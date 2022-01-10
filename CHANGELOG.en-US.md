@@ -21,6 +21,7 @@ timeline: true
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
+- 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 
