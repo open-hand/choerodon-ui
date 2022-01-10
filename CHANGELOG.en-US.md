@@ -18,9 +18,11 @@ timeline: true
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` hook.
+- 💄 `Alert`: Optimize the layout style of the component.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
+- 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 
 ## 1.5.1
 

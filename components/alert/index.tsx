@@ -121,6 +121,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
         [`${prefixCls}-with-description`]: !!description,
         [`${prefixCls}-no-icon`]: !showIcon,
         [`${prefixCls}-banner`]: !!banner,
+        [`${prefixCls}-closable`]: closable || closeText,
       },
       className,
     );
@@ -145,8 +146,10 @@ export default class Alert extends PureComponent<AlertProps, any> {
       >
         <div hidden={!closing} className={alertCls} style={style}>
           {showIcon ? <Icon className={`${prefixCls}-icon`} type={iconType} /> : null}
-          <span className={`${prefixCls}-message`}>{message}</span>
-          <span className={`${prefixCls}-description`}>{description}</span>
+          <div className={`${prefixCls}-content`}>
+            <span className={`${prefixCls}-message`}>{message}</span>
+            <span className={`${prefixCls}-description`}>{description}</span>
+          </div>
           {closeIcon}
         </div>
       </Animate>

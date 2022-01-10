@@ -9,8 +9,18 @@
 .@{alert-prefix-cls} {
   .reset-component;
   position: relative;
+  display: flex;
   padding: 0.08rem 0.15rem 0.08rem 0.37rem;
+  word-break: break-all;
   border-radius: @border-radius-base;
+
+  &-content{
+    flex: 1;
+  }
+
+  &-closable > .@{alert-prefix-cls}-content {
+    padding-right: 0.16rem;
+  }
 
   &&-no-icon {
     padding: 0.08rem 0.15rem;
@@ -65,9 +75,6 @@
   }
 
   &-close-icon {
-    position: absolute;
-    top: 0.08rem;
-    right: 0.16rem;
     overflow: hidden;
     font-size: @font-size-sm;
     line-height: 1.5;
@@ -108,9 +115,6 @@
   }
 
   &-with-description &-close-icon {
-    position: absolute;
-    top: 0.16rem;
-    right: 0.16rem;
     font-size: @font-size-base;
     cursor: pointer;
   }
