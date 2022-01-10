@@ -205,6 +205,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @observable mode?: ViewMode;
 
+  /**
+   * popup 弹框中输入框 hover 时显示值
+   */
+  @observable popupHoverValue?: string | null;
+
   popupRangeEditor?: HTMLInputElement | null;
 
   @autobind
@@ -296,11 +301,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
-      const { prefixCls, range, text } = this;
-      const className = `${prefixCls}-popup-editor`;
+      const { prefixCls, range, text, popupHoverValue, rangeTarget } = this;
+      const className = classNames(`${prefixCls}-popup-editor`, {
+        [`${prefixCls}-popup-hover-value`]: !isNil(popupHoverValue) && !range,
+        [`${prefixCls}-popup-hover-value-start`]: !isNil(popupHoverValue) && range && rangeTarget === 0,
+        [`${prefixCls}-popup-hover-value-end`]: !isNil(popupHoverValue) && range && rangeTarget === 1,
+      });
       const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
       if (range) {
-        const { rangeTarget } = this;
         const [startValue = '', endValue = ''] = this.processRangeValue(this.rangeValue);
         const startText = this.getText(startValue) as string;
         const endText = this.getText(endValue) as string;
@@ -310,7 +318,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-start`}
               onChange={this.handleChange}
               onFocus={this.handleRangeStart}
-              value={rangeTarget === 0 && text !== undefined ? text : startText}
+              value={rangeTarget === 0 ? (popupHoverValue ?? text ?? startText) : startText}
               placeholder={startPlaceholder}
               ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
             />
@@ -319,7 +327,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-end`}
               onChange={this.handleChange}
               onFocus={this.handleRangeEnd}
-              value={rangeTarget === 1 && text !== undefined ? text : endText}
+              value={rangeTarget === 1 ? (popupHoverValue ?? text ?? endText) : endText}
               placeholder={endPlaceHolder}
               ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
             />
@@ -329,7 +337,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       return (
         <ObserverTextField
           key="popup-editor"
-          value={this.getTextNode()}
+          value={popupHoverValue ?? this.getTextNode()}
           onInput={this.handleChange}
           border={false}
           className={className}
@@ -337,6 +345,24 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         />
       );
     }
+  }
+
+  @action
+  handleDateMounseEnter = (currentDate?: Moment): void => {
+    const { editorInPopup } = this.observableProps;
+    const hoverValue = currentDate && currentDate.format(this.getDateFormat());
+    if (editorInPopup) {
+      this.popupHoverValue = hoverValue;
+    }
+    else {
+      this.hoverValue = hoverValue;
+    }
+  }
+
+  @action
+  handleDateMounseLeave = (): void => {
+    this.hoverValue = null;
+    this.popupHoverValue = null;
   }
 
   getPopupContent() {
@@ -362,6 +388,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             step: this.getProp('step') || {},
             renderExtraFooter: this.getProp('renderExtraFooter'),
             extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
+            onDateMouseEnter: this.handleDateMounseEnter,
+            onDateMouseLeave: this.handleDateMounseLeave,
           } as DateViewProps)
         }
       </>

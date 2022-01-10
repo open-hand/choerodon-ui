@@ -344,7 +344,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     const {
       prefixCls,
       use12Hours,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, step },
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, step, onDateMouseLeave },
       observableProps: { format },
     } = this;
     const isUpperCase = format.indexOf('A') > -1;
@@ -373,6 +373,8 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       };
       if (!isDisabled) {
         props.onClick = this.handleTimeCellClick.bind(this, current, unit);
+        props.onMouseEnter = this.handleDateMounseEnter(current);
+        props.onMouseLeave = onDateMouseLeave;
       }
       items.push(renderer(props, text, current, selected));
       pre.add(unit === TimeUnit.a ? 12 : (step[stepMapping[unit]] || 1), finalUnit);

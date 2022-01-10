@@ -38,7 +38,7 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
   renderPanelBody(): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell },
+      props: { date, renderer = this.renderCell, onDateMouseLeave },
     } = this;
     const selected = date.clone();
     const firstDay = this.getFirstDay(date);
@@ -72,7 +72,12 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
 
       if (cells.length === 8) {
         rows.push(
-          <tr onClick={this.handleCellClick.bind(this, currentDate)} key={firstDay.format('M_D')}>
+          <tr
+            onClick={this.handleCellClick.bind(this, currentDate)}
+            key={firstDay.format('M_D')}
+            onMouseEnter={this.handleDateMounseEnter(currentDate)}
+            onMouseLeave={onDateMouseLeave}
+          >
             {cells}
           </tr>,
         );

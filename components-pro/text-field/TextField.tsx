@@ -237,6 +237,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @observable text?: string;
 
+  /**
+   * hover 时显示值
+   */
+  @observable hoverValue?: string | null;
+
   type = 'text';
 
   tagContainer: HTMLUListElement | null;
@@ -389,7 +394,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { isFlat } = this.props;
     const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = rangeTarget === undefined && this.hasFloatLabel ? [] : this.getPlaceholders();
     if (rangeTarget === undefined) {
-      const { text } = this;
+      const text = this.hoverValue ?? this.text;
       if (text !== undefined) {
         return {
           text,
@@ -424,6 +429,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       };
     }
     const [startValue, endValue] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
+    const { hoverValue } = this;
+    if (!isNil(hoverValue)
+    && ((rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1))) {
+      return {
+        text: hoverValue,
+        width: isFlat ? measureTextWidth(hoverValue) : 0,
+      };
+    }
     if (rangeTarget === 0) {
       const { renderedStartText } = this;
       if (renderedStartText) {
@@ -769,7 +782,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderRangeEditor(props) {
     const { isFlat } = this.props;
-    const { prefixCls, rangeTarget, isFocused, editable } = this;
+    const { prefixCls, rangeTarget, isFocused, editable, hoverValue } = this;
     const [startValue = '', endValue = ''] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
     const startRenderedValue = this.renderRenderedValue(startValue, {
       key: 'startRenderedText',
@@ -798,11 +811,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.color = 'transparent';
     }
     // 筛选条默认宽度处理
+    const addWidth = 4 + (this.isFocused && ((rangeTarget === 0 && startText) || (rangeTarget === 1 && endText)) ? 4 : 0);
     if (isFlat) {
-      startStyle.width = startWidth + 4;
+      startStyle.width = startWidth + addWidth;
       startStyle.boxSizing = 'content-box';
-      endStyle.width = endWidth + 4;
+      endStyle.width = endWidth + addWidth;
       endStyle.boxSizing = 'content-box';
+      editorStyle.width = (
+        !isNil(rangeTarget)
+          ? rangeTarget === 0 ? startWidth + addWidth : endWidth + addWidth
+          : undefined);
+      editorStyle.boxSizing = !isNil(rangeTarget) ? 'content-box' : undefined;
     }
     if (startRenderedValue && (!editable || !isFocused)) {
       startStyle.textIndent = -1000;
@@ -812,6 +831,20 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       endStyle.textIndent = -1000;
       endStyle.color = 'transparent';
     }
+    const inputValue = (
+      rangeTarget === undefined || !this.isFocused
+        ? ''
+        : isNil(hoverValue)
+          ? this.text === undefined
+            ? rangeTarget === 0
+              ? startText
+              : endText
+            : this.text
+          : hoverValue
+    );
+    const inputClassString = classNames(`${prefixCls}-range-input`, {
+      [`${prefixCls}-hover-value`]: !isNil(hoverValue),
+    });
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
         {startRenderedValue}
@@ -820,19 +853,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           !this.disabled && (
             <input
               {...props}
-              className={`${prefixCls}-range-input`}
+              className={inputClassString}
               key="text"
-              value={
-                rangeTarget === undefined || !this.isFocused
-                  ? ''
-                  : this.text === undefined
-                    ? rangeTarget === 0
-                      ? startText
-                      : endText
-                    : this.text
-              }
+              value={inputValue}
               placeholder={
-                !editable || rangeTarget === undefined || !this.isFocused
+                !editable || rangeTarget === undefined || !this.isFocused || hoverValue
                   ? ''
                   : rangeTarget === 0
                     ? startPlaceholder
@@ -1020,6 +1045,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.renderLengthElement();
     }
 
+    otherProps.className = classNames(otherProps.className, {
+      [`${prefixCls}-hover-value`]: !isNil(this.hoverValue),
+    });
+
     this.setInputStylePadding(otherProps);
     const childNodes: ReactNode[] = [
       <input
@@ -1030,7 +1059,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         placeholder={editorTextInfo.placeholder}
-        value={editorTextInfo.text}
+        value={this.hoverValue ?? editorTextInfo.text}
         readOnly={!this.editable}
       />,
     ];

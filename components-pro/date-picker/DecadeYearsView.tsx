@@ -103,7 +103,7 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
   renderPanelBody(): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
     } = this;
     const selected = date.clone().subtract(date.year() % 10, 'y');
     const from = date
@@ -137,6 +137,8 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
       if (!isDisabled) {
         decadeProps.onClick = this.handleCellClick.bind(this, currentYear);
         decadeProps.children = this.renderInner(text);
+        decadeProps.onMouseEnter = this.handleDateMounseEnter(currentYear);
+        decadeProps.onMouseLeave = onDateMouseLeave;
       }
 
       cells.push(renderer(decadeProps, text, currentYear, selected));

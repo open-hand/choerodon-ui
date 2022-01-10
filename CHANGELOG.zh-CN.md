@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, onColumnResize 参数新增 index 属性。
 - 🌟 `<pro>Table.Column`: header 钩子参数新增 aggregationTree 属性。
 - 💄 `Alert`: 优化组件布局样式。
+- 💄 `<pro>DatePicker`: 优化 hover 选值显示, 并且优化 isFlat 和 range 模式下显示样式。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下虚拟滚动的问题。
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。

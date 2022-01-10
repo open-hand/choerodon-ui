@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
@@ -31,6 +31,8 @@ export interface DateViewProps extends ViewComponentProps {
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
   disabledNow?: boolean;
+  onDateMouseEnter?: (date?: Moment) => void,
+  onDateMouseLeave?: () => void,
 }
 
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
@@ -270,10 +272,15 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     return firstDay.date(firstDay.daysInMonth()).startOf('w');
   }
 
+  handleDateMounseEnter = (currentDate?: Moment): MouseEventHandler => {
+    const { onDateMouseEnter = noop } = this.props;
+    return () => onDateMouseEnter(currentDate);
+  }
+
   renderPanelBody(): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
     } = this;
     const selected = date.clone();
     const prevMonth = this.getFirstDay(date);
@@ -306,6 +313,8 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
       if (!isDisabled) {
         dayProps.onClick = this.handleCellClick.bind(this, currentDate);
+        dayProps.onMouseEnter = this.handleDateMounseEnter(currentDate);
+        dayProps.onMouseLeave = onDateMouseLeave;
       }
 
       cells.push(renderer(dayProps, text, currentDate, selected));
