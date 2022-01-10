@@ -90,6 +90,7 @@ export interface GenerateRowProps extends GenerateRowsProps {
   statistics?: Statistics | undefined;
   headerGroup?: { count: number };
   children?: ReactNode;
+  className?: string;
 }
 
 function generateRowGroup(props: GenerateRowGroupProps): ReactElement {
@@ -116,7 +117,7 @@ function generateRowGroup(props: GenerateRowGroupProps): ReactElement {
 function generateRow(props: GenerateRowProps): ReactElement {
   const {
     tableStore, record, parentExpanded, lock, columnGroups, groupPath, index,
-    statistics, expandIconColumnIndex, children, headerGroup, draggableId, dragRowHeight,
+    statistics, expandIconColumnIndex, children, headerGroup, draggableId, dragRowHeight, className,
   } = props;
   const { key } = record;
   const tableRowProps: TableRowProps = {
@@ -129,6 +130,7 @@ function generateRow(props: GenerateRowProps): ReactElement {
     expandIconColumnIndex,
     groupPath,
     children,
+    className,
   };
   if (statistics) {
     const { rowMetaData } = statistics;
@@ -484,7 +486,7 @@ VirtualRows.displayName = 'VirtualRows';
 
 const Rows: FunctionComponent<RowsProps> = function Rows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable } = props;
-  const { cachedData, currentData, groupedData } = tableStore;
+  const { cachedData, currentData, groupedData, yqcloudBarStatus, dataSet, yqcloudBarColumn, prefixCls } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
     generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false }, onClearCache)
   ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable]);
@@ -500,8 +502,31 @@ const Rows: FunctionComponent<RowsProps> = function Rows(props) {
       tableStore.rowMetaData = undefined;
     }
   }), [tableStore]);
+
+  let qyBar;
+  const { queryDataSet } = dataSet;
+  if (yqcloudBarStatus && queryDataSet) {
+    const queryFields = {}
+    const { current } = queryDataSet
+    queryDataSet.fields.forEach((_, key) => {
+      queryFields[key] = current ? current.get(key) : null;
+    })
+    const record = new Record(queryFields, dataSet)
+    qyBar = generateRow({
+      index: { count: -1 },
+      tableStore,
+      record,
+      columnGroups: yqcloudBarColumn,
+      lock,
+      children: false,
+      expandIconColumnIndex: -1,
+      parentExpanded: yqcloudBarStatus,
+      className:`${prefixCls}-row-search`,
+    })
+  }
   return cachedRows.length || rows.length ? (
     <>
+      {[qyBar]}
       {cachedRows}
       {rows}
     </>

@@ -23,7 +23,7 @@ export interface TableWrapperProps extends ElementProps {
 
 const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper(props) {
   const { children, hasBody, lock, hasHeader, hasFooter, columnGroups } = props;
-  const { prefixCls, summary, tableStore } = useContext(TableContext);
+  const { prefixCls, summary, tableStore, dataSet } = useContext(TableContext);
   const { leafs, width } = columnGroups;
   const { overflowX, customizable, rowDraggable, dragColumnAlign } = tableStore;
   const hasPlaceHolder = lock !== ColumnLock.left && (hasHeader || hasFooter) && tableStore.overflowY;
@@ -71,9 +71,9 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
   }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder, overflowX]);
 
   const style = useMemo(() => ({ width: tableWidth }), [tableWidth]);
-
   const className = classNames({
     [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && (tableStore.height !== undefined || (!tableStore.hasFooter && overflowX)),
+    [`${prefixCls}-fold`]: dataSet.getState('foldable'),
   });
 
   return (

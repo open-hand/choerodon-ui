@@ -1,4 +1,4 @@
-import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
+import React, { Children, cloneElement, CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
 import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
@@ -41,7 +41,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader } from './utils';
+import { getColumnKey, getEditorByField, getHeader } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -62,6 +62,8 @@ import { LabelLayout } from '../form/enum';
 import ColumnGroup from './ColumnGroup';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
+
+export const YQCLOUDBAR_KEY = '__yqcloud-column__'; // TODO:Symbol
 
 export const ROW_NUMBER_KEY = '__row-number-column__'; // TODO:Symbol
 
@@ -886,6 +888,8 @@ export default class TableStore {
 
   performanceOn = false;
 
+  @observable yqcloudBarStatus: boolean;
+
   lastSelected?: Record;
 
   activeEmptyCell?: HTMLTableCellElement;
@@ -1624,6 +1628,31 @@ export default class TableStore {
   }
 
   @computed
+  get yqcloudQueryColumn(): ColumnProps | undefined {
+    if (this.queryBar === 'yqcloudBar') {
+      const { prefixCls } = this;
+      const className = `${prefixCls}-inline-query`;
+
+      const lock: ColumnLock | boolean = ColumnLock.left;
+
+      const queryColumn: ColumnProps = {
+        key: YQCLOUDBAR_KEY,
+        header: <Icon type="manage_search" className={className} onClick={action(() => this.yqcloudBarStatus = !this.yqcloudBarStatus)} />,
+        resizable: false,
+        titleEditable: false,
+        headerClassName: className,
+        className,
+        footerClassName: className,
+        align: ColumnAlign.center,
+        width: 50,
+        lock,
+      };
+      return queryColumn;
+    }
+    return undefined;
+  }
+
+  @computed
   get draggableColumn(): ColumnProps | undefined {
     const { dragColumnAlign, rowDraggable, prefixCls } = this;
     if (dragColumnAlign && rowDraggable) {
@@ -1651,12 +1680,13 @@ export default class TableStore {
 
   @computed
   get leftColumns(): ColumnProps[] {
-    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn } = this;
+    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, yqcloudQueryColumn } = this;
     return observable.array([
       expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
       selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
+      yqcloudQueryColumn,
       ...leftOriginalColumns,
     ].filter<ColumnProps>(columnFilter));
   }
@@ -1722,6 +1752,67 @@ export default class TableStore {
       );
     }
     return false;
+  }
+
+  getQueryFields(extraStyle) {
+    const { queryFields } = this.dataSet.props
+    const { queryDataSet } = this.dataSet;
+    const result: ReactElement<any>[] = [];
+    if (queryDataSet) {
+      const { fields } = queryDataSet;
+      return [...fields.entries()].reduce((list, [name, field]) => {
+        if (!field.get('bind')) {
+          const props: any = {
+            key: name,
+            name,
+            dataSet: queryDataSet,
+          };
+          const element = queryFields![name];
+          list.push(
+            isValidElement(element)
+              ? cloneElement(element, {
+                placeholder: field.get('label'),
+                ...props,
+              })
+              : cloneElement(getEditorByField(field), {
+                placeholder: field.get('label'),
+                ...props,
+                style: {
+                  ...props.style || {},
+                  ...extraStyle,
+                },
+                onChange: () => {
+                  this.dataSet.query();
+                },
+                onEnterDown: (e) => {
+                  e.stopPropagation();
+                },
+                ...(isObject(element) ? element : {}),
+              }),
+          );
+        }
+        return list;
+      }, result);
+    }
+    return result;
+  }
+
+  @computed
+  get yqcloudBarColumn(): ColumnGroups {
+    const yqBarColumn: ColumnProps[] = observable.array(
+      this.columns.map((col) => {
+        if (col.key === '__selection-column__') {
+          return {
+            ...col,
+            renderer: () => <span />,
+          } as ColumnProps
+        }
+        return {
+          ...col,
+          renderer: ({ name }) => this.getQueryFields({ width: '100%' }).find(field => field.key === name),
+        } as ColumnProps
+      }));
+    return new ColumnGroups(yqBarColumn, this);
   }
 
   get hasFooter(): boolean {

@@ -21,14 +21,17 @@ import Table, {
   TableQueryBarHook,
   TableQueryBarHookCustomProps,
   TableQueryBarHookProps,
+  QueryHeaderConfig,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
+import Radio from '../../radio';
 import { ButtonColor, ButtonType } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
 import DataSet from '../../data-set';
+import Record from '../../data-set/Record';
 import Modal from '../../modal';
 import Progress from '../../progress';
 import Column from '../Column';
@@ -37,6 +40,7 @@ import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import TableProfessionalBar from './TableProfessionalBar';
+import TableYQCloudBar from './TableYQCloudBar';
 import TableDynamicFilterBar from './TableDynamicFilterBar';
 import { PaginationProps } from '../../pagination/Pagination';
 import { exportExcel, findBindFieldBy } from '../../data-set/utils';
@@ -56,6 +60,7 @@ export interface TableQueryBarProps {
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: SummaryBar[];
   dynamicFilterBar?: DynamicFilterBarConfig;
+  queryHeaderConfig?: QueryHeaderConfig;
   filterBarFieldName?: string;
   filterBarPlaceholder?: string;
   searchCode?: string;
@@ -151,15 +156,15 @@ const ExportFooter = observer((props) => {
         }} /></div>
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
-      dataSet.exportStatus !== DataSetExportStatus.failed &&
-      <>
-        <span>{messageTimeout || $l('Table', 'export_operating')}</span>
-        <Button
-          color={ButtonColor.gray}
-          onClick={handleClick}
-        >{$l('Table', 'cancel_button')}
-        </Button>
-      </>
+        dataSet.exportStatus !== DataSetExportStatus.failed &&
+        <>
+          <span>{messageTimeout || $l('Table', 'export_operating')}</span>
+          <Button
+            color={ButtonColor.gray}
+            onClick={handleClick}
+          >{$l('Table', 'cancel_button')}
+          </Button>
+        </>
       }
     </div>
   );
@@ -176,6 +181,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   exportModal;
 
   exportDataSet: DataSet;
+
+  exportRadioDataSet: DataSet;
 
   exportData: any;
 
@@ -272,9 +279,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   @autobind
   async handleButtonExport() {
-    const { tableStore } = this.context;
+    const { tableStore, prefixCls } = this.context;
     const columnHeaders = await tableStore.getColumnHeaders();
     this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
+    this.exportRadioDataSet = new DataSet({ data: [{ exportStrategy: 'ALL' }], fields: [{ name: 'exportStrategy' }] })
     this.exportDataSet.selectAll();
     this.exportModal = Modal.open({
       title: $l('Table', 'choose_export_columns'),
@@ -288,8 +296,20 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       closable: true,
       okText: $l('Table', 'export_button'),
       onOk: this.handleExport,
+      footer: (okBtn, cancelBtn) => (
+        <div className={`${prefixCls}-export-modal-footer`}>
+          <div className={`${prefixCls}-export-modal-footer-radio`}>
+            <Radio dataSet={this.exportRadioDataSet} name="exportStrategy" value="ALL">{$l('Table', 'export_all')}</Radio>
+            <Radio dataSet={this.exportRadioDataSet} name="exportStrategy" value="SELECTED" >{$l('Table', 'export_selected')}</Radio>
+          </div>
+          <div>
+            {okBtn}
+            {cancelBtn}
+          </div>
+        </div>
+      ),
       style: {
-        width: pxToRem(400),
+        width: pxToRem(500),
       },
     });
   }
@@ -313,22 +333,34 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     } = this;
     if (selected.length) {
       const { exportModal } = this;
-      dataSet.export(
-        selected.reduce((columns, record) => {
-          let myName = record.get('name');
-          const myField = dataSet.getField(myName);
-          if (myField && myField.type === FieldType.object) {
-            const bindField = findBindFieldBy(myField, dataSet.fields, 'textField');
-            if (bindField) {
-              myName = bindField.name;
-            }
+
+      const exportColumns = selected.reduce((columns, record) => {
+        let myName = record.get('name');
+        const myField = dataSet.getField(myName);
+        if (myField && myField.type === FieldType.object) {
+          const bindField = findBindFieldBy(myField, dataSet.fields, 'textField');
+          if (bindField) {
+            myName = bindField.name;
           }
-          columns[myName] = record.get('label');
-          return columns;
-        }, {}),
+        }
+        columns[myName] = record.get('label');
+        return columns;
+      }, {});
+      dataSet.export(
+        exportColumns,
         clientExportQuantity,
       ).then((exportData) => {
-        this.exportData = exportData;
+        const { current } = this.exportRadioDataSet;
+        const isExportAll = current && current.get('exportStrategy') === "ALL";
+        if (isExportAll) {
+          this.exportData = exportData;
+        } else {
+          const selectedData = dataSet.selected.sort((current, next) => current.id - next.id);
+          const jsonData = selectedData.map((x: Record) => ({ ...x.toData() }))
+          const exportSelectedData: any[] = dataSet.displayDataTransform(jsonData, exportColumns);
+          exportSelectedData.unshift(exportColumns);
+          this.exportData = exportSelectedData
+        }
       });
       if (exportModal) {
         exportModal.update(
@@ -788,6 +820,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
+  renderYQCloudBar(props: TableQueryBarHookProps) {
+    const { prefixCls } = this.context;
+    return <TableYQCloudBar key="toolbar" prefixCls={prefixCls} {...props} />;
+  }
+
   @autobind
   expandTree() {
     const { tableStore } = this.context;
@@ -819,7 +856,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         tableStore,
         tableStore: { queryBar, props: { queryBarProps } },
       },
-      props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
+      props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded, queryHeaderConfig },
       showQueryBar,
     } = this;
     if (showQueryBar) {
@@ -839,6 +876,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         queryFields,
         queryFieldsLimit: queryFieldsLimits,
         summaryFieldsLimit: summaryFieldsLimits,
+        queryHeaderConfig,
         summaryBar,
         onQuery: treeQueryExpanded && isTree ? this.expandTree : onQuery,
         onReset: treeQueryExpanded && isTree ? this.collapseTree : onReset,
@@ -857,6 +895,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           return this.renderProfessionalBar(props);
         case TableQueryBarType.filterBar:
           return this.renderDynamicFilterBar(props);
+        case TableQueryBarType.yqcloudBar:
+          return this.renderYQCloudBar(props);
         default:
       }
     }

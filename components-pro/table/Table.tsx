@@ -72,6 +72,7 @@ import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
+import YQCloudBar from './query-bar/TableYQCloudBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import {
   findCell,
@@ -144,6 +145,7 @@ export interface TableQueryBarHookProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+  queryHeaderConfig?: QueryHeaderConfig;
 }
 
 export interface expandedRowRendererProps {
@@ -210,6 +212,14 @@ export interface DynamicFilterBarConfig {
   suffixes?: Suffixes[];
   prefixes?: React.ReactElement<any>[];
   tableFilterAdapter?: TransportProps;
+}
+
+export interface QueryHeaderConfig {
+  title?: string;
+  dropDownArea?: ReactNode;
+  fold?: Boolean;
+  buttonArea?: ReactNode;
+  searchable?: Boolean;
 }
 
 export interface Instance {
@@ -401,7 +411,7 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number | undefined;
   /**
    * 显示查询条
-   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar`
+   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar` `YQCloudBar`
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook | undefined;
@@ -409,6 +419,10 @@ export interface TableProps extends DataSetComponentProps {
    * 查询条自定义参数
    */
   queryBarProps?: TableQueryBarHookCustomProps;
+  /**
+   * 燕千云筛选条配置项
+   */
+  queryHeaderConfig?: QueryHeaderConfig;
   /**
    * 显示汇总条
    * @default 'normal'
@@ -735,6 +749,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   static ProfessionalBar = ProfessionalBar;
 
+  static YQCloudBar = YQCloudBar;
+
   static DynamicFilterBar = DynamicFilterBar;
 
   static ToolBar = ToolBar;
@@ -821,6 +837,7 @@ export default class Table extends DataSetComponent<TableProps> {
         TableQueryBarType.none,
         TableQueryBarType.professionalBar,
         TableQueryBarType.filterBar,
+        TableQueryBarType.yqcloudBar,
       ]),
       PropTypes.func,
     ]),
@@ -1406,6 +1423,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'summaryBarFieldWidth',
       'queryBar',
       'queryBarProps',
+      'queryHeaderConfig',
       'autoFocus',
       'summaryBar',
       'defaultRowExpanded',
@@ -1620,6 +1638,7 @@ export default class Table extends DataSetComponent<TableProps> {
         buttonsLimit,
         queryFields,
         queryFieldsLimit,
+        queryHeaderConfig,
         summaryFieldsLimit,
         summaryBarFieldWidth,
         filterBarFieldName,
@@ -1687,6 +1706,7 @@ export default class Table extends DataSetComponent<TableProps> {
               summaryBar={summaryBar}
               dynamicFilterBar={dynamicFilterBar}
               queryFieldsLimit={queryFieldsLimit}
+              queryHeaderConfig={queryHeaderConfig}
               summaryBarFieldWidth={summaryBarFieldWidth}
               summaryFieldsLimit={summaryFieldsLimit}
               filterBarFieldName={filterBarFieldName}

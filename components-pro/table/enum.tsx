@@ -71,6 +71,7 @@ export enum TableQueryBarType {
   advancedBar = 'advancedBar',
   professionalBar = 'professionalBar',
   filterBar = 'filterBar',
+  yqcloudBar = 'yqcloudBar'
 }
 
 export enum TablePaginationPosition {

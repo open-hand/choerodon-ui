@@ -10,12 +10,37 @@
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @table-border: @border-width-base @border-style-base @table-border-color;
+@table-row-search-bg: @table-row-group-title-bg;
 
 .@{table-prefix-cls} {
   position: relative;
   color: @text-color;
   font-size: @font-size-base;
   outline: none;
+ 
+  &-row-search {
+    > td {
+      background-color: @table-row-search-bg !important;
+      border-right-color: @table-row-search-bg !important;
+    
+      > span{
+        height: 100%;
+        padding: 0;
+        line-height:0 !important;
+        border: none;
+      }
+      .@{table-prefix-cls}-cell-multiple-block {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+          padding: 0;
+        }
+    }
+  }
+
+  &-fold{
+    display: none;
+  }
 
   table {
     font-size: inherit;
@@ -70,6 +95,21 @@
     flex-flow: row nowrap;
     justify-content: space-between;
   }
+
+  &-export-modal-footer{
+    display: flex;
+    justify-content: space-between;
+    &-radio{
+      display: flex;
+      label:first-child{
+        margin-right: .24rem;
+      }
+    }
+    &-operation{
+      margin-left: .4rem;
+    }
+  }
+  
 
   &-cell {
     margin: 0;
@@ -366,6 +406,9 @@
       padding-right: 0 !important;
       padding-left: 0 !important;
     }
+  }
+  &-inline-query{
+    cursor: pointer;
   }
 
   &-editor {
@@ -1320,6 +1363,90 @@
       .@{table-prefix-cls}-summary-group-wrapper {
         margin: 0;
       }
+    }
+  }
+
+  &-yqcloud-toolbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 0.3rem;
+    margin-bottom: 0.08rem;
+    &-select {
+      width: 1.6rem;
+      margin: -0.01rem -0.06rem;
+    }
+    &-fold-icon {
+      position: absolute;
+      right: 0.16rem;
+      cursor: pointer;
+    }
+    &-action-button {
+      margin: 0 0.16rem 0 0 ;
+      padding: 0.04rem;
+      background: @table-row-search-bg;
+      border: 0;
+      &:hover {
+        background: #e8e8e8;
+      }
+    }
+    &-action-menu {
+      .c7n-menu-submenu-title {
+        min-width: 1.2rem;
+        padding-left: 0.16rem;
+      }
+    }
+    &-filter {
+      display: flex;
+      align-items: center;
+      > span {
+        margin-right: 0.04rem;
+        color: #595959;
+        font-size: 0.14rem;
+        line-height: 0.22rem;
+      }
+      &-title {
+        margin-right: 0.16rem;
+        &:first-child {
+          margin-left: 0;
+        }
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+      }
+      &-buttons {
+        flex-shrink: 0;
+        margin-right: 0.16rem;
+      }
+      .toolbar-icon {
+        width: 0.16rem;
+        height: 0.16rem;
+        margin-right: 0.16rem;
+        color: rgba(0, 0, 0, 0.65);
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          color: @primary-color;
+        }
+      }
+    }
+    &-fold{
+      position: absolute;
+      right: 0;
+      transform: rotate(90deg);
+      cursor: pointer;
+      transition: all @animation-duration-slow @ease-in-out-circ;
+      &:hover,
+        &.active {
+          color: @primary-color;
+        }
+    }
+    &-folded{
+      transform: rotate(-90deg);
+      transition: all @animation-duration-slow @ease-in-out-circ;
     }
   }
 

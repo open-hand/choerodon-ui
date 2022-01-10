@@ -112,6 +112,8 @@ const locale: Locale = {
     current_page_records: '当前页记录',
     cached_records: '缓存的记录',
     refresh: '刷新',
+    export_all: '导出列所有数据',
+    export_selected: '导出列已选数据',
   },
   Pagination: {
     page: '页',
