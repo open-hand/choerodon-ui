@@ -75,7 +75,7 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
           <tr
             onClick={this.handleCellClick.bind(this, currentDate)}
             key={firstDay.format('M_D')}
-            onMouseEnter={this.handleDateMouseEnter(currentDate)}
+            onMouseEnter={this.handleDateMouseEnter.bind(this, currentDate)}
             onMouseLeave={onDateMouseLeave}
           >
             {cells}

@@ -27,6 +27,7 @@ import { stopEvent } from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import isSame from '../_util/isSame';
+import measureTextWidth from '../_util/measureTextWidth';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
 import ObserverTextField from '../text-field/TextField';
@@ -206,6 +207,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @observable mode?: ViewMode;
 
   /**
+   * hover 时显示值
+   */
+   @observable hoverValue?: string | null;
+
+  /**
    * popup 弹框中输入框 hover 时显示值
    */
   @observable popupHoverValue?: string | null;
@@ -363,6 +369,32 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   handleDateMouseLeave = (): void => {
     this.hoverValue = null;
     this.popupHoverValue = null;
+  }
+
+  // 处理 hover 值显示
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
+    const { isFlat } = this.props;
+    const { hoverValue } = this;
+    if (!isNil(hoverValue)) {
+      if (rangeTarget === undefined || (rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1)) {
+        return {
+          text: hoverValue,
+          width: isFlat ? measureTextWidth(hoverValue) : 0,
+        };
+      }
+    }
+    return super.getEditorTextInfo(rangeTarget);
+  }
+
+  getRangeInputValue(startText: string, endText: string): string {
+    return this.hoverValue ?? super.getRangeInputValue(startText, endText);
+  }
+
+  getInputClassString(className: string): string {
+    const { prefixCls, hoverValue } = this;
+    return classNames(className, {
+      [`${prefixCls}-hover-value`]: !isNil(hoverValue),
+    });
   }
 
   getPopupContent() {

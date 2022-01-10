@@ -148,7 +148,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
 
       if (!isDisabled) {
         yearProps.onClick = this.handleCellClick.bind(this, currentYear);
-        yearProps.onMouseEnter = this.handleDateMouseEnter(currentYear);
+        yearProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentYear);
         yearProps.onMouseLeave = onDateMouseLeave;
       }
 

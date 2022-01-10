@@ -274,7 +274,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   handleDateMouseEnter = (currentDate?: Moment): MouseEventHandler => {
     const { onDateMouseEnter = noop } = this.props;
-    return () => onDateMouseEnter(currentDate);
+    return onDateMouseEnter(currentDate);
   }
 
   renderPanelBody(): ReactNode {
@@ -313,7 +313,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
       if (!isDisabled) {
         dayProps.onClick = this.handleCellClick.bind(this, currentDate);
-        dayProps.onMouseEnter = this.handleDateMouseEnter(currentDate);
+        dayProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentDate);
         dayProps.onMouseLeave = onDateMouseLeave;
       }
 
