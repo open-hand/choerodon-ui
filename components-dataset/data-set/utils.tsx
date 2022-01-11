@@ -882,9 +882,15 @@ export function findBindFieldBy(myField: Field, fields: Fields, prop: string, re
   });
 }
 
-export function getLimit(limit: any, record: Record) {
+export function getLimit(limit: any, record: Record, minOrMax: any, type: FieldType) {
   if (isString(limit) && record.dataSet.getField(limit)) {
     return record.get(limit);
+  }
+  if (limit === undefined) {
+    const configLimit = record.dataSet.getConfig(minOrMax);
+    if (configLimit && typeof configLimit === 'function') {
+      return configLimit(type);
+    }
   }
   return limit;
 }

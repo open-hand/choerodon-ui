@@ -1137,11 +1137,11 @@ export default class Field {
           }
           case 'max':
           case 'min':
-            return getLimit(this.get(key, record), record);
+            return getLimit(this.get(key, record), record, key, this.get('type', record));
           case 'minLength':
           case 'maxLength':
             return getBaseType(this.get('type', record)) !== FieldType.string ? undefined : this.get(key, record);
-          case 'format' :
+          case 'format':
             return this.get('format', record) || getDateFormatByField(this, this.get('type', record), record);
           case 'nonStrictStep': {
             const nonStrictStep = this.get('nonStrictStep', record);

@@ -143,6 +143,8 @@ const prefixCls = getConfig('prefixCls');
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | onTabsChange | Tabs 变更事件， 初始化时也会触发， 可用于监控埋点 | (props: { activeKey:string, activeGroupKey?:string, title: string, groupTitle?:string, code?:string }) => void |   |
 | onButtonClick | 按钮点击事件， 可用于监控埋点 | (props: { title:string, icon?:string }) => void |   |
+| min | 最小值 | min: (FieldType) => value |   |
+| max | 最大值 | max: (FieldType) => value |   |
 
 ### Customizable
 

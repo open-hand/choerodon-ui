@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
+- 🌟 `configure`: Added `min`, `max` properties.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
