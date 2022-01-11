@@ -95,7 +95,7 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
   renderPanelBody(): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate },
+      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
     } = this;
     const selected = date.clone();
     const prevMonth = date.clone().startOf('y');
@@ -119,6 +119,8 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
       };
       if (!isDisabled) {
         monthProps.onClick = this.handleCellClick.bind(this, currentMonth);
+        monthProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentMonth);
+        monthProps.onMouseLeave = onDateMouseLeave;
       }
 
       cells.push(renderer(monthProps, text, currentMonth, selected));

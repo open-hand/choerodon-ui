@@ -43,6 +43,12 @@
     &-popup-datetime {
       width: @datetime-picker-width;
     }
+
+    &-popup-hover-value .@{c7n-pro-prefix}-input,
+    &-popup-hover-value-start &-range-start,
+    &-popup-hover-value-end &-range-end {
+      color: @gray-6;
+    }
   }
 
   &-datetime-wrapper {
@@ -335,6 +341,7 @@
     ul {
       position: absolute;
       top: 50%;
+      z-index: 2;
       width: 100%;
       margin: 0;
       padding: 0;
