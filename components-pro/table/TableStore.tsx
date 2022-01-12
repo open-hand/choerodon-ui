@@ -1117,27 +1117,17 @@ export default class TableStore {
 
   @observable actualRows: number | undefined;
 
-  @observable actualRowHeight: number | undefined;
-
   @observable rowMetaData?: VirtualRowMetaData[] | undefined;
 
   lastMeasuredIndex = 0;
 
   @observable scrolling: boolean | undefined;
 
-  get virtualEstimatedCellInnerHeight(): number {
-    const { rowHeight } = this;
-    const normalRowHeight = isNumber(rowHeight) ? rowHeight : 30;
-    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
-  }
-
   @computed
   get virtualRowHeight(): number {
-    const { actualRowHeight } = this;
-    if (actualRowHeight !== undefined) {
-      return actualRowHeight;
-    }
-    return this.virtualEstimatedCellInnerHeight + (this.aggregation && this.hasAggregationColumn ? 3 * 4 : 3);
+    const { rowHeight } = this;
+    const normalRowHeight = isNumber(rowHeight) ? rowHeight + 3 : 33;
+    return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
   }
 
   get virtualEstimatedRows() {

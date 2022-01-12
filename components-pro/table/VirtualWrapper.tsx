@@ -35,9 +35,8 @@ function getRowHeight(tableStore: TableStore, dataSet: DataSet, draggableId: str
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
   const { tableStore, prefixCls, virtualSpin, spinProps, isTree, rowDragRender, dataSet } = useContext(TableContext);
-  const { virtualTop, virtualHeight, rowHeight: virtualRowHeight, scrolling = false } = tableStore;
+  const { virtualTop, virtualHeight, scrolling = false } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
-  const [rowHeight, setRowHeight] = useState(virtualRowHeight);
   useEffect(action(() => {
     if (virtualHeight !== height) {
       const { lastScrollTop, node: { tableBodyWrap } } = tableStore;
@@ -58,12 +57,6 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
       tableStore.setLastScrollTop(tableBodyWrap ? tableBodyWrap.scrollTop : 0);
     }
   }, [tableStore]);
-  useEffect(action(() => {
-    if (virtualRowHeight !== rowHeight) {
-      tableStore.actualRowHeight = undefined;
-      setRowHeight(virtualRowHeight);
-    }
-  }), [virtualRowHeight, rowHeight, tableStore]);
 
   const getBody = (droppableProvided?: DroppableProvided, droppableSnapshot?: DroppableStateSnapshot) => {
     const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };

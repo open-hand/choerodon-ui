@@ -1466,8 +1466,8 @@
     border-bottom-color: transparent;
   }
 
-  &-row:last-of-type &-cell,
-  &-row + &-expanded-row:last-child &-cell,
+  &-row:last-of-type:not(&-row-has-next) &-cell,
+  &-row:not(&-row-has-next) + &-expanded-row:last-child &-cell,
   &-cell-last-group {
     border-bottom-style: none;
   }

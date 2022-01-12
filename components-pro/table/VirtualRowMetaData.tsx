@@ -9,6 +9,8 @@ export default class VirtualRowMetaData {
 
   prev?: VirtualRowMetaData | undefined;
 
+  next?: VirtualRowMetaData | undefined;
+
   @observable actualHeight?: number;
 
   @observable record: Record;

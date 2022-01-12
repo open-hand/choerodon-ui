@@ -117,30 +117,30 @@ const App = () => {
   const scoreDs = useDataSet(() => ({
     paging: false,
     data: [
-      { id: 8, company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1 },
-      { id: 1, company: '厦门XX食品有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '80' },
-      { id: 2, company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80', parentScoreId: '1' },
-      { id: 3, company: '厦门XX食品有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '80' },
-      { id: 4, company: '厦门XX食品有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '80', showInHeader: 1 },
-      { id: 5, company: '厦门XX食品有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '80' },
-      { id: 6, company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80', parentScoreId: '5' },
-      { id: 7, company: '厦门XX食品有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '80' },
-      { id: 18, company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1 },
-      { id: 11, company: '山西XX科贸有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '70' },
-      { id: 12, company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70', parentScoreId: '1' },
-      { id: 13, company: '山西XX科贸有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '70' },
-      { id: 14, company: '山西XX科贸有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '70', showInHeader: 1 },
-      { id: 15, company: '山西XX科贸有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '70' },
-      { id: 16, company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70', parentScoreId: '5' },
-      { id: 17, company: '山西XX科贸有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '70' },
-      { id: 28, company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1 },
-      { id: 21, company: '上海XX商务有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '60' },
-      { id: 22, company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60', parentScoreId: '1' },
-      { id: 23, company: '上海XX商务有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '60' },
-      { id: 24, company: '上海XX商务有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '60', showInHeader: 1 },
-      { id: 25, company: '上海XX商务有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '60' },
-      { id: 26, company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60', parentScoreId: '5' },
-      { id: 27, company: '上海XX商务有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '60' },
+      { id: 8, company: '厦门XX食品有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '80', showInHeader: 1, payType: '本人付款', currency: 'CNY' },
+      { id: 1, company: '厦门XX食品有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '80', payType: '本人付款', currency: 'CNY' },
+      { id: 2, company: '厦门XX食品有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '80', parentScoreId: '1', payType: '本人付款', currency: 'CNY' },
+      { id: 3, company: '厦门XX食品有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '80', payType: '本人付款', currency: 'CNY' },
+      { id: 4, company: '厦门XX食品有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '80', showInHeader: 1, payType: '本人付款', currency: 'CNY' },
+      { id: 5, company: '厦门XX食品有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '80', payType: '本人付款', currency: 'CNY' },
+      { id: 6, company: '厦门XX食品有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '80', parentScoreId: '5', payType: '本人付款', currency: 'CNY' },
+      { id: 7, company: '厦门XX食品有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '80', payType: '本人付款', currency: 'CNY' },
+      { id: 18, company: '山西XX科贸有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '70', showInHeader: 1, payType: '代理人付款', currency: 'CNY' },
+      { id: 11, company: '山西XX科贸有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '70', payType: '代理人付款', currency: 'CNY' },
+      { id: 12, company: '山西XX科贸有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '70', parentScoreId: '1', payType: '代理人付款', currency: 'CNY' },
+      { id: 13, company: '山西XX科贸有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '70', payType: '代理人付款', currency: 'CNY' },
+      { id: 14, company: '山西XX科贸有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '70', showInHeader: 1, payType: '代理人付款', currency: 'CNY' },
+      { id: 15, company: '山西XX科贸有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '70', payType: '代理人付款', currency: 'CNY' },
+      { id: 16, company: '山西XX科贸有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '70', parentScoreId: '5', payType: '代理人付款', currency: 'CNY' },
+      { id: 17, company: '山西XX科贸有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '70', payType: '代理人付款', currency: 'CNY' },
+      { id: 28, company: '上海XX商务有限公司', scoreId: '8', scoreMeaning: '技术总分（50%）', score: '60', showInHeader: 1, payType: '现金付款', currency: 'USD' },
+      { id: 21, company: '上海XX商务有限公司', scoreId: '1', scoreMeaning: '评分要素1', score: '60', payType: '现金付款', currency: 'USD' },
+      { id: 22, company: '上海XX商务有限公司', scoreId: '2', scoreMeaning: '评分要素2', score: '60', parentScoreId: '1', payType: '现金付款', currency: 'USD' },
+      { id: 23, company: '上海XX商务有限公司', scoreId: '3', scoreMeaning: '评分要素3', score: '60', payType: '现金付款', currency: 'USD' },
+      { id: 24, company: '上海XX商务有限公司', scoreId: '4', scoreMeaning: '商务总分（50%）', score: '60', showInHeader: 1, payType: '现金付款', currency: 'USD' },
+      { id: 25, company: '上海XX商务有限公司', scoreId: '5', scoreMeaning: '评分要素1', score: '60', payType: '现金付款', currency: 'USD' },
+      { id: 26, company: '上海XX商务有限公司', scoreId: '6', scoreMeaning: '评分要素2', score: '60', parentScoreId: '5', payType: '现金付款', currency: 'USD' },
+      { id: 27, company: '上海XX商务有限公司', scoreId: '7', scoreMeaning: '评分要素3', score: '60', payType: '现金付款', currency: 'USD' },
     ],
     fields: [
       {
@@ -154,6 +154,18 @@ const App = () => {
       {
         name: 'scoreId',
         label: '评分',
+      },
+      {
+        name: 'payType',
+        label: '付款方式',
+      },
+      {
+        name: 'payTerms',
+        label: '付款条款',
+      },
+      {
+        name: 'currency',
+        label: '币种',
       },
     ],
   }), []);
@@ -201,6 +213,7 @@ const App = () => {
           return list;
         }, [])
       ) : title,
+      footer: ({ aggregationTree }) => aggregationTree,
       width: 300,
     },
   ], []);
@@ -276,7 +289,16 @@ const App = () => {
     { 
       name: 'company',
       type: 'header',
-      hidden: true,
+      columnProps: {
+        align: 'left',
+        aggregationLimit: 2,
+        aggregationLimitDefaultExpanded: true,
+        children: [
+          { name: 'payType' },
+          { name: 'payTerms' },
+          { name: 'currency' },
+        ],
+      },
     },
     { 
       name: 'scoreId',
@@ -284,6 +306,7 @@ const App = () => {
       type: 'column',
       columnProps: {
         renderer: ({ record }) => record.get('scoreMeaning'),
+        footer: '其他信息',
         width: 200,
       },
     },
@@ -339,6 +362,7 @@ const App = () => {
       <Table
         customizable
         customizedCode="advanced-group2"
+        aggregation
         columnDraggable
         columnTitleEditable
         border
@@ -346,6 +370,7 @@ const App = () => {
         columns={scoreColumns}
         groups={scoreGroups}
         headerRowHeight="auto"
+        footerRowHeight="auto"
         onScrollLeft={handleGroup2ScrollLeft}
         onColumnResize={handleGroup2ColumnResize}
         ref={group2Ref}

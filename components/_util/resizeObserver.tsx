@@ -73,8 +73,8 @@ class ReactResizeObserver extends PureComponent<ResizeObserverProps> {
       }
       return contentRect;
     })();
-    const fixedWidth = Math.floor(width);
-    const fixedHeight = Math.floor(height);
+    const fixedWidth = Math.round(width);
+    const fixedHeight = Math.round(height);
 
     if (
       (this.width !== fixedWidth && ['width', 'both'].includes(resizeProp!)) ||
