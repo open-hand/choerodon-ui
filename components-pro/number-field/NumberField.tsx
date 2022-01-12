@@ -519,9 +519,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
           else {
             nextValue = plus(Number(newValue), (isPlus ? Number(step) : -Number(step)));
           }
-          if (min && ((stringMode && new BigNumber(nextValue).isLessThan(min)) || (!stringMode && nextValue < min))) {
+          if (!isEmpty(min) && ((stringMode && new BigNumber(nextValue).isLessThan(min)) || (!stringMode && nextValue < min))) {
             newValue = min;
-          } else if (max && ((stringMode && new BigNumber(nextValue).isGreaterThan(max)) || (!stringMode && nextValue > max))) {
+          } else if (!isEmpty(max) && ((stringMode && new BigNumber(nextValue).isGreaterThan(max)) || (!stringMode && nextValue > max))) {
             const nearMaxStep = getNearStepValues(max, step, min, max, stringMode);
             if (nearMaxStep) {
               newValue = nearMaxStep[0];
@@ -539,7 +539,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   getCurrentInputValue() {
     let value;
-    if (this.text) {
+    if (!isEmpty(this.text)) {
       value = this.text;
     }
     else if (this.range && !isNil(this.rangeTarget) && this.rangeValue) {

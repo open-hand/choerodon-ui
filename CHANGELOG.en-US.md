@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 - 🐞 `<pro>Table`: Fix the height calculation problem when there is a horizontal scroll bar.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
+- 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0.
 
 ## 1.5.1
 

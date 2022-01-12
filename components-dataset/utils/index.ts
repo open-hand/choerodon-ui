@@ -28,8 +28,8 @@ export function warning(valid: boolean, message: string): void {
   }
 }
 
-export function isEmpty(value: any, allowBlank = false): boolean {
-  return isNil(value) || (allowBlank ? false : value === '');
+export function isEmpty(value: any): value is '' | null | undefined {
+  return isNil(value) || value === '';
 }
 
 export function isSame(newValue, oldValue) {
@@ -54,7 +54,7 @@ export function parseNumber(value: any, precision?: number): number {
 
 export function parseBigNumber(value: any, precision?: number, defaultValue?: string | null): string | undefined | null {
   const valueBig = new BigNumber(value);
-  precision = precision && precision >= 0 && isFinite(precision)
+  precision = !isEmpty(precision) && precision >= 0 && isFinite(precision)
     ? new BigNumber(precision).integerValue(BigNumber.ROUND_DOWN).toNumber()
     : valueBig.decimalPlaces();
   return bigNumberToFixed(valueBig, precision, defaultValue);
@@ -113,14 +113,14 @@ function getBigNumberNearStepValues(
     return undefined;
   }
   const valueBig = new BigNumber(value);
-  const minBig = new BigNumber(min!);
+  const minBig = new BigNumber(min);
   const stepBig = new BigNumber(step);
   let maxBig: BigNumber;
   if (isEmpty(max)) {
     maxBig = valueBig.plus(step);
   }
   else {
-    maxBig = new BigNumber(max!);
+    maxBig = new BigNumber(max);
   }
 
   const maxDecimal = Math.max(valueBig.decimalPlaces(), stepBig.decimalPlaces());
@@ -201,7 +201,7 @@ export function getNearStepValues<T extends Moment | number | string>(
       }
     }
   }
-  else if (!isEmpty(value) && !isEmpty(step) && typeof step !== 'object') {
+  else if (!isEmpty(value) && !!step && typeof step !== 'object') {
     if (isBigNumber) {
       return getBigNumberNearStepValues(value as number | string, step, min as any, max as any) as T[] | undefined;
     }
