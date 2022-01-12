@@ -48,7 +48,7 @@ export interface TableTBodyProps extends ElementProps {
 
 type Statistics = {
   count: number;
-  rowMetaData?: VirtualRowMetaData[];
+  rowMetaData: VirtualRowMetaData[];
   lastRowMetaData?: VirtualRowMetaData;
   dragTargetFound?: boolean;
 }
@@ -101,14 +101,15 @@ function generateRowGroup(props: GenerateRowGroupProps): ReactElement {
     </TableRowGroup>
   );
   if (statistics) {
-    const { rowMetaData } = statistics;
-    if (rowMetaData) {
-      const currentRowMetaData = new VirtualRowMetaData(tableStore, 'group', statistics.lastRowMetaData);
-      currentRowMetaData.groupLevel = level;
-      currentRowMetaData.node = node;
-      rowMetaData.push(currentRowMetaData);
-      statistics.lastRowMetaData = currentRowMetaData;
+    const { rowMetaData, lastRowMetaData } = statistics;
+    const currentRowMetaData = new VirtualRowMetaData(tableStore, 'group', lastRowMetaData);
+    if (lastRowMetaData) {
+      lastRowMetaData.next = currentRowMetaData;
     }
+    currentRowMetaData.groupLevel = level;
+    currentRowMetaData.node = node;
+    rowMetaData.push(currentRowMetaData);
+    statistics.lastRowMetaData = currentRowMetaData;
   }
   return node;
 }
@@ -131,15 +132,16 @@ function generateRow(props: GenerateRowProps): ReactElement {
     children,
   };
   if (statistics) {
-    const { rowMetaData } = statistics;
+    const { rowMetaData, lastRowMetaData } = statistics;
     tableRowProps.virtualIndex = statistics.count;
     statistics.count++;
-    if (rowMetaData) {
-      const currentRowMetaData = new VirtualRowMetaData(tableStore, 'row', statistics.lastRowMetaData, record);
-      rowMetaData.push(currentRowMetaData);
-      statistics.lastRowMetaData = currentRowMetaData;
-      tableRowProps.metaData = currentRowMetaData;
+    const currentRowMetaData = new VirtualRowMetaData(tableStore, 'row', lastRowMetaData, record);
+    if (lastRowMetaData) {
+      lastRowMetaData.next = currentRowMetaData;
     }
+    rowMetaData.push(currentRowMetaData);
+    statistics.lastRowMetaData = currentRowMetaData;
+    tableRowProps.metaData = currentRowMetaData;
   }
   index.count++;
   if (headerGroup) {
@@ -418,10 +420,7 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable, snapshot, dragRowHeight } = props;
   const draggableId = snapshot && snapshot.draggingFromThisWith;
   const [totalRows, statistics]: [ReactNode[], Statistics] = useComputed(() => {
-    const $statistics: Statistics = { count: 0 };
-    if (!tableStore.isFixedRowHeight || (isTree && rowDraggable) || tableStore.hasRowGroups) {
-      $statistics.rowMetaData = [];
-    }
+    const $statistics: Statistics = { count: 0, rowMetaData: [] };
     const cachedRows = generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: true }, onClearCache, $statistics);
     const rows = generateRows({
       tableStore,
@@ -440,38 +439,29 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const renderGroup = useCallback((startIndex) => {
     const groups: ReactNode[] = [];
     const { rowMetaData } = statistics;
-    if (rowMetaData) {
-      const first = rowMetaData[startIndex];
-      if (first && first.type === 'group' && first.groupLevel === 0) {
-        return groups;
-      }
-      let level;
-      rowMetaData.slice(0, startIndex).reverse().some((metaData) => {
-        if (metaData.type === 'group') {
-          const { groupLevel = 0 } = metaData;
-          if (level === undefined || groupLevel < level) {
-            level = groupLevel;
-            groups.unshift(metaData.node);
-          }
-          return groupLevel === 0;
-        }
-        return false;
-      });
+    const first = rowMetaData[startIndex];
+    if (first && first.type === 'group' && first.groupLevel === 0) {
+      return groups;
     }
+    let level;
+    rowMetaData.slice(0, startIndex).reverse().some((metaData) => {
+      if (metaData.type === 'group') {
+        const { groupLevel = 0 } = metaData;
+        if (level === undefined || groupLevel < level) {
+          level = groupLevel;
+          groups.unshift(metaData.node);
+        }
+        return groupLevel === 0;
+      }
+      return false;
+    });
     return groups;
   }, [statistics]);
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
 
   useEffect(action(() => {
     tableStore.lastMeasuredIndex = 0;
-    const { rowMetaData } = statistics;
-    tableStore.rowMetaData = rowMetaData;
-    if (!rowMetaData) {
-      const actualRows = totalRows.length;
-      if (tableStore.actualRows !== actualRows) {
-        tableStore.actualRows = actualRows;
-      }
-    }
+    tableStore.rowMetaData = statistics.rowMetaData;
   }), [totalRows, statistics, tableStore]);
 
   return totalRows.length ? (

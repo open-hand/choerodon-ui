@@ -1056,7 +1056,15 @@ export default class Table extends DataSetComponent<TableProps> {
           if (tableStore.virtual && !findRow(tableStore, record)) {
             const { tableBodyWrap } = this;
             if (tableBodyWrap) {
-              tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+              const { rowMetaData } = tableStore;
+              if (rowMetaData) {
+                const metaData = rowMetaData.find(m => m.record === record);
+                if (metaData) {
+                  tableBodyWrap.scrollTop = metaData.offset;
+                }
+              } else {
+                tableBodyWrap.scrollTop = record.index * tableStore.virtualRowHeight;
+              }
             }
           }
           raf(() => {

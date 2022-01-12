@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, ReactNode, useContext } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
@@ -9,6 +9,8 @@ import { getColumnLock, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock } from './enum';
 import ColumnGroup from './ColumnGroup';
 import { FooterHookOptions } from './Column';
+import TableCellInner from './TableCellInner';
+import AggregationTree from './AggregationTree';
 
 export interface TableFooterCellProps extends ElementProps {
   columnGroup: ColumnGroup;
@@ -20,7 +22,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   const { columnGroup, style, className, colSpan, right } = props;
   const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
   const { column } = columnGroup;
-  const { autoFootHeight, props: { footerRowHeight } } = tableStore;
+  const { autoFootHeight, props: { footerRowHeight }, aggregation } = tableStore;
   const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classString = classNames(`${prefixCls}-cell`, {
@@ -39,6 +41,41 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
     ...footerStyle,
     ...style,
   };
+  const aggregationTree = useMemo((): ReactNode => {
+    if (aggregation) {
+      const { column: $column, headerGroup } = columnGroup;
+      if (headerGroup) {
+        const { tableGroup } = columnGroup;
+        if (tableGroup) {
+          const { columnProps } = tableGroup;
+          const { totalRecords } = headerGroup;
+          if (columnProps && totalRecords.length) {
+            const { children } = columnProps;
+            if (children && children.length) {
+              const renderer = ({ colGroup, style }) => {
+                return (
+                  <TableCellInner
+                    record={totalRecords[0]}
+                    column={colGroup.column}
+                    style={style}
+                    inAggregation
+                  />
+                );
+              };
+              return (
+                <AggregationTree
+                  columns={children}
+                  headerGroup={headerGroup}
+                  column={{ ...$column, ...columnProps }}
+                  renderer={renderer}
+                />
+              );
+            }
+          }
+        }
+      }
+    }
+  }, [columnGroup, aggregation]);
 
   if (columnLock) {
     if (columnLock === ColumnLock.left) {
@@ -53,6 +90,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
         const footerHookOptions: FooterHookOptions = {
           dataSet,
           name,
+          aggregationTree,
         };
         try {
           return footer(footerHookOptions);

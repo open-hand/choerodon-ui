@@ -183,7 +183,6 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         tableStore.saveCustomized(tempCustomized);
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
-        tableStore.actualRowHeight = undefined;
         const { aggregation: customAggregation } = tempCustomized;
         if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
           onAggregationChange(customAggregation);

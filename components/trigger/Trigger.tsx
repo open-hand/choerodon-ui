@@ -179,6 +179,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   activeElement?: HTMLElement | null;
 
+  activeElementEvent?: EventManager;
+
   currentTriggerChild?: ReactElement | null;
 
   focusElements?: HTMLElement[];
@@ -202,13 +204,31 @@ export default class Trigger extends Component<TriggerProps> {
     this.popup = node;
   }
 
+  setActiveElement(activeElement: HTMLElement | null) {
+    this.activeElement = activeElement;
+    const activeElementEvent = getIf<Trigger, EventManager>(this, 'activeElementEvent', () => new EventManager());
+    if (activeElement) {
+      activeElementEvent.clear().setTarget(activeElement).addEventListener('blur', () => {
+        const { target } = this;
+        if (target && document.activeElement === document.body) {
+          this.setActiveElement(null);
+          target.focus();
+        }
+      }, { once: true });
+    } else {
+      activeElementEvent.clear();
+    }
+  }
+
   @autobind
   getFocusableElements(elements) {
     this.focusElements = elements;
     const { target, activeElement } = this;
     if (target && activeElement && (!elements || !elements.includes(activeElement))) {
-      this.activeElement = null;
-      target.focus();
+      if (!elements || !elements.length) {
+        this.setActiveElement(null);
+        target.focus();
+      }
     }
   }
 
@@ -299,6 +319,9 @@ export default class Trigger extends Component<TriggerProps> {
     if (this.documentEvent) {
       this.documentEvent.clear();
     }
+    if (this.activeElementEvent) {
+      this.activeElementEvent.clear();
+    }
   }
 
   @autobind
@@ -326,10 +349,10 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   handleTargetBlur(e, child: ReactElement): boolean {
     const { popup, focusTarget } = this;
-    const relatedTarget = isIE() ? document.activeElement : e.relatedTarget;
+    const relatedTarget: HTMLElement | null = isIE() ? document.activeElement : e.relatedTarget;
     if (popup && popup.element.contains(relatedTarget)) {
       e.stopPropagation();
-      this.activeElement = relatedTarget;
+      this.setActiveElement(relatedTarget);
       this.currentTriggerChild = child;
       if (!focusTarget) {
         this.focusTarget = e.target;
@@ -338,7 +361,7 @@ export default class Trigger extends Component<TriggerProps> {
     }
     if (focusTarget) {
       this.focusTarget = null;
-      this.activeElement = null;
+      this.setActiveElement(null);
       this.currentTriggerChild = null;
       if (focusTarget !== relatedTarget) {
         this.handleTriggerEvent('Blur', child, e);

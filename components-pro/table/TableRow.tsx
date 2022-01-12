@@ -10,13 +10,13 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, get, reaction, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
-import isNumber from 'lodash/isNumber';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -142,22 +142,13 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   })();
 
   const setRowHeight = useCallback(action((key: Key, height: number) => {
-    if (tableStore.propVirtual) {
-      const { rowHeight } = tableStore;
-      if (height > (isNumber(rowHeight) ? rowHeight : 20)) {
-        if (metaData) {
-          if (Math.abs(metaData.height - height) > 1) {
-            tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
-          }
-        } else if ((tableStore.actualRowHeight === undefined || Math.abs(tableStore.actualRowHeight - height) > 1)) {
-          tableStore.actualRowHeight = height;
-        }
-      }
+    if (tableStore.propVirtual && inView && metaData && metaData.actualHeight !== height) {
+      tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
     }
     if (!isStickySupport()) {
-      set(tableStore.lockColumnsBodyRowsHeight, key, height);
+      tableStore.batchSetRowHeight(key, () => set(tableStore.lockColumnsBodyRowsHeight, key, height));
     }
-  }), [tableStore, metaData]);
+  }), [tableStore, metaData, inView]);
 
   const saveRef = useCallback(action((row: HTMLTableRowElement | null) => {
     rowRef.current = row;
@@ -451,6 +442,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       [`${rowPrefixCls}-disabled`]: disabled,
       [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (tableStore.mouseBatchChooseIdList || []).includes(id),
       [`${rowPrefixCls}-expanded`]: expandable && isExpanded,
+      [`${rowPrefixCls}-has-next`]: metaData && metaData.next,
     },
     className, // 增加可以自定义类名满足拖拽功能
     rowExternalProps.className,
@@ -514,18 +506,18 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const { current } = rowRef;
-    if (needIntersection && inView && current) {
+    if (needIntersection && inView && current && !metaData) {
       const { offsetHeight } = current;
       if (record.getState(VIRTUAL_HEIGHT) !== offsetHeight) {
         record.setState(VIRTUAL_HEIGHT, offsetHeight);
       }
     }
-  }, [needIntersection, record, inView]);
+  }, [needIntersection, record, inView, metaData]);
 
   const height = needIntersection && !inView ? entry ? pxToRem(entry.boundingClientRect.height) :
-    pxToRem(record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
+    pxToRem(metaData ? metaData.height : record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
     rowStyle.height = height;
