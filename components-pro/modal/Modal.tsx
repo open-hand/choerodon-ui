@@ -14,7 +14,6 @@ import Icon from '../icon';
 import autobind from '../_util/autobind';
 import Button, { ButtonProps } from '../button/Button';
 import EventManager from '../_util/EventManager';
-import isEmpty from '../_util/isEmpty';
 import { ButtonColor, FuncType } from '../button/enum';
 import asyncComponent, { AsyncCmpLoadingFunction } from '../_util/AsyncComponent';
 import message from '../message';
@@ -519,7 +518,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       return this.getWrappedHeader(header(title, closeButton, this.okBtn, this.cancelBtn));
     }
 
-    if (!isEmpty(header, true)) {
+    if (!isNil(header)) {
       return this.getWrappedHeader(header);
     }
   }
@@ -580,7 +579,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       return this.getWrappedFooter(footer(this.okBtn, this.cancelBtn, this.childrenProps));
     }
 
-    if (!isEmpty(footer, true)) {
+    if (!isNil(footer)) {
       return this.getWrappedFooter(footer);
     }
   }

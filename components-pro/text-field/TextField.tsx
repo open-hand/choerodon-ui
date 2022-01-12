@@ -798,11 +798,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.color = 'transparent';
     }
     // 筛选条默认宽度处理
+    const addWidth = 4 + (this.isFocused && ((rangeTarget === 0 && startText) || (rangeTarget === 1 && endText)) ? 4 : 0);
     if (isFlat) {
-      startStyle.width = startWidth + 4;
+      startStyle.width = startWidth + addWidth;
       startStyle.boxSizing = 'content-box';
-      endStyle.width = endWidth + 4;
+      endStyle.width = endWidth + addWidth;
       endStyle.boxSizing = 'content-box';
+      editorStyle.width = (
+        !isNil(rangeTarget)
+          ? rangeTarget === 0 ? startWidth + addWidth : endWidth + addWidth
+          : undefined);
+      editorStyle.boxSizing = !isNil(rangeTarget) ? 'content-box' : undefined;
     }
     if (startRenderedValue && (!editable || !isFocused)) {
       startStyle.textIndent = -1000;
@@ -820,17 +826,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           !this.disabled && (
             <input
               {...props}
-              className={`${prefixCls}-range-input`}
+              className={this.getInputClassString(`${prefixCls}-range-input`)}
               key="text"
-              value={
-                rangeTarget === undefined || !this.isFocused
-                  ? ''
-                  : this.text === undefined
-                    ? rangeTarget === 0
-                      ? startText
-                      : endText
-                    : this.text
-              }
+              value={this.getRangeInputValue(startText, endText)}
               placeholder={
                 !editable || rangeTarget === undefined || !this.isFocused
                   ? ''
@@ -868,6 +866,23 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         />
       </span>
     );
+  }
+
+  getRangeInputValue(startText: string, endText: string): string {
+    const { rangeTarget, text } = this;
+    return (
+      rangeTarget === undefined || !this.isFocused
+        ? ''
+        : text === undefined
+          ? rangeTarget === 0
+            ? startText
+            : endText
+          : text
+    );
+  }
+
+  getInputClassString(className: string): string {
+    return className;
   }
 
   renderMultipleEditor(props: T) {
@@ -1019,6 +1034,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (this.showLengthInfo && !this.lengthElement) {
       this.renderLengthElement();
     }
+
+    otherProps.className = this.getInputClassString(otherProps.className);
 
     this.setInputStylePadding(otherProps);
     const childNodes: ReactNode[] = [

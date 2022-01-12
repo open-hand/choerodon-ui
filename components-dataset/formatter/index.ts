@@ -1,5 +1,6 @@
 import isString from 'lodash/isString';
 import capitalize from 'lodash/capitalize';
+import isNil from 'lodash/isNil';
 import BigNumber from 'bignumber.js';
 import { BigNumberTarget } from 'choerodon-ui/lib/configure';
 import { FieldType, FieldFormat, FieldTrim } from '../data-set/enum';
@@ -107,15 +108,17 @@ export function formatBigNumber(value, lang: string | undefined, options?: Intl.
   if (options) {
     const minimumFractionDigits = options.minimumFractionDigits;
     const maximumFractionDigits = options.maximumFractionDigits;
-    decimalPlaces = minimumFractionDigits
-      ? minimumFractionDigits === maximumFractionDigits
-        ? minimumFractionDigits
-        : (maximumFractionDigits
-          ? (valuePrecision > maximumFractionDigits 
-            ? maximumFractionDigits : (valuePrecision < minimumFractionDigits ? minimumFractionDigits : valuePrecision))
-          : (valuePrecision < minimumFractionDigits 
-            ? minimumFractionDigits : valuePrecision))
-      : (maximumFractionDigits && maximumFractionDigits < valuePrecision ? maximumFractionDigits : valuePrecision);
+    decimalPlaces = (
+      !isNil(minimumFractionDigits)
+        ? minimumFractionDigits === maximumFractionDigits
+          ? minimumFractionDigits
+          : (!isNil(maximumFractionDigits)
+            ? (valuePrecision > maximumFractionDigits 
+              ? maximumFractionDigits : (valuePrecision < minimumFractionDigits ? minimumFractionDigits : valuePrecision))
+            : (valuePrecision < minimumFractionDigits 
+              ? minimumFractionDigits : valuePrecision))
+        : (!isNil(maximumFractionDigits) && maximumFractionDigits < valuePrecision ? maximumFractionDigits : valuePrecision)
+    );
   }
   const fmt = {
     prefix: '',

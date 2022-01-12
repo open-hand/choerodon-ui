@@ -27,6 +27,7 @@ import { stopEvent } from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import isSame from '../_util/isSame';
+import measureTextWidth from '../_util/measureTextWidth';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
 import ObserverTextField from '../text-field/TextField';
@@ -205,6 +206,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @observable mode?: ViewMode;
 
+  /**
+   * hover 时显示值
+   */
+  @observable hoverValue?: string | null;
+
   popupRangeEditor?: HTMLInputElement | null;
 
   @autobind
@@ -296,11 +302,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
-      const { prefixCls, range, text } = this;
-      const className = `${prefixCls}-popup-editor`;
+      const { prefixCls, range, text, rangeTarget } = this;
+      const popupHoverValue = this.getHoverValue(true);
+      const className = classNames(`${prefixCls}-popup-editor`, {
+        [`${prefixCls}-popup-hover-value`]: !isNil(popupHoverValue) && !range,
+        [`${prefixCls}-popup-hover-value-start`]: !isNil(popupHoverValue) && range && rangeTarget === 0,
+        [`${prefixCls}-popup-hover-value-end`]: !isNil(popupHoverValue) && range && rangeTarget === 1,
+      });
       const [startPlaceholder, endPlaceHolder = startPlaceholder] = this.getPlaceholders();
       if (range) {
-        const { rangeTarget } = this;
         const [startValue = '', endValue = ''] = this.processRangeValue(this.rangeValue);
         const startText = this.getText(startValue) as string;
         const endText = this.getText(endValue) as string;
@@ -310,7 +320,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-start`}
               onChange={this.handleChange}
               onFocus={this.handleRangeStart}
-              value={rangeTarget === 0 && text !== undefined ? text : startText}
+              value={rangeTarget === 0 ? (popupHoverValue ?? text ?? startText) : startText}
               placeholder={startPlaceholder}
               ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
             />
@@ -319,7 +329,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-end`}
               onChange={this.handleChange}
               onFocus={this.handleRangeEnd}
-              value={rangeTarget === 1 && text !== undefined ? text : endText}
+              value={rangeTarget === 1 ? (popupHoverValue ?? text ?? endText) : endText}
               placeholder={endPlaceHolder}
               ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
             />
@@ -329,7 +339,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       return (
         <ObserverTextField
           key="popup-editor"
-          value={this.getTextNode()}
+          value={popupHoverValue ?? this.getTextNode()}
           onInput={this.handleChange}
           border={false}
           className={className}
@@ -337,6 +347,56 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         />
       );
     }
+  }
+
+  getHoverValue(isPopup: boolean): string | null | undefined {
+    const { editorInPopup } = this.props;
+    const { hoverValue } = this;
+    return (
+      isPopup && editorInPopup
+        ? hoverValue
+        : !isPopup && !editorInPopup
+          ? hoverValue
+          : undefined
+    );
+  }
+
+  @action
+  handleDateMouseEnter = (currentDate?: Moment): void => {
+    this.hoverValue = currentDate && currentDate.format(this.getDateFormat());
+  }
+
+  @action
+  handleDateMouseLeave = (): void => {
+    this.hoverValue = null;
+  }
+
+  // 处理 hover 值显示
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
+    const { isFlat } = this.props;
+    const hoverValue = this.getHoverValue(false);
+    if (!isNil(hoverValue)) {
+      if (rangeTarget === undefined || (rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1)) {
+        return {
+          text: hoverValue,
+          width: isFlat ? measureTextWidth(hoverValue) : 0,
+        };
+      }
+    }
+    return super.getEditorTextInfo(rangeTarget);
+  }
+
+  getRangeInputValue(startText: string, endText: string): string {
+    const hoverValue = this.getHoverValue(false);
+    return hoverValue ?? super.getRangeInputValue(startText, endText);
+  }
+
+  getInputClassString(className: string): string {
+    const { prefixCls } = this;
+    const hoverValue = this.getHoverValue(false);
+    return classNames(className, {
+      [`${prefixCls}-hover-value`]: !isNil(hoverValue),
+    });
   }
 
   getPopupContent() {
@@ -362,6 +422,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             step: this.getProp('step') || {},
             renderExtraFooter: this.getProp('renderExtraFooter'),
             extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
+            onDateMouseEnter: this.handleDateMouseEnter,
+            onDateMouseLeave: this.handleDateMouseLeave,
           } as DateViewProps)
         }
       </>

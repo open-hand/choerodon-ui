@@ -173,7 +173,7 @@ export function getBigNumberFormatOptions(getProp: (name) => any, getValue?: () 
   else {
     const precisionInValue = isNumber(precision)
       ? precision
-      : new BigNumber(isNil(value) ? getValue ? getValue() || 0 : 0 : value).decimalPlaces();
+      : new BigNumber(isEmpty(value) ? getValue ? getValue() || 0 : 0 : value).decimalPlaces();
     bigNumberFormatterOptions = getConfig('numberFieldFormatterOptions') || { options: {} };
     options = {
       maximumFractionDigits: precisionInValue,
