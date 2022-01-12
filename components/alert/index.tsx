@@ -150,7 +150,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
             <span className={`${prefixCls}-message`}>{message}</span>
             <span className={`${prefixCls}-description`}>{description}</span>
           </div>
-          {closeIcon}
+          <button type="button" className={`${prefixCls}-close-wrapper`}>{closeIcon}</button>
         </div>
       </Animate>
     );
