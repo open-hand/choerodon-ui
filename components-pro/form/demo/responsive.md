@@ -20,9 +20,10 @@ const { Option } = Select;
 
 ReactDOM.render(
   <Form
-    columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 5 }}
+    columns={{ xs: 1, sm: 1, md: 2, lg: 2, xl: 3, xxl: 5 }}
     labelWidth={{ xs: 'auto', sm: 50, md: 50, lg: 100, xl: 100, xxl: 'auto' }}
     labelLayout={{ xs: 'vertical', sm: 'float', md: 'horizontal' }}
+    separateSpacing={{ lg: {width: 20,height:20}, xl: {width: 30,height:30}, xxl: {width: 50,height:50} }}
   >
     <TextField label="手机号" pattern="1[3-9]\d{9}" name="phone" required clearButton addonBefore="+86" addonAfter="中国大陆" />
     <Password label="密码" name="password" required />

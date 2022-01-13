@@ -20,7 +20,7 @@ import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
-import Responsive, { hasBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
+import Responsive, { hasBreakPointMap, isBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isFunction from 'lodash/isFunction';
 import axios from '../axios';
@@ -546,6 +546,16 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           height,
         };
       }
+      if (isBreakPointMap(separateSpacing)) {
+        const responsiveSeparateSpacing = this.responsiveItems[4];
+        if (responsiveSeparateSpacing) {
+          const { width = 0, height = 0 } = responsiveSeparateSpacing;
+          return {
+            width,
+            height,
+          };
+        }
+      }
     }
     return undefined;
   }
@@ -894,7 +904,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
-            paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth + 5) : undefined}
+            paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth) : undefined}
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
           >
@@ -914,7 +924,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           className={fieldClassName}
           style={this.labelLayout === LabelLayout.horizontal
           && separateSpacingWidth
-            ? { paddingRight: pxToRem(separateSpacingWidth + 5) } : undefined}
+            ? { paddingRight: pxToRem(separateSpacingWidth) } : undefined}
         >
           {labelLayout === LabelLayout.vertical && !!label && (
             <>
@@ -946,7 +956,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           cols.push(
             <col
               key={key}
-              // 优化当使用separateSoacing label宽度太窄问题
+              // 优化当使用 separateSpacing label 宽度太窄问题
               style={{ width: pxToRem(labelLayout === LabelLayout.horizontal ? separateSpacingWidth + columnLabelWidth : columnLabelWidth) }}
             />,
           );
@@ -1042,6 +1052,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           observableProps.labelWidth,
           observableProps.labelAlign,
           observableProps.labelLayout,
+          observableProps.separateSpacing,
         ]}
         onChange={this.handleResponsive}
       >
