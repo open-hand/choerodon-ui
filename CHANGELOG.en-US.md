@@ -19,13 +19,13 @@ timeline: true
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 💄 `Alert`: Optimize the layout style of the component.
-- 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode.
+- 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 - 🐞 `<pro>Table`: Fix the height calculation problem when there is a horizontal scroll bar.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
-- 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0.
+- 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 
 ## 1.5.1
 
