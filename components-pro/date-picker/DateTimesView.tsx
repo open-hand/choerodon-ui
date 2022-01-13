@@ -26,6 +26,10 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
     this.changeViewMode(ViewMode.time);
   }
 
+  handleCellClick(date: Moment): void {
+    this.changeSelectedDate(date);
+  }
+
   handleKeyDownRight(e) {
     if (e.altKey) {
       this.changeViewMode(ViewMode.time);
