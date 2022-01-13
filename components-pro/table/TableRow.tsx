@@ -10,7 +10,6 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -109,6 +108,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const mounted = useRef<boolean>(false);
   const dragRef = useRef<boolean>(false);
   const needIntersection = !hidden && tableStore.virtualCell;
+  const columnsInView = needIntersection ? tableStore.columnGroups.inView : true;
   const { ref: intersectionRef, inView, entry } = useInView({
     root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
     rootMargin: `${VIRTUAL_ROOT_MARGIN}px`,
@@ -117,7 +117,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual : (!lock && (!tableStore.isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual || needIntersection : (!lock && (!tableStore.isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -141,20 +141,30 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     return !!expandedRowRenderer || (isTree && (!!record.children || (canTreeLoadData && !isLoaded)));
   })();
 
-  const setRowHeight = useCallback(action((key: Key, height: number) => {
-    if (tableStore.propVirtual && inView && metaData && metaData.actualHeight !== height) {
-      tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+  const setRowHeight = useCallback(action((key: Key, height: number, target: HTMLTableRowElement) => {
+    if (inView && columnsInView && height && target.offsetParent) {
+      if (metaData) {
+        if (metaData.actualHeight !== height) {
+          tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
+        }
+      } else if (needIntersection) {
+        if (record.getState(VIRTUAL_HEIGHT) !== height) {
+          record.setState(VIRTUAL_HEIGHT, height);
+        }
+      }
+      if (!isStickySupport()) {
+        if (get(tableStore.lockColumnsBodyRowsHeight, key) !== height) {
+          set(tableStore.lockColumnsBodyRowsHeight, key, height);
+        }
+      }
     }
-    if (!isStickySupport()) {
-      tableStore.batchSetRowHeight(key, () => set(tableStore.lockColumnsBodyRowsHeight, key, height));
-    }
-  }), [tableStore, metaData, inView]);
+  }), [tableStore, metaData, inView, columnsInView, needIntersection, record]);
 
   const saveRef = useCallback(action((row: HTMLTableRowElement | null) => {
     rowRef.current = row;
     if (needSaveRowHeight) {
       if (row) {
-        setRowHeight(rowKey, row.offsetHeight);
+        setRowHeight(rowKey, row.offsetHeight, row);
       } else if (!isStickySupport() && get(tableStore.lockColumnsBodyRowsHeight, rowKey)) {
         remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
       }
@@ -291,7 +301,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       }
     }
     // componentWillUnmount
-    return () => {
+    return action(() => {
       mounted.current = false;
       /**
        * Fixed the when row resize has scrollbar the expanded row would be collapsed
@@ -302,7 +312,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       if (!isStickySupport()) {
         remove(tableStore.lockColumnsBodyRowsHeight, rowKey);
       }
-    };
+    });
   }, []);
 
   useEffect(() => {
@@ -506,17 +516,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }
 
-  useLayoutEffect(() => {
-    const { current } = rowRef;
-    if (needIntersection && inView && current && !metaData) {
-      const { offsetHeight } = current;
-      if (record.getState(VIRTUAL_HEIGHT) !== offsetHeight) {
-        record.setState(VIRTUAL_HEIGHT, offsetHeight);
-      }
-    }
-  }, [needIntersection, record, inView, metaData]);
-
-  const height = needIntersection && !inView ? entry ? pxToRem(entry.boundingClientRect.height) :
+  const height = needIntersection && (!inView || !columnsInView) ? entry && (entry.target as HTMLTableRowElement).offsetParent ? pxToRem(entry.boundingClientRect.height || (entry.target as HTMLTableRowElement).offsetHeight) :
     pxToRem(metaData ? metaData.height : record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
   if (height) {
