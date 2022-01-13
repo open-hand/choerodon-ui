@@ -339,6 +339,7 @@ title: DataSet
 | getLookupData(lookupValue, record) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 `record` - 记录 | object |
 | fetchLookup(noCache, record) | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  `noCache` - 是否禁用缓存 `record` - 记录 | Promise&lt;object[]&gt; |
 | isValid(record) | 是否校验通过 |  `record` - 记录 | boolean |
+| isDirty(record) | 值是否变更 |  `record` - 记录 | boolean |
 | getValidationMessage(record) | 获取校验信息 |  `record` - 记录 | string |
 | getValidationErrorValues(record) | 获取校验结果 |  `record` - 记录 | ValidationResult[] |
 | getAttachments(record) | 获取附件列表 |  `record` - 记录 | AttachmentFile[] |
