@@ -731,6 +731,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const flag = this.props.columns !== nextProps.columns
       || this.props.children !== nextProps.children
       || this.props.rowSelection !== nextProps.rowSelection
+      || this.props.data !== nextProps.data
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }

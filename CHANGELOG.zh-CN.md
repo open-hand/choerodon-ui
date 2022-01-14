@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。修复设置了 step 且 max 小于 0 时, 数据校验错误的问题。
 - 🐞 `<pro>Range`: 修复 range 模式下，拖拽一滑块后，无法拖动另一滑块的问题。
+- 🐞 `<pro>PerformanceTable`: 修复勾选列全选被禁用的问题。
 
 ## 1.5.1
 

@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
 
 ## 1.5.1
 
