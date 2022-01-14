@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复有横向滚动条时高度计算的问题。
+- 🐞 `<pro>Table`: 修复分组取消锁定的问题。
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。
 

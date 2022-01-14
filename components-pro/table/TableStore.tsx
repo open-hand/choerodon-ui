@@ -637,8 +637,10 @@ function normalizeColumns(
 }
 
 
-function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): [ColumnProps[], boolean] {
+function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+  const leftGroupedColumns: ColumnProps[] = [];
   const groupedColumns: ColumnProps[] = [];
+  const rightGroupedColumns: ColumnProps[] = [];
   let hasAggregation = false;
   groups.forEach((group) => {
     const { name, type, columnProps } = group;
@@ -664,13 +666,19 @@ function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [ke
       if (customizedColumns) {
         Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
       }
-      groupedColumns.push(column);
+      if (!column.lock) {
+        groupedColumns.push(column);
+      } else if (column.lock === true || column.lock === ColumnLock.left) {
+        leftGroupedColumns.push(column);
+      } else {
+        rightGroupedColumns.push(column);
+      }
       if (columnProps && !hasAggregation && columnProps.aggregation) {
         hasAggregation = true;
       }
     }
   });
-  return [groupedColumns, hasAggregation];
+  return [leftGroupedColumns, groupedColumns, rightGroupedColumns, hasAggregation];
 }
 
 function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], columns: ColumnProps[], dataSet: DataSet, groupedColumns: ColumnProps[], customizedColumns?: { [key: string]: ColumnProps }, parentKey?: any): ColumnProps[] {
@@ -697,6 +705,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
           if (customizedColumns) {
             Object.assign(newCol, customizedColumns[colKey]);
           }
+          newCol.lock = false;
           generatedColumns.add(newCol);
         });
       } else {
@@ -714,7 +723,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
             const newKey = `${key}-${getColumnKey(oldColumn)}`;
             const newColumn: ColumnProps = {
               ...columnProps,
-              lock: ColumnLock.left,
+              lock: oldColumn.lock,
               titleEditable: false,
               draggable: false,
               hideable: false,
@@ -743,6 +752,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
             if (customizedColumns) {
               Object.assign(newCol, customizedColumns[__originalKey], customizedColumns[colKey]);
             }
+            newCol.lock = false;
             return newCol;
           }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
           __tableGroup: tableGroup,
@@ -773,21 +783,22 @@ export function normalizeGroupColumns(
     ? mergeDefaultProps(columns, aggregation, customizedColumns)
     : normalizeColumns(children, aggregation, customizedColumns);
   const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = generatedColumns;
-  const [columnGroupedColumns, hasAggregationColumnGroup] = groups.length ?
+  const [leftColumnGroupedColumns, columnGroupedColumns, rightColumnGroupedColumns, hasAggregationColumnGroup] = groups.length ?
     getColumnGroupedColumns(groups, customizedColumns) :
-    [[], false];
+    [[], [], [], false];
   if (hasHeaderGroup) {
+    const groupedColumns = [...leftColumnGroupedColumns, ...columnGroupedColumns];
     return [
-      columnGroupedColumns,
-      getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns], dataSet, columnGroupedColumns, customizedColumns),
-      [],
+      groupedColumns,
+      getHeaderGroupedColumns(tableStore.groupedDataWithHeader, headerTableGroups!, [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns], dataSet, groupedColumns, customizedColumns),
+      rightColumnGroupedColumns,
       hasAggregationColumnGroup || hasAggregationColumn,
     ];
   }
   return [
-    [...columnGroupedColumns, ...leftOriginalColumns],
-    originalColumns,
-    rightOriginalColumns,
+    [...leftColumnGroupedColumns, ...leftOriginalColumns],
+    [...columnGroupedColumns, ...originalColumns],
+    [...rightOriginalColumns, ...rightColumnGroupedColumns],
     hasAggregationColumnGroup || hasAggregationColumn,
   ];
 }
