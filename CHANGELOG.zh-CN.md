@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 onTabsChange, onButtonClick 属性。
-- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, onColumnResize 参数新增 index 属性。
+- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing，支持响应式。

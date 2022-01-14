@@ -1350,6 +1350,10 @@ export default class TableStore {
   }
 
   get emptyText(): ReactNode {
+    const { renderEmpty } = this.props;
+    if (renderEmpty) {
+      return renderEmpty();
+    }
     return this.getConfig('renderEmpty')('Table');
   }
 

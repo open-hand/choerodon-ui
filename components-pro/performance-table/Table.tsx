@@ -1538,14 +1538,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   handleShowMouseArea = (left: number, fixed: boolean | string | undefined) => {
     const { tableColumnResizeTrigger } = this.tableStore;
-    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
     const mouseAreaLeft = left + (!fixed ? this.scrollX : 0) + 1;
     addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
   };
 
   handleHideMouseArea = () => {
     const { tableColumnResizeTrigger } = this.tableStore;
-    if(tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
+    if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
     addStyle(this.mouseAreaRef.current, { display: 'none' });
   };
 

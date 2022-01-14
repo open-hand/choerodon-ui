@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
-- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, and added `index` property on the parameter of the `onColumnResize` hook.
+- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.

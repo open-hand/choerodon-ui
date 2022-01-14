@@ -40,7 +40,7 @@ class RichTextViewer extends Component<RichTextViewerProps> {
       const imgArr: string[] = [];
       deltaOps.forEach(item => {
         const image = item.insert.image;
-        if(image) {
+        if (image) {
           imgArr.push(image);
         }
       });
