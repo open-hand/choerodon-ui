@@ -19,6 +19,8 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
 - 🌟 `configure`: 新增 min, max 属性。
+- 🌟 `<pro>Table`: 新增 comboBar 筛选条类型及对应 queryBarProps 相关组合筛选条配置项。
+- 💄 `<pro>Table`: 优化前端导出支持导出勾选项。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing，支持响应式。
 - 💄 `<pro>DatePicker`: 优化 hover 选值显示, 并且优化 isFlat 和 range 模式下显示样式。优化 dateTime 模式日期选择。

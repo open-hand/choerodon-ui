@@ -33,7 +33,7 @@ subtitle: 表格
 | buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
-| queryBar | 查询条, 可选值为钩子或者内置类型：`filterBar` `professionalBar` `advancedBar` `normal` `bar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/components/configure#API) |
+| queryBar | 查询条, 可选值为钩子或者内置类型：`filterBar` `professionalBar` `advancedBar` `normal` `bar` `comboBar` `none` | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/components/configure#API) |
 | queryBarProps | 查询条自定义参数。 当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性 | object |  |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit, summaryBarFieldWidth }) => ReactNode |  |
 | summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 |
@@ -223,6 +223,18 @@ subtitle: 表格
 | formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+
+### Table.ComboBar
+
+| 参数             | 说明                                                     | 类型   | 默认值 |
+| ---------------- | -------------------------------------------------------- | ------ | ------ |
+| title | 头部标题 | string | |
+| dropDownArea | 自定义下拉菜单区域 | () => ReactNode | |
+| buttonArea | 自定义按钮区域 | () => ReactNode | |
+| searchable | 筛选条头部是否配置查询  | boolean | true |
+| fold | 表格是否开启折叠收缩 | boolean | false |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

@@ -10,12 +10,17 @@
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @table-border: @border-width-base @border-style-base @table-border-color;
+@table-row-search-bg: @table-row-group-title-bg;
 
 .@{table-prefix-cls} {
   position: relative;
   color: @text-color;
   font-size: @font-size-base;
   outline: none;
+
+  &-fold{
+    display: none;
+  }
 
   table {
     font-size: inherit;
@@ -70,6 +75,21 @@
     flex-flow: row nowrap;
     justify-content: space-between;
   }
+
+  &-export-modal-footer{
+    display: flex;
+    justify-content: space-between;
+    &-radio{
+      display: flex;
+      label:first-child{
+        margin-right: .24rem;
+      }
+    }
+    &-operation{
+      margin-left: .4rem;
+    }
+  }
+  
 
   &-cell {
     margin: 0;
@@ -366,6 +386,9 @@
       padding-right: 0 !important;
       padding-left: 0 !important;
     }
+  }
+  &-inline-query{
+    cursor: pointer;
   }
 
   &-editor {
@@ -845,6 +868,9 @@
         text-align: left;
       }
     }
+    &-options .@{table-prefix-cls}-filter-select-hidden {
+      display: none;
+    }
   }
 
   &-dynamic-filter-bar {
@@ -1323,6 +1349,85 @@
     }
   }
 
+  &-combo-toolbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 0.3rem;
+    margin-bottom: 0.08rem;
+    &-select {
+      width: 1.6rem;
+      margin: -0.01rem -0.06rem;
+    }
+    &-fold-icon {
+      position: absolute;
+      right: 0.16rem;
+      cursor: pointer;
+    }
+    &-action-button {
+      margin: 0 0.16rem 0 0 ;
+      padding: 0.04rem;
+      background: @table-row-search-bg;
+      border: 0;
+      &:hover {
+        background: #e8e8e8;
+      }
+    }
+    &-action-menu {
+      .c7n-menu-submenu-title {
+        min-width: 1.2rem;
+        padding-left: 0.16rem;
+      }
+    }
+    &-filter {
+      display: flex;
+      align-items: center;
+      > span {
+        margin-right: 0.04rem;
+        color: #595959;
+        font-size: 0.14rem;
+        line-height: 0.22rem;
+      }
+      &-title {
+        margin-right: 0.16rem;
+        &:first-child {
+          margin-left: 0;
+        }
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+      }
+      &-buttons {
+        flex-shrink: 0;
+        margin-right: 0.16rem;
+      }
+      .toolbar-icon {
+        width: 0.16rem;
+        height: 0.16rem;
+        margin-right: 0.16rem;
+        color: rgba(0, 0, 0, 0.65);
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          color: @primary-color;
+        }
+      }
+    }
+    &-fold{
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      transition: all @animation-duration-slow @ease-in-out-circ;
+      &:hover,
+        &.active {
+          color: @primary-color;
+        }
+    }
+  }
+
   &-pagination {
     margin: 0.1rem 0 0 0;
     text-align: right;
@@ -1401,6 +1506,15 @@
 
   &-thead:not(&-column-resizing) &-cell-inner:hover &-sort-icon {
     opacity: 1;
+  }
+
+  &-thead-inline-search {
+    padding-bottom: 0.01rem;
+    background-color: @table-row-search-bg;
+    border-bottom: @table-border;
+  }
+  &-thead-inline-search-last {
+    box-shadow: -@border-width-base 0 0 @table-border-color;
   }
 
   &-expand-icon {

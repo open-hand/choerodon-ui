@@ -1241,9 +1241,9 @@ export default class DataSet extends EventManager {
       await this.ready();
       const data = await this.generateQueryParameter();
       data._HAP_EXCEL_EXPORT_COLUMNS = columns;
-      const { totalCount, totalKey } = this;
+      const { totalCount, totalKey, selected } = this;
       const params = { _r: Date.now(), ...this.generateOrderQueryString() };
-      ObjectChainValue.set(params, totalKey, totalCount);
+      ObjectChainValue.set(params, totalKey, this.getState('__EXPORT-STRATEGY__') === 'ALL' ? totalCount : selected.length);
       const newConfig = axiosConfigAdapter('exports', this, data, params);
       if (newConfig.url || this.exportMode === ExportMode.client) {
         if (
@@ -1309,40 +1309,73 @@ export default class DataSet extends EventManager {
   private async doClientExport(data: any, quantity: number, isFile = true): Promise<any[] | void> {
     const columnsExport = data._HAP_EXCEL_EXPORT_COLUMNS;
     delete data._HAP_EXCEL_EXPORT_COLUMNS;
-    const { totalCount } = this;
+    const { totalCount, selected } = this;
+    const exportStrategy = this.getState('__EXPORT-STRATEGY__');
     runInAction(() => {
       this.exportProgress = 0;
       this.exportStatus = DataSetExportStatus.start;
     });
     let newResult: any[] = [];
     if (totalCount > 0) {
-      const queryTime = Math.ceil(totalCount / quantity);
-      // 处理超并发问题 在超大数据量下一口气发出了几千个请求造成数据丢失
-      const queryExportList: { getPromise: () => AxiosPromise<any> }[] = [];
       runInAction(() => {
         this.exportStatus = DataSetExportStatus.exporting;
       });
-      for (let i = 0; i < queryTime; i++) {
-        const params = { ...this.generateQueryString(1 + i, quantity) };
-        const newConfig = axiosConfigAdapter('read', this, data, params);
-        queryExportList.push({
-          getPromise: () => this.axios(newConfig),
+      if (exportStrategy === 'ALL') {
+        const queryTime = Math.ceil(totalCount / quantity);
+        // 处理超并发问题 在超大数据量下一口气发出了几千个请求造成数据丢失
+        const queryExportList: { getPromise: () => AxiosPromise<any> }[] = [];
+        for (let i = 0; i < queryTime; i++) {
+          const params = { ...this.generateQueryString(1 + i, quantity) };
+          const newConfig = axiosConfigAdapter('read', this, data, params);
+          queryExportList.push({
+            getPromise: () => this.axios(newConfig),
+          });
+        }
+        return concurrentPromise(queryExportList, (currentPromiseIndex) => {
+          // 下面还有一段处理所以设置最大值为99
+          runInAction(() => {
+            this.exportProgress = Math.min(99, Math.floor(currentPromiseIndex / queryExportList.length * 100));
+          });
+          return this.exportStatus === undefined;
+        }).then((resultValue: any[]) => {
+          const reducer = (accumulator: any[], currentValue: any[]) => [...accumulator, ...currentValue];
+          const todataList = (item) => item ? item[this.dataKey] : [];
+          runInAction(() => {
+            this.exportStatus = DataSetExportStatus.progressing;
+          });
+          const exportAlldate = resultValue.map(todataList).reduce(reducer);
+          newResult = this.displayDataTransform(exportAlldate, columnsExport);
+          newResult.unshift(columnsExport);
+          runInAction(() => {
+            this.exportStatus = DataSetExportStatus.success;
+          });
+          if (isFile) {
+            exportExcel(newResult, this.name);
+          } else {
+            return newResult;
+          }
+        }).catch((err) => {
+          console.warn(err);
+          runInAction(() => {
+            this.exportStatus = DataSetExportStatus.failed;
+            this.exportProgress = 0;
+          });
         });
       }
-      return concurrentPromise(queryExportList, (currentPromiseIndex) => {
-        // 下面还有一段处理所以设置最大值为99
+      // 前端勾选导出
+      return new Promise((resolve) => {
         runInAction(() => {
-          this.exportProgress = Math.min(99, Math.floor(currentPromiseIndex / queryExportList.length * 100));
+          this.exportProgress = 10;
         });
-        return this.exportStatus === undefined;
-      }).then((resultValue: any[]) => {
-        const reducer = (accumulator: any[], currentValue: any[]) => [...accumulator, ...currentValue];
-        const todataList = (item) => item ? item[this.dataKey] : [];
+        setTimeout(() => {
+          resolve(true)
+        }, 1000);
+      }).then(() => {
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.progressing;
         });
-        const exportAlldate = resultValue.map(todataList).reduce(reducer);
-        newResult = this.displayDataTransform(exportAlldate, columnsExport);
+        const jsonData = selected.map((x: Record) => ({ ...x.toData() }));
+        newResult = this.displayDataTransform(jsonData, columnsExport);
         newResult.unshift(columnsExport);
         runInAction(() => {
           this.exportStatus = DataSetExportStatus.success;
