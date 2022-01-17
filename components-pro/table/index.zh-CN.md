@@ -107,6 +107,7 @@ subtitle: 表格
 | onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | |
 | searchCode | 动态筛选条后端接口唯一编码  | string | |
 | rowBoxPlacement | 行选择框位置  | `start` \| `end` \| number | start |
+| renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
