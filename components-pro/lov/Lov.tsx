@@ -509,6 +509,7 @@ export default class Lov extends Select<LovProps> {
     const { viewMode } = this.props;
     return classNames(modalProps.className, {
       [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === 'modal' && this.showSelectedInView,
+      [`${this.prefixCls}-lov-custom-drawer`]: viewMode === 'drawer' && this.multiple && this.showSelectedInView,
     });
   }
 
