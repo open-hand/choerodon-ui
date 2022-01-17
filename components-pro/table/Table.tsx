@@ -720,6 +720,10 @@ export interface TableProps extends DataSetComponentProps {
    * 表格体展开变更事件
    */
   onBodyExpand?: (expanded: boolean) => void;
+  /**
+   * 自定义渲染数据为空的状态
+   */
+  renderEmpty?: () => ReactNode;
 }
 
 @observer

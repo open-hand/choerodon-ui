@@ -636,7 +636,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return (
       <Dropdown overlay={menu} key="dropdown_button">
         <Button {...tableButtonProps} key="more_button">
-          {$l('Table', 'more')} <Icon type='expand_more' />
+          <span>{$l('Table', 'more')}</span>
+          <Icon type='expand_more' />
         </Button>
       </Dropdown>
     );

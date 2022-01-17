@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
-- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, and added `index` property on the parameter of the `onColumnResize` hook.
+- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
+- 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
 
 ## 1.5.1
 

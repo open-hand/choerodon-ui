@@ -386,7 +386,7 @@ function rgbToHsl(r, g, b) {
     var max = mathMax(r, g, b), min = mathMin(r, g, b);
     var h, s, l = (max + min) / 2;
 
-    if(max == min) {
+    if (max == min) {
         h = s = 0; // achromatic
     }
     else {
@@ -416,15 +416,15 @@ function hslToRgb(h, s, l) {
     l = bound01(l, 100);
 
     function hue2rgb(p, q, t) {
-        if(t < 0) t += 1;
-        if(t > 1) t -= 1;
-        if(t < 1/6) return p + (q - p) * 6 * t;
-        if(t < 1/2) return q;
-        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
         return p;
     }
 
-    if(s === 0) {
+    if (s === 0) {
         r = g = b = l; // achromatic
     }
     else {
@@ -454,7 +454,7 @@ function rgbToHsv(r, g, b) {
     var d = max - min;
     s = max === 0 ? 0 : d / max;
 
-    if(max == min) {
+    if (max == min) {
         h = 0; // achromatic
     }
     else {

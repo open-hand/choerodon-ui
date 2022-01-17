@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 onTabsChange, onButtonClick 属性。
-- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, onColumnResize 参数新增 index 属性。
+- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing，支持响应式。
@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。修复设置了 step 且 max 小于 0 时, 数据校验错误的问题。
 - 🐞 `<pro>Range`: 修复 range 模式下，拖拽一滑块后，无法拖动另一滑块的问题。
+- 🐞 `<pro>PerformanceTable`: 修复勾选列全选被禁用的问题。
 
 ## 1.5.1
 
