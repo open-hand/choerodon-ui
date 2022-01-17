@@ -66,10 +66,10 @@ const AggregationButton: FunctionComponent<AggregationButtonProps> = function Ag
       }
       default:
     }
-  }), [tableStore, record, aggregationExpandKey, expanded]);
+  }), [tableStore, record, aggregationExpandKey, expanded, headerGroup, rowGroup]);
   const handleClick = useCallback(() => {
     handleMenuClick({ key: tableStore.aggregationExpandType });
-  }, [handleMenuClick, tableStore, headerGroup, rowGroup]);
+  }, [handleMenuClick, tableStore]);
   const getOverlay = useCallback(() => (
     <Menu prefixCls={`${prefixCls}-dropdown-menu`} onClick={handleMenuClick}>
       <Menu.Item key="cell">{$l('Table', expanded ? 'collapse_cell' : 'expand_cell')}</Menu.Item>

@@ -10,7 +10,7 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
-import { action, observable, runInAction, toJS } from 'mobx';
+import { action, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DragDropContextProps,
@@ -29,8 +29,6 @@ import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
-import Animate from 'choerodon-ui/lib/animate';
-import Icon from 'choerodon-ui/lib/icon';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
@@ -95,6 +93,7 @@ import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
 import mergeProps from '../_util/mergeProps';
+import ErrorBar from './ErrorBar';
 
 export type TableGroup = {
   name: string;
@@ -721,6 +720,10 @@ export interface TableProps extends DataSetComponentProps {
    * 表格体展开变更事件
    */
   onBodyExpand?: (expanded: boolean) => void;
+  /**
+   * 自定义渲染数据为空的状态
+   */
+  renderEmpty?: () => ReactNode;
 }
 
 @observer
@@ -936,8 +939,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
-  @observable showDataSetError?: boolean;
-
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls } = this;
     return this.element.querySelector(
@@ -1076,16 +1077,6 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       }
     }
-  }
-
-  @autobind
-  handleDataSetSelfValidate({ valid }: { valid: boolean; }) {
-    this.showDataSetError = !valid;
-  }
-
-  @autobind
-  handleDataSetReset() {
-    this.clearError();
   }
 
   @autobind
@@ -1612,8 +1603,6 @@ export default class Table extends DataSetComponent<TableProps> {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
-      handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetSelfValidate);
-      handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
     }
   }
 
@@ -1702,7 +1691,7 @@ export default class Table extends DataSetComponent<TableProps> {
               treeQueryExpanded={treeQueryExpanded}
               searchCode={searchCode}
             />
-            {this.getValidationErrors()}
+            <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             <Spin {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
@@ -2303,35 +2292,5 @@ export default class Table extends DataSetComponent<TableProps> {
         onScrollLeft(scrollLeft);
       }
     }
-  }
-
-  getValidationErrors(): ReactNode {
-    const { validationSelfErrors: error } = this.props.dataSet;
-    const showError = this.showDataSetError && error && error.length;
-
-    return (
-      <Animate
-        transitionName="slide-down"
-        className={classNames(`${this.prefixCls}-error`)}
-        hiddenProp="hidden"
-        component="div"
-      >
-        {
-          showError && (<div hidden={!showError} className={classNames(`${this.prefixCls}-error-content`)}>
-            <div>
-              <Icon type="cancel" />
-              {error ? error[0].message : null}
-            </div>
-            <Icon type="close" onClick={this.clearError} />
-          </div>)
-        }
-      </Animate>
-    );
-  }
-
-  @autobind
-  @action
-  clearError() {
-    this.handleDataSetSelfValidate({ valid: true });
   }
 }

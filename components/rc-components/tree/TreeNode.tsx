@@ -336,10 +336,10 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   }
 
   getMergedDraggable = (draggable, data) => {
-    if(typeof draggable === 'function') {
+    if (typeof draggable === 'function') {
       return draggable(data);
     }
-    if(typeof draggable === 'object') {
+    if (typeof draggable === 'object') {
       const { nodeDraggable = false } = draggable;
       return typeof nodeDraggable === 'function'
         ? nodeDraggable(data)
@@ -354,9 +354,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const {
       prefixCls, draggable,
     } = context!;
-    if(typeof draggable === 'object') {
+    if (typeof draggable === 'object') {
       const { icon = false } = draggable;
-      if(icon) {
+      if (icon) {
         return (
           <span className={`${prefixCls}-draggable-icon`}>
             {React.isValidElement(icon) ? icon : <Icon type="baseline-drag_indicator" />}
@@ -522,7 +522,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       direction,
     } = context!;
     let isDraggable = draggable;
-    if(typeof draggable === 'object') {
+    if (typeof draggable === 'object') {
       const { nodeDraggable = false } = draggable;
       isDraggable = nodeDraggable;
     }

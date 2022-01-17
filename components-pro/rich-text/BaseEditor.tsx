@@ -138,7 +138,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
       const imgArr: string[] = [];
       this.deltaOps.forEach(item => {
         const image = item.insert.image;
-        if(image) {
+        if (image) {
           imgArr.push(image);
         }
       });

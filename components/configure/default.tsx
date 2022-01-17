@@ -92,7 +92,7 @@ const defaults = {
   tableBorder: true,
   tableHighLightRow: true,
   tableSelectedHighLightRow: false,
-  tableRowHeight: 28,
+  tableRowHeight: 30,
   tableDefaultRenderer: '',
   tableColumnResizable: true,
   tableColumnHideable: true,
