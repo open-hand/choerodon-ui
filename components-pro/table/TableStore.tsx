@@ -63,6 +63,8 @@ import ColumnGroup from './ColumnGroup';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
+export const COMBOBAR_KEY = '__combo-column__'; // TODO:Symbol
+
 export const ROW_NUMBER_KEY = '__row-number-column__'; // TODO:Symbol
 
 export const DRAG_KEY = '__drag-column__'; // TODO:Symbol
@@ -897,6 +899,8 @@ export default class TableStore {
 
   performanceOn = false;
 
+  @observable comboBarStatus: boolean;
+
   lastSelected?: Record;
 
   activeEmptyCell?: HTMLTableCellElement;
@@ -915,6 +919,8 @@ export default class TableStore {
   @observable headerHeight: number;
 
   @observable footerHeight: number;
+
+  @observable isFold: boolean | undefined;
 
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
@@ -1630,6 +1636,31 @@ export default class TableStore {
   }
 
   @computed
+  get comboQueryColumn(): ColumnProps | undefined {
+    if (this.queryBar === 'comboBar') {
+      const { prefixCls } = this;
+      const className = `${prefixCls}-inline-query`;
+
+      const lock: ColumnLock | boolean = ColumnLock.left;
+
+      const queryColumn: ColumnProps = {
+        key: COMBOBAR_KEY,
+        header: <Icon type="manage_search" className={className} onClick={action(() => this.comboBarStatus = !this.comboBarStatus)} />,
+        resizable: false,
+        titleEditable: false,
+        headerClassName: className,
+        className,
+        footerClassName: className,
+        align: ColumnAlign.center,
+        width: 50,
+        lock,
+      };
+      return queryColumn;
+    }
+    return undefined;
+  }
+
+  @computed
   get draggableColumn(): ColumnProps | undefined {
     const { dragColumnAlign, rowDraggable, prefixCls } = this;
     if (dragColumnAlign && rowDraggable) {
@@ -1657,12 +1688,13 @@ export default class TableStore {
 
   @computed
   get leftColumns(): ColumnProps[] {
-    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn } = this;
+    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
     return observable.array([
       expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
       selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
+      comboQueryColumn,
       ...leftOriginalColumns,
     ].filter<ColumnProps>(columnFilter));
   }
@@ -2396,5 +2428,10 @@ export default class TableStore {
     const visibleStartIndex = getVisibleStartIndex(this, () => scrollTop);
     return index >= getStartIndex(this, () => visibleStartIndex) &&
       index <= getEndIndex(this, () => getVisibleEndIndex(this, () => visibleStartIndex, () => scrollTop));
+  }
+
+  @action
+  setFold() {
+    this.isFold = !this.isFold;
   }
 }

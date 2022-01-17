@@ -112,6 +112,8 @@ const locale: Locale = {
     current_page_records: 'Current page records',
     cached_records: 'Cached records',
     refresh: 'Refresh',
+    export_all: 'Export all data',
+    export_selected: 'Export selected data',
   },
   Pagination: {
     page: 'Page',
