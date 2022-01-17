@@ -1,9 +1,9 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } from 'axios';
-import { Moment } from 'moment';
+import { Moment, MomentInput } from 'moment';
 import isObject from 'lodash/isObject';
 import { LovConfig } from '../interface';
-import { ExportMode, RecordStatus } from '../data-set/enum';
+import { ExportMode, RecordStatus, FieldType } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { TransportHookProps, TransportProps } from '../data-set/Transport';
 import DataSet from '../data-set/DataSet';
@@ -44,7 +44,7 @@ export interface AttachmentConfig {
   batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[], props: { isPublic?: boolean }) => Promise<{ [key in T]: number }>;
   fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => Promise<FileLike[]>;
   getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | undefined;
-  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string |Function | undefined;
+  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | Function | undefined;
   getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
   onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
@@ -101,6 +101,8 @@ export interface Config {
   attachment?: AttachmentConfig;
   numberFieldNonStrictStep?: boolean;
   confirm?: (message: any) => Promise<boolean>;
+  min?: (type: FieldType) => number | MomentInput | string | null;
+  max?: (type: FieldType) => number | MomentInput | string | null;
 }
 
 export type ConfigKeys = keyof Config;
