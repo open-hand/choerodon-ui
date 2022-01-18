@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
 - 🐞 `<pro>Lov`: Fixed `z-index` style in drawer mode.
+- 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
 
 ## 1.5.1
 
