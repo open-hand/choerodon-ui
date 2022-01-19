@@ -3,13 +3,29 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import cssUnitConverter from 'css-unit-converter';
 
+function defaultTo(value: number | undefined | null, callback: () => number): number {
+  if (isNil(value)) {
+    return callback();
+  }
+  return value;
+}
+
+let rootStyle: CSSStyleDeclaration | undefined;
+
+function getRootFontSize(): number {
+  if (!rootStyle) {
+    rootStyle = window.getComputedStyle(document.documentElement);
+  }
+  return defaultTo(toPx(rootStyle.fontSize), () => 100);
+}
+
 export function pxToRem(num?: number | string | null): string | undefined {
   if (num !== undefined && num !== null) {
     if (num === 0) {
       return '0';
     }
     if (isNumber(num)) {
-      return `${num / 100}rem`;
+      return `${num / getRootFontSize()}rem`;
     }
     return num;
   }
@@ -33,13 +49,6 @@ const builtInHeight = [
 
 const calcReg = /^calc\(([^()]*)\)$/;
 const unitReg = /^([+-]?[\d]+(?:[.][\d]+)?(?:[Ee][+-]?[\d]+)?)([^\d.+-]+)$/;
-
-function defaultTo(value: number | undefined | null, callback: () => number): number {
-  if (isNil(value)) {
-    return callback();
-  }
-  return value;
-}
 
 export function isCalcSize(num: string) {
   return num.match(calcReg);
@@ -94,7 +103,7 @@ export function toPx(num?: number | string | null, getRelationSize?: (unit: 'vh'
                 return viewWidth * number / 100;
               }
               case 'rem':
-                return number * defaultTo(toPx(window.getComputedStyle(document.documentElement).fontSize), () => 100);
+                return number * getRootFontSize();
               case 'em':
                 return number * defaultTo(getRelationSize && getRelationSize('em'), () => defaultTo(toPx(window.getComputedStyle(document.body).fontSize), () => 12));
               default:
