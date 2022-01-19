@@ -3,13 +3,67 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import cssUnitConverter from 'css-unit-converter';
 
+let rootStyle: CSSStyleDeclaration | undefined;
+
+let evalSupport;
+
+function defaultTo(value: number | undefined | null, callback: () => number): number {
+  if (isNil(value)) {
+    return callback();
+  }
+  return value;
+}
+
+function isEvalSupport(): boolean {
+  if (evalSupport === undefined) {
+    try {
+      /* eslint-disable-next-line no-eval */
+      eval('');
+      evalSupport = true;
+    } catch (e) {
+      evalSupport = false;
+    }
+  }
+  return evalSupport;
+}
+
+function getRootFontSize(): number {
+  if (!rootStyle) {
+    rootStyle = window.getComputedStyle(document.documentElement);
+  }
+  return defaultTo(toPx(rootStyle.fontSize), () => 100);
+}
+
+function calculate(n1: number | undefined, n2: number | undefined, operation: string): number | undefined {
+  if (n1 !== undefined && n2 !== undefined) {
+    switch (operation.trim()) {
+      case '+':
+        return n1 + n2;
+      case '-':
+        return n1 - n2;
+      case '*':
+        return n1 * n2;
+      case '/':
+        return n1 / n2;
+      case '%':
+        return n1 % n2;
+      default: {
+        if (isEvalSupport()) {
+          /* eslint-disable-next-line no-eval */
+          return eval(`${n1}${operation}${n2}`);
+        }
+      }
+    }
+  }
+}
+
 export function pxToRem(num?: number | string | null): string | undefined {
   if (num !== undefined && num !== null) {
     if (num === 0) {
       return '0';
     }
     if (isNumber(num)) {
-      return `${num / 100}rem`;
+      return `${num / getRootFontSize()}rem`;
     }
     return num;
   }
@@ -34,18 +88,11 @@ const builtInHeight = [
 const calcReg = /^calc\(([^()]*)\)$/;
 const unitReg = /^([+-]?[\d]+(?:[.][\d]+)?(?:[Ee][+-]?[\d]+)?)([^\d.+-]+)$/;
 
-function defaultTo(value: number | undefined | null, callback: () => number): number {
-  if (isNil(value)) {
-    return callback();
-  }
-  return value;
-}
-
-export function isCalcSize(num: string) {
+export function isCalcSize(num: string): RegExpMatchArray | null {
   return num.match(calcReg);
 }
 
-export function isPercentSize(num: string) {
+export function isPercentSize(num: string): boolean {
   return num.indexOf('%') !== -1;
 }
 
@@ -61,8 +108,7 @@ export function toPx(num?: number | string | null, getRelationSize?: (unit: 'vh'
           const list = calcMatches[1].split(' ');
           return list.slice(1).reduce<number | undefined>((result, calc, index, array) => {
             if (index % 2 === 1) {
-              /* eslint-disable-next-line no-eval */
-              return eval(`${result}${array[index - 1]}${toPx(calc, getRelationSize)}`);
+              return calculate(result, toPx(calc, getRelationSize), array[index - 1]);
             }
             return result;
           }, toPx(list[0], getRelationSize));
@@ -94,7 +140,7 @@ export function toPx(num?: number | string | null, getRelationSize?: (unit: 'vh'
                 return viewWidth * number / 100;
               }
               case 'rem':
-                return number * defaultTo(toPx(window.getComputedStyle(document.documentElement).fontSize), () => 100);
+                return number * getRootFontSize();
               case 'em':
                 return number * defaultTo(getRelationSize && getRelationSize('em'), () => defaultTo(toPx(window.getComputedStyle(document.body).fontSize), () => 12));
               default:
