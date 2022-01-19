@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
 - 🐞 `<pro>Lov`: Fixed `z-index` style in drawer mode.
 - 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
+- 🐞 `<pro>DataSet`: Fixed the issue that the page could not be turned after submitting the write-back data successfully.
 
 ## 1.5.1
 

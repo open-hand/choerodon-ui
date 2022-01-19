@@ -2509,7 +2509,10 @@ export default class DataSet extends EventManager {
 
   @action
   commitData(allData: any[], total?: number, onlyDelete?: boolean): DataSet {
-    const { autoQueryAfterSubmit, primaryKey } = this.props;
+    const { autoQueryAfterSubmit, primaryKey, strictPageSize, pageSize } = this.props;
+    if (strictPageSize) {
+      this.records = this.records.slice(0, pageSize);
+    }
     if (this.dataToJSON === DataToJSON.normal) {
       flatMap(this.dirtyRecords).forEach(record =>
         record.commit(omit(record.toData(), ['__dirty']), this),
