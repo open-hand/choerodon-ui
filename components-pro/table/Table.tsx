@@ -70,6 +70,7 @@ import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
+import ComboBar from './query-bar/TableComboBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import {
   findCell,
@@ -400,7 +401,7 @@ export interface TableProps extends DataSetComponentProps {
   queryFieldsLimit?: number | undefined;
   /**
    * 显示查询条
-   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar`
+   * 可选值: `advancedBar` `normal` `bar` `none` `professionalBar` `filterBar` `comboBar`
    * @default 'normal'
    */
   queryBar?: TableQueryBarType | TableQueryBarHook | undefined;
@@ -720,6 +721,10 @@ export interface TableProps extends DataSetComponentProps {
    * 表格体展开变更事件
    */
   onBodyExpand?: (expanded: boolean) => void;
+  /**
+   * 自定义渲染数据为空的状态
+   */
+  renderEmpty?: () => ReactNode;
 }
 
 @observer
@@ -733,6 +738,8 @@ export default class Table extends DataSetComponent<TableProps> {
   static AdvancedQueryBar = AdvancedQueryBar;
 
   static ProfessionalBar = ProfessionalBar;
+
+  static ComboBar = ComboBar;
 
   static DynamicFilterBar = DynamicFilterBar;
 
@@ -820,6 +827,7 @@ export default class Table extends DataSetComponent<TableProps> {
         TableQueryBarType.none,
         TableQueryBarType.professionalBar,
         TableQueryBarType.filterBar,
+        TableQueryBarType.comboBar,
       ]),
       PropTypes.func,
     ]),
@@ -1604,7 +1612,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock, isFold },
       props: {
         dataSet,
         treeQueryExpanded,
@@ -1670,7 +1678,7 @@ export default class Table extends DataSetComponent<TableProps> {
             spinProps={tableSpinProps}
             isTree={mode === TableMode.tree}
           >
-            {this.getHeader()}
+            {!isFold && this.getHeader()}
             <TableQueryBar
               buttons={buttons}
               buttonsLimit={tableButtonsLimit}
@@ -1687,25 +1695,27 @@ export default class Table extends DataSetComponent<TableProps> {
               treeQueryExpanded={treeQueryExpanded}
               searchCode={searchCode}
             />
-            <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
-            <Spin {...tableSpinProps} key="content">
-              <div {...this.getOtherProps()}>
-                <div
-                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
-                  ref={this.saveContentRef}
-                  onScroll={this.handleBodyScroll}
-                >
-                  {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                  {content}
-                  {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+            {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
+            {!isFold &&
+              <Spin {...tableSpinProps} key="content">
+                <div {...this.getOtherProps()}>
+                  <div
+                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                    ref={this.saveContentRef}
+                    onScroll={this.handleBodyScroll}
+                  >
+                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                    {content}
+                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                  </div>
+                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
+                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                 </div>
-                {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                {isStickySupport() && overflowX && <StickyShadow position="right" />}
-                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
-              </div>
-            </Spin>
-            {this.getFooter()}
-            {this.getPagination(TablePaginationPosition.bottom)}
+              </Spin>
+            }
+            {!isFold && this.getFooter()}
+            {!isFold && this.getPagination(TablePaginationPosition.bottom)}
           </TableContextProvider>
         </div>
       </ReactResizeObserver>

@@ -115,6 +115,8 @@ const locale: Locale = {
     current_page_records: '現在のページレコード',
     cached_records: 'キャッシュされたレコード',
     refresh: '更新',
+    export_all: 'すべてのデータ',
+    export_selected: '選択したデータ',
   },
   Pagination: {
     page: 'ページ',

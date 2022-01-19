@@ -23,6 +23,7 @@ import Table, {
   TableQueryBarHookProps,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
+import Radio from '../../radio';
 import { ButtonColor, ButtonType } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
@@ -37,6 +38,7 @@ import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
 import TableProfessionalBar from './TableProfessionalBar';
+import TableComboBar from './TableComboBar';
 import TableDynamicFilterBar from './TableDynamicFilterBar';
 import { PaginationProps } from '../../pagination/Pagination';
 import { exportExcel, findBindFieldBy } from '../../data-set/utils';
@@ -151,15 +153,15 @@ const ExportFooter = observer((props) => {
         }} /></div>
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
-      dataSet.exportStatus !== DataSetExportStatus.failed &&
-      <>
-        <span>{messageTimeout || $l('Table', 'export_operating')}</span>
-        <Button
-          color={ButtonColor.gray}
-          onClick={handleClick}
-        >{$l('Table', 'cancel_button')}
-        </Button>
-      </>
+        dataSet.exportStatus !== DataSetExportStatus.failed &&
+        <>
+          <span>{messageTimeout || $l('Table', 'export_operating')}</span>
+          <Button
+            color={ButtonColor.gray}
+            onClick={handleClick}
+          >{$l('Table', 'cancel_button')}
+          </Button>
+        </>
       }
     </div>
   );
@@ -271,11 +273,18 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   @autobind
+  handleChangeExportStrategy(value) {
+    const { dataSet } = this.context;
+    dataSet.setState('__EXPORT-STRATEGY__', value);
+  }
+
+  @autobind
   async handleButtonExport() {
-    const { tableStore } = this.context;
+    const { tableStore, prefixCls } = this.context;
     const columnHeaders = await tableStore.getColumnHeaders();
     this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
     this.exportDataSet.selectAll();
+    this.handleChangeExportStrategy('ALL');
     this.exportModal = Modal.open({
       title: $l('Table', 'choose_export_columns'),
       children: (
@@ -288,8 +297,20 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       closable: true,
       okText: $l('Table', 'export_button'),
       onOk: this.handleExport,
+      footer: (okBtn, cancelBtn) => (
+        <div className={`${prefixCls}-export-modal-footer`}>
+          <div className={`${prefixCls}-export-modal-footer-radio`}>
+            <Radio name="exportStrategy" value="ALL" defaultChecked onChange={this.handleChangeExportStrategy}>{$l('Table', 'export_all')}</Radio>
+            <Radio name="exportStrategy" value="SELECTED" onChange={this.handleChangeExportStrategy}>{$l('Table', 'export_selected')}</Radio>
+          </div>
+          <div>
+            {okBtn}
+            {cancelBtn}
+          </div>
+        </div>
+      ),
       style: {
-        width: pxToRem(400),
+        width: pxToRem(500),
       },
     });
   }
@@ -636,7 +657,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return (
       <Dropdown overlay={menu} key="dropdown_button">
         <Button {...tableButtonProps} key="more_button">
-          {$l('Table', 'more')} <Icon type='expand_more' />
+          <span>{$l('Table', 'more')}</span>
+          <Icon type='expand_more' />
         </Button>
       </Dropdown>
     );
@@ -788,6 +810,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
+  renderComboBar(props: TableQueryBarHookProps) {
+    const { prefixCls } = this.context;
+    return <TableComboBar key="toolbar" prefixCls={prefixCls} {...props} />;
+  }
+
   @autobind
   expandTree() {
     const { tableStore } = this.context;
@@ -857,6 +884,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           return this.renderProfessionalBar(props);
         case TableQueryBarType.filterBar:
           return this.renderDynamicFilterBar(props);
+        case TableQueryBarType.comboBar:
+          return this.renderComboBar(props);
         default:
       }
     }

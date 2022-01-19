@@ -129,13 +129,20 @@ function getBigNumberNearStepValues(
   const minFactorBig = new BigNumber(minBig.multipliedBy(precisionFactorBig).toFixed(0));
   const stepFactorBig = stepBig.multipliedBy(precisionFactorBig);
   const maxFactorBig = new BigNumber(maxBig.multipliedBy(precisionFactorBig).toFixed(0));
+  // min 等于最小安全数时, 且 max 小于 0, 设置 step 计算起点为: Math.floor(max / step) * step
+  const minFactorBase = (
+    minBig.isEqualTo(-MAX_SAFE_INTEGER)
+      ? maxBig.isLessThan(0) ? stepBig.multipliedBy(maxBig.dividedBy(stepBig).toFormat(0, BigNumber.ROUND_FLOOR)) : new BigNumber(0)
+      : minBig
+  );
+  const minFactorBaseBig = new BigNumber(minFactorBase.multipliedBy(precisionFactorBig).toFixed(0));
 
-  let beforeStepFactorBig = getBigBeforeStepValue(valueFactorBig, minFactorBig, stepFactorBig);
+  let beforeStepFactorBig = getBigBeforeStepValue(valueFactorBig, minFactorBaseBig, stepFactorBig);
   if (beforeStepFactorBig.isEqualTo(valueFactorBig)) {
     return undefined;
   }
   if (beforeStepFactorBig.isGreaterThan(maxFactorBig)) {
-    beforeStepFactorBig = getBigBeforeStepValue(maxFactorBig, minFactorBig, stepFactorBig);
+    beforeStepFactorBig = getBigBeforeStepValue(maxFactorBig, minFactorBaseBig, stepFactorBig);
   }
   else if (beforeStepFactorBig.isLessThan(minFactorBig)) {
     beforeStepFactorBig = minFactorBig;
@@ -143,7 +150,7 @@ function getBigNumberNearStepValues(
   const afterStepFactorBig = beforeStepFactorBig.plus(stepFactorBig);
 
   const values = [bigNumberToFixed(beforeStepFactorBig.dividedBy(precisionFactorBig), undefined, String(value))!];
-  if (afterStepFactorBig.isLessThanOrEqualTo(maxFactorBig)) {
+  if (afterStepFactorBig.isLessThanOrEqualTo(maxFactorBig) && afterStepFactorBig.dividedBy(precisionFactorBig).isLessThanOrEqualTo(maxBig)) {
     values.push(bigNumberToFixed(afterStepFactorBig.dividedBy(precisionFactorBig), undefined, String(value))!);
   }
   return values;
@@ -211,7 +218,12 @@ export function getNearStepValues<T extends Moment | number | string>(
     const precisionFactor = getPrecisionFactor(Number(value), Number(step));
     const valueFactor = precisionFix(Number(value), precisionFactor);
     const minFactor = precisionFix(min, precisionFactor);
-    const minFactorBase = min === -MAX_SAFE_INTEGER ? 0 : minFactor;
+    // min 等于最小安全数时, 且 max 小于 0, 设置 step 计算起点为: Math.floor(max / step) * step
+    const minFactorBase = (
+      min === -MAX_SAFE_INTEGER
+        ? max < 0 ? precisionFix(Math.floor(max / Number(step)) * Number(step), precisionFactor) : 0
+        : minFactor
+    );
     const maxFactor = precisionFix(max, precisionFactor);
     const stepFactor = precisionFix(Number(step), precisionFactor);
     let beforeStepFactor = getBeforeStepValue(valueFactor, minFactorBase, stepFactor);
@@ -225,7 +237,7 @@ export function getNearStepValues<T extends Moment | number | string>(
     }
     const afterStepFactor = beforeStepFactor + stepFactor;
     const values: number[] = [beforeStepFactor / precisionFactor];
-    if (afterStepFactor <= maxFactor) {
+    if (afterStepFactor <= maxFactor && (afterStepFactor / precisionFactor) <= max) {
       values.push(afterStepFactor / precisionFactor);
     }
     return values as T[];

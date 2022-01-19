@@ -81,6 +81,7 @@ export default function createSlider(Component) {
         );
       }
       this.handlesRefs = {};
+      this.draggedFlag = false;
     }
 
     componentWillUnmount() {
@@ -160,22 +161,27 @@ export default function createSlider(Component) {
     }
 
     removeDocumentEvents() {
-      /* eslint-disable no-unused-expressions */
-      this.onTouchMoveListener && this.onTouchMoveListener.remove();
-      this.onTouchUpListener && this.onTouchUpListener.remove();
+      if(this.draggedFlag) {
+        /* eslint-disable no-unused-expressions */
+        this.onTouchMoveListener && this.onTouchMoveListener.remove();
+        this.onTouchUpListener && this.onTouchUpListener.remove();
 
-      this.onMouseMoveListener && this.onMouseMoveListener.remove();
-      this.onMouseUpListener && this.onMouseUpListener.remove();
-      /* eslint-enable no-unused-expressions */
+        this.onMouseMoveListener && this.onMouseMoveListener.remove();
+        this.onMouseUpListener && this.onMouseUpListener.remove();
+        /* eslint-enable no-unused-expressions */
+        this.draggedFlag = false;
+      }
     }
 
     onMouseUp = () => {
       if (this.handlesRefs[this.prevMovedHandleIndex]) {
         this.handlesRefs[this.prevMovedHandleIndex].clickFocus();
       }
+      this.draggedFlag = true;
     }
 
     onMouseMove = (e) => {
+      this.draggedFlag = true;
       if (!this.sliderRef) {
         this.onEnd();
         return;

@@ -32,7 +32,7 @@ const responsiveMap: BreakpointMap = {
 
 const responsiveArray: Breakpoint[] = Object.keys(responsiveMap) as Breakpoint[];
 
-function isBreakPointMap(item: any): item is BreakpointMap {
+export function isBreakPointMap(item: any): item is BreakpointMap {
   if (isObject(item)) {
     const keys = Object.keys(item);
     if (keys.length) {
