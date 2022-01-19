@@ -14,6 +14,7 @@ import {
   ValidationMessageFormatter,
   ValidationMessageReportFormatter,
 } from '../validator/ValidationMessageReportFormatter';
+import Field from '../data-set/Field';
 import Record from '../data-set/Record';
 import { CacheOptions } from '../cache';
 import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
@@ -67,7 +68,7 @@ export interface Config {
   }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
   lovDefineUrl?: string | ((code: string) => string);
-  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
+  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
   lovQueryUrl?:
     | string
     | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);

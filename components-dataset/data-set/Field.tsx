@@ -334,7 +334,7 @@ export type FieldProps = {
   /**
    * LOV配置请求的钩子
    */
-  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string) => AxiosRequestConfig);
+  lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
   /**
    * LOV查询请求的钩子
    */
