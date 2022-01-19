@@ -11,8 +11,10 @@ import isEmpty from '../_util/isEmpty';
 import isOverflow from '../overflow-tip/util';
 import { show } from '../tooltip/singleton';
 import { CurrencyProps } from '../currency/Currency';
+import { FieldType } from '../data-set/enum';
 import Field from '../data-set/Field';
 import { defaultOutputRenderer } from './utils';
+import { processArrayLookupValue } from '../cascader/utils';
 
 export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
   renderEmpty?: () => ReactNode;
@@ -69,8 +71,25 @@ export default class Output extends FormField<OutputProps> {
 
   processValue(value: any): ReactNode {
     if (!isNil(value)) {
-      const text = isPlainObject(value) ? value : super.processValue(value);
-      const { field } = this;
+      const { field, record } = this;
+      let text;
+      if (isArrayLike(value) && field && record && this.getProp('options')) {
+        const textField = this.getProp('textField') || 'meaning';
+        const valueField = this.getProp('valueField') || 'value';
+        const options = this.getProp('options');
+        text = processArrayLookupValue(
+          value,
+          super.processValue.bind(this),
+          textField,
+          this.getProp('type') !== FieldType.object,
+          valueField,
+          field,
+          record,
+          options,
+          undefined,
+        );
+      }
+      text = isNil(text) ? isPlainObject(value) ? value : super.processValue(value) : text;
       return processFieldValue(text, field, {
         getProp: (name) => this.getProp(name),
         getValue: () => this.getValue(),

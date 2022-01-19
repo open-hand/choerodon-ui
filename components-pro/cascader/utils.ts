@@ -1,6 +1,14 @@
+import { ReactNode } from 'react';
+import { isArrayLike, toJS } from 'mobx';
+import isNil from 'lodash/isNil';
+import isPlainObject from 'lodash/isPlainObject';
+import isObject from 'lodash/isObject';
 import DataSet from '../data-set/DataSet';
 import { DataSetSelection, FieldType } from '../data-set/enum';
 import Record from '../data-set/Record';
+import Field from '../data-set/Field';
+import ObjectChainValue from '../_util/ObjectChainValue';
+import isSameLike from '../_util/isSameLike';
 
 export type Tree = object[] | object | undefined;
 export type List = object[] | object | undefined;
@@ -142,4 +150,111 @@ export function expandTreeRecords(records: Record[], isAllleaf = true): Record[]
     return parentRecords.concat(expandRecords);
   }
   return expandRecords
+}
+
+export function getSimpleValue(value: any, valueField: string): any {
+  if (isPlainObject(value)) {
+    return ObjectChainValue.get(value, valueField);
+  }
+  return value;
+}
+
+/**
+ * 获取record 或者 obj对应的值
+ * @param value
+ * @param key
+ */
+export function getRecordOrObjValue(value: any, key: string): any {
+  if (value instanceof Record) {
+    return value.get(key);
+  }
+  if (isObject(value)) {
+    return value[key];
+  }
+  return value;
+}
+
+export function findByValue(value: any, valueField: string, options?: DataSet, changeOnSelect?: boolean): Record | undefined {
+  const findTreeItem = (options, valueItem, index) => {
+    let sameItemTreeNode;
+    if (valueItem.length > 0) {
+      sameItemTreeNode = options.find(ele => {
+        return isSameLike(getRecordOrObjValue(ele, valueField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], valueField) : valueItem[index]);
+      });
+      if (sameItemTreeNode) {
+        if (sameItemTreeNode.children && !(changeOnSelect && index === (valueItem.length - 1))) {
+          return findTreeItem(sameItemTreeNode.children, valueItem, ++index);
+        }
+        return sameItemTreeNode;
+      }
+    }
+  };
+  value = getSimpleValue(value, valueField);
+  if (options && value) {
+    return findTreeItem(toJS(options.treeData), toJS(value), 0);
+  }
+}
+
+/**
+ * 返回tree 的值的列表方法
+ * @param record
+ * @param textField
+ * @param allArray
+ */
+export function treeTextToArray(record: Record, textField: string, allArray?: string[]): string[] {
+  if (!allArray) {
+    allArray = [];
+  }
+  if (record) {
+    allArray = [getRecordOrObjValue(record, textField), ...allArray];
+  }
+  if (record.parent) {
+    return treeTextToArray(record.parent, textField, allArray);
+  }
+  return allArray;
+}
+
+function processObjectValue(value: any, textField: string, valueField: string, options?: DataSet, changeOnSelect?: boolean): any {
+  if (!isNil(value)) {
+    const found = findByValue(value, valueField, options, changeOnSelect);
+    if (found && isArrayLike(value)) {
+      return treeTextToArray(found, textField);
+    }
+    if (isPlainObject(value)) {
+      return ObjectChainValue.get(value, textField);
+    }
+  }
+}
+
+/**
+ * Cascader 值渲染
+ * @param value 
+ * @param defaultProcessValue 
+ * @param textField 
+ * @param primitive 
+ * @param valueField 
+ * @param field 
+ * @param record 
+ * @param options 
+ * @param changeOnSelect 
+ * @returns 
+ */
+export function processArrayLookupValue(
+  value: any,
+  defaultProcessValue: (value: any) => ReactNode,
+  textField: string,
+  primitive: boolean,
+  valueField: string,
+  field?: Field,
+  record?: Record,
+  options?: DataSet,
+  changeOnSelect?: boolean,
+): ReactNode {
+  const processvalue = processObjectValue(value, textField, valueField, options, changeOnSelect);
+  if (isArrayLike(processvalue)) {
+    return processvalue.join('/');
+  }
+  if (primitive && field) {
+    return defaultProcessValue(field.getText(value, undefined, record));
+  }
 }

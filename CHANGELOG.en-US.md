@@ -38,6 +38,8 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed `z-index` style in drawer mode.
 - 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
 - 🐞 `<pro>DataSet`: Fixed the issue that the page could not be turned after submitting the write-back data successfully.
+- 🐞 `<pro>Cascader`: Fixed incorrect text display in `Table` and `Output` components.
+- 🐞 `<pro>DataSet`: Fixed the verification error of whether `Field` in `DataSet` is modified when `Cascader` component sets `multiple` property to `true`.
 
 ## 1.5.1
 

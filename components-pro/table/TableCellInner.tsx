@@ -67,6 +67,7 @@ import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
+import { processArrayLookupValue } from '../cascader/utils';
 
 let inTab = false;
 
@@ -439,6 +440,24 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       let processedValue;
       if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
         processedValue = field.getText(v, undefined, record) as string;
+      }
+      // 获取 Cascader 渲染值
+      if (isNil(processedValue) && isArrayLike(v) && field && record && field.get('options', record)) {
+        let editorProps;
+        if (column && column.editor && isValidElement(column.editor) && column.editor.props) {
+          editorProps = column.editor.props;
+        }
+        processedValue = processArrayLookupValue(
+          v,
+          processValue,
+          field.get('textField', record) || 'meaning',
+          (!editorProps || editorProps.primitiveValue !== false) && field.get('type', record) !== FieldType.object,
+          field.get('valueField', record) || 'value',
+          field,
+          record,
+          field.get('options', record),
+          editorProps && editorProps.changeOnSelect,
+        );
       }
       // 值集中不存在 再去取直接返回的值
       const text = isNil(processedValue) ? processValue(v) : processedValue;

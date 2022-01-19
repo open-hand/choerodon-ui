@@ -14,7 +14,6 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import cloneDeep from 'lodash/cloneDeep';
 import isFunction from 'lodash/isFunction';
-import isObject from 'lodash/isObject';
 import { MenuMode } from 'choerodon-ui/lib/cascader';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -24,7 +23,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
-import normalizeOptions, { expandTreeRecords } from './utils';
+import normalizeOptions, { expandTreeRecords, getSimpleValue, getRecordOrObjValue, findByValue, treeTextToArray, processArrayLookupValue } from './utils';
 import { $l } from '../locale-context';
 import ObjectChainValue from '../_util/ObjectChainValue';
 import isEmptyUtil from '../_util/isEmpty';
@@ -75,13 +74,6 @@ function defaultOnOption({ record }) {
 
 export function getItemKey(record: Record, text: ReactNode, value: any) {
   return `item-${value || record.id}-${(isValidElement(text) ? text.key : text) || record.id}`;
-}
-
-function getSimpleValue(value, valueField) {
-  if (isPlainObject(value)) {
-    return ObjectChainValue.get(value, valueField);
-  }
-  return value;
 }
 
 /**
@@ -274,7 +266,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     const returnActiveValue = (arrayOption, index) => {
       if (arrayOption && arrayOption.length > 0) {
         arrayOption.forEach((item) => {
-          if (isSameLike(value[index], this.getRecordOrObjValue(item, this.valueField))) {
+          if (isSameLike(value[index], getRecordOrObjValue(item, this.valueField))) {
             result = item;
             if (item.children) {
               returnActiveValue(item.children, ++index);
@@ -579,21 +571,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   /**
-   * 获取record 或者 obj对应的值
-   * @param value
-   * @param key
-   */
-  getRecordOrObjValue(value, key) {
-    if (value instanceof Record) {
-      return value.get(key);
-    }
-    if (isObject(value)) {
-      return value[key];
-    }
-    return value;
-  }
-
-  /**
    * 渲染menu 表格
    * @param menuProps
    */
@@ -630,8 +607,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       let treeRecords: any = [];
       if (treeRecord.length > 0) {
         treeRecords = treeRecord.map((recordItem) => {
-          const value = this.getRecordOrObjValue(recordItem, valueField);
-          const text = isFilterSearch ? this.treeTextToArray(recordItem).join('/') : this.getRecordOrObjValue(recordItem, textField);
+          const value = getRecordOrObjValue(recordItem, valueField);
+          const text = isFilterSearch ? treeTextToArray(recordItem, textField).join('/') : getRecordOrObjValue(recordItem, textField);
           const optionProps = onOption ? onOption({ dataSet: options, record: recordItem }) : undefined;
           const optionDisabled = menuDisabled || (optionProps && optionProps.disabled);
           const key: Key = getItemKey(recordItem, text, value);
@@ -1048,7 +1025,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       let sameItemTreeNode;
       if (valueItem.length > 0) {
         sameItemTreeNode = options.find(ele => {
-          return isSameLike(this.getRecordOrObjValue(ele, textField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], textField) : valueItem[index]);
+          return isSameLike(getRecordOrObjValue(ele, textField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], textField) : valueItem[index]);
         });
         if (sameItemTreeNode) {
           if (sameItemTreeNode.children && !(changeOnSelect && index === (valueItem.length - 1))) {
@@ -1063,28 +1040,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       if (this.options) {
         return findTreeItem(this.options.treeData, textArray, 0);
       }
-    }
-  }
-
-  findByValue(value): Record | undefined {
-    const { valueField, props: { changeOnSelect } } = this;
-    const findTreeItem = (options, valueItem, index) => {
-      let sameItemTreeNode;
-      if (valueItem.length > 0) {
-        sameItemTreeNode = options.find(ele => {
-          return isSameLike(this.getRecordOrObjValue(ele, valueField), isPlainObject(valueItem[index]) ? ObjectChainValue.get(valueItem[index], valueField) : valueItem[index]);
-        });
-        if (sameItemTreeNode) {
-          if (sameItemTreeNode.children && !(changeOnSelect && index === (valueItem.length - 1))) {
-            return findTreeItem(sameItemTreeNode.children, valueItem, ++index);
-          }
-          return sameItemTreeNode;
-        }
-      }
-    };
-    value = getSimpleValue(value, valueField);
-    if (this.options && value) {
-      return findTreeItem(toJS(this.options.treeData), toJS(value), 0);
     }
   }
 
@@ -1103,12 +1058,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   generateComboOption(value: string | any[], callback?: (text: string) => void): void {
-    const { textField } = this;
+    const { textField, valueField, options, props: { changeOnSelect } } = this;
     if (value) {
       if (isArrayLike(value)) {
         value.forEach(v => !isNil(v) && this.generateComboOption(v));
       } else {
-        const found = this.findByText(value) || this.findByValue(value);
+        const found = this.findByText(value) || findByValue(value, valueField, options, changeOnSelect);
         if (found) {
           const text = found.get(textField);
           if (text !== value && callback) {
@@ -1320,29 +1275,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       allArray = [];
     }
     if (record) {
-      allArray = [this.getRecordOrObjValue(record, valueField), ...allArray];
+      allArray = [getRecordOrObjValue(record, valueField), ...allArray];
     }
     if (record.parent) {
       return this.treeValueToArray(record.parent, allArray);
-    }
-    return allArray;
-  }
-
-  /**
-   * 返回tree 的值的列表方法
-   * @param record
-   * @param allArray
-   */
-  treeTextToArray(record: Record, allArray?: string[]) {
-    const { textField } = this;
-    if (!allArray) {
-      allArray = [];
-    }
-    if (record) {
-      allArray = [this.getRecordOrObjValue(record, textField), ...allArray];
-    }
-    if (record.parent) {
-      return this.treeTextToArray(record.parent, allArray);
     }
     return allArray;
   }
@@ -1375,32 +1311,20 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return obj;
   }
 
-  processObjectValue(value, textField) {
-    if (!isNil(value)) {
-      const found = this.findByValue(value);
-      if (found && isArrayLike(value)) {
-        return this.treeTextToArray(found);
-      }
-      if (isPlainObject(value)) {
-        return ObjectChainValue.get(value, textField);
-      }
-    }
-  }
-
-  processLookupValue(value) {
-    const { field, textField, primitive } = this;
-    const processvalue = this.processObjectValue(value, textField);
-    if (isArrayLike(processvalue)) {
-      return processvalue.join('/');
-    }
-    if (primitive && field) {
-      return super.processValue(field.getText(value, undefined, this.record));
-    }
-  }
-
   // 处理value
   processValue(value: any): ReactNode {
-    const text = this.processLookupValue(value);
+    const { field, textField, primitive, valueField, record, options, props: { changeOnSelect } } = this;
+    const text = processArrayLookupValue(
+      value,
+      super.processValue.bind(this),
+      textField,
+      primitive,
+      valueField,
+      field,
+      record,
+      options,
+      changeOnSelect,
+    );
     if (isEmptyUtil(text)) {
       if (isPlainObject(value)) {
         return ObjectChainValue.get(value, this.valueField) || '';
@@ -1496,7 +1420,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   async processSelectedData() {
     const values = this.getValues();
-    const { field } = this;
+    const { field, valueField, options, props: { changeOnSelect } } = this;
     if (field) {
       await field.ready();
     }
@@ -1505,7 +1429,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     } = this;
     runInAction(() => {
       const newValues = values.filter(value => {
-        const record = this.findByValue(value);
+        const record = findByValue(value, valueField, options, changeOnSelect);
         return !!record;
       });
       if (this.text && combo) {

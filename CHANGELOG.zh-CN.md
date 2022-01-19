@@ -38,6 +38,8 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 drawer 模式下的样式叠加问题。
 - 🐞 `<pro>Record`: 修复多选模式下错误过滤 0 和 false 的问题。
 - 🐞 `<pro>DataSet`: 修复提交回写数据成功后无法翻页的问题。
+- 🐞 `<pro>Cascader`: 修复在 Table 和 Output 组件中值展示错误问题。
+- 🐞 `<pro>DataSet`: 修复 Cascader 组件设置 multiple 属性为 true 时, DataSet 中 Field 是否被修改校验错误问题。
 
 ## 1.5.1
 
