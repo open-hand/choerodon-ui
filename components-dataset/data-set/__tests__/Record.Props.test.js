@@ -1,7 +1,7 @@
 import DataSet from "..";
 import { data as mockData, commonDs, mockTableTreeDs } from "./mock";
 
-describe('Record Values', () => {
+describe('Record Props', () => {
   describe('disabled', () => {
     it('disabled为true-验证被校验对象是禁用和非禁用的正确性', () => {
       const ds = new DataSet({
