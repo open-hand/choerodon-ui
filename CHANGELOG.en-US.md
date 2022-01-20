@@ -18,6 +18,9 @@ timeline: true
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
+- 🌟 `configure`: Added `min`, `max` properties.
+- 🌟 `<pro>Table`: Added query bar type of `comboBar` and configuration item of queryBarProps.
+- 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
@@ -26,10 +29,16 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 - 🐞 `<pro>Table`: Fix the height calculation problem when there is a horizontal scroll bar.
 - 🐞 `<pro>Table`: Fix the problem of the lock of group set to false.
+- 🐞 `<pro>Table`: Fix the problem that new child nodes could not be cleared by reset in tree mode.
+- 🐞 `<pro>Table`: Fix the problem that the initial state of the dynamic filter bar asynchronous query rendering is wrong.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
+- 🐞 `<pro>Lov`: Fixed `z-index` style in drawer mode.
+- 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
+- 🐞 `<pro>DataSet`: Fixed the issue that the page could not be turned after submitting the write-back data successfully.
+- 🐞 `<pro>Select`: Fix the problem that the drop-down box is not aligned when the browser font size is not default.
 
 ## 1.5.1
 

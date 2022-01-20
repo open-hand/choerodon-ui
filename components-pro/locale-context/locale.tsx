@@ -114,6 +114,8 @@ export interface Locale extends DataSetLocale {
     current_page_records: string;
     cached_records: string;
     refresh: string;
+    export_all: string,
+    export_selected: string,
   };
   Pagination: {
     page: string;

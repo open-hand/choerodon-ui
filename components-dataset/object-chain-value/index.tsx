@@ -18,7 +18,7 @@ export function get(obj: object | undefined | null, prop: string): any {
         return null;
       }
       if (isArrayLike(value)) {
-        return value.map(item => get(item, restKey)).filter(item => !!item);
+        return value.map(item => get(item, restKey)).filter(item => !!item || item === false || item === 0);
       }
       if (isObject(value)) {
         return get(value, restKey);

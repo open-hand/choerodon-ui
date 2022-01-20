@@ -10,6 +10,19 @@
 @spin-prefix-cls: ~'@{c7n-prefix}-spin-nested-loading';
 @drawer-list-padding: 0.2rem;
 
+
+.@{lov-prefix-cls}-custom-drawer {
+
+  .@{modal-prefix-cls}-header-buttons {
+    z-index: 10;
+  }
+
+  .@{modal-prefix-cls}-footer {
+    position: relative;
+    z-index: 10;
+  }
+}
+
 .@{modal-prefix-cls} {
   &-body {
     .@{table-prefix-cls} {
@@ -22,18 +35,6 @@
           }
         }
       }
-    }
-  }
-
-  &-drawer-content {
-
-    .@{modal-prefix-cls}-header-buttons {
-      z-index: 10;
-    }
-
-    .@{modal-prefix-cls}-footer {
-      position: relative;
-      z-index: 10;
     }
   }
 

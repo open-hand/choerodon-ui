@@ -1,8 +1,8 @@
 ---
 order: 2
 title:
-  zh-CN: DataSet
-  en-US: 数据源
+  zh-CN: 数据源
+  en-US: DataSet
 ---
 
 ## zh-CN

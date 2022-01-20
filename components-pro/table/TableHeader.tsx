@@ -1,11 +1,12 @@
-import React, { DetailedHTMLProps, FunctionComponent, ReactElement, ThHTMLAttributes, useCallback, useContext, useRef, useState } from 'react';
+import React, { cloneElement, DetailedHTMLProps, FunctionComponent, isValidElement, ReactElement, ThHTMLAttributes, useCallback, useContext, useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import isObject from 'lodash/isObject';
 import classNames from 'classnames';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
-import { getTableHeaderRows, isStickySupport } from './utils';
+import { getEditorByField, getTableHeaderRows, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
 import ExpandIcon from './ExpandIcon';
@@ -17,7 +18,7 @@ export interface TableHeaderProps extends ElementProps {
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock } = props;
   const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
-  const { columnResizable, columnResizing, columnGroups } = tableStore;
+  const { columnResizable, columnResizing, columnGroups, comboBarStatus } = tableStore;
   const { columns } = columnGroups;
 
   const headerRows: ColumnGroup[][] = getTableHeaderRows(lock ? columns.filter((group) => group.lock === lock) : columns);
@@ -136,6 +137,83 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
       return <tr key={rowKey} />;
     });
   };
+
+  const getQueryFields = (extraStyle) => {
+    const { queryFields } = dataSet.props
+    const { queryDataSet } = dataSet;
+    const result: ReactElement<any>[] = [];
+    if (queryDataSet) {
+      const { fields } = queryDataSet;
+      return [...fields.entries()].reduce((list, [name, field]) => {
+        if (!field.get('bind')) {
+          const props: any = {
+            key: name,
+            name,
+            dataSet: queryDataSet,
+          };
+          const element = queryFields![name];
+          list.push(
+            isValidElement(element)
+              ? cloneElement(element, {
+                placeholder: field.get('label'),
+                ...props,
+              })
+              : cloneElement(getEditorByField(field), {
+                placeholder: field.get('label'),
+                ...props,
+                style: {
+                  ...props.style || {},
+                  ...extraStyle,
+                },
+                ...(isObject(element) ? element : {}),
+              }),
+          );
+        }
+        return list;
+      }, result);
+    }
+    return result;
+  }
+
+  const getInlineSearchTr = () => {
+    const notRenderThKey = ['__selection-column__', '__combo-column__'];
+    const fieldsComponent = getQueryFields({ width: 'calc(100% - 1px)' });
+    const lastthCls = classNames(`${prefixCls}-thead-inline-search`, `${prefixCls}-thead-inline-search-last`)
+    const notLockLeft = lock !== ColumnLock.left;
+
+    return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
+      const { length } = row;
+      const rowKey = String(rowIndex);
+      const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
+      if (length) {
+        const tds = row.map((col) => {
+          if (!col.hidden) {
+            const { key } = col;
+            return (
+              <th key={key} className={`${prefixCls}-thead-inline-search`}>
+                {!notRenderThKey.includes(String(key)) && fieldsComponent.find(field => field.key === key)}
+              </th>
+            )
+          }
+          return undefined;
+        })
+        if (hasPlaceholder) {
+          tds.push(<th className={lastthCls}>&nbsp;</th>)
+        }
+        return (
+          <TableHeaderRow
+            key={rowKey}
+            rowIndex={rowIndex}
+            rows={headerRows}
+            lock={lock}
+          >
+            {tds}
+          </TableHeaderRow>
+        );
+      }
+      return <tr key={rowKey} />;
+    });
+  }
   const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
     ref: nodeRef,
     className: classNames(`${prefixCls}-thead`, {
@@ -151,6 +229,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   return (
     <thead {...theadProps}>
       {getTrs()}
+      {comboBarStatus && getInlineSearchTr()}
     </thead>
   );
 };

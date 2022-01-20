@@ -212,7 +212,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   componentDidMount(): void {
-    const { fuzzyQueryOnly } = this.props;
+    const { fuzzyQueryOnly, queryDataSet } = this.props;
     if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
@@ -224,7 +224,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         });
       }
     }
+    if (this.originalValue === undefined && queryDataSet.current) {
+      this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+    }
   }
+
 
   componentWillUnmount(): void {
     const { fuzzyQueryOnly } = this.props;
