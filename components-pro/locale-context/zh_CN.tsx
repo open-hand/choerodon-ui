@@ -149,6 +149,7 @@ const locale: Locale = {
     file_max_size: '文件大小不能超过：{size}',
     file_list_max_length: '文件数量最大限制为：{count}',
     file_type_mismatch: '文件类型不匹配，正确的类型：{types}',
+    drag_info: '点击或将文件拖拽到这里上传',
   },
   Modal: {
     ok: '确定',
