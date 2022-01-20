@@ -1402,7 +1402,20 @@ export default class DataSet extends EventManager {
   reset(): DataSet {
     this.resetInBatch = true;
     try {
-      this.records = this.originalData.map(record => record.reset());
+      this.records = this.records.filter(record => {
+        const { status, parent } = record;
+        if (status === RecordStatus.add) {
+          if (parent && parent.children) {
+            const index = parent.children.indexOf(record);
+            if (index > -1) {
+              parent.children.splice(index, 1);
+              if (!parent.children.length) parent.children = undefined;
+            }
+          }
+          return false;
+        }
+        return record.reset();
+      });
     } finally {
       this.resetInBatch = false;
     }
