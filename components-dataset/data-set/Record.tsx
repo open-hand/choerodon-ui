@@ -908,10 +908,6 @@ export default class Record {
         dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
       }
     }
-    if (this.children) {
-      const children = this.children.filter(child => child.status !== RecordStatus.add);
-      this.children = children.length ? children : undefined;
-    }
     return this;
   }
 
