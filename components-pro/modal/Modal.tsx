@@ -451,6 +451,7 @@ export default class Modal extends ViewComponent<ModalProps> {
               ),
               scrollLeft + offsetWidth - HANDLE_MIN_SIZE,
             ),
+            true,
           );
           const top = pxToRem(
             Math.min(
@@ -460,6 +461,7 @@ export default class Modal extends ViewComponent<ModalProps> {
               ),
               scrollTop + offsetHeight - HANDLE_MIN_SIZE,
             ),
+            true,
           );
           this.offset = [left, top];
           Object.assign(element.style, {

@@ -516,9 +516,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }
 
-  const height = needIntersection && (!inView || !columnsInView) ? entry && (entry.target as HTMLTableRowElement).offsetParent ? pxToRem(entry.boundingClientRect.height || (entry.target as HTMLTableRowElement).offsetHeight) :
-    pxToRem(metaData ? metaData.height : record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight) : lock ?
-    pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number) : undefined;
+  const height = needIntersection && (!inView || !columnsInView) ? entry && (entry.target as HTMLTableRowElement).offsetParent ? pxToRem(entry.boundingClientRect.height || (entry.target as HTMLTableRowElement).offsetHeight, true) :
+    pxToRem(metaData ? metaData.height : record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight, true) : lock ?
+    pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number, true) : undefined;
   if (height) {
     rowStyle.height = height;
   }

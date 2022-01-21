@@ -1,5 +1,7 @@
 export { default as getContext } from './context-manager';
 
+export { default as global } from './global';
+
 export { default as MessageManager } from './message-manager';
 
 export { default as ModalManager } from './modal-manager';

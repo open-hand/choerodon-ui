@@ -358,11 +358,11 @@ export default class TableEditor extends Component<TableEditorProps> {
         if (this.originalCssText === undefined) {
           this.originalCssText = wrap.style.cssText;
         }
-        const width = pxToRem(offsetWidth);
+        const width = pxToRem(offsetWidth, true);
         if (width !== this.width) {
           this.width = width;
         }
-        wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left)}, ${pxToRem(top)})`)}`;
+        wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left, true)}, ${pxToRem(top, true)})`)}`;
         if (editor.forcePositionChanged) {
           editor.forcePositionChanged();
         }
@@ -483,7 +483,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         const { height } = this;
         const { style = {}, ...otherProps } = this.editorProps;
         if (height !== undefined) {
-          style.height = pxToRem(height);
+          style.height = pxToRem(height, true);
         }
         const newEditorProps = {
           ...otherProps,

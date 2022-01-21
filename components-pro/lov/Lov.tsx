@@ -8,7 +8,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, scaleSize } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
@@ -489,7 +489,7 @@ export default class Lov extends Select<LovProps> {
           closable: true,
           autoFocus: false,
           bodyStyle: {
-            minHeight: isIE() ? pxToRem(Math.min(350, window.innerHeight)) : 'min(3.5rem, 100vh)',
+            minHeight: isIE() ? pxToRem(Math.min(scaleSize(350), window.innerHeight), true) : 'min(3.5rem, 100vh)',
           },
           drawer,
           drawerBorder: !drawer,
@@ -567,7 +567,7 @@ export default class Lov extends Select<LovProps> {
     }
     this.setPopup(false);
     this.modal = undefined;
-    this.focus()
+    this.focus();
   }
 
   @autobind

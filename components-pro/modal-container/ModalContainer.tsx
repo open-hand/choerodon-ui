@@ -76,7 +76,7 @@ function hideBodyScrollBar(container: HTMLElement) {
     style.overflow = 'hidden';
     if (container.tagName.toLowerCase() === 'body') {
       if (hasScrollBar(container)) {
-        style.paddingRight = pxToRem(measureScrollbar()) || '';
+        style.paddingRight = pxToRem(measureScrollbar(), true) || '';
       }
     } else {
       const { ownerDocument } = container;
@@ -431,7 +431,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           }
         }
       } else if (isEmbeddedContainer) {
-        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100))!;
+        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100), true)!;
       }
       if (transitionAppear === false) {
         maskTransition = false;
@@ -483,7 +483,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       maskProps.style = isEmbeddedContainer ? {
         ...maskStyle,
         position: 'absolute',
-        height: pxToRem(offsetContainer.scrollHeight)!,
+        height: pxToRem(offsetContainer.scrollHeight, true)!,
       } : maskStyle;
     }
     return (

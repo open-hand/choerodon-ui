@@ -2,10 +2,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import cssUnitConverter from 'css-unit-converter';
-
-let rootStyle: CSSStyleDeclaration | undefined;
-
-let evalSupport;
+import { global } from 'choerodon-ui/shared';
 
 function defaultTo(value: number | undefined | null, callback: () => number): number {
   if (isNil(value)) {
@@ -15,23 +12,27 @@ function defaultTo(value: number | undefined | null, callback: () => number): nu
 }
 
 function isEvalSupport(): boolean {
-  if (evalSupport === undefined) {
+  const { EVAL_SUPPORT } = global;
+  if (EVAL_SUPPORT === undefined) {
     try {
       /* eslint-disable-next-line no-eval */
       eval('');
-      evalSupport = true;
+      global.EVAL_SUPPORT = true;
+      return true;
     } catch (e) {
-      evalSupport = false;
+      global.EVAL_SUPPORT = false;
+      return false;
     }
   }
-  return evalSupport;
+  return EVAL_SUPPORT;
 }
 
-function getRootFontSize(): number {
-  if (!rootStyle) {
-    rootStyle = window.getComputedStyle(document.documentElement);
+export function getRootFontSize(): number {
+  let { ROOT_STYLE } = global;
+  if (!ROOT_STYLE) {
+    ROOT_STYLE = window.getComputedStyle(document.documentElement);
   }
-  return defaultTo(toPx(rootStyle.fontSize), () => 100);
+  return defaultTo(toPx(ROOT_STYLE.fontSize), () => 100);
 }
 
 function calculate(n1: number | undefined, n2: number | undefined, operation: string): number | undefined {
@@ -57,13 +58,17 @@ function calculate(n1: number | undefined, n2: number | undefined, operation: st
   }
 }
 
-export function pxToRem(num?: number | string | null): string | undefined {
+export function scaleSize(px: number): number {
+  return px * getRootFontSize() / 100;
+}
+
+export function pxToRem(num?: number | string | null, useCurrentFrontSize?: boolean): string | undefined {
   if (num !== undefined && num !== null) {
     if (num === 0) {
       return '0';
     }
     if (isNumber(num)) {
-      return `${num / getRootFontSize()}rem`;
+      return `${num / (useCurrentFrontSize ? getRootFontSize() : 100)}rem`;
     }
     return num;
   }

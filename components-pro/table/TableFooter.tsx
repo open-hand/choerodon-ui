@@ -70,7 +70,7 @@ const TableFooter: FunctionComponent<TableFooterProps> = function TableFooter(pr
     return tds;
   };
   const style = !isStickySupport() && lock && (rowHeight === 'auto' || tableStore.autoFootHeight) ? {
-    height: pxToRem(get(tableStore.lockColumnsFootRowsHeight, 0)),
+    height: pxToRem(get(tableStore.lockColumnsFootRowsHeight, 0), true),
   } : undefined;
   const tr = (
     <tr style={style}>

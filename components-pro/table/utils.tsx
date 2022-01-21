@@ -1,6 +1,7 @@
 import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
+import { global } from 'choerodon-ui/shared';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
@@ -178,23 +179,24 @@ export function isInCellEditor(element?: ReactElement<FormFieldProps>): boolean 
   return false;
 }
 
-let STICKY_SUPPORT;
 
 export function isStickySupport(): boolean {
+  const { STICKY_SUPPORT } = global;
   if (STICKY_SUPPORT !== undefined) {
     return STICKY_SUPPORT;
   }
   if (typeof window !== 'undefined') {
     const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
     const stickyElement = document.createElement('div');
-    STICKY_SUPPORT = vendorList.some(vendor => {
+    const support = vendorList.some(vendor => {
       stickyElement.style.position = `${vendor}sticky`;
       if (stickyElement.style.position !== '') {
         return true;
       }
       return false;
     });
-    return STICKY_SUPPORT;
+    global.STICKY_SUPPORT = support;
+    return support;
   }
   return true;
 }

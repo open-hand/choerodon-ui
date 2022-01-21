@@ -42,7 +42,7 @@ function sexIdRenderer({ dataSet, record }) {
 
 function renderPhoneEditor(record) {
   const region = (
-    <Select record={record} name="phone-region">
+    <Select record={record} name="phone-region" style={{ height: '.2rem' }}>
       <Option value="+81">+81</Option>
       <Option value="+00">+00</Option>
     </Select>

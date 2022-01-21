@@ -72,6 +72,7 @@ import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import ComboBar from './query-bar/TableComboBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
+import FilterSelect from './query-bar/FilterSelect';
 import {
   findCell,
   findIndexedSibling,
@@ -742,6 +743,8 @@ export default class Table extends DataSetComponent<TableProps> {
   static ComboBar = ComboBar;
 
   static DynamicFilterBar = DynamicFilterBar;
+
+  static FilterSelect = FilterSelect;
 
   static ToolBar = ToolBar;
 
@@ -2076,7 +2079,7 @@ export default class Table extends DataSetComponent<TableProps> {
       const style: CSSProperties | undefined = lock ? {
         width: pxToRem(lock === ColumnLock.right
           ? (tableStore.rightColumnGroups.width - 1 + (tableStore.overflowY ? measureScrollbar() : 0))
-          : tableStore.leftColumnGroups.width),
+          : tableStore.leftColumnGroups.width, true),
         marginLeft: lock === ColumnLock.right ? pxToRem(1) : undefined,
       } : undefined;
 
