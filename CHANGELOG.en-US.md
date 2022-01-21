@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 🌟 `configure`: Added `min`, `max` properties.
 - 🌟 `<pro>Table`: Added query bar type of `comboBar` and configuration item of queryBarProps.
+- 🌟 `<pro>Attachment`: Added new upload mode of `Attachment.Dragger`.
 - 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
