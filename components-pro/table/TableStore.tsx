@@ -10,7 +10,7 @@ import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isCalcSize, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
@@ -1143,7 +1143,7 @@ export default class TableStore {
   @computed
   get virtualRowHeight(): number {
     const { rowHeight } = this;
-    const normalRowHeight = isNumber(rowHeight) ? rowHeight + 3 : 33;
+    const normalRowHeight = scaleSize(isNumber(rowHeight) ? rowHeight + 3 : 33);
     return this.aggregation && this.hasAggregationColumn ? normalRowHeight * 4 : normalRowHeight;
   }
 
@@ -1555,7 +1555,7 @@ export default class TableStore {
         resizable: false,
         titleEditable: false,
         align: ColumnAlign.center,
-        width: 30,
+        width: scaleSize(30),
         lock: ColumnLock.right,
         header: this.customizedColumnHeader,
         headerClassName: `${this.prefixCls}-customized-column`,
@@ -1572,7 +1572,7 @@ export default class TableStore {
         resizable: false,
         titleEditable: false,
         align: ColumnAlign.center,
-        width: 50,
+        width: scaleSize(50),
         lock: true,
       };
     }
@@ -1591,7 +1591,7 @@ export default class TableStore {
         renderer: this.renderRowNumber,
         tooltip: TableColumnTooltip.overflow,
         align: ColumnAlign.center,
-        width: 50,
+        width: scaleSize(50),
         lock: true,
       };
     }
@@ -1623,7 +1623,7 @@ export default class TableStore {
         footerClassName: className,
         renderer: this.renderSelectionBox,
         align: ColumnAlign.center,
-        width: 50,
+        width: scaleSize(50),
         lock,
       };
       if (dataSet && dataSet.selection === DataSetSelection.multiple) {
@@ -1652,7 +1652,7 @@ export default class TableStore {
         className,
         footerClassName: className,
         align: ColumnAlign.center,
-        width: 50,
+        width: scaleSize(50),
         lock,
       };
       return queryColumn;
@@ -1671,7 +1671,7 @@ export default class TableStore {
         className: `${prefixCls}-drag-column`,
         renderer: this.renderDragBox,
         align: ColumnAlign.center,
-        width: 50,
+        width: scaleSize(50),
       };
       if (dragColumnAlign === DragColumnAlign.left) {
         draggableColumn.lock = ColumnLock.left;

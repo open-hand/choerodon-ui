@@ -1,35 +1,31 @@
-let scrollbarWidth: number;
-let rootFontSize = 100;
-
-function getRootFontSize(): number {
-  if (typeof window !== 'undefined' && document.defaultView) {
-    const { fontSize } = document.defaultView.getComputedStyle(document.documentElement);
-    if (fontSize !== null) {
-      return parseFloat(fontSize);
-    }
-  }
-  return 100;
-}
+import { global } from 'choerodon-ui/shared';
 
 export default function measureScrollbar(direction = 'vertical'): number {
   if (typeof window === 'undefined') {
     return 0;
   }
-  const fontSize = getRootFontSize();
-  if (scrollbarWidth && fontSize === rootFontSize) {
-    return scrollbarWidth;
+  if (direction === 'vertical') {
+    const { SCROLL_BAR_WIDTH_VERTICAL } = global;
+    if (SCROLL_BAR_WIDTH_VERTICAL !== undefined) {
+      return SCROLL_BAR_WIDTH_VERTICAL;
+    }
+  } else {
+    const { SCROLL_BAR_WIDTH_HORIZONTAL } = global;
+    if (SCROLL_BAR_WIDTH_HORIZONTAL !== undefined) {
+      return SCROLL_BAR_WIDTH_HORIZONTAL;
+    }
   }
-  rootFontSize = fontSize;
   const scrollDiv = document.createElement('div');
   scrollDiv.style.cssText = 'position: absolute;width: 50px;height: 50px;top: -9999px; overflow: scroll';
   document.body.appendChild(scrollDiv);
   let size = 0;
   if (direction === 'vertical') {
     size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  } else if (direction === 'horizontal') {
+    global.SCROLL_BAR_WIDTH_VERTICAL = size;
+  } else {
     size = scrollDiv.offsetHeight - scrollDiv.clientHeight;
+    global.SCROLL_BAR_WIDTH_HORIZONTAL = size;
   }
   document.body.removeChild(scrollDiv);
-  scrollbarWidth = size / fontSize * 100;
-  return scrollbarWidth;
+  return size;
 }

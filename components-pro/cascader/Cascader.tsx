@@ -723,7 +723,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
     let dropdownMenuStyleMerge = dropdownMenuStyle;
     if ((this.itemMenuWidth > 0)) {
-      dropdownMenuStyleMerge = { ...dropdownMenuStyle, width: pxToRem(this.itemMenuWidth) };
+      dropdownMenuStyleMerge = { ...dropdownMenuStyle, width: pxToRem(this.itemMenuWidth, true)! };
     }
 
     // 由于想让多选出现不同展现这边增加一个selected属性来解决但是会造成一定的性能损耗
@@ -831,9 +831,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   getPopupStyleFromAlign(target): CSSProperties | undefined {
     if (target) {
       if (this.props.dropdownMatchSelectWidth) {
-        this.setItemMenuWidth(target.getBoundingClientRect().width);
+        const { width } = target.getBoundingClientRect();
+        this.setItemMenuWidth(width);
         return {
-          minWidth: pxToRem(target.getBoundingClientRect().width),
+          minWidth: pxToRem(width, true)!,
         };
       }
       return undefined;
@@ -1191,7 +1192,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         }
         this.setIsClickTab(isClickTab);
       }
-    // 多选模式
+      // 多选模式
     } else {
       this.setactiveEmpty();
       this.unChoose(targetOption.value);

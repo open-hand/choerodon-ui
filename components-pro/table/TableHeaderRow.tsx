@@ -40,6 +40,7 @@ const TableHeaderRow: FunctionComponent<TableHeaderRowProps> = function TableHea
               getRowHeight(index + rowIndex + 1),
           height,
         ),
+      true,
     );
   };
   const needStoreRowHeight = !isStickySupport() && (headerRowHeight === 'auto' || rowHeight === 'auto' || rows.length > 1);

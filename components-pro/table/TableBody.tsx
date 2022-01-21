@@ -28,11 +28,12 @@ const TableBody: FunctionComponent<TableBodyProps> = function TableBody(props) {
         ...(height === undefined ? style : {}),
         height: pxToRem(
           hasFooterAndNotLock && height !== undefined ? height + scrollbar : hasLockAndNoFooter && height !== undefined ? height - scrollbar : height,
+          true,
         ),
-        marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar) : undefined,
-        width: fixedLeft ? pxToRem(tableStore.leftColumnGroups.width + (scrollbar || 20)) :
+        marginBottom: hasFooterAndNotLock ? pxToRem(-scrollbar, true) : undefined,
+        width: fixedLeft ? pxToRem(tableStore.leftColumnGroups.width + (scrollbar || 20), true) :
           lock === ColumnLock.right
-            ? pxToRem(tableStore.rightColumnGroups.width - 1 + (overflowY ? scrollbar : 0))
+            ? pxToRem(tableStore.rightColumnGroups.width - 1 + (overflowY ? scrollbar : 0), true)
             : undefined,
         marginLeft: lock === ColumnLock.right ? pxToRem(1) : undefined,
       }}
@@ -43,7 +44,7 @@ const TableBody: FunctionComponent<TableBodyProps> = function TableBody(props) {
   );
   if (fixedLeft) {
     return (
-      <div className={`${prefixCls}-body-wrapper`} style={{ width: pxToRem(tableStore.leftColumnGroups.width) }}>
+      <div className={`${prefixCls}-body-wrapper`} style={{ width: pxToRem(tableStore.leftColumnGroups.width, true) }}>
         {tableBody}
       </div>
     );

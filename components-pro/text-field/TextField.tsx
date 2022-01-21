@@ -896,7 +896,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.zIndex = -1;
       props.readOnly = true;
     } else if (text) {
-      editorStyle.width = pxToRem(measureTextWidth(text, style));
+      editorStyle.width = pxToRem(measureTextWidth(text, style), true)!;
     }
     return (
       <li key="text">

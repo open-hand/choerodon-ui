@@ -537,7 +537,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       onChange: this.handleFieldChange,
     };
     if (text) {
-      editorProps.style = { width: pxToRem(measureTextWidth(text)) };
+      editorProps.style = { width: pxToRem(measureTextWidth(text), true)! };
     }
     return (
       <li key="text">

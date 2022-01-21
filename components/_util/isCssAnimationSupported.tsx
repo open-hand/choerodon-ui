@@ -1,24 +1,19 @@
-let animation: boolean;
+import { global } from 'choerodon-ui/shared';
 
 function isCssAnimationSupported() {
-  if (animation !== undefined) {
-    return animation;
+  const { CSS_ANIMATION_SUPPORT } = global;
+  if (CSS_ANIMATION_SUPPORT !== undefined) {
+    return CSS_ANIMATION_SUPPORT;
   }
-  const domPrefixes = 'Webkit Moz O ms Khtml'.split(' ');
-  const elm = document.createElement('div');
-  if (elm.style.animationName !== undefined) {
-    animation = true;
+  if (typeof window !== 'undefined') {
+    const domPrefixes = ['webkit', 'moz', 'O', 'ms', 'khtml'];
+    const elmStyle = document.createElement('div').style;
+    const support = elmStyle.animationName !== undefined ||
+      domPrefixes.some(prefix => (elmStyle as any)[`${prefix}AnimationName`] !== undefined);
+    global.CSS_ANIMATION_SUPPORT = support;
+    return support;
   }
-  if (animation !== undefined) {
-    for (let i = 0; i < domPrefixes.length; i++) {
-      if ((elm.style as any)[`${domPrefixes[i]}AnimationName`] !== undefined) {
-        animation = true;
-        break;
-      }
-    }
-  }
-  animation = animation || false;
-  return animation;
+  return false;
 }
 
 export default isCssAnimationSupported;

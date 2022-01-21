@@ -29,7 +29,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
   const hasPlaceHolder = lock !== ColumnLock.left && (hasHeader || hasFooter) && tableStore.overflowY;
   const tableWidth: number | string | undefined = overflowX ?
     lock !== ColumnLock.left && !hasBody && tableStore.overflowY ?
-      pxToRem(width + measureScrollbar()) : pxToRem(width) : '100%';
+      pxToRem(width + measureScrollbar(), true) : pxToRem(width, true) : '100%';
   const editorKeys = new Set<Key>();
   const editors = useMemo((): ReactElement<TableEditorProps>[] | undefined => hasBody ?
     treeReduce<ReactElement<TableEditorProps>[], ColumnProps>(leafs.map(({ column }) => column), (nodes, column) => {
@@ -44,8 +44,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
         }
       }
       return nodes;
-    }, []) : undefined,
-  [leafs, overflowX, lock, hasBody],
+    }, []) : undefined, [leafs, overflowX, lock, hasBody],
   );
 
   const colGroup = useMemo((): ReactNode => {
@@ -65,7 +64,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
       />
     ));
     if (hasPlaceHolder) {
-      cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar()) }} />);
+      cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar(), true) }} />);
     }
     return <colgroup>{cols}</colgroup>;
   }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder, overflowX]);

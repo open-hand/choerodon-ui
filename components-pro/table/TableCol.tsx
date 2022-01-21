@@ -17,8 +17,8 @@ const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   const width = last && !tableStore.hasEmptyWidthColumn ? undefined : tableStore.overflowX ? columnWidth(column, tableStore) : get(column, 'width');
   const minWidth = minColumnWidth(column, tableStore);
   const style = useMemo(() => ({
-    width: pxToRem(width),
-    minWidth: pxToRem(minWidth),
+    width: pxToRem(width, true),
+    minWidth: pxToRem(minWidth, true),
   }), [width, minWidth]);
   return (
     <col

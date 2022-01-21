@@ -140,7 +140,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       left = 0;
     }
     if (resizeLine) {
-      transform(`translateX(${pxToRem(left) || 0})`, resizeLine.style);
+      transform(`translateX(${pxToRem(left, true) || 0})`, resizeLine.style);
     }
     return left + bodyLeft;
   }), [tableStore, globalRef]);
@@ -412,9 +412,9 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   if (columnLock) {
     classList.push(`${prefixCls}-cell-fix-${columnLock}`);
     if (columnLock === ColumnLock.left) {
-      cellStyle.left = pxToRem(columnGroup.left)!;
+      cellStyle.left = pxToRem(columnGroup.left, true)!;
     } else if (columnLock === ColumnLock.right) {
-      cellStyle.right = pxToRem(columnGroup.right + (rowIndex === 0 && tableStore.overflowY ? measureScrollbar() : 0))!;
+      cellStyle.right = pxToRem(columnGroup.right + (rowIndex === 0 && tableStore.overflowY ? measureScrollbar() : 0), true)!;
     }
   }
   if (className) {

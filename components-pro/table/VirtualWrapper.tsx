@@ -59,7 +59,7 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
   }, [tableStore]);
 
   const getBody = (droppableProvided?: DroppableProvided, droppableSnapshot?: DroppableStateSnapshot) => {
-    const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight)! };
+    const wrapperStyle: CSSProperties = { height: pxToRem(virtualHeight, true)! };
     const style: CSSProperties = {};
     if (scrolling) {
       wrapperStyle.pointerEvents = 'none';
@@ -67,10 +67,10 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
     const dragRowHeight = droppableSnapshot && droppableSnapshot.draggingFromThisWith ? getRowHeight(tableStore, dataSet, droppableSnapshot.draggingFromThisWith) : undefined;
     const top = dragRowHeight ? virtualTop + dragRowHeight : virtualTop;
     if (isStickySupport() && tableStore.hasRowGroups) {
-      wrapperStyle.paddingTop = pxToRem(top)!;
+      wrapperStyle.paddingTop = pxToRem(top, true)!;
       style.position = 'relative';
     } else {
-      style.transform = toTransformValue({ translateY: pxToRem(top) });
+      style.transform = toTransformValue({ translateY: pxToRem(top, true) });
     }
     return (
       <div
@@ -115,7 +115,7 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
                   position: 'absolute',
                   top: '50%',
                   left: '50%',
-                  marginTop: pxToRem(tableStore.lastScrollTop)!,
+                  marginTop: pxToRem(tableStore.lastScrollTop, true)!,
                   transform: toTransformValue({ translate: '-50% -50%' }),
                 },
               })

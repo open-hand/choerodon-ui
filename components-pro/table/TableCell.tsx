@@ -77,13 +77,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       if (columnLock === ColumnLock.left) {
         return {
           ...style,
-          left: pxToRem(columnGroup.left)!,
+          left: pxToRem(columnGroup.left, true)!,
         };
       }
       if (columnLock === ColumnLock.right) {
         return {
           ...style,
-          right: pxToRem(colSpan && colSpan > 1 ? 0 : columnGroup.right)!,
+          right: pxToRem(colSpan && colSpan > 1 ? 0 : columnGroup.right, true)!,
         };
       }
     }

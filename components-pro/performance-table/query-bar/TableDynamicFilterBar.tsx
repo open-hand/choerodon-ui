@@ -498,7 +498,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             }
             if (height > (childHeight + 18) && !hidden) {
               // 收起留一行高度
-              refSingleWrapper.style.height = pxToRem(childHeight + 18) || '';
+              refSingleWrapper.style.height = pxToRem(childHeight + 18, true) || '';
               refSingleWrapper.style.overflow = 'hidden';
             } else {
               refSingleWrapper.style.height = '';

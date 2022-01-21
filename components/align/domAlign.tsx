@@ -265,11 +265,11 @@ export default function (el: HTMLElement, refNode: HTMLElement, align) {
   }
   const { width, height } = newElRegion;
   if (width !== elRegion.width) {
-    source.style.width = width ? pxToRem(width)! : '0';
+    source.style.width = width ? pxToRem(width, true)! : '0';
   }
 
   if (height !== elRegion.height) {
-    source.style.height = height ? pxToRem(height)! : '0';
+    source.style.height = height ? pxToRem(height, true)! : '0';
   }
   // const isTargetFixed = isFixedPosition(target);
   const { offsetParent } = source;
@@ -279,8 +279,8 @@ export default function (el: HTMLElement, refNode: HTMLElement, align) {
     newElRegion.top -= top;
   }
   Object.assign(source.style, {
-    left: pxToRem(newElRegion.left),
-    top: pxToRem(newElRegion.top),
+    left: pxToRem(newElRegion.left, true),
+    top: pxToRem(newElRegion.top, true),
   });
 
   // if (isTargetFixed) {

@@ -124,7 +124,7 @@ export default class IconCategory extends Component<IconItemProps> {
           pageSize={pageSize}
           showSizeChanger={false}
           onChange={this.handlePageChange}
-          style={{ right: pxToRem(measureScrollbar()) }}
+          style={{ right: pxToRem(measureScrollbar(), true) }}
         />
       );
     }

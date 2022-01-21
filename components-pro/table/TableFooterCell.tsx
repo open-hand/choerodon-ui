@@ -79,9 +79,9 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
 
   if (columnLock) {
     if (columnLock === ColumnLock.left) {
-      cellStyle.left = pxToRem(columnGroup.left)!;
+      cellStyle.left = pxToRem(columnGroup.left, true)!;
     } else if (columnLock === ColumnLock.right) {
-      cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : columnGroup.right + right)!;
+      cellStyle.right = pxToRem(colSpan && colSpan > 1 ? right : columnGroup.right + right, true)!;
     }
   }
   const getFooter = (): ReactNode => {

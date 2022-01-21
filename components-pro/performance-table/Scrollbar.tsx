@@ -259,7 +259,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     const IEstyles: React.CSSProperties = {
       [vertical ? 'top' : 'left']: showScrollArrow ? '0.2rem' : 0,
       [vertical ? 'bottom' : 'right']: showScrollArrow ? '0.2rem' : 0,
-      [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${pxToRem(scrollBarOffset)}rem)`,
+      [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${pxToRem(scrollBarOffset)})`,
       [vertical ? 'width' : 'height']: showScrollArrow ? '0.2rem' : '0.1rem',
     };
     const unhandled = getUnhandledProps(propTypes, rest);

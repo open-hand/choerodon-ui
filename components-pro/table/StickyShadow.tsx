@@ -31,11 +31,11 @@ const StickyShadow: FunctionComponent<StickyShadowProps> = function StickyShadow
   if (!children) {
     const scrollBarWidth = measureScrollbar();
     if (position === 'left') {
-      style.left = pxToRem(columnGroups.leftLeafColumnsWidth - 1)!;
+      style.left = pxToRem(columnGroups.leftLeafColumnsWidth - 1, true)!;
     } else if (position === 'right') {
-      style.right = pxToRem(columnGroups.rightLeafColumnsWidth + (tableStore.overflowY ? scrollBarWidth : 0))!;
+      style.right = pxToRem(columnGroups.rightLeafColumnsWidth + (tableStore.overflowY ? scrollBarWidth : 0), true)!;
     }
-    style.bottom = pxToRem(scrollBarWidth)!;
+    style.bottom = pxToRem(scrollBarWidth, true)!;
   }
   return (
     <div className={classString} style={style}>

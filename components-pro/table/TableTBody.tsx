@@ -154,7 +154,7 @@ function generateRow(props: GenerateRowProps): ReactElement {
     } else {
       tableRowProps.style = {
         transform: toTransformValue({
-          translateY: pxToRem(-dragRowHeight),
+          translateY: pxToRem(-dragRowHeight, true),
         }),
       };
     }
@@ -401,7 +401,7 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
   const { emptyText, width, prefixCls, dataSet } = tableStore;
   const styles: CSSProperties = width ? {
     position: isStickySupport() ? 'sticky' : 'relative',
-    left: pxToRem(width / 2)!,
+    left: pxToRem(width / 2, true)!,
   } : {
     transform: 'none',
     display: 'inline-block',
