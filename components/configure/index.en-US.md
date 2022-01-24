@@ -29,6 +29,7 @@ const prefixCls = getConfig('prefixCls');
 | lookupAxiosConfig | Lookup fetch axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lookupUrl and method is post. | AxiosRequestConfig \| ({ dataSet: DataSet, record: Record, params?: any, lookupCode: string }) => AxiosRequestConfig | post |
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
 | lovDefineAxiosConfig | hook for Lov configure axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovDefineUrl and method is post. | AxiosRequestConfig \| (code: string, field?: Field) => AxiosRequestConfig | - |
+| lookupAxiosMethod | 值列表请求的类型 | Http method | 'post' |
 | lovQueryUrl | Lov query url or hook which return url | string \| ((code: string, lovConfig?: LovConfig, { dataSet, params, data }) => string) | code => \`/common/lov/dataset/\${code}\` |
 | lovQueryAxiosConfig | hook for Lov query axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovQueryUrl and method is post. | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
 | lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) \| (multiple?: boolean) => [TableProps](/components-pro/table/) | {} |
@@ -91,6 +92,7 @@ const prefixCls = getConfig('prefixCls');
 | tableFilterSuffix | Table 筛选条按钮预留区 | ReactNode | |
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
+| confirm | 变更检查行为自定义，可与[modifiedCheckMessage](/components-pro/data-set/#API)关联使用 | (message: any) => Promise<boolean>  | async (message) => (await confirm(message)) !== 'cancel' |
 | customizable | 是否显示个性化设置入口按钮 | boolean \| [Customizable](#Customizable) | false |
 | customizedSave | Table 个性化保存的钩子 | (code, customized, component: keyof [Customizable](#Customizable)) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | customizedLoad | Table 个性化加载的钩子 | (code, component: keyof [Customizable](#Customizable)) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
@@ -110,6 +112,8 @@ const prefixCls = getConfig('prefixCls');
 | buttonColor | Default Button color | string | default |
 | renderEmpty | 自定义组件空状态。componentName会接收到的值为 `Table` `Select`,在实现函数的时候需要对这两个输入进行处理,**注意需要同时处理Table以及Select**,默认值参考源代码的[defaultRenderEmpty](https://github.com/open-hand/choerodon-ui/blob/master/components/configure/index.tsx) | (componentName: string) => ReactNode | - |
 | defaultValidationMessages | Default validation messages. More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
+| validationMessageFormatter | 校验信息格式器 | ValidationMessageFormatter: (message?: string, injectOptons?: any) => Promise<any> \| any | (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message |
+| validationMessageReportFormatter | 校验报告信息格式器 | ValidationMessageReportFormatter: (message: any) => Promise<string \| undefined> \| string \| undefined | (message) => getReactNodeText(<span\>{message}</span\>) |
 | generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string, sort?: string[] }) => object | - |
 | feedback | The feedback of DataSet for query and submit. More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | Default transport of DataSet. More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
