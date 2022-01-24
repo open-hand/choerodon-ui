@@ -1,10 +1,12 @@
+import isRegExp from 'lodash/isRegExp';
 import { isEmpty } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
 function generatePattern(pattern: string | RegExp): RegExp {
-  if (pattern instanceof RegExp) {
+  if (isRegExp(pattern)) {
+    pattern.lastIndex = 0;
     return pattern;
   }
   const begin = pattern.startsWith('^') ? '' : '^';
