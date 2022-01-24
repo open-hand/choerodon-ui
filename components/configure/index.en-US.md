@@ -59,7 +59,9 @@ const prefixCls = getConfig('prefixCls');
 | tableHighLightRow | Default Table current line highlight, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean | true |
 | tableSelectedHighLightRow | Default Table selected line highlight | boolean | false |
 | tableParityRow | Default Table parity line | boolean |  |
-| tableRowHeight | Default Table row height | auto \| number | 30 |
+| tableRowHeight | 默认 Table 行高 | auto \| number \| ({ size }) => number \| auto | 30 |
+| tableHeaderRowHeight | 默认 Table 头行高 | auto \| number \| ({ size }) => number \| auto | tableRowHeight |
+| tableFooterRowHeight | 默认 Table 脚行高 | auto \| number \| ({ size }) => number \| auto | tableRowHeight |
 | tableExpandIcon | Default Table custom expansion icon | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | tableSpinProps | Default Table spin props | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | Default Table button props | ButtonProps | { color: 'primary', funcType: 'flat' } |

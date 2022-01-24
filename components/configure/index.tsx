@@ -26,6 +26,7 @@ import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
 import { Action } from '../trigger/enum';
+import { Size } from '../_util/enum';
 import { TooltipPlacement, TooltipTheme } from '../tooltip';
 import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
@@ -121,7 +122,9 @@ export interface Config extends DataSetConfig {
   tableHighLightRow?: boolean | HighLightRowType;
   tableParityRow?: boolean;
   tableSelectedHighLightRow?: boolean;
-  tableRowHeight?: 'auto' | number;
+  tableRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
+  tableHeaderRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
+  tableFooterRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
   tableColumnResizable?: boolean;
   tableColumnHideable?: boolean;
   performanceTableColumnHideable?: boolean;

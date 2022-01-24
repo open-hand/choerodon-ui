@@ -56,7 +56,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable, props: { headerRowHeight } } = tableStore;
+  const { columnResizable, headerRowHeight } = tableStore;
   const {
     headerClassName,
     headerStyle = {},

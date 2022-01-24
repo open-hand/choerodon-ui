@@ -752,7 +752,7 @@ export default class Lov extends Select<LovProps> {
       className: classNames(className, `${this.prefixCls}-lov`),
       type,
     };
-    if (!this.isValid) {
+    if (!this.valid) {
       props.color = ButtonColor.red;
     }
 

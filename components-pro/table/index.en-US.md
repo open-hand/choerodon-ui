@@ -39,9 +39,9 @@ subtitle: 表格
 | summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
 | useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | [globalConfig.tableUseMouseBatchChoose](/components/configure#API) |
-| rowHeight | 行高 | number \| auto | [globalConfig.tableRowHeight](/components/configure#API) |
-| headerRowHeight | 头行高 | number \| auto | rowHeight |
-| footerRowHeight | 脚行高 | number \| auto | rowHeight |
+| rowHeight | 行高 | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/components/configure#API) |
+| headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
+| footerRowHeight | 脚行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
 | onScrollLeft | 横向滚动事件 | (scrollLeft) => void |  |
 | onScrollTop | 纵向滚动事件 | (scrollTop) => void |  |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
