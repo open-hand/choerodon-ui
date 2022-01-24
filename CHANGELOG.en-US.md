@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Attachment`: The button displays a error color when the upload fails in `popup` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
+- 🐞 `<pro>Lov`: Fix the null value in the first render when `autoSelectSingle` is turned on.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.
 - 🐞 `<pro>Table`: Fix the height calculation problem when there is a horizontal scroll bar.
 - 🐞 `<pro>Table`: Fix the problem of the lock of group set to false.
