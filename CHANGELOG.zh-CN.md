@@ -15,8 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 onTabsChange, onButtonClick 属性。
-- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性。
+- 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight 属性。
+- 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性, rowHeight 支持钩子。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
 - 🌟 `configure`: 新增 min, max 属性。
 - 🌟 `<pro>Table`: 新增 comboBar 筛选条类型及对应 queryBarProps 相关组合筛选条配置项。
@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing，支持响应式。
 - 💄 `<pro>DatePicker`: 优化 hover 选值显示, 并且优化 isFlat 和 range 模式下显示样式。优化 dateTime 模式日期选择。
+- 💄 `<pro>Attachment`: popup 模式上传失败时按钮显示警告色。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下虚拟滚动的问题。

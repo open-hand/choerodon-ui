@@ -62,7 +62,9 @@ const prefixCls = getConfig('prefixCls');
 | tableHighLightRow | 默认 Table 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | true |
 | tableSelectedHighLightRow | 默认 Table 当前勾选行高亮 | boolean | false |
 | tableParityRow | 默认 Table 奇偶行 | boolean |  |
-| tableRowHeight | 默认 Table 行高 | auto \| number | 30 |
+| tableRowHeight | 默认 Table 行高 | auto \| number \| ({ size }) => number \| auto | 30 |
+| tableHeaderRowHeight | 默认 Table 头行高 | auto \| number \| ({ size }) => number \| auto | tableRowHeight |
+| tableFooterRowHeight | 默认 Table 脚行高 | auto \| number \| ({ size }) => number \| auto | tableRowHeight |
 | tableExpandIcon | 默认 Table 自定义展开图标 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode |  |
 | tableSpinProps | 默认 Table spin 的属性 | SpinProps | { size: Size.default, wrapperClassName: '' } |
 | tableButtonProps | 默认 TableButton 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |

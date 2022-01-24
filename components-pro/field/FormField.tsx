@@ -546,19 +546,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @computed
-  get isValid(): boolean {
-    if (this.pristine) {
-      return true;
-    }
-    const { field } = this;
-    if (field) {
-      return field.isValid(this.record);
-    }
-    const { validationResults } = this;
-    if (validationResults) {
-      return !validationResults.length;
-    }
-    return true;
+  get valid(): boolean {
+    return this.isValid();
   }
 
   get multiple(): boolean {
@@ -641,6 +630,21 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   isEmpty() {
     const value = this.getValue();
     return isFieldValueEmpty(value, this.range, this.multiple);
+  }
+
+  isValid() {
+    if (this.pristine) {
+      return true;
+    }
+    const { field } = this;
+    if (field) {
+      return field.isValid(this.record);
+    }
+    const { validationResults } = this;
+    if (validationResults) {
+      return !validationResults.length;
+    }
+    return true;
   }
 
   isReadOnly(): boolean {
@@ -756,7 +760,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return super.getWrapperClassNames(
       {
         [`${prefixCls}-highlight`]: this.highlight,
-        [`${prefixCls}-invalid`]: !this.isValid,
+        [`${prefixCls}-invalid`]: !this.valid,
         [`${prefixCls}-float-label`]: this.hasFloatLabel,
         [`${prefixCls}-required`]: required,
         [`${prefixCls}-required-colors`]: required && (empty || !this.getContextConfig('showRequiredColorsOnlyEmpty')),
@@ -1496,7 +1500,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     const wrapper = this.renderWrapper();
     const { highlight, dataSet, record, name } = this;
     if (highlight) {
-      const hidden = !(this.hasFloatLabel || this.showValidation === ShowValidation.newLine || this.isValid);
+      const hidden = !(this.hasFloatLabel || this.showValidation === ShowValidation.newLine || this.valid);
       const highlightWrapper = this.highlightRenderer(transformHighlightProps(highlight, { dataSet, record, name, hidden }), wrapper);
       if (isValidElement(highlightWrapper)) {
         return highlightWrapper;

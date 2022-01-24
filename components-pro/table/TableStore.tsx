@@ -1327,17 +1327,13 @@ export default class TableStore {
   }
 
   get rowHeight(): 'auto' | number {
-    let rowHeight: 'auto' | number = 30;
-    if ('rowHeight' in this.props) {
-      rowHeight = this.props.rowHeight!;
-    } else {
-      const tableRowHeight = this.getConfig('tableRowHeight');
-      if (typeof tableRowHeight !== 'undefined') {
-        rowHeight = tableRowHeight;
-      }
+    const { rowHeight = defaultTo(this.getConfig('tableRowHeight'), 30) } = this.props;
+    const { size } = this;
+    if (typeof rowHeight === 'function') {
+      return rowHeight({ size });
     }
     if (isNumber(rowHeight)) {
-      switch (this.size) {
+      switch (size) {
         case Size.large:
           return rowHeight + 2;
         case Size.small:
@@ -1346,6 +1342,48 @@ export default class TableStore {
       }
     }
     return rowHeight;
+  }
+
+  get headerRowHeight(): 'auto' | number {
+    const { headerRowHeight = this.getConfig('tableHeaderRowHeight') } = this.props;
+    if (headerRowHeight === undefined) {
+      return this.rowHeight;
+    }
+    const { size } = this;
+    if (typeof headerRowHeight === 'function') {
+      return headerRowHeight({ size });
+    }
+    if (isNumber(headerRowHeight)) {
+      switch (size) {
+        case Size.large:
+          return headerRowHeight + 2;
+        case Size.small:
+          return headerRowHeight - 2;
+        default:
+      }
+    }
+    return headerRowHeight;
+  }
+
+  get footerRowHeight(): 'auto' | number {
+    const { footerRowHeight = this.getConfig('tableFooterRowHeight') } = this.props;
+    if (footerRowHeight === undefined) {
+      return this.rowHeight;
+    }
+    const { size } = this;
+    if (typeof footerRowHeight === 'function') {
+      return footerRowHeight({ size });
+    }
+    if (isNumber(footerRowHeight)) {
+      switch (size) {
+        case Size.large:
+          return footerRowHeight + 2;
+        case Size.small:
+          return footerRowHeight - 2;
+        default:
+      }
+    }
+    return footerRowHeight;
   }
 
   get autoFootHeight(): boolean {

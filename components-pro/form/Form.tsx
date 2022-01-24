@@ -1136,7 +1136,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     }
     prepareForReport.timeout = window.setTimeout(() => {
       if (!prepareForReport.result) {
-        const field = this.getFields().find(one => !one.isValid);
+        const field = this.getFields().find(one => !one.valid);
         if (field) {
           field.focus();
         }

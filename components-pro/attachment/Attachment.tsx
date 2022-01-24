@@ -676,6 +676,14 @@ export default class Attachment extends FormField<AttachmentProps> {
     return false;
   }
 
+  isValid(): boolean {
+    const { attachments } = this;
+    if (attachments && attachments.some(({ status, invalid }) => invalid || status === 'error')) {
+      return false;
+    }
+    return super.isValid();
+  }
+
   renderUploadBtn(isCardButton: boolean, label?: ReactNode): ReactElement<ButtonProps> {
     const {
       count = 0,
@@ -716,7 +724,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
         key="upload-btn"
         icon="file_upload"
-        color={this.isValid ? ButtonColor.primary : ButtonColor.red}
+        color={this.valid ? ButtonColor.primary : ButtonColor.red}
         {...rest}
         className={viewMode === 'popup' ? this.getMergedClassNames() : this.getClassName()}
         onMouseEnter={this.handleMouseEnter}

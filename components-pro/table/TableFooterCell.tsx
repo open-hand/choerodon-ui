@@ -22,7 +22,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   const { columnGroup, style, className, colSpan, right } = props;
   const { rowHeight, dataSet, prefixCls, tableStore } = useContext(TableContext);
   const { column } = columnGroup;
-  const { autoFootHeight, props: { footerRowHeight }, aggregation } = tableStore;
+  const { autoFootHeight, footerRowHeight, aggregation } = tableStore;
   const { footer, footerClassName, footerStyle = {}, align, name, command, lock } = column;
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classString = classNames(`${prefixCls}-cell`, {

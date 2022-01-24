@@ -15,8 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `onTabsChange`, `onButtonClick` properties.
-- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook.
+- 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight` properties.
+- 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook. `rowHeight` supports hooks.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 🌟 `configure`: Added `min`, `max` properties.
 - 🌟 `<pro>Table`: Added query bar type of `comboBar` and configuration item of queryBarProps.
@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
+- 💄 `<pro>Attachment`: The button displays a error color when the upload fails in `popup` mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `aggregation` mode.

@@ -439,17 +439,17 @@ export interface TableProps extends DataSetComponentProps {
    * 行高
    * @default 30
    */
-  rowHeight?: number | 'auto';
+  rowHeight?: number | 'auto' | ((props: { size: Size }) => 'auto' | number);
   /**
    * 头行高
    * @default rowHeight
    */
-  headerRowHeight?: number | 'auto';
+  headerRowHeight?: number | 'auto' | ((props: { size: Size }) => 'auto' | number);
   /**
    * 脚行高
    * @default rowHeight
    */
-  footerRowHeight?: number | 'auto';
+  footerRowHeight?: number | 'auto' | ((props: { size: Size }) => 'auto' | number);
   /**
    * 默认行是否展开，当dataSet没有设置expandField时才有效
    * @default false;
@@ -1700,22 +1700,22 @@ export default class Table extends DataSetComponent<TableProps> {
             />
             {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
             {!isFold &&
-              <Spin {...tableSpinProps} key="content">
-                <div {...this.getOtherProps()}>
-                  <div
-                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
-                    ref={this.saveContentRef}
-                    onScroll={this.handleBodyScroll}
-                  >
-                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                    {content}
-                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
-                  </div>
-                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
-                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+            <Spin {...tableSpinProps} key="content">
+              <div {...this.getOtherProps()}>
+                <div
+                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  ref={this.saveContentRef}
+                  onScroll={this.handleBodyScroll}
+                >
+                  {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                  {content}
+                  {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                 </div>
-              </Spin>
+                {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                {isStickySupport() && overflowX && <StickyShadow position="right" />}
+                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+              </div>
+            </Spin>
             }
             {!isFold && this.getFooter()}
             {!isFold && this.getPagination(TablePaginationPosition.bottom)}
