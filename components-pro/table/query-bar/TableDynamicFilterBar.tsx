@@ -510,19 +510,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
-   * 注入 onEnterDown 事件
+   * 注入 refEditors
    * @param element
    * @param name
    */
   createFields(element, name): ReactElement {
-    const { onEnterDown } = element.props;
-    if (onEnterDown && isFunction(onEnterDown)) {
-      return element;
-    }
     const props: any = {
-      onEnterDown: () => {
-        this.handleQuery();
-      },
       ref: (node) => this.refEditors.set(name, node),
     };
     return cloneElement(element, props);
@@ -823,7 +816,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     key={name}
                     onClick={() => {
                       const editor = this.refEditors.get(name);
-                      if (editor && Object.prototype.hasOwnProperty.call(editor, 'focus')) {
+                      if (editor) {
                         this.refEditors.get(name).focus();
                       }
                     }}
@@ -842,7 +835,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     <div
                       className={`${prefixCls}-filter-content`}
                       key={name}
-                      onClick={() => this.refEditors.get(name).focus()}
+                      onClick={() => {
+                        const editor = this.refEditors.get(name);
+                        if (editor) {
+                          this.refEditors.get(name).focus();
+                        }
+                      }}
                     >
                       <Icon
                         type="cancel"
