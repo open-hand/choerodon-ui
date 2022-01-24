@@ -361,4 +361,63 @@
     padding: .05rem .1rem 0 .1rem;
     background-color: @component-background;
   }
+
+  &-drag {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: #FFF;
+    border: @border-width-base dashed @border-color-base;
+    border-radius: @border-radius-base;
+    cursor: pointer;
+    transition: border-color @animation-duration-slow;
+
+    &-hover:not(.@{pro-attachment-prefix-cls}-disabled) {
+      border: 0.01rem dashed @primary-8;
+    }
+
+    &-disabled {
+      cursor: not-allowed;
+    }
+
+    .@{pro-attachment-prefix-cls}-btn {
+      height: 100%;
+    }
+
+    .@{pro-attachment-prefix-cls}-drag-container {
+      display: table-cell;
+      width: 5rem;
+      height: 2rem;
+      vertical-align: middle;
+    }
+
+    &:not(.@{pro-attachment-prefix-cls}-disabled):hover {
+      border-color: @primary-5;
+    }
+
+    &-box {
+      padding: 0.16rem 0;
+      &-icon {
+        .@{iconfont-css-prefix} {
+          color: @primary-5;
+          font-size: 0.18rem;
+        }
+        margin-bottom: 0.09rem;
+      }
+      &-text {
+        color: @heading-color;
+        font-weight: 400;
+        font-size: @font-size-sm;
+        line-height: 0.2rem;
+      }
+      &-hint {
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+      }
+    }
+  }
+  &-drag-hover {
+    background-color: @background-color-light;
+  }
 }
