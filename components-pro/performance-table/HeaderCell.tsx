@@ -29,7 +29,7 @@ export interface HeaderCellProps extends CellProps {
   flexGrow?: number;
   fixed?: boolean | 'left' | 'right';
   dataIndex?: string;
-  onMouseEnterHandler?: (left: number, fixed: string | boolean | undefined) => void;
+  onMouseEnterHandler?: (columnWidth: number, left: number, fixed: string | boolean | undefined) => void;
   onMouseLeaveHandler?: () => void;
 }
 
@@ -91,9 +91,9 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     };
   }
 
-  handleColumnResizeStart = () => {
+  handleColumnResizeStart = (columnWidth: number) => {
     const { left = 0, fixed, onColumnResizeStart, resizeLeft = 0 } = this.props;
-    onColumnResizeStart?.(this.state.columnWidth, left + resizeLeft, !!fixed);
+    onColumnResizeStart?.(columnWidth, left + resizeLeft, !!fixed);
   };
 
   handleColumnResizeMove = (width, left = 0, fixed) => {
@@ -114,9 +114,9 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     }
   };
 
-  handleShowMouseArea = (left) => {
-    const { onMouseEnterHandler = noop, fixed } = this.props;
-    onMouseEnterHandler(left, fixed);
+  handleShowMouseArea = (columnWidth: number) => {
+    const { onMouseEnterHandler = noop, fixed, left = 0, resizeLeft = 0  } = this.props;
+    onMouseEnterHandler(columnWidth, left + resizeLeft, !!fixed);
   };
 
   // @ts-ignore
@@ -124,7 +124,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
 
   renderResizeSpanner() {
     const { resizable, left = 0, onMouseLeaveHandler, fixed, headerHeight, minWidth, groupCount, children, style } = this.props;
-    const { columnWidth } = this.state;
+    const { columnWidth = 0 } = this.state;
 
     if (!resizable) {
       return null;
@@ -147,9 +147,9 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
         minWidth={minWidth}
         style={{ top: style ? style.top : 0 }}
         onColumnResizeMove={this.handleColumnResizeMove}
-        onColumnResizeStart={this.handleColumnResizeStart}
+        onColumnResizeStart={() => this.handleColumnResizeStart(defaultColumnWidth)}
         onColumnResizeEnd={this.handleColumnResizeEnd}
-        onMouseEnterHandler={this.handleShowMouseArea}
+        onMouseEnterHandler={() => this.handleShowMouseArea(defaultColumnWidth)}
         onMouseLeaveHandler={onMouseLeaveHandler}
       />
     );
