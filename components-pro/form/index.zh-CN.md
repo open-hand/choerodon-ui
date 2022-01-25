@@ -34,7 +34,8 @@ title: Form
 | onReset | 重置回调 | Function |  |
 | onSuccess | 提交成功回调 | Function |  |
 | onError | 提交失败回调 | Function |  |
-| separateSpacing | 切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合labelwidth效果会更好 | {width:number,height:number} | - |
+| separateSpacing | 切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合labelwidth效果会更好 | number \| \[number, number \] \| {width:number,height:number} | - |
+| spacingType | 间隔类型， 可选值 `between` `aroung` `evenly` | SpacingType \| \[SpacingType, SpacingType\] \| {width:SpacingType,height:SpacingType} | 'between' |
 | fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | |
 

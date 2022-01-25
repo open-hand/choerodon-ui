@@ -20,7 +20,8 @@
 
   &-label {
     padding: @label-wrapper-padding;
-    color: @label-color-horizontal;
+    padding-top: 0;
+    padding-bottom: 0;
 
     &-right {
       text-align: right;
@@ -33,6 +34,10 @@
     label {
       display: flex;
       align-items: baseline;
+      padding: @label-wrapper-padding;
+      padding-right: 0;
+      padding-left: 0;
+      color: @label-color-horizontal;
 
       > span {
         flex: 1;

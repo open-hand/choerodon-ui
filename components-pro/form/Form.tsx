@@ -2,13 +2,12 @@ import React, {
   Children,
   cloneElement,
   createElement,
-  CSSProperties,
   FormEvent,
   FormEventHandler,
   isValidElement,
+  MouseEvent,
   ReactElement,
   ReactNode,
-  MouseEvent,
 } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -31,15 +30,20 @@ import FormContext, { FormContextValue, FormProvider } from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation } from './enum';
+import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation, SpacingType } from './enum';
 import {
   defaultColumns,
   defaultExcludeUseColonTag,
   defaultLabelWidth,
   FIELD_SUFFIX,
   getProperty,
+  getSpacingFieldStyle,
+  getSpacingLabelStyle,
+  getSpacingProperties,
   hasParentElement,
   normalizeLabelWidth,
+  normalizeSeparateSpacing,
+  normalizeSpacingType,
 } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
@@ -67,6 +71,7 @@ export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign 
 export type LabelLayoutType = LabelLayout | { [key in ResponsiveKeys]: LabelLayout };
 export type ColumnsType = number | { [key in ResponsiveKeys]: number };
 export type SeparateSpacing = { width: number; height: number }
+export type SpacingTypeMap = { width: SpacingType; height: SpacingType }
 
 export interface FormProps extends DataSetComponentProps {
   /**
@@ -173,7 +178,12 @@ export interface FormProps extends DataSetComponentProps {
   /**
    * 切分单元格间隔，当label布局为默认值horizontal时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好
    */
-  separateSpacing?: SeparateSpacing;
+  separateSpacing?: number | [number, number] | SeparateSpacing;
+  /**
+   * 切分单元格间隔类型
+   * @default SpacingType.around
+   */
+  spacingType?: SpacingType | [SpacingType, SpacingType] | SpacingTypeMap;
   axios?: AxiosInstance;
   acceptCharset?: string;
   encType?: string;
@@ -313,6 +323,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
      */
     onError: PropTypes.func,
     separateSpacing: PropTypes.object,
+    spacingType: PropTypes.string,
     /**
      * 校验信息提示方式
      */
@@ -539,7 +550,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   get separateSpacing(): SeparateSpacing | undefined {
     const { separateSpacing } = this.observableProps;
     if (separateSpacing) {
-      const { width = 0, height = 0 } = separateSpacing;
+      const { width = 0, height = 0 } = normalizeSeparateSpacing(separateSpacing);
       if (width || height) {
         return {
           width,
@@ -558,6 +569,11 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     }
     return undefined;
+  }
+
+  get spacingType(): SpacingTypeMap {
+    const { spacingType } = this.props;
+    return normalizeSpacingType(spacingType);
   }
 
   isReadOnly() {
@@ -621,6 +637,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       'useColon',
       'excludeUseColonTagList',
       'separateSpacing',
+      'spacingType',
       'fieldHighlightRenderer',
       'layout',
       'showValidation',
@@ -771,8 +788,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
     const childrenArray: (ReactElement<any> & { ref })[] = [];
-    const separateSpacingWidth: number = this.separateSpacing ? this.separateSpacing.width / 2 : 0;
+    const { separateSpacing } = this;
     const isLabelLayoutHorizontal = labelLayout === LabelLayout.horizontal;
+    const spacingProperties = separateSpacing ? getSpacingProperties(separateSpacing, this.spacingType, isLabelLayoutHorizontal) : undefined;
     let isAllOutputCom = true;
     Children.forEach<ReactNode>(children, (child) => {
       if (isValidElement(child)) {
@@ -904,7 +922,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
-            paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth) : undefined}
+            style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
           >
@@ -922,9 +940,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1)}
           rowSpan={rowSpan}
           className={fieldClassName}
-          style={this.labelLayout === LabelLayout.horizontal
-          && separateSpacingWidth
-            ? { paddingRight: pxToRem(separateSpacingWidth) } : undefined}
+          style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
         >
           {labelLayout === LabelLayout.vertical && !!label && (
             <>
@@ -957,7 +973,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             <col
               key={key}
               // 优化当使用 separateSpacing label 宽度太窄问题
-              style={{ width: pxToRem(labelLayout === LabelLayout.horizontal ? separateSpacingWidth + columnLabelWidth : columnLabelWidth) }}
+              style={{ width: pxToRem(spacingProperties ? spacingProperties.paddingHorizontal + columnLabelWidth : columnLabelWidth) }}
             />,
           );
         }
@@ -973,24 +989,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     }
 
-    let tableStyle: CSSProperties | undefined;
-    const { separateSpacing } = this;
-    if (separateSpacing) {
-      if (labelLayout === LabelLayout.horizontal) {
-        tableStyle = {
-          borderCollapse: 'separate',
-          borderSpacing: `0rem ${pxToRem(separateSpacing.height)}`,
-        };
-      } else {
-        tableStyle = {
-          borderCollapse: 'separate',
-          borderSpacing: `${pxToRem(separateSpacing.width)} ${pxToRem(separateSpacing.height)}`,
-        };
-      }
-    }
-
     return (
-      <table key="form-body" style={tableStyle} className={`${isAutoWidth ? 'auto-width' : ''}`}>
+      <table key="form-body" style={spacingProperties && spacingProperties.style} className={`${isAutoWidth ? 'auto-width' : ''}`}>
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
       </table>

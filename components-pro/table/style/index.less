@@ -18,7 +18,7 @@
   font-size: @font-size-base;
   outline: none;
 
-  &-fold{
+  &-fold {
     display: none;
   }
 
@@ -76,16 +76,19 @@
     justify-content: space-between;
   }
 
-  &-export-modal-footer{
+  &-export-modal-footer {
     display: flex;
     justify-content: space-between;
-    &-radio{
+
+    &-radio {
       display: flex;
-      label:first-child{
+
+      label:first-child {
         margin-right: .24rem;
       }
     }
-    &-operation{
+
+    &-operation {
       margin-left: .4rem;
     }
   }
@@ -352,13 +355,26 @@
     }
   }
 
-  &-thead &-cell {
-    padding: @table-header-cell-padding-vertical-base @table-header-cell-padding-horizontal-base;
+  &-thead &-cell when not(@table-header-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
+    padding-top: @table-header-cell-padding-vertical-base;
+    padding-bottom: @table-header-cell-padding-vertical-base;
   }
 
-  &-tfoot &-cell {
-    padding: @table-footer-cell-padding-vertical-base @table-footer-cell-padding-horizontal-base;
+  &-thead &-cell when not(@table-header-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
+    padding-right: @table-header-cell-padding-horizontal-base;
+    padding-left: @table-header-cell-padding-horizontal-base;
   }
+
+  &-tfoot &-cell when not(@table-footer-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
+    padding-top: @table-footer-cell-padding-vertical-base;
+    padding-bottom: @table-footer-cell-padding-vertical-base;
+  }
+
+  &-tfoot &-cell when not(@table-footer-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
+    padding-right: @table-footer-cell-padding-horizontal-base;
+    padding-left: @table-footer-cell-padding-horizontal-base;
+  }
+
   &-thead &-cell,
   &-tfoot &-cell {
     position: relative;
@@ -394,7 +410,8 @@
       padding-left: 0 !important;
     }
   }
-  &-inline-query{
+
+  &-inline-query {
     cursor: pointer;
   }
 
@@ -875,6 +892,7 @@
         text-align: left;
       }
     }
+
     &-options .@{table-prefix-cls}-filter-select-hidden {
       display: none;
     }
@@ -1363,53 +1381,65 @@
     justify-content: flex-start;
     height: 0.3rem;
     margin-bottom: 0.08rem;
+
     &-select {
       width: 1.6rem;
       margin: -0.01rem -0.06rem;
     }
+
     &-fold-icon {
       position: absolute;
       right: 0.16rem;
       cursor: pointer;
     }
+
     &-action-button {
-      margin: 0 0.16rem 0 0 ;
+      margin: 0 0.16rem 0 0;
       padding: 0.04rem;
       background: @table-row-search-bg;
       border: 0;
+
       &:hover {
         background: #e8e8e8;
       }
     }
+
     &-action-menu {
       .c7n-menu-submenu-title {
         min-width: 1.2rem;
         padding-left: 0.16rem;
       }
     }
+
     &-filter {
       display: flex;
       align-items: center;
+
       > span {
         margin-right: 0.04rem;
         color: #595959;
         font-size: 0.14rem;
         line-height: 0.22rem;
       }
+
       &-title {
         margin-right: 0.16rem;
+
         &:first-child {
           margin-left: 0;
         }
+
         color: rgba(0, 0, 0, 0.85);
         font-weight: 400;
         font-size: 14px;
         line-height: 22px;
       }
+
       &-buttons {
         flex-shrink: 0;
         margin-right: 0.16rem;
       }
+
       .toolbar-icon {
         width: 0.16rem;
         height: 0.16rem;
@@ -1423,15 +1453,17 @@
         }
       }
     }
-    &-fold{
+
+    &-fold {
       position: absolute;
       right: 0;
       cursor: pointer;
       transition: all @animation-duration-slow @ease-in-out-circ;
+
       &:hover,
-        &.active {
-          color: @primary-color;
-        }
+      &.active {
+        color: @primary-color;
+      }
     }
   }
 
@@ -1520,6 +1552,7 @@
     background-color: @table-row-search-bg;
     border-bottom: @table-border;
   }
+
   &-thead-inline-search-last {
     box-shadow: -@border-width-base 0 0 @table-border-color;
   }
@@ -1653,16 +1686,34 @@
 
 .sm() {
   &-small {
-    .@{table-prefix-cls}-cell {
-      padding: @table-cell-padding-vertical-sm @table-cell-padding-horizontal-sm;
+    .@{table-prefix-cls}-cell when not(@table-cell-padding-vertical-sm = @table-cell-padding-vertical-base) {
+      padding-top: @table-cell-padding-vertical-sm;
+      padding-bottom: @table-cell-padding-vertical-sm;
     }
 
-    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell {
-      padding: @table-header-cell-padding-vertical-sm @table-header-cell-padding-horizontal-sm;
+    .@{table-prefix-cls}-cell when not(@table-cell-padding-horizontal-sm = @table-cell-padding-horizontal-base) {
+      padding-right: @table-cell-padding-horizontal-sm;
+      padding-left: @table-cell-padding-horizontal-sm;
     }
 
-    .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell {
-      padding: @table-footer-cell-padding-vertical-sm @table-footer-cell-padding-horizontal-sm;
+    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell when not(@table-header-cell-padding-vertical-sm = @table-header-cell-padding-vertical-base) {
+      padding-top: @table-header-cell-padding-vertical-sm;
+      padding-bottom: @table-header-cell-padding-vertical-sm;
+    }
+
+    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell when not(@table-header-cell-padding-horizontal-sm = @table-header-cell-padding-horizontal-base) {
+      padding-right: @table-header-cell-padding-horizontal-sm;
+      padding-left: @table-header-cell-padding-horizontal-sm;
+    }
+
+    .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell when not(@table-footer-cell-padding-vertical-sm = @table-footer-cell-padding-vertical-base) {
+      padding-top: @table-footer-cell-padding-vertical-sm;
+      padding-bottom: @table-footer-cell-padding-vertical-sm;
+    }
+
+    .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell when not(@table-footer-cell-padding-horizontal-sm = @table-footer-cell-padding-horizontal-base) {
+      padding-right: @table-footer-cell-padding-horizontal-sm;
+      padding-left: @table-footer-cell-padding-horizontal-sm;
     }
   }
 }
