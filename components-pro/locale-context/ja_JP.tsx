@@ -152,6 +152,7 @@ const locale: Locale = {
     file_max_size: 'ファイルサイズは次を超えることはできません：{size}',
     file_list_max_length: 'ファイルの最大数は次のように制限されています：{count}',
     file_type_mismatch: 'ファイルタイプの不一致、正しいタイプ：{types}',
+    drag_info: 'ここでファイルをクリックまたはドラッグしてアップロードします',
   },
   Modal: {
     ok: 'OK',
