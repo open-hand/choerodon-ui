@@ -1276,8 +1276,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { value },
     },
   }) {
-    if (key === MORE_KEY) {
-      this.options.queryMore(this.options.currentPage + 1);
+    const { searchMatcher } = this;
+    if (key === MORE_KEY && isString(searchMatcher)) {
+      this.options.queryMore(this.options.currentPage + 1, this.getSearchPara(searchMatcher, super.text));
+    } else if (key === MORE_KEY) {
+      this.options.queryMore(this.options.currentPage + 1)
     } else if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
     } else {
@@ -1309,9 +1312,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @action
-  setText(text?: string): void {
+  setText(text?: string, isDifference?: boolean): void {
     super.setText(text);
-    if (this.searchable && !this.isSearchFieldInPopup()) {
+    // isDifference - 判断加上前后的值是否不一致才搜索
+    if (this.searchable && !this.isSearchFieldInPopup() && isDifference) {
       this.doSearch(text);
     }
   }
@@ -1379,7 +1383,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       target.value = restricted;
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
-    this.setText(restricted);
+    this.setText(restricted, super.text !== restricted);
     if (this.observableProps.combo) {
       if (type !== 'compositionend') {
         this.generateComboOption(restricted, text => this.setText(text));
