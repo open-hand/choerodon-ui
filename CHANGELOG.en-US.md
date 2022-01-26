@@ -43,6 +43,8 @@ timeline: true
 - 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
 - 🐞 `<pro>DataSet`: Fixed the issue that the page could not be turned after submitting the write-back data successfully.
 - 🐞 `<pro>Select`: Fix the problem that the drop-down box is not aligned when the browser font size is not default.
+- 🐞 `<pro>Select`: Fixed the search content mismatch caused by drop-down paging search without transferring parameters on the second page.
+- 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
 - 🐞 Fix the style problem when the browser font size is not default.
 
 ## 1.5.1
