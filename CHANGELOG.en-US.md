@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that selecting all in the check column was disabled.
+- 🐞 `<pro>PerformanceTable`: Fix an issue where dragging column width under combined column indicates incorrect line position.
 - 🐞 `<pro>Lov`: Fixed `z-index` style in drawer mode.
 - 🐞 `<pro>Record`: Fixed the problem of incorrectly filtering 0 and false in multi-select mode.
 - 🐞 `<pro>DataSet`: Fixed the issue that the page could not be turned after submitting the write-back data successfully.

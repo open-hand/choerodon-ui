@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。修复设置了 step 且 max 小于 0 时, 数据校验错误的问题。
 - 🐞 `<pro>Range`: 修复 range 模式下，拖拽一滑块后，无法拖动另一滑块的问题。
 - 🐞 `<pro>PerformanceTable`: 修复勾选列全选被禁用的问题。
+- 🐞 `<pro>PerformanceTable`: 修复组合列下拖拽列宽指示线位置错误的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下的样式叠加问题。
 - 🐞 `<pro>Record`: 修复多选模式下错误过滤 0 和 false 的问题。
 - 🐞 `<pro>DataSet`: 修复提交回写数据成功后无法翻页的问题。
