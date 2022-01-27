@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 
 export interface ColumnProps {
   align?: 'left' | 'center' | 'right';
@@ -46,25 +45,25 @@ Column.defaultProps = {
   sortable: false,
 };
 
-Column.propTypes = {
-  align: PropTypes.oneOf(['left', 'center', 'right']),
-  verticalAlign: PropTypes.oneOf(['top', 'middle', 'bottom']),
-  width: PropTypes.number,
-  fixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-  resizable: PropTypes.bool,
-  sortable: PropTypes.bool,
-  flexGrow: PropTypes.number,
-  minWidth: PropTypes.number,
-  colSpan: PropTypes.number,
-  sort: PropTypes.number,
-  treeCol: PropTypes.bool,
-  hidden: PropTypes.bool,
-  hideable: PropTypes.bool,
-  titleEditable: PropTypes.bool,
-  onResize: PropTypes.func,
-  render: PropTypes.func,
-  dataIndex: PropTypes.string,
-};
+export const ColumnPropTypeKeys = [
+  'align',
+  'verticalAlign',
+  'width',
+  'fixed',
+  'resizable',
+  'sortable',
+  'flexGrow',
+  'minWidth',
+  'colSpan',
+  'sort',
+  'treeCol',
+  'hidden',
+  'hideable',
+  'titleEditable',
+  'onResize',
+  'render',
+  'dataIndex',
+];
 
 Column.__PFM_TABLE_COLUMN = true;
 

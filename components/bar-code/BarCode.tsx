@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useCallback, useEffect, useRef } from 'react';
-
+import defaultTo from 'lodash/defaultTo';
 import JsBarCode from 'jsbarcode';
 import { QRBarCodeProps } from './index';
 
@@ -14,8 +14,8 @@ const BarCode: FunctionComponent<QRBarCodeProps> = function BarCode(props) {
       if (canvasRef || svgRef)
         JsBarCode(renderAs === 'canvas' ? canvasRef : svgRef, value, {
           ...option,
-          background: option?.background || bgColor,
-          lineColor: option?.lineColor || fgColor,
+          background: defaultTo(option && option.background, bgColor),
+          lineColor: defaultTo(option && option.lineColor, fgColor),
         });
     } catch (error) {
       console.warn(error);

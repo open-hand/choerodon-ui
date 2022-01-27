@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import moment, { Moment } from 'moment';
 import noop from 'lodash/noop';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -57,22 +56,6 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     mode: 'month',
     onSelect: noop,
     onPanelChange: noop,
-  };
-
-  static propTypes = {
-    monthCellRender: PropTypes.func,
-    dateCellRender: PropTypes.func,
-    monthFullCellRender: PropTypes.func,
-    dateFullCellRender: PropTypes.func,
-    fullscreen: PropTypes.bool,
-    locale: PropTypes.object,
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    onPanelChange: PropTypes.func,
-    value: PropTypes.object,
-    onSelect: PropTypes.func,
-    mode: PropTypes.string,
   };
 
   context: ConfigContextValue;

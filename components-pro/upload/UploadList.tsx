@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { FormField, FormFieldProps } from '../field/FormField';
 import Icon from '../icon';
@@ -16,12 +15,6 @@ export interface UploadListProps extends FormFieldProps {
 
 export default class UploadList extends FormField<UploadListProps> {
   static displayName = 'UploadList';
-
-  static propTypes = {
-    items: PropTypes.array,
-    remove: PropTypes.func,
-    ...FormField.propTypes,
-  };
 
   static defaultProps = {
     ...FormField.defaultProps,

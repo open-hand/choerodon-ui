@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -24,18 +23,6 @@ export interface IconItemProps {
 @observer
 export default class IconCategory extends Component<IconItemProps> {
   static displayName = 'IconCategory';
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    icons: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.string).isRequired,
-    value: PropTypes.string,
-    onSelect: PropTypes.func.isRequired,
-    onPageChange: PropTypes.func,
-    pageSize: PropTypes.number,
-    page: PropTypes.number,
-    paging: PropTypes.bool,
-    customFontName: PropTypes.string,
-  };
 
   static defaultProps = {
     paging: true,

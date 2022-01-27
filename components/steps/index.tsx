@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, useContext } from 'react';
-import PropTypes from 'prop-types';
 import RcSteps, { Step, StepGroup } from '../rc-components/steps';
 import { Size } from '../_util/enum';
 import ConfigContext from '../config-provider/ConfigContext';
@@ -53,12 +52,6 @@ Steps.StepGroup = StepGroup as React.ClassicComponentClass<StepProps>;
 Steps.defaultProps = {
   iconPrefix: 'icon',
   current: 0,
-};
-
-Steps.propTypes = {
-  prefixCls: PropTypes.string,
-  iconPrefix: PropTypes.string,
-  current: PropTypes.number,
 };
 
 export default Steps;

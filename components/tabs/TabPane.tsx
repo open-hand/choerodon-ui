@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, ReactNode, useEffect, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useEffect, useState } from 'react';
 import classnames from 'classnames';
 import { getDataAttr } from './utils';
 import { CountRendererProps } from './Count';
@@ -21,6 +21,7 @@ export interface TabPaneProps {
   showCount?: boolean;
   placeholder?: ReactNode;
   sort?: number;
+  children?: ReactNode;
 }
 
 const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
@@ -63,4 +64,4 @@ TabPane.defaultProps = {
   showCount: true,
 };
 
-export default TabPane;
+export default memo(TabPane, (props, nextProps) => !props.active && !nextProps.active);

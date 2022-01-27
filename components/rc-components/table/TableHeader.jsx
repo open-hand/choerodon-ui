@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import TableHeaderRow from './TableHeaderRow';
+import TableContext from './TableContext';
 
 function getHeaderRows(columns, currentRow = 0, rows) {
   rows = rows || [];
@@ -35,7 +35,8 @@ function getHeaderRows(columns, currentRow = 0, rows) {
   return rows.filter(row => row.length > 0);
 }
 
-export default function TableHeader(props, { table }) {
+export default function TableHeader(props) {
+  const table = useContext(TableContext);
   const { components } = table;
   const { prefixCls, showHeader, onHeaderRow } = table.props;
   const { expander, columns, fixed } = props;
@@ -69,14 +70,3 @@ export default function TableHeader(props, { table }) {
     </HeaderWrapper>
   );
 }
-
-TableHeader.propTypes = {
-  fixed: PropTypes.string,
-  columns: PropTypes.array.isRequired,
-  expander: PropTypes.object.isRequired,
-  onHeaderRow: PropTypes.func,
-};
-
-TableHeader.contextTypes = {
-  table: PropTypes.any,
-};

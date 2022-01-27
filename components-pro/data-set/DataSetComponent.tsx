@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { computed } from 'mobx';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import DataSet from './DataSet';
@@ -15,11 +14,6 @@ export interface DataSetComponentProps extends ViewComponentProps {
 }
 
 export default class DataSetComponent<T extends DataSetComponentProps, C extends ConfigContextValue = ConfigContextValue> extends ViewComponent<T, C> {
-  static propTypes = {
-    dataSet: PropTypes.object,
-    ...ViewComponent.propTypes,
-  };
-
   get dataSet(): DataSet | undefined {
     return this.observableProps.dataSet;
   }

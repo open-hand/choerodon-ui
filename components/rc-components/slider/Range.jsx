@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import Track from './common/Track';
@@ -9,18 +8,6 @@ import * as utils from './utils';
 
 class Range extends Component {
   static displayName = 'Range';
-  static propTypes = {
-    defaultValue: PropTypes.arrayOf(PropTypes.number),
-    value: PropTypes.arrayOf(PropTypes.number),
-    count: PropTypes.number,
-    pushable: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.number,
-    ]),
-    allowCross: PropTypes.bool,
-    disabled: PropTypes.bool,
-    tabIndex: PropTypes.arrayOf(PropTypes.number),
-  };
 
   static defaultProps = {
     count: 1,

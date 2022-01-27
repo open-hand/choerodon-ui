@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
 import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
 import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
@@ -13,26 +12,6 @@ import Ripple from '../../ripple';
 
 const MenuItem = createReactClass({
   displayName: 'MenuItem',
-
-  propTypes: {
-    rootPrefixCls: PropTypes.string,
-    eventKey: PropTypes.string,
-    active: PropTypes.bool,
-    children: PropTypes.any,
-    selectedKeys: PropTypes.array,
-    disabled: PropTypes.bool,
-    checkable: PropTypes.bool,
-    title: PropTypes.string,
-    onItemHover: PropTypes.func,
-    onSelect: PropTypes.func,
-    onClick: PropTypes.func,
-    onDeselect: PropTypes.func,
-    parentMenu: PropTypes.object,
-    onDestroy: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onMouseDown: PropTypes.func,
-  },
 
   getDefaultProps() {
     return {

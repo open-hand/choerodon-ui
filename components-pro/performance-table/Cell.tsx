@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { runInAction } from 'mobx';
-import PropTypes from 'prop-types';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import { LAYER_WIDTH } from './constants';
-import { isNullOrUndefined, defaultClassPrefix, getUnhandledProps, prefix } from './utils';
+import { defaultClassPrefix, getUnhandledProps, isNullOrUndefined, prefix } from './utils';
 import TableContext from './TableContext';
-import Column from './Column';
-import { StandardProps, RowDataType } from './common';
+import { ColumnPropTypeKeys } from './Column';
+import { RowDataType, StandardProps } from './common';
 
 export interface CellProps extends StandardProps {
   align?: 'left' | 'center' | 'right';
@@ -55,44 +54,43 @@ export interface CellProps extends StandardProps {
   isDragging?: boolean;
 }
 
-export const propTypes = {
-  align: PropTypes.oneOf(['left', 'center', 'right']),
-  verticalAlign: PropTypes.oneOf(['top', 'middle', 'bottom']),
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  dataKey: PropTypes.string,
-  isHeaderCell: PropTypes.bool,
-  width: PropTypes.number,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  left: PropTypes.number,
-  headerHeight: PropTypes.number,
-  style: PropTypes.object,
-  firstColumn: PropTypes.bool,
-  lastColumn: PropTypes.bool,
-  hasChildren: PropTypes.bool,
-  children: PropTypes.any,
-  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  rowIndex: PropTypes.number,
-  rowData: PropTypes.object,
-  depth: PropTypes.number,
-  onTreeToggle: PropTypes.func,
-  renderTreeToggle: PropTypes.func,
-  renderCell: PropTypes.func,
-  wordWrap: PropTypes.bool,
-  hidden: PropTypes.bool,
-  treeCol: PropTypes.bool,
-  expanded: PropTypes.bool,
-  groupHeader: PropTypes.node,
-  groupCount: PropTypes.number,
-  isDragging: PropTypes.bool,
-};
+export const propTypeKeys = [
+  'align',
+  'verticalAlign',
+  'className',
+  'classPrefix',
+  'dataKey',
+  'isHeaderCell',
+  'width',
+  'height',
+  'left',
+  'headerHeight',
+  'style',
+  'firstColumn',
+  'lastColumn',
+  'hasChildren',
+  'children',
+  'rowKey',
+  'rowIndex',
+  'rowData',
+  'depth',
+  'onTreeToggle',
+  'renderTreeToggle',
+  'renderCell',
+  'wordWrap',
+  'hidden',
+  'treeCol',
+  'expanded',
+  'groupHeader',
+  'groupCount',
+  'isDragging',
+];
 
 class Cell extends React.PureComponent<CellProps> {
   static get contextType() {
     return TableContext;
   }
 
-  static propTypes = propTypes;
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell'),
     headerHeight: 36,
@@ -127,8 +125,10 @@ class Cell extends React.PureComponent<CellProps> {
   }
 
   handleExpandClick = (event: React.MouseEvent) => {
-    const { rowKey, rowIndex, rowData } = this.props;
-    this.props.onTreeToggle?.(rowKey, rowIndex, rowData, event);
+    const { rowKey, rowIndex, rowData, onTreeToggle } = this.props;
+    if (onTreeToggle) {
+      onTreeToggle(rowKey, rowIndex, rowData, event);
+    }
   };
 
   renderTreeNodeExpandIcon() {
@@ -251,7 +251,7 @@ class Cell extends React.PureComponent<CellProps> {
     }
 
     // fix unable to get propTypes after gatsby is compiled
-    const unhandledProps = getUnhandledProps(propTypes, getUnhandledProps(Column.propTypes, rest));
+    const unhandledProps = getUnhandledProps(propTypeKeys, getUnhandledProps(ColumnPropTypeKeys, rest));
     let cell = renderCell ? renderCell(cellContent) : cellContent;
     const { searchText, highlightRowIndexs } = tableStore;
     if (isNumber(cell)) cell = String(cell);

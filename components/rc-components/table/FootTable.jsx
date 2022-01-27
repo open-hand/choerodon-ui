@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import measureScrollbar from '../../_util/measureScrollbar';
 import BaseTable from './BaseTable';
+import TableContext from './TableContext';
 
-export default function FootTable(props, { table }) {
+export default function FootTable(props) {
+  const table = useContext(TableContext);
   const { prefixCls, scroll } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
   const { saveRef, columnManager } = table;
@@ -44,18 +45,3 @@ export default function FootTable(props, { table }) {
     </div>
   );
 }
-
-FootTable.propTypes = {
-  fixed: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
-  columns: PropTypes.array.isRequired,
-  tableClassName: PropTypes.string.isRequired,
-  handleBodyScrollLeft: PropTypes.func.isRequired,
-  expander: PropTypes.object.isRequired,
-};
-
-FootTable.contextTypes = {
-  table: PropTypes.any,
-};

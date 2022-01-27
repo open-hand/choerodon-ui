@@ -9,7 +9,6 @@ import React, {
   ReactElement,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { action as mobxAction, computed, isArrayLike, observable, runInAction } from 'mobx';
@@ -191,20 +190,6 @@ export interface FormProps extends DataSetComponentProps {
   showHelp?: ShowHelp;
 }
 
-const labelWidthPropTypes = PropTypes.oneOfType([
-  PropTypes.number,
-  PropTypes.oneOf(['auto']),
-  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])),
-]);
-const labelAlignPropTypes = PropTypes.oneOf([LabelAlign.left, LabelAlign.center, LabelAlign.right]);
-const labelLayoutPropTypes = PropTypes.oneOf([
-  LabelLayout.horizontal,
-  LabelLayout.vertical,
-  LabelLayout.placeholder,
-  LabelLayout.float,
-  LabelLayout.none,
-]);
-
 @observer
 export default class Form extends DataSetComponent<FormProps, FormContextValue> implements IForm {
   static displayName = 'Form';
@@ -212,125 +197,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   static FormVirtualGroup = FormVirtualGroup;
 
   static Item = Item;
-
-  static propTypes = {
-    /**
-     * 表单提交请求地址
-     */
-    action: PropTypes.string,
-    /**
-     * 表单提交的HTTP Method
-     * 可选值：POST | GET
-     * @default POST
-     */
-    method: PropTypes.string,
-    /**
-     * 表单提交的目标
-     * 当表单设置了设置target且没有dataSet时作浏览器默认提交，否则作Ajax提交
-     */
-    target: PropTypes.string,
-    /**
-     * Ajax提交时的参数回调
-     */
-    processParams: PropTypes.func,
-    /**
-     * 只读
-     */
-    readOnly: PropTypes.bool,
-    /**
-     * 内部控件的标签的宽度
-     */
-    labelWidth: PropTypes.oneOfType([
-      labelWidthPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelWidthPropTypes,
-        [ResponsiveKeys.sm]: labelWidthPropTypes,
-        [ResponsiveKeys.md]: labelWidthPropTypes,
-        [ResponsiveKeys.lg]: labelWidthPropTypes,
-        [ResponsiveKeys.xl]: labelWidthPropTypes,
-        [ResponsiveKeys.xxl]: labelWidthPropTypes,
-      }),
-    ]),
-    useColon: PropTypes.bool,
-    excludeUseColonTagList: PropTypes.array,
-    /**
-     * 标签文字对齐方式
-     * 可选值： 'left' | 'center' | 'right'
-     */
-    labelAlign: PropTypes.oneOfType([
-      labelAlignPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelAlignPropTypes,
-        [ResponsiveKeys.sm]: labelAlignPropTypes,
-        [ResponsiveKeys.md]: labelAlignPropTypes,
-        [ResponsiveKeys.lg]: labelAlignPropTypes,
-        [ResponsiveKeys.xl]: labelAlignPropTypes,
-        [ResponsiveKeys.xxl]: labelAlignPropTypes,
-      }),
-    ]),
-    /**
-     * 标签位置
-     * 可选值： 'horizontal' | 'vertical' | 'placeholder' | 'float' | 'none'
-     */
-    labelLayout: PropTypes.oneOfType([
-      labelLayoutPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelLayoutPropTypes,
-        [ResponsiveKeys.sm]: labelLayoutPropTypes,
-        [ResponsiveKeys.md]: labelLayoutPropTypes,
-        [ResponsiveKeys.lg]: labelLayoutPropTypes,
-        [ResponsiveKeys.xl]: labelLayoutPropTypes,
-        [ResponsiveKeys.xxl]: labelLayoutPropTypes,
-      }),
-    ]),
-    /**
-     * 表单列数
-     */
-    columns: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: PropTypes.number,
-        [ResponsiveKeys.sm]: PropTypes.number,
-        [ResponsiveKeys.md]: PropTypes.number,
-        [ResponsiveKeys.lg]: PropTypes.number,
-        [ResponsiveKeys.xl]: PropTypes.number,
-        [ResponsiveKeys.xxl]: PropTypes.number,
-      }),
-    ]),
-    pristine: PropTypes.bool,
-    /**
-     * 表单头
-     */
-    header: PropTypes.string,
-    /**
-     * 高亮渲染器
-     */
-    fieldHighlightRenderer: PropTypes.func,
-    /**
-     * 提交回调
-     */
-    onSubmit: PropTypes.func,
-    /**
-     * 重置回调
-     */
-    onReset: PropTypes.func,
-    /**
-     * 提交成功回调
-     */
-    onSuccess: PropTypes.func,
-    /**
-     * 提交失败回调
-     */
-    onError: PropTypes.func,
-    separateSpacing: PropTypes.object,
-    spacingType: PropTypes.string,
-    /**
-     * 校验信息提示方式
-     */
-    showValidation: PropTypes.string,
-    showHelp: PropTypes.string,
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'form',

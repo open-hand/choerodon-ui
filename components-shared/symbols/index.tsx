@@ -10,6 +10,7 @@ const Symbols = {
   MenuContext: Symbol('MenuContext'),
   ModalContext: Symbol('ModalContext'),
   RadioContext: Symbol('RadioContext'),
+  TableContext: Symbol('TableContext'),
   TabsContext: Symbol('TabsContext'),
   TreeContext: Symbol('TreeContext'),
   ProFormContext: Symbol('ProFormContext'),

@@ -19,11 +19,12 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import defaultTo from 'lodash/defaultTo';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
+import { global } from 'choerodon-ui/shared';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Tooltip as TextTooltip, WaitType } from '../core/enum';
@@ -50,16 +51,16 @@ import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { fromRangeValue, toRangeValue } from '../field/utils';
 
-let PLACEHOLDER_SUPPORT;
-
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
 export function isPlaceHolderSupport(): boolean {
-  if (PLACEHOLDER_SUPPORT !== undefined) {
-    return PLACEHOLDER_SUPPORT;
+  if (global.PLACEHOLDER_SUPPORT !== undefined) {
+    return global.PLACEHOLDER_SUPPORT;
   }
   if (typeof window !== 'undefined') {
-    return (PLACEHOLDER_SUPPORT = 'placeholder' in document.createElement('input'));
+    const support = 'placeholder' in document.createElement('input');
+    global.PLACEHOLDER_SUPPORT = support;
+    return support;
   }
   return true;
 }
@@ -148,82 +149,6 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
   static displayName = 'TextField';
-
-  static propTypes = {
-    /**
-     * 占位词
-     */
-    placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-    /**
-     * 最小长度
-     */
-    minLength: PropTypes.number,
-    /**
-     * 最大长度
-     */
-    maxLength: PropTypes.number,
-    /**
-     * 正则校验
-     */
-    pattern: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    /**
-     * 自动完成
-     */
-    autoComplete: PropTypes.string,
-    /**
-     * 前缀
-     */
-    prefix: PropTypes.node,
-    /**
-     * 后缀
-     */
-    suffix: PropTypes.node,
-    /**
-     * 是否显示清除按钮
-     */
-    clearButton: PropTypes.bool,
-    /**
-     * 前置标签
-     */
-    addonBefore: PropTypes.node,
-    /**
-     * 前置标签样式
-     */
-    addonBeforeStyle: PropTypes.object,
-    /**
-     * 后置标签
-     */
-    addonAfter: PropTypes.node,
-    /**
-     * 后置标签样式
-     */
-    addonAfterStyle: PropTypes.object,
-    /**
-     * 限制可输入的字符
-     */
-    restrict: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    /**
-     * 是否是筛选条 flat 模式
-     */
-    isFlat: PropTypes.bool,
-    /**
-     * 触发值变更的动作， default: blur
-     */
-    valueChangeAction: PropTypes.oneOf([ValueChangeAction.input, ValueChangeAction.blur]),
-    /**
-     * 值变更间隔时间，只有在valueChangeAction为input时起作用
-     */
-    wait: PropTypes.number,
-    /**
-     * 值变更间隔类型，可选值：throttle | debounce
-     * @default throttle
-     */
-    waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
-    groupClassName: PropTypes.string,
-    showLengthInfo: PropTypes.bool,
-    border: PropTypes.bool,
-    ...FormField.propTypes,
-  };
 
   static defaultProps = {
     ...FormField.defaultProps,
@@ -1066,8 +991,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
     if (this.lengthInfoWidth || this.suffixWidth || this.clearButton) {
       let paddingRight = this.isSuffixClick
-        ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0) + (this.clearButton ? 18 : 0)
-        : (this.lengthInfoWidth ?? 0) + Math.max((this.suffixWidth ?? 0), (this.clearButton ? 18 : 0));
+        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWidth, 0) + (this.clearButton ? 18 : 0)
+        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.suffixWidth, 0), (this.clearButton ? 18 : 0));
       if (this.lengthInfoWidth && !this.suffixWidth && !this.clearButton) {
         paddingRight += 3;
       }
@@ -1119,7 +1044,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         divStyle = {
           width: children.props.style.width,
         };
-        this.suffixWidth = toPx(children.props.style.width) ?? 21;
+        this.suffixWidth = defaultTo(toPx(children.props.style.width), 21);
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -1136,12 +1061,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         width: this.suffixWidth,
       };
     } else {
-      this.suffixWidth = undefined;
+      delete this.suffixWidth;
     }
 
-    this.isSuffixClick = props && props.onClick;
+    const isSuffixClick = props && props.onClick;
+    this.isSuffixClick = isSuffixClick;
     const classString = classNames(`${prefixCls}-suffix`, {
-      [`${prefixCls}-allow-clear`]: clearButton && !props?.onClick,
+      [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
     const right = this.lengthInfoWidth ? this.lengthInfoWidth + 2 : undefined;
     return (
@@ -1246,7 +1172,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       let right: number | undefined;
       if (this.lengthInfoWidth || this.suffixWidth) {
         right = this.isSuffixClick
-          ? (this.lengthInfoWidth ?? 0) + (this.suffixWidth ?? 0)
+          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWidth, 0)
           : this.lengthInfoWidth;
       }
       return this.wrapperInnerSpanButton(

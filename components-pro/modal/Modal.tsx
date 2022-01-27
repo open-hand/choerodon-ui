@@ -1,5 +1,4 @@
 import React, { cloneElement, CSSProperties, isValidElement, Key, MouseEvent as ReactMouseEvent, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
@@ -100,40 +99,6 @@ export interface ModalProps extends ViewComponentProps {
 
 export default class Modal extends ViewComponent<ModalProps> {
   static displayName = 'Modal';
-
-  static propTypes = {
-    ...ViewComponent.propTypes,
-    closable: PropTypes.bool,
-    movable: PropTypes.bool,
-    fullScreen: PropTypes.bool,
-    maskClosable: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    maskStyle: PropTypes.object,
-    mask: PropTypes.bool,
-    maskClassName: PropTypes.string,
-    keyboardClosable: PropTypes.bool,
-    footer: PropTypes.oneOfType([PropTypes.func, PropTypes.node, PropTypes.bool]),
-    destroyOnClose: PropTypes.bool,
-    okText: PropTypes.node,
-    cancelText: PropTypes.node,
-    okProps: PropTypes.object,
-    autoCenter: PropTypes.bool,
-    cancelProps: PropTypes.object,
-    onClose: PropTypes.func,
-    onOk: PropTypes.func,
-    onCancel: PropTypes.func,
-    afterClose: PropTypes.func,
-    okButton: PropTypes.bool,
-    cancelButton: PropTypes.bool,
-    okCancel: PropTypes.bool,
-    drawer: PropTypes.bool,
-    drawerOffset: PropTypes.number,
-    drawerTransitionName: PropTypes.oneOf(['slide-up', 'slide-right', 'slide-down', 'slide-up', 'slide-left']),
-    okFirst: PropTypes.bool,
-    mousePosition: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    contentStyle: PropTypes.object,
-    bodyStyle: PropTypes.object,
-    closeOnLocationChange: PropTypes.bool,
-  };
 
   static defaultProps = {
     suffixCls,

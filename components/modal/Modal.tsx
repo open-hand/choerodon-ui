@@ -1,16 +1,12 @@
 import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { ModalManager } from 'choerodon-ui/shared';
 import Button from '../button';
 import { ButtonFuncType, ButtonProps, ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { getConfirmLocale } from './locale';
 import Dialog from '../rc-components/dialog';
-import addEventListener from '../_util/addEventListener';
 import Sidebar from './Sidebar';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
-
-let mousePosition: { x: number; y: number } | null;
-let mousePositionEventBinded: boolean;
 
 export interface ModalProps {
   prefixCls?: string;
@@ -136,31 +132,6 @@ export default class Modal extends Component<ModalProps, {}> {
     center: false,
   };
 
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    onOk: PropTypes.func,
-    onCancel: PropTypes.func,
-    okText: PropTypes.node,
-    cancelText: PropTypes.node,
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    confirmLoading: PropTypes.bool,
-    visible: PropTypes.bool,
-    align: PropTypes.object,
-    footer: PropTypes.node,
-    title: PropTypes.node,
-    closable: PropTypes.bool,
-    transitionName: PropTypes.string,
-    funcType: PropTypes.string,
-    center: PropTypes.bool,
-    disableOk: PropTypes.bool,
-    disableCancel: PropTypes.bool,
-    keyboard: PropTypes.bool,
-    okType: PropTypes.string,
-    maskTransitionName: PropTypes.string,
-    okButtonProps: PropTypes.object,
-    cancelButtonProps: PropTypes.object,
-  };
-
   context: ConfigContextValue;
 
   handleCancel = (e: any) => {
@@ -178,21 +149,7 @@ export default class Modal extends Component<ModalProps, {}> {
   };
 
   componentDidMount() {
-    if (mousePositionEventBinded) {
-      return;
-    }
-    // 只有点击事件支持从鼠标位置动画展开
-    addEventListener(document.documentElement, 'click', (e: MouseEvent<any>) => {
-      mousePosition = {
-        x: e.pageX,
-        y: e.pageY,
-      };
-      // 100ms 内发生过点击事件，则从点击位置动画展示
-      // 否则直接 zoom 展示
-      // 这样可以兼容非点击方式展开
-      setTimeout(() => (mousePosition = null), 100);
-    });
-    mousePositionEventBinded = true;
+    ModalManager.registerMousePosition();
   }
 
   renderFooter = (locale: ModalLocale) => {
@@ -247,7 +204,7 @@ export default class Modal extends Component<ModalProps, {}> {
         prefixCls={prefixCls}
         footer={footer === undefined ? defaultFooter : footer}
         visible={visible}
-        mousePosition={mousePosition}
+        mousePosition={ModalManager.mousePosition}
         onClose={this.handleCancel}
       />
     );

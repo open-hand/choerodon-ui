@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-const classNames = require('classnames');
-
-function noop() {
-}
+import noop from 'lodash/noop';
+import classNames from 'classnames';
 
 class Switch extends Component {
   constructor(props) {
@@ -32,12 +29,12 @@ class Switch extends Component {
       this.setState({
         checked: !!nextProps.checked,
       });
-    
+
     } else if('value' in nextProps) {
       this.setState({
         checked: nextProps.checkedValue === nextProps.value,
       });
-    } 
+    }
   }
 
   setChecked(checked) {
@@ -51,7 +48,7 @@ class Switch extends Component {
     }
 
 
-    
+
     const { checkedValue = true, unCheckedValue = false } = this.props;
     const value = checked ? checkedValue : unCheckedValue;
     this.props.onChange(value);
@@ -126,32 +123,14 @@ class Switch extends Component {
   }
 }
 
-Switch.propTypes = {
-  className: PropTypes.string,
-  prefixCls: PropTypes.string,
-  disabled: PropTypes.bool,
-  checkedChildren: PropTypes.any,
-  unCheckedChildren: PropTypes.any,
-  onChange: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  onClick: PropTypes.func,
-  tabIndex: PropTypes.number,
-  checked: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
-  autoFocus: PropTypes.bool,
-  loadingIcon: PropTypes.node,
-  checkedValue: PropTypes.any, 
-  unCheckedValue: PropTypes.any 
-};
-
 Switch.defaultProps = {
   prefixCls: 'rc-switch',
   checkedChildren: null,
   unCheckedChildren: null,
   className: '',
   defaultChecked: false,
-  checkedValue: true, 
-  unCheckedValue: false, 
+  checkedValue: true,
+  unCheckedValue: false,
   onChange: noop,
   onClick: noop,
 };

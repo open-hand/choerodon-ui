@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -11,6 +10,7 @@ import isFunction from 'lodash/isFunction';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
+import RcUpload from 'choerodon-ui/lib/rc-components/upload';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
@@ -32,6 +32,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
+import Dragger from './Dragger';
 import { ShowHelp } from '../field/enum';
 import { FIELD_SUFFIX } from '../form/utils';
 import { showValidationMessage } from '../field/utils';
@@ -80,6 +81,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   downloadAll?: ButtonProps | boolean;
   previewTarget?: string;
   isPublic?: boolean;
+  dragUpload?: boolean;
+  dragBoxRender?: ReactNode[];
   __inGroup?: boolean;
 }
 
@@ -99,6 +102,8 @@ const defaultSort: Sort = {
 export default class Attachment extends FormField<AttachmentProps> {
   static displayName = 'Attachment';
 
+  static Dragger: typeof Dragger;
+
   static defaultProps = {
     ...FormField.defaultProps,
     suffixCls: 'attachment',
@@ -107,13 +112,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     downloadAll: true,
     listType: 'text',
     viewMode: 'list',
-  };
-
-  static propTypes = {
-    ...FormField.propTypes,
-    sortable: PropTypes.bool,
-    listType: PropTypes.oneOf(['text', 'picture', 'picture-card']),
-    viewMode: PropTypes.oneOf(['none', 'list', 'popup']),
+    dragUpload: false,
   };
 
   // eslint-disable-next-line camelcase
@@ -127,6 +126,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable sort?: Sort;
 
   @observable popup?: boolean;
+
+  @observable dragState?: string;
 
   tempAttachmentUUID?: string;
 
@@ -306,6 +307,8 @@ export default class Attachment extends FormField<AttachmentProps> {
       'count',
       'max',
       'listLimit',
+      'dragBoxRender',
+      'dragUpload',
       'showHistory',
       'isPublic',
       'downloadAll',
@@ -473,7 +476,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   handleSuccess(response: any, attachment: AttachmentFile) {
     attachment.percent = 100;
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       setTimeout(mobxAction(() => {
         attachment.status = 'success';
         const { onUploadSuccess: handleUploadSuccess } = this.getContextConfig('attachment');
@@ -630,6 +633,23 @@ export default class Attachment extends FormField<AttachmentProps> {
       return true;
     }
     return beforeUpload(attachment, attachments);
+  }
+
+  handleDragUpload = (file: File) => {
+    this.autoCreate();
+    this.uploadAttachments([
+      new AttachmentFile({
+        uid: this.getUid(0),
+        url: URL.createObjectURL(file),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified,
+        originFileObj: file,
+        creationDate: new Date(),
+      }),
+    ]);
+    return false;
   }
 
   @autobind
@@ -1012,6 +1032,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     return (
       <div className={classes.join(' ')}>
+        {this.renderDragUploadArea()}
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
@@ -1062,6 +1083,61 @@ export default class Attachment extends FormField<AttachmentProps> {
     this.popup = popup;
   }
 
+  @mobxAction
+  setDragState(state) {
+    this.dragState = state;
+  }
+
+  @autobind
+  handleFileDrop(e) {
+    this.setDragState(e.type);
+  }
+
+  renderDefaultDragBox() {
+    const { prefixCls } = this;
+    return (
+      <div className={`${prefixCls}-drag-box`}>
+        <p className={`${prefixCls}-drag-box-icon`}>
+          <Icon type="inbox" />
+        </p>
+        <p className={`${prefixCls}-drag-box-text`}>{$l('Attachment', 'file_type_mismatch')}</p>
+        <p className={`${prefixCls}-drag-box-hint`}>
+          {this.getProp('help')}
+        </p>
+      </div>
+    )
+  }
+
+  renderDragUploadArea() {
+    const { dragUpload, dragBoxRender, accept } = this.props;
+    const { prefixCls } = this;
+    if (dragUpload) {
+      const dragCls = classNames(prefixCls, {
+        [`${prefixCls}-drag`]: true,
+        [`${prefixCls}-drag-hover`]: this.dragState === 'dragover',
+      });
+      const rcUploadProps = {
+        ...this.props,
+        accept: accept ? accept.join(',') : undefined,
+        beforeUpload: this.handleDragUpload,
+        prefixCls,
+      };
+      return (
+        <div
+          className={dragCls}
+          onDrop={this.handleFileDrop}
+          onDragOver={this.handleFileDrop}
+          onDragLeave={this.handleFileDrop}
+        >
+          <RcUpload {...rcUploadProps} className={`${prefixCls}-btn`}>
+            {dragBoxRender || this.renderDefaultDragBox()}
+          </RcUpload>
+        </div>
+      );
+    }
+    return undefined;
+  }
+
   render() {
     const { viewMode, listType, hidden } = this.props;
     const { readOnly, prefixCls } = this;
@@ -1078,6 +1154,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             popupHidden={hidden || !this.popup}
             onPopupHiddenChange={this.handlePopupHiddenChange}
           >
+            {this.renderDragUploadArea()}
             {readOnly ? this.renderViewButton(label) : this.renderUploadBtn(false, label)}
           </Trigger>
           {this.renderHelp(ShowHelp.tooltip)}

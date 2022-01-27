@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 
 const FOOTER_ROW_KEY = `rc_table_footer_key_${Date.now()}`;
@@ -10,19 +9,6 @@ function getColumnFooter(col) {
 }
 
 class TableFooterRow extends Component {
-  static propTypes = {
-    columns: PropTypes.array,
-    data: PropTypes.array,
-    components: PropTypes.any,
-    prefixCls: PropTypes.string,
-    onHover: PropTypes.func,
-    hovered: PropTypes.bool,
-    height: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  };
-
   handleMouseEnter = () => {
     const { onHover } = this.props;
     if (onHover) {

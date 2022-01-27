@@ -1,5 +1,4 @@
 import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import debounce from 'lodash/debounce';
@@ -167,73 +166,6 @@ export interface CascaderProps extends TriggerFieldProps {
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   static displayName = 'Cascader';
-
-  static propTypes = {
-    /**
-     * 次级菜单的展开方式，可选 'click' 和 'hover'
-     */
-    expandTrigger: PropTypes.oneOf([
-      ExpandTrigger.hover,
-      ExpandTrigger.click,
-    ]),
-    /**
-     * 下拉框匹配输入框宽度
-     * @default true
-     */
-    dropdownMatchSelectWidth: PropTypes.bool,
-    /**
-     * 下拉框菜单样式名
-     */
-    dropdownMenuStyle: PropTypes.object,
-    /**
-     * 选项数据源
-     */
-    options: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object),
-    ]),
-    /**
-     * 是否为原始值
-     * true - 选项中valueField对应的值
-     * false - 选项值对象
-     */
-    primitiveValue: PropTypes.bool,
-    /**
-     * 当下拉列表为空时显示的内容
-     */
-    notFoundContent: PropTypes.node,
-    /**
-     * 选择一个值的时候触发
-     */
-    onChoose: PropTypes.func,
-    /**
-     * 取消选中一个值的时候触发多选时候生效
-     */
-    onUnChoose: PropTypes.func,
-    /** 选择及改变 */
-    changeOnSelect: PropTypes.bool,
-    /**
-     * 设置选项属性，如 disabled;
-     */
-    onOption: PropTypes.func,
-    /**
-     * 渲染分页 Item 内容
-     */
-    pagingOptionContent: PropTypes.node,
-    /**
-     * 可搜索属性
-     */
-    searchable: PropTypes.bool,
-    /**
-     * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
-     */
-    searchMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    singleMenuStyle: PropTypes.object,
-    singleMenuItemStyle: PropTypes.object,
-    singlePleaseRender: PropTypes.func,
-    singleMenuItemRender: PropTypes.func,
-    ...TriggerField.propTypes,
-  };
 
   static defaultProps = {
     ...TriggerField.defaultProps,

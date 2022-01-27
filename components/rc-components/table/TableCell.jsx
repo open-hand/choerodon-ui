@@ -1,19 +1,7 @@
 import React, { Component, isValidElement } from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 export default class TableCell extends Component {
-  static propTypes = {
-    record: PropTypes.object,
-    prefixCls: PropTypes.string,
-    index: PropTypes.number,
-    indent: PropTypes.number,
-    indentSize: PropTypes.number,
-    column: PropTypes.object,
-    expandIcon: PropTypes.node,
-    component: PropTypes.any,
-  };
-
   isInvalidRenderCellText(text) {
     return text && !isValidElement(text) &&
       Object.prototype.toString.call(text) === '[object Object]';

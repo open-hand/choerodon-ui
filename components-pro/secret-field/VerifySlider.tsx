@@ -142,7 +142,10 @@ export default class VerifySlider extends Component<VerifySliderProps> {
   }
 
   componentWillUnmount() {
-    this.moveEvent?.clear()
+    const { moveEvent } = this;
+    if (moveEvent) {
+      moveEvent.clear();
+    }
   }
 
   public render() {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 const ROW = 4;
@@ -22,13 +21,6 @@ function chooseDecade(year, event) {
 }
 
 export default class DecadePanel extends Component {
-  static propTypes = {
-    locale: PropTypes.object,
-    value: PropTypes.object,
-    defaultValue: PropTypes.object,
-    rootPrefixCls: PropTypes.string,
-  };
-
   static defaultProps = {
     onSelect() {
     },

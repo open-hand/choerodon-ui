@@ -1,6 +1,5 @@
 import React, { cloneElement, Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import toArray from '../util/Children/toArray';
 import Menu from '../menu';
 import scrollIntoView from 'dom-scroll-into-view';
@@ -10,29 +9,6 @@ import LocaleReceiver from '../../locale-provider/LocaleReceiver';
 import defaultLocale from '../../locale-provider/default';
 
 export default class DropdownMenu extends Component {
-  static propTypes = {
-    defaultActiveFirstOption: PropTypes.bool,
-    value: PropTypes.any,
-    dropdownMenuStyle: PropTypes.object,
-    multiple: PropTypes.bool,
-    onPopupFocus: PropTypes.func,
-    onPopupScroll: PropTypes.func,
-    onMenuDeSelect: PropTypes.func,
-    onMenuSelect: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    prefixCls: PropTypes.string,
-    menuItems: PropTypes.any,
-    inputValue: PropTypes.string,
-    visible: PropTypes.bool,
-    filter: PropTypes.bool,
-    checkAll: PropTypes.func,
-    footer: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.string,
-    ]),
-    onKeyDown: PropTypes.func,
-  };
-
   static defaultProps = {
     footer: null,
   };

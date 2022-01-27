@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -17,35 +16,6 @@ function generateOptions(length, disabledOptions, hideDisabledOptions, step = 1)
 }
 
 class Panel extends Component {
-  static propTypes = {
-    clearText: PropTypes.string,
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    defaultOpenValue: PropTypes.object,
-    value: PropTypes.object,
-    placeholder: PropTypes.string,
-    format: PropTypes.string,
-    inputReadOnly: PropTypes.bool,
-    disabledHours: PropTypes.func,
-    disabledMinutes: PropTypes.func,
-    disabledSeconds: PropTypes.func,
-    hideDisabledOptions: PropTypes.bool,
-    onChange: PropTypes.func,
-    onEsc: PropTypes.func,
-    allowEmpty: PropTypes.bool,
-    showHour: PropTypes.bool,
-    showMinute: PropTypes.bool,
-    showSecond: PropTypes.bool,
-    onClear: PropTypes.func,
-    use12Hours: PropTypes.bool,
-    hourStep: PropTypes.number,
-    minuteStep: PropTypes.number,
-    secondStep: PropTypes.number,
-    addon: PropTypes.func,
-    focusOnOpen: PropTypes.bool,
-    onKeyDown: PropTypes.func,
-  };
-
   static defaultProps = {
     prefixCls: 'rc-time-picker-panel',
     onChange: noop,

@@ -11,6 +11,7 @@ import {
   getPropValue,
   getTreeNodesStates,
   getValuePropValue,
+  isEmpty,
   isMultiple,
   isPositionPrefix,
   labelCompatible,
@@ -25,10 +26,7 @@ import {
 import SelectTrigger from './SelectTrigger';
 import _TreeNode from './TreeNode';
 import { SHOW_ALL, SHOW_CHILD, SHOW_PARENT } from './strategies';
-import { SelectPropTypes } from './PropTypes';
 import Button from '../../button/Button';
-import { getLabelFromPropsValue, getMapKey } from '../select/util';
-import { isEmpty } from './util';
 
 function filterFn(input, child) {
   return (
@@ -70,8 +68,6 @@ function loopTreeData(data, level = 0, treeCheckable) {
 }
 
 export default class Select extends Component {
-  static propTypes = SelectPropTypes;
-
   static defaultProps = {
     prefixCls: 'rc-tree-select',
     filterTreeNode: filterFn,

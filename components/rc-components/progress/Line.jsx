@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import enhancer from './enhancer';
-import { defaultProps, propTypes } from './types';
+import { defaultProps } from './types';
 
 class Line extends Component {
-  static propTypes = propTypes;
-
   static defaultProps = defaultProps;
 
   render() {

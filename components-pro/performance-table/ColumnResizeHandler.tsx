@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import clamp from 'lodash/clamp';
 import debounce from 'lodash/debounce';
@@ -12,6 +11,7 @@ import TableContext from './TableContext';
 import { RESIZE_MIN_WIDTH } from './constants';
 
 export type FixedType = boolean | 'left' | 'right';
+
 export interface Client {
   clientX?: number;
   clientY?: number;
@@ -30,32 +30,30 @@ export interface ColumnResizeHandlerProps {
   onColumnResizeStart?: (client: Client) => void;
   onColumnResizeEnd?: (columnWidth?: number, cursorDelta?: number) => void;
   onColumnResizeMove?: (columnWidth?: number, columnLeft?: number, columnFixed?: FixedType) => void;
-  onMouseEnterHandler?: (left: number) => void;
+  onMouseEnterHandler?: () => void;
   onMouseLeaveHandler?: () => void;
 }
 
-const propTypes = {
-  height: PropTypes.number,
-  defaultColumnWidth: PropTypes.number,
-  columnLeft: PropTypes.number,
-  columnFixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  minWidth: PropTypes.number,
-  style: PropTypes.object,
-  onColumnResizeStart: PropTypes.func,
-  onColumnResizeEnd: PropTypes.func,
-  onColumnResizeMove: PropTypes.func,
-  onMouseEnterHandler: PropTypes.func,
-  onMouseLeaveHandler: PropTypes.func,
-};
+const propTypeKeys = [
+  'height',
+  'defaultColumnWidth',
+  'columnLeft',
+  'columnFixed',
+  'className',
+  'classPrefix',
+  'minWidth',
+  'style',
+  'onColumnResizeStart',
+  'onColumnResizeEnd',
+  'onColumnResizeMove',
+  'onMouseEnterHandler',
+  'onMouseLeaveHandler',
+];
 
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
   static get contextType() {
     return TableContext;
   }
-
-  static propTypes = propTypes;
 
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-column-resize-spanner'),
@@ -107,7 +105,8 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
   // React Strict Mode compatibility: if `nodeRef` is passed, we will use it instead of trying to find
   // the underlying DOM node ourselves. See the README for more information.
   findDOMNode(): HTMLElement {
-    return this.handleRef?.current || ReactDOM.findDOMNode(this);
+    const { handleRef } = this;
+    return handleRef && handleRef.current || ReactDOM.findDOMNode(this);
   }
 
   handleDragStart = (e) => {
@@ -121,7 +120,10 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
       };
 
       this.touchX = clientX;
-      this.props.onColumnResizeStart?.(client);
+      const { onColumnResizeStart } = this.props;
+      if (onColumnResizeStart) {
+        onColumnResizeStart(client);
+      }
     }
 
     const thisNode = this.findDOMNode();
@@ -146,7 +148,10 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     if (!this.dragging) return;
 
     this.dragging = false;
-    this.props.onColumnResizeEnd?.(this.columnWidth, this.cursorDelta);
+    const { onColumnResizeEnd } = this.props;
+    if (onColumnResizeEnd) {
+      onColumnResizeEnd(this.columnWidth, this.cursorDelta);
+    }
   };
 
   onMove = (deltaX: number) => {
@@ -164,14 +169,24 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
       this.props.minWidth ? Math.max(this.props.minWidth, RESIZE_MIN_WIDTH) : RESIZE_MIN_WIDTH,
       20000,
     );
-    onColumnResizeMove?.(this.columnWidth, columnLeft, columnFixed);
+    if (onColumnResizeMove) {
+      onColumnResizeMove(this.columnWidth, columnLeft, columnFixed);
+    }
   };
 
   onColumnResizeEnd = () => {
     this.isKeyDown = false;
-    this.props.onColumnResizeEnd?.(this.columnWidth, this.cursorDelta);
-    this.mouseMoveTracker?.releaseMouseMoves?.();
-    this.mouseMoveTracker = null;
+    const { onColumnResizeEnd } = this.props;
+    if (onColumnResizeEnd) {
+      onColumnResizeEnd(this.columnWidth, this.cursorDelta);
+    }
+    const { mouseMoveTracker } = this;
+    if (mouseMoveTracker) {
+      if (mouseMoveTracker.releaseMouseMoves) {
+        mouseMoveTracker.releaseMouseMoves();
+      }
+      this.mouseMoveTracker = null;
+    }
   };
 
   onColumnResizeMouseDown = (event: React.MouseEvent) => {
@@ -185,28 +200,22 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
       clientY: event.clientY,
       preventDefault: Function(),
     };
-
-    this.props.onColumnResizeStart?.(client);
+    const { onColumnResizeStart } = this.props;
+    if (onColumnResizeStart) {
+      onColumnResizeStart(client);
+    }
   };
 
-  showMouseArea = (e) => {
+  handleShowMouseArea = debounce(() => {
     const { onMouseEnterHandler = noop } = this.props;
-    const { left } = getComputedStyle(e.target);
-    onMouseEnterHandler(parseFloat(left));
-  }
-
-  delayShowMouseArea = debounce(this.showMouseArea, 300)
-
-  handleShowMouseArea = (e) => {
-    e.persist();
-    this.delayShowMouseArea(e);
-  }
+    onMouseEnterHandler();
+  }, 300);
 
   handleHideMouseArea = () => {
     const { onMouseLeaveHandler = noop } = this.props;
-    this.delayShowMouseArea.cancel();
+    this.handleShowMouseArea.cancel();
     onMouseLeaveHandler();
-  }
+  };
 
   getMouseMoveTracker() {
     return (
@@ -237,7 +246,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     };
 
     const classes = classNames(classPrefix, className);
-    const unhandled = getUnhandledProps(propTypes, rest);
+    const unhandled = getUnhandledProps(propTypeKeys, rest);
 
     return (
       <div

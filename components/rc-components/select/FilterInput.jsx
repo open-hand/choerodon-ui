@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Icon from '../../icon';
 import Input from '../../input';
 import Button from '../../button';
 import { saveRef } from './util';
 
 class FilterInput extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    placeholder: PropTypes.string,
-    onChange: PropTypes.func,
-    onKeyDown: PropTypes.func,
-  };
-
   constructor(props) {
     super(props);
     const value = props.filterValue || '';

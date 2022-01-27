@@ -1,19 +1,7 @@
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import enUs from '../locale/en_US';
 
 export default {
-  propTypes: {
-    className: PropTypes.string,
-    locale: PropTypes.object,
-    style: PropTypes.object,
-    visible: PropTypes.bool,
-    onSelect: PropTypes.func,
-    prefixCls: PropTypes.string,
-    onChange: PropTypes.func,
-    onOk: PropTypes.func,
-  },
-
   getDefaultProps() {
     return {
       locale: enUs,

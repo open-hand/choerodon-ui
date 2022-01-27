@@ -510,19 +510,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
-   * 注入 onEnterDown 事件
+   * 注入 refEditors
    * @param element
    * @param name
    */
   createFields(element, name): ReactElement {
-    const { onEnterDown } = element.props;
-    if (onEnterDown && isFunction(onEnterDown)) {
-      return element;
-    }
     const props: any = {
-      onEnterDown: () => {
-        this.handleQuery();
-      },
       ref: (node) => this.refEditors.set(name, node),
     };
     return cloneElement(element, props);
@@ -658,7 +651,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { getConfig } = this.context;
     const { prefixCls } = this;
-    const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
@@ -823,12 +816,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     key={name}
                     onClick={() => {
                       const editor = this.refEditors.get(name);
-                      if (editor && Object.prototype.hasOwnProperty.call(editor, 'focus')) {
+                      if (editor) {
                         this.refEditors.get(name).focus();
                       }
                     }}
                   >
-                    <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                    <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                     <span className={itemClassName}>{this.createFields(element, name)}</span>
                   </div>
                 );
@@ -842,7 +835,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     <div
                       className={`${prefixCls}-filter-content`}
                       key={name}
-                      onClick={() => this.refEditors.get(name).focus()}
+                      onClick={() => {
+                        const editor = this.refEditors.get(name);
+                        if (editor) {
+                          this.refEditors.get(name).focus();
+                        }
+                      }}
                     >
                       <Icon
                         type="cancel"
@@ -851,7 +849,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           this.handleUnSelect([name]);
                         }}
                       />
-                      <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                      <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                       <span className={`${prefixCls}-filter-item`}>
                         {this.createFields(element, name)}
                       </span>

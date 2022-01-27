@@ -1,20 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import TableContext from './TableContext';
 
-export default function ColGroup(props, { table }) {
+export default function ColGroup(props) {
+  const table = useContext(TableContext);
   const { prefixCls, expandIconAsCell } = table.props;
   const { fixed } = props;
 
-  let cols = [];
-
-  if (expandIconAsCell && fixed !== 'right') {
-    cols.push(
-      <col
-        className={`${prefixCls}-expand-icon-col`}
-        key="rc-table-expand-icon-col"
-      />
-    );
-  }
+  const expandCol = expandIconAsCell && fixed !== 'right' ? (
+    <col
+      className={`${prefixCls}-expand-icon-col`}
+      key="rc-table-expand-icon-col"
+    />
+  ) : null;
 
   let leafColumns;
 
@@ -25,28 +22,19 @@ export default function ColGroup(props, { table }) {
   } else {
     leafColumns = table.columnManager.leafColumns();
   }
-  cols = cols.concat(
-    leafColumns.map(c => {
-      return (
-        <col
-          key={c.key || c.dataIndex}
-          style={{ width: c.width, minWidth: c.width }}
-        />
-      );
-    })
-  );
+  const cols = leafColumns.map(c => {
+    return (
+      <col
+        key={c.key || c.dataIndex}
+        style={{ width: c.width, minWidth: c.width }}
+      />
+    );
+  });
 
   return (
     <colgroup>
+      {expandCol}
       {cols}
     </colgroup>
   );
 }
-
-ColGroup.propTypes = {
-  fixed: PropTypes.string,
-};
-
-ColGroup.contextTypes = {
-  table: PropTypes.any,
-};

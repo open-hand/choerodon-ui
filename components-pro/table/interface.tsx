@@ -44,7 +44,6 @@ export {
   onRowProps,
   TableQueryBarHook,
   Commands,
-  buttonsEnumType,
   TablePaginationConfig,
   SpinIndicator,
   Instance,

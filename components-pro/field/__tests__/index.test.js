@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { observer } from 'mobx-react';
-import PropTypes from 'prop-types';
 import ObserverFormField from '..';
 
 @observer
@@ -33,10 +32,6 @@ describe('Select', () => {
     const mockFn = jest.fn();
     @observer
     class TestFiledForm1 extends ObserverFormField {
-      static propTypes = {
-        onClick: PropTypes.func,
-      };
-
       renderWrapper() {
         return (
           <div onClick={this.props.onClick}>

@@ -1,22 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import addEventListener from '../../_util/addEventListener';
 
 export default class Handle extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    vertical: PropTypes.bool,
-    offset: PropTypes.number,
-    style: PropTypes.object,
-    disabled: PropTypes.bool,
-    min: PropTypes.number,
-    max: PropTypes.number,
-    value: PropTypes.number,
-    tabIndex: PropTypes.number,
-  };
-
   state = {
     clickFocused: false,
   };

@@ -1,6 +1,5 @@
 // @ts-nocheck
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
@@ -19,24 +18,22 @@ export interface RowProps extends StandardProps {
   snapshot?: DraggableStateSnapshot;
 }
 
-const propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-  headerHeight: PropTypes.number,
-  top: PropTypes.number,
-  isHeaderRow: PropTypes.bool,
-  rowDraggable: PropTypes.bool,
-  rowRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  style: PropTypes.object,
-  provided: PropTypes.object,
-  snapshot: PropTypes.object,
-};
+const propTypeKeys = [
+  'width',
+  'height',
+  'headerHeight',
+  'top',
+  'isHeaderRow',
+  'rowDraggable',
+  'rowRef',
+  'className',
+  'classPrefix',
+  'style',
+  'provided',
+  'snapshot',
+];
 
 class Row extends React.PureComponent<RowProps> {
-  static propTypes = propTypes;
-
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-row'),
     height: 46,
@@ -74,12 +71,14 @@ class Row extends React.PureComponent<RowProps> {
       ...style,
     };
 
-    const unhandledProps = getUnhandledProps(propTypes, rest);
+    const unhandledProps = getUnhandledProps(propTypeKeys, rest);
 
     return (
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
-          translateDOMPositionXY?.(styles, 0, top);
+          if (translateDOMPositionXY) {
+            translateDOMPositionXY(styles, 0, top);
+          }
           const providedProps = {};
           let transform = styles.transform;
           if (rowDraggable && provided) {

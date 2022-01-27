@@ -1,9 +1,8 @@
-import Trigger from '../trigger';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import DropdownMenu from './DropdownMenu';
 import ReactDOM from 'react-dom';
+import classnames from 'classnames';
+import Trigger from '../trigger';
+import DropdownMenu from './DropdownMenu';
 import { isSingleMode, saveRef } from './util';
 import Spin from '../../spin';
 
@@ -37,35 +36,6 @@ const BUILT_IN_PLACEMENTS = {
 };
 
 export default class SelectTrigger extends Component {
-  static propTypes = {
-    onPopupFocus: PropTypes.func,
-    onPopupScroll: PropTypes.func,
-    dropdownMatchSelectWidth: PropTypes.bool,
-    dropdownAlign: PropTypes.object,
-    visible: PropTypes.bool,
-    disabled: PropTypes.bool,
-    showSearch: PropTypes.bool,
-    dropdownClassName: PropTypes.string,
-    onDropdownMouseDown: PropTypes.any,
-    dropdownStyle: PropTypes.any,
-    multiple: PropTypes.bool,
-    inputValue: PropTypes.string,
-    filterOption: PropTypes.any,
-    options: PropTypes.any,
-    prefixCls: PropTypes.string,
-    popupClassName: PropTypes.string,
-    popupPlacement: PropTypes.string,
-    children: PropTypes.any,
-    filter: PropTypes.bool,
-    builtinPlacements: PropTypes.any,
-    getRootDomNode: PropTypes.func,
-    loading: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.object,
-    ]),
-    onKeyDown: PropTypes.func,
-  };
-
   static defaultProps = {
     popupPlacement: 'bottomLeft',
     loading: false,

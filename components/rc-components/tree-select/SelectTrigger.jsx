@@ -1,5 +1,4 @@
 import React, { cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import Trigger from '../trigger';
@@ -27,18 +26,6 @@ const BUILT_IN_PLACEMENTS = {
 };
 
 class SelectTrigger extends Component {
-  static propTypes = {
-    dropdownMatchSelectWidth: PropTypes.bool,
-    dropdownPopupAlign: PropTypes.object,
-    visible: PropTypes.bool,
-    filterTreeNode: PropTypes.any,
-    treeNodes: PropTypes.any,
-    inputValue: PropTypes.string,
-    prefixCls: PropTypes.string,
-    popupClassName: PropTypes.string,
-    children: PropTypes.any,
-  };
-
   state = {
     _expandedKeys: [],
     fireOnExpand: false,

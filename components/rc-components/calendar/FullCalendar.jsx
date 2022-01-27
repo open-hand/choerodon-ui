@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import DateTable from './date/DateTable';
 import MonthTable from './month/MonthTable';
 import CalendarMixin from './mixin/CalendarMixin';
@@ -8,23 +7,6 @@ import CommonMixin from './mixin/CommonMixin';
 import CalendarHeader from './full-calendar/CalendarHeader';
 
 const FullCalendar = createReactClass({
-  propTypes: {
-    defaultType: PropTypes.string,
-    type: PropTypes.string,
-    prefixCls: PropTypes.string,
-    locale: PropTypes.object,
-    onTypeChange: PropTypes.func,
-    fullscreen: PropTypes.bool,
-    monthCellRender: PropTypes.func,
-    dateCellRender: PropTypes.func,
-    showTypeSwitch: PropTypes.bool,
-    Select: PropTypes.func.isRequired,
-    headerComponents: PropTypes.array,
-    headerComponent: PropTypes.object, // The whole header component
-    headerRender: PropTypes.func,
-    showHeader: PropTypes.bool,
-    disabledDate: PropTypes.func,
-  },
   mixins: [CommonMixin, CalendarMixin],
   getDefaultProps() {
     return {

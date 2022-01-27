@@ -1,5 +1,4 @@
 import React, { ButtonHTMLAttributes, Children, CSSProperties, KeyboardEventHandler, MouseEventHandler, PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
@@ -56,19 +55,6 @@ export default class Button extends PureComponent<ButtonProps, any> {
     loading: false,
     ghost: false,
     funcType: 'flat',
-  };
-
-  static propTypes = {
-    type: PropTypes.string,
-    shape: PropTypes.oneOf(['circle', 'circle-outline']),
-    size: PropTypes.oneOf([Size.large, Size.default, Size.small]),
-    htmlType: PropTypes.oneOf(['submit', 'button', 'reset']),
-    onClick: PropTypes.func,
-    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    className: PropTypes.string,
-    icon: PropTypes.string,
-    ghost: PropTypes.bool,
-    funcType: PropTypes.oneOf(['raised', 'flat']),
   };
 
   context: ConfigContextValue;

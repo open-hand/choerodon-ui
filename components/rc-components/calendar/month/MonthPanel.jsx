@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import MonthTable from './MonthTable';
 
@@ -11,12 +10,6 @@ function goYear(direction) {
 }
 
 const MonthPanel = createReactClass({
-  propTypes: {
-    onChange: PropTypes.func,
-    disabledDate: PropTypes.func,
-    onSelect: PropTypes.func,
-  },
-
   getDefaultProps() {
     return {
       onChange: noop,

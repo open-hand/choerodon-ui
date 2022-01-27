@@ -1,34 +1,12 @@
 /* eslint react/no-is-mounted:0 react/sort-comp:0 */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
 
 class AjaxUploader extends Component {
-  static propTypes = {
-    component: PropTypes.string,
-    style: PropTypes.object,
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    multiple: PropTypes.bool,
-    disabled: PropTypes.bool,
-    accept: PropTypes.string,
-    children: PropTypes.any,
-    onStart: PropTypes.func,
-    data: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
-    headers: PropTypes.object,
-    beforeUpload: PropTypes.func,
-    customRequest: PropTypes.func,
-    onProgress: PropTypes.func,
-    withCredentials: PropTypes.bool,
-  }
-
   state = { uid: getUid() }
 
   reqs = {}

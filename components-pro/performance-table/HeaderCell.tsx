@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import ColumnResizeHandler from './ColumnResizeHandler';
@@ -29,7 +28,7 @@ export interface HeaderCellProps extends CellProps {
   flexGrow?: number;
   fixed?: boolean | 'left' | 'right';
   dataIndex?: string;
-  onMouseEnterHandler?: (left: number, fixed: string | boolean | undefined) => void;
+  onMouseEnterHandler?: (columnWidth: number, left: number, fixed: string | boolean | undefined) => void;
   onMouseLeaveHandler?: () => void;
 }
 
@@ -39,29 +38,27 @@ interface HeaderCelltate {
   flexGrow?: number;
 }
 
-const propTypes = {
-  index: PropTypes.number,
-  sortColumn: PropTypes.string,
-  dataIndex: PropTypes.string,
-  sortType: PropTypes.oneOf(['desc', 'asc']),
-  sortable: PropTypes.bool,
-  resizable: PropTypes.bool,
-  minWidth: PropTypes.number,
-  onColumnResizeStart: PropTypes.func,
-  onColumnResizeEnd: PropTypes.func,
-  onResize: PropTypes.func,
-  onColumnResizeMove: PropTypes.func,
-  onSortColumn: PropTypes.func,
-  flexGrow: PropTypes.number,
-  fixed: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['left', 'right'])]),
-  children: PropTypes.node,
-  onMouseEnterHandler: PropTypes.func,
-  onMouseLeaveHandler: PropTypes.func,
-};
+const propTypeKeys = [
+  'index',
+  'sortColumn',
+  'dataIndex',
+  'sortType',
+  'sortable',
+  'resizable',
+  'minWidth',
+  'onColumnResizeStart',
+  'onColumnResizeEnd',
+  'onResize',
+  'onColumnResizeMove',
+  'onSortColumn',
+  'flexGrow',
+  'fixed',
+  'children',
+  'onMouseEnterHandler',
+  'onMouseLeaveHandler',
+];
 
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
-  static propTypes = propTypes;
-
   static get contextType() {
     return TableContext;
   }
@@ -91,32 +88,39 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     };
   }
 
-  handleColumnResizeStart = () => {
+  handleColumnResizeStart = (columnWidth: number) => {
     const { left = 0, fixed, onColumnResizeStart, resizeLeft = 0 } = this.props;
-    onColumnResizeStart?.(this.state.columnWidth, left + resizeLeft, !!fixed);
+    if (onColumnResizeStart) {
+      onColumnResizeStart(columnWidth, left + resizeLeft, !!fixed);
+    }
   };
 
   handleColumnResizeMove = (width, left = 0, fixed) => {
     const { onColumnResizeMove = noop, resizeLeft = 0 } = this.props;
-    onColumnResizeMove(width, left + resizeLeft, fixed)
-  }
+    onColumnResizeMove(width, left + resizeLeft, fixed);
+  };
 
   handleColumnResizeEnd = (columnWidth?: number, cursorDelta?: number) => {
     const { dataKey, index, onColumnResizeEnd, onResize } = this.props;
     this.setState({ columnWidth });
-    onColumnResizeEnd?.(columnWidth, cursorDelta, dataKey, index);
-    onResize?.(columnWidth, dataKey);
-  };
-
-  handleClick = () => {
-    if (this.props.sortable) {
-      this.props.onSortColumn?.(this.props.dataKey);
+    if (onColumnResizeEnd) {
+      onColumnResizeEnd(columnWidth, cursorDelta, dataKey, index);
+    }
+    if (onResize) {
+      onResize(columnWidth, dataKey);
     }
   };
 
-  handleShowMouseArea = (left) => {
-    const { onMouseEnterHandler = noop, fixed } = this.props;
-    onMouseEnterHandler(left, fixed);
+  handleClick = () => {
+    const { sortable, onSortColumn, dataKey } = this.props;
+    if (sortable && onSortColumn) {
+      onSortColumn(dataKey);
+    }
+  };
+
+  handleShowMouseArea = (columnWidth: number) => {
+    const { onMouseEnterHandler = noop, fixed, left = 0, resizeLeft = 0  } = this.props;
+    onMouseEnterHandler(columnWidth, left + resizeLeft, !!fixed);
   };
 
   // @ts-ignore
@@ -124,7 +128,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
 
   renderResizeSpanner() {
     const { resizable, left = 0, onMouseLeaveHandler, fixed, headerHeight, minWidth, groupCount, children, style } = this.props;
-    const { columnWidth } = this.state;
+    const { columnWidth = 0 } = this.state;
 
     if (!resizable) {
       return null;
@@ -134,7 +138,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
 
     // 处理组合列第一列拖拽柄定位问题
     if (groupCount && groupCount > 1) {
-      defaultColumnWidth = (children as React.ReactElement)?.props.children[0].props.width;
+      defaultColumnWidth = children ? (children as React.ReactElement).props.children[0].props.width : undefined;
     }
 
     return (
@@ -147,9 +151,9 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
         minWidth={minWidth}
         style={{ top: style ? style.top : 0 }}
         onColumnResizeMove={this.handleColumnResizeMove}
-        onColumnResizeStart={this.handleColumnResizeStart}
+        onColumnResizeStart={() => this.handleColumnResizeStart(defaultColumnWidth)}
         onColumnResizeEnd={this.handleColumnResizeEnd}
-        onMouseEnterHandler={this.handleShowMouseArea}
+        onMouseEnterHandler={() => this.handleShowMouseArea(defaultColumnWidth)}
         onMouseLeaveHandler={onMouseLeaveHandler}
       />
     );
@@ -190,7 +194,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     const classes = classNames(classPrefix, className, {
       [this.addPrefix('sortable')]: sortable,
     });
-    const unhandledProps = getUnhandledProps(propTypes, rest);
+    const unhandledProps = getUnhandledProps(propTypeKeys, rest);
 
     let ariaSort;
 

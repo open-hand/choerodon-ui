@@ -1,5 +1,4 @@
 import React, { Children, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { Cancelable, DebounceSettings } from 'lodash';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -91,68 +90,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
   static get contextType() {
     return FormContext;
   }
-
-  static propTypes = {
-    /**
-     * 按钮展现模式
-     * 可选值：'flat' | 'raised'
-     * @default raised
-     */
-    funcType: PropTypes.oneOf([FuncType.flat, FuncType.raised, FuncType.link]),
-    /**
-     * 按钮颜色风格
-     * 可选值：'default' | 'primary' | 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'dark'
-     * @default 'default'
-     */
-    color: PropTypes.oneOf([
-      ButtonColor.default,
-      ButtonColor.primary,
-      ButtonColor.gray,
-      ButtonColor.blue,
-      ButtonColor.red,
-      ButtonColor.green,
-      ButtonColor.yellow,
-      ButtonColor.purple,
-      ButtonColor.dark,
-    ]),
-    /**
-     * 按钮类型
-     * 可选值：'button' | 'submit' | 'reset'
-     * @default 'button'
-     */
-    type: PropTypes.oneOf([ButtonType.button, ButtonType.submit, ButtonType.reset]),
-    /**
-     * 按钮是否是加载状态
-     */
-    loading: PropTypes.bool,
-    /**
-     * 点击跳转的地址，指定此属性 button 的行为和 a 链接一致
-     */
-    href: PropTypes.string,
-    /**
-     * 相当于 a 链接的 target 属性，href 存在时生效
-     */
-    target: PropTypes.string,
-    /**
-     * 点击等待时间
-     */
-    wait: PropTypes.number,
-    /**
-     * 点击间隔类型，可选值：throttle | debounce
-     * @default throttle
-     */
-    waitType: PropTypes.oneOf([WaitType.throttle, WaitType.debounce]),
-    /**
-     * 用tooltip显示按钮内容
-     * 可选值：`none` `always` `overflow`
-     */
-    tooltip: PropTypes.string,
-    /**
-     * 将按钮宽度调整为其父宽度的选项
-     */
-    block: PropTypes.bool,
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'btn',

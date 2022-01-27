@@ -1,22 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import { getMonthName } from '../util';
 
 export default class CalendarHeader extends Component {
-  static propTypes = {
-    value: PropTypes.object,
-    locale: PropTypes.object,
-    yearSelectOffset: PropTypes.number,
-    yearSelectTotal: PropTypes.number,
-    onValueChange: PropTypes.func,
-    onTypeChange: PropTypes.func,
-    Select: PropTypes.func,
-    prefixCls: PropTypes.string,
-    type: PropTypes.string,
-    showTypeSwitch: PropTypes.bool,
-    headerComponents: PropTypes.array,
-  };
   static defaultProps = {
     yearSelectOffset: 10,
     yearSelectTotal: 20,

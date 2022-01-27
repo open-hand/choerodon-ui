@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import toFragment from '../../util/Children/mapSelf';
 import MonthPanel from '../month/MonthPanel';
 import YearPanel from '../year/YearPanel';
@@ -23,18 +22,6 @@ function showIf(condition, el) {
 }
 
 const CalendarHeader = createReactClass({
-  propTypes: {
-    prefixCls: PropTypes.string,
-    value: PropTypes.object,
-    onValueChange: PropTypes.func,
-    showTimePicker: PropTypes.bool,
-    onPanelChange: PropTypes.func,
-    locale: PropTypes.object,
-    enablePrev: PropTypes.any,
-    enableNext: PropTypes.any,
-    disabledMonth: PropTypes.func,
-  },
-
   getDefaultProps() {
     return {
       enableNext: 1,

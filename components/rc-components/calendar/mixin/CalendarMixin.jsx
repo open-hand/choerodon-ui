@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import noop from 'lodash/noop';
@@ -20,12 +19,6 @@ function getNowByCurrentStateValue(value) {
 }
 
 const CalendarMixin = {
-  propTypes: {
-    value: PropTypes.object,
-    defaultValue: PropTypes.object,
-    onKeyDown: PropTypes.func,
-  },
-
   getDefaultProps() {
     return {
       onKeyDown: noop,

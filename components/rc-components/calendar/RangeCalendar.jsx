@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import classnames from 'classnames';
 import noop from 'lodash/noop';
@@ -70,34 +69,6 @@ function onInputSelect(direction, value) {
 }
 
 const RangeCalendar = createReactClass({
-  propTypes: {
-    prefixCls: PropTypes.string,
-    dateInputPlaceholder: PropTypes.any,
-    defaultValue: PropTypes.any,
-    value: PropTypes.any,
-    hoverValue: PropTypes.any,
-    mode: PropTypes.arrayOf(PropTypes.oneOf(['date', 'month', 'year', 'decade'])),
-    showDateInput: PropTypes.bool,
-    timePicker: PropTypes.any,
-    showOk: PropTypes.bool,
-    showToday: PropTypes.bool,
-    defaultSelectedValue: PropTypes.array,
-    selectedValue: PropTypes.array,
-    onOk: PropTypes.func,
-    showClear: PropTypes.bool,
-    locale: PropTypes.object,
-    onChange: PropTypes.func,
-    onSelect: PropTypes.func,
-    onValueChange: PropTypes.func,
-    onHoverChange: PropTypes.func,
-    onPanelChange: PropTypes.func,
-    format: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    onClear: PropTypes.func,
-    type: PropTypes.any,
-    disabledDate: PropTypes.func,
-    disabledTime: PropTypes.func,
-  },
-
   mixins: [CommonMixin],
 
   getDefaultProps() {

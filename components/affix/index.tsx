@@ -1,6 +1,5 @@
 import React, { Component, CSSProperties } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowequal from 'lodash/isEqual';
 import omit from 'lodash/omit';
@@ -68,12 +67,6 @@ export default class Affix extends Component<AffixProps, AffixState> {
   static get contextType() {
     return ConfigContext;
   }
-
-  static propTypes = {
-    offsetTop: PropTypes.number,
-    offsetBottom: PropTypes.number,
-    target: PropTypes.func,
-  };
 
   context: ConfigContextValue;
 

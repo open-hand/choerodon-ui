@@ -1,7 +1,6 @@
 import React, { cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import KeyCode from '../../_util/KeyCode';
 import DateTable from './date/DateTable';
@@ -47,33 +46,6 @@ function goDay(direction) {
 }
 
 const Calendar = createReactClass({
-  propTypes: {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    defaultValue: PropTypes.object,
-    value: PropTypes.object,
-    selectedValue: PropTypes.object,
-    mode: PropTypes.oneOf(['time', 'date', 'month', 'year', 'decade']),
-    locale: PropTypes.object,
-    showDateInput: PropTypes.bool,
-    showWeekNumber: PropTypes.bool,
-    showToday: PropTypes.bool,
-    showOk: PropTypes.bool,
-    onSelect: PropTypes.func,
-    onOk: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    timePicker: PropTypes.element,
-    dateInputPlaceholder: PropTypes.any,
-    onClear: PropTypes.func,
-    onChange: PropTypes.func,
-    onPanelChange: PropTypes.func,
-    disabledDate: PropTypes.func,
-    disabledTime: PropTypes.any,
-    renderFooter: PropTypes.func,
-    renderSidebar: PropTypes.func,
-  },
-
   mixins: [CommonMixin, CalendarMixin],
 
   getDefaultProps() {

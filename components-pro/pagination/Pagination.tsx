@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -65,24 +64,6 @@ function defaultItemRender(page: number, type: PagerType) {
 @observer
 export default class Pagination extends DataSetComponent<PaginationProps> {
   static displayName = 'Pagination';
-
-  static propTypes = {
-    total: PropTypes.number,
-    page: PropTypes.number,
-    pageSize: PropTypes.number,
-    onChange: PropTypes.func,
-    itemRender: PropTypes.func,
-    sizeChangerPosition: PropTypes.oneOf([SizeChangerPosition.left, SizeChangerPosition.right]),
-    sizeChangerOptionRenderer: PropTypes.func,
-    showSizeChanger: PropTypes.bool,
-    showQuickJumper: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    showSizeChangerLabel: PropTypes.bool,
-    showTotal: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    showPager: PropTypes.bool,
-    simple: PropTypes.bool,
-    quickJumperPosition: PropTypes.oneOf([QuickJumperPosition.left, QuickJumperPosition.right]),
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'pagination',

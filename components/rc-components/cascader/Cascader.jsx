@@ -1,5 +1,4 @@
 import React, { cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import isEqual from 'lodash/isEqual';
 import Trigger from '../trigger';
@@ -59,34 +58,6 @@ export default class Cascader extends Component {
     expandIcon: <Icon type="navigate_next" />,
     menuMode:'multiple',
     locale:Locale,
-  };
-
-  static propTypes = {
-    value: PropTypes.array,
-    defaultValue: PropTypes.array,
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func,
-    onPopupVisibleChange: PropTypes.func,
-    popupVisible: PropTypes.bool,
-    disabled: PropTypes.bool,
-    transitionName: PropTypes.string,
-    popupClassName: PropTypes.string,
-    popupPlacement: PropTypes.string,
-    prefixCls: PropTypes.string,
-    dropdownMenuColumnStyle: PropTypes.object,
-    builtinPlacements: PropTypes.object,
-    loadData: PropTypes.func,
-    changeOnSelect: PropTypes.bool,
-    children: PropTypes.node,
-    onKeyDown: PropTypes.func,
-    expandTrigger: PropTypes.string,
-    expandIcon: PropTypes.node,
-    menuMode: PropTypes.string,
-    locale: PropTypes.object,
-    singleMenuStyle: PropTypes.object,
-    singleMenuItemStyle: PropTypes.object,
-    singlePleaseRender: PropTypes.func,
-    singleMenuItemRender: PropTypes.func,
   };
 
   constructor(props) {

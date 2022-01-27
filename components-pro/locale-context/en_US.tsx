@@ -149,6 +149,7 @@ const locale: Locale = {
     file_max_size: 'File size cannot exceed: {size}',
     file_list_max_length: 'The maximum number of files is limited to: {count}',
     file_type_mismatch: 'File type mismatch, correct type: {types}',
+    drag_info: 'Click or drag files here to upload',
   },
   Modal: {
     ok: 'OK',

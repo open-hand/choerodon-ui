@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -20,15 +19,6 @@ export interface PasswordProps extends TextFieldProps {
 @observer
 export default class Password extends TextField<PasswordProps> {
   static displayName = 'Password';
-
-  static propTypes = {
-    /**
-     * 是否可揭示
-     * @default true
-     */
-    reveal: PropTypes.bool,
-    ...TextField.propTypes,
-  };
 
   static defaultProps = {
     ...TextField.defaultProps,

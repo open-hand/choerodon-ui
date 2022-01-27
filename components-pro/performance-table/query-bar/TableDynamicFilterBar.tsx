@@ -80,14 +80,18 @@ function isEqualDynamicProps(originalValue, newValue) {
 }
 
 function getQueryData(queryDataSet) {
-  const queryData = omit(queryDataSet?.current?.toData(true), ['__dirty']);
-  return Object.keys(queryData).reduce((p, key) => {
-    const value = queryData[key];
-    if (!isEmpty(value)) {
-      p[key] = value;
-    }
-    return p;
-  }, {});
+  const { current } = queryDataSet;
+  if (current) {
+    const queryData = omit(current.toData(true), ['__dirty']);
+    return Object.keys(queryData).reduce((p, key) => {
+      const value = queryData[key];
+      if (!isEmpty(value)) {
+        p[key] = value;
+      }
+      return p;
+    }, {});
+  }
+  return {};
 }
 
 export interface TableDynamicFilterBarProps extends ElementProps {
@@ -520,11 +524,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { tableStore, tableStore: { proPrefixCls, node, highlightRowIndexs } } = this.context;
-    const { dataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
-    const searchText = dynamicFilterBar?.searchText || tableStore.getConfig('tableFilterSearchText') || 'params';
-    const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
+    const { fuzzyQuery } = this.props;
     if (!fuzzyQuery) return null;
+    const { dataSet, dynamicFilterBar, autoQueryAfterReset, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { tableStore, tableStore: { proPrefixCls, node, highlightRowIndexs } } = this.context;
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || tableStore.getConfig('tableFilterSearchText') || 'params';
+    const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     return (<div className={`${proPrefixCls}-filter-search`}>
       <TextField
         style={{ width: 280 }}
@@ -536,7 +541,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         onChange={debounce((value: string) => {
           runInAction(() => {
             this.searchText = value || '';
-            if (dynamicFilterBar?.quickSearch) {
+            if (dynamicFilterBar && dynamicFilterBar.quickSearch) {
               tableStore.highlightRowIndexs = [];
               tableStore.searchText = value || '';
               node.forceUpdate();
@@ -546,7 +551,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           this.handleQuery();
         }, 500)}
         onKeyDown={(e) => {
-          if (e.keyCode === KeyCode.ENTER && dynamicFilterBar?.quickSearch) {
+          if (e.keyCode === KeyCode.ENTER && dynamicFilterBar && dynamicFilterBar.quickSearch) {
             e.preventDefault();
             const rows: any[] = [...new Set(highlightRowIndexs)];
             node.scrollTop(rows[this.enterNum] * node.getRowHeight());
@@ -559,7 +564,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         onClear={() => {
           runInAction(() => {
             this.searchText = '';
-            if (dynamicFilterBar?.quickSearch) {
+            if (dynamicFilterBar && dynamicFilterBar.quickSearch) {
               tableStore.searchText = '';
               tableStore.highlightRowIndexs = [];
               node.forceUpdate();
@@ -694,7 +699,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     key={name}
                     onClick={() => this.refEditors.get(name).focus()}
                   >
-                    <span className={`${proPrefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                    <span className={`${proPrefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                     <span className={itemClassName}>{this.createFields(element, name)}</span>
                   </div>
                 );
@@ -717,7 +722,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           this.handleUnSelect([name]);
                         }}
                       />
-                      <span className={`${proPrefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                      <span className={`${proPrefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                       <span className={`${proPrefixCls}-filter-item`}>
                         {this.createFields(element, name)}
                       </span>

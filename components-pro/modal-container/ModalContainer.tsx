@@ -8,7 +8,6 @@ import findLast from 'lodash/findLast';
 import findLastIndex from 'lodash/findLastIndex';
 import noop from 'lodash/noop';
 import { ModalContainerState } from 'choerodon-ui/shared/modal-manager';
-import EventManager from 'choerodon-ui/lib/_util/EventManager';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -20,7 +19,7 @@ import Animate from '../animate';
 import Mask from './Mask';
 import { stopEvent } from '../_util/EventManager';
 import { suffixCls, toUsefulDrawerTransitionName } from '../modal/utils';
-import { getDocument, getMousePosition } from '../_util/DocumentUtils';
+import { getDocument } from '../_util/DocumentUtils';
 import { ViewComponentProps } from '../core/ViewComponent';
 
 export { ModalContainerState };
@@ -186,21 +185,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       this.active = false;
       this.drawerOffsets = { 'slide-up': [], 'slide-right': [], 'slide-down': [], 'slide-left': [] };
       this.top();
-      const doc = typeof window === 'undefined' ? undefined : document;
-      if (doc && !ModalManager.mousePositionEventBound.has(doc)) {
-        new EventManager(doc).addEventListener(
-          'click',
-          (e: MouseEvent) => {
-            ModalManager.mousePosition = getMousePosition(e.clientX, e.clientY, window);
-            // 100ms 内发生过点击事件，则从点击位置动画展示
-            // 否则直接 zoom 展示
-            // 这样可以兼容非点击方式展开
-            setTimeout(() => (delete ModalManager.mousePosition), 100);
-          },
-          true,
-        );
-        ModalManager.mousePositionEventBound.add(doc);
-      }
+      ModalManager.registerMousePosition();
     });
   }
 

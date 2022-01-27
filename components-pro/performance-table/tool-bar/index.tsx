@@ -95,7 +95,7 @@ const ToolBar: React.FC<ToolBarProps> = ({
           return React.cloneElement(btn, {
             // eslint-disable-next-line react/no-array-index-key
             key: index,
-            ...btn?.props,
+            ...btn.props,
           });
         })}
       </div>
@@ -116,7 +116,7 @@ const ToolBar: React.FC<ToolBarProps> = ({
     if (settings.length < 1) {
       return null;
     }
-    return settings?.length ? (
+    return settings.length ? (
       <div className={`${toolbarPrefixCls}-setting-items`}>
         {settings.map((setting, index) => {
           const settingItem = getSettingItem(setting, prefixCls!);

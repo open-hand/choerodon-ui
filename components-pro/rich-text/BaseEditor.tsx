@@ -1,5 +1,4 @@
 import React, { Component, ComponentClass } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { findDOMNode } from 'react-dom';
 import { Range, ReactQuillProps, UnprivilegedEditor } from 'react-quill/lib';
@@ -72,23 +71,6 @@ export interface BaseEditorProps {
 
 @observer
 export default class BaseEditor extends Component<BaseEditorProps> {
-  static propTypes = {
-    value: PropTypes.any,
-    onChange: PropTypes.func,
-    options: PropTypes.object,
-    saveRef: PropTypes.func,
-    autoFocus: PropTypes.bool,
-    mode: PropTypes.string,
-    toolbarId: PropTypes.string,
-    toolbar: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        RichTextToolbarType.none,
-        RichTextToolbarType.normal,
-      ]),
-      PropTypes.func,
-    ]),
-  };
-
   state = {
     imgOpen: false,
     images: [],
@@ -222,12 +204,12 @@ export default class BaseEditor extends Component<BaseEditorProps> {
               nextSrc={images[srcIndex + 1]}
               onMovePrevRequest={
                 () => {
-                  this.setState({srcIndex: srcIndex - 1});
+                  this.setState({ srcIndex: srcIndex - 1 });
                 }
               }
               onMoveNextRequest={
                 () => {
-                  this.setState({srcIndex: srcIndex + 1});
+                  this.setState({ srcIndex: srcIndex + 1 });
                 }
               }
             />

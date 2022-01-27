@@ -701,13 +701,13 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.cleanDragState();
 
     if (dropTargetKey === null) return;
-
+    const activeItem = this.getActiveItem();
     const abstractDropNodeProps = {
       ...getTreeNodeProps(
         dropTargetKey,
         this.getTreeNodeRequiredProps() as TreeNodeRequiredProps,
       ),
-      active: this.getActiveItem()?.data.key === dropTargetKey,
+      active: activeItem ? activeItem.data.key === dropTargetKey : false,
       data: keyEntities[dropTargetKey].node,
     };
     const dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;

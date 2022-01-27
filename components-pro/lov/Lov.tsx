@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -103,25 +102,6 @@ export interface LovProps extends SelectProps, ButtonProps {
 export default class Lov extends Select<LovProps> {
   static displayName = 'Lov';
 
-  static propTypes = {
-    ...Select.propTypes,
-    ...Button.propTypes,
-    modalProps: PropTypes.object,
-    tableProps: PropTypes.object,
-    noCache: PropTypes.bool,
-    fetchSingle: PropTypes.bool,
-    autoSelectSingle: PropTypes.bool,
-    /**
-     * 触发查询变更的动作， default: input
-     */
-    searchAction: PropTypes.oneOf([SearchAction.blur, SearchAction.input]),
-    showCheckedStrategy: PropTypes.string,
-    viewRenderer: PropTypes.func,
-    nodeRenderer: PropTypes.func,
-    showSelectedInView: PropTypes.bool,
-    selectionProps: PropTypes.object,
-  };
-
   static defaultProps = {
     ...Select.defaultProps,
     clearButton: true,
@@ -185,9 +165,13 @@ export default class Lov extends Select<LovProps> {
   }
 
   /**
-   * 点击查询仅存在一条数据时自动选中
+   * 点击查询仅存在一条数据时自动选中, Button 模式禁用
    */
   get autoSelectSingle(): boolean | undefined {
+    const { viewMode } = this.observableProps;
+    if (viewMode === ViewMode.button) {
+      return false;
+    }
     if ('autoSelectSingle' in this.props) {
       return this.props.autoSelectSingle;
     }
@@ -451,9 +435,7 @@ export default class Lov extends Select<LovProps> {
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
-      if (!this.autoSelectSingle) {
-        this.autoCreate();
-      }
+      this.autoCreate();
       const { options } = this;
       if (!this.modal && config && options) {
         const modalProps = this.getModalProps();

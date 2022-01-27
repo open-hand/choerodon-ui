@@ -1,6 +1,5 @@
 import { cloneElement, Component, isValidElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
 import domAlign from './domAlign';
@@ -31,18 +30,6 @@ export interface AlignProps {
 
 export default class Align extends Component<AlignProps, any> {
   static displayName = 'Align';
-
-  static propTypes = {
-    childrenProps: PropTypes.object,
-    childrenRef: PropTypes.func,
-    align: PropTypes.object.isRequired,
-    target: PropTypes.func,
-    onAlign: PropTypes.func,
-    monitorBufferTime: PropTypes.number,
-    monitorWindowResize: PropTypes.bool,
-    hidden: PropTypes.bool,
-    children: PropTypes.any,
-  };
 
   static defaultProps = {
     monitorBufferTime: 50,

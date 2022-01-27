@@ -1,5 +1,4 @@
 import React, { Children, cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { createPortal, findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
@@ -7,7 +6,6 @@ import contains from '../util/Dom/contains';
 import addEventListener from '../../_util/addEventListener';
 import Popup from './Popup';
 import { getAlignFromPlacement, getPopupClassNameFromAlign } from './utils';
-import ContainerRender from '../util/ContainerRender';
 import Portal from '../util/Portal';
 
 function returnEmptyString() {
@@ -21,55 +19,7 @@ function returnDocument() {
 const ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter',
   'onMouseLeave', 'onFocus', 'onBlur', 'onContextMenu'];
 
-const IS_REACT_16 = !!createPortal;
-
 class Trigger extends Component {
-  static propTypes = {
-    children: PropTypes.any,
-    action: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-    showAction: PropTypes.any,
-    hideAction: PropTypes.any,
-    getPopupClassNameFromAlign: PropTypes.any,
-    onPopupVisibleChange: PropTypes.func,
-    afterPopupVisibleChange: PropTypes.func,
-    popup: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.func,
-    ]).isRequired,
-    popupStyle: PropTypes.object,
-    prefixCls: PropTypes.string,
-    popupClassName: PropTypes.string,
-    popupPlacement: PropTypes.string,
-    builtinPlacements: PropTypes.object,
-    popupTransitionName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    popupAnimation: PropTypes.any,
-    mouseEnterDelay: PropTypes.number,
-    mouseLeaveDelay: PropTypes.number,
-    zIndex: PropTypes.number,
-    focusDelay: PropTypes.number,
-    blurDelay: PropTypes.number,
-    getPopupContainer: PropTypes.func,
-    getDocument: PropTypes.func,
-    getRootDomNode: PropTypes.func,
-    forceRender: PropTypes.bool,
-    destroyPopupOnHide: PropTypes.bool,
-    mask: PropTypes.bool,
-    maskClosable: PropTypes.bool,
-    onPopupAlign: PropTypes.func,
-    popupAlign: PropTypes.object,
-    popupVisible: PropTypes.bool,
-    defaultPopupVisible: PropTypes.bool,
-    maskTransitionName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    maskAnimation: PropTypes.string,
-    stretch: PropTypes.string,
-  };
-
   static defaultProps = {
     prefixCls: 'rc-trigger-popup',
     getPopupClassNameFromAlign: returnEmptyString,
@@ -135,14 +85,6 @@ class Trigger extends Component {
   componentDidUpdate(_, prevState) {
     const props = this.props;
     const state = this.state;
-    const triggerAfterPopupVisibleChange = () => {
-      if (prevState.popupVisible !== state.popupVisible) {
-        props.afterPopupVisibleChange(state.popupVisible);
-      }
-    };
-    if (!IS_REACT_16) {
-      this.renderComponent(null, triggerAfterPopupVisibleChange);
-    }
 
     this.prevPopupVisible = prevState.popupVisible;
 
@@ -560,24 +502,6 @@ class Trigger extends Component {
     }
 
     const trigger = cloneElement(child, newChildProps);
-
-    if (!IS_REACT_16) {
-      return (
-        <ContainerRender
-          parent={this}
-          visible={popupVisible}
-          autoMount={false}
-          forceRender={props.forceRender}
-          getComponent={this.getComponent}
-          getContainer={this.getContainer}
-        >
-          {({ renderComponent }) => {
-            this.renderComponent = renderComponent;
-            return trigger;
-          }}
-        </ContainerRender>
-      );
-    }
 
     let portal;
     // prevent unmounting after it's rendered

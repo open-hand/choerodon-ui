@@ -1,15 +1,14 @@
 /* eslint react/sort-comp:0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import getUid from './uid';
-import warning from '../../_util/warning';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
-import isObject  from 'lodash/isObject';
-import toString  from 'lodash/toString';
-import isNil  from 'lodash/isNil';
+import isObject from 'lodash/isObject';
+import toString from 'lodash/toString';
+import isNil from 'lodash/isNil';
+import getUid from './uid';
+import warning from '../../_util/warning';
 
 const IFRAME_STYLE = {
   position: 'absolute',
@@ -22,24 +21,6 @@ const IFRAME_STYLE = {
 
 // diferent from AjaxUpload, can only upload on at one time, serial seriously
 class IframeUploader extends Component {
-  static propTypes = {
-    component: PropTypes.string,
-    style: PropTypes.object,
-    disabled: PropTypes.bool,
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    accept: PropTypes.string,
-    onStart: PropTypes.func,
-    multiple: PropTypes.bool,
-    children: PropTypes.any,
-    data: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.func,
-    ]),
-    action: PropTypes.string,
-    name: PropTypes.string,
-  }
-
   state = { uploading: false }
 
   file = {}
@@ -249,15 +230,15 @@ class IframeUploader extends Component {
     onStart(file);
   }
 /**
- * 
- * @param { 需要加入的参数 } requestFileKeys 
- * @param { 文件内容 } file 
- * @param { props的必传参数 } data 
+ *
+ * @param { 需要加入的参数 } requestFileKeys
+ * @param { 文件内容 } file
+ * @param { props的必传参数 } data
  */
  requestFileInput(requestFileKeys,file,data) {
 
    const inputs = document.createDocumentFragment();
-    /** 
+    /**
      * 添加注入的data数据
      */
     if (data) {
@@ -272,7 +253,7 @@ class IframeUploader extends Component {
           inputs.appendChild(input);
         }
       }
-    } 
+    }
 
     const toStringValue = (value) => {
       if(isNil(value)){
@@ -286,11 +267,11 @@ class IframeUploader extends Component {
       }
       return toString(value)
     }
-    
+
     /**
-     * 
-     * @param {所有数据} obj 
-     * @param {需要传出的参数keys} arrayString 
+     *
+     * @param {所有数据} obj
+     * @param {需要传出的参数keys} arrayString
      */
     const ArrayToObject = (obj,arrayString) => {
       arrayString.forEach(item => {
@@ -303,7 +284,7 @@ class IframeUploader extends Component {
         inputs.appendChild(input);
       })
     }
-    
+
     /**
      * 判断是否需要增加key
      */

@@ -1,16 +1,7 @@
 import React, { Children, Component } from 'react';
-import PropTypes from 'prop-types';
 import { menuAllProps } from './util';
 
 class MenuItemGroup extends Component {
-  static propTypes = {
-    renderMenuItem: PropTypes.func,
-    index: PropTypes.number,
-    className: PropTypes.string,
-    subMenuKey: PropTypes.string,
-    rootPrefixCls: PropTypes.string,
-  };
-
   static defaultProps = {
     disabled: true,
   };

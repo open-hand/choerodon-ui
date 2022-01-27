@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DateConstants from './DateConstants';
 import { getTitleString, getTodayTime } from '../util/';
@@ -30,17 +29,6 @@ function getIdFromDate(date) {
 }
 
 const DateTBody = createReactClass({
-  propTypes: {
-    contentRender: PropTypes.func,
-    dateRender: PropTypes.func,
-    disabledDate: PropTypes.func,
-    prefixCls: PropTypes.string,
-    selectedValue: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-    value: PropTypes.object,
-    hoverValue: PropTypes.any,
-    showWeekNumber: PropTypes.bool,
-  },
-
   getDefaultProps() {
     return {
       hoverValue: [],

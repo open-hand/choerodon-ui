@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import isString from 'lodash/isString';
-import PropTypes from 'prop-types';
 import Cropper from 'react-easy-crop';
 import Button, { ButtonProps } from '../button';
 import Icon from '../icon';
@@ -71,30 +70,6 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   static get contextType() {
     return ConfigContext;
   }
-
-  static propTypes = {
-    visible: PropTypes.bool.isRequired, // 上传图片模态框的显示状态
-    onClose: PropTypes.func, // 模态框关闭时的回调
-    onUploadOk: PropTypes.func, // 成功上传时的回调
-    limit: PropTypes.object, // 限制内容
-    uploadUrl: PropTypes.string, // 上传链接
-    previewList: PropTypes.array,
-    editorWidth: PropTypes.number,
-    editorHeight: PropTypes.number,
-    rectSize: PropTypes.number, // 默认最小的
-    prefixCls: PropTypes.string, // 自定义样式前缀
-    handleUpload: PropTypes.func,
-    axiosConfig: PropTypes.object,
-    cropComplete: PropTypes.func,
-    title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    previewTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    reloadTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    uploadProps: PropTypes.object,
-    modalProps: PropTypes.object,
-    reloadText: PropTypes.func,
-    uploadFaild: PropTypes.func,
-    uploadError: PropTypes.func,
-  };
 
   static defaultProps = {
     limit: {

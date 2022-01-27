@@ -1,7 +1,7 @@
 import React, { Component, Key } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, computed, observable, runInAction } from 'mobx';
+import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import xor from 'lodash/xor';
 import C7NTree, {
@@ -68,61 +68,9 @@ function defaultNodeCover() {
   return {};
 }
 
-const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 @observer
 export default class Tree extends Component<TreeProps> {
   static displayName = 'Tree<PRO>';
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    children: PropTypes.any,
-    treeData: PropTypes.array, // Generate treeNode by children
-    showLine: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    showIcon: PropTypes.bool,
-    icon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    selectable: PropTypes.bool,
-    disabled: PropTypes.bool,
-    multiple: PropTypes.bool,
-    checkable: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
-    checkStrictly: PropTypes.bool,
-    draggable: PropTypes.oneOfType([PropTypes.bool, PropTypes.func, PropTypes.object]),
-    defaultExpandParent: PropTypes.bool,
-    autoExpandParent: PropTypes.bool,
-    defaultExpandAll: PropTypes.bool,
-    defaultExpandedKeys: PropTypes.arrayOf(keyPropType),
-    expandedKeys: PropTypes.arrayOf(keyPropType),
-    defaultCheckedKeys: PropTypes.arrayOf(keyPropType),
-    checkedKeys: PropTypes.oneOfType([
-      PropTypes.arrayOf(keyPropType),
-      PropTypes.object,
-    ]),
-    defaultSelectedKeys: PropTypes.arrayOf(keyPropType),
-    selectedKeys: PropTypes.arrayOf(keyPropType),
-    onClick: PropTypes.func,
-    onDoubleClick: PropTypes.func,
-    onExpand: PropTypes.func,
-    onCheck: PropTypes.func,
-    onSelect: PropTypes.func,
-    onLoad: PropTypes.func,
-    loadData: PropTypes.func,
-    loadedKeys: PropTypes.arrayOf(keyPropType),
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onRightClick: PropTypes.func,
-    onDragStart: PropTypes.func,
-    onDragEnter: PropTypes.func,
-    onDragOver: PropTypes.func,
-    onDragLeave: PropTypes.func,
-    onDragEnd: PropTypes.func,
-    onDrop: PropTypes.func,
-    filterTreeNode: PropTypes.func,
-    motion: PropTypes.object,
-    switcherIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    filter: PropTypes.func,
-  };
 
   static TreeNode = TreeNode;
 
@@ -489,7 +437,7 @@ export default class Tree extends Component<TreeProps> {
       this.handleAfterLoadData(event);
     }));
   }
-  
+
   @autobind
   handleAfterLoadData(event): void {
     const { dataSet, selectable } = this.props;
@@ -499,7 +447,7 @@ export default class Tree extends Component<TreeProps> {
       if (!loadRootRecord) {
         return;
       }
-      const loadRecords: Record[] = loadRootRecord.children ?? [];
+      const loadRecords: Record[] = defaultTo(loadRootRecord.children , []);
 
       if (checkField) {
         const field = dataSet.getField(checkField);

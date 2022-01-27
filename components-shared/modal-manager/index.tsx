@@ -1,6 +1,9 @@
+import { MouseEvent } from 'react';
 import { action, observable } from 'mobx';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { EventManager } from 'choerodon-ui/dataset';
+import { getMousePosition } from '../util';
 
 export type MousePosition = { x: number; y: number };
 
@@ -44,6 +47,7 @@ export type ModalManagerType = {
   removeInstance: (instance: IModalContainer) => void;
   getKey: () => string;
   clear: (closeByLocationChange?: boolean) => void;
+  registerMousePosition: () => void;
   mousePositionEventBound: WeakSet<Document>;
   mousePosition?: MousePosition;
   containerStyles: WeakMap<HTMLElement, { overflow: string, paddingRight: string, position: string }>
@@ -81,14 +85,36 @@ function clear(closeByLocationChange) {
   });
 }
 
+const mousePositionEventBound = new WeakSet<Document>();
+
+function registerMousePosition() {
+  const doc = typeof window === 'undefined' ? undefined : document;
+  if (doc && !mousePositionEventBound.has(doc)) {
+    // 只有点击事件支持从鼠标位置动画展开
+    new EventManager(doc).addEventListener(
+      'click',
+      (e: MouseEvent) => {
+        ModalManager.mousePosition = getMousePosition(e.clientX, e.clientY, window);
+        // 100ms 内发生过点击事件，则从点击位置动画展示
+        // 否则直接 zoom 展示
+        // 这样可以兼容非点击方式展开
+        setTimeout(() => (delete ModalManager.mousePosition), 100);
+      },
+      true,
+    );
+    mousePositionEventBound.add(doc);
+  }
+}
+
 const ModalManager: ModalManagerType = {
   addInstance,
   removeInstance,
   getKey,
-  mousePositionEventBound: new WeakSet<Document>(),
+  mousePositionEventBound,
   containerInstances,
   clear,
   containerStyles: new WeakMap(),
+  registerMousePosition,
 };
 
 export default ModalManager;

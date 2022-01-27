@@ -1,32 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 
 class Header extends Component {
-  static propTypes = {
-    format: PropTypes.string,
-    prefixCls: PropTypes.string,
-    disabledDate: PropTypes.func,
-    placeholder: PropTypes.string,
-    clearText: PropTypes.string,
-    value: PropTypes.object,
-    inputReadOnly: PropTypes.bool,
-    hourOptions: PropTypes.array,
-    minuteOptions: PropTypes.array,
-    secondOptions: PropTypes.array,
-    disabledHours: PropTypes.func,
-    disabledMinutes: PropTypes.func,
-    disabledSeconds: PropTypes.func,
-    onChange: PropTypes.func,
-    onClear: PropTypes.func,
-    onEsc: PropTypes.func,
-    allowEmpty: PropTypes.bool,
-    defaultOpenValue: PropTypes.object,
-    currentSelectPanel: PropTypes.string,
-    focusOnOpen: PropTypes.bool,
-    onKeyDown: PropTypes.func,
-  };
-
   static defaultProps = {
     inputReadOnly: false,
   }

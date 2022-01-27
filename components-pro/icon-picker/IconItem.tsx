@@ -1,5 +1,4 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, memo, useCallback } from 'react';
 import classNames from 'classnames';
 import Icon from '../icon';
 
@@ -11,31 +10,22 @@ export interface IconItemProps {
   customFontName?: string;
 }
 
-export default class IconItem extends PureComponent<IconItemProps> {
-  static displayName = 'IconItem';
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    active: PropTypes.bool.isRequired,
-    type: PropTypes.string.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    customFontName: PropTypes.string,
-  };
-
-  handleClick = () => {
-    const { onSelect, type } = this.props;
+const IconItem: FunctionComponent<IconItemProps> = function IconItem(props) {
+  const { prefixCls, type, onSelect, active, customFontName } = props;
+  const handleClick = useCallback(() => {
     onSelect(type);
-  };
+  }, [type, onSelect]);
 
-  render() {
-    const { prefixCls, type, active, customFontName } = this.props;
-    return (
-      <li className={classNames({ [`${prefixCls}-item-selected`]: active })}>
-        <div onClick={this.handleClick}>
-          <Icon customFontName={customFontName} type={type} />
-          <p>{type}</p>
-        </div>
-      </li>
-    );
-  }
-}
+  return (
+    <li className={classNames({ [`${prefixCls}-item-selected`]: active })}>
+      <div onClick={handleClick}>
+        <Icon customFontName={customFontName} type={type} />
+        <p>{type}</p>
+      </div>
+    </li>
+  );
+};
+
+IconItem.displayName = 'IconItem';
+
+export default memo(IconItem);

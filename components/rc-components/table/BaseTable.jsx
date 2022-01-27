@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
+import TableContext from './TableContext';
 
 class BaseTable extends Component {
-  static propTypes = {
-    fixed: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]),
-    columns: PropTypes.array.isRequired,
-    tableClassName: PropTypes.string.isRequired,
-    hasHead: PropTypes.bool.isRequired,
-    hasBody: PropTypes.bool.isRequired,
-    hasFoot: PropTypes.bool.isRequired,
-    store: PropTypes.object.isRequired,
-    expander: PropTypes.object.isRequired,
-    getRowKey: PropTypes.func,
-    isAnyColumnsFixed: PropTypes.bool,
-  };
-
-  static contextTypes = {
-    table: PropTypes.any,
-  };
+  static get contextType() {
+    return TableContext;
+  }
 
   handleRowHover = (isHover, key) => {
     this.props.store.setState({
@@ -35,7 +19,7 @@ class BaseTable extends Component {
   };
 
   renderRows = (renderData, indent, ancestorKeys = []) => {
-    const { table } = this.context;
+    const table = this.context;
     const { columnManager, components } = table;
     const {
       prefixCls,
@@ -133,7 +117,7 @@ class BaseTable extends Component {
   };
 
   render() {
-    const { table } = this.context;
+    const table = this.context;
     const { components } = table;
     const { prefixCls, scroll, data, getBodyWrapper } = table.props;
     const { expander, tableClassName, hasHead, hasBody, hasFoot, fixed, columns } = this.props;

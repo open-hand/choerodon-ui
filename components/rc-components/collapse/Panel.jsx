@@ -1,129 +1,96 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import PanelContent from './PanelContent';
 import Animate from '../../animate';
 
-export default class CollapsePanel extends Component {
-  static propTypes = {
-    className: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    id: PropTypes.string,
-    children: PropTypes.any,
-    openAnimation: PropTypes.object,
-    prefixCls: PropTypes.string,
-    header: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.node,
-    ]),
-    headerClass: PropTypes.string,
-    showArrow: PropTypes.bool,
-    isActive: PropTypes.bool,
-    onItemClick: PropTypes.func,
-    style: PropTypes.object,
-    destroyInactivePanel: PropTypes.bool,
-    disabled: PropTypes.bool,
-    forceRender: PropTypes.bool,
-  };
+const CollapsePanel = function CollapsePanel(props) {
+  const {
+    className,
+    id,
+    style,
+    prefixCls,
+    header,
+    headerClass,
+    children,
+    isActive,
+    showArrow,
+    destroyInactivePanel,
+    disabled,
+    accordion,
+    forceRender,
+    expandIcon,
+    expandIconPosition,
+    extra,
+    trigger,
+    openAnimation,
+    onItemClick,
+  } = props;
+  const headerCls = classNames(`${prefixCls}-header`, headerClass, {
+    [`${prefixCls}-item-expand-renderer`]: showArrow && typeof expandIcon === 'function',
+  });
+  const itemCls = classNames(`${prefixCls}-item`, {
+    [`${prefixCls}-item-active`]: isActive,
+    [`${prefixCls}-item-disabled`]: disabled,
+  }, className);
 
-  static defaultProps = {
-    showArrow: true,
-    isActive: false,
-    destroyInactivePanel: false,
-    onItemClick() {
-    },
-    headerClass: '',
-    forceRender: false,
-  };
-
-  handleItemClick() {
-    if (this.props.onItemClick) {
-      this.props.onItemClick();
+  const iconCls = classNames(`${prefixCls}-expand-icon`, {
+    [`${prefixCls}-expanded`]: isActive,
+    [`${prefixCls}-collapsed`]: !isActive,
+  });
+  const handleItemClick = useCallback(() => {
+    if (onItemClick) {
+      onItemClick();
     }
-  }
+  }, [onItemClick]);
 
-  render() {
-    const {
-      className,
-      id,
-      style,
-      prefixCls,
-      header,
-      headerClass,
-      children,
-      isActive,
-      showArrow,
-      destroyInactivePanel,
-      disabled,
-      accordion,
-      forceRender,
-      expandIcon,
-      expandIconPosition,
-      extra,
-      trigger,
-    } = this.props;
-    const headerCls = classNames(`${prefixCls}-header`, {
-      [headerClass]: headerClass,
-      [`${prefixCls}-item-expand-renderer`]: showArrow && typeof expandIcon === 'function',
-    });
-    const itemCls = classNames({
-      [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive,
-      [`${prefixCls}-item-disabled`]: disabled,
-    }, className);
+  const icon = showArrow ? (
+    <span className={`${prefixCls}-expand-icon-wrapper`} onClick={trigger === 'icon' ? handleItemClick : undefined}>
+      {typeof expandIcon === 'function' ? expandIcon(props) : <i className={iconCls} />}
+    </span>
+  ) : null;
 
-    const iconCls = classNames({
-      [`${prefixCls}-expand-icon`]: true,
-      [`${prefixCls}-expanded`]: isActive,
-      [`${prefixCls}-collapsed`]: !isActive,
-    });
-
-    let icon = null;
-
-    if (showArrow) {
-      icon = (
-        <span className={`${prefixCls}-expand-icon-wrapper`} onClick={trigger === 'icon' ? this.handleItemClick.bind(this) : noop}>
-          {typeof expandIcon === 'function' ? expandIcon(this.props) : <i className={iconCls} />}
-        </span>
-      );
-    }
-
-    return (
-      <div className={itemCls} style={style} id={id}>
-        <div
-          className={headerCls}
-          onClick={trigger === 'header' ? this.handleItemClick.bind(this) : noop}
-          role={accordion ? 'tab' : 'button'}
-          tabIndex={disabled ? -1 : 0}
-          aria-expanded={`${isActive}`}
-          onKeyPress={this.handleKeyPress}
-        >
-          {showArrow && expandIconPosition !== 'text-right' && icon }
-          {header}
-          {showArrow && expandIconPosition === 'text-right' && icon }
-          {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
-        </div>
-        <Animate
-          hiddenProp="isInactive"
-          exclusive
-          component=""
-          animation={this.props.openAnimation}
-        >
-          <PanelContent
-            prefixCls={prefixCls}
-            isInactive={!isActive}
-            destroyInactivePanel={destroyInactivePanel}
-            forceRender={forceRender}
-            role={accordion ? 'tabpanel' : null}
-          >
-            {children}
-          </PanelContent>
-        </Animate>
+  return (
+    <div className={itemCls} style={style} id={id}>
+      <div
+        className={headerCls}
+        onClick={trigger === 'header' ? handleItemClick : undefined}
+        role={accordion ? 'tab' : 'button'}
+        tabIndex={disabled ? -1 : 0}
+        aria-expanded={`${isActive}`}
+      >
+        {showArrow && expandIconPosition !== 'text-right' && icon}
+        {header}
+        {showArrow && expandIconPosition === 'text-right' && icon}
+        {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
       </div>
-    );
-  }
-}
+      <Animate
+        hiddenProp="isInactive"
+        exclusive
+        component=""
+        animation={openAnimation}
+      >
+        <PanelContent
+          prefixCls={prefixCls}
+          isInactive={!isActive}
+          destroyInactivePanel={destroyInactivePanel}
+          forceRender={forceRender}
+          role={accordion ? 'tabpanel' : null}
+        >
+          {children}
+        </PanelContent>
+      </Animate>
+    </div>
+  );
+};
+
+CollapsePanel.displayName = 'RcCollapsePanel';
+
+CollapsePanel.defaultProps = {
+  showArrow: true,
+  isActive: false,
+  destroyInactivePanel: false,
+  forceRender: false,
+};
+
+export default CollapsePanel;

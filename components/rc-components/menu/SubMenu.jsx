@@ -1,6 +1,5 @@
 import React, { Component, createElement } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
@@ -32,37 +31,6 @@ const updateDefaultActiveFirst = (store, eventKey, defaultActiveFirst) => {
 };
 
 export class SubMenu extends Component {
-  static propTypes = {
-    parentMenu: PropTypes.object,
-    title: PropTypes.node,
-    children: PropTypes.any,
-    selectedKeys: PropTypes.array,
-    openKeys: PropTypes.array,
-    onClick: PropTypes.func,
-    onOpenChange: PropTypes.func,
-    rootPrefixCls: PropTypes.string,
-    eventKey: PropTypes.string,
-    multiple: PropTypes.bool,
-    active: PropTypes.bool, // TODO: remove
-    onItemHover: PropTypes.func,
-    onSelect: PropTypes.func,
-    triggerSubMenuAction: PropTypes.string,
-    onDeselect: PropTypes.func,
-    onDestroy: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onTitleMouseEnter: PropTypes.func,
-    onTitleMouseLeave: PropTypes.func,
-    onTitleClick: PropTypes.func,
-    popupOffset: PropTypes.array,
-    isOpen: PropTypes.bool,
-    store: PropTypes.object,
-    mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
-    manualRef: PropTypes.func,
-    itemIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    expandIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  };
-
   static defaultProps = {
     onMouseEnter: noop,
     onMouseLeave: noop,

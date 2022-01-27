@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import classNames from 'classnames';
@@ -25,12 +24,6 @@ export interface TransferProps extends SelectProps {
 @observer
 export default class Transfer extends Select<TransferProps> {
   static displayName = 'Transfer';
-
-  static propTypes = {
-    ...Select.propTypes,
-    titles: PropTypes.arrayOf(PropTypes.node),
-    sortable: PropTypes.bool,
-  };
 
   static defaultProps = {
     ...Select.defaultProps,
@@ -124,7 +117,7 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.removeValues(this.targetSelected.map(record => record.get(valueField)));
     this.targetSelected = [];
-    this.updateIndex()
+    this.updateIndex();
   }
 
   @autobind
@@ -133,24 +126,33 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
     this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
     this.sourceSelected = [];
-    this.updateIndex()
+    this.updateIndex();
   }
 
   @autobind
   @action
   handleSortTo(direction: string) {
-    const { valueField } = this;
-    const to = direction === 'up' ? -1 : 1
-
-    const targetFilteredOptions = this.options.getState('targetFilteredOptions');
-    const index = targetFilteredOptions.findIndex(record => record.get(valueField) === this.options.current?.get(valueField))
-    const currentOpt = targetFilteredOptions[index]
-    const moveOpt = targetFilteredOptions[index + to]
-
-    const optionsCurrentIndex = this.options.findIndex(record => record.get(valueField) === currentOpt.get(valueField))
-    const optionsMoveIndex = this.options.findIndex(record => record.get(valueField) === moveOpt.get(valueField))
-
-    this.options.move(optionsCurrentIndex, optionsMoveIndex);
+    const { valueField, options } = this;
+    const { current } = options;
+    if (current) {
+      const targetFilteredOptions = options.getState('targetFilteredOptions');
+      if (targetFilteredOptions) {
+        const to = direction === 'up' ? -1 : 1;
+        const currentValue = current.get(valueField);
+        const index = targetFilteredOptions.findIndex(record => record.get(valueField) === currentValue);
+        const currentOpt = targetFilteredOptions[index];
+        const moveOpt = targetFilteredOptions[index + to];
+        if (currentOpt && moveOpt) {
+          const currentOptValue = currentOpt.get(valueField);
+          const moveOptValue = moveOpt.get(valueField);
+          const optionsCurrentIndex = options.findIndex(record => record.get(valueField) === currentOptValue);
+          const optionsMoveIndex = options.findIndex(record => record.get(valueField) === moveOptValue);
+          if (optionsCurrentIndex !== -1 && optionsMoveIndex !== -1) {
+            options.move(optionsCurrentIndex, optionsMoveIndex);
+          }
+        }
+      }
+    }
   }
 
   @autobind
@@ -205,7 +207,7 @@ export default class Transfer extends Select<TransferProps> {
   handleRemove = (value) => {
     this.removeValues([value]);
     this.updateIndex();
-  }
+  };
 
   @action
   updateIndex() {
@@ -245,7 +247,7 @@ export default class Transfer extends Select<TransferProps> {
       oneWayProps = {
         multiple: false,
         onRemove: this.handleRemove,
-      }
+      };
     }
 
     return (

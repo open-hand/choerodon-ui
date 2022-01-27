@@ -6,8 +6,8 @@
 import React from 'react';
 import warning from '../../_util/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
-import { NodeElement, Key, DataNode, DataEntity, NodeInstance, FlattenNode, Direction } from './interface';
-import { TreeProps, AllowDrop } from './Tree';
+import { DataEntity, DataNode, Direction, FlattenNode, Key, NodeElement, NodeInstance } from './interface';
+import { AllowDrop, TreeProps } from './Tree';
 
 export function arrDel(list: Key[], value: Key | undefined | null) {
   const clone = list.slice();
@@ -99,7 +99,7 @@ export function calcDropPosition(
   const { clientX, clientY } = event;
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
-  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition?.x || 0) - clientX);
+  const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition && startMousePosition.x || 0) - clientX);
   const rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
 
   // find abstract drop node by horizontal offset
@@ -146,7 +146,7 @@ export function calcDropPosition(
     // first half of first node in first level
     dropPosition = -1;
   } else if (
-    (abstractDragOverEntity.children || []).length 
+    (abstractDragOverEntity.children || []).length
   ) {
     // drop on expanded node
     // only allow drop inside
@@ -211,14 +211,14 @@ export function calcDropPosition(
       dropAllowed = false;
     }
   }
-
+  const { key: dropTargetKey, pos: dropTargetPos, parent } = abstractDropNodeEntity;
   return {
     dropPosition,
     dropLevelOffset,
-    dropTargetKey: abstractDropNodeEntity.key,
-    dropTargetPos: abstractDropNodeEntity.pos,
+    dropTargetKey,
+    dropTargetPos,
     dragOverNodeKey,
-    dropContainerKey: dropPosition === 0 ? null : (abstractDropNodeEntity.parent?.key || null),
+    dropContainerKey: dropPosition === 0 ? null : (parent && parent.key || null),
     dropAllowed,
   };
 }

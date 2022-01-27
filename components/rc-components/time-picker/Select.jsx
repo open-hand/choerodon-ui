@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDom from 'react-dom';
 import classnames from 'classnames';
 
@@ -24,15 +23,6 @@ const scrollTo = (element, to, duration) => {
 };
 
 class Select extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    options: PropTypes.array,
-    selectedIndex: PropTypes.number,
-    type: PropTypes.string,
-    onSelect: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-  };
-
   state = {
     active: false,
   };

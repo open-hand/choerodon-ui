@@ -1,5 +1,4 @@
 import React, { isValidElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isString from 'lodash/isString';
@@ -13,7 +12,7 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning, { KeepRunningProps } from '../_util/keepRunning';
 import Icon from '../icon';
-import { getNearStepValues, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseNumber, plus, bigNumberToFixed, parseBigNumber } from './utils';
+import { bigNumberToFixed, getNearStepValues, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseBigNumber, parseNumber, plus } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
@@ -22,7 +21,7 @@ import defaultFormatNumber from '../formatter/formatNumber';
 import defaultFormatBigNumber from '../formatter/formatBigNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
-import { getNumberFormatOptions, getNumberFormatter, getBigNumberFormatter, getBigNumberFormatOptions } from '../field/utils';
+import { getBigNumberFormatOptions, getBigNumberFormatter, getNumberFormatOptions, getNumberFormatter } from '../field/utils';
 
 // BigNumber: https://mikemcl.github.io/bignumber.js/
 function getCurrentValidValue(value: string, stringMode?: boolean): number | string {
@@ -140,42 +139,6 @@ export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
   static displayName = 'NumberField';
-
-  static propTypes = {
-    /**
-     * 最小值
-     */
-    min: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * 最大值
-     */
-    max: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * 步距
-     */
-    step: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    /**
-     * 非严格步距
-     */
-    nonStrictStep: PropTypes.bool,
-    /**
-     * 格式器
-     */
-    formatter: PropTypes.func,
-    /**
-     * 格式器参数
-     */
-    longPressPlus: PropTypes.bool,
-    /**
-     * 是否开启长按步距增加
-     */
-    formatterOptions: PropTypes.object,
-    /**
-     * 是否启用UP DOWN键盘事件
-     */
-    keyboard: PropTypes.bool,
-    ...TextField.propTypes,
-  };
 
   static defaultProps = {
     ...TextField.defaultProps,

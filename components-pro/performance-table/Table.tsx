@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { get, isArrayLike, runInAction } from 'mobx';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import isFunction from 'lodash/isFunction';
 import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import defaultTo from 'lodash/defaultTo';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
@@ -78,7 +78,7 @@ import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar, { ToolBarProps } from './tool-bar';
-import { TableHeightType, TableColumnResizeTriggerType } from '../table/enum';
+import { TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
 import { $l } from '../locale-context';
@@ -372,77 +372,72 @@ interface TableState {
   [key: string]: any;
 }
 
-const propTypes = {
-  columns: PropTypes.array,
-  autoHeight: PropTypes.bool,
-  affixHeader: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  affixHorizontalScrollbar: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  bordered: PropTypes.bool,
-  bodyRef: PropTypes.func,
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  children: PropTypes.any,
-  cellBordered: PropTypes.bool,
-  clickScrollLength: PropTypes.object,
-  data: PropTypes.arrayOf(PropTypes.object),
-  defaultExpandAllRows: PropTypes.bool,
-  defaultExpandedRowKeys: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  ),
-  defaultSortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  disabledScroll: PropTypes.bool,
-  expandedRowKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  hover: PropTypes.bool,
-  height: PropTypes.number,
-  headerHeight: PropTypes.number,
-  locale: PropTypes.object,
-  loading: PropTypes.bool,
-  loadAnimation: PropTypes.bool,
-  minHeight: PropTypes.number,
-  rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  renderTreeToggle: PropTypes.func,
-  renderRowExpanded: PropTypes.func,
-  rowExpandedHeight: PropTypes.number,
-  renderEmpty: PropTypes.func,
-  renderLoading: PropTypes.func,
-  rowClassName: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  rtl: PropTypes.bool,
-  style: PropTypes.object,
-  sortColumn: PropTypes.string,
-  sortType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  showHeader: PropTypes.bool,
-  showScrollArrow: PropTypes.bool,
-  shouldUpdateScroll: PropTypes.bool,
-  translate3d: PropTypes.bool,
-  wordWrap: PropTypes.bool,
-  width: PropTypes.number,
-  virtualized: PropTypes.bool,
-  isTree: PropTypes.bool,
-  onRowClick: PropTypes.func,
-  onRowContextMenu: PropTypes.func,
-  onScroll: PropTypes.func,
-  onSortColumn: PropTypes.func,
-  onExpandChange: PropTypes.func,
-  onTouchStart: PropTypes.func,
-  onTouchMove: PropTypes.func,
-  onDataUpdated: PropTypes.func,
-  highLightRow: PropTypes.bool,
-  /**
-   * 显示查询条
-   */
-  queryBar: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  customizedCode: PropTypes.string,
-  customizable: PropTypes.bool,
-  columnDraggable: PropTypes.bool,
-  columnTitleEditable: PropTypes.bool,
-  columnsDragRender: PropTypes.object,
-  rowSelection: PropTypes.object,
-  rowDraggable: PropTypes.bool,
-  onDragEndBefore: PropTypes.func,
-  onDragEnd: PropTypes.func,
-  onDragStart: PropTypes.func,
-};
+const propTypeKeys = [
+  'columns',
+  'autoHeight',
+  'affixHeader',
+  'affixHorizontalScrollbar',
+  'bordered',
+  'bodyRef',
+  'className',
+  'classPrefix',
+  'children',
+  'cellBordered',
+  'clickScrollLength',
+  'data',
+  'defaultExpandAllRows',
+  'defaultExpandedRowKeys',
+  'defaultSortType',
+  'disabledScroll',
+  'expandedRowKeys',
+  'hover',
+  'height',
+  'headerHeight',
+  'locale',
+  'loading',
+  'loadAnimation',
+  'minHeight',
+  'rowKey',
+  'rowHeight',
+  'renderTreeToggle',
+  'renderRowExpanded',
+  'rowExpandedHeight',
+  'renderEmpty',
+  'renderLoading',
+  'rowClassName',
+  'rtl',
+  'style',
+  'sortColumn',
+  'sortType',
+  'showHeader',
+  'showScrollArrow',
+  'shouldUpdateScroll',
+  'translate3d',
+  'wordWrap',
+  'width',
+  'virtualized',
+  'isTree',
+  'onRowClick',
+  'onRowContextMenu',
+  'onScroll',
+  'onSortColumn',
+  'onExpandChange',
+  'onTouchStart',
+  'onTouchMove',
+  'onDataUpdated',
+  'highLightRow',
+  'queryBar',
+  'customizedCode',
+  'customizable',
+  'columnDraggable',
+  'columnTitleEditable',
+  'columnsDragRender',
+  'rowSelection',
+  'rowDraggable',
+  'onDragEndBefore',
+  'onDragEnd',
+  'onDragStart',
+];
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
 
@@ -460,8 +455,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   static ColumnGroup = ColumnGroup;
 
   static HeaderCell = HeaderCell;
-
-  static propTypes = propTypes;
 
   static ProfessionalBar = ProfessionalBar;
 
@@ -678,8 +671,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   listenWheel = (deltaX: number, deltaY: number) => {
     this.handleWheel(deltaX, deltaY);
-    this.scrollbarXRef.current?.onWheelScroll?.(deltaX);
-    this.scrollbarYRef.current?.onWheelScroll?.(deltaY);
+    const xRef = this.scrollbarXRef.current;
+    if (xRef && xRef.onWheelScroll) {
+      xRef.onWheelScroll(deltaX);
+    }
+    const yRef = this.scrollbarYRef.current;
+    if (yRef && yRef.onWheelScroll) {
+      yRef.onWheelScroll(deltaY);
+    }
   };
 
   componentDidMount() {
@@ -701,12 +700,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // this.touchMoveListener = on(tableBody, 'touchmove', this.handleTouchMove, options);
     }
 
-    const { affixHeader, affixHorizontalScrollbar } = this.props;
+    const { affixHeader, affixHorizontalScrollbar, bodyRef } = this.props;
     if (isNumberOrTrue(affixHeader) || isNumberOrTrue(affixHorizontalScrollbar)) {
       this.scrollListener = on(window, 'scroll', this.handleWindowScroll);
     }
-
-    this.props?.bodyRef?.(this.wheelWrapperRef.current);
+    if (bodyRef) {
+      bodyRef(this.wheelWrapperRef.current);
+    }
   }
 
   shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
@@ -731,7 +731,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const flag = this.props.columns !== nextProps.columns
       || this.props.children !== nextProps.children
       || this.props.rowSelection !== nextProps.rowSelection
-      || this.props.data !== nextProps.data
+      || this.props.data !== nextProps.data;
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
@@ -740,27 +740,30 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
     const { rowHeight, data, height, virtualized, children, columns } = prevProps;
-    if (data !== this.props.data) {
+    const { props, state } = this;
+    const { data: nextData, onDataUpdated, shouldUpdateScroll, columns: nextColumns, rowSelection, children: nextChildren } = props;
+    if (data !== nextData) {
       this.calculateRowMaxHeight();
-      this.props.onDataUpdated?.(this.props.data, this.scrollTo);
-
+      if (onDataUpdated) {
+        onDataUpdated(nextData, this.scrollTo);
+      }
       const maxHeight =
-        this.props.data.length * (typeof rowHeight === 'function' ? rowHeight({}) : rowHeight!);
+        nextData.length * (typeof rowHeight === 'function' ? rowHeight({}) : rowHeight!);
       // 当开启允许更新滚动条，或者滚动条位置大于表格的最大高度，则初始滚动条位置
-      if (this.props.shouldUpdateScroll || Math.abs(this.scrollY) > maxHeight) {
+      if (shouldUpdateScroll || Math.abs(this.scrollY) > maxHeight) {
         this.scrollTo({ x: 0, y: 0 });
       }
     } else {
       this.updatePosition();
     }
 
-    if (columns !== this.props.columns || children !== this.props.children || this.tableStore.customizable) {
+    if (columns !== nextColumns || children !== nextChildren || this.tableStore.customizable) {
       let shouldFixedColumn = false;
 
-      if ((!columns || columns.length === 0) && this.props.rowSelection && this.props.columns && this.props.columns.length) {
+      if ((!columns || columns.length === 0) && rowSelection && nextColumns && nextColumns.length) {
         let rowSelectionFixed: any = 'left';
-        if ('fixed' in this.props.rowSelection) {
-          rowSelectionFixed = this.props.rowSelection.fixed;
+        if ('fixed' in rowSelection) {
+          rowSelectionFixed = rowSelection.fixed;
         }
         const columnsWithRowSelectionProps: ColumnProps = {
           title: $l('Table', 'select_current_page'),
@@ -770,18 +773,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           fixed: rowSelectionFixed,
         };
         runInAction(() => {
-          this.tableStore.originalColumns = this.props.columns!.splice(this.props.rowSelection?.columnIndex || 0, 0, columnsWithRowSelectionProps);
+          this.tableStore.originalColumns = nextColumns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
         });
       }
 
-      if (this.props.children) {
-        shouldFixedColumn = Array.from(this.props.children as Iterable<any>).some(
+      if (nextChildren) {
+        shouldFixedColumn = Array.from(nextChildren as Iterable<any>).some(
           (child: any) => child && child.props && child.props.fixed,
         );
       }
-
-      if (this.tableStore.originalColumns && this.tableStore.originalColumns.length) {
-        shouldFixedColumn = Array.from(this.tableStore.originalColumns as Iterable<any>).some(
+      const { originalColumns } = this.tableStore;
+      if (originalColumns && originalColumns.length) {
+        shouldFixedColumn = Array.from(originalColumns as Iterable<any>).some(
           (child: any) => child && child.fixed,
         );
       }
@@ -790,14 +793,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if (
       // 当 Table 的 data 发生变化，需要重新计算高度
-      data !== this.props.data ||
+      data !== nextData ||
       // 当 Table 内容区的高度发生变化需要重新计算
-      height !== this.props.height ||
+      height !== props.height ||
       // 当 Table 内容区的高度发生变化需要重新计算
-      prevState.contentHeight !== this.state.contentHeight ||
+      prevState.contentHeight !== state.contentHeight ||
       // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
-      prevState.expandedRowKeys !== this.state.expandedRowKeys ||
-      prevProps.expandedRowKeys !== this.props.expandedRowKeys
+      prevState.expandedRowKeys !== state.expandedRowKeys ||
+      prevProps.expandedRowKeys !== props.expandedRowKeys
     ) {
       this.calculateTableContextHeight(prevProps);
     }
@@ -820,13 +823,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   componentWillUnmount() {
     this.wheelHandler = null;
-    if (this.tableRef.current) {
-      unbindElementResize(this.tableRef.current);
+    const { current } = this.tableRef;
+    if (current) {
+      unbindElementResize(current);
     }
-    this.wheelListener?.off();
-    this.touchStartListener?.off();
-    this.touchMoveListener?.off();
-    this.scrollListener?.off();
+    const { wheelListener, touchStartListener, touchMoveListener, scrollListener } = this;
+    if (wheelListener) {
+      wheelListener.off();
+    }
+    if (touchStartListener) {
+      touchStartListener.off();
+    }
+    if (touchMoveListener) {
+      touchMoveListener.off();
+    }
+    if (scrollListener) {
+      scrollListener.off();
+    }
   }
 
   getExpandedRowKeys() {
@@ -840,15 +853,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   getScrollCellGroups() {
-    return this.tableRef.current?.querySelectorAll(`.${this.addPrefix('cell-group-scroll')}`);
+    const { current } = this.tableRef;
+    return current && current.querySelectorAll(`.${this.addPrefix('cell-group-scroll')}`);
   }
 
   getFixedLeftCellGroups() {
-    return this.tableRef.current?.querySelectorAll(`.${this.addPrefix('cell-group-fixed-left')}`);
+    const { current } = this.tableRef;
+    return current && current.querySelectorAll(`.${this.addPrefix('cell-group-fixed-left')}`);
   }
 
   getFixedRightCellGroups() {
-    return this.tableRef.current?.querySelectorAll(`.${this.addPrefix('cell-group-fixed-right')}`);
+    const { current } = this.tableRef;
+    return current && current.querySelectorAll(`.${this.addPrefix('cell-group-fixed-right')}`);
   }
 
   isRTL() {
@@ -976,29 +992,30 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { header, children: childColumns, align, fixed, verticalAlign } = column.props;
     for (let index = 0; index < childColumns.length; index += 1) {
       const childColumn = childColumns[index];
-      const { verticalAlign: childVerticalAlign, align: childAlign } = childColumn.props;
-      const parentProps = {
-        align: childAlign || align,
-        fixed,
-        verticalAlign: childVerticalAlign || verticalAlign,
-        ...cellProps,
-      };
-      const groupCellProps: any = {
-        parent: column,
-        ...childColumn?.props,
-        ...parentProps,
-      };
-      if (index === 0) {
-        groupCellProps.groupCount = childColumns.length;
-        groupCellProps.groupHeader = header;
+      if (childColumn) {
+        const { verticalAlign: childVerticalAlign, align: childAlign } = childColumn.props;
+        const parentProps = {
+          align: childAlign || align,
+          fixed,
+          verticalAlign: childVerticalAlign || verticalAlign,
+          ...cellProps,
+        };
+        const groupCellProps: any = {
+          parent: column,
+          ...childColumn.props,
+          ...parentProps,
+        };
+        if (index === 0) {
+          groupCellProps.groupCount = childColumns.length;
+          groupCellProps.groupHeader = header;
+        }
+        if (childColumn.type && (childColumn.type as typeof ColumnGroup).__PRO_TABLE_COLUMN_GROUP) {
+          const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array);
+          array.concat(res);
+        } else {
+          array.push(React.cloneElement(childColumn, groupCellProps));
+        }
       }
-      if ((childColumn.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
-        const res = this.getFlattenColumn(childColumn, { ...parentProps, parent: column }, array);
-        array.concat(res);
-      } else {
-        array.push(React.cloneElement(childColumn, groupCellProps));
-      }
-
     }
     return array;
   }
@@ -1031,7 +1048,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             columnChildren[0].props.dataKey,
         };
         cellProps.hidden = column.props.hidden;
-        if ((column.type as typeof ColumnGroup)?.__PRO_TABLE_COLUMN_GROUP) {
+        if (column.type && (column.type as typeof ColumnGroup).__PRO_TABLE_COLUMN_GROUP) {
           return this.getFlattenColumn(column, cellProps, []);
         }
         return React.cloneElement(column, cellProps);
@@ -1458,12 +1475,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   setOffsetByAffix = () => {
     const { affixHeader, affixHorizontalScrollbar } = this.props;
-    const headerNode = this.headerWrapperRef?.current;
+    const { headerWrapperRef, tableRef } = this;
+    const headerNode = headerWrapperRef && headerWrapperRef.current;
     if (isNumberOrTrue(affixHeader) && headerNode) {
       this.setState(() => ({ headerOffset: getOffset(headerNode) }));
     }
 
-    const tableNode = this.tableRef?.current;
+    const tableNode = tableRef && tableRef.current;
     if (isNumberOrTrue(affixHorizontalScrollbar) && tableNode) {
       this.setState(() => ({ tableOffset: getOffset(tableNode) }));
     }
@@ -1488,18 +1506,24 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { affixHorizontalScrollbar } = this.props;
     const headerHeight = this.getTableHeaderHeight();
     const bottom = typeof affixHorizontalScrollbar === 'number' ? affixHorizontalScrollbar : 0;
-
+    const offset = defaultTo(tableOffset && tableOffset.top, 0) + bottom;
     const fixedScrollbar =
       // @ts-ignore
-      scrollY + windowHeight < height + (tableOffset.top + bottom) &&
+      scrollY + windowHeight < height + offset &&
       // @ts-ignore
-      scrollY + windowHeight - headerHeight > tableOffset?.top + bottom;
-
-    if (
-      this.scrollbarXRef?.current?.barRef?.current &&
-      fixedHorizontalScrollbar !== fixedScrollbar
-    ) {
-      this.setState({ fixedHorizontalScrollbar: fixedScrollbar });
+      scrollY + windowHeight - headerHeight > offset;
+    const { scrollbarXRef } = this;
+    if (scrollbarXRef) {
+      const { current } = scrollbarXRef;
+      if (current) {
+        const { barRef } = current;
+        if (
+          barRef && barRef.current &&
+          fixedHorizontalScrollbar !== fixedScrollbar
+        ) {
+          this.setState({ fixedHorizontalScrollbar: fixedScrollbar });
+        }
+      }
     }
   };
 
@@ -1519,8 +1543,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   handleSortColumn = (dataKey: string) => {
     let sortType = this.getSortType();
-
-    if (this.props.sortColumn === dataKey) {
+    const { onSortColumn, sortColumn } = this.props;
+    if (sortColumn === dataKey) {
       switch (sortType) {
         case SORT_TYPE.ASC:
           sortType = SORT_TYPE.DESC as SortType;
@@ -1533,14 +1557,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       this.setState({ sortType });
     }
-    this.props.onSortColumn?.(dataKey, sortType);
+    if (onSortColumn) {
+      onSortColumn(dataKey, sortType);
+    }
   };
 
-  handleShowMouseArea = (left: number, fixed: boolean | string | undefined) => {
+  handleShowMouseArea = (width: number, left: number, fixed: boolean | string | undefined): void => {
     const { tableColumnResizeTrigger } = this.tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
-    const mouseAreaLeft = left + (!fixed ? this.scrollX : 0) + 1;
-    addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
+    this.handleColumnResizeMove(width, left, !!fixed);
   };
 
   handleHideMouseArea = () => {
@@ -1610,7 +1635,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       nextExpandedRowKeys.push(rowKey);
     }
     this.setState({ expandedRowKeys: nextExpandedRowKeys });
-    this.props.onExpandChange?.(!open, rowData);
+    const { onExpandChange } = this.props;
+    if (onExpandChange) {
+      onExpandChange(!open, rowData);
+    }
   };
 
   setSelectedRowKeys(selectedRowKeys: string[], selectionInfo: SelectionInfo) {
@@ -1669,9 +1697,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.scrollY = Math.min(0, nextScrollY < this.minScrollY ? this.minScrollY : nextScrollY);
     this.scrollX = Math.min(0, nextScrollX < this.minScrollX ? this.minScrollX : nextScrollX);
     this.updatePosition();
-
-    onScroll?.(this.scrollX, this.scrollY);
-
+    if (onScroll) {
+      onScroll(this.scrollX, this.scrollY);
+    }
     if (virtualized) {
       this.setState({
         isScrolling: true,
@@ -1703,13 +1731,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.touchX = pageX;
       this.touchY = pageY;
     }
-
-    this.props.onTouchStart?.(event);
+    const { onTouchStart } = this.props;
+    if (onTouchStart) {
+      onTouchStart(event);
+    }
   };
 
   // 处理移动端 Touch 事件, Move 的时候初始化，更新 scroll
   handleTouchMove = ({ e }) => {
-    const { autoHeight } = this.props;
+    const { autoHeight, onTouchMove } = this.props;
 
     if (e.touches) {
       const { pageX, pageY } = e.touches[0];
@@ -1719,18 +1749,26 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (!this.shouldHandleWheelY(deltaY) && !this.shouldHandleWheelX(deltaX)) {
         return;
       }
-
-      e.preventDefault?.();
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
 
       this.handleWheel(deltaX, deltaY);
-      this.scrollbarXRef.current?.onWheelScroll?.(deltaX);
-      this.scrollbarYRef.current?.onWheelScroll?.(deltaY);
+      const xRef = this.scrollbarXRef.current;
+      if (xRef && xRef.onWheelScroll) {
+        xRef.onWheelScroll(deltaX);
+      }
+      const yRef = this.scrollbarYRef.current;
+      if (yRef && yRef.onWheelScroll) {
+        yRef.onWheelScroll(deltaY);
+      }
 
       this.touchX = pageX;
       this.touchY = pageY;
     }
-
-    this.props.onTouchMove?.(e);
+    if (onTouchMove) {
+      onTouchMove(e);
+    }
   };
 
   /**
@@ -1798,7 +1836,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
         this.scrollX = width - contentWidth - SCROLLBAR_WIDTH;
         this.updatePosition();
-        this.scrollbarXRef?.current?.resetScrollBarPosition?.(-this.scrollX);
+        const { scrollbarXRef } = this;
+        if (scrollbarXRef) {
+          const { current } = scrollbarXRef;
+          if (current && current.resetScrollBarPosition) {
+            current.resetScrollBarPosition(-this.scrollX);
+          }
+        }
       }, 0);
     }
   }
@@ -1844,21 +1888,21 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // @ts-ignore
       this.translateDOMPositionXY(headerStyle, this.scrollX, 0);
 
-      const wheelElement = this.wheelWrapperRef?.current;
-      const headerElement = this.headerWrapperRef?.current;
-      const affixHeaderElement = this.affixHeaderWrapperRef?.current;
+      const wheelElement = this.wheelWrapperRef && this.wheelWrapperRef.current;
+      const headerElement = this.headerWrapperRef && this.headerWrapperRef.current;
+      const affixHeaderElement = this.affixHeaderWrapperRef && this.affixHeaderWrapperRef.current;
 
       wheelElement && addStyle(wheelElement, wheelStyle);
       headerElement && addStyle(headerElement, headerStyle);
 
-      if (affixHeaderElement?.hasChildNodes?.()) {
+      if (affixHeaderElement && affixHeaderElement.hasChildNodes && affixHeaderElement.hasChildNodes()) {
         addStyle(affixHeaderElement.firstChild, headerStyle);
       }
     }
-
-    if (this.tableHeaderRef?.current) {
+    const header = this.tableHeaderRef && this.tableHeaderRef.current;
+    if (header) {
       toggleClass(
-        this.tableHeaderRef.current,
+        header,
         this.addPrefix('cell-group-shadow'),
         this.scrollY < 0,
       );
@@ -1884,9 +1928,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const group = scrollArrayGroups[i];
       addStyle(group, wheelGroupStyle);
     }
-
-    if (this.wheelWrapperRef?.current) {
-      addStyle(this.wheelWrapperRef.current, wheelStyle);
+    const header = this.wheelWrapperRef && this.wheelWrapperRef.current;
+    if (header) {
+      addStyle(header, wheelStyle);
     }
 
     const leftShadowClassName = this.addPrefix('cell-group-left-shadow');
@@ -1957,14 +2001,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   calculateTableWidth = () => {
-    const table = this.tableRef?.current;
+    const table = this.tableRef && this.tableRef.current;
     const { width } = this.state;
 
     if (table) {
       const nextWidth = getWidth(table);
       if (width !== nextWidth) {
         this.scrollX = 0;
-        this.scrollbarXRef?.current?.resetScrollBarPosition();
+        const current = this.scrollbarXRef && this.scrollbarXRef.current;
+        current && current.resetScrollBarPosition();
         this._cacheCells = null;
       }
 
@@ -1976,7 +2021,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   calculateTableContentWidth(prevProps: TableProps) {
-    const table = this.tableRef?.current;
+    const table = this.tableRef && this.tableRef.current;
     const row = table.querySelector(`.${this.addPrefix('row')}:not(.virtualized)`);
     const contentWidth = row ? getWidth(row) : 0;
 
@@ -2085,7 +2130,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const [scrollY, handleScrollY] = this.getControlledScrollTopValue(top);
 
     this.scrollY = scrollY;
-    this.scrollbarYRef?.current?.resetScrollBarPosition?.(handleScrollY);
+    const current = this.scrollbarYRef && this.scrollbarYRef.current;
+    current && current.resetScrollBarPosition && current.resetScrollBarPosition(handleScrollY);
     this.updatePosition();
 
     /**
@@ -2102,7 +2148,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   scrollLeft = (left = 0) => {
     const [scrollX, handleScrollX] = this.getControlledScrollLeftValue(left);
     this.scrollX = scrollX;
-    this.scrollbarXRef?.current?.resetScrollBarPosition?.(handleScrollX);
+    const current = this.scrollbarXRef && this.scrollbarXRef.current;
+    current && current.resetScrollBarPosition && current.resetScrollBarPosition(handleScrollX);
     this.updatePosition();
   };
 
@@ -2132,7 +2179,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   onRowClick(rowData, event, rowIndex, index) {
-    const { highLightRow, rowKey, rowDraggable, isTree } = this.props;
+    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick } = this.props;
     const rowNum = rowDraggable || isTree ? rowData[rowKey!] : rowIndex;
     if (highLightRow) {
       const tableRows = Object.values(this.tableRows);
@@ -2149,12 +2196,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       this._lastRowIndex = rowNum;
     }
-    this.props.onRowClick?.(rowData, event);
+    if (onRowClick) {
+      onRowClick(rowData, event);
+    }
   }
 
   bindRowContextMenu = (rowData: object) => {
     return (event: React.MouseEvent) => {
-      this.props.onRowContextMenu?.(rowData, event);
+      const { onRowContextMenu } = this.props;
+      if (onRowContextMenu) {
+        onRowContextMenu(rowData, event);
+      }
     };
   };
 
@@ -2296,7 +2348,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (findSpanRow.length) {
         rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
       } else if (this.rowSpanList.find(x => x.start === rowIndex)) {
-        rowStyles.zIndex = 1
+        rowStyles.zIndex = 1;
       }
       const {
         fixedLeftCells = [],
@@ -2431,7 +2483,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-            // {...(rowDragRender && rowDragRender.draggableProps)} todo
+              // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
@@ -3008,7 +3060,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.tableStore.totalHeight = height;
     });
 
-    const unhandled = getUnhandledProps(propTypes, rest);
+    const unhandled = getUnhandledProps(propTypeKeys, rest);
 
     const { tableStore, translateDOMPositionXY } = this;
 

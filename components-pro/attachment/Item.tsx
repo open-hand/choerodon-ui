@@ -8,7 +8,7 @@ import { Size } from 'choerodon-ui/lib/_util/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
-import Progress from '../progress';
+import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { AttachmentListType } from './Attachment';

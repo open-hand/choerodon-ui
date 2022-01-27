@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import isNegativeZero from 'is-negative-zero';
@@ -31,50 +30,6 @@ const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
 const isValidProps = value => value !== undefined && value !== null;
 
 export default class InputNumber extends Component {
-  static propTypes = {
-    value: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    defaultValue: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    focusOnUpDown: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    onChange: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onKeyUp: PropTypes.func,
-    prefixCls: PropTypes.string,
-    tabIndex: PropTypes.string,
-    disabled: PropTypes.bool,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    readOnly: PropTypes.bool,
-    max: PropTypes.number,
-    min: PropTypes.number,
-    step: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    upHandler: PropTypes.node,
-    downHandler: PropTypes.node,
-    useTouch: PropTypes.bool,
-    formatter: PropTypes.func,
-    parser: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    onMouseOver: PropTypes.func,
-    onMouseOut: PropTypes.func,
-    precision: PropTypes.number,
-    required: PropTypes.bool,
-    pattern: PropTypes.string,
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-    ]),
-  };
-
   static defaultProps = {
     focusOnUpDown: true,
     useTouch: false,

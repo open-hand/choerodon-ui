@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Radio, RadioProps } from '../radio/Radio';
@@ -23,22 +22,6 @@ export interface CheckBoxProps extends RadioProps {
 
 export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> {
   static displayName = 'CheckBox';
-
-  static propTypes = {
-    /**
-     * 中间状态
-     */
-    indeterminate: PropTypes.bool,
-    /**
-     * 未选中时的值
-     */
-    unCheckedValue: PropTypes.any,
-    /**
-     * 未选中时的内容
-     */
-    unCheckedChildren: PropTypes.node,
-    ...Radio.propTypes,
-  };
 
   /**
    * tooltip disable sign

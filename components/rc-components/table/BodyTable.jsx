@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import measureScrollbar from '../../_util/measureScrollbar';
 import BaseTable from './BaseTable';
+import TableContext from './TableContext';
 
-export default function BodyTable(props, { table }) {
+export default function BodyTable(props) {
+  const table = useContext(TableContext);
   const { prefixCls, scroll } = table.props;
   const {
     columns,
@@ -100,20 +101,3 @@ export default function BodyTable(props, { table }) {
     </div>
   );
 }
-
-BodyTable.propTypes = {
-  fixed: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
-  columns: PropTypes.array.isRequired,
-  tableClassName: PropTypes.string.isRequired,
-  handleBodyScroll: PropTypes.func.isRequired,
-  getRowKey: PropTypes.func.isRequired,
-  expander: PropTypes.object.isRequired,
-  isAnyColumnsFixed: PropTypes.bool,
-};
-
-BodyTable.contextTypes = {
-  table: PropTypes.any,
-};

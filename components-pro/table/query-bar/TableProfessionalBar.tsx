@@ -102,7 +102,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   @autobind
   async handleQuery(collapse?: boolean) {
     const { dataSet, queryDataSet, onQuery = noop } = this.props;
-    if (await queryDataSet?.validate()) {
+    if (queryDataSet && await queryDataSet.validate()) {
       await dataSet.query();
       if (!collapse) {
         await onQuery();

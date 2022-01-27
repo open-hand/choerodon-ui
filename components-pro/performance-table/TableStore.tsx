@@ -18,7 +18,7 @@ import Column, { ColumnProps } from './Column';
 import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
-import { ColumnLock, TableHeightType, TableColumnResizeTriggerType } from '../table/enum';
+import { ColumnLock, TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
 // import isFragment from '../_util/isFragment';
 
 // export function normalizeColumns(
@@ -231,7 +231,8 @@ export default class TableStore {
 
   // @computed
   // get selectedRowKeys(): string[] {
-  //   return this.node.props.queryBar?.dataSet;
+  //   const { queryBar } = this.node.props;
+  //   return queryBar && queryBar.dataSet;
   // }
 
   async loadCustomized() {

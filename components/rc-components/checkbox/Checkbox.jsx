@@ -1,28 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import PureRenderMixin from '../util/PureRenderMixin';
 import classNames from 'classnames';
+import PureRenderMixin from '../util/PureRenderMixin';
 
 export default class Checkbox extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    name: PropTypes.string,
-    id: PropTypes.string,
-    type: PropTypes.string,
-    defaultChecked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    checked: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    disabled: PropTypes.bool,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onClick: PropTypes.func,
-    tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    readOnly: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    value: PropTypes.any,
-  };
   static defaultProps = {
     prefixCls: 'rc-checkbox',
     className: '',

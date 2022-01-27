@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import TableFooterRow from './TableFooterRow';
+import TableContext from './TableContext';
 
 function appendExpandIconColumn(columns) {
   const expandIconCol = {
@@ -10,7 +10,8 @@ function appendExpandIconColumn(columns) {
   return [expandIconCol, ...columns];
 }
 
-export default function TableFooter(props, { table }) {
+export default function TableFooter(props) {
+  const table = useContext(TableContext);
   const { columnManager, components } = table;
   const { prefixCls, data, expandIconAsCell } = table.props;
   const { fixed, onHover } = props;
@@ -46,12 +47,4 @@ export default function TableFooter(props, { table }) {
   );
 }
 
-TableFooter.propTypes = {
-  fixed: PropTypes.string,
-  columns: PropTypes.array.isRequired,
-  onHover: PropTypes.func,
-};
-
-TableFooter.contextTypes = {
-  table: PropTypes.any,
-};
+TableFooter.displayName = 'RcTableFooter';

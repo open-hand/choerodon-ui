@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import Icon from '../icon';
 import RcRate from '../rc-components/rate';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -25,11 +24,6 @@ export default class Rate extends Component<RateProps, any> {
   static get contextType() {
     return ConfigContext;
   }
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    character: PropTypes.node,
-  };
 
   static defaultProps = {
     character: <Icon type="star" />,

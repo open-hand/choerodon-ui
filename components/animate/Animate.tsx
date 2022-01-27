@@ -7,7 +7,6 @@ import {
   ReactElement,
   ReactNode,
 } from 'react';
-import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import {
@@ -57,22 +56,6 @@ export interface AnimateState {
 
 export default class Animate extends PureComponent<AnimateProps> {
   static displayName = 'Animate';
-
-  static propTypes = {
-    component: PropTypes.any,
-    componentProps: PropTypes.object,
-    animation: PropTypes.object,
-    transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    transitionEnter: PropTypes.bool,
-    transitionAppear: PropTypes.bool,
-    exclusive: PropTypes.bool,
-    transitionLeave: PropTypes.bool,
-    onEnd: PropTypes.func,
-    onEnter: PropTypes.func,
-    onLeave: PropTypes.func,
-    onAppear: PropTypes.func,
-    hiddenProp: PropTypes.string,
-  };
 
   static defaultProps = {
     component: 'span',

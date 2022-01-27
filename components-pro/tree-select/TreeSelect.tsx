@@ -1,5 +1,4 @@
 import React, { Key, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -28,14 +27,6 @@ export interface TreeSelectProps extends SelectProps {
 @observer
 export default class TreeSelect extends Select<TreeSelectProps> {
   static displayName = 'TreeSelect';
-
-  static propTypes = {
-    treeCheckable: PropTypes.bool,
-    showCheckedStrategy: PropTypes.string,
-    treeDefaultExpandAll: PropTypes.bool,
-    treeDefaultExpandedKeys: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string])),
-    ...Select.propTypes,
-  };
 
   static defaultProps = {
     ...Select.defaultProps,

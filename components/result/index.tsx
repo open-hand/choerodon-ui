@@ -55,19 +55,20 @@ const renderStatus = (prefixCls: string, { status, icon, statusRenderer }: Resul
       });
     }
   }
-  if (iconMap.get(`${status}`) && (iconMap.get(`${status}`) as any)?.type !== Icon) {
+  const statusIcon = iconMap.get(String(status));
+  if (statusIcon && (statusIcon as any).type !== Icon) {
     return (
       <div
         className={`${className} ${prefixCls}-image`}
         style={icon || statusRenderer ? {} : (`${status}` === '500' ? { width: 400 } : { width: 800 })}
       >
-        {icon || iconMap.get(`${status}`)}
+        {icon || statusIcon}
       </div>
     );
   }
   return (
     <div className={`${className}`}>
-      {icon || iconMap.get(`${status}`)}
+      {icon || statusIcon}
     </div>
   );
 
