@@ -1,5 +1,4 @@
 import React, { ChangeEventHandler, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import Group from './Group';
@@ -85,36 +84,6 @@ export default class Input extends Component<InputProps, any> {
     showLengthInfo: true,
     showPasswordEye: false,
     border: true,
-  };
-
-  static propTypes = {
-    type: PropTypes.string,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    label: PropTypes.node,
-    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
-    maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    disabled: PropTypes.bool,
-    value: PropTypes.any,
-    defaultValue: PropTypes.any,
-    className: PropTypes.string,
-    addonBefore: PropTypes.node,
-    addonAfter: PropTypes.node,
-    prefixCls: PropTypes.string,
-    autosize: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    onPressEnter: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onKeyUp: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    prefix: PropTypes.node,
-    suffix: PropTypes.node,
-    copy: PropTypes.bool,
-    onCopy: PropTypes.func,
-    readOnly: PropTypes.bool,
-    focused: PropTypes.bool,
-    border: PropTypes.bool,
-    showLengthInfo: PropTypes.bool,
-    showPasswordEye: PropTypes.bool,
   };
 
   context: ConfigContextValue;

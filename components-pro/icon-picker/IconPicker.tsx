@@ -1,5 +1,4 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import flatten from 'lodash/flatten';
@@ -25,15 +24,6 @@ type CategoryType = keyof Locale['Icon'];
 @observer
 export default class IconPicker extends TriggerField<IconPickerProps> {
   static displayName = 'IconPicker';
-
-  static propTypes = {
-    ...TriggerField.propTypes,
-    pageSize: PropTypes.number,
-    customFontName: PropTypes.string,
-    icons: PropTypes.oneOfType([PropTypes.object,
-      PropTypes.array,
-    ]),
-  };
 
   static defaultProps = {
     ...TriggerField.defaultProps,

@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import measureScrollbar from '../../_util/measureScrollbar';
 import BaseTable from './BaseTable';
+import TableContext from './TableContext';
 
-export default function HeadTable(props, { table }) {
+export default function HeadTable(props) {
+  const table = useContext(TableContext);
   const { prefixCls, scroll, showHeader } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
   const { saveRef } = table;
@@ -45,17 +46,4 @@ export default function HeadTable(props, { table }) {
   );
 }
 
-HeadTable.propTypes = {
-  fixed: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
-  columns: PropTypes.array.isRequired,
-  tableClassName: PropTypes.string.isRequired,
-  handleBodyScrollLeft: PropTypes.func.isRequired,
-  expander: PropTypes.object.isRequired,
-};
-
-HeadTable.contextTypes = {
-  table: PropTypes.any,
-};
+HeadTable.displayName = 'RcHeadTable';

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Align from '../../align';
 import Animate from '../../animate';
@@ -8,22 +7,6 @@ import LazyRenderBox from './LazyRenderBox';
 import { saveRef } from './utils';
 
 class Popup extends Component {
-  static propTypes = {
-    visible: PropTypes.bool,
-    style: PropTypes.object,
-    getClassNameFromAlign: PropTypes.func,
-    onAlign: PropTypes.func,
-    getRootDomNode: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    align: PropTypes.any,
-    destroyPopupOnHide: PropTypes.bool,
-    className: PropTypes.string,
-    prefixCls: PropTypes.string,
-    onMouseLeave: PropTypes.func,
-    stretch: PropTypes.string,
-    children: PropTypes.node,
-  };
-
   constructor(props) {
     super(props);
 

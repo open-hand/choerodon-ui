@@ -11,7 +11,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import { TabsPosition, TabsType } from './enum';
 import TabPane, { TabPaneProps } from './TabPane';
@@ -101,22 +100,6 @@ const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
 };
 
 Tabs.displayName = 'Tabs';
-
-Tabs.propTypes = {
-  destroyInactiveTabPane: PropTypes.bool,
-  showMore: PropTypes.bool,
-  onChange: PropTypes.func,
-  children: PropTypes.any,
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  activeKey: PropTypes.string,
-  defaultActiveKey: PropTypes.string,
-  keyboard: PropTypes.bool,
-  hideAdd: PropTypes.bool,
-  tabPosition: PropTypes.oneOf<TabsPosition>([TabsPosition.top, TabsPosition.right, TabsPosition.bottom, TabsPosition.left]),
-  type: PropTypes.oneOf<TabsType>([TabsType.card, TabsType.line, TabsType['editable-card'], TabsType['second-level']]),
-};
 
 Tabs.defaultProps = {
   defaultChangeable: true,

@@ -1,5 +1,4 @@
 import React, { CSSProperties, isValidElement, Key, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
@@ -243,103 +242,6 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
   static displayName = 'Select';
-
-  static propTypes = {
-    /**
-     * 复合输入值
-     * @default false
-     */
-    combo: PropTypes.bool,
-    /**
-     * 常用项
-     * @default undefined
-     */
-    commonItem: PropTypes.array,
-    /**
-     * 多值标签超出最大数量时的占位描述
-     */
-    maxCommonTagPlaceholder: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    /**
-     * 多值标签最大数量
-     */
-    maxCommonTagCount: PropTypes.number,
-    /**
-     * 多值标签文案最大长度
-     */
-    maxCommonTagTextLength: PropTypes.number,
-    /**
-     * 过滤器
-     * @default false
-     */
-    searchable: PropTypes.bool,
-    /**
-     * 搜索匹配器。 当为字符串时，作为lookup的参数名来重新请求值列表。
-     */
-    searchMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * 参数匹配器。 当为字符串时，参数拼接。
-     */
-    paramMatcher: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * 是否为原始值
-     * true - 选项中valueField对应的值
-     * false - 选项值对象
-     */
-    primitiveValue: PropTypes.bool,
-    /**
-     * 渲染Option文本的钩子
-     * @example
-     * ```js
-     * <Select
-     *   {...props}
-     *   optionRenderer={({ dataSet, record, text, value }) => text + '$'}
-     * />
-     * ```
-     */
-    optionRenderer: PropTypes.func,
-    /**
-     * 当下拉列表为空时显示的内容
-     */
-    notFoundContent: PropTypes.node,
-    /**
-     * 渲染分页 Item 内容
-     */
-    pagingOptionContent: PropTypes.node,
-    /**
-     * 设置选项属性，如 disabled;
-     */
-    onOption: PropTypes.func,
-    /**
-     * 下拉时自动重新查询
-     */
-    noCache: PropTypes.bool,
-    /**
-     * 下拉框匹配输入框宽度
-     * @default true
-     */
-    dropdownMatchSelectWidth: PropTypes.bool,
-    /**
-     * 多选时显示全选按钮;
-     * @default true
-     */
-    selectAllButton: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    /**
-     * 多选是否开启反选
-     * @default false
-     */
-    reverse: PropTypes.bool,
-    /**
-     * 用tooltip显示选项内容
-     * 可选值：`none` `always` `overflow`
-     */
-    optionTooltip: PropTypes.string,
-    /**
-     * 是否默认高亮第一个选项
-     * @default true
-     */
-    defaultActiveFirstOption: PropTypes.bool,
-    ...TriggerField.propTypes,
-  };
 
   static defaultProps = {
     ...TriggerField.defaultProps,

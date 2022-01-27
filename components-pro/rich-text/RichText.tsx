@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import { ReactQuillProps } from 'react-quill/lib';
@@ -37,19 +36,6 @@ export default class RichText extends FormField<RichTextProps> {
   static displayName = 'RichText';
 
   static RichTextViewer = RichTextViewer;
-
-  static propTypes = {
-    options: PropTypes.object,
-    mode: PropTypes.oneOf([RichTextMode.editor, RichTextMode.preview]),
-    toolbar: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        RichTextToolbarType.none,
-        RichTextToolbarType.normal,
-      ]),
-      PropTypes.func,
-    ]),
-    ...FormField.propTypes,
-  };
 
   static defaultProps = {
     ...FormField.defaultProps,

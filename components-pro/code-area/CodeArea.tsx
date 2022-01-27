@@ -1,5 +1,4 @@
 import React, { ComponentClass, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classes from 'component-classes';
 import classNames from 'classnames';
@@ -7,6 +6,7 @@ import { action, autorun, IReactionDisposer, observable, runInAction } from 'mob
 import { observer } from 'mobx-react';
 import { EditorConfiguration } from 'codemirror';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
+import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
@@ -50,16 +50,6 @@ const defaultCodeMirrorOptions: EditorConfiguration = {
 export default class CodeArea extends FormField<CodeAreaProps> {
   static displayName = 'CodeArea';
 
-  static propTypes = {
-    options: PropTypes.object,
-    formatHotKey: PropTypes.string,
-    unFormatHotKey: PropTypes.string,
-    formatter: PropTypes.object,
-    editorDidMount: PropTypes.func,
-    themeSwitch: PropTypes.oneOf([ThemeSwitch.idea, ThemeSwitch.material]),
-    ...FormField.propTypes,
-  };
-
   static defaultProps = {
     ...FormField.defaultProps,
     suffixCls: 'code-area',
@@ -79,8 +69,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   constructor(props, content) {
     super(props, content);
-    const theme = this.props.options?.theme ? this.props.options?.theme : this.props.themeSwitch;
-    this.setTheme(theme ?? defaultCodeMirrorOptions.theme);
+    const { options } = props;
+    const theme = options && options.theme ? options.theme : props.themeSwitch;
+    this.setTheme(defaultTo(theme, defaultCodeMirrorOptions.theme));
     this.disposer = autorun(() => {
       // 在绑定dataSet的情况下
       // 当手动修改过codeArea里面的值以后 再使用record.set去更新值 组件不会更新
@@ -90,7 +81,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       // 当数据存在错误的时候  codeArea去格式化 因为格式化失败了
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
       // 因此需要使用中间变量进行处理
-      const { formatter } = this.props;
+      const { formatter } = props;
       const recordValue = this.getValue();
       const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
       // 判断跟中间值是否一致 通过这个判断 数据的来源是 blur的时候设置的值 还是直接通过外部进行修改的值
@@ -153,11 +144,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   setThemeWrapper(nextProps) {
     const { options, themeSwitch } = nextProps;
     const { options: preOptions, themeSwitch: preThemeSwitch } = this.props;
-    if (preOptions?.theme !== options?.theme || preThemeSwitch !== themeSwitch) {
-      const theme = (options?.theme ? options?.theme : themeSwitch) ?? defaultCodeMirrorOptions.theme;
-      if (theme !== this.theme) {
-        this.setTheme(theme);
-      }
+    const preOptionsTheme = preOptions && preOptions.theme;
+    const optionsTheme = options && options.theme;
+    if (preOptionsTheme !== optionsTheme || preThemeSwitch !== themeSwitch) {
+      this.setTheme(defaultTo(optionsTheme || themeSwitch, defaultCodeMirrorOptions.theme));
     }
   }
 
@@ -176,11 +166,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   getHeader = () => {
     const { title, options, themeSwitch } = this.props;
-    if (!title && (options?.theme || !themeSwitch)) {
+    if (!title && (options && options.theme || !themeSwitch)) {
       return null;
     }
     const titleNode = title ? <div className={`${this.prefixCls}-header-title`}>{title}</div> : null;
-    const themeSwitchNode = !options?.theme && themeSwitch ? (
+    const themeSwitchNode = (!options || !options.theme) && themeSwitch ? (
       <div className={`${this.prefixCls}-header-switch`}>
         <Switch
           unCheckedChildren={<Icon type="moon-circle" />}
@@ -230,7 +220,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @action
   setTheme(theme?: string): void {
-    this.theme = theme;
+    if (theme !== this.theme) {
+      this.theme = theme;
+    }
   }
 
   @action

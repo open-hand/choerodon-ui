@@ -1,6 +1,5 @@
 import React, { Children, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ColProps } from '../grid/col';
 import warning from '../_util/warning';
@@ -31,24 +30,6 @@ export default class FormItem extends Component<FormItemProps, any> {
   static defaultProps = {
     hasFeedback: false,
     colon: true,
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    help: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
-    validateStatus: PropTypes.oneOf([
-      FormItemValidateStatus.success,
-      FormItemValidateStatus.warning,
-      FormItemValidateStatus.error,
-      FormItemValidateStatus.validating,
-    ]),
-    hasFeedback: PropTypes.bool,
-    wrapperCol: PropTypes.object,
-    className: PropTypes.string,
-    id: PropTypes.string,
-    children: PropTypes.node,
-    colon: PropTypes.bool,
   };
 
   static get contextType() {

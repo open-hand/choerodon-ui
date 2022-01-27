@@ -1,59 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableCell from './TableCell';
 import warning from '../../_util/warning';
 
 class TableRow extends Component {
-  static propTypes = {
-    onRow: PropTypes.func,
-    onRowClick: PropTypes.func,
-    onRowDoubleClick: PropTypes.func,
-    onRowContextMenu: PropTypes.func,
-    onRowMouseEnter: PropTypes.func,
-    onRowMouseLeave: PropTypes.func,
-    record: PropTypes.object,
-    prefixCls: PropTypes.string,
-    onHover: PropTypes.func,
-    columns: PropTypes.array,
-    height: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    index: PropTypes.number,
-    rowKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-    className: PropTypes.string,
-    indent: PropTypes.number,
-    indentSize: PropTypes.number,
-    hasExpandIcon: PropTypes.func.isRequired,
-    hovered: PropTypes.bool.isRequired,
-    visible: PropTypes.bool.isRequired,
-    store: PropTypes.object.isRequired,
-    fixed: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-    ]),
-    renderExpandIcon: PropTypes.func,
-    renderExpandIconCell: PropTypes.func,
-    components: PropTypes.any,
-    expandedRow: PropTypes.bool,
-    isAnyColumnsFixed: PropTypes.bool,
-    ancestorKeys: PropTypes.array.isRequired,
-  }
-
   static defaultProps = {
-    onRow() {},
+    onRow() {
+    },
     expandIconColumnIndex: 0,
     expandRowByClick: false,
-    onHover() {},
-    hasExpandIcon() {},
-    renderExpandIcon() {},
-    renderExpandIconCell() {},
-  }
+    onHover() {
+    },
+    hasExpandIcon() {
+    },
+    renderExpandIcon() {
+    },
+    renderExpandIconCell() {
+    },
+  };
 
   constructor(props) {
     super(props);
@@ -88,21 +53,21 @@ class TableRow extends Component {
     if (onRowClick) {
       onRowClick(record, index, event);
     }
-  }
+  };
 
   onRowDoubleClick = (event) => {
     const { record, index, onRowDoubleClick } = this.props;
     if (onRowDoubleClick) {
       onRowDoubleClick(record, index, event);
     }
-  }
+  };
 
   onContextMenu = (event) => {
     const { record, index, onRowContextMenu } = this.props;
     if (onRowContextMenu) {
       onRowContextMenu(record, index, event);
     }
-  }
+  };
 
   onMouseEnter = (event) => {
     const { record, index, onRowMouseEnter, onHover, rowKey } = this.props;
@@ -110,7 +75,7 @@ class TableRow extends Component {
     if (onRowMouseEnter) {
       onRowMouseEnter(record, index, event);
     }
-  }
+  };
 
   onMouseLeave = (event) => {
     const { record, index, onRowMouseLeave, onHover, rowKey } = this.props;
@@ -118,7 +83,7 @@ class TableRow extends Component {
     if (onRowMouseLeave) {
       onRowMouseLeave(record, index, event);
     }
-  }
+  };
 
   setExpanedRowHeight() {
     const { store, rowKey } = this.props;
@@ -225,7 +190,7 @@ class TableRow extends Component {
           key={column.key || column.dataIndex}
           expandIcon={hasExpandIcon(i) && renderExpandIcon()}
           component={BodyCell}
-        />
+        />,
       );
     }
 

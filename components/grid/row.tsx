@@ -1,6 +1,5 @@
 import React, { Children, cloneElement, HTMLAttributes, PureComponent, ReactElement } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import Responsive, { BreakpointMap } from '../responsive/Responsive';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -24,16 +23,6 @@ export default class Row extends PureComponent<RowProps> {
 
   static defaultProps = {
     gutter: defaultGutter,
-  };
-
-  static propTypes = {
-    type: PropTypes.string,
-    align: PropTypes.string,
-    justify: PropTypes.string,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    gutter: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    prefixCls: PropTypes.string,
   };
 
   context: ConfigContextValue;

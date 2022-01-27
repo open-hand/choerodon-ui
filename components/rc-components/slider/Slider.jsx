@@ -1,20 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import warning from '../../_util/warning';
 import Track from './common/Track';
 import createSlider from './common/createSlider';
 import * as utils from './utils';
 
 class Slider extends Component {
-  static propTypes = {
-    defaultValue: PropTypes.number,
-    value: PropTypes.number,
-    disabled: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    tabIndex: PropTypes.number,
-  };
-
   constructor(props) {
     super(props);
 

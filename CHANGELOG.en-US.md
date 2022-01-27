@@ -21,12 +21,14 @@ timeline: true
 - 🌟 `configure`: Added `min`, `max` properties.
 - 🌟 `<pro>Table`: Added query bar type of `comboBar` and configuration item of queryBarProps.
 - 🌟 `<pro>Attachment`: Added new upload mode of `Attachment.Dragger`.
+- 🌟 `<pro>Form`: Added spacingType property.
 - 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
-- 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness.
+- 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness and support number and numbers value type.
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
 - 💄 `<pro>Attachment`: The button displays a error color when the upload fails in `popup` mode.
 - 💄 `<pro>Table`: Optimize the dynamic query bar to enter repeated query and click on the label to get focus is invalid.
+- 💄 Remove prop-types.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Lov`: Fix the null value in the first render when `autoSelectSingle` is turned on.
@@ -46,6 +48,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem that the drop-down box is not aligned when the browser font size is not default.
 - 🐞 `<pro>Select`: Fixed the search content mismatch caused by drop-down paging search without transferring parameters on the second page.
 - 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
+- 🐞 `<pro>Validator`: Fix the validation problem when `pattern` is a regular object with global tag.
 - 🐞 Fix the style problem when the browser font size is not default.
 
 ## 1.5.1

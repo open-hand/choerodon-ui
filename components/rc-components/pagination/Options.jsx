@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import KEYCODE from './KeyCode';
 
 const BUILT_IN_PLACEMENTS = {
@@ -30,17 +29,6 @@ const BUILT_IN_PLACEMENTS = {
 };
 
 export default class Options extends Component {
-  static propTypes = {
-    changeSize: PropTypes.func,
-    quickGo: PropTypes.func,
-    selectComponentClass: PropTypes.func,
-    current: PropTypes.number,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.string),
-    pageSize: PropTypes.number,
-    buildOptionText: PropTypes.func,
-    locale: PropTypes.object,
-  };
-
   static defaultProps = {
     pageSizeOptions: ['10', '20', '30', '40'],
   };

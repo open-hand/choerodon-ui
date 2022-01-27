@@ -34,7 +34,8 @@ class RichTextViewer extends Component<RichTextViewerProps> {
   }
 
   open = (e) => {
-    if (e.target?.nodeName === 'IMG') {
+    const { target } = e;
+    if (target && target.nodeName === 'IMG') {
       e.stopPropagation();
       const { deltaOps } = this.props;
       const imgArr: string[] = [];
@@ -44,14 +45,15 @@ class RichTextViewer extends Component<RichTextViewerProps> {
           imgArr.push(image);
         }
       });
-      const index = imgArr.findIndex(img => img === e.target.src);
+      const { src } = target;
+      const index = imgArr.findIndex(img => img === src);
       this.setState({
         open: true,
         images: imgArr,
         srcIndex: index,
       });
     }
-  }
+  };
 
   escape = str => str.replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
 

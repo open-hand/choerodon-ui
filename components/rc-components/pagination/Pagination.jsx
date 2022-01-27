@@ -1,5 +1,4 @@
 import React, { cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import Pager from './Pager';
@@ -18,30 +17,6 @@ function defaultItemRender(page, type, element) {
 }
 
 export default class Pagination extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    current: PropTypes.number,
-    defaultCurrent: PropTypes.number,
-    total: PropTypes.number,
-    pageSize: PropTypes.number,
-    defaultPageSize: PropTypes.number,
-    onChange: PropTypes.func,
-    hideOnSinglePage: PropTypes.bool,
-    showSizeChanger: PropTypes.bool,
-    showLessItems: PropTypes.bool,
-    onShowSizeChange: PropTypes.func,
-    selectComponentClass: PropTypes.func,
-    showPrevNextJumpers: PropTypes.bool,
-    showQuickJumper: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    showTitle: PropTypes.bool,
-    pageSizeOptions: PropTypes.arrayOf(PropTypes.string),
-    showTotal: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    locale: PropTypes.object,
-    style: PropTypes.object,
-    itemRender: PropTypes.func,
-    tiny: PropTypes.bool,
-  };
-
   static defaultProps = {
     defaultCurrent: 1,
     total: 0,
@@ -122,14 +97,6 @@ export default class Pagination extends Component {
         lastCurrentNode.blur();
       }
     }
-  }
-
-  getJumpPrevPage() {
-    return Math.max(1, this.state.current - (this.props.showLessItems ? 3 : 5));
-  }
-
-  getJumpNextPage() {
-    return Math.min(this.calculatePage(), this.state.current + (this.props.showLessItems ? 3 : 5));
   }
 
   savePaginationNode = (node) => {

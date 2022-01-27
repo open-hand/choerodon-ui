@@ -104,8 +104,6 @@ const BUILT_IN_PLACEMENTS_LABEL = {
 };
 
 export default class Select extends Component {
-  static propTypes = SelectPropTypes;
-
   static defaultProps = {
     blurChange: true,
     prefixCls: 'rc-select',

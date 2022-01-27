@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 
 export interface OptGroupProps {
   /**
@@ -10,9 +9,5 @@ export interface OptGroupProps {
 
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
 export default class OptGroup extends Component<OptGroupProps> {
-  static propTypes = {
-    label: PropTypes.string,
-  };
-
   static __PRO_OPT_GROUP = true;
 }

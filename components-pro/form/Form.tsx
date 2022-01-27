@@ -2,15 +2,13 @@ import React, {
   Children,
   cloneElement,
   createElement,
-  CSSProperties,
   FormEvent,
   FormEventHandler,
   isValidElement,
+  MouseEvent,
   ReactElement,
   ReactNode,
-  MouseEvent,
 } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import { action as mobxAction, computed, isArrayLike, observable, runInAction } from 'mobx';
@@ -31,15 +29,20 @@ import FormContext, { FormContextValue, FormProvider } from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation } from './enum';
+import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation, SpacingType } from './enum';
 import {
   defaultColumns,
   defaultExcludeUseColonTag,
   defaultLabelWidth,
   FIELD_SUFFIX,
   getProperty,
+  getSpacingFieldStyle,
+  getSpacingLabelStyle,
+  getSpacingProperties,
   hasParentElement,
   normalizeLabelWidth,
+  normalizeSeparateSpacing,
+  normalizeSpacingType,
 } from './utils';
 import FormVirtualGroup from './FormVirtualGroup';
 import { Tooltip as LabelTooltip } from '../core/enum';
@@ -67,6 +70,7 @@ export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign 
 export type LabelLayoutType = LabelLayout | { [key in ResponsiveKeys]: LabelLayout };
 export type ColumnsType = number | { [key in ResponsiveKeys]: number };
 export type SeparateSpacing = { width: number; height: number }
+export type SpacingTypeMap = { width: SpacingType; height: SpacingType }
 
 export interface FormProps extends DataSetComponentProps {
   /**
@@ -173,27 +177,18 @@ export interface FormProps extends DataSetComponentProps {
   /**
    * 切分单元格间隔，当label布局为默认值horizontal时候使用padding修改单元格横向间距可能需要结合labelwidth效果会更好
    */
-  separateSpacing?: SeparateSpacing;
+  separateSpacing?: number | [number, number] | SeparateSpacing;
+  /**
+   * 切分单元格间隔类型
+   * @default SpacingType.around
+   */
+  spacingType?: SpacingType | [SpacingType, SpacingType] | SpacingTypeMap;
   axios?: AxiosInstance;
   acceptCharset?: string;
   encType?: string;
   showValidation?: ShowValidation;
   showHelp?: ShowHelp;
 }
-
-const labelWidthPropTypes = PropTypes.oneOfType([
-  PropTypes.number,
-  PropTypes.oneOf(['auto']),
-  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])])),
-]);
-const labelAlignPropTypes = PropTypes.oneOf([LabelAlign.left, LabelAlign.center, LabelAlign.right]);
-const labelLayoutPropTypes = PropTypes.oneOf([
-  LabelLayout.horizontal,
-  LabelLayout.vertical,
-  LabelLayout.placeholder,
-  LabelLayout.float,
-  LabelLayout.none,
-]);
 
 @observer
 export default class Form extends DataSetComponent<FormProps, FormContextValue> implements IForm {
@@ -202,124 +197,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   static FormVirtualGroup = FormVirtualGroup;
 
   static Item = Item;
-
-  static propTypes = {
-    /**
-     * 表单提交请求地址
-     */
-    action: PropTypes.string,
-    /**
-     * 表单提交的HTTP Method
-     * 可选值：POST | GET
-     * @default POST
-     */
-    method: PropTypes.string,
-    /**
-     * 表单提交的目标
-     * 当表单设置了设置target且没有dataSet时作浏览器默认提交，否则作Ajax提交
-     */
-    target: PropTypes.string,
-    /**
-     * Ajax提交时的参数回调
-     */
-    processParams: PropTypes.func,
-    /**
-     * 只读
-     */
-    readOnly: PropTypes.bool,
-    /**
-     * 内部控件的标签的宽度
-     */
-    labelWidth: PropTypes.oneOfType([
-      labelWidthPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelWidthPropTypes,
-        [ResponsiveKeys.sm]: labelWidthPropTypes,
-        [ResponsiveKeys.md]: labelWidthPropTypes,
-        [ResponsiveKeys.lg]: labelWidthPropTypes,
-        [ResponsiveKeys.xl]: labelWidthPropTypes,
-        [ResponsiveKeys.xxl]: labelWidthPropTypes,
-      }),
-    ]),
-    useColon: PropTypes.bool,
-    excludeUseColonTagList: PropTypes.array,
-    /**
-     * 标签文字对齐方式
-     * 可选值： 'left' | 'center' | 'right'
-     */
-    labelAlign: PropTypes.oneOfType([
-      labelAlignPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelAlignPropTypes,
-        [ResponsiveKeys.sm]: labelAlignPropTypes,
-        [ResponsiveKeys.md]: labelAlignPropTypes,
-        [ResponsiveKeys.lg]: labelAlignPropTypes,
-        [ResponsiveKeys.xl]: labelAlignPropTypes,
-        [ResponsiveKeys.xxl]: labelAlignPropTypes,
-      }),
-    ]),
-    /**
-     * 标签位置
-     * 可选值： 'horizontal' | 'vertical' | 'placeholder' | 'float' | 'none'
-     */
-    labelLayout: PropTypes.oneOfType([
-      labelLayoutPropTypes,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: labelLayoutPropTypes,
-        [ResponsiveKeys.sm]: labelLayoutPropTypes,
-        [ResponsiveKeys.md]: labelLayoutPropTypes,
-        [ResponsiveKeys.lg]: labelLayoutPropTypes,
-        [ResponsiveKeys.xl]: labelLayoutPropTypes,
-        [ResponsiveKeys.xxl]: labelLayoutPropTypes,
-      }),
-    ]),
-    /**
-     * 表单列数
-     */
-    columns: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        [ResponsiveKeys.xs]: PropTypes.number,
-        [ResponsiveKeys.sm]: PropTypes.number,
-        [ResponsiveKeys.md]: PropTypes.number,
-        [ResponsiveKeys.lg]: PropTypes.number,
-        [ResponsiveKeys.xl]: PropTypes.number,
-        [ResponsiveKeys.xxl]: PropTypes.number,
-      }),
-    ]),
-    pristine: PropTypes.bool,
-    /**
-     * 表单头
-     */
-    header: PropTypes.string,
-    /**
-     * 高亮渲染器
-     */
-    fieldHighlightRenderer: PropTypes.func,
-    /**
-     * 提交回调
-     */
-    onSubmit: PropTypes.func,
-    /**
-     * 重置回调
-     */
-    onReset: PropTypes.func,
-    /**
-     * 提交成功回调
-     */
-    onSuccess: PropTypes.func,
-    /**
-     * 提交失败回调
-     */
-    onError: PropTypes.func,
-    separateSpacing: PropTypes.object,
-    /**
-     * 校验信息提示方式
-     */
-    showValidation: PropTypes.string,
-    showHelp: PropTypes.string,
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'form',
@@ -539,7 +416,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   get separateSpacing(): SeparateSpacing | undefined {
     const { separateSpacing } = this.observableProps;
     if (separateSpacing) {
-      const { width = 0, height = 0 } = separateSpacing;
+      const { width = 0, height = 0 } = normalizeSeparateSpacing(separateSpacing);
       if (width || height) {
         return {
           width,
@@ -558,6 +435,11 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     }
     return undefined;
+  }
+
+  get spacingType(): SpacingTypeMap {
+    const { spacingType } = this.props;
+    return normalizeSpacingType(spacingType);
   }
 
   isReadOnly() {
@@ -621,6 +503,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       'useColon',
       'excludeUseColonTagList',
       'separateSpacing',
+      'spacingType',
       'fieldHighlightRenderer',
       'layout',
       'showValidation',
@@ -771,8 +654,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     const matrix: (boolean | undefined)[][] = [[]];
     let noLabel = true;
     const childrenArray: (ReactElement<any> & { ref })[] = [];
-    const separateSpacingWidth: number = this.separateSpacing ? this.separateSpacing.width / 2 : 0;
+    const { separateSpacing } = this;
     const isLabelLayoutHorizontal = labelLayout === LabelLayout.horizontal;
+    const spacingProperties = separateSpacing ? getSpacingProperties(separateSpacing, this.spacingType, isLabelLayoutHorizontal) : undefined;
     let isAllOutputCom = true;
     Children.forEach<ReactNode>(children, (child) => {
       if (isValidElement(child)) {
@@ -904,7 +788,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
-            paddingLeft={this.labelLayout === LabelLayout.horizontal && separateSpacingWidth ? pxToRem(separateSpacingWidth) : undefined}
+            style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
           >
@@ -922,9 +806,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1)}
           rowSpan={rowSpan}
           className={fieldClassName}
-          style={this.labelLayout === LabelLayout.horizontal
-          && separateSpacingWidth
-            ? { paddingRight: pxToRem(separateSpacingWidth) } : undefined}
+          style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
         >
           {labelLayout === LabelLayout.vertical && !!label && (
             <>
@@ -957,7 +839,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             <col
               key={key}
               // 优化当使用 separateSpacing label 宽度太窄问题
-              style={{ width: pxToRem(labelLayout === LabelLayout.horizontal ? separateSpacingWidth + columnLabelWidth : columnLabelWidth) }}
+              style={{ width: pxToRem(spacingProperties ? spacingProperties.paddingHorizontal + columnLabelWidth : columnLabelWidth) }}
             />,
           );
         }
@@ -973,24 +855,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     }
 
-    let tableStyle: CSSProperties | undefined;
-    const { separateSpacing } = this;
-    if (separateSpacing) {
-      if (labelLayout === LabelLayout.horizontal) {
-        tableStyle = {
-          borderCollapse: 'separate',
-          borderSpacing: `0rem ${pxToRem(separateSpacing.height)}`,
-        };
-      } else {
-        tableStyle = {
-          borderCollapse: 'separate',
-          borderSpacing: `${pxToRem(separateSpacing.width)} ${pxToRem(separateSpacing.height)}`,
-        };
-      }
-    }
-
     return (
-      <table key="form-body" style={tableStyle} className={`${isAutoWidth ? 'auto-width' : ''}`}>
+      <table key="form-body" style={spacingProperties && spacingProperties.style} className={`${isAutoWidth ? 'auto-width' : ''}`}>
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
       </table>

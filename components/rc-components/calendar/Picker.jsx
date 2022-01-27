@@ -1,7 +1,6 @@
 import React, { cloneElement } from 'react';
 import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import createChainedFunction from '../util/createChainedFunction';
 import KeyCode from '../../_util/KeyCode';
@@ -13,31 +12,6 @@ function refFn(field, component) {
 }
 
 const Picker = createReactClass({
-  propTypes: {
-    animation: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    disabled: PropTypes.bool,
-    transitionName: PropTypes.string,
-    onChange: PropTypes.func,
-    onOpenChange: PropTypes.func,
-    children: PropTypes.func,
-    getCalendarContainer: PropTypes.func,
-    calendar: PropTypes.element,
-    style: PropTypes.object,
-    open: PropTypes.bool,
-    defaultOpen: PropTypes.bool,
-    prefixCls: PropTypes.string,
-    placement: PropTypes.any,
-    value: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array,
-    ]),
-    defaultValue: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.array,
-    ]),
-    align: PropTypes.object,
-  },
-
   getDefaultProps() {
     return {
       prefixCls: 'rc-calendar-picker',

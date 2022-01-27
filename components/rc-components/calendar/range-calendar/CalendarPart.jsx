@@ -1,31 +1,11 @@
 import React, { cloneElement } from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import CalendarHeader from '../calendar/CalendarHeader';
 import DateTable from '../date/DateTable';
 import DateInput from '../date/DateInput';
 import { getTimeConfig } from '../util/index';
 
 const CalendarPart = createReactClass({
-  propTypes: {
-    prefixCls: PropTypes.string,
-    value: PropTypes.any,
-    hoverValue: PropTypes.any,
-    selectedValue: PropTypes.any,
-    direction: PropTypes.any,
-    locale: PropTypes.any,
-    showDateInput: PropTypes.bool,
-    showTimePicker: PropTypes.bool,
-    format: PropTypes.any,
-    placeholder: PropTypes.any,
-    disabledDate: PropTypes.any,
-    timePicker: PropTypes.any,
-    disabledTime: PropTypes.any,
-    onInputSelect: PropTypes.func,
-    timePickerDisabledTime: PropTypes.object,
-    enableNext: PropTypes.any,
-    enablePrev: PropTypes.any,
-  },
   render() {
     const props = this.props;
     const {

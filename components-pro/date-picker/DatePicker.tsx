@@ -1,8 +1,8 @@
 import React, { createElement, CSSProperties, KeyboardEventHandler, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import moment, { isMoment, Moment, MomentInput, MomentParsingFlags } from 'moment';
 import classNames from 'classnames';
 import raf from 'raf';
+import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
@@ -100,50 +100,6 @@ export interface DatePickerKeyboardEvent {
 export default class DatePicker extends TriggerField<DatePickerProps>
   implements DatePickerKeyboardEvent {
   static displayName = 'DatePicker';
-
-  static propTypes = {
-    /**
-     * 日期格式，如 `YYYY-MM-DD HH:mm:ss`
-     */
-    format: PropTypes.string,
-    /**
-     * 显示模式date|dateTime|time|year|month|week
-     */
-    mode: PropTypes.string,
-    /**
-     * 单元格渲染
-     */
-    cellRenderer: PropTypes.func,
-    /**
-     * 日期过滤
-     */
-    filter: PropTypes.func,
-    /**
-     * 最小日期
-     */
-    min: PropTypes.any,
-    /**
-     * 最大日期
-     */
-    max: PropTypes.any,
-    /**
-     * 时间步距
-     */
-    step: PropTypes.shape({
-      hour: PropTypes.number,
-      minute: PropTypes.number,
-      second: PropTypes.number,
-    }),
-    /**
-     * 时区显示
-     */
-    timeZone: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    /**
-     * 编辑器在下拉框中显示
-     */
-    editorInPopup: PropTypes.bool,
-    ...TriggerField.propTypes,
-  };
 
   static defaultProps = {
     ...TriggerField.defaultProps,
@@ -292,9 +248,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
+    const viewMode = this.getViewMode();
     return classNames(
       super.getPopupClassName(defaultClassName), {
-        [`${this.prefixCls}-popup-${this.getViewMode()?.toLowerCase()}`]: this.getViewMode(),
+        [`${this.prefixCls}-popup-${String(viewMode).toLowerCase()}`]: viewMode,
       },
     );
   }
@@ -320,7 +277,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-start`}
               onChange={this.handleChange}
               onFocus={this.handleRangeStart}
-              value={rangeTarget === 0 ? (popupHoverValue ?? text ?? startText) : startText}
+              value={rangeTarget === 0 ? defaultTo(defaultTo(popupHoverValue, text), startText) : startText}
               placeholder={startPlaceholder}
               ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
             />
@@ -329,17 +286,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-end`}
               onChange={this.handleChange}
               onFocus={this.handleRangeEnd}
-              value={rangeTarget === 1 ? (popupHoverValue ?? text ?? endText) : endText}
+              value={rangeTarget === 1 ? defaultTo(defaultTo(popupHoverValue, text), endText) : endText}
               placeholder={endPlaceHolder}
               ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
             />
           </span>
         );
       }
+      const value = isNil(popupHoverValue) ? this.getTextNode() : popupHoverValue;
       return (
         <ObserverTextField
           key="popup-editor"
-          value={popupHoverValue ?? this.getTextNode()}
+          value={value}
           onInput={this.handleChange}
           border={false}
           className={className}
@@ -364,12 +322,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @action
   handleDateMouseEnter = (currentDate?: Moment): void => {
     this.hoverValue = currentDate && currentDate.format(this.getDateFormat());
-  }
+  };
 
   @action
   handleDateMouseLeave = (): void => {
     this.hoverValue = null;
-  }
+  };
 
   // 处理 hover 值显示
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
@@ -388,7 +346,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getRangeInputValue(startText: string, endText: string): string {
     const hoverValue = this.getHoverValue(false);
-    return hoverValue ?? super.getRangeInputValue(startText, endText);
+    if (isNil(hoverValue)) {
+      return super.getRangeInputValue(startText, endText);
+    }
+    return hoverValue;
   }
 
   getInputClassString(className: string): string {

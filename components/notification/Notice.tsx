@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, Key, memo, ReactNode, useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import Icon from '../icon';
@@ -23,7 +22,7 @@ export interface NoticeProps {
 }
 
 
-const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
+const Notice: FunctionComponent<NoticeProps> = function Notice(props) {
   const {
     contentClassName,
     prefixCls,
@@ -100,18 +99,6 @@ const Notice: FunctionComponent<NoticeProps> = function Notic(props) {
       }
     </div>
   );
-};
-
-Notice.propTypes = {
-  duration: PropTypes.number,
-  onClose: PropTypes.func,
-  children: PropTypes.any,
-  closeIcon: PropTypes.node,
-  prefixCls: PropTypes.string,
-  className: PropTypes.string,
-  contentClassName: PropTypes.string,
-  closable: PropTypes.bool,
-  style: PropTypes.object,
 };
 
 Notice.defaultProps = {

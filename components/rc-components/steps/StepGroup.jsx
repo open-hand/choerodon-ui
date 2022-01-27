@@ -1,44 +1,24 @@
 /* eslint react/no-did-mount-set-state: 0 */
 import React, { Children, cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { isFlexSupported, getStyle } from './utils';
+import { isFlexSupported } from './utils';
 import StepGroup from './StepGroup';
 import Step from './Step';
-import RenderIcon from './RenderIcon'
+import RenderIcon from './RenderIcon';
 import Icon from '../../icon';
 import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 import Menu from '../../menu';
 import MenuItem from '../../menu/MenuItem';
-import Button from '../../button'
+import Button from '../../button';
 import EventManager from '../../_util/EventManager';
 
 export default class Steps extends Component {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    iconPrefix: PropTypes.string,
-    direction: PropTypes.string,
-    labelPlacement: PropTypes.string,
-    children: PropTypes.any,
-    status: PropTypes.string,
-    size: PropTypes.string,
-    progressDot: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    style: PropTypes.object,
-    current: PropTypes.number,
-    getNumberChange: PropTypes.func,
-    setNumberChange: PropTypes.func,
-    headerRender: PropTypes.func,
-    headerIcon: PropTypes.string,
-    headerText: PropTypes.string,
-  };
-
   static defaultProps = {
     prefixCls: 'rc-steps',
     iconPrefix: 'rc',

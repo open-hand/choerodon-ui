@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
+import defaultTo from 'lodash/defaultTo';
 import isEmpty from 'lodash/isEmpty';
 import isNil from 'lodash/isNil';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
@@ -149,7 +150,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
     return (
       <div className={`${prefixCls}-popup-view`}>
-        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: this.hueColor ?? '#ff0000' }}>
+        <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: defaultTo(this.hueColor, '#ff0000') }}>
           <div {...gradientProps} />
           <div {...gradientPointerProps} />
         </div>

@@ -1,5 +1,4 @@
 import React, { cloneElement, FormEventHandler, isValidElement, ReactInstance, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import isPromise from 'is-promise';
@@ -264,155 +263,14 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 值变化前，拦截并返回新的值
    */
   processValue?: (value: any, range?: 0 | 1) => any;
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T, FormContextValue> {
   static get contextType() {
     return FormContext;
   }
-
-  static propTypes = {
-    _inTable: PropTypes.bool,
-    type: PropTypes.string,
-    /**
-     * 字段名
-     */
-    name: PropTypes.string,
-    /**
-     * <受控>当前值
-     */
-    value: PropTypes.any,
-    /**
-     * 默认值
-     */
-    defaultValue: PropTypes.any,
-    /**
-     * 是否必输
-     */
-    required: PropTypes.bool,
-    /**
-     * 是否只读
-     */
-    readOnly: PropTypes.bool,
-    /**
-     * 对照表单id
-     */
-    form: PropTypes.string,
-    /**
-     * 对照record在DataSet中的index
-     * @default dataSet.currentIndex
-     */
-    dataIndex: PropTypes.number,
-    /**
-     * 是否是多值
-     * @default false
-     */
-    multiple: PropTypes.bool,
-    /**
-     * 是否是范围值
-     * @default false
-     */
-    range: PropTypes.oneOfType([PropTypes.bool, PropTypes.arrayOf(PropTypes.string)]),
-    /**
-     * 表单下控件跨越的行数
-     */
-    rowSpan: PropTypes.number,
-    /**
-     * 另起新行
-     */
-    newLine: PropTypes.bool,
-    /**
-     * 表单下控件跨越的列数
-     */
-    colSpan: PropTypes.number,
-    /**
-     * 校验器
-     * (value: any, name?: string, form?: ReactInstance) => string | boolean | Promise<string | boolean>
-     */
-    validator: PropTypes.func,
-    /**
-     * 校验失败回调
-     * (validationMessage: ReactNode, validity: Validity, name?: string) => void
-     */
-    onInvalid: PropTypes.func,
-    /**
-     * 额外信息，常用作提示
-     */
-    help: PropTypes.string,
-    /**
-     * 显示提示信息的方式
-     */
-    showHelp: PropTypes.oneOf([ShowHelp.tooltip, ShowHelp.newLine, ShowHelp.label, ShowHelp.none]),
-    /**
-     * 渲染器
-     */
-    renderer: PropTypes.func,
-    /**
-     * 校验信息渲染器
-     */
-    validationRenderer: PropTypes.func,
-    /**
-     * 多值标签超出最大数量时的占位描述
-     */
-    maxTagPlaceholder: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    /**
-     * 多值标签最大数量
-     */
-    maxTagCount: PropTypes.number,
-    /**
-     * 多值标签文案最大长度
-     */
-    maxTagTextLength: PropTypes.number,
-    /**
-     * 显示原始值
-     */
-    pristine: PropTypes.bool,
-    /**
-     * 字符串值是否去掉首尾空格
-     * 可选值: both left right none
-     * @default: both
-     */
-    trim: PropTypes.oneOf([FieldTrim.both, FieldTrim.left, FieldTrim.right, FieldTrim.none]),
-    /**
-     * 值变化前回调
-     * (value: any, oldValue: any) => boolean
-     */
-    onBeforeChange: PropTypes.func,
-    /**
-     * 值变化回调
-     * (value: any, oldValue: any, form?: ReactInstance) => void
-     */
-    onChange: PropTypes.func,
-    /**
-     * 输入回调
-     */
-    onInput: PropTypes.func,
-    /**
-     * 键盘回车回调
-     */
-    onEnterDown: PropTypes.func,
-    /**
-     * 键盘回车回调
-     */
-    fieldClassName: PropTypes.string,
-    /**
-     * 高亮
-     */
-    highlight: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
-    /**
-     * 高亮渲染器
-     */
-    highlightRenderer: PropTypes.func,
-    /**
-     * 是否使用冒号
-     */
-    useColon: PropTypes.bool,
-    /**
-     * 校验信息提示方式
-     */
-    showValidation: PropTypes.string,
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     readOnly: false,

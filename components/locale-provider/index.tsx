@@ -1,5 +1,4 @@
 import React, { Children, Component, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import interopDefault from '../_util/interopDefault';
@@ -65,10 +64,6 @@ function setMomentLocale(locale: Locale) {
 }
 
 export default class LocaleProvider extends Component<LocaleProviderProps, any> {
-  static propTypes = {
-    locale: PropTypes.object,
-  };
-
   static defaultProps = {
     locale: {},
   };

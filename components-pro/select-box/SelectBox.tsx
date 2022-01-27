@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { computed, isArrayLike } from 'mobx';
 import classNames from 'classnames';
@@ -36,14 +35,6 @@ export interface SelectBoxProps extends SelectProps {
 @observer
 export default class SelectBox extends Select<SelectBoxProps> {
   static displayName = 'SelectBox';
-
-  static propTypes = {
-    /**
-     * 是否垂直显示
-     */
-    vertical: PropTypes.bool,
-    ...Select.propTypes,
-  };
 
   static defaultProps = {
     ...Select.defaultProps,

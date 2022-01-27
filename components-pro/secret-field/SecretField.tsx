@@ -22,10 +22,6 @@ export default class SecretField extends TextField<SecretFieldProps> {
     ...TextField.defaultProps,
   };
 
-  static propTypes = {
-    ...TextField.propTypes,
-  };
-
   // eslint-disable-next-line camelcase
   // static __IS_IN_CELL_EDITOR = true;
 
@@ -35,14 +31,14 @@ export default class SecretField extends TextField<SecretFieldProps> {
     super(props, context);
     runInAction(() => {
       this.setSecretEnable();
-    })
+    });
   }
 
   private secretEnable: Boolean = false;
 
   get isSecretEnable(): Boolean {
     const { record, name } = this;
-    if (!record?.get('_token') || !record?.get(name) ) {
+    if (!record || !record.get('_token') || !record.get(name)) {
       // 新增数据，record没有token或者没有值，显示为textfield
       return false;
     }
@@ -60,15 +56,16 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   @action
   private openModal() {
-    const label = this.getLabel();
-    const { readOnly, name, record } = this;
-    if (!record?.getState(`_secretField_countDown_${name}`)) {
-      record?.setState({ [`_secretField_countDown_${name}`]: new CountDown() });
-    }
-    const pattern = this.getProp('pattern');
-    const restrict = this.getProp('restrict');
-    const required = this.getProp('required');
     if (!this.modal) {
+      const label = this.getLabel();
+      const { readOnly, name, record } = this;
+      const key = `_secretField_countDown_${name}`;
+      if (record && !record.getState(key)) {
+        record.setState(key, new CountDown());
+      }
+      const pattern = this.getProp('pattern');
+      const restrict = this.getProp('restrict');
+      const required = this.getProp('required');
       const { modalProps } = this.props;
       this.modal = open({
         title: label,
@@ -82,9 +79,9 @@ export default class SecretField extends TextField<SecretFieldProps> {
             pattern={pattern}
             restrict={restrict}
             required={required}
-            token={record?.get('_token')}
+            token={record && record.get('_token')}
             onChange={this.handleSecretChange}
-            countDown={record?.getState(`_secretField_countDown_${name}`)}
+            countDown={record && record.getState(key)}
           />
         ),
         destroyOnClose: true,
@@ -104,7 +101,10 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   @autobind
   handleSecretChange(data?: any) {
-    this.record?.init(this.name || '', data);
+    const { record } = this;
+    if (record) {
+      record.init(this.name || '', data);
+    }
   }
 
   @autobind
@@ -127,18 +127,18 @@ export default class SecretField extends TextField<SecretFieldProps> {
         {
           onClick: disabled ? null : this.handleOpenModal,
         },
-      )
+      );
     }
     // 只读：已读不显示查看按钮
     // readFlag: true已查看 undefined未查看
-    const readFlag = record?.getState(`_secretField_queryFlag_${name}`);
+    const readFlag = record && record.getState(`_secretField_queryFlag_${name}`);
     if (!readFlag && readOnly) {
       return this.wrapperSuffix(
         <Icon type='visibility-o' />,
         {
           onClick: disabled ? null : this.handleOpenModal,
         },
-      )
+      );
     }
     return null;
   }

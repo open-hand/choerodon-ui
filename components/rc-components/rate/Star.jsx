@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 export default class Star extends Component {
-  static propTypes = {
-    value: PropTypes.number,
-    index: PropTypes.number,
-    prefixCls: PropTypes.string,
-    allowHalf: PropTypes.bool,
-    disabled: PropTypes.bool,
-    onHover: PropTypes.func,
-    onClick: PropTypes.func,
-    character: PropTypes.node,
-    focused: PropTypes.bool,
-  };
-
   onHover = (e) => {
     const { onHover, index } = this.props;
     onHover(e, index);

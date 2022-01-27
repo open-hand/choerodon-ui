@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import Locale from './locale/en_US';
@@ -21,33 +20,6 @@ export default class Menus extends Component {
     locale: Locale,
     singleMenuStyle: { width:'3rem'},
     singleMenuItemStyle: { minWidth: '1rem'},
-  };
-
-  static propTypes = {
-    // 选择的值
-    value: PropTypes.array,
-    // 当前激活的值
-    activeValue: PropTypes.array,
-    // 可选内容
-    options: PropTypes.array.isRequired,
-    // 注入样式开头
-    prefixCls: PropTypes.string,
-    // 触发展开事件
-    expandTrigger: PropTypes.string,
-    // 被选择后触发
-    onSelect: PropTypes.func,
-    // 是否可见
-    visible: PropTypes.bool,
-    // 下拉列表的样式配置
-    dropdownMenuColumnStyle: PropTypes.object,
-    // 标识是由于tab select 触发的事件
-    isTabSelected: PropTypes.bool,
-    selectedValues: PropTypes.array,
-    locale: PropTypes.object,
-    singleMenuStyle: PropTypes.object,
-    singleMenuItemStyle: PropTypes.object,
-    singlePleaseRender: PropTypes.func,
-    singleMenuItemRender: PropTypes.func,
   };
 
   constructor(props) {
@@ -211,7 +183,7 @@ export default class Menus extends Component {
     const activeOptions = this.getActiveOptions()
     const dropdownMenuColumnStyleSingle = {...dropdownMenuColumnStyle,...singleMenuStyle}
     const tabItemRender = activeOptions.map((item,indexItem) => (this.getTabItem(item,indexItem)))
-    let tabItemRenderResult 
+    let tabItemRenderResult
     if(showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length){
        const pleaseRenderProps = {
         key:"please_check" ,
@@ -221,7 +193,7 @@ export default class Menus extends Component {
        if(isFunction(singlePleaseRender)){
         tabItemRenderResult = singlePleaseRender(pleaseRenderProps)
        }else{
-        const pleaseItem = (    
+        const pleaseItem = (
             <span {...pleaseRenderProps}>
               {pleaseRenderProps.text}
               <Icon type="arrow_drop_down" />

@@ -3,6 +3,7 @@ export interface Globals {
   STICKY_SUPPORT?: boolean | undefined;
   FLEX_SUPPORT?: boolean | undefined;
   CSS_ANIMATION_SUPPORT?: boolean | undefined;
+  PLACEHOLDER_SUPPORT?: boolean | undefined;
   ROOT_STYLE?: CSSStyleDeclaration;
   SCROLL_BAR_WIDTH_VERTICAL?: number;
   SCROLL_BAR_WIDTH_HORIZONTAL?: number;

@@ -1,6 +1,5 @@
 import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import { defaultClassPrefix, prefix } from './utils';
 
 export interface ColumnGroupProps {
@@ -51,7 +50,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
       </div>
 
       {React.Children.map(children, (node: React.ReactElement) => {
-        const nodeStyles = { ...node.props?.style, top: styles.height, left: styles.left };
+        const nodeStyles = { ...node.props.style, top: styles.height, left: styles.left };
         return React.cloneElement(node, {
           className: addPrefix('cell'),
           style: nodeStyles,
@@ -69,12 +68,6 @@ ColumnGroup.__PRO_TABLE_COLUMN_GROUP = true;
 ColumnGroup.defaultProps = {
   headerHeight: 80,
   classPrefix: defaultClassPrefix('performance-table-column-group'),
-};
-
-ColumnGroup.propTypes = {
-  header: PropTypes.node,
-  classPrefix: PropTypes.string,
-  verticalAlign: PropTypes.oneOf(['top', 'middle', 'bottom']),
 };
 
 export default ColumnGroup;

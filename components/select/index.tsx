@@ -1,5 +1,4 @@
 import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -117,32 +116,6 @@ export default class Select extends Component<SelectProps, {}> {
     showCheckAll: true,
     choiceRemove: true,
     border: true,
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    size: PropTypes.oneOf([Size.default, Size.large, Size.small]),
-    combobox: PropTypes.bool,
-    notFoundContent: PropTypes.any,
-    showSearch: PropTypes.bool,
-    optionLabelProp: PropTypes.string,
-    transitionName: PropTypes.string,
-    choiceTransitionName: PropTypes.string,
-    showNotFindInputItem: PropTypes.bool,
-    showNotFindSelectedItem: PropTypes.bool,
-    filter: PropTypes.bool,
-    showCheckAll: PropTypes.bool,
-    footer: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-    choiceRender: PropTypes.func,
-    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    filterValue: PropTypes.string,
-    onFilterChange: PropTypes.func,
-    choiceRemove: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    onChoiceRemove: PropTypes.func,
-    onClear: PropTypes.func,
-    border: PropTypes.bool,
-    blurChange: PropTypes.bool,
   };
 
   context: ConfigContextValue;

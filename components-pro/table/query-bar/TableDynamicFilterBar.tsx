@@ -651,7 +651,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { getConfig } = this.context;
     const { prefixCls } = this;
-    const searchText = dynamicFilterBar?.searchText || getConfig('tableFilterSearchText') || 'params';
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
@@ -821,7 +821,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       }
                     }}
                   >
-                    <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                    <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                     <span className={itemClassName}>{this.createFields(element, name)}</span>
                   </div>
                 );
@@ -849,7 +849,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           this.handleUnSelect([name]);
                         }}
                       />
-                      <span className={`${prefixCls}-filter-label`}>{queryField?.get('label')}</span>
+                      <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
                       <span className={`${prefixCls}-filter-item`}>
                         {this.createFields(element, name)}
                       </span>

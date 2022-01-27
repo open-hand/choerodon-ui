@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import merge from 'lodash/merge';
@@ -12,59 +11,9 @@ import HeadTable from './HeadTable';
 import BodyTable from './BodyTable';
 import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
+import { TableContextProvider } from './TableContext';
 
 export default class Table extends Component {
-  static propTypes = {
-    data: PropTypes.array,
-    useFixedHeader: PropTypes.bool,
-    columns: PropTypes.array,
-    prefixCls: PropTypes.string,
-    bodyStyle: PropTypes.object,
-    style: PropTypes.object,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    rowClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    onRow: PropTypes.func,
-    onHeaderRow: PropTypes.func,
-    onRowClick: PropTypes.func,
-    onRowDoubleClick: PropTypes.func,
-    onRowContextMenu: PropTypes.func,
-    onRowMouseEnter: PropTypes.func,
-    onRowMouseLeave: PropTypes.func,
-    showHeader: PropTypes.bool,
-    title: PropTypes.func,
-    id: PropTypes.string,
-    footer: PropTypes.func,
-    emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    scroll: PropTypes.object,
-    rowRef: PropTypes.func,
-    getBodyWrapper: PropTypes.func,
-    children: PropTypes.node,
-    components: PropTypes.shape({
-      table: PropTypes.any,
-      header: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-      body: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-      footer: PropTypes.shape({
-        wrapper: PropTypes.any,
-        row: PropTypes.any,
-        cell: PropTypes.any,
-      }),
-    }),
-    ...ExpandableTable.PropTypes,
-  };
-
-  static childContextTypes = {
-    table: PropTypes.any,
-    components: PropTypes.any,
-  };
-
   static defaultProps = {
     data: [],
     useFixedHeader: false,
@@ -118,31 +67,29 @@ export default class Table extends Component {
     this.debouncedWindowResize = debounce(this.handleWindowResize, 150);
   }
 
-  getChildContext() {
+  getContextValue() {
     return {
-      table: {
-        props: this.props,
-        columnManager: this.columnManager,
-        saveRef: this.saveRef,
-        components: merge({
-          table: 'table',
-          header: {
-            wrapper: 'thead',
-            row: 'tr',
-            cell: 'th',
-          },
-          body: {
-            wrapper: 'tbody',
-            row: 'tr',
-            cell: 'td',
-          },
-          footer: {
-            wrapper: 'tfoot',
-            row: 'tr',
-            cell: 'td',
-          },
-        }, this.props.components),
-      },
+      props: this.props,
+      columnManager: this.columnManager,
+      saveRef: this.saveRef,
+      components: merge({
+        table: 'table',
+        header: {
+          wrapper: 'thead',
+          row: 'tr',
+          cell: 'th',
+        },
+        body: {
+          wrapper: 'tbody',
+          row: 'tr',
+          cell: 'td',
+        },
+        footer: {
+          wrapper: 'tfoot',
+          row: 'tr',
+          cell: 'td',
+        },
+      }, this.props.components),
     };
   }
 
@@ -480,30 +427,32 @@ export default class Table extends Component {
 
     return (
       <Provider store={this.store}>
-        <ExpandableTable
-          {...props}
-          columnManager={this.columnManager}
-          getRowKey={this.getRowKey}
-        >
-          {(expander) => {
-            this.expander = expander;
-            return (
-              <div
-                ref={this.saveRef('tableNode')}
-                className={className}
-                style={props.style}
-                id={props.id}
-              >
-                {this.renderTitle()}
-                <div className={`${prefixCls}-content`}>
-                  {this.renderMainTable()}
-                  {hasLeftFixed && this.renderLeftFixedTable()}
-                  {hasRightFixed && this.renderRightFixedTable()}
+        <TableContextProvider {...this.getContextValue()}>
+          <ExpandableTable
+            {...props}
+            columnManager={this.columnManager}
+            getRowKey={this.getRowKey}
+          >
+            {(expander) => {
+              this.expander = expander;
+              return (
+                <div
+                  ref={this.saveRef('tableNode')}
+                  className={className}
+                  style={props.style}
+                  id={props.id}
+                >
+                  {this.renderTitle()}
+                  <div className={`${prefixCls}-content`}>
+                    {this.renderMainTable()}
+                    {hasLeftFixed && this.renderLeftFixedTable()}
+                    {hasRightFixed && this.renderRightFixedTable()}
+                  </div>
                 </div>
-              </div>
-            );
-          }}
-        </ExpandableTable>
+              );
+            }}
+          </ExpandableTable>
+        </TableContextProvider>
       </Provider>
     );
   }

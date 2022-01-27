@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { EditorCore } from 'rc-editor-core';
 import { CompositeDecorator, ContentState, EditorState, SelectionState } from 'draft-js';
@@ -8,34 +7,6 @@ import createMention from '../utils/createMention';
 import exportContent from '../utils/exportContent';
 
 class Mention extends Component {
-  static propTypes = {
-    value: PropTypes.object,
-    suggestions: PropTypes.array,
-    prefix: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.arrayOf(PropTypes.string)],
-    ),
-    prefixCls: PropTypes.string,
-    tag: PropTypes.element,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    onSearchChange: PropTypes.func,
-    onChange: PropTypes.func,
-    mode: PropTypes.string,
-    multiLines: PropTypes.bool,
-    suggestionStyle: PropTypes.object,
-    placeholder: PropTypes.string,
-    defaultValue: PropTypes.object,
-    notFoundContent: PropTypes.any,
-    position: PropTypes.string,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onSelect: PropTypes.func,
-    getSuggestionContainer: PropTypes.func,
-    noRedup: PropTypes.bool,
-    mentionStyle: PropTypes.object,
-    placement: PropTypes.string,
-  };
-
   constructor(props) {
     super(props);
 

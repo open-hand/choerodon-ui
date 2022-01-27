@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
 import isString from 'lodash/isString';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Tooltip as LabelTooltip } from '../core/enum';
@@ -9,16 +9,15 @@ export interface FormLabelProps {
   className?: string;
   rowSpan?: number;
   children?: ReactNode;
-  paddingLeft?: string;
+  style?: CSSProperties;
   tooltip?: LabelTooltip;
   help?: ReactNode;
 }
 
 const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(props) {
-  const { className, rowSpan, paddingLeft, tooltip, children, help } = props;
+  const { className, rowSpan, style, tooltip, children, help } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
-  const style = useMemo(() => paddingLeft ? { paddingLeft } : undefined, [paddingLeft]);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
     if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && isOverflow(currentTarget))) {

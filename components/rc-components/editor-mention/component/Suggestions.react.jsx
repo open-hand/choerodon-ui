@@ -1,6 +1,5 @@
 import React, { Children, cloneElement, Component, isValidElement } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { decode } from 'draft-js/lib/DraftOffsetKey';
 import cx from 'classnames';
 import scrollIntoView from 'dom-scroll-into-view';
@@ -16,23 +15,6 @@ import getSearchWord from '../utils/getSearchWord';
 const isNotFalse = i => i !== false;
 
 export default class Suggestions extends Component {
-  static propTypes = {
-    callbacks: PropTypes.object,
-    suggestions: PropTypes.array,
-    store: PropTypes.object,
-    onSearchChange: PropTypes.func,
-    prefixCls: PropTypes.string,
-    mode: PropTypes.string,
-    style: PropTypes.object,
-    onSelect: PropTypes.func,
-    getSuggestionContainer: PropTypes.func,
-    notFoundContent: PropTypes.any,
-    getSuggestionStyle: PropTypes.func,
-    className: PropTypes.string,
-    noRedup: PropTypes.bool,
-    placement: PropTypes.string,
-  };
-
   constructor(props) {
     super(props);
     this.state = {

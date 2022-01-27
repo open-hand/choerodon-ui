@@ -29,7 +29,7 @@ export function genPercentAdd() {
   let k = 0.1;
   const i = 0.01;
   const end = 0.98;
-  return function(s: number) {
+  return function (s: number) {
     let start = s;
     if (start >= end) {
       return start;
@@ -61,6 +61,7 @@ export function removeFileItem(file: UploadFile, fileList: UploadFile[]) {
 const isImageFileType = (type: string): boolean => type.indexOf('image/') === 0;
 
 const MEASURE_SIZE = 200;
+
 export function previewImage(file: File | Blob): Promise<string> {
   return new Promise(resolve => {
     if (!file.type || !isImageFileType(file.type)) {
@@ -113,7 +114,7 @@ export function getFileType(filename: string): string {
   const suffix = filename ?
     filename.lastIndexOf('.') === -1 ? '' : filename.split('.').pop()
     : '';
-  switch (suffix?.toLowerCase()) {
+  switch (suffix ? suffix.toLowerCase() : '') {
     case 'doc':
     case 'docx':
       return 'doc';

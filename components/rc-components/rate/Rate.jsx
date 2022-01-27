@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import KeyCode from '../../_util/KeyCode';
@@ -8,26 +7,6 @@ import { getOffsetLeft } from './util';
 import Star from './Star';
 
 export default class Rate extends Component {
-  static propTypes = {
-    disabled: PropTypes.bool,
-    value: PropTypes.number,
-    defaultValue: PropTypes.number,
-    count: PropTypes.number,
-    allowHalf: PropTypes.bool,
-    allowClear: PropTypes.bool,
-    style: PropTypes.object,
-    prefixCls: PropTypes.string,
-    onChange: PropTypes.func,
-    onHoverChange: PropTypes.func,
-    className: PropTypes.string,
-    character: PropTypes.node,
-    tabIndex: PropTypes.number,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    autoFocus: PropTypes.bool,
-  };
-
   static defaultProps = {
     defaultValue: 0,
     count: 5,

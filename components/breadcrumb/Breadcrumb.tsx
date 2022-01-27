@@ -1,5 +1,4 @@
 import React, { Children, cloneElement, Component, CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from '../_util/warning';
 import BreadcrumbItem, { BreadcrumbItemProps } from './BreadcrumbItem';
@@ -49,14 +48,6 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
 
   static defaultProps = {
     separator: '/',
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    separator: PropTypes.node,
-    routes: PropTypes.array,
-    params: PropTypes.object,
-    itemRender: PropTypes.func,
   };
 
   context: ConfigContextValue;

@@ -1,5 +1,4 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isCssAnimationSupported from '../_util/isCssAnimationSupported';
@@ -39,15 +38,6 @@ export default class Spin extends Component<SpinProps, SpinState> {
     spinning: true,
     size: Size.default,
     wrapperClassName: '',
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    className: PropTypes.string,
-    spinning: PropTypes.bool,
-    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
-    wrapperClassName: PropTypes.string,
-    indicator: PropTypes.node,
   };
 
   context: ConfigContextValue;

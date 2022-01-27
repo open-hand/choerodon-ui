@@ -1,5 +1,4 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import { action, computed, observable } from 'mobx';
@@ -28,11 +27,6 @@ export interface TimesViewProps extends DateViewProps {
 @observer
 export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   static displayName = 'TimesView';
-
-  static propTypes = {
-    datetimeSide: PropTypes.bool,
-    ...DaysView.propTypes,
-  };
 
   static defaultProps = {
     datetimeSide: false,

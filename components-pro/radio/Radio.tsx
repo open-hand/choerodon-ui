@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
@@ -32,24 +31,6 @@ export interface RadioProps extends FormFieldProps {
 
 export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   static displayName = 'Radio';
-
-  static propTypes = {
-    /**
-     * <受控>是否选中
-     */
-    checked: PropTypes.bool,
-    /**
-     * 初始是否选中
-     */
-    defaultChecked: PropTypes.bool,
-    /**
-     * 显示模式
-     * 可选值： button | box
-     * @default box
-     */
-    mode: PropTypes.oneOf([ViewMode.button, ViewMode.box]),
-    ...FormField.propTypes,
-  };
 
   static defaultProps = {
     ...FormField.defaultProps,

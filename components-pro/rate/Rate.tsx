@@ -24,11 +24,6 @@ export interface RateProps extends C7NRateProps, FormFieldProps {
 export default class Rate<T extends RateProps> extends FormField<T> {
   static displayName = 'Rate';
 
-  static propTypes = {
-    ...C7NRate.propTypes,
-    ...FormField.propTypes,
-  };
-
   static defaultProps = {
     ...C7NRate.defaultProps,
     ...FormField.defaultProps,

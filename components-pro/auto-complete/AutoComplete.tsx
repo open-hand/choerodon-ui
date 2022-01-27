@@ -27,10 +27,6 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
 
   inputText = '';
 
-  static propTypes = {
-    ...Select.propTypes,
-  };
-
   static defaultProps = {
     ...Select.defaultProps,
     searchable: true,
@@ -74,7 +70,8 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
 
   @autobind
   handleFocus(e) {
-    this.inputText = e.target?.value;
+    const { target } = e;
+    this.inputText = target ? target.value : '';
     super.handleFocus(e);
   }
 

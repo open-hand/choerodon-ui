@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import getOffset from '../utils/getOffset';
 
 export default class SuggestionPortal extends Component {
-  static propTypes = {
-    offsetKey: PropTypes.any,
-    mentionStore: PropTypes.object,
-    decoratedText: PropTypes.string,
-    children: PropTypes.any,
-    callbacks: PropTypes.any,
-    suggestionRegex: PropTypes.any,
-  };
-
   componentWillMount() {
     this.matchDecorates(this.props);
   }

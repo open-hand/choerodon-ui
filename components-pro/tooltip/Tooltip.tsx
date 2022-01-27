@@ -1,5 +1,4 @@
 import React, { Children, Component, isValidElement } from 'react';
-import PropTypes from 'prop-types';
 import isNil from 'lodash/isNil';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
@@ -105,37 +104,6 @@ export default class Tooltip extends Component<TooltipProps, any> {
   }
 
   static displayName = 'Tooltip';
-
-  static propTypes = {
-    title: PropTypes.any,
-    arrowPointAtCenter: PropTypes.bool,
-    autoAdjustOverflow: PropTypes.bool,
-    defaultHidden: PropTypes.bool,
-    mouseEnterDelay: PropTypes.number,
-    mouseLeaveDelay: PropTypes.number,
-    placement: PropTypes.oneOf([
-      'top',
-      'topLeft',
-      'topRight',
-      'bottom',
-      'bottomLeft',
-      'bottomRight',
-      'left',
-      'leftTop',
-      'leftBottom',
-      'right',
-      'rightTop',
-      'rightBottom',
-    ]),
-    trigger: PropTypes.arrayOf(
-      PropTypes.oneOf([Action.click, Action.hover, Action.contextMenu, Action.focus]),
-    ),
-    hidden: PropTypes.bool,
-    onHiddenChange: PropTypes.func,
-    suffixCls: PropTypes.string,
-    transitionName: PropTypes.string,
-    theme: PropTypes.oneOf(['light', 'dark']),
-  };
 
   static defaultProps = {
     suffixCls: 'tooltip',

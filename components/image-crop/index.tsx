@@ -469,7 +469,7 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
     />
   );
 
-  const title = modalProps?.title || modalTitle;
+  const title = modalProps && modalProps.title || modalTitle;
   const cancelButtonProps: ButtonProps = { funcType: 'raised' };
   const okButtonProps: ButtonProps = { funcType: 'raised', type: 'primary' };
   return (

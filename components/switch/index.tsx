@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import RcSwitch from '../rc-components/switch';
@@ -25,14 +24,6 @@ export default class Switch extends Component<SwitchProps, {}> {
   }
 
   static displayName = 'Switch';
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-
-    // size=default and size=large are the same
-    size: PropTypes.oneOf([Size.small, Size.default, Size.large]),
-    className: PropTypes.string,
-  };
 
   context: ConfigContextValue;
 

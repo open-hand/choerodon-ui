@@ -92,7 +92,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
       map(conditionData, data => {
         if (isSelect(data)) {
           const fieldObj = findFieldObj(queryDataSet, data);
-          if (fieldObj?.name) {
+          if (fieldObj && fieldObj.name) {
             putData.push({
               comparator: 'EQUAL',
               fieldName: fieldObj.name,
@@ -121,7 +121,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
       const otherRecord = menuDataSet.current.clone();
       otherRecord.set('conditionList', putData);
       menuDataSet.current.reset();
-      menuDataSet.create({ ...omitData(otherRecord.toData())});
+      menuDataSet.create({ ...omitData(otherRecord.toData()) });
       // 新建
     } else if (type === 'create') {
       menuDataSet.current.set('conditionList', putData);
@@ -207,8 +207,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const { current } = menuDataSet;
     let shouldQuery = false;
     if (current) {
-      const { conditionList } = current.toData();
+      const conditionList = current.get('conditionList');
       const initData = {};
+      const { current: currentQueryRecord } = queryDataSet;
       if (conditionList && conditionList.length) {
         map(conditionList, condition => {
           if (condition.comparator === 'EQUAL') {
@@ -218,16 +219,16 @@ const QuickFilterMenu = function QuickFilterMenu() {
           }
         });
         onOriginalChange(Object.keys(initData));
-        const emptyRecord = new Record({...initData}, queryDataSet);
+        const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, Object.keys(initData));
-        shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
+        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {});
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
-        shouldQuery = !isEqualDynamicProps(initData, omit(queryDataSet?.current?.toData(true), ['__dirty']));
+        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {});
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
@@ -252,7 +253,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 重置初始勾选项及初始赋值
        */
       queryDataSet.locate(0);
-      queryDataSet.get(0)?.reset();
+      const first = queryDataSet.get(0);
+      if (first) {
+        first.reset();
+      }
       onOriginalChange();
       if (autoQuery) {
         dataSet.query();
@@ -274,7 +278,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
       if (menuRecord) {
         conditionDataSet.loadData(menuRecord.get('conditionList'));
       }
-      if (current) current.set('filterName', searchId);
+      if (current) {
+        current.set('filterName', searchId);
+      }
       conditionAssign(init);
     } else if (searchId === null) {
       handleQueryReset();
@@ -285,11 +291,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
           conditionDataSet.loadData(menuRecord.get('conditionList'));
-          if (current) current.set('filterName', menuRecord.get('searchId'));
+          if (current) {
+            current.set('filterName', menuRecord.get('searchId'));
+          }
         }
         conditionAssign(init);
-      } else {
-        current?.set('filterName', undefined);
+      } else if (current) {
+        current.set('filterName', undefined);
       }
     }
   };
@@ -320,7 +328,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   const handleChange = (value?: number) => {
-    queryDataSet.current?.reset();
+    const { current } = queryDataSet;
+    if (current) {
+      current.reset();
+    }
     locateData(value);
   };
 
@@ -390,22 +401,25 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const conditionData = Object.entries(omit(current.toData(true), ['__dirty']));
         conditionDataSet.reset();
         conditionDataSet.map(record => {
-          if (!selectFields?.includes(record.get('fieldName'))) {
+          if (!selectFields || !selectFields.includes(record.get('fieldName'))) {
             conditionDataSet.remove(record);
           }
           return null;
         });
         map(conditionData, data => {
           const fieldObj = findFieldObj(queryDataSet, data);
-          if (fieldObj?.name) {
-            const currentRecord = conditionDataSet.find(record => record.get('fieldName') === fieldObj.name);
-            if (currentRecord) {
-              currentRecord.set('value', fieldObj.value);
-            } else if (isSelect(data)) {
-              conditionDataSet.create({
-                fieldName: fieldObj.name,
-                value: fieldObj.value,
-              });
+          if (fieldObj) {
+            const { name } = fieldObj;
+            if (name) {
+              const currentRecord = conditionDataSet.find(record => record.get('fieldName') === name);
+              if (currentRecord) {
+                currentRecord.set('value', fieldObj.value);
+              } else if (isSelect(data)) {
+                conditionDataSet.create({
+                  fieldName: name,
+                  value: fieldObj.value,
+                });
+              }
             }
           }
         });
@@ -500,7 +514,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         domEvent.preventDefault();
         domEvent.stopPropagation();
         if (key === 'filter_default') {
-          setDefaultFlag(record?.get('defaultFlag') ? 0 : 1, record);
+          setDefaultFlag(record.get('defaultFlag') ? 0 : 1, record);
         } else if (key === 'filter_rename') {
           handleEdit(record);
         } else {
@@ -508,7 +522,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
       }}>
         <Menu.Item key='filter_default'>
-          {record?.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}
+          {record.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}
         </Menu.Item>
         <Menu.Item key='filter_rename'>
           {$l('Table', 'rename')}
@@ -568,7 +582,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDataSet?.current?.get('filterName') && (
+          {filterMenuDataSet.current && filterMenuDataSet.current.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>

@@ -1,5 +1,4 @@
 import React, { Children, cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import { connect } from 'mini-store';
@@ -72,42 +71,6 @@ export function saveRef(c) {
 export function getWrappedInstance() { return SubPopupMenu }
 
 export class SubPopupMenu extends Component {
-  static propTypes = {
-    onSelect: PropTypes.func,
-    onClick: PropTypes.func,
-    onDeselect: PropTypes.func,
-    onOpenChange: PropTypes.func,
-    onDestroy: PropTypes.func,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    openKeys: PropTypes.arrayOf(PropTypes.string),
-    hidden: PropTypes.bool,
-    children: PropTypes.any,
-    parentMenu: PropTypes.object,
-    eventKey: PropTypes.string,
-    store: PropTypes.shape({
-      getState: PropTypes.func,
-      setState: PropTypes.func,
-    }),
-
-    // adding in refactor
-    focusable: PropTypes.bool,
-    multiple: PropTypes.bool,
-    style: PropTypes.object,
-    defaultActiveFirst: PropTypes.bool,
-    activeKey: PropTypes.string,
-    selectedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
-    level: PropTypes.number,
-    mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
-    triggerSubMenuAction: PropTypes.oneOf(['click', 'hover']),
-    inlineIndent: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    manualRef: PropTypes.func,
-    itemIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    expandIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-  };
-
   static defaultProps = {
     prefixCls: 'rc-menu',
     className: '',

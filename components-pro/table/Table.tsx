@@ -1,5 +1,4 @@
 import React, { CSSProperties, MouseEventHandler, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
@@ -181,18 +180,6 @@ export type Commands =
   | TableCommandType
   | [TableCommandType, TableButtonProps]
   | ReactElement<TableButtonProps>;
-
-export const buttonsEnumType = PropTypes.oneOf([
-  TableButtonType.add,
-  TableButtonType.save,
-  TableButtonType.remove,
-  TableButtonType.delete,
-  TableButtonType.reset,
-  TableButtonType.query,
-  TableButtonType.export,
-  TableButtonType.expandAll,
-  TableButtonType.collapseAll,
-]);
 
 export interface TablePaginationConfig extends PaginationProps {
   position?: TablePaginationPosition;
@@ -751,149 +738,6 @@ export default class Table extends DataSetComponent<TableProps> {
   static TableRow = TableRow;
 
   static TableHeaderCell = TableHeaderCell;
-
-  static propTypes = {
-    columns: PropTypes.array,
-    /**
-     * 表头
-     */
-    header: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    /**
-     * 是否显示表头
-     */
-    showHeader: PropTypes.bool,
-    /**
-     * 是否显示表头
-     */
-    showRemovedRow: PropTypes.bool,
-    /**
-     * 表脚
-     */
-    footer: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    /**
-     * 是否显示边框
-     * @default true
-     */
-    border: PropTypes.bool,
-    /**
-     * 可编辑单元格边框
-     */
-    columnEditorBorder: PropTypes.bool,
-    /**
-     * 功能按钮
-     * 可选值：`add` `delete` `remove` `save` `query` `expandAll` `collapseAll` 或 自定义按钮
-     */
-    buttons: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        buttonsEnumType,
-        PropTypes.arrayOf(PropTypes.oneOfType([buttonsEnumType, PropTypes.object])),
-        PropTypes.node,
-      ]),
-    ),
-    buttonsLimit: PropTypes.number,
-    /**
-     * 自定义查询字段组件
-     * 默认会根据queryDataSet中定义的field类型自动匹配组件， 匹配类型如下
-     * lovCode => Lov
-     * lookupCode => Select
-     * type:number => NumberField
-     * type:date => DatePicker
-     * type:dateTime => DatePicker[mode=dateTime]
-     * type:week => DatePicker[mode=week]
-     * default => TextField
-     */
-    queryFields: PropTypes.object,
-    /**
-     * 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口
-     * @default 1
-     */
-    queryFieldsLimit: PropTypes.number,
-    /**
-     * 头部显示的汇总字段的数量，超出限制的查询字段放入弹出窗口
-     * @default 3
-     */
-    summaryFieldsLimit: PropTypes.number,
-    /**
-     * 头部显示的汇总字段单个宽度
-     * @default 170
-     */
-    summaryBarFieldWidth: PropTypes.number,
-    /**
-     * 显示查询条
-     * @default true
-     */
-    queryBar: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        TableQueryBarType.advancedBar,
-        TableQueryBarType.normal,
-        TableQueryBarType.bar,
-        TableQueryBarType.none,
-        TableQueryBarType.professionalBar,
-        TableQueryBarType.filterBar,
-        TableQueryBarType.comboBar,
-      ]),
-      PropTypes.func,
-    ]),
-    useMouseBatchChoose: PropTypes.bool,
-    /**
-     * 行高
-     * @default 30
-     */
-    rowHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf(['auto'])]),
-    alwaysShowRowBox: PropTypes.bool,
-    showSelectionTips: PropTypes.bool,
-    showSelectionCachedButton: PropTypes.bool,
-    showCachedSelection: PropTypes.bool,
-    onShowCachedSelectionChange: PropTypes.func,
-    showAllPageSelectionButton: PropTypes.bool,
-    defaultRowExpanded: PropTypes.bool,
-    expandRowByClick: PropTypes.bool,
-    indentSize: PropTypes.number,
-    filter: PropTypes.func,
-    mode: PropTypes.oneOf([TableMode.list, TableMode.tree]),
-    editMode: PropTypes.oneOf([TableEditMode.inline, TableEditMode.cell]),
-    filterBarFieldName: PropTypes.string,
-    filterBarPlaceholder: PropTypes.string,
-    highLightRow: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf([HighLightRowType.focus, HighLightRowType.click])]),
-    selectedHighLightRow: PropTypes.bool,
-    parityRow: PropTypes.bool,
-    autoMaxWidth: PropTypes.bool,
-    /**
-     * 设置drag框体位置
-     */
-    dragColumnAlign: PropTypes.oneOf([DragColumnAlign.left, DragColumnAlign.right]),
-    /**
-     * 开启列拖拽，但是无法使用宽度拖拽
-     */
-    columnDraggable: PropTypes.bool,
-    /**
-     * 开启行拖拽
-     */
-    rowDraggable: PropTypes.bool,
-    columnsDragRender: PropTypes.object,
-    expandIcon: PropTypes.func,
-    expandIconAsCell: PropTypes.bool,
-    expandIconColumnIndex: PropTypes.number,
-    rowDragRender: PropTypes.object,
-    onDragEndBefore: PropTypes.func,
-    /**
-     * 新增的组合键开关闭
-     */
-    keyboard: PropTypes.bool,
-    /**
-     * 是否单独处理column footer
-     */
-    autoFootHeight: PropTypes.bool,
-    /**
-     * 客户端查询导出，查询数目设置
-     */
-    clientExportQuantity: PropTypes.number,
-    /**
-     * 可以修改由于样式导致的虚拟高度和rowHeight不一致
-     */
-    virtualRowHeight: PropTypes.number,
-    ...DataSetComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'table',

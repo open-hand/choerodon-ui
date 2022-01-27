@@ -1,10 +1,9 @@
 import React, { Children, Component, CSSProperties, isValidElement, Key, MouseEventHandler, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
 import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
@@ -111,46 +110,6 @@ export interface TriggerProps extends ElementProps {
 @observer
 export default class Trigger extends Component<TriggerProps> {
   static displayName = 'Trigger';
-
-  static propTypes = {
-    action: MobxPropTypes.arrayOrObservableArrayOf(
-      PropTypes.oneOf([Action.hover, Action.contextMenu, Action.focus, Action.click]),
-    ),
-    showAction: MobxPropTypes.arrayOrObservableArrayOf(
-      PropTypes.oneOf([
-        ShowAction.mouseEnter,
-        ShowAction.contextMenu,
-        ShowAction.focus,
-        ShowAction.click,
-      ]),
-    ),
-    hideAction: MobxPropTypes.arrayOrObservableArrayOf(
-      PropTypes.oneOf([HideAction.blur, HideAction.mouseLeave, HideAction.click]),
-    ),
-    popupContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    popupCls: PropTypes.string,
-    popupStyle: PropTypes.object,
-    popupHidden: PropTypes.bool,
-    popupPlacement: PropTypes.string,
-    popupAlign: PropTypes.object,
-    builtinPlacements: PropTypes.any,
-    onPopupAnimateAppear: PropTypes.func,
-    onPopupAnimateEnter: PropTypes.func,
-    onPopupAnimateLeave: PropTypes.func,
-    onPopupAnimateEnd: PropTypes.func,
-    onPopupAlign: PropTypes.func,
-    onPopupHiddenChange: PropTypes.func,
-    getPopupStyleFromAlign: PropTypes.func,
-    getPopupContainer: PropTypes.func,
-    focusDelay: PropTypes.number,
-    blurDelay: PropTypes.number,
-    mouseEnterDelay: PropTypes.number,
-    mouseLeaveDelay: PropTypes.number,
-    transitionName: PropTypes.string,
-    defaultPopupHidden: PropTypes.bool,
-    popupClassName: PropTypes.string,
-    tabIntoPopupContent: PropTypes.bool,
-  };
 
   static defaultProps = {
     focusDelay: 150,

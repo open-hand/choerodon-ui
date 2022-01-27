@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import Slider, { SliderProps } from 'choerodon-ui/lib/slider';
@@ -22,19 +21,6 @@ export interface RangeProps extends SliderProps {
 @observer
 export default class Range extends NumberField<RangeProps> {
   static displayName = 'Range';
-
-  static propTypes = {
-    /**
-     * 是否垂直方向
-     * @default
-     * false
-     */
-    vertical: PropTypes.bool,
-    dots: PropTypes.bool,
-    marks: PropTypes.object,
-    included: PropTypes.bool,
-    ...NumberField.propTypes,
-  };
 
   static defaultProps = {
     ...NumberField.defaultProps,

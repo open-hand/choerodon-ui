@@ -1,15 +1,9 @@
 /* eslint react/prop-types: 0 */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import enhancer from './enhancer';
-import { defaultProps, propTypes } from './types';
+import { defaultProps } from './types';
 
 class Circle extends Component {
-  static propTypes = {
-    ...propTypes,
-    gapPosition: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
-  };
-
   static defaultProps = {
     ...defaultProps,
     gapPosition: 'top',

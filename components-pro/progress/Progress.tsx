@@ -10,6 +10,7 @@ import { FieldFormat } from '../data-set/enum';
 export interface ProgressProps extends C7NProgressProps {
   dataSet?: DataSet;
   name?: string;
+  value?: number;
 }
 
 @observer

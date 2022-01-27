@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import uniqBy from 'lodash/uniqBy';
@@ -185,48 +184,6 @@ export interface UploadProps extends FormFieldProps {
 @observer
 export default class Upload extends FormField<UploadProps> {
   static displayName = 'Upload';
-
-  static propTypes = {
-    /**
-     * 可接受的上传文件类型
-     * 可选值: MIME类型字符串组成的数组
-     */
-    accept: PropTypes.arrayOf(PropTypes.string),
-    /**
-     * 上传文件路径
-     */
-    action: PropTypes.string,
-    /**
-     * 上传所需参数或者返回上传参数的方法
-     * @default
-     * {}
-     */
-    data: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /**
-     * 设置上传的请求头部
-     * @default
-     * {}
-     */
-    headers: PropTypes.object,
-    uploadImmediately: PropTypes.bool,
-    fileListMaxLength: PropTypes.number,
-    showPreviewImage: PropTypes.bool,
-    previewImageWidth: PropTypes.number,
-    extra: PropTypes.any,
-    onFileChange: PropTypes.func,
-    beforeUpload: PropTypes.func,
-    onRemoveFile: PropTypes.func,
-    onUploadProgress: PropTypes.func,
-    onUploadSuccess: PropTypes.func,
-    onUploadError: PropTypes.func,
-    showUploadBtn: PropTypes.bool,
-    showUploadList: PropTypes.bool,
-    uploadFileList: PropTypes.array,
-    withCredentials: PropTypes.bool,
-    appendUpload: PropTypes.bool,
-    partialUpload: PropTypes.bool,
-    ...FormField.propTypes,
-  };
 
   static defaultProps = {
     ...FormField.defaultProps,

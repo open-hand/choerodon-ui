@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import noop from 'lodash/noop';
 import { getMonthName, getTodayTime } from '../util';
@@ -16,12 +15,6 @@ function chooseMonth(month) {
 export default class MonthTable extends Component {
   static defaultProps = {
     onSelect: noop,
-  };
-  static propTypes = {
-    onSelect: PropTypes.func,
-    cellRender: PropTypes.func,
-    prefixCls: PropTypes.string,
-    value: PropTypes.object,
   };
 
   state = {

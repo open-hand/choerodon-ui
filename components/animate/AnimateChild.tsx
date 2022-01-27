@@ -2,7 +2,6 @@ import { cloneElement, CSSProperties, isValidElement, PureComponent } from 'reac
 import { findDOMNode } from 'react-dom';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
-import PropTypes from 'prop-types';
 import cssAnimate, { isCssAnimationSupported } from 'css-animation';
 import animUtil from './util';
 
@@ -20,12 +19,6 @@ export interface AnimateChildProps {
 
 export default class AnimateChild extends PureComponent<AnimateChildProps, any> {
   static displayName = 'AnimateChild';
-
-  static propTypes = {
-    children: PropTypes.any,
-    transitionName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    animation: PropTypes.any,
-  };
 
   stopper;
 

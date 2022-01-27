@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 
 class ContainerRender extends Component {
-  static propTypes = {
-    autoMount: PropTypes.bool,
-    autoDestroy: PropTypes.bool,
-    visible: PropTypes.bool,
-    forceRender: PropTypes.bool,
-    parent: PropTypes.any,
-    getComponent: PropTypes.func.isRequired,
-    getContainer: PropTypes.func.isRequired,
-    children: PropTypes.func.isRequired,
-  };
-
   static defaultProps = {
     autoMount: true,
     autoDestroy: true,

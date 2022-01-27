@@ -1,5 +1,4 @@
 import React, { MouseEventHandler, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -38,16 +37,6 @@ export interface DateViewProps extends ViewComponentProps {
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   implements DatePickerKeyboardEvent {
   static displayName = 'DaysView';
-
-  static propTypes = {
-    date: PropTypes.object,
-    renderer: PropTypes.func,
-    isValidDate: PropTypes.func,
-    onSelect: PropTypes.func,
-    onSelectedDateChange: PropTypes.func,
-    onViewModeChange: PropTypes.func,
-    ...ViewComponent.propTypes,
-  };
 
   static defaultProps = {
     suffixCls: 'calendar',

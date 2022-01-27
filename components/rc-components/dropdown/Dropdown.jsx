@@ -1,32 +1,9 @@
 import React, { cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Trigger from '../trigger';
 import placements from './placements';
 
 export default class Dropdown extends Component {
-  static propTypes = {
-    minOverlayWidthMatchTrigger: PropTypes.bool,
-    onVisibleChange: PropTypes.func,
-    onOverlayClick: PropTypes.func,
-    prefixCls: PropTypes.string,
-    children: PropTypes.any,
-    transitionName: PropTypes.string,
-    overlayClassName: PropTypes.string,
-    animation: PropTypes.any,
-    align: PropTypes.object,
-    overlayStyle: PropTypes.object,
-    placement: PropTypes.string,
-    overlay: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
-    showAction: PropTypes.array,
-    hideAction: PropTypes.array,
-    getPopupContainer: PropTypes.func,
-    visible: PropTypes.bool,
-    defaultVisible: PropTypes.bool,
-    overlayPlacements: PropTypes.object,
-  };
-
   static defaultProps = {
     minOverlayWidthMatchTrigger: true,
     prefixCls: 'rc-dropdown',

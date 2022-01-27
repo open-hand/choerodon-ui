@@ -1,6 +1,5 @@
 import React, { cloneElement, Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 import SubMenu from './SubMenu';
 import { getWidth, menuAllProps, setStyle } from './util';
@@ -19,20 +18,6 @@ if (canUseDOM) {
 }
 
 export default class DOMWrap extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
-    mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
-    prefixCls: PropTypes.string,
-    level: PropTypes.number,
-    theme: PropTypes.string,
-    overflowedIndicator: PropTypes.node,
-    hidden: PropTypes.bool,
-    hiddenClassName: PropTypes.string,
-    tag: PropTypes.string,
-    style: PropTypes.object,
-  };
-
   static defaultProps = {
     tag: 'div',
     className: '',

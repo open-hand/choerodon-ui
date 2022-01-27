@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from 'react';
+import defaultTo from 'lodash/defaultTo';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy';
@@ -35,8 +36,8 @@ export default class SelectionList extends Component<SelectionListProps> {
   prefixCls = getProPrefixCls('modal');
 
   getRecords(records: Record[]) {
-    return sortBy(records, function(item) {
-      return item.getState(TIMESTAMP) ?? -1;
+    return sortBy(records, function (item) {
+      return defaultTo(item.getState(TIMESTAMP), -1);
     });
   }
 
@@ -108,7 +109,9 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          <Tag closable onClose={() => { this.unSelect(record); }}>
+          <Tag closable onClose={() => {
+            this.unSelect(record);
+          }}>
             <span>{record.get(textField)}</span>
           </Tag>
         </li>
@@ -131,7 +134,7 @@ export default class SelectionList extends Component<SelectionListProps> {
         </Animate>
       </div>
     );
-  }
+  };
 
   render() {
     const { selectionsPosition } = this.props;

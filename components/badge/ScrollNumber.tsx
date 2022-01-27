@@ -69,7 +69,7 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
   }
   if (children) {
     return cloneElement(children, oriProps => ({
-      className: classNames(`${prefixCls}-custom-component`, oriProps?.className, motionClassName),
+      className: classNames(`${prefixCls}-custom-component`, oriProps && oriProps.className, motionClassName),
     }));
   }
   return createElement(component, newProps, numberNodes);

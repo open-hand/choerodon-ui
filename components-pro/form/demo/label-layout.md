@@ -14,7 +14,7 @@ title:
 Label Layout.
 
 ````jsx
-import { Form, TextField, Password, NumberField, EmailField, UrlField, DatePicker, Switch, CheckBox, Select, SelectBox, TextArea, CodeArea, Icon, Button } from 'choerodon-ui/pro';
+import { Form, TextField, Password, NumberField, EmailField, UrlField, DatePicker, Switch, CheckBox, Select, SelectBox, TextArea, CodeArea, Range, Icon, Button } from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
@@ -33,11 +33,16 @@ const App = () => {
   const [labelAlign, setLabelAlign] = React.useState('right');
   const [useColon, setUseColon] = React.useState(true);
   const [showHelp, setShowHelp] = React.useState('label');
+  const [separateSpacingHorizontal, setSeparateSpacingHorizontal] = React.useState(0);
+  const [separateSpacingVertical, setSeparateSpacingVertical] = React.useState(0);
+  const [spacingType, setSpacingType] = React.useState('around');
   return (
     <>
       <Form
         columns={2}
         labelLayout="vertical"
+        separateSpacing={{ width: 100, height: 20 }}
+        spacingType="between"
       >
         <SelectBox label="labelLayout" value={labelLayout} onChange={setLabelLayout}>
           <Option value="horizontal">horizontal</Option>
@@ -60,6 +65,23 @@ const App = () => {
           <Option value="tooltip">tooltip</Option>
           <Option value="none">none</Option>
         </SelectBox>
+        <Range
+          label="separateSpacing.width"
+          value={separateSpacingHorizontal}
+          onChange={setSeparateSpacingHorizontal}
+          marks={{ 0: 0, 100: 100 }}
+        />
+        <Range
+          label="separateSpacing.height"
+          value={separateSpacingVertical}
+          onChange={setSeparateSpacingVertical}
+          marks={{ 0: 0, 100: 100 }}
+        />
+        <SelectBox label="spacingType" value={spacingType} onChange={setSpacingType}>
+          <Option value="around">around</Option>
+          <Option value="between">between</Option>
+          <Option value="evenly">evenly</Option>
+        </SelectBox>
         {
           labelLayout === 'horizontal' && (
             <SelectBox label="labelWidth" value={labelWidth} onChange={setLabelWidth}>
@@ -77,6 +99,9 @@ const App = () => {
         useColon={useColon}
         showHelp={showHelp}
         columns={3}
+        separateSpacing={{ width: separateSpacingHorizontal, height: separateSpacingVertical }}
+        spacingType={spacingType}
+        style={{ backgroundColor: '#eeeeee' }}
       >
         <TextField colSpan={3} label="手机号" pattern="1[3-9]\d{9}" name="phone" addonBefore="+86" addonAfter="中国大陆" help="请输入你的手机号" showHelp="tooltip" required highlight="高亮" />
         <Password label="密码" name="password" required />

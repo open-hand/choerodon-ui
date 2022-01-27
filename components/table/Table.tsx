@@ -1,6 +1,5 @@
 import React, { Component, ReactChildren, ReactNode, SyntheticEvent } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
@@ -93,32 +92,6 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   static Column = Column;
 
   static ColumnGroup = ColumnGroup;
-
-  static propTypes = {
-    dataSource: PropTypes.array,
-    empty: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    onColumnFilterChange: PropTypes.func,
-    columns: PropTypes.array,
-    prefixCls: PropTypes.string,
-    useFixedHeader: PropTypes.bool,
-    rowSelection: PropTypes.object,
-    className: PropTypes.string,
-    size: PropTypes.oneOf([Size.large, Size.default, Size.small]),
-    loading: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    bordered: PropTypes.bool,
-    onChange: PropTypes.func,
-    locale: PropTypes.object,
-    dropdownPrefixCls: PropTypes.string,
-    filterBar: PropTypes.bool,
-    filters: PropTypes.array,
-    filterBarPlaceholder: PropTypes.string,
-    onFilterSelectChange: PropTypes.func,
-    noFilter: PropTypes.bool,
-    autoScroll: PropTypes.bool,
-    indentSize: PropTypes.number,
-    rowKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    showHeader: PropTypes.bool,
-  };
 
   static defaultProps = {
     dataSource: [],

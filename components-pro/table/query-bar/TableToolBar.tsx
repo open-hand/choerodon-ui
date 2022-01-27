@@ -62,7 +62,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
   @autobind
   async handleQuery(collapse?: boolean) {
     const { dataSet, queryDataSet, onQuery = noop } = this.props;
-    if (await queryDataSet?.validate()) {
+    if (queryDataSet && await queryDataSet.validate()) {
       dataSet.query();
       if (!collapse) {
         onQuery();

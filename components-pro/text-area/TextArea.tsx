@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import isString from 'lodash/isString';
-import PropTypes from 'prop-types';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import { AutoSizeType, ResizeType } from './enum';
@@ -34,19 +33,6 @@ export interface TextAreaProps extends TextFieldProps {
 @observer
 export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   static displayName = 'TextArea';
-
-  static propTypes = {
-    cols: PropTypes.number,
-    rows: PropTypes.number,
-    resize: PropTypes.oneOf([
-      ResizeType.vertical,
-      ResizeType.horizontal,
-      ResizeType.none,
-      ResizeType.both,
-    ]),
-    autoSize: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    ...TextField.propTypes,
-  };
 
   static defaultProps = {
     ...TextField.defaultProps,

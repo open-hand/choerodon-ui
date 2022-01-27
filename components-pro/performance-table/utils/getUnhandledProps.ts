@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 /**
  * Returns an object consisting of props beyond the scope of the Component.
  * Useful for getting and spreading unknown props from the user.
@@ -9,11 +8,9 @@ import PropTypes from 'prop-types';
 
 // fix unable to get propTypes after gatsby is compiled
 const getUnhandledProps = (
-  propTypes: Record<string, PropTypes.Requireable<any>>,
+  propTypeKeys: string[],
   props: Record<string, any>
 ) => {
-  const propTypeKeys = Object.keys(propTypes);
-
   return Object.keys(props).reduce((acc: any, prop: string) => {
     if (prop === 'childKey') {
       return acc;

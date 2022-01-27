@@ -1,39 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { create, Provider } from 'mini-store';
 import noop from 'lodash/noop';
 import SubPopupMenu, { getActiveKey } from './SubPopupMenu';
 
 export default class Menu extends Component {
   static displayName = 'Menu';
-
-  static propTypes = {
-    defaultSelectedKeys: PropTypes.arrayOf(PropTypes.string),
-    selectedKeys: PropTypes.arrayOf(PropTypes.string),
-    defaultOpenKeys: PropTypes.arrayOf(PropTypes.string),
-    openKeys: PropTypes.arrayOf(PropTypes.string),
-    mode: PropTypes.oneOf(['horizontal', 'vertical', 'vertical-left', 'vertical-right', 'inline']),
-    getPopupContainer: PropTypes.func,
-    onClick: PropTypes.func,
-    onSelect: PropTypes.func,
-    onDeselect: PropTypes.func,
-    onDestroy: PropTypes.func,
-    openTransitionName: PropTypes.string,
-    openAnimation: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    subMenuOpenDelay: PropTypes.number,
-    subMenuCloseDelay: PropTypes.number,
-    forceSubMenuRender: PropTypes.bool,
-    triggerSubMenuAction: PropTypes.string,
-    level: PropTypes.number,
-    selectable: PropTypes.bool,
-    multiple: PropTypes.bool,
-    children: PropTypes.any,
-    focusable: PropTypes.bool,
-    style: PropTypes.object,
-    defaultActiveFirst: PropTypes.bool,
-    visible: PropTypes.bool,
-    activeKey: PropTypes.string,
-  };
 
   static defaultProps = {
     prefixCls: 'rc-menu',

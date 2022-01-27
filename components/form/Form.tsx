@@ -1,5 +1,4 @@
 import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import warning from '../_util/warning';
@@ -138,14 +137,6 @@ export default class Form extends Component<FormProps, any> {
     onSubmit(e: FormEvent<HTMLFormElement>) {
       e.preventDefault();
     },
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    layout: PropTypes.oneOf([FormLayout.horizontal, FormLayout.inline, FormLayout.vertical]),
-    children: PropTypes.any,
-    onSubmit: PropTypes.func,
-    hideRequiredMark: PropTypes.bool,
   };
 
   static Item = FormItem;

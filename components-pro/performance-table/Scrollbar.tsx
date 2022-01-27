@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { addStyle, DOMMouseMoveTracker, getOffset } from 'dom-lib';
 import isNumber from 'lodash/isNumber';
@@ -38,26 +37,24 @@ type State = {
   handlePressed: boolean;
 };
 
-const propTypes = {
-  tableId: PropTypes.string,
-  vertical: PropTypes.bool,
-  length: PropTypes.number,
-  scrollLength: PropTypes.number,
-  scrollBarOffset: PropTypes.number,
-  clickScrollLength: PropTypes.object,
-  showScrollArrow: PropTypes.bool,
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  onScroll: PropTypes.func,
-  onMouseDown: PropTypes.func,
-};
+const propTypeKeys = [
+  'tableId',
+  'vertical',
+  'length',
+  'scrollLength',
+  'scrollBarOffset',
+  'clickScrollLength',
+  'showScrollArrow',
+  'className',
+  'classPrefix',
+  'onScroll',
+  'onMouseDown',
+];
 
 class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   static get contextType() {
     return TableContext;
   }
-
-  static propTypes = propTypes;
 
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-scrollbar'),
@@ -123,11 +120,17 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   }
 
   handleMouseDown = (event: React.MouseEvent) => {
-    this.mouseMoveTracker = this.getMouseMoveTracker();
-    // @ts-ignore
-    this.mouseMoveTracker?.captureMouseMoves(event);
+    const mouseMoveTracker = this.getMouseMoveTracker();
+    this.mouseMoveTracker = mouseMoveTracker;
+    if (mouseMoveTracker) {
+      // @ts-ignore
+      mouseMoveTracker.captureMouseMoves(event);
+    }
     this.setState({ handlePressed: true });
-    this.props.onMouseDown?.(event);
+    const { onMouseDown } = this.props;
+    if (onMouseDown) {
+      onMouseDown(event);
+    }
   };
 
   handleDragEnd = () => {
@@ -136,11 +139,13 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   };
 
   handleScroll(delta: number, event: React.MouseEvent) {
-    const { length, scrollLength } = this.props;
+    const { length, scrollLength, onScroll } = this.props;
     const scrollDelta = delta * (scrollLength / length);
 
     this.updateScrollBarPosition(delta);
-    this.props.onScroll?.(scrollDelta, event);
+    if (onScroll) {
+      onScroll(scrollDelta, event);
+    }
   }
 
   resetScrollBarPosition(forceDelta = 0) {
@@ -158,41 +163,43 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
     const styles = {};
 
     if (typeof forceDelta === 'undefined') {
-      this.scrollOffset += delta;
-      this.scrollOffset = Math.max(this.scrollOffset, 0);
-      this.scrollOffset = Math.min(this.scrollOffset, max);
+      this.scrollOffset = Math.min(Math.max(this.scrollOffset + delta, 0), max);
     } else {
       this.scrollOffset = forceDelta || 0;
     }
-
-    if (vertical) {
-      translateDOMPositionXY?.(styles, 0, this.scrollOffset);
-    } else {
-      translateDOMPositionXY?.(styles, this.scrollOffset, 0);
+    if (translateDOMPositionXY) {
+      if (vertical) {
+        translateDOMPositionXY(styles, 0, this.scrollOffset);
+      } else {
+        translateDOMPositionXY(styles, this.scrollOffset, 0);
+      }
     }
 
     addStyle(this.handleRef.current, styles);
   }
 
   releaseMouseMoves() {
-    // @ts-ignore
-    this.mouseMoveTracker?.releaseMouseMoves?.();
-    this.mouseMoveTracker = null;
+    const { mouseMoveTracker } = this;
+    if (mouseMoveTracker) {
+      // @ts-ignore
+      mouseMoveTracker.releaseMouseMoves && mouseMoveTracker.releaseMouseMoves();
+      this.mouseMoveTracker = null;
+    }
   }
 
   handleDragMove = (deltaX: number, deltaY: number, event: React.MouseEvent) => {
-    const { vertical } = this.props;
 
     // @ts-ignore
     if (!this.mouseMoveTracker || !this.mouseMoveTracker.isDragging()) {
       return;
     }
 
-    if (event?.buttons === 0 || window?.event?.['buttons'] === 0) {
+    if (event && event.buttons === 0 || window.event && window.event['buttons'] === 0) {
       this.releaseMouseMoves();
       return;
     }
 
+    const { vertical } = this.props;
     this.handleScroll(vertical ? deltaY : deltaX, event);
   };
 
@@ -200,7 +207,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
    * 点击滚动条，然后滚动到指定位置
    */
   handleClick = (event: React.MouseEvent) => {
-    if (this.handleRef.current && this.handleRef.current?.contains(event.target as Node)) {
+    if (this.handleRef.current && this.handleRef.current.contains(event.target as Node)) {
       return;
     }
 
@@ -230,11 +237,9 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
         const handleLength = (length / scrollLength) * clickScrollLength.vertical;
         this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
       }
-    } else {
-      if (isNumber(clickScrollLength.horizontal)) {
-        const handleLength = (length / scrollLength) * clickScrollLength.horizontal;
-        this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
-      }
+    } else if (isNumber(clickScrollLength.horizontal)) {
+      const handleLength = (length / scrollLength) * clickScrollLength.horizontal;
+      this.handleScroll(sort === 'fir' ? -handleLength : handleLength, e);
     }
   };
 
@@ -262,7 +267,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
       [vertical ? 'height' : 'width']: style ? style[vertical ? 'height' : 'width'] - scrollBarOffset : `calc(100% - ${pxToRem(scrollBarOffset)})`,
       [vertical ? 'width' : 'height']: showScrollArrow ? '0.2rem' : '0.1rem',
     };
-    const unhandled = getUnhandledProps(propTypes, rest);
+    const unhandled = getUnhandledProps(propTypeKeys, rest);
     const scrollbarStyle = { ...style, ...IEstyles };
     const valuenow = (this.scrollOffset / length) * 100 + width;
 

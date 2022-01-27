@@ -1,10 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes, memo, useContext } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ConfigContext from '../config-provider/ConfigContext';
-
-const stringOrNumber = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
-const objectOrNumber = PropTypes.oneOfType([PropTypes.object, PropTypes.number]);
 
 export interface ColSize {
   span?: number;
@@ -84,21 +80,5 @@ const Col: FunctionComponent<ColProps> = function Col(props) {
 };
 
 Col.displayName = 'Col';
-
-Col.propTypes = {
-  span: stringOrNumber,
-  order: stringOrNumber,
-  offset: stringOrNumber,
-  push: stringOrNumber,
-  pull: stringOrNumber,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  xs: objectOrNumber,
-  sm: objectOrNumber,
-  md: objectOrNumber,
-  lg: objectOrNumber,
-  xl: objectOrNumber,
-  xxl: objectOrNumber,
-};
 
 export default memo(Col);

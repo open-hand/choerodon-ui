@@ -1,9 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import noop from 'lodash/noop';
 import { action, observable, runInAction } from 'mobx';
-import { PropTypes as MobxPropTypes } from 'mobx-react';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { getIf } from '../data-set/utils';
@@ -74,59 +72,6 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
 
 export default abstract class TriggerField<T extends TriggerFieldProps = TriggerFieldProps> extends TextField<T> {
   static displayName = 'TriggerField';
-
-  static propTypes = {
-    /**
-     * 下拉框的自定义内容
-     */
-    popupContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    /**
-     * 下拉框的自定义样式名
-     */
-    popupCls: PropTypes.string,
-    /**
-     * 下拉框的内链样式
-     */
-    popupStyle: PropTypes.object,
-    /**
-     * 下拉框对齐方式
-     */
-    popupPlacement: PropTypes.string,
-    /**
-     * 触发下拉框的方式
-     * 可选值：click | focus | hover | contextMenu
-     */
-    trigger: MobxPropTypes.arrayOrObservableArrayOf(PropTypes.string),
-    /**
-     * 下拉框显示延迟
-     * @defualt 150
-     */
-    triggerShowDelay: PropTypes.number,
-    /**
-     * 下拉框隐藏延迟
-     * @defualt 50
-     */
-    triggerHiddenDelay: PropTypes.number,
-    /**
-     * 下拉框变化钩子
-     */
-    onPopupHiddenChange: PropTypes.func,
-    /**
-     * 定义浮层的容器，默认为 body
-     */
-    getPopupContainer: PropTypes.func,
-    /**
-     * 定义浮层对齐的目标，默认为组件最外层元素
-     */
-    getPopupAlignTarget: PropTypes.func,
-    /**
-     * 当popup中有可获取焦点对象时，是否按tab键时获取焦点
-     */
-    tabIntoPopupContent: PropTypes.bool,
-
-    viewMode: PropTypes.oneOf(['none', 'popup', 'modal', 'list', 'drawer']),
-    ...TextField.propTypes,
-  };
 
   static defaultProps = {
     ...TextField.defaultProps,

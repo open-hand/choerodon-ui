@@ -30,3 +30,9 @@ export enum ShowValidation {
   tooltip = 'tooltip',
   newLine = 'newLine',
 }
+
+export enum SpacingType {
+  around = 'around',
+  between = 'between',
+  evenly = 'evenly',
+}

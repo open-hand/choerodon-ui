@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import Icon from '../../icon';
@@ -16,19 +15,6 @@ export default class Menus extends Component {
     selectedValues: [],
     expandTrigger: 'click',
     expandIcon: <Icon type="navigate_next" />,
-  };
-
-  static propTypes = {
-    value: PropTypes.array,
-    activeValue: PropTypes.array,
-    selectedValues: PropTypes.array,
-    options: PropTypes.array.isRequired,
-    prefixCls: PropTypes.string,
-    expandTrigger: PropTypes.string,
-    onSelect: PropTypes.func,
-    visible: PropTypes.bool,
-    dropdownMenuColumnStyle: PropTypes.object,
-    expandIcon:PropTypes.node,
   };
 
   constructor(props) {

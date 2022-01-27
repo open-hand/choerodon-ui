@@ -1,6 +1,5 @@
 import React, { CSSProperties, Key, PureComponent, ReactNode } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { NotificationManager } from 'choerodon-ui/shared';
 import noop from 'lodash/noop';
@@ -69,16 +68,6 @@ export interface NotificationState {
 }
 
 export default class Notification extends PureComponent<NotificationProps, NotificationState> {
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    transitionName: PropTypes.string,
-    animation: PropTypes.string,
-    style: PropTypes.object,
-    foldCount: PropTypes.number,
-    closeIcon: PropTypes.node,
-    contentClassName: PropTypes.string,
-  };
-
   static defaultProps = {
     prefixCls: 'c7n-notification',
     animation: 'fade',

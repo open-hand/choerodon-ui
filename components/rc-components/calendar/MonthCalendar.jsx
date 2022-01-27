@@ -1,6 +1,5 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import KeyCode from '../../_util/KeyCode';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -8,10 +7,6 @@ import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 
 const MonthCalendar = createReactClass({
-  propTypes: {
-    monthCellRender: PropTypes.func,
-    dateCellRender: PropTypes.func,
-  },
   mixins: [CommonMixin, CalendarMixin],
 
   getInitialState() {

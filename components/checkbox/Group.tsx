@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shallowEqual from 'lodash/isEqual';
 import Checkbox from './Checkbox';
@@ -52,13 +51,6 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
 
   static defaultProps = {
     options: [],
-  };
-
-  static propTypes = {
-    defaultValue: PropTypes.array,
-    value: PropTypes.array,
-    options: PropTypes.array,
-    onChange: PropTypes.func,
   };
 
   context: ConfigContextValue;

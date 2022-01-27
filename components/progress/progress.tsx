@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Icon from '../icon';
 import { Circle } from '../rc-components/progress';
@@ -49,31 +48,6 @@ export default class Progress extends Component<ProgressProps, {}> {
     trailColor: '#f3f3f3',
     size: Size.default,
   };
-
-  static propTypes = {
-    status: PropTypes.oneOf([
-      ProgressStatus.normal,
-      ProgressStatus.exception,
-      ProgressStatus.active,
-      ProgressStatus.success,
-    ]),
-    type: PropTypes.oneOf([
-      ProgressType.line,
-      ProgressType.circle,
-      ProgressType.dashboard,
-      ProgressType.loading,
-    ]),
-    showInfo: PropTypes.bool,
-    showPointer: PropTypes.bool,
-    percent: PropTypes.number,
-    width: PropTypes.number,
-    strokeWidth: PropTypes.number,
-    strokeColor: PropTypes.string,
-    trailColor: PropTypes.string,
-    format: PropTypes.func,
-    gapDegree: PropTypes.number,
-    size: PropTypes.oneOf([Size.default, Size.small, Size.large]),
-  }
 
   context: ConfigContextValue;
 

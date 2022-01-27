@@ -1,28 +1,18 @@
-import React, { Children, Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Children, memo } from 'react';
 
-export default class LazyRenderBox extends Component {
-  static propTypes = {
-    children: PropTypes.any,
-    className: PropTypes.string,
-    hidden: PropTypes.bool,
-    hiddenClassName: PropTypes.string,
-  };
+const LazyRenderBox = function LazyRenderBox(props) {
+  const { hiddenClassName, hidden, ...rest } = props;
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.hiddenClassName || !nextProps.hidden;
-  }
-
-  render() {
-    const { hiddenClassName, hidden, ...props } = this.props;
-
-    if (hiddenClassName || Children.count(props.children) > 1) {
-      if (hidden && hiddenClassName) {
-        props.className += ` ${hiddenClassName}`;
-      }
-      return <div {...props} />;
+  if (hiddenClassName || Children.count(rest.children) > 1) {
+    if (hidden && hiddenClassName) {
+      rest.className += ` ${hiddenClassName}`;
     }
-
-    return Children.only(props.children);
+    return <div {...rest} />;
   }
-}
+
+  return Children.only(rest.children);
+};
+
+LazyRenderBox.displayName = 'RcLazyRenderBox';
+
+export default memo(LazyRenderBox, (props, nextProps) => !nextProps.hiddenClassName && nextProps.hidden);

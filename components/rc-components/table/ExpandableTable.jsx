@@ -1,28 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'mini-store';
 import TableRow from './TableRow';
 
 class ExpandableTable extends Component {
-  static propTypes = {
-    expandIconAsCell: PropTypes.bool,
-    expandedRowKeys: PropTypes.array,
-    expandedRowClassName: PropTypes.func,
-    defaultExpandAllRows: PropTypes.bool,
-    defaultExpandedRowKeys: PropTypes.array,
-    expandIconColumnIndex: PropTypes.number,
-    expandedRowRender: PropTypes.func,
-    childrenColumnName: PropTypes.string,
-    indentSize: PropTypes.number,
-    onExpand: PropTypes.func,
-    onExpandedRowsChange: PropTypes.func,
-    columnManager: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired,
-    prefixCls: PropTypes.string.isRequired,
-    data: PropTypes.array,
-    children: PropTypes.func.isRequired,
-  };
-
   static defaultProps = {
     expandIconAsCell: false,
     expandedRowClassName: () => '',

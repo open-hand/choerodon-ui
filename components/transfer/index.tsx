@@ -1,5 +1,4 @@
 import React, { ChangeEvent, Component, CSSProperties, ReactNode, SyntheticEvent } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { computed } from 'mobx';
 import noop from 'lodash/noop';
@@ -77,28 +76,6 @@ export default class Transfer extends Component<TransferProps, any> {
     dataSource: [],
     render: noop,
     showSearch: false,
-  };
-
-  static propTypes = {
-    prefixCls: PropTypes.string,
-    dataSource: PropTypes.array,
-    render: PropTypes.func,
-    targetKeys: PropTypes.array,
-    onChange: PropTypes.func,
-    listStyle: PropTypes.object,
-    className: PropTypes.string,
-    titles: PropTypes.array,
-    operations: PropTypes.array,
-    sortable: PropTypes.bool,
-    sortOperations: PropTypes.array,
-    showSearch: PropTypes.bool,
-    filterOption: PropTypes.func,
-    searchPlaceholder: PropTypes.string,
-    notFoundContent: PropTypes.node,
-    body: PropTypes.func,
-    footer: PropTypes.func,
-    rowKey: PropTypes.func,
-    lazy: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   };
 
   context: ConfigContextValue;

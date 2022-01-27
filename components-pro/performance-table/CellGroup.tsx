@@ -1,6 +1,5 @@
 // @ts-nocheck
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
@@ -14,26 +13,25 @@ export interface CellGroupProps {
   style?: React.CSSProperties;
   className?: string;
   classPrefix?: string;
-  snapshot?: DraggableStateSnapshot,
-  provided?: DraggableProvided,
+  snapshot?: DraggableStateSnapshot;
+  provided?: DraggableProvided;
+  rowDraggable?: boolean;
 }
 
-const propTypes = {
-  fixed: PropTypes.oneOf(['left', 'right']),
-  width: PropTypes.number,
-  height: PropTypes.number,
-  left: PropTypes.number,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  classPrefix: PropTypes.string,
-  rowDraggable: PropTypes.bool,
-  snapshot: PropTypes.object,
-  provided: PropTypes.object,
-};
+const propTypeKeys = [
+  'fixed',
+  'width',
+  'height',
+  'left',
+  'style',
+  'className',
+  'classPrefix',
+  'rowDraggable',
+  'snapshot',
+  'provided',
+];
 
 class CellGroup extends React.PureComponent<CellGroupProps> {
-  static propTypes = propTypes;
-
   static defaultProps = {
     classPrefix: defaultClassPrefix('performance-table-cell-group'),
   };
@@ -64,7 +62,7 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
       height,
       ...style,
     };
-    const unhandledProps = getUnhandledProps(propTypes, rest);
+    const unhandledProps = getUnhandledProps(propTypeKeys, rest);
 
     let childArr = [];
     if (rowDraggable) {
@@ -81,7 +79,9 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
     return (
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
-          translateDOMPositionXY?.(styles, left, 0);
+          if (translateDOMPositionXY) {
+            translateDOMPositionXY(styles, left, 0);
+          }
           return (
             <div {...unhandledProps} className={classes} style={styles}>
               {cloneChildren}

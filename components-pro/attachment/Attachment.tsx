@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -114,13 +113,6 @@ export default class Attachment extends FormField<AttachmentProps> {
     listType: 'text',
     viewMode: 'list',
     dragUpload: false,
-  };
-
-  static propTypes = {
-    ...FormField.propTypes,
-    sortable: PropTypes.bool,
-    listType: PropTypes.oneOf(['text', 'picture', 'picture-card']),
-    viewMode: PropTypes.oneOf(['none', 'list', 'popup']),
   };
 
   // eslint-disable-next-line camelcase
