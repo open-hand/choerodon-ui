@@ -30,7 +30,7 @@ export interface ColumnResizeHandlerProps {
   onColumnResizeStart?: (client: Client) => void;
   onColumnResizeEnd?: (columnWidth?: number, cursorDelta?: number) => void;
   onColumnResizeMove?: (columnWidth?: number, columnLeft?: number, columnFixed?: FixedType) => void;
-  onMouseEnterHandler?: (left: number) => void;
+  onMouseEnterHandler?: () => void;
   onMouseLeaveHandler?: () => void;
 }
 
@@ -189,22 +189,14 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     this.props.onColumnResizeStart?.(client);
   };
 
-  showMouseArea = (e) => {
+  handleShowMouseArea = debounce(() => {
     const { onMouseEnterHandler = noop } = this.props;
-    const { left } = getComputedStyle(e.target);
-    onMouseEnterHandler(parseFloat(left));
-  }
-
-  delayShowMouseArea = debounce(this.showMouseArea, 300)
-
-  handleShowMouseArea = (e) => {
-    e.persist();
-    this.delayShowMouseArea(e);
-  }
+    onMouseEnterHandler();
+  }, 300)
 
   handleHideMouseArea = () => {
     const { onMouseLeaveHandler = noop } = this.props;
-    this.delayShowMouseArea.cancel();
+    this.handleShowMouseArea.cancel();
     onMouseLeaveHandler();
   }
 

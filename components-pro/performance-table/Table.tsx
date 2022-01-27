@@ -1536,11 +1536,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.props.onSortColumn?.(dataKey, sortType);
   };
 
-  handleShowMouseArea = (left: number, fixed: boolean | string | undefined) => {
+  handleShowMouseArea = (width: number, left: number, fixed: boolean | string | undefined): void => {
     const { tableColumnResizeTrigger } = this.tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
-    const mouseAreaLeft = left + (!fixed ? this.scrollX : 0) + 1;
-    addStyle(this.mouseAreaRef.current, { display: 'block', left: `${mouseAreaLeft}px` });
+    this.handleColumnResizeMove(width, left, !!fixed);
   };
 
   handleHideMouseArea = () => {

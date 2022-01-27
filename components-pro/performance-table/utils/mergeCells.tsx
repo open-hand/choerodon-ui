@@ -59,6 +59,7 @@ function mergeCells(cells) {
           groupHeader: nextGroupHeader = currentGroupName,
           left: columnLeft,
           resizable,
+          fixed,
           ...otherProps
         } = nextCell.props;
         if (j === 0) {
@@ -84,6 +85,8 @@ function mergeCells(cells) {
             onColumnResizeEnd: otherProps.onColumnResizeEnd,
             onColumnResizeMove: otherProps.onColumnResizeMove,
             onColumnResizeStart: otherProps.onColumnResizeStart,
+            onMouseEnterHandler: otherProps.onMouseEnterHandler,
+            onMouseLeaveHandler: otherProps.onMouseLeaveHandler,
           }
         }
         groupChildren.push(
@@ -91,6 +94,7 @@ function mergeCells(cells) {
             key={j}
             index={i + j}
             left={left}
+            fixed={fixed}
             dataKey={dataKey}
             width={nextCellWidth}
             sortable={sortable}
