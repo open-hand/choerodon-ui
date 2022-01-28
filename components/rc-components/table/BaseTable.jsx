@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'mini-store';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
@@ -7,33 +7,35 @@ import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 import TableContext from './TableContext';
 
-class BaseTable extends Component {
-  static get contextType() {
-    return TableContext;
-  }
+const BaseTable = function BaseTable(props) {
+  const table = useContext(TableContext);
+  const { components } = table;
+  const {
+    prefixCls,
+    scroll,
+    data,
+    getBodyWrapper,
+    childrenColumnName,
+    rowClassName,
+    rowRef,
+    onRowClick,
+    onRowDoubleClick,
+    onRowContextMenu,
+    onRowMouseEnter,
+    onRowMouseLeave,
+    onRow,
+  } = table.props;
+  const { store, expander, tableClassName, hasHead, hasBody, hasFoot, fixed, columns, getRowKey, isAnyColumnsFixed } = props;
+  const tableStyle = {};
 
-  handleRowHover = (isHover, key) => {
-    this.props.store.setState({
+  const handleRowHover = useContext((isHover, key) => {
+    store.setState({
       currentHoverKey: isHover ? key : null,
     });
-  };
+  }, [store]);
 
-  renderRows = (renderData, indent, ancestorKeys = []) => {
-    const table = this.context;
-    const { columnManager, components } = table;
-    const {
-      prefixCls,
-      childrenColumnName,
-      rowClassName,
-      rowRef,
-      onRowClick,
-      onRowDoubleClick,
-      onRowContextMenu,
-      onRowMouseEnter,
-      onRowMouseLeave,
-      onRow,
-    } = table.props;
-    const { getRowKey, fixed, expander, isAnyColumnsFixed } = this.props;
+  const renderRows = (renderData, indent, ancestorKeys = []) => {
+    const { columnManager } = table;
 
     const rows = [];
 
@@ -46,7 +48,7 @@ class BaseTable extends Component {
 
       const onHoverProps = {};
       if (columnManager.isAnyColumnsFixed()) {
-        onHoverProps.onHover = this.handleRowHover;
+        onHoverProps.onHover = handleRowHover;
       }
 
       let leafColumns;
@@ -103,7 +105,7 @@ class BaseTable extends Component {
       rows.push(row);
 
       expander.renderRows(
-        this.renderRows,
+        renderRows,
         rows,
         record,
         i,
@@ -116,46 +118,40 @@ class BaseTable extends Component {
     return rows;
   };
 
-  render() {
-    const table = this.context;
-    const { components } = table;
-    const { prefixCls, scroll, data, getBodyWrapper } = table.props;
-    const { expander, tableClassName, hasHead, hasBody, hasFoot, fixed, columns } = this.props;
-    const tableStyle = {};
-
-    if (!fixed && scroll.x) {
-      // not set width, then use content fixed width
-      if (scroll.x === true) {
-        tableStyle.tableLayout = 'fixed';
-      } else {
-        tableStyle.width = scroll.x;
-      }
+  if (!fixed && scroll.x) {
+    // not set width, then use content fixed width
+    if (scroll.x === true) {
+      tableStyle.tableLayout = 'fixed';
+    } else {
+      tableStyle.width = scroll.x;
     }
-
-    const Table = hasBody ? components.table : 'table';
-    const BodyWrapper = components.body.wrapper;
-
-    let body;
-    if (hasBody) {
-      body = (
-        <BodyWrapper className={`${prefixCls}-tbody`}>
-          {this.renderRows(data, 0)}
-        </BodyWrapper>
-      );
-      if (getBodyWrapper) {
-        body = getBodyWrapper(body);
-      }
-    }
-
-    return (
-      <Table className={tableClassName} style={tableStyle} key="table">
-        <ColGroup columns={columns} fixed={fixed} />
-        {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
-        {body}
-        {hasFoot && <TableFooter onHover={this.handleRowHover} columns={columns} fixed={fixed} />}
-      </Table>
-    );
   }
-}
+
+  const Table = hasBody ? components.table : 'table';
+  const BodyWrapper = components.body.wrapper;
+
+  let body;
+  if (hasBody) {
+    body = (
+      <BodyWrapper className={`${prefixCls}-tbody`}>
+        {renderRows(data, 0)}
+      </BodyWrapper>
+    );
+    if (getBodyWrapper) {
+      body = getBodyWrapper(body);
+    }
+  }
+
+  return (
+    <Table className={tableClassName} style={tableStyle} key="table">
+      <ColGroup columns={columns} fixed={fixed} />
+      {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
+      {body}
+      {hasFoot && <TableFooter onHover={handleRowHover} columns={columns} fixed={fixed} />}
+    </Table>
+  );
+};
+
+BaseTable.displayName = 'RcBaseTable';
 
 export default connect()(BaseTable);
