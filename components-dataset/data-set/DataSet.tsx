@@ -82,6 +82,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { iteratorReduce } from '../iterator-helper';
 import Validator from '../validator/Validator';
 import LookupCache from './LookupCache';
+import { treeReduce } from '../tree-helper';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -1368,7 +1369,7 @@ export default class DataSet extends EventManager {
           this.exportProgress = 10;
         });
         setTimeout(() => {
-          resolve(true)
+          resolve(true);
         }, 1000);
       }).then(() => {
         runInAction(() => {
@@ -2522,9 +2523,17 @@ export default class DataSet extends EventManager {
 
   @action
   commitData(allData: any[], total?: number, onlyDelete?: boolean): DataSet {
-    const { autoQueryAfterSubmit, primaryKey, strictPageSize, pageSize } = this.props;
+    const { autoQueryAfterSubmit, primaryKey, strictPageSize } = this.props;
     if (strictPageSize) {
-      this.records = this.records.slice(0, pageSize);
+      const { paging } = this;
+      if (paging === 'server') {
+        const { idField, parentField, childrenField } = this.props;
+        if (idField && parentField || childrenField) {
+          this.records = treeReduce<Record[], Record>(this.treeRecords.slice(0, this.pageSize), (pre, node) => pre.concat(node), []);
+        }
+      } else if (paging) {
+        this.records = this.records.slice(0, this.pageSize);
+      }
     }
     if (this.dataToJSON === DataToJSON.normal) {
       flatMap(this.dirtyRecords).forEach(record =>
