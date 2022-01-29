@@ -1,9 +1,8 @@
 import React, { Component, CSSProperties, ReactElement } from 'react';
-import moment, { Moment } from 'moment';
+import { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from './locale/en_US';
-import interopDefault from '../_util/interopDefault';
 import RcTimePicker from '../rc-components/time-picker';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -81,7 +80,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
   constructor(props: TimePickerProps) {
     super(props);
     const value = props.value || props.defaultValue;
-    if (value && !interopDefault(moment).isMoment(value)) {
+    if (value && !isMoment(value)) {
       throw new Error('The value/defaultValue of TimePicker must be a moment object');
     }
     this.state = {

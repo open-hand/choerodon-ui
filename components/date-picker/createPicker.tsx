@@ -1,5 +1,5 @@
 import React, { Component, ComponentClass, MouseEvent } from 'react';
-import moment, { Moment } from 'moment';
+import moment, { isMoment, Moment } from 'moment';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isFunction from 'lodash/isFunction';
@@ -7,7 +7,6 @@ import Button from '../button';
 import Icon from '../icon';
 import Input from '../input';
 import warning from '../_util/warning';
-import interopDefault from '../_util/interopDefault';
 import MonthCalendar from '../rc-components/calendar/MonthCalendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
 import { Size } from '../_util/enum';
@@ -40,7 +39,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
     constructor(props: any, context: ConfigContextValue) {
       super(props, context);
       const value = props.value || props.defaultValue;
-      if (value && !interopDefault(moment).isMoment(value)) {
+      if (value && !isMoment(value)) {
         throw new Error(
           'The value/defaultValue of DatePicker or MonthPicker must be a moment object',
         );
@@ -182,7 +181,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
           disabledTime={disabledTime}
           locale={locale.lang}
           timePicker={props.timePicker}
-          defaultValue={props.defaultPickerValue || interopDefault(moment)()}
+          defaultValue={props.defaultPickerValue || moment()}
           dateInputPlaceholder={placeholder}
           prefixCls={prefixCls}
           className={calendarClassName}

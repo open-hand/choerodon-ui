@@ -1367,13 +1367,13 @@ export default class Field {
     }
   }
 
-  getAttachments(record: Record | undefined = this.record) {
+  getAttachments(record: Record | undefined = this.record, uuid?: string | undefined) {
     if (record) {
-      const uuid = record.get(this.name);
-      if (uuid) {
+      const value = uuid || record.get(this.name);
+      if (value) {
         const { attachmentCaches } = record;
         if (attachmentCaches) {
-          const cache = attachmentCaches.get(uuid);
+          const cache = attachmentCaches.get(value);
           if (cache) {
             return get(cache, 'attachments');
           }

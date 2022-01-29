@@ -49,6 +49,8 @@ timeline: true
 - 🐞 `<pro>Select`: 修复下拉分页搜索在第二页没有传参导致搜索内容不匹配。
 - 🐞 `<pro>Select`: 修复下拉分页搜索每次选择都会查询的问题。
 - 🐞 `<pro>Validator`: 修复 pattern 为带有 global 标记的正则对象时的校验问题。
+- 🐞 `<pro>Attachment`: 修复首次上传的文件在成功之前没有立即显示的问题。
+- 🐞 `WeekPicker`: 修复样式问题。
 - 🐞 修复在浏览器非默认字号下的样式问题。
 
 ## 1.5.1

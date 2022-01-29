@@ -49,6 +49,8 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the search content mismatch caused by drop-down paging search without transferring parameters on the second page.
 - 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
 - 🐞 `<pro>Validator`: Fix the validation problem when `pattern` is a regular object with global tag.
+- 🐞 `<pro>Attachment`: Fix first upload file not showing immediately before successful.
+- 🐞 `WeekPicker`: Fix style issue.
 - 🐞 Fix the style problem when the browser font size is not default.
 
 ## 1.5.1

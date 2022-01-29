@@ -1,11 +1,10 @@
 /* tslint:disable jsx-no-multiline-js */
 import React, { Component, MouseEventHandler } from 'react';
-import moment, { Moment } from 'moment';
+import moment, { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import Button from '../button';
 import Icon from '../icon';
 import warning from '../_util/warning';
-import interopDefault from '../_util/interopDefault';
 import { RangePickerPresetRange, RangePickerValue } from './interface';
 import RangeCalendar from '../rc-components/calendar/RangeCalendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
@@ -85,15 +84,15 @@ export default class RangePicker extends Component<any, RangePickerState> {
     super(props, context);
     const value = props.value || props.defaultValue || [];
     if (
-      (value[0] && !interopDefault(moment).isMoment(value[0])) ||
-      (value[1] && !interopDefault(moment).isMoment(value[1]))
+      (value[0] && !isMoment(value[0])) ||
+      (value[1] && !isMoment(value[1]))
     ) {
       throw new Error('The value/defaultValue of RangePicker must be a moment object array');
     }
     const pickerValue = !value || isEmptyArray(value) ? props.defaultPickerValue : value;
     this.state = {
       value,
-      showDate: pickerValueAdapter(pickerValue || interopDefault(moment)()),
+      showDate: pickerValueAdapter(pickerValue || moment()),
       open: props.open,
       hoverValue: [],
     };
