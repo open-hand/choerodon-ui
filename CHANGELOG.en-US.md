@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight` properties.
+- 🌟 `<pro>DataSet`: `ValidationRule` add `disabled` hook.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook. `rowHeight` supports hooks.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 🌟 `configure`: Added `min`, `max` properties.

@@ -432,3 +432,4 @@ title: DataSet
 | name | 校验的名称，可选值：`minLength` `maxLength` | string |
 | value | 校验值 | number |
 | message | 校验提示内容  | string |
+| disabled | 禁用  | boolean \| ({ dataSet }) => boolean |
