@@ -122,7 +122,7 @@ export function stringifyValue(value) {
 
 export interface TableDynamicFilterBarProps extends ElementProps {
   dataSet: DataSet;
-  queryDataSet: DataSet;
+  queryDataSet?: DataSet;
   queryFields: ReactElement<any>[];
   queryFieldsLimit?: number;
   buttons?: ReactElement<ButtonProps>[];
@@ -224,7 +224,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         });
       }
     }
-    if (this.originalValue === undefined && queryDataSet.current) {
+    if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
     }
   }
@@ -319,7 +319,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   setOriginalConditionFields = (code) => {
     const { queryDataSet, dataSet } = this.props;
     if (!code) {
-      this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.get(0) });
+      if (queryDataSet) {
+        this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.get(0) });
+      }
     } else {
       this.originalConditionFields = Array.isArray(code) ? code : [code];
     }
@@ -349,7 +351,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   handleDataSetCreate() {
     const { queryDataSet } = this.props;
-    this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+    if (queryDataSet) {
+      this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+    }
   }
 
   /**
@@ -413,7 +417,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         ],
       });
       let status = RecordStatus.update;
-      if (queryDataSet.current) {
+      if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(true), ['__dirty'])) ? RecordStatus.sync : RecordStatus.update;
       }
       // 初始化状态
@@ -602,7 +606,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param hidden 是否隐藏全部
    */
   getExpandNode(hidden): ReactNode {
-    const { prefixCls, props: { refreshBtn} } = this;
+    const { prefixCls, props: { refreshBtn } } = this;
     if (!this.showExpandIcon && !hidden) return null;
     return (
       <span

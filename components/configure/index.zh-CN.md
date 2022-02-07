@@ -154,6 +154,7 @@ const prefixCls = getConfig('prefixCls');
 | onButtonClick | 按钮点击事件， 可用于监控埋点 | (props: { title:string, icon?:string }) => void |   |
 | min | 最小值 | min: (FieldType) => value |   |
 | max | 最大值 | max: (FieldType) => value |   |
+| xlsx | 异步获取 xlsx 库 | () => import('xlsx') |   |
 
 ### Customizable
 

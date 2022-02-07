@@ -1,6 +1,7 @@
 import { observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } from 'axios';
 import { Moment, MomentInput } from 'moment';
+import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import { LovConfig } from '../interface';
 import { ExportMode, RecordStatus, FieldType } from '../data-set/enum';
@@ -104,6 +105,7 @@ export interface Config {
   confirm?: (message: any) => Promise<boolean>;
   min?: (type: FieldType) => number | MomentInput | string | null;
   max?: (type: FieldType) => number | MomentInput | string | null;
+  xlsx?: () => Promise<any>;
 }
 
 export type ConfigKeys = keyof Config;
@@ -143,6 +145,7 @@ const defaultConfig = {
   confirm: (_) => Promise.resolve(true),
   validationMessageFormatter: defaultValidationMessageFormatter,
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
+  xlsx: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;

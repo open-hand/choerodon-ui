@@ -6,7 +6,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import Table, { onColumnResizeProps, TableProps } from '../table/Table';
+import Table, { onColumnResizeProps, TableProps, TableQueryBarHookCustomProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
@@ -232,7 +232,7 @@ export default class LovView extends Component<LovViewProps> {
       queryBarProps: {
         ...(tableProps && tableProps.queryBarProps),
         ...getConfig('lovQueryBarProps'),
-      },
+      } as TableQueryBarHookCustomProps,
     };
     if (multiple) {
       if (popup || !tableProps || !tableProps.selectionMode) {
