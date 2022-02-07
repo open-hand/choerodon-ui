@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight` properties.
+- 🌟 `<pro>DataSet`: `ValidationRule` add `disabled` hook.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook. `rowHeight` supports hooks.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
 - 🌟 `configure`: Added `min`, `max` properties.
@@ -49,6 +50,8 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the search content mismatch caused by drop-down paging search without transferring parameters on the second page.
 - 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
 - 🐞 `<pro>Validator`: Fix the validation problem when `pattern` is a regular object with global tag.
+- 🐞 `<pro>Attachment`: Fix first upload file not showing immediately before successful.
+- 🐞 `WeekPicker`: Fix style issue.
 - 🐞 Fix the style problem when the browser font size is not default.
 
 ## 1.5.1

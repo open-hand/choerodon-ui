@@ -1,9 +1,8 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
-import moment, { Moment } from 'moment';
+import moment, { Moment, isMoment } from 'moment';
 import noop from 'lodash/noop';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Header from './Header';
-import interopDefault from '../_util/interopDefault';
 import enUS from './locale/en_US';
 import FullCalendar from '../rc-components/calendar/FullCalendar';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -63,8 +62,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   constructor(props: CalendarProps) {
     super(props);
 
-    const value = props.value || props.defaultValue || interopDefault(moment)();
-    if (!interopDefault(moment).isMoment(value)) {
+    const value = props.value || props.defaultValue || moment();
+    if (!isMoment(value)) {
       throw new Error('The value/defaultValue of Calendar must be a moment object');
     }
     this.state = {

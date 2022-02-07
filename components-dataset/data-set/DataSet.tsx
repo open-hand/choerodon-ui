@@ -188,6 +188,7 @@ export interface ValidationRule {
   name: string;
   value: number;
   message?: string;
+  disabled?: boolean | ((props: { dataSet: DataSet }) => boolean);
 }
 
 export interface ValidationSelfErrors extends ValidationRule {
@@ -2364,26 +2365,28 @@ export default class DataSet extends EventManager {
     const result: ValidationSelfErrors[] = [];
     if (validationRules) {
       validationRules.forEach(item => {
-        const { message, value, name } = item;
-        switch (name) {
-          case ValidationSelfType.minLength:
-            if (this.length < value) {
-              result.push(this.getValidationSelfError({
-                ...item,
-                message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }),
-              }));
-            }
-            break;
-          case ValidationSelfType.maxLength:
-            if (this.length > value) {
-              result.push(this.getValidationSelfError({
-                ...item,
-                message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }),
-              }));
-            }
-            break;
-          default:
-            break;
+        const { message, value, name, disabled } = item;
+        if (!disabled || (typeof disabled === 'function' && disabled({ dataSet: this }) !== true)) {
+          switch (name) {
+            case ValidationSelfType.minLength:
+              if (this.length < value) {
+                result.push(this.getValidationSelfError({
+                  ...item,
+                  message: message || formatTemplate($l('DataSet', 'data_length_too_short'), { length: value }),
+                }));
+              }
+              break;
+            case ValidationSelfType.maxLength:
+              if (this.length > value) {
+                result.push(this.getValidationSelfError({
+                  ...item,
+                  message: message || formatTemplate($l('DataSet', 'data_length_too_long'), { length: value }),
+                }));
+              }
+              break;
+            default:
+              break;
+          }
         }
       });
     }

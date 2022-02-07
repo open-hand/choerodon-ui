@@ -154,7 +154,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   get attachments(): AttachmentFile[] | undefined {
     const { field } = this;
     if (field) {
-      return field.getAttachments(this.record);
+      return field.getAttachments(this.record, this.tempAttachmentUUID);
     }
     return this.observableProps.attachments;
   }

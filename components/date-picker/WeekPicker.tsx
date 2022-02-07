@@ -1,19 +1,23 @@
 import React, { Component, MouseEventHandler } from 'react';
-import moment, { Moment } from 'moment';
+import { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Input from '../input';
 import Button from '../button';
-import interopDefault from '../_util/interopDefault';
 import Calendar from '../rc-components/calendar';
 import RcDatePicker from '../rc-components/calendar/Picker';
 import { Size } from '../_util/enum';
+import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function formatValue(value: Moment | null, format: string): string {
   return (value && value.format(format)) || '';
 }
 
 export default class WeekPicker extends Component<any, any> {
+  static get contextType() {
+    return ConfigContext;
+  }
+
   static defaultProps = {
     format: 'gggg-wo',
     allowClear: true,
@@ -23,10 +27,12 @@ export default class WeekPicker extends Component<any, any> {
 
   private picker: any;
 
-  constructor(props: any) {
-    super(props);
+  context: ConfigContextValue;
+
+  constructor(props: any, context: ConfigContextValue) {
+    super(props, context);
     const value = props.value || props.defaultValue;
-    if (value && !interopDefault(moment).isMoment(value)) {
+    if (value && !isMoment(value)) {
       throw new Error(
         'The value/defaultValue of DatePicker or MonthPicker must be a moment object',
       );
@@ -43,9 +49,15 @@ export default class WeekPicker extends Component<any, any> {
     }
   }
 
+  getPrefixCls() {
+    const { prefixCls } = this.props;
+    const { getPrefixCls } = this.context;
+    return getPrefixCls('calendar', prefixCls);
+  }
+
   weekDateRender = (current: any) => {
     const { value } = this.state;
-    const { prefixCls } = this.props;
+    const prefixCls = this.getPrefixCls();
     if (value && current.year() === value.year() && current.week() === value.week()) {
       return (
         <div className={`${prefixCls}-selected-day`}>
@@ -114,7 +126,6 @@ export default class WeekPicker extends Component<any, any> {
     const { props } = this;
     const { focused, value } = this.state;
     const {
-      prefixCls,
       className,
       disabled,
       pickerClass,
@@ -131,6 +142,7 @@ export default class WeekPicker extends Component<any, any> {
       label,
       id,
     } = props;
+    const prefixCls = this.getPrefixCls();
 
     const pickerValue = value;
     if (pickerValue && localeCode) {

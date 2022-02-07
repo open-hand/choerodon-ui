@@ -1,7 +1,6 @@
 import React, { Children, Component, ReactElement } from 'react';
 import moment from 'moment';
 import { getContext, Symbols } from 'choerodon-ui/shared';
-import interopDefault from '../_util/interopDefault';
 import { changeConfirmLocale, ModalLocale } from '../modal/locale';
 import { changeNoticeLocale, NoticeLocale } from '../notification/locale'
 import { LocaleReceiverContext } from './LocaleReceiver';
@@ -57,9 +56,9 @@ export const LocaleContext = getContext<LocaleReceiverContext>(Symbols.LocaleCon
 
 function setMomentLocale(locale: Locale) {
   if (locale && locale.locale) {
-    interopDefault(moment).locale(locale.locale);
+    moment.locale(locale.locale);
   } else {
-    interopDefault(moment).locale('en');
+    moment.locale('en');
   }
 }
 
