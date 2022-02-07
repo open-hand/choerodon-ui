@@ -1352,7 +1352,7 @@ export default class DataSet extends EventManager {
             this.exportStatus = DataSetExportStatus.success;
           });
           if (isFile) {
-            exportExcel(newResult, this.name);
+            exportExcel(newResult, this.name, this.getConfig('xlsx'));
           } else {
             return newResult;
           }
@@ -1383,7 +1383,7 @@ export default class DataSet extends EventManager {
           this.exportStatus = DataSetExportStatus.success;
         });
         if (isFile) {
-          exportExcel(newResult, this.name);
+          exportExcel(newResult, this.name, this.getConfig('xlsx'));
         } else {
           return newResult;
         }

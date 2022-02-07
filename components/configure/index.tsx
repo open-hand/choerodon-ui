@@ -9,10 +9,18 @@ import {
   Status,
 } from 'choerodon-ui/dataset/configure';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
-import { expandIconProps, Suffixes, TableCustomized, TablePaginationConfig, TableProps, TableQueryBarHook } from 'choerodon-ui/pro/lib/table/Table';
+import {
+  expandIconProps,
+  Suffixes,
+  TableCustomized,
+  TablePaginationConfig,
+  TableProps,
+  TableQueryBarHook,
+  TableQueryBarHookCustomProps,
+} from 'choerodon-ui/pro/lib/table/Table';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { ColumnAlign, DragColumnAlign, HighLightRowType, TableQueryBarType, TableColumnResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
+import { ColumnAlign, DragColumnAlign, HighLightRowType, TableColumnResizeTriggerType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
@@ -114,7 +122,7 @@ export interface Config extends DataSetConfig {
   lovShowSelectedInView?: boolean | LovShowSelectedInViewHook;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
-  queryBarProps?: object;
+  queryBarProps?: TableQueryBarHookCustomProps;
   tableVirtual?: boolean;
   tableVirtualCell?: boolean;
   tableBorder?: boolean;

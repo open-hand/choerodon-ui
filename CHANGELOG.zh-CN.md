@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight 属性。
+- 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight, xlsx 属性。
 - 🌟 `<pro>DataSet`: ValidationRule 增加 disabled 钩子。
 - 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性, rowHeight 支持钩子。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。

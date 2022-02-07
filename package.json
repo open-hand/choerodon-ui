@@ -106,8 +106,7 @@
     "scroll-into-view-if-needed": "^2.2.25",
     "smooth-scroll-into-view-if-needed": "^1.1.28",
     "tslib": "^1.9.3",
-    "warning": "~4.0.3",
-    "xlsx": "^0.17.0"
+    "warning": "~4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -265,7 +264,8 @@
     "webpack-merge": "^4.2.2",
     "webpackbar": "^4.0.0",
     "xhr-mock": "^2.5.1",
-    "xhr2": "^0.2.0"
+    "xhr2": "^0.2.0",
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "test": "jest --config .jest.js --cache=false",

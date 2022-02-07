@@ -4,7 +4,6 @@ import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
-import reduce from 'lodash/reduce';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
@@ -27,7 +26,7 @@ import Radio from '../../radio';
 import { ButtonColor, ButtonType } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
-import TableContext from '../TableContext';
+import TableContext, { TableContextValue } from '../TableContext';
 import autobind from '../../_util/autobind';
 import DataSet from '../../data-set';
 import Modal from '../../modal';
@@ -153,15 +152,15 @@ const ExportFooter = observer((props) => {
         }} /></div>
         <Button color={ButtonColor.primary} onClick={handleClick}>{$l('Table', 'download_button')}</Button></>}
       {dataSet.exportStatus !== DataSetExportStatus.success &&
-        dataSet.exportStatus !== DataSetExportStatus.failed &&
-        <>
-          <span>{messageTimeout || $l('Table', 'export_operating')}</span>
-          <Button
-            color={ButtonColor.gray}
-            onClick={handleClick}
-          >{$l('Table', 'cancel_button')}
-          </Button>
-        </>
+      dataSet.exportStatus !== DataSetExportStatus.failed &&
+      <>
+        <span>{messageTimeout || $l('Table', 'export_operating')}</span>
+        <Button
+          color={ButtonColor.gray}
+          onClick={handleClick}
+        >{$l('Table', 'cancel_button')}
+        </Button>
+      </>
       }
     </div>
   );
@@ -175,6 +174,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return TableContext;
   }
 
+  context: TableContextValue;
+
   exportModal;
 
   exportDataSet: DataSet;
@@ -184,7 +185,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   /**
    * 多行汇总
    */
-  @observable moreSummary: SummaryBar[];
+  @observable moreSummary: ReactElement[] | undefined;
 
   static defaultProps = {
     summaryBarFieldWidth: 170,
@@ -371,10 +372,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   handleExportButton(data: DataSetExportStatus, filename?: string) {
     const {
       dataSet,
+      tableStore,
     } = this.context;
     if (data === DataSetExportStatus.success) {
       if (this.exportData) {
-        exportExcel(this.exportData, filename);
+        exportExcel(this.exportData, filename, tableStore.getConfig('xlsx'));
         this.exportModal.close();
         this.exportData = null;
       }
@@ -464,63 +466,79 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * 渲染表头汇总列
    * @param summary
    */
-  renderSummary(summary) {
-    const {
-      props: { summaryBar, summaryFieldsLimit, summaryBarFieldWidth },
-      context: {
-        tableStore,
-        dataSet,
-        prefixCls,
-      },
-    } = this;
-    const { props: { queryBarProps } } = tableStore;
-    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
-    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
-    const fieldTypeArr = [FieldType.currency, FieldType.number];
-    if (summaryBar && summary && summary.length) {
-      return summary.map((summaryCol, index) => {
-        const field = dataSet.getField(summaryCol);
-        const hasSeparate = summaryBar.length > summaryFieldsLimits! || index !== (summaryBar.length - 1);
-        if (isString(summaryCol) && field && fieldTypeArr.includes(field.type)) {
-          const summaryValue = reduce(dataSet.map((record) => isNumber(record.get(summaryCol)) ? record.get(summaryCol) : 0), (sum, n) => sum + n);
-          return (
-            <div key={field.get('name')}>
-              <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
-                <div className={`${prefixCls}-summary-col-label`} title={field.get('label')}>{field.get('label')}:</div>
-                <div className={`${prefixCls}-summary-col-value`} title={summaryValue}>{summaryValue}</div>
-              </div>
-              {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
-                <div />
-              </div>}
-            </div>
-          );
+  renderSummary(summary?: SummaryBar[]): ReactElement[] | undefined {
+    if (summary) {
+      const { length } = summary;
+      if (length) {
+        const { summaryBar } = this.props;
+        if (summaryBar) {
+          const { length: summaryLength } = summaryBar;
+          const {
+            props: { summaryFieldsLimit, summaryBarFieldWidth },
+            context: {
+              tableStore,
+              dataSet,
+              prefixCls,
+            },
+          } = this;
+          const { props: { queryBarProps } } = tableStore;
+          const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
+          const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
+          const fieldTypeArr = [FieldType.currency, FieldType.number];
+          return summary.reduce<ReactElement[]>((list, summaryCol, index) => {
+            const hasSeparate = length > summaryFieldsLimits || index !== (summaryLength - 1);
+            if (isString(summaryCol)) {
+              const field = dataSet.getField(summaryCol);
+              if (field && fieldTypeArr.includes(field.get('type'))) {
+                const summaryValue = dataSet.reduce<number>((sum, record) => {
+                  const n = record.get(summaryCol);
+                  if (isNumber(n)) {
+                    return sum + n;
+                  }
+                  return sum;
+                }, 0);
+                const name = field.get('name');
+                const label = field.get('label');
+                list.push(
+                  <div key={name}>
+                    <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
+                      <div className={`${prefixCls}-summary-col-label`} title={String(label)}>{label}:</div>
+                      <div className={`${prefixCls}-summary-col-value`} title={String(summaryValue)}>{summaryValue}</div>
+                    </div>
+                    {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
+                      <div />
+                    </div>}
+                  </div>,
+                );
+              }
+            } else if (typeof summaryCol === 'function') {
+              const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit: summaryFieldsLimits, summaryBarFieldWidth, dataSet });
+              list.push(
+                <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
+                  <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
+                    <div
+                      className={`${prefixCls}-summary-col-label`}
+                      title={isString(summaryObj.label) ? summaryObj.label : ''}
+                    >
+                      {summaryObj.label}:
+                    </div>
+                    <div
+                      className={`${prefixCls}-summary-col-value`}
+                      title={isString(summaryObj.value) || isNumber(summaryObj.value) ? summaryObj.value.toString() : ''}
+                    >
+                      {summaryObj.value}
+                    </div>
+                  </div>
+                  {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
+                    <div />
+                  </div>}
+                </div>,
+              );
+            }
+            return list;
+          }, []);
         }
-        if (typeof summaryCol === 'function') {
-          const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit: summaryFieldsLimits, summaryBarFieldWidth, dataSet });
-          return (
-            <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
-              <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
-                <div
-                  className={`${prefixCls}-summary-col-label`}
-                  title={isString(summaryObj.label) ? summaryObj.label : ''}
-                >
-                  {summaryObj.label}:
-                </div>
-                <div
-                  className={`${prefixCls}-summary-col-value`}
-                  title={isString(summaryObj.value) || isNumber(summaryObj.value) ? summaryObj.value.toString() : ''}
-                >
-                  {summaryObj.value}
-                </div>
-              </div>
-              {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
-                <div />
-              </div>}
-            </div>
-          );
-        }
-        return null;
-      });
+      }
     }
   }
 
@@ -529,7 +547,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * @param summary
    */
   @action
-  openMore = (summary) => {
+  openMore = (summary?: SummaryBar[]) => {
     if (this.moreSummary && this.moreSummary.length) {
       this.moreSummary = [];
     } else {
@@ -542,10 +560,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
    * 汇总条展开收起按钮
    * @param summary
    */
-  getMoreSummaryButton(summary) {
-    const { prefixCls } = this.context;
-
+  getMoreSummaryButton(summary: SummaryBar[]) {
     if (summary.length) {
+      const { prefixCls } = this.context;
       return (
         <div className={`${prefixCls}-summary-button-more`}>
           <a
@@ -574,8 +591,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       },
     } = this;
     const { props: { queryBarProps } } = tableStore;
-    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
-    const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
+    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
+    const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
     if (summaryBar) {
       const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
       const moreSummary = summaryBar.slice(summaryFieldsLimits);
@@ -760,10 +777,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         }
       };
       propFields.forEach(({ name }) => {
-        const field = cloneFields.get(name);
-        if (field) {
-          cloneFields.delete(name);
-          processField(field, name);
+        if (name) {
+          const field = cloneFields.get(name);
+          if (field) {
+            cloneFields.delete(name);
+            processField(field, name);
+          }
         }
       });
       cloneFields.forEach((field, name) => {
@@ -819,7 +838,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   expandTree() {
     const { tableStore } = this.context;
     const { props: { queryBarProps } } = tableStore;
-    if (typeof queryBarProps.onQuery === 'function') {
+    if (queryBarProps && typeof queryBarProps.onQuery === 'function') {
       queryBarProps.onQuery();
     }
     tableStore.expandAll();
@@ -829,7 +848,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   collapseTree() {
     const { tableStore } = this.context;
     const { props: { queryBarProps } } = tableStore;
-    if (typeof queryBarProps.onReset === 'function') {
+    if (queryBarProps && typeof queryBarProps.onReset === 'function') {
       queryBarProps.onReset();
     }
     tableStore.collapseAll();
@@ -852,11 +871,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
-      const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps };
-      const onReset = tableQueryBarProps && typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
-      const onQuery = tableQueryBarProps && typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
-      const queryFieldsLimits = queryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.queryFieldsLimit);
-      const summaryFieldsLimits = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
+      const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
+      const onReset = typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
+      const onQuery = typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
+      const queryFieldsLimits = queryFieldsLimit || tableQueryBarProps.queryFieldsLimit;
+      const summaryFieldsLimits = summaryFieldsLimit || tableQueryBarProps.summaryFieldsLimit || 3;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
         ...tableQueryBarProps,
         dataSet,

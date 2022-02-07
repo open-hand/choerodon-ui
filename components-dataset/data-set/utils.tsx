@@ -2,6 +2,7 @@ import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
 import { isArrayLike, ObservableMap } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
+import isPromise from 'is-promise';
 import isBoolean from 'lodash/isBoolean';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
@@ -1105,8 +1106,12 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
  * @param data 导出需要导出的数据
  * @param excelname 导出表单的名字
  */
-export function exportExcel(data, excelName) {
-  import('xlsx').then(XLSX => {
+export function exportExcel(data, excelName, getXLSX: () => Promise<any>) {
+  const promise = getXLSX();
+  if (!promise || !isPromise(promise)) {
+    throw new Error('For using the excel export, please set the `xlsx` hook of configure to import xlsx module.');
+  }
+  promise.then(XLSX => {
     const ws = XLSX.utils.json_to_sheet(data, { skipHeader: true }); /* 新建空workbook，然后加入worksheet */
     const wb = XLSX.utils.book_new();  /* 新建book */
     XLSX.utils.book_append_sheet(wb, ws); /* 生成xlsx文件(book,sheet数据,sheet命名) */

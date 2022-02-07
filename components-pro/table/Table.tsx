@@ -131,11 +131,14 @@ export interface SummaryBarProps {
   summaryBarFieldWidth?: number;
 }
 
-export interface TableQueryBarHookProps {
+export interface TableQueryBarBaseProps {
   dataSet: DataSet;
-  queryDataSet: DataSet;
+  queryDataSet?: DataSet;
   buttons: ReactElement<ButtonProps>[];
   queryFields: ReactElement<any>[];
+}
+
+export interface TableQueryBarCustomProps {
   queryFieldsLimit: number;
   buttonsLimit?: number;
   summaryFieldsLimit: number;
@@ -144,6 +147,9 @@ export interface TableQueryBarHookProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+}
+
+export interface TableQueryBarHookProps extends TableQueryBarBaseProps, TableQueryBarCustomProps {
 }
 
 export interface expandedRowRendererProps {
@@ -174,7 +180,7 @@ export interface onColumnResizeProps {
   index: number;
 }
 
-export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarHookProps>;
+export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarBaseProps> & TableQueryBarCustomProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType
