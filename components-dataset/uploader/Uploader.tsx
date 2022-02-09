@@ -1,9 +1,7 @@
 import { AxiosError } from 'axios';
 import { runInAction } from 'mobx';
-import { $l } from '../locale-context';
-import { formatFileSize } from '../formatter';
 import AttachmentFile from '../data-set/AttachmentFile';
-import { isAcceptFile, uploadFile } from './utils';
+import { beforeUploadFile, uploadFile } from './utils';
 import { getConfig } from '../configure';
 import { DataSetContext } from '../data-set/DataSet';
 import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
@@ -56,41 +54,6 @@ export default class Uploader {
     Object.assign(this.props, props);
   }
 
-  async beforeUpload(attachment: AttachmentFile, attachments: AttachmentFile[] = []): Promise<boolean | undefined> {
-    const { props, context } = this;
-    const globalConfig = context.getConfig('attachment');
-    try {
-      const { accept } = props;
-      if (accept && !isAcceptFile(attachment, accept)) {
-        runInAction(() => {
-          attachment.status = 'error';
-          attachment.invalid = true;
-          attachment.errorMessage = $l('Attachment', 'file_type_mismatch', undefined, { types: accept.join(',') }) as string;
-        });
-        return;
-      }
-      const { fileSize = globalConfig.defaultFileSize, useChunk, chunkSize = globalConfig.defaultChunkSize } = props;
-      if (!(useChunk && chunkSize > 0) && fileSize && fileSize > 0 && attachment.size > fileSize) {
-        runInAction(() => {
-          attachment.status = 'error';
-          attachment.invalid = true;
-          attachment.errorMessage = $l('Attachment', 'file_max_size', undefined, { size: formatFileSize(fileSize) }) as string;
-        });
-        return;
-      }
-      const { onBeforeUpload } = globalConfig;
-      if (onBeforeUpload && await onBeforeUpload(attachment, attachments) === false) {
-        return false;
-      }
-
-      const { beforeUpload } = props;
-      return !(beforeUpload && await beforeUpload(attachment, attachments) === false);
-
-    } catch (e) {
-      return false;
-    }
-  }
-
   async upload(attachment: AttachmentFile, attachments?: AttachmentFile[], tempAttachmentUUID?: string | undefined): Promise<any> {
     const { attachmentUUID = tempAttachmentUUID } = attachment;
     if (attachment.status === 'success' || attachment.invalid || !attachmentUUID) {
@@ -98,13 +61,14 @@ export default class Uploader {
     }
     const { context, props } = this;
     const globalConfig = context.getConfig('attachment');
-    const result = await this.beforeUpload(attachment, attachments);
+    const { chunkSize = globalConfig.defaultChunkSize } = props;
+    const useChunk = props.useChunk && chunkSize > 0 && attachment.size > chunkSize;
+    const result = await beforeUploadFile(props, context, attachment, attachments, useChunk);
     if (result === true) {
       try {
-        const resp = await uploadFile(props, attachment, attachmentUUID, context);
+        const resp = await uploadFile(props, attachment, attachmentUUID, context, chunkSize, useChunk);
         runInAction(() => {
           attachment.status = 'success';
-          const useChunk = !!attachment.chunks;
           const { onUploadSuccess: handleUploadSuccess } = globalConfig;
           if (handleUploadSuccess) {
             handleUploadSuccess(resp, attachment, useChunk);

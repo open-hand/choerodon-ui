@@ -18,7 +18,7 @@ import {
 import Field from '../data-set/Field';
 import Record from '../data-set/Record';
 import { CacheOptions } from '../cache';
-import AttachmentFile, {  FileLike } from '../data-set/AttachmentFile';
+import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
 import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 
 export type TimeZone = string | ((moment: Moment) => string);
@@ -52,7 +52,7 @@ export interface AttachmentConfig {
   getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | Function | undefined;
   getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
-  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], useChunk?: boolean) => boolean | undefined | PromiseLike<boolean | undefined>;
   onBeforeUploadChunk?: (chunk: AttachmentFileChunk, attachment: AttachmentFile) => boolean | undefined | PromiseLike<boolean | undefined>;
   onUploadSuccess?: (response: any, attachment: AttachmentFile, useChunk?: boolean) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;

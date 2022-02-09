@@ -33,9 +33,9 @@ title: Lov
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined |  |
 | viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet, lovConfig, textField, valueField, multiple, modal}) => ReactNode |  |
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  |
-| selectionProps | 显示已选记录时的参数 | object |  |
+| selectionProps | 显示已选记录时的参数 | SelectionProps |  |
 
-### selectionProps
+### SelectionProps
 
 | 参数        | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |

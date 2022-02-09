@@ -427,11 +427,27 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  @autobind
+  private getSelectionProps() {
+    const { nodeRenderer, selectionProps } = this.props;
+    const lovSelectionProps = this.getContextConfig('lovSelectionProps');
+    const props: SelectionProps = {
+      ...lovSelectionProps,
+    };
+    if (nodeRenderer) {
+      props.nodeRenderer = nodeRenderer;
+    }
+    return {
+      ...props,
+      ...selectionProps,
+    };
+  }
+
   @action
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode } = this.observableProps;
-    const { onBeforeSelect, viewRenderer, nodeRenderer, selectionProps } = this.props;
+    const { onBeforeSelect, viewRenderer } = this.props;
     const drawer = viewMode === 'drawer';
     if (viewMode === 'modal' || drawer) {
       const config = this.getConfig();
@@ -463,7 +479,7 @@ export default class Lov extends Select<LovProps> {
               textField={textField}
               viewRenderer={viewRenderer}
               showSelectedInView={this.showSelectedInView}
-              selectionProps={selectionProps || { nodeRenderer }}
+              getSelectionProps={this.getSelectionProps}
             />
           ),
           onClose: this.handleLovViewClose,

@@ -7,6 +7,8 @@ import { appendFormData } from '../data-set/utils';
 import axios from '../axios';
 import PromiseQueue from '../promise-queue';
 import { UploaderProps } from './Uploader';
+import { $l } from '../locale-context';
+import { formatFileSize } from '../formatter';
 
 function getAxios(context: DataSetContext): AxiosInstance {
   return context.getConfig('axios') || axios;
@@ -143,24 +145,6 @@ async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile
   });
 }
 
-export async function uploadFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext): Promise<any> {
-  const { useChunk } = props;
-  if (useChunk) {
-    const globalConfig = context.getConfig('attachment');
-    const { chunkSize = globalConfig.defaultChunkSize } = props;
-    if (chunkSize > 0) {
-      const chunks = cuteFile(attachment, chunkSize);
-      const { length } = chunks;
-      if (length > 1) {
-        const { chunkThreads = globalConfig.defaultChunkThreads } = props;
-        return uploadChunks(props, attachment, chunks.slice(), attachmentUUID, context, Math.min(length, chunkThreads));
-      }
-      delete attachment.chunks;
-    }
-  }
-  return uploadNormalFile(props, attachment, attachmentUUID, context);
-}
-
 function cuteFile(attachment: AttachmentFile, chunkSize: number): AttachmentFileChunk[] {
   const { size, chunks } = attachment;
   if (!chunks) {
@@ -187,4 +171,54 @@ function cuteFile(attachment: AttachmentFile, chunkSize: number): AttachmentFile
     return newChunks;
   }
   return chunks;
+}
+
+export async function beforeUploadFile(
+  props: UploaderProps,
+  context: DataSetContext,
+  attachment: AttachmentFile,
+  attachments: AttachmentFile[] = [],
+  useChunk?: boolean,
+): Promise<boolean | undefined> {
+  const globalConfig = context.getConfig('attachment');
+  try {
+    const { accept } = props;
+    if (accept && !isAcceptFile(attachment, accept)) {
+      runInAction(() => {
+        attachment.status = 'error';
+        attachment.invalid = true;
+        attachment.errorMessage = $l('Attachment', 'file_type_mismatch', undefined, { types: accept.join(',') }) as string;
+      });
+      return;
+    }
+    const { fileSize = globalConfig.defaultFileSize } = props;
+    if (!useChunk && fileSize && fileSize > 0 && attachment.size > fileSize) {
+      runInAction(() => {
+        attachment.status = 'error';
+        attachment.invalid = true;
+        attachment.errorMessage = $l('Attachment', 'file_max_size', undefined, { size: formatFileSize(fileSize) }) as string;
+      });
+      return;
+    }
+    const { onBeforeUpload } = globalConfig;
+    if (onBeforeUpload && await onBeforeUpload(attachment, attachments, useChunk) === false) {
+      return false;
+    }
+
+    const { beforeUpload } = props;
+    return !(beforeUpload && await beforeUpload(attachment, attachments) === false);
+
+  } catch (e) {
+    return false;
+  }
+}
+
+export async function uploadFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext, chunkSize: number, useChunk?: boolean): Promise<any> {
+  if (useChunk) {
+    const chunks = cuteFile(attachment, chunkSize);
+    const globalConfig = context.getConfig('attachment');
+    const { chunkThreads = globalConfig.defaultChunkThreads } = props;
+    return uploadChunks(props, attachment, chunks.slice(), attachmentUUID, context, Math.min(chunks.length, chunkThreads));
+  }
+  return uploadNormalFile(props, attachment, attachmentUUID, context);
 }

@@ -143,64 +143,25 @@
     }
   }
   &-float-label & > ul {
-    margin-left: 0.03rem;
+    margin: @input-float-multiple-margin;
     padding: @input-float-multiple-padding;
 
     > li {
-      display: inline-block;
-      max-width: 99%;
       height: @input-float-tag-height-base;
       margin-top: @input-float-tag-margin-vertical;
       margin-bottom: @input-float-tag-margin-vertical;
-      padding: @input-float-tag-padding;
       line-height: @input-float-tag-line-height-base;
-      vertical-align: middle;
     }
   }
   &-float-label &-multiple-block {
-    display: inline-block;
-    max-width: 99%;
-    overflow: hidden;
-    color: @input-tag-default-color;
-    line-height: @line-height-base;
-    white-space: nowrap;
-    background-color: @input-tag-default-bg;
-    border-radius: 0.12rem;
-
-    > div {
-      display: inline-block;
-      max-width: 100%;
-      height: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      vertical-align: top;
-
-      &:not(:last-child) {
-        max-width: ~'calc(100% - .24rem)';
-      }
-    }
-
-    &-invalid {
-      background-color: @error-color;
-    }
-
-    &-disabled {
-      padding-right: 0.1rem;
-      background-color: @disabled-color;
-      cursor: not-allowed;
-    }
-
-    cursor: default;
+    padding: @input-float-tag-padding;
+    border-radius: @input-float-tag-border-radius;
 
     .@{iconfont-css-prefix} {
-      height: 100%;
-      margin-left: 0.08rem;
-      color: @tag-multiple-color;
-      font-size: 0.16rem;
-      line-height: 0.2rem;
-      vertical-align: top;
-      cursor: pointer;
+      color: @input-float-tag-close-color;
+      font-size: @input-float-tag-close-font-size;
+      line-height: @input-float-tag-close-line-height;
+      vertical-align: @input-float-tag-close-vertical-align;
     }
   }
   &-prefix-button&-float-label .@{field-label-prefix-cls}-wrapper {
