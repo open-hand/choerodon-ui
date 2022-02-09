@@ -71,7 +71,13 @@ export default class Uploader {
           attachment.status = 'success';
           const { onUploadSuccess: handleUploadSuccess } = globalConfig;
           if (handleUploadSuccess) {
-            handleUploadSuccess(resp, attachment, useChunk);
+            handleUploadSuccess(resp, attachment, {
+              useChunk,
+              bucketName: props.bucketName,
+              bucketDirectory: props.bucketDirectory,
+              storageCode: props.storageCode,
+              isPublic: props.isPublic,
+            });
           }
           const { onUploadSuccess } = props;
           if (onUploadSuccess) {

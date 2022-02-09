@@ -94,7 +94,14 @@ function getUploadAxiosConfig(
 
 async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chunk: AttachmentFileChunk, attachmentUUID: string, context: DataSetContext): Promise<any> {
   const { onBeforeUploadChunk } = context.getConfig('attachment');
-  if (!onBeforeUploadChunk || await onBeforeUploadChunk(chunk, attachment) !== false) {
+  if (!onBeforeUploadChunk || await onBeforeUploadChunk({
+    chunk,
+    attachment,
+    bucketName: props.bucketName,
+    bucketDirectory: props.bucketDirectory,
+    storageCode: props.storageCode,
+    isPublic: props.isPublic,
+  }) !== false) {
     const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
       chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
     }));
@@ -201,7 +208,13 @@ export async function beforeUploadFile(
       return;
     }
     const { onBeforeUpload } = globalConfig;
-    if (onBeforeUpload && await onBeforeUpload(attachment, attachments, useChunk) === false) {
+    if (onBeforeUpload && await onBeforeUpload(attachment, attachments, {
+      useChunk,
+      bucketName: props.bucketName,
+      bucketDirectory: props.bucketDirectory,
+      storageCode: props.storageCode,
+      isPublic: props.isPublic,
+    }) === false) {
       return false;
     }
 

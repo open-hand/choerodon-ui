@@ -52,9 +52,9 @@ export interface AttachmentConfig {
   getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | Function | undefined;
   getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
-  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], useChunk?: boolean) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onBeforeUploadChunk?: (chunk: AttachmentFileChunk, attachment: AttachmentFile) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onUploadSuccess?: (response: any, attachment: AttachmentFile, useChunk?: boolean) => void;
+  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], props: { useChunk?: boolean; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onBeforeUploadChunk?: (props: { chunk: AttachmentFileChunk; attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onUploadSuccess?: (response: any, attachment: AttachmentFile, props: { useChunk?: boolean; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: { attachmentUUID: string; attachments: AttachmentFile[]; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<void>;
   onRemove?: (props: { attachment: AttachmentFile; attachmentUUID: string; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<boolean>;
