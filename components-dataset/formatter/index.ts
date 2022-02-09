@@ -1,4 +1,5 @@
 import isString from 'lodash/isString';
+import defaultTo from 'lodash/defaultTo';
 import capitalize from 'lodash/capitalize';
 import isNil from 'lodash/isNil';
 import BigNumber from 'bignumber.js';
@@ -92,14 +93,13 @@ export function formatBigNumber(value, lang: string | undefined, options?: Intl.
   if (toLocaleStringSupportsLocales()) {
     if (lang && options && options.currency) {
       formatOne = (1).toLocaleString(normalizeLanguage(lang), {
-        style: options.style ?? (bigNumberTarget === 'currency' ? 'currency' : 'decimal'),
+        style: defaultTo(options.style, bigNumberTarget === 'currency' ? 'currency' : 'decimal'),
         currency: options.currency,
         currencyDisplay: options.currencyDisplay,
         maximumFractionDigits: 0,
       });
     }
-  }
-  else if (options && options.currency) {
+  } else if (options && options.currency) {
     formatOne = `${options.currency} ${formatOne}`;
   }
 
@@ -113,9 +113,9 @@ export function formatBigNumber(value, lang: string | undefined, options?: Intl.
         ? minimumFractionDigits === maximumFractionDigits
           ? minimumFractionDigits
           : (!isNil(maximumFractionDigits)
-            ? (valuePrecision > maximumFractionDigits 
+            ? (valuePrecision > maximumFractionDigits
               ? maximumFractionDigits : (valuePrecision < minimumFractionDigits ? minimumFractionDigits : valuePrecision))
-            : (valuePrecision < minimumFractionDigits 
+            : (valuePrecision < minimumFractionDigits
               ? minimumFractionDigits : valuePrecision))
         : (!isNil(maximumFractionDigits) && maximumFractionDigits < valuePrecision ? maximumFractionDigits : valuePrecision)
     );
@@ -154,4 +154,13 @@ export function formatTemplate(string: string, args: object | any[], lazy?: bool
     }
     return lazy ? `{${i}}` : '';
   });
+}
+
+const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+export function formatFileSize(size: number, unitIndex = 0) {
+  if (size < 1024) {
+    return `${size}${units[unitIndex]}`;
+  }
+  return formatFileSize(Math.round(size / 1024), unitIndex + 1);
 }

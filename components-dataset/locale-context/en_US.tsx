@@ -37,6 +37,10 @@ const locale: Locale = {
     unique: 'The value is duplicate, please input another one.',
     unknown: 'Unknown error.',
   },
+  Attachment: {
+    file_max_size: 'File size cannot exceed: {size}',
+    file_type_mismatch: 'File type mismatch, correct type: {types}',
+  },
 };
 
 export default locale;

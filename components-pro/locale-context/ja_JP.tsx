@@ -136,6 +136,7 @@ const locale: Locale = {
     file_list_max_length: 'ファイル数が上限を超えています',
   },
   Attachment: {
+    ...jaJP.Attachment,
     value_missing_no_label: '添付ファイルをアップロードしてください。',
     value_missing: '{label}をアップロードしてください。',
     upload_attachment: '添付ファイルをアップロード',
@@ -149,9 +150,7 @@ const locale: Locale = {
     view_operation_records: '操作記録の表示',
     download: 'ダウンロード',
     delete: '消去',
-    file_max_size: 'ファイルサイズは次を超えることはできません：{size}',
     file_list_max_length: 'ファイルの最大数は次のように制限されています：{count}',
-    file_type_mismatch: 'ファイルタイプの不一致、正しいタイプ：{types}',
     drag_info: 'ここでファイルをクリックまたはドラッグしてアップロードします',
   },
   Modal: {

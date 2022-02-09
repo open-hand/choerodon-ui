@@ -24,7 +24,7 @@ const ATTACHMENT_TARGET = 'attachment-preview';
 
 export interface ItemProps {
   attachment: AttachmentFile;
-  onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
+  onUpload: (attachment: AttachmentFile) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onPreview?: () => void;
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
@@ -195,12 +195,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   };
   const renderButtons = (): ReactNode => {
     const buttons: ReactNode[] = [];
-    if (attachmentUUID && !readOnly && status === 'error' && !attachment.invalid) {
+    if (!readOnly && status === 'error' && !attachment.invalid) {
       const upProps = {
         key: 'upload',
         className: classnames(`${prefixCls}-icon`),
         icon: 'replay',
-        onClick: () => onUpload(attachment, attachmentUUID),
+        onClick: () => onUpload(attachment),
         funcType: FuncType.link,
         block: isCard,
       };

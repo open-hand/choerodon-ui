@@ -29,6 +29,9 @@ title: Attachment
 | sortable | 是否可排序, 只读模式下不可拖拽 | boolean | true |
 | fileKey | 上传文件的参数名 | string | [attachment.defaultFileKey](/component/configure/#Attachment) |
 | fileSize | 上传文件的大小限制, 单位 `B` | number | [attachment.defaultFileSize](/component/configure/#Attachment) |
+| useChunk | 是否开启分片上传 | boolean |  |
+| chunkSize | 分片大小 | number | [attachment.defaultChunkSize](/component/configure/#Attachment) |
+| chunkThreads | 分片上传并发数 | number | [attachment.defaultChunkThreads](/component/configure/#Attachment) |
 | pictureWidth | 图片尺寸， 只适用于 listType 为 picture 和 picture-card | number |  |
 | count | 自定义附件数量 | number |  |
 | max | 同时上传文件的最大数量, `0` 表示无限制 | number |  |

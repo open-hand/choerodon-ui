@@ -224,24 +224,27 @@ const prefixCls = getConfig('prefixCls');
 
 ### AttachmentConfig
 
-| 属性              | 说明                | 类型                                |
-| ----------------- | ------------------- | ----------------------------------- |
-| defaultFileKey               | 上传文件的参数名                | string                              |
-| defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              |
-| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => AxiosRequestConfig                             |
-| batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[], { isPublic?: boolean }) => Promise<{\[key as string\]: number}>                             |
-| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => Promise<FileLike[]>                             |
-| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             |
-| getDownloadUrl               | 获取下载地址，返回值类型为函数时作为按钮的点击事件，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function                            |
-| getDownloadAllUrl               | 获取全部下载地址，返回值类型为函数时作为按钮的点击事件               | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function                            |
-| getAttachmentUUID               | 获取附件的UUID                | ({ isPublic?: boolean }) => Promise<string> \| string                            |
-| renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card', defaultIcon: ReactNode) => ReactNode                            |
-| renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            |
-| onUploadSuccess | 上传成功的回调 | (attachment: AttachmentFile, response: any) => void |
-| onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |
-| onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void |
-| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean |
-
+| 属性              | 说明                | 类型                                | 默认值 |
+| ----------------- | ------------------- | ----------------------------------- |--- |
+| defaultFileKey               | 上传文件的参数名                | string                              | 'file' |
+| defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              | 0 |
+| defaultChunkSize               | 上传分片文件的大小, 单位 `B`                | number                              | 5 * 1024 * 1024 |
+| defaultChunkThreads               | 上传分片文件的并发数                | number                              | 3 |
+| action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), chunk: [AttachmentFileChunk](/component-pro/data-set/#AttachmentFileChunk), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => AxiosRequestConfig                             | |
+| batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[], { isPublic?: boolean }) => Promise<{\[key as string\]: number}>                             | |
+| fetchList               | 查询附件列表                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => Promise<FileLike[]>                             | |
+| getPreviewUrl               | 获取预览地址，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string                             | |
+| getDownloadUrl               | 获取下载地址，返回值类型为函数时作为按钮的点击事件，默认使用 AttachmentFile.url                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function                            | ({ attahment }) => attachment.url |
+| getDownloadAllUrl               | 获取全部下载地址，返回值类型为函数时作为按钮的点击事件               | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function                            | |
+| getAttachmentUUID               | 获取附件的UUID                | ({ isPublic?: boolean }) => Promise<string> \| string                            | |
+| renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card', defaultIcon: ReactNode) => ReactNode                            | |
+| renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            | |
+| onBeforeUpload | 上传前的回调 | (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
+| onBeforeUploadChunk | 上传分片前的回调 | (chunk: AttachmentFileChunk, attachment: AttachmentFile) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
+| onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile, useChunk?: boolean) => void | |
+| onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | |
+| onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
+| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |
 
 ### SecretFieldConfig
 

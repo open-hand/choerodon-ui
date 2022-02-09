@@ -17,7 +17,7 @@ export interface AttachmentListProps {
   listType?: AttachmentListType;
   pictureWidth: number;
   limit?: number;
-  onUpload: (attachment: AttachmentFile, attachmentUUID: string) => void;
+  onUpload: (attachment: AttachmentFile) => void;
   onHistory?: (attachment: AttachmentFile, attachmentUUID: string) => void;
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   onOrderChange: (props: { attachments: AttachmentFile[] }) => void;

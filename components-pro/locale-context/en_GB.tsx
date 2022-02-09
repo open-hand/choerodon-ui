@@ -133,6 +133,7 @@ const locale: Locale = {
     file_list_max_length: 'Number of files exceeded the maximum',
   },
   Attachment: {
+    ...enGB.Attachment,
     value_missing_no_label: 'Please upload attachments. ',
     value_missing: 'Please upload {label}. ',
     upload_attachment: 'Upload attachment',
@@ -146,9 +147,7 @@ const locale: Locale = {
     view_operation_records: 'View operation records',
     download: 'Download',
     delete: 'Delete',
-    file_max_size: 'File size cannot exceed: {size}',
     file_list_max_length: 'The maximum number of files is limited to: {count}',
-    file_type_mismatch: 'File type mismatch, correct type: {types}',
     drag_info: 'Click or drag files here to upload',
   },
   Modal: {

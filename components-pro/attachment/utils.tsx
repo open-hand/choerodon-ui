@@ -1,18 +1,12 @@
+import { Utils } from 'choerodon-ui/dataset';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { Sort } from './Attachment';
 
-export function appendFormData(formData: FormData, data: object) {
-  Object.keys(data).forEach(key => formData.append(key, data[key]));
-}
+const { formatFileSize } = Utils;
 
-const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
-
-export function formatFileSize(size: number, unitIndex = 0) {
-  if (size < 1024) {
-    return `${size}${units[unitIndex]}`;
-  }
-  return formatFileSize(Math.round(size / 1024), unitIndex + 1);
-}
+export {
+  formatFileSize,
+};
 
 export function sortAttachments(attachments: AttachmentFile[] | undefined, sort: Sort): AttachmentFile[] | undefined {
   if (attachments) {

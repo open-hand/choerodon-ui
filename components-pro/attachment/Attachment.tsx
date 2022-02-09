@@ -1,12 +1,13 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
+import { getConfig, Uploader } from 'choerodon-ui/dataset';
+import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
@@ -18,11 +19,10 @@ import { ButtonColor, FuncType } from '../button/enum';
 import AttachmentList from './AttachmentList';
 import AttachmentGroup from './AttachmentGroup';
 import { FormField, FormFieldProps } from '../field/FormField';
-import axios from '../axios';
 import autobind from '../_util/autobind';
 import Modal from '../modal';
 import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
-import { appendFormData, formatFileSize, sortAttachments } from './utils';
+import { sortAttachments } from './utils';
 import ObserverSelect from '../select/Select';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import attachmentStore from '../stores/AttachmentStore';
@@ -37,35 +37,14 @@ import { ShowHelp } from '../field/enum';
 import { FIELD_SUFFIX } from '../form/utils';
 import { showValidationMessage } from '../field/utils';
 import { ShowValidation } from '../form/enum';
+import { getIf } from '../data-set/utils';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
-export interface AttachmentProps extends FormFieldProps, ButtonProps {
-  /**
-   *  可接受的上传文件类型
-   */
-  accept?: string[];
-  /**
-   * 上传文件路径
-   */
-  action?: string;
-  /**
-   * 上传所需参数或者返回上传参数的方法
-   */
-  data?: object | Function;
-  /**
-   * 设置上传的请求头部
-   */
-  headers?: any;
-  withCredentials?: boolean;
+export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderProps {
   listType?: AttachmentListType;
   viewMode?: 'none' | 'list' | 'popup';
   sortable?: boolean;
-  fileKey?: string;
-  fileSize?: number;
-  bucketName?: string;
-  bucketDirectory?: string;
-  storageCode?: string;
   pictureWidth?: number;
   count?: number;
   max?: number;
@@ -74,13 +53,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps {
   showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
-  beforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onUploadProgress?: (percent: number, attachment: AttachmentFile) => void;
-  onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
-  onUploadError?: (error: AxiosError, response: any, attachment: AttachmentFile) => void;
   downloadAll?: ButtonProps | boolean;
   previewTarget?: string;
-  isPublic?: boolean;
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
   __inGroup?: boolean;
@@ -128,6 +102,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable popup?: boolean;
 
   @observable dragState?: string;
+
+  uploader?: Uploader;
 
   tempAttachmentUUID?: string;
 
@@ -189,10 +165,6 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     const { count } = this.observableProps;
     return count;
-  }
-
-  get axios(): AxiosInstance {
-    return this.getContextConfig('axios') || axios;
   }
 
   get defaultValidationMessages(): ValidationMessages {
@@ -301,6 +273,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       'viewMode',
       'fileKey',
       'fileSize',
+      'useChunk',
+      'chunkSize',
+      'chunkThreads',
       'bucketName',
       'bucketDirectory',
       'storageCode',
@@ -321,71 +296,6 @@ export default class Attachment extends FormField<AttachmentProps> {
     ]);
   }
 
-  getUploadAxiosConfig(attachment: AttachmentFile, attachmentUUID: string): AxiosRequestConfig | undefined {
-    const { originFileObj } = attachment;
-    if (originFileObj) {
-      const globalConfig = this.getContextConfig('attachment');
-      const { action, data, headers, fileKey = globalConfig.defaultFileKey, withCredentials } = this.props;
-      const newHeaders = {
-        'X-Requested-With': 'XMLHttpRequest',
-        ...headers,
-      };
-      const formData = new FormData();
-      formData.append(fileKey, originFileObj);
-      if (data) {
-        appendFormData(formData, data);
-      }
-      const onUploadProgress = (e) => {
-        this.handleProgress(e.total > 0 ? (e.loaded / e.total) * 100 : 0, attachment);
-      };
-      if (action) {
-        return {
-          url: action,
-          headers: {
-            ...newHeaders,
-          },
-          data: formData,
-          onUploadProgress,
-          method: 'POST',
-          withCredentials,
-        };
-      }
-      const actionHook = globalConfig.action;
-      if (actionHook) {
-        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-        const newConfig = typeof actionHook === 'function' ? actionHook({
-          attachment,
-          bucketName,
-          bucketDirectory,
-          storageCode,
-          attachmentUUID,
-          isPublic,
-        }) : actionHook;
-        const { data: customData, onUploadProgress: customUploadProgress } = newConfig;
-        if (customData) {
-          appendFormData(formData, customData);
-        }
-        return {
-          withCredentials,
-          method: 'POST',
-          ...newConfig,
-          headers: {
-            ...newHeaders,
-            ...newConfig.headers,
-          },
-          data: formData,
-          onUploadProgress: (e) => {
-            onUploadProgress(e);
-            if (customUploadProgress) {
-              customUploadProgress(e);
-            }
-          },
-        };
-      }
-      throw new Error(`Please set Upload.action or configure.attachment.action .`);
-    }
-  }
-
   isAcceptFile(attachment: AttachmentFile, accept: string[]): boolean {
     const acceptTypes = accept.map(type => (
       new RegExp(type.replace(/\./g, '\\.').replace(/\*/g, '.*'))
@@ -394,7 +304,17 @@ export default class Attachment extends FormField<AttachmentProps> {
     return acceptTypes.some(acceptType => acceptType.test(name) || acceptType.test(type));
   }
 
-  getAttachmentUUID() {
+  async getAttachmentUUID(): Promise<string> {
+    this.autoCreate();
+    const oldAttachmentUUID = this.tempAttachmentUUID || this.getValue();
+    const attachmentUUID = oldAttachmentUUID || (await this.fetchAttachmentUUID());
+    if (attachmentUUID !== oldAttachmentUUID) {
+      this.tempAttachmentUUID = attachmentUUID;
+    }
+    return attachmentUUID;
+  }
+
+  fetchAttachmentUUID(): Promise<string> | string {
     const { getAttachmentUUID } = this.getContextConfig('attachment');
     if (!getAttachmentUUID) {
       throw new Error('no getAttachmentUUID hook in global configure.');
@@ -404,11 +324,6 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
-    const oldAttachmentUUID = this.getValue();
-    const attachmentUUID = oldAttachmentUUID || (await this.getAttachmentUUID());
-    if (attachmentUUID !== oldAttachmentUUID) {
-      this.tempAttachmentUUID = attachmentUUID;
-    }
     const max = this.getProp('max');
     if (max > 0 && (this.count || 0) + attachments.length > max) {
       Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
@@ -421,39 +336,54 @@ export default class Attachment extends FormField<AttachmentProps> {
       oldAttachments.forEach(attachment => this.doRemove(attachment));
       this.attachments = [...attachments];
     }
-    if (attachmentUUID) {
-      try {
-        await Promise.all(attachments.map((attachment) => this.upload(attachment, attachmentUUID)));
-      } finally {
-        this.changeOrder();
-        if (this.tempAttachmentUUID) {
-          delete this.tempAttachmentUUID;
-          this.setValue(attachmentUUID);
-        }
-      }
+    try {
+      await Promise.all(attachments.map((attachment) => this.upload(attachment)));
+    } finally {
+      this.changeOrder();
     }
   }
 
   @autobind
-  async uploadAttachment(attachment: AttachmentFile, attachmentUUID: string) {
-    await this.upload(attachment, attachmentUUID);
-    this.changeOrder();
+  async uploadAttachment(attachment: AttachmentFile) {
+    await this.upload(attachment);
+    if (attachment.status === 'success') {
+      this.changeOrder();
+    }
   }
 
-  async upload(attachment: AttachmentFile, attachmentUUID: string) {
-    try {
-      const result = await this.beforeUpload(attachment, this.attachments!);
-      if (result === false) {
-        this.removeAttachment(attachment);
-      } else if (attachment.status !== 'error' && !attachment.invalid) {
-        const config = this.getUploadAxiosConfig(attachment, attachmentUUID);
-        if (config) {
-          await this.handleSuccess(await this.axios(config), attachment);
-        }
+  getUploaderProps(): UploaderProps {
+    const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+    const {
+      accept, action, data, headers, fileKey, withCredentials, fileSize, chunkSize, chunkThreads, useChunk,
+      beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
+    } = this.props;
+    return {
+      accept, action, data, headers, fileKey, withCredentials, bucketName, bucketDirectory, storageCode, isPublic,
+      fileSize, chunkSize, chunkThreads, useChunk, beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
+    };
+  }
+
+  async upload(attachment: AttachmentFile) {
+    const uploader = getIf(this, 'uploader', () => {
+      return new Uploader(
+        {},
+        {
+          getConfig: this.getContextConfig as typeof getConfig,
+        },
+      );
+    });
+    uploader.setProps(this.getUploaderProps());
+    const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
+    if (result === false) {
+      this.removeAttachment(attachment);
+    } else if (attachment.status === 'success') {
+      const { tempAttachmentUUID } = this;
+      if (tempAttachmentUUID) {
+        delete this.tempAttachmentUUID;
+        this.setValue(tempAttachmentUUID);
+      } else {
+        this.checkValidity();
       }
-    } catch (e) {
-      this.handleError(e, attachment);
-      throw e;
     }
   }
 
@@ -463,51 +393,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     return otherProps;
   }
 
-  @mobxAction
-  handleProgress(percent: number, attachment: AttachmentFile) {
-    attachment.status = 'uploading';
-    attachment.percent = percent;
-    const { onUploadProgress } = this.props;
-    if (onUploadProgress) {
-      onUploadProgress(percent, attachment);
-    }
-  }
-
-  @mobxAction
-  handleSuccess(response: any, attachment: AttachmentFile) {
-    attachment.percent = 100;
-    return new Promise<void>((resolve) => {
-      setTimeout(mobxAction(() => {
-        attachment.status = 'success';
-        const { onUploadSuccess: handleUploadSuccess } = this.getContextConfig('attachment');
-        if (handleUploadSuccess) {
-          handleUploadSuccess(response, attachment);
-        }
-        const { onUploadSuccess } = this.props;
-        if (onUploadSuccess) {
-          onUploadSuccess(response, attachment);
-        }
-        this.checkValidity();
-        resolve();
-      }), 0);
-    });
-  }
-
-  @mobxAction
-  handleError(error: AxiosError, attachment: AttachmentFile) {
-    const { onUploadError: handleUploadError } = this.getContextConfig('attachment');
-    const { response } = error;
-    const { onUploadError } = this.props;
-    attachment.status = 'error';
-    attachment.error = error;
-    const { message } = error;
-    if (handleUploadError) {
-      handleUploadError(error, attachment);
-    }
-    attachment.errorMessage = attachment.errorMessage || message;
-    if (onUploadError) {
-      onUploadError(error, response, attachment);
-    }
+  processFiles(files: File[], attachmentUUID: string): AttachmentFile[] {
+    return files.map((file, index: number) => new AttachmentFile({
+      uid: this.getUid(index),
+      url: URL.createObjectURL(file),
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+      originFileObj: file,
+      creationDate: new Date(),
+      attachmentUUID,
+    }));
   }
 
   @autobind
@@ -517,17 +414,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (target.value) {
       const files: File[] = [...target.files];
       target.value = '';
-      this.autoCreate();
-      this.uploadAttachments(files.map((file, index: number) => new AttachmentFile({
-        uid: this.getUid(index),
-        url: URL.createObjectURL(file),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: file.lastModified,
-        originFileObj: file,
-        creationDate: new Date(),
-      })));
+      this.getAttachmentUUID().then((uuid) => {
+        this.uploadAttachments(this.processFiles(files, uuid));
+      });
     }
   }
 
@@ -614,43 +503,12 @@ export default class Attachment extends FormField<AttachmentProps> {
     return undefined;
   }
 
-  @mobxAction
-  beforeUpload(attachment: AttachmentFile, attachments: AttachmentFile[]): boolean | undefined | PromiseLike<boolean | undefined> {
-    const { beforeUpload, fileSize = this.getContextConfig('attachment').defaultFileSize, accept } = this.props;
-    if (accept && !this.isAcceptFile(attachment, accept)) {
-      attachment.status = 'error';
-      attachment.invalid = true;
-      attachment.errorMessage = $l('Attachment', 'file_type_mismatch', { types: accept.join(',') }) as string;
-      return;
-    }
-    if (fileSize && fileSize > 0 && attachment.size > fileSize) {
-      attachment.status = 'error';
-      attachment.invalid = true;
-      attachment.errorMessage = $l('Attachment', 'file_max_size', { size: formatFileSize(fileSize) }) as string;
-      return;
-    }
-    if (!beforeUpload) {
-      return true;
-    }
-    return beforeUpload(attachment, attachments);
-  }
-
   handleDragUpload = (file: File) => {
-    this.autoCreate();
-    this.uploadAttachments([
-      new AttachmentFile({
-        uid: this.getUid(0),
-        url: URL.createObjectURL(file),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: file.lastModified,
-        originFileObj: file,
-        creationDate: new Date(),
-      }),
-    ]);
+    this.getAttachmentUUID().then((uuid) => {
+      this.uploadAttachments(this.processFiles([file], uuid));
+    });
     return false;
-  }
+  };
 
   @autobind
   handleClick(e) {
@@ -1105,7 +963,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           {this.getProp('help')}
         </p>
       </div>
-    )
+    );
   }
 
   renderDragUploadArea() {

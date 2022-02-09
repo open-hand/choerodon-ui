@@ -34,6 +34,10 @@ const locale: Locale = {
     unique: '该字段值重复，请重新填写。',
     unknown: '未知错误。',
   },
+  Attachment: {
+    file_max_size: '文件大小不能超过：{size}',
+    file_type_mismatch: '文件类型不匹配，正确的类型：{types}',
+  },
 };
 
 export default locale;

@@ -18,7 +18,8 @@ import {
 import Field from '../data-set/Field';
 import Record from '../data-set/Record';
 import { CacheOptions } from '../cache';
-import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
+import AttachmentFile, {  FileLike } from '../data-set/AttachmentFile';
+import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 
 export type TimeZone = string | ((moment: Moment) => string);
 
@@ -42,14 +43,18 @@ export type Formatter = {
 export interface AttachmentConfig {
   defaultFileKey: string;
   defaultFileSize: number;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean }) => AxiosRequestConfig);
+  defaultChunkSize: number;
+  defaultChunkThreads: number;
+  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; chunk?: AttachmentFileChunk | undefined; bucketName?: string | undefined; bucketDirectory?: string | undefined; storageCode?: string | undefined; attachmentUUID: string; isPublic?: boolean | undefined }) => AxiosRequestConfig);
   batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[], props: { isPublic?: boolean }) => Promise<{ [key in T]: number }>;
   fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => Promise<FileLike[]>;
   getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | undefined;
   getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | Function | undefined;
   getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
-  onUploadSuccess?: (response: any, attachment: AttachmentFile) => void;
+  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onBeforeUploadChunk?: (chunk: AttachmentFileChunk, attachment: AttachmentFile) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onUploadSuccess?: (response: any, attachment: AttachmentFile, useChunk?: boolean) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: { attachmentUUID: string; attachments: AttachmentFile[]; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<void>;
   onRemove?: (props: { attachment: AttachmentFile; attachmentUUID: string; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<boolean>;
@@ -124,6 +129,8 @@ const defaultFormatter: Formatter = {
 const defaultAttachment: AttachmentConfig = {
   defaultFileKey: 'file',
   defaultFileSize: 0,
+  defaultChunkSize: 5 * 1024 * 1024,
+  defaultChunkThreads: 3,
   getDownloadUrl({ attachment }) {
     return attachment.url;
   },
