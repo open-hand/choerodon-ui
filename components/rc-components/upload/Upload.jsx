@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
+import noop from 'lodash/noop';
 import AjaxUpload from './AjaxUploader';
 import IframeUpload from './IframeUploader';
-
-function empty() {
-}
 
 class Upload extends Component {
   static defaultProps = {
@@ -13,10 +11,10 @@ class Upload extends Component {
     headers: {},
     name: 'file',
     multipart: false,
-    onReady: empty,
-    onStart: empty,
-    onError: empty,
-    onSuccess: empty,
+    onReady: noop,
+    onStart: noop,
+    onError: noop,
+    onSuccess: noop,
     supportServerRender: false,
     multiple: false,
     beforeUpload: null,

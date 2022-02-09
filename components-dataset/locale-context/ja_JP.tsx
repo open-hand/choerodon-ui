@@ -38,6 +38,10 @@ const locale: Locale = {
     unique: 'このフィールドの値は一意ではありません。再入力してください。',
     unknown: '不明なエラー。',
   },
+  Attachment: {
+    file_max_size: 'ファイルサイズは次を超えることはできません：{size}',
+    file_type_mismatch: 'ファイルタイプの不一致、正しいタイプ：{types}',
+  },
 };
 
 export default locale;

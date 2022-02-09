@@ -14,7 +14,7 @@ import Field from '../data-set/Field';
 import { FieldType } from '../data-set/enum';
 import Record from '../data-set/Record';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
-import { formatNumber } from '../formatter';
+import { formatNumber, formatFileSize } from '../formatter';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || 1 - 2 ** 53;
@@ -94,7 +94,7 @@ export function isValidBigNumber(bigNumber?: BigNumber): boolean {
 
 export function bigNumberToFixed(bigNumber?: BigNumber, precision?: number, defaultValue?: string | null): string | undefined | null {
   return isValidBigNumber(bigNumber)
-    ? bigNumber!.toFixed(precision ?? bigNumber!.decimalPlaces())
+    ? bigNumber!.toFixed(defaultTo(precision, bigNumber!.decimalPlaces()))
     : defaultValue;
 }
 
@@ -118,8 +118,7 @@ function getBigNumberNearStepValues(
   let maxBig: BigNumber;
   if (isEmpty(max)) {
     maxBig = valueBig.plus(step);
-  }
-  else {
+  } else {
     maxBig = new BigNumber(max);
   }
 
@@ -143,8 +142,7 @@ function getBigNumberNearStepValues(
   }
   if (beforeStepFactorBig.isGreaterThan(maxFactorBig)) {
     beforeStepFactorBig = getBigBeforeStepValue(maxFactorBig, minFactorBaseBig, stepFactorBig);
-  }
-  else if (beforeStepFactorBig.isLessThan(minFactorBig)) {
+  } else if (beforeStepFactorBig.isLessThan(minFactorBig)) {
     beforeStepFactorBig = minFactorBig;
   }
   const afterStepFactorBig = beforeStepFactorBig.plus(stepFactorBig);
@@ -207,12 +205,11 @@ export function getNearStepValues<T extends Moment | number | string>(
         return getNearStepMoments(value, hour, TimeUnit.hour) as T[];
       }
     }
-  }
-  else if (!isEmpty(value) && !!step && typeof step !== 'object') {
+  } else if (!isEmpty(value) && !!step && typeof step !== 'object') {
     if (isBigNumber) {
       return getBigNumberNearStepValues(value as number | string, step, min as any, max as any) as T[] | undefined;
     }
-    
+
     min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
     max = defaultTo(Number(max), MAX_SAFE_INTEGER);
     const precisionFactor = getPrecisionFactor(Number(value), Number(step));
@@ -360,4 +357,5 @@ export default {
   isValidBigNumber,
   bigNumberToFixed,
   parseBigNumber,
+  formatFileSize,
 };

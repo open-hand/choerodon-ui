@@ -425,6 +425,18 @@ title: DataSet
 | invalid   | 检验失败，如果为true, 则无法重新上传  | boolean |
 | originFileObj   | 原始文件对象，只有通过上传按钮选择的附件才有该对象  | File |
 
+### AttachmentFileChunk
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| file   | AttachmentFile对象    | AttachmentFile |
+| total   | 文件总大小    | number |
+| start   | 分片起始位置    | number |
+| end   | 分片结束位置    | number |
+| index   | 分片索引    | number |
+| status   | 状态 `error` `success` `uploading`    | string |
+| percent   | 上传进度, 0 至 100   | number |
+
 ## ValidationRule
 
 | 属性                | 说明                                       | 类型     |

@@ -35,6 +35,10 @@ export interface Locale {
     unique: string;
     unknown: string;
   };
+  Attachment: {
+    file_max_size: string;
+    file_type_mismatch: string;
+  };
 }
 
 export default zh_CN;

@@ -58,6 +58,8 @@ export { default as lookupStore, LookupCodeStore } from './stores/LookupCodeStor
 
 export { default as TreeHelper } from './tree-helper';
 
+export { default as Uploader } from './uploader';
+
 export { default as Utils } from './utils';
 
 export { default as Validator } from './validator/Validator';

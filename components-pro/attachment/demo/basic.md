@@ -24,6 +24,8 @@ configure({
   attachment: {
     defaultFileKey: 'file',
     defaultFileSize: 500 * 1024 * 1024,
+    defaultChunkSize: 500 * 1024 * 1024,
+    defaultChunkThreads: 3,
     action: {
       url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       headers: {
@@ -61,12 +63,21 @@ configure({
     getDownloadAllUrl({ attachmentUUID }) {
       return `/${attachmentUUID}`;
     },
-    onUploadSuccess(resp, attachment) {
-      attachment.load({
-        name: resp.name,
-        uid: uuid(),
-        // url: resp.url,
-      });
+    onBeforeUploadChunk(chunk) {
+      if (chunk) {
+        // do chunk upload check
+      }
+    },
+    onUploadSuccess(resp, attachment, useChunk) {
+      if (useChunk) {
+        // do chunks upload complete
+      } else if (resp) {
+        attachment.load({
+          name: resp.name,
+          uid: uuid(),
+          // url: resp.url,
+        });
+      }
     },
     renderHistory() {
       return 'empty';
@@ -84,6 +95,8 @@ const App = () => {
     value,
     onChange: setValue,
     showHistory: true,
+    useChunk: true,
+    chunkSize: 1024,
     help: '支持文件类型： .deb .txt .pdf image/*',
   };
 

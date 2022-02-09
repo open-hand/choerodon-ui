@@ -14,6 +14,7 @@ title:
 The most basic usage.
 
 ```jsx
+import { configure } from 'choerodon-ui';
 import {
   DataSet,
   Table,
@@ -29,6 +30,11 @@ import {
 } from 'choerodon-ui/pro';
 import { action } from 'mobx';
 import moment from 'moment';
+
+// 导出配置
+configure({
+  xlsx: () => import('xlsx'),
+});
 
 const { Column } = Table;
 const { Option } = Select;

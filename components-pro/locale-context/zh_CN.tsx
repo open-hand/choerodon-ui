@@ -133,6 +133,7 @@ const locale: Locale = {
     file_list_max_length: '文件数量超过最大限制',
   },
   Attachment: {
+    ...zhCN.Attachment,
     value_missing_no_label: '请上传附件。',
     value_missing: '请上传{label}。',
     upload_attachment: '上传附件',
@@ -146,9 +147,7 @@ const locale: Locale = {
     view_operation_records: '查看操作记录',
     download: '下载',
     delete: '删除',
-    file_max_size: '文件大小不能超过：{size}',
     file_list_max_length: '文件数量最大限制为：{count}',
-    file_type_mismatch: '文件类型不匹配，正确的类型：{types}',
     drag_info: '点击或将文件拖拽到这里上传',
   },
   Modal: {

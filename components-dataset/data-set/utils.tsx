@@ -12,7 +12,6 @@ import isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import { isEmpty, parseBigNumber, parseNumber, warning } from '../utils';
 import Field, { FieldProps, Fields } from './Field';
-// import XLSX from 'xlsx';
 import { BooleanValue, DataToJSON, FieldType, RecordStatus, SortOrder } from './enum';
 import DataSet, { DataSetProps } from './DataSet';
 import Record, { RecordDynamicProps } from './Record';
@@ -1194,7 +1193,7 @@ export async function concurrentPromise(
     // 最大并发数
     const maxConcurrent = Math.min(5, promiseLoadersLength);
     let currentPromiseIndex = 0;
-    const execPromise = async (getPromise: () => Promise<any>, index: number) => {
+    const execPromise = async (loader: { getPromise: () => Promise<any> } | undefined, index: number) => {
       if (fail) {
         return;
       }
@@ -1205,7 +1204,10 @@ export async function concurrentPromise(
       }
       let res;
       try {
-        res = await getPromise();
+        if (!loader) {
+          throw new Error('loader is undefined');
+        }
+        res = await loader.getPromise();
       } catch (error) {
         fail = true;
         reject(error);
@@ -1220,13 +1222,13 @@ export async function concurrentPromise(
       // 执行下一个promise
       if (currentPromiseIndex < promiseLoadersLength - 1) {
         ++currentPromiseIndex;
-        execPromise(promiseLoaders[currentPromiseIndex]?.getPromise, currentPromiseIndex);
+        execPromise(promiseLoaders[currentPromiseIndex], currentPromiseIndex);
       }
     };
 
     // 初始化执行
     for (let i = 0; i < maxConcurrent; i++) {
-      execPromise(promiseLoaders[i]?.getPromise, i);
+      execPromise(promiseLoaders[i], i);
     }
     currentPromiseIndex = maxConcurrent - 1;
   });
@@ -1336,4 +1338,8 @@ export function mergeDataSetProps(props: DataSetProps | undefined, dataSetProps?
     return dataSetProps(props || {});
   }
   return { ...props, ...dataSetProps };
+}
+
+export function appendFormData(formData: FormData, data: object) {
+  Object.keys(data).forEach(key => formData.append(key, data[key]));
 }

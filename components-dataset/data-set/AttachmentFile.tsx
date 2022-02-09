@@ -1,6 +1,7 @@
-import { action, observable, runInAction } from 'mobx';
+import { action as mobxAction, observable, runInAction } from 'mobx';
 import { AxiosError } from 'axios';
 import isNil from 'lodash/isNil';
+import AttachmentFileChunk from './AttachmentFileChunk';
 
 const extReg = /(.*)\.([^.]*)$/;
 
@@ -13,6 +14,7 @@ export interface FileLike {
   url?: string;
   originFileObj?: File;
   creationDate?: Date;
+  attachmentUUID?: string;
 
   [key: string]: any;
 }
@@ -39,15 +41,37 @@ export default class AttachmentFile implements FileLike {
 
   @observable status?: 'error' | 'success' | 'uploading' | 'deleting' | 'done';
 
-  @observable percent?: number | undefined;
+  @observable private $percent?: number | undefined;
+
+  get percent(): number | undefined {
+    const { chunks } = this;
+    if (chunks) {
+      const { length } = chunks;
+      return chunks.reduce((sum, chunk) => {
+        const { status, percent = status === 'success' ? 100 : 0 } = chunk;
+        return sum + percent / length;
+      }, 0);
+    }
+    return this.$percent;
+  }
+
+  set percent(percent: number | undefined) {
+    runInAction(() => {
+      this.$percent = percent;
+    });
+  }
 
   @observable error?: AxiosError | undefined;
 
-  @observable errorMessage?: string;
+  @observable errorMessage?: string | undefined;
 
   @observable invalid?: boolean;
 
   creationDate: Date;
+
+  attachmentUUID?: string | undefined;
+
+  chunks?: AttachmentFileChunk[];
 
   constructor(file: FileLike) {
     runInAction(() => {
@@ -61,7 +85,7 @@ export default class AttachmentFile implements FileLike {
     });
   }
 
-  @action
+  @mobxAction
   private load(file: FileLike) {
     const { name } = file;
     if (name) {
