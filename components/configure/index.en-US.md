@@ -146,6 +146,7 @@ const prefixCls = getConfig('prefixCls');
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | control `UP` `DOWN` keyboard events for `NumberField` component | boolean | true |
 | lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录  | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |
+| lovSelectionProps | Lov 显示已选记录时的参数  | [SelectionProps](components-pro/lov#SelectionProps) |  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | onTabsChange | Tabs 变更事件， 初始化时也会触发， 可用于监控埋点 | (props: { activeKey:string, activeGroupKey?:string, title: string, groupTitle?:string, code?:string }) => void |   |
 | onButtonClick | 按钮点击事件， 可用于监控埋点 | (props: { title:string, icon?:string }) => void |   |
@@ -236,9 +237,9 @@ const prefixCls = getConfig('prefixCls');
 | getAttachmentUUID               | 获取附件的UUID                | ({ isPublic?: boolean }) => Promise<string> \| string                            | |
 | renderIcon               | 附件列表项的前缀图标渲染函数                | (attachment: AttachmentFile, listType: 'text'\| 'picture' \| 'picture-card', defaultIcon: ReactNode) => ReactNode                            | |
 | renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            | |
-| onBeforeUpload | 上传前的回调 | (attachment: AttachmentFile, attachments: AttachmentFile[]) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
-| onBeforeUploadChunk | 上传分片前的回调 | (chunk: AttachmentFileChunk, attachment: AttachmentFile) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
-| onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile, useChunk?: boolean) => void | |
+| onBeforeUpload | 上传前的回调 | (attachment: AttachmentFile, attachments: AttachmentFile[], props: { useChunk?: boolean, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
+| onBeforeUploadChunk | 上传分片前的回调 | ({ chunk: AttachmentFileChunk, attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
+| onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile, props: { useChunk?: boolean, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => void | |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | |
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |

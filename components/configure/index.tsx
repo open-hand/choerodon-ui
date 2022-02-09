@@ -18,6 +18,7 @@ import {
   TableQueryBarHook,
   TableQueryBarHookCustomProps,
 } from 'choerodon-ui/pro/lib/table/Table';
+import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnAlign, DragColumnAlign, HighLightRowType, TableColumnResizeTriggerType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
@@ -120,6 +121,7 @@ export interface Config extends DataSetConfig {
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
   lovQueryBarProps?: object;
   lovShowSelectedInView?: boolean | LovShowSelectedInViewHook;
+  lovSelectionProps?: SelectionProps;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: TableQueryBarHookCustomProps;

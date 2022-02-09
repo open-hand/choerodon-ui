@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight, xlsx, attachment.defaultChunkSize, attachment.defaultChunkThreads, attachment.onBeforeUpload, attachment.onBeforeUploadChunk 属性。
+- 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight, xlsx, attachment.defaultChunkSize, attachment.defaultChunkThreads, attachment.onBeforeUpload, attachment.onBeforeUploadChunk, lovSelectionProps 属性。
 - 🌟 `<pro>DataSet`: ValidationRule 增加 disabled 钩子。
 - 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性, rowHeight 支持钩子。
 - 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 comboBar 筛选条类型及对应 queryBarProps 相关组合筛选条配置项。
 - 🌟 `<pro>Attachment`: 新增 Attachment.Dragger 拖拽上传, 新增 useChunk, chunkSize, chunkThreads 属性。
 - 🌟 `<pro>Form`: 新增 spacingType 属性。
+- 🌟 `<pro>PerformanceTable`: 单元格实现 renderEmpty。
 - 💄 `<pro>Table`: 优化前端导出支持导出勾选项。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing 支持响应式，值类型支持数字和数字数组类型。

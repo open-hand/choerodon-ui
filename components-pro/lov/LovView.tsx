@@ -34,7 +34,7 @@ export interface LovViewProps {
   textField?: string;
   viewRenderer?: ViewRenderer;
   showSelectedInView?: boolean;
-  selectionProps?: SelectionProps,
+  getSelectionProps?: () => SelectionProps,
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -289,7 +289,7 @@ export default class LovView extends Component<LovViewProps> {
       multiple,
       viewMode,
       showSelectedInView,
-      selectionProps,
+      getSelectionProps,
     } = this.props;
     if (!showSelectedInView || !multiple) {
       return null;
@@ -315,7 +315,7 @@ export default class LovView extends Component<LovViewProps> {
         valueField={valueField}
         textField={textField}
         selectionsPosition={selectionsPosition}
-        selectionProps={selectionProps}
+        selectionProps={getSelectionProps && getSelectionProps()}
       />
     );
   }

@@ -1212,9 +1212,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @action
-  setText(text?: string, isDifference?: boolean): void {
+  setText(text?: string): void {
+    const isDifference = this.searchText !== text;
     super.setText(text);
-    // isDifference - 判断加上前后的值是否不一致才搜索
     if (this.searchable && !this.isSearchFieldInPopup() && isDifference) {
       this.doSearch(text);
     }
@@ -1283,7 +1283,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       target.value = restricted;
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
-    this.setText(restricted, this.searchText !== restricted);
+    this.setText(restricted);
     if (this.observableProps.combo) {
       if (type !== 'compositionend') {
         this.generateComboOption(restricted, text => this.setText(text));

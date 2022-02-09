@@ -8,6 +8,7 @@ import { defaultClassPrefix, getUnhandledProps, isNullOrUndefined, prefix } from
 import TableContext from './TableContext';
 import { ColumnPropTypeKeys } from './Column';
 import { RowDataType, StandardProps } from './common';
+import isEmpty from 'choerodon-ui/pro/lib/_util/isEmpty';
 
 export interface CellProps extends StandardProps {
   align?: 'left' | 'center' | 'right';
@@ -254,6 +255,9 @@ class Cell extends React.PureComponent<CellProps> {
     const unhandledProps = getUnhandledProps(propTypeKeys, getUnhandledProps(ColumnPropTypeKeys, rest));
     let cell = renderCell ? renderCell(cellContent) : cellContent;
     const { searchText, highlightRowIndexs } = tableStore;
+    if (isEmpty(cell)) {
+      cell = tableStore.getConfig('renderEmpty')('Output');
+    }
     if (isNumber(cell)) cell = String(cell);
     if (isString(cell) && searchText) {
       const index = cell.indexOf(searchText);

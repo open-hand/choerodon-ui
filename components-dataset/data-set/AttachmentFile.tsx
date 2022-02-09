@@ -43,6 +43,8 @@ export default class AttachmentFile implements FileLike {
 
   @observable private $percent?: number | undefined;
 
+  md5?: string;
+
   get percent(): number | undefined {
     const { chunks } = this;
     if (chunks) {
