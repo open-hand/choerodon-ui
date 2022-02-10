@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 drawer 模式下的样式叠加问题。
 - 🐞 `<pro>Record`: 修复多选模式下错误过滤 0 和 false 的问题。
 - 🐞 `<pro>DataSet`: 修复提交回写数据成功后无法翻页的问题。
+- 🐞 `<pro>DataSet`: 修复 cacheSelection 和 cacheModified 在 appendData 时不起效果。
 - 🐞 `<pro>Select`: 修复在浏览器非默认字号下下拉框没对齐的问题。
 - 🐞 `<pro>Select`: 修复下拉分页搜索在第二页没有传参导致搜索内容不匹配。
 - 🐞 `<pro>Select`: 修复下拉分页搜索每次选择都会查询的问题。

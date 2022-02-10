@@ -519,7 +519,6 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
 
   const handleClearCache = useCallback(action(() => {
     dataSet.clearCachedRecords();
-    tableStore.showCachedSelection = false;
   }), [dataSet, tableStore]);
 
   useLayoutEffect(() => {

@@ -49,6 +49,8 @@ class App extends React.Component {
     parentField: 'parentId',
     idField: 'id',
     checkField: 'ischecked',
+    cacheSelection: true,
+    cacheModified: true,
     fields: [
       { name: 'id', type: 'number' },
       { name: 'text', type: 'string', label: '功能名称' },
@@ -104,6 +106,8 @@ class App extends React.Component {
             rowHeight={40}
             onRow={nodeCover}
             header="treeAsync"
+            buttons={['query', ['query', { children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
+            showCachedSelection
           >
             <Column name="text" editor renderer={iconRenderer} width={250} />
             <Column name="ischecked" editor />
@@ -119,6 +123,8 @@ class App extends React.Component {
             rowHeight={40}
             onRow={nodeCover}
             header="treeLoadData"
+            buttons={['query', ['query', { children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
+            showCachedSelection
           >
             <Column name="text" editor renderer={iconRenderer} width={250} />
             <Column name="ischecked" editor />
