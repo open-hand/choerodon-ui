@@ -54,7 +54,7 @@ const AttachmentGroup: FunctionComponent<AttachmentGroupProps> = function Attach
   const attachments = useMemo((): ReactElement | undefined => children ? (
     <div className={`${prefixCls}-group`}>
       {
-        normalizeAttachments(children, hasCount || viewMode === 'list' ? undefined : action((attachment, index) => {
+        normalizeAttachments(children, hasCount ? undefined : action((attachment, index) => {
           if (attachment) {
             listRef.current.set(index, attachment);
           } else {

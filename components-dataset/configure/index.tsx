@@ -23,6 +23,8 @@ import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 
 export type TimeZone = string | ((moment: Moment) => string);
 
+export type BigNumberTarget = 'currency' | 'number-field';
+
 export type Status = {
   [RecordStatus.add]: string;
   [RecordStatus.update]: string;
@@ -166,11 +168,10 @@ const globalConfig: ObservableMap<ConfigKeys, Config[ConfigKeys]> = observable.m
 const baseMergeProps: (keyof Config)[] = ['transport', 'feedback', 'formatter', 'attachment'];
 
 export function getConfig<C extends Config, T extends keyof C, D extends DefaultConfig>(key: T): T extends keyof D ? D[T] : C[T] {
-  const custom = (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
-  const hasCustom = (globalConfig as ObservableMap<keyof C, C[T]>).has(key);
-  if (!hasCustom) {
+  if (!(globalConfig as ObservableMap<keyof C, C[T]>).has(key)) {
     return (defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
   }
+  const custom = (globalConfig as ObservableMap<keyof C, C[T]>).get(key) as T extends keyof D ? D[T] : C[T];
   if ((baseMergeProps as T[]).includes(key)) {
     return {
       ...(defaultGlobalConfig as ObservableMap<keyof C, C[T]>).get(key),

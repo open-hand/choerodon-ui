@@ -3,7 +3,7 @@ import defaultTo from 'lodash/defaultTo';
 import capitalize from 'lodash/capitalize';
 import isNil from 'lodash/isNil';
 import BigNumber from 'bignumber.js';
-import { BigNumberTarget } from 'choerodon-ui/lib/configure';
+import { BigNumberTarget } from '../configure';
 import { FieldType, FieldFormat, FieldTrim } from '../data-set/enum';
 import {
   getNumberFormatOptions,
