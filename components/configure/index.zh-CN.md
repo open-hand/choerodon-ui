@@ -99,7 +99,7 @@ const prefixCls = getConfig('prefixCls');
 | tableFilterSearchText | Table 筛选条快速搜索参数名 | string | 'params' |
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | confirm | 变更检查行为自定义，可与[modifiedCheckMessage](/components-pro/data-set/#API)关联使用 | (message: any) => Promise<boolean>  | async (message) => (await confirm(message)) !== 'cancel' |
-| customizable | 是否显示个性化设置入口按钮 | boolean \| [Customizable](#Customizable) | false |
+| customizable | 是否开启个性化 | boolean \| [Customizable](#Customizable) | false |
 | customizedSave | Table 个性化保存的钩子 | (code, customized, component: keyof [Customizable](#Customizable)) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | customizedLoad | Table 个性化加载的钩子 | (code, component: keyof [Customizable](#Customizable)) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
@@ -113,6 +113,7 @@ const prefixCls = getConfig('prefixCls');
 | modalAutoCenter | Modal 是否默认居中 | boolean | false |
 | modalMaskClosable | 点击蒙层是否允许关闭，可选 boolean \| click \| dblclick | boolean \| string | false |
 | drawerOkFirst | 默认 Modal drawer 的 ok 按钮排在第一个，优先级高于 modalOkFirst | boolean \| undefined | undefined |
+| modalResizable | modal是否可调整大小 | boolean |   |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
 | buttonColor | 默认 Button 的颜色 | string | default |
 | renderEmpty | 自定义组件空状态。componentName会接收到的值为 `Table` `Select`,在实现函数的时候需要对这两个输入进行处理,**注意需要同时处理Table以及Select**,默认值参考源代码的[defaultRenderEmpty](https://github.com/open-hand/choerodon-ui/blob/master/components/configure/index.tsx) | (componentName: string) => ReactNode | - |
@@ -164,6 +165,7 @@ const prefixCls = getConfig('prefixCls');
 | Table | false | boolean |
 | PerformanceTable | false | boolean |
 | Tabs | false | boolean |
+| Customizable | false | boolean |
 
 ### Formatter
 

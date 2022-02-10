@@ -13,3 +13,8 @@ export type modalChildrenProps = {
   handleOk: (ok: Function) => void;
   handleCancel: (cancel: Function) => void;
 }
+
+export interface ModalCustomized {
+  width?: string | number;
+  height?: string | number;
+}

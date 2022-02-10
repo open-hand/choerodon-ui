@@ -3,6 +3,25 @@
 @import 'mixin';
 
 @modal-prefix-cls: ~'@{c7n-pro-prefix}-modal';
+@modal-prefix-cursor-cls: ~'@{modal-prefix-cls}-resizer-cursor-line';
+
+.line-vertical() {
+  top: 0;
+  width: 0.1rem;
+  height: 100%;
+  border-right: 0.04rem solid rgba(255, 255, 255, 0);
+  border-left: 0.04rem solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}
+
+.line-horizontal() {
+  left: 0;
+  width: 100%;
+  height: 0.1rem;
+  border-top: 0.04rem solid rgba(255, 255, 255, 0);
+  border-bottom: 0.04rem solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+}
 
 .@{modal-prefix-cls} {
   position: fixed;
@@ -56,7 +75,7 @@
     text-align: right;
     border-radius: 0 0 @border-radius-base @border-radius-base;
 
-    button + button {
+    button+button {
       margin-bottom: 0;
       margin-left: 0.08rem;
     }
@@ -157,6 +176,140 @@
     min-width: 5.2rem;
     height: min-content;
   }
+
+  &-resizer-content {
+    display: flex;
+    flex-direction: column;
+
+    .@{modal-prefix-cls}-body {
+      flex: 1;
+    }
+  }
+
+  &-resizer-cursor {
+    position: absolute;
+
+    &-modal {
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 0.14rem;
+      height: 0.1rem;
+      transform: rotate(-45deg);
+      cursor: se-resize;
+    }
+
+    &-icon {
+      position: relative;
+      display: block;
+      width: 0.14rem;
+      height: 0.05rem;
+
+      &::before,
+      &::after {
+        position: absolute;
+        height: 0.01rem;
+        background: @text-color-secondary;
+        content: '';
+      }
+
+      &::before {
+        top: 0;
+        width: 100%;
+      }
+
+      &::after {
+        bottom: 0;
+        left: 25%;
+        width: 50%;
+      }
+
+      &:focus,
+      &:hover {
+
+        &::before,
+        &::after {
+          color: #444;
+        }
+      }
+    }
+
+    &-drawer-right,
+    &-drawer-left,
+    &-drawer-up,
+    &-drawer-down {
+      position: absolute;
+      z-index: 10;
+      box-sizing: border-box;
+
+      &::before,
+      &::after {
+        position: absolute;
+        display: block;
+        content: "";
+      }
+
+      &::before {
+        top: calc(50% - 0.13rem);
+        left: -0.02rem;
+        width: 0.03rem;
+        height: 0.26rem;
+        margin-top: 0.07rem;
+        margin-bottom: 0.07rem;
+        background: @component-background;
+      }
+
+      &::after {
+        top: calc(50% - 0.06rem);
+        left: -0.01rem;
+        width: 0.02rem;
+        height: 0.12rem;
+        margin-top: 0.07rem;
+        margin-bottom: 0.07rem;
+        border-right: 0.01rem solid #7a869a;
+        border-left: 0.01rem solid #7a869a;
+      }
+
+      &:hover {
+        .@{modal-prefix-cursor-cls} {
+          background-color: @link-hover-color;
+        }
+      }
+
+      &:active {
+        .@{modal-prefix-cursor-cls} {
+          background-color: @link-active-color;
+        }
+      }
+    }
+
+    &-drawer-right {
+      .line-vertical();
+      left: -0.05rem;
+    }
+
+    &-drawer-left {
+      .line-vertical();
+      right: -0.05rem;
+    }
+
+    &-drawer-up,
+    &-drawer-down {
+      .line-horizontal();
+      bottom: -0.05rem;
+    }
+
+    &-drawer-down {
+      .line-horizontal();
+      top: -0.05rem;
+    }
+
+    .@{modal-prefix-cursor-cls} {
+      width: 100%;
+      height: 100%;
+      transition: all 0.1s ease-out;
+    }
+  }
 }
 
 .@{c7n-pro-prefix}-confirm {
@@ -200,7 +353,7 @@
     font-size: @font-size-base;
   }
 
-  &-title + &-content {
+  &-title+&-content {
     margin-top: 0.08rem;
   }
 }

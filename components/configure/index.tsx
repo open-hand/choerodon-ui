@@ -30,7 +30,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalProps, ModalCustomized } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
@@ -90,12 +90,14 @@ export type Customizable = {
   Table?: boolean;
   PerformanceTable?: boolean;
   Tabs?: boolean;
+  Modal?: boolean;
 }
 
 export interface Customized {
   Table?: TableCustomized;
   PerformanceTable?: PerformanceTableCustomized;
   Tabs?: TabsCustomized;
+  Modal?: ModalCustomized;
 }
 
 export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component: T) => void;
@@ -178,6 +180,7 @@ export interface Config extends DataSetConfig {
   modalButtonProps?: ButtonProps;
   modalKeyboard?: boolean;
   modalMaskClosable?: boolean | 'click' | 'dblclick';
+  modalResizable?: boolean;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
   renderEmpty?: renderEmptyHandler;

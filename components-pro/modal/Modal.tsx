@@ -6,8 +6,10 @@ import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
-import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { getCustomizable } from 'choerodon-ui/lib/configure/utils';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -20,10 +22,20 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
-import { modalChildrenProps } from './interface';
+import { modalChildrenProps, ModalCustomized } from './interface';
 import { getDocument, MousePosition } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
+
+function getMath(value, min, max) {
+  return Math.min(
+    Math.max(
+      value,
+      min,
+    ),
+    max,
+  )
+}
 
 function fixUnit(n) {
   if (isNumber(n)) {
@@ -95,6 +107,8 @@ export interface ModalProps extends ViewComponentProps {
   contentStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
   closeOnLocationChange?: boolean;
+  resizable?: boolean;
+  customizedCode?: string;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -139,9 +153,17 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   okCancelEvent: EventManager = new EventManager();
 
+  resizeEvent: EventManager = new EventManager();
+
   offset?: [number | string | undefined, number | string | undefined];
 
   cancelButton: Button | null;
+
+  minWidth: number;
+
+  minHeight: number;
+
+  @observable tempCustomized: ModalCustomized | null | undefined;
 
   get okBtn(): ReactElement<ButtonProps> {
     const {
@@ -192,6 +214,23 @@ export default class Modal extends ViewComponent<ModalProps> {
     );
   }
 
+  get drawerTransitionName(): DrawerTransitionName {
+    const { drawerTransitionName = this.getContextConfig('drawerTransitionName') } = this.props;
+    return toUsefulDrawerTransitionName(drawerTransitionName);
+  }
+
+  get doc(): Document {
+    return getDocument(window);
+  }
+
+  get docOffsetWidth(): number {
+    return this.doc.documentElement.clientWidth || this.doc.body.clientWidth;
+  }
+
+  get docOffsetHeight(): number {
+    return this.doc.documentElement.clientHeight || this.doc.body.clientHeight;
+  }
+
   contentNode: HTMLElement;
 
   childrenProps: modalChildrenProps;
@@ -206,6 +245,17 @@ export default class Modal extends ViewComponent<ModalProps> {
       handleOk: this.registerOk,
       handleCancel: this.registerCancel,
     };
+    this.loadCustomized();
+  }
+
+  componentDidMount() {
+    const { contentStyle, resizable = this.getContextConfig('modalResizable'), style } = this.props;
+    if (resizable) {
+      runInAction(() => {
+        this.minWidth = style && toPx(style.minWidth) || contentStyle && toPx(contentStyle.minWidth) || (this.element as HTMLDivElement).getBoundingClientRect().width;
+        this.minHeight = style && toPx(style.minHeight) || contentStyle && toPx(contentStyle.minHeight) || this.contentNode.offsetHeight;
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
@@ -280,24 +330,55 @@ export default class Modal extends ViewComponent<ModalProps> {
       'bodyStyle',
       'closeOnLocationChange',
       'eventKey',
+      'resizable',
+      'customizedCode',
     ]);
+  }
+
+  async loadCustomized() {
+    const { customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
+    const customizable = getCustomizable('Modal');
+    if (resizable && customizable && customizedCode) {
+      const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
+      if (temp) {
+        runInAction(() => {
+          this.tempCustomized = temp;
+        });
+        this.forceUpdate();
+      }
+    }
+  }
+
+  saveCustomized() {
+    const { customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
+    const customizable = getCustomizable('Modal');
+    if (resizable && customizable && customizedCode) {
+      const customizedSave = this.getContextConfig('customizedSave');
+      customizedSave(customizedCode, this.tempCustomized || {}, 'Modal');
+    }
   }
 
   getOtherProps() {
     const otherProps = super.getOtherProps();
     const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer, onTop } = this.props;
+    const currentStyle = { ...style, ...this.tempCustomized };
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
       otherProps.onKeyDown = this.handleKeyDown;
     }
-    if (!drawer) {
+
+    if (drawer) {
+      otherProps.style = {
+        ...currentStyle,
+      };
+    } else {
       const position = this.mousePosition || mousePosition;
       if (position) {
         this.mousePosition = position;
         otherProps.style = {
-          ...style,
-          transformOrigin: getTransformOrigin(position, style),
+          ...currentStyle,
+          transformOrigin: getTransformOrigin(position, currentStyle),
         };
       }
       if (hidden) {
@@ -321,10 +402,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     const {
       prefixCls,
       props: {
-        style = {},
+        style = this.tempCustomized || {},
         fullScreen,
         drawer,
-        drawerTransitionName = this.getContextConfig('drawerTransitionName'),
         size,
         active,
         border = this.getContextConfig('modalSectionBorder'),
@@ -340,28 +420,130 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-fullscreen`]: fullScreen,
       [`${prefixCls}-drawer`]: drawer,
       [`${prefixCls}-border`]: drawer ? drawerBorder : border,
-      [`${prefixCls}-drawer-${toUsefulDrawerTransitionName(drawerTransitionName)}`]: drawer,
+      [`${prefixCls}-drawer-${toUsefulDrawerTransitionName(this.drawerTransitionName)}`]: drawer,
       [`${prefixCls}-auto-center`]: autoCenter && center && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,
     });
   }
 
+  @autobind
+  handleResize(e) {
+    e.persist();
+    const { drawer, fullScreen } = this.props;
+    if (e.target && !fullScreen && this.contentNode) {
+      const mousemove = !drawer ? this.handleModalMouseResize(e) : this.handleDrawerMouseResize(e);
+      if (mousemove) {
+        const handleMouseUp = () => {
+          const { width, height } = (this.element as HTMLDivElement).getBoundingClientRect();
+          runInAction(() => {
+            this.tempCustomized = { width, height };
+          });
+          this.resizeEvent
+            .removeEventListener('mousemove', mousemove)
+            .removeEventListener('mouseup', handleMouseUp);
+        };
+        this.resizeEvent.setTarget(this.doc)
+          .addEventListener('mousemove', mousemove)
+          .addEventListener('mouseup', handleMouseUp);
+      }
+    }
+  }
+
+  handleModalMouseResize(e) {
+    const { contentNode, docOffsetHeight, docOffsetWidth, element, element: { offsetParent }, minHeight, minWidth, prefixCls, props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
+    const { clientX, clientY } = e;
+    const { left: elementLeft, top: elementTop } = (element as HTMLDivElement).getBoundingClientRect();
+    const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
+    const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
+    const clzz = classes(element);
+    const startX = clientX - contentWidth;
+    const startY = clientY - contentHeight;
+    // modal模式需存在坐标
+    if (!drawer && !this.offset && clzz.has(`${prefixCls}-center`)) {
+      this.offset = [pxToRem(elementLeft), pxToRem(autoCenter ? contentTop : elementTop)];
+      clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
+      Object.assign(element.style, {
+        left: this.offset[0],
+        top: this.offset[1],
+      });
+    }
+    return (me) => {
+      const width = me.clientX - startX;
+      const height = me.clientY - startY;
+      Object.assign(element.style, {
+        width: pxToRem(getMath(width, minWidth, embeddedOffsetWidth || docOffsetWidth)),
+        height: pxToRem(getMath(height, minHeight, embeddedOffsetHeight || docOffsetHeight)),
+      });
+    };
+  }
+
+  handleDrawerMouseResize(e) {
+    const { contentNode, drawerTransitionName, docOffsetHeight, docOffsetWidth, element, element: { offsetParent }, minWidth, minHeight } = this;
+    const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
+    const maxWidth = embeddedOffsetWidth || docOffsetWidth;
+    const maxHeight = embeddedOffsetHeight || docOffsetHeight;
+    let { offsetHeight: height, offsetWidth: width } = contentNode;
+    return (me) => {
+      let { clientX, clientY } = me;
+      if (offsetParent) {
+        clientX = element.offsetLeft + me.clientX - e.clientX;
+        clientY = element.offsetTop + me.clientY - e.clientY;
+      }
+      switch (drawerTransitionName) {
+        case 'slide-right':
+          width = getMath(maxWidth - clientX, minWidth, maxWidth);
+          break;
+        case 'slide-left':
+          width = getMath(clientX, minWidth, maxWidth);
+          break;
+        case 'slide-up':
+          height = getMath(clientY, minHeight, maxHeight);
+          break;
+        case 'slide-down':
+          height = getMath(maxHeight - clientY, minHeight, maxHeight);
+          break;
+        default:
+          break;
+      }
+      Object.assign(element.style, {
+        width: pxToRem(width),
+        height: pxToRem(height),
+      });
+    };
+  }
+
   render() {
-    const { prefixCls, props: { contentStyle, drawer } } = this;
+    const { prefixCls, drawerTransitionName, props: { contentStyle, drawer, resizable = this.getContextConfig('modalResizable'), fullScreen } } = this;
     const header = this.getHeader();
     const body = this.getBody();
     const footer = this.getFooter();
+    const resizerPrefixCls = `${prefixCls}-resizer`;
+    const resizerCursorCls = `${resizerPrefixCls}-cursor`;
     return (
       <div {...this.getMergedProps()}>
         <div
           ref={this.contentReference}
-          className={classNames(`${prefixCls}-content`, { [`${prefixCls}-drawer-content`]: drawer })}
+          className={classNames(`${prefixCls}-content`, { [`${prefixCls}-drawer-content`]: drawer, [`${resizerPrefixCls}-content`]: resizable })}
           style={contentStyle}
         >
           {header}
           {body}
           {footer}
+          {
+            resizable && <div
+              className={classNames(resizerCursorCls, {
+                [`${resizerCursorCls}-modal`]: !drawer && !fullScreen,
+                [`${resizerCursorCls}-drawer-right`]: drawer && drawerTransitionName === 'slide-right',
+                [`${resizerCursorCls}-drawer-left`]: drawer && drawerTransitionName === 'slide-left',
+                [`${resizerCursorCls}-drawer-up`]: drawer && drawerTransitionName === 'slide-up',
+                [`${resizerCursorCls}-drawer-down`]: drawer && drawerTransitionName === 'slide-down',
+              })}
+              onMouseDown={this.handleResize}
+            >
+              {drawer ? <div className={`${resizerCursorCls}-line`} /> : <span className={`${resizerCursorCls}-icon`} />}
+            </div>
+          }
         </div>
       </div>
     );
@@ -376,6 +558,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   componentWillUnmount() {
     this.moveEvent.clear();
     this.okCancelEvent.clear();
+    this.resizeEvent.clear();
   }
 
   @autobind
@@ -391,20 +574,17 @@ export default class Modal extends ViewComponent<ModalProps> {
   handleHeaderMouseDown(downEvent: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
     const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
-      const { prefixCls } = this;
+      const { prefixCls, docOffsetHeight, docOffsetWidth } = this;
       const { clientX, clientY, currentTarget } = downEvent;
       const clzz = classes(element);
       const { offsetLeft, offsetParent } = element;
-      const doc = getDocument(window);
       const {
         scrollTop = 0, scrollLeft = 0,
-        offsetHeight = doc.documentElement.clientHeight || doc.body.clientHeight,
-        offsetWidth = doc.documentElement.clientWidth || doc.body.clientWidth,
       } = offsetParent || {};
       const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
       this.moveEvent
-        .setTarget(doc)
+        .setTarget(this.doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
           clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
@@ -414,7 +594,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetLeft + moveX - clientX,
                 scrollLeft - headerWidth + HANDLE_MIN_SIZE,
               ),
-              scrollLeft + offsetWidth - HANDLE_MIN_SIZE,
+              scrollLeft + docOffsetHeight - HANDLE_MIN_SIZE,
             ),
             true,
           );
@@ -424,7 +604,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetTop + moveY - clientY,
                 scrollTop - headerHeight + HANDLE_MIN_SIZE,
               ),
-              scrollTop + offsetHeight - HANDLE_MIN_SIZE,
+              scrollTop + docOffsetWidth - HANDLE_MIN_SIZE,
             ),
             true,
           );
@@ -447,6 +627,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     try {
       const [ret1, ret2] = await promise;
       if (ret1 !== false && ret2) {
+        this.saveCustomized();
         this.close();
       }
     } catch (e) {
