@@ -162,7 +162,7 @@ const prefixCls = getConfig('prefixCls');
 | Table | false | boolean |
 | PerformanceTable | false | boolean |
 | Tabs | false | boolean |
-| Customizable | false | boolean |
+| Modal | false | boolean |
 
 ### Formatter
 

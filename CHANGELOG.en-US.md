@@ -24,7 +24,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added new upload mode of `Attachment.Dragger`. Added `useChunk`, `chunkSize`, `chunkThreads` properties.
 - 🌟 `<pro>Form`: Added spacingType property.
 - 🌟 `<pro>PerformanceTable`: The cell implements `renderEmpty`.
-- 🌟 `<pro>Modal`: Added `resizable`, `customizedCode` properties.
+- 🌟 `<pro>Modal`: Added `resizable`, `customizable`, `customizedCode` properties.
 - 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness and support number and numbers value type.

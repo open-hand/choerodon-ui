@@ -24,7 +24,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 Attachment.Dragger 拖拽上传, 新增 useChunk, chunkSize, chunkThreads 属性。
 - 🌟 `<pro>Form`: 新增 spacingType 属性。
 - 🌟 `<pro>PerformanceTable`: 单元格实现 renderEmpty。
-- 🌟 `<pro>Modal`: 新增 resizable, customizedCode 属性.
+- 🌟 `<pro>Modal`: 新增 resizable, customizable, customizedCode 属性.
 - 💄 `<pro>Table`: 优化前端导出支持导出勾选项。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing 支持响应式，值类型支持数字和数字数组类型。

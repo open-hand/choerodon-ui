@@ -108,6 +108,7 @@ export interface ModalProps extends ViewComponentProps {
   bodyStyle?: CSSProperties;
   closeOnLocationChange?: boolean;
   resizable?: boolean;
+  customizable?: boolean;
   customizedCode?: string;
 }
 
@@ -331,13 +332,13 @@ export default class Modal extends ViewComponent<ModalProps> {
       'closeOnLocationChange',
       'eventKey',
       'resizable',
+      'customizable',
       'customizedCode',
     ]);
   }
 
   async loadCustomized() {
-    const { customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
-    const customizable = getCustomizable('Modal');
+    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
     if (resizable && customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
       if (temp) {
@@ -350,8 +351,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   saveCustomized() {
-    const { customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
-    const customizable = getCustomizable('Modal');
+    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
     if (resizable && customizable && customizedCode) {
       const customizedSave = this.getContextConfig('customizedSave');
       customizedSave(customizedCode, this.tempCustomized || {}, 'Modal');
