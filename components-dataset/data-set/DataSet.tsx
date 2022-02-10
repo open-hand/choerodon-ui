@@ -2669,6 +2669,8 @@ Then the query method will be auto invoke.`,
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
     appendRecords(this, this.processData(sortedData, undefined, parent), parent);
     this.fireEvent(DataSetEvents.append, { dataSet: this });
+    this.releaseCachedSelected(true);
+    this.releaseCachedModified();
     return this;
   }
 
