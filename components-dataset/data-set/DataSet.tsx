@@ -1234,6 +1234,16 @@ export default class DataSet extends EventManager {
   }
 
   /**
+   * 强制将数据集中的增删改的记录进行远程提交, 绕过校验
+   * @return Promise
+   */
+  forceSubmit(): Promise<any> {
+    return this.ready().then(() => this.pending.add(
+      this.write(useSelected(this.dataToJSON) ? this.selected : [...this.cachedModified, ...this.records]),
+    ));
+  }
+
+  /**
    * 导出数据
    * @param object columns 导出的列
    * @param number exportQuantity 导出数量
