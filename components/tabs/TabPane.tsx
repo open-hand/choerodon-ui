@@ -59,9 +59,11 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
 
 TabPane.displayName = 'TabPane';
 
-TabPane.defaultProps = {
+const MemoTabPane: FunctionComponent<TabPaneProps> = memo(TabPane, (props, nextProps) => !props.active && !nextProps.active);
+
+MemoTabPane.defaultProps = {
   overflowCount: 99,
   showCount: true,
 };
 
-export default memo(TabPane, (props, nextProps) => !props.active && !nextProps.active);
+export default MemoTabPane;
