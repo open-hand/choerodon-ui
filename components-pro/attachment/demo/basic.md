@@ -24,7 +24,7 @@ configure({
   attachment: {
     defaultFileKey: 'file',
     defaultFileSize: 500 * 1024 * 1024,
-    defaultChunkSize: 500 * 1024 * 1024,
+    defaultChunkSize: 5 * 1024 * 1024,
     defaultChunkThreads: 3,
     action: {
       url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',

@@ -1,13 +1,13 @@
 import React from 'react';
 import jsdom from 'jsdom';
 import { mount } from 'enzyme';
-import JSFormatter from 'choerodon-ui/pro/lib/code-area/formatters/JSFormatter';
+import JSFormatter from '../formatters/JSFormatter';
 import CodeArea from '..';
 import DataSet from '../../data-set';
 // eslint-disable-next-line import/no-named-as-default
 import JSONFormatter from '../formatters/JSONFormatter';
 
-import 'choerodon-ui/pro/lib/code-area/lint/json';
+import '../lint/json';
 
 if (typeof window !== 'undefined') {
   // eslint-disable-next-line global-require

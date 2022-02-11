@@ -6,6 +6,7 @@ import {
   Config as DataSetConfig,
   DefaultConfig as DataSetDefaultConfig,
   Formatter,
+  BigNumberTarget,
   Status,
 } from 'choerodon-ui/dataset/configure';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
@@ -44,7 +45,7 @@ import defaults from './default';
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
 
-export { Status, Formatter };
+export { Status, Formatter, BigNumberTarget };
 
 export type renderEmptyHandler = (componentName?: string) => ReactNode;
 
@@ -77,8 +78,6 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
-
-export type BigNumberTarget = 'currency' | 'number-field';
 
 export type FormatBigNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions, bigNumberTarget: BigNumberTarget) => string;
 

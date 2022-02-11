@@ -9,6 +9,7 @@ import PromiseQueue from '../promise-queue';
 import { UploaderProps } from './Uploader';
 import { $l } from '../locale-context';
 import { formatFileSize } from '../formatter';
+import UploadError from './UploadError';
 
 function getAxios(context: DataSetContext): AxiosInstance {
   return context.getConfig('axios') || axios;
@@ -93,21 +94,26 @@ function getUploadAxiosConfig(
 }
 
 async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chunk: AttachmentFileChunk, attachmentUUID: string, context: DataSetContext): Promise<any> {
-  const { onBeforeUploadChunk } = context.getConfig('attachment');
-  if (!onBeforeUploadChunk || await onBeforeUploadChunk({
-    chunk,
-    attachment,
-    bucketName: props.bucketName,
-    bucketDirectory: props.bucketDirectory,
-    storageCode: props.storageCode,
-    isPublic: props.isPublic,
-  }) !== false) {
-    const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
-      chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
-    }));
-    const resp = await getAxios(context)(config);
-    chunk.status = 'success';
-    return resp;
+  try {
+    const { onBeforeUploadChunk } = context.getConfig('attachment');
+    if (!onBeforeUploadChunk || await onBeforeUploadChunk({
+      chunk,
+      attachment,
+      bucketName: props.bucketName,
+      bucketDirectory: props.bucketDirectory,
+      storageCode: props.storageCode,
+      isPublic: props.isPublic,
+    }) !== false) {
+      const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
+        chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
+      }));
+      const resp = await getAxios(context)(config);
+      chunk.status = 'success';
+      return resp;
+    }
+  } catch (e) {
+    chunk.status = 'error';
+    throw new UploadError(e);
   }
 }
 
@@ -136,20 +142,24 @@ function uploadChunks(
 }
 
 async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext) {
-  const config = getUploadAxiosConfig(props, attachment, undefined, attachmentUUID, context, mobxAction((e) => {
-    const percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
-    attachment.status = 'uploading';
-    attachment.percent = percent;
-    const { onUploadProgress: handleProgress } = props;
-    if (handleProgress) {
-      handleProgress(percent, attachment);
-    }
-  }));
-  const resp = await getAxios(context)(config);
-  attachment.percent = 100;
-  return new Promise<any>((resolve) => {
-    setTimeout(() => resolve(resp), 0);
-  });
+  try {
+    const config = getUploadAxiosConfig(props, attachment, undefined, attachmentUUID, context, mobxAction((e) => {
+      const percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
+      attachment.status = 'uploading';
+      attachment.percent = percent;
+      const { onUploadProgress: handleProgress } = props;
+      if (handleProgress) {
+        handleProgress(percent, attachment);
+      }
+    }));
+    const resp = await getAxios(context)(config);
+    attachment.percent = 100;
+    return new Promise<any>((resolve) => {
+      setTimeout(() => resolve(resp), 0);
+    });
+  } catch (e) {
+    throw new UploadError(e);
+  }
 }
 
 function cuteFile(attachment: AttachmentFile, chunkSize: number): AttachmentFileChunk[] {
@@ -188,42 +198,37 @@ export async function beforeUploadFile(
   useChunk?: boolean,
 ): Promise<boolean | undefined> {
   const globalConfig = context.getConfig('attachment');
-  try {
-    const { accept } = props;
-    if (accept && !isAcceptFile(attachment, accept)) {
-      runInAction(() => {
-        attachment.status = 'error';
-        attachment.invalid = true;
-        attachment.errorMessage = $l('Attachment', 'file_type_mismatch', undefined, { types: accept.join(',') }) as string;
-      });
-      return;
-    }
-    const { fileSize = globalConfig.defaultFileSize } = props;
-    if (!useChunk && fileSize && fileSize > 0 && attachment.size > fileSize) {
-      runInAction(() => {
-        attachment.status = 'error';
-        attachment.invalid = true;
-        attachment.errorMessage = $l('Attachment', 'file_max_size', undefined, { size: formatFileSize(fileSize) }) as string;
-      });
-      return;
-    }
-    const { onBeforeUpload } = globalConfig;
-    if (onBeforeUpload && await onBeforeUpload(attachment, attachments, {
-      useChunk,
-      bucketName: props.bucketName,
-      bucketDirectory: props.bucketDirectory,
-      storageCode: props.storageCode,
-      isPublic: props.isPublic,
-    }) === false) {
-      return false;
-    }
-
-    const { beforeUpload } = props;
-    return !(beforeUpload && await beforeUpload(attachment, attachments) === false);
-
-  } catch (e) {
+  const { accept } = props;
+  if (accept && !isAcceptFile(attachment, accept)) {
+    runInAction(() => {
+      attachment.status = 'error';
+      attachment.invalid = true;
+      attachment.errorMessage = $l('Attachment', 'file_type_mismatch', undefined, { types: accept.join(',') }) as string;
+    });
+    return;
+  }
+  const { fileSize = globalConfig.defaultFileSize } = props;
+  if (!useChunk && fileSize && fileSize > 0 && attachment.size > fileSize) {
+    runInAction(() => {
+      attachment.status = 'error';
+      attachment.invalid = true;
+      attachment.errorMessage = $l('Attachment', 'file_max_size', undefined, { size: formatFileSize(fileSize) }) as string;
+    });
+    return;
+  }
+  const { onBeforeUpload } = globalConfig;
+  if (onBeforeUpload && await onBeforeUpload(attachment, attachments, {
+    useChunk,
+    bucketName: props.bucketName,
+    bucketDirectory: props.bucketDirectory,
+    storageCode: props.storageCode,
+    isPublic: props.isPublic,
+  }) === false) {
     return false;
   }
+
+  const { beforeUpload } = props;
+  return !(beforeUpload && await beforeUpload(attachment, attachments) === false);
 }
 
 export async function uploadFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext, chunkSize: number, useChunk?: boolean): Promise<any> {
