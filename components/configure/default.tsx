@@ -152,6 +152,7 @@ const defaults = {
   confirm: async (message) => (await confirm(message)) !== 'cancel',
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),
   validationMessageFormatter: (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message,
+  modalResizable: false,
 };
 
 export default defaults;
