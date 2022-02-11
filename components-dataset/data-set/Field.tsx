@@ -417,6 +417,26 @@ export type FieldProps = {
    */
   attachmentCount?: number;
   /**
+   * 附件上传属性名
+   */
+  fileKey?: string;
+  /**
+   * 附件大小限制
+   */
+  fileSize?: number;
+  /**
+   * 附件开启分片上传
+   */
+  useChunk?: boolean;
+  /**
+   * 附件分片大小
+   */
+  chunkSize?: number;
+  /**
+   * 附件分片上传并发数
+   */
+  chunkThreads?: number;
+  /**
    * 值变化前，拦截并返回新的值
    */
   processValue?: (value: any, range?: 0 | 1) => any;

@@ -123,6 +123,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     return this.getProp('storageCode');
   }
 
+  get fileKey() {
+    return this.getProp('fileKey') || this.getContextConfig('attachment').defaultFileKey;
+  }
+
   get isPublic() {
     return this.getProp('isPublic');
   }
@@ -352,9 +356,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   getUploaderProps(): UploaderProps {
-    const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+    const { bucketName, bucketDirectory, storageCode, isPublic, fileKey } = this;
+    const fileSize = this.getProp('fileSize');
+    const chunkSize = this.getProp('chunkSize');
+    const chunkThreads = this.getProp('chunkThreads');
+    const useChunk = this.getProp('useChunk');
     const {
-      accept, action, data, headers, fileKey, withCredentials, fileSize, chunkSize, chunkThreads, useChunk,
+      accept, action, data, headers, withCredentials,
       beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
     } = this.props;
     return {
@@ -577,12 +585,12 @@ export default class Attachment extends FormField<AttachmentProps> {
       },
     } = this;
     const buttonProps = this.getOtherProps();
-    const { ref, style, name, fileKey, onChange, ...rest } = buttonProps;
+    const { ref, style, name, onChange, ...rest } = buttonProps;
     const max = this.getProp('max');
     const uploadProps = {
       multiple,
       accept: accept ? accept.join(',') : undefined,
-      name: name || fileKey || this.getContextConfig('attachment').defaultFileKey,
+      name: name || this.fileKey,
       type: 'file',
       ref,
       onChange,

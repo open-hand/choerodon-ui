@@ -316,6 +316,11 @@ title: DataSet
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
 | attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
+| fileKey | 附件上传属性名 | string | [AttachmentConfig.defaultFileKey](/components/configure/#AttachmentConfig) |
+| fileSize | 附件大小限制 | number | [AttachmentConfig.defaultFileSize](/components/configure/#AttachmentConfig) |
+| useChunk | 附件开启分片上传 | string |  |
+| chunkSize | 附件分片大小 | number | [AttachmentConfig.defaultChunkSize](/components/configure/#AttachmentConfig)  |
+| chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](/components/configure/#AttachmentConfig) |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
 
 ### Field Values
