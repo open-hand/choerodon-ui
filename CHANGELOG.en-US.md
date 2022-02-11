@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight`, `xlsx`, `attachment.defaultChunkSize`, `attachment.defaultChunkThreads`, `attachment.onBeforeUpload`, `attachment.onBeforeUploadChunk`, `lovSelectionProps` properties.
+- 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight`, `xlsx`, `attachment.defaultChunkSize`, `attachment.defaultChunkThreads`, `attachment.onBeforeUpload`, `attachment.onBeforeUploadChunk`, `lovSelectionProps`, `modalResizable` properties.
 - 🌟 `<pro>DataSet`: Added `forceSubmit` method. `ValidationRule` add `disabled` hook.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook. `rowHeight` supports hooks.
 - 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added new upload mode of `Attachment.Dragger`. Added `useChunk`, `chunkSize`, `chunkThreads` properties.
 - 🌟 `<pro>Form`: Added spacingType property.
 - 🌟 `<pro>PerformanceTable`: The cell implements `renderEmpty`.
+- 🌟 `<pro>Modal`: Added `resizable`, `customizable`, `customizedCode` properties.
 - 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness and support number and numbers value type.

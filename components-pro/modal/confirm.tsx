@@ -73,6 +73,7 @@ export default async function confirm(props: ModalProps & confirmProps | ReactNo
         return result;
       },
       ...otherProps,
+      resizable: false,
     });
   });
 }
