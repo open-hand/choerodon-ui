@@ -8,7 +8,7 @@ import { defaultClassPrefix, getUnhandledProps, isNullOrUndefined, prefix } from
 import TableContext from './TableContext';
 import { ColumnPropTypeKeys } from './Column';
 import { RowDataType, StandardProps } from './common';
-import isEmpty from 'choerodon-ui/pro/lib/_util/isEmpty';
+import isEmpty from '../_util/isEmpty';
 
 export interface CellProps extends StandardProps {
   align?: 'left' | 'center' | 'right';

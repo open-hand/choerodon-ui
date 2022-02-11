@@ -364,26 +364,31 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   async upload(attachment: AttachmentFile) {
-    const uploader = getIf(this, 'uploader', () => {
-      return new Uploader(
-        {},
-        {
-          getConfig: this.getContextConfig as typeof getConfig,
-        },
-      );
-    });
-    uploader.setProps(this.getUploaderProps());
-    const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
-    if (result === false) {
-      this.removeAttachment(attachment);
-    } else if (attachment.status === 'success') {
-      const { tempAttachmentUUID } = this;
-      if (tempAttachmentUUID) {
-        delete this.tempAttachmentUUID;
-        this.setValue(tempAttachmentUUID);
-      } else {
-        this.checkValidity();
+    try {
+      const uploader = getIf(this, 'uploader', () => {
+        return new Uploader(
+          {},
+          {
+            getConfig: this.getContextConfig as typeof getConfig,
+          },
+        );
+      });
+      uploader.setProps(this.getUploaderProps());
+      const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
+      if (result === false) {
+        this.removeAttachment(attachment);
+      } else if (attachment.status === 'success') {
+        const { tempAttachmentUUID } = this;
+        if (tempAttachmentUUID) {
+          delete this.tempAttachmentUUID;
+          this.setValue(tempAttachmentUUID);
+        } else {
+          this.checkValidity();
+        }
       }
+    } catch (e) {
+      this.removeAttachment(attachment);
+      throw e;
     }
   }
 

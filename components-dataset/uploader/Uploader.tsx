@@ -5,6 +5,7 @@ import { beforeUploadFile, uploadFile } from './utils';
 import { getConfig } from '../configure';
 import { DataSetContext } from '../data-set/DataSet';
 import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
+import UploadError from './UploadError';
 
 export interface UploaderProps {
   /**
@@ -86,22 +87,25 @@ export default class Uploader {
         });
         return resp;
       } catch (error) {
-        const { response } = error;
-        runInAction(() => {
-          const { onUploadError } = props;
-          const { onUploadError: handleUploadError } = globalConfig;
-          attachment.status = 'error';
-          attachment.error = error;
-          const { message } = error;
-          if (handleUploadError) {
-            handleUploadError(error, attachment);
-          }
-          attachment.errorMessage = message || attachment.errorMessage;
-          if (onUploadError) {
-            onUploadError(error, response, attachment);
-          }
-        });
-        return response;
+        if (error instanceof UploadError) {
+          const { response } = error;
+          runInAction(() => {
+            const { onUploadError } = props;
+            const { onUploadError: handleUploadError } = globalConfig;
+            attachment.status = 'error';
+            attachment.error = error;
+            const { message } = error;
+            if (handleUploadError) {
+              handleUploadError(error, attachment);
+            }
+            attachment.errorMessage = message || attachment.errorMessage;
+            if (onUploadError) {
+              onUploadError(error, response, attachment);
+            }
+          });
+          return response;
+        }
+        throw error;
       }
     }
     return result;
