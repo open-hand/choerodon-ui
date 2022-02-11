@@ -25,7 +25,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: rgba(45, 45, 45, .5);
+      background-color: rgba(45, 45, 45, .5);
       border-radius: 8px;
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     }
@@ -40,7 +40,7 @@
       width: calc(100% - 0.32rem);
       height: 0.57rem;
       margin: 0;
-      background-image: linear-gradient(180deg, rgba(255,255,255,0.50) 0%, rgba(255,255,255) 100%);
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 1) 100%);
       transform: scaleY(-1);
       content: '';
     }
@@ -55,7 +55,7 @@
       width: calc(100% - 0.32rem);
       height: 0.57rem;
       margin: 0;
-      background-image: linear-gradient(180deg, rgba(255,255,255) 0%, rgba(255,255,255,0.50) 100%);
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.50) 100%);
       border-radius: 0.04rem;
       transform: scaleY(-1);
       content: '';
@@ -67,17 +67,20 @@
     justify-content: space-between;
     margin: 0 0.2rem 0.1rem 0.12rem;
     padding: 0.08rem 0.16rem;
-    background: rgba(255,255,255);
+    background-color: rgba(255, 255, 255, 1);
     border: none;
     border-radius: 0.04rem;
     box-shadow: @shadow-2;
-    &-message{
+
+    &-message {
       color: @text-color-secondary;
     }
-    &-close{
+
+    &-close {
       color: @link-color;
       cursor: pointer;
-      &:hover{
+
+      &:hover {
         color: @link-hover-color;
       }
     }
@@ -101,7 +104,7 @@
     padding: @notification-padding;
     overflow: hidden;
     line-height: 1.5;
-    background: @component-background;
+    background-color: @component-background;
     border-radius: @border-radius-base;
     box-shadow: @shadow-2;
     transition: all @animation-duration-slow @ease-in-out;
@@ -115,7 +118,7 @@
 
       &-single-line-auto-margin {
         display: block;
-        width:~'calc(@{notification-width} - @{notification-padding-horizontal} * 2 - .24rem - .48rem - 100%)';
+        width: ~'calc(@{notification-width} - @{notification-padding-horizontal} * 2 - .24rem - .48rem - 100%)';
         max-width: 0.04rem;
         background-color: transparent;
         pointer-events: none;
@@ -135,7 +138,7 @@
       padding-right: 0.24rem;
     }
 
-    &-opacity{
+    &-opacity {
       transform: scale(0.98);
       opacity: 0.7;
       filter: blur(0.5px);

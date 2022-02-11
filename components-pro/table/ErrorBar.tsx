@@ -13,6 +13,11 @@ const ErrorBar: FunctionComponent<ErrorBarProps> = function ErrorBar(props) {
   const { dataSet, prefixCls } = props;
   const { validationSelfErrors: error } = dataSet;
   const errorMessage: string | undefined = error && error.length ? error[0].message : undefined;
+  const saveRef = (node) => {
+    if (node) {
+      node.focus();
+    }
+  };
   return (
     <Animate
       transitionName="slide-down"
@@ -22,7 +27,7 @@ const ErrorBar: FunctionComponent<ErrorBarProps> = function ErrorBar(props) {
     >
       {
         errorMessage && (
-          <div hidden={!errorMessage} className={`${prefixCls}-error-content`}>
+          <div ref={saveRef} hidden={!errorMessage} className={`${prefixCls}-error-content`} tabIndex={-1}>
             <div>
               <Icon type="cancel" />
               {errorMessage}
