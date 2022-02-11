@@ -48,9 +48,9 @@ title: Modal
 | contentStyle | 内容样式 | object |  |
 | bodyStyle | 内容体样式 | object |  |
 | closeOnLocationChange | 路由变更时自动关闭, 注意必须要有一个设置了 location 的 ModalProvider。由 ModalProvider 提供的 Modal， 即使 closeOnLocationChange 设为 false 也会因其 ModalProvider 的销毁而被强制关闭  | boolean | true |
-| resizable | 可拖拽 | boolean | false |
-| customizable | 是否开启个性化  | boolean | |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
+| resizable | 是否可调整大小 | boolean | false |
+| customizable | 是否开启个性化 | boolean | false |
+| customizedCode | 个性化编码，设置后默认将会存储调整大小后的宽高等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 
 <style>
 .code-box-demo .c7n-pro-btn {

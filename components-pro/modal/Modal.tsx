@@ -224,14 +224,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     return getDocument(window);
   }
 
-  get docOffsetWidth(): number {
-    return this.doc.documentElement.clientWidth || this.doc.body.clientWidth;
-  }
-
-  get docOffsetHeight(): number {
-    return this.doc.documentElement.clientHeight || this.doc.body.clientHeight;
-  }
-
   contentNode: HTMLElement;
 
   childrenProps: modalChildrenProps;
@@ -451,7 +443,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   handleModalMouseResize(e) {
-    const { contentNode, docOffsetHeight, docOffsetWidth, element, element: { offsetParent }, minHeight, minWidth, prefixCls, props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
+    const { contentNode, element, element: { offsetParent }, minHeight, minWidth, prefixCls, props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
+    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { clientX, clientY } = e;
     const { left: elementLeft, top: elementTop } = (element as HTMLDivElement).getBoundingClientRect();
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
@@ -472,17 +465,18 @@ export default class Modal extends ViewComponent<ModalProps> {
       const width = me.clientX - startX;
       const height = me.clientY - startY;
       Object.assign(element.style, {
-        width: pxToRem(getMath(width, minWidth, embeddedOffsetWidth || docOffsetWidth)),
-        height: pxToRem(getMath(height, minHeight, embeddedOffsetHeight || docOffsetHeight)),
+        width: pxToRem(getMath(width, minWidth, embeddedOffsetWidth || docClientWidth)),
+        height: pxToRem(getMath(height, minHeight, embeddedOffsetHeight || docClientHeight)),
       });
     };
   }
 
   handleDrawerMouseResize(e) {
-    const { contentNode, drawerTransitionName, docOffsetHeight, docOffsetWidth, element, element: { offsetParent }, minWidth, minHeight } = this;
+    const { contentNode, drawerTransitionName, element, element: { offsetParent }, minWidth, minHeight } = this;
+    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
-    const maxWidth = embeddedOffsetWidth || docOffsetWidth;
-    const maxHeight = embeddedOffsetHeight || docOffsetHeight;
+    const maxWidth = embeddedOffsetWidth || docClientWidth;
+    const maxHeight = embeddedOffsetHeight || docClientHeight;
     let { offsetHeight: height, offsetWidth: width } = contentNode;
     return (me) => {
       let { clientX, clientY } = me;
@@ -574,7 +568,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   handleHeaderMouseDown(downEvent: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
     const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
-      const { prefixCls, docOffsetHeight, docOffsetWidth } = this;
+      const { prefixCls } = this;
+      const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
       const { clientX, clientY, currentTarget } = downEvent;
       const clzz = classes(element);
       const { offsetLeft, offsetParent } = element;
@@ -594,7 +589,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetLeft + moveX - clientX,
                 scrollLeft - headerWidth + HANDLE_MIN_SIZE,
               ),
-              scrollLeft + docOffsetHeight - HANDLE_MIN_SIZE,
+              scrollLeft + docClientHeight - HANDLE_MIN_SIZE,
             ),
             true,
           );
@@ -604,7 +599,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetTop + moveY - clientY,
                 scrollTop - headerHeight + HANDLE_MIN_SIZE,
               ),
-              scrollTop + docOffsetWidth - HANDLE_MIN_SIZE,
+              scrollTop + docClientWidth - HANDLE_MIN_SIZE,
             ),
             true,
           );
