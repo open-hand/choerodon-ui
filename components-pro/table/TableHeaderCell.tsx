@@ -38,7 +38,7 @@ import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { CUSTOMIZED_KEY } from './TableStore';
 import ColumnGroup from './ColumnGroup';
-import AggregationTree from './AggregationTree';
+import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import TableCellInner from './TableCellInner';
 
 export interface TableHeaderCellProps extends ElementProps {
@@ -73,7 +73,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     rootMargin: '100px',
     initialInView: true,
   });
-  const aggregationTree = useMemo((): ReactNode => {
+  const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
       if (headerGroup) {
@@ -94,14 +94,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
                   />
                 );
               };
-              return (
-                <AggregationTree
-                  columns={children}
-                  headerGroup={headerGroup}
-                  column={{ ...$column, ...columnProps }}
-                  renderer={renderer}
-                />
-              );
+              return groupedAggregationTree({
+                columns: children,
+                headerGroup,
+                column: { ...$column, ...columnProps },
+                renderer,
+              });
             }
           }
         }

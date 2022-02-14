@@ -208,7 +208,7 @@ export async function beforeUploadFile(
     return;
   }
   const { fileSize = globalConfig.defaultFileSize } = props;
-  if (!useChunk && fileSize && fileSize > 0 && attachment.size > fileSize) {
+  if (fileSize && fileSize > 0 && attachment.size > fileSize) {
     runInAction(() => {
       attachment.status = 'error';
       attachment.invalid = true;

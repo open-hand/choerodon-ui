@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 forceSubmit 方法， ValidationRule 增加 disabled 钩子。
 - 🌟 `<pro>DataSet.Field`: 新增 useChunk, chunkSize, chunkThreads, fileKey, fileSize 属性。
 - 🌟 `<pro>Table`: 新增 setColumnWidth 实例方法, 新增 renderEmpty 属性, onColumnResize 参数新增 index 属性, rowHeight 支持钩子。
-- 🌟 `<pro>Table.Column`: header 和 footer 钩子参数新增 aggregationTree 属性。
+- 🌟 `<pro>Table.Column`: 新增 aggregationTreeIndex 属性, renderer、header 和 footer 钩子参数新增 aggregationTree 属性。
 - 🌟 `configure`: 新增 min, max 属性。
 - 🌟 `<pro>Table`: 新增 comboBar 筛选条类型及对应 queryBarProps 相关组合筛选条配置项。
 - 🌟 `<pro>Attachment`: 新增 Attachment.Dragger 拖拽上传, 新增 useChunk, chunkSize, chunkThreads 属性。

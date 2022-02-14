@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, ReactNode, useContext, useMemo } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
@@ -10,7 +10,7 @@ import { ColumnAlign, ColumnLock } from './enum';
 import ColumnGroup from './ColumnGroup';
 import { FooterHookOptions } from './Column';
 import TableCellInner from './TableCellInner';
-import AggregationTree from './AggregationTree';
+import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 
 export interface TableFooterCellProps extends ElementProps {
   columnGroup: ColumnGroup;
@@ -41,7 +41,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
     ...footerStyle,
     ...style,
   };
-  const aggregationTree = useMemo((): ReactNode => {
+  const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
       if (headerGroup) {
@@ -62,14 +62,12 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
                   />
                 );
               };
-              return (
-                <AggregationTree
-                  columns={children}
-                  headerGroup={headerGroup}
-                  column={{ ...$column, ...columnProps }}
-                  renderer={renderer}
-                />
-              );
+              return groupedAggregationTree({
+                columns: children,
+                headerGroup,
+                column: { ...$column, ...columnProps },
+                renderer,
+              });
             }
           }
         }

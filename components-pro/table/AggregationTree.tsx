@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, ReactNode, useCallback, useContext, useMemo } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactElement, ReactNode, useCallback, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import defaultTo from 'lodash/defaultTo';
 import omit from 'lodash/omit';
@@ -21,10 +21,11 @@ export interface AggregationTreeProps {
   headerGroup?: Group;
   column: ColumnProps;
   renderer: (props: { colGroup: ColumnGroup; style?: CSSProperties }) => ReactNode;
+  index?: number;
 }
 
 const AggregationTree: FunctionComponent<AggregationTreeProps> = function AggregationTree(props) {
-  const { columns, groups, record, rowGroup, headerGroup, column, renderer } = props;
+  const { columns, groups, record, rowGroup, headerGroup, column, renderer, index = 0 } = props;
   const { tableStore, prefixCls, dataSet, aggregation: tableAggregation } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
   const columnGroups: ColumnGroup[] = useMemo(() => {
@@ -97,11 +98,11 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
   const { length } = visibleChildren;
   if (length > 0) {
     const { aggregationLimit, aggregationDefaultExpandedKeys, aggregationDefaultExpandAll, aggregationLimitDefaultExpanded } = column;
-    const expanded: boolean = defaultTo(
+    const hasExpand = index === 0 && length > aggregationLimit!;
+    const expanded: boolean = hasExpand ? defaultTo(
       record ? tableStore.isAggregationCellExpanded(record, aggregationExpandKey) : headerGroup && headerGroup.getState(EXPAND_KEY),
       typeof aggregationLimitDefaultExpanded === 'function' ? record ? aggregationLimitDefaultExpanded(record) : false : aggregationLimitDefaultExpanded,
-    ) || false;
-    const hasExpand = length > aggregationLimit!;
+    ) || false : false;
     const nodes = hasExpand && !expanded ? visibleChildren.slice(0, aggregationLimit! - 1) : visibleChildren;
     return (
       <Tree
@@ -139,3 +140,47 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
 AggregationTree.displayName = 'AggregationTree';
 
 export default observer(AggregationTree);
+
+export function groupedAggregationTree(props: AggregationTreeProps): ReactElement<AggregationTreeProps>[] {
+  const { groups, columns } = props;
+  if (groups) {
+    const treeGroups: ColumnGroup[][] = [];
+    groups.forEach(group => {
+      const { column: { aggregationTreeIndex = 0 } } = group;
+      let treeGroup = treeGroups[aggregationTreeIndex];
+      if (!treeGroup) {
+        treeGroup = [];
+        treeGroups[aggregationTreeIndex] = treeGroup;
+      }
+      treeGroup.push(group);
+    });
+    return treeGroups.reduce<ReactElement<AggregationTreeProps>[]>((trees, treeGroup, index) => treeGroup ? trees.concat(
+      <AggregationTree
+        key={String(index)}
+        {...props}
+        groups={treeGroup}
+      />,
+    ) : trees, []);
+  }
+  if (columns) {
+    const treeColumns: ColumnProps[][] = [];
+    columns.forEach(column => {
+      const { aggregationTreeIndex = 0 } = column;
+      let treeColumn = treeColumns[aggregationTreeIndex];
+      if (!treeColumn) {
+        treeColumn = [];
+        treeColumns[aggregationTreeIndex] = treeColumn;
+      }
+      treeColumn.push(column);
+    });
+    return treeColumns.reduce<ReactElement<AggregationTreeProps>[]>((trees, treeColumn, index) => treeColumn ? trees.concat(
+      <AggregationTree
+        key={String(index)}
+        {...props}
+        columns={treeColumn}
+        index={index}
+      />,
+    ) : trees, []);
+  }
+  return [];
+}

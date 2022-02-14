@@ -8,6 +8,7 @@ import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
 import { Commands, TableGroup } from './Table';
 import TableStore from './TableStore';
+import { AggregationTreeProps } from './AggregationTree';
 
 export function defaultAggregationRenderer({ text }) {
   return text;
@@ -20,12 +21,13 @@ export interface ColumnRenderProps extends RenderProps {
   aggregation?: boolean;
   headerGroup?: Group;
   rowGroup?: Group;
+  aggregationTree?: ReactElement<AggregationTreeProps>[];
 }
 
 export interface FooterHookOptions {
   dataSet: DataSet;
   name?: string | undefined;
-  aggregationTree?: ReactNode;
+  aggregationTree?: ReactElement<AggregationTreeProps>[];
 }
 
 export interface HeaderHookOptions extends FooterHookOptions {
@@ -173,6 +175,10 @@ export interface ColumnPropsBase extends ElementProps {
    * 默认展开所有聚合列树节点
    */
   aggregationDefaultExpandAll?: boolean;
+  /**
+   * 聚合单元格中的列索引
+   */
+  aggregationTreeIndex?: number;
   /**
    * 在聚合列下是否隐藏
    */

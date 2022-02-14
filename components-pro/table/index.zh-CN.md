@@ -121,9 +121,9 @@ subtitle: 表格
 | defaultWidth | 默认列宽, 只在出横向滚动条时起作用 | number | [globalConfig.tableColumnDefaultWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultWidth](/components/configure#API) |
 | minWidth | 最小列宽 | number | [globalConfig.tableColumnDefaultMinWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/components/configure#API) |
 | title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree }) => ReactNode |  |
-| footer | 列脚 | ReactNode \| ({ dataSet, name }) => ReactNode |  |
-| renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values) }) => ReactNode |  |
+| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
+| footer | 列脚 | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode |  |
+| renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string | [globalConfig.tableColumnAlign](/components/configure#API) |
@@ -148,6 +148,7 @@ subtitle: 表格
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
+| aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 
