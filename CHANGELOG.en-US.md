@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `WeekPicker`: Fix style issue.
 - 🐞 `<pro>FormField`: Fixed `Cascader` rendering display values in `Output` and `TableCell`.
 - 🐞 Fix the style problem when the browser font size is not default.
+- 🐞 `<pro>DataSet`: Fixed the verification error of whether `Field` in `DataSet` is modified when `Cascader` component sets `multiple` property to `true`.
 
 ## 1.5.1
 

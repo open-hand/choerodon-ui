@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `WeekPicker`: 修复样式问题。
 - 🐞 `<pro>FormField`: 修复 Cascader 在 Output 及 TableCell 中渲染显示值的问题。
 - 🐞 修复在浏览器非默认字号下的样式问题。
+- 🐞 `<pro>DataSet`: 修复 Cascader 组件设置 multiple 属性为 true 时, DataSet 中 Field 是否被修改校验错误问题。
 
 ## 1.5.1
 
