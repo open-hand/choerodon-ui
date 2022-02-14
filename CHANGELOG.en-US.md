@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
 - 🐞 `<pro>Validator`: Fix the validation problem when `pattern` is a regular object with global tag.
 - 🐞 `<pro>Attachment`: Fix first upload file not showing immediately before successful.
+- 🐞 `<pro>Attachment`: Fix the problem that the file that failed to upload for the first time cannot be deleted.
 - 🐞 `<pro>Attachment.Group`: Fix the issue that "no attachment" is always displayed in list mode.
 - 🐞 `WeekPicker`: Fix style issue.
 - 🐞 `<pro>FormField`: Fixed `Cascader` rendering display values in `Output` and `TableCell`.
