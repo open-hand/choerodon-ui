@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
 - 💄 `<pro>Attachment`: The button displays a error color when the upload fails in `popup` mode.
 - 💄 `<pro>Table`: Optimize the dynamic query bar to enter repeated query and click on the label to get focus is invalid.
+- 💄 `<pro>PerformanceTable`: Optimize tree indentation of PerformanceTable.
 - 💄 Remove prop-types.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
@@ -55,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the problem that the drop-down paging search will query every time it is selected.
 - 🐞 `<pro>Validator`: Fix the validation problem when `pattern` is a regular object with global tag.
 - 🐞 `<pro>Attachment`: Fix first upload file not showing immediately before successful.
+- 🐞 `<pro>Attachment`: Fix the problem that the file that failed to upload for the first time cannot be deleted.
 - 🐞 `<pro>Attachment.Group`: Fix the issue that "no attachment" is always displayed in list mode.
 - 🐞 `WeekPicker`: Fix style issue.
 - 🐞 `<pro>FormField`: Fixed `Cascader` rendering display values in `Output` and `TableCell`.

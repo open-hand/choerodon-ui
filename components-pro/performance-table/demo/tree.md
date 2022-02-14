@@ -17,7 +17,7 @@ Table tree example.
 
 import {Icon} from 'choerodon-ui';
 import { PerformanceTable } from 'choerodon-ui/pro';
-import fakeTreeData from '../../../site/theme/mock/performance-data/treeData.js';
+import fakeTreeData from '../../../site/theme/mock/performance-data/treeData';
 
 class TreeTable extends React.Component {
   constructor(props) {

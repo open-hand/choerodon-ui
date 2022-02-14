@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 hover 选值显示, 并且优化 isFlat 和 range 模式下显示样式。优化 dateTime 模式日期选择。
 - 💄 `<pro>Attachment`: popup 模式上传失败时按钮显示警告色。
 - 💄 `<pro>Table`: 优化动态查询条回车重复查询和点击 label 获焦无效的问题。
+- 💄 `<pro>PerformanceTable`: 优化大数据表格树形缩进。
 - 💄 剔除 prop-types。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
@@ -55,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复下拉分页搜索每次选择都会查询的问题。
 - 🐞 `<pro>Validator`: 修复 pattern 为带有 global 标记的正则对象时的校验问题。
 - 🐞 `<pro>Attachment`: 修复首次上传的文件在成功之前没有立即显示的问题。
+- 🐞 `<pro>Attachment`: 修复首次上传失败的文件无法删除的问题。
 - 🐞 `<pro>Attachment.Group`: 修复 list 模式始终会显示“暂无附件”的问题。
 - 🐞 `WeekPicker`: 修复样式问题。
 - 🐞 `<pro>FormField`: 修复 Cascader 在 Output 及 TableCell 中渲染显示值的问题。
