@@ -1098,8 +1098,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     runInAction(() => {
       if (this.prefixWidth && this.prefixWidth > 24) {
-        this.floatLabelOffsetX = this.prefixWidth - 24;
-      } else {
+        if (this.floatLabelOffsetX !== this.prefixWidth - 24) {
+          this.floatLabelOffsetX = this.prefixWidth - 24;
+        }
+      } else if (this.floatLabelOffsetX !== undefined) {
         this.floatLabelOffsetX = undefined;
       }
     });
