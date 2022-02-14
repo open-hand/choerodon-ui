@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 hover 选值显示, 并且优化 isFlat 和 range 模式下显示样式。优化 dateTime 模式日期选择。
 - 💄 `<pro>Attachment`: popup 模式上传失败时按钮显示警告色。
 - 💄 `<pro>Table`: 优化动态查询条回车重复查询和点击 label 获焦无效的问题。
+- 💄 `<pro>PerformanceTable`: 优化大数据表格树形缩进。
 - 💄 剔除 prop-types。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。

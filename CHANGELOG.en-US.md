@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize `hover` selection display, and optimize display styles in `isFlat` and `range` mode. And optimize `dateTime` mode date selection.
 - 💄 `<pro>Attachment`: The button displays a error color when the upload fails in `popup` mode.
 - 💄 `<pro>Table`: Optimize the dynamic query bar to enter repeated query and click on the label to get focus is invalid.
+- 💄 `<pro>PerformanceTable`: Optimize tree indentation of PerformanceTable.
 - 💄 Remove prop-types.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
