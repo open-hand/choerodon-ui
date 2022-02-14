@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix first upload file not showing immediately before successful.
 - 🐞 `<pro>Attachment.Group`: Fix the issue that "no attachment" is always displayed in list mode.
 - 🐞 `WeekPicker`: Fix style issue.
+- 🐞 `<pro>FormField`: Fixed `Cascader` rendering display values in `Output` and `TableCell`.
 - 🐞 Fix the style problem when the browser font size is not default.
 
 ## 1.5.1

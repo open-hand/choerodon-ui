@@ -438,7 +438,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     const processRenderer = (v, repeat?: number) => {
       let processedValue;
       if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
-        processedValue = field.getText(v, undefined, record) as string;
+        // Cascader 值集处理
+        if (isArrayLike(v)) {
+          processedValue = v.map(v => field.getText(v, undefined, record)).join('/');
+        } else {
+          processedValue = field.getText(v, undefined, record) as string;
+        }
       }
       // 值集中不存在 再去取直接返回的值
       const text = isNil(processedValue) ? processValue(v) : processedValue;
