@@ -582,7 +582,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDataSet.current && filterMenuDataSet.current.get('filterName') && (
+          {filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName') && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>
