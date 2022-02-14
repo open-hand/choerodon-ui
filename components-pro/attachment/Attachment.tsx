@@ -385,9 +385,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
       if (result === false) {
         this.removeAttachment(attachment);
-      } else if (attachment.status === 'success') {
+      } else {
         const { tempAttachmentUUID } = this;
-        if (tempAttachmentUUID) {
+        if (attachment.status === 'success' && tempAttachmentUUID) {
           delete this.tempAttachmentUUID;
           this.setValue(tempAttachmentUUID);
         } else {
@@ -436,23 +436,25 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   doRemove(attachment: AttachmentFile): Promise<any> | undefined {
     const { onRemove } = this.getContextConfig('attachment');
-    const attachmentUUID = this.getValue();
-    if (onRemove && attachmentUUID) {
-      if (attachment.status === 'error') {
+    if (onRemove) {
+      if (attachment.status === 'error' || attachment.invalid) {
         return this.removeAttachment(attachment);
       }
-      const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-      attachment.status = 'deleting';
-      return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
-        .then(mobxAction((result) => {
-          if (result !== false) {
-            this.removeAttachment(attachment);
-          }
-          attachment.status = 'done';
-        }))
-        .catch(mobxAction(() => {
-          attachment.status = 'done';
-        }));
+      const attachmentUUID = this.getValue();
+      if (attachmentUUID) {
+        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+        attachment.status = 'deleting';
+        return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
+          .then(mobxAction((result) => {
+            if (result !== false) {
+              this.removeAttachment(attachment);
+            }
+            attachment.status = 'done';
+          }))
+          .catch(mobxAction(() => {
+            attachment.status = 'done';
+          }));
+      }
     }
   }
 
