@@ -178,6 +178,7 @@ class Cell extends React.PureComponent<CellProps> {
       onCell,
       rowSpan,
       fixed,
+      hasChildren,
       ...rest
     } = this.props;
     const { tableStore } = this.context;
@@ -235,7 +236,7 @@ class Cell extends React.PureComponent<CellProps> {
       width,
       height: nextHeight,
       textAlign: align,
-      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + 10 : null,
+      [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + (hasChildren ? 8 : 36) : null,
     };
 
     if (verticalAlign) {
