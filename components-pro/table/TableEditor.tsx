@@ -310,11 +310,11 @@ export default class TableEditor extends Component<TableEditorProps> {
         tableStore.editors.forEach((editor) => {
           const editorCellNode = editor.cellNode;
           if (editorCellNode) {
-            editor.alignEditor(editorCellNode);
+            editor.alignEditor(editorCellNode, editor === this ? height : undefined);
           }
         });
       } else {
-        this.alignEditor(cellNode);
+        this.alignEditor(cellNode, height);
       }
     }
   }
@@ -334,7 +334,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @action
-  alignEditor(cellNode?: HTMLSpanElement | undefined) {
+  alignEditor(cellNode?: HTMLSpanElement | undefined, height?: number) {
     const { wrap, editor } = this;
     const { tableStore } = this.context;
     if (!cellNode) {
@@ -346,9 +346,13 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
     this.cellNode = cellNode;
     if (cellNode) {
-      const { offsetHeight } = cellNode;
-      if (offsetHeight !== this.height) {
-        this.height = offsetHeight;
+      if (height === undefined) {
+        const { offsetHeight } = cellNode;
+        if (offsetHeight !== this.height) {
+          this.height = offsetHeight;
+        }
+      } else {
+        this.height = height;
       }
       if (!this.rendered) {
         this.rendered = true;

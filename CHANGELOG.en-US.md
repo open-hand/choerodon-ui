@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of the lock of group set to false.
 - 🐞 `<pro>Table`: Fix the problem that new child nodes could not be cleared by reset in tree mode.
 - 🐞 `<pro>Table`: Fix the problem that the initial state of the dynamic filter bar asynchronous query rendering is wrong.
+- 🐞 `<pro>Table`: Fix the problem that TextArea editor may be shaking after resizing.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.
