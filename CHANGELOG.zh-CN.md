@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复分组取消锁定的问题。
 - 🐞 `<pro>Table`: 修复 tree 模式下无法通过 reset 清除新增子节点的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条异步查询渲染初始状态错误的问题。
+- 🐞 `<pro>Table`: 修复 TextArea 编辑器调整大小后肯定会抖动的问题。
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。修复设置了 step 且 max 小于 0 时, 数据校验错误的问题。
 - 🐞 `<pro>Range`: 修复 range 模式下，拖拽一滑块后，无法拖动另一滑块的问题。
