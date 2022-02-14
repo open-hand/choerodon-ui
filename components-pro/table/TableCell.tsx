@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, HTMLProps, Key, TdHTMLAttributes, useCallback, useContext } from 'react';
+import React, { CSSProperties, FunctionComponent, HTMLProps, Key, ReactElement, TdHTMLAttributes, useCallback, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -17,9 +17,10 @@ import ColumnGroup from './ColumnGroup';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
 import TableStore from './TableStore';
-import AggregationTree from './AggregationTree';
+import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
+import AggregationTreeGroups from './AggregationTreeGroups';
 
-function getRowSpan(group: Group, tableStore: TableStore) {
+function getRowSpan(group: Group, tableStore: TableStore): number {
   if (tableStore.headerTableGroups.length) {
     const { subGroups, subHGroups } = group;
     if (subHGroups) {
@@ -107,21 +108,19 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   if (group && !groupCell) {
     return null;
   }
-  const getAggregationColumns = ($aggregation) => {
+  const getAggregationTreeGroups = ($aggregation): ReactElement<AggregationTreeProps>[] | undefined => {
     if ($aggregation) {
       const { childrenInAggregation } = columnGroup;
       if (childrenInAggregation) {
         const groups = childrenInAggregation.columns;
-        return (
-          <AggregationTree
-            rowGroup={__tableGroup ? group : rowGroup}
-            headerGroup={columnGroup.headerGroup}
-            record={record}
-            groups={groups}
-            column={column}
-            renderer={aggregationTreeRenderer}
-          />
-        );
+        return groupedAggregationTree({
+          rowGroup: __tableGroup ? group : rowGroup,
+          headerGroup: columnGroup.headerGroup,
+          record,
+          groups,
+          column,
+          renderer: aggregationTreeRenderer,
+        });
       }
     }
   };
@@ -138,7 +137,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         </span>
       );
     }
-    const aggregationList = getAggregationColumns($aggregation);
+    const aggregationList = getAggregationTreeGroups($aggregation);
     if (groupCell && group && __tableGroup) {
       return (
         <TableGroupCellInner rowSpan={rowSpan} group={group} column={column}>
@@ -148,9 +147,20 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
     if (aggregationList) {
       const { renderer = defaultAggregationRenderer } = column;
+      const treeGroups = <AggregationTreeGroups trees={aggregationList} />;
       return (
         <span className={`${cellPrefix}-inner`}>
-          {renderer({ text: aggregationList, record, dataSet, aggregation: tableAggregation, headerGroup: columnGroup.headerGroup, rowGroup })}
+          {
+            renderer({
+              text: treeGroups,
+              record,
+              dataSet,
+              aggregation: tableAggregation,
+              headerGroup: columnGroup.headerGroup,
+              rowGroup,
+              aggregationTree: aggregationList,
+            })
+          }
         </span>
       );
     }

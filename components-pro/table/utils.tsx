@@ -37,6 +37,7 @@ import { $l } from '../locale-context';
 import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
+import { AggregationTreeProps } from './AggregationTree';
 
 export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const type = field.get('type', record);
@@ -275,7 +276,7 @@ function getLabel(dataSet, name) {
 export interface HeaderOptions extends ColumnProps {
   dataSet: DataSet;
   group?: Group | undefined;
-  aggregationTree?: ReactNode;
+  aggregationTree?: ReactElement<AggregationTreeProps>[];
 }
 
 export function getHeader(column: HeaderOptions): ReactNode {

@@ -389,6 +389,20 @@
     margin-left: @btn-group-spacing;
   }
 
+  &-aggregation {
+    &-groups {
+      display: flex;
+
+      &-tree {
+        flex: 1;
+
+        &:not(:first-child) {
+          margin-left: .1rem;
+        }
+      }
+    }
+  }
+
   &-aggregation &-cell {
     vertical-align: top;
 

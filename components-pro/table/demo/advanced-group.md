@@ -174,16 +174,9 @@ const App = () => {
     { 
       title: '头分组聚合列', // 可在个性化内显示
       header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
-      renderer: ({ text, record, dataSet }) => record.getState('editing') ? (
-        <Row>
-          <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }} onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
-            {text}
-          </Col>
-          <Col span={12}>
-            {record.isSelected ? <TextField record={record} name="quantity" /> : null}
-          </Col>
-        </Row>
-      ) : text,
+      renderer: ({ text, record, dataSet, aggregationTree }) => record.getState('editing') ? (
+        text
+      ) : aggregationTree[0],
       aggregation: true,
       aggregationLimit: 3,
       aggregationLimitDefaultExpanded: true,
@@ -192,7 +185,7 @@ const App = () => {
       align: 'left',
       children: [
         { name: 'unitPrice' },
-        { name: 'quantity' },
+        { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
         { name: 'amount' },
         { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
       ],
@@ -208,7 +201,7 @@ const App = () => {
       header: ({ group, title }) => group ? (
         group.totalRecords.reduce((list, record) => {
           if (record.get('showInHeader')) {
-            list.push(<div>{record.get('scoreMeaning')} {record.get('score')}</div>);
+            list.push(<div key={record.key}>{record.get('scoreMeaning')} {record.get('score')}</div>);
           }
           return list;
         }, [])

@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `forceSubmit` method. `ValidationRule` add `disabled` hook.
 - 🌟 `<pro>DataSet.Field`: Added `useChunk`, `chunkSize`, `chunkThreads`, `fileKey`, `fileSize` properties.
 - 🌟 `<pro>Table`: Added the `setColumnWidth` instance method, added `renderEmpty` property, and added `index` property on the parameter of the `onColumnResize` hook. `rowHeight` supports hooks.
-- 🌟 `<pro>Table.Column`: Added `aggregationTree` property on the parameter of the `header` and `footer` hook.
+- 🌟 `<pro>Table.Column`: Added `aggregationTreeIndex` property. Added `aggregationTree` property on the parameter of the `renderer`, `header` and `footer` hook.
 - 🌟 `configure`: Added `min`, `max` properties.
 - 🌟 `<pro>Table`: Added query bar type of `comboBar` and configuration item of queryBarProps.
 - 🌟 `<pro>Attachment`: Added new upload mode of `Attachment.Dragger`. Added `useChunk`, `chunkSize`, `chunkThreads` properties.
