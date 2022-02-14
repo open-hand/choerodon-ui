@@ -924,8 +924,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return getDateFormatByField(field, this.getFieldType(field), this.record);
   }
 
-  processValue(value: any): ReactNode {
-    return processValue(value, this.getDateFormat());
+  processValue(value: any, field?: Field): ReactNode {
+    return processValue(value, this.getDateFormat(field));
   }
 
   getDataSetValue(): any {

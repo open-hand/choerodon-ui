@@ -83,7 +83,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (key && (!filter || filter(key))) {
             const values = current.get(key);
             if (isArrayLike(values)) {
-              values.forEach(item => !isNil(item) && result.push(key));
+              const field = current.getField(key);
+              if (field && field.get('multiple', current)) {
+                values.forEach(item => !isNil(item) && result.push(key));
+              } else if (values.some(item => !isNil(item))) {
+                result.push(key);
+              }
             } else if (!isNil(values)) {
               result.push(key);
             }
@@ -205,7 +210,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
-                isPlainObject(v) ? v : super.processValue(v),
+                isPlainObject(v) ? v : super.processValue(v, field),
                 field,
                 {
                   getProp: (name) => this.getProp(name),
@@ -215,7 +220,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
-          const text = this.processText(isNil(fieldValue) ? this.processValue(value) : isMoment(fieldValue) ? super.processValue(fieldValue) : fieldValue);
+          const text = this.processText(isNil(fieldValue) ? this.processValue(value) : isMoment(fieldValue) ? super.processValue(fieldValue, field) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : text,
             field,
@@ -283,25 +288,31 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   @autobind
   @action
-  handleDataSetUpdate({ name, value }) {
+  handleDataSetUpdate({ name, value, record }) {
     const values = this.getValues();
     if (isArrayLike(value)) {
       const { length } = value;
       if (length) {
-        let repeat = 0;
-        const filtered = values.filter(item => {
-          if (item === name) {
-            repeat += 1;
-            if (repeat > length) {
-              return false;
+        const field = record.getField(name);
+        if (field && field.get('multiple', record)) {
+          let repeat = 0;
+          const filtered = values.filter(item => {
+            if (item === name) {
+              repeat += 1;
+              if (repeat > length) {
+                return false;
+              }
             }
+            return true;
+          });
+          for (let i = 0, n = length - repeat; i < n; i += 1) {
+            filtered.push(name);
           }
-          return true;
-        });
-        for (let i = 0, n = length - repeat; i < n; i += 1) {
-          filtered.push(name);
+          this.setValue(filtered);
+        } else if (values.indexOf(name) === -1) {
+          values.push(name);
+          this.setValue(values);
         }
-        this.setValue(filtered);
       } else {
         this.setValue(values.filter(item => item !== name));
       }
@@ -460,7 +471,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> {
-    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, this.record, true);
+    const current = this.queryDataSet ? this.queryDataSet.current : undefined;
+    const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, current, true);
     const editorProps: FormFieldProps = {
       ...props,
       key: 'value',
@@ -470,6 +482,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       onInput: this.handleInput,
       onEnterDown: this.handleFieldEnterDown,
       renderer: noop,
+      isFlat: selectField && selectField.get('range', current),
     };
 
     if ((editor.type as any).__PRO_SELECT) {
@@ -527,7 +540,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   renderMultipleEditor(props: FilterSelectProps) {
-    const { text, selectField, prefixCls } = this;
+    const { text, selectField, prefixCls, queryDataSet } = this;
     const editorProps: FilterSelectProps = {
       ...omit(props, ['multiple', 'prefixCls']),
       clearButton: false,
@@ -536,7 +549,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       elementClassName: `${prefixCls}-inner-editor`,
       onChange: this.handleFieldChange,
     };
-    if (text) {
+    if (text && (!selectField || !queryDataSet || !selectField.get('range', queryDataSet.current))) {
       editorProps.style = { width: pxToRem(measureTextWidth(text), true)! };
     }
     return (

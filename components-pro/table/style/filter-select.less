@@ -83,5 +83,28 @@
         cursor: pointer;
       }
     }
+
+    &-multiple-input {
+      // 筛选条 range 类型
+      & > label > span {
+        display: flex;
+        align-items: center;
+        & > span {
+          display: flex;
+          align-items: center;
+        }
+      }
+      &[class*="-range "], &[class$="-range"] {
+        width: auto;
+      }
+      // 筛选条 multiple 类型
+      & .@{table-prefix-cls}-filter-select-inner-editor ul {
+        margin-top: -3px;
+      }
+      // DatePicker 组件 hover 显示样式
+      .@{c7n-pro-prefix}-calendar-picker-hover-value {
+        width: auto;
+      }
+    }
   }
 }
