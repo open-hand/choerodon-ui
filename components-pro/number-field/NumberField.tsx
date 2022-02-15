@@ -461,7 +461,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const currentValue = getCurrentValidValue(String(value), stringMode);
     return (function* (newValue: number | string) {
       while (true) {
-        const nearStep = getNearStepValues(newValue, step, min, max, stringMode);
+        const nearStep = nonStrictStep === false ? getNearStepValues(newValue, step, min, max, stringMode) : undefined;
         if (nonStrictStep === false && nearStep) {
           switch (nearStep.length) {
             case 1:
@@ -485,8 +485,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
           if (!isEmpty(min) && ((stringMode && new BigNumber(nextValue).isLessThan(min)) || (!stringMode && nextValue < min))) {
             newValue = min;
           } else if (!isEmpty(max) && ((stringMode && new BigNumber(nextValue).isGreaterThan(max)) || (!stringMode && nextValue > max))) {
-            const nearMaxStep = getNearStepValues(max, step, min, max, stringMode);
-            if (nearMaxStep) {
+            const nearMaxStep = nonStrictStep === false ? getNearStepValues(max, step, min, max, stringMode) : undefined;
+            if (nonStrictStep === false && nearMaxStep) {
               newValue = nearMaxStep[0];
             } else {
               newValue = max;
