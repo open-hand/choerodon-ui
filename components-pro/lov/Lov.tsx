@@ -798,6 +798,11 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  getTextByValue(value: any): ReactNode {
+    const { mode } = this.props;
+    return mode === ViewMode.button ? this.processRenderer(value) : super.getTextByValue(value);
+  }
+
   renderWrapper(): ReactNode {
     const { mode, children, clearButton } = this.props;
     if (mode === ViewMode.button) {

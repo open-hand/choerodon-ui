@@ -64,7 +64,8 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed `Cascader` rendering display values in `Output` and `TableCell`.
 - 🐞 Fix the style problem when the browser font size is not default.
 - 🐞 `<pro>DataSet`: Fixed the verification error of whether `Field` in `DataSet` is modified when `Cascader` component sets `multiple` property to `true`.
-- 🐞`<pro>Table`: Fixed `queryBar` as `bar`, filter field set `range` or `multiple` property style, and `datetime` type field display error.
+- 🐞 `<pro>Table`: Fixed `queryBar` as `bar`, filter field set `range` or `multiple` property style, and `datetime` type field display error.
+- 🐞 `<pro>Lov`: Fix multi-select rendering error in `button` mode.
 
 ## 1.5.1
 
