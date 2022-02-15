@@ -31,21 +31,22 @@
       text-align: center;
     }
 
-    label {
-      display: flex;
-      align-items: baseline;
-      padding: @label-wrapper-padding;
-      padding-right: 0;
-      padding-left: 0;
-      color: @label-color-horizontal;
-
-      > span {
-        flex: 1;
-      }
-    }
-
     &-left label > span {
       flex: unset;
+    }
+  }
+
+  label&-label,
+  &-label label {
+    display: flex;
+    align-items: baseline;
+    padding: @label-wrapper-padding;
+    padding-right: 0;
+    padding-left: 0;
+    color: @label-color-horizontal;
+
+    > span {
+      flex: 1;
     }
   }
 
