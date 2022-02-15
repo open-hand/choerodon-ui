@@ -505,7 +505,7 @@ const ObserverRows = observer(Rows);
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
   const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer, isTree } = useContext(TableContext);
-  const { rowDraggable, propVirtual } = tableStore;
+  const { rowDraggable } = tableStore;
   const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
@@ -535,7 +535,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
 
   const renderClone = useRenderClone(lock ? undefined : columnGroups);
 
-  const body = propVirtual ? (
+  const body = tableStore.propVirtual ? (
     <ObserverVirtualRows
       onClearCache={handleClearCache}
       expandIconColumnIndex={expandIconColumnIndex}
@@ -560,12 +560,12 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       rowDraggable={rowDraggable}
     />
   );
-  const tbody = rowDraggable && !propVirtual ? (
+  const tbody = rowDraggable && !tableStore.virtual ? (
     <Droppable
       droppableId="table"
       key="table"
       isCombineEnabled={isTree}
-      mode={propVirtual ? 'virtual' : 'standard'}
+      mode="standard"
       renderClone={renderClone}
       getContainerForClone={() => instance(tableStore.node.getClassName(), prefixCls).tbody as React.ReactElement<HTMLElement>}
       {...(rowDragRender && rowDragRender.droppableProps)}
