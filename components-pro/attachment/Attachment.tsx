@@ -105,7 +105,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   uploader?: Uploader;
 
-  tempAttachmentUUID?: string;
+  @observable tempAttachmentUUID?: string | undefined;
 
   get help() {
     return this.getProp('help');
@@ -313,7 +313,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     const oldAttachmentUUID = this.tempAttachmentUUID || this.getValue();
     const attachmentUUID = oldAttachmentUUID || (await this.fetchAttachmentUUID());
     if (attachmentUUID !== oldAttachmentUUID) {
-      this.tempAttachmentUUID = attachmentUUID;
+      runInAction(() => {
+        this.tempAttachmentUUID = attachmentUUID;
+      });
     }
     return attachmentUUID;
   }
@@ -386,13 +388,15 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (result === false) {
         this.removeAttachment(attachment);
       } else {
-        const { tempAttachmentUUID } = this;
-        if (attachment.status === 'success' && tempAttachmentUUID) {
-          delete this.tempAttachmentUUID;
-          this.setValue(tempAttachmentUUID);
-        } else {
-          this.checkValidity();
-        }
+        runInAction(() => {
+          const { tempAttachmentUUID } = this;
+          if (attachment.status === 'success' && tempAttachmentUUID) {
+            this.tempAttachmentUUID = undefined;
+            this.setValue(tempAttachmentUUID);
+          } else {
+            this.checkValidity();
+          }
+        });
       }
     } catch (e) {
       this.removeAttachment(attachment);
