@@ -966,7 +966,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     } = this;
     let processedValue;
     if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
-      processedValue = field.getText(value, undefined, record) as string;
+      // Cascader 值集处理
+      if (isArrayLike(value)) {
+        processedValue = value.map(v => field.getText(v, undefined, record)).join('/');
+      } else {
+        processedValue = field.getText(value, undefined, record) as string;
+      }
     }
     // 值集中不存在 再去取直接返回的值
     const text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);

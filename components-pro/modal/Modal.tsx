@@ -446,14 +446,18 @@ export default class Modal extends ViewComponent<ModalProps> {
     const { contentNode, element, element: { offsetParent }, minHeight, minWidth, prefixCls, props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { clientX, clientY } = e;
-    const { left: elementLeft, top: elementTop } = (element as HTMLDivElement).getBoundingClientRect();
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const clzz = classes(element);
     const startX = clientX - contentWidth;
     const startY = clientY - contentHeight;
+    let { left: elementLeft, top: elementTop } = (element as HTMLDivElement).getBoundingClientRect();
     // modal模式需存在坐标
     if (!drawer && !this.offset && clzz.has(`${prefixCls}-center`)) {
+      if (offsetParent) {
+        elementTop = element.offsetTop;
+        elementLeft = element.offsetLeft;
+      }
       this.offset = [pxToRem(elementLeft), pxToRem(autoCenter ? contentTop : elementTop)];
       clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
       Object.assign(element.style, {
@@ -472,7 +476,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   handleDrawerMouseResize(e) {
-    const { contentNode, drawerTransitionName, element, element: { offsetParent }, minWidth, minHeight } = this;
+    const { contentNode, drawerTransitionName, element, element: { offsetParent, offsetLeft: elementOffsetTop, offsetTop: elementOffsetLeft }, minWidth, minHeight } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const maxWidth = embeddedOffsetWidth || docClientWidth;
@@ -481,8 +485,8 @@ export default class Modal extends ViewComponent<ModalProps> {
     return (me) => {
       let { clientX, clientY } = me;
       if (offsetParent) {
-        clientX = element.offsetLeft + me.clientX - e.clientX;
-        clientY = element.offsetTop + me.clientY - e.clientY;
+        clientX = elementOffsetTop + me.clientX - e.clientX;
+        clientY = elementOffsetLeft + me.clientY - e.clientY;
       }
       switch (drawerTransitionName) {
         case 'slide-right':
@@ -589,7 +593,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetLeft + moveX - clientX,
                 scrollLeft - headerWidth + HANDLE_MIN_SIZE,
               ),
-              scrollLeft + docClientHeight - HANDLE_MIN_SIZE,
+              scrollLeft + docClientWidth - HANDLE_MIN_SIZE,
             ),
             true,
           );
@@ -599,7 +603,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 offsetTop + moveY - clientY,
                 scrollTop - headerHeight + HANDLE_MIN_SIZE,
               ),
-              scrollTop + docClientWidth - HANDLE_MIN_SIZE,
+              scrollTop + docClientHeight - HANDLE_MIN_SIZE,
             ),
             true,
           );

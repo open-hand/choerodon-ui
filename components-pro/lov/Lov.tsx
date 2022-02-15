@@ -169,7 +169,7 @@ export default class Lov extends Select<LovProps> {
    */
   get autoSelectSingle(): boolean | undefined {
     const { viewMode } = this.observableProps;
-    if (viewMode === ViewMode.button) {
+    if ([ViewMode.button, ViewMode.popup].includes(viewMode)) {
       return false;
     }
     if ('autoSelectSingle' in this.props) {

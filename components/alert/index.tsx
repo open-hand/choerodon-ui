@@ -132,9 +132,11 @@ export default class Alert extends PureComponent<AlertProps, any> {
     }
 
     const closeIcon = closable ? (
-      <a onClick={this.handleClose} className={`${prefixCls}-close-icon`}>
-        {closeText || <Icon type="close" />}
-      </a>
+      <button type="button" className={`${prefixCls}-close-wrapper`}>
+        <a onClick={this.handleClose} className={`${prefixCls}-close-icon`}>
+          {closeText || <Icon type="close" />}
+        </a>
+      </button>
     ) : null;
 
     return closed ? null : (
@@ -150,7 +152,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
             <span className={`${prefixCls}-message`}>{message}</span>
             <span className={`${prefixCls}-description`}>{description}</span>
           </div>
-          <button type="button" className={`${prefixCls}-close-wrapper`}>{closeIcon}</button>
+          {closeIcon}
         </div>
       </Animate>
     );

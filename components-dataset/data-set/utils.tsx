@@ -89,6 +89,9 @@ function processOneToJSON(value, field: Field, record?: Record, checkRange = tru
           processOneToJSON(value[1], field, record, false),
         ];
       }
+    } else if (isArrayLike(value)) {
+      // Cascacer 值集
+      value = value.map(v => processOneToJSON(v, field, record, false));
     } else {
       if (isDate(value)) {
         value = moment(value);

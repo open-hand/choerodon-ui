@@ -21,6 +21,8 @@ export {
   TableAutoHeightType,
   HighLightRowType,
   RowBoxPlacement,
+  GroupType,
+  TableColumnResizeTriggerType,
 } from './enum';
 
 export {

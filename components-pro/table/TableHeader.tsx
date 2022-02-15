@@ -1,4 +1,15 @@
-import React, { cloneElement, DetailedHTMLProps, FunctionComponent, isValidElement, ReactElement, ThHTMLAttributes, useCallback, useContext, useRef, useState } from 'react';
+import React, {
+  cloneElement,
+  DetailedHTMLProps,
+  FunctionComponent,
+  isValidElement,
+  ReactElement,
+  ThHTMLAttributes,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import { observer } from 'mobx-react-lite';
 import isObject from 'lodash/isObject';
 import classNames from 'classnames';
@@ -139,7 +150,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   };
 
   const getQueryFields = (extraStyle) => {
-    const { queryFields } = dataSet.props
+    const { queryFields } = dataSet.props;
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
@@ -173,12 +184,12 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
       }, result);
     }
     return result;
-  }
+  };
 
   const getInlineSearchTr = () => {
     const notRenderThKey = ['__selection-column__', '__combo-column__'];
     const fieldsComponent = getQueryFields({ width: 'calc(100% - 1px)' });
-    const lastthCls = classNames(`${prefixCls}-thead-inline-search`, `${prefixCls}-thead-inline-search-last`)
+    const lastthCls = classNames(`${prefixCls}-thead-inline-search`, `${prefixCls}-thead-inline-search-last`);
     const notLockLeft = lock !== ColumnLock.left;
 
     return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
@@ -193,12 +204,12 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               <th key={key} className={`${prefixCls}-thead-inline-search`}>
                 {!notRenderThKey.includes(String(key)) && fieldsComponent.find(field => field.key === key)}
               </th>
-            )
+            );
           }
           return undefined;
-        })
+        });
         if (hasPlaceholder) {
-          tds.push(<th className={lastthCls}>&nbsp;</th>)
+          tds.push(<th className={lastthCls}>&nbsp;</th>);
         }
         return (
           <TableHeaderRow
@@ -213,7 +224,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
       }
       return <tr key={rowKey} />;
     });
-  }
+  };
   const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
     ref: nodeRef,
     className: classNames(`${prefixCls}-thead`, {

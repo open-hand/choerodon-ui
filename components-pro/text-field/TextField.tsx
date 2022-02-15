@@ -187,6 +187,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     width: number;
   } | undefined;
 
+  prefixWidth?: number;
+
   lengthElement?: ReactNode;
 
   lengthInfoWidth?: number;
@@ -313,8 +315,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
     const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = rangeTarget === undefined && this.hasFloatLabel ? [] : this.getPlaceholders();
+    const { text } = this;
     if (rangeTarget === undefined) {
-      const { text } = this;
       if (text !== undefined) {
         return {
           text,
@@ -365,11 +367,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           };
         }
       }
-      if (startPlaceHolder) {
+      if (!isNil(startPlaceHolder) || !isNil(text)) {
+        const width = !isNil(text) ? measureTextWidth(text) : !isNil(startPlaceHolder) ? measureTextWidth(startPlaceHolder) : 0;
         return {
           text: '',
-          width: isFlat ? measureTextWidth(startPlaceHolder) : 0,
-          placeholder: startPlaceHolder,
+          width: isFlat ? width : 0,
+          placeholder: isNil(text) ? startPlaceHolder : undefined,
         };
       }
     }
@@ -389,11 +392,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           };
         }
       }
-      if (endPlaceHolder) {
+      if (!isNil(endPlaceHolder) || !isNil(text)) {
+        const width = !isNil(text) ? measureTextWidth(text) : !isNil(endPlaceHolder) ? measureTextWidth(endPlaceHolder) : 0;
         return {
           text: '',
-          width: isFlat ? measureTextWidth(endPlaceHolder) : 0,
-          placeholder: endPlaceHolder,
+          width: isFlat ? width : 0,
+          placeholder: isNil(text) ? endPlaceHolder : undefined,
         };
       }
     }
@@ -539,9 +543,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.renderLengthElement();
     const suffix = this.getSuffix();
     const button = this.getInnerSpanButton();
+    const prefix = this.getPrefix();
 
     const input = this.getWrappedEditor(renderedValue);
-    const prefix = this.getPrefix();
     const otherPrevNode = this.getOtherPrevNode();
     const otherNextNode = this.getOtherNextNode();
     const placeholderDiv = renderedValue ? undefined : this.renderPlaceHolder();
@@ -1003,6 +1007,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     }
+    if (this.prefixWidth && this.prefixWidth > 24) {
+      otherProps.style = {
+        ...otherProps.style,
+        paddingLeft: this.prefixWidth + 2,
+      };
+    }
   }
 
   renderLengthElement(): void {
@@ -1029,6 +1039,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (suffix) {
       return this.wrapperSuffix(suffix);
     }
+    this.suffixWidth = undefined;
   }
 
   getDefaultSuffix(): ReactNode {
@@ -1079,14 +1090,45 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getPrefix(): ReactNode {
     const { prefix } = this.props;
+    let wrapperPrefixNode;
     if (prefix) {
-      return this.wrapperPrefix(prefix);
+      wrapperPrefixNode = this.wrapperPrefix(prefix);
+    } else {
+      this.prefixWidth = undefined;
     }
+    runInAction(() => {
+      if (this.prefixWidth && this.prefixWidth > 24) {
+        if (this.floatLabelOffsetX !== this.prefixWidth - 24) {
+          this.floatLabelOffsetX = this.prefixWidth - 24;
+        }
+      } else if (this.floatLabelOffsetX !== undefined) {
+        this.floatLabelOffsetX = undefined;
+      }
+    });
+    return wrapperPrefixNode;
   }
 
   wrapperPrefix(children: ReactNode): ReactNode {
     const { prefixCls } = this;
-    return <div className={`${prefixCls}-prefix`}>{children}</div>;
+    let divStyle = {};
+    if (isValidElement<any>(children)) {
+      this.prefixWidth = 24;
+      if (children.props && children.props.style) {
+        divStyle = {
+          width: children.props.style.width,
+        };
+        const calculateWidth = toPx(children.props.style.width);
+        this.prefixWidth = calculateWidth != null ? calculateWidth : 24;
+      }
+    } else if (children && children !== true) {
+      this.prefixWidth = measureTextWidth(children.toString()) + 4;
+      divStyle = {
+        width: this.prefixWidth > 24 ? this.prefixWidth : undefined,
+      };
+    } else {
+      this.prefixWidth = undefined;
+    }
+    return <div className={`${prefixCls}-prefix`} style={{ ...divStyle }}>{children}</div>;
   }
 
   renderMultipleHolder() {
@@ -1155,8 +1197,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     const [placeholder] = this.getPlaceholders();
     if (placeholder) {
+      let divStyle;
+      if (this.prefixWidth && this.prefixWidth > 24) {
+        divStyle = {
+          paddingLeft: this.prefixWidth + 5,
+        };
+      }
       return (
-        <div className={`${prefixCls}-placeholder`}>
+        <div className={`${prefixCls}-placeholder`} style={{ ...divStyle }}>
           <span className={`${prefixCls}-placeholder-inner`}>{placeholder}</span>
         </div>
       );
