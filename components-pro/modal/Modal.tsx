@@ -431,6 +431,7 @@ export default class Modal extends ViewComponent<ModalProps> {
           runInAction(() => {
             this.tempCustomized = { width, height };
           });
+          this.saveCustomized();
           this.resizeEvent
             .removeEventListener('mousemove', mousemove)
             .removeEventListener('mouseup', handleMouseUp);
@@ -626,7 +627,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     try {
       const [ret1, ret2] = await promise;
       if (ret1 !== false && ret2) {
-        this.saveCustomized();
         this.close();
       }
     } catch (e) {
