@@ -143,9 +143,11 @@ function uploadChunks(
 
 async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext) {
   try {
+    runInAction(() => {
+      attachment.status = 'uploading';
+    });
     const config = getUploadAxiosConfig(props, attachment, undefined, attachmentUUID, context, mobxAction((e) => {
       const percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
-      attachment.status = 'uploading';
       attachment.percent = percent;
       const { onUploadProgress: handleProgress } = props;
       if (handleProgress) {
