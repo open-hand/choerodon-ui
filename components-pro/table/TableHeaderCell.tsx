@@ -206,7 +206,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       .addEventListener('mouseup', resizeEnd);
   }), [tableStore, globalRef, setSplitLineHidden, setSplitLinePosition, resizeEvent]);
 
-  const delayResizeStart = useCallback(debounce(resizeStart, 300), [resizeStart]);
+  const delayResizeStart = useCallback(debounce(
+    resizeStart,
+    300,
+    { 
+      leading: true,
+      trailing: false,
+    },
+  ), [resizeStart]);
 
   const prevColumnGroup: ColumnGroup | undefined = columnResizable ? prev && prev.lastLeaf : undefined;
 
@@ -258,10 +265,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       }
     }
   }, [prevColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
-
-  const handleStopResize = useCallback(() => {
-    delayResizeStart.cancel();
-  }, [delayResizeStart]);
 
   const handleRightResize = useCallback((e) => {
     if (currentColumnGroup) {
@@ -326,12 +329,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }), [globalRef, prefixCls, tableStore]);
 
   const handleLeftDoubleClick = useCallback(() => {
-    delayResizeStart.cancel();
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
   const handleRightDoubleClick = useCallback(() => {
-    delayResizeStart.cancel();
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
@@ -345,7 +346,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
         onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
         onMouseDown={handleLeftResize}
-        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
         onMouseEnter={(e) => handleShowSplitLine(e, 'pre')}
         onMouseLeave={handleHideSplitLine}
       />
@@ -356,7 +356,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
         onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
         onMouseDown={handleRightResize}
-        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
         onMouseEnter={(e) => handleShowSplitLine(e, 'next')}
         onMouseLeave={handleHideSplitLine}
       />
