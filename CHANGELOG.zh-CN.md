@@ -65,7 +65,9 @@ timeline: true
 - 🐞 修复在浏览器非默认字号下的样式问题。
 - 🐞 `<pro>DataSet`: 修复 Cascader 组件设置 multiple 属性为 true 时, DataSet 中 Field 是否被修改校验错误问题。
 - 🐞 `<pro>Table`: 修复 queryBar 为 bar 时, 筛选字段设置 range 或 multiple 属性时的样式, 以及 datetime 类型字段显示错误问题。
+- 🐞 `<pro>Table`: 修复列动态变化时编辑器没有对齐的问题。
 - 🐞 `<pro>Lov`: 修复按钮模式下多选渲染错误的问题。
+- 🐞 `<pro>Lov`: 修复首次弹窗时可能不显示数据的问题。
 
 ## 1.5.1
 

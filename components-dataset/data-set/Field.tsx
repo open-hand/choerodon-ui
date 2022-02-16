@@ -999,11 +999,17 @@ export default class Field {
       return computedOptions.get();
     }
     const newComputedOptions = computed<DataSet | undefined>(() => {
+      const optionsProps = this.get('optionsProps', record);
+      const lovCode = this.get('lovCode', record);
+      if (lovCode) {
+        const type = this.get('type', record);
+        if (type === FieldType.object || type === FieldType.auto) {
+          return lovCodeStore.getLovDataSet(lovCode, this, optionsProps, record);
+        }
+      }
       // 确保 lookup 相关配置介入观察
       lookupStore.getAxiosConfig(this, record);
-      const optionsProps = this.get('optionsProps', record);
       const lookupToken = getLookupToken(this, record);
-      const type = this.get('type', record);
       if (lookupToken) {
         const { lookupCaches } = this.dataSet;
         if (lookupCaches) {
@@ -1028,12 +1034,6 @@ export default class Field {
               return new DataSet({ status: DataSetStatus.loading });
             }
           }
-        }
-      }
-      const lovCode = this.get('lovCode', record);
-      if (lovCode) {
-        if (type === FieldType.object || type === FieldType.auto) {
-          return lovCodeStore.getLovDataSet(lovCode, this, optionsProps, record);
         }
       }
       return undefined;
