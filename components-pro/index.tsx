@@ -149,3 +149,5 @@ export { default as Attachment } from './attachment';
 export { default as Rate } from './rate';
 
 export { default as SecretField } from './secret-field';
+
+export { default as Mentions } from './mentions';

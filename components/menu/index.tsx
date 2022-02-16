@@ -1,4 +1,4 @@
-import React, { CSSProperties, PureComponent } from 'react';
+import React, { CSSProperties, PureComponent, FocusEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
@@ -52,6 +52,8 @@ export interface MenuProps {
   inlineCollapsed?: boolean;
   subMenuCloseDelay?: number;
   subMenuOpenDelay?: number;
+  onFocus?: FocusEventHandler<HTMLElement>;
+  onBlur?: FocusEventHandler<HTMLElement>;
 }
 
 export interface MenuState {

@@ -40,7 +40,6 @@ module.exports = {
 
     '!components/style/v2-compatible-reset.tsx',
     '!components/responsive/*.{ts,tsx}',
-    '!components/mention/*.{ts,tsx}',
     '!components/configure/*.{ts,tsx}',
     '!components/align/*.{ts,tsx}',
     '!components-pro/code-area/lint/*.{ts,tsx}',

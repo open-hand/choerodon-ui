@@ -470,13 +470,17 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       </span>,
     );
   }
-  if (headerRowHeight !== 'auto' && rowHeight !== 'auto') {
+  if (headerRowHeight !== 'auto' && rowHeight !== 'auto' && !isSearchCell) {
     const height: number = Number(cellStyle.height) || ((headerRowHeight === undefined ? rowHeight : headerRowHeight) * (rowSpan || 1));
     innerProps.style = {
       height: pxToRem(height),
       lineHeight: pxToRem(height - 2),
     };
     innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+  }
+
+  if (isSearchCell) {
+    innerClassNames.push(`${prefixCls}-cell-search-header`);
   }
 
   if (key === CUSTOMIZED_KEY && isStickySupport() && tableStore.stickyRight && tableStore.overflowX && tableStore.columnGroups.rightLeafs.length === 1) {

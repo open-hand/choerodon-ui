@@ -542,18 +542,6 @@ form {
       border-color: @error-color;
     }
   }
-  .@{c7n-prefix}-mention-wrapper {
-    .@{c7n-prefix}-mention-editor {
-      &,
-      &:not([disabled]):hover {
-        border-color: @error-color;
-      }
-    }
-    &.@{c7n-prefix}-mention-active:not([disabled]) .@{c7n-prefix}-mention-editor,
-    .@{c7n-prefix}-mention-editor:not([disabled]):focus {
-      .active(@error-color);
-    }
-  }
 
   .@{c7n-prefix}-cascader-picker:focus .@{c7n-prefix}-cascader-input {
     .active(@error-color);
