@@ -334,9 +334,21 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (resizable && customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
       if (temp) {
+        const { contentNode, element, prefixCls } = this;
         runInAction(() => {
           this.tempCustomized = temp;
         });
+        if (classes(element).has(`${prefixCls}-auto-center`)) {
+          Object.assign(element.style, {
+            bottom: 0,
+            margin: 'auto',
+          });
+          if (contentNode) {
+            Object.assign(contentNode.style, {
+              height: 'inherit',
+            });
+          }
+        }
         this.forceUpdate();
       }
     }
@@ -431,6 +443,7 @@ export default class Modal extends ViewComponent<ModalProps> {
           runInAction(() => {
             this.tempCustomized = { width, height };
           });
+          this.saveCustomized();
           this.resizeEvent
             .removeEventListener('mousemove', mousemove)
             .removeEventListener('mouseup', handleMouseUp);
@@ -458,11 +471,12 @@ export default class Modal extends ViewComponent<ModalProps> {
         elementTop = element.offsetTop;
         elementLeft = element.offsetLeft;
       }
-      this.offset = [pxToRem(elementLeft), pxToRem(autoCenter ? contentTop : elementTop)];
+      this.offset = [pxToRem(elementLeft), pxToRem(autoCenter && contentTop ? contentTop : elementTop)];
       clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
       Object.assign(element.style, {
         left: this.offset[0],
         top: this.offset[1],
+        margin: 'initial',
       });
     }
     return (me) => {
@@ -626,7 +640,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     try {
       const [ret1, ret2] = await promise;
       if (ret1 !== false && ret2) {
-        this.saveCustomized();
         this.close();
       }
     } catch (e) {
