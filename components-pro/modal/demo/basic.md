@@ -60,7 +60,6 @@ const App = () => {
       okProps: { disabled: true },
       closeOnLocationChange: false,
       autoCenter: true,
-      resizable: true,
     });
   }, [Modal]);
 

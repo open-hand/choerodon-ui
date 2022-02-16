@@ -66,6 +66,8 @@ function getComponentKey(component) {
   switch (component) {
     case 'Tabs':
       return 'tabs';
+    case 'Modal':
+      return 'modal';
     default:
       return 'table';
   }

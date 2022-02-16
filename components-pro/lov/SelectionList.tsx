@@ -8,11 +8,13 @@ import { observer } from 'mobx-react';
 import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { LovConfig } from 'choerodon-ui/dataset/interface';
 import Tag from 'choerodon-ui/lib/tag';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Animate from '../animate';
 import Icon from '../icon';
 import { $l } from '../locale-context';
+import autobind from '../_util/autobind';
 import { SelectionProps } from './Lov';
 
 export const TIMESTAMP = '__TIMESTAMP__';
@@ -34,6 +36,15 @@ export interface SelectionListProps {
 @observer
 export default class SelectionList extends Component<SelectionListProps> {
   prefixCls = getProPrefixCls('modal');
+
+  selectionNode: HTMLElement;
+
+  modalNode: HTMLElement | null;
+
+  @autobind
+  contentRef(node) {
+    this.selectionNode = node;
+  }
 
   getRecords(records: Record[]) {
     return sortBy(records, function (item) {
@@ -80,7 +91,7 @@ export default class SelectionList extends Component<SelectionListProps> {
       );
     });
     return (
-      <div className={`${classString}-container`}>
+      <div className={`${classString}-container`} ref={this.contentRef}>
         <p className={`${classString}-intro`}>
           {isEmptyList ? placeholder : $l('Lov', 'selection_tips', {
             count: <b key="count">{records.length}</b>,
@@ -135,6 +146,29 @@ export default class SelectionList extends Component<SelectionListProps> {
       </div>
     );
   };
+
+  updateModalStyle() {
+    if (!this.modalNode && this.selectionNode) {
+      const { offsetParent } = this.selectionNode;
+      if (this.selectionNode && offsetParent && offsetParent.parentNode) {
+        const { parentNode } = offsetParent;
+        this.modalNode = (parentNode as HTMLDivElement);
+        const { width } = (parentNode as HTMLDivElement).getBoundingClientRect();
+        Object.assign((parentNode as HTMLDivElement).style, {
+          width: pxToRem(width + 300),
+        });
+      }
+    } else if (this.modalNode && !this.selectionNode) {
+      Object.assign((this.modalNode as HTMLDivElement).style, {
+        width: pxToRem(this.modalNode.offsetWidth - 300),
+      });
+      this.modalNode = null;
+    }
+  }
+
+  componentDidUpdate() {
+    this.updateModalStyle();
+  }
 
   render() {
     const { selectionsPosition } = this.props;
