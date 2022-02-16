@@ -2,6 +2,7 @@
 title: Transfer
 subtitle: 穿梭框
 order: 0
+deprecated: true
 ---
 
 双栏穿梭选择框。

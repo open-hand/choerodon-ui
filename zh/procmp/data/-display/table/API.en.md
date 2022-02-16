@@ -20,14 +20,14 @@ title: API
 | buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  | 1.4.5 |
 | queryFields           | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件                                                                                                                                      | ReactNode[] \| object                                                                                  |          |    |
 | queryFieldsLimit      | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口                                                                                                                                                                       | number                                                                                                 |          |    |
-| queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/en/procmp/configure/configure) |   |
+| queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| comboBar | none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/en/procmp/configure/configure) |   |
 | queryBarProps | 查询条参数，不同查询条参数配置应对应。当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性。 | object | | 1.4.1  |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |    |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |   |
 | useMouseBatchChoose   | 是否使用鼠标批量选择,开启后在 rowbox 的情况下可以进行鼠标拖动批量选择,在起始的 rowbox 处按下,在结束位置松开                                                                                                                    | boolean                                                                                                | [globalConfig.tableUseMouseBatchChoose](/zh/procmp/configure/configure)    |    |
-| rowHeight             | 行高                                                                                                                                                                                                                           | number \| auto                                                                                         | [globalConfig.tableRowHeight](/zh/procmp/configure/configure)       |    |
-| headerRowHeight | 头行高 | number \| auto | rowHeight | 1.5.1 |
-| footerRowHeight | 脚行高 | number \| auto | rowHeight | 1.5.1 |
+| rowHeight             | 行高                                                                                                                                                                                                                           | number \| auto \| ({ size }) => number \| auto                                                                                         | [globalConfig.tableRowHeight](/zh/procmp/configure/configure)       |  1.5.2(支持钩子)  |
+| headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
+| footerRowHeight | 脚行高 | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
 | defaultRowExpanded    | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效                                                                                                                                                                       | boolean                                                                                                | false    |    |
 | expandRowByClick      | 通过点击行来展开子行                                                                                                                                                                                                           | boolean                                                                                                | false    |    |
 | expandedRowRenderer   | 展开行渲染器                                                                                                                                                                                                                   | ({ dataSet, record }) => ReactNode                                                                     |          |    |
@@ -86,9 +86,10 @@ title: API
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
 | showHeader |	是否显示表头 |	boolean |	true | 1.4.2 |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean | true | 1.4.4 |
-| onColumnResize | 列宽改变的回调事件  | ({ column, width }) => void | | 1.4.4 |
+| onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | | 1.4.4 |
 | searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5 |
 | rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5 |
+| renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
 | groups | 分组 | 请查看TableGroup[配置项](#tablegroup) | | 1.5.1 |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/en/procmp/configure/configure) | 1.5.1 |
 | bodyExpandable | 表格体是否可展开 | boolean | | 1.5.1 |
@@ -97,6 +98,7 @@ title: API
 | onScrollLeft | 横向滚动事件 | (scrollLeft) => void |  | 1.5.1 |
 | onScrollTop | 纵向滚动事件 | (scrollTop) => void |  | 1.5.1 |
 | onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void | | 1.5.1 |
+| renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -110,9 +112,9 @@ title: API
 | defaultWidth | 列的默认宽度  | number | [globalConfig.tableColumnDefaultWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultWidth](/zh/procmp/configure/configure)  | 1.5.1 |
 | minWidth        | 最小列宽                                                                                                                                                                                          | number                                                                                                                             | [globalConfig.tableColumnDefaultMinWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/zh/procmp/configure/configure)       |  |
 | title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values) }) => ReactNode |  |  |
-| footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name }) => ReactNode                                                                                           |           |  |
-| renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values) }) => ReactNode                                                                              |           |  |
+| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
+| footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                           |           |  |
+| renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[]  }) => ReactNode                                                                              |           |  |
 | editor          | 编辑器, 设为 true 时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 false 值，而不是在控件上加 disabled。                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |  |
 | lock            | 是否锁定， 可选值 false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
 | align           | 文字对齐方式，可选值： left \| center \| right                                                                                                                                                    | string                                                                                                                             |      [globalConfig.tableColumnAlign](/zh/procmp/configure/configure)     |  |
@@ -136,6 +138,7 @@ title: API
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |  |
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |  |
+| aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 | 1.5.2 |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  | |
 | highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | 1.5.1 |
@@ -215,6 +218,20 @@ title: API
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 
+### ComboBar
+
+> 1.5.2 版本新增属性。
+
+组合搜索条的配置项。
+
+| 参数             | 说明                            | 类型   | 默认值 |
+| ---------------- | ------------------------------ | ------ | ------ |
+| title | 头部标题 | string | |
+| dropDownArea | 自定义下拉菜单区域 | () => ReactNode | |
+| buttonArea | 自定义按钮区域 | () => ReactNode | |
+| searchable | 筛选条头部是否配置查询  | boolean | false |
+| fold | 表格是否开启折叠收缩 | boolean | false |
+
 ### pagination
 
 分页的配置项。
@@ -256,10 +273,11 @@ spin 的配置项。
 
 > 1.5.1 版本新增方法。
 
-| 名称 | 说明 | 参数 | 返回值类型 |
-| --- | --- | --- | --- |
-| setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |
-| setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |
+| 名称 | 说明 | 参数 | 返回值类型 | 版本 |
+| --- | --- | --- | --- | --- |
+| setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |  |
+| setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |  |
+| setColumnWidth(width, indexOrKeyOrName) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name |  | 1.5.2 |
 
 ### 分页配置
 

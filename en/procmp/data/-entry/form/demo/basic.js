@@ -85,7 +85,7 @@ const App = () => {
         ref={phoneRef}
         label="手机号"
         labelWidth={150}
-        pattern="1[3-9]\d{9}"
+        pattern={/1[3-9]\d{9}/g}
         name="phone"
         required
         clearButton

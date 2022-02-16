@@ -2,6 +2,7 @@
 title: AutoComplete
 subtitle: 自动完成
 order: 0
+deprecated: true
 ---
 
 Autocomplete function of input field.

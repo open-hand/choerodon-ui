@@ -2,6 +2,7 @@
 title: Form
 subtitle: 表单
 order: 0
+deprecated: true
 ---
 
 具有数据收集、校验和提交功能的表单，包含复选框、单选框、输入框、下拉选择框等元素。

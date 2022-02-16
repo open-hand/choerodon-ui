@@ -1,0 +1,107 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本使用",
+        "en": "Basic"
+      },
+      "description": {
+        "zh": "基本使用。\n",
+        "en": "Basic usage.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "async.js",
+      "title": {
+        "zh": "异步加载",
+        "en": "Asynchronous loading"
+      },
+      "description": {
+        "zh": "匹配内容列表为异步返回时。\n",
+        "en": "async.\n"
+      },
+      "order": 1,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "mentionsKey.js",
+      "title": {
+        "zh": "自定义触发字符",
+        "en": "Customize Trigger Token"
+      },
+      "description": {
+        "zh": "通过 `mentionsKey` 属性自定义触发字符。默认为 `@`, 可以定义为数组。\n",
+        "en": "Customize Trigger Token by `mentionsKey` props. Default to `@`, `Array<string>` also supported.\n"
+      },
+      "order": 2,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "readonly.js",
+      "title": {
+        "zh": "无效或只读",
+        "en": "disabled or readOnly"
+      },
+      "description": {
+        "zh": "通过 `disabled` 属性设置是否生效。通过 `readOnly` 属性设置是否只读。\n",
+        "en": "Configurate `disabled` and `readOnly`.\n"
+      },
+      "order": 3,
+      "height": 207,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "placement.js",
+      "title": {
+        "zh": "向上展开",
+        "en": "Placement"
+      },
+      "description": {
+        "zh": "向上展开建议。\n",
+        "en": "Change the suggestions placement.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "autoSize.js",
+      "title": {
+        "zh": "自动大小",
+        "en": "autoSize"
+      },
+      "description": {
+        "zh": "自适应内容高度。\n",
+        "en": "Height autoSize.\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "controlled.js",
+      "title": {
+        "zh": "受控模式",
+        "en": "Controlled"
+      },
+      "description": {
+        "zh": "受控模式。\n",
+        "en": "Controlled mode.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "category": "pro"
+    }
+  ]
+}

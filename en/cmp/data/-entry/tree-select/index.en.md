@@ -2,6 +2,7 @@
 title: TreeSelect
 subtitle: 树选择
 order: 0
+deprecated: true
 ---
 
 Tree selection control.

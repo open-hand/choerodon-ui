@@ -16,9 +16,15 @@ import {
   Button,
   AutoComplete,
 } from 'choerodon-ui/pro';
+import { configure } from 'choerodon-ui';
 
 const { Column } = Table;
 const { Option } = Select;
+
+// 前端导出配置
+configure({
+  xlsx: () => import('xlsx'),
+});
 
 function sexIdRenderer({ dataSet, record }) {
   // 获取性别codeValueId
@@ -559,7 +565,9 @@ class App extends React.Component {
           showQuickJumper: true,
           pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],
         }}
-        onColumnResize={({ column, width }) => console.log(column, width)}
+        onColumnResize={({ column, width, index }) =>
+          console.log(column, width, index)
+        }
       >
         <Column
           name="userid"

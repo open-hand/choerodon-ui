@@ -2,6 +2,7 @@
 title: Rate
 subtitle: 评分
 order: 0
+deprecated: true
 ---
 
 Rate component.

@@ -2,6 +2,7 @@
 title: Radio
 subtitle: 单选框
 order: 0
+deprecated: true
 ---
 
 Radio.

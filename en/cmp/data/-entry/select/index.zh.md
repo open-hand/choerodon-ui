@@ -2,6 +2,7 @@
 title: Select
 subtitle: 选择器
 order: 0
+deprecated: true
 ---
 
 下拉选择器。

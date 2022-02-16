@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { PerformanceTable } from 'choerodon-ui/pro';
+import { PerformanceTable, Icon } from 'choerodon-ui/pro';
 
 class TreeTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: fakeTreeData
+      data: fakeTreeData,
     };
   }
+
   render() {
     const { data } = this.state;
     const columns = [
@@ -49,7 +50,7 @@ class TreeTable extends React.Component {
           }}
           renderTreeToggle={(icon, rowData, expanded) => {
             if (rowData.labelName === '手机') {
-              return <i className="icon icon-spin icon-spinner" />;
+              return <Icon type="cancel" />;
             }
             return icon;
           }}

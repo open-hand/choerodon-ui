@@ -2,6 +2,7 @@
 title: Tooltip
 subtitle: 文字提示
 order: 0
+deprecated: true
 ---
 
 A simple text popup tip.

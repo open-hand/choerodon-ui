@@ -2,6 +2,7 @@
 title: DatePicker
 subtitle: 日期选择框
 order: 0
+deprecated: true
 ---
 
 To select or input a date.

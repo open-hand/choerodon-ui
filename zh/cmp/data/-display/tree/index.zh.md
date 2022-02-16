@@ -2,6 +2,7 @@
 title: Tree
 subtitle: 树形控件
 order: 0
+deprecated: true
 ---
 
 多层次的结构列表。

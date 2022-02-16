@@ -2,6 +2,7 @@
 title: Table
 subtitle: 表格
 order: 0
+deprecated: true
 ---
 
 A table displays rows of data.

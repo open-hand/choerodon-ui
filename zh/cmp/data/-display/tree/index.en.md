@@ -2,6 +2,7 @@
 title: Tree
 subtitle: 树形控件
 order: 0
+deprecated: true
 ---
 
 A hierarchical list structure component.

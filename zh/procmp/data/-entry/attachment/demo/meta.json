@@ -108,6 +108,21 @@
       "screenshot": "",
       "height": 230,
       "category": "pro"
+    },
+    {
+      "filename": "dragger.js",
+      "title": {
+        "zh": "拖拽上传",
+        "en": "Upload for Drag"
+      },
+      "description": {
+        "zh": "可拖拽文件上传。\n",
+        "en": "Can Upload for Drag file.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 350,
+      "category": "pro"
     }
   ]
 }

@@ -2,6 +2,7 @@
 title: DatePicker
 subtitle: 日期选择框
 order: 0
+deprecated: true
 ---
 
 输入或选择日期的控件。

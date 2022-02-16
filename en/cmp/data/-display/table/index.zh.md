@@ -2,6 +2,7 @@
 title: Table
 subtitle: 表格
 order: 0
+deprecated: true
 ---
 
 展示行列数据。

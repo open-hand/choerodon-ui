@@ -2,6 +2,7 @@
 title: Switch
 subtitle: 开关
 order: 0
+deprecated: true
 ---
 
 Switching Selector.

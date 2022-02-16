@@ -106,6 +106,7 @@ abstract: true
 | query(page, params, cache) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  `cache`&lt;optional&gt;(1.5.0-beta.0) - 是否保留缓存的变更记录  | Promise&lt;any&gt; | |
 | queryMore(page, params) | 查询更多， 保留原数据 | page&lt;optional,default:1&gt; - 指定页码 params&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; | 1.1.0 |
 | submit() | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; false - 校验失败，undefined - 无数据提交或提交相关配置不全，如没有 submitUrl。 | |
+| forceSubmit() | 强制提交，绕过校验。 | | Promise&lt;any&gt; undefined - 无数据提交或提交相关配置不全，如没有 submitUrl。 | 1.5.2 |
 | reset() | 重置更改, 并清除校验状态 |  |  |    |
 | locate(index) | 定位到指定记录, 如果paging 为 true和server，则做远程查询 为server指代的是根节点节点的index坐标| index - 记录索引 | Promise&lt;Record&gt; |  |
 | page(page) | 定位到指定页码，如果paging 为 true和server，则做远程查询 | page - 页码 | Promise&lt;any&gt; |    |
@@ -309,7 +310,7 @@ abstract: true
 | lovDefineUrl | lov 配置请求地址 | string \| (code) => string |  | |
 | lovQueryUrl | lov 查询请求地址 | string \| (code, config, { dataSet, params, data }) => string |  |   |
 | lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure/#axiosrequestconfig)。配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |  |
-| lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure/#axiosrequestconfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code) => AxiosRequestConfig |  |  |
+| lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure/#axiosrequestconfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code: string, field?: Field) => AxiosRequestConfig |  |  |
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure/#axiosrequestconfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  | |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#axiosrequestconfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.0.0 |
 | bind | 内部字段别名绑定 | string |  | |
@@ -328,6 +329,11 @@ abstract: true
 | bucketDirectory | 附件上传的桶目录 | string |  | 1.4.4 |
 | storageCode | 附件存储编码 | string |  | 1.4.4 |
 | attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  | 1.4.4 |
+| fileKey | 附件上传属性名 | string | [AttachmentConfig.defaultFileKey](zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
+| fileSize | 附件大小限制 | number | [AttachmentConfig.defaultFileSize](zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
+| useChunk | 附件开启分片上传 | string |  | 1.5.2 |
+| chunkSize | 附件分片大小 | number | [AttachmentConfig.defaultChunkSize](zh/procmp/configure/configure#attachmentconfig)  | 1.5.2 |
+| chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   | 1.4.4 |
 
 ### Field Values
@@ -358,6 +364,7 @@ abstract: true
 | getLookupData(lookupValue, record) | 根据 lookup 值获取 lookup 数据对象 | `lookupValue` - lookup 值，默认本字段值 `record` - 记录 | object |
 | fetchLookup(noCache, record) | 请求 lookup 数据，若有缓存直接返回缓存数据。 |  `noCache` - 是否禁用缓存 `record` - 记录 | Promise&lt;object[]&gt; |
 | isValid(record) | 是否校验通过 |  `record` - 记录 | boolean |
+| isDirty(record) | 值是否变更 |  `record` - 记录 | boolean ||
 | getValidationMessage(record) | 获取校验信息 |  `record` - 记录 | string |
 | getValidationErrorValues(record) | 获取校验结果 |  `record` - 记录 | ValidationResult[] | 1.5.0-beta.0 |
 | getAttachments(record) | 获取附件列表 |  `record` - 记录 | AttachmentFile[] | 1.5.0-beta.0 |
@@ -452,12 +459,28 @@ abstract: true
 | invalid   | 检验失败，如果为true, 则无法重新上传  | boolean |
 | originFileObj   | 原始文件对象，只有通过上传按钮选择的附件才有该对象  | File |
 
+### AttachmentFileChunk
+
+> 1.5.2 版本新增属性
+
+| 属性                | 说明                                       | 类型     |
+| ------------------- | ------------------------------------------ | -------- |
+| file   | AttachmentFile对象    | AttachmentFile |
+| total   | 文件总大小    | number |
+| start   | 分片起始位置    | number |
+| end   | 分片结束位置    | number |
+| index   | 分片索引    | number |
+| status   | 状态 `error` `success` `uploading`    | string |
+| percent   | 上传进度, 0 至 100   | number |
+
 ### ValidationRule
 
 > 1.5.1 版本新增属性
 
 | 属性                | 说明                                       | 类型     |
 | ------------------- | ------------------------------------------ | -------- |
-| name | 校验的名称，可选值：`minLength` `maxLength` | string |
+| name | 校验的名称，可选值：minLength \| maxLength | string |
 | value | 校验值 | number |
 | message | 校验提示内容  | string |
+| disabled(1.5.2) | 禁用  | boolean \| ({ dataSet }) => boolean |
+

@@ -2,6 +2,7 @@
 title: Input
 subtitle: 输入框
 order: 0
+deprecated: true
 ---
 
 通过鼠标或键盘输入内容，是最基础的表单域的包装。

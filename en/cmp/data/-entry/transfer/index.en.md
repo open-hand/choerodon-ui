@@ -2,6 +2,7 @@
 title: Transfer
 subtitle: 穿梭框
 order: 0
+deprecated: true
 ---
 
 Double column transfer choice box.

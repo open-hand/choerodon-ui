@@ -2,6 +2,7 @@
 title: Slider
 subtitle: 滑动输入条
 order: 0
+deprecated: true
 ---
 
 滑动型输入器，展示当前值和可选范围。

@@ -2,6 +2,7 @@
 title: Tooltip
 subtitle: 文字提示
 order: 0
+deprecated: true
 ---
 
 简单的文字提示气泡框。

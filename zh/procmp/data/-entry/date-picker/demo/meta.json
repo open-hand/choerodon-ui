@@ -37,8 +37,8 @@
     {
       "filename": "dataset.js",
       "title": {
-        "zh": "DataSet",
-        "en": "数据源"
+        "zh": "数据源",
+        "en": "DataSet"
       },
       "description": {
         "zh": "绑定数据源。\n",

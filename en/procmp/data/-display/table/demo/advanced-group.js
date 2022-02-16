@@ -3,12 +3,17 @@ import ReactDOM from 'react-dom';
 import {
   useDataSet,
   Table,
+  Form,
   TextField,
   CheckBox,
+  SelectBox,
+  Switch,
   Row,
   Col,
 } from 'choerodon-ui/pro';
 import { action } from 'mobx';
+
+const { Option } = SelectBox;
 
 const App = () => {
   // 物料
@@ -27,6 +32,8 @@ const App = () => {
           amount: 90000,
           tax: 0.1,
           totalAmount: 1965310000,
+          totalAmountNoTax: 1965000000,
+          taxAmount: 310000,
         },
         {
           id: 2,
@@ -39,6 +46,8 @@ const App = () => {
           amount: 1600000,
           tax: 0.1,
           totalAmount: 1965310000,
+          totalAmountNoTax: 1965000000,
+          taxAmount: 310000,
         },
         {
           id: 3,
@@ -51,6 +60,8 @@ const App = () => {
           amount: 1700000,
           tax: 0.1,
           totalAmount: 1965310000,
+          totalAmountNoTax: 1965000000,
+          taxAmount: 310000,
         },
         {
           id: 4,
@@ -63,6 +74,8 @@ const App = () => {
           amount: 1920000,
           tax: 0.1,
           totalAmount: 1965310000,
+          totalAmountNoTax: 1965000000,
+          taxAmount: 310000,
         },
         {
           id: 5,
@@ -75,6 +88,8 @@ const App = () => {
           amount: 1960000000,
           tax: 0.1,
           totalAmount: 1965310000,
+          totalAmountNoTax: 1965000000,
+          taxAmount: 310000,
         },
         {
           id: 6,
@@ -87,6 +102,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701740000,
+          totalAmountNoTax: 2701700000,
+          taxAmount: 40000,
         },
         {
           id: 7,
@@ -99,6 +116,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701740000,
+          totalAmountNoTax: 2701700000,
+          taxAmount: 40000,
         },
         {
           id: 8,
@@ -111,6 +130,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701740000,
+          totalAmountNoTax: 2701700000,
+          taxAmount: 40000,
         },
         {
           id: 9,
@@ -123,6 +144,8 @@ const App = () => {
           amount: 980000,
           tax: 0.1,
           totalAmount: 2701740000,
+          totalAmountNoTax: 2701700000,
+          taxAmount: 40000,
         },
         {
           id: 10,
@@ -135,6 +158,8 @@ const App = () => {
           amount: 760000,
           tax: 0.1,
           totalAmount: 2701740000,
+          totalAmountNoTax: 2701700000,
+          taxAmount: 40000,
         },
         {
           id: 11,
@@ -147,6 +172,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701880000,
+          totalAmountNoTax: 2701880000,
+          taxAmount: 80000,
         },
         {
           id: 12,
@@ -159,6 +186,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701880000,
+          totalAmountNoTax: 2701880000,
+          taxAmount: 80000,
         },
         {
           id: 13,
@@ -171,6 +200,8 @@ const App = () => {
           amount: 900000000,
           tax: 0.1,
           totalAmount: 2701880000,
+          totalAmountNoTax: 2701880000,
+          taxAmount: 80000,
         },
         {
           id: 14,
@@ -183,6 +214,8 @@ const App = () => {
           amount: 900000,
           tax: 0.1,
           totalAmount: 2701880000,
+          totalAmountNoTax: 2701880000,
+          taxAmount: 80000,
         },
         {
           id: 15,
@@ -195,6 +228,8 @@ const App = () => {
           amount: 980000,
           tax: 0.1,
           totalAmount: 2701880000,
+          totalAmountNoTax: 2701880000,
+          taxAmount: 80000,
         },
       ],
       fields: [
@@ -228,11 +263,29 @@ const App = () => {
         {
           name: 'totalAmount',
           type: 'currency',
-          label: '含税总价',
+          label: '总价(含税)',
+        },
+        {
+          name: 'totalAmountNoTax',
+          type: 'currency',
+          label: '总价(不含税)',
+        },
+        {
+          name: 'taxAmount',
+          type: 'currency',
+          label: '税额',
         },
         {
           name: 'itemSize',
           label: '规格',
+        },
+        {
+          name: 'origin',
+          label: '产地',
+        },
+        {
+          name: 'unit',
+          label: '单位',
         },
         {
           name: 'tax',
@@ -256,6 +309,8 @@ const App = () => {
           scoreMeaning: '技术总分（50%）',
           score: '80',
           showInHeader: 1,
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 1,
@@ -263,6 +318,8 @@ const App = () => {
           scoreId: '1',
           scoreMeaning: '评分要素1',
           score: '80',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 2,
@@ -271,6 +328,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '80',
           parentScoreId: '1',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 3,
@@ -278,6 +337,8 @@ const App = () => {
           scoreId: '3',
           scoreMeaning: '评分要素3',
           score: '80',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 4,
@@ -286,6 +347,8 @@ const App = () => {
           scoreMeaning: '商务总分（50%）',
           score: '80',
           showInHeader: 1,
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 5,
@@ -293,6 +356,8 @@ const App = () => {
           scoreId: '5',
           scoreMeaning: '评分要素1',
           score: '80',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 6,
@@ -301,6 +366,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '80',
           parentScoreId: '5',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 7,
@@ -308,6 +375,8 @@ const App = () => {
           scoreId: '7',
           scoreMeaning: '评分要素3',
           score: '80',
+          payType: '本人付款',
+          currency: 'CNY',
         },
         {
           id: 18,
@@ -316,6 +385,8 @@ const App = () => {
           scoreMeaning: '技术总分（50%）',
           score: '70',
           showInHeader: 1,
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 11,
@@ -323,6 +394,8 @@ const App = () => {
           scoreId: '1',
           scoreMeaning: '评分要素1',
           score: '70',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 12,
@@ -331,6 +404,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '70',
           parentScoreId: '1',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 13,
@@ -338,6 +413,8 @@ const App = () => {
           scoreId: '3',
           scoreMeaning: '评分要素3',
           score: '70',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 14,
@@ -346,6 +423,8 @@ const App = () => {
           scoreMeaning: '商务总分（50%）',
           score: '70',
           showInHeader: 1,
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 15,
@@ -353,6 +432,8 @@ const App = () => {
           scoreId: '5',
           scoreMeaning: '评分要素1',
           score: '70',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 16,
@@ -361,6 +442,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '70',
           parentScoreId: '5',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 17,
@@ -368,6 +451,8 @@ const App = () => {
           scoreId: '7',
           scoreMeaning: '评分要素3',
           score: '70',
+          payType: '代理人付款',
+          currency: 'CNY',
         },
         {
           id: 28,
@@ -376,6 +461,8 @@ const App = () => {
           scoreMeaning: '技术总分（50%）',
           score: '60',
           showInHeader: 1,
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 21,
@@ -383,6 +470,8 @@ const App = () => {
           scoreId: '1',
           scoreMeaning: '评分要素1',
           score: '60',
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 22,
@@ -391,6 +480,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '60',
           parentScoreId: '1',
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 23,
@@ -398,6 +489,8 @@ const App = () => {
           scoreId: '3',
           scoreMeaning: '评分要素3',
           score: '60',
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 24,
@@ -406,6 +499,8 @@ const App = () => {
           scoreMeaning: '商务总分（50%）',
           score: '60',
           showInHeader: 1,
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 25,
@@ -413,6 +508,8 @@ const App = () => {
           scoreId: '5',
           scoreMeaning: '评分要素1',
           score: '60',
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 26,
@@ -421,6 +518,8 @@ const App = () => {
           scoreMeaning: '评分要素2',
           score: '60',
           parentScoreId: '5',
+          payType: '现金付款',
+          currency: 'USD',
         },
         {
           id: 27,
@@ -428,6 +527,8 @@ const App = () => {
           scoreId: '7',
           scoreMeaning: '评分要素3',
           score: '60',
+          payType: '现金付款',
+          currency: 'USD',
         },
       ],
       fields: [
@@ -443,6 +544,18 @@ const App = () => {
           name: 'scoreId',
           label: '评分',
         },
+        {
+          name: 'payType',
+          label: '付款方式',
+        },
+        {
+          name: 'payTerms',
+          label: '付款条款',
+        },
+        {
+          name: 'currency',
+          label: '币种',
+        },
       ],
     }),
     [],
@@ -451,49 +564,24 @@ const App = () => {
   const itemColumns = React.useMemo(
     () => [
       {
-        header: ({ group, title }) =>
-          group
-            ? group.totalRecords.reduce(
-                (sum, record) => sum + (record.get('amount') || 0),
-                0,
-              )
-            : title,
-        renderer: ({ text, record, dataSet }) =>
-          record.getState('editing') ? (
-            <Row>
-              <Col
-                span={12}
-                style={{
-                  cursor: 'pointer',
-                  borderRight: '1px solid #eee',
-                }}
-                onClick={() =>
-                  record.isSelected
-                    ? dataSet.unSelect(record)
-                    : dataSet.select(record)
-                }
-              >
-                {text}
-              </Col>
-              <Col span={12}>
-                {record.isSelected ? (
-                  <TextField record={record} name="quantity" />
-                ) : null}
-              </Col>
-            </Row>
-          ) : (
-            text
-          ),
+        title: '头分组聚合列', // 可在个性化内显示
+        header: ({ aggregationTree, title }) =>
+          aggregationTree ? aggregationTree : title,
+        renderer: ({ text, record, dataSet, aggregationTree }) =>
+          record.getState('editing') ? text : aggregationTree[0],
         aggregation: true,
+        aggregationLimit: 3,
+        aggregationLimitDefaultExpanded: true,
+        titleEditable: false,
         key: 'itemDetail',
         align: 'left',
         children: [
           { name: 'unitPrice' },
-          { name: 'quantity' },
+          { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
           { name: 'amount' },
           { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
         ],
-        defaultWidth: 300,
+        width: 300,
       },
     ],
     [],
@@ -510,7 +598,7 @@ const App = () => {
             ? group.totalRecords.reduce((list, record) => {
                 if (record.get('showInHeader')) {
                   list.push(
-                    <div>
+                    <div key={record.key}>
                       {record.get('scoreMeaning')} {record.get('score')}
                     </div>,
                   );
@@ -518,7 +606,8 @@ const App = () => {
                 return list;
               }, [])
             : title,
-        defaultWidth: 300,
+        footer: ({ aggregationTree }) => aggregationTree,
+        width: 300,
       },
     ],
     [],
@@ -559,7 +648,13 @@ const App = () => {
             }
             return text;
           },
-          children: [{ name: 'totalAmount' }],
+          aggregationLimit: 2,
+          aggregationLimitDefaultExpanded: true,
+          children: [
+            { name: 'totalAmount' },
+            { name: 'totalAmountNoTax' },
+            { name: 'taxAmount' },
+          ],
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
@@ -570,7 +665,13 @@ const App = () => {
         columnProps: {
           align: 'left',
           aggregation: true,
-          children: [{ name: 'itemSize' }],
+          aggregationLimit: 2,
+          aggregationLimitDefaultExpanded: true,
+          children: [
+            { name: 'itemSize' },
+            { name: 'origin' },
+            { name: 'unit' },
+          ],
           renderer: ({ record, dataSet, text }) => {
             const handleClick = action(() => {
               const isEditing = !dataSet.getState('editing');
@@ -596,7 +697,16 @@ const App = () => {
       {
         name: 'company',
         type: 'header',
-        hidden: true,
+        columnProps: {
+          align: 'left',
+          aggregationLimit: 2,
+          aggregationLimitDefaultExpanded: true,
+          children: [
+            { name: 'payType' },
+            { name: 'payTerms' },
+            { name: 'currency' },
+          ],
+        },
       },
       {
         name: 'scoreId',
@@ -604,6 +714,7 @@ const App = () => {
         type: 'column',
         columnProps: {
           renderer: ({ record }) => record.get('scoreMeaning'),
+          footer: '其他信息',
           width: 200,
         },
       },
@@ -625,6 +736,18 @@ const App = () => {
       current.setScrollLeft(scrollLeft);
     }
   }, []);
+  const handleGroup1ColumnResize = React.useCallback(({ width, index }) => {
+    const { current } = group2Ref;
+    if (current) {
+      current.setColumnWidth(width, index);
+    }
+  }, []);
+  const handleGroup2ColumnResize = React.useCallback(({ width, index }) => {
+    const { current } = group1Ref;
+    if (current) {
+      current.setColumnWidth(width, index);
+    }
+  }, []);
 
   return (
     <>
@@ -634,13 +757,13 @@ const App = () => {
         aggregation
         columnDraggable
         columnTitleEditable
-        columnResizable={false}
         border
         dataSet={itemDs}
         columns={itemColumns}
         groups={itemGroups}
         headerRowHeight="auto"
         onScrollLeft={handleGroup1ScrollLeft}
+        onColumnResize={handleGroup1ColumnResize}
         ref={group1Ref}
         style={{ height: 500 }}
         selectionMode="none"
@@ -649,15 +772,17 @@ const App = () => {
       <Table
         customizable
         customizedCode="advanced-group2"
+        aggregation
         columnDraggable
         columnTitleEditable
-        columnResizable={false}
         border
         dataSet={scoreDs}
         columns={scoreColumns}
         groups={scoreGroups}
         headerRowHeight="auto"
+        footerRowHeight="auto"
         onScrollLeft={handleGroup2ScrollLeft}
+        onColumnResize={handleGroup2ColumnResize}
         ref={group2Ref}
         selectionMode="none"
         bodyExpandable

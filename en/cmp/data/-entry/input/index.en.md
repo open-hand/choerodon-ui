@@ -2,6 +2,7 @@
 title: Input
 subtitle: 输入框
 order: 0
+deprecated: true
 ---
 
 A basic widget for getting the user input is a text field.

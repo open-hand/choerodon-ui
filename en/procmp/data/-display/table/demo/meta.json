@@ -234,6 +234,21 @@
       "category": "pro"
     },
     {
+      "filename": "combo-bar.js",
+      "title": {
+        "zh": "组合搜索条",
+        "en": "Combo Bar"
+      },
+      "description": {
+        "zh": "可以使用 queryBar='comboBar' 并配合 queryBarProps 实现组合搜索条功能。\n",
+        "en": "Achieved Combo Bar when use queryBar='comboBar' and queryBarProps.\n"
+      },
+      "order": 14,
+      "screenshot": "",
+      "height": 625,
+      "category": "pro"
+    },
+    {
       "filename": "query-dataset.js",
       "title": {
         "zh": "自定义查询 DataSet",

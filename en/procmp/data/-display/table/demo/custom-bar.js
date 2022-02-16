@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
-import { ConfigProvider } from 'choerodon-ui';
 
 const { FilterBar } = Table;
 
@@ -43,7 +42,12 @@ const QueryBar = (props) => {
             {buttons}
           </div>
         </Form>
-        <FilterBar {...props} buttons={[]} />
+        <FilterBar
+          {...props}
+          // 官网 demo 需要,正常项目内使用无需传 prefixCls
+          prefixCls="c7n-pro-table"
+          buttons={[]}
+        />
       </>
     );
   }
@@ -126,10 +130,4 @@ class App extends React.Component {
   }
 }
 
-// 官网 demo 需要包裹 ConfigProvider
-ReactDOM.render(
-  <ConfigProvider prefixCls="c7n" proPrefixCls="c7n-pro">
-    <App />
-  </ConfigProvider>,
-  document.getElementById('container'),
-);
+ReactDOM.render(<App />, document.getElementById('container'));

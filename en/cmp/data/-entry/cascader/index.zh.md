@@ -2,6 +2,7 @@
 title: Cascader
 subtitle: 级联选择
 order: 0
+deprecated: true
 ---
 
 级联选择框。

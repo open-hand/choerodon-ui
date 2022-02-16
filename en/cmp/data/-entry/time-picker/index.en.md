@@ -2,6 +2,7 @@
 title: TimePicker
 subtitle: 时间选择框
 order: 0
+deprecated: true
 ---
 
 To select/input a time.
