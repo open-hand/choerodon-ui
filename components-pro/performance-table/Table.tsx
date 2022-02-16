@@ -727,11 +727,36 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     ) {
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
+    } else if (this.props.data !== nextProps.data && this._cacheCells) {
+      const { rowSelection } = nextProps;
+      if (rowSelection && rowSelection.type !== 'radio') {
+        const flatData = nextState.data.filter((item, index) => {
+          if (rowSelection.getCheckboxProps) {
+            return !this.getCheckboxPropsByItem(item, index).disabled;
+          }
+          return true;
+        });
+        const checkboxAllDisabled = flatData.every(
+          (item, index) => this.getCheckboxPropsByItem(item, index).disabled,
+        );
+        const checkboxAllHeaderCell = React.cloneElement(
+          this._cacheCells.headerCells[0],
+          {
+            children: React.cloneElement(
+              this._cacheCells.headerCells[0].props.children,
+              {
+                disabled: checkboxAllDisabled,
+                data: flatData,
+              }
+            )
+          },
+        );
+        this._cacheCells.headerCells[0] = checkboxAllHeaderCell;
+      }
     }
     const flag = this.props.columns !== nextProps.columns
       || this.props.children !== nextProps.children
-      || this.props.rowSelection !== nextProps.rowSelection
-      || this.props.data !== nextProps.data;
+      || this.props.rowSelection !== nextProps.rowSelection;
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
