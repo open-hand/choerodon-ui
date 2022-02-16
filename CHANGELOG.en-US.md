@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize tree indentation of PerformanceTable.
 - 💄 Remove prop-types.
 - 💄 `<pro>TextField`: Optimize the `prefix` style.
+- 💄 `<pro>Lov`: Optimize the selected interaction in drawer mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Lov`: Fix the null value in the first render when `autoSelectSingle` is turned on.
