@@ -12,6 +12,7 @@
 
 
 .@{lov-prefix-cls}-custom-drawer {
+  transition: width @animation-duration-slow @ease-in-out;
 
   .@{modal-prefix-cls}-header-buttons {
     z-index: 10;
@@ -24,9 +25,6 @@
 }
 
 .@{modal-prefix-cls} {
-  &-drawer {
-    transition: width @animation-duration-slow @ease-in-out;
-  }
   &-body {
     .@{table-prefix-cls} {
       &-professional-query-bar {
