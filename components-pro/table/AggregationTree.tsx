@@ -139,7 +139,9 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
 
 AggregationTree.displayName = 'AggregationTree';
 
-export default observer(AggregationTree);
+const ObserverAggregationTree = observer(AggregationTree);
+
+export default ObserverAggregationTree;
 
 export function groupedAggregationTree(props: AggregationTreeProps): ReactElement<AggregationTreeProps>[] {
   const { groups, columns } = props;
@@ -155,7 +157,7 @@ export function groupedAggregationTree(props: AggregationTreeProps): ReactElemen
       treeGroup.push(group);
     });
     return treeGroups.reduce<ReactElement<AggregationTreeProps>[]>((trees, treeGroup, index) => treeGroup ? trees.concat(
-      <AggregationTree
+      <ObserverAggregationTree
         key={String(index)}
         {...props}
         groups={treeGroup}
@@ -174,7 +176,7 @@ export function groupedAggregationTree(props: AggregationTreeProps): ReactElemen
       treeColumn.push(column);
     });
     return treeColumns.reduce<ReactElement<AggregationTreeProps>[]>((trees, treeColumn, index) => treeColumn ? trees.concat(
-      <AggregationTree
+      <ObserverAggregationTree
         key={String(index)}
         {...props}
         columns={treeColumn}
