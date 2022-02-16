@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 spacingType 属性。
 - 🌟 `<pro>PerformanceTable`: 单元格实现 renderEmpty。
 - 🌟 `<pro>Modal`: 新增 resizable, customizable, customizedCode 属性.
+- 🌟 `<pro>Mentions`: 新增 Mentions 组件。移除基础的 Mention 组件。
 - 💄 `<pro>Table`: 优化前端导出支持导出勾选项。
 - 💄 `Alert`: 优化组件布局样式。
 - 💄 `<pro>Form`: 优化 separateSpacing 支持响应式，值类型支持数字和数字数组类型。
@@ -35,6 +36,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化大数据表格树形缩进。
 - 💄 剔除 prop-types。
 - 💄 `<pro>TextField`: 优化 prefix 样式。
+- 💄 升级危险依赖包。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
 - 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 出现的初次渲染空值情况。

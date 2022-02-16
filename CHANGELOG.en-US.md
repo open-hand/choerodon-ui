@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added spacingType property.
 - 🌟 `<pro>PerformanceTable`: The cell implements `renderEmpty`.
 - 🌟 `<pro>Modal`: Added `resizable`, `customizable`, `customizedCode` properties.
+- 🌟 `<pro>Mentions`: Added `Mentions` component. And remove basic `Mention` component.
 - 💄 `<pro>Table`: Optimize front-end export and support export check.
 - 💄 `Alert`: Optimize the layout style of the component.
 - 💄 `<pro>Form`: Optimize `separateSpacing` to support responsiveness and support number and numbers value type.
@@ -35,6 +36,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize tree indentation of PerformanceTable.
 - 💄 Remove prop-types.
 - 💄 `<pro>TextField`: Optimize the `prefix` style.
+- 💄 Upgrade hazardous dependency packages.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Lov`: Fix the null value in the first render when `autoSelectSingle` is turned on.

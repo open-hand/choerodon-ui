@@ -1,0 +1,62 @@
+@import '../../../components/style/themes/default';
+@import '../../text-field/style/mixin';
+
+@mentions-prefix: ~'@{c7n-pro-prefix}-mentions';
+
+.@{mentions-prefix} {
+  min-height: .3rem;
+  .input;
+
+  &-wrapper {
+    max-width: 100%;
+
+    label {
+      .@{mentions-prefix} {
+        padding-right: 0.13rem;
+      }
+
+      .@{mentions-prefix}-clear-button {
+        top: 0.07rem;
+        right: 0.03rem;
+        bottom: unset;
+        width: 0.2rem;
+      }
+
+      .@{mentions-prefix}-length-info {
+        right: 0;
+        bottom: -0.2rem;
+      }
+    }
+  }
+
+  &,
+  &-placeholder {
+    padding: .07rem @input-padding-horizontal;
+  }
+
+  &-length-info {
+    top: unset;
+    right: 0.08rem;
+    bottom: 0.04rem;
+    margin: unset;
+  }
+
+  &-measure {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    padding: 0.07rem 0.13rem 0.07rem 0.1rem;
+    overflow: auto;
+    color: transparent;
+    font-size: inherit;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    vertical-align: bottom;
+    border: 0.01rem solid transparent;
+    border-radius: 0.02rem;
+    pointer-events: none;
+  }
+}
