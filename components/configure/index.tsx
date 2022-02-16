@@ -120,12 +120,12 @@ export interface Config extends DataSetConfig {
   lovModalProps?: Partial<ModalProps>;
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
-  lovQueryBarProps?: object;
+  lovQueryBarProps?: Partial<TableQueryBarHookCustomProps>;
   lovShowSelectedInView?: boolean | LovShowSelectedInViewHook;
   lovSelectionProps?: SelectionProps;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
-  queryBarProps?: TableQueryBarHookCustomProps;
+  queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   tableVirtual?: boolean;
   tableVirtualCell?: boolean;
   tableBorder?: boolean;
