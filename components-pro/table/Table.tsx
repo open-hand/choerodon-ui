@@ -1394,9 +1394,25 @@ export default class Table extends DataSetComponent<TableProps> {
     this.syncSizeInFrame();
   }
 
+  private columnsSize?: number;
+
+  componentDidUpdate() {
+    const { tableStore } = this;
+    const { currentEditorName } = tableStore;
+    if (currentEditorName) {
+      const { columns: { length } } = tableStore;
+      const currentEditor = tableStore.editors.get(currentEditorName);
+      if (currentEditor && length !== this.columnsSize) {
+        this.columnsSize = length;
+        currentEditor.alignEditor();
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     this.disconnect();
+    this.columnsSize = this.tableStore.columns.length;
     this.tableStore.updateProps(nextProps);
     this.connect();
   }

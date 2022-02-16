@@ -65,7 +65,9 @@ timeline: true
 - 🐞 Fix the style problem when the browser font size is not default.
 - 🐞 `<pro>DataSet`: Fixed the verification error of whether `Field` in `DataSet` is modified when `Cascader` component sets `multiple` property to `true`.
 - 🐞 `<pro>Table`: Fixed `queryBar` as `bar`, filter field set `range` or `multiple` property style, and `datetime` type field display error.
+- 🐞 `<pro>Table`: Fix the problem that the editor is not aligned when the column changes dynamically.
 - 🐞 `<pro>Lov`: Fix multi-select rendering error in `button` mode.
+- 🐞 `<pro>Lov`: Fix the problem that the data may not be displayed when the first popup.
 
 ## 1.5.1
 
