@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize tree indentation of PerformanceTable.
 - 💄 Remove prop-types.
 - 💄 `<pro>TextField`: Optimize the `prefix` style.
+- 💄 `<pro>Lov`: Optimize the selected interaction in drawer mode.
 - 🐞 `<pro>DatePicker`: Fix the problem of displaying 'Invalid date' after clearing the value of input box in `range` and `editorInPopup` mode.
 - 🐞 `<pro>Lov`: Fix the problem that the popup window cannot be closed when clicking the last page of the pagination in `popup` mode.
 - 🐞 `<pro>Lov`: Fix the null value in the first render when `autoSelectSingle` is turned on.
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that new child nodes could not be cleared by reset in tree mode.
 - 🐞 `<pro>Table`: Fix the problem that the initial state of the dynamic filter bar asynchronous query rendering is wrong.
 - 🐞 `<pro>Table`: Fix the problem that TextArea editor may be shaking after resizing.
+- 🐞 `<pro>Table`: Fix the problem that split line stick to the mouse.
 - 🐞 `Alert`: Fix the problem of overflow without line feed when the information is long.
 - 🐞 `<pro>NumberField`: Fixed an invalid `min` or `max` property value set to 0. And fixed data verification error when `step` is set and `max` is less than 0.
 - 🐞 `<pro>Range`: Fix the problem that the slider cannot be dragged after dragging another slider in `range` mode.

@@ -49,10 +49,11 @@ export interface TableHeaderCellProps extends ElementProps {
   getHeaderNode?: () => HTMLTableSectionElement | null;
   scope?: string;
   children?: ReactNode;
+  isSearchCell?: boolean;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon } = props;
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon, isSearchCell } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -205,7 +206,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       .addEventListener('mouseup', resizeEnd);
   }), [tableStore, globalRef, setSplitLineHidden, setSplitLinePosition, resizeEvent]);
 
-  const delayResizeStart = useCallback(debounce(resizeStart, 300), [resizeStart]);
+  const delayResizeStart = useCallback(debounce(
+    resizeStart,
+    300,
+    { 
+      leading: true,
+      trailing: false,
+    },
+  ), [resizeStart]);
 
   const prevColumnGroup: ColumnGroup | undefined = columnResizable ? prev && prev.lastLeaf : undefined;
 
@@ -257,10 +265,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       }
     }
   }, [prevColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
-
-  const handleStopResize = useCallback(() => {
-    delayResizeStart.cancel();
-  }, [delayResizeStart]);
 
   const handleRightResize = useCallback((e) => {
     if (currentColumnGroup) {
@@ -325,12 +329,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }), [globalRef, prefixCls, tableStore]);
 
   const handleLeftDoubleClick = useCallback(() => {
-    delayResizeStart.cancel();
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
   const handleRightDoubleClick = useCallback(() => {
-    delayResizeStart.cancel();
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
@@ -344,7 +346,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
         onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
         onMouseDown={handleLeftResize}
-        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
         onMouseEnter={(e) => handleShowSplitLine(e, 'pre')}
         onMouseLeave={handleHideSplitLine}
       />
@@ -355,7 +356,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
         onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
         onMouseDown={handleRightResize}
-        onMouseUp={autoMaxWidth ? handleStopResize : undefined}
         onMouseEnter={(e) => handleShowSplitLine(e, 'next')}
         onMouseLeave={handleHideSplitLine}
       />
@@ -422,13 +422,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(headerClassName);
   }
 
-  const headerNode = isValidElement(header) ? (
+  const headerNode = !isSearchCell ? (isValidElement(header) ? (
     cloneElement(header, { key: 'text' })
   ) : isString(header) ? (
     <span key="text">{header}</span>
   ) : (
     header
-  );
+  )) : null;
 
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
@@ -465,7 +465,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
   if (expandIcon) {
     childNodes.unshift(
-      <span key="prefix" className={`${prefixCls}-header-expand-icon`}>
+      <span key="prefix" className={!isSearchCell ? `${prefixCls}-header-expand-icon` : undefined}>
         {expandIcon}
       </span>,
     );

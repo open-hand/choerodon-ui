@@ -441,7 +441,24 @@ export default class Modal extends ViewComponent<ModalProps> {
         const handleMouseUp = () => {
           const { width, height } = (this.element as HTMLDivElement).getBoundingClientRect();
           runInAction(() => {
-            this.tempCustomized = { width, height };
+            let temp: ModalCustomized = {};
+            if (drawer) {
+              switch (this.drawerTransitionName) {
+                case 'slide-left':
+                case 'slide-right':
+                  temp.width = width;
+                  break;
+                case 'slide-up':
+                case 'slide-down':
+                  temp.height = height;
+                  break;
+                default:
+                  break;
+              }
+            } else {
+              temp = { width, height };
+            }
+            this.tempCustomized = temp;
           });
           this.saveCustomized();
           this.resizeEvent

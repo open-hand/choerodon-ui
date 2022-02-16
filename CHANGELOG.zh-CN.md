@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化大数据表格树形缩进。
 - 💄 剔除 prop-types。
 - 💄 `<pro>TextField`: 优化 prefix 样式。
+- 💄 `<pro>Lov`: 优化 drawer 模式下的 selected 交互。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
 - 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 出现的初次渲染空值情况。
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 tree 模式下无法通过 reset 清除新增子节点的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条异步查询渲染初始状态错误的问题。
 - 🐞 `<pro>Table`: 修复 TextArea 编辑器调整大小后肯定会抖动的问题。
+- 🐞 `<pro>Table`: 修复拖拽分割线粘连鼠标问题。
 - 🐞 `Alert`: 修复信息较长时内容溢出的问题。
 - 🐞 `<pro>NumberField`: 修复 min 或 max 属性值设置为 0 无效的问题。修复设置了 step 且 max 小于 0 时, 数据校验错误的问题。
 - 🐞 `<pro>Range`: 修复 range 模式下，拖拽一滑块后，无法拖动另一滑块的问题。
