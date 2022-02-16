@@ -125,7 +125,7 @@ export interface Config extends DataSetConfig {
   lovSelectionProps?: SelectionProps;
   labelLayout?: LabelLayout;
   queryBar?: TableQueryBarType | TableQueryBarHook;
-  queryBarProps?: TableQueryBarHookCustomProps;
+  queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   tableVirtual?: boolean;
   tableVirtualCell?: boolean;
   tableBorder?: boolean;
