@@ -2,9 +2,8 @@
 import {
   ReactNode,
   FocusEventHandler,
-  Context,
-  createContext,
 } from 'react';
+import { getContext, Symbols } from 'choerodon-ui/shared';
 import { OptionProps } from './Option';
 
 export interface MentionsContextProps {
@@ -17,7 +16,7 @@ export interface MentionsContextProps {
 }
 
 // We will never use default, here only to fix TypeScript warning
-const MentionsContext: Context<MentionsContextProps> = createContext(null as any);
+const MentionsContext = getContext<MentionsContextProps>(Symbols.MentionsContext, null as any);
 
 export const MentionsContextProvider = MentionsContext.Provider;
 export const MentionsContextConsumer = MentionsContext.Consumer;

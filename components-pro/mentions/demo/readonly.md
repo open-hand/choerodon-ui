@@ -19,7 +19,7 @@ import { Mentions } from 'choerodon-ui/pro';
 const { Option } = Mentions;
 
 function getOptions() {
-  return ['afc163', 'zombiej', 'yesmeck'].map(value => (
+  return ['mike', 'jason', 'Kevin'].map(value => (
     <Option key={value} value={value}>
       {value}
     </Option>

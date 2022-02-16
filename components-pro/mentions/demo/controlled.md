@@ -20,11 +20,11 @@ const { Option, getMentions } = Mentions;
 
 class App extends React.Component {
   state = {
-    value: '@afc163',
+    value: '@mike',
   };
 
   handleChange = editorState => {
-    console.log('getMentions: ', getMentions(editorState, { prefix: '@', split: ' ' }));
+    console.log('getMentions: ', getMentions(editorState, { mentionsKey: '@', split: ' ' }));
 
     this.setState({
       value: editorState,
@@ -38,9 +38,9 @@ class App extends React.Component {
         onChange={this.handleChange}
         value={this.state.value}
       >
-        <Option value="afc163">afc163</Option>
-        <Option value="zombieJ">zombieJ</Option>
-        <Option value="yesmeck">yesmeck</Option>
+        <Option value="mike">mike</Option>
+        <Option value="jason">jason</Option>
+        <Option value="Kevin">Kevin</Option>
       </Mentions>
     );
   }

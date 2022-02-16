@@ -22,7 +22,7 @@ When need to mention someone or something.
 
 | API | Description | Type |
 | --- | ----------- | ---- |
-| getMentions | get mentioned people in input value | Function(value: string, config?: { prefix?: string \| string[], split?: string }): { prefix: string, value: string }[] |
+| getMentions | get mentioned people in input value | Function(value: string, config?: { mentionsKey?: string \| string[], split?: string }): { mentionsKey: string, value: string }[] |
 
 ### Mentions
 
@@ -32,11 +32,11 @@ When need to mention someone or something.
 | split | Set split string before and after selected mention | string | ' ' |
 | transitionName | Animation name, optional value: `zoom` `fade` `slide-up` `slide-down` `slide-left` `slide-right` `swing` `move` | string |  |
 | placement | Set popup placement | `top` \| `bottom` |  |
-| prefix | Set trigger prefix keyword | string \| string[] | @ |
+| mentionsKey | Set trigger mentionsKey keyword | string \| string[] | @ |
 | filterOption | Customize filter option logic | false \| (input: string, option: OptionProps) => boolean |  |
 | validateSearch | Customize trigger search logic | (text: string, props: MentionsProps) => void |  |
-| onSelect | Trigger when user select the option | (option: OptionProps, prefix: string) => void |  |
-| onSearch | Trigger when prefix hit | (text: string, prefix: string) => void |  |
+| onSelect | Trigger when user select the option | (option: OptionProps, mentionsKey: string) => void |  |
+| onSearch | Trigger when mentionsKey hit | (text: string, mentionsKey: string) => void |  |
 | getPopupContainer | Set the mount `HTML` node for suggestions | (triggerNode: Element) => HTMLElement |  |
 | loading | Whether the option is being loaded | boolean |  |
 

@@ -15,7 +15,6 @@ import {
   filterOption as defaultFilterOption,
   getBeforeSelectionText,
   getLastMeasureIndex,
-  Omit,
   replaceWithMeasure,
   setInputSelection,
   validateSearch as defaultValidateSearch,
@@ -23,29 +22,27 @@ import {
 } from './utils';
 
 export interface MentionsConfig {
-  prefix?: string | string[];
+  mentionsKey?: string | string[];
   split?: string;
 }
 
 export interface MentionsEntity {
-  prefix: string;
+  mentionsKey: string;
   value: string;
 }
 
-type BaseTextareaAttrs = Omit<TextAreaProps, 'prefix'>;
-
 export type Placement = 'top' | 'bottom';
 
-export interface MentionsProps extends BaseTextareaAttrs {
+export interface MentionsProps extends TextAreaProps {
   notFoundContent?: ReactNode;
   split?: string;
   transitionName?: string;
   placement?: Placement;
-  prefix?: string | string[];
+  mentionsKey?: string | string[];
   filterOption?: false | typeof defaultFilterOption;
   validateSearch?: typeof defaultValidateSearch;
-  onSelect?: (option: OptionProps, prefix: string) => void;
-  onSearch?: (text: string, prefix: string) => void;
+  onSelect?: (option: OptionProps, mentionsKey: string) => void;
+  onSearch?: (text: string, mentionsKey: string) => void;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   loading?: boolean;
 }
@@ -63,7 +60,7 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
     suffixCls: 'mentions',
     rows: 1,
     trim: FieldTrim.left,
-    prefix: '@',
+    mentionsKey: '@',
     split: ' ',
     validateSearch: defaultValidateSearch,
     filterOption: defaultFilterOption,
@@ -139,6 +136,7 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
       'onSearch',
       'getPopupContainer',
       'loading',
+      'mentionsKey',
     ]);
   }
 
@@ -186,7 +184,7 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
 
   /**
    * When to start measure:
-   * 1. When user press `prefix`
+   * 1. When user press `mentionsKey`
    * 2. When measureText !== prevMeasureText
    *  - If measure hit
    *  - If measuring
@@ -200,12 +198,12 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
   handleKeyUp(event: KeyboardEvent<HTMLTextAreaElement>) {
     const { key, which } = event;
     const { measureText: prevMeasureText, measuring } = this;
-    const { prefix = '', onKeyUp: clientOnKeyUp, onSearch, validateSearch } = this.props;
+    const { mentionsKey = '', onKeyUp: clientOnKeyUp, onSearch, validateSearch } = this.props;
     const target = event.target as HTMLTextAreaElement;
     const selectionStartText = getBeforeSelectionText(target);
-    const { location: measureIndex, prefix: measurePrefix } = getLastMeasureIndex(
+    const { location: measureIndex, mentionsKey: measurePrefix } = getLastMeasureIndex(
       selectionStartText,
-      prefix,
+      mentionsKey,
     );
 
     // If the client implements an onKeyUp handler, call it
@@ -288,7 +286,7 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
     const { text, selectionLocation } = replaceWithMeasure(value, {
       measureLocation,
       targetText: mentionValue,
-      prefix: measurePrefix,
+      mentionsKey: measurePrefix,
       selectionStart: this.element ? this.element.selectionStart : -1,
       split: String(split || ''),
     });
@@ -403,8 +401,8 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
 }
 
 Mentions.getMentions = (value = '', config: MentionsConfig = {}): MentionsEntity[] => {
-  const { prefix = '@', split = ' ' } = config;
-  const prefixList: string[] = Array.isArray(prefix) ? prefix : [prefix];
+  const { mentionsKey = '@', split = ' ' } = config;
+  const prefixList: string[] = Array.isArray(mentionsKey) ? mentionsKey : [mentionsKey];
 
   return value
     .split(split)
@@ -422,7 +420,7 @@ Mentions.getMentions = (value = '', config: MentionsConfig = {}): MentionsEntity
 
       if (hitPrefix !== null) {
         return {
-          prefix: hitPrefix,
+          mentionsKey: hitPrefix,
           value: str.slice((hitPrefix as string).length),
         };
       }

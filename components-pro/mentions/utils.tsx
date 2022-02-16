@@ -3,8 +3,6 @@ import { isFragment } from 'react-is';
 import { MentionsProps } from './Mentions';
 import { OptionProps } from './Option';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
 type OmitFunc = <T extends object, K extends [...(keyof T)[]]>(
   obj: T,
   ...keys: K
@@ -31,31 +29,31 @@ export function getBeforeSelectionText(input: HTMLTextAreaElement) {
 
 interface MeasureIndex {
   location: number;
-  prefix: string;
+  mentionsKey: string;
 }
 /**
- * Find the last match prefix index
+ * Find the last match mentionsKey index
  */
-export function getLastMeasureIndex(text: string, prefix: string | string[] = ''): MeasureIndex {
-  const prefixList: string[] = Array.isArray(prefix) ? prefix : [prefix];
+export function getLastMeasureIndex(text: string, mentionsKey: string | string[] = ''): MeasureIndex {
+  const prefixList: string[] = Array.isArray(mentionsKey) ? mentionsKey : [mentionsKey];
   return prefixList.reduce(
     (lastMatch: MeasureIndex, prefixStr): MeasureIndex => {
       const lastIndex = text.lastIndexOf(prefixStr);
       if (lastIndex > lastMatch.location) {
         return {
           location: lastIndex,
-          prefix: prefixStr,
+          mentionsKey: prefixStr,
         };
       }
       return lastMatch;
     },
-    { location: -1, prefix: '' },
+    { location: -1, mentionsKey: '' },
   );
 }
 
 interface MeasureConfig {
   measureLocation: number;
-  prefix: string;
+  mentionsKey: string;
   targetText: string;
   selectionStart: number;
   split: string;
@@ -93,7 +91,7 @@ function reduceText(text: string, targetText: string, split: string) {
  *  => little @light test
  */
 export function replaceWithMeasure(text: string, measureConfig: MeasureConfig) {
-  const { measureLocation, prefix, targetText, selectionStart, split } = measureConfig;
+  const { measureLocation, mentionsKey, targetText, selectionStart, split } = measureConfig;
 
   // Before text will append one space if have other text
   let beforeMeasureText = text.slice(0, measureLocation);
@@ -107,14 +105,14 @@ export function replaceWithMeasure(text: string, measureConfig: MeasureConfig) {
   // Cut duplicate string with current targetText
   let restText = reduceText(
     text.slice(selectionStart),
-    targetText.slice(selectionStart - measureLocation - prefix.length),
+    targetText.slice(selectionStart - measureLocation - mentionsKey.length),
     split,
   );
   if (restText.slice(0, split.length) === split) {
     restText = restText.slice(split.length);
   }
 
-  const connectedStartText = `${beforeMeasureText}${prefix}${targetText}${split}`;
+  const connectedStartText = `${beforeMeasureText}${mentionsKey}${targetText}${split}`;
 
   return {
     text: `${connectedStartText}${restText}`,

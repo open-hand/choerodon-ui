@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-通过 `prefix` 属性自定义触发字符。默认为 `@`, 可以定义为数组。
+通过 `mentionsKey` 属性自定义触发字符。默认为 `@`, 可以定义为数组。
 
 ## en-US
 
-Customize Trigger Token by `prefix` props. Default to `@`, `Array<string>` also supported.
+Customize Trigger Token by `mentionsKey` props. Default to `@`, `Array<string>` also supported.
 
 ```jsx
 import { Mentions } from 'choerodon-ui/pro';
@@ -19,30 +19,30 @@ import { Mentions } from 'choerodon-ui/pro';
 const { Option } = Mentions;
 
 const MOCK_DATA = {
-  '@': ['afc163', 'zombiej', 'yesmeck'],
+  '@': ['mike', 'jason', 'Kevin'],
   '#': ['1.0', '2.0', '3.0'],
 };
 
 class App extends React.Component {
   state = {
-    prefix: '@',
+    mentionsKey: '@',
   };
 
-  onSearch = (_, prefix) => {
-    this.setState({ prefix });
+  onSearch = (_, mentionsKey) => {
+    this.setState({ mentionsKey });
   };
 
   render() {
-    const { prefix } = this.state;
+    const { mentionsKey } = this.state;
 
     return (
       <Mentions
         style={{ width: '100%' }}
         placeholder="input @ to mention people, # to mention tag"
-        prefix={['@', '#']}
+        mentionsKey={['@', '#']}
         onSearch={this.onSearch}
       >
-        {(MOCK_DATA[prefix] || []).map(value => (
+        {(MOCK_DATA[mentionsKey] || []).map(value => (
           <Option key={value} value={value}>
             {value}
           </Option>
