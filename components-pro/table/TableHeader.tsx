@@ -195,15 +195,32 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
     return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
       const { length } = row;
       const rowKey = String(rowIndex);
+      const lastColumnClassName = notLockLeft ? `${prefixCls}-cell-last` : undefined;
       const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
       if (length) {
-        const tds = row.map((col) => {
+        const tds = row.map((col, index) => {
           if (!col.hidden) {
-            const { key } = col;
+            const { key, rowSpan, colSpan, children } = col;
+            const cellProps: TableHeaderCellProps = {
+              key,
+              columnGroup: col,
+              getHeaderNode,
+              rowIndex,
+              isSearchCell: true,
+            };
+            if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
+              cellProps.className = `${lastColumnClassName} ${prefixCls}-thead-inline-search`;
+            }
+            if (rowSpan > 1 || children) {
+              cellProps.rowSpan = rowSpan;
+            }
+            if (colSpan > 1 || children) {
+              cellProps.colSpan = colSpan;
+            }
             return (
-              <th key={key} className={`${prefixCls}-thead-inline-search`}>
+              <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'}>
                 {!notRenderThKey.includes(String(key)) && fieldsComponent.find(field => field.key === key)}
-              </th>
+              </TableHeaderCell>
             );
           }
           return undefined;
