@@ -16,6 +16,7 @@ const Symbols = {
   ProFormContext: Symbol('ProFormContext'),
   ProTableContext: Symbol('ProTableContext'),
   ProPerformanceTableContext: Symbol('ProPerformanceTableContext'),
+  MentionsContext: Symbol('MentionsContext'),
 };
 
 export default Symbols;

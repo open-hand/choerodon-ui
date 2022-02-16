@@ -114,10 +114,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   renderWrapper(): ReactNode {
     const { resize = ResizeType.none } = this.props;
-    const text = this.getTextNode();
     const resizable = resize !== ResizeType.none;
     const wrapperProps = this.getWrapperProps() || {};
-    const elementProps = this.getOtherProps() || {};
     const lengthElement = this.renderLengthInfoWrapper();
     // 先计算suffix，然后再计算clearButton，设置right，避免重叠
     const suffix = this.getSuffix();
@@ -136,14 +134,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
         marginBottom: '0.2rem',
       };
     }
-    const element = (
-      <textarea
-        {...elementProps}
-        placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
-        readOnly={!this.editable}
-        value={isString(text) ? text : this.processValue(this.getValue()) as string}
-      />
-    );
+    const element = this.wrapperInputNode();
     const children = (
       <>
         {element}
@@ -166,6 +157,19 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
           {this.renderFloatLabel()}
         </label>
       </div>
+    );
+  }
+
+  wrapperInputNode(): ReactNode {
+    const text = this.getTextNode();
+    const elementProps = this.getOtherProps() || {};
+    return (
+      <textarea
+        {...elementProps}
+        placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
+        readOnly={!this.editable}
+        value={isString(text) ? text : this.processValue(this.getValue()) as string}
+      />
     );
   }
 
