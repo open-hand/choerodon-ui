@@ -66,7 +66,7 @@ import {
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
-import FilterBar from './query-bar/TableFilterBar';
+import FilterBar, { FilterBarProps } from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import ComboBar from './query-bar/TableComboBar';
@@ -147,6 +147,19 @@ export interface TableQueryBarCustomProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+}
+
+export interface ComboBarProps { 
+  title?: string | ReactNode;
+  fold?: Boolean;
+  searchable?: Boolean;
+  dropDownArea?: () => ReactNode;
+  buttonArea?: () => ReactNode;
+  onQuery?: () => void;
+  onReset?: () => void;
+}
+
+export interface TableComboBarProps extends ComboBarProps, TableQueryBarBaseProps, FilterBarProps { 
 }
 
 export interface TableQueryBarHookProps extends TableQueryBarBaseProps, TableQueryBarCustomProps {
@@ -402,7 +415,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 查询条自定义参数
    */
-  queryBarProps?: TableQueryBarHookCustomProps;
+  queryBarProps?: TableQueryBarHookCustomProps | ComboBarProps;
   /**
    * 显示汇总条
    * @default 'normal'

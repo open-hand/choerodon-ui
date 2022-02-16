@@ -49,10 +49,11 @@ export interface TableHeaderCellProps extends ElementProps {
   getHeaderNode?: () => HTMLTableSectionElement | null;
   scope?: string;
   children?: ReactNode;
+  isSearchCell?: boolean;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon } = props;
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon, isSearchCell } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -422,13 +423,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(headerClassName);
   }
 
-  const headerNode = isValidElement(header) ? (
+  const headerNode = !isSearchCell ? (isValidElement(header) ? (
     cloneElement(header, { key: 'text' })
   ) : isString(header) ? (
     <span key="text">{header}</span>
   ) : (
     header
-  );
+  )) : null;
 
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
@@ -465,7 +466,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
   if (expandIcon) {
     childNodes.unshift(
-      <span key="prefix" className={`${prefixCls}-header-expand-icon`}>
+      <span key="prefix" className={!isSearchCell ? `${prefixCls}-header-expand-icon` : undefined}>
         {expandIcon}
       </span>,
     );
