@@ -36,7 +36,6 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化大数据表格树形缩进。
 - 💄 剔除 prop-types。
 - 💄 `<pro>TextField`: 优化 prefix 样式。
-- 💄 升级危险依赖包。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下将输入框中的值清除后显示"无效日期"的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下点击分页中最后一页时弹窗无法关闭的问题。
 - 🐞 `<pro>Lov`: 修复开启 autoSelectSingle 出现的初次渲染空值情况。
