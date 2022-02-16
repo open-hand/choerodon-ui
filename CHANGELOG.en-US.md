@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.2
+
+`2022-02-16`
+
 - 🌟 `configure`: Added `onTabsChange`, `onButtonClick`, `tableHeaderRowHeight`, `tableFooterRowHeight`, `xlsx`, `attachment.defaultChunkSize`, `attachment.defaultChunkThreads`, `attachment.onBeforeUpload`, `attachment.onBeforeUploadChunk`, `lovSelectionProps`, `modalResizable` properties.
 - 🌟 `<pro>DataSet`: Added `forceSubmit` method. `ValidationRule` add `disabled` hook.
 - 🌟 `<pro>DataSet.Field`: Added `useChunk`, `chunkSize`, `chunkThreads`, `fileKey`, `fileSize` properties.
@@ -74,7 +78,7 @@ timeline: true
 
 ## 1.5.1
 
-`2021-01-06`
+`2022-01-06`
 
 - 🌟 `configure`: Added `bigNumberFormatter`, `tableHeightChangeable`, `tableColumnResizeTrigger` properties. The return value of `attachment.getDownloadUrl` and `attachment.getDownloadAllUrl` is supported as function type for button clicks.
 - 🌟 `Notification`: Added config props of `foldCount`.
