@@ -330,12 +330,26 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   async loadCustomized() {
-    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
+    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable'), drawer } = this.props;
     if (resizable && customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
       if (temp) {
         const { contentNode, element, prefixCls } = this;
         runInAction(() => {
+          if (drawer) {
+            switch (this.drawerTransitionName) {
+              case 'slide-right':
+              case 'slide-left':
+                delete temp.height;
+                break;
+              case 'slide-up':
+              case 'slide-down':
+                delete temp.width;
+                break
+              default:
+                break;
+            }
+          }
           this.tempCustomized = temp;
         });
         if (classes(element).has(`${prefixCls}-auto-center`)) {
