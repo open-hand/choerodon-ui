@@ -73,6 +73,15 @@ export function pxToRem(num?: number | string | null, useCurrentFrontSize?: bool
     return num;
   }
 }
+export function pxToVw(num?: number | string | null, unit: 'vw' | 'vh' = 'vw'): string | undefined {
+  if (num !== undefined && num !== null) {
+    if (isNumber(num)) {
+      const { clientWidth, clientHeight } = document.documentElement;
+      return `${num / (unit === 'vw' ? clientWidth : clientHeight) * 100}${unit}`;
+    }
+    return num;
+  }
+}
 
 const builtInHeight = [
   'auto',
