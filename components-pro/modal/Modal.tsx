@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
-import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx, pxToVw } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getCustomizable } from 'choerodon-ui/lib/configure/utils';
@@ -460,17 +460,17 @@ export default class Modal extends ViewComponent<ModalProps> {
               switch (this.drawerTransitionName) {
                 case 'slide-left':
                 case 'slide-right':
-                  temp.width = width;
+                  temp.width = pxToVw(width, 'vw');
                   break;
                 case 'slide-up':
                 case 'slide-down':
-                  temp.height = height;
+                  temp.height = pxToVw(height, 'vh');
                   break;
                 default:
                   break;
               }
             } else {
-              temp = { width, height };
+              temp = { width: pxToVw(width, 'vw'), height: pxToVw(height, 'vh') };
             }
             this.tempCustomized = temp;
           });
