@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list。
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 
 ## 1.5.2

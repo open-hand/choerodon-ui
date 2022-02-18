@@ -3,6 +3,7 @@ category: Pro Components
 subtitle: 穿梭框
 type: Data Entry
 title: Transfer
+cols: 1
 ---
 
 表单控件。
@@ -36,6 +37,22 @@ title: Transfer
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
 | value | 选项值 | any |  |
+
+### Render Props
+
+- Transfer 支持接收 children 自定义渲染列表，并返回以下参数：
+
+| 参数      | 说明                                     | 类型        |默认值 |
+|-----------|------------------------------------------|------------|--------|
+| direction | 渲染列表的方向 | `left` \| `right`  |  |
+| targetOption | 目标数据源 | Record[]  |  |
+| onItemSelect | 勾选条目 | (Records: Record[])  |  |
+
+#### 参考示例
+
+```
+<Transfer {...props}>{({ direction, targetOption, onItemSelect}) => <YourComponent {...listProps} />}</Transfer>
+ ```
 
 <style>
 .code-box-demo .c7n-hap-transfer-wrapper {
