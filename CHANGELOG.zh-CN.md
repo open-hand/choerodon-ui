@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式.
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
+- 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 
 ## 1.5.2
 
