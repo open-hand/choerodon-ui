@@ -967,7 +967,7 @@ export default class Field {
         return this.getLookupText(value, showValueIfNotFound, record);
       }
     }
-    const options = this.getOptions();
+    const options = this.getOptions(record);
     const textField = this.get('textField', record);
     if (options) {
       const valueField = this.get('valueField', record);
