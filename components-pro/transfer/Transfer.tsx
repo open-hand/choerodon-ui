@@ -43,6 +43,8 @@ export default class Transfer extends Select<TransferProps> {
 
   @observable targetCurrentSelected: string | undefined;
 
+  isCustom = false;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -50,6 +52,7 @@ export default class Transfer extends Select<TransferProps> {
       this.targetSelected = [];
       this.clearCurrentIndex();
     });
+    this.isCustom = typeof props.children === 'function';
   }
 
   @autobind
@@ -114,8 +117,18 @@ export default class Transfer extends Select<TransferProps> {
   @autobind
   @action
   handleMoveToLeft() {
-    const { valueField } = this;
-    this.removeValues(this.targetSelected.map(record => record.get(valueField)));
+    const { valueField, isCustom } = this;
+    if (!isCustom) {
+      this.removeValues(this.targetSelected.map(record => record.get(valueField)));
+    } else {
+      let currentValues = this.getValues();
+      const targetKeys = this.targetSelected.map(record => record.key);
+      for (const key of targetKeys) {
+        currentValues = currentValues.filter(record => record.key !== key);
+      }
+      this.setValue(currentValues);
+    }
+   
     this.targetSelected = [];
     this.updateIndex();
   }
@@ -124,7 +137,7 @@ export default class Transfer extends Select<TransferProps> {
   @action
   handleMoveToRight() {
     const { valueField } = this;
-    this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));
+    this.prepareSetValue(...(this.isCustom? this.sourceSelected : this.sourceSelected.map(record => record.get(valueField))));
     this.sourceSelected = [];
     this.updateIndex();
   }
@@ -249,6 +262,12 @@ export default class Transfer extends Select<TransferProps> {
         onRemove: this.handleRemove,
       };
     }
+    let customOption = {};
+    if (this.isCustom) {
+      customOption = {
+        targetOption: targetValues,
+      };
+    }
 
     return (
       <span key="wrapper" className={classNameString}>
@@ -260,6 +279,8 @@ export default class Transfer extends Select<TransferProps> {
           onSelectAll={this.handleSourceSelectAllChange}
           onSelect={this.handleMenuClick}
           optionsFilter={this.sourceFilter}
+          direction="left"
+          {...customOption}
         />
         <TransferOperation
           className={`${prefixCls}-operation`}
@@ -281,9 +302,11 @@ export default class Transfer extends Select<TransferProps> {
           onSelectAll={this.handleTargetSelectAllChange}
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
+          direction="right"
+          {...customOption}
           {...oneWayProps}
         />
-        {sortable && (
+        {sortable && !this.isCustom && (
           <TransferSort
             className={`${prefixCls}-sort`}
             upActive={upActive}

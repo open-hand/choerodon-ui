@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.3
+
+- 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list。
+
 ## 1.5.2
 
 `2022-02-16`
