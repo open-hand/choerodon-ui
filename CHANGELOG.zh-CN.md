@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
+- 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
+
+## 1.5.2
+
+`2022-02-16`
+
 - 🌟 `configure`: 新增 onTabsChange, onButtonClick, tableHeaderRowHeight, tableFooterRowHeight, xlsx, attachment.defaultChunkSize, attachment.defaultChunkThreads, attachment.onBeforeUpload, attachment.onBeforeUploadChunk, lovSelectionProps, modalResizable 属性。
 - 🌟 `<pro>DataSet`: 新增 forceSubmit 方法， ValidationRule 增加 disabled 钩子。
 - 🌟 `<pro>DataSet.Field`: 新增 useChunk, chunkSize, chunkThreads, fileKey, fileSize 属性。
@@ -74,7 +81,7 @@ timeline: true
 
 ## 1.5.1
 
-`2021-01-06`
+`2022-01-06`
 
 - 🌟 `configure`: 新增 bigNumberFormatter, tableHeightChangeable, tableColumnResizeTrigger 属性, attachment.getDownloadUrl 和 attachment.getDownloadAllUrl 返回值类型支持钩子用于按钮点击。
 - 🌟 `Notification`: 新增 foldCount 全局配置属性。

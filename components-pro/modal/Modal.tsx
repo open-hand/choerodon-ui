@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
-import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx, pxToVw } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getCustomizable } from 'choerodon-ui/lib/configure/utils';
@@ -242,6 +242,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     const { contentStyle, resizable = this.getContextConfig('modalResizable'), style } = this.props;
     if (resizable) {
       runInAction(() => {
@@ -330,12 +331,26 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   async loadCustomized() {
-    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
+    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable'), drawer } = this.props;
     if (resizable && customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
       if (temp) {
         const { contentNode, element, prefixCls } = this;
         runInAction(() => {
+          if (drawer) {
+            switch (this.drawerTransitionName) {
+              case 'slide-right':
+              case 'slide-left':
+                delete temp.height;
+                break;
+              case 'slide-up':
+              case 'slide-down':
+                delete temp.width;
+                break
+              default:
+                break;
+            }
+          }
           this.tempCustomized = temp;
         });
         if (classes(element).has(`${prefixCls}-auto-center`)) {
@@ -438,6 +453,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (e.target && !fullScreen && this.contentNode) {
       const mousemove = !drawer ? this.handleModalMouseResize(e) : this.handleDrawerMouseResize(e);
       if (mousemove) {
+        const maskDiv: HTMLDivElement = document.createElement('div');
+        maskDiv.className = `${this.prefixCls}-resizer-mask`;
+        this.element.appendChild(maskDiv);
         const handleMouseUp = () => {
           const { width, height } = (this.element as HTMLDivElement).getBoundingClientRect();
           runInAction(() => {
@@ -446,21 +464,22 @@ export default class Modal extends ViewComponent<ModalProps> {
               switch (this.drawerTransitionName) {
                 case 'slide-left':
                 case 'slide-right':
-                  temp.width = width;
+                  temp.width = pxToVw(width, 'vw');
                   break;
                 case 'slide-up':
                 case 'slide-down':
-                  temp.height = height;
+                  temp.height = pxToVw(height, 'vh');
                   break;
                 default:
                   break;
               }
             } else {
-              temp = { width, height };
+              temp = { width: pxToVw(width, 'vw'), height: pxToVw(height, 'vh') };
             }
             this.tempCustomized = temp;
           });
           this.saveCustomized();
+          this.element.removeChild(maskDiv);
           this.resizeEvent
             .removeEventListener('mousemove', mousemove)
             .removeEventListener('mouseup', handleMouseUp);

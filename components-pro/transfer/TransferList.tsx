@@ -12,12 +12,15 @@ import { getItemKey, Select, SelectProps } from '../select/Select';
 import autobind from '../_util/autobind';
 import { stopPropagation } from '../_util/EventManager';
 import ViewComponent from '../core/ViewComponent';
+import CustomArea from './CustomArea';
 
 export interface TransferListProps extends SelectProps {
   header?: ReactNode;
   selected: Record[];
   currentIndex?: number;
   oneWay?: boolean;
+  targetOption?: Record[];
+  direction: string;
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
@@ -95,6 +98,8 @@ export default class TransferList extends Select<TransferListProps> {
     delete otherProps.sortOperations;
     delete otherProps.oneWay;
     delete otherProps.onRemove;
+    delete otherProps.targetOption;
+    delete otherProps.direction;
     return otherProps;
   }
 
@@ -206,12 +211,20 @@ export default class TransferList extends Select<TransferListProps> {
       textField,
       valueField,
       multiple,
-      props: { selected, onSelect },
+      props: { selected, onSelect, onSelectAll, children, targetOption, direction },
     } = this;
     const searchField = searchable && this.getSearchField();
     const classString = classNames(`${prefixCls}-body`, {
       [`${prefixCls}-body-with-search`]: searchable,
     });
+    // 自定义渲染
+    if (typeof children === 'function') {
+      return (
+        <CustomArea targetOption={targetOption}>{
+          children({ direction, targetOption, onItemSelect: onSelectAll })}
+        </CustomArea>
+      );
+    }
     const selectedKeys = multiple ? selected.map(record =>
       getItemKey(record, record.get(textField), record.get(valueField)),
     ) : [];
@@ -248,13 +261,14 @@ export default class TransferList extends Select<TransferListProps> {
     ViewComponent.prototype.handleBlur.call(this, e);
   }
 
-  render() {
-    const { header, footer } = this;
+  renderWrapper() {
+    const { header, footer, props: { style, children } } = this;
+    const isCustom = typeof children === 'function';
     return (
-      <div {...this.getOtherProps()}>
-        {header}
+      <div {...this.getOtherProps()} style={style}>
+        {!isCustom && header}
         {this.renderBody()}
-        {footer}
+        {!isCustom && footer}
       </div>
     );
   }

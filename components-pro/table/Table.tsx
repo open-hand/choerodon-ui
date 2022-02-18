@@ -68,9 +68,9 @@ import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
-import ProfessionalBar from './query-bar/TableProfessionalBar';
-import ComboBar from './query-bar/TableComboBar';
-import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
+import ProfessionalBar, { TableProfessionalBarProps } from './query-bar/TableProfessionalBar';
+import ComboBar, { ComboBarProps } from './query-bar/TableComboBar';
+import DynamicFilterBar, { TableDynamicFilterBarProps } from './query-bar/TableDynamicFilterBar';
 import FilterSelect from './query-bar/FilterSelect';
 import {
   findCell,
@@ -180,7 +180,7 @@ export interface onColumnResizeProps {
   index: number;
 }
 
-export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarBaseProps> & TableQueryBarCustomProps;
+export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarBaseProps> & TableQueryBarCustomProps & ComboBarProps & TableProfessionalBarProps & TableDynamicFilterBarProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType
@@ -402,7 +402,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 查询条自定义参数
    */
-  queryBarProps?: TableQueryBarHookCustomProps;
+  queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   /**
    * 显示汇总条
    * @default 'normal'
