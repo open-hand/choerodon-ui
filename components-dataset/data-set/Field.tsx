@@ -25,6 +25,7 @@ import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getLovPara } from '../stores/utils';
 import AttachmentFile from './AttachmentFile';
 import { iteratorFind, iteratorSome } from '../iterator-helper';
+import { treeFind } from '../tree-helper';
 import LookupCache from './LookupCache';
 
 function isEqualDynamicProps(oldProps, newProps) {
@@ -918,7 +919,17 @@ export default class Field {
     const valueField = this.get('valueField', record);
     const lookup = this.getLookup(record);
     if (lookup) {
-      const found = lookup.find(obj => isSameLike(get(obj, valueField), value));
+      const optionsProps = this.get('optionsProps', record);
+      let found: object | undefined;
+      if (optionsProps && optionsProps.childrenField) {
+        found = treeFind(
+          lookup,
+          (node) => isSameLike(get(node, valueField), value),
+          optionsProps.childrenField,
+        );
+      } else {
+        found = lookup.find(obj => isSameLike(get(obj, valueField), value));
+      }
       if (found) {
         return get(found, textField);
       }
@@ -960,14 +971,11 @@ export default class Field {
    */
   getText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
     value = value === undefined ? this.getValue(record) : value;
-    const optionsProps = this.get('optionsProps', record);
-    if (!(optionsProps && optionsProps.childrenField)) {
-      const lookup = this.getLookup(record);
-      if (lookup && !isObject(value)) {
-        return this.getLookupText(value, showValueIfNotFound, record);
-      }
+    const lookup = this.getLookup(record);
+    if (lookup && !isObject(value)) {
+      return this.getLookupText(value, showValueIfNotFound, record);
     }
-    const options = this.getOptions(record);
+    const options = this.get('options', record);
     const textField = this.get('textField', record);
     if (options) {
       const valueField = this.get('valueField', record);
