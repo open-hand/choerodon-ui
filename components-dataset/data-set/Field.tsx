@@ -981,7 +981,7 @@ export default class Field {
       const valueField = this.get('valueField', record);
       const found = options.find(item => isSameLike(item.get(valueField), value));
       if (found) {
-        return found.get(textField, record);
+        return found.get(textField);
       }
     }
     if (textField && isObject(value)) {
