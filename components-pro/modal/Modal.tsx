@@ -452,6 +452,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (e.target && !fullScreen && this.contentNode) {
       const mousemove = !drawer ? this.handleModalMouseResize(e) : this.handleDrawerMouseResize(e);
       if (mousemove) {
+        const maskDiv: HTMLDivElement = document.createElement('div');
+        maskDiv.className = `${this.prefixCls}-resizer-mask`;
+        this.element.appendChild(maskDiv);
         const handleMouseUp = () => {
           const { width, height } = (this.element as HTMLDivElement).getBoundingClientRect();
           runInAction(() => {
@@ -475,6 +478,7 @@ export default class Modal extends ViewComponent<ModalProps> {
             this.tempCustomized = temp;
           });
           this.saveCustomized();
+          this.element.removeChild(maskDiv);
           this.resizeEvent
             .removeEventListener('mousemove', mousemove)
             .removeEventListener('mouseup', handleMouseUp);
