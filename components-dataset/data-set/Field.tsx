@@ -960,17 +960,20 @@ export default class Field {
    */
   getText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
     value = value === undefined ? this.getValue(record) : value;
-    const lookup = this.getLookup(record);
-    if (lookup && !isObject(value)) {
-      return this.getLookupText(value, showValueIfNotFound, record);
+    const optionsProps = this.get('optionsProps', record);
+    if (!(optionsProps && optionsProps.childrenField)) {
+      const lookup = this.getLookup(record);
+      if (lookup && !isObject(value)) {
+        return this.getLookupText(value, showValueIfNotFound, record);
+      }
     }
-    const options = this.get('options', record);
+    const options = this.getOptions(record);
     const textField = this.get('textField', record);
     if (options) {
       const valueField = this.get('valueField', record);
       const found = options.find(item => isSameLike(item.get(valueField), value));
       if (found) {
-        return found.get(textField, record);
+        return found.get(textField);
       }
     }
     if (textField && isObject(value)) {

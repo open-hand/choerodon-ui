@@ -15,9 +15,8 @@ timeline: true
 
 ---
 
-## 1.5.3
-
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
+- 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 
 ## 1.5.2
 
