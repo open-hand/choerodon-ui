@@ -242,6 +242,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   componentDidMount() {
+    super.componentDidMount();
     const { contentStyle, resizable = this.getContextConfig('modalResizable'), style } = this.props;
     if (resizable) {
       runInAction(() => {
