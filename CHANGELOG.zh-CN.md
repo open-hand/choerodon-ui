@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
+
 ## 1.5.2
 
 `2022-02-16`

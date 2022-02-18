@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
+
 ## 1.5.2
 
 `2022-02-16`
