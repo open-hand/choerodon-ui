@@ -16,7 +16,10 @@ timeline: true
 ---
 
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list。
+- 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
+- 💄 `<pro>Table`: Optimized the error tip style.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
+- 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 
 ## 1.5.2
 

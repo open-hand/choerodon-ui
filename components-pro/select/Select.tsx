@@ -4,6 +4,7 @@ import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isNil from 'lodash/isNil';
 import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
@@ -1034,16 +1035,21 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
-  syncValueOnBlur(value) {
-    if (value) {
-      const { comboOptions } = this;
-      const data = comboOptions ? comboOptions.data : [];
-      this.options.ready().then(() => {
-        const record = this.findByTextWithValue(value, data);
-        if (record) {
-          this.choose(record);
+  syncValueOnBlur(text) {
+    if (text) {
+      const value = this.getValue();
+      if (value !== text) {
+        if (!isObject(value) || value[this.textField] !== text) {
+          const { comboOptions } = this;
+          const data = comboOptions ? comboOptions.data : [];
+          this.options.ready().then(() => {
+            const record = this.findByTextWithValue(text, data);
+            if (record) {
+              this.choose(record);
+            }
+          });
         }
-      });
+      }
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
     }
