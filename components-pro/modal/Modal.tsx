@@ -6,7 +6,7 @@ import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
-import { pxToRem, toPx, pxToVw } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, toPx, pxToPercent } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { getCustomizable } from 'choerodon-ui/lib/configure/utils';
@@ -458,23 +458,25 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.element.appendChild(maskDiv);
         const handleMouseUp = () => {
           const { width, height } = (this.element as HTMLDivElement).getBoundingClientRect();
+          const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = this.element.offsetParent || {};
           runInAction(() => {
-            let temp: ModalCustomized = {};
+            const temp: ModalCustomized = {
+              width: pxToPercent(width, embeddedOffsetWidth),
+              height: pxToPercent(height, embeddedOffsetHeight),
+            };
             if (drawer) {
               switch (this.drawerTransitionName) {
                 case 'slide-left':
                 case 'slide-right':
-                  temp.width = pxToVw(width, 'vw');
+                  delete temp.height;
                   break;
                 case 'slide-up':
                 case 'slide-down':
-                  temp.height = pxToVw(height, 'vh');
+                  delete temp.width;
                   break;
                 default:
                   break;
               }
-            } else {
-              temp = { width: pxToVw(width, 'vw'), height: pxToVw(height, 'vh') };
             }
             this.tempCustomized = temp;
           });
