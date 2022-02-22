@@ -272,6 +272,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   @autobind
   handleKeyDown(e) {
     if (e.keyCode === KeyCode.ESC) {
+      e.stopPropagation();
       const { cancelButton } = this;
       if (cancelButton && !cancelButton.disabled) {
         cancelButton.handleClickWait(e);
