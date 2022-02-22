@@ -53,6 +53,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
+  getUUID?: () => Promise<string> | string;
   downloadAll?: ButtonProps | boolean;
   previewTarget?: string;
   dragUpload?: boolean;
@@ -321,11 +322,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   fetchAttachmentUUID(): Promise<string> | string {
-    const { getAttachmentUUID } = this.getContextConfig('attachment');
-    if (!getAttachmentUUID) {
+    const { getUUID = this.getContextConfig('attachment').getAttachmentUUID } = this.props;
+    if (!getUUID) {
       throw new Error('no getAttachmentUUID hook in global configure.');
     }
-    return getAttachmentUUID({ isPublic: this.isPublic });
+    return getUUID({ isPublic: this.isPublic });
   }
 
   @mobxAction
