@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
 - 🐞 `<pro>ColorPicker`: 修复 prefix 色块消失的问题。
+- 🐞 `<pro>Table.Column`: 修复 onCell 在虚拟单元格内不起作用的问题。
 
 ## 1.5.2
 
