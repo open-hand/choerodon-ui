@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.
 - 🐞 `<pro>ColorPicker`: Fixed `prefix` color block missing.
+- 🐞 `<pro>Table.Column`: Fix `onCell` not working in virtual cells.
 
 ## 1.5.2
 

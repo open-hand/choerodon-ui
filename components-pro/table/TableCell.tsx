@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, HTMLProps, Key, ReactElement, TdHTMLAttributes, useCallback, useContext } from 'react';
+import React, { CSSProperties, FunctionComponent, HTMLProps, Key, ReactElement, useCallback, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
@@ -168,14 +168,25 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
+  const isBuiltInColumn = tableStore.isBuiltInColumn(column);
+  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+  const cellExternalProps: HTMLProps<HTMLTableCellElement> =
+    typeof columnOnCell === 'function'
+      ? columnOnCell({
+        dataSet,
+        record,
+        column,
+      })
+      : {};
   if (inView === false || columnGroup.inView === false) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
-    const emptyCellProps: TdHTMLAttributes<HTMLTableDataCellElement> & { 'data-index': Key } = {
+    const emptyCellProps: HTMLProps<HTMLTableCellElement> & { 'data-index': Key } = {
       colSpan,
       rowSpan,
       'data-index': key,
-      className: baseClassName,
-      style: baseStyle,
+      ...cellExternalProps,
+      className: classNames(baseClassName, cellExternalProps.className),
+      style: { ...baseStyle, ...cellExternalProps.style },
       scope,
     };
     if (hasEditor) {
@@ -190,16 +201,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
     return <TCell {...emptyCellProps} />;
   }
-  const isBuiltInColumn = tableStore.isBuiltInColumn(column);
-  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
-  const cellExternalProps: HTMLProps<HTMLTableCellElement> =
-    typeof columnOnCell === 'function'
-      ? columnOnCell({
-        dataSet,
-        record,
-        column,
-      })
-      : {};
   const cellStyle: CSSProperties = {
     ...baseStyle,
     ...cellExternalProps.style,
