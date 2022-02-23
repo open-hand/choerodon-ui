@@ -523,8 +523,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @action
   clear() {
     const record = this.getQueryRecord();
-    if (record) {
-      record.clear();
+    if (record && this.queryDataSet) {
+      this.queryDataSet.fields.forEach((_, key) => record.init(key, null));
+      this.doQuery();
     }
     this.setValue(undefined);
     this.setSelectField(undefined);

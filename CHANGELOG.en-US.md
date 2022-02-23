@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.
+- 🐞 `<pro>Table`: Fixed the problem that the table filterbar clicks the clear button to execute multiple queries.
 
 ## 1.5.2
 
