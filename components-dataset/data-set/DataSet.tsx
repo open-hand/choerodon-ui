@@ -1143,7 +1143,7 @@ export default class DataSet extends EventManager {
       warning(false, 'Please do not use the `dataSet.toJSONData` method during the rendering phase.');
     }
     const dataToJSON = adapterDataToJSON(isSelected, noCascade) || this.dataToJSON;
-    const records = useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records];
+    const records = useSelected(dataToJSON) ? this.selected : this.all;
     return generateJSONData(this, records).data;
   }
 
@@ -1227,7 +1227,7 @@ export default class DataSet extends EventManager {
     await this.ready();
     if (await this.validate()) {
       return this.pending.add(
-        this.write(useSelected(dataToJSON) ? this.selected : [...this.cachedModified, ...this.records]),
+        this.write(useSelected(dataToJSON) ? this.selected : this.all),
       );
     }
     return false;
@@ -1238,8 +1238,9 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   forceSubmit(): Promise<any> {
+    const { dataToJSON } = this;
     return this.ready().then(() => this.pending.add(
-      this.write(useSelected(this.dataToJSON) ? this.selected : [...this.cachedModified, ...this.records]),
+      this.write(useSelected(dataToJSON) ? this.selected : this.all),
     ));
   }
 
@@ -2298,8 +2299,8 @@ export default class DataSet extends EventManager {
       const cascade =
         noCascade === undefined && dataToJSON ? useCascade(dataToJSON) : !noCascade;
       const validateResult = Promise.all(
-        (useSelected(dataToJSON) ? this.selected : [...this.cachedModified.filter(record => !record.isRemoved), ...this.data]).map(record =>
-          record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
+        (useSelected(dataToJSON) ? this.selected : this.all).map(record =>
+          record.isRemoved || record.validate(this.props.forceValidate || useAll(dataToJSON), !cascade),
         ),
       ).then(results => results.every(result => result));
       const valid: boolean = await validateResult;
@@ -2356,15 +2357,17 @@ export default class DataSet extends EventManager {
 
   getValidationErrors(): ValidationErrors[] {
     const { dataToJSON } = this;
-    const data = useSelected(dataToJSON) ? this.selected : this.data;
+    const data = useSelected(dataToJSON) ? this.selected : this.all;
     return data.reduce<ValidationErrors[]>((results, record) => {
-      const validationResults = record.getValidationErrors();
-      if (validationResults.length) {
-        results.push({
-          record,
-          errors: validationResults,
-          valid: false,
-        });
+      if (!record.isRemoved) {
+        const validationResults = record.getValidationErrors();
+        if (validationResults.length) {
+          results.push({
+            record,
+            errors: validationResults,
+            valid: false,
+          });
+        }
       }
       return results;
     }, []);
@@ -3009,6 +3012,7 @@ Then the query method will be auto invoke.`,
       this.setCachedSelected([
         ...this.cachedSelected.filter(record => isAllPageSelection ? !record.isSelected : record.isSelected),
         ...(isAllPageSelection ? this.currentUnSelected : this.currentSelected).map(record => {
+          record.isSelected = !isAllPageSelection;
           record.isCurrent = false;
           record.isCached = true;
           return record;

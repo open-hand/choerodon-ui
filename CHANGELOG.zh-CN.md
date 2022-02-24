@@ -24,6 +24,8 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
 - 🐞 `<pro>ColorPicker`: 修复 prefix 色块消失的问题。
 - 🐞 `<pro>Table.Column`: 修复 onCell 在虚拟单元格内不起作用的问题。
+- 🐞 `<pro>Select`: 修复多选模式下可以通过 Backspace 键删除禁用的选项。
+- 🐞 `<pro>DataSet`: 修复缓存的勾选记录在值变更时或者 dataToJSON 为 all 时没有提交的问题。
 
 ## 1.5.2
 
