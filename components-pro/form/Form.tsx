@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import { action as mobxAction, computed, isArrayLike, observable, runInAction } from 'mobx';
+import { action as mobxAction, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -792,7 +792,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
           >
-            {label}
+            {toJS(label)}
           </FormItemLabel>,
         );
       }
@@ -811,7 +811,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           {labelLayout === LabelLayout.vertical && !!label && (
             <>
               <label className={labelClassName}>
-                {label}
+                {toJS(label)}
               </label>
               {isLabelShowHelp ? this.renderTooltipHelp(help) : null}
             </>

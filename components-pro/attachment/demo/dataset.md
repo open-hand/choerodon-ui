@@ -14,7 +14,7 @@ title:
 DataSet Binding
 
 ````jsx
-import { Attachment, DataSet, Row, Col } from 'choerodon-ui/pro';
+import { Attachment, DataSet, Row, Col, Form } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
@@ -23,9 +23,8 @@ const App = () => {
   const props = {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
     name: 'attachment',
-    dataSet: ds,
     labelLayout: 'float',
-    showValidation: 'newLine',
+    showValidation: 'newLine', viewMode: 'popup'
   };
 
   React.useEffect(() => {
@@ -41,7 +40,9 @@ const App = () => {
   return (
     <Row gutter={10}>
       <Col span={12}>
-        <Attachment {...props} />
+        <Form dataSet={ds}>
+            <Attachment {...props} />
+        </Form>
       </Col>
     </Row>
   );
