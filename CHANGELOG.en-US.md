@@ -24,6 +24,8 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.
 - 🐞 `<pro>ColorPicker`: Fixed `prefix` color block missing.
 - 🐞 `<pro>Table.Column`: Fix `onCell` not working in virtual cells.
+- 🐞 `<pro>Select`: Fix the problem that the disabled options can be deleted by backspace key in multiple mode.
+- 🐞 `<pro>DataSet`: Fix the problem that cached selection records are not submitted when the value is changed or when `dataToJSON` is `all`.
 
 ## 1.5.2
 

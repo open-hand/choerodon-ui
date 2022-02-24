@@ -746,13 +746,18 @@ export default class Record {
           dirtyData.set(fieldName, oldValue);
           if (this.status === RecordStatus.sync) {
             this.status = RecordStatus.update;
+            if (this.isCached && dataSet.cacheModifiedKeys) {
+              dataSet.cachedModified.push(this);
+            }
           }
         } else if (isSame(processToJSON(dirtyData.get(fieldName), field, this), newValueForCompare)) {
           dirtyData.delete(fieldName);
           if (this.status === RecordStatus.update && dirtyData.size === 0) {
             this.status = RecordStatus.sync;
             if (this.isCached) {
-              this.isCached = false;
+              if (!dataSet.cacheSelectionKeys || !this.isSelected) {
+                this.isCached = false;
+              }
               const { cachedModified } = dataSet;
               const cachedIndex = cachedModified.indexOf(this);
               if (cachedIndex > -1) {

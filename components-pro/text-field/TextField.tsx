@@ -19,6 +19,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import findLastIndex from 'lodash/findLastIndex';
 import defaultTo from 'lodash/defaultTo';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
@@ -760,10 +761,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               value={this.getRangeInputValue(startText, endText)}
               placeholder={
                 !editable || rangeTarget === undefined || !this.isFocused
-                  ? ''
-                  : rangeTarget === 0
-                    ? startPlaceholder
-                    : endPlaceholder
+                  ? '' : rangeTarget === 0 ? startPlaceholder : endPlaceholder
               }
               readOnly={!editable}
               style={editorStyle}
@@ -801,12 +799,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { rangeTarget, text } = this;
     return (
       rangeTarget === undefined || !this.isFocused
-        ? ''
-        : text === undefined
-          ? rangeTarget === 0
-            ? startText
-            : endText
-          : text
+        ? '' : text === undefined ? rangeTarget === 0 ? startText : endText : text
     );
   }
 
@@ -1254,10 +1247,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @action
   removeLastValue() {
     const values = this.getValues();
-    const value = values.pop();
-    const { range } = this;
-    this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
-    this.afterRemoveValue(fromRangeValue(value, range), -1);
+    const index = findLastIndex(values, (value) => !this.isMultipleBlockDisabled(value));
+    if (index !== -1) {
+      const [value] = values.splice(index, 1);
+      const { range } = this;
+      this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
+      this.afterRemoveValue(fromRangeValue(value, range), -1);
+    }
   }
 
   handleTagAnimateEnd() {
