@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Table.Column`: 修复 onCell 在虚拟单元格内不起作用的问题。
 - 🐞 `<pro>Select`: 修复多选模式下可以通过 Backspace 键删除禁用的选项。
 - 🐞 `<pro>DataSet`: 修复缓存的勾选记录在值变更时或者 dataToJSON 为 all 时没有提交的问题。
+- 🐞 `<pro>Attachment`: 修复在下拉模式中通过表单上下文传递 dataSet 时附件数量不会查询的问题。
 
 ## 1.5.2
 

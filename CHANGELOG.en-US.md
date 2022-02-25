@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Table.Column`: Fix `onCell` not working in virtual cells.
 - 🐞 `<pro>Select`: Fix the problem that the disabled options can be deleted by backspace key in multiple mode.
 - 🐞 `<pro>DataSet`: Fix the problem that cached selection records are not submitted when the value is changed or when `dataToJSON` is `all`.
+- 🐞 `<pro>Attachment`: Fix the problem that the count of attachments will not be queried when passing dataSet through Form context in popup mode.
 
 ## 1.5.2
 

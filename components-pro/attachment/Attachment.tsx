@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { action as mobxAction, observable, runInAction } from 'mobx';
+import { action as mobxAction, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -26,7 +26,7 @@ import { sortAttachments } from './utils';
 import ObserverSelect from '../select/Select';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import attachmentStore from '../stores/AttachmentStore';
-import { DataSetEvents, FieldType } from '../data-set/enum';
+import { FieldType } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
@@ -179,17 +179,12 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
-  processDataSetEventListener(on: boolean) {
-    const { dataSet } = this;
-    if (dataSet) {
-      dataSet[on ? 'addEventListener' : 'removeEventListener'](DataSetEvents.load, this.handleDataSetLoad);
-    }
-  }
+  private reaction?: IReactionDisposer;
 
   componentDidMount() {
     super.componentDidMount();
     this.fetchCount();
-    this.processDataSetEventListener(true);
+    this.reaction = reaction(() => this.record, () => this.fetchCount());
   }
 
   componentDidUpdate(prevProps: AttachmentProps) {
@@ -201,7 +196,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   componentWillUnmount() {
     super.componentWillUnmount();
-    this.processDataSetEventListener(false);
+    const { reaction } = this;
+    if (reaction) {
+      reaction();
+      delete this.reaction;
+    }
   }
 
   getFieldType(): FieldType {
