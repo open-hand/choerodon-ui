@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
 - 🌟 `<pro>Attachment`: 新增 getUUID 属性。
+- 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式.
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。

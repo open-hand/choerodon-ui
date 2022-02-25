@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
 - 🌟 `<pro>Attachment`: Added `getUUID` property.
+- 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.

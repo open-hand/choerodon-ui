@@ -70,6 +70,18 @@ title: Form
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
 | hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
 
+#### Form.ItemGroup
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| className | 自定义类名 | string |  |
+| style | 自定义样式 | React.CSSProperties |  |
+| label | 标签 | string \| ReactNode |  |
+| help | 帮助信息(显示在label旁) | string |  |
+| required | 是否必填(仅显示必填样式，不做校验) | boolean |  |
+| useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
+| compact | 是否用紧凑模式 | boolean |  |
+
 ### Form Responsive
 
 响应式可设置参数`columns` `labelWidth` `labelAlign` `labelLayout` 为一个键值对。

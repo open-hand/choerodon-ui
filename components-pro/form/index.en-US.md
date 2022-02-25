@@ -70,6 +70,18 @@ title: Form
 
 当需要对Form的一些表单控件进行分组控制的时候可以使用,例如统一控制某些表单控件的显隐,此外,使用**FormVirtualGroup**可以统一对表单控件进行属性注入,例如统一的**className**等.注意,FormVirtualGroup组件本身不会产生实际的dom结果,其结果与去掉**FormVirtualGroup**然后将显隐控制等逐一写入表单控件中的写法完全一致,
 
+#### Form.ItemGroup
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| className | 自定义类名 | string |  |
+| style | 自定义样式 | React.CSSProperties |  |
+| label | 标签 | string \| ReactNode |  |
+| help | 帮助信息(显示在label旁) | string |  |
+| required | 是否必填(仅显示必填样式，不做校验) | boolean |  |
+| useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
+| compact | 是否用紧凑模式 | boolean |  |
+
 ### Form Responsive
 
 响应式可设置参数`columns` `labelWidth` `labelAlign` `labelLayout` 为一个键值对。

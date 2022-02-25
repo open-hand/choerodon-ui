@@ -56,4 +56,23 @@
       display: none;
     }
   }
+
+  &-item-group {
+    display: flex;
+    box-sizing: border-box;
+
+    &-item {
+      display: inline-block;
+    }
+
+    &-item:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    &-compact {
+      & .@{form-prefix-cls}-item-group-item:not(:last-child) {
+        margin-right: -1px;
+      }
+    }
+  }
 }

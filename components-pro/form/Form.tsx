@@ -49,6 +49,7 @@ import { Tooltip as LabelTooltip } from '../core/enum';
 import { DataSetEvents } from '../data-set/enum';
 import Item from './Item';
 import FormItemLabel from './FormItemLabel';
+import ItemGroup from './ItemGroup';
 import { ShowHelp } from '../field/enum';
 import Icon from '../icon';
 import { hide, show } from '../tooltip/singleton';
@@ -197,6 +198,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   static FormVirtualGroup = FormVirtualGroup;
 
   static Item = Item;
+
+  static ItemGroup = ItemGroup;
 
   static defaultProps = {
     suffixCls: 'form',
