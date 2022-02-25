@@ -99,7 +99,7 @@ async function getContainer(): Promise<RefObject<TooltipContainerRef>> {
   });
 }
 
-export async function show(target: HTMLElement, props: TooltipProps, duration?: number): Promise<TaskRunner | undefined> {
+export async function show(target: HTMLElement, props: TooltipProps, duration = 100): Promise<TaskRunner | undefined> {
   const container = await getContainer();
   const { current } = container;
   if (current) {
@@ -107,7 +107,7 @@ export async function show(target: HTMLElement, props: TooltipProps, duration?: 
   }
 }
 
-export async function hide(duration?: number): Promise<TaskRunner | undefined> {
+export async function hide(duration = 100): Promise<TaskRunner | undefined> {
   const container = await getContainer();
   const { current } = container;
   if (current) {

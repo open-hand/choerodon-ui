@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem that the disabled options can be deleted by backspace key in multiple mode.
 - 🐞 `<pro>DataSet`: Fix the problem that cached selection records are not submitted when the value is changed or when `dataToJSON` is `all`.
 - 🐞 `<pro>Attachment`: Fix the problem that the count of attachments will not be queried when passing dataSet through Form context in popup mode.
+- 🐞 `<pro>Tooltip`: Fixed missing default value of duration in singleton mode.
 
 ## 1.5.2
 
