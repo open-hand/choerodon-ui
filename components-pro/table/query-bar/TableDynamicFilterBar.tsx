@@ -172,6 +172,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return getProPrefixCls('table', prefixCls);
   }
 
+  get queryFields(): React.ReactElement<any>[] {
+    const { queryFields } = this.props;
+    return queryFields.filter(component => {
+      return !component.props.hidden;
+    })
+  }
+
   @observable moreFields: Field[];
 
   /**
@@ -809,7 +816,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {this.getFilterMenu()}
           <div className={`${prefixCls}--dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
-              {queryFields.slice(0, queryFieldsLimit).map(element => {
+              {this.queryFields.slice(0, queryFieldsLimit).map(element => {
                 const { name, hidden } = element.props;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -830,7 +837,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   </div>
                 );
               })}
-              {queryFields.slice(queryFieldsLimit).map(element => {
+              {this.queryFields.slice(queryFieldsLimit).map(element => {
                 const { name, hidden } = element.props;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -862,7 +869,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 }
                 return null;
               })}
-              {(queryFieldsLimit < queryFields.length) && (<div className={`${prefixCls}-filter-item`}>
+              {(queryFieldsLimit < this.queryFields.length) && (<div className={`${prefixCls}-filter-item`}>
                 <Dropdown
                   visible={!this.fieldSelectHidden}
                   overlay={(
