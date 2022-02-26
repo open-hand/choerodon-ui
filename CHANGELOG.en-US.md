@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the problem that cached selection records are not submitted when the value is changed or when `dataToJSON` is `all`.
 - 🐞 `<pro>Attachment`: Fix the problem that the count of attachments will not be queried when passing dataSet through Form context in popup mode.
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
+- 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 
 ## 1.5.2
 

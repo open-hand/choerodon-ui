@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复缓存的勾选记录在值变更时或者 dataToJSON 为 all 时没有提交的问题。
 - 🐞 `<pro>Attachment`: 修复在下拉模式中通过表单上下文传递 dataSet 时附件数量不会查询的问题。
 - 🐞 `<pro>Attachment`: 修复 sortable 为 false 时也会调用排序接口导致报错的问题。
+- 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 
 ## 1.5.2
 
