@@ -681,20 +681,25 @@ export default class Attachment extends FormField<AttachmentProps> {
       ...this.sort,
       custom: true,
     };
-    const attachmentUUID = this.getValue();
-    if (attachmentUUID) {
-      const attachments = this.getValidAttachments();
+    const { sortable } = this.props;
+    if (sortable) {
       const { onOrderChange } = this.getContextConfig('attachment');
-      if (onOrderChange && attachments) {
-        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-        onOrderChange({
-          bucketName,
-          bucketDirectory,
-          storageCode,
-          attachments,
-          attachmentUUID,
-          isPublic,
-        });
+      if (onOrderChange) {
+        const attachmentUUID = this.getValue();
+        if (attachmentUUID) {
+          const attachments = this.getValidAttachments();
+          if (attachments) {
+            const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+            onOrderChange({
+              bucketName,
+              bucketDirectory,
+              storageCode,
+              attachments,
+              attachmentUUID,
+              isPublic,
+            });
+          }
+        }
       }
     }
   }
