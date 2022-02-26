@@ -73,7 +73,7 @@ export default class ColumnGroups {
   @computed
   get leafs(): ColumnGroup[] {
     const { aggregation, hidden } = this;
-    return hidden ? [] : this.columns.reduce<ColumnGroup[]>((leafs, group) => leafs.concat(aggregation && group.column.aggregation ? group : group.leafs), []);
+    return hidden ? [] : this.columns.reduce<ColumnGroup[]>((leafs, group) => group.hidden ? leafs : leafs.concat(aggregation && group.column.aggregation && !group.hidden ? group : group.leafs), []);
   }
 
   @computed
@@ -81,7 +81,7 @@ export default class ColumnGroups {
     if (!this.parent) {
       const { aggregation } = this;
       return this.columns.reduce<ColumnGroup[]>(
-        (leafs, group) => group.lock === ColumnLock.left ? leafs.concat(aggregation && group.column.aggregation ? group : group.leafs) : leafs,
+        (leafs, group) => group.lock === ColumnLock.left ? leafs.concat(aggregation && group.column.aggregation && !group.hidden ? group : group.leafs) : leafs,
         [],
       );
     }
@@ -93,7 +93,7 @@ export default class ColumnGroups {
     if (!this.parent) {
       const { aggregation } = this;
       return this.columns.reduce<ColumnGroup[]>(
-        (leafs, group) => group.lock === ColumnLock.right ? leafs.concat(aggregation && group.column.aggregation ? group : group.leafs) : leafs,
+        (leafs, group) => group.lock === ColumnLock.right ? leafs.concat(aggregation && group.column.aggregation && !group.hidden ? group : group.leafs) : leafs,
         [],
       );
     }
