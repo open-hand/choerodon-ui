@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that the count of attachments will not be queried when passing dataSet through Form context in popup mode.
 - 🐞 `<pro>Tooltip`: Fixed missing default value of duration in singleton mode.
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
+- 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 
 ## 1.5.2
 
