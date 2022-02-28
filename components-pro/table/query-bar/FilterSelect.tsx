@@ -66,6 +66,8 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   reaction: IReactionDisposer;
 
+  isDoClear: boolean;
+
   @computed
   get value(): any {
     const { filter } = this.props;
@@ -324,7 +326,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       }
       this.setValue(values);
     }
-    this.doQuery();
+    if (!this.isDoClear) {
+      this.doQuery();
+    }
   }
 
   @autobind
@@ -523,12 +527,15 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   @action
   clear() {
     const record = this.getQueryRecord();
+    this.isDoClear = true;
     if (record) {
       record.clear();
+      this.doQuery();
     }
     this.setValue(undefined);
     this.setSelectField(undefined);
     this.element.text = undefined;
+    this.isDoClear = false;
   }
 
   renderWrapper(): ReactNode {

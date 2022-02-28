@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fixed missing default value of duration in singleton mode.
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
 - 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
+- 🐞 `<pro>Table`: Fixed the problem that the table filterbar clicks the clear button to execute multiple queries.
 
 ## 1.5.2
 
