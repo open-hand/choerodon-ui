@@ -4,6 +4,7 @@
 @import 'mixin';
 
 @output-prefix-cls: ~'@{c7n-pro-prefix}-output';
+@field-label-prefix-cls: ~'@{c7n-pro-prefix}-field-label';
 
 .@{output-prefix-cls} {
   font-weight: @output-font-weight;
@@ -35,4 +36,27 @@
   }
 
   .multi;
+
+  &-float-label {
+    height: @float-label-height-base;
+    line-height: @float-label-height-base;
+  }
+
+  &-float-label + .@{field-label-prefix-cls}-wrapper {
+    position: relative;
+
+    .@{field-label-prefix-cls} {
+      position: absolute;
+      top: -(@float-label-height-base + @output-float-label-line-height / 2);
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      color: inherit;
+      font-weight: @output-font-weight;
+      font-size: @output-float-label-font-size;
+      line-height: @output-float-label-line-height;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
 }

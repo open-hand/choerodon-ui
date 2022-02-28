@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
 - 🌟 `<pro>Attachment`: 新增 getUUID 属性。
+- 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。
 - 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。
