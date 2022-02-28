@@ -17,8 +17,10 @@ timeline: true
 
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
 - 🌟 `<pro>Attachment`: 新增 getUUID 属性。
+- 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
-- 💄 `<pro>Table`: 优化错误提示的样式.
+- 💄 `<pro>Table`: 优化错误提示的样式。
+- 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
@@ -27,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复多选模式下可以通过 Backspace 键删除禁用的选项。
 - 🐞 `<pro>DataSet`: 修复缓存的勾选记录在值变更时或者 dataToJSON 为 all 时没有提交的问题。
 - 🐞 `<pro>Attachment`: 修复在下拉模式中通过表单上下文传递 dataSet 时附件数量不会查询的问题。
+- 🐞 `<pro>Tooltip`: 修复单例模式下 duration 默认值缺失的问题。
 - 🐞 `<pro>Attachment`: 修复 sortable 为 false 时也会调用排序接口导致报错的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 

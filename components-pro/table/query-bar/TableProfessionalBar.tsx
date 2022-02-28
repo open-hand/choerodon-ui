@@ -47,11 +47,18 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @observable moreFields: ReactElement[];
 
+  get queryFields(): React.ReactElement<any>[] {
+    const { queryFields } = this.props;
+    return queryFields.filter(component => {
+      return !component.props.hidden;
+    })
+  }
+
   componentDidMount(): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = this.props;
     if (queryDataSet && queryFields.length && defaultExpanded) {
       runInAction(() => {
-        this.moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+        this.moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
       });
     }
     this.processDataSetListener(true);
@@ -61,7 +68,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
     if (queryDataSet && queryFields.length && (defaultExpanded || (this.moreFields && this.moreFields.length))) {
       runInAction(() => {
-        this.moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+        this.moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
       });
     }
   }
@@ -85,8 +92,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
    */
   @autobind
   async handleDataSetValidate({ result }) {
-    const { queryFieldsLimit, queryFields } = this.props;
-    const moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+    const { queryFieldsLimit } = this.props;
+    const moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
     if (!await result) {
       runInAction(() => {
         this.moreFields = moreFields;
@@ -178,12 +185,12 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
           labelWidth={80}
           {...formProps}
         >
-          {this.createFields(queryFields.slice(0, queryFieldsLimit))}
+          {this.createFields(this.queryFields.slice(0, queryFieldsLimit))}
           {this.moreFields}
         </Form>
       );
 
-      const moreFields = this.createFields(queryFields.slice(queryFieldsLimit));
+      const moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
       const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
 
       return (

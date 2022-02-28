@@ -17,8 +17,10 @@ timeline: true
 
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
 - 🌟 `<pro>Attachment`: Added `getUUID` property.
+- 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
+- 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.
@@ -27,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem that the disabled options can be deleted by backspace key in multiple mode.
 - 🐞 `<pro>DataSet`: Fix the problem that cached selection records are not submitted when the value is changed or when `dataToJSON` is `all`.
 - 🐞 `<pro>Attachment`: Fix the problem that the count of attachments will not be queried when passing dataSet through Form context in popup mode.
+- 🐞 `<pro>Tooltip`: Fixed missing default value of duration in singleton mode.
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
 - 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 

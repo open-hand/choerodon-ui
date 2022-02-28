@@ -184,6 +184,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * @memberof FormFieldProps
    */
   showHelp?: ShowHelp;
+  showValidation?: ShowValidation;
   /**
    * 渲染器
    */
