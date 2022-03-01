@@ -14,6 +14,8 @@ export enum DataSetEvents {
   unSelectAll = 'unSelectAll',
   batchSelect = 'batchSelect',
   batchUnSelect = 'batchUnSelect',
+  selectAllPage = 'selectAllPage',
+  unSelectAllPage = 'unSelectAllPage',
   indexChange = 'indexChange',
   update = 'update',
   fieldChange = 'fieldChange',
