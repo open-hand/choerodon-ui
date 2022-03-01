@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
 - 🌟 `<pro>Attachment`: 新增 getUUID 属性。
 - 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。

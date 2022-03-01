@@ -1123,6 +1123,9 @@ export default class DataSet extends EventManager {
       this.setCachedSelected([]);
       this.setState(ALL_PAGE_SELECTION, enable);
       processAfterAllPageSelection.forEach(cb => cb());
+      this.fireEvent(enable ? DataSetEvents.selectAllPage : DataSetEvents.unSelectAllPage, {
+        dataSet: this,
+      });
     }
   }
 

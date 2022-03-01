@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
 - 🌟 `<pro>Attachment`: Added `getUUID` property.
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
