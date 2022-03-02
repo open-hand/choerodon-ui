@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复 sortable 为 false 时也会调用排序接口导致报错的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
+- 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
 
 ## 1.5.2
 
