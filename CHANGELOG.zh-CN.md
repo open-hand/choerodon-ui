@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
+- 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 
 ## 1.5.2
 

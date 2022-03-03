@@ -161,6 +161,10 @@ export default class SelectionList extends Component<SelectionListProps> {
     }
   }
 
+  componentDidMount() {
+    this.updateModalStyle();
+  }
+
   componentDidUpdate() {
     this.updateModalStyle();
   }
