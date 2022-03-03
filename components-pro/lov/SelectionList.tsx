@@ -17,8 +17,6 @@ import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import { SelectionProps } from './Lov';
 
-export const TIMESTAMP = '__TIMESTAMP__';
-
 export enum SelectionsPosition {
   side = 'side',
   below = 'below',
@@ -47,15 +45,12 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   getRecords(records: Record[]) {
-    return sortBy(records, function (item) {
-      return defaultTo(item.getState(TIMESTAMP), -1);
-    });
+    return sortBy(records, (item: Record) => defaultTo(item.selectedTimestamp, -1));
   }
 
   @action
   unSelect = (record: Record) => {
     const { dataSet, treeFlag } = this.props;
-    record.setState(TIMESTAMP, 0);
     if (treeFlag === 'Y') {
       dataSet.treeUnSelect(record);
     } else {
