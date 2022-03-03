@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed colon not showing under grid layout, and `Output` style issues.
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
+- 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 
 ## 1.5.2
 
