@@ -73,6 +73,7 @@ const SELECTABLE_KEY = '__SELECTABLE_KEY__';  // TODO:Symbol
 const DISABLED_KEY = '__DISABLED_KEY__';  // TODO:Symbol
 const SELECT_KEY = '__SELECT_KEY__';  // TODO:Symbol
 const UNSELECT_KEY = '__UNSELECT_KEY__';  // TODO:Symbol
+const SELECT_TIMESTAMP = '__TIMESTAMP__';  // TODO:Symbol
 
 function initRecordField(record: Record, name: string, fieldProps?: FieldProps): [Field, Map<string, Field> | undefined] {
   const { dataSet } = record;
@@ -181,6 +182,10 @@ export default class Record {
 
   @observable status: RecordStatus;
 
+  get selectedTimestamp(): number | undefined {
+    return this.getState(SELECT_TIMESTAMP);
+  }
+
   get selectable(): boolean {
     const $selectable = this.getState(SELECTABLE_KEY);
     if ($selectable !== undefined) {
@@ -222,11 +227,15 @@ export default class Record {
   }
 
   set isSelected(isSelected: boolean) {
+    const newState: object = {
+      [SELECT_TIMESTAMP]: isSelected ? Date.now() : undefined,
+    };
     if (this.isDataSetInAllPageSelection) {
-      this.setState(UNSELECT_KEY, !isSelected);
+      newState[UNSELECT_KEY] = !isSelected;
     } else {
-      this.setState(SELECT_KEY, isSelected);
+      newState[SELECT_KEY] = isSelected;
     }
+    this.setState(newState);
   }
 
   @observable isCurrent?: boolean;

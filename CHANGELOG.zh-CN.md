@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
+- 🌟 `<pro>DataSet.Record`: 新增 selectedTimestamp 值.
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
 - 🌟 `<pro>Attachment`: 新增 getUUID 属性。
 - 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。
@@ -35,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
+- 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 
 ## 1.5.2
 

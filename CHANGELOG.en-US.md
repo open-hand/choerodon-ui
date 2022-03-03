@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
+- 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
 - 🌟 `<pro>Attachment`: Added `getUUID` property.
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
@@ -35,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 - 🐞 `<pro>Table`: Fixed the problem that the table filterbar clicks the clear button to execute multiple queries.
 - 🐞 `<pro>Form`: Fixed colon not showing under grid layout, and `Output` style issues.
+- 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 
 ## 1.5.2
 

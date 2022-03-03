@@ -219,6 +219,7 @@ title: DataSet
 | status         | 状态， 可选值 `add` `update` `delete` `sync`    | observable&lt;string&gt;  |
 | disabled       | 禁用                                            | observable&lt;boolean&gt; |
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
+| selectedTimestamp     | 选中时间戳, 可用于排序                                       | observable&lt;number&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
 | isExpanded     | 树形节点是否展开                                    | observable&lt;boolean&gt; |
