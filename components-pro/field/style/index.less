@@ -106,6 +106,10 @@
     content: ':';
   }
 
+  &-row &-label&-label-useColon::after {
+    width: 0.04rem;
+  }
+
   &-label-help {
     .icon-help_outline {
       position: relative;
@@ -175,6 +179,10 @@
 
     &-control {
       flex: 1;
+    }
+
+    & .@{field-prefix-cls}-wrapper {
+      padding: @form-item-wrapper-padding;
     }
   }
 
