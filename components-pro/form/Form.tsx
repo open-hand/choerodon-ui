@@ -188,6 +188,10 @@ export interface FormProps extends DataSetComponentProps {
   encType?: string;
   showValidation?: ShowValidation;
   showHelp?: ShowHelp;
+  /**
+   * 校验失败自动定位
+   */
+  autoValidationLocate?: boolean;
 }
 
 @observer
@@ -587,7 +591,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   // 处理校验失败定位
   @autobind
   handleDataSetValidate({ valid, errors: validationErrors, noLocate }: { valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) {
-    if (!noLocate && !valid) {
+    const { autoValidationLocate } = this.props;
+    if (autoValidationLocate !== false && !noLocate && !valid) {
       const [firstInvalidRecord] = validationErrors;
       if (firstInvalidRecord) {
         const { errors } = firstInvalidRecord;

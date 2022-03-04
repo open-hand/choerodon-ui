@@ -38,6 +38,7 @@ title: Form
 | spacingType | 间隔类型， 可选值 `between` `aroung` `evenly` | SpacingType \| \[SpacingType, SpacingType\] \| {width:SpacingType,height:SpacingType} | 'between' |
 | fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | |
+| autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

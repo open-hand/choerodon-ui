@@ -180,7 +180,12 @@ export interface onColumnResizeProps {
   index: number;
 }
 
-export type TableQueryBarHookCustomProps = Omit<object, keyof TableQueryBarBaseProps> & TableQueryBarCustomProps & ComboBarProps & TableProfessionalBarProps & TableDynamicFilterBarProps;
+export type TableQueryBarHookCustomProps =
+  Omit<object, keyof TableQueryBarBaseProps>
+  & TableQueryBarCustomProps
+  & ComboBarProps
+  & TableProfessionalBarProps
+  & TableDynamicFilterBarProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType
@@ -311,15 +316,6 @@ export interface TableProps extends DataSetComponentProps {
    * 单元格编辑器边框
    */
   columnEditorBorder?: boolean;
-  /**
-   * 是否自动聚焦
-   * @default true
-   */
-  autoFocus?: boolean;
-  /**
-   * 数据源
-   */
-  dataSet: DataSet;
   /**
    * 选择记录的模式
    */
@@ -719,6 +715,10 @@ export interface TableProps extends DataSetComponentProps {
    * 自定义渲染数据为空的状态
    */
   renderEmpty?: () => ReactNode;
+  /**
+   * 校验失败自动定位
+   */
+  autoValidationLocate?: boolean;
 }
 
 @observer
@@ -897,7 +897,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   handleDataSetValidate({ valid, dataSet, errors: validationErrors, noLocate }: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
-    if (!noLocate && !valid) {
+    const { autoValidationLocate } = this.props;
+    if (autoValidationLocate !== false && !noLocate && !valid) {
       const { tableStore } = this;
       const [firstInvalidRecord] = validationErrors;
       if (firstInvalidRecord) {
