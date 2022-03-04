@@ -131,11 +131,13 @@ const Dropdown: FunctionComponent<DropDownProps> = function Dropdown(props) {
 
 Dropdown.displayName = 'Dropdown';
 
-Dropdown.defaultProps = {
+const MemoDropdown: typeof Dropdown = memo(Dropdown);
+
+MemoDropdown.defaultProps = {
   suffixCls: 'dropdown',
   placement: Placements.bottomLeft,
   trigger: [Action.hover, Action.focus],
   defaultHidden: true,
 };
 
-export default memo(Dropdown);
+export default MemoDropdown;

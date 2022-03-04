@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'lodash/isEqual';
+import shallowEqual from 'shallowequal';
 import RadioGroup from './group';
 import RadioButton from './radioButton';
 import { RadioChangeEvent, RadioProps } from './interface';
@@ -18,7 +18,7 @@ export default class Radio extends Component<RadioProps, {}> {
     type: 'radio',
   };
 
-  static get contextType() {
+  static get contextType(): typeof RadioContext {
     return RadioContext;
   }
 

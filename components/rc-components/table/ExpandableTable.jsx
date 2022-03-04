@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'mini-store';
 import TableRow from './TableRow';
+import { remove } from './utils';
 
 class ExpandableTable extends Component {
   static defaultProps = {
@@ -29,6 +30,8 @@ class ExpandableTable extends Component {
       getRowKey,
     } = props;
 
+    this.preExpandedRowKeys = expandedRowKeys;
+
     let finnalExpandedRowKeys = [];
     let rows = [...data];
 
@@ -51,10 +54,11 @@ class ExpandableTable extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ('expandedRowKeys' in nextProps) {
+  componentDidUpdate() {
+    if ('expandedRowKeys' in this.props && this.preExpandedRowKeys !== this.props.expandedRowKeys) { // modified by njq.niu@hand-china.com
+      this.preExpandedRowKeys = this.props.expandedRowKeys;
       this.store.setState({
-        expandedRowKeys: nextProps.expandedRowKeys,
+        expandedRowKeys: this.props.expandedRowKeys,
       });
     }
   }
@@ -65,7 +69,7 @@ class ExpandableTable extends Component {
       event.stopPropagation();
     }
 
-    const { onExpandedRowsChange, onExpand } = this.props;
+    const { onExpandedRowsChange, onExpand , uncontrolled = false} = this.props;
     let { expandedRowKeys } = this.store.getState();
 
     if (expanded) {
@@ -75,11 +79,11 @@ class ExpandableTable extends Component {
       // row was collapse
       const expandedRowIndex = expandedRowKeys.indexOf(rowKey);
       if (expandedRowIndex !== -1) {
-        expandedRowKeys.splice(expandedRowIndex, 1);
+        expandedRowKeys = remove(expandedRowKeys, rowKey);
       }
     }
 
-    if (!this.props.expandedRowKeys) {
+    if (!this.props.expandedRowKeys || uncontrolled) {
       this.store.setState({ expandedRowKeys });
     }
 
@@ -116,14 +120,19 @@ class ExpandableTable extends Component {
       colCount = this.columnManager.leafColumns().length;
     }
     const columns = [{
-      key: 'extra-row',
-      render: () => ({
-        props: {
-          colSpan: colCount,
+        key: 'extra-row',
+        render: () => {
+          const { expandedRowKeys } = this.store.getState();
+          const expanded = !!~expandedRowKeys.indexOf(parentKey);
+          return {
+            props: {
+              colSpan: colCount,
+            },
+            children: fixed !== 'right' ? render(record, index, indent, expanded) : '&nbsp;',
+          };
         },
-        children: fixed !== 'right' ? render(record, index, indent) : '&nbsp;',
-      }),
-    }];
+      },
+    ];
     if (expandIconAsCell && fixed !== 'right') {
       columns.unshift({
         key: 'expand-icon-placeholder',
@@ -177,13 +186,7 @@ class ExpandableTable extends Component {
     }
 
     if (childrenData) {
-      rows.push(
-        ...renderRows(
-          childrenData,
-          nextIndent,
-          nextAncestorKeys,
-        )
-      );
+      renderRows(childrenData, nextIndent, rows, nextAncestorKeys);
     }
   };
 

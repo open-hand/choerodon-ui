@@ -49,8 +49,9 @@ components-shared/**/*.jsx
 components-shared/**/*.js
 components-shared/**/*.d.ts
 #components-pro/**/*.d.ts
-!components/rc-components/**/*.@(jsx|js)
-components/rc-components/dialog/*.@(jsx|js)
+!components/rc-components/**/*.jsx
+components/rc-components/dialog/*.jsx
+components/rc-components/dialog/*.js
 !components/**/__tests__/*.js
 !components/**/__tests__/*.js.snap
 !components-pro/**/__tests__/*.js
@@ -58,7 +59,8 @@ components/rc-components/dialog/*.@(jsx|js)
 /.history
 jest_*
 .jest-cache/
-components/rc-components/tree/**/*.@(jsx|js)
+components/rc-components/tree/**/*.jsx
+components/rc-components/tree/**/*.js
 components/form/__tests__/type.js
 site/theme/mock/performance-data/*.js
 .eslintcache

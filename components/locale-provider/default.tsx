@@ -46,6 +46,8 @@ export default {
     removeFile: 'Remove file',
     uploadError: 'Upload error',
     previewFile: 'Preview file',
+    confirmRemove: 'Are you sure to delete the file?',
+    confirmReUpload: 'Are you sure to reupload?',
   },
   Collapse: {
     fold: 'Fold',

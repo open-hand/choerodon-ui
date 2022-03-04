@@ -5,7 +5,6 @@ import placements from './placements';
 
 export default class Dropdown extends Component {
   static defaultProps = {
-    minOverlayWidthMatchTrigger: true,
     prefixCls: 'rc-dropdown',
     trigger: ['hover'],
     showAction: [],
@@ -66,6 +65,24 @@ export default class Dropdown extends Component {
       });
     }
     props.onVisibleChange(visible);
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    if ('visible' in nextProps) {
+      return {
+        visible: nextProps.visible,
+      };
+    }
+    return null;
+  }
+
+  getMinOverlayWidthMatchTrigger = () => {
+    const { minOverlayWidthMatchTrigger, alignPoint } = this.props;
+    if ('minOverlayWidthMatchTrigger' in this.props) {
+      return minOverlayWidthMatchTrigger;
+    }
+
+    return !alignPoint;
   };
 
   getMenuElement = () => {
@@ -87,8 +104,8 @@ export default class Dropdown extends Component {
     return this.trigger.getPopupDomNode();
   }
 
-  afterVisibleChange = visible => {
-    if (visible && this.props.minOverlayWidthMatchTrigger) {
+  afterVisibleChange = (visible) => {
+    if (visible && this.getMinOverlayWidthMatchTrigger()) {
       const overlayNode = this.getPopupDomNode();
       const rootNode = ReactDOM.findDOMNode(this);
       if (rootNode && overlayNode && rootNode.offsetWidth > overlayNode.offsetWidth) {

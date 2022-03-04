@@ -8,8 +8,7 @@
  *
  * @providesModule ReactComponentWithPureRenderMixin
  */
-
-const shallowEqual = require('lodash/isEqual');
+import shallowEqual from 'shallowequal';
 
 function shallowCompare(instance, nextProps, nextState) {
   return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
@@ -47,4 +46,4 @@ const ReactComponentWithPureRenderMixin = {
   },
 };
 
-module.exports = ReactComponentWithPureRenderMixin;
+export default ReactComponentWithPureRenderMixin;

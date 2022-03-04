@@ -35,7 +35,7 @@ export interface TableProfessionalBarProps extends ElementProps {
 
 @observer
 export default class TableProfessionalBar extends Component<TableProfessionalBarProps> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

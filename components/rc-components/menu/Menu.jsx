@@ -220,6 +220,7 @@ export default class Menu extends Component {
       onOpenChange: this.onOpenChange,
       onDeselect: this.onDeselect,
       onSelect: this.onSelect,
+      openTransitionName: this.getOpenTransitionName(),
       parentMenu: this,
     };
 

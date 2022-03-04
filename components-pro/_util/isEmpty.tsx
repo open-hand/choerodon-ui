@@ -1,3 +1,5 @@
 import { Utils } from 'choerodon-ui/dataset';
 
-export default Utils.isEmpty;
+const isEmpty: typeof Utils.isEmpty = Utils.isEmpty;
+
+export default isEmpty;

@@ -27,7 +27,7 @@ const RenderIcon = function RenderIcon(props) {
   }
   if (icon || status === 'finish' || status === 'error') {
     const { iconPrefix } = props;
-    const iconClassName = classNames(`${iconPrefix}`, {
+    const iconClassName = classNames(`${prefixCls}-icon`, `${iconPrefix}`, {
       [`${iconPrefix}-${icon}`]: icon && isString(icon),
       [`${iconPrefix}-check`]: !icon && status === 'finish',
       [`${iconPrefix}-close`]: !icon && status === 'error',

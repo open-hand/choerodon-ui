@@ -4,7 +4,7 @@ import { Item } from '../rc-components/menu';
 import MenuContext, { MenuContextValue } from './MenuContext';
 
 class MenuItem extends PureComponent<any, any> {
-  static get contextType() {
+  static get contextType(): typeof MenuContext {
     return MenuContext;
   }
 
@@ -29,6 +29,7 @@ class MenuItem extends PureComponent<any, any> {
     if (inlineCollapsed && props.level === 1) {
       return (
         <Tooltip
+          prefixCls={props.tooltipPrefixCls}
           title={props.children}
           placement="right"
           overlayClassName={`${props.rootPrefixCls}-inline-collapsed-tooltip`}

@@ -1,5 +1,6 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactElement } from 'react';
 import { Area } from '../image-crop';
+import { PopconfirmProps } from '../popconfirm';
 
 export type UploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
 
@@ -18,6 +19,7 @@ export interface UploadFile {
   status?: UploadFileStatus;
   percent?: number;
   thumbUrl?: string;
+  isNotImage?: boolean;
   originFileObj?: File | Blob;
   response?: any;
   error?: any;
@@ -35,6 +37,12 @@ export interface UploadChangeParam {
 export interface ShowUploadListInterface {
   showRemoveIcon?: boolean;
   showPreviewIcon?: boolean;
+  showDownloadIcon?: boolean;
+  showReUploadIcon?: boolean;
+  removePopConfirmTitle?: string;
+  reUploadText?: string;
+  reUploadPopConfirmTitle?: string;
+  getCustomFilenameTitle?: (file: UploadFile) => string;
 }
 
 export interface UploadLocale {
@@ -42,14 +50,20 @@ export interface UploadLocale {
   removeFile?: string;
   uploadError?: string;
   previewFile?: string;
+  confirmRemove?: string;
+  confirmReUpload?: string;
 }
 
+export type UploadType = 'drag' | 'select';
+export type UploadListType = 'text' | 'picture' | 'picture-card';
+
 export interface UploadProps {
-  type?: 'drag' | 'select';
+  type?: UploadType;
   name?: string;
   defaultFileList?: Array<UploadFile>;
   fileList?: Array<UploadFile>;
-  action?: string;
+  action?: string | ((file: UploadFile) => PromiseLike<any>);
+  directory?: boolean;
   data?: Record<string, any> | ((file: UploadFile) => any);
   headers?: HttpRequestHeader;
   showUploadList?: boolean | ShowUploadListInterface;
@@ -58,7 +72,7 @@ export interface UploadProps {
   accept?: string;
   beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>;
   onChange?: (info: UploadChangeParam) => void;
-  listType?: 'text' | 'picture' | 'picture-card';
+  listType?: UploadListType;
   className?: string;
   onStart?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
@@ -75,8 +89,15 @@ export interface UploadProps {
   previewFile?: PreviewFileHandler;
   withCredentials?: boolean;
   locale?: UploadLocale;
-  requestFileKeys?: string[]|string;
+  requestFileKeys?: string[] | string;
   showFileSize?: boolean;
+  overwriteDefaultEvent?: boolean;
+  downloadPropsIntercept?: Function;
+  fileInputClick?: (el: Element) => void;
+  onReUpload?: (file: UploadFile) => void | boolean;
+  renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
+  tooltipPrefixCls?: string;
+  popconfirmProps?: PopconfirmProps;
 }
 
 export interface UploadState {
@@ -84,9 +105,12 @@ export interface UploadState {
   dragState: string;
 }
 
+export type UploadListIconFunc = (file: UploadFile) => boolean;
+
 type PreviewFileHandler = (file: File | Blob) => PromiseLike<string>;
+
 export interface UploadListProps {
-  listType?: 'text' | 'picture' | 'picture-card';
+  listType?: UploadListType;
   onPreview?: (file: UploadFile) => void;
   onRemove?: (file: UploadFile) => void | boolean;
   onDragEnd: (files: UploadFile[]) => void | boolean;
@@ -95,8 +119,19 @@ export interface UploadListProps {
   prefixCls?: string;
   showRemoveIcon?: boolean;
   dragUploadList?: boolean;
-  showPreviewIcon?: boolean;
+  showPreviewIcon?: boolean | UploadListIconFunc;
+  showDownloadIcon?: boolean | UploadListIconFunc;
+  downloadPropsIntercept?: Function;
+  removePopConfirmTitle?: string;
+  showReUploadIcon?: boolean | UploadListIconFunc;
+  reUploadText?: string;
+  reUploadPopConfirmTitle?: string;
+  onReUpload?: (file: UploadFile) => void | boolean;
+  getCustomFilenameTitle?: (file: UploadFile) => string;
   locale: UploadLocale;
   previewFile?: PreviewFileHandler;
   showFileSize?: boolean;
+  renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
+  tooltipPrefixCls?: string;
+  popconfirmProps?: PopconfirmProps;
 }

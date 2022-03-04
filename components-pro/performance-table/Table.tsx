@@ -498,7 +498,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return null;
   }
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

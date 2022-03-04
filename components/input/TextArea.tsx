@@ -1,8 +1,19 @@
-import React, { ChangeEvent, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode, TextareaHTMLAttributes } from 'react';
+import React, {
+  ChangeEvent,
+  Component,
+  CSSProperties,
+  FocusEvent,
+  KeyboardEvent,
+  ReactNode,
+  TextareaHTMLAttributes,
+} from 'react';
+import { findDOMNode } from 'react-dom';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
+import ResizeObserver from 'resize-observer-polyfill';
 import { AbstractInputProps } from './Input';
 import calculateNodeHeight from './calculateNodeHeight';
+import { InnerRowCtx } from '../rc-components/table/TableRowContext';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function onNextFrame(cb: () => void) {
@@ -25,9 +36,8 @@ export interface AutoSizeType {
   maxRows?: number;
 }
 
-export interface TextAreaProps extends AbstractInputProps {
+export interface TextAreaProps extends AbstractInputProps<HTMLTextAreaElement> {
   autosize?: boolean | AutoSizeType;
-  onPressEnter?: FormEventHandler<any>;
   autoFocus?: boolean;
   border?: boolean;
 }
@@ -38,18 +48,19 @@ export interface TextAreaState {
   focused?: boolean;
 }
 
-export type HTMLTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
+export type HTMLTextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'prefix'>;
 
 export default class TextArea extends Component<TextAreaProps & HTMLTextareaProps, TextAreaState> {
   static displayName = 'TextArea';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
   static defaultProps = {
     showLengthInfo: true,
     border: true,
+    labelLayout: 'float',
   };
 
   context: ConfigContextValue;
@@ -63,6 +74,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   };
 
   private textAreaRef: HTMLTextAreaElement;
+
+  private resizeObserver?: ResizeObserver;
 
   componentDidMount() {
     this.resizeTextarea();
@@ -83,7 +96,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     // Re-render with the new content then recalculate the height as required.
 
     if (this.textAreaRef.value !== nextProps.value) {
-      const inputLength = nextProps.value && nextProps.value.length;
+      const inputLength = nextProps.value && String(nextProps.value).length;
       this.setState({
         inputLength: inputLength || 0,
       });
@@ -100,6 +113,13 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
         clearNextFrameAction(this.nextFrameActionId);
       }
       this.nextFrameActionId = onNextFrame(this.resizeTextarea);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      delete this.resizeObserver;
     }
   }
 
@@ -129,9 +149,11 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   }
 
   getTextAreaClassName() {
-    const { className } = this.props;
+    const { className, disabled } = this.props;
     const prefixCls = this.getPrefixCls();
-    return classNames(prefixCls, `${prefixCls}-textarea-element`, className);
+    return classNames(prefixCls, className, `${prefixCls}-textarea-element`, {
+      [`${prefixCls}-disabled`]: disabled,
+    });
   }
 
   handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -146,7 +168,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     const { onPressEnter, onKeyDown } = this.props;
-    if (e.keyCode === 13 && onPressEnter) {
+    if (e.keyCode === 13 && typeof onPressEnter === 'function') {
       onPressEnter(e);
     }
     if (onKeyDown) {
@@ -165,7 +187,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
   };
 
   getWrapperClassName() {
-    const { disabled, label, border } = this.props;
+    const { disabled, label, border, labelLayout } = this.props;
     const { inputLength, focused } = this.state;
     const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-wrapper`, `${prefixCls}-textarea`, {
@@ -173,7 +195,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
       [`${prefixCls}-focused`]: focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
-      [`${prefixCls}-has-border`]: border,
+      [`${prefixCls}-has-border`]: border && labelLayout === 'float',
     });
   }
 
@@ -197,20 +219,21 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     }
   };
 
-  getLengthInfo() {
+  getLengthInfo(prefixCls) {
     const { maxLength, showLengthInfo } = this.props;
-    const prefixCls = this.getPrefixCls();
     const { inputLength } = this.state;
-    return (maxLength && showLengthInfo) ||
-      (maxLength && maxLength > 0 && inputLength === maxLength) ? (
-        <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-      ) : null;
+    return showLengthInfo !== 'never' && ((maxLength && showLengthInfo) || (maxLength && maxLength > 0 && inputLength === maxLength)) ? (
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    ) : null;
   }
 
   getLabel() {
     const { placeholder, label } = this.props;
     const { inputLength, focused } = this.state;
-    if (inputLength === 0 && !focused && placeholder) {
+    if (inputLength === 0 && placeholder) {
+      if (focused) {
+        return label || placeholder;
+      }
       return placeholder;
     }
     return label;
@@ -244,31 +267,54 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
       ...props.style,
       ...textareaStyles,
     };
+    const hasBorder = props.border && props.labelLayout === 'float';
 
     // Make sure it could be reset when using form.getFieldDecorator
     if ('value' in otherProps) {
       otherProps.value = otherProps.value || '';
     }
     otherProps.onInput = this.handleInput;
-
     return (
-      <span className={this.getWrapperClassName()}>
-        <div className={`${prefixCls}-rendered-wrapper`}>
-          <textarea
-            {...otherProps}
-            className={this.getTextAreaClassName()}
-            style={style}
-            onKeyDown={this.handleKeyDown}
-            onChange={this.handleTextareaChange}
-            ref={this.saveTextAreaRef}
-            onInput={this.handleInput}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-          />
-          {this.renderFloatLabel()}
-        </div>
-        {this.getLengthInfo()}
-      </span>
+      <InnerRowCtx.Consumer>
+        {(options) => {
+          if (options && !this.resizeObserver && this.textAreaRef) {
+            this.resizeObserver = new ResizeObserver(options.syncRowHeight);
+            const dom = findDOMNode(this.textAreaRef);
+            // eslint-disable-next-line no-unused-expressions
+            dom && this.resizeObserver.observe(dom as Element);
+          }
+
+          const textarea = (
+            <textarea
+              {...otherProps}
+              className={this.getTextAreaClassName()}
+              style={style}
+              onKeyDown={this.handleKeyDown}
+              onChange={this.handleTextareaChange}
+              ref={this.saveTextAreaRef}
+              onInput={this.handleInput}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
+            />
+          );
+
+          const labeledTextArea = hasBorder ? (
+            <div className={`${prefixCls}-rendered-wrapper`}>
+              {textarea}
+              {this.renderFloatLabel()}
+            </div>
+          ) : textarea;
+
+          const lengthInfo = this.getLengthInfo(prefixCls);
+
+          return lengthInfo || hasBorder ? (
+            <span className={this.getWrapperClassName()}>
+              {labeledTextArea}
+              {lengthInfo}
+            </span>
+          ) : labeledTextArea;
+        }}
+      </InnerRowCtx.Consumer>
     );
   }
 }

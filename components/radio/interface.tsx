@@ -3,6 +3,8 @@ import { Size } from '../_util/enum';
 import { AbstractCheckboxGroupProps } from '../checkbox/Group';
 import { AbstractCheckboxProps } from '../checkbox/Checkbox';
 
+export type RadioGroupButtonStyle = 'outline' | 'solid';
+
 export interface RadioGroupProps extends AbstractCheckboxGroupProps {
   defaultValue?: any;
   value?: any;
@@ -14,6 +16,7 @@ export interface RadioGroupProps extends AbstractCheckboxGroupProps {
   children?: ReactNode;
   id?: string;
   label?: string;
+  buttonStyle?: RadioGroupButtonStyle;
 }
 
 export interface RadioGroupState {

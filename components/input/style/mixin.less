@@ -14,6 +14,7 @@
   height: @input-height-sm;
   padding: @input-padding-vertical-sm @input-padding-horizontal-sm;
 }
+
 // input status
 // == when focus or actived
 .active(@color: @input-focus-border-color) {
@@ -95,6 +96,7 @@
     background: none;
     border: none;
     cursor: pointer;
+
     &-copy {
       display: inline-block;
     }
@@ -214,33 +216,42 @@
 }
 
 .border() {
-  &-has-border&-wrapper::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    border: @border-width-base @border-style-base @input-border-color;
-    border-radius: 0.04rem;
-    content: ' ';
+  &-has-border {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      border: @border-width-base @border-style-base @input-border-color;
+      border-radius: 0.04rem;
+      content: ' ';
+    }
   }
 
-  &-has-border&-wrapper:hover::before {
+  &-has-border:hover::before {
     border-color: @input-color;
   }
 
-  &-has-border&-focused&-wrapper::before,
+  &-focused &-has-border::before,
+  &-focused&-has-border::before,
   .has-error &-wrapper::before {
     border-width: 0.02rem;
   }
-  &-has-border&-focused&-wrapper::before {
+  &-focused &-has-border::before,
+  &-focused&-has-border::before {
     border-color: @primary-color;
   }
-  .has-error &-has-border&-wrapper::before {
+  .has-error &-has-border::before {
     border-color: @error-color;
   }
-  &-has-border&-disabled::before {
+  &-disabled &-has-border::before,
+  &-disabled&-has-border::before {
     border-color: @input-border-color !important;
     border-style: dashed;
   }
@@ -254,6 +265,7 @@
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
+
     .is-required &::after {
       display: inline-block;
       width: 0.08rem;
@@ -264,6 +276,7 @@
       line-height: 1;
       content: '*';
     }
+
     &-wrapper {
       position: absolute;
       top: 0;
@@ -277,14 +290,14 @@
     }
   }
 
-  &-rendered-lg &-label{
+  &-rendered-lg &-label {
     font-size: @font-size-lg;
     line-height: @input-height-lg;
   }
 
-  &-rendered-sm &-label{
-    font-size: @font-size-sm ;
-    line-height: @input-height-sm  ;
+  &-rendered-sm &-label {
+    font-size: @font-size-sm;
+    line-height: @input-height-sm;
   }
 
   &-has-prefix &-label-wrapper {
@@ -296,6 +309,7 @@
     transform: scaleX(0.8);
   }
   &:-webkit-autofill + &-label-wrapper {
+    z-index: 1;
     border-top-color: @component-background;
     transform: scaleX(0.8);
   }
@@ -346,15 +360,15 @@
     transform: scaleX(1);
     opacity: 1;
     transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
-      border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 }
 
 // label input
 .input-group(@inputClass) {
   position: relative;
-  display: inline-block;
+  display: table;
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
@@ -368,6 +382,7 @@
 
   > [class*='col-'] {
     padding-right: 0.08rem;
+
     &:last-child {
       padding-right: 0;
     }
@@ -376,7 +391,7 @@
   &-addon,
   &-wrap,
   > .@{inputClass} {
-    display: inline-block;
+    display: table-cell;
 
     &:not(:first-child):not(:last-child) {
       border-radius: 0;
@@ -397,6 +412,7 @@
   .@{inputClass} {
     width: 100%;
     margin-bottom: 0;
+
     &:focus {
       z-index: 1; // Fix https://gw.alipayobjects.com/zos/rmsportal/DHNpoqfMXSfrSnlZvhsJ.png
     }
@@ -404,13 +420,14 @@
 
   &-addon {
     position: relative;
+    padding: 0 .1rem;
     color: @input-color;
     font-weight: normal;
     font-size: @font-size-base;
     line-height: 1;
     text-align: center;
     background-color: @input-addon-bg;
-    border: @border-width-base @border-style-base @input-baseline-color;
+    border: @border-width-base @border-style-base @input-border-color;
     border-radius: @border-radius-base;
     transition: all @animation-duration-slow;
 
@@ -430,6 +447,10 @@
         .@{c7n-prefix}-select-selection {
           color: @primary-color;
         }
+      }
+
+      &-has-border.@{c7n-prefix}-select::before {
+        display: none;
       }
     }
 
@@ -467,6 +488,18 @@
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
+  }
+
+  > .@{inputClass}-has-border:not(:first-child)::before,
+  > *:not(:first-child) .@{inputClass}-has-border::before {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  > .@{inputClass}-has-border:not(:last-child)::before,
+  > *:not(:last-child) .@{inputClass}-has-border::before {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &-addon:first-child {
@@ -515,26 +548,31 @@
     display: block;
     white-space: nowrap;
     .clearfix;
+
     .@{c7n-prefix}-input-has-border::before,
     .@{c7n-prefix}-select-has-border::before {
       border-style: @border-style-base;
     }
+
     > * {
       display: inline-block;
       float: none;
       vertical-align: top;
+
       &:not(:first-child) {
         .@{c7n-prefix}-input-has-border,
         .@{c7n-prefix}-select-has-border,
         &.@{c7n-prefix}-input-has-border,
         &.@{c7n-prefix}-select-has-border {
           margin-left: -0.01rem;
+
           &::before {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
           }
         }
       }
+
       &:not(:last-child) {
         .@{c7n-prefix}-input-has-border::before,
         .@{c7n-prefix}-select-has-border::before,
@@ -571,23 +609,7 @@
     position: absolute;
     top: 50%;
     z-index: 2;
-    color: @input-color;
     line-height: 0;
     transform: translateY(-50%);
-    :not(.anticon) {
-      line-height: @line-height-base;
-    }
-  }
-
-  .@{inputClass}-suffix {
-    right: @input-padding-horizontal-base + 0.01rem;
-  }
-
-  .@{inputClass}:not(:first-child) {
-    padding-left: @input-padding-horizontal-base + @input-affix-width;
-  }
-
-  .@{inputClass}:not(:last-child) {
-    padding-right: @input-padding-horizontal-base + @input-affix-width;
   }
 }

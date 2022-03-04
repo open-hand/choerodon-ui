@@ -1,19 +1,27 @@
-import React, { Children, Component, CSSProperties, ReactElement, ReactNode } from 'react';
+import React, { isValidElement, cloneElement, Children, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
+import flatMap from 'lodash/flatMap';
 import classNames from 'classnames';
-import { ColProps } from '../grid/col';
+import Col, { ColProps } from '../grid/col';
 import warning from '../_util/warning';
 import { FIELD_DATA_PROP, FIELD_META_PROP } from './constants';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
 import Animate from '../animate';
+import Row from '../grid/row';
 import { FormItemValidateStatus } from './enum';
 import FormContext, { FormContextValue } from './FormContext';
 
+function intersperse(arr: Array<any>, inter: any) {
+  return flatMap(arr, (a, i) => i ? [inter, a] : [a]);
+}
+
 export interface FormItemProps {
   prefixCls?: string;
+  rowPrefixCls?: string;
   className?: string;
   id?: string;
   label?: ReactNode;
+  labelCol?: ColProps;
   wrapperCol?: ColProps;
   help?: ReactNode;
   extra?: ReactNode;
@@ -22,6 +30,8 @@ export interface FormItemProps {
   required?: boolean;
   style?: CSSProperties;
   colon?: boolean;
+  labelLayout?: 'float' | 'none' | 'horizontal';
+  helpTransitionName?: string;
 }
 
 export default class FormItem extends Component<FormItemProps, any> {
@@ -30,22 +40,25 @@ export default class FormItem extends Component<FormItemProps, any> {
   static defaultProps = {
     hasFeedback: false,
     colon: true,
+    labelLayout: 'float',
   };
 
-  static get contextType() {
+  static __FORM_ITEM = true;
+
+  static get contextType(): typeof FormContext {
     return FormContext;
   }
 
   context: FormContextValue;
 
-  state = { helpShow: false };
+  helpShow = false;
 
   componentDidMount() {
     const { children } = this.props;
     warning(
       this.getControls(children, true).length <= 1,
       '`Form.Item` cannot generate `validateStatus` and `help` automatically, ' +
-        'while there are more than one `getFieldDecorator` in it.',
+      'while there are more than one `getFieldDecorator` in it.',
     );
   }
 
@@ -54,14 +67,20 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   getHelpMsg() {
-    const props = this.props;
-    const onlyControl = this.getOnlyControl();
-    if (props.help === undefined && onlyControl) {
+    const { help } = this.props;
+    if (help === undefined && this.getOnlyControl()) {
       const errors = this.getField().errors;
-      return errors ? errors.map((e: any) => e.message).join(', ') : '';
+      if (errors) {
+        return intersperse(errors.map((e: any, index: number) => (
+          isValidElement(e.message)
+            ? cloneElement(e.message, { key: index })
+            : e.message
+        )), ' ');
+      }
+      return '';
     }
 
-    return props.help;
+    return help;
   }
 
   getControls(children: ReactNode, recursively: boolean) {
@@ -75,7 +94,7 @@ export default class FormItem extends Component<FormItemProps, any> {
       const child = childrenArray[i] as ReactElement<any>;
       if (
         child.type &&
-        ((child.type as any) === FormItem || (child.type as any).displayName === 'FormItem')
+        ((child.type as any) === FormItem || (child.type as any).displayName === 'FormItem' || (child.type as any).__FORM_ITEM)
       ) {
         continue;
       }
@@ -122,23 +141,30 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   onHelpAnimEnd = (_key: string, helpShow: boolean) => {
-    this.setState({ helpShow });
+    this.helpShow = helpShow;
+    if (!helpShow) {
+      this.setState({});
+    }
   };
 
   renderHelp() {
+    const { helpTransitionName = 'show-error' } = this.props;
     const prefixCls = this.getPrefixCls();
     const help = this.getHelpMsg();
     const children = help ? (
-      <div className={`${prefixCls}-explain`} key="error">
+      <div className={`${prefixCls}-explain`} key="help">
         {help}
       </div>
     ) : null;
+    if (children) {
+      this.helpShow = !!children;
+    }
     return (
       <Animate
-        transitionName="show-error"
+        transitionName={helpTransitionName}
         component=""
         transitionAppear
-        key="error"
+        key="help"
         onEnd={this.onHelpAnimEnd}
       >
         {children}
@@ -188,6 +214,13 @@ export default class FormItem extends Component<FormItemProps, any> {
         'is-validating': validateStatus === FormItemValidateStatus.validating,
       });
     }
+
+    // 必输字段,输入框加黄色背景, 解决表格行内编辑,没有label的情况下没有提示必输标示的问题
+    const required = this.isRequired();
+    if (required) {
+      classes = classNames(classes, [`${prefixCls}-item-required`]);
+    }
+
     return (
       <div className={classes}>
         <span className={`${prefixCls}-item-children`}>{c1}</span>
@@ -198,17 +231,22 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   renderWrapper(children: ReactNode) {
-    const { wrapperCol } = this.props;
+    const { wrapperCol, labelLayout } = this.props;
     const prefixCls = this.getPrefixCls();
     const required = this.isRequired();
+    const isHorizontal = labelLayout === 'horizontal';
     const className = classNames(
       `${prefixCls}-item-control-wrapper`,
       wrapperCol && wrapperCol.className,
       {
-        'is-required': required,
+        'is-required': isHorizontal ? undefined : required,
       },
     );
-    return (
+    return isHorizontal ? (
+      <Col {...wrapperCol} className={className} key="wrapper">
+        {children}
+      </Col>
+    ) : (
       <div className={className} key="wrapper">
         {children}
       </div>
@@ -257,10 +295,45 @@ export default class FormItem extends Component<FormItemProps, any> {
     }
   };
 
+  renderLabel() {
+    const { prefixCls, label, labelCol, colon, id } = this.props;
+    const context = this.context;
+    const required = this.isRequired();
+
+    const labelColClassName = classNames(
+      `${prefixCls}-item-label`,
+      labelCol && labelCol.className,
+    );
+    const labelClassName = classNames({
+      [`${prefixCls}-item-required`]: required,
+    });
+
+    let labelChildren = label;
+    // Keep label is original where there should have no colon
+    const haveColon = colon && !context.vertical;
+    // Remove duplicated user input colon
+    if (haveColon && typeof label === 'string' && (label as string).trim() !== '') {
+      labelChildren = (label as string).replace(/[：|:]\s*$/, '');
+    }
+
+    return label ? (
+      <Col {...labelCol} className={labelColClassName} key="label">
+        <label
+          htmlFor={id || this.getId()}
+          className={labelClassName}
+          title={typeof label === 'string' ? label : ''}
+          onClick={this.onLabelClick}
+        >
+          {labelChildren}
+        </label>
+      </Col>
+    ) : null;
+  }
+
   renderChildren() {
-    const { children } = this.props;
+    const { children, labelLayout } = this.props;
     return [
-      // this.renderLabel(),
+      labelLayout === 'horizontal' && this.renderLabel(),
       this.renderWrapper(
         this.renderValidateWrapper(children, this.renderHelp(), this.renderExtra()),
       ),
@@ -269,17 +342,20 @@ export default class FormItem extends Component<FormItemProps, any> {
 
   renderFormItem(children: ReactNode) {
     const props = this.props;
-    const { helpShow } = this.state;
     const prefixCls = this.getPrefixCls();
     const style = props.style;
     const itemClassName = {
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-with-help`]: !!this.getHelpMsg() || helpShow,
+      [`${prefixCls}-item-with-help`]: this.helpShow,
       [`${prefixCls}-item-no-colon`]: !props.colon,
       [`${props.className}`]: !!props.className,
     };
 
-    return (
+    return props.labelLayout === 'horizontal' ? (
+      <Row prefixCls={props.rowPrefixCls} className={classNames(itemClassName)} style={style}>
+        {children}
+      </Row>
+    ) : (
       <div className={classNames(itemClassName)} style={style}>
         {children}
       </div>

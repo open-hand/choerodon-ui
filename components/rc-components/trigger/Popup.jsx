@@ -73,8 +73,18 @@ class Popup extends Component {
     return ReactDOM.findDOMNode(this.popupInstance);
   }
 
-  getTarget = () => {
+  getTargetElement = () => {
     return this.props.getRootDomNode();
+  };
+
+  // `target` on `rc-align` can accept as a function to get the bind element or a point.
+  // ref: https://www.npmjs.com/package/rc-align
+  getAlignTarget = () => {
+    const { point } = this.props;
+    if (point) {
+      return point;
+    }
+    return this.getTargetElement;
   };
 
   getMaskTransitionName() {
@@ -102,6 +112,7 @@ class Popup extends Component {
 
   renderPopupInner = (innerRef) => {
     const { savePopupRef } = this;
+    const { stretchChecked, targetHeight, targetWidth } = this.state;
     const {
       align,
       prefixCls, style, getClassNameFromAlign,
@@ -126,8 +137,12 @@ class Popup extends Component {
           sizeStyle.minWidth = targetWidth;
         }
       } else {
-        // Do nothing when stretch not ready
-        return null;
+        sizeStyle.visibility = 'hidden';
+        setTimeout(() => {
+          if (this.alignInstance) {
+            this.alignInstance.forceAlign();
+          }
+        }, 0);
       }
     }
     const newStyle = {
@@ -182,7 +197,7 @@ class Popup extends Component {
         >
           {visible ? (
             <Align
-              target={this.getTarget}
+              target={this.getAlignTarget()}
               key="popup"
               ref={this.saveAlignRef}
               monitorWindowResize
@@ -206,13 +221,12 @@ class Popup extends Component {
         hiddenProp="hidden"
       >
         <Align
-          target={this.getTarget}
+          target={this.getAlignTarget()}
           key="popup"
           ref={this.saveAlignRef}
           monitorWindowResize
-          hidden={!visible}
           childrenProps={{ hidden: 'hidden' }}
-          disabled={!visible}
+          hidden={!visible}
           align={align}
           onAlign={this.onAlign}
         >

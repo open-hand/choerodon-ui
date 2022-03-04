@@ -5,7 +5,7 @@ import TableContext from './TableContext';
 
 export default function FootTable(props) {
   const table = useContext(TableContext);
-  const { prefixCls, scroll } = table.props;
+  const { prefixCls, scroll, showHeader } = table.props;
   const { columns, fixed, tableClassName, handleBodyScrollLeft, expander } = props;
   const { saveRef, columnManager } = table;
   let { useFixedHeader } = table.props;
@@ -21,7 +21,7 @@ export default function FootTable(props) {
     }
   }
 
-  if (!useFixedHeader || !columnManager.hasFooter()) {
+  if (!useFixedHeader || !showHeader || !columnManager.hasFooter()) {
     return null;
   }
 

@@ -47,7 +47,7 @@ export interface SliderState {
 }
 
 export default class Slider extends Component<SliderProps, SliderState> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -80,9 +80,7 @@ export default class Slider extends Component<SliderProps, SliderState> {
   };
 
   handleWithTooltip: HandleGeneratorFn = ({ value, dragging, index, ...restProps }) => {
-    const { tooltipPrefixCls: customizeTooltipPrefixCls, tipFormatter } = this.props;
-    const { getPrefixCls } = this.context;
-    const tooltipPrefixCls = getPrefixCls('tooltip', customizeTooltipPrefixCls);
+    const { tooltipPrefixCls, tipFormatter } = this.props;
     const { visibles } = this.state;
     const visible = tipFormatter ? visibles[index] || dragging : false;
     return (

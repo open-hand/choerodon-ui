@@ -8,16 +8,14 @@ export interface TimeLineItemProps {
   color?: string;
   dot?: ReactNode;
   pending?: boolean;
-  last?: boolean;
   style?: CSSProperties;
 }
 
-const TimelineItem: FunctionComponent<TimeLineItemProps> = props => {
+const TimelineItem: FunctionComponent<TimeLineItemProps> = function TimelineItem(props) {
   const {
     prefixCls: customizePrefixCls,
     className,
     color = '',
-    last,
     children,
     pending,
     dot,
@@ -29,7 +27,6 @@ const TimelineItem: FunctionComponent<TimeLineItemProps> = props => {
   const itemClassName = classNames(
     {
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-last`]: last,
       [`${prefixCls}-item-pending`]: pending,
     },
     className,
@@ -59,7 +56,6 @@ TimelineItem.displayName = 'TimelineItem';
 
 TimelineItem.defaultProps = {
   color: 'blue',
-  last: false,
   pending: false,
 };
 

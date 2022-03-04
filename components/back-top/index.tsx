@@ -24,7 +24,7 @@ export interface BackTopProps {
 export default class BackTop extends PureComponent<BackTopProps, any> {
   static displayName = 'BackTop';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -61,6 +61,17 @@ export default class BackTop extends PureComponent<BackTopProps, any> {
       onClick(e);
     }
   };
+
+  setScrollTop(value: number) {
+    const { target = getDefaultTarget } = this.props;
+    const targetNode = target();
+    if (targetNode === window) {
+      document.body.scrollTop = value;
+      document.documentElement.scrollTop = value;
+    } else {
+      (targetNode as HTMLElement).scrollTop = value;
+    }
+  }
 
   handleScroll = () => {
     const { visibilityHeight, target = getDefaultTarget } = this.props;

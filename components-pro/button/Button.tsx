@@ -87,7 +87,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   // eslint-disable-next-line camelcase
   static __PRO_BUTTON = true;
 
-  static get contextType() {
+  static get contextType(): typeof FormContext {
     return FormContext;
   }
 

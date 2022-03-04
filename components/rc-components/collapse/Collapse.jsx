@@ -103,6 +103,7 @@ export default class Collapse extends Component {
         prefixCls,
         destroyInactivePanel,
         openAnimation: this.state.openAnimation,
+        accordion,
         children: child.props.children,
         onItemClick: disabled ? null : () => this.onClickItem(key),
         expandIcon,

@@ -1,4 +1,4 @@
-import { computed, observable, runInAction } from 'mobx';
+import { observable, runInAction } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import DataSet from './DataSet';
 
@@ -45,7 +45,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get create(): TransportType | undefined {
     return this.props.create;
   }
@@ -56,7 +55,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get read(): TransportType | undefined {
     return this.props.read || this.dataSet.queryUrl;
   }
@@ -67,7 +65,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get update(): TransportType | undefined {
     return this.props.update;
   }
@@ -78,7 +75,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get destroy(): TransportType | undefined {
     return this.props.destroy;
   }
@@ -89,7 +85,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get validate(): TransportType | undefined {
     return this.props.validate || this.dataSet.validateUrl;
   }
@@ -100,7 +95,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get submit(): TransportType | undefined {
     return this.props.submit || this.dataSet.submitUrl;
   }
@@ -111,7 +105,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get exports(): TransportType | undefined {
     return this.props.exports || this.dataSet.exportUrl;
   }
@@ -122,7 +115,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get tls(): TransportType | undefined {
     return this.props.tls || this.dataSet.tlsUrl;
   }
@@ -133,7 +125,6 @@ export default class Transport {
     });
   }
 
-  @computed
   get adapter(): TransportAdapter | undefined {
     return this.props.adapter;
   }

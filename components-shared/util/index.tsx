@@ -30,15 +30,18 @@ export function findIFrame(self: Window): HTMLIFrameElement | undefined {
 
 export { MousePosition };
 
-function getPageMousePosition(x, y, self: Window): MousePosition {
-  const { scrollTop, scrollLeft } = self.document.documentElement;
-  return { x: x + scrollLeft, y: y + scrollTop };
+function getPageMousePosition(x, y, self: Window, client?: boolean): MousePosition {
+  const { scrollTop, scrollLeft, clientWidth, clientHeight } = self.document.documentElement;
+  if (client) {
+    return { x, y, vw: clientWidth, vh: clientHeight };
+  }
+  return { x: x + scrollLeft, y: y + scrollTop, vw: clientWidth, vh: clientHeight };
 }
 
 export function getMousePosition(x: number, y: number, self: Window, client?: boolean): MousePosition {
   try {
     if (self.top === self) {
-      return client ? { x, y } : getPageMousePosition(x, y, self);
+      return getPageMousePosition(x, y, self, client);
     }
     const { parent } = self;
     const iframe = findIFrame(self);
@@ -46,11 +49,11 @@ export function getMousePosition(x: number, y: number, self: Window, client?: bo
     const newX = x + left;
     const newY = y + top;
     if (parent === self.top) {
-      return client ? { x: newX, y: newY } : getPageMousePosition(newX, newY, parent);
+      return getPageMousePosition(newX, newY, parent, client);
     }
     return getMousePosition(newX, newY, parent);
   } catch (e) {
-    return client ? { x, y } : getPageMousePosition(x, y, self);
+    return getPageMousePosition(x, y, self, client);
   }
 }
 

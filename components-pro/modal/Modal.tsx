@@ -118,7 +118,6 @@ export default class Modal extends ViewComponent<ModalProps> {
   static defaultProps = {
     suffixCls,
     closable: false,
-    movable: true,
     mask: true,
     okButton: true,
     okCancel: true,
@@ -725,7 +724,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   getWrappedHeader(header: ReactNode): ReactNode {
     const {
       prefixCls,
-      props: { title, closable, movable, fullScreen, drawer },
+      props: { title, closable, movable  = this.getContextConfig('modalMovable'), fullScreen, drawer },
     } = this;
     if (title || closable || movable || header) {
       const headerProps: any = {

@@ -43,7 +43,7 @@ export interface VerifyTypeObjProps {
 
 @observer
 export default class SecretFieldView extends Component<SecretFieldViewProps> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

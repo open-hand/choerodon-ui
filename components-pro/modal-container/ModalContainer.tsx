@@ -111,7 +111,7 @@ export interface ModalContainerProps {
 
 @observer
 export default class ModalContainer extends Component<ModalContainerProps> implements IModalContainer {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

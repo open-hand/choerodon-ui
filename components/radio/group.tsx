@@ -1,8 +1,8 @@
 import React, { Children, Component, ReactNode } from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'lodash/isEqual';
+import shallowEqual from 'shallowequal';
 import Radio from './radio';
-import { RadioChangeEvent, RadioGroupProps, RadioGroupState } from './interface';
+import { RadioChangeEvent, RadioGroupButtonStyle, RadioGroupProps, RadioGroupState } from './interface';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { RadioContextProvider } from './RadioContext';
 
@@ -21,12 +21,13 @@ function getCheckedValue(children: ReactNode) {
 export default class RadioGroup extends Component<RadioGroupProps, RadioGroupState> {
   static displayName = 'RadioGroup';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
   static defaultProps = {
     disabled: false,
+    buttonStyle: 'outline' as RadioGroupButtonStyle,
   };
 
   context: ConfigContextValue;
@@ -96,24 +97,20 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
 
   render() {
     const { props } = this;
-    const { prefixCls: customizePrefixCls, className = '', options, size, label, disabled } = props;
+    const { prefixCls: customizePrefixCls, className = '', options, buttonStyle, size, label, disabled } = props;
     const { value } = this.state;
     const { getPrefixCls } = this.context;
-    const prefixCls = getPrefixCls('radio-group', customizePrefixCls);
+    const prefixCls = getPrefixCls('radio', customizePrefixCls);
+    const groupPrefixCls = `${prefixCls}-group`;
     const classString = classNames(
-      prefixCls,
+      groupPrefixCls,
+      `${groupPrefixCls}-${buttonStyle}`,
       {
-        [`${prefixCls}-${size}`]: size,
+        [`${groupPrefixCls}-${size}`]: size,
       },
       className,
     );
-    const wrapperClassString = classNames({
-      [`${prefixCls}-wrapper`]: true,
-      [`${prefixCls}-has-label`]: label,
-    });
-    const labelClassString = classNames(`${prefixCls}-label`, {
-      'label-disabled': disabled,
-    });
+
     let { children } = props;
 
     // 如果存在 options, 优先使用
@@ -124,8 +121,10 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
           return (
             <Radio
               key={String(index)}
+              prefixCls={prefixCls}
               disabled={disabled}
               value={option}
+              onChange={this.onRadioChange}
               checked={value === option}
             >
               {option}
@@ -136,8 +135,10 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
         return (
           <Radio
             key={String(index)}
+            prefixCls={prefixCls}
             disabled={option.disabled || disabled}
             value={option.value}
+            onChange={this.onRadioChange}
             checked={value === option.value}
           >
             {option.label}
@@ -146,21 +147,34 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
       });
     }
 
-    return (
-      <div className={wrapperClassString}>
-        {props.label ? <span className={labelClassString}>{props.label}</span> : null}
-        <div
-          className={classString}
-          style={props.style}
-          onMouseEnter={props.onMouseEnter}
-          onMouseLeave={props.onMouseLeave}
-          id={props.id}
-        >
-          <RadioContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
-            {children}
-          </RadioContextProvider>
-        </div>
+    const group = (
+      <div
+        className={classString}
+        style={props.style}
+        onMouseEnter={props.onMouseEnter}
+        onMouseLeave={props.onMouseLeave}
+        id={props.id}
+      >
+        <RadioContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
+          {children}
+        </RadioContextProvider>
       </div>
     );
+    if (label) {
+      const wrapperClassString = classNames({
+        [`${groupPrefixCls}-wrapper`]: true,
+        [`${groupPrefixCls}-has-label`]: label,
+      });
+      const labelClassString = classNames(`${groupPrefixCls}-label`, {
+        'label-disabled': disabled,
+      });
+      return (
+        <div className={wrapperClassString}>
+          <span className={labelClassString}>{label}</span>
+          {group}
+        </div>
+      );
+    }
+    return group;
   }
 }

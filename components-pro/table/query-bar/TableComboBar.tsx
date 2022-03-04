@@ -17,7 +17,7 @@ import Field from '../../data-set/Field';
 import Record from '../../data-set/Record';
 import autobind from '../../_util/autobind';
 
-export interface ComboBarProps extends TableQueryBarBaseProps, FilterBarProps { 
+export interface ComboBarProps extends TableQueryBarBaseProps, FilterBarProps {
   title?: string | ReactNode;
   fold?: Boolean;
   searchable?: Boolean;
@@ -27,7 +27,7 @@ export interface ComboBarProps extends TableQueryBarBaseProps, FilterBarProps {
 
 @observer
 export default class TableComboBar extends Component<ComboBarProps, any> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

@@ -15,7 +15,7 @@ export type TableQueryBarHook = (props: TableQueryBarHookCustomProps & TableQuer
 export default class PerformanceTableQueryBar extends Component<TableQueryBarProps> {
   static displayName = 'PerformanceTableQueryBar';
 
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

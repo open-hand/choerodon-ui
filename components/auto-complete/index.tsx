@@ -1,7 +1,7 @@
-import React, { Children, ClassicComponentClass, Component, FormEventHandler, isValidElement, ReactElement } from 'react';
+import React, { Children, ClassicComponentClass, cloneElement, Component, FormEventHandler, isValidElement, ReactElement } from 'react';
 import classNames from 'classnames';
 import Select, { AbstractSelectProps, OptGroupProps, OptionProps, SelectValue } from '../select';
-import Input from '../input';
+import Input, { InputProps } from '../input';
 import InputElement from './InputElement';
 import { OptGroup, Option } from '../rc-components/select';
 import { Size } from '../_util/enum';
@@ -13,7 +13,7 @@ export interface DataSourceItemObject {
   text: string;
 }
 
-export type DataSourceItemType = string | DataSourceItemObject | ReactElement;
+export type DataSourceItemType = string | DataSourceItemObject | ReactElement<OptionProps> | ReactElement<OptGroupProps>;
 
 export interface AutoCompleteInputProps {
   onChange?: FormEventHandler<any>;
@@ -29,10 +29,12 @@ export interface AutoCompleteProps extends AbstractSelectProps {
   value?: SelectValue;
   defaultValue?: SelectValue;
   dataSource?: DataSourceItemType[];
+  backfill?: boolean;
   optionLabelProp?: string;
   onChange?: (value: SelectValue) => void;
   onSelect?: (value: SelectValue, option: Record<string, any>) => any;
   children?: ValidInputElement | ReactElement<OptionProps> | ReactElement<OptionProps>[];
+  inputProps?: InputProps;
 }
 
 function isSelectOptionOrSelectOptGroup(child: any): boolean {
@@ -42,7 +44,7 @@ function isSelectOptionOrSelectOptGroup(child: any): boolean {
 export default class AutoComplete extends Component<AutoCompleteProps, {}> {
   static displayName = 'AutoComplete';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -63,12 +65,12 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
   private select: any;
 
   getInputElement = () => {
-    const { children } = this.props;
+    const { children, inputProps } = this.props;
     const element =
       children && isValidElement(children) && children.type !== Option ? (
-        Children.only(children)
+        cloneElement<any>(Children.only(children), { labelLayout: 'none' })
       ) : (
-        <Input border={false} />
+        <Input {...inputProps} border={false} />
       );
     const elementProps = { ...(element as ReactElement<any>).props };
 

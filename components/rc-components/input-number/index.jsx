@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import isNegativeZero from 'is-negative-zero';
+import KeyCode from '../../_util/KeyCode';
 import InputHandler from './InputHandler';
 import Icon from '../../icon';
-import Input from '../../input';
 import { preventDefault } from '../../_util/EventManager';
 
 function defaultParser(input) {
@@ -29,20 +29,27 @@ const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
 
 const isValidProps = value => value !== undefined && value !== null;
 
+const isEqual = (oldValue, newValue) => newValue === oldValue ||
+  (typeof newValue === 'number' && typeof oldValue === 'number' &&
+    isNaN(newValue) && isNaN(oldValue));
+
 export default class InputNumber extends Component {
   static defaultProps = {
     focusOnUpDown: true,
     useTouch: false,
     prefixCls: 'rc-input-number',
+    max: MAX_SAFE_INTEGER,
     min: -MAX_SAFE_INTEGER,
     step: 1,
     style: {},
     onChange: noop,
     onKeyDown: noop,
+    onPressEnter: noop,
     onFocus: noop,
     onBlur: noop,
     parser: defaultParser,
     required: false,
+    autoComplete: 'off',
   };
 
   constructor(props) {
@@ -54,28 +61,19 @@ export default class InputNumber extends Component {
     } else {
       value = props.defaultValue;
     }
-    value = this.toNumber(value);
-
     this.state = {
-      inputValue: this.toPrecisionAsStep(value),
-      value,
       focused: props.autoFocus,
+    };
+    const validValue = this.getValidValue(this.toNumber(value));
+    this.state = {
+      ...this.state,
+      inputValue: this.toPrecisionAsStep(validValue),
+      value: validValue,
     };
   }
 
   componentDidMount() {
     this.componentDidUpdate();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps) {
-      const value = this.state.focused
-        ? nextProps.value : this.getValidValue(nextProps.value, nextProps.min, nextProps.max);
-      this.setState({
-        value,
-        inputValue: this.inputting ? value : this.toPrecisionAsStep(value),
-      });
-    }
   }
 
   componentWillUpdate() {
@@ -89,7 +87,99 @@ export default class InputNumber extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const { value, onChange, max, min } = this.props;
+    const { focused } = this.state;
+
+    // Don't trigger in componentDidMount
+    if (prevProps) {
+      if (!isEqual(prevProps.value, value) ||
+        !isEqual(prevProps.max, max) ||
+        !isEqual(prevProps.min, min)) {
+        const validValue = focused ? value : this.getValidValue(value);
+        let nextInputValue;
+        if (this.pressingUpOrDown) {
+          nextInputValue = validValue;
+        } else if (this.inputting) {
+          nextInputValue = this.rawInput;
+        } else {
+          nextInputValue = this.toPrecisionAsStep(validValue);
+        }
+        this.setState({ // eslint-disable-line
+          value: validValue,
+          inputValue: nextInputValue,
+        });
+      }
+
+      // Trigger onChange when max or min change
+      // https://github.com/ant-design/ant-design/issues/11574
+      const nextValue = 'value' in this.props ? value : this.state.value;
+      // ref: null < 20 === true
+      // https://github.com/ant-design/ant-design/issues/14277
+      if ('max' in this.props &&
+        prevProps.max !== max &&
+        typeof nextValue === 'number' &&
+        nextValue > max &&
+        onChange) {
+        onChange(max);
+      }
+      if ('min' in this.props &&
+        prevProps.min !== min &&
+        typeof nextValue === 'number' &&
+        nextValue < min &&
+        onChange) {
+        onChange(min);
+      }
+    }
+
+    // Restore cursor
+    try {
+      // Firefox set the input cursor after it get focused.
+      // This caused that if an input didn't init with the selection,
+      // set will cause cursor not correct when first focus.
+      // Safari will focus input if set selection. We need skip this.
+      if (this.cursorStart !== undefined && this.state.focused) {
+        // In most cases, the string after cursor is stable.
+        // We can move the cursor before it
+
+        if (
+          // If not match full str, try to match part of str
+          !this.partRestoreByAfter(this.cursorAfter) && this.state.value !== this.props.value
+        ) {
+          // If not match any of then, let's just keep the position
+          // TODO: Logic should not reach here, need check if happens
+          let pos = this.cursorStart + 1;
+
+          // If not have last string, just position to the end
+          if (!this.cursorAfter) {
+            pos = this.input.value.length;
+          } else if (this.lastKeyCode === KeyCode.BACKSPACE) {
+            pos = this.cursorStart - 1;
+          } else if (this.lastKeyCode === KeyCode.DELETE) {
+            pos = this.cursorStart;
+          }
+          this.fixCaret(pos, pos);
+        } else if (this.currentValue === this.input.value) {
+          // Handle some special key code
+          switch (this.lastKeyCode) {
+            case KeyCode.BACKSPACE:
+              this.fixCaret(this.cursorStart - 1, this.cursorStart - 1);
+              break;
+            case KeyCode.DELETE:
+              this.fixCaret(this.cursorStart + 1, this.cursorStart + 1);
+              break;
+            default:
+            // Do nothing
+          }
+        }
+      }
+    } catch (e) {
+      // Do nothing
+    }
+
+    // Reset last key
+    this.lastKeyCode = null;
+
     // pressingUpOrDown is true means that someone just click up or down button
     if (!this.pressingUpOrDown) {
       return;
@@ -104,8 +194,9 @@ export default class InputNumber extends Component {
       } else {
         this.focus();
       }
-      this.pressingUpOrDown = false;
     }
+
+    this.pressingUpOrDown = false;
   }
 
   componentWillUnmount() {
@@ -113,16 +204,23 @@ export default class InputNumber extends Component {
   }
 
   onKeyDown = (e, ...args) => {
-    if (e.keyCode === 38) {
+    const { onKeyDown, onPressEnter } = this.props;
+
+    if (e.keyCode === KeyCode.UP) {
       const ratio = this.getRatio(e);
       this.up(e, ratio);
       this.stop();
-    } else if (e.keyCode === 40) {
+    } else if (e.keyCode === KeyCode.DOWN) {
       const ratio = this.getRatio(e);
       this.down(e, ratio);
       this.stop();
+    } else if (e.keyCode === KeyCode.ENTER && onPressEnter) {
+      onPressEnter(e);
     }
-    const { onKeyDown } = this.props;
+
+    // Trigger user key down
+    this.recordCursorPosition();
+    this.lastKeyCode = e.keyCode;
     if (onKeyDown) {
       onKeyDown(e, ...args);
     }
@@ -131,18 +229,41 @@ export default class InputNumber extends Component {
   onKeyUp = (e, ...args) => {
     this.stop();
     const { onKeyUp } = this.props;
+
+    this.recordCursorPosition();
+
+    // Trigger user key up
     if (onKeyUp) {
       onKeyUp(e, ...args);
     }
   };
 
   onChange = (e) => {
+    const { onChange, value } = this.props;
+    const { value: stateValue } = this.state;
     if (this.state.focused) {
       this.inputting = true;
     }
-    const input = this.props.parser(this.getValueFromEvent(e));
-    this.setState({ inputValue: input });
-    this.props.onChange(this.toNumberWhenUserInput(input)); // valid number or invalid string
+    // 限制数字输入框只能输入数字
+    let newValue = this.props.parser(this.getValueFromEvent(e));
+    if (isNaN(`${newValue}0`)) newValue = this.rawInput !== undefined ? this.rawInput : stateValue !== undefined ? stateValue : value;
+    this.rawInput = newValue;
+    if (this.composing) {
+      this.setState({ inputValue: this.getValueFromEvent(e) });
+    } else {
+      this.setState({ inputValue: this.rawInput });
+      onChange(this.toNumber(this.rawInput)); // valid number or invalid string
+    }
+  };
+
+  onMouseUp = (...args) => {
+    const { onMouseUp } = this.props;
+
+    this.recordCursorPosition();
+
+    if (onMouseUp) {
+      onMouseUp(...args);
+    }
   };
 
   onFocus = (...args) => {
@@ -158,17 +279,33 @@ export default class InputNumber extends Component {
       focused: false,
     });
     const value = this.getCurrentValidValue(this.state.inputValue);
-    e.persist();  // fix https://github.com/react-component/input-number/issues/51
-    this.setValue(value, () => {
-      this.props.onBlur(e, ...args);
+    e.persist();
+    this.setValue(value, (newValue) => {
+      const { onBlur } = this.props;
+      if (onBlur) {
+        const originValue = this.input.value;
+        const inputValue = this.getInputDisplayValue({ focus: false, value: newValue });
+        this.input.value = inputValue;
+        onBlur(e, ...args);
+        this.input.value = originValue;
+      }
     });
+  };
+
+  onComposition = (e) => {
+    if (e.type === 'compositionstart') {
+      this.composing = true;
+    } else if (e.type === 'compositionend') {
+      this.composing = false;
+      this.onChange(e);
+    }
   };
 
   getCurrentValidValue(value) {
     let val = value;
     if (val === '') {
       val = '';
-    } else if (!this.isNotCompleteNumber(val)) {
+    } else if (!this.isNotCompleteNumber(parseFloat(val, 10))) {
       val = this.getValidValue(val);
     } else {
       val = this.state.value;
@@ -188,7 +325,13 @@ export default class InputNumber extends Component {
 
   getValueFromEvent(e) {
     // optimize for chinese input expierence
-    return e.target.value.trim().replace(/。/g, '.');
+    let value = e.target.value.trim().replace(/。/g, '.');
+
+    if (isValidProps(this.props.decimalSeparator)) {
+      value = value.replace(this.props.decimalSeparator, '.');
+    }
+
+    return value;
   }
 
   getValidValue(value, min = this.props.min, max = this.props.max) {
@@ -207,27 +350,32 @@ export default class InputNumber extends Component {
 
   setValue(v, callback) {
     // trigger onChange
-    const newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? undefined : parseFloat(v, 10);
-    const changed = newValue !== this.state.value ||
-      `${newValue}` !== `${this.state.inputValue}`;
+    const { precision } = this.props;
+    const newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? null : parseFloat(v, 10);
+    const { value = null, inputValue = null } = this.state;
+    const newValueInString = typeof newValue === 'number'
+      ? newValue.toFixed(precision) : `${newValue}`;
+    const changed = newValue !== value || newValueInString !== `${inputValue}`;
     if (!('value' in this.props)) {
       this.setState({
         value: newValue,
         inputValue: this.toPrecisionAsStep(v),
-      }, callback);
+      }, callback ? () => callback(newValue) : undefined);
     } else {
       // always set input value same as value
       this.setState({
         inputValue: this.toPrecisionAsStep(this.state.value),
-      }, callback);
+      }, callback ? () => callback(newValue) : undefined);
     }
     if (changed) {
       this.props.onChange(newValue);
     }
+
+    return newValue;
   }
 
   getPrecision(value) {
-    if ('precision' in this.props) {
+    if (isValidProps(this.props.precision)) {
       return this.props.precision;
     }
     const valueString = value.toString();
@@ -247,8 +395,9 @@ export default class InputNumber extends Component {
   // if this.props.precision is undefined
   // https://github.com/react-component/input-number/issues/39
   getMaxPrecision(currentValue, ratio = 1) {
-    if ('precision' in this.props) {
-      return this.props.precision;
+    const { precision } = this.props;
+    if (isValidProps(precision)) {
+      return precision;
     }
     const { step } = this.props;
     const ratioPrecision = this.getPrecision(ratio);
@@ -265,12 +414,111 @@ export default class InputNumber extends Component {
     return Math.pow(10, precision);
   }
 
+  getInputDisplayValue = (state) => {
+    const { focused, inputValue, value } = state || this.state;
+    let inputDisplayValue;
+    if (focused) {
+      inputDisplayValue = inputValue;
+    } else {
+      inputDisplayValue = this.toPrecisionAsStep(value);
+    }
+
+    if (inputDisplayValue === undefined || inputDisplayValue === null) {
+      inputDisplayValue = '';
+    }
+
+    let inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
+    if (isValidProps(this.props.decimalSeparator)) {
+      inputDisplayValueFormat = inputDisplayValueFormat
+        .toString()
+        .replace('.', this.props.decimalSeparator);
+    }
+
+    return inputDisplayValueFormat;
+  };
+
+  recordCursorPosition = () => {
+    // Record position
+    try {
+      this.cursorStart = this.input.selectionStart;
+      this.cursorEnd = this.input.selectionEnd;
+      this.currentValue = this.input.value;
+      this.cursorBefore = this.input.value.substring(0, this.cursorStart);
+      this.cursorAfter = this.input.value.substring(this.cursorEnd);
+    } catch (e) {
+      // Fix error in Chrome:
+      // Failed to read the 'selectionStart' property from 'HTMLInputElement'
+      // http://stackoverflow.com/q/21177489/3040605
+    }
+  };
+
+  fixCaret(start, end) {
+    if (start === undefined || end === undefined || !this.input || !this.input.value) {
+      return;
+    }
+
+    try {
+      const currentStart = this.input.selectionStart;
+      const currentEnd = this.input.selectionEnd;
+
+      if (start !== currentStart || end !== currentEnd) {
+        this.input.setSelectionRange(start, end);
+      }
+    } catch (e) {
+      // Fix error in Chrome:
+      // Failed to read the 'selectionStart' property from 'HTMLInputElement'
+      // http://stackoverflow.com/q/21177489/3040605
+    }
+  }
+
+  restoreByAfter = (str) => {
+    if (str === undefined) return false;
+
+    const fullStr = this.input.value;
+    const index = fullStr.lastIndexOf(str);
+
+    if (index === -1) return false;
+
+    const prevCursorPos = this.cursorBefore.length;
+    if (this.lastKeyCode === KeyCode.DELETE &&
+      this.cursorBefore.charAt(prevCursorPos - 1) === str[0]) {
+      this.fixCaret(prevCursorPos, prevCursorPos);
+      return true;
+    }
+
+    if (index + str.length === fullStr.length) {
+      this.fixCaret(index, index);
+
+      return true;
+    }
+    return false;
+  };
+
+  partRestoreByAfter = (str) => {
+    if (str === undefined) return false;
+
+    // For loop from full str to the str with last char to map. e.g. 123
+    // -> 123
+    // -> 23
+    // -> 3
+    return Array.prototype.some.call(str, (_, start) => {
+      const partStr = str.substring(start);
+
+      return this.restoreByAfter(partStr);
+    });
+  };
+
   focus() {
     this.input.focus();
+    this.recordCursorPosition();
   }
 
   blur() {
     this.input.blur();
+  }
+
+  select() {
+    this.input.select();
   }
 
   formatWrapper(num) {
@@ -310,8 +558,9 @@ export default class InputNumber extends Component {
 
   toNumber(num) {
     const { precision } = this.props;
+    const { focused } = this.state;
     // num.length > 16 => This is to prevent input of large numbers
-    const numberIsTooLarge = num && num.length > 16 ;
+    const numberIsTooLarge = num && num.length > 16 && focused;
     if (this.isNotCompleteNumber(num) || numberIsTooLarge) {
       return num;
     }
@@ -319,15 +568,6 @@ export default class InputNumber extends Component {
       return Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
     }
     return Number(num);
-  }
-
-  // '1.0' '1.00'  => may be a inputing number
-  toNumberWhenUserInput(num) {
-    // num.length > 16 => prevent input large number will became Infinity
-    if ((/\.\d*0$/.test(num) || num.length > 16) && this.state.focused) {
-      return num;
-    }
-    return this.toNumber(num);
   }
 
   upStep(val, rat) {
@@ -409,13 +649,21 @@ export default class InputNumber extends Component {
     this.step('up', e, ratio, recursive);
   };
 
+  saveUp = (node) => {
+    this.upHandler = node;
+  };
+
+  saveDown = (node) => {
+    this.downHandler = node;
+  };
+
   saveInput = (node) => {
     this.input = node;
   };
 
   renderSuffix = () => {
     const props = { ...this.props };
-    const { prefixCls, disabled, readOnly, useTouch } = props;
+    const { prefixCls, disabled, readOnly, useTouch, upHandler, downHandler } = props;
     let upDisabledClass = '';
     let downDisabledClass = '';
     const { value } = this.state;
@@ -433,7 +681,9 @@ export default class InputNumber extends Component {
         downDisabledClass = `${prefixCls}-handler-down-disabled`;
       }
     }
+
     const editable = !props.readOnly && !props.disabled;
+
     let upEvents;
     let downEvents;
     if (useTouch) {
@@ -459,104 +709,133 @@ export default class InputNumber extends Component {
     }
     const isUpDisabled = !!upDisabledClass || disabled || readOnly;
     const isDownDisabled = !!downDisabledClass || disabled || readOnly;
-    return (<div className={`${prefixCls}-handler-wrap`}>
-      <InputHandler
-        ref="up"
-        disabled={isUpDisabled}
-        prefixCls={prefixCls}
-        unselectable="unselectable"
-        {...upEvents}
-        role="button"
-        aria-label="Increase Value"
-        aria-disabled={!!isUpDisabled}
-        className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
-      >
-        {this.props.upHandler || <Icon
+    return (
+      <div className={`${prefixCls}-handler-wrap`}>
+        <InputHandler
+          ref={this.saveUp}
+          disabled={isUpDisabled}
+          prefixCls={prefixCls}
           unselectable="unselectable"
-          type="baseline-arrow_drop_up"
-          className={`${prefixCls}-handler-up-inner`}
-          onClick={preventDefault}
-        />}
-      </InputHandler>
-      <InputHandler
-        ref="down"
-        disabled={isDownDisabled}
-        prefixCls={prefixCls}
-        unselectable="unselectable"
-        {...downEvents}
-        role="button"
-        aria-label="Decrease Value"
-        aria-disabled={!!isDownDisabled}
-        className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
-      >
-        {this.props.downHandler || <Icon
+          {...upEvents}
+          role="button"
+          aria-label="Increase Value"
+          aria-disabled={!!isUpDisabled}
+          className={`${prefixCls}-handler ${prefixCls}-handler-up ${upDisabledClass}`}
+        >
+          {upHandler || <Icon
+            unselectable="unselectable"
+            type="baseline-arrow_drop_up"
+            className={`${prefixCls}-handler-up-inner`}
+            onClick={preventDefault}
+          />}
+        </InputHandler>
+        <InputHandler
+          ref={this.saveDown}
+          disabled={isDownDisabled}
+          prefixCls={prefixCls}
           unselectable="unselectable"
-          type="baseline-arrow_drop_down"
-          className={`${prefixCls}-handler-down-inner`}
-          onClick={preventDefault}
-        />}
-      </InputHandler>
-    </div>);
+          {...downEvents}
+          role="button"
+          aria-label="Decrease Value"
+          aria-disabled={!!isDownDisabled}
+          className={`${prefixCls}-handler ${prefixCls}-handler-down ${downDisabledClass}`}
+        >
+          {downHandler || <Icon
+            unselectable="unselectable"
+            type="baseline-arrow_drop_down"
+            className={`${prefixCls}-handler-down-inner`}
+            onClick={preventDefault}
+          />}
+        </InputHandler>
+      </div>
+    );
   };
 
   render() {
     const props = { ...this.props };
-    const { prefixCls, disabled, readOnly, useTouch } = props;
+    const { prefixCls, disabled, autoComplete = 'off', renderInput = (inputProps) => <input {...inputProps} />, renderHandler = noop } = props;
+    const { value, inputValue, focused } = this.state;
     const classes = classNames({
       [prefixCls]: true,
       [props.className]: !!props.className,
+      [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-focused`]: focused,
     });
     const editable = !props.readOnly && !props.disabled;
+
+
+    const dataOrAriaAttributeProps = {};
+    for (const key in props) {
+      if (
+        props.hasOwnProperty(key) &&
+        (
+          key.substr(0, 5) === 'data-' ||
+          key.substr(0, 5) === 'aria-' ||
+          key === 'role'
+        )
+      ) {
+        dataOrAriaAttributeProps[key] = props[key];
+      }
+    }
     // focus state, show input value
     // unfocus state, show valid value
-    let inputDisplayValue;
-    if (this.state.focused) {
-      inputDisplayValue = this.state.inputValue;
-    } else {
-      inputDisplayValue = this.toPrecisionAsStep(this.state.value);
-    }
-
-    if (inputDisplayValue === undefined || inputDisplayValue === null) {
-      inputDisplayValue = '';
-    }
-    const inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
-    // ref for test
+    const inputDisplayValue = this.composing ? inputValue : this.getInputDisplayValue();
+    const handler = this.renderSuffix();
     return (
       <div
         className={classes}
         style={props.style}
+        title={props.title}
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
         onMouseOver={props.onMouseOver}
         onMouseOut={props.onMouseOut}
+        onCompositionStart={this.onComposition}
+        onCompositionEnd={this.onComposition}
       >
-        <Input
-          required={props.required}
-          type={props.type}
-          placeholder={props.placeholder}
-          onClick={props.onClick}
-          tabIndex={props.tabIndex}
-          autoComplete="off"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          onKeyDown={editable ? this.onKeyDown : noop}
-          onKeyUp={editable ? this.onKeyUp : noop}
-          autoFocus={props.autoFocus}
-          maxLength={props.maxLength}
-          readOnly={props.readOnly}
-          disabled={props.disabled}
-          max={props.max}
-          min={props.min}
-          step={props.step}
-          name={props.name}
-          id={props.id}
-          onChange={this.onChange}
-          ref={this.saveInput}
-          value={inputDisplayValueFormat}
-          pattern={props.pattern}
-          suffix={this.renderSuffix()}
-          label={props.label}
-        />
+        {renderHandler(handler)}
+        <div
+          className={`${prefixCls}-input-wrap`}
+        >
+          {
+            renderInput({
+              role: 'spinbutton',
+              'aria-valuemin': props.min,
+              'aria-valuemax': props.max,
+              'aria-valuenow': value,
+              required: props.required,
+              type: props.type,
+              placeholder: props.placeholder,
+              onClick: props.onClick,
+              onMouseUp: this.onMouseUp,
+              className: `${prefixCls}-input`,
+              tabIndex: props.tabIndex,
+              autoComplete: autoComplete,
+              onFocus: this.onFocus,
+              onBlur: this.onBlur,
+              onKeyDown: editable ? this.onKeyDown : noop,
+              onKeyUp: editable ? this.onKeyUp : noop,
+              autoFocus: props.autoFocus,
+              maxLength: props.maxLength,
+              readOnly: props.readOnly,
+              disabled: props.disabled,
+              max: props.max,
+              min: props.min,
+              step: props.step,
+              name: props.name,
+              title: props.title,
+              id: props.id,
+              onChange: this.onChange,
+              ref: this.saveInput,
+              value: inputDisplayValue,
+              pattern: props.pattern,
+              suffix: handler,
+              label: props.label,
+              inputMode: props.inputMode,
+              ...dataOrAriaAttributeProps,
+            })
+          }
+        </div>
       </div>
     );
   }

@@ -2,8 +2,10 @@ import React, { cloneElement, Component, ReactElement, SyntheticEvent } from 're
 import { findDOMNode } from 'react-dom';
 import closest from 'dom-closest';
 import classNames from 'classnames';
+import shallowequal from 'shallowequal';
 import Dropdown from '../dropdown';
 import Icon from '../icon';
+import Checkbox from '../checkbox';
 import Radio from '../radio';
 import FilterDropdownMenuWrapper from './FilterDropdownMenuWrapper';
 import { ColumnFilterItem, ColumnProps, FilterMenuProps, FilterMenuState } from './interface';
@@ -11,7 +13,8 @@ import Menu, { Item as MenuItem, SubMenu } from '../rc-components/menu';
 
 export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterMenuState> {
   static defaultProps = {
-    handleFilter() {/* noop */},
+    handleFilter() {/* noop */
+    },
     column: {},
   };
 
@@ -42,7 +45,8 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
       selectedKeys: string[];
       visible: boolean;
     };
-    if ('selectedKeys' in nextProps) {
+    const { selectedKeys } = this.props;
+    if ('selectedKeys' in nextProps && !shallowequal(selectedKeys, nextProps.selectedKeys)) {
       newState.selectedKeys = nextProps.selectedKeys;
     }
     if ('filterDropdownVisible' in column) {
@@ -103,21 +107,23 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
   confirmFilter() {
     const { selectedKeys: propSelectedKeys, column, confirmFilter } = this.props;
     const { selectedKeys } = this.state;
-    if (selectedKeys !== propSelectedKeys) {
+    if (!shallowequal(selectedKeys, propSelectedKeys)) {
       confirmFilter(column, selectedKeys);
     }
   }
 
   renderMenuItem(item: ColumnFilterItem) {
-    const { column } = this.props;
+    const { column, radioPrefixCls, checkboxPrefixCls } = this.props;
     const { selectedKeys } = this.state;
-    const multiple = 'filterMultiple' in column ? column.filterMultiple : false;
-    const input = multiple ? null : (
-      <Radio checked={selectedKeys.indexOf(item.value.toString()) >= 0} />
+    const multiple = 'filterMultiple' in column ? column.filterMultiple : true;
+    const input = multiple ? (
+      <Checkbox prefixCls={checkboxPrefixCls} checked={selectedKeys.indexOf(item.value.toString()) >= 0} />
+    ) : (
+      <Radio prefixCls={radioPrefixCls} checked={selectedKeys.indexOf(item.value.toString()) >= 0} />
     );
 
     return (
-      <MenuItem key={item.value}>
+      <MenuItem key={item.value} checkable={false}>
         {input}
         <span>{item.text}</span>
       </MenuItem>
@@ -134,7 +140,7 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
   renderMenus(items: ColumnFilterItem[]): ReactElement<any>[] {
     return items.map(item => {
       if (item.children && item.children.length > 0) {
-        const { dropdownPrefixCls } = this.props;
+        const { dropdownProps: { prefixCls: dropdownPrefixCls } } = this.props;
         const { keyPathOfSelectedItem } = this.state;
         const containSelected = Object.keys(keyPathOfSelectedItem).some(
           key => keyPathOfSelectedItem[key].indexOf(item.value) >= 0,
@@ -155,7 +161,7 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
   };
 
   handleMenuItemClick = (info: { keyPath: string; key: string }) => {
-    if (info.keyPath.length <= 1) {
+    if (!info.keyPath || info.keyPath.length <= 1) {
       return;
     }
     const { keyPathOfSelectedItem, selectedKeys } = this.state;
@@ -171,15 +177,17 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
 
   renderFilterIcon = () => {
     const { column, locale, prefixCls, selectedKeys } = this.props;
-    const filterIcon = column.filterIcon as any;
-    const dropdownSelectedClass = selectedKeys.length > 0 ? `${prefixCls}-selected` : '';
+    const filterd = selectedKeys.length > 0;
+    let filterIcon = column.filterIcon as any;
+    if (typeof filterIcon === 'function') {
+      filterIcon = filterIcon(filterd);
+    }
+    const dropdownSelectedClass = filterd ? `${prefixCls}-selected` : '';
 
     return filterIcon ? (
       cloneElement(filterIcon as any, {
         title: locale.filterTitle,
-        className: classNames(filterIcon.className, {
-          [`${prefixCls}-icon`]: true,
-        }),
+        className: classNames(`${prefixCls}-icon`, filterIcon.props.className),
       })
     ) : (
       <Icon title={locale.filterTitle} type="filter_list" className={dropdownSelectedClass} />
@@ -187,16 +195,29 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
   };
 
   render() {
-    const { column, locale, prefixCls, dropdownPrefixCls, getPopupContainer } = this.props;
+    const { column, locale, prefixCls, dropdownProps, getPopupContainer, rippleDisabled } = this.props;
     const { visible, selectedKeys } = this.state;
+    const dropdownPrefixCls = dropdownProps.prefixCls;
     // default multiple selection in filter dropdown
-    const multiple = 'filterMultiple' in column ? column.filterMultiple : false;
+    const multiple = 'filterMultiple' in column ? column.filterMultiple : true;
     const dropdownMenuClass = classNames({
       [`${dropdownPrefixCls}-menu-without-submenu`]: !this.hasSubMenu(),
     });
-    const menus = column.filterDropdown ? (
+    let { filterDropdown } = column;
+    if (filterDropdown && typeof filterDropdown === 'function') {
+      filterDropdown = filterDropdown({
+        prefixCls: `${dropdownPrefixCls}-custom`,
+        setSelectedKeys: ($selectedKeys: Array<any>) => this.setSelectedKeys({ selectedKeys: $selectedKeys }),
+        selectedKeys,
+        confirm: this.handleConfirm,
+        clearFilters: this.handleClearFilters,
+        filters: column.filters,
+        getPopupContainer: (triggerNode: HTMLElement) => triggerNode.parentNode,
+      });
+    }
+    const menus = filterDropdown ? (
       <FilterDropdownMenuWrapper onClick={this.handleFilterDropdownMenuClick}>
-        {column.filterDropdown}
+        {filterDropdown}
       </FilterDropdownMenuWrapper>
     ) : (
       <FilterDropdownMenuWrapper
@@ -205,6 +226,7 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
       >
         <Menu
           multiple={multiple}
+          rippleDisabled={rippleDisabled}
           onClick={this.handleMenuItemClick}
           prefixCls={`${dropdownPrefixCls}-menu`}
           className={dropdownMenuClass}
@@ -228,6 +250,7 @@ export default class FilterMenu<T> extends Component<FilterMenuProps<T>, FilterM
 
     return (
       <Dropdown
+        {...dropdownProps}
         trigger={['click']}
         overlay={menus}
         visible={this.neverShown ? false : visible}

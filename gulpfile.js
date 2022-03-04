@@ -131,7 +131,7 @@ function compileShared() {
         error = 1;
       },
       finish: tsDefaultReporter.finish,
-    })
+    }),
   );
 
   function check() {
@@ -156,7 +156,7 @@ function compileDataset() {
         error = 1;
       },
       finish: tsDefaultReporter.finish,
-    })
+    }),
   );
 
   function check() {
@@ -174,7 +174,7 @@ function compileDataset() {
 function compilePro(modules) {
   const dir = modules === false ? 'es' : 'lib';
   const less = gulp.src(['components-pro/**/*.less']).pipe(
-    through2.obj(function(file, encoding, next) {
+    through2.obj(function (file, encoding, next) {
       const content = file.contents.toString(encoding);
       if (content.match(lessLibName)) {
         file.contents = Buffer.from(
@@ -231,7 +231,7 @@ function compilePro(modules) {
 
 function compile(modules) {
   const less = gulp.src(['components/**/*.less']).pipe(
-    through2.obj(function(file, encoding, next) {
+    through2.obj(function (file, encoding, next) {
       this.push(file.clone());
       if (
         file.path.match(/[/\\]style[/\\]index\.less$/) ||
@@ -320,7 +320,7 @@ function pub(done) {
 }
 
 function changePath(dir, name, isPro) {
-  return through2.obj(function(file, encoding, next) {
+  return through2.obj(function (file, encoding, next) {
     const matches = file.path.match(/\.d\.ts|\.js/);
     if (matches) {
       const content = file.contents.toString(encoding);
@@ -416,12 +416,14 @@ gulp.task('compile-with-shared', done => {
 
 gulp.task('compile-with-rc-es', done => {
   compileRc(false)
+    .pipe(changePath(esProDir, proName, true))
     .pipe(gulp.dest(esRcDir))
     .on('finish', done);
 });
 
 gulp.task('compile-with-rc-lib', done => {
   compileRc()
+    .pipe(changePath(libProDir, proName, true))
     .pipe(gulp.dest(libRcDir))
     .on('finish', done);
 });

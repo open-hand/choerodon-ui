@@ -52,7 +52,11 @@ const CalendarHeader = createReactClass({
     const referer = this.state.yearPanelReferer;
     this.setState({ yearPanelReferer: null });
     this.props.onPanelChange(value, referer);
-    this.props.onValueChange(value);
+    if (this.props.onYearSelect) {
+      this.props.onYearSelect(value);
+    } else {
+      this.props.onValueChange(value);
+    }
   },
 
   onDecadeSelect(value) {

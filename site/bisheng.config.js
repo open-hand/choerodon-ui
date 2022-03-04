@@ -80,13 +80,13 @@ module.exports = {
   },
   webpackConfig(config) {
     config.resolve.alias = {
-      'choerodon-ui/dataset': path.join(process.cwd(), 'components-dataset'),
-      'choerodon-ui/shared': path.join(process.cwd(), 'components-shared'),
-      'choerodon-ui/pro/lib': path.join(process.cwd(), 'components-pro'),
-      'choerodon-ui/pro': path.join(process.cwd(), 'index-pro'),
-      'choerodon-ui/lib': path.join(process.cwd(), 'components'),
-      'choerodon-ui': path.join(process.cwd(), 'index'),
-      site: path.join(process.cwd(), 'site'),
+      'choerodon-ui/dataset': path.resolve('components-dataset'),
+      'choerodon-ui/shared': path.resolve('components-shared'),
+      'choerodon-ui/pro/lib': path.resolve('components-pro'),
+      'choerodon-ui/pro': path.resolve('index-pro'),
+      'choerodon-ui/lib': path.resolve('components'),
+      'choerodon-ui': path.resolve('index'),
+      site: path.resolve('site'),
       'react-router': 'react-router/umd/ReactRouter',
     };
 

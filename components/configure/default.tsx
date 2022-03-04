@@ -129,6 +129,7 @@ const defaults = {
   modalAutoCenter: false,
   modalKeyboard: true,
   modalMaskClosable: false,
+  modalMovable: true,
   buttonColor: ButtonColor.default,
   buttonFuncType: FuncType.raised,
   renderEmpty: defaultRenderEmpty,

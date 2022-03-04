@@ -15,6 +15,8 @@ const ICON_CLOSE = 'close';
 const defaultTitle = '---';
 
 export interface TreeNodeProps {
+  [key: string]: any;
+
   eventKey?: Key; // Pass by parent `cloneElement`
   prefixCls?: string;
   className?: string;
@@ -365,7 +367,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       }
       return null;
     }
-  }
+  };
 
   // Switcher
   renderSwitcher = () => {

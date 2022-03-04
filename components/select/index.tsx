@@ -9,6 +9,7 @@ import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigCont
 
 export interface AbstractSelectProps {
   prefixCls?: string;
+  spinPrefixCls?: string;
   className?: string;
   size?: Size;
   notFoundContent?: ReactNode | null;
@@ -17,16 +18,28 @@ export interface AbstractSelectProps {
   showSearch?: boolean;
   allowClear?: boolean;
   disabled?: boolean;
+  showArrow?: boolean;
   style?: CSSProperties;
   tabIndex?: number;
-  placeholder?: string;
+  placeholder?: ReactNode;
   defaultActiveFirstOption?: boolean;
   dropdownClassName?: string;
   dropdownStyle?: CSSProperties;
   dropdownMenuStyle?: CSSProperties;
+  dropdownMatchSelectWidth?: boolean;
   onDropdownMouseDown?: (e: MouseEvent<any>) => void;
   onSearch?: (value: string) => any;
   filterOption?: boolean | ((inputValue: string, option: ReactElement<OptionProps>) => any);
+  id?: string;
+  blurChange?: boolean;
+  showCheckAll?: boolean;
+  autoClearSearchValue?: boolean,
+  dropdownMenuRippleDisabled?: boolean,
+  dropdownMenuItemCheckable?: boolean,
+  choiceRemove?: boolean;
+  border?: boolean;
+  builtinPlacements?: object,
+  labelLayout?: 'none' | 'float',
 }
 
 export interface LabeledValue {
@@ -34,14 +47,15 @@ export interface LabeledValue {
   label: ReactNode;
 }
 
-export type SelectValue = string | any[] | LabeledValue | LabeledValue[];
+export type SelectValue = string | number | any[] | LabeledValue | LabeledValue[];
 
 export interface SelectProps extends AbstractSelectProps {
-  blurChange?: boolean;
+  form?: any,
   value?: SelectValue;
   defaultValue?: SelectValue;
-  mode?: SelectMode;
+  mode?: SelectMode | string;
   optionLabelProp?: string;
+  firstActiveValue?: string | string[];
   onInput?: (value: SelectValue) => void;
   onChange?: (value: SelectValue, option: ReactElement<any> | ReactElement<any>[]) => void;
   onSelect?: (value: SelectValue, option: ReactElement<any>) => any;
@@ -50,11 +64,12 @@ export interface SelectProps extends AbstractSelectProps {
   onFocus?: () => any;
   onPopupScroll?: () => any;
   onInputKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onMouseEnter?: (e: MouseEvent<HTMLInputElement>) => any;
+  onMouseLeave?: (e: MouseEvent<HTMLInputElement>) => any;
   onChoiceItemClick?: (value: SelectValue, option: ReactElement<any>) => void;
   onClear?: () => any;
   maxTagCount?: number;
   maxTagPlaceholder?: ReactNode | ((omittedValues: SelectValue[]) => ReactNode);
-  dropdownMatchSelectWidth?: boolean;
   optionFilterProp?: string;
   labelInValue?: boolean;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
@@ -64,20 +79,17 @@ export interface SelectProps extends AbstractSelectProps {
   showNotFindInputItem?: boolean;
   showNotFindSelectedItem?: boolean;
   getRootDomNode?: () => HTMLElement;
-  showCheckAll?: boolean;
   filter?: boolean;
   footer?: ReactNode | string;
   choiceRender?: (label: ReactElement<any>, value: SelectValue) => any;
   loading?: boolean | object;
   onFilterChange?: (value: string) => void;
-  choiceRemove?: boolean;
   filterValue?: string;
-  border?: boolean;
 }
 
 export interface OptionProps {
   disabled?: boolean;
-  value?: any;
+  value?: string | number;
   title?: string;
   children?: ReactNode;
   className?: string;
@@ -97,7 +109,7 @@ export interface SelectLocale {
 // export { Option, OptGroup };
 
 export default class Select extends Component<SelectProps, {}> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -106,6 +118,8 @@ export default class Select extends Component<SelectProps, {}> {
   static Option = Option as ClassicComponentClass<OptionProps>;
 
   static OptGroup = OptGroup as ClassicComponentClass<OptGroupProps>;
+
+  static SECRET_COMBOBOX_MODE_DO_NOT_USE = 'SECRET_COMBOBOX_MODE_DO_NOT_USE';
 
   static defaultProps = {
     blurChange: true,
@@ -135,13 +149,17 @@ export default class Select extends Component<SelectProps, {}> {
   };
 
   getNotFoundContent(locale: SelectLocale) {
-    const { notFoundContent, mode } = this.props;
-    const isCombobox = mode === SelectMode.combobox;
-    if (isCombobox) {
+    const { notFoundContent } = this.props;
+    if (this.isCombobox()) {
       // AutoComplete don't have notFoundContent defaultly
       return notFoundContent === undefined ? null : notFoundContent;
     }
     return notFoundContent === undefined ? locale.notFoundContent : notFoundContent;
+  }
+
+  isCombobox() {
+    const { mode } = this.props;
+    return mode === 'combobox' || mode === Select.SECRET_COMBOBOX_MODE_DO_NOT_USE;
   }
 
   renderSelect = (locale: SelectLocale) => {
@@ -157,7 +175,7 @@ export default class Select extends Component<SelectProps, {}> {
     );
 
     let { optionLabelProp } = this.props;
-    const isCombobox = mode === SelectMode.combobox;
+    const isCombobox = this.isCombobox();
     if (isCombobox) {
       // children 带 dom 结构时，无法填入输入框
       optionLabelProp = optionLabelProp || 'value';
@@ -168,7 +186,7 @@ export default class Select extends Component<SelectProps, {}> {
       tags: mode === SelectMode.tags,
       combobox: isCombobox,
     };
-
+    delete restProps.form;
     return (
       <RcSelect
         {...restProps}

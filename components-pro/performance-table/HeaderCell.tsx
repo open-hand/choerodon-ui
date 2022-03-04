@@ -59,7 +59,7 @@ const propTypeKeys = [
 ];
 
 class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

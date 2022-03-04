@@ -40,7 +40,7 @@ export function genPercentAdd() {
     if (k < 0.001) {
       k = 0.001;
     }
-    return start * 100;
+    return start;
   };
 }
 
@@ -65,7 +65,9 @@ const MEASURE_SIZE = 200;
 export function previewImage(file: File | Blob): Promise<string> {
   return new Promise(resolve => {
     if (!file.type || !isImageFileType(file.type)) {
-      resolve('');
+      const reader = new FileReader();
+      reader.onloadend = () => resolve((reader.result || '').toString());
+      reader.readAsDataURL(file);
       return;
     }
 

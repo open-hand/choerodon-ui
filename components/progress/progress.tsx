@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import Icon from '../icon';
 import { Circle } from '../rc-components/progress';
@@ -13,7 +13,7 @@ export interface ProgressProps {
   type?: ProgressType;
   percent?: number;
   successPercent?: number;
-  format?: (percent: number) => React.ReactNode;
+  format?: (percent?: number, successPercent?: number) => ReactNode;
   status?: ProgressStatus;
   showInfo?: boolean;
   showPointer?: boolean;
@@ -27,10 +27,20 @@ export interface ProgressProps {
   size?: Size;
 }
 
+const validProgress = (progress: number | undefined) => {
+  if (!progress || progress < 0) {
+    return 0;
+  }
+  if (progress > 100) {
+    return 100;
+  }
+  return progress;
+};
+
 export default class Progress extends Component<ProgressProps, {}> {
   static displayName = 'Progress';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -74,7 +84,8 @@ export default class Progress extends Component<ProgressProps, {}> {
           //   fill: strokeColor ? strokeColor : '',
           // }}
           className={`${prefixCls}-status-pointer-${progressStatus}`}
-          fill="#6887E8" d="M103.371587,49.724578 C103.681687,50.1292204 103.634794,50.6951896 103.280961,51.0440945 L103.186137,51.1265795 L78.8502947,69.7769214 C79.5504585,70.8623565 79.9567807,72.1551739 79.9567807,73.5428929 C79.9567807,77.3850168 76.8421239,80.4996736 73,80.4996736 C69.1578761,80.4996736 66.0432193,77.3850168 66.0432193,73.5428929 C66.0432193,69.700769 69.1578761,66.5861122 73,66.5861122 C74.7317808,66.5861122 76.3157678,67.218893 77.5333601,68.265854 L101.969586,49.5391281 C102.407948,49.2031866 103.035646,49.2862154 103.371587,49.724578 Z M73,68.5861122 C70.2624456,68.5861122 68.0432193,70.8053385 68.0432193,73.5428929 C68.0432193,76.2804473 70.2624456,78.4996736 73,78.4996736 C75.7375544,78.4996736 77.9567807,76.2804473 77.9567807,73.5428929 C77.9567807,70.8053385 75.7375544,68.5861122 73,68.5861122 Z"
+          fill="#6887E8"
+          d="M103.371587,49.724578 C103.681687,50.1292204 103.634794,50.6951896 103.280961,51.0440945 L103.186137,51.1265795 L78.8502947,69.7769214 C79.5504585,70.8623565 79.9567807,72.1551739 79.9567807,73.5428929 C79.9567807,77.3850168 76.8421239,80.4996736 73,80.4996736 C69.1578761,80.4996736 66.0432193,77.3850168 66.0432193,73.5428929 C66.0432193,69.700769 69.1578761,66.5861122 73,66.5861122 C74.7317808,66.5861122 76.3157678,67.218893 77.5333601,68.265854 L101.969586,49.5391281 C102.407948,49.2031866 103.035646,49.2862154 103.371587,49.724578 Z M73,68.5861122 C70.2624456,68.5861122 68.0432193,70.8053385 68.0432193,73.5428929 C68.0432193,76.2804473 70.2624456,78.4996736 73,78.4996736 C75.7375544,78.4996736 77.9567807,76.2804473 77.9567807,73.5428929 C77.9567807,70.8053385 75.7375544,68.5861122 73,68.5861122 Z"
           transform="translate(-66 -49)"
         />
       </svg>
@@ -142,16 +153,12 @@ export default class Progress extends Component<ProgressProps, {}> {
     if (showInfo) {
       let text;
       const circleType = type === ProgressType.circle || type === ProgressType.dashboard;
-      if (progressStatus === ProgressStatus.exception) {
-        text = format ? textFormatter(percent) : <Icon type={circleType ? 'close' : 'cancel'} />;
+      if (format || (progressStatus !== ProgressStatus.exception && progressStatus !== ProgressStatus.success)) {
+        text = textFormatter(validProgress(percent), validProgress(successPercent));
+      } else if (progressStatus === ProgressStatus.exception) {
+        text = <Icon type={circleType ? 'close' : 'cancel'} />;
       } else if (progressStatus === ProgressStatus.success) {
-        text = format ? (
-          textFormatter(percent)
-        ) : (
-          <Icon type={circleType ? 'check' : 'check_circle'} />
-        );
-      } else {
-        text = textFormatter(percent);
+        text = <Icon type={circleType ? 'check' : 'check_circle'} />;
       }
       progressInfo = <span className={`${prefixCls}-text`}>{text}</span>;
       if (showPointer) {
@@ -166,12 +173,12 @@ export default class Progress extends Component<ProgressProps, {}> {
 
     if (type === ProgressType.line) {
       const percentStyle = {
-        width: `${percent}%`,
+        width: `${validProgress(percent)}%`,
         height: strokeWidth || (size === Size.small ? 6 : 8),
         background: strokeColor,
       };
       const successPercentStyle = {
-        width: `${successPercent}%`,
+        width: `${validProgress(successPercent)}%`,
         height: strokeWidth || (size === Size.small ? 6 : 8),
       };
       const successSegment =
@@ -205,7 +212,7 @@ export default class Progress extends Component<ProgressProps, {}> {
       progress = (
         <div className={`${prefixCls}-inner`} style={circleStyle}>
           <Circle
-            percent={percent}
+            percent={validProgress(percent)}
             strokeWidth={circleWidth}
             trailWidth={circleWidth}
             trailColor={trailColor}

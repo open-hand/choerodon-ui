@@ -5,7 +5,7 @@ import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { Size } from '../_util/enum';
-import Pagination from '../pagination';
+import Pagination, { PaginationProps } from '../pagination';
 import { Row } from '../grid';
 import Item from './Item';
 import { ListContextProvider } from './ListContext';
@@ -39,8 +39,11 @@ export interface ListProps {
   itemLayout?: string;
   loading?: boolean | SpinProps;
   loadMore?: ReactNode;
+  paginationProps?: PaginationProps;
   pagination?: any;
   prefixCls?: string;
+  rowPrefixCls?: string;
+  spinPrefixCls?: string;
   rowKey?: any;
   renderItem: any;
   size?: Size;
@@ -60,7 +63,7 @@ export default class List extends Component<ListProps> {
 
   static Item: typeof Item = Item;
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -73,6 +76,25 @@ export default class List extends Component<ListProps> {
   };
 
   context: ConfigContextValue;
+
+  state = {
+    paginationCurrent: 1,
+  };
+
+  defaultPaginationProps = {
+    current: 1,
+    pageSize: 10,
+    onChange: (page: number, pageSize: number) => {
+      const { pagination } = this.props;
+      this.setState({
+        paginationCurrent: page,
+      });
+      if (pagination && pagination.onChange) {
+        pagination.onChange(page, pageSize);
+      }
+    },
+    total: 0,
+  };
 
   private keys: { [key: string]: string } = {};
 
@@ -106,7 +128,7 @@ export default class List extends Component<ListProps> {
     return renderItem(item, index);
   };
 
-  isSomethingAfterLastTtem() {
+  isSomethingAfterLastItem() {
     const { loadMore, pagination, footer } = this.props;
     return !!(loadMore || pagination || footer);
   }
@@ -124,6 +146,7 @@ export default class List extends Component<ListProps> {
   }
 
   render() {
+    const { paginationCurrent } = this.state;
     const {
       bordered,
       split,
@@ -139,6 +162,9 @@ export default class List extends Component<ListProps> {
       footer,
       empty,
       loading,
+      rowPrefixCls,
+      spinPrefixCls,
+      paginationProps: propsPaginationProps,
       ...rest
     } = this.props;
     const prefixCls = this.getPrefixCls();
@@ -170,26 +196,56 @@ export default class List extends Component<ListProps> {
       [`${prefixCls}-bordered`]: bordered,
       [`${prefixCls}-loading`]: isLoading,
       [`${prefixCls}-grid`]: grid,
-      [`${prefixCls}-something-after-last-item`]: this.isSomethingAfterLastTtem(),
+      [`${prefixCls}-something-after-last-item`]: this.isSomethingAfterLastItem(),
     });
 
-    const paginationContent = (
-      <div className={`${prefixCls}-pagination`}>
-        <Pagination {...pagination} />
-      </div>
+    const paginationProps = {
+      ...this.defaultPaginationProps,
+      ...propsPaginationProps,
+      total: dataSource.length,
+      current: paginationCurrent,
+      ...pagination || {},
+    };
+
+    const largestPage = Math.ceil(
+      paginationProps.total / paginationProps.pageSize,
     );
+    if (paginationProps.current > largestPage) {
+      paginationProps.current = largestPage;
+    }
+    const paginationContent = pagination ? (
+      <div className={`${prefixCls}-pagination`}>
+        <Pagination
+          {...paginationProps}
+          onChange={this.defaultPaginationProps.onChange}
+        />
+      </div>
+    ) : null;
+
+    let splitDataSource = [...dataSource];
+    if (pagination) {
+      if (
+        dataSource.length >
+        (paginationProps.current - 1) * paginationProps.pageSize
+      ) {
+        splitDataSource = [...dataSource].splice(
+          (paginationProps.current - 1) * paginationProps.pageSize,
+          paginationProps.pageSize,
+        );
+      }
+    }
 
     let childrenContent;
     childrenContent = isLoading && <div style={{ minHeight: 53 }} />;
-    if (dataSource.length > 0) {
-      const items = dataSource.map((item: any, index: number) => this.renderItem(item, index));
+    if (splitDataSource.length > 0) {
+      const items = splitDataSource.map((item: any, index: number) => this.renderItem(item, index));
       const childrenList = Children.map(items, (child: any, index) =>
         cloneElement(child, {
           key: this.keys[index],
         }),
       );
 
-      childrenContent = grid ? <Row gutter={grid.gutter}>{childrenList}</Row> : childrenList;
+      childrenContent = grid ? <Row prefixCls={rowPrefixCls} gutter={grid.gutter}>{childrenList}</Row> : childrenList;
     } else if (!children && !isLoading && !empty) {
       childrenContent = (
         <LocaleReceiver componentName="Table" defaultLocale={defaultLocale.Table}>
@@ -200,21 +256,23 @@ export default class List extends Component<ListProps> {
       childrenContent = empty;
     }
 
+    const paginationPosition = paginationProps.position || 'bottom';
+
     const content = (
-      <div>
-        <Spin {...loadingProp}>{childrenContent}</Spin>
-        {loadMore}
-        {!loadMore && pagination ? paginationContent : null}
-      </div>
+      <Spin prefixCls={spinPrefixCls} {...loadingProp}>
+        {childrenContent}
+        {children}
+      </Spin>
     );
 
     return (
       <ListContextProvider {...this.getContextValue()}>
-        <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem', 'selectable'])}>
+        <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem', 'selectable', 'rowKey', 'renderItem', 'locale'])}>
+          {(paginationPosition === 'top' || paginationPosition === 'both') && paginationContent}
           {header && <div className={`${prefixCls}-header`}>{header}</div>}
           {content}
-          {children}
           {footer && <div className={`${prefixCls}-footer`}>{footer}</div>}
+          {loadMore || (paginationPosition === 'bottom' || paginationPosition === 'both') && paginationContent}
         </div>
       </ListContextProvider>
     );

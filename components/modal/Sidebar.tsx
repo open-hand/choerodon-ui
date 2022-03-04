@@ -31,7 +31,7 @@ function isFixedWidth(width: ModalFuncProps['width']) {
 export default class Sidebar extends Component<SidebarProps, {}> {
   static displayName = 'Sidebar';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

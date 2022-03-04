@@ -1,3 +1,5 @@
 import { Utils } from 'choerodon-ui/dataset';
 
-export default Utils.isSame;
+const isSame: typeof Utils.isSame = Utils.isSame;
+
+export default isSame;
