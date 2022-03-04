@@ -70,8 +70,8 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
     case FieldType.boolean:
       return isQueryField ? (
         <ObserverSelect clearButton {...flatProps}>
-          <Option value>{$l('Table', 'query_option_yes')}</Option>
-          <Option value={false}>{$l('Table', 'query_option_no')}</Option>
+          <Option value={field.get('trueValue', record)}>{$l('Table', 'query_option_yes')}</Option>
+          <Option value={field.get('falseValue', record)}>{$l('Table', 'query_option_no')}</Option>
         </ObserverSelect>
       ) : (
         <ObserverCheckBox />

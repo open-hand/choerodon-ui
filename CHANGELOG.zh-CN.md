@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复 sortable 为 false 时也会调用排序接口导致报错的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
+- 🐞 `<pro>Table`: 修复动态查询条 Lov 无法回显的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
