@@ -114,6 +114,7 @@ const prefixCls = getConfig('prefixCls');
 | modalMaskClosable | 点击蒙层是否允许关闭，可选 boolean \| click \| dblclick | boolean \| string | false |
 | drawerOkFirst | 默认 Modal drawer 的 ok 按钮排在第一个，优先级高于 modalOkFirst | boolean \| undefined | undefined |
 | modalResizable | modal是否可调整大小 | boolean |   |
+| modalMovable | modal是否可移动 | boolean |   |
 | buttonFuncType | 默认 Button 的功能类型 | string | raised |
 | buttonColor | 默认 Button 的颜色 | string | default |
 | renderEmpty | 自定义组件空状态。componentName会接收到的值为 `Table` `Select`,在实现函数的时候需要对这两个输入进行处理,**注意需要同时处理Table以及Select**,默认值参考源代码的[defaultRenderEmpty](https://github.com/open-hand/choerodon-ui/blob/master/components/configure/index.tsx) | (componentName: string) => ReactNode | - |

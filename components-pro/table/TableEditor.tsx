@@ -60,7 +60,7 @@ function offset(node: HTMLElement, topNode: HTMLElement | null, initialize: [num
 export default class TableEditor extends Component<TableEditorProps> {
   static displayName = 'TableEditor';
 
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

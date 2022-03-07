@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import { Size } from '../_util/enum';
 import Grid from './Grid';
 import Meta from './Meta';
-import Tabs from '../tabs';
+import Tabs, { TabsProps } from '../tabs';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
 import warning from '../_util/warning';
 import addEventListener from '../_util/addEventListener';
@@ -18,9 +18,10 @@ export type CardType = 'inner';
 export interface CardTabListType {
   key: string;
   tab: ReactNode;
+  disabled?: boolean;
 }
 
-export interface CardProps {
+export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   prefixCls?: string;
   title?: ReactNode;
   extra?: ReactNode;
@@ -41,12 +42,17 @@ export interface CardProps {
   onHeadClick?: MouseEventHandler<any>;
   activeTabKey?: string;
   defaultActiveTabKey?: string;
+  tabsProps?: TabsProps;
 }
 
-export default class Card extends Component<CardProps, {}> {
+export interface CardState {
+  widerPadding: boolean;
+}
+
+export default class Card extends Component<CardProps, CardState> {
   static displayName = 'Card';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -56,9 +62,9 @@ export default class Card extends Component<CardProps, {}> {
 
   context: ConfigContextValue;
 
-  resizeEvent: any;
+  private resizeEvent: any;
 
-  updateWiderPaddingCalled: boolean;
+  private updateWiderPaddingCalled: boolean;
 
   state = {
     widerPadding: false,
@@ -92,15 +98,15 @@ export default class Card extends Component<CardProps, {}> {
     if (!this.container) {
       return;
     }
-    // 936 is a magic card width pixer number indicated by designer
-    const WIDTH_BOUDARY_PX = 936;
+    // 936 is a magic card width pixel number indicated by designer
+    const WIDTH_BOUNDARY_PX = 936;
     const { widerPadding } = this.state;
-    if (this.container.offsetWidth >= WIDTH_BOUDARY_PX && !widerPadding) {
+    if (this.container.offsetWidth >= WIDTH_BOUNDARY_PX && !widerPadding) {
       this.setState({ widerPadding: true }, () => {
         this.updateWiderPaddingCalled = true; // first render without css transition
       });
     }
-    if (this.container.offsetWidth < WIDTH_BOUDARY_PX && widerPadding) {
+    if (this.container.offsetWidth < WIDTH_BOUNDARY_PX && widerPadding) {
       this.setState({ widerPadding: false }, () => {
         this.updateWiderPaddingCalled = true; // first render without css transition
       });
@@ -163,6 +169,7 @@ export default class Card extends Component<CardProps, {}> {
       activeTabKey,
       defaultActiveTabKey,
       onHeadClick,
+      tabsProps,
       ...others
     } = this.props;
     const { widerPadding } = this.state;
@@ -214,13 +221,14 @@ export default class Card extends Component<CardProps, {}> {
     const tabs =
       tabList && tabList.length ? (
         <Tabs
+          {...tabsProps}
           {...extraProps}
           className={`${prefixCls}-head-tabs`}
           size={Size.large}
           onChange={this.onTabChange}
         >
           {tabList.map(item => (
-            <Tabs.TabPane tab={item.tab} key={item.key} />
+            <Tabs.TabPane tab={item.tab} disabled={item.disabled} key={item.key} />
           ))}
         </Tabs>
       ) : null;

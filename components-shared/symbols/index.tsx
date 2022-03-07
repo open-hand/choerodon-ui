@@ -11,6 +11,8 @@ const Symbols = {
   ModalContext: Symbol('ModalContext'),
   RadioContext: Symbol('RadioContext'),
   TableContext: Symbol('TableContext'),
+  TableRowContext: Symbol('TableRowContext'),
+  TableInnerRowContext: Symbol('TableInnerRowContext'),
   TabsContext: Symbol('TabsContext'),
   TreeContext: Symbol('TreeContext'),
   ProFormContext: Symbol('ProFormContext'),

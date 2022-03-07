@@ -11,7 +11,7 @@ export interface PopoverProps extends AbstractTooltipProps {
 export default class Popover extends Component<PopoverProps, {}> {
   static displayName = 'Popover';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

@@ -4,7 +4,7 @@ import moment from 'moment';
 class Header extends Component {
   static defaultProps = {
     inputReadOnly: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -112,7 +112,7 @@ class Header extends Component {
     this.setState({
       invalid: false,
     });
-  }
+  };
 
   onKeyDown = (e) => {
     const { onEsc, onKeyDown } = this.props;
@@ -121,24 +121,28 @@ class Header extends Component {
     }
 
     onKeyDown(e);
-  }
+  };
 
   onClear = () => {
     this.setState({ str: '' });
     this.props.onClear();
-  }
+  };
 
   getClearButton() {
-    const { prefixCls, allowEmpty } = this.props;
+    const { prefixCls, allowEmpty, clearIcon } = this.props;
     if (!allowEmpty) {
       return null;
     }
-    return (<a
-      className={`${prefixCls}-clear-btn`}
-      role="button"
-      title={this.props.clearText}
-      onMouseDown={this.onClear}
-    />);
+    return (
+      <a
+        role="button"
+        className={`${prefixCls}-clear-btn`}
+        title={this.props.clearText}
+        onMouseDown={this.onClear}
+      >
+        {clearIcon || <i className={`${prefixCls}-clear-btn-icon`} />}
+      </a>
+    );
   }
 
   getProtoValue() {

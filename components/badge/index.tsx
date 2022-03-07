@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, memo, ReactNode, useContext, useMemo, useRef } from 'react';
-import CSSMotion from 'rc-motion';
 import classNames from 'classnames';
 import defaultTo from 'lodash/defaultTo';
 import ScrollNumber from './ScrollNumber';
@@ -7,6 +6,7 @@ import { isPresetColor, PresetColorType, PresetStatusColorType } from '../_util/
 import { LiteralUnion } from '../_util/type';
 import { cloneElement } from '../_util/reactNode';
 import ConfigContext from '../config-provider/ConfigContext';
+import Animate from '../animate';
 
 export { ScrollNumberProps } from './ScrollNumber';
 
@@ -51,7 +51,10 @@ const Badge: FunctionComponent<BadgeProps> = function Badge({
 }) {
   const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('badge', customizePrefixCls);
-
+  const scrollNumberPrefixCls = getPrefixCls(
+    'scroll-number',
+    customizeScrollNumberPrefixCls,
+  );
   // ================================ Misc ================================
   const numberedDisplayCount = (
     (count as number) > (overflowCount as number) ? `${overflowCount}+` : count
@@ -90,6 +93,8 @@ const Badge: FunctionComponent<BadgeProps> = function Badge({
   if (!isHidden) {
     isDotRef.current = showAsDot;
   }
+
+  const isDot = isDotRef.current;
 
   // =============================== Styles ===============================
   const mergedStyle = useMemo<CSSProperties>(() => {
@@ -134,10 +139,14 @@ const Badge: FunctionComponent<BadgeProps> = function Badge({
     [`${prefixCls}-status-${color}`]: isPresetColor(color),
   });
 
-  const statusStyle: CSSProperties = {};
-  if (color && !isPresetColor(color)) {
-    statusStyle.background = color;
-  }
+  const scrollNumberCls = classNames({
+    [`${prefixCls}-dot`]: isDot,
+    [`${prefixCls}-count`]: !isDot,
+    [`${prefixCls}-count-sm`]: size === 'small',
+    [`${prefixCls}-multiple-words`]: !isDot && displayCount && displayCount.toString().length > 1,
+    [`${prefixCls}-status-${status}`]: !!status,
+    [`${prefixCls}-status-${color}`]: isPresetColor(color),
+  });
 
   const badgeClassName = classNames(
     prefixCls,
@@ -147,6 +156,11 @@ const Badge: FunctionComponent<BadgeProps> = function Badge({
     },
     className,
   );
+
+  const statusStyle: CSSProperties = {};
+  if (color && !isPresetColor(color)) {
+    statusStyle.background = color;
+  }
 
   if (!children && hasStatus) {
     const statusTextColor = mergedStyle.color;
@@ -160,50 +174,36 @@ const Badge: FunctionComponent<BadgeProps> = function Badge({
     );
   }
 
+  let scrollNumberStyle: CSSProperties = { ...mergedStyle };
+  if (color && !isPresetColor(color)) {
+    scrollNumberStyle = scrollNumberStyle || {};
+    scrollNumberStyle.background = color;
+  }
+  const scrollNumber = isHidden ? null : (
+    <ScrollNumber
+      prefixCls={scrollNumberPrefixCls}
+      hidden={isHidden}
+      className={scrollNumberCls}
+      count={displayCount}
+      title={titleNode}
+      style={scrollNumberStyle}
+      key="scrollNumber"
+    >
+      {displayNode}
+    </ScrollNumber>
+  );
+
   return (
     <span {...restProps} className={badgeClassName}>
       {children}
-      <CSSMotion visible={!isHidden} motionName={`${prefixCls}-zoom`} motionAppear={false}>
-        {({ className: motionClassName }) => {
-          const scrollNumberPrefixCls = getPrefixCls(
-            'scroll-number',
-            customizeScrollNumberPrefixCls,
-          );
-
-          const isDot = isDotRef.current;
-
-          const scrollNumberCls = classNames({
-            [`${prefixCls}-dot`]: isDot,
-            [`${prefixCls}-count`]: !isDot,
-            [`${prefixCls}-count-sm`]: size === 'small',
-            [`${prefixCls}-multiple-words`]:
-            !isDot && displayCount && displayCount.toString().length > 1,
-            [`${prefixCls}-status-${status}`]: !!status,
-            [`${prefixCls}-status-${color}`]: isPresetColor(color),
-          });
-
-          let scrollNumberStyle: CSSProperties = { ...mergedStyle };
-          if (color && !isPresetColor(color)) {
-            scrollNumberStyle = scrollNumberStyle || {};
-            scrollNumberStyle.background = color;
-          }
-
-          return (
-            <ScrollNumber
-              prefixCls={scrollNumberPrefixCls}
-              show={!isHidden}
-              motionClassName={motionClassName}
-              className={scrollNumberCls}
-              count={displayCount}
-              title={titleNode}
-              style={scrollNumberStyle}
-              key="scrollNumber"
-            >
-              {displayNode}
-            </ScrollNumber>
-          );
-        }}
-      </CSSMotion>
+      <Animate
+        component=""
+        hiddenProp="hidden"
+        transitionName={children ? `${prefixCls}-zoom` : ''}
+        transitionAppear
+      >
+        {scrollNumber};
+      </Animate>
       {statusTextNode}
     </span>
   );

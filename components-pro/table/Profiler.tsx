@@ -9,7 +9,7 @@ export interface ProfilerProps {
 export default class Profiler extends PureComponent<ProfilerProps> {
   static displayName = 'Profiler';
 
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

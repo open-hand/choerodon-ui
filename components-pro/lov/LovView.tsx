@@ -38,7 +38,7 @@ export interface LovViewProps {
 }
 
 export default class LovView extends Component<LovViewProps> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

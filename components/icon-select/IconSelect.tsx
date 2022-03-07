@@ -26,7 +26,7 @@ export interface IconSelectState {
 export default class IconSelect extends Component<IconSelectProps, IconSelectState> {
   static displayName = 'IconSelect';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

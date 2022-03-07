@@ -16,7 +16,7 @@ import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigCont
 export { TreeData, TreeSelectProps } from './interface';
 
 export default class TreeSelect extends Component<TreeSelectProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

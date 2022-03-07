@@ -42,7 +42,7 @@ ReactDOM.render(
       <Input addonBefore={selectBefore} addonAfter={selectAfter} defaultValue="mysite" />
     </div>
     <div style={{ marginBottom: 16 }}>
-      <Input addonAfter={<Icon type="setting" />} label="mysite" />
+      <Input addonAfter={<Icon type="settings" />} label="mysite" />
     </div>
   </div>,
   mountNode,

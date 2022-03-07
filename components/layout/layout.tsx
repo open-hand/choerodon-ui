@@ -20,7 +20,7 @@ function generator({ displayName, suffixCls }: GeneratorProps) {
     return class Adapter extends PureComponent<BasicProps, any> {
       static displayName = displayName;
 
-      static get contextType() {
+      static get contextType(): typeof ConfigContext {
         return ConfigContext;
       }
 
@@ -38,7 +38,7 @@ function generator({ displayName, suffixCls }: GeneratorProps) {
         const { prefixCls: customizePrefixCls } = this.props;
         const { getPrefixCls } = this.context;
         return (
-          <BasicComponent {...this.props} prefixCls={getPrefixCls(suffixCls, customizePrefixCls)} />
+          <BasicComponent prefixCls={getPrefixCls(suffixCls, customizePrefixCls)} {...this.props} />
         );
       }
     };
@@ -56,7 +56,7 @@ function Basic(props: BasicProps) {
 }
 
 class BasicLayout extends PureComponent<BasicProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

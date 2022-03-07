@@ -28,7 +28,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
   return class PickerWrapper extends Component<any, any> {
     static displayName = 'PickerWrapper';
 
-    static get contextType() {
+    static get contextType(): typeof ConfigContext {
       return ConfigContext;
     }
 
@@ -44,6 +44,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       },
       locale: {},
       border: true,
+      layoutLayout: 'float',
     };
 
     context: ConfigContextValue;
@@ -115,7 +116,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       });
       const pickerWrapperInputClass = classNames(`${inputPrefixCls}-wrapper`, {
         [`${inputPrefixCls}-disabled`]: props.disabled,
-        [`${inputPrefixCls}-has-border`]: props.border,
+        [`${inputPrefixCls}-has-border`]: props.border && props.layoutLayout === 'float',
       });
 
       const timeFormat = (props.showTime && props.showTime.format) || 'HH:mm:ss';

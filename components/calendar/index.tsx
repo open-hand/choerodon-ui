@@ -6,6 +6,8 @@ import Header from './Header';
 import enUS from './locale/en_US';
 import FullCalendar from '../rc-components/calendar/FullCalendar';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { RadioProps } from '../radio';
+import { SelectProps } from '../select';
 
 export { HeaderProps } from './Header';
 
@@ -20,6 +22,8 @@ export type CalendarMode = 'month' | 'year';
 
 export interface CalendarProps {
   prefixCls?: string;
+  selectProps?: SelectProps;
+  radioProps?: RadioProps;
   className?: string;
   value?: Moment;
   defaultValue?: Moment;
@@ -45,7 +49,7 @@ export interface CalendarState {
 export default class Calendar extends Component<CalendarProps, CalendarState> {
   static displayName = 'Calendar';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -206,6 +210,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
           onTypeChange={this.onHeaderTypeChange}
           onValueChange={this.onHeaderValueChange}
           validRange={props.validRange}
+          selectProps={props.selectProps}
+          radioProps={props.radioProps}
         />
         <FullCalendar
           {...props}

@@ -30,6 +30,7 @@ export interface TabsContextValue {
   tabTitleEditable?: boolean | undefined;
   tabCountHideable?: boolean | undefined;
   defaultChangeable?: boolean | undefined;
+  rippleDisabled?: boolean | undefined;
 }
 
 const TabsContext = getContext<TabsContextValue>(Symbols.TabsContext, {

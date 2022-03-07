@@ -1,7 +1,7 @@
 import React, { Component, MouseEventHandler, ReactNode } from 'react';
 import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import Icon from '../icon';
-import Button from '../button';
+import Button, { ButtonProps } from '../button';
 import { ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
@@ -15,6 +15,9 @@ export interface PopconfirmProps extends AbstractTooltipProps {
   okText?: ReactNode;
   okType?: ButtonType;
   cancelText?: ReactNode;
+  iconType?: string;
+  okButtonProps?: ButtonProps;
+  cancelButtonProps?: ButtonProps;
 }
 
 export interface PopconfirmState {
@@ -29,7 +32,7 @@ export interface PopconfirmLocale {
 export default class Popconfirm extends Component<PopconfirmProps, PopconfirmState> {
   static displayName = 'Popconfirm';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -38,6 +41,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     placement: 'top',
     trigger: 'click',
     okType: 'primary',
+    iconType: 'warning',
   };
 
   context: ConfigContextValue;
@@ -101,19 +105,19 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
   };
 
   renderOverlayWithLocale = (popconfirmLocale: PopconfirmLocale) => {
-    const { title, cancelText, okText, okType } = this.props;
+    const { title, cancelText, okText, okType, iconType, okButtonProps, cancelButtonProps } = this.props;
     const prefixCls = this.getPrefixCls();
     return (
       <div className={`${prefixCls}-inner-content`}>
         <div className={`${prefixCls}-message`}>
-          <Icon type="warning" />
+          <Icon type={iconType!} />
           <div className={`${prefixCls}-message-title`}>{typeof title === 'function' ? title() : title}</div>
         </div>
         <div className={`${prefixCls}-buttons`}>
-          <Button onClick={this.onCancel} size={Size.small}>
+          <Button {...okButtonProps} onClick={this.onCancel} size={Size.small}>
             {cancelText || popconfirmLocale.cancelText}
           </Button>
-          <Button onClick={this.onConfirm} type={okType} size={Size.small}>
+          <Button {...cancelButtonProps} onClick={this.onConfirm} type={okType} size={Size.small}>
             {okText || popconfirmLocale.okText}
           </Button>
         </div>

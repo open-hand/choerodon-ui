@@ -1,6 +1,7 @@
 import React, { HTMLAttributes, PureComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isNumber from 'lodash/isNumber';
 import Icon from '../icon';
 import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
 import LayoutContext, { LayoutContextValue } from './LayoutContext';
@@ -31,6 +32,8 @@ const dimensionMap = {
 
 export type CollapseType = 'clickTrigger' | 'responsive';
 
+export type SiderTheme = 'light' | 'dark';
+
 export interface SiderProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
   collapsible?: boolean;
@@ -42,6 +45,8 @@ export interface SiderProps extends HTMLAttributes<HTMLDivElement> {
   width?: number | string;
   collapsedWidth?: number | string;
   breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  theme?: SiderTheme;
+  onBreakpoint?: (broken: boolean) => void;
 }
 
 export interface SiderState {
@@ -65,7 +70,7 @@ const generateId = (() => {
 export default class Sider extends PureComponent<SiderProps, SiderState> {
   static displayName = 'LayoutSider';
 
-  static get contextType() {
+  static get contextType(): typeof LayoutContext {
     return LayoutContext;
   }
 
@@ -78,6 +83,7 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
     width: 200,
     collapsedWidth: 80,
     style: {},
+    theme: 'dark' as SiderTheme,
   };
 
   context: LayoutContextValue;
@@ -154,6 +160,10 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
 
   responsiveHandler = (event: MediaQueryListEvent) => {
     this.setState({ below: event.matches });
+    const { onBreakpoint } = this.props;
+    if (onBreakpoint) {
+      onBreakpoint(event.matches);
+    }
     const { collapsed } = this.state;
     if (collapsed !== event.matches) {
       this.setCollapsed(event.matches, 'responsive');
@@ -186,6 +196,7 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
     const {
       prefixCls: customizePrefixCls,
       className,
+      theme,
       collapsible,
       reverseArrow,
       trigger,
@@ -198,11 +209,13 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
     const { collapsed, below } = this.state;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('layout-sider', customizePrefixCls);
-    const divProps = omit(others, ['collapsed', 'defaultCollapsed', 'onCollapse', 'breakpoint']);
-    const siderWidth = collapsed ? collapsedWidth : width;
+    const divProps = omit(others, ['collapsed', 'defaultCollapsed', 'onCollapse', 'breakpoint', 'onBreakpoint']);
+    const rawWidth = collapsed ? collapsedWidth : width;
+    // use "px" as fallback unit for width
+    const siderWidth = isNumber(rawWidth) ? `${rawWidth}px` : String(rawWidth);
     // special trigger when collapsedWidth == 0
     const zeroWidthTrigger =
-      collapsedWidth === 0 || collapsedWidth === '0' || collapsedWidth === '0px' ? (
+      parseFloat(String(collapsedWidth || 0)) === 0 ? (
         <span onClick={this.toggle} className={`${prefixCls}-zero-width-trigger`}>
           <Icon type="bars" />
         </span>
@@ -214,29 +227,27 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
     const status = collapsed ? 'collapsed' : 'expanded';
     const defaultTrigger = iconObj[status];
     const triggerDom =
-      trigger !== null
-        ? zeroWidthTrigger || (
-          <div
-            className={`${prefixCls}-trigger`}
-            onClick={this.toggle}
-            style={{ width: siderWidth }}
-          >
-            {trigger || defaultTrigger}
-          </div>
-        )
-        : null;
+      trigger !== null ? zeroWidthTrigger || (
+        <div
+          className={`${prefixCls}-trigger`}
+          onClick={this.toggle}
+          style={{ width: siderWidth }}
+        >
+          {trigger || defaultTrigger}
+        </div>
+      ) : null;
     const divStyle = {
       ...style,
-      flex: `0 0 ${siderWidth}px`,
-      maxWidth: `${siderWidth}px`, // Fix width transition bug in IE11
-      minWidth: `${siderWidth}px`,
-      width: `${siderWidth}px`,
+      flex: `0 0 ${siderWidth}`,
+      maxWidth: siderWidth, // Fix width transition bug in IE11
+      minWidth: siderWidth,
+      width: siderWidth,
     };
-    const siderCls = classNames(className, prefixCls, {
+    const siderCls = classNames(className, prefixCls, `${prefixCls}-${theme}`, {
       [`${prefixCls}-collapsed`]: !!collapsed,
       [`${prefixCls}-has-trigger`]: collapsible && trigger !== null && !zeroWidthTrigger,
       [`${prefixCls}-below`]: !!below,
-      [`${prefixCls}-zero-width`]: siderWidth === 0 || siderWidth === '0' || siderWidth === '0px',
+      [`${prefixCls}-zero-width`]: parseFloat(siderWidth) === 0,
     });
     return (
       <LayoutSiderContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>

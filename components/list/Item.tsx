@@ -55,11 +55,7 @@ function getGrid(grid: ListGridType, t: ColumnType) {
   return grid[t] && Math.floor(24 / grid[t]!);
 }
 
-export interface ListItemComponent extends FunctionComponent<ListItemProps> {
-  Meta: typeof Meta;
-}
-
-const ListItem = function ListItem(props) {
+const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
   const { grid, getPrefixCls } = useContext(ListContext);
   const {
     prefixCls: customizePrefixCls,
@@ -142,11 +138,13 @@ const ListItem = function ListItem(props) {
   );
 
   return mainContent;
-} as ListItemComponent;
+};
 
 
 ListItem.displayName = 'ListItem';
 
-ListItem.Meta = Meta;
+export type ListItemComponent = typeof ListItem & { Meta: typeof Meta };
 
-export default ListItem;
+(ListItem as ListItemComponent).Meta = Meta;
+
+export default ListItem as ListItemComponent;

@@ -2,7 +2,6 @@ import React, { cloneElement } from 'react';
 import createReactClass from 'create-react-class';
 import AsyncValidator from 'async-validator';
 import get from 'lodash/get';
-import has from 'lodash/has';
 import set from 'lodash/set';
 import createFieldsStore from './createFieldsStore';
 import warning from '../../_util/warning';
@@ -128,10 +127,13 @@ function createBaseForm(option = {}, mixins = []) {
           this.cachedBind[name] = {};
         }
         const cache = this.cachedBind[name];
-        if (!cache[action]) {
-          cache[action] = fn.bind(this, name, action);
+        if (!cache[action] || cache[action].oriFn !== fn) {
+          cache[action] = {
+            fn: fn.bind(this, name, action),
+            oriFn: fn,
+          };
         }
-        return cache[action];
+        return cache[action].fn;
       },
 
       recoverClearedField(name) {
@@ -170,6 +172,7 @@ function createBaseForm(option = {}, mixins = []) {
           fieldMeta.ref = fieldElem.ref;
           return cloneElement(fieldElem, {
             ...props,
+            form: this,
             ...this.fieldsStore.getFieldValuePropValue(fieldMeta),
           });
         };
@@ -254,7 +257,7 @@ function createBaseForm(option = {}, mixins = []) {
       },
 
       getRules(fieldMeta, action) {
-        const actionRules = fieldMeta.validate.filter((item) => {
+        const actionRules = (fieldMeta.validate || []).filter((item) => {
           return !action || item.trigger.indexOf(action) >= 0;
         }).map((item) => item.rules);
         return flattenArray(actionRules);
@@ -281,6 +284,14 @@ function createBaseForm(option = {}, mixins = []) {
           names.forEach(name => delete this.clearedFieldMetaCache[name]);
         } else {
           this.clearedFieldMetaCache = {};
+        }
+      },
+
+      registerField(name, fieldOption = {}) {
+        const { fieldsMeta } = this.fieldsStore;
+        const isRegistered = fieldsMeta[name];
+        if (!isRegistered) {
+          return this.getFieldProps(name, fieldOption);
         }
       },
 
@@ -387,7 +398,8 @@ function createBaseForm(option = {}, mixins = []) {
           if (errors && errors.length) {
             errors.forEach((e) => {
               const fieldName = e.field;
-              if (!has(errorsGroup, fieldName)) {
+              const field = get(errorsGroup, fieldName);
+              if (typeof field !== 'object' || Array.isArray(field)) {
                 set(errorsGroup, fieldName, { errors: [] });
               }
               const fieldErrors = get(errorsGroup, fieldName.concat('.errors'));

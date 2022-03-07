@@ -14,6 +14,7 @@ const ExpandIcon = function ExpandIcon(props) {
   if (needIndentSpaced) {
     return <span className={`${prefixCls}-expand-icon ${prefixCls}-spaced`} />;
   }
+  return null;
 };
 
 ExpandIcon.displayName = 'RcExpandIcon';

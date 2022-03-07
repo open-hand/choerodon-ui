@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { connect } from 'mini-store';
+import classNames from 'classnames';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableFooter from './TableFooter';
@@ -9,7 +10,7 @@ import TableContext from './TableContext';
 
 const BaseTable = function BaseTable(props) {
   const table = useContext(TableContext);
-  const { components } = table;
+  const { columnManager, components } = table;
   const {
     prefixCls,
     scroll,
@@ -25,20 +26,26 @@ const BaseTable = function BaseTable(props) {
     onRowMouseLeave,
     onRow,
   } = table.props;
-  const { store, expander, tableClassName, hasHead, hasBody, hasFoot, fixed, columns, getRowKey, isAnyColumnsFixed } = props;
+  const { store, expander, tableClassName, hasHead, hasBody, hasFoot, fixed, getRowKey, isAnyColumnsFixed } = props;
   const tableStyle = {};
 
-  const handleRowHover = useContext((isHover, key) => {
+  const getColumns = (cols = props.columns || []) => {
+    return cols.map(column => ({
+      ...column,
+      className:
+        !!column.fixed && !fixed
+          ? classNames(`${prefixCls}-fixed-columns-in-body`, column.className)
+          : column.className,
+    }));
+  };
+
+  const handleRowHover = useCallback((isHover, key) => {
     store.setState({
       currentHoverKey: isHover ? key : null,
     });
   }, [store]);
 
-  const renderRows = (renderData, indent, ancestorKeys = []) => {
-    const { columnManager } = table;
-
-    const rows = [];
-
+  const renderRows = (renderData, indent, rows = [], ancestorKeys = []) => {
     for (let i = 0; i < renderData.length; i++) {
       const record = renderData[i];
       const key = getRowKey(record, i);
@@ -57,16 +64,17 @@ const BaseTable = function BaseTable(props) {
       } else if (fixed === 'right') {
         leafColumns = columnManager.rightLeafColumns();
       } else {
-        leafColumns = columnManager.leafColumns();
+        leafColumns = getColumns(columnManager.leafColumns());
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
+      const rowIndex = rows.filter(row => !row.props.expandedRow).length;
 
       const row = (
         <ExpandableRow
           {...expander.props}
           fixed={fixed}
-          index={i}
+          index={rowIndex}
           prefixCls={rowPrefixCls}
           record={record}
           key={key}
@@ -81,7 +89,7 @@ const BaseTable = function BaseTable(props) {
               indent={indent}
               className={className}
               record={record}
-              index={i}
+              index={rowIndex}
               prefixCls={rowPrefixCls}
               childrenColumnName={childrenColumnName}
               columns={leafColumns}
@@ -117,7 +125,6 @@ const BaseTable = function BaseTable(props) {
     }
     return rows;
   };
-
   if (!fixed && scroll.x) {
     // not set width, then use content fixed width
     if (scroll.x === true) {
@@ -142,6 +149,8 @@ const BaseTable = function BaseTable(props) {
     }
   }
 
+  const columns = getColumns();
+
   return (
     <Table className={tableClassName} style={tableStyle} key="table">
       <ColGroup columns={columns} fixed={fixed} />
@@ -151,7 +160,5 @@ const BaseTable = function BaseTable(props) {
     </Table>
   );
 };
-
-BaseTable.displayName = 'RcBaseTable';
 
 export default connect()(BaseTable);

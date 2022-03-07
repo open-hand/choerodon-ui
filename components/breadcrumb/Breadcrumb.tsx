@@ -2,6 +2,8 @@ import React, { Children, cloneElement, Component, CSSProperties, ReactNode } fr
 import classNames from 'classnames';
 import warning from '../_util/warning';
 import BreadcrumbItem, { BreadcrumbItemProps } from './BreadcrumbItem';
+import { DropDownProps } from '../dropdown';
+import { ListProps } from '../list';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface Route {
@@ -17,6 +19,8 @@ export interface BreadcrumbProps {
   itemRender?: (route: any, params: any, routes: Array<any>, paths: Array<string>) => ReactNode;
   style?: CSSProperties;
   className?: string;
+  dropdownProps?: Partial<DropDownProps>;
+  listProps?: Partial<ListProps>;
 }
 
 function getBreadcrumbName(route: Route, params: any) {
@@ -40,7 +44,7 @@ function defaultItemRender(route: Route, params: any, routes: Route[], paths: st
 export default class Breadcrumb extends Component<BreadcrumbProps, any> {
   static displayName = 'Breadcrumb';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -71,6 +75,8 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
       params = {},
       children,
       itemRender = defaultItemRender,
+      dropdownProps,
+      listProps,
     } = this.props;
     const { getPrefixCls } = this.context;
     if (routes && routes.length > 0) {
@@ -85,7 +91,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
           paths.push(path);
         }
         return (
-          <BreadcrumbItem separator={separator} key={route.breadcrumbName || path}>
+          <BreadcrumbItem prefixCls={prefixCls} dropdownProps={dropdownProps} listProps={listProps} separator={separator} key={route.breadcrumbName || path}>
             {itemRender(route, params, routes!, paths)}
           </BreadcrumbItem>
         );
@@ -100,6 +106,9 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
           'Breadcrumb only accepts Breadcrumb.Item as it\'s children',
         );
         return cloneElement<BreadcrumbItemProps>(element, {
+          prefixCls,
+          dropdownProps,
+          listProps,
           separator,
           key: index,
         });

@@ -51,7 +51,7 @@ const propTypeKeys = [
 ];
 
 class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

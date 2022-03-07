@@ -14,7 +14,7 @@ function formatValue(value: Moment | null, format: string): string {
 }
 
 export default class WeekPicker extends Component<any, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

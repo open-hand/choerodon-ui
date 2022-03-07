@@ -198,6 +198,7 @@ export default class Rate extends Component {
         <Star
           ref={this.saveRef(index)}
           index={index}
+          count={count}
           disabled={disabled}
           prefixCls={`${prefixCls}-star`}
           allowHalf={allowHalf}
@@ -220,6 +221,7 @@ export default class Rate extends Component {
         onBlur={disabled ? null : this.onBlur}
         onKeyDown={disabled ? null : this.onKeyDown}
         ref={this.saveRate}
+        role="radiogroup"
       >
         {stars}
       </ul>

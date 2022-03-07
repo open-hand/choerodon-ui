@@ -1,7 +1,7 @@
 import React, { Component, CSSProperties } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import shallowequal from 'lodash/isEqual';
+import shallowequal from 'shallowequal';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import getScroll from '../_util/getScroll';
@@ -64,7 +64,7 @@ export interface AffixState {
 export default class Affix extends Component<AffixProps, AffixState> {
   static displayName = 'Affix';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

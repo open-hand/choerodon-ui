@@ -249,7 +249,7 @@ export interface ViewComponentProps
 
 /* eslint-disable react/no-unused-prop-types */
 export default class ViewComponent<P extends ViewComponentProps, C extends ConfigContextValue = ConfigContextValue> extends Component<P, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

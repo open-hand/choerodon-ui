@@ -5,7 +5,7 @@ import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigConte
 import { EventManager } from 'choerodon-ui/dataset';
 import { getMousePosition } from '../util';
 
-export type MousePosition = { x: number; y: number };
+export type MousePosition = { x: number; y: number; vw: number; vh: number };
 
 export interface ModalContainerState {
   modals: ModalProps[];

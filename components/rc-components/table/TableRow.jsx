@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'mini-store';
+import ResizeObserver from 'resize-observer-polyfill';
 import TableCell from './TableCell';
 import warning from '../../_util/warning';
+import TableRowContext, { InnerRowCtx } from './TableRowContext';
 
 class TableRow extends Component {
   static defaultProps = {
@@ -24,17 +26,30 @@ class TableRow extends Component {
     super(props);
 
     this.shouldRender = props.visible;
+    this.resizeObserver = null;
+    this.state = {};
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.visible || (!prevState.visible && nextProps.visible)) {
+      return {
+        shouldRender: true,
+        visible: nextProps.visible,
+      };
+    }
+    return {
+      visible: nextProps.visible,
+    };
   }
 
   componentDidMount() {
-    if (this.shouldRender) {
+    if (this.state.shouldRender) {
       this.saveRowRef();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.visible || (!this.props.visible && nextProps.visible)) {
-      this.shouldRender = true;
+      if (this.rowRef) {
+        this.resizeObserver = new ResizeObserver(this.syncRowHeight);
+        const dom = ReactDOM.findDOMNode(this);
+        this.resizeObserver.observe(dom);
+      }
     }
   }
 
@@ -43,8 +58,15 @@ class TableRow extends Component {
   }
 
   componentDidUpdate() {
-    if (this.shouldRender && !this.rowRef) {
+    if (this.state.shouldRender && !this.rowRef) {
       this.saveRowRef();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      delete this.resizeObserver;
     }
   }
 
@@ -89,19 +111,29 @@ class TableRow extends Component {
     const { store, rowKey } = this.props;
     let { expandedRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
-    expandedRowsHeight = {
-      ...expandedRowsHeight,
-      [rowKey]: height,
-    };
-    store.setState({ expandedRowsHeight });
+    const oldHeight = expandedRowsHeight && expandedRowsHeight[rowKey];
+    if (oldHeight !== height) {
+      expandedRowsHeight = {
+        ...expandedRowsHeight,
+        [rowKey]: height,
+      };
+      store.setState({ expandedRowsHeight });
+    }
   }
 
   setRowHeight() {
-    const { store, index } = this.props;
-    const fixedColumnsBodyRowsHeight = store.getState().fixedColumnsBodyRowsHeight.slice();
+    const { store, rowKey } = this.props;
+    const { fixedColumnsBodyRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
-    fixedColumnsBodyRowsHeight[index] = height;
-    store.setState({ fixedColumnsBodyRowsHeight });
+    const oldHeight = fixedColumnsBodyRowsHeight && fixedColumnsBodyRowsHeight[rowKey];
+    if (oldHeight !== height) {
+      store.setState({
+        fixedColumnsBodyRowsHeight: {
+          ...fixedColumnsBodyRowsHeight,
+          [rowKey]: height,
+        },
+      });
+    }
   }
 
   getStyle() {
@@ -120,7 +152,10 @@ class TableRow extends Component {
 
   saveRowRef() {
     this.rowRef = ReactDOM.findDOMNode(this);
+    this.syncRowHeight();
+  }
 
+  syncRowHeight = () => {
     const { isAnyColumnsFixed, fixed, expandedRow, ancestorKeys } = this.props;
 
     if (!isAnyColumnsFixed) {
@@ -134,10 +169,10 @@ class TableRow extends Component {
     if (!fixed && ancestorKeys.length >= 0) {
       this.setRowHeight();
     }
-  }
+  };
 
   render() {
-    if (!this.shouldRender) {
+    if (!this.state.shouldRender) {
       return null;
     }
 
@@ -145,6 +180,7 @@ class TableRow extends Component {
       prefixCls,
       columns,
       record,
+      rowKey,
       index,
       onRow,
       indent,
@@ -152,6 +188,7 @@ class TableRow extends Component {
       hovered,
       height,
       visible,
+      fixed,
       components,
       hasExpandIcon,
       renderExpandIcon,
@@ -180,17 +217,22 @@ class TableRow extends Component {
       );
 
       cells.push(
-        <TableCell
-          prefixCls={prefixCls}
-          record={record}
-          indentSize={indentSize}
-          indent={indent}
-          index={index}
-          column={column}
-          key={column.key || column.dataIndex}
-          expandIcon={hasExpandIcon(i) && renderExpandIcon()}
-          component={BodyCell}
-        />,
+        <TableRowContext.Consumer key={column.key || column.dataIndex}>
+          {(form) => (
+            <TableCell
+              prefixCls={prefixCls}
+              record={record}
+              indentSize={indentSize}
+              indent={indent}
+              form={form}
+              index={index}
+              column={column}
+              key={column.key || column.dataIndex}
+              expandIcon={hasExpandIcon(i) && renderExpandIcon()}
+              component={BodyCell}
+            />
+          )}
+        </TableRowContext.Consumer>,
       );
     }
 
@@ -208,25 +250,30 @@ class TableRow extends Component {
     style = { ...style, ...customStyle };
 
     return (
-      <BodyRow
-        onClick={this.onRowClick}
-        onDoubleClick={this.onRowDoubleClick}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        onContextMenu={this.onContextMenu}
-        className={rowClassName}
-        {...rowProps}
-        style={style}
-      >
-        {cells}
-      </BodyRow>
+      <InnerRowCtx.Provider value={{ syncRowHeight: this.syncRowHeight }}>
+        <BodyRow
+          onClick={this.onRowClick}
+          onDoubleClick={this.onRowDoubleClick}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          onContextMenu={this.onContextMenu}
+          className={rowClassName}
+          fixed={fixed}
+          record={record}
+          {...rowProps}
+          style={style}
+          data-row-key={rowKey}
+        >
+          {cells}
+        </BodyRow>
+      </InnerRowCtx.Provider>
     );
   }
 }
 
 function getRowHeight(state, props) {
   const { expandedRowsHeight, fixedColumnsBodyRowsHeight } = state;
-  const { fixed, index, rowKey } = props;
+  const { fixed, rowKey } = props;
 
   if (!fixed) {
     return null;
@@ -236,8 +283,8 @@ function getRowHeight(state, props) {
     return expandedRowsHeight[rowKey];
   }
 
-  if (fixedColumnsBodyRowsHeight[index]) {
-    return fixedColumnsBodyRowsHeight[index];
+  if (fixedColumnsBodyRowsHeight[rowKey]) {
+    return fixedColumnsBodyRowsHeight[rowKey];
   }
 
   return null;
@@ -248,9 +295,9 @@ export default connect((state, props) => {
   const { rowKey, ancestorKeys } = props;
   const visible = ancestorKeys.length === 0 || ancestorKeys.every(k => ~expandedRowKeys.indexOf(k));
 
-  return ({
+  return {
     visible,
     hovered: currentHoverKey === rowKey,
     height: getRowHeight(state, props),
-  });
+  };
 })(TableRow);

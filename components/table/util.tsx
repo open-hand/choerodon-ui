@@ -1,5 +1,8 @@
-import { Children, isValidElement, ReactChildren } from 'react';
+import { Children, Context, isValidElement, Key, ReactChildren } from 'react';
+import RcTableRowContext from '../rc-components/table/TableRowContext';
 import { ColumnProps } from './interface';
+
+export const TableRowContext: Context<any> = RcTableRowContext;
 
 export function flatArray(data: any[] = [], childrenName = 'children') {
   const result: any[] = [];
@@ -42,7 +45,7 @@ export function flatFilter<T>(
   tree: ColumnProps<T>[],
   callback: (node: ColumnProps<T>) => any,
 ): ColumnProps<T>[] {
-  return tree.reduce(
+  return tree.reduce<ColumnProps<T>[]>(
     (acc, node) => {
       if (callback(node)) {
         acc.push(node);
@@ -53,7 +56,7 @@ export function flatFilter<T>(
       }
       return acc;
     },
-    [] as ColumnProps<T>[],
+    [],
   );
 }
 
@@ -81,7 +84,7 @@ export function getLeafColumns<T>(columns: ColumnProps<T>[]) {
   return flatFilter(columns, c => !c.children);
 }
 
-export function getColumnKey<T>(column: ColumnProps<T>, index?: number) {
+export function getColumnKey<T>(column: ColumnProps<T>, index?: number): Key | undefined {
   return column.key || column.dataIndex || index;
 }
 
@@ -134,4 +137,12 @@ export function removeHiddenColumns<T>(columns: ColumnProps<T>[]) {
     }
     return true;
   });
+}
+
+export function getHeight(el: HTMLElement) {
+  return el.getBoundingClientRect().height;
+}
+
+export function isNumber(obj: any): boolean {
+  return typeof obj === 'number' && !isNaN(obj);
 }

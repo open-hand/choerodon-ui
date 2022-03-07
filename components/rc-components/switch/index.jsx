@@ -1,1 +1,3 @@
-module.exports = require('./Switch');
+import Switch from './Switch';
+
+export default Switch;

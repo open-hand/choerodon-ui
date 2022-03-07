@@ -269,7 +269,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
 }
 
 export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSetComponent<T, FormContextValue> {
-  static get contextType() {
+  static get contextType(): typeof FormContext {
     return FormContext;
   }
 

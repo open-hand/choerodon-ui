@@ -72,7 +72,7 @@ export interface CarouselProps {
 export default class Carousel extends Component<CarouselProps> {
   static displayName = 'Carousel';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

@@ -26,7 +26,7 @@ export default function ColGroup(props) {
     return (
       <col
         key={c.key || c.dataIndex}
-        style={{ width: c.width, minWidth: c.width }}
+        style={{ width: c.width, minWidth: c.minWidth || c.width }}
       />
     );
   });

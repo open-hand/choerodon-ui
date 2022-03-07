@@ -5,44 +5,58 @@ import classNames from 'classnames';
 import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
+import traverseFileTree from './traverseFileTree';
 
 class AjaxUploader extends Component {
-  state = { uid: getUid() }
+  state = { uid: getUid() };
 
-  reqs = {}
+  reqs = {};
 
   onChange = e => {
     const files = e.target.files;
     this.uploadFiles(files);
     this.reset();
-  }
+  };
 
-  onClick = () => {
+  onClick = (e) => {
     const el = this.fileInput;
     if (!el) {
       return;
     }
-    el.click();
-  }
+    if (e.target === el) return;
+    if (this.props.fileInputClick) {
+      this.props.fileInputClick(el);
+    } else {
+      el.click();
+    }
+  };
 
   onKeyDown = e => {
     if (e.key === 'Enter') {
       this.onClick();
     }
-  }
+  };
 
   onFileDrop = e => {
+    e.preventDefault();
+
     if (e.type === 'dragover') {
-      e.preventDefault();
       return;
     }
-    const files = Array.prototype.slice.call(e.dataTransfer.files).filter(
-      file => attrAccept(file, this.props.accept)
-    );
-    this.uploadFiles(files);
 
-    e.preventDefault();
-  }
+    if (this.props.directory) {
+      traverseFileTree(
+        e.dataTransfer.items,
+        this.uploadFiles,
+        _file => attrAccept(_file, this.props.accept),
+      );
+    } else {
+      const files = Array.prototype.slice.call(e.dataTransfer.files).filter(
+        file => attrAccept(file, this.props.accept),
+      );
+      this.uploadFiles(files);
+    }
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -53,13 +67,13 @@ class AjaxUploader extends Component {
     this.abort();
   }
 
-  uploadFiles(files) {
+  uploadFiles = (files) => {
     const postFiles = Array.prototype.slice.call(files);
     postFiles.forEach((file) => {
       file.uid = getUid();
       this.upload(file, postFiles);
     });
-  }
+  };
 
   upload(file, fileList) {
     const { props } = this;
@@ -73,10 +87,9 @@ class AjaxUploader extends Component {
       before.then((processedFile) => {
         const processedFileType = Object.prototype.toString.call(processedFile);
         if (processedFileType === '[object File]' || processedFileType === '[object Blob]') {
-          this.post(processedFile);
-        } else {
-          this.post(file);
+          return this.post(processedFile);
         }
+        return this.post(file);
       }).catch(e => {
         console && console.log(e); // eslint-disable-line
       });
@@ -86,39 +99,46 @@ class AjaxUploader extends Component {
   }
 
   post(file) {
-    const { requestFileKeys } = this.props;
     if (!this._isMounted) {
       return;
     }
     const { props } = this;
-    let { data } = props;
+    let { data, requestFileKeys } = props;
     const { onStart, onProgress } = props;
     if (typeof data === 'function') {
       data = data(file);
     }
-    const { uid } = file;
-    const request = props.customRequest || defaultRequest;
-    this.reqs[uid] = request({
-      action: props.action,
-      filename: props.name,
-      file,
-      data,
-      requestFileKeys, // 判断传递的是数据不是文件
-      headers: props.headers,
-      withCredentials: props.withCredentials,
-      onProgress: onProgress ? e => {
-        onProgress(e, file);
-      } : null,
-      onSuccess: (ret, xhr) => {
-        delete this.reqs[uid];
-        props.onSuccess(ret, file, xhr);
-      },
-      onError: (err, ret) => {
-        delete this.reqs[uid];
-        props.onError(err, ret, file);
-      },
+    new Promise(resolve => {
+      const { action } = props;
+      if (typeof action === 'function') {
+        return resolve(action(file));
+      }
+      resolve(action);
+    }).then(action => {
+      const { uid } = file;
+      const request = props.customRequest || defaultRequest;
+      this.reqs[uid] = request({
+        action,
+        filename: props.name,
+        file,
+        data,
+        requestFileKeys, // 判断传递的是数据不是文件
+        headers: props.headers,
+        withCredentials: props.withCredentials,
+        onProgress: onProgress ? e => {
+          onProgress(e, file);
+        } : null,
+        onSuccess: (ret, xhr) => {
+          delete this.reqs[uid];
+          props.onSuccess(ret, file, xhr);
+        },
+        onError: (err, ret) => {
+          delete this.reqs[uid];
+          props.onError(err, ret, file);
+        },
+      });
+      onStart(file);
     });
-    onStart(file);
   }
 
   reset() {
@@ -130,20 +150,16 @@ class AjaxUploader extends Component {
   abort(file) {
     const { reqs } = this;
     if (file) {
-      let uid = file;
-      if (file && file.uid) {
-        uid = file.uid;
-      }
-      if (reqs[uid]) {
+      const uid = file.uid ? file.uid : file;
+      if (reqs[uid] && reqs[uid].abort) {
         reqs[uid].abort();
-        delete reqs[uid];
       }
+      delete reqs[uid];
     } else {
-      Object.keys(reqs).forEach((uid) => {
-        if (reqs[uid]) {
+      Object.keys(reqs).forEach(uid => {
+        if (reqs[uid] && reqs[uid].abort) {
           reqs[uid].abort();
         }
-
         delete reqs[uid];
       });
     }
@@ -151,12 +167,12 @@ class AjaxUploader extends Component {
 
   saveFileInput = (node) => {
     this.fileInput = node;
-  }
+  };
 
   render() {
     const {
       component: Tag, prefixCls, className, disabled,
-      style, multiple, accept, children,
+      style, multiple, accept, children, directory,
     } = this.props;
     const cls = classNames({
       [prefixCls]: true,
@@ -183,6 +199,8 @@ class AjaxUploader extends Component {
           key={this.state.uid}
           style={{ display: 'none' }}
           accept={accept}
+          directory={directory ? 'directory' : null}
+          webkitdirectory={directory ? 'webkitdirectory' : null}
           multiple={multiple}
           onChange={this.onChange}
         />

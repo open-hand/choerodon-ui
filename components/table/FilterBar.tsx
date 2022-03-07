@@ -8,7 +8,7 @@ export interface FilterBarProps<T> {
   placeholder?: string;
   dataSource?: T[];
   filters?: string[];
-  columnFilters?: TableStateFilters;
+  columnFilters?: TableStateFilters<T>;
   multiple?: boolean;
   columns?: ColumnProps<T>[];
   onFilterSelectChange?: (filters?: any[]) => void;

@@ -21,7 +21,7 @@ export interface RateProps {
 export default class Rate extends Component<RateProps, any> {
   static displayName = 'Rate';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

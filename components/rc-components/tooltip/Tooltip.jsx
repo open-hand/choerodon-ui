@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Trigger from '../trigger';
 import { placements } from './placements';
+import Content from './Content';
 
 class Tooltip extends Component {
   static defaultProps = {
@@ -20,9 +21,14 @@ class Tooltip extends Component {
       <div className={`${prefixCls}-arrow ${prefixCls}-arrow-${theme}`} key="arrow">
         {arrowContent}
       </div>,
-      <div className={`${prefixCls}-inner ${prefixCls}-inner-${theme}`} key="content" id={id}>
-        {typeof overlay === 'function' ? overlay() : overlay}
-      </div>,
+      <Content
+        key="content"
+        trigger={this.trigger}
+        prefixCls={prefixCls}
+        id={id}
+        overlay={overlay}
+        theme={theme}
+      />,
     ];
   };
 
@@ -44,6 +50,7 @@ class Tooltip extends Component {
       prefixCls,
       children,
       onVisibleChange,
+      onVisibleBeforeChange,
       afterVisibleChange,
       transitionName,
       animation,
@@ -69,6 +76,7 @@ class Tooltip extends Component {
         popupPlacement={placement}
         popupAlign={align}
         getPopupContainer={getTooltipContainer}
+        beforePopupVisibleChange={onVisibleBeforeChange}
         onPopupVisibleChange={onVisibleChange}
         afterPopupVisibleChange={afterVisibleChange}
         popupTransitionName={transitionName}

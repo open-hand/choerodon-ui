@@ -1,11 +1,25 @@
-import React, { ChangeEventHandler, Component, CSSProperties, FocusEvent, FormEventHandler, KeyboardEvent, ReactNode } from 'react';
+import React, {
+  ChangeEventHandler,
+  cloneElement,
+  Component,
+  CompositionEvent,
+  FocusEvent,
+  InputHTMLAttributes,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import classNames from 'classnames';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import Group from './Group';
 import Search from './Search';
 import TextArea from './TextArea';
 import Icon from '../icon';
 import { Size } from '../_util/enum';
+import { getIeVersion, isChrome } from '../_util/browser';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 function fixControlledValue(value: undefined | null | string) {
@@ -15,59 +29,103 @@ function fixControlledValue(value: undefined | null | string) {
   return value;
 }
 
-export interface AbstractInputProps {
-  prefixCls?: string;
-  className?: string;
-  defaultValue?: any;
-  value?: any;
-  tabIndex?: number;
-  style?: CSSProperties;
-  label?: ReactNode;
-  showLengthInfo?: boolean;
-  showPasswordEye?: boolean;
+function isNeedTriggerAfterComposition(): boolean {
+  return isChrome() || getIeVersion() === 11;
 }
 
-export interface InputProps extends AbstractInputProps {
-  placeholder?: string;
+function upperCaseString(value: any) {
+  if (isString(value)) {
+    return value.toUpperCase();
+  }
+  return undefined;
+}
+
+function lowerCaseString(value: any) {
+  if (isString(value)) {
+    return value.toLowerCase();
+  }
+  return undefined;
+}
+
+/**
+ * 判断是否全角
+ */
+function isDbc(s: string) {
+  let dbc = false;
+  if (isString(s)) {
+    for (let i = 0; i < s.length; i++) {
+      const c = s.charCodeAt(i);
+      if ((c > 65248) || (c === 12288)) {
+        dbc = true;
+        break;
+      }
+    }
+  }
+  return dbc;
+}
+
+/**
+ * 全角转半角
+ */
+function dbcToSbc(str: string) {
+  const result: string[] = [];
+  if (isString(str)) {
+    for (let i = 0; i < str.length; i++) {
+      const code = str.charCodeAt(i); // 获取当前字符的unicode编码
+      if (code >= 65281 && code <= 65373) { // 在这个unicode编码范围中的是所有的英文字母已及各种字符
+        result.push(String.fromCharCode(code - 65248)); // 把全角字符的unicode编码转换为对应半角字符的unicode码
+      } else if (code === 12288) { // 空格
+        result.push(' ');
+      } else {
+        result.push(str.charAt(i));
+      }
+    }
+  }
+  return result.join('');
+}
+
+export type InputSelection = {
+  start: number | null,
+  end: number | null,
+} | null;
+
+export interface AbstractInputProps<T> extends Omit<InputHTMLAttributes<T>, 'onChange' | 'onCopy' | 'size' | 'prefix'> {
+  prefixCls?: string;
+  label?: ReactNode;
+  showLengthInfo?: boolean | 'never';
+  showPasswordEye?: boolean | 'hold' | 'nohold';
+  labelLayout?: 'float' | 'none';
+  onChange?: ChangeEventHandler<T>;
+  onPressEnter?: KeyboardEventHandler<T>;
+}
+
+export interface InputProps extends AbstractInputProps<HTMLInputElement> {
   copy?: boolean;
-  type?: string;
-  id?: string;
-  name?: string;
   size?: Size;
-  maxLength?: number;
-  disabled?: boolean;
-  readOnly?: boolean;
   addonBefore?: ReactNode;
   addonAfter?: ReactNode;
-  onPressEnter?: FormEventHandler<HTMLInputElement>;
-  onKeyDown?: FormEventHandler<HTMLInputElement>;
-  onKeyUp?: FormEventHandler<HTMLInputElement>;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  onClick?: FormEventHandler<HTMLInputElement>;
-  onFocus?: FormEventHandler<HTMLInputElement>;
-  onBlur?: FormEventHandler<HTMLInputElement>;
-  onInput?: FormEventHandler<HTMLInputElement>;
   onCopy?: (value: any) => void;
-  autoComplete?: string;
   prefix?: ReactNode;
   suffix?: ReactNode;
-  spellCheck?: boolean;
-  autoFocus?: boolean;
   focused?: boolean;
   border?: boolean;
+  typeCase?: 'upper' | 'lower';
+  dbc2sbc?: boolean;
+  trimAll?: boolean;
+  trim?: boolean;
+  inputChinese?: boolean;
 }
 
 export interface InputState {
   value?: any;
   focused?: boolean;
-  showPasswordEye?: boolean;
   showPassword?: boolean;
 }
 
 export default class Input extends Component<InputProps, any> {
   static displayName = 'Input';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -84,6 +142,11 @@ export default class Input extends Component<InputProps, any> {
     showLengthInfo: true,
     showPasswordEye: false,
     border: true,
+    dbc2sbc: false,
+    trim: false,
+    trimAll: false,
+    inputChinese: false,
+    labelLayout: 'float',
   };
 
   context: ConfigContextValue;
@@ -92,11 +155,15 @@ export default class Input extends Component<InputProps, any> {
 
   input: HTMLInputElement;
 
-  rendered: HTMLDivElement;
+  rendered?: HTMLDivElement;
 
-  prefix: HTMLSpanElement;
+  prefix?: HTMLSpanElement;
 
-  suffix: HTMLSpanElement;
+  suffix?: HTMLSpanElement;
+
+  isOnComposition = false;
+
+  inputSelection: InputSelection;
 
   constructor(props, context: ConfigContextValue) {
     super(props, context);
@@ -106,16 +173,6 @@ export default class Input extends Component<InputProps, any> {
       showPassword: false,
     };
   }
-
-  handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const { onPressEnter, onKeyDown } = this.props;
-    if (e.keyCode === 13 && onPressEnter) {
-      onPressEnter(e);
-    }
-    if (onKeyDown) {
-      onKeyDown(e);
-    }
-  };
 
   componentDidMount() {
     const { focused, autoFocus } = this.props;
@@ -156,33 +213,64 @@ export default class Input extends Component<InputProps, any> {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: InputProps) {
+    const { inputSelection } = this;
+    const { value } = prevProps;
+    if (inputSelection && value && !this.isOnComposition) {
+      // 在 didUpdate 时根据情况恢复光标的位置
+      // 如果光标的位置小于值的长度，那么可以判定属于中间编辑的情况
+      // 此时恢复光标的位置
+      // 当如果不是 onComposiotionend 触发的事件时不用修改位置
+      if (inputSelection.start &&
+        this.transformValue(value).length &&
+        inputSelection.start < this.transformValue(value).length) {
+        const input = this.input;
+        input.selectionStart = inputSelection.start;
+        input.selectionEnd = inputSelection.end;
+        this.inputSelection = null;
+      }
+    }
     this.setRenderedStyle();
   }
 
   setRenderedStyle() {
     const { rendered, suffix, prefix } = this;
-    let suffixWidth: string;
-    let prefixWidth: string;
-    let margin = '0';
-    let width = '100%';
-    if (suffix && prefix) {
-      suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
-      prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
-      margin = `0 ${suffixWidth} 0 ${prefixWidth}`;
-      width = `calc(100% - ${suffixWidth} - ${prefixWidth})`;
-    } else if (suffix) {
-      suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
-      margin = `0 ${suffixWidth} 0 0`;
-      width = `calc(100% - ${suffixWidth})`;
-    } else if (prefix) {
-      prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
-      margin = `0 0 0 ${prefixWidth}`;
-      width = `calc(100% - ${prefixWidth})`;
+    if (rendered) {
+      let suffixWidth: string;
+      let prefixWidth: string;
+      let margin = '0';
+      let width = '100%';
+      if (suffix && prefix) {
+        suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
+        prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
+        margin = `0 ${suffixWidth} 0 ${prefixWidth}`;
+        width = `calc(100% - ${suffixWidth} - ${prefixWidth})`;
+      } else if (suffix) {
+        suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
+        margin = `0 ${suffixWidth} 0 0`;
+        width = `calc(100% - ${suffixWidth})`;
+      } else if (prefix) {
+        prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
+        margin = `0 0 0 ${prefixWidth}`;
+        width = `calc(100% - ${prefixWidth})`;
+      }
+      rendered.style.margin = margin;
+      rendered.style.width = width;
     }
-    rendered.style.margin = margin;
-    rendered.style.width = width;
   }
+
+  handleComposition = (e: CompositionEvent) => {
+    if (e.type === 'compositionend') {
+      // composition is end
+      this.isOnComposition = false;
+      if (isNeedTriggerAfterComposition()) {
+        this.handleChange(e);
+      }
+    } else {
+      // in composition
+      this.isOnComposition = true;
+    }
+  };
 
   handleFocus = (e: FocusEvent<HTMLInputElement>) => {
     const { onFocus, readOnly } = this.props;
@@ -197,23 +285,55 @@ export default class Input extends Component<InputProps, any> {
   };
 
   handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { onBlur, readOnly } = this.props;
+    const value = e.target.value;
+    const { onChange, trim, trimAll, onBlur, readOnly } = this.props;
     if (!readOnly) {
       this.setState({
         focused: false,
       });
     }
-    if (onBlur) {
+    let trimValue = value;
+    if (trim && isString(value)) {
+      trimValue = value.trim();
+    }
+    if (trimAll && isString(value)) {
+      trimValue = value.replace(/\s/g, '');
+    }
+    if (trimValue !== value) {
+      this.input.value = trimValue;
+      if (onChange && isFunction(onChange)) {
+        e.target.value = trimValue;
+        onChange(e);
+      }
+    }
+    if (onBlur && isFunction(onBlur)) {
       onBlur(e);
     }
   };
 
   handleChange = e => {
     const { onChange } = this.props;
+    if (!this.isOnComposition) {
+      // 在 onChange 时记录光标的位置
+      if (this.input) {
+        this.inputSelection = {
+          start: this.input.selectionStart,
+          end: this.input.selectionEnd,
+        };
+      }
+      const transformValue = this.transformValue(e.target.value);
+      if (transformValue !== e.target.value) {
+        e.target.value = this.transformValue(e.target.value);
+        if (this.inputSelection && (this.inputSelection.start || this.inputSelection.end)) {
+          e.target.setSelectionRange(this.inputSelection.start, this.inputSelection.end);
+          this.inputSelection = null;
+        }
+      }
+    }
     if (!('value' in this.props)) {
       this.setState({ value: e.target.value });
     }
-    if (onChange) {
+    if (onChange && isFunction(onChange)) {
       onChange(e);
     }
   };
@@ -232,6 +352,28 @@ export default class Input extends Component<InputProps, any> {
     this.setState({
       showPassword: !showPassword,
     });
+  };
+
+  handleShowPassword = () => {
+    this.setState({
+      showPassword: true,
+    });
+  };
+
+  handleHidePassword = () => {
+    this.setState({
+      showPassword: false,
+    });
+  };
+
+  handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const { onPressEnter, onKeyDown } = this.props;
+    if (e.keyCode === 13 && onPressEnter) {
+      onPressEnter(e);
+    }
+    if (onKeyDown) {
+      onKeyDown(e);
+    }
   };
 
   saveInput = (node: HTMLInputElement) => {
@@ -265,116 +407,95 @@ export default class Input extends Component<InputProps, any> {
   }
 
   getInputClassName() {
-    const { size, copy } = this.props;
+    const { size, copy, disabled, typeCase, showPasswordEye, type } = this.props;
     const prefixCls = this.getPrefixCls();
     return classNames(prefixCls, {
       [`${prefixCls}-sm`]: size === Size.small,
       [`${prefixCls}-lg`]: size === Size.large,
+      [`${prefixCls}-disabled`]: disabled,
+      [`${prefixCls}-upper`]: typeCase === 'upper',
+      [`${prefixCls}-lower`]: typeCase === 'lower',
       [`${prefixCls}-has-copy`]: copy,
+      [`${prefixCls}-has-eye`]: showPasswordEye && type === 'password',
     });
   }
 
-  renderCopyIcon() {
+  transformValue(v: any) {
+    const { typeCase, dbc2sbc = true, inputChinese } = this.props;
+    let value = v;
+    if (typeCase === 'upper') {
+      value = upperCaseString(v);
+    } else if (typeCase === 'lower') {
+      value = lowerCaseString(v);
+    }
+
+    if (dbc2sbc && isDbc(v)) {
+      value = dbcToSbc(v);
+    }
+
+    if (!inputChinese && isString(value)) {
+      value = value.replace(/[\u4e00-\u9fa5]/g, '');
+    }
+
+    return value;
+  }
+
+  renderCopyIcon(prefixCls?: string) {
     const { copy } = this.props;
-    const prefixCls = this.getPrefixCls();
     return copy ? (
-      <span className={`${prefixCls}-icon`} onClick={this.handleCopy}>
+      <span className={`${prefixCls}-icon `} onClick={this.handleCopy}>
         <Icon className={`${prefixCls}-icon-copy`} type="library_books" />
       </span>
     ) : null;
   }
 
-  renderShowPassword() {
-    const { type } = this.props;
-    const prefixCls = this.getPrefixCls();
-    const { showPassword } = this.state;
-    return type === 'password' ? (
-      <span className={`${prefixCls}-icon`} onClick={this.handleTogglePassword}>
-        <Icon
-          className={`${prefixCls}-icon-copy`}
-          type={showPassword ? 'visibility' : 'visibility_off'}
-        />
-      </span>
-    ) : null;
+  renderShowPassword(prefixCls?: string) {
+    const { type, showPasswordEye } = this.props;
+    if (showPasswordEye && type === 'password') {
+      const { showPassword } = this.state;
+      const props: any = {};
+      if (showPasswordEye === 'nohold') {
+        props.onMouseDown = this.handleShowPassword;
+        props.onMouseLeave = this.handleHidePassword;
+        props.onMouseUp = this.handleHidePassword;
+      } else {
+        props.onClick = this.handleTogglePassword;
+      }
+      return (
+        <span className={`${prefixCls}-icon ${prefixCls}-icon-eye`} {...props}>
+          <Icon
+            className={`${prefixCls}-icon-copy`}
+            type={showPassword ? 'visibility' : 'visibility_off'}
+          />
+        </span>
+      );
+    }
   }
 
-  renderInput() {
-    const { className, type } = this.props;
-    const { showPassword, value } = this.state;
-    // Fix https://fb.me/react-unknown-prop
-    const otherProps = omit<InputProps,
-      | 'placeholder'
-      | 'prefixCls'
-      | 'onPressEnter'
-      | 'addonBefore'
-      | 'addonAfter'
-      | 'prefix'
-      | 'suffix'
-      | 'label'
-      | 'copy'
-      | 'style'
-      | 'focused'
-      | 'showLengthInfo'
-      | 'showPasswordEye'
-      | 'size'
-      | 'border'>(this.props, [
-        'placeholder',
-        'prefixCls',
-        'onPressEnter',
-        'addonBefore',
-        'addonAfter',
-        'prefix',
-        'suffix',
-        'label',
-        'copy',
-        'style',
-        'focused',
-        'showLengthInfo',
-        'showPasswordEye',
-        'size',
-        'border',
-      ]);
-
-    return (
-      <input
-        {...otherProps}
-        value={fixControlledValue(value)}
-        className={classNames(this.getInputClassName(), className)}
-        onKeyDown={this.handleKeyDown}
-        ref={this.saveInput}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        type={showPassword ? 'text' : type}
-      />
-    );
-  }
-
-  getLengthInfo() {
+  getLengthInfo(prefixCls?: string) {
     const { maxLength, showLengthInfo } = this.props;
-    const prefixCls = this.getPrefixCls();
     const { value } = this.state;
     const inputLength = value ? value.length : 0;
-    return (maxLength && showLengthInfo) ||
-    (maxLength && maxLength > 0 && inputLength === maxLength) ? (
-        <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-      ) : null;
+    return showLengthInfo !== 'never' && ((maxLength && showLengthInfo === true) || (maxLength && maxLength > 0 && inputLength === maxLength)) ? (
+      <div className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    ) : null;
   }
 
   getLabel() {
     const { focused } = this.state;
     const { placeholder, label } = this.props;
-    if (!this.hasValue() && !focused && placeholder) {
+    if (!this.hasValue() && placeholder) {
+      if (focused) {
+        return label || placeholder;
+      }
       return placeholder;
     }
     return label;
   }
 
-  renderFloatLabel(): ReactNode {
+  renderFloatLabel(prefixCls?: string): ReactNode {
     const label = this.getLabel();
-    const { border } = this.props;
-    if (label && border) {
-      const prefixCls = this.getPrefixCls();
+    if (label) {
       return (
         <div className={`${prefixCls}-label-wrapper`}>
           <div className={`${prefixCls}-label`}>{label}</div>
@@ -383,9 +504,8 @@ export default class Input extends Component<InputProps, any> {
     }
   }
 
-  getSizeClassName(name: string) {
+  getSizeClassName(name: string, prefixCls?: string) {
     const { size } = this.props;
-    const prefixCls = this.getPrefixCls();
     return classNames(`${prefixCls}-${name}`, {
       [`${prefixCls}-${name}-sm`]: size === Size.small,
       [`${prefixCls}-${name}-lg`]: size === Size.large,
@@ -397,57 +517,220 @@ export default class Input extends Component<InputProps, any> {
     return value && value.length !== 0;
   }
 
-  renderPlaceholder() {
-    const { placeholder, border } = this.props;
-    if (!border && placeholder) {
-      const prefixCls = this.getPrefixCls();
+  renderPlaceholder(prefixCls?: string) {
+    const { placeholder, border, labelLayout } = this.props;
+    if (!border && placeholder && labelLayout === 'float') {
       return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }
   }
 
-  render() {
-    const props = this.props;
-    const { disabled, label, style, showPasswordEye, border } = this.props;
-    const prefixCls = this.getPrefixCls();
-    const { focused } = this.state;
+  renderLabeledIcon(children: ReactElement<any>, prefixCls?: string) {
+    const { props } = this;
+    const hasBorder = props.border && props.labelLayout === 'float';
+    const passwordEye = this.renderShowPassword(prefixCls);
+    const placeHolder = this.renderPlaceholder(prefixCls);
+    const copyIcon = this.renderCopyIcon(prefixCls);
+    const floatLabel = hasBorder && this.renderFloatLabel(prefixCls);
+    const { className } = props;
     const prefix = props.prefix ? (
-      <span ref={this.savePrefix} className={this.getSizeClassName('prefix')}>
+      <span className={`${prefixCls}-prefix`} ref={this.savePrefix}>
         {props.prefix}
       </span>
     ) : null;
-    const suffix = props.suffix ? (
-      <span ref={this.saveSuffix} className={this.getSizeClassName('suffix')}>
-        {props.suffix}
+
+    const $suffix = props.showPasswordEye === 'nohold' && passwordEye ? passwordEye : props.suffix;
+    const $passwordEye = props.showPasswordEye === 'nohold' ? undefined : passwordEye;
+    const suffix = $suffix ? (
+      <span className={`${prefixCls}-suffix`} ref={this.saveSuffix}>
+        {$suffix}
       </span>
     ) : null;
+    if (hasBorder) {
+      children = cloneElement<InputProps>(children, { className: classNames(children.props.className, className) });
+    }
+    if ($passwordEye || placeHolder || copyIcon || floatLabel) {
+      children = (
+        <div
+          className={this.getSizeClassName('rendered', prefixCls)}
+          ref={this.saveRenderedRef}
+        >
+          {placeHolder}
+          {children}
+          {floatLabel}
+          {copyIcon}
+          {$passwordEye}
+        </div>
+      );
+    }
 
-    const className = classNames(`${prefixCls}-wrapper`, {
+    if (prefix || suffix) {
+      const affixWrapperCls = classNames(this.getSizeClassName('affix-wrapper', prefixCls), {
+        [`${className}`]: className && !hasBorder,
+        [`${prefixCls}-has-border`]: hasBorder,
+      });
+      return (
+        <span
+          className={affixWrapperCls}
+          style={props.style}
+        >
+          {prefix}
+          {cloneElement(children, { style: null })}
+          {suffix}
+        </span>
+      );
+    }
+    if (hasBorder) {
+      return (
+        <span className={`${prefixCls}-has-border`} style={props.style}>
+          {cloneElement(children, { style: null })}
+        </span>
+      );
+    }
+    return cloneElement(children, { className: classNames(className, children.props.className), style: props.style });
+  }
+
+  renderInput(prefixCls?: string) {
+    const { labelLayout, type } = this.props;
+    const { value, showPassword } = this.state;
+    const omits = [
+      'prefixCls',
+      'onPressEnter',
+      'addonBefore',
+      'addonAfter',
+      'prefix',
+      'suffix',
+      'label',
+      'labelLayout',
+      'copy',
+      'style',
+      'focused',
+      'showLengthInfo',
+      'showPasswordEye',
+      'size',
+      'border',
+      'form',
+      'onChange',
+      'dbc2sbc',
+      'typeCase',
+      'trim',
+      'trimAll',
+      'inputChinese',
+      'type',
+    ];
+    if (labelLayout === 'float') {
+      omits.push('placeholder');
+    }
+    const otherProps: Omit<InputProps,
+      'prefixCls'
+      | 'onPressEnter'
+      | 'addonBefore'
+      | 'addonAfter'
+      | 'prefix'
+      | 'suffix'
+      | 'label'
+      | 'labelLayout'
+      | 'copy'
+      | 'style'
+      | 'focused'
+      | 'showLengthInfo'
+      | 'showPasswordEye'
+      | 'size'
+      | 'border'
+      | 'form'
+      | 'onChange'
+      | 'dbc2sbc'
+      | 'typeCase'
+      | 'trim'
+      | 'trimAll'
+      | 'inputChinese'
+      | 'type'
+      | 'placeholder'> = omit(this.props, omits);
+
+    return this.renderLabeledIcon(
+      <input
+        {...otherProps}
+        value={fixControlledValue(value)}
+        className={this.getInputClassName()}
+        onKeyDown={this.handleKeyDown}
+        ref={this.saveInput}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        onChange={this.handleChange}
+        onCompositionStart={this.handleComposition}
+        onCompositionUpdate={this.handleComposition}
+        onCompositionEnd={this.handleComposition}
+        type={showPassword ? 'text' : type}
+      />,
+      prefixCls,
+    );
+  }
+
+  getWrapperClassName(prefixCls?: string) {
+    const { disabled, label, prefix, suffix } = this.props;
+    const { focused } = this.state;
+    return classNames({
       [`${prefixCls}-has-value`]: this.hasValue(),
       [`${prefixCls}-focused`]: focused,
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-has-label`]: !!label,
       [`${prefixCls}-has-prefix`]: !!prefix,
       [`${prefixCls}-has-suffix`]: !!suffix,
-      [`${prefixCls}-has-border`]: border,
+    });
+  }
+
+  renderLabeledInput(children: ReactElement<any>, prefixCls?: string) {
+    const props = this.props;
+
+    const wrapperClassName = `${prefixCls}-group`;
+    const addonClassName = `${wrapperClassName}-addon`;
+    const addonBefore = props.addonBefore ? (
+      <span className={addonClassName}>
+        {props.addonBefore}
+      </span>
+    ) : null;
+
+    const addonAfter = props.addonAfter ? (
+      <span className={addonClassName}>
+        {props.addonAfter}
+      </span>
+    ) : null;
+    const lengthInfo = this.getLengthInfo(prefixCls);
+    const className = classNames(`${prefixCls}-wrapper`, this.getWrapperClassName(prefixCls), {
+      [wrapperClassName]: (addonBefore || addonAfter),
     });
 
-    return (
-      <span className={className} style={style}>
-        <div className={`${prefixCls}-content`}>
-          <div className={`${prefixCls}-rendered-wrapper`}>
-            {prefix}
-            <div className={this.getSizeClassName('rendered')} ref={this.saveRenderedRef}>
-              {this.renderPlaceholder()}
-              {this.renderInput()}
-              {this.renderFloatLabel()}
-              {this.renderCopyIcon()}
-              {showPasswordEye ? this.renderShowPassword() : null}
-            </div>
-            {suffix}
-          </div>
-          {this.getLengthInfo()}
-        </div>
-      </span>
-    );
+    const groupClassName = this.getSizeClassName('group-wrapper', prefixCls);
+
+    // Need another wrapper for changing display:table to display:inline-block
+    // and put style prop in wrapper
+    if (addonBefore || addonAfter) {
+      return (
+        <span
+          className={groupClassName}
+          style={props.style}
+        >
+          <span className={className}>
+            {addonBefore}
+            {cloneElement(children, { style: null })}
+            {addonAfter}
+          </span>
+          {lengthInfo}
+        </span>
+      );
+    }
+    if (lengthInfo) {
+      return (
+        <span className={className} style={props.style}>
+          {cloneElement(children, { style: null })}
+          {lengthInfo}
+        </span>
+      );
+    }
+    return cloneElement(children, { className: classNames(children.props.className, className) });
+  }
+
+  render() {
+    const prefixCls = this.getPrefixCls();
+    return this.renderLabeledInput(this.renderInput(prefixCls), prefixCls);
   }
 }

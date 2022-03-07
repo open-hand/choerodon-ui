@@ -12,10 +12,13 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { TransferDirection } from './enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { ButtonProps } from '../button/Button';
+import { InputProps } from '../input/Input';
 
 export { TransferListProps } from './list';
 export { TransferOperationProps } from './operation';
 export { TransferSearchProps } from './search';
+export { TransferDirection };
 
 export interface TransferItem {
   key: string;
@@ -26,6 +29,7 @@ export interface TransferItem {
 
 export interface TransferProps {
   prefixCls?: string;
+  checkboxPrefixCls?: string;
   className?: string;
   dataSource: TransferItem[];
   targetKeys?: string[];
@@ -35,6 +39,7 @@ export interface TransferProps {
   onSelectChange?: (sourceSelectedKeys: string[], targetSelectedKeys: string[]) => void;
   style?: CSSProperties;
   listStyle?: CSSProperties;
+  operationStyle?: CSSProperties;
   titles?: string[];
   operations?: string[] | ReactNode[];
   sortable?: boolean;
@@ -49,6 +54,8 @@ export interface TransferProps {
   onSearchChange?: (direction: TransferDirection, e: ChangeEvent<HTMLInputElement>) => void;
   lazy?: {} | boolean;
   onScroll?: (direction: TransferDirection, e: SyntheticEvent<HTMLDivElement>) => void;
+  inputProps?: InputProps;
+  buttonProps?: ButtonProps;
 }
 
 export interface TransferLocale {
@@ -60,7 +67,7 @@ export interface TransferLocale {
 }
 
 export default class Transfer extends Component<TransferProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -83,7 +90,7 @@ export default class Transfer extends Component<TransferProps, any> {
   splitedDataSource: {
     leftDataSource: TransferItem[];
     rightDataSource: TransferItem[];
-  } | null;
+  } | null = null;
 
   transferRef: HTMLElement | null = null;
 
@@ -106,11 +113,11 @@ export default class Transfer extends Component<TransferProps, any> {
     const { props } = this;
 
     if (nextProps.targetKeys !== props.targetKeys || nextProps.dataSource !== props.dataSource) {
-      // clear cached splited dataSource
+      // clear cached separated dataSource
       this.splitedDataSource = null;
 
       if (!nextProps.selectedKeys) {
-        // clear key nolonger existed
+        // clear key no longer existed
         // clear checkedKeys according to targetKeys
         const { dataSource, targetKeys = [] } = nextProps;
 
@@ -180,9 +187,9 @@ export default class Transfer extends Component<TransferProps, any> {
     const { rightFilter } = this.state;
     const { rightDataSource } = this.splitDataSource();
     if (filterOption && rightFilter) {
-      return  rightDataSource.filter(opt => filterOption(rightFilter, opt))
+      return rightDataSource.filter(opt => filterOption(rightFilter, opt));
     }
-    return rightDataSource
+    return rightDataSource;
   }
 
   moveTo = (direction: TransferDirection) => {
@@ -218,16 +225,16 @@ export default class Transfer extends Component<TransferProps, any> {
   sortTo = (direction: TransferDirection) => {
     const { prefixCls: customizePrefixCls } = this.props;
     const { highlightKey } = this.state;
-    const to = direction === TransferDirection.up ? -1 : 1
+    const to = direction === TransferDirection.up ? -1 : 1;
     const { rightDataSource } = this.splitDataSource();
 
     const mapRightKey = rightDataSource.map(x => x.key);
 
     const filterRightDataSource: TransferItem[] = this.computedRightDataSource;
     const filterCurrentIndex = filterRightDataSource.findIndex(x => x.key === highlightKey);
-    const sourceIndex = rightDataSource.findIndex(x => x.key === highlightKey)
+    const sourceIndex = rightDataSource.findIndex(x => x.key === highlightKey);
     const moveToOption = filterRightDataSource[filterCurrentIndex + to];
-    const moveToIndex = rightDataSource.findIndex(x => x.key === moveToOption.key)
+    const moveToIndex = rightDataSource.findIndex(x => x.key === moveToOption.key);
 
     arrayMove(mapRightKey, sourceIndex, moveToIndex);
     this.splitedDataSource = null;
@@ -265,14 +272,15 @@ export default class Transfer extends Component<TransferProps, any> {
 
   handleSelectChange(direction: TransferDirection, holder: string[]) {
     const { onSelectChange } = this.props;
-    const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     if (!onSelectChange) {
       return;
     }
 
     if (direction === TransferDirection.left) {
+      const { targetSelectedKeys } = this.state;
       onSelectChange(holder, targetSelectedKeys);
     } else {
+      const { sourceSelectedKeys } = this.state;
       onSelectChange(sourceSelectedKeys, holder);
     }
   }
@@ -410,10 +418,15 @@ export default class Transfer extends Component<TransferProps, any> {
       searchPlaceholder,
       body,
       footer,
+      style,
       listStyle,
+      operationStyle,
       filterOption,
       render,
       lazy,
+      buttonProps,
+      inputProps,
+      checkboxPrefixCls,
     } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('transfer', customizePrefixCls);
@@ -430,10 +443,10 @@ export default class Transfer extends Component<TransferProps, any> {
     const leftActive = targetSelectedKeys.length > 0;
     const rightActive = sourceSelectedKeys.length > 0;
 
-    const filterRightDataSource: TransferItem[] = this.computedRightDataSource
+    const filterRightDataSource: TransferItem[] = this.computedRightDataSource;
 
     const mapRightKey = filterRightDataSource.map(x => x.key);
-    const hasHighlight = !!highlightKey && mapRightKey.indexOf(highlightKey) > -1
+    const hasHighlight = !!highlightKey && mapRightKey.indexOf(highlightKey) > -1;
     const upActive = hasHighlight && mapRightKey.indexOf(highlightKey) !== 0;
     const downActive = hasHighlight && mapRightKey.indexOf(highlightKey) !== mapRightKey.length - 1;
     const cls = classNames(className, prefixCls);
@@ -442,6 +455,7 @@ export default class Transfer extends Component<TransferProps, any> {
     return (
       <div
         className={cls}
+        style={style}
         ref={dom => {
           this.transferRef = dom;
         }}
@@ -468,6 +482,8 @@ export default class Transfer extends Component<TransferProps, any> {
           footer={footer}
           lazy={lazy}
           onScroll={this.handleLeftScroll}
+          inputProps={inputProps}
+          checkboxPrefixCls={checkboxPrefixCls}
         />
         <Operation
           className={`${prefixCls}-operation`}
@@ -477,6 +493,8 @@ export default class Transfer extends Component<TransferProps, any> {
           leftActive={leftActive}
           leftArrowText={operations[1]}
           moveToLeft={this.moveToLeft}
+          buttonProps={buttonProps}
+          style={operationStyle}
         />
         <List
           prefixCls={`${prefixCls}-list`}
@@ -501,6 +519,8 @@ export default class Transfer extends Component<TransferProps, any> {
           footer={footer}
           lazy={lazy}
           onScroll={this.handleRightScroll}
+          inputProps={inputProps}
+          checkboxPrefixCls={checkboxPrefixCls}
         />
         {!!sortable && (
           <SortButton

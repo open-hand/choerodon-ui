@@ -2,7 +2,7 @@ import React, { memo, useRef } from 'react';
 import classnames from 'classnames';
 
 const PanelContent = function PanelContent(props) {
-  const { prefixCls, isInactive, children, destroyInactivePanel, forceRender } = props;
+  const { prefixCls, isInactive, children, destroyInactivePanel, forceRender, role } = props;
   const isActived = useRef();
   isActived.current = forceRender || isActived.current || !isInactive;
   if (!isActived.current) {
@@ -17,7 +17,7 @@ const PanelContent = function PanelContent(props) {
   return (
     <div
       className={contentCls}
-      role="tabpanel"
+      role={role}
     >
       {child}
     </div>
@@ -26,4 +26,4 @@ const PanelContent = function PanelContent(props) {
 
 PanelContent.displayName = 'RcPanelContent';
 
-export default memo(PanelContent, (props, nextProps) => props.isInactive && nextProps.isInactive);
+export default memo(PanelContent, (props, nextProps) => !props.forceRender && props.isInactive && nextProps.isInactive);

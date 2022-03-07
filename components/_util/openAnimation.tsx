@@ -1,10 +1,10 @@
 import cssAnimation from 'css-animation';
 import raf from 'raf';
 
-function animate(node: HTMLElement, show: boolean, done: () => void) {
+export function animate(node: HTMLElement, show: boolean, done: () => void, className) {
   let height: number;
   let requestAnimationFrameId: number;
-  return cssAnimation(node, 'c7n-motion-collapse', {
+  return cssAnimation(node, className, {
     start() {
       if (!show) {
         node.style.height = `${node.offsetHeight}px`;
@@ -37,13 +37,13 @@ function animate(node: HTMLElement, show: boolean, done: () => void) {
 
 const animation = {
   enter(node: HTMLElement, done: () => void) {
-    return animate(node, true, done);
+    return animate(node, true, done, 'c7n-motion-collapse');
   },
   leave(node: HTMLElement, done: () => void) {
-    return animate(node, false, done);
+    return animate(node, false, done, 'c7n-motion-collapse');
   },
   appear(node: HTMLElement, done: () => void) {
-    return animate(node, true, done);
+    return animate(node, true, done, 'c7n-motion-collapse');
   },
 };
 

@@ -159,7 +159,7 @@ export const SEARCHTEXT = '__SEARCHTEXT__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

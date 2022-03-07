@@ -1,12 +1,1 @@
-declare global {
-  interface Window {
-    ActiveXObject: any;
-  }
-}
-
-export default function isIE(): boolean {
-  if (window && !!window.ActiveXObject || 'ActiveXObject' in window) {
-    return true;
-  }
-  return false;
-}
+export { isIE as default } from 'choerodon-ui/lib/_util/browser';

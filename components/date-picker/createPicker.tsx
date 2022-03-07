@@ -21,7 +21,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
   return class CalenderWrapper extends Component<any, any> {
     static displayName = 'CalenderWrapper';
 
-    static get contextType() {
+    static get contextType(): typeof ConfigContext {
       return ConfigContext;
     }
 

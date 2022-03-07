@@ -2,7 +2,7 @@ import { Utils } from 'choerodon-ui/dataset';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { Sort } from './Attachment';
 
-const { formatFileSize } = Utils;
+const formatFileSize: typeof Utils.formatFileSize = Utils.formatFileSize;
 
 export {
   formatFileSize,

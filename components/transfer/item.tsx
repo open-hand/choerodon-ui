@@ -19,6 +19,7 @@ export default class Item extends Component<any, any> {
       isHighlight,
       prefixCls,
       onClick,
+      checkboxPrefixCls,
     } = this.props;
 
     const className = classNames({
@@ -33,7 +34,7 @@ export default class Item extends Component<any, any> {
         title={renderedText}
         onClick={item.disabled ? undefined : () => onClick(item)}
       >
-        <Checkbox checked={checked} disabled={item.disabled} />
+        <Checkbox prefixCls={checkboxPrefixCls} checked={checked} disabled={item.disabled} />
         <span>{renderedEl}</span>
       </li>
     );

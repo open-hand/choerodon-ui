@@ -1,4 +1,3 @@
-import { Component } from 'react';
+function Column() {}
 
-export default class Column extends Component {
-}
+export default Column;

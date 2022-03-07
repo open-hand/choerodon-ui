@@ -71,7 +71,7 @@ function getParagraphBasicProps(hasAvatar: boolean, hasTitle: boolean): Skeleton
 }
 
 class Skeleton extends React.Component<SkeletonProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

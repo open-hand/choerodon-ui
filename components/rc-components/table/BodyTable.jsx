@@ -9,9 +9,11 @@ export default function BodyTable(props) {
   const {
     columns,
     fixed,
+    resizable,
     tableClassName,
     getRowKey,
     handleBodyScroll,
+    handleWheel,
     expander,
     isAnyColumnsFixed,
   } = props;
@@ -19,8 +21,7 @@ export default function BodyTable(props) {
   let { useFixedHeader } = table.props;
   const bodyStyle = { ...table.props.bodyStyle };
   const innerBodyStyle = {};
-
-  if (scroll.x || fixed) {
+  if (scroll.x || fixed || resizable) {
     bodyStyle.overflowX = bodyStyle.overflowX || 'auto';
     // Fix weired webkit render bug
     bodyStyle.WebkitTransform = 'translate3d (0, 0, 0)';
@@ -81,6 +82,7 @@ export default function BodyTable(props) {
           className={`${prefixCls}-body-inner`}
           style={innerBodyStyle}
           ref={saveRef(refName)}
+          onWheel={handleWheel}
           onScroll={handleBodyScroll}
         >
           {baseTable}
@@ -95,6 +97,7 @@ export default function BodyTable(props) {
       className={`${prefixCls}-body`}
       style={bodyStyle}
       ref={saveRef('bodyTable')}
+      onWheel={handleWheel}
       onScroll={handleBodyScroll}
     >
       {baseTable}
