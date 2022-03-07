@@ -54,6 +54,17 @@ function findFieldObj(queryDataSet, data) {
     value = Object.values(data[1])[0];
   }
   const field = queryDataSet.getField(name);
+  if (field && field.get('lovCode')) {
+    const textField = field.get('textField');
+    const valueField = field.get('valueField');
+    return {
+      name,
+      value: {
+        [valueField]: value[valueField],
+        [textField]: value[textField],
+      },
+    };
+  }
   if (field && field.get('ignore') !== 'always') {
     return { name, value };
   }
@@ -88,7 +99,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
     const status = {};
     status[statusKey] = statusAdd;
     if (type !== 'edit') {
-      const conditionData = Object.entries(omit(queryDataSet.current.toData(true), ['__dirty']));
+      const conditionData = Object.entries(omit(queryDataSet.current.toData(), ['__dirty']));
       map(conditionData, data => {
         if (isSelect(data)) {
           const fieldObj = findFieldObj(queryDataSet, data);
@@ -102,11 +113,11 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
           }
         }
       });
-      // 加入空值勾选字段
       const hasValueFields = putData.map(pt => pt.fieldName);
       map(selectFields, fieldName => {
+        const value = queryDataSet.current.get(fieldName);
+        // 加入空值勾选字段
         if (!hasValueFields.includes(fieldName)) {
-          const value = queryDataSet.current.get(fieldName);
           putData.push({
             comparator: 'EQUAL',
             fieldName,
@@ -221,14 +232,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, Object.keys(initData));
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {});
+        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {});
+        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
@@ -391,14 +402,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
   }
 
   const handleSave = async () => {
-    const filterMenuRecord = filterMenuDataSet.current;
-    if (!filterMenuRecord || !filterMenuRecord.get('filterName')) {
+    const filterMenuRecord = filterMenuDataSet ? filterMenuDataSet.current : undefined;
+    if ((!filterMenuRecord || !filterMenuRecord.get('filterName')) && menuDataSet) {
       menuDataSet.create({});
       openModal('create');
     } else {
       const { current } = queryDataSet;
-      if (current) {
-        const conditionData = Object.entries(omit(current.toData(true), ['__dirty']));
+      if (current && conditionDataSet) {
+        const conditionData = Object.entries(omit(current.toData(), ['__dirty']));
         conditionDataSet.reset();
         conditionDataSet.map(record => {
           if (!selectFields || !selectFields.includes(record.get('fieldName'))) {
@@ -431,6 +442,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
           const status = {};
           const toJSONFields = conditionDataSet.toJSONData().map((condition) => (condition as { fieldName }).fieldName);
           status[statusKey] = statusAdd;
+          // 处理空值已勾选条件
           if (!toJSONFields.includes(fieldName)) {
             putData.push({
               comparator: 'EQUAL',
@@ -448,6 +460,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         if (res && res.success) {
           loadData(res.content ? res.content[0].searchId : undefined);
         }
+      } else {
+        dataSet.query();
       }
     }
   };

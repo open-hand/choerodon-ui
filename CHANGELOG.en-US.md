@@ -37,9 +37,11 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
 - 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 - 🐞 `<pro>Table`: Fixed the problem that the table filterbar clicks the clear button to execute multiple queries.
+- 🐞 `<pro>Table`:Fixed the issue that the dynamic query bar Lov could not be echoed.
 - 🐞 `<pro>Form`: Fixed colon not showing under grid layout, and `Output` style issues.
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
+- 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 
 ## 1.5.2
 

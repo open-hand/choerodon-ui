@@ -317,6 +317,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnEditorBorder?: boolean;
   /**
+   * 数据源
+   */
+  dataSet: DataSet;
+  /**
    * 选择记录的模式
    */
   selectionMode?: SelectionMode;
