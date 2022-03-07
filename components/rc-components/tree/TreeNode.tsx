@@ -113,15 +113,15 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
   };
 
   onCheck = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    stopEvent(e);
     if (this.isDisabled()) return;
 
-    const { disableCheckbox, checked, context } = this.props;
-    const { onNodeCheck } = context!;
+    const { disableCheckbox } = this.props;
 
     if (!this.isCheckable() || disableCheckbox) return;
 
-    e.preventDefault();
+    const { checked, context } = this.props;
+    const { onNodeCheck } = context!;
+    stopEvent(e);
     const targetChecked = !checked;
     onNodeCheck(e, convertNodePropsToEventData(this.props), targetChecked);
   };
@@ -365,7 +365,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       }
       return null;
     }
-  }
+  };
 
   // Switcher
   renderSwitcher = () => {
