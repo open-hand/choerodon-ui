@@ -109,6 +109,7 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
         prefixCls={`${cellPrefix}-tree`}
         virtual={false}
         focusable={false}
+        selectable={false}
         defaultExpandedKeys={aggregationDefaultExpandedKeys}
         defaultExpandAll={aggregationDefaultExpandAll}
       >
