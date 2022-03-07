@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+import React, { Component, CSSProperties, ReactElement } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import isNumber from 'lodash/isNumber';
@@ -26,6 +26,7 @@ export interface AvatarProps {
   /* callback when img load error */
   /* return false to prevent Avatar show default fallback behavior, then you can do fallback by your self */
   onError?: () => boolean;
+  renderIcon?: (type: string) => ReactElement;
 }
 
 export interface AvatarState {
@@ -36,7 +37,7 @@ export interface AvatarState {
 export default class Avatar extends Component<AvatarProps, AvatarState> {
   static displayName = 'Avatar';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -109,6 +110,7 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
       icon,
       className,
       alt,
+      renderIcon = (type) => <Icon type={type} />,
       ...others
     } = this.props;
     const { getPrefixCls } = this.context;
@@ -140,7 +142,7 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
     if (src && isImgExist) {
       children = <img src={src} onError={this.handleImgLoadError} alt={alt} />;
     } else if (icon) {
-      children = <Icon type={icon} />;
+      children = renderIcon(icon);
     } else {
       const childrenNode = this.avatarChildren;
       if (childrenNode || scale !== 1) {

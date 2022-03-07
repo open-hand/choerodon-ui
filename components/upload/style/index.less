@@ -304,7 +304,7 @@
       line-height: 1;
     }
   }
-  
+
   &-picture {
     .@{upload-item}-uploading {
       .@{upload-item}-info {
@@ -374,8 +374,7 @@
       opacity: 0;
       transition: all @animation-duration-slow;
 
-      .@{iconfont-css-prefix}-visibility,
-      .@{iconfont-css-prefix}-delete {
+      .@{iconfont-css-prefix} {
         z-index: 10;
         width: 0.16rem;
         margin: 0 0.04rem;
@@ -389,7 +388,7 @@
       }
     }
 
-    .@{upload-item}-info:hover + .@{upload-item}-actions,
+    .@{upload-item}-info:hover .@{upload-item}-actions,
     .@{upload-item}-actions:hover {
       opacity: 1;
     }

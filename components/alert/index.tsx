@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import Icon from '../icon';
 import Animate from '../animate';
+import getDataOrAriaProps from '../_util/getDataOrAriaProps';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface AlertProps {
@@ -29,12 +30,13 @@ export interface AlertProps {
   prefixCls?: string;
   className?: string;
   banner?: boolean;
+  iconOutline?: boolean;
 }
 
 export default class Alert extends PureComponent<AlertProps, any> {
   static displayName = 'Alert';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -76,6 +78,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
   render() {
     const { props } = this;
     const {
+      iconOutline,
       description,
       prefixCls: customizePrefixCls,
       message,
@@ -95,21 +98,41 @@ export default class Alert extends PureComponent<AlertProps, any> {
     type = banner && type === undefined ? 'warning' : type || 'info';
 
     if (!iconType) {
-      switch (type) {
-        case 'success':
-          iconType = 'check_circle';
-          break;
-        case 'info':
-          iconType = 'info';
-          break;
-        case 'error':
-          iconType = 'error';
-          break;
-        case 'warning':
-          iconType = 'warning';
-          break;
-        default:
-          iconType = 'default';
+      // use outline icon in alert with description
+      if (iconOutline) {
+        switch (type) {
+          case 'success':
+            iconType = 'check_circle_outline-o';
+            break;
+          case 'info':
+            iconType = 'info-o';
+            break;
+          case 'error':
+            iconType = 'error_outline';
+            break;
+          case 'warning':
+            iconType = 'warning_amber-o-2';
+            break;
+          default:
+            iconType = 'default';
+        }
+      } else {
+        switch (type) {
+          case 'success':
+            iconType = 'check_circle';
+            break;
+          case 'info':
+            iconType = 'info';
+            break;
+          case 'error':
+            iconType = 'error';
+            break;
+          case 'warning':
+            iconType = 'warning';
+            break;
+          default:
+            iconType = 'default';
+        }
       }
     }
 
@@ -139,6 +162,8 @@ export default class Alert extends PureComponent<AlertProps, any> {
       </button>
     ) : null;
 
+    const dataOrAriaProps = getDataOrAriaProps(this.props);
+
     return closed ? null : (
       <Animate
         component=""
@@ -146,7 +171,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
         transitionName={`${prefixCls}-slide-up`}
         onEnd={this.animationEnd}
       >
-        <div hidden={!closing} className={alertCls} style={style}>
+        <div hidden={!closing} className={alertCls} style={style} {...dataOrAriaProps}>
           {showIcon ? <Icon className={`${prefixCls}-icon`} type={iconType} /> : null}
           <div className={`${prefixCls}-content`}>
             <span className={`${prefixCls}-message`}>{message}</span>

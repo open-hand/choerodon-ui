@@ -10,7 +10,7 @@ export interface CheckableTagProps {
 }
 
 export default class CheckableTag extends Component<CheckableTagProps> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

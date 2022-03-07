@@ -185,7 +185,7 @@ const Picker = createReactClass({
     return (<Trigger
       popup={this.getCalendarElement()}
       popupAlign={align}
-      builtinPlacements={this.getBuiltInPlacements()}
+      builtinPlacements={getBuiltInPlacements}
       popupPlacement={placement}
       action={(disabled && !state.open) ? [] : ['click']}
       destroyPopupOnHide

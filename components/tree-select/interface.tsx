@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { AbstractSelectProps, SelectValue } from '../select';
 
 export interface TreeData {
@@ -16,8 +16,6 @@ export interface TreeSelectProps extends AbstractSelectProps {
   onChange?: (value: any, label: any) => void;
   onSearch?: (value: any) => void;
   searchPlaceholder?: string;
-  dropdownStyle?: CSSProperties;
-  dropdownMatchSelectWidth?: boolean;
   treeDefaultExpandAll?: boolean;
   treeCheckable?: boolean | ReactNode;
   treeDefaultExpandedKeys?: Array<string>;
@@ -31,7 +29,6 @@ export interface TreeSelectProps extends AbstractSelectProps {
   labelInValue?: boolean;
   treeCheckStrictly?: boolean;
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
-  autoClearSearchValue?: boolean;
   searchValue?: string;
   /**
    * 多值标签

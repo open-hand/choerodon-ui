@@ -85,7 +85,7 @@ export interface C7NAnchor {
 export default class Anchor extends Component<AnchorProps, AnchorState> {
   static displayName = 'Anchor';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

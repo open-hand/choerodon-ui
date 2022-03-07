@@ -52,7 +52,7 @@ const propTypeKeys = [
 ];
 
 class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

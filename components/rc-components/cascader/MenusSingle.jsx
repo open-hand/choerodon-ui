@@ -18,8 +18,8 @@ export default class Menus extends Component {
     selectedValues: [],
     isTabSelected: false,
     locale: Locale,
-    singleMenuStyle: { width:'3rem'},
-    singleMenuItemStyle: { minWidth: '1rem'},
+    singleMenuStyle: { width: '3rem' },
+    singleMenuItemStyle: { minWidth: '1rem' },
   };
 
   constructor(props) {
@@ -38,20 +38,29 @@ export default class Menus extends Component {
     }
   }
 
+  getFieldName(name) {
+    const { fieldNames, defaultFieldNames } = this.props;
+    // 防止只设置单个属性的名字
+    return fieldNames[name] || defaultFieldNames[name];
+  }
+
   /**
    * render th li list
    * @param {*} option
    * @param {*} menuIndex
    */
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, singleMenuItemStyle,selectedValues } = this.props;
+    const { prefixCls, expandTrigger, singleMenuItemStyle, selectedValues } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex, false);
     let expandProps = {
       onClick: () => {
         return onSelect('click');
-      }
+      },
     };
-    const hasChildren = option.children && option.children.length > 0;
+    const childrenField = this.getFieldName('children');
+    const labelField = this.getFieldName('label');
+    const valueField = this.getFieldName('value');
+    const hasChildren = option[childrenField] && option[childrenField].length > 0;
     let menuItemCls = `${prefixCls}-menu-item`;
     // TODO: add item style
     if (expandTrigger === 'hover' && hasChildren) {
@@ -63,7 +72,7 @@ export default class Menus extends Component {
         },
       };
     }
-    if ( selectedValues.findIndex((item) => item === option.value) > -1) {
+    if (selectedValues.findIndex((item) => item === option[valueField]) > -1) {
       menuItemCls += ` ${prefixCls}-menu-item-selected`;
     }
     if (this.isActiveOption(option, menuIndex)) {
@@ -79,18 +88,18 @@ export default class Menus extends Component {
     let title = '';
     if (option.title) {
       title = option.title;
-    } else if (typeof option.label === 'string') {
-      title = option.label;
+    } else if (typeof option[labelField] === 'string') {
+      title = option[labelField];
     }
     return (
       <li
-        key={option.key || option.value}
+        key={option.key || option[valueField]}
         className={menuItemCls}
         title={title}
         style={singleMenuItemStyle}
         {...expandProps}
       >
-        {option.label}
+        {option[labelField]}
       </li>
     );
   }
@@ -160,13 +169,15 @@ export default class Menus extends Component {
       onClick: onSelect,
     };
     let menuItemCls = `${prefixCls}-menu-tab-item`;
-    let label = option.label
-    if(isFunction(singleMenuItemRender)){
-      label = singleMenuItemItem(option.label)
+    const labelField = this.getFieldName('label');
+    const valueField = this.getFieldName('value');
+    let label = option[labelField];
+    if (isFunction(singleMenuItemRender)) {
+      label = singleMenuItemItem(option[labelField]);
     }
     return (
       <span
-        key={option.key || option.value}
+        key={option.key || option[valueField]}
         className={menuItemCls}
         {...expandProps}
       >
@@ -178,41 +189,41 @@ export default class Menus extends Component {
 
   render() {
     const { prefixCls, dropdownMenuColumnStyle, isTabSelected, locale, singleMenuStyle, singlePleaseRender } = this.props;
-    const showOptions = this.getShowOptions()
-    let showOptionsIndex = showOptions.length - 1
-    const activeOptions = this.getActiveOptions()
-    const dropdownMenuColumnStyleSingle = {...dropdownMenuColumnStyle,...singleMenuStyle}
-    const tabItemRender = activeOptions.map((item,indexItem) => (this.getTabItem(item,indexItem)))
-    let tabItemRenderResult
-    if(showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length){
-       const pleaseRenderProps = {
-        key:"please_check" ,
+    const showOptions = this.getShowOptions();
+    let showOptionsIndex = showOptions.length - 1;
+    const activeOptions = this.getActiveOptions();
+    const dropdownMenuColumnStyleSingle = { ...dropdownMenuColumnStyle, ...singleMenuStyle };
+    const tabItemRender = activeOptions.map((item, indexItem) => (this.getTabItem(item, indexItem)));
+    let tabItemRenderResult;
+    if (showOptions && activeOptions && !isTabSelected && showOptions.length > activeOptions.length) {
+      const pleaseRenderProps = {
+        key: 'please_check',
         className: `${prefixCls}-menu-tab-item ${prefixCls}-menu-tab-please`,
-        text:locale.pleaseSelect
-       }
-       if(isFunction(singlePleaseRender)){
-        tabItemRenderResult = singlePleaseRender(pleaseRenderProps)
-       }else{
+        text: locale.pleaseSelect,
+      };
+      if (isFunction(singlePleaseRender)) {
+        tabItemRenderResult = singlePleaseRender(pleaseRenderProps);
+      } else {
         const pleaseItem = (
-            <span {...pleaseRenderProps}>
+          <span {...pleaseRenderProps}>
               {pleaseRenderProps.text}
-              <Icon type="arrow_drop_down" />
+            <Icon type="arrow_drop_down" />
             </span>
-        )
-        tabItemRenderResult = tabItemRender.length > 0 ? [...tabItemRender,pleaseItem] : pleaseItem;
-       }
+        );
+        tabItemRenderResult = tabItemRender.length > 0 ? [...tabItemRender, pleaseItem] : pleaseItem;
+      }
     }
-    if(isTabSelected){
-      showOptionsIndex = activeOptions.length - 1 < 0 ? 0 : activeOptions.length - 1
+    if (isTabSelected) {
+      showOptionsIndex = activeOptions.length - 1 < 0 ? 0 : activeOptions.length - 1;
     }
 
     return (
       <div className={`${prefixCls}-mode-single `}>
         <div className={`${prefixCls}-menu-tab`}>
-          {tabItemRenderResult || tabItemRender }
+          {tabItemRenderResult || tabItemRender}
         </div>
         <ul className={`${prefixCls}-menu ${prefixCls}-menu-single `} key={showOptionsIndex} style={dropdownMenuColumnStyleSingle}>
-            {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
+          {showOptions[showOptionsIndex].map(option => this.getOption(option, showOptionsIndex))}
         </ul>
       </div>
     );

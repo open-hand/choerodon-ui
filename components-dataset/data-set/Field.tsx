@@ -1,9 +1,9 @@
 import { CSSProperties, ReactNode } from 'react';
 import { action, computed, get, IComputedValue, isObservableObject, observable, ObservableMap, remove, runInAction, set, toJS } from 'mobx';
-import { MomentInput } from 'moment';
+import { isMoment, MomentInput } from 'moment';
 import raf from 'raf';
 import isString from 'lodash/isString';
-import isEqual from 'lodash/isEqual';
+import isEqualWith from 'lodash/isEqualWith';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
 import { AxiosRequestConfig } from 'axios';
@@ -32,27 +32,14 @@ function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
     return true;
   }
-  if (isObject(newProps) && isObject(oldProps)) {
-    const newKeys = Object.keys(newProps);
-    const { length } = newKeys;
-    if (length) {
-      if (length !== Object.keys(oldProps).length) {
-        return false;
-      }
-      return newKeys.every(key => {
-        const value = newProps[key];
-        const oldValue = oldProps[key];
-        if (oldValue === value) {
-          return true;
-        }
-        if (typeof value === 'function' && typeof oldValue === 'function') {
-          return value.toString() === oldValue.toString();
-        }
-        return isEqual(oldValue, value);
-      });
+  return isEqualWith(newProps, oldProps, (value, other) => {
+    if (isMoment(value) && isMoment(other)) {
+      return value.isSame(other);
     }
-  }
-  return isEqual(newProps, oldProps);
+    if (typeof value === 'function' && typeof other === 'function') {
+      return value.toString() === other.toString();
+    }
+  });
 }
 
 function getPropsFromLovConfig(lovCode: string, propsName: string[]) {

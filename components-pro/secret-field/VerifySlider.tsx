@@ -12,7 +12,7 @@ interface VerifySliderProps {
 }
 
 export default class VerifySlider extends Component<VerifySliderProps> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

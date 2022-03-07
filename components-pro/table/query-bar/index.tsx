@@ -170,7 +170,7 @@ const ExportFooter = observer((props) => {
 export default class TableQueryBar extends Component<TableQueryBarProps> {
   static displayName = 'TableQueryBar';
 
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

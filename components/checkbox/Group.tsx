@@ -1,11 +1,11 @@
 import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'lodash/isEqual';
+import shallowEqual from 'shallowequal';
 import Checkbox from './Checkbox';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { CheckboxContextProvider } from './CheckboxContext';
 
-export type CheckboxValueType = string | number;
+export type CheckboxValueType = string | number | boolean;
 
 export interface CheckboxOptionType {
   label: ReactNode;
@@ -15,6 +15,7 @@ export interface CheckboxOptionType {
 
 export interface AbstractCheckboxGroupProps {
   prefixCls?: string;
+  checkboxPrefixCls?: string;
   className?: string;
   options?: Array<CheckboxOptionType | string>;
   disabled?: boolean;
@@ -45,7 +46,7 @@ export interface CheckboxGroupContext {
 export default class CheckboxGroup extends Component<CheckboxGroupProps, CheckboxGroupState> {
   static displayName = 'CheckboxGroup';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -121,19 +122,20 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
 
   render() {
     const { props, state } = this;
-    const { prefixCls: customizePrefixCls, className, style, options } = props;
+    const { prefixCls: customizePrefixCls, className, style, options, checkboxPrefixCls, label } = props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('checkbox-group', customizePrefixCls);
     let children = props.children;
     if (options && options.length > 0) {
       children = this.getOptions().map(option => (
         <Checkbox
-          key={option.value}
+          key={String(option.value)}
           disabled={'disabled' in option ? option.disabled : props.disabled}
           value={option.value}
           checked={state.value.indexOf(option.value) !== -1}
           onChange={() => this.toggleOption(option)}
           className={`${prefixCls}-item`}
+          prefixCls={checkboxPrefixCls}
         >
           {option.label}
         </Checkbox>
@@ -143,19 +145,27 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
     const classString = classNames(prefixCls, className);
     const wrapperClassString = classNames({
       [`${prefixCls}-wrapper`]: true,
-      [`${prefixCls}-has-label`]: props.label,
+      [`${prefixCls}-has-label`]: label,
     });
     const labelClassString = classNames(`${prefixCls}-label`, {
       'label-disabled': props.disabled,
     });
     return (
       <CheckboxContextProvider {...this.getContextValue()} getPrefixCls={getPrefixCls}>
-        <div className={wrapperClassString}>
-          {props.label ? <span className={labelClassString}>{props.label}</span> : null}
-          <div className={classString} style={style}>
-            {children}
-          </div>
-        </div>
+        {
+          label ? (
+            <div className={wrapperClassString} style={style}>
+              <span className={labelClassString}>{label}</span>
+              <div className={classString}>
+                {children}
+              </div>
+            </div>
+          ) : (
+            <div className={classString} style={style}>
+              {children}
+            </div>
+          )
+        }
       </CheckboxContextProvider>
     );
   }

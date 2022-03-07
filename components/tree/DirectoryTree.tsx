@@ -41,7 +41,7 @@ function getTreeData({ treeData, children }: DirectoryTreeProps) {
 }
 
 class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeState> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

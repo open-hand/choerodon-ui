@@ -20,6 +20,37 @@
     transition: opacity @animation-duration-slow;
   }
 
+  &.resizable-table&-empty .react-resizable {
+    .column-resizable-handle {
+      display: none;
+    }
+  }
+
+  &.resizable-table .react-resizable {
+    position: relative;
+
+    .column-resizable-handle {
+      position: absolute;
+      top: 0;
+      right: -0.01rem;
+      bottom: 0;
+      z-index: 100;
+      width: 0.06rem;
+      cursor: col-resize;
+
+      &:hover, &.react-draggable-dragging {
+        background-color: #ccc;
+      }
+    }
+  }
+
+  &.resizable-table &-thead th,
+  &.resizable-table &-tbody td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   table {
     width: 100%;
     text-align: left;

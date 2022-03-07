@@ -8,6 +8,7 @@ export default {
   year: 'Year',
   timeSelect: 'Select time',
   dateSelect: 'Select date',
+  weekSelect: 'Choose a week',
   monthSelect: 'Choose a month',
   yearSelect: 'Choose a year',
   decadeSelect: 'Choose a decade',

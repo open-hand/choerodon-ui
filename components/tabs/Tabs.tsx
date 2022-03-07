@@ -58,6 +58,7 @@ export interface TabsProps {
   tabTitleEditable?: boolean;
   tabCountHideable?: boolean;
   defaultChangeable?: boolean;
+  rippleDisabled?: boolean;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }

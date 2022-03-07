@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface Globals {
   EVAL_SUPPORT?: boolean | undefined;
   STICKY_SUPPORT?: boolean | undefined;
@@ -7,6 +9,7 @@ export interface Globals {
   ROOT_STYLE?: CSSStyleDeclaration;
   SCROLL_BAR_WIDTH_VERTICAL?: number;
   SCROLL_BAR_WIDTH_HORIZONTAL?: number;
+  DEFAULT_SPIN_INDICATOR?: ReactNode;
 }
 
 const global: Globals = {};

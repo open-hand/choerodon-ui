@@ -1,4 +1,5 @@
 import { Utils } from 'choerodon-ui/dataset';
 
-export default Utils.normalizeLanguage;
+const normalizeLanguage: typeof Utils.normalizeLanguage = Utils.normalizeLanguage;
 
+export default normalizeLanguage;

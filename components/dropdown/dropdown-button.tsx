@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo, MouseEventHandler, useContext } from 'react';
 import classNames from 'classnames';
-import Button from '../button';
+import Button, { ButtonProps } from '../button';
 import { ButtonGroupProps } from '../button/ButtonGroup';
 import Icon from '../icon';
 import Dropdown, { DropDownProps } from './dropdown';
@@ -13,6 +13,8 @@ export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
   disabled?: boolean;
   onClick?: MouseEventHandler<any>;
   children?: any;
+  buttonProps?: ButtonProps;
+  buttonGroupPrefixCls?: string;
 }
 
 const DropdownButton: FunctionComponent<DropdownButtonProps> = function DropdownButton(props) {
@@ -30,12 +32,16 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = function Dropdown
     onVisibleChange,
     placement,
     getPopupContainer,
+    buttonProps,
+    buttonGroupPrefixCls,
+    overlayPlacements,
     ...restProps
   } = props;
   const { getPrefixCls } = useContext(ConfigContext);
 
-  const prefixCls = getPrefixCls('dropdown-button', customizePrefixCls);
-  const dropdownProps = {
+  const prefixCls = getPrefixCls('dropdown', customizePrefixCls);
+  const dropdownProps: DropDownProps = {
+    prefixCls,
     align,
     overlay,
     disabled,
@@ -43,18 +49,19 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = function Dropdown
     onVisibleChange,
     placement,
     getPopupContainer,
+    overlayPlacements,
   };
   if ('visible' in props) {
-    (dropdownProps as any).visible = visible;
+    dropdownProps.visible = visible;
   }
 
   return (
-    <ButtonGroup {...restProps} className={classNames(prefixCls, className)}>
-      <Button type={type} disabled={disabled} onClick={onClick}>
+    <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className)}>
+      <Button {...buttonProps} type={type} disabled={disabled} onClick={onClick}>
         {children}
       </Button>
       <Dropdown {...dropdownProps}>
-        <Button type={type}>
+        <Button {...buttonProps} type={type}>
           <Icon type="arrow_drop_down" />
         </Button>
       </Dropdown>

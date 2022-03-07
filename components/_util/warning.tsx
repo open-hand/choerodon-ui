@@ -1,4 +1,5 @@
 import { Utils } from 'choerodon-ui/dataset';
 
-export default Utils.warning;
+const warning: typeof Utils.warning = Utils.warning;
 
+export default warning;

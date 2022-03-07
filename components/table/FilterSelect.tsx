@@ -35,7 +35,7 @@ export interface FilterSelectProps<T> {
   placeholder?: string;
   dataSource?: T[];
   filters?: string[];
-  columnFilters?: TableStateFilters;
+  columnFilters?: TableStateFilters<T>;
   columns?: ColumnProps<T>[];
   onFilter?: (column: ColumnProps<T>, nextFilters: string[]) => void;
   onChange?: (filters?: any[]) => void;
@@ -47,7 +47,7 @@ export interface FilterSelectProps<T> {
 export interface FilterSelectState<T> {
   columns: ColumnProps<T>[];
   filters: string[];
-  columnFilters: TableStateFilters;
+  columnFilters: TableStateFilters<T>;
   selectColumn?: ColumnProps<T>;
   inputValue: string;
   checked: any[];
@@ -58,7 +58,7 @@ function removeDoubleOr(filters: LabeledValue[]): LabeledValue[] {
 }
 
 export default class FilterSelect<T> extends Component<FilterSelectProps<T>, FilterSelectState<T>> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

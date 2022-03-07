@@ -6,8 +6,6 @@ import DropdownMenu from './DropdownMenu';
 import { isSingleMode, saveRef } from './util';
 import Spin from '../../spin';
 
-Trigger.displayName = 'Trigger';
-
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
     points: ['tl', 'bl'],
@@ -41,9 +39,16 @@ export default class SelectTrigger extends Component {
     loading: false,
   };
 
-  state = {
-    dropdownWidth: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.saveDropdownMenuRef = saveRef(this, 'dropdownMenuRef');
+    this.saveTriggerRef = saveRef(this, 'triggerRef');
+
+    this.state = {
+      dropdownWidth: null,
+    };
+  }
 
   componentDidMount() {
     this.setDropdownWidth();
@@ -66,7 +71,7 @@ export default class SelectTrigger extends Component {
 
   getFilterInput = () => {
     return this.dropdownMenuRef && this.dropdownMenuRef.filterRef;
-  }
+  };
 
   getPopupDOMNode = () => {
     return this.triggerRef.getPopupDomNode();
@@ -81,9 +86,9 @@ export default class SelectTrigger extends Component {
       };
     }
     return (
-      <Spin {...loading}>
+      <Spin prefixCls={props.spinPrefixCls} {...loading}>
         <DropdownMenu
-          ref={saveRef(this, 'dropdownMenuRef')}
+          ref={this.saveDropdownMenuRef}
           {...newProps}
           prefixCls={this.getDropdownPrefixCls()}
           onMenuSelect={props.onMenuSelect}
@@ -97,10 +102,11 @@ export default class SelectTrigger extends Component {
           firstActiveValue={props.firstActiveValue}
           defaultActiveFirstOption={props.defaultActiveFirstOption}
           dropdownMenuStyle={props.dropdownMenuStyle}
+          dropdownMenuRippleDisabled={props.dropdownMenuRippleDisabled}
           onFilterChange={props.onFilterChange}
           footer={props.footer}
           onMouseDown={props.onDropdownMouseDown}
-      />
+        />
       </Spin>
 
     );
@@ -133,6 +139,8 @@ export default class SelectTrigger extends Component {
       dropdownMatchSelectWidth,
       filter,
       filterValue,
+      checkAll,
+      footer,
     } = props;
     const dropdownPrefixCls = this.getDropdownPrefixCls();
     const popupClassName = {
@@ -148,7 +156,14 @@ export default class SelectTrigger extends Component {
       filter,
       filterValue,
     });
-
+    let hideAction;
+    if (disabled) {
+      hideAction = [];
+    } else if (footer || (multiple && checkAll) || filter || (isSingleMode(props) && !showSearch)) {
+      hideAction = ['click'];
+    } else {
+      hideAction = ['blur'];
+    }
     const popupStyle = { ...dropdownStyle };
     const widthProp = dropdownMatchSelectWidth ? 'width' : 'minWidth';
     if (this.state.dropdownWidth && !popupStyle[widthProp]) {
@@ -158,8 +173,9 @@ export default class SelectTrigger extends Component {
     return (
       <Trigger
         {...props}
-        action={disabled ? [] : ['click']}
-        ref={saveRef(this, 'triggerRef')}
+        showAction={disabled ? [] : props.showAction}
+        hideAction={hideAction}
+        ref={this.saveTriggerRef}
         popupPlacement={props.popupPlacement}
         builtinPlacements={props.builtinPlacements || BUILT_IN_PLACEMENTS}
         prefixCls={dropdownPrefixCls}

@@ -1,12 +1,15 @@
 import React, { Component, isValidElement } from 'react';
 import get from 'lodash/get';
 
-export default class TableCell extends Component {
-  isInvalidRenderCellText(text) {
-    return text && !isValidElement(text) &&
-      Object.prototype.toString.call(text) === '[object Object]';
-  }
+function isInvalidRenderCellText(text) {
+  return (
+    text &&
+    !isValidElement(text) &&
+    Object.prototype.toString.call(text) === '[object Object]'
+  );
+}
 
+export default class TableCell extends Component {
   handleClick = (e) => {
     const { record, column: { onCellClick } } = this.props;
     if (onCellClick) {
@@ -37,15 +40,13 @@ export default class TableCell extends Component {
     } else {
       text = get(record, dataIndex);
     }
-    let tdProps = {
-      tabIndex: -1,
-    };
+    let tdProps = { tabIndex: -1 };
     let colSpan;
     let rowSpan;
 
     if (render) {
       text = render(text, record, index);
-      if (this.isInvalidRenderCellText(text)) {
+      if (isInvalidRenderCellText(text)) {
         tdProps = text.props || tdProps;
         colSpan = tdProps.colSpan;
         rowSpan = tdProps.rowSpan;
@@ -54,9 +55,9 @@ export default class TableCell extends Component {
     }
 
     if (column.onCell) {
-      tdProps = { ...tdProps, ...column.onCell(record) };
+      tdProps = { ...tdProps, ...column.onCell(record,  column) };
     }
-    if (this.isInvalidRenderCellText(text)) {
+    if (isInvalidRenderCellText(text)) {
       text = null;
     }
 
@@ -72,7 +73,7 @@ export default class TableCell extends Component {
     }
 
     if (column.align) {
-      tdProps.style = { textAlign: column.align };
+      tdProps.style = { ...tdProps.style, textAlign: column.align };
     }
 
     return (

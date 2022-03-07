@@ -12,6 +12,10 @@ declare module 'dom-closest';
 
 declare module 'rc-motion';
 
+declare module 'shallowequal' {
+  export default function (obj1: object | null | undefined, obj2: object | null | undefined): boolean;
+}
+
 declare module 'dom-lib';
 
 declare module 'dom-lib/lib/transition/translateDOMPositionXY';

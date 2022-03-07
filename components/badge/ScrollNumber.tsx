@@ -13,7 +13,7 @@ export interface ScrollNumberProps {
   component?: string;
   style?: CSSProperties;
   title?: string | number | null;
-  show: boolean;
+  hidden: boolean;
 }
 
 export interface ScrollNumberState {
@@ -28,7 +28,7 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
   motionClassName,
   style,
   title,
-  show,
+  hidden,
   component = 'sup',
   children,
   ...restProps
@@ -39,7 +39,7 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
   // ============================ Render ============================
   const newProps = {
     ...restProps,
-    'data-show': show,
+    'data-show': !hidden,
     style,
     className: classNames(prefixCls, className, motionClassName),
     title: title as string,

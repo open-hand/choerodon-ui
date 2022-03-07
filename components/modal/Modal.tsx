@@ -53,6 +53,8 @@ export interface ModalProps {
   mask?: boolean;
   keyboard?: boolean;
   funcType?: ButtonFuncType;
+  wrapProps?: any;
+  movable?: boolean;
   center?: boolean;
   okButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
@@ -85,6 +87,8 @@ export interface ModalFuncProps {
   disableCancel?: boolean;
   closable?: boolean;
   footer?: ReactNode;
+  okButtonProps?: ButtonProps;
+  cancelButtonProps?: ButtonProps;
 }
 
 export type ModalFunc = (
@@ -102,7 +106,7 @@ export interface ModalLocale {
 export default class Modal extends Component<ModalProps, {}> {
   static displayName = 'Modal';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -129,6 +133,8 @@ export default class Modal extends Component<ModalProps, {}> {
     disableCancel: false,
     visible: false,
     okType: 'primary',
+    okButtonDisabled: false,
+    cancelButtonDisabled: false,
     center: false,
   };
 
@@ -190,16 +196,28 @@ export default class Modal extends Component<ModalProps, {}> {
 
   render() {
     const { getPrefixCls, getConfig } = this.context;
-    const { footer, visible, prefixCls: customizePrefixCls, keyboard = getConfig('modalKeyboard') } = this.props;
+    const {
+      footer,
+      visible,
+      prefixCls: customizePrefixCls,
+      movable = getConfig('modalMovable'),
+      center = getConfig('modalAutoCenter'),
+      maskClosable = getConfig('modalMaskClosable'),
+      keyboard = getConfig('modalKeyboard'),
+    } = this.props;
     const prefixCls = getPrefixCls('modal', customizePrefixCls);
     const defaultFooter = (
       <LocaleReceiver componentName="Modal" defaultLocale={getConfirmLocale()}>
         {this.renderFooter}
       </LocaleReceiver>
     );
+
     return (
       <Dialog
         {...this.props}
+        movable={movable}
+        maskClosable={maskClosable}
+        center={center}
         keyboard={keyboard}
         prefixCls={prefixCls}
         footer={footer === undefined ? defaultFooter : footer}

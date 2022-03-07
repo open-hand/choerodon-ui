@@ -11,14 +11,24 @@ import { FormLayout } from './enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { FormContextProvider } from './FormContext';
 
+type FormCreateOptionMessagesCallback = (...args: any[]) => string;
+
+interface FormCreateOptionMessages {
+  [messageId: string]:
+    | string
+    | FormCreateOptionMessagesCallback
+    | FormCreateOptionMessages;
+}
+
 export interface FormCreateOption<T> {
-  onFieldsChange?: (props: T, fields: Array<any>) => void;
-  onValuesChange?: (props: T, values: any) => void;
+  onFieldsChange?: (props: T, fields: Array<any>, allFields: any, add: string) => void;
+  onValuesChange?: (props: T, changedValues: any, allValues: any) => void;
   mapPropsToFields?: (props: T) => void;
+  validateMessages?: FormCreateOptionMessages;
   withRef?: boolean;
 }
 
-export interface FormProps {
+export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   layout?: FormLayout;
   form?: WrappedFormUtils;
   onSubmit?: FormEventHandler<any>;
@@ -120,14 +130,29 @@ export interface FormComponentProps {
   form: WrappedFormUtils;
 }
 
+export interface RcBaseFormProps {
+  wrappedComponentRef?: any;
+}
+
 export interface ComponentDecorator {
-  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<Omit<P, keyof FormComponentProps>>;
+  <P extends FormComponentProps>(component: ComponentClass<P> | SFC<P>): ComponentClass<RcBaseFormProps & Omit<P, keyof FormComponentProps>>;
+}
+
+export function create<TOwnProps>(
+  options: FormCreateOption<TOwnProps> = {},
+): ComponentDecorator {
+  return createDOMForm({
+    fieldNameProp: 'id',
+    ...options,
+    fieldMetaProp: FIELD_META_PROP,
+    fieldDataProp: FIELD_DATA_PROP,
+  });
 }
 
 export default class Form extends Component<FormProps, any> {
   static displayName = 'Form';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -143,16 +168,7 @@ export default class Form extends Component<FormProps, any> {
 
   static createFormField = createFormField;
 
-  static create = function <TOwnProps>(
-    options: FormCreateOption<TOwnProps> = {},
-  ): ComponentDecorator {
-    return createDOMForm({
-      fieldNameProp: 'id',
-      ...options,
-      fieldMetaProp: FIELD_META_PROP,
-      fieldDataProp: FIELD_DATA_PROP,
-    });
-  };
+  static create = create;
 
   context: ConfigContextValue;
 

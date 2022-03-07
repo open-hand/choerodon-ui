@@ -1,57 +1,59 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
-import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
-import KeyCode from '../../_util/KeyCode';
+import { findDOMNode } from 'react-dom';
+import scrollIntoView from 'dom-scroll-into-view';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
 import noop from 'lodash/noop';
+import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
+import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
+import KeyCode from '../../_util/KeyCode';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
+import { menuAllProps } from './util';
+
 /* eslint react/no-is-mounted:0 */
 
-const MenuItem = createReactClass({
-  displayName: 'MenuItem',
+export class MenuItem extends React.Component {
+  static displayName = 'MenuItem';
 
-  getDefaultProps() {
-    return {
-      onSelect: noop,
-      onMouseEnter: noop,
-      onMouseLeave: noop,
-      onMouseDown: noop,
-    };
-  },
+  static defaultProps = {
+    onSelect: noop,
+    onMouseEnter: noop,
+    onMouseLeave: noop,
+    onMouseDown: noop,
+    manualRef: noop,
+  };
 
   componentWillUnmount() {
     const props = this.props;
     if (props.onDestroy) {
       props.onDestroy(props.eventKey);
     }
-  },
+  }
 
   componentDidMount() {
     // invoke customized ref to expose component to mixin
-    if (this.props.manualRef) {
-      this.props.manualRef(this);
-    }
-  },
+    this.callRef();
+  }
 
   componentDidUpdate() {
-    // invoke customized ref to expose component to mixin
-    if (this.props.manualRef) {
-      this.props.manualRef(this);
+    if (this.props.active) {
+      scrollIntoView(findDOMNode(this), findDOMNode(this.props.parentMenu), {
+        onlyScrollIfNeeded: true,
+      });
     }
-  },
+    this.callRef();
+  }
 
-  onKeyDown(e) {
+  onKeyDown = (e) => {
     const keyCode = e.keyCode;
     if (keyCode === KeyCode.ENTER) {
       this.onClick(e);
       return true;
     }
-  },
+  };
 
-  onMouseLeave(e) {
+  onMouseLeave = (e) => {
     const { eventKey, onItemHover, onMouseLeave } = this.props;
     onItemHover({
       key: eventKey,
@@ -61,9 +63,9 @@ const MenuItem = createReactClass({
       key: eventKey,
       domEvent: e,
     });
-  },
+  };
 
-  onMouseEnter(e) {
+  onMouseEnter = (e) => {
     const { eventKey, onItemHover, onMouseEnter } = this.props;
     onItemHover({
       key: eventKey,
@@ -73,9 +75,9 @@ const MenuItem = createReactClass({
       key: eventKey,
       domEvent: e,
     });
-  },
+  };
 
-  handleRippleMouseEnter(e) {
+  handleRippleMouseEnter = (e) => {
     const { tooltip, tooltipTheme, tooltipPlacement, children, mode } = this.props;
     const { currentTarget } = e;
     if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(currentTarget)))) {
@@ -85,9 +87,9 @@ const MenuItem = createReactClass({
         theme: tooltipTheme,
       });
     }
-  },
+  };
 
-  onClick(e) {
+  onClick = (e) => {
     const { eventKey, multiple, onClick, onSelect, onDeselect, isSelected } = this.props;
     const info = {
       key: eventKey,
@@ -105,39 +107,56 @@ const MenuItem = createReactClass({
     } else if (!isSelected) {
       onSelect(info);
     }
-  },
+  };
 
   getPrefixCls() {
     return `${this.props.rootPrefixCls}-item`;
-  },
+  }
 
   getActiveClassName() {
     return `${this.getPrefixCls()}-active`;
-  },
+  }
 
   getSelectedClassName() {
     return `${this.getPrefixCls()}-selected`;
-  },
+  }
 
   getDisabledClassName() {
     return `${this.getPrefixCls()}-disabled`;
-  },
+  }
+
+  callRef() {
+    if (this.props.manualRef) {
+      this.props.manualRef(this);
+    }
+  }
 
   render() {
-    const props = this.props;
+    const props = { ...this.props };
     const className = classNames(this.getPrefixCls(), props.className, {
       [this.getActiveClassName()]: !props.disabled && props.active,
       [this.getSelectedClassName()]: props.isSelected,
       [this.getDisabledClassName()]: props.disabled,
     });
-    const attrs = {
+    let attrs = {
       ...props.attribute,
       title: props.title,
       className,
-      role: 'menuitem',
-      'aria-selected': props.isSelected,
+      role: props.role || 'menuitem',
       'aria-disabled': props.disabled,
     };
+
+    if (props.role === 'option') {
+      // overwrite to option
+      attrs = {
+        ...attrs,
+        role: 'option',
+        'aria-selected': props.isSelected,
+      };
+    } else if (props.role === null || props.role === 'none') {
+      attrs.role = 'none';
+    }
+
     let mouseEvent = {};
     if (!props.disabled) {
       mouseEvent = {
@@ -158,15 +177,17 @@ const MenuItem = createReactClass({
       <Checkbox disabled={props.disabled} checked={props.isSelected} tabIndex={-1} />
     ) : null;
     const rippleProps = {
-      disabled: props.disabled,
+      disabled: props.disabled || props.rippleDisabled,
     };
     if (['overflow', 'always'].includes(props.tooltip)) {
       rippleProps.onMouseEnter = this.handleRippleMouseEnter;
       rippleProps.onMouseLeave = hide;
     }
+    menuAllProps.forEach(key => delete props[key]);
     return (
       <Ripple {...rippleProps}>
         <li
+          {...props}
           {...attrs}
           {...mouseEvent}
           style={style}
@@ -176,12 +197,14 @@ const MenuItem = createReactClass({
         </li>
       </Ripple>
     );
-  },
-});
+  };
+}
 
-MenuItem.isMenuItem = 1;
+MenuItem.isMenuItem = true;
 
-export default connect(({ activeKey, selectedKeys }, { eventKey, subMenuKey }) => ({
+const connected = connect(({ activeKey, selectedKeys }, { eventKey, subMenuKey }) => ({
   active: activeKey[subMenuKey] === eventKey,
   isSelected: selectedKeys.indexOf(eventKey) !== -1,
 }))(MenuItem);
+
+export default connected;

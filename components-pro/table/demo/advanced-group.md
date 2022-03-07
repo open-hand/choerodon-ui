@@ -175,7 +175,15 @@ const App = () => {
       title: '头分组聚合列', // 可在个性化内显示
       header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
       renderer: ({ text, record, dataSet, aggregationTree }) => record.getState('editing') ? (
-        text
+        <Row>
+          <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }} onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
+            {aggregationTree[0]}
+            {record.isSelected ? <div>已选</div> : null}
+          </Col>
+          <Col span={12}>
+            {record.isSelected ? aggregationTree[1] : null}
+          </Col>
+        </Row>
       ) : aggregationTree[0],
       aggregation: true,
       aggregationLimit: 3,

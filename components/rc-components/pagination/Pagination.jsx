@@ -23,7 +23,7 @@ export default class Pagination extends Component {
     defaultPageSize: 10,
     onChange: noop,
     className: '',
-    selectPrefixCls: 'rc-select',
+    selectProps: { prefixCls: 'rc-select' },
     prefixCls: 'rc-pagination',
     selectComponentClass: null,
     hideOnSinglePage: false,
@@ -153,6 +153,12 @@ export default class Pagination extends Component {
     let current = this.state.current;
     const newCurrent = this.calculatePage(size);
     current = current > newCurrent ? newCurrent : current;
+    // fix the issue:
+    // Once 'total' is 0, 'current' in 'onShowSizeChange' is 0, which is not correct.
+    if (newCurrent === 0) {
+      current = this.state.current;
+    }
+
     if (typeof size === 'number') {
       if (!('pageSize' in this.props)) {
         this.setState({
@@ -301,6 +307,13 @@ export default class Pagination extends Component {
     const prevPage = current - 1 > 0 ? current - 1 : 0;
     const nextPage = current + 1 < allPages ? current + 1 : allPages;
 
+    const dataOrAriaAttributeProps = Object.keys(props).reduce((prev, key) => {
+      if ((key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-' || key === 'role')) {
+        prev[key] = props[key];
+      }
+      return prev;
+    }, {});
+
     if (props.simple) {
       if (goButton) {
         if (typeof goButton === 'boolean') {
@@ -332,7 +345,12 @@ export default class Pagination extends Component {
       }
 
       return (
-        <ul className={`${prefixCls} ${prefixCls}-simple ${props.className}`} style={props.style}>
+        <ul
+          className={`${prefixCls} ${prefixCls}-simple ${props.className}`}
+          style={props.style}
+          ref={this.savePaginationNode}
+          {...dataOrAriaAttributeProps}
+        >
           <li
             title={props.showTitle ? locale.prev_page : null}
             onClick={this.prev}
@@ -395,6 +413,7 @@ export default class Pagination extends Component {
       const prevItemTitle = props.showLessItems ? locale.prev_3 : locale.prev_5;
       const nextItemTitle = props.showLessItems ? locale.next_3 : locale.next_5;
       if (props.showPrevNextJumpers) {
+        const { renderJumper = () => '•••' } = props;
         jumpPrev = (
           <li
             title={props.showTitle ? prevItemTitle : null}
@@ -405,7 +424,7 @@ export default class Pagination extends Component {
             className={`${prefixCls}-jump-prev`}
           >
             {props.itemRender(
-              this.getJumpPrevPage(), 'jump-prev', <a className={`${prefixCls}-item-link`}>•••</a>, props.size,
+              this.getJumpPrevPage(), 'jump-prev', <a className={`${prefixCls}-item-link`}>{renderJumper()}</a>, props.size,
             )}
           </li>
         );
@@ -419,7 +438,7 @@ export default class Pagination extends Component {
             className={`${prefixCls}-jump-next`}
           >
             {props.itemRender(
-              this.getJumpNextPage(), 'jump-next', <a className={`${prefixCls}-item-link`}>•••</a>, props.size,
+              this.getJumpNextPage(), 'jump-next', <a className={`${prefixCls}-item-link`}>{renderJumper()}</a>, props.size,
             )}
           </li>
         );
@@ -554,7 +573,7 @@ export default class Pagination extends Component {
         locale={props.locale}
         rootPrefixCls={prefixCls}
         selectComponentClass={props.selectComponentClass}
-        selectPrefixCls={props.selectPrefixCls}
+        selectProps={props.selectProps}
         changeSize={this.props.showSizeChanger ? this.changePageSize : null}
         current={this.state.current}
         pageSize={this.state.pageSize}
@@ -574,6 +593,7 @@ export default class Pagination extends Component {
         style={props.style}
         unselectable="unselectable"
         ref={this.savePaginationNode}
+        {...dataOrAriaAttributeProps}
       >
         {props.tiny && sizeChanger}
         {totalText}

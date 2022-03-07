@@ -46,12 +46,12 @@ export default class SelectionBox extends Component<SelectionBoxProps, Selection
   }
 
   render() {
-    const { type, rowIndex, ...rest } = this.props;
+    const { type, rowIndex, radioPrefixCls, checkboxPrefixCls, ...rest } = this.props;
     const { checked } = this.state;
 
     if (type === 'radio') {
-      return <Radio checked={checked} value={rowIndex} {...rest} />;
+      return <Radio prefixCls={radioPrefixCls} checked={checked} value={rowIndex} {...rest} />;
     }
-    return <Checkbox checked={checked} {...rest} />;
+    return <Checkbox prefixCls={checkboxPrefixCls} checked={checked} {...rest} />;
   }
 }

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
-import noop from 'lodash/noop';
 import PanelContent from './PanelContent';
 import Animate from '../../animate';
 
@@ -43,6 +42,11 @@ const CollapsePanel = function CollapsePanel(props) {
       onItemClick();
     }
   }, [onItemClick]);
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
+      handleItemClick();
+    }
+  }, [handleItemClick]);
 
   const icon = showArrow ? (
     <span className={`${prefixCls}-expand-icon-wrapper`} onClick={trigger === 'icon' ? handleItemClick : undefined}>
@@ -58,6 +62,7 @@ const CollapsePanel = function CollapsePanel(props) {
         role={accordion ? 'tab' : 'button'}
         tabIndex={disabled ? -1 : 0}
         aria-expanded={`${isActive}`}
+        onKeyPress={handleKeyPress}
       >
         {showArrow && expandIconPosition !== 'text-right' && icon}
         {header}

@@ -101,13 +101,15 @@ const Notice: FunctionComponent<NoticeProps> = function Notice(props) {
   );
 };
 
-Notice.defaultProps = {
+Notice.displayName = 'Notice';
+
+const MemoNotice: typeof Notice = memo(Notice);
+
+MemoNotice.defaultProps = {
   duration: 1.5,
   style: {
     right: '50%',
   },
 };
 
-Notice.displayName = 'Notice';
-
-export default memo(Notice);
+export default MemoNotice;

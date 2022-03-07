@@ -101,6 +101,7 @@
     "react-slick": "~0.25.2",
     "resize-observer-polyfill": "^1.5.1",
     "rmc-feedback": "^1.0.0",
+    "shallowequal": "^1.1.0",
     "scroll-into-view-if-needed": "^2.2.25",
     "smooth-scroll-into-view-if-needed": "^1.1.28",
     "tslib": "^1.9.3",

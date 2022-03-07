@@ -1,13 +1,15 @@
-import React, { Component, CSSProperties, SyntheticEvent } from 'react';
+import React, { Component, createElement, CSSProperties, SyntheticEvent } from 'react';
 import classNames from 'classnames';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import isFunction from 'lodash/isFunction';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Progress from '../progress';
-import { UploadFile, UploadListProps } from './interface';
+import { UploadFile, UploadListIconFunc, UploadListProps, UploadListType } from './interface';
 import Animate from '../animate';
+import PopConfirm from '../popconfirm';
 import { ProgressType } from '../progress/enum';
-import { previewImage, getFileType, getFileSizeStr, isImageUrl } from './utils';
+import { getFileSizeStr, getFileType, isImageUrl, previewImage } from './utils';
 import CompressedfileIcon from './icon-svg/compressedfileIcon';
 import DocIcon from './icon-svg/docIcon';
 import FileuploadIcon from './icon-svg/fileuploadIcon';
@@ -26,15 +28,39 @@ const reorder = (list, startIndex, endIndex): UploadFile[] => {
   return result;
 };
 
+function defaultRenderIcon(file: UploadFile, listType: UploadListType, prefixCls?: string) {
+  if (listType === 'picture' || listType === 'picture-card') {
+    return <Icon type="file" style={{ fontSize: 48, color: 'rgba(0,0,0,0.5)' }} />;
+  }
+  if (file.status === 'uploading') {
+    return <Progress key='loading' type={ProgressType.loading} size={Size.small} />;
+  }
+  const filetype = getFileType(file.name);
+  switch (filetype) {
+    case 'compressedfile':
+      return <CompressedfileIcon className={`${prefixCls}-icon-file`} />;
+    case 'doc':
+      return <DocIcon className={`${prefixCls}-icon-file`} />;
+    case 'image':
+      return <ImageIcon className={`${prefixCls}-icon-file`} />;
+    case 'pdf':
+      return <PdfIcon className={`${prefixCls}-icon-file`} />;
+    case 'xls':
+      return <XlsIcon className={`${prefixCls}-icon-file`} />;
+    default:
+      return <FileuploadIcon className={`${prefixCls}-icon-file`} />;
+  }
+}
+
 export default class UploadList extends Component<UploadListProps, any> {
   static displayName = 'UploadList';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
   static defaultProps = {
-    listType: 'text', // or picture
+    listType: 'text',
     progressAttr: {
       strokeWidth: 2,
       showInfo: false,
@@ -44,6 +70,9 @@ export default class UploadList extends Component<UploadListProps, any> {
     showPreviewIcon: true,
     dragUploadList: false,
     showFileSize: false,
+    showDownloadIcon: true,
+    showReUploadIcon: false,
+    downloadPropsIntercept: o => o,
   };
 
   context: ConfigContextValue;
@@ -64,11 +93,25 @@ export default class UploadList extends Component<UploadListProps, any> {
     return onPreview(file);
   };
 
+  /**
+   * @param {UploadFile} file
+   * @param {React.SyntheticEvent<HTMLElement>} e
+   */
+  handleReUpload = (file: UploadFile, e: React.SyntheticEvent<HTMLElement>) => {
+    const { onReUpload } = this.props;
+    if (!onReUpload) {
+      return;
+    }
+    e.preventDefault();
+    return onReUpload(file);
+  };
+
   componentDidUpdate() {
-    const { listType, items, previewFile } = this.props;
+    const { listType } = this.props;
     if (listType !== 'picture' && listType !== 'picture-card') {
       return;
     }
+    const { items, previewFile } = this.props;
     (items || []).forEach(file => {
       if (
         typeof document === 'undefined' ||
@@ -118,53 +161,42 @@ export default class UploadList extends Component<UploadListProps, any> {
       listType,
       showPreviewIcon,
       showRemoveIcon,
+      showDownloadIcon,
+      showReUploadIcon,
+      removePopConfirmTitle,
+      reUploadText,
+      reUploadPopConfirmTitle,
       locale,
       dragUploadList,
       showFileSize,
+      getCustomFilenameTitle,
+      downloadPropsIntercept,
+      tooltipPrefixCls,
+      popconfirmProps,
+      renderIcon = defaultRenderIcon,
     } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
     const list = items.map((file, index) => {
       let progress;
-      let icon = file.status === 'uploading' ?
-        <Progress key='loading' type={ProgressType.loading} size={Size.small} />
-        : <FileuploadIcon className={`${prefixCls}-icon-file`} />;
-      if (file.status !== 'uploading') {
-        const filetype = getFileType(file.name);
-        switch (filetype) {
-          case 'compressedfile':
-            icon = <CompressedfileIcon className={`${prefixCls}-icon-file`} />;
-            break;
-          case 'doc':
-            icon = <DocIcon className={`${prefixCls}-icon-file`} />;
-            break;
-          case 'image':
-            icon = <ImageIcon className={`${prefixCls}-icon-file`} />;
-            break;
-          case 'pdf':
-            icon = <PdfIcon className={`${prefixCls}-icon-file`} />;
-            break;
-          case 'xls':
-            icon = <XlsIcon className={`${prefixCls}-icon-file`} />;
-            break;
-          default:
-            break;
-        }
-      }
-
-      if (listType === 'picture' || listType === 'picture-card') {
-        if (listType === 'picture-card' && file.status === 'uploading') {
+      let icon = renderIcon(file, listType!, prefixCls);
+      const stat = {
+        isImg: isImageUrl(file),
+        isUploading: file.status === 'uploading',
+        isError: file.status === 'error',
+        isPictureCard: listType === 'picture-card',
+      };
+      if (listType === 'picture' || stat.isPictureCard) {
+        if (stat.isPictureCard && stat.isUploading) {
           icon = <div className={`${prefixCls}-list-item-uploading-text`}>{locale.uploading}</div>;
-        } else if (listType === 'picture' && file.status === 'uploading') {
+        } else if (listType === 'picture' && stat.isUploading) {
           icon = <Progress key='loading' type={ProgressType.loading} size={Size.small} />;
         } else if (!file.thumbUrl && !file.url) {
           icon = <Icon className={`${prefixCls}-list-item-thumbnail`} type="picture" />;
         } else {
-          const thumbnail = isImageUrl(file) ? (
+          const thumbnail = stat.isImg ? (
             <img src={file.thumbUrl || file.url} alt={file.name} />
-          ) : (
-            <Icon type="file" style={{ fontSize: 48, color: 'rgba(0,0,0,0.5)' }} />
-          );
+          ) : icon;
           icon = (
             <a
               className={`${prefixCls}-list-item-thumbnail`}
@@ -179,7 +211,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         }
       }
 
-      if (file.status === 'uploading') {
+      if (stat.isUploading) {
         const { progressAttr } = this.props;
         // show loading icon if upload progress listener is disabled
         const loadingProgress =
@@ -225,39 +257,90 @@ export default class UploadList extends Component<UploadListProps, any> {
             pointerEvents: 'none',
             opacity: 0.5,
           } as CSSProperties);
-      const previewIcon = showPreviewIcon ? (
-        <a
-          href={file.url || file.thumbUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={style}
-          onClick={e => this.handlePreview(file, e)}
-          title={locale.previewFile}
-        >
-          <Icon type="visibility" />
-        </a>
-      ) : null;
+      const previewIcon =
+        isFunction(showPreviewIcon)
+          ? (showPreviewIcon as UploadListIconFunc)(file)
+          : stat.isImg && showPreviewIcon ? (
+            <a
+              href={file.url || file.thumbUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={style}
+              onClick={e => this.handlePreview(file, e)}
+              title={locale.previewFile}
+            >
+              <Icon type="visibility" />
+            </a>
+          ) : null;
+      const reUploadIcon =
+        isFunction(showReUploadIcon)
+          ? (showReUploadIcon as UploadListIconFunc)(file)
+          : showReUploadIcon ? (
+            <PopConfirm
+              {...popconfirmProps}
+              title={reUploadPopConfirmTitle || locale.confirmReUpload}
+              onConfirm={(e) => {
+                this.handleReUpload(file, e);
+              }}
+            >
+              <Icon
+                type="file_upload"
+                title={reUploadText}
+              />
+            </PopConfirm>
+          ) : null;
       const removeIcon = showRemoveIcon ? (
-        <Icon type="delete" title={locale.removeFile} onClick={() => this.handleClose(file)} />
+        <PopConfirm
+          {...popconfirmProps}
+          title={removePopConfirmTitle || locale.confirmRemove}
+          onConfirm={() => {
+            this.handleClose(file);
+          }}
+        >
+          <Icon
+            type={stat.isPictureCard ? 'delete' : 'close'}
+            className={stat.isPictureCard ? `${prefixCls}-list-item-action-remove` : undefined}
+            title={locale.removeFile}
+          />
+        </PopConfirm>
       ) : null;
-      const removeIconCross = showRemoveIcon ? (
-        <Icon type="close" title={locale.removeFile} onClick={() => this.handleClose(file)} />
-      ) : null;
+      const downloadLinkProps: any = {
+        ...file.linkProps,
+        rel: 'noopener noreferrer',
+      };
+      if (stat.isError) {
+        downloadLinkProps.style = { color: '#f5222d' };
+      }
+      if (!(stat.isError || stat.isUploading)) {
+        downloadLinkProps.href = file.url || file.thumbUrl;
+        downloadLinkProps.target = '_blank';
+        if (downloadLinkProps.href) {
+          downloadLinkProps.filename = file.name;
+        }
+      }
+      const downloadIcon =
+        !stat.isError && !stat.isUploading && (isFunction(showDownloadIcon) ? (showDownloadIcon as UploadListIconFunc)(file) : showDownloadIcon)
+        && <a {...downloadPropsIntercept!(downloadLinkProps)}><Icon type="get_app" /></a>;
       const actions =
-        listType === 'picture-card' && file.status !== 'uploading' ? (
+        stat.isPictureCard && !stat.isUploading ? (
           <span className={`${prefixCls}-list-item-actions`}>
-            {previewIcon}
-            {removeIcon}
+            {stat.isError || previewIcon}{downloadIcon}{reUploadIcon}{removeIcon}
           </span>
         ) : (
-          removeIconCross
+          removeIcon
         );
-      let message;
-      if (file.response && typeof file.response === 'string') {
-        message = file.response;
-      } else {
-        message = (file.error && file.error.statusText) || locale.uploadError;
-      }
+      const message = file.response && typeof file.response === 'string' ? file.response : ((file.error && file.error.statusText) || locale.uploadError);
+
+      const fileName = (stat.isPictureCard && !stat.isUploading) ? (
+        <Tooltip prefixCls={tooltipPrefixCls} title={getCustomFilenameTitle ? getCustomFilenameTitle(file) : file.name} placement="bottom">
+          {
+            createElement(downloadLinkProps.href ? 'a' : 'span', {
+              className: `${prefixCls}-list-item-file-name`,
+              ...downloadPropsIntercept!(downloadLinkProps),
+            }, file.name)
+          }
+        </Tooltip>
+      ) : null;
       const filesizeStr = getFileSizeStr(file.size);
       const fileSize =
         (showFileSize && filesizeStr !== '' && listType === 'text') ? (
@@ -266,11 +349,26 @@ export default class UploadList extends Component<UploadListProps, any> {
           </span>
         ) : null;
 
+      const iconAndPreview = stat.isPictureCard ? (
+        <span className={`${prefixCls}-list-item-picture-card`}>
+          {icon}
+        </span>
+      ) : <>{icon}{preview}</>;
+
+      const iconAndPreviewTooltip =
+        stat.isError ? (
+          <Tooltip prefixCls={tooltipPrefixCls} title={message}>
+            {iconAndPreview}
+          </Tooltip>
+        ) : (
+          iconAndPreview
+        );
+
       const listItemInfo = (
         <div className={`${prefixCls}-list-item-info`}>
           <span className={`${prefixCls}-list-item-span`}>
-            {icon}
-            {preview}
+            {iconAndPreviewTooltip}
+            {fileName}
             {fileSize}
             {actions}
           </span>
@@ -279,15 +377,6 @@ export default class UploadList extends Component<UploadListProps, any> {
           </Animate>
         </div>
       );
-
-      const listItemInfoTooltip =
-        file.status === 'error' ? (
-          <Tooltip title={message}>
-            {listItemInfo}
-          </Tooltip>
-        ) : (
-          listItemInfo
-        );
 
       if (dragUploadList) {
         return (
@@ -300,7 +389,7 @@ export default class UploadList extends Component<UploadListProps, any> {
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
-                {listItemInfoTooltip}
+                {listItemInfo}
               </div>
             )}
           </Draggable>
@@ -309,7 +398,7 @@ export default class UploadList extends Component<UploadListProps, any> {
 
       return (
         <div className={infoUploadingClass} key={file.uid}>
-          {listItemInfoTooltip}
+          {listItemInfo}
         </div>
       );
     });

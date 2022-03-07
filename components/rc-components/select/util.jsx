@@ -1,6 +1,17 @@
 import { Children } from 'react';
 
+export function toTitle(title) {
+  if (typeof title === 'string') {
+    return title;
+  }
+  return null;
+}
+
 export function getValuePropValue(child) {
+  if (!child) {
+    return null;
+  }
+
   const props = child.props;
   if ('value' in props) {
     return props.value;
@@ -115,7 +126,7 @@ export const UNSELECTABLE_STYLE = {
 };
 
 export const UNSELECTABLE_ATTRIBUTE = {
-  unselectable: 'unselectable',
+  unselectable: 'on',
 };
 
 export function findFirstMenuItem(children) {

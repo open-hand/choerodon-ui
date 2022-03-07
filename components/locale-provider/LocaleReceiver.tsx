@@ -12,7 +12,7 @@ export interface LocaleReceiverContext {
 }
 
 export default class LocaleReceiver extends Component<LocaleReceiverProps> {
-  static get contextType() {
+  static get contextType(): typeof LocaleContext {
     return LocaleContext;
   }
 

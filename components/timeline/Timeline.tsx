@@ -1,22 +1,25 @@
 import React, { Children, cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import TimelineItem from './TimelineItem';
-import Icon from '../icon';
+import Spin from '../spin';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { Size } from '../_util/enum';
 
 export interface TimelineProps {
   prefixCls?: string;
+  spinPrefixCls?: string;
   className?: string;
   /** 指定最后一个幽灵节点是否存在或内容 */
   pending?: ReactNode;
   pendingDot?: ReactNode;
   style?: CSSProperties;
+  reverse?: boolean;
 }
 
 export default class Timeline extends Component<TimelineProps, any> {
   static displayName = 'Timeline';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -27,10 +30,12 @@ export default class Timeline extends Component<TimelineProps, any> {
   render() {
     const {
       prefixCls: customizePrefixCls,
+      spinPrefixCls,
       children,
-      pending,
+      pending = null,
       pendingDot,
       className,
+      reverse,
       ...restProps
     } = this.props;
     const { getPrefixCls } = this.context;
@@ -40,25 +45,43 @@ export default class Timeline extends Component<TimelineProps, any> {
       prefixCls,
       {
         [`${prefixCls}-pending`]: !!pending,
+        [`${prefixCls}-reverse`]: !!reverse,
       },
       className,
     );
-    // Remove falsy items
-    const falsylessItems = Children.toArray(children).filter(item => !!item);
-    const items = Children.map(falsylessItems, (ele: ReactElement<any>, idx) =>
-      cloneElement(ele, {
-        last: idx === Children.count(falsylessItems) - 1,
-      }),
-    );
+
     const pendingItem = pending ? (
-      <TimelineItem pending={!!pending} dot={pendingDot || <Icon type="loading" />}>
+      <TimelineItem
+        prefixCls={prefixCls}
+        pending={!!pending}
+        dot={pendingDot || <Spin prefixCls={spinPrefixCls} size={Size.small} />}
+      >
         {pendingNode}
       </TimelineItem>
     ) : null;
+
+    const timeLineItems = reverse
+      ? [pendingItem, ...Children.toArray(children).reverse()]
+      : [...Children.toArray(children), pendingItem];
+
+    // Remove falsy items
+    const truthyItems = timeLineItems.filter(item => !!item);
+    const itemsCount = Children.count(truthyItems);
+    const lastCls = `${prefixCls}-item-last`;
+    const items = Children.map(truthyItems, (ele: ReactElement<any>, idx) =>
+      cloneElement(ele, {
+        className: classNames([
+          ele.props.className,
+          (!reverse && !!pending)
+            ? (idx === itemsCount - 2) ? lastCls : ''
+            : (idx === itemsCount - 1) ? lastCls : '',
+        ]),
+      }),
+    );
+
     return (
       <ul {...restProps} className={classString}>
         {items}
-        {pendingItem}
       </ul>
     );
   }

@@ -106,6 +106,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     onPrevClick = noop,
     onNextClick = noop,
     changeActiveKey,
+    rippleDisabled,
   } = useContext(TabsContext);
   const modal = useModal();
   const openCustomizationModal = useCallback(() => {
@@ -248,7 +249,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         </>
       );
       rst.push(
-        <Ripple disabled={disabled} key={key}>
+        <Ripple disabled={disabled || rippleDisabled} key={key}>
           <TabBarInner ref={tabBarRef[index].ref} {...tabProps}>
             {type === TabsType['editable-card'] ? (
               <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>

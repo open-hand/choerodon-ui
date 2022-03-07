@@ -209,7 +209,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     layout: FormLayout.table,
   };
 
-  static get contextType() {
+  static get contextType(): typeof FormContext {
     return FormContext;
   }
 

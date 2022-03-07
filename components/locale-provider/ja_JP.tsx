@@ -42,6 +42,8 @@ export default {
     removeFile: 'ファイルを削除',
     uploadError: 'アップロードエラー',
     previewFile: 'ファイルをプレビュー',
+    confirmRemove: '削除を確認しますか？',
+    confirmReUpload: '再アップロードしてもよろしいですか？',
   },
   Collapse: {
     fold: '折る',

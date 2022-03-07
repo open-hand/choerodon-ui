@@ -4,9 +4,11 @@ import { SubMenu as RcSubMenu } from '../rc-components/menu';
 import MenuContext, { MenuContextValue } from './MenuContext';
 
 class SubMenu extends PureComponent<any, any> {
-  static get contextType() {
+  static get contextType(): typeof MenuContext {
     return MenuContext;
   }
+
+  static isSubMenu = 1;
 
   context: MenuContextValue;
 
