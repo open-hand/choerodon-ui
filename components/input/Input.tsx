@@ -234,28 +234,36 @@ export default class Input extends Component<InputProps, any> {
   }
 
   setRenderedStyle() {
-    const { rendered, suffix, prefix } = this;
-    if (rendered) {
+    const { rendered, input, suffix, prefix } = this;
+    if (rendered || input) {
       let suffixWidth: string;
       let prefixWidth: string;
-      let margin = '0';
+      let marginRight = '';
+      let marginLeft = '';
       let width = '100%';
       if (suffix && prefix) {
         suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
         prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
-        margin = `0 ${suffixWidth} 0 ${prefixWidth}`;
+        marginRight = suffixWidth;
+        marginLeft = prefixWidth;
         width = `calc(100% - ${suffixWidth} - ${prefixWidth})`;
       } else if (suffix) {
         suffixWidth = `${(suffix.clientWidth || -2) + 2}px`;
-        margin = `0 ${suffixWidth} 0 0`;
+        marginRight = suffixWidth;
         width = `calc(100% - ${suffixWidth})`;
       } else if (prefix) {
         prefixWidth = `${(prefix.clientWidth || -2) + 2}px`;
-        margin = `0 0 0 ${prefixWidth}`;
+        marginLeft = prefixWidth;
         width = `calc(100% - ${prefixWidth})`;
       }
-      rendered.style.margin = margin;
-      rendered.style.width = width;
+      if (rendered) {
+        rendered.style.marginRight = marginRight;
+        rendered.style.marginLeft = marginLeft;
+        rendered.style.width = width;
+      } else if (input) {
+        input.style.paddingRight = marginRight;
+        input.style.paddingLeft = marginLeft;
+      }
     }
   }
 
