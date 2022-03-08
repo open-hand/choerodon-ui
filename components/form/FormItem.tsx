@@ -18,6 +18,7 @@ function intersperse(arr: Array<any>, inter: any) {
 export interface FormItemProps {
   prefixCls?: string;
   rowPrefixCls?: string;
+  colPrefixCls?: string;
   className?: string;
   id?: string;
   label?: ReactNode;
@@ -231,7 +232,7 @@ export default class FormItem extends Component<FormItemProps, any> {
   }
 
   renderWrapper(children: ReactNode) {
-    const { wrapperCol, labelLayout } = this.props;
+    const { wrapperCol, labelLayout, colPrefixCls } = this.props;
     const prefixCls = this.getPrefixCls();
     const required = this.isRequired();
     const isHorizontal = labelLayout === 'horizontal';
@@ -243,7 +244,7 @@ export default class FormItem extends Component<FormItemProps, any> {
       },
     );
     return isHorizontal ? (
-      <Col {...wrapperCol} className={className} key="wrapper">
+      <Col prefixCls={colPrefixCls} {...wrapperCol} className={className} key="wrapper">
         {children}
       </Col>
     ) : (
@@ -296,7 +297,7 @@ export default class FormItem extends Component<FormItemProps, any> {
   };
 
   renderLabel() {
-    const { prefixCls, label, labelCol, colon, id } = this.props;
+    const { prefixCls, label, labelCol, colon, id, colPrefixCls } = this.props;
     const context = this.context;
     const required = this.isRequired();
 
@@ -317,7 +318,7 @@ export default class FormItem extends Component<FormItemProps, any> {
     }
 
     return label ? (
-      <Col {...labelCol} className={labelColClassName} key="label">
+      <Col prefixCls={colPrefixCls} {...labelCol} className={labelColClassName} key="label">
         <label
           htmlFor={id || this.getId()}
           className={labelClassName}
