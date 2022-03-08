@@ -20,6 +20,7 @@ export interface ItemGroupProps {
   required?: boolean;
   useColon?: boolean;
   compact?: boolean;
+  hidden?: boolean;
 }
 
 const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
