@@ -9,12 +9,13 @@ import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import { Menus, SingleMenu } from 'choerodon-ui/lib/rc-components/cascader';
+import { defaultFieldNames } from 'choerodon-ui/lib/rc-components/cascader/Cascader';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import cloneDeep from 'lodash/cloneDeep';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
-import { MenuMode } from 'choerodon-ui/lib/cascader';
+import { FieldNamesType, MenuMode } from 'choerodon-ui/lib/cascader';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
@@ -162,6 +163,7 @@ export interface CascaderProps extends TriggerFieldProps {
    * 渲染分页 Item 内容
    */
   pagingOptionContent?: string | ReactNode;
+  fieldNames?: FieldNamesType;
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -173,6 +175,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     searchable: false,
     dropdownMatchSelectWidth: false,
     expandTrigger: ExpandTrigger.click,
+    fieldNames: defaultFieldNames,
     onOption: defaultOnOption,
   };
 
@@ -552,6 +555,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         singleMenuItemRender,
         async,
         loadData,
+        fieldNames,
       },
     } = this;
     let optGroups: any[] = [];
@@ -685,6 +689,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         return (
           <SingleMenu
             {...menuProps}
+            fieldNames={fieldNames}
+            defaultFieldNames={defaultFieldNames}
             singleMenuStyle={singleMenuStyle}
             singleMenuItemStyle={singleMenuItemStyle}
             singlePleaseRender={singlePleaseRender}
@@ -705,6 +711,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       return (
         <Menus
           {...menuProps}
+          fieldNames={fieldNames}
+          defaultFieldNames={defaultFieldNames}
           prefixCls={this.prefixCls}
           expandTrigger={expandTrigger}
           activeValue={selectedValues}
