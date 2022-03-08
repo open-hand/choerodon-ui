@@ -8,6 +8,8 @@ import MenusSingle from './MenusSingle';
 import KeyCode from '../../_util/KeyCode';
 import Locale from './locale/en_US';
 
+export const defaultFieldNames = { label: 'label', value: 'value', children: 'children' };
+
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
     points: ['tl', 'bl'],
@@ -57,7 +59,7 @@ export default class Cascader extends Component {
     popupPlacement: 'bottomLeft',
     builtinPlacements: BUILT_IN_PLACEMENTS,
     expandTrigger: 'click',
-    fieldNames: { label: 'label', value: 'value', children: 'children' },
+    fieldNames: defaultFieldNames,
     expandIcon: <Icon type="navigate_next" />,
     menuMode: 'multiple',
     locale: Locale,
@@ -78,7 +80,6 @@ export default class Cascader extends Component {
       value: initialValue,
       isTabSelected: false,
     };
-    this.defaultFieldNames = { label: 'label', value: 'value', children: 'children' };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -105,7 +106,6 @@ export default class Cascader extends Component {
   }
 
   getFieldName(name) {
-    const { defaultFieldNames } = this;
     const { fieldNames, filedNames } = this.props;
     if ('filedNames' in this.props) {
       return filedNames[name] || defaultFieldNames[name]; // For old compatibility
@@ -312,7 +312,7 @@ export default class Cascader extends Component {
           <Menus
             {...this.props}
             fieldNames={this.getFieldNames()}
-            defaultFieldNames={this.defaultFieldNames}
+            defaultFieldNames={defaultFieldNames}
             value={this.state.value}
             activeValue={this.state.activeValue}
             onSelect={this.handleMenuSelect}
@@ -323,7 +323,7 @@ export default class Cascader extends Component {
           <MenusSingle
             {...this.props}
             fieldNames={this.getFieldNames()}
-            defaultFieldNames={this.defaultFieldNames}
+            defaultFieldNames={defaultFieldNames}
             isTabSelected={this.state.isTabSelected}
             value={this.state.value}
             activeValue={this.state.activeValue}
