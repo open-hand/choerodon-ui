@@ -54,6 +54,9 @@ export interface MenuProps {
   subMenuOpenDelay?: number;
   onFocus?: FocusEventHandler<HTMLElement>;
   onBlur?: FocusEventHandler<HTMLElement>;
+  getPopupContainer?: (triggerNode: Element) => HTMLElement;
+  focusable?: boolean;
+  rippleDisabled?: boolean;
 }
 
 export interface MenuState {
@@ -63,7 +66,7 @@ export interface MenuState {
 export default class Menu extends PureComponent<MenuProps, MenuState> {
   static displayName = 'Menu';
 
-  static get contextType() {
+  static get contextType(): typeof LayoutSiderContext {
     return LayoutSiderContext;
   }
 
@@ -143,9 +146,10 @@ export default class Menu extends PureComponent<MenuProps, MenuState> {
       (nextProps.inlineCollapsed && !inlineCollapsed) ||
       (nextContext.siderCollapsed && !siderCollapsed)
     ) {
+      const menuNode = findDOMNode(this) as Element;
       this.switchModeFromInline =
         !!openKeys.length &&
-        !!(findDOMNode(this) as HTMLElement).querySelectorAll(
+        !!menuNode.querySelectorAll(
           `.${this.getPrefixCls()}-submenu-open`,
         ).length;
       this.inlineOpenKeys = openKeys;

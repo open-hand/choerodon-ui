@@ -61,11 +61,11 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
   const { length } = list;
   const disabled = length <= MAX;
   const handlePrev = useCallback(() => {
-    setCurrentIndex(Math.max(currentIndex - MAX, 0));
-  }, [currentIndex, length]);
+    setCurrentIndex((prevCurrentIndex) => Math.max(prevCurrentIndex - MAX, 0));
+  }, []);
   const handleNext = useCallback(() => {
-    setCurrentIndex(Math.min(currentIndex + MAX, length - 1));
-  }, [currentIndex, length]);
+    setCurrentIndex((prevCurrentIndex) => Math.min(prevCurrentIndex + MAX, length - 1));
+  }, [length]);
   useEffect(() => {
     const { current } = containerRef;
     if (current) {

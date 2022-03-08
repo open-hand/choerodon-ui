@@ -17,7 +17,7 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
     href: '#',
   };
 
-  static get contextType() {
+  static get contextType(): typeof AnchorContext {
     return AnchorContext;
   }
 

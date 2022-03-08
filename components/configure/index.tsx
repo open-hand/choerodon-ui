@@ -173,6 +173,7 @@ export interface Config extends DataSetConfig {
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
   drawerTransitionName?: string;
+  modalMovable?: boolean;
   modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;

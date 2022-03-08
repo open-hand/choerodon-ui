@@ -1,12 +1,13 @@
 import React, { Component, KeyboardEvent, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
+import { EventManager } from 'choerodon-ui/dataset';
+import Animate from '../../animate';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
-import Icon from '../../icon';
-import Animate from '../../animate';
-import getScrollBarSize from '../util/getScrollBarSize';
 import KeyCode from '../../_util/KeyCode';
-import addEventListener from '../../_util/addEventListener';
+import contains from '../util/Dom/contains';
+import getScrollBarSize from '../util/getScrollBarSize';
+import Icon from '../../icon';
 
 let uuid = 0;
 let openCount = 0;
@@ -47,6 +48,22 @@ function offset(el: any) {
   return pos;
 }
 
+function getLeftTop(content: any) {
+  let t = 0;
+  let l = 0;
+  /* tslint:disable */
+  for (t = content.offsetTop, l = content.offsetLeft, content = content.offsetParent; content;) {
+    t += content.offsetTop;
+    l += content.offsetLeft;
+    content = content.offsetParent
+  }
+  /* tslint:enable */
+  return {
+    top: t,
+    left: l,
+  };
+}
+
 export default class Dialog extends Component<IDialogPropTypes, any> {
   static defaultProps = {
     className: '',
@@ -72,13 +89,19 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
 
   private dialog: any;
 
+  private content: any;
+
+  private header: any;
+
   private sentinel: HTMLElement;
 
   private bodyIsOverflowing: boolean;
 
   private scrollbarWidth: number;
 
-  private resizeEvent: any;
+  private resizeEvent?: EventManager;
+
+  private moveEvent?: EventManager;
 
   componentWillMount() {
     this.inTransition = false;
@@ -99,7 +122,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   }
 
   componentDidUpdate(prevProps: IDialogPropTypes) {
-    const { mousePosition, visible, mask } = this.props;
+    const { mousePosition, visible, mask, movable } = this.props;
     if (visible) {
       // first show
       if (!prevProps.visible) {
@@ -107,7 +130,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         this.openTime = Date.now();
         this.lastOutSideFocusNode = document.activeElement as HTMLElement;
         this.addScrollingEffect();
-        this.wrap.focus();
+        this.tryFocus();
         const dialogNode = findDOMNode(this.dialog);
         if (mousePosition) {
           const elOffset = offset(dialogNode);
@@ -130,16 +153,19 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         this.lastOutSideFocusNode = null;
       }
     }
+    if (this.header && movable) {
+      Object.assign((this.header as HTMLElement).style, {
+        cursor: 'move',
+      });
+    }
   }
 
   componentWillUnmount() {
-    const { visible, center } = this.props;
+    const { visible } = this.props;
     if (visible || this.inTransition) {
       this.removeScrollingEffect();
     }
-    if (center) {
-      this.removeEventListener();
-    }
+    this.removeEventListener();
   }
 
   center = () => {
@@ -153,15 +179,25 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
   };
 
+  tryFocus() {
+    if (!contains(this.wrap, document.activeElement)) {
+      this.lastOutSideFocusNode = document.activeElement as HTMLElement;
+      this.wrap.focus();
+    }
+  }
+
   onEventListener = () => {
     if (typeof window !== 'undefined') {
-      this.resizeEvent = addEventListener(window, 'resize', this.center);
+      this.resizeEvent = new EventManager(window).addEventListener('resize', this.center);
     }
   };
 
   removeEventListener = () => {
-    if (typeof window !== 'undefined') {
-      this.resizeEvent.remove();
+    if (this.resizeEvent) {
+      this.resizeEvent.clear();
+    }
+    if (this.moveEvent) {
+      this.moveEvent.clear();
     }
   };
 
@@ -199,7 +235,9 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
   onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const props = this.props;
     if (props.keyboard && e.keyCode === KeyCode.ESC) {
+      e.stopPropagation();
       this.close(e);
+      return;
     }
     // keep focus inside dialog
     if (props.visible) {
@@ -230,13 +268,17 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     }
     let footer;
     if (props.footer) {
-      footer = <div className={`${prefixCls}-footer`}>{props.footer}</div>;
+      footer = (
+        <div className={`${prefixCls}-footer`} ref={this.saveRef('footer')}>
+          {props.footer}
+        </div>
+      );
     }
 
     let header;
     if (props.title) {
       header = (
-        <div className={`${prefixCls}-header`}>
+        <div onMouseDown={this.handleHeaderMouseDown} className={`${prefixCls}-header`} ref={this.saveRef('header')}>
           <div className={`${prefixCls}-title`} id={this.titleId}>
             {props.title}
           </div>
@@ -253,7 +295,7 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
           aria-label="Close"
           className={`${prefixCls}-close`}
         >
-          <Icon className={`${prefixCls}-close-x`} type="close" />
+          {props.closeIcon || <Icon className={`${prefixCls}-close-x`} type="close" />}
         </button>
       );
     }
@@ -269,10 +311,15 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         className={`${prefixCls} ${props.className || ''}`}
         hidden={!props.visible}
       >
-        <div className={`${prefixCls}-content`}>
+        <div ref={this.saveRef('content')} className={`${prefixCls}-content`}>
           {closer}
           {header}
-          <div className={`${prefixCls}-body`} style={props.bodyStyle} {...props.bodyProps}>
+          <div
+            className={`${prefixCls}-body`}
+            style={props.bodyStyle}
+            ref={this.saveRef('body')}
+            {...props.bodyProps}
+          >
             {props.children}
           </div>
           {footer}
@@ -299,6 +346,58 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
         {props.visible || !props.destroyOnClose ? dialogElement : null}
       </Animate>
     );
+  };
+
+  handleHeaderMouseDown = (downEvent: React.MouseEvent) => {
+    const { wrap, props: { movable } } = this;
+    const { content } = this;
+    const dialogNode = findDOMNode(this.dialog);
+    if (wrap && content && dialogNode && movable) {
+      const { clientX, clientY } = downEvent;
+      let { offsetLeft, offsetTop } = wrap;
+      if ((dialogNode as HTMLElement).style.margin !== '0rem') {
+        const { left, top } = getLeftTop(content);
+        offsetLeft = left;
+        offsetTop = top;
+      }
+      let { moveEvent } = this;
+      if (!moveEvent) {
+        moveEvent = new EventManager(typeof window === 'undefined' ? undefined : document);
+        this.moveEvent = moveEvent;
+      }
+      moveEvent
+        .addEventListener('mousemove', (moveEvent: React.MouseEvent) => {
+          const { clientX: moveX, clientY: moveY } = moveEvent;
+          const left = Math.max(offsetLeft + moveX - clientX, 0);
+          const top = Math.max(offsetTop + moveY - clientY, 0);
+          if ((dialogNode as HTMLElement).style.margin !== '0rem') {
+            offsetLeft = left;
+            offsetTop = top;
+            Object.assign((dialogNode as HTMLElement).style, {
+              margin: `0rem`,
+              top: `0px`,
+            });
+            Object.assign(wrap.style, {
+              left: `${left}px`,
+              top: `${top}px`,
+              overflow: `hidden`,
+            });
+          }
+          Object.assign((dialogNode as HTMLElement).style, {
+            margin: `0rem`,
+            top: `0px`,
+          });
+          Object.assign(wrap.style, {
+            left: `${left}px`,
+            top: `${top}px`,
+          });
+        })
+        .addEventListener('mouseup', () => {
+          if (moveEvent) {
+            moveEvent.clear();
+          }
+        });
+    }
   };
 
   getZIndexStyle = () => {

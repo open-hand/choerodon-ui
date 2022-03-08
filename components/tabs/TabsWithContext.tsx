@@ -59,6 +59,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabDraggable,
     tabTitleEditable,
     tabCountHideable,
+    rippleDisabled,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -170,6 +171,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabTitleEditable,
     tabCountHideable,
     defaultChangeable,
+    rippleDisabled,
   };
   const inkBarAnimated = isAnimated(animated) ? animated.inkBar : animated;
   let tabPaneAnimated = isAnimated(animated) ? animated.tabPane : animated;

@@ -128,6 +128,7 @@ export default class Picker extends Component {
       disabledMinutes, disabledSeconds, hideDisabledOptions, inputReadOnly,
       allowEmpty, showHour, showMinute, showSecond, defaultOpenValue, clearText,
       addon, use12Hours, focusOnOpen, onKeyDown, hourStep, minuteStep, secondStep,
+      clearIcon,
     } = this.props;
     return (
       <Panel
@@ -157,6 +158,7 @@ export default class Picker extends Component {
         addon={addon}
         focusOnOpen={focusOnOpen}
         onKeyDown={onKeyDown}
+        clearIcon={clearIcon}
       />
     );
   }
@@ -223,8 +225,9 @@ export default class Picker extends Component {
     const {
       prefixCls, placeholder, placement, align, id,
       disabled, transitionName, style, className, getPopupContainer, name, autoComplete,
-      onFocus, onBlur, autoFocus, inputReadOnly, label
+      onFocus, onBlur, autoFocus, inputReadOnly, label, inputIcon, component = Input
     } = this.props;
+    const Cmp = component;
     const { open, value } = this.state;
     const popupClassName = this.getPopupClassName();
     return (
@@ -243,7 +246,7 @@ export default class Picker extends Component {
         onPopupVisibleChange={this.onVisibleChange}
       >
         <span className={`${prefixCls} ${className}`} style={style}>
-          <Input
+          <Cmp
             className={`${prefixCls}-input`}
             ref={this.saveInputRef}
             type="text"
@@ -260,9 +263,10 @@ export default class Picker extends Component {
             autoFocus={autoFocus}
             focused={open}
             onChange={noop}
-            readOnly
+            readOnly={!!inputReadOnly}
             id={id}
           />
+          {inputIcon || <span className={`${prefixCls}-icon`}/>}
         </span>
       </Trigger>
     );

@@ -1,9 +1,12 @@
-import React, { Component, ReactChildren, ReactNode, SyntheticEvent } from 'react';
+import React, { Component, ComponentType, Key, ReactChildren, ReactNode, SyntheticEvent } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed';
+import isEqual from 'lodash/isEqual';
+import classes from 'component-classes';
 import Pagination, { PaginationProps } from '../pagination';
 import Icon from '../icon';
 import Spin, { SpinProps } from '../spin';
@@ -15,6 +18,7 @@ import createStore, { Store } from './createStore';
 import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import Column from './Column';
+import Button from '../button';
 import ColumnGroup from './ColumnGroup';
 import createBodyRow from './createBodyRow';
 import {
@@ -22,20 +26,32 @@ import {
   flatArray,
   flatFilter,
   getColumnKey,
+  getHeight,
   getLeafColumns,
+  isNumber,
   normalizeColumns,
   removeHiddenColumns,
+  TableRowContext,
   treeMap,
 } from './util';
 import {
   ColumnProps,
   CompareFn,
+  CustomColumn,
+  ExportProps,
+  handleProps,
   RowSelectionType,
+  SelectionInfo,
   SelectionItemSelectFn,
+  SorterRenderProps,
+  SorterResult,
+  TableAutoHeightType,
   TableComponents,
   TableLocale,
   TablePaginationConfig,
   TableProps,
+  TableRowSelection,
+  TableSelectWay,
   TableState,
   TableStateFilters,
 } from './interface';
@@ -45,7 +61,23 @@ import FilterBar from './FilterBar';
 import { VALUE_OR } from './FilterSelect';
 import RcTable from '../rc-components/table';
 import { Size } from '../_util/enum';
+import Resizable from './Resizable';
+import ColumnFilterMenu from './ColumnFilterMenu';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+
+const ResizeableTitle = (props: any) => {
+  const { onResize, onDrag, width, ...restProps } = props;
+
+  if (!width) {
+    return <th {...restProps} />;
+  }
+
+  return (
+    <Resizable onResize={onResize} onDrag={onDrag}>
+      <th {...restProps} />
+    </Resizable>
+  );
+};
 
 function findBodyDom(dom: Element | HTMLDivElement, reg: RegExp): any {
   if (dom.childElementCount > 0) {
@@ -71,6 +103,37 @@ function stopPropagation(e: SyntheticEvent<any>) {
   }
 }
 
+function getRowSelection<T>(props: TableProps<T>): TableRowSelection<T> {
+  return props.rowSelection || {};
+}
+
+function defaultRenderSorter<T>(props: SorterRenderProps<T>): ReactNode {
+  const { column, isSortColumn, sortOrder, prefixCls, changeOrder } = props;
+  const isAscend = isSortColumn && sortOrder === 'ascend';
+  column.className = classNames(column.className, {
+    [`${prefixCls}-sort-${sortOrder}`]: isSortColumn,
+  });
+  const { onHeaderCell } = column;
+  column.onHeaderCell = col => {
+    const customProps = (onHeaderCell && onHeaderCell(col)) || {};
+    const { onClick } = customProps;
+    return {
+      ...customProps,
+      onClick: (e: SyntheticEvent<any>) => {
+        if (!e.isDefaultPrevented()) {
+          if (typeof onClick === 'function') {
+            onClick(e);
+          }
+          if (!e.isDefaultPrevented()) {
+            changeOrder(isAscend ? 'descend' : 'ascend');
+          }
+        }
+      },
+    };
+  };
+  return <Icon type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
+}
+
 const defaultPagination = {
   onChange: noop,
   onShowSizeChange: noop,
@@ -85,9 +148,11 @@ const emptyObject = {};
 export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   static displayName = 'Table';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
+
+  static TableRowContext = TableRowContext;
 
   static Column = Column;
 
@@ -102,13 +167,16 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     size: Size.default,
     loading: false,
     bordered: false,
+    resizable: false,
     indentSize: 20,
     locale: {},
     rowKey: 'key',
     showHeader: true,
+    autoHeight: false,
     filterBar: true,
     noFilter: false,
     autoScroll: true,
+    renderSorter: defaultRenderSorter,
   };
 
   context: ConfigContextValue;
@@ -123,7 +191,15 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   components: TableComponents;
 
-  private refTable;
+  row: ComponentType<any>;
+
+  iframe: HTMLIFrameElement; // 判断存在iframe没有这样修复跳转页面问题
+
+  element: HTMLDivElement;
+
+  refTable: HTMLDivElement;
+
+  wrapper: HTMLDivElement;
 
   constructor(props: TableProps<T>) {
     super(props);
@@ -136,29 +212,43 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     this.columns = props.columns || normalizeColumns(props.children as ReactChildren);
 
     this.createComponents(props.components);
-
+    const customColumns = this.getCustomColumns() || [];
     this.state = {
       ...this.getDefaultSortOrder(this.columns),
       // 减少状态
       filters: this.getFiltersFromColumns(),
       barFilters: props.filters || [],
       pagination: this.getDefaultPagination(props),
+      columnAdjust: {},
+      customColumns,
+      tableAutoHeight: 0,
     };
 
     this.CheckboxPropsCache = {};
 
     this.store = createStore({
-      selectedRowKeys: (props.rowSelection || {}).selectedRowKeys || [],
+      selectedRowKeys: getRowSelection(props).selectedRowKeys || [],
       selectionDirty: false,
+      customColumns,
+      exported: false,
+      exportStoreProps: undefined,
+      scroll: props.scroll,
     });
   }
 
+  setElementRef = (node: RcTable) => {
+    if (node && node.tableContent) {
+      this.element = node.tableContent;
+    }
+  };
+
   saveRef = ref => {
     this.refTable = ref;
+    this.wrapper = ref;
   };
 
   getCheckboxPropsByItem = (item: T, index: number) => {
-    const { rowSelection = {} } = this.props;
+    const rowSelection = getRowSelection(this.props);
     if (!rowSelection.getCheckboxProps) {
       return {};
     }
@@ -177,7 +267,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   getDefaultSelection() {
-    const { rowSelection = {} } = this.props;
+    const rowSelection = getRowSelection(this.props);
     if (!rowSelection.getCheckboxProps) {
       return [];
     }
@@ -188,15 +278,14 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getDefaultPagination(props: TableProps<T>) {
     const pagination: TablePaginationConfig = props.pagination || {};
-    return this.hasPagination(props)
-      ? {
+    return this.hasPagination(props) ?
+      {
         ...defaultPagination,
         size: props.size,
         ...pagination,
         current: pagination.defaultCurrent || pagination.current || 1,
         pageSize: pagination.defaultPageSize || pagination.pageSize || 10,
-      }
-      : {};
+      } : {};
   }
 
   componentWillReceiveProps(nextProps: TableProps<T>) {
@@ -214,25 +303,27 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         return { pagination: nextProps.pagination !== false ? newPagination : emptyObject };
       });
     }
-    const { rowSelection, dataSource, components } = this.props;
+    const { dataSource, scroll, components } = this.props;
     const { filters, sortColumn, sortOrder } = this.state;
     if (nextProps.rowSelection && 'selectedRowKeys' in nextProps.rowSelection) {
       this.store.setState({
         selectedRowKeys: nextProps.rowSelection.selectedRowKeys || [],
       });
-      if (
-        rowSelection &&
-        nextProps.rowSelection.getCheckboxProps !== rowSelection.getCheckboxProps
-      ) {
-        this.CheckboxPropsCache = {};
-      }
     }
     if ('dataSource' in nextProps && nextProps.dataSource !== dataSource) {
       this.store.setState({
         selectionDirty: false,
       });
-      this.CheckboxPropsCache = {};
     }
+    if ('scroll' in nextProps && !isEqual(nextProps.scroll, scroll)) {
+      const tableScroll = this.store.getState().scroll;
+      this.store.setState({
+        scroll: { ...tableScroll, ...nextProps.scroll },
+      });
+    }
+
+    // https://github.com/ant-design/ant-design/issues/10133
+    this.CheckboxPropsCache = {};
 
     if (this.getSortOrderColumns(this.columns).length > 0) {
       const sortState = this.getSortStateFromColumns(this.columns);
@@ -276,29 +367,31 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   setSelectedRowKeys(
     selectedRowKeys: string[],
-    { selectWay, record, checked, changeRowKeys, nativeEvent }: any,
+    selectionInfo: SelectionInfo<T>,
+    selectedRows?: T[],
   ) {
-    const { rowSelection = {} as any } = this.props;
+    const { selectWay, record, checked, changeRowKeys, nativeEvent } = selectionInfo;
+    const rowSelection = getRowSelection(this.props);
     if (rowSelection && !('selectedRowKeys' in rowSelection)) {
       this.store.setState({ selectedRowKeys });
     }
-    const data = this.getFlatData();
     if (!rowSelection.onChange && !rowSelection[selectWay]) {
       return;
     }
-    const selectedRows = data.filter(
+    const data = this.getFlatData();
+    selectedRows = selectedRows || data.filter(
       (row, i) => selectedRowKeys.indexOf(this.getRecordKey(row, i)) >= 0,
     );
     if (rowSelection.onChange) {
       rowSelection.onChange(selectedRowKeys, selectedRows);
     }
     if (selectWay === 'onSelect' && rowSelection.onSelect) {
-      rowSelection.onSelect(record, checked, selectedRows, nativeEvent);
+      rowSelection.onSelect(record!, checked!, selectedRows, nativeEvent!);
     } else if (selectWay === 'onSelectAll' && rowSelection.onSelectAll) {
       const changeRows = data.filter(
-        (row, i) => changeRowKeys.indexOf(this.getRecordKey(row, i)) >= 0,
+        (row, i) => changeRowKeys!.indexOf(this.getRecordKey(row, i)) >= 0,
       );
-      rowSelection.onSelectAll(checked, selectedRows, changeRows);
+      rowSelection.onSelectAll(checked!, selectedRows, changeRows);
     } else if (selectWay === 'onSelectInvert' && rowSelection.onSelectInvert) {
       rowSelection.onSelectInvert(selectedRowKeys);
     }
@@ -308,7 +401,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     return (props || this.props).pagination !== false;
   }
 
-  isFiltersChanged(filters: TableStateFilters) {
+  isFiltersChanged(filters: TableStateFilters<T>) {
     let filtersChanged = false;
     const { filters: stateFilters } = this.state;
     if (Object.keys(filters).length !== Object.keys(stateFilters).length) {
@@ -337,11 +430,11 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     );
   }
 
-  getFiltersFromColumns(columns?: ColumnProps<T>[]) {
-    const filters: any = {};
+  getFiltersFromColumns(columns?: ColumnProps<T>[]): TableStateFilters<T> {
+    const filters: TableStateFilters<T> = {} as TableStateFilters<T>;
     this.getFilteredValueColumns(columns).forEach((col: ColumnProps<T>) => {
       const colKey = this.getColumnKey(col) as string;
-      filters[colKey] = col.filteredValue;
+      filters[colKey] = col.filteredValue as any;
     });
     return filters;
   }
@@ -366,9 +459,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
 
   getSortStateFromColumns(columns?: ColumnProps<T>[]) {
     // return first column which sortOrder is not falsy
-    const sortedColumn = this.getSortOrderColumns(columns).filter(
+    const sortedColumn = this.getSortOrderColumns(columns).find(
       (col: ColumnProps<T>) => col.sortOrder,
-    )[0];
+    );
 
     if (sortedColumn) {
       return {
@@ -390,7 +483,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     }
 
     return (a: T, b: T) => {
-      const result = (sortColumn!.sorter as CompareFn<T>)(a, b);
+      const result = (sortColumn!.sorter as CompareFn<T>)(a, b, sortOrder);
       if (result !== 0) {
         return sortOrder === 'descend' ? -result : result;
       }
@@ -398,29 +491,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     };
   }
 
-  setSortOrder(order: string, column: ColumnProps<T>) {
-    const newState = {
-      sortOrder: order,
-      sortColumn: column,
-    };
-
-    // Controlled
-    if (this.getSortOrderColumns().length === 0) {
-      this.setState(newState);
-    }
-
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(
-        ...this.prepareParamsArguments({
-          ...this.state,
-          ...newState,
-        }),
-      );
-    }
-  }
-
-  toggleSortOrder(order: string, column: ColumnProps<T>) {
+  toggleSortOrder(order: 'ascend' | 'descend' | null, column: ColumnProps<T>) {
     let { sortColumn, sortOrder } = this.state;
     // 只同时允许一列进行排序，否则会导致排序顺序的逻辑问题
     const isSortColumn = this.isSortColumn(column);
@@ -430,13 +501,13 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       sortColumn = column;
     } else if (sortOrder === order) {
       // 切换为未排序状态
-      sortOrder = '';
+      sortOrder = undefined;
       sortColumn = null;
     } else {
       // 切换为排序状态
       sortOrder = order;
     }
-    const newState = {
+    const newState: Pick<TableState<T>, 'sortOrder' | 'sortColumn'> = {
       sortOrder,
       sortColumn,
     };
@@ -457,19 +528,54 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     }
   }
 
+  handleFilter = (column: ColumnProps<T>, nextFilters: string[]) => {
+    const { filters: stateFilters } = this.state;
+    const filters: TableStateFilters<T> = {
+      ...stateFilters,
+      [this.getColumnKey(column) as string]: nextFilters,
+    };
+    // Remove filters not in current columns
+    const currentColumnKeys: string[] = [];
+    treeMap(this.columns, c => {
+      if (!c.children) {
+        currentColumnKeys.push(this.getColumnKey(c) as string);
+      }
+    });
+    Object.keys(filters).forEach(columnKey => {
+      if (currentColumnKeys.indexOf(columnKey) < 0) {
+        delete filters[columnKey];
+      }
+    });
+
+    this.setNewFilterState({
+      filters,
+    });
+  };
+
   setNewFilterState(newState: any) {
     const { pagination: propsPagination, onChange } = this.props;
     const { pagination: statePagination } = this.state;
-    const pagination = { ...statePagination };
+    const pagination: TablePaginationConfig = { ...statePagination };
 
     if (propsPagination) {
       // Reset current prop
       pagination.current = 1;
       pagination.onChange!(pagination.current);
     }
+    const filtersToSetState = { ...newState.filters };
+    // Remove filters which is controlled
+    this.getFilteredValueColumns().forEach((col: ColumnProps<T>) => {
+      const columnKey = this.getColumnKey(col);
+      if (columnKey) {
+        delete filtersToSetState[columnKey];
+      }
+    });
+    if (Object.keys(filtersToSetState).length > 0) {
+      newState.filters = filtersToSetState;
+    }
 
     // Controlled current prop will not respond user interaction
-    if (propsPagination && typeof propsPagination === 'object' && 'current' in propsPagination) {
+    if (typeof propsPagination === 'object' && 'current' in propsPagination) {
       newState.pagination = {
         ...pagination,
         current: statePagination.current,
@@ -483,7 +589,6 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         onChange(
           ...this.prepareParamsArguments({
             ...this.state,
-            selectionDirty: false,
             pagination,
           }),
         );
@@ -518,29 +623,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     this.forceUpdate();
   };
 
-  handleFilter = (column: ColumnProps<T>, nextFilters: string[]) => {
-    const { filters: stateFilters } = this.state;
-    const filters = {
-      ...stateFilters,
-      [this.getColumnKey(column) as string]: nextFilters,
-    };
-    // Remove filters not in current columns
-    const currentColumnKeys: string[] = [];
-    treeMap(this.columns, c => {
-      if (!c.children) {
-        currentColumnKeys.push(this.getColumnKey(c) as string);
-      }
-    });
-    Object.keys(filters).forEach(columnKey => {
-      if (currentColumnKeys.indexOf(columnKey) < 0) {
-        delete filters[columnKey];
-      }
-    });
-
-    this.setNewFilterState({
-      filters,
-    });
-  };
+  getSelectedRows(_: { e?: CheckboxChangeEvent; selectionKey?: string; record?: T; rowIndex?: number }) {
+    return undefined;
+  }
 
   handleSelect = (record: T, rowIndex: number, e: CheckboxChangeEvent) => {
     const checked = e.target.checked;
@@ -562,7 +647,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       checked,
       changeRowKeys: undefined,
       nativeEvent,
-    });
+    }, this.getSelectedRows({ e, record, rowIndex }));
   };
 
   handleRadioSelect = (record: T, rowIndex: number, e: RadioChangeEvent) => {
@@ -581,7 +666,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       checked,
       changeRowKeys: undefined,
       nativeEvent,
-    });
+    }, this.getSelectedRows({ record, rowIndex }));
   };
 
   handleSelectRow = (selectionKey: string, index: number, onSelectFunc: SelectionItemSelectFn) => {
@@ -593,7 +678,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       .map((item, i) => this.getRecordKey(item, i));
 
     const changeRowKeys: string[] = [];
-    let selectWay = '';
+    let selectWay: TableSelectWay = 'onSelectAll';
     let checked;
     // handle default selection
     switch (selectionKey) {
@@ -648,7 +733,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       selectWay,
       checked,
       changeRowKeys,
-    });
+    }, this.getSelectedRows({ selectionKey }));
   };
 
   handlePageChange = (current: number, ...otherArguments: any[]) => {
@@ -656,25 +741,26 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     const { pagination: statePagination } = this.state;
     const pagination = { ...statePagination };
     if (autoScroll) {
-      const scrollIntoViewSmoothly =
-        'scrollBehavior' in document.documentElement.style
-          ? scrollIntoView
-          : smoothScrollIntoView;
+      const { refTable } = this;
       setTimeout(() => {
-        if (this.refTable && this.refTable.clientHeight > document.body.clientHeight) {
-          scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
-        } else if (this.refTable) {
-          if (this.refTable.scrollIntoViewIfNeeded) {
-            this.refTable.scrollIntoViewIfNeeded({
+        const scrollIntoViewSmoothly =
+          'scrollBehavior' in document.documentElement.style
+            ? scrollIntoView
+            : smoothScrollIntoView;
+        if (refTable) {
+          if (refTable.clientHeight > document.body.clientHeight) {
+            scrollIntoViewSmoothly(refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
+          } else if ('scrollIntoViewIfNeeded' in refTable) {
+            (refTable as any).scrollIntoViewIfNeeded({
               block: 'start',
             });
           } else {
-            scrollIntoViewSmoothly(this.refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
+            scrollIntoViewSmoothly(refTable, { block: 'start', behavior: 'smooth', scrollMode: 'if-needed' });
           }
         }
       }, 10);
-      if (this.refTable) {
-        const dom = findBodyDom(this.refTable, new RegExp(`${this.getPrefixCls()}-body`));
+      if (refTable) {
+        const dom = findBodyDom(refTable, new RegExp(`${this.getPrefixCls()}-body`));
         if (dom !== null && dom.scroll) {
           dom.scrollTop = 0;
         }
@@ -707,7 +793,6 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       onChange(
         ...this.prepareParamsArguments({
           ...this.state,
-          selectionDirty: false,
           pagination,
         }),
       );
@@ -725,10 +810,12 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           this.handleSelect(record, rowIndex, e);
         }
       };
-
+      const { radioPrefixCls, checkboxPrefixCls } = this.props;
       return (
         <span onClick={stopPropagation}>
           <SelectionBox
+            radioPrefixCls={radioPrefixCls}
+            checkboxPrefixCls={checkboxPrefixCls}
             type={type}
             store={this.store}
             rowIndex={rowIndex}
@@ -756,10 +843,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     return findDOMNode(this) as HTMLElement;
   };
 
-  renderRowSelection(locale: TableLocale) {
-    const { rowSelection } = this.props;
+  renderRowSelection(columns: ColumnProps<T>[], locale: TableLocale) {
+    const { rowSelection, dropdownProps, menuProps, checkboxPrefixCls } = this.props;
     const prefixCls = this.getPrefixCls();
-    const columns = this.columns.concat();
     if (rowSelection) {
       const data = this.getFlatCurrentPageData().filter((item, index) => {
         if (rowSelection.getCheckboxProps) {
@@ -783,6 +869,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         );
         selectionColumn.title = (
           <SelectionCheckboxAll
+            checkboxPrefixCls={checkboxPrefixCls}
+            dropdownProps={dropdownProps}
+            menuProps={menuProps}
             store={this.store}
             locale={locale}
             data={data}
@@ -811,7 +900,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     return columns;
   }
 
-  getColumnKey(column: ColumnProps<T>, index?: number) {
+  getColumnKey(column: ColumnProps<T>, index?: number): Key | undefined {
     return getColumnKey(column, index);
   }
 
@@ -834,10 +923,13 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   renderColumnsDropdown(columns: ColumnProps<T>[], locale: TableLocale) {
-    const { dropdownPrefixCls: customizeDropdownPrefixCls, filterBar } = this.props;
+    const { dropdownPrefixCls: customizeDropdownPrefixCls, radioPrefixCls, checkboxPrefixCls, rippleDisabled, filterBar, customCode, filterBarLocale, renderSorter, dropdownProps: $dropdownProps, inputNumberProps } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = this.getPrefixCls();
-    const dropdownPrefixCls = getPrefixCls('dropdown', customizeDropdownPrefixCls);
+    const dropdownProps = {
+      prefixCls: getPrefixCls('dropdown', customizeDropdownPrefixCls),
+      ...$dropdownProps,
+    };
     const { sortOrder, filters } = this.state;
     return treeMap(columns, (originColumn, i) => {
       const column = { ...originColumn };
@@ -853,53 +945,166 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
             selectedKeys={colFilters}
             confirmFilter={this.handleFilter}
             prefixCls={`${prefixCls}-filter`}
-            dropdownPrefixCls={dropdownPrefixCls}
+            dropdownProps={dropdownProps}
+            radioPrefixCls={radioPrefixCls}
+            checkboxPrefixCls={checkboxPrefixCls}
+            rippleDisabled={rippleDisabled}
             getPopupContainer={this.getPopupContainer}
           />
         );
       }
       if (column.sorter) {
         const isSortColumn = this.isSortColumn(column);
-        const isAscend = isSortColumn && sortOrder === 'ascend';
-        // const isDescend = isSortColumn && sortOrder === 'descend';
-        column.className = classNames(column.className, {
-          [`${prefixCls}-sort-${sortOrder}`]: isSortColumn,
+        sortButton = renderSorter!<T>({
+          prefixCls,
+          column,
+          sortOrder,
+          isSortColumn,
+          changeOrder: (order) => this.toggleSortOrder(order, column),
         });
-        const { onHeaderCell } = column;
-        column.onHeaderCell = col => {
-          const customProps = (onHeaderCell && onHeaderCell(col)) || {};
-          const { onClick } = customProps;
-          return {
-            ...customProps,
-            onClick: (e: SyntheticEvent<any>) => {
-              if (!e.isDefaultPrevented()) {
-                if (typeof onClick === 'function') {
-                  onClick(e);
-                }
-                if (!e.isDefaultPrevented()) {
-                  this.setSortOrder(isAscend ? 'descend' : 'ascend', column);
-                }
-              }
-            },
-          };
-        };
-        sortButton = <Icon type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
+      }
+
+      let customButton;
+      if (column.filterBar === true && customCode) {
+        const filterColumns = columns.filter(c => c.filterField === true);
+        customButton = (
+          <ColumnFilterMenu
+            customCode={customCode}
+            locale={locale}
+            filterBarLocale={filterBarLocale!}
+            customColumns={this.getCustomColumns()}
+            store={this.store}
+            columns={filterColumns}
+            prefixCls={`${prefixCls}-filter`}
+            dropdownProps={dropdownProps}
+            checkboxPrefixCls={checkboxPrefixCls}
+            inputNumberProps={inputNumberProps}
+            confirmFilter={this.handleCustomColumnFilter}
+            getPopupContainer={this.getPopupContainer}
+          />
+        );
       }
       column.title = (
         <span key={key}>
           {column.title}
           {sortButton}
+          {customButton}
           {filterDropdown}
         </span>
       );
 
-      if (sortButton || filterDropdown) {
+      if (sortButton || filterDropdown || customButton) {
         column.className = classNames(`${prefixCls}-column-has-filters`, column.className);
       }
 
       return column;
     });
   }
+
+  setCustomState(customColumns: any[]) {
+    this.setState({
+      customColumns,
+    });
+  }
+
+  // 根据 customColumns 返回新的 columns
+  renderCustomColumns = (columns: ColumnProps<T>[]) => {
+    const customColumns = this.getCustomColumns() || [];
+    if (customColumns.length === 0) {
+      return columns.map((column, colIndex) => {
+        return {
+          ...column,
+          orderSeq: colIndex,
+        };
+      });
+    }
+    const newColumns: ColumnProps<T>[] = [];
+    for (let colIndex = 0; colIndex < columns.length; colIndex++) {
+      const column = columns[colIndex];
+      const customColumn = customColumns.find((fCustomColumn) => {
+        return fCustomColumn.fieldKey === this.getColumnKey(column);
+      });
+      if (!customColumn) {
+        // 该字段没有自定义, 将排序设置为默认的顺序, 继续
+        newColumns.push({ ...column, orderSeq: colIndex });
+        continue;
+      }
+      if (customColumn.hidden === 1) {
+        // 该字段隐藏了 不需要显示, 继续
+        continue;
+      }
+      const newColumn: ColumnProps<T> = { ...column };
+      if (customColumn.fixedLeft === 1) {
+        newColumn.fixed = 'left';
+      }
+      // else if (customColumn.fixedRight) {
+      //   newColumn.fixed = 'right';
+      // }
+      newColumn.orderSeq = customColumn.orderSeq === undefined ? colIndex : customColumn.orderSeq;
+      newColumns.push(newColumn);
+    }
+    const noFixedColumns: ColumnProps<T>[] = [];
+    const fixedLeftColumns: ColumnProps<T>[] = [];
+    const fixedRightColumns: ColumnProps<T>[] = [];
+    const actionColumns: ColumnProps<T>[] = newColumns.length === 0 ? [] : [newColumns[newColumns.length - 1]];
+    for (let colIndex = 0; colIndex < newColumns.length - 1; colIndex += 1) {
+      const column: ColumnProps<T> = newColumns[colIndex];
+      if (column.fixed) {
+        if (column.fixed === 'left') {
+          fixedLeftColumns.push(column);
+        } else if (column.fixed === 'right') {
+          fixedRightColumns.push(column);
+        } else {
+          noFixedColumns.push(column);
+        }
+      } else {
+        noFixedColumns.push(column);
+      }
+    }
+    fixedLeftColumns.sort((a: ColumnProps<T>, b: ColumnProps<T>) => {
+      return (a.orderSeq as number) - (b.orderSeq as number);
+    });
+    noFixedColumns.sort((a: ColumnProps<T>, b: ColumnProps<T>) => {
+      return (a.orderSeq as number) - (b.orderSeq as number);
+    });
+    return [...fixedLeftColumns, ...noFixedColumns, ...fixedRightColumns, ...actionColumns];
+  };
+
+  /**
+   * 获取用户个性化的 Table 的 头设置
+   * table's columns
+   */
+  getCustomColumns(): CustomColumn[] | undefined {
+    const { customColumns, defaultCustomColumns, onCustomColumnFilter } = this.props;
+    if (customColumns) {
+      if (defaultCustomColumns) {
+        throw new Error('Table Can\'t set customColumns and defaultCustomColumns together');
+      }
+      if (!onCustomColumnFilter) {
+        throw new Error('Table must set customColumns and onCustomColumnFilter together');
+      }
+    }
+    if (customColumns) {
+      return customColumns;
+    }
+
+    if (defaultCustomColumns) {
+      const { customColumns: stateCustomColumns = defaultCustomColumns } = this.state;
+      return stateCustomColumns;
+    }
+  }
+
+  /**
+   * 用户个性化 Table 编辑
+   */
+  handleCustomColumnFilter = () => {
+    const { onCustomColumnFilter } = this.props;
+    const { customColumns = [] } = this.store.getState();
+    this.setCustomState(customColumns);
+    if (onCustomColumnFilter) {
+      onCustomColumnFilter(customColumns);
+    }
+  };
 
   handleShowSizeChange = (current: number, pageSize: number) => {
     const { pagination } = this.state;
@@ -928,21 +1133,22 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       return null;
     }
     const { pagination } = this.state;
-    const { size } = this.props;
+    const { size, paginationProps } = this.props;
     const { getConfig } = this.context;
     const prefixCls = this.getPrefixCls();
     const position = pagination.position || 'bottom';
     const total = pagination.total || this.getLocalData().length;
-    const paginationProps = getConfig('pagination') as PaginationProps;
+    const configPaginationProps = getConfig('pagination') as PaginationProps;
     return total > 0 && (position === paginationPosition || position === 'both') ? (
       <Pagination
+        {...configPaginationProps}
         {...paginationProps}
         key={`pagination-${paginationPosition}`}
         {...pagination}
         className={classNames(pagination.className, `${prefixCls}-pagination`)}
         onChange={this.handlePageChange}
         total={total}
-        size={pagination.size || size}
+        size={pagination.size || (size === 'middle' ? Size.small : size)}
         current={this.getMaxCurrent(total)}
         onShowSizeChange={this.handleShowSizeChange}
       />
@@ -950,7 +1156,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   // Get pagination, filters, sorter
-  prepareParamsArguments(state: any): [TablePaginationConfig | boolean, string[], Record<string, any>, any[]] {
+  prepareParamsArguments(state: TableState<T>): [TablePaginationConfig | boolean, TableStateFilters<T>, SorterResult<T>, any[]] {
     const pagination = { ...state.pagination };
     // remove useless handle function in Table.onChange
     delete pagination.onChange;
@@ -959,12 +1165,13 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     delete pagination.sizeChangerOptionText;
     const filters = state.filters;
     const barFilters = state.barFilters;
-    const sorter: any = {};
-    if (state.sortColumn && state.sortOrder) {
-      sorter.column = state.sortColumn;
-      sorter.order = state.sortOrder;
-      sorter.field = state.sortColumn.dataIndex;
-      sorter.columnKey = this.getColumnKey(state.sortColumn);
+    const sorter: SorterResult<T> = {};
+    const { sortColumn, sortOrder } = state;
+    if (sortColumn && sortOrder) {
+      sorter.column = sortColumn;
+      sorter.order = sortOrder;
+      sorter.field = sortColumn.dataIndex;
+      sorter.columnKey = this.getColumnKey(sortColumn);
     }
     return [pagination, filters, sorter, barFilters];
   }
@@ -977,6 +1184,28 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       }
     });
     return column;
+  }
+
+  componentDidMount() {
+    const { autoHeight } = this.props;
+    if (autoHeight) {
+      const tableAutoHeight = this.syncSize();
+      const { tableAutoHeight: stateTableAutoHeight } = this.state;
+      if (stateTableAutoHeight !== tableAutoHeight) {
+        const tableScroll = this.store.getState().scroll;
+        this.store.setState({ scroll: { ...tableScroll, y: tableAutoHeight } });
+        this.setState({ tableAutoHeight });
+      }
+    }
+    if (this.element) {
+      const prefixCls = this.getPrefixCls();
+      const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+      if (isMac) {
+        classes(this.element).add(`${prefixCls}-os-mac`);
+      } else {
+        classes(this.element).add(`${prefixCls}-os-win`);
+      }
+    }
   }
 
   getCurrentPageData() {
@@ -1039,6 +1268,9 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       if (sorterFn) {
         data = this.recursiveSort(data, sorterFn);
       }
+      if (noFilter) {
+        return data;
+      }
       let filteredData = data;
       // 筛选
       if (filters) {
@@ -1074,9 +1306,6 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
           }
         });
       }
-      if (noFilter) {
-        return data;
-      }
       return filteredData;
     }
     return [];
@@ -1098,42 +1327,155 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   createComponents(components: TableComponents = {}, prevComponents?: TableComponents) {
     const bodyRow = components && components.body && components.body.row;
     const preBodyRow = prevComponents && prevComponents.body && prevComponents.body.row;
-    if (!this.components || bodyRow !== preBodyRow) {
-      this.components = { ...components };
-      this.components.body = {
-        ...components.body,
-        row: createBodyRow(bodyRow),
+    if (!this.row || bodyRow !== preBodyRow) {
+      this.row = createBodyRow(bodyRow);
+    }
+    const headerProps: any = {};
+    const { resizable } = this.props;
+    if (resizable) {
+      headerProps.header = {
+        cell: ResizeableTitle,
       };
     }
+
+    this.components = {
+      ...headerProps,
+      ...components,
+      body: {
+        ...components.body,
+        row: this.row,
+      },
+    };
   }
+
+  handleResize = (col: ColumnProps<T>) => (_: any, dragCallbackData: any) => {
+    const { columnAdjust } = this.state;
+    const { scroll } = this.store.getState();
+    let index = -1;
+    for (let i = 0; i < this.columns.length; i++) {
+      if (this.columns[i].key === col.key || this.columns[i].dataIndex === col.dataIndex) {
+        index = i;
+      }
+    }
+    let width = this.columns[index].width + dragCallbackData.x;
+    if (index !== -1) {
+      const key = this.columns[index].dataIndex;
+      /**
+       * 使用以前存储的拖动的宽度值
+       */
+      if (columnAdjust
+        && key
+        && columnAdjust[key]
+        && typeof columnAdjust[key] === 'number'
+        && columnAdjust[key] >= 50) {
+        width = columnAdjust[key] + dragCallbackData.x;
+      }
+
+      if (width <= 50) {
+        width = 50;
+      }
+
+      if (key) {
+        columnAdjust[key] = width;
+        if (scroll && scroll.x) {
+          this.store.setState({
+            scroll: { ...scroll, x: scroll.x + dragCallbackData.x },
+          });
+        }
+      }
+      this.setState({
+        columnAdjust,
+      });
+    }
+  };
+
+  getContentHeight = () => {
+    const { refTable, element, props: { autoHeight } } = this;
+    if (autoHeight && refTable && refTable.parentNode) {
+      const { top: parentTop, height: parentHeight } = (refTable.parentNode as HTMLElement).getBoundingClientRect();
+      const { top: tableTop } = element.getBoundingClientRect();
+      let diff = 80;
+      if (autoHeight && autoHeight !== true && isNumber(autoHeight.diff)) {
+        diff = autoHeight.diff || 80;
+      }
+      if (refTable) {
+        return parentHeight - (tableTop - parentTop) - diff || 0;
+      }
+    }
+    return 0;
+  };
+
+  syncSize = () => {
+    const { element } = this;
+    if (element) {
+      const prefixCls = this.getPrefixCls();
+      let height = this.getContentHeight();
+      if (element && isNumber(height)) {
+        const tableTitle: HTMLDivElement | null = element.querySelector(`.${prefixCls}-title`);
+        const tableHeader: HTMLTableSectionElement | null = element.querySelector(
+          `.${prefixCls}-thead`,
+        );
+        const tableFooter: HTMLTableSectionElement | null = element.querySelector(
+          `.${prefixCls}-footer`,
+        );
+        const tableFootWrap: HTMLDivElement | null = element.querySelector(`.${prefixCls}-foot`);
+        if (tableTitle) {
+          height -= getHeight(tableTitle);
+        }
+        if (tableHeader) {
+          height -= getHeight(tableHeader);
+        }
+        if (tableFooter) {
+          height -= getHeight(tableFooter);
+        }
+        if (tableFootWrap) {
+          height -= getHeight(tableFootWrap);
+        }
+        return height;
+      }
+    }
+    return 0;
+  };
 
   renderTable = (contextLocale: TableLocale, loading: SpinProps): ReactNode => {
     const { props } = this;
     const locale = { ...contextLocale, ...props.locale };
     const {
-      filterBarMultiple,
-      filterBarPlaceholder,
+      autoHeight,
+      bodyStyle: tableBodyStyle,
       showHeader,
-      filterBar,
-      dataSource,
-      filters,
       empty,
+      scroll,
+      resizable,
       ...restProps
     } = props;
-    const { filters: columnFilters } = this.state;
     const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
     const expandIconAsCell = props.expandedRowRender && props.expandIconAsCell !== false;
+    const { tableAutoHeight } = this.state;
+    const tableScroll = this.store.getState().scroll;
+    let bodyStyle = { ...tableBodyStyle };
+    if (tableAutoHeight && tableAutoHeight > 0 && autoHeight) {
+      if (autoHeight !== true && autoHeight.type === TableAutoHeightType.maxHeight) {
+        bodyStyle = { ...bodyStyle, maxHeight: tableAutoHeight };
+      } else {
+        bodyStyle = { ...bodyStyle, height: tableAutoHeight };
+      }
+    }
 
     const classString = classNames({
       [`${prefixCls}-${props.size}`]: true,
       [`${prefixCls}-bordered`]: props.bordered,
       [`${prefixCls}-empty`]: !data.length,
       [`${prefixCls}-without-column-header`]: !showHeader,
+      'resizable-table': resizable,
     });
-
-    let columns = this.renderRowSelection(locale);
+    let columns = this.columns.concat(); // 为了不更改原先的 columns
     columns = this.renderColumnsDropdown(columns, locale);
+    // 先执行: renderColumnsDropDown, 可能会更改 columns 的 fixed 或者 数量
+    columns = this.renderCustomColumns(columns);
+    // 改变了 columns, 依赖于 columns 的 fixed: left;
+    columns = this.renderRowSelection(columns, locale);
     columns = columns.map((column, i) => {
       const newColumn = { ...column };
       newColumn.key = this.getColumnKey(newColumn, i);
@@ -1141,19 +1483,82 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     });
     columns = removeHiddenColumns(columns);
 
-    let expandIconColumnIndex = columns[0] && columns[0].key === 'selection-column' ? 1 : 0;
-    if ('expandIconColumnIndex' in restProps) {
-      expandIconColumnIndex = restProps.expandIconColumnIndex as number;
-    }
+    const expandIconColumnIndex =
+      'expandIconColumnIndex' in restProps ? restProps.expandIconColumnIndex : columns[0] && columns[0].key === 'selection-column' ? 1 : 0;
 
-    const table = (
+    if (resizable) {
+      const { columnAdjust = {} } = this.state;
+      const keys = Object.keys(columnAdjust);
+      columns = columns.map((col) => {
+
+        const otherProp: any = {};
+        const colWidth = col.width;
+
+        if (typeof colWidth === 'number') {
+          const key = col.dataIndex;
+          if (key && keys.indexOf(key) !== -1) {
+            otherProp.width = columnAdjust[key];
+          }
+        }
+        return {
+          ...col,
+          ...otherProp,
+          onCell: (record: T, _col?: ColumnProps<T>) => {
+            const _mCol = _col || col;
+            let cellProps = {};
+            if (col.onCell) {
+              cellProps = col.onCell(record) || {};
+            }
+            cellProps = {
+              ...cellProps,
+              style: {
+                ...((cellProps as any).style || {}),
+                maxWidth: _mCol.width,
+                minWidth: _mCol.width,
+              },
+            };
+            return cellProps;
+          },
+          onHeaderCell: (column: any) => {
+            let headerCellProps = {};
+            if (col.onHeaderCell) {
+              headerCellProps = col.onHeaderCell(column) || {};
+            }
+            headerCellProps = {
+              ...headerCellProps,
+              width: column.width,
+              style: {
+                ...((headerCellProps as any).style || {}),
+                maxWidth: col.width,
+                minWidth: col.width,
+              },
+              onResize: this.handleResize(col),
+            };
+            return headerCellProps;
+          },
+        };
+      });
+    }
+    const omits = [
+      'style',
+      'filterBarMultiple',
+      'filterBarPlaceholder',
+      'filterBar',
+      'dataSource',
+      'filters',
+    ];
+    return (
       <RcTable
         key="table"
-        {...restProps}
+        {...omit(restProps, omits)}
+        ref={this.setElementRef}
+        scroll={tableScroll || scroll}
+        resizable={resizable}
         onRow={this.onRow}
         components={this.components}
         prefixCls={prefixCls}
         data={data}
+        bodyStyle={bodyStyle}
         columns={columns}
         showHeader={showHeader}
         className={classString}
@@ -1162,32 +1567,98 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         emptyText={!loading.spinning && (empty || locale.emptyText)}
       />
     );
-    if (filterBar) {
-      const bar = (
-        <FilterBar
-          key="filter-bar"
-          prefixCls={prefixCls}
-          placeholder={filterBarPlaceholder}
-          columns={getLeafColumns(this.columns)}
-          onFilterSelectChange={this.handleFilterSelectChange}
-          onFilterSelectClear={this.handleFilterSelectClear}
-          onColumnFilterChange={this.handleColumnFilterChange}
-          onFilter={this.handleFilter}
-          dataSource={dataSource}
-          filters={filters}
-          columnFilters={columnFilters}
-          multiple={filterBarMultiple}
-          getPopupContainer={this.getPopupContainer}
-        />
-      );
-      return [bar, table];
+  };
+
+  renderConfigConsumer() {
+    const { exported } = this.props;
+    if (exported) {
+      return this.renderExportButton(exported);
     }
-    return table;
+  }
+
+  renderExportButton = (props: ExportProps) => {
+    let { dataParam, method, action } = props;
+    this.store.setState({ exportStoreProps: props });
+    if (!dataParam) {
+      dataParam = {};
+    }
+
+    if (!method) {
+      method = 'get';
+    }
+
+    if (!action) {
+      action = '';
+    }
+
+    const exportProps: handleProps = {
+      dataParam,
+      method,
+      action,
+    };
+    const onClick = () => {
+      this.handleExport(exportProps);
+    };
+    const { buttonProps } = this.props;
+    return (
+      <Button
+        {...buttonProps}
+        type="primary"
+        disabled={this.store.getState().exported}
+        loading={this.store.getState().exported}
+        {...props}
+        onClick={onClick}
+      />
+    );
+  };
+
+  handleExport = (exportedProps: handleProps) => {
+    const { dataParam, method, action } = exportedProps;
+    let { iframe } = this;
+    const exportStoreProps = this.store.getState().exportStoreProps;
+    if (exportStoreProps && exportStoreProps.onClick && typeof exportStoreProps.onClick === 'function') {
+      exportStoreProps.onClick(exportedProps);
+    } else {
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.id = '_export_window';
+        iframe.name = '_export_window';
+        iframe.style.cssText =
+          'position:absolute;left:-10000px;top:-10000px;width:1px;height:1px;display:none';
+        document.body.appendChild(iframe);
+      }
+      this.store.setState({ exported: true });
+      const form = document.createElement('form');
+      form.target = '_export_window';
+      form.method = method;
+      form.action = action;
+      const s = document.createElement('input');
+      s.id = '_request_data';
+      s.type = 'hidden';
+      s.name = '_request_data';
+      s.value = JSON.stringify(dataParam);
+      form.appendChild(s);
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+      this.store.setState({ exported: false });
+    }
+
   };
 
   render() {
     const { props } = this;
-    const { style, className } = props;
+    const {
+      style,
+      className,
+      spinPrefixCls,
+      filterBarMultiple,
+      filterBarPlaceholder,
+      filterBar,
+      dataSource,
+      filters,
+    } = props;
+    const { filters: columnFilters } = this.state;
     const prefixCls = this.getPrefixCls();
     const data = this.getCurrentPageData();
 
@@ -1211,6 +1682,24 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         ? `${prefixCls}-with-pagination`
         : `${prefixCls}-without-pagination`;
 
+    const bar = filterBar && (
+      <FilterBar
+        key="filter-bar"
+        prefixCls={prefixCls}
+        placeholder={filterBarPlaceholder}
+        columns={getLeafColumns(this.columns)}
+        onFilterSelectChange={this.handleFilterSelectChange}
+        onFilterSelectClear={this.handleFilterSelectClear}
+        onColumnFilterChange={this.handleColumnFilterChange}
+        onFilter={this.handleFilter}
+        dataSource={dataSource}
+        filters={filters}
+        columnFilters={columnFilters}
+        multiple={filterBarMultiple}
+        getPopupContainer={this.getPopupContainer}
+      />
+    );
+
     return (
       <div
         className={classNames(`${prefixCls}-wrapper`, className)}
@@ -1218,10 +1707,13 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         ref={this.saveRef}
       >
         <Spin
+          prefixCls={spinPrefixCls}
           {...loading}
           className={loading.spinning ? `${paginationPatchClass} ${prefixCls}-spin-holder` : ''}
         >
           {this.renderPagination('top')}
+          {this.renderConfigConsumer()}
+          {bar}
           {table}
           {this.renderPagination('bottom')}
         </Spin>

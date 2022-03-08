@@ -1,33 +1,6 @@
 import React, { Component } from 'react';
 import KEYCODE from './KeyCode';
 
-const BUILT_IN_PLACEMENTS = {
-  bottomLeft: {
-    points: ['tl', 'tl'],
-    offset: [0, 0],
-    overflow: {
-      adjustX: 0,
-      adjustY: 1,
-    },
-  },
-  topLeft: {
-    points: ['bl', 'tl'],
-    offset: [0, -4],
-    overflow: {
-      adjustX: 0,
-      adjustY: 1,
-    },
-  },
-  bottomRight: {
-    points: ['tr', 'br'],
-    offset: [0, 4],
-    overflow: {
-      adjustX: 0,
-      adjustY: 1,
-    },
-  },
-};
-
 export default class Options extends Component {
   static defaultProps = {
     pageSizeOptions: ['10', '20', '30', '40'],
@@ -101,14 +74,13 @@ export default class Options extends Component {
 
       changeSelect = (
         <Select
-          prefixCls={props.selectPrefixCls}
+          {...props.selectProps}
           showSearch={false}
           className={`${prefixCls}-size-changer`}
           optionLabelProp="children"
           dropdownMatchSelectWidth={false}
           value={pageSize.toString()}
           onChange={this.changeSize}
-          builtinPlacements={BUILT_IN_PLACEMENTS}
           getPopupContainer={triggerNode => triggerNode.parentNode}
           border={false}
         >

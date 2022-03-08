@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, FunctionComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 import RcCollapse from '../rc-components/collapse';
 
@@ -12,10 +12,10 @@ export interface CollapsePanelProps {
   prefixCls?: string;
   forceRender?: boolean;
   id?: string;
-  extra?: React.ReactNode;
+  extra?: ReactNode;
 }
 
-const CollapsePanel: React.FC<CollapsePanelProps> = (props: CollapsePanelProps) => {
+const CollapsePanel: FunctionComponent<CollapsePanelProps> = function CollapsePanel(props: CollapsePanelProps) {
   const { prefixCls, className = '', showArrow = true } = props;
   const collapsePanelClassName = classNames(
     {
@@ -25,5 +25,7 @@ const CollapsePanel: React.FC<CollapsePanelProps> = (props: CollapsePanelProps) 
   );
   return <RcCollapse.Panel {...props} className={collapsePanelClassName} />;
 };
+
+CollapsePanel.displayName = 'CollapsePanel';
 
 export default CollapsePanel;

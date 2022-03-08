@@ -12,12 +12,21 @@ export default class Checkbox extends Component {
     onFocus() {},
     onBlur() {},
     onChange() {},
+    checkedValue: true,
+    unCheckedValue: false,
   };
 
   constructor(props) {
     super(props);
 
-    const checked = 'checked' in props ? props.checked : props.defaultChecked;
+    let checked = false;
+    if ('checked' in props) {
+      checked = !!props.checked;
+    } else if('value' in props) {
+      checked = props.checkedValue === props.value
+    } else {
+      checked = !!props.defaultChecked;
+    }
 
     this.state = {
       checked,
@@ -29,7 +38,12 @@ export default class Checkbox extends Component {
       this.setState({
         checked: nextProps.checked,
       });
-    }
+    // modified by njq.niu@hand-china.com
+    } else if('value' in nextProps) {
+      this.setState({
+        checked: nextProps.checkedValue === nextProps.value,
+      });
+    } 
   }
 
   shouldComponentUpdate(...args) {
@@ -54,10 +68,15 @@ export default class Checkbox extends Component {
         checked: e.target.checked,
       });
     }
+    
+    const { checkedValue = true, unCheckedValue = false } = props;
+    const { target: { checked } } = e;
+    const value = checked ? checkedValue : unCheckedValue;
+
     props.onChange({
       target: {
         ...props,
-        checked: e.target.checked,
+        checked: value,
       },
       stopPropagation() {
         e.stopPropagation();
@@ -89,6 +108,8 @@ export default class Checkbox extends Component {
       onBlur,
       autoFocus,
       value,
+      checkedValue,
+      unCheckedValue,
       ...others
     } = this.props;
 

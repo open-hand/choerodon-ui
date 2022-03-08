@@ -103,6 +103,8 @@ export const menuAllProps = [
   'theme',
   'itemIcon',
   'expandIcon',
+  'checkable',
+  'rippleDisabled',
 ];
 
 export const getWidth = elem => {

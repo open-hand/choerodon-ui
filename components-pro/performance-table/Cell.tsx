@@ -88,7 +88,7 @@ export const propTypeKeys = [
 ];
 
 class Cell extends React.PureComponent<CellProps> {
-  static get contextType() {
+  static get contextType(): typeof TableContext {
     return TableContext;
   }
 

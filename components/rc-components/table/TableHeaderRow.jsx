@@ -13,8 +13,16 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
       {row.map((cell, i) => {
         const { column, ...cellProps } = cell;
         const customProps = column.onHeaderCell ? column.onHeaderCell(column) : {};
+        if (column.width) {
+          const addStyle = {
+            minWidth: column.width,
+            width: column.width,
+            maxWidth: column.width,
+          }
+          customProps.style = { ...customProps.style, ...addStyle }
+        }
         if (column.align) {
-          cellProps.style = { textAlign: column.align };
+          customProps.style = { ...customProps.style, textAlign: column.align };
         }
         return (
           <HeaderCell

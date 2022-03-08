@@ -1,8 +1,9 @@
 import React, { cloneElement, Component } from 'react';
 import { findDOMNode } from 'react-dom';
+import scrollIntoView from 'dom-scroll-into-view';
+import raf from 'raf';
 import toArray from '../util/Children/toArray';
 import Menu from '../menu';
-import scrollIntoView from 'dom-scroll-into-view';
 import { getSelectKeys, preventDefaultEvent, saveRef } from './util';
 import FilterInput from './FilterInput';
 import LocaleReceiver from '../../locale-provider/LocaleReceiver';
@@ -13,8 +14,10 @@ export default class DropdownMenu extends Component {
     footer: null,
   };
 
-  componentWillMount() {
-    this.lastInputValue = this.props.inputValue;
+  constructor(props) {
+    super(props);
+    this.lastInputValue = props.inputValue;
+    this.saveMenuRef = saveRef(this, 'menuRef');
   }
 
   componentDidMount() {
@@ -55,11 +58,13 @@ export default class DropdownMenu extends Component {
         scrollIntoViewOpts.alignWithTop = true;
       }
 
-      scrollIntoView(
-        itemComponent,
-        findDOMNode(this.menuRef),
-        scrollIntoViewOpts,
-      );
+      raf(() => {
+        scrollIntoView(
+          itemComponent,
+          findDOMNode(this.menuRef),
+          scrollIntoViewOpts,
+        );
+      });
     }
   };
 
@@ -75,6 +80,7 @@ export default class DropdownMenu extends Component {
       inputValue,
       firstActiveValue,
       backfillValue,
+      dropdownMenuRippleDisabled,
     } = props;
 
     if (menuItems && menuItems.length) {
@@ -121,6 +127,8 @@ export default class DropdownMenu extends Component {
           }
           return clone(item);
         });
+      } else {
+        this.firstActiveItem = null;
       }
 
       // clear activeKey when inputValue change
@@ -131,9 +139,11 @@ export default class DropdownMenu extends Component {
 
       return (
         <Menu
-          ref={saveRef(this, 'menuRef')}
+          ref={this.saveMenuRef}
           style={this.props.dropdownMenuStyle}
           defaultActiveFirst={defaultActiveFirstOption}
+          rippleDisabled={dropdownMenuRippleDisabled}
+          role="listbox"
           {...activeKeyProps}
           multiple={multiple}
           {...menuProps}
@@ -169,12 +179,12 @@ export default class DropdownMenu extends Component {
 
   renderCheckLabel = (locale) => {
     const { prefixCls, checkAll } = this.props;
-    return (
+    return checkAll ? (
       <div className={`${prefixCls}-select-all-none`}>
         <span name="check-all" onClick={checkAll}>{locale.selectAll}</span>
         <span name="check-none" onClick={checkAll}>{locale.selectNone}</span>
       </div>
-    );
+    ) : null;
   };
 
   render() {
@@ -193,20 +203,25 @@ export default class DropdownMenu extends Component {
         </LocaleReceiver>
       );
     }
-    return (
+    const menu = renderMenu ? (
+      <div
+        style={{ overflow: 'auto' }}
+        onFocus={this.props.onPopupFocus}
+        onMouseDown={preventDefaultEvent}
+        onScroll={this.props.onPopupScroll}
+      >
+        {renderMenu}
+      </div>
+    ) : null;
+    const footer = this.getFooter();
+    return menu || filterInput || selectOpt || footer ? (
       <div onMouseDown={onMouseDown}>
         {filterInput}
         {selectOpt}
-        <div
-          style={{ overflow: 'auto' }}
-          onScroll={this.props.onPopupScroll}
-          onFocus={this.props.onPopupFocus}
-        >
-          {renderMenu}
-        </div>
-        {this.getFooter()}
+        {menu}
+        {footer}
       </div>
-    );
+    ) : null;
   }
 }
 

@@ -46,6 +46,7 @@ export interface TimePickerProps {
   defaultOpenValue?: Moment;
   popupClassName?: string;
   label?: any;
+  component?: any;
 }
 
 export interface TimePickerLocale {
@@ -55,7 +56,7 @@ export interface TimePickerLocale {
 export default class TimePicker extends Component<TimePickerProps, any> {
   static displayName = 'TimePicker';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

@@ -100,7 +100,7 @@ const DateInput = createReactClass({
   render() {
     const props = this.props;
     const { invalid, str } = this.state;
-    const { locale, prefixCls, placeholder } = props;
+    const { locale, prefixCls, placeholder, clearIcon } = props;
     const invalidClass = invalid ? `${prefixCls}-input-invalid` : '';
     return (<div className={`${prefixCls}-input-wrap`}>
       <div className={`${prefixCls}-date-input-wrap`}>
@@ -114,11 +114,12 @@ const DateInput = createReactClass({
         />
       </div>
       {props.showClear ? <a
-        className={`${prefixCls}-clear-btn`}
         role="button"
         title={locale.clear}
         onClick={this.onClear}
-      /> : null}
+      >
+        {clearIcon || <span className={`${prefixCls}-clear-btn`}/>}
+      </a> : null}
     </div>);
   },
 });

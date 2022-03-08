@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo, ReactNode, useCallback, useContext, useState } from 'react';
+import React, { FunctionComponent, memo, MouseEventHandler, ReactNode, useCallback, useContext, useState } from 'react';
 import classNames from 'classnames';
 import DropDown, { DropDownProps } from '../dropdown';
 import { Placements } from '../dropdown/enum';
@@ -10,8 +10,8 @@ import ConfigContext from '../config-provider/ConfigContext';
 export interface menuListItemProps {
   href?: string;
   listItemName?: string;
-  listChildren?: ({ listItemName, href }: { listItemName: string; href: string }) => React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
+  listChildren?: ({ listItemName, href }: { listItemName: string; href: string }) => ReactNode;
+  onClick?: MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
 }
 
 export interface BreadcrumbItemProps {
@@ -19,10 +19,10 @@ export interface BreadcrumbItemProps {
   separator?: ReactNode;
   href?: string;
   overlay?: DropDownProps['overlay'];
-  dropdownProps?: DropDownProps;
-  listProps?: ListProps;
+  dropdownProps?: Partial<DropDownProps>;
+  listProps?: Partial<ListProps>;
   menuList?: menuListItemProps[];
-  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement | HTMLSpanElement>;
   children?: ReactNode;
 }
 
@@ -54,7 +54,7 @@ const BreadcrumbItem: BreadcrumbItemInterface = function BreadcrumbItem({
    * @param childrenLink
    * @param restPropsLink
    */
-  const renderLink = (childrenLink, restPropsLink, classNameLink, key): React.ReactNode => {
+  const renderLink = (childrenLink, restPropsLink, classNameLink, key): ReactNode => {
     if (key in restPropsLink) {
       return (
         <a className={`${prefixCls}-${classNameLink}`} {...restPropsLink}>
@@ -100,42 +100,42 @@ const BreadcrumbItem: BreadcrumbItemInterface = function BreadcrumbItem({
     }, 300);
   }, []);
 
-  const renderBreadcrumbMenu = (linkItem: React.ReactNode) => {
-    if (overlayMenu) {
-      const buildASPlacements = buildPlacements as unknown as Placements;
-      const dropDownProps = {
-        overlayClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
-        onOverlayClick,
-        overlay: overlayMenu,
-        placement: isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter,
-        onVisibleChange,
-        overlayPlacements: buildASPlacements,
-        ...dropdownProps,
-      };
-      return (
-        <DropDown {...dropDownProps}>
-          <span className={classNames(`${prefixCls}-overlay-link`, {
-            [`${prefixCls}-overlay-border`]: active,
-            [`${prefixCls}-overlay-menu`]: isMenuListOn,
-          })}>
-            {linkItem}
-            {isMenuListOn || <Icon type="arrow_drop_down" />}
-            <i className={classNames(`${prefixCls}-overlay-cover`, {
-              [`${prefixCls}-overlay-cover-active`]: active,
-            })} />
-          </span>
-        </DropDown>
-      );
-    }
-    return linkItem;
-  };
-
-  let link: string | React.ReactNode = renderLink(children, restProps, `link`, 'href');
-
-  // wrap to dropDown
-  link = renderBreadcrumbMenu(link);
-
   if (children) {
+
+    const renderBreadcrumbMenu = (linkItem: ReactNode) => {
+      if (overlayMenu) {
+        const buildASPlacements = buildPlacements;
+        const dropDownProps = {
+          overlayClassName: isMenuListOn ? `${prefixCls}-overlay-popup` : undefined,
+          onOverlayClick,
+          overlay: overlayMenu,
+          placement: isMenuListOn ? Placements.bottomLeft : Placements.bottomCenter,
+          onVisibleChange,
+          overlayPlacements: buildASPlacements,
+          ...dropdownProps,
+        };
+        return (
+          <DropDown {...dropDownProps}>
+            <span className={classNames(`${prefixCls}-overlay-link`, {
+              [`${prefixCls}-overlay-border`]: active,
+              [`${prefixCls}-overlay-menu`]: isMenuListOn,
+            })}>
+              {linkItem}
+              {isMenuListOn || <Icon type="arrow_drop_down" />}
+              <i className={classNames(`${prefixCls}-overlay-cover`, {
+                [`${prefixCls}-overlay-cover-active`]: active,
+              })} />
+            </span>
+          </DropDown>
+        );
+      }
+      return linkItem;
+    };
+
+    let link: ReactNode = renderLink(children, restProps, `link`, 'href');
+
+    // wrap to dropDown
+    link = renderBreadcrumbMenu(link);
     return (
       <span>
         {link}

@@ -1,6 +1,6 @@
 import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'lodash/isEqual';
+import shallowEqual from 'shallowequal';
 import CheckboxGroup, { CheckboxGroupContext } from './Group';
 import RcCheckbox from '../rc-components/checkbox';
 import CheckboxContext from './CheckboxContext';
@@ -47,7 +47,7 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
     indeterminate: false,
   };
 
-  static get contextType() {
+  static get contextType(): typeof CheckboxContext {
     return CheckboxContext;
   }
 

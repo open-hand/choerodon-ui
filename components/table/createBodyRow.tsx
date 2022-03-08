@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass } from 'react';
+import React, { Component, ComponentClass, ReactNode, ReactHTML } from 'react';
 import classnames from 'classnames';
 import omit from 'lodash/omit';
 import { Store } from './createStore';
@@ -8,15 +8,16 @@ interface BodyRowProps {
   className?: string;
   rowKey: string;
   prefixCls: string;
+  children?: ReactNode
 }
 
 interface BodyRowState {
   selected: boolean;
 }
 
-export type BodyRowClass = ComponentClass
+export type BodyRowClass = ComponentClass;
 
-export default function createTableRow(Cmp = 'tr') {
+export default function createTableRow(Cmp: keyof ReactHTML = 'tr') {
   class BodyRow extends Component<BodyRowProps, BodyRowState> {
     private store: Store;
 
@@ -59,7 +60,12 @@ export default function createTableRow(Cmp = 'tr') {
       const { props } = this;
       const { selected } = this.state;
       const { className, prefixCls, children } = props;
-      const otherProps: any = omit(props, ['prefixCls', 'rowKey', 'store', 'children']);
+      const omits: string[] = ['prefixCls', 'rowKey', 'store', 'children'];
+
+      if (Cmp === 'tr') {
+        omits.push('record');
+      }
+      const otherProps: any = omit(props, omits);
       const classString = classnames(className, {
         [`${prefixCls}-row-selected`]: selected,
       });

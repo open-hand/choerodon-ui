@@ -19,7 +19,7 @@ export interface SwitchProps {
 }
 
 export default class Switch extends Component<SwitchProps, {}> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -30,11 +30,15 @@ export default class Switch extends Component<SwitchProps, {}> {
   private rcSwitch: any;
 
   focus() {
-    this.rcSwitch.focus();
+    if (this.rcSwitch) {
+      this.rcSwitch.focus();
+    }
   }
 
   blur() {
-    this.rcSwitch.blur();
+    if (this.rcSwitch) {
+      this.rcSwitch.blur();
+    }
   }
 
   saveSwitch = (node: RcSwitch | null) => {

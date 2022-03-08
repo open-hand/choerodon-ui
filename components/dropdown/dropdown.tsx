@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import DropdownButton from './dropdown-button';
 import warning from '../_util/warning';
 import RcDropdown from '../rc-components/dropdown';
-import { Placements } from './enum';
 import { RenderFunction } from '../tooltip';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
@@ -21,11 +20,11 @@ export interface DropDownProps {
   overlayClassName?: string;
   placement?: 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
   forceRender?: boolean;
-  overlayPlacements?: Placements;
+  overlayPlacements?: object;
 }
 
 export default class Dropdown extends Component<DropDownProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -65,10 +64,11 @@ export default class Dropdown extends Component<DropDownProps, any> {
       );
 
       // menu cannot be selectable in dropdown defaultly
-      const selectable = overlayElement.props.selectable || false;
-      return cloneElement(overlayElement, {
+      const { selectable = false, focusable = true } = overlayProps;
+      return typeof overlayElement.type === 'string' ? overlayElement : cloneElement(overlayElement, {
         mode: 'vertical',
         selectable,
+        focusable,
       });
     }
   };
@@ -89,12 +89,20 @@ export default class Dropdown extends Component<DropDownProps, any> {
       className: classNames(child.props.className, `${prefixCls}-trigger`),
       disabled,
     });
+
+    const triggerActions = disabled ? [] : trigger;
+    let alignPoint;
+    if (triggerActions && triggerActions.indexOf('contextMenu') !== -1) {
+      alignPoint = true;
+    }
+
     return (
       <RcDropdown
+        alignPoint={alignPoint}
         {...this.props}
         prefixCls={prefixCls}
         transitionName={this.getTransitionName()}
-        trigger={disabled ? [] : trigger}
+        trigger={triggerActions}
         overlay={this.renderOverlay}
       >
         {dropdownTrigger}

@@ -1,5 +1,6 @@
 import { getDocument, getMousePosition } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
 import { pxToRem } from '../_util/UnitConvertor';
+import { AlignPoint } from './Align';
 
 type overflowType = { adjustX?: boolean; adjustY?: boolean };
 type regionType = { left: number; top: number; width: number; height: number };
@@ -182,22 +183,18 @@ function adjustForViewport(
 //   return true;
 // }
 
-export default function (el: HTMLElement, refNode: HTMLElement, align) {
+function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotOutOfVisible: boolean) {
   let points = align.points;
   let offset = (align.offset || [0, 0]).slice();
   let targetOffset = (align.targetOffset || [0, 0]).slice();
   const overflow: overflowType = align.overflow || {};
-  const target: HTMLElement = align.target || refNode;
   const source: HTMLElement = align.source || el;
   const newOverflowCfg: overflowType = {};
   let fail = 0;
   const visibleRect = getVisibleRectForElement();
   const elRegion = getRegion(source);
-  const refNodeRegion = getRegion(target);
   let elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset);
   let newElRegion = Object.assign(elRegion, elFuturePos);
-
-  const isTargetNotOutOfVisible = !isOutOfVisibleRect(target);
 
   if (visibleRect && (overflow.adjustX || overflow.adjustY) && isTargetNotOutOfVisible) {
     if (overflow.adjustX) {
@@ -295,4 +292,55 @@ export default function (el: HTMLElement, refNode: HTMLElement, align) {
     targetOffset,
     overflow: newOverflowCfg,
   };
+}
+
+export default function alignElement(el: HTMLElement, refNode: HTMLElement, align) {
+  const target = align.target || refNode;
+  const refNodeRegion = getRegion(target);
+  const isTargetNotOutOfVisible = !isOutOfVisibleRect(target);
+  return doAlign(el, refNodeRegion, align, isTargetNotOutOfVisible);
+}
+
+export function alignPoint(el: HTMLElement, tgtPoint: AlignPoint, align) {
+  let left = 0;
+  let top = 0;
+  const { ownerDocument } = el;
+  const defaultView = ownerDocument ? ownerDocument.defaultView : null;
+  const documentElement = ownerDocument ? ownerDocument.documentElement : null;
+  const scrollX = documentElement ? documentElement.scrollLeft : 0;
+  const scrollY = documentElement ? documentElement.scrollTop : 0;
+
+  if (tgtPoint.pageX !== undefined) {
+    left = tgtPoint.pageX - scrollX;
+  } else if (tgtPoint.clientX !== undefined) {
+    left = scrollX + tgtPoint.clientX;
+  }
+
+  if (tgtPoint.pageY !== undefined) {
+    top = tgtPoint.pageY - scrollY;
+  } else if (tgtPoint.clientY !== undefined) {
+    top = tgtPoint.clientY;
+  }
+  const position = defaultView ? getMousePosition(left, top, defaultView, true) : {
+    x: left,
+    y: top,
+    vw: documentElement ? documentElement.clientWidth : 0,
+    vh: documentElement ? documentElement.clientHeight : 0,
+  };
+  left = position.x;
+  top = position.y;
+
+  const tgtRegion: regionType = {
+    left,
+    top,
+    width: 0,
+    height: 0,
+  };
+  const pointInView = left >= 0 && left <= position.vw && top >= 0 && top <= position.vh; // Provide default target point
+
+  const points = [align.points[0], 'cc'];
+  return doAlign(el, tgtRegion, {
+    ...align,
+    points,
+  }, pointInView);
 }

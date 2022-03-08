@@ -9,6 +9,11 @@ import Item from './item';
 import triggerEvent from '../_util/triggerEvent';
 import Animate from '../animate';
 import PureRenderMixin from '../rc-components/util/PureRenderMixin';
+import { InputProps } from '../input';
+
+function isIEorEDGE() {
+  return (document as any).documentMode || /Edge/.test(navigator.userAgent);
+}
 
 function isRenderResultPlainObject(result: any): result is { value; label } {
   return (
@@ -20,6 +25,7 @@ function isRenderResultPlainObject(result: any): result is { value; label } {
 
 export interface TransferListProps {
   prefixCls: string;
+  checkboxPrefixCls?: string;
   titleText: string;
   dataSource: TransferItem[];
   filter: string;
@@ -41,6 +47,7 @@ export interface TransferListProps {
   footer?: (props: any) => any;
   lazy?: boolean | {};
   onScroll: Function;
+  inputProps?: InputProps;
 }
 
 export default class TransferList extends Component<TransferListProps, any> {
@@ -58,6 +65,10 @@ export default class TransferList extends Component<TransferListProps, any> {
 
   triggerScrollTimer: number;
 
+  fixIERepaintTimer: number;
+
+  notFoundNode: HTMLDivElement;
+
   state = {
     mounted: false,
   };
@@ -73,6 +84,7 @@ export default class TransferList extends Component<TransferListProps, any> {
   componentWillUnmount() {
     clearTimeout(this.timer);
     clearTimeout(this.triggerScrollTimer);
+    clearTimeout(this.fixIERepaintTimer);
   }
 
   shouldComponentUpdate(...args: any[]) {
@@ -105,18 +117,21 @@ export default class TransferList extends Component<TransferListProps, any> {
     // Manually trigger scroll event for lazy search bug
 
     this.triggerScrollTimer = window.setTimeout(() => {
-      const listNode = (findDOMNode(this) as HTMLElement).querySelectorAll(
-        `${prefixCls}-content`,
+      const transferNode = findDOMNode(this) as Element;
+      const listNode = transferNode.querySelectorAll(
+        `.${prefixCls}-content`,
       )[0];
       if (listNode) {
         triggerEvent(listNode, 'scroll');
       }
     }, 0);
+    this.fixIERepaint();
   };
 
   handleClear = () => {
     const { handleClear } = this.props;
     handleClear();
+    this.fixIERepaint();
   };
 
   matchFilter = (text: string, item: TransferItem) => {
@@ -130,21 +145,34 @@ export default class TransferList extends Component<TransferListProps, any> {
   renderItem = (item: TransferItem) => {
     const { render = noop } = this.props;
     const renderResult = render(item);
-    if (isRenderResultPlainObject(renderResult)) {
-      return {
-        renderedText: renderResult.value,
-        renderedEl: renderResult.label,
-      };
-    }
+    const isRenderResultPlain = isRenderResultPlainObject(renderResult);
     return {
-      renderedText: renderResult,
-      renderedEl: renderResult,
+      renderedText: isRenderResultPlain ? renderResult.value : renderResult,
+      renderedEl: isRenderResultPlain ? renderResult.label : renderResult,
     };
   };
+
+  saveNotFoundRef = (node: HTMLDivElement) => {
+    this.notFoundNode = node;
+  };
+
+  // Fix IE/Edge repaint
+  fixIERepaint() {
+    if (!isIEorEDGE()) {
+      return;
+    }
+    this.fixIERepaintTimer = window.setTimeout(() => {
+      if (this.notFoundNode) {
+        const { className } = this.notFoundNode;
+        this.notFoundNode.className = className;
+      }
+    }, 0);
+  }
 
   render() {
     const {
       prefixCls,
+      checkboxPrefixCls,
       dataSource,
       titleText,
       checkedKeys,
@@ -161,6 +189,7 @@ export default class TransferList extends Component<TransferListProps, any> {
       itemsUnit,
       onScroll,
       handleSelectAll,
+      inputProps,
     } = this.props;
     const { mounted } = this.state;
 
@@ -201,6 +230,7 @@ export default class TransferList extends Component<TransferListProps, any> {
           isHighlight={isHighlight}
           prefixCls={prefixCls}
           onClick={this.handleSelect}
+          checkboxPrefixCls={checkboxPrefixCls}
         />
       );
     });
@@ -215,6 +245,7 @@ export default class TransferList extends Component<TransferListProps, any> {
           handleClear={this.handleClear}
           placeholder={searchPlaceholder}
           value={filter}
+          inputProps={inputProps}
         />
       </div>
     ) : null;
@@ -235,7 +266,7 @@ export default class TransferList extends Component<TransferListProps, any> {
         >
           {showItems}
         </Animate>
-        <div className={`${prefixCls}-body-not-found`}>{notFoundContent}</div>
+        <div className={`${prefixCls}-body-not-found`} ref={this.saveNotFoundRef}>{notFoundContent}</div>
       </div>
     );
 
@@ -245,6 +276,7 @@ export default class TransferList extends Component<TransferListProps, any> {
     const checkedAll = checkStatus === 'all';
     const checkAllCheckbox = (
       <Checkbox
+        prefixCls={checkboxPrefixCls}
         checked={checkedAll}
         indeterminate={checkStatus === 'part'}
         onChange={() => handleSelectAll(filteredDataSource, checkedAll)}

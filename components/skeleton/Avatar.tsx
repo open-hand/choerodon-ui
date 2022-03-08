@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FunctionComponent, memo, useContext } from 'react';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import Element, { SkeletonElementProps } from './Element';
@@ -8,9 +8,9 @@ export interface AvatarProps extends Omit<SkeletonElementProps, 'shape'> {
   shape?: 'circle' | 'square';
 }
 
-const SkeletonAvatar: React.FunctionComponent<AvatarProps> = function SkeletonAvatar(props) {
+const SkeletonAvatar: FunctionComponent<AvatarProps> = function SkeletonAvatar(props) {
   const { prefixCls: customizePrefixCls, className, active } = props;
-  const { getPrefixCls } = React.useContext(ConfigContext);
+  const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('skeleton', customizePrefixCls);
   const cls = classNames(prefixCls, className, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active,
@@ -24,9 +24,11 @@ const SkeletonAvatar: React.FunctionComponent<AvatarProps> = function SkeletonAv
 
 SkeletonAvatar.displayName = 'SkeletonAvatar';
 
-SkeletonAvatar.defaultProps = {
+const MemoSkeletonAvatar: typeof SkeletonAvatar = memo(SkeletonAvatar);
+
+MemoSkeletonAvatar.defaultProps = {
   size: 'default',
   shape: 'circle',
 };
 
-export default React.memo(SkeletonAvatar);
+export default MemoSkeletonAvatar;

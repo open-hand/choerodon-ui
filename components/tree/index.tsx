@@ -148,7 +148,7 @@ export interface TreeProps extends Omit<RcTreeProps, 'prefixCls' | 'showLine'> {
 export default class Tree extends Component<TreeProps, any> {
   static displayName = 'Tree';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

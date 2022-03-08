@@ -42,6 +42,8 @@ export default {
     removeFile: '刪除檔案',
     uploadError: '上傳失敗',
     previewFile: '檔案預覽',
+    confirmRemove: '確認刪除？',
+    confirmReUpload: '確認重新上傳？',
   },
   Collapse: {
     fold: '收起',

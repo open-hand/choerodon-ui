@@ -32,7 +32,11 @@ export default class Menus extends Component {
       this.scrollActiveItemToView();
     }
   }
-
+  getFieldName(name) {
+    const { fieldNames, defaultFieldNames } = this.props;
+    // 防止只设置单个属性的名字
+    return fieldNames[name] || defaultFieldNames[name];
+  }
   getOption(option, menuIndex) {
     const { prefixCls, expandTrigger, expandIcon, selectedValues } = this.props;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
@@ -43,7 +47,10 @@ export default class Menus extends Component {
     };
     let menuItemCls = `${prefixCls}-menu-item`;
     let expandIconNode = null;
-    const hasChildren = option.children && option.children.length > 0;
+    const childrenField = this.getFieldName('children');
+    const labelField = this.getFieldName('label');
+    const valueField = this.getFieldName('value');
+    const hasChildren = option[childrenField] && option[childrenField].length > 0;
     if (hasChildren || option.isLeaf === false) {
       menuItemCls += ` ${prefixCls}-menu-item-expand`;
       expandIconNode = (
@@ -77,17 +84,17 @@ export default class Menus extends Component {
     let title = '';
     if (option.title) {
       title = option.title;
-    } else if (typeof option.label === 'string') {
-      title = option.label;
+    } else if (typeof option[labelField] === 'string') {
+      title = option[labelField];
     }
     return (
       <li
-        key={option.key || option.value}
+        key={option.key || option[valueField]}
         className={menuItemCls}
         title={title}
         {...expandProps}
       >
-        {option.label}
+        {option[labelField]}
         {expandIconNode}
       </li>
     );
@@ -96,13 +103,18 @@ export default class Menus extends Component {
   getActiveOptions(values) {
     const activeValue = values || this.props.activeValue;
     const options = this.props.options;
-    return arrayTreeFilter(options, (o, level) => o.value === activeValue[level]);
+    const childrenField = this.getFieldName('children');
+    const valueField = this.getFieldName('value');
+    return arrayTreeFilter(options,
+      (o, level) => o[valueField] === activeValue[level],
+      { childrenKeyName: childrenField });
   }
 
   getShowOptions() {
     const { options } = this.props;
+    const childrenField = this.getFieldName('children');
     const result = this.getActiveOptions()
-      .map(activeOption => activeOption.children)
+      .map(activeOption => activeOption[childrenField])
       .filter(activeOption => !!activeOption);
     result.unshift(options);
     return result;
@@ -135,7 +147,7 @@ export default class Menus extends Component {
 
   isActiveOption(option, menuIndex) {
     const { activeValue = [] } = this.props;
-    return activeValue[menuIndex] === option.value;
+    return activeValue[menuIndex] === option[this.getFieldName('value')];
   }
 
   saveMenuItem = (index) => (node) => {

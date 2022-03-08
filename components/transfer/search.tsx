@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent, MouseEventHandler } from 'react';
 import Icon from '../icon';
-import Input from '../input';
+import Input, { InputProps } from '../input';
 
 export interface TransferSearchProps {
   prefixCls?: string;
@@ -8,9 +8,12 @@ export interface TransferSearchProps {
   onChange?: (e: FormEvent<any>) => void;
   handleClear?: MouseEventHandler<any>;
   value?: any;
+  inputProps?: InputProps;
 }
 
 export default class Search extends Component<TransferSearchProps, any> {
+  static displayName = 'TransferSearch';
+
   static defaultProps = {
     placeholder: '',
   };
@@ -32,7 +35,7 @@ export default class Search extends Component<TransferSearchProps, any> {
   };
 
   render() {
-    const { placeholder, value, prefixCls } = this.props;
+    const { placeholder, value, prefixCls, inputProps } = this.props;
     const icon =
       value && value.length > 0 ? (
         <a href="#" className={`${prefixCls}-action`} onClick={this.handleClear}>
@@ -47,6 +50,7 @@ export default class Search extends Component<TransferSearchProps, any> {
     return (
       <div>
         <Input
+          {...inputProps}
           placeholder={placeholder}
           className={prefixCls}
           value={value}

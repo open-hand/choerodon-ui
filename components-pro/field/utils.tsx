@@ -35,7 +35,9 @@ import Field, { HighlightProps } from '../data-set/Field';
 import { Renderer, RenderProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
-const { toRangeValue, getDateFormatByFieldType, getDateFormatByField } = Utils;
+const toRangeValue: typeof Utils.toRangeValue = Utils.toRangeValue;
+const getDateFormatByFieldType: typeof Utils.getDateFormatByFieldType = Utils.getDateFormatByFieldType;
+const getDateFormatByField: typeof Utils.getDateFormatByField = Utils.getDateFormatByField;
 
 export {
   toRangeValue,

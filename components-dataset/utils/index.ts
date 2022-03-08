@@ -33,7 +33,7 @@ export function isEmpty(value: any): value is '' | null | undefined {
 }
 
 export function isSame(newValue, oldValue) {
-  return (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
+  return newValue === oldValue || (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
 }
 
 export function isSameLike(newValue, oldValue) {

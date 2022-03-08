@@ -1,8 +1,8 @@
-import React, { Children, Component, ReactElement } from 'react';
+import React, { Component, ReactNode } from 'react';
 import moment from 'moment';
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import { changeConfirmLocale, ModalLocale } from '../modal/locale';
-import { changeNoticeLocale, NoticeLocale } from '../notification/locale'
+import { changeNoticeLocale, NoticeLocale } from '../notification/locale';
 import { LocaleReceiverContext } from './LocaleReceiver';
 
 export interface Locale {
@@ -49,7 +49,7 @@ export interface PerformanceTable {
 
 export interface LocaleProviderProps {
   locale: Locale;
-  children?: ReactElement<any>;
+  children?: ReactNode;
 }
 
 export const LocaleContext = getContext<LocaleReceiverContext>(Symbols.LocaleContext, {});
@@ -106,7 +106,7 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
     const { children } = this.props;
     return (
       <LocaleContext.Provider value={this.getContextValue()}>
-        {Children.only(children)}
+        {children}
       </LocaleContext.Provider>
     );
   }

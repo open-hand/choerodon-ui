@@ -41,7 +41,7 @@ export interface CollapseProps {
 export default class Collapse extends Component<CollapseProps, any> {
   static displayName = 'Collapse';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

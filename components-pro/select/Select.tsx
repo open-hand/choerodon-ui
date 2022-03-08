@@ -578,8 +578,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         options.map((record) => {
           if (record.get(valueField) === item) {
             text = maxCommonTagTextLength &&
-              isString(record.get(textField)) &&
-              record.get(textField).length > maxCommonTagTextLength
+            isString(record.get(textField)) &&
+            record.get(textField).length > maxCommonTagTextLength
               ? `${record.get(textField).slice(0, maxCommonTagTextLength)}...`
               : record.get(textField);
             textRecord = record;
@@ -625,7 +625,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const {
       options,
       props: { optionRenderer },
-    } = this
+    } = this;
     return optionRenderer
       ? optionRenderer({ dataSet: options, record, text, value })
       : text;
@@ -692,7 +692,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       if (!('selectedKeys' in menuProps) && this.isSelected(record)) {
         selectedKeys.push(key);
       }
-      const itemContent = this.getMenuItem({ record, text, value })
+      const itemContent = this.getMenuItem({ record, text, value });
       const recordValues = record.get(OTHER_OPTION_PROPS) || {};
       const itemProps = {
         ...recordValues,

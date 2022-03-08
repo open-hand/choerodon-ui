@@ -17,7 +17,7 @@ const defaultGutter = 0;
 export default class Row extends PureComponent<RowProps> {
   static displayName = 'Row';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

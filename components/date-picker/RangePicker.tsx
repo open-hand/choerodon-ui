@@ -67,7 +67,7 @@ function fixLocale(value: RangePickerValue | undefined, localeCode: string) {
 export default class RangePicker extends Component<any, RangePickerState> {
   static displayName = 'RangePicker';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

@@ -5,7 +5,7 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import Dragger from './Dragger';
 import UploadList from './UploadList';
-import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState } from './interface';
+import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -15,21 +15,21 @@ export { UploadProps };
 export default class Upload extends Component<UploadProps, UploadState> {
   static displayName = 'Upload';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
   static Dragger: typeof Dragger;
 
   static defaultProps = {
-    type: 'select',
+    type: 'select' as UploadType,
     multiple: false,
     action: '',
     data: {},
     accept: '',
     beforeUpload: T,
     showUploadList: true,
-    listType: 'text', // or pictrue
+    listType: 'text',
     className: '',
     disabled: false,
     supportServerRender: true,
@@ -83,12 +83,9 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.clearProgressTimer();
     this.progressTimer = setInterval(() => {
       curPercent = getPercent(curPercent);
-      this.onProgress(
-        {
-          percent: curPercent,
-        },
-        file,
-      );
+      this.onProgress({
+        percent: curPercent * 100,
+      }, file);
     }, 200);
   }
 
@@ -236,7 +233,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
         const { fileList } = this.state;
         this.onChange({
           file,
-          fileList: uniqBy(uploadFiles.concat(fileList), (item: any) => item.uid),
+          fileList: uniqBy(fileList.concat(uploadFiles.map(fileToObject)), (item: UploadFile) => item.uid),
         });
         return false;
       }
@@ -255,12 +252,28 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.upload = node;
   };
 
+  getPrefixCls() {
+    const { prefixCls: customizePrefixCls } = this.props;
+    const { getPrefixCls } = this.context;
+    return getPrefixCls('upload', customizePrefixCls);
+  }
+
   renderUploadList = (uploadLocale: UploadLocale) => {
-    const { showUploadList, listType, onPreview, locale, previewFile, dragUploadList, showFileSize } = this.props;
+    const { showUploadList, listType, onPreview, onReUpload, downloadPropsIntercept, locale, previewFile, dragUploadList, showFileSize, renderIcon, tooltipPrefixCls, popconfirmProps } = this.props;
+    const prefixCls = this.getPrefixCls();
     const { fileList } = this.state;
-    const { showRemoveIcon, showPreviewIcon } = showUploadList as any;
+    const {
+      showRemoveIcon,
+      removePopConfirmTitle,
+      showPreviewIcon,
+      showDownloadIcon,
+      showReUploadIcon, reUploadText,
+      reUploadPopConfirmTitle,
+      getCustomFilenameTitle,
+    } = showUploadList as any;
     return (
       <UploadList
+        prefixCls={prefixCls}
         listType={listType}
         items={fileList}
         onPreview={onPreview}
@@ -270,15 +283,25 @@ export default class Upload extends Component<UploadProps, UploadState> {
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
         showPreviewIcon={showPreviewIcon}
+        showDownloadIcon={showDownloadIcon}
+        removePopConfirmTitle={removePopConfirmTitle}
+        showReUploadIcon={showReUploadIcon}
+        reUploadText={reUploadText}
+        reUploadPopConfirmTitle={reUploadPopConfirmTitle}
+        onReUpload={onReUpload}
+        getCustomFilenameTitle={getCustomFilenameTitle}
         locale={{ ...uploadLocale, ...locale }}
+        downloadPropsIntercept={downloadPropsIntercept}
         showFileSize={showFileSize}
+        renderIcon={renderIcon}
+        tooltipPrefixCls={tooltipPrefixCls}
+        popconfirmProps={popconfirmProps}
       />
     );
   };
 
   render() {
     const {
-      prefixCls: customizePrefixCls,
       className,
       showUploadList,
       listType,
@@ -286,19 +309,19 @@ export default class Upload extends Component<UploadProps, UploadState> {
       disabled,
       children,
       dragUploadList,
+      overwriteDefaultEvent,
     } = this.props;
     const { fileList, dragState } = this.state;
 
-    const { getPrefixCls } = this.context;
+    const prefixCls = this.getPrefixCls();
 
-    const prefixCls = getPrefixCls('upload', customizePrefixCls);
-
-    const rcUploadProps = {
-      ...this.props,
+    const rcUploadProps: any = {
+      ...(overwriteDefaultEvent ? undefined : this.props),
       onStart: this.onStart,
       onError: this.onError,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,
+      ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
       prefixCls,
     };

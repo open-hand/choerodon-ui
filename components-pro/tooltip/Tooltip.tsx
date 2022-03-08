@@ -99,7 +99,7 @@ const PopupContent: React.FC<{
 };
 
 export default class Tooltip extends Component<TooltipProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

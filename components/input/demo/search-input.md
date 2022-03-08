@@ -18,19 +18,21 @@ import { Input } from 'choerodon-ui';
 
 const Search = Input.Search;
 
+const onSearch = value => console.log(value);
+
 ReactDOM.render(
   <div>
     <Search
       placeholder="input search text"
-      onSearch={value => console.log(value)}
+      onSearch={onSearch}
       style={{ width: 200 }}
     />
     <br />
     <br />
-    <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+    <Search placeholder="input search text" onSearch={onSearch} enterButton />
     <br />
     <br />
-    <Search placeholder="input search text" enterButton="Search" size="large" />
+    <Search placeholder="input search text" onSearch={onSearch} enterButton="Search" size="large" />
   </div>,
   mountNode,
 );

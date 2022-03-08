@@ -1,22 +1,23 @@
-import React, { Component, CSSProperties, MouseEventHandler } from 'react';
+import React, { Component, CSSProperties, HTMLAttributes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import Icon from '../icon';
 import CheckableTag from './CheckableTag';
 import Animate from '../animate';
-import { PresetColorType, isPresetColor as isPresetColorUtil } from '../_util/colors';
+import { isPresetColor as isPresetColorUtil, PresetColorType } from '../_util/colors';
 import { LiteralUnion } from '../_util/type';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export { CheckableTagProps } from './CheckableTag';
 
-export interface TagProps {
+export interface TagProps extends HTMLAttributes<HTMLDivElement> {
   prefixCls?: string;
   className?: string;
   color?: LiteralUnion<PresetColorType, string>;
   /** 标签是否可以关闭 */
   closable?: boolean;
+  visible?: boolean;
   /** 关闭时的回调 */
   onClose?: Function;
   /** 动画关闭后的回调 */
@@ -27,10 +28,11 @@ export interface TagProps {
 export interface TagState {
   closing: boolean;
   closed: boolean;
+  visible: boolean;
 }
 
 export default class Tag extends Component<TagProps, TagState> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -42,19 +44,41 @@ export default class Tag extends Component<TagProps, TagState> {
     closable: false,
   };
 
+  static getDerivedStateFromProps(nextProps: TagProps) {
+    return ('visible' in nextProps) ? { visible: nextProps.visible } : null;
+  }
+
   context: ConfigContextValue;
 
   state = {
     closing: false,
     closed: false,
+    visible: true,
   };
 
-  close: MouseEventHandler<HTMLElement> = e => {
+  componentDidUpdate(_prevProps: TagProps, prevState: TagState) {
+    const { visible } = this.state;
+    if (prevState.visible && !visible) {
+      this.close();
+    } else if (!prevState.visible && visible) {
+      this.show();
+    }
+  }
+
+  handleIconClick = (e: React.MouseEvent<HTMLElement>) => {
     const { onClose } = this.props;
     if (onClose) {
       onClose(e);
     }
-    if (e.defaultPrevented) {
+    if (e.defaultPrevented || 'visible' in this.props) {
+      return;
+    }
+    this.setState({ visible: false });
+  };
+
+  close = () => {
+    const { closing, closed } = this.state;
+    if (closing || closed) {
       return;
     }
     const dom = findDOMNode(this) as HTMLElement;
@@ -63,6 +87,12 @@ export default class Tag extends Component<TagProps, TagState> {
     dom.style.width = `${dom.getBoundingClientRect().width}px`;
     this.setState({
       closing: true,
+    });
+  };
+
+  show = () => {
+    this.setState({
+      closed: false,
     });
   };
 
@@ -78,6 +108,10 @@ export default class Tag extends Component<TagProps, TagState> {
       if (afterClose) {
         afterClose();
       }
+    } else {
+      this.setState({
+        closed: false,
+      });
     }
   };
 
@@ -94,7 +128,7 @@ export default class Tag extends Component<TagProps, TagState> {
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('tag', customizePrefixCls);
     const { closing, closed } = this.state;
-    const closeIcon = closable ? <Icon type="close" onClick={this.close} /> : '';
+    const closeIcon = closable ? <Icon type="close" onClick={this.handleIconClick} /> : '';
     const isPresetColor = isPresetColorUtil(color);
     const classString = classNames(
       prefixCls,
@@ -106,7 +140,11 @@ export default class Tag extends Component<TagProps, TagState> {
       className,
     );
     // fix https://fb.me/react-unknown-prop
-    const divProps = omit(otherProps, ['onClose', 'afterClose']);
+    const divProps = omit(otherProps, [
+      'onClose',
+      'afterClose',
+      'visible',
+    ]);
     const tagStyle: CSSProperties = {
       ...style,
     };

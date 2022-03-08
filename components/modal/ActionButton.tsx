@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import Button from '../button';
+import { ButtonType, ButtonProps } from '../button/Button';
+
+export interface CommonButtonProps {
+  type?: ButtonType;
+  actionFn?: (...args: any[]) => any | PromiseLike<any>;
+  closeModal: Function;
+  text?: ReactNode;
+  buttonProps?: ButtonProps;
+}
 
 export interface ActionButtonProps {
-  okProps?: any;
-  cancelProps?: any;
+  okProps: CommonButtonProps;
+  cancelProps?: CommonButtonProps;
   autoFocus?: boolean;
 }
 
@@ -34,7 +43,7 @@ export default class ActionButton extends Component<ActionButtonProps, ActionBut
     clearTimeout(this.timeoutId);
   }
 
-  onClick = (props: any) => {
+  onClick = (props: CommonButtonProps) => {
     const { actionFn, closeModal } = props;
     if (actionFn) {
       let ret;
@@ -69,6 +78,8 @@ export default class ActionButton extends Component<ActionButtonProps, ActionBut
     const { loading } = this.state;
     const cancelButton = cancelProps && (
       <Button
+        {...cancelProps.buttonProps}
+        type={cancelProps.type}
         disabled={loading}
         onClick={() => {
           this.onClick(cancelProps);
@@ -78,9 +89,10 @@ export default class ActionButton extends Component<ActionButtonProps, ActionBut
       </Button>
     );
     return (
-      <div>
+      <>
         {cancelButton}
         <Button
+          {...okProps.buttonProps}
           loading={loading}
           type={okProps.type}
           onClick={() => {
@@ -89,7 +101,7 @@ export default class ActionButton extends Component<ActionButtonProps, ActionBut
         >
           {okProps.text}
         </Button>
-      </div>
+      </>
     );
   }
 }

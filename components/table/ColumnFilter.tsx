@@ -20,7 +20,7 @@ export interface ColumnFilterState {
 }
 
 export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, ColumnFilterState> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 

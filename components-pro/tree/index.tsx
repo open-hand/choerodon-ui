@@ -72,7 +72,7 @@ function defaultNodeCover() {
 export default class Tree extends Component<TreeProps> {
   static displayName = 'Tree<PRO>';
 
-  static TreeNode = TreeNode;
+  static TreeNode: typeof TreeNode = TreeNode;
 
   @observable stateCheckedKeys: string[];
 
@@ -310,11 +310,7 @@ export default class Tree extends Component<TreeProps> {
           const field = dataSet.getField(checkField);
           found.set(
             checkField,
-            field
-              ? checked
-                ? field.get(BooleanValue.trueValue, found)
-                : field.get(BooleanValue.falseValue, found)
-              : checked,
+            field ? checked ? field.get(BooleanValue.trueValue, found) : field.get(BooleanValue.falseValue, found) : checked,
           );
           return false;
         }
@@ -384,11 +380,7 @@ export default class Tree extends Component<TreeProps> {
         records.forEach((record) => {
           record.set(
             checkField,
-            field
-              ? checked
-                ? field.get(BooleanValue.trueValue, record)
-                : field.get(BooleanValue.falseValue, record)
-              : checked,
+            field ? checked ? field.get(BooleanValue.trueValue, record) : field.get(BooleanValue.falseValue, record) : checked,
           );
         });
       } else {
@@ -447,7 +439,7 @@ export default class Tree extends Component<TreeProps> {
       if (!loadRootRecord) {
         return;
       }
-      const loadRecords: Record[] = defaultTo(loadRootRecord.children , []);
+      const loadRecords: Record[] = defaultTo(loadRootRecord.children, []);
 
       if (checkField) {
         const field = dataSet.getField(checkField);
@@ -458,12 +450,10 @@ export default class Tree extends Component<TreeProps> {
         });
         if (!loadRootRecord.isSelected && loadRecords.every(record => record.isSelected)) {
           dataSet.select(loadRootRecord);
-        }
-        else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
+        } else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
           dataSet.unSelect(loadRootRecord);
         }
-      }
-      else if (event.checked) {
+      } else if (event.checked) {
         loadRecords.forEach(record => {
           dataSet.select(record);
         });

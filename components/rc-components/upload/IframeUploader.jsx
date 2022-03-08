@@ -21,9 +21,9 @@ const IFRAME_STYLE = {
 
 // diferent from AjaxUpload, can only upload on at one time, serial seriously
 class IframeUploader extends Component {
-  state = { uploading: false }
+  state = { uploading: false };
 
-  file = {}
+  file = {};
 
   onLoad = () => {
     if (!this.state.uploading) {
@@ -45,7 +45,7 @@ class IframeUploader extends Component {
       props.onError(err, null, file);
     }
     this.endUpload();
-  }
+  };
 
   onChange = () => {
     const target = this.getFormInputNode();
@@ -72,7 +72,7 @@ class IframeUploader extends Component {
     } else {
       this.endUpload();
     }
-  }
+  };
 
   componentDidMount() {
     this.updateIframeWH();
@@ -128,7 +128,7 @@ class IframeUploader extends Component {
     <body>
     <form method="post"
     encType="multipart/form-data"
-    action="${this.props.action}" id="form"
+    action="" id="form"
     style="display:block;height:9999px;position:relative;overflow:hidden;">
     <input id="input" type="file"
      name="${this.props.name}"
@@ -223,21 +223,31 @@ class IframeUploader extends Component {
     if (typeof data === 'function') {
       data = data(file);
     }
-    const inputs = this.requestFileInput(requestFileKeys, file, data)
+    const inputs = this.requestFileInput(requestFileKeys, file, data);
     dataSpan.appendChild(inputs);
-    formNode.submit();
-    dataSpan.innerHTML = '';
-    onStart(file);
+    new Promise(resolve => {
+      const { action } = this.props;
+      if (typeof action === 'function') {
+        return resolve(action(file));
+      }
+      resolve(action);
+    }).then(action => {
+      formNode.setAttribute('action', action);
+      formNode.submit();
+      dataSpan.innerHTML = '';
+      onStart(file);
+    });
   }
-/**
- *
- * @param { 需要加入的参数 } requestFileKeys
- * @param { 文件内容 } file
- * @param { props的必传参数 } data
- */
- requestFileInput(requestFileKeys,file,data) {
 
-   const inputs = document.createDocumentFragment();
+  /**
+   *
+   * @param { 需要加入的参数 } requestFileKeys
+   * @param { 文件内容 } file
+   * @param { props的必传参数 } data
+   */
+  requestFileInput(requestFileKeys, file, data) {
+
+    const inputs = document.createDocumentFragment();
     /**
      * 添加注入的data数据
      */
@@ -256,24 +266,24 @@ class IframeUploader extends Component {
     }
 
     const toStringValue = (value) => {
-      if(isNil(value)){
+      if (isNil(value)) {
         return '';
       }
-      if(isString(value)){
-        return value
+      if (isString(value)) {
+        return value;
       }
-      if(isObject(value)) {
-        return JSON.stringify(value)
+      if (isObject(value)) {
+        return JSON.stringify(value);
       }
-      return toString(value)
-    }
+      return toString(value);
+    };
 
     /**
      *
      * @param {所有数据} obj
      * @param {需要传出的参数keys} arrayString
      */
-    const ArrayToObject = (obj,arrayString) => {
+    const ArrayToObject = (obj, arrayString) => {
       arrayString.forEach(item => {
         const input = document.createElement('input');
         input.setAttribute('name', toStringValue(item));
@@ -282,26 +292,39 @@ class IframeUploader extends Component {
          * 添加文件数据
          */
         inputs.appendChild(input);
-      })
-    }
+      });
+    };
 
     /**
      * 判断是否需要增加key
      */
-    if(isString(requestFileKeys) || isArray(requestFileKeys)){
-      let requestFileKeysFile = ['uid','type','name','lastModifiedDate'];
-      if(isString(requestFileKeys)){
+    if (isString(requestFileKeys) || isArray(requestFileKeys)) {
+      let requestFileKeysFile = ['uid', 'type', 'name', 'lastModifiedDate'];
+      if (isString(requestFileKeys)) {
         requestFileKeysFile.push(requestFileKeys);
-      }else{
-        requestFileKeysFile = [...requestFileKeysFile,...requestFileKeys]
+      } else {
+        requestFileKeysFile = [...requestFileKeysFile, ...requestFileKeys];
       }
-      ArrayToObject(file,requestFileKeysFile)
+      ArrayToObject(file, requestFileKeysFile);
     }
-    return inputs
+    return inputs;
   }
 
   saveIframe = (node) => {
     this.iframe = node;
+  };
+
+  onClick = (e) => {
+    const el = this.getFormInputNode();
+    if (!el) {
+      return;
+    }
+    if(e.target === el) return;
+    if(this.props.fileInputClick){
+      this.props.fileInputClick(el);
+    } else {
+      el.click();
+    }
   }
 
   render() {
@@ -320,6 +343,7 @@ class IframeUploader extends Component {
     });
     return (
       <Tag
+        onClick={this.onClick}
         className={cls}
         style={{ position: 'relative', zIndex: 0, ...style }}
       >

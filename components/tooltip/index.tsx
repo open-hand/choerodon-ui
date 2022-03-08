@@ -22,6 +22,8 @@ export type TooltipPlacement =
 
 export type TooltipTheme = 'light' | 'dark';
 
+export type TooltipTrigger = 'hover' | 'focus' | 'click' | 'contextMenu';
+
 export interface AbstractTooltipProps {
   prefixCls?: string;
   overlayClassName?: string;
@@ -31,11 +33,12 @@ export interface AbstractTooltipProps {
   builtinPlacements?: Record<string, any>;
   defaultVisible?: boolean;
   visible?: boolean;
+  onVisibleBeforeChange?: (visible: boolean) => boolean;
   onVisibleChange?: (visible: boolean) => void;
   mouseEnterDelay?: number;
   mouseLeaveDelay?: number;
   transitionName?: string;
-  trigger?: 'hover' | 'focus' | 'click' | 'contextMenu';
+  trigger?: TooltipTrigger;
   openClassName?: string;
   arrowPointAtCenter?: boolean;
   autoAdjustOverflow?: boolean | AdjustOverflow;
@@ -55,20 +58,20 @@ export interface TooltipProps extends AbstractTooltipProps {
 
 const splitObject = (obj: any, keys: string[]) => {
   const picked: any = {};
-  const omited: any = { ...obj };
+  const omitted: any = { ...obj };
   keys.forEach(key => {
     if (obj && key in obj) {
       picked[key] = obj[key];
-      delete omited[key];
+      delete omitted[key];
     }
   });
-  return { picked, omited };
+  return { picked, omitted };
 };
 
 export default class Tooltip extends Component<TooltipProps, any> {
   static displayName = 'Tooltip';
 
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -81,7 +84,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     autoAdjustOverflow: true,
   };
 
-  private tooltip: any;
+  private tooltip: RcTooltip | null;
 
   context: ConfigContextValue;
 
@@ -112,7 +115,10 @@ export default class Tooltip extends Component<TooltipProps, any> {
   };
 
   getPopupDomNode() {
-    return this.tooltip.getPopupDomNode();
+    const { tooltip } = this;
+    if (tooltip) {
+      return tooltip.getPopupDomNode();
+    }
   }
 
   getPlacements() {
@@ -151,7 +157,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
     ) && element.props.disabled && this.isHoverTrigger()) {
       // Pick some layout related style properties up to span
 
-      const { picked, omited } = splitObject(element.props.style, [
+      const { picked, omitted } = splitObject(element.props.style, [
         'position',
         'left',
         'right',
@@ -167,7 +173,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         cursor: 'not-allowed',
       };
       const buttonStyle = {
-        ...omited,
+        ...omitted,
         pointerEvents: 'none',
       };
       const child = cloneElement(element, {
@@ -244,9 +250,9 @@ export default class Tooltip extends Component<TooltipProps, any> {
       visible = false;
     }
 
-    const child = this.getDisabledCompatibleChildren(
-      isValidElement(children) ? children : <span>{children}</span>,
-    );
+    const child = isValidElement(children) ? this.getDisabledCompatibleChildren(
+      children,
+    ) : <span>{children}</span>;
     const childProps = child.props;
     const childCls = classNames(childProps.className, {
       [openClassName || `${prefixCls}-open`]: true,

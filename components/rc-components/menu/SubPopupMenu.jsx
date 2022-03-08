@@ -238,6 +238,7 @@ export class SubPopupMenu extends Component {
       eventKey: key,
       active: !childProps.disabled && isActive,
       multiple: props.multiple,
+      rippleDisabled: props.rippleDisabled,
       onClick: (e) => {
         (childProps.onClick || noop)(e);
         this.onClick(e);

@@ -203,8 +203,12 @@ export default class Upload extends FormField<UploadProps> {
     showUploadBtn: true,
     showUploadList: true,
     beforeUpload: T,
-    onUploadSuccess: () => message.success($l('Upload', 'upload_success')),
-    onUploadError: () => message.error($l('Upload', 'upload_failure')),
+    onUploadSuccess: () => {
+      message.success($l('Upload', 'upload_success'));
+    },
+    onUploadError: () => {
+      message.error($l('Upload', 'upload_failure'));
+    },
   };
 
   /**

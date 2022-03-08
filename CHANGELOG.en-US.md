@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 merge `hzero-ui`.
+- 🌟 `configure`: Added `modalMovable` property.
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.

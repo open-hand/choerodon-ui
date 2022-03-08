@@ -2,7 +2,7 @@ import React, { CSSProperties, Key } from 'react';
 import { createPortal } from 'react-dom';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
-import shallowEqual from 'lodash/isEqual';
+import shallowEqual from 'shallowequal';
 import noop from 'lodash/noop';
 import isElement from 'lodash/isElement';
 import { PopupManager } from 'choerodon-ui/shared';

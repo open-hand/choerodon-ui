@@ -67,7 +67,7 @@ export interface AvatarUploadProps {
 let Avatarlocale = defaultLocale.imageCrop;
 
 export default class AvatarUploader extends Component<AvatarUploadProps, any> {
-  static get contextType() {
+  static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
 
@@ -392,7 +392,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     );
   }
 
-  getUploadProps() {
+  getUploadProps(): UploadProps {
     const { limit: { size: limitSize, type }, uploadProps } = this.props;
     const typeLimit = type.split(',').map((item) => `image/${item}`).join(',');
     return {
