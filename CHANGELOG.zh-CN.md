@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。
 - 🌟 `<pro>Table`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
+- 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。
 - 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。

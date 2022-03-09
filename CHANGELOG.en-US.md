@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
+- 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.
