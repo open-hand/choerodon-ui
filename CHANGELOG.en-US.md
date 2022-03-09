@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 merge `hzero-ui`.
 - 🌟 `configure`: Added `modalMovable` property.
+- 🌟 `Collapse.Panel`: Added `dataSet` property.
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
@@ -25,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
+- 💄 `<pro>Table`: The `hideable` of required columns is always false.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.

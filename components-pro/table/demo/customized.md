@@ -60,6 +60,7 @@ class App extends React.Component {
         name: 'name',
         type: 'intl',
         label: '姓名',
+        dynamicProps: { required: () => false }
       },
       {
         name: 'age',

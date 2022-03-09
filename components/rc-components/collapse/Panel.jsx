@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from '../../animate';
+import { DataSetEvents } from 'choerodon-ui/dataset/data-set/enum';
 
 const CollapsePanel = function CollapsePanel(props) {
   const {
@@ -24,6 +25,8 @@ const CollapsePanel = function CollapsePanel(props) {
     trigger,
     openAnimation,
     onItemClick,
+    eventKey,
+    dataSet,
   } = props;
   const headerCls = classNames(`${prefixCls}-header`, headerClass, {
     [`${prefixCls}-item-expand-renderer`]: showArrow && typeof expandIcon === 'function',
@@ -39,9 +42,9 @@ const CollapsePanel = function CollapsePanel(props) {
   });
   const handleItemClick = useCallback(() => {
     if (onItemClick) {
-      onItemClick();
+      onItemClick(eventKey);
     }
-  }, [onItemClick]);
+  }, [onItemClick, eventKey]);
   const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
       handleItemClick();
@@ -54,8 +57,28 @@ const CollapsePanel = function CollapsePanel(props) {
     </span>
   ) : null;
 
+  const wrapRef = useRef(null);
+  const dsList = dataSet ? [].concat(dataSet) : [];
+  const { length } = dsList;
+
+  useEffect(() => {
+    if (length && !disabled && !isActive) {
+      const handleValdate = ({ valid }) => {
+        if (!valid) {
+          handleItemClick();
+          const { current } = wrapRef;
+          if (current) {
+            current.focus();
+          }
+        }
+      };
+      dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValdate));
+      return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValdate));
+    }
+  }, [isActive, disabled, handleItemClick, length, ...dsList]);
+
   return (
-    <div className={itemCls} style={style} id={id}>
+    <div className={itemCls} style={style} id={id} ref={wrapRef} tabIndex={-1}>
       <div
         className={headerCls}
         onClick={trigger === 'header' ? handleItemClick : undefined}

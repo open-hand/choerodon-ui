@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 合并 hzero-ui。
 - 🌟 `configure`: 新增 modalMovable 属性。
+- 🌟 `Collapse.Panel`: 新增 dataSet 属性。
 - 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
 - 🌟 `<pro>DataSet.Record`: 新增 selectedTimestamp 值.
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
@@ -25,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
+- 💄 `<pro>Table`: 优化必输列的 hideable 始终为 false。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。
 - 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。
