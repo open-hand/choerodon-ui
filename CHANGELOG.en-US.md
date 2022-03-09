@@ -24,9 +24,11 @@ timeline: true
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
+- 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.
+- 💄 `<pro>Range`: Optimization of data value display and occlusion of adjacent marks.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.

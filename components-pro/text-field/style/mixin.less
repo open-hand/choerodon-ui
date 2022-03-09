@@ -79,6 +79,33 @@
   transition-duration: @animation-duration-slow;
   transition-property: opacity, color, background-color, border;
 
+  &-compact:not(:last-child) {
+    margin-right: -@border-width-base;
+    border-right-width: @border-width-base;
+  }
+
+  &-compact:not(:first-child) & {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &-compact:not(:last-child) & {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &-compact:hover &-wrapper {
+    z-index: 2;
+  }
+  &-compact:focus &-wrapper {
+    z-index: 2;
+  }
+
+  &-compact &-invalid,
+  &-compact &-focused {
+    z-index: 2;
+  }
+
   &-border &,
   &-border&-float-label::before {
     border-style: @border-style-base;
