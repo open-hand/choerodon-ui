@@ -16,6 +16,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
+import raf from 'raf';
 import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
 import Responsive, { hasBreakPointMap, isBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
@@ -603,7 +604,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           const [{ field: { name } }] = errors;
           const field = this.getFields().find(item => item.props.name === name);
           if (field) {
-            field.focus();
+            raf(() => {
+              field.focus();
+            });
           }
         }
       }

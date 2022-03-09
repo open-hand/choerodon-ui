@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 合并 hzero-ui。
 - 🌟 `configure`: 新增 modalMovable 属性。
+- 🌟 `Collapse.Panel`: 新增 dataSet 属性。
 - 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
 - 🌟 `<pro>DataSet.Record`: 新增 selectedTimestamp 值.
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。

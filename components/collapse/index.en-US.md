@@ -40,3 +40,4 @@ A content area which can be collapsed and expanded.
 | forceRender | Forced render of content on panel, instead of lazy rending after clicking on header | boolean | `false` |
 | showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
 | extra	| The extra element in the corner | ReactNode | - |	
+| dataSet	| DataSet， The panel will automatically expanded when dataset validation fails | DataSet \| DataSet[] | 无 |	

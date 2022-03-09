@@ -57,7 +57,7 @@ export default class Collapse extends Component {
     }
   }
 
-  onClickItem(key) {
+  onClickItem = (key) => {
     let activeKey = this.state.activeKey;
     if (this.props.accordion) {
       activeKey = activeKey[0] === key ? [] : [key];
@@ -73,7 +73,7 @@ export default class Collapse extends Component {
       }
     }
     this.setActiveKey(activeKey);
-  }
+  };
 
   getItems() {
     const activeKey = this.state.activeKey;
@@ -105,10 +105,11 @@ export default class Collapse extends Component {
         openAnimation: this.state.openAnimation,
         accordion,
         children: child.props.children,
-        onItemClick: disabled ? null : () => this.onClickItem(key),
+        onItemClick: disabled ? null : this.onClickItem,
         expandIcon,
         expandIconPosition,
         trigger,
+        eventKey: key,
       };
 
       newChildren.push(cloneElement(child, props));

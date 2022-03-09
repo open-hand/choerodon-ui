@@ -1,5 +1,6 @@
 import React, { CSSProperties, FunctionComponent, ReactNode } from 'react';
 import classNames from 'classnames';
+import DataSet from 'choerodon-ui/dataset';
 import RcCollapse from '../rc-components/collapse';
 
 export interface CollapsePanelProps {
@@ -13,6 +14,7 @@ export interface CollapsePanelProps {
   forceRender?: boolean;
   id?: string;
   extra?: ReactNode;
+  dataSet?: DataSet | DataSet[];
 }
 
 const CollapsePanel: FunctionComponent<CollapsePanelProps> = function CollapsePanel(props: CollapsePanelProps) {
