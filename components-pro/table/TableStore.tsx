@@ -457,7 +457,38 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
   }
 }
 
+function mergeCustomizedColumn(column: ColumnProps, dataSet: DataSet, customizedColumns?: { [key: string]: ColumnProps }, isChildrenHideDisabled?: boolean, key?: string): void {
+  if (customizedColumns) {
+    const newProps = customizedColumns[key || getColumnKey(column).toString()];
+    if (isChildrenHideDisabled) {
+      column.hideable = false;
+      if (newProps) {
+        delete newProps.hidden;
+      }
+    } else {
+      const field = dataSet.getField(column.name);
+      if (field) {
+        const dynamicProps = field.get('dynamicProps');
+        const computedProps = field.get('computedProps');
+        if ((dynamicProps && dynamicProps.required) || (computedProps && computedProps.required) || field.get('required')) {
+          column.hideable = false;
+          if (newProps) {
+            delete newProps.hidden;
+          }
+        }
+      }
+    }
+    Object.assign(column, newProps);
+  }
+}
+
+type ChildrenInfo = {
+  hasAggregationColumn: boolean;
+  isHideDisabled: boolean;
+}
+
 function mergeDefaultProps(
+  dataSet: DataSet,
   originalColumns: ColumnProps[],
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
@@ -468,11 +499,12 @@ function mergeDefaultProps(
     center: 0,
     right: 0,
   },
-): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+): [ColumnProps[], ColumnProps[], ColumnProps[], ChildrenInfo] {
   const columns: ColumnProps[] = [];
   const leftColumns: ColumnProps[] = [];
   const rightColumns: ColumnProps[] = [];
   let hasAggregationColumn = false;
+  let isHideDisabled = false;
   originalColumns.forEach((column) => {
     if (isPlainObject(column)) {
       const newColumn: ColumnProps = { ...ColumnDefaultProps, ...column };
@@ -484,18 +516,24 @@ function mergeDefaultProps(
         hasAggregationColumn = true;
       }
       if (tableAggregation || !aggregation) {
-        if (customizedColumns) {
-          Object.assign(newColumn, customizedColumns[getColumnKey(newColumn).toString()]);
+        if (children) {
+          const [, childrenColumns, , {
+            hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
+          }] = mergeDefaultProps(dataSet, children, tableAggregation, customizedColumns, newColumn, defaultKey);
+          newColumn.children = childrenColumns;
+          if (!hasAggregationColumn && childrenHasAggregationColumn) {
+            hasAggregationColumn = true;
+          }
+          if (!isHideDisabled && childrenIsHideDisabled) {
+            isHideDisabled = true;
+          }
+        }
+        mergeCustomizedColumn(newColumn, dataSet, customizedColumns, isHideDisabled);
+        if (!isHideDisabled && newColumn.hideable === false) {
+          isHideDisabled = true;
         }
         if (parent) {
           newColumn.lock = parent.lock;
-        }
-        if (children) {
-          const [, childrenColumns, , childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, newColumn, defaultKey);
-          newColumn.children = childrenColumns;
-          if (!hasAggregationColumn && childrenHasAggregationColumn) {
-            hasAggregationColumn = childrenHasAggregationColumn;
-          }
         }
         if (parent || !newColumn.lock) {
           if (newColumn.sort === undefined) {
@@ -517,9 +555,15 @@ function mergeDefaultProps(
           rightColumns.push(newColumn);
         }
       } else if (children) {
-        const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = mergeDefaultProps(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+        const [leftNodes, nodes, rightNodes, {
+          hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
+        }] = mergeDefaultProps(dataSet, children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
         if (!hasAggregationColumn && childrenHasAggregationColumn) {
-          hasAggregationColumn = childrenHasAggregationColumn;
+          hasAggregationColumn = true;
+        }
+        if (!isHideDisabled && childrenIsHideDisabled) {
+          newColumn.hideable = false;
+          isHideDisabled = true;
         }
         if (parent) {
           parent.children = [...leftNodes, ...nodes, ...rightNodes];
@@ -532,17 +576,18 @@ function mergeDefaultProps(
     }
   }, []);
   if (parent) {
-    return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
+    return [[], sortBy(columns, ({ sort }) => sort), [], { hasAggregationColumn, isHideDisabled }];
   }
   return [
     sortBy(leftColumns, ({ sort }) => sort),
     sortBy(columns, ({ sort }) => sort),
     sortBy(rightColumns, ({ sort }) => sort),
-    hasAggregationColumn,
+    { hasAggregationColumn, isHideDisabled },
   ];
 }
 
 function normalizeColumns(
+  dataSet: DataSet,
   elements: ReactNode,
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
@@ -553,11 +598,12 @@ function normalizeColumns(
     center: 0,
     right: 0,
   },
-): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+): [ColumnProps[], ColumnProps[], ColumnProps[], ChildrenInfo] {
   const columns: ColumnProps[] = [];
   const leftColumns: ColumnProps[] = [];
   const rightColumns: ColumnProps[] = [];
   let hasAggregationColumn = false;
+  let isHideDisabled = false;
   const normalizeColumn = (element) => {
     if (isValidElement<any>(element)) {
       const { props, key, type } = element;
@@ -580,16 +626,22 @@ function normalizeColumns(
           hasAggregationColumn = true;
         }
         if (tableAggregation || !aggregation) {
-          if (customizedColumns) {
-            Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
-          }
-          if (parent) {
-            column.lock = parent.lock;
-          }
-          const [, childrenColumns, , childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, column, defaultKey);
+          const [, childrenColumns, , {
+            hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
+          }] = normalizeColumns(dataSet, children, tableAggregation, customizedColumns, column, defaultKey);
           column.children = childrenColumns;
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
+          }
+          if (!isHideDisabled && childrenIsHideDisabled) {
+            isHideDisabled = true;
+          }
+          mergeCustomizedColumn(column, dataSet, customizedColumns, isHideDisabled);
+          if (!isHideDisabled && column.hideable === false) {
+            isHideDisabled = true;
+          }
+          if (parent) {
+            column.lock = parent.lock;
           }
           if (parent || !column.lock) {
             if (column.sort === undefined) {
@@ -611,9 +663,15 @@ function normalizeColumns(
             rightColumns.push(column);
           }
         } else {
-          const [leftNodes, nodes, rightNodes, childrenHasAggregationColumn] = normalizeColumns(children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
+          const [leftNodes, nodes, rightNodes, {
+            hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
+          }] = normalizeColumns(dataSet, children, tableAggregation, customizedColumns, parent, defaultKey, parent ? undefined : columnSort);
           if (!hasAggregationColumn && childrenHasAggregationColumn) {
             hasAggregationColumn = childrenHasAggregationColumn;
+          }
+          if (!isHideDisabled && childrenIsHideDisabled) {
+            column.hideable = false;
+            isHideDisabled = true;
           }
           if (parent) {
             parent.children = [...leftNodes, ...nodes, ...rightNodes];
@@ -628,18 +686,18 @@ function normalizeColumns(
   };
   Children.forEach(elements, normalizeColumn);
   if (parent) {
-    return [[], sortBy(columns, ({ sort }) => sort), [], hasAggregationColumn];
+    return [[], sortBy(columns, ({ sort }) => sort), [], { hasAggregationColumn, isHideDisabled }];
   }
   return [
     sortBy(leftColumns, ({ sort }) => sort),
     sortBy(columns, ({ sort }) => sort),
     sortBy(rightColumns, ({ sort }) => sort),
-    hasAggregationColumn,
+    { hasAggregationColumn, isHideDisabled },
   ];
 }
 
 
-function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
+function getColumnGroupedColumns(dataSet: DataSet, groups: TableGroup[], customizedColumns?: { [key: string]: ColumnProps }): [ColumnProps[], ColumnProps[], ColumnProps[], boolean] {
   const leftGroupedColumns: ColumnProps[] = [];
   const groupedColumns: ColumnProps[] = [];
   const rightGroupedColumns: ColumnProps[] = [];
@@ -652,11 +710,8 @@ function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [ke
         lock: ColumnLock.left,
         ...columnProps,
         children: columnProps && columnProps.children ? treeMap(columnProps.children, (col => {
-          const colKey = getColumnKey(col);
           const newCol = { ...col, __tableGroup: group };
-          if (customizedColumns) {
-            Object.assign(newCol, customizedColumns[colKey]);
-          }
+          mergeCustomizedColumn(newCol, dataSet, customizedColumns);
           return newCol;
         }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2) : undefined,
         draggable: false,
@@ -665,9 +720,7 @@ function getColumnGroupedColumns(groups: TableGroup[], customizedColumns?: { [ke
         name,
         __tableGroup: group,
       };
-      if (customizedColumns) {
-        Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
-      }
+      mergeCustomizedColumn(column, dataSet, customizedColumns);
       if (!column.lock) {
         groupedColumns.push(column);
       } else if (column.lock === true || column.lock === ColumnLock.left) {
@@ -704,9 +757,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
             __group: group,
             __originalKey,
           };
-          if (customizedColumns) {
-            Object.assign(newCol, customizedColumns[colKey]);
-          }
+          mergeCustomizedColumn(newCol, dataSet, customizedColumns);
           newCol.lock = false;
           generatedColumns.add(newCol);
         });
@@ -734,9 +785,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
               children: [oldColumn],
               __tableGroup: tableGroup,
             };
-            if (customizedColumns) {
-              Object.assign(newColumn, customizedColumns[newKey]);
-            }
+            mergeCustomizedColumn(newColumn, dataSet, customizedColumns, false, newKey);
             groupedColumns[length - 1] = newColumn;
           }
         }
@@ -760,9 +809,7 @@ function getHeaderGroupedColumns(groups: Group[], tableGroups: TableGroup[], col
           __tableGroup: tableGroup,
           __group: group,
         };
-        if (customizedColumns) {
-          Object.assign(column, customizedColumns[getColumnKey(column).toString()]);
-        }
+        mergeCustomizedColumn(column, dataSet, customizedColumns);
         generatedColumns.add(column);
       }
     } else if (subColumns.length) {
@@ -782,11 +829,11 @@ export function normalizeGroupColumns(
   const { headerTableGroups, groups, dataSet } = tableStore;
   const hasHeaderGroup = headerTableGroups.length > 0;
   const generatedColumns = columns
-    ? mergeDefaultProps(columns, aggregation, customizedColumns)
-    : normalizeColumns(children, aggregation, customizedColumns);
-  const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] = generatedColumns;
+    ? mergeDefaultProps(dataSet, columns, aggregation, customizedColumns)
+    : normalizeColumns(dataSet, children, aggregation, customizedColumns);
+  const [leftOriginalColumns, originalColumns, rightOriginalColumns, { hasAggregationColumn }] = generatedColumns;
   const [leftColumnGroupedColumns, columnGroupedColumns, rightColumnGroupedColumns, hasAggregationColumnGroup] = groups.length ?
-    getColumnGroupedColumns(groups, customizedColumns) :
+    getColumnGroupedColumns(dataSet, groups, customizedColumns) :
     [[], [], [], false];
   if (hasHeaderGroup) {
     const groupedColumns = [...leftColumnGroupedColumns, ...columnGroupedColumns];
