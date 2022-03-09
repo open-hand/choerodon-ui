@@ -672,7 +672,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           const { type, props: outChildProps } = outChild;
           if (outChildProps.hidden) return null;
           if (type) {
-            if (isFunction(type) && (type as any).__PRO_OUTPUT) {
+            if (isFunction(type) && !(type as any).__PRO_OUTPUT) {
               isAllOutputCom = false;
             }
 
