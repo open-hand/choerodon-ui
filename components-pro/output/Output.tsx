@@ -22,6 +22,9 @@ export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
 export default class Output extends FormField<OutputProps> {
   static displayName = 'Output';
 
+  // eslint-disable-next-line camelcase
+  static __PRO_OUTPUT = true;
+
   static defaultProps = {
     ...FormField.defaultProps,
     suffixCls: 'output',

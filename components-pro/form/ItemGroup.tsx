@@ -43,7 +43,7 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     if (isFragment(child) && child.props) {
       return Children.map<ReactNode, ReactNode>(child.props.children, innerChild => mapChildren(innerChild));
     }
-  
+
     let itemStyle: CSSProperties = {};
     if (child.props && child.props.style && (child.props.style.originalWidth || child.props.style.width)) {
       if (child.props.style.width !== '100%') {
@@ -58,8 +58,8 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
       }
       child.props.style.width = '100%';
     }
-  
-    if ((isFunction(child.type) || typeof child.type === 'object') && (child.type as any).displayName === 'FormItem') {
+
+    if ((isFunction(child.type) || typeof child.type === 'object') && (child.type as any).__PRO_FORM_ITEM) {
       return mapChildren(child.props.children);
     }
 
