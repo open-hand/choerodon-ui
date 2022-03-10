@@ -1723,7 +1723,7 @@ export default class TableStore {
   @computed
   get comboQueryColumn(): ColumnProps | undefined {
     if (this.queryBar === 'comboBar') {
-      const { prefixCls } = this;
+      const { prefixCls, props: { bodyExpandable } } = this;
       const className = `${prefixCls}-inline-query`;
 
       const lock: ColumnLock | boolean = ColumnLock.left;
@@ -1737,7 +1737,7 @@ export default class TableStore {
         className,
         footerClassName: className,
         align: ColumnAlign.center,
-        width: scaleSize(50),
+        width: scaleSize(bodyExpandable ? 65 : 50),
         lock,
       };
       return queryColumn;

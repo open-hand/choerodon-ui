@@ -31,6 +31,9 @@ timeline: true
 - 💄 `<pro>Table`: 优化错误提示的样式。
 - 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。
 - 💄 `<pro>Range`: 优化数据值显示及相邻 marks 遮挡问题。
+- 💄 `<pro>Table`: 优化组合搜索条设置了 bodyExpandable 遮挡了搜索按钮的问题。
+- 💄 `<pro>Table`: 优化组合搜索条行内搜索没有自适应 rowHeight 的问题。
+- 💄 `<pro>Table`: 优化搜索条选择 Lov 条件按钮没有对齐的问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
@@ -49,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
+
 
 ## 1.5.2
 

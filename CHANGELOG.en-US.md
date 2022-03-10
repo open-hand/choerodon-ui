@@ -31,6 +31,9 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.
 - 💄 `<pro>Range`: Optimization of data value display and occlusion of adjacent marks.
+- 💄 `<pro>Table`: Optimized combination search bar is set with `bodyexpandable`, which blocks the problem of the search button.
+- 💄 `<pro>Table`: Optimized problem of adaptive `rowheight` in optimized combination search.
+- 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.
