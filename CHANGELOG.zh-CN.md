@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
+- 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
 
 
 ## 1.5.2

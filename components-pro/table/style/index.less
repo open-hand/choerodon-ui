@@ -241,13 +241,22 @@
       }
     }
 
-    &:not(&-aggregation) &-inner > * {
+    &:not(&-aggregation) &-inner:not(&-inner-custom) > * {
       vertical-align: middle;
     }
 
     &-multiple-block,
     &:not(&-aggregation) &-inner > &-multiple-block {
       vertical-align: text-top;
+    }
+
+    
+    &:not(&-aggregation) &-inner {
+      .@{c7n-pro-prefix}-btn {
+        top: 50%;
+        vertical-align: top;
+        transform: translateY(-50%);
+      }
     }
 
     &-tree {

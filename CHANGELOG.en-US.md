@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
+- 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 
 ## 1.5.2
 
