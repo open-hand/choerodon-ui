@@ -3,7 +3,6 @@ export {
   ViewMode,
   PrefixRule,
   SearchAction,
-  TriggerViewMode,
 } from './enum';
 export {
   Events,
