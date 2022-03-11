@@ -7,7 +7,7 @@ const { Option, getMentions } = Mentions;
 function onChange(value) {
   console.log('Change:', value);
 
-  console.log('getMentions: ', getMentions(value));
+  console.log('getMentions: ', value && getMentions(value));
 }
 
 function onSelect(option, mentionsKey) {

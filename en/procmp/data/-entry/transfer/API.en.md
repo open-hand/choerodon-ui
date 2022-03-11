@@ -28,3 +28,20 @@ title: API
 |-----------|------------------------------------------|------------|
 | value | 选项值 | any |
 
+### Render Props
+
+> 1.5.3 版本新增组件。
+
+- Transfer 支持接收 children 自定义渲染列表，并返回以下参数：
+
+| 参数      | 说明                                     | 类型        |
+|-----------|------------------------------------------|------------|
+| direction | 渲染列表的方向 | `left` \| `right`  |
+| targetOption | 目标数据源 | Record[]  |
+| onItemSelect | 勾选条目 | (Records: Record[])  |
+
+#### 参考示例
+
+```
+<Transfer {...props}>{({ direction, targetOption, onItemSelect}) => <YourComponent {...listProps} />}</Transfer>
+ ```

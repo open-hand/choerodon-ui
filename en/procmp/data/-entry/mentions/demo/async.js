@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Mentions } from 'choerodon-ui/pro';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash';
 
 const { Option } = Mentions;
 

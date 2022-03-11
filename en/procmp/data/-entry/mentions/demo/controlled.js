@@ -12,7 +12,7 @@ class App extends React.Component {
   handleChange = (editorState) => {
     console.log(
       'getMentions: ',
-      getMentions(editorState, { mentionsKey: '@', split: ' ' }),
+      editorState && getMentions(editorState, { mentionsKey: '@', split: ' ' }),
     );
 
     this.setState({
