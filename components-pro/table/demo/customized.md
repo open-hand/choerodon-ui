@@ -74,7 +74,6 @@ class App extends React.Component {
         type: 'string',
         label: '性别',
         lookupCode: 'HR.EMPLOYEE_GENDER',
-        required: true,
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
     ],
@@ -150,6 +149,7 @@ class App extends React.Component {
           <Column header="子组合">
             <Column name="userid" title="ID" header={({ ds, name, title }) => <i>{title}</i>} tooltip="always" />
             <Column name="name" tooltip="overflow" renderer={this.renderName} />
+            <Column name="sex" />
           </Column>
         </Column>
         <Column header="操作" align="center" renderer={this.renderEdit} footer="---" />

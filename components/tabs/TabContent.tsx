@@ -1,15 +1,4 @@
-import React, {
-  createElement,
-  CSSProperties,
-  forwardRef,
-  ForwardRefExoticComponent,
-  PropsWithoutRef,
-  ReactElement,
-  RefAttributes,
-  useContext,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { createElement, CSSProperties, FunctionComponent, ReactElement, useContext, useLayoutEffect, useState } from 'react';
 import classnames from 'classnames';
 import { getActiveIndex, getMarginStyle, getTransformByIndex, getTransformPropValue } from './utils';
 import { TabPaneProps } from './TabPane';
@@ -22,7 +11,7 @@ export interface TabContentProps {
   style?: CSSProperties | undefined;
 }
 
-const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & RefAttributes<HTMLDivElement>> = forwardRef(function TabContent(props: TabContentProps, ref) {
+const TabContent: FunctionComponent<TabContentProps> = function TabContent(props) {
   const { destroyInactiveTabPane, animated, animatedWithMargin, style } = props;
   const { prefixCls, totalPanelsMap, activeKey, tabBarPosition } = useContext(TabsContext);
   const [mergedStyle, setMergedStyle] = useState(() => animated ? ({
@@ -51,6 +40,7 @@ const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & R
       setMergedStyle(style);
     }
   }, [animated, totalPanelsMap, activeKey, tabBarPosition, style]);
+
   const getTabPanes = (): ReactElement<TabPaneProps>[] => {
     const ret: ReactElement<TabPaneProps>[] = [];
     totalPanelsMap.forEach(({ type, ...child }, key) => {
@@ -59,6 +49,7 @@ const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & R
         {
           ...child,
           key,
+          eventKey: key,
           active: activeKey === key,
           destroyInactiveTabPane,
           rootPrefixCls: prefixCls,
@@ -71,12 +62,11 @@ const TabContent: ForwardRefExoticComponent<PropsWithoutRef<TabContentProps> & R
     <div
       className={classes}
       style={mergedStyle}
-      ref={ref}
     >
       {getTabPanes()}
     </div>
   );
-});
+};
 
 TabContent.defaultProps = {
   animated: true,

@@ -85,10 +85,11 @@
 
   &-group {
     margin: 0;
-    padding: .02rem;
+    padding: @tab-groups-padding;
     background-color: rgba(0, 0, 0, 0.05);
 
     &-item {
+      position: relative;
       display: inline-block;
       padding: 0.03rem .08rem;
       color: rgba(0, 0, 0, 0.45);
@@ -113,6 +114,15 @@
       .@{c7n-prefix}-badge {
         margin: 0;
         vertical-align: baseline;
+      }
+
+      .@{tab-prefix-cls}-invalid-badge > .@{c7n-prefix}-scroll-number-custom-component {
+        top: -@tab-groups-padding;
+        right: 0;
+      }
+
+      &:last-child .@{tab-prefix-cls}-invalid-badge > .@{c7n-prefix}-scroll-number-custom-component {
+        right: -@tab-groups-padding;
       }
     }
   }
@@ -164,7 +174,7 @@
     cursor: pointer;
     opacity: 0;
     transition: width @animation-duration-slow @ease-in-out,
-      opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+    opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
     user-select: none;
     pointer-events: none;
 
@@ -299,7 +309,7 @@
       font-weight: 500;
     }
 
-    .@{tab-prefix-cls}-tab-disabled,.@{tab-prefix-cls}-second-tab-disabled,
+    .@{tab-prefix-cls}-tab-disabled, .@{tab-prefix-cls}-second-tab-disabled,
     .@{tab-prefix-cls}-tab-disabled .@{tab-prefix-cls}-tab-count {
       color: @disabled-color;
       cursor: default;
@@ -316,11 +326,13 @@
       color: @tab-active-color;
     }
   }
+
   &-second-nav {
     height: auto;
     margin: 0;
     padding: .02rem;
     background-color: rgba(0, 0, 0, 0.05);
+
     > .@{tab-prefix-cls}-ink-bar-animated {
       display: none;
     }
@@ -391,7 +403,7 @@
         width: @tab-scrolling-size;
         height: 0;
         transition: height @animation-duration-slow @ease-in-out,
-          opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+        opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
       }
 
       &-tab-prev.@{tab-prefix-cls}-tab-arrow-show,
@@ -570,18 +582,65 @@
     font-size: @font-size-sm;
     vertical-align: baseline;
   }
+
+  &-invalid-badge {
+    position: static;
+
+    > .@{c7n-prefix}-scroll-number-custom-component {
+      top: @tab-horizontal-padding-vertical;
+      right: -0.1rem;
+      transform: initial;
+      transform-origin: center;
+
+      &.@{c7n-prefix}-badge-zoom-appear,
+      &.@{c7n-prefix}-badge-zoom-enter {
+        animation: c7nZoomInvalidBadgeIn @animation-duration-slow @ease-out-back;
+      }
+
+      &.@{c7n-prefix}-badge-zoom-leave {
+        animation: c7nZoomInvalidBadgeOut @animation-duration-slow @ease-in-back;
+      }
+    }
+
+    &-content {
+      display: inline-block;
+      width: 0.12rem;
+      height: 0.12rem;
+      padding-top: 0.01rem;
+      color: @text-color-dark;
+      text-align: center;
+      background-color: @error-color;
+      border-radius: 0.014rem;
+
+      &::before {
+        display: inline;
+        font-weight: 600;
+        font-size: 0.12rem;
+        font-style: normal;
+        content: '*';
+      }
+    }
+  }
 }
 
-.@{tab-prefix-cls}-top .@{tab-prefix-cls}-ink-bar-animated,
-.@{tab-prefix-cls}-bottom .@{tab-prefix-cls}-ink-bar-animated {
+.@{tab-prefix-cls}-top > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated,
+.@{tab-prefix-cls}-bottom > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated {
   transition: transform @animation-duration-slow @ease-in-out,
-    width @animation-duration-slow @ease-in-out;
+  width @animation-duration-slow @ease-in-out;
 }
 
-.@{tab-prefix-cls}-left .@{tab-prefix-cls}-ink-bar-animated,
-.@{tab-prefix-cls}-right .@{tab-prefix-cls}-ink-bar-animated {
+.@{tab-prefix-cls}-left > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated,
+.@{tab-prefix-cls}-right > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated {
   transition: transform @animation-duration-slow @ease-in-out,
-    height @animation-duration-slow @ease-in-out;
+  height @animation-duration-slow @ease-in-out;
+}
+
+.@{tab-prefix-cls}-top > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-tab {
+  vertical-align: bottom;
+}
+
+.@{tab-prefix-cls}-bottom > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-tab {
+  vertical-align: top;
 }
 
 .no-flex,
@@ -596,5 +655,25 @@
     > .@{tab-prefix-cls}-tabpane-inactive {
       display: none;
     }
+  }
+}
+
+@keyframes c7nZoomInvalidBadgeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes c7nZoomInvalidBadgeOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
   }
 }

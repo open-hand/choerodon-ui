@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { DataSetEvents } from 'choerodon-ui/dataset/data-set/enum';
+import ConfigProvider from 'choerodon-ui/lib/config-provider';
 import PanelContent from './PanelContent';
 import Animate from '../../animate';
-import { DataSetEvents } from 'choerodon-ui/dataset/data-set/enum';
 
 const CollapsePanel = function CollapsePanel(props) {
   const {
@@ -58,24 +59,32 @@ const CollapsePanel = function CollapsePanel(props) {
   ) : null;
 
   const wrapRef = useRef(null);
+
+  const handleValidate = useCallback(({ valid, noLocate }) => {
+    if (!noLocate && !valid && !isActive && !disabled) {
+      handleItemClick();
+      const { current } = wrapRef;
+      if (current) {
+        current.focus();
+      }
+    }
+  }, [handleItemClick, isActive, disabled]);
+
   const dsList = dataSet ? [].concat(dataSet) : [];
   const { length } = dsList;
 
   useEffect(() => {
     if (length && !disabled && !isActive) {
-      const handleValdate = ({ valid }) => {
-        if (!valid) {
-          handleItemClick();
-          const { current } = wrapRef;
-          if (current) {
-            current.focus();
-          }
-        }
-      };
-      dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValdate));
-      return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValdate));
+      dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValidate).addEventListener(DataSetEvents.validateSelf, handleValidate));
+      return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValidate).removeEventListener(DataSetEvents.validateSelf, handleValidate));
     }
-  }, [isActive, disabled, handleItemClick, length, ...dsList]);
+  }, [isActive, disabled, handleValidate, length, ...dsList]);
+
+  const childrenWithProvider = length ? children : (
+    <ConfigProvider onValidate={handleValidate} onValidateSelf={handleValidate}>
+      {children}
+    </ConfigProvider>
+  );
 
   return (
     <div className={itemCls} style={style} id={id} ref={wrapRef} tabIndex={-1}>
@@ -105,7 +114,7 @@ const CollapsePanel = function CollapsePanel(props) {
           forceRender={forceRender}
           role={accordion ? 'tabpanel' : null}
         >
-          {children}
+          {childrenWithProvider}
         </PanelContent>
       </Animate>
     </div>

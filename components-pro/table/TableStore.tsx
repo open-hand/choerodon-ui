@@ -527,8 +527,10 @@ function mergeDefaultProps(
           if (!isHideDisabled && childrenIsHideDisabled) {
             isHideDisabled = true;
           }
+          mergeCustomizedColumn(newColumn, dataSet, customizedColumns, childrenIsHideDisabled);
+        } else {
+          mergeCustomizedColumn(newColumn, dataSet, customizedColumns);
         }
-        mergeCustomizedColumn(newColumn, dataSet, customizedColumns, isHideDisabled);
         if (!isHideDisabled && newColumn.hideable === false) {
           isHideDisabled = true;
         }
@@ -636,7 +638,7 @@ function normalizeColumns(
           if (!isHideDisabled && childrenIsHideDisabled) {
             isHideDisabled = true;
           }
-          mergeCustomizedColumn(column, dataSet, customizedColumns, isHideDisabled);
+          mergeCustomizedColumn(column, dataSet, customizedColumns, childrenIsHideDisabled);
           if (!isHideDisabled && column.hideable === false) {
             isHideDisabled = true;
           }

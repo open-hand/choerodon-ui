@@ -16,8 +16,8 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
   const { getConfig: getParentConfig } = useContext(ConfigContext);
   const { children, ...localConfig } = props;
   const configStore = useLocalStore((config) => ({
-    config: observable.map(config),
-  }), localConfig);
+    config,
+  }), observable.map(localConfig));
   const getLocalConfig = useCallback<typeof getConfig>((key) => {
     const localValue = configStore.config.get(key);
     if (configStore.config.has(key)) {
@@ -81,7 +81,7 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
     getTooltip: getLocalTooltip,
     getTooltipTheme: getLocalTooltipTheme,
     getTooltipPlacement: getLocalTooltipPlacement,
-  }), [getConfig, getLocalPrefixCls, getLocalProPrefixCls, getLocalCustomizable, getLocalTooltip, getLocalTooltipTheme, getLocalTooltipPlacement]);
+  }), [getLocalConfig, getLocalPrefixCls, getLocalProPrefixCls, getLocalCustomizable, getLocalTooltip, getLocalTooltipTheme, getLocalTooltipPlacement]);
   return (
     <ConfigContext.Provider value={value}>
       <FormProvider>

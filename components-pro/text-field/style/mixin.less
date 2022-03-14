@@ -160,6 +160,10 @@
 
   &-disabled {
     background-color: @input-disabled-bg;
+
+    i {
+      color: @input-disabled-icon-color;
+    }
   }
 
   &-disabled &,
@@ -605,10 +609,8 @@
     border-color: @input-error-border-color;
   }
 
-  &-float-label&-disabled {
-    i {
-      color: @input-disabled-color;
-    }
+  &-float-label&-disabled i {
+    color: @input-disabled-icon-color;
   }
 
   &-float-label&-disabled::before {

@@ -60,6 +60,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | countRenderer         | 数字渲染器          | ({ text, count, overflowCount }) => ReactNode  | ({ text }) => { if (text) return text; }     |
 | overflowCount         | 展示封顶的数字值         | number | 99     |
 | showCount         | 显示数字        | boolean | true     |
+| dataSet	| 数据集对象，当数据集校验失败时会出现提示标记 | DataSet \| DataSet[] | 无 |	
 
 ### Tabs.TabGroup
 
