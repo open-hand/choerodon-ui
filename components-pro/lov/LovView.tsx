@@ -17,6 +17,7 @@ import { getColumnKey } from '../table/utils';
 import SelectionList, { SelectionsPosition } from './SelectionList';
 import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
+import { TriggerViewMode } from '../trigger-field/TriggerField';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -25,7 +26,7 @@ export interface LovViewProps {
   tableProps?: Partial<TableProps>;
   multiple: boolean;
   values: any[];
-  viewMode?: string;
+  viewMode?: TriggerViewMode;
   onSelect: (records: Record | Record[]) => void;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
   modal?: modalChildrenProps;
@@ -58,7 +59,7 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     this.selection = selection;
     dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
-    if (viewMode === 'popup' && multiple) {
+    if (viewMode === TriggerViewMode.popup && multiple) {
       dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -68,7 +69,7 @@ export default class LovView extends Component<LovViewProps> {
   componentWillUnmount() {
     const { dataSet, multiple, viewMode } = this.props;
     dataSet.selection = this.selection;
-    if (viewMode === 'popup' && multiple) {
+    if (viewMode === TriggerViewMode.popup && multiple) {
       dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
@@ -76,7 +77,7 @@ export default class LovView extends Component<LovViewProps> {
 
   shouldComponentUpdate(nextProps: Readonly<LovViewProps>): boolean {
     const { viewMode } = this.props;
-    if (viewMode === 'popup' && nextProps.popupHidden) {
+    if (viewMode === TriggerViewMode.popup && nextProps.popupHidden) {
       return false;
     }
     return true;
@@ -103,7 +104,7 @@ export default class LovView extends Component<LovViewProps> {
             key: gridFieldName,
             header: display,
             name: gridFieldName,
-            width: viewMode === 'popup' ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
+            width: viewMode === TriggerViewMode.popup ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
             align: gridFieldAlign,
             editor: false,
           };
@@ -193,9 +194,9 @@ export default class LovView extends Component<LovViewProps> {
     } = this.props;
     const { getConfig } = context;
     const columns = this.getColumns();
-    const popup = viewMode === 'popup';
-    const modal = viewMode === 'modal';
-    const drawer = viewMode === 'drawer';
+    const popup = viewMode === TriggerViewMode.popup;
+    const modal = viewMode === TriggerViewMode.modal;
+    const drawer = viewMode === TriggerViewMode.drawer;
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -288,9 +289,9 @@ export default class LovView extends Component<LovViewProps> {
       }
     }
 
-    const selectionsPosition = viewMode === 'drawer' ?
+    const selectionsPosition = viewMode === TriggerViewMode.drawer ?
       SelectionsPosition.side :
-      (viewMode === 'modal' ? SelectionsPosition.below : undefined);
+      (viewMode === TriggerViewMode.modal ? SelectionsPosition.below : undefined);
 
     return (
       <SelectionList
@@ -320,7 +321,7 @@ export default class LovView extends Component<LovViewProps> {
     }
     return (
       <>
-        {viewMode === 'drawer' && this.renderSelectionList()}
+        {viewMode === TriggerViewMode.drawer && this.renderSelectionList()}
         <div>
           {viewRenderer
             ? toJS(

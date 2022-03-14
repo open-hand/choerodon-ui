@@ -17,6 +17,12 @@ export interface TriggerFieldPopupContentProps {
   setPopup: (hidden: boolean) => void;
 }
 
+export enum TriggerViewMode {
+  popup = 'popup',
+  drawer = 'drawer',
+  modal = 'modal',
+}
+
 export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = TriggerFieldPopupContentProps> extends TextFieldProps {
   /**
    * 下拉框的自定义内容
@@ -67,7 +73,7 @@ export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = Tri
    */
   tabIntoPopupContent?: boolean;
 
-  viewMode?: 'popup' | 'modal' | 'drawer';
+  viewMode?: TriggerViewMode;
 }
 
 export default abstract class TriggerField<T extends TriggerFieldProps = TriggerFieldProps> extends TextField<T> {
@@ -80,7 +86,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     popupPlacement: 'bottomLeft',
     triggerShowDelay: 150,
     triggerHiddenDelay: 50,
-    viewMode: 'popup',
+    viewMode: TriggerViewMode.popup,
   };
 
   popupTask?: TaskRunner;

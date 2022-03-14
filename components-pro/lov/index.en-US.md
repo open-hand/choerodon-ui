@@ -43,7 +43,7 @@ title: Lov
 | placeholder | 已选记录为空时的默认文案 | string \| ReactNode  | |
 
 
-更多属性请参考 [TextField](/components-pro/text-field/#TextField), [Button](/components-pro/button/#Button)。
+更多属性请参考 [Select](/components-pro/select/#Select), [Button](/components-pro/button/#Button)。
 
 <style>
 .code-box .c7n-row {
