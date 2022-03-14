@@ -31,7 +31,7 @@ import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import Column, { ColumnProps } from './Column';
 import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
-import DataSet, { ValidationErrors } from '../data-set/DataSet';
+import DataSet, { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
@@ -899,9 +899,21 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  handleDataSetValidateSelf(props: { valid: boolean; dataSet: DataSet; errors: ValidationSelfErrors[]; noLocate?: boolean }) {
+    const onValidateSelf = this.getContextConfig('onValidateSelf');
+    if (onValidateSelf) {
+      onValidateSelf(props);
+    }
+  }
+
   @autobind
-  handleDataSetValidate({ valid, dataSet, errors: validationErrors, noLocate }: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
+  handleDataSetValidate(props: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
+    const { valid, dataSet, errors: validationErrors, noLocate } = props;
     const { autoValidationLocate } = this.props;
+    const onValidate = this.getContextConfig('onValidate');
+    if (onValidate) {
+      onValidate(props);
+    }
     if (autoValidationLocate !== false && !noLocate && !valid) {
       const { tableStore } = this;
       const [firstInvalidRecord] = validationErrors;
@@ -1481,6 +1493,7 @@ export default class Table extends DataSetComponent<TableProps> {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
+      handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetValidateSelf);
     }
   }
 

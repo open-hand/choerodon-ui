@@ -3,6 +3,7 @@ import React, {
   JSXElementConstructor,
   Key,
   MouseEvent,
+  UIEvent,
   useCallback,
   useContext,
   useEffect,
@@ -10,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { observable } from 'mobx';
 import classnames from 'classnames';
 import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import { iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
@@ -25,6 +27,12 @@ import { Animated, GroupPanelMap, TabsCustomized, TabsProps } from './Tabs';
 import { TabPaneProps } from './TabPane';
 import TabsContext, { TabsContextValue } from './TabsContext';
 import ConfigContext from '../config-provider/ConfigContext';
+
+function handleScroll(e: UIEvent<HTMLDivElement>) {
+  const { currentTarget } = e;
+  currentTarget.scrollLeft = 0;
+  currentTarget.scrollTop = 0;
+}
 
 function isAnimated(animated?: boolean | Animated): animated is Animated {
   return typeof animated === 'object';
@@ -146,6 +154,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       }
     }
   }, [hasPropActiveKey, activeKey, onChange, currentGroup]);
+  const validationMap = useMemo(() => observable.map(), []);
   const value: TabsContextValue = {
     defaultActiveKey: propDefaultActiveKey,
     actuallyDefaultActiveKey,
@@ -163,6 +172,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     groupedPanelsMap,
     currentPanelMap,
     totalPanelsMap,
+    validationMap,
     onTabClick,
     onPrevClick,
     onNextClick,
@@ -281,7 +291,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   }
 
   const tabs = (
-    <div className={cls} style={style} {...getDataAttr(restProps)}>
+    <div className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
       {contents}
     </div>
   );

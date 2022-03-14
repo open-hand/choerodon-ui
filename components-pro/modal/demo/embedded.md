@@ -41,7 +41,9 @@ const OpenModalButton = ({ children, drawer, autoCenter }) => {
   }, [Modal]);
 
   return (
+<ModalProvider>
     <Button onClick={openModal} style={{ verticalAlign: 'top' }}>{children}</Button>
+</ModalProvider>
   );
 }
 

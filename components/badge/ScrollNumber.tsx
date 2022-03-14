@@ -7,7 +7,6 @@ import ConfigContext from '../config-provider/ConfigContext';
 export interface ScrollNumberProps {
   prefixCls?: string;
   className?: string;
-  motionClassName?: string;
   count?: string | number | null;
   children?: ReactElement<HTMLElement>;
   component?: string;
@@ -25,7 +24,6 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
   prefixCls: customizePrefixCls,
   count,
   className,
-  motionClassName,
   style,
   title,
   hidden,
@@ -41,7 +39,7 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
     ...restProps,
     'data-show': !hidden,
     style,
-    className: classNames(prefixCls, className, motionClassName),
+    className: classNames(prefixCls, className),
     title: title as string,
   };
 
@@ -69,7 +67,7 @@ const ScrollNumber: FunctionComponent<ScrollNumberProps> = function ScrollNumber
   }
   if (children) {
     return cloneElement(children, oriProps => ({
-      className: classNames(`${prefixCls}-custom-component`, oriProps && oriProps.className, motionClassName),
+      className: classNames(`${prefixCls}-custom-component`, oriProps && oriProps.className),
     }));
   }
   return createElement(component, newProps, numberNodes);

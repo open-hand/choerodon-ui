@@ -9,6 +9,7 @@ import {
   BigNumberTarget,
   Status,
 } from 'choerodon-ui/dataset/configure';
+import { ValidationErrors, ValidationSelfErrors } from 'choerodon-ui/dataset/data-set/DataSet';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import {
   expandIconProps,
@@ -223,6 +224,8 @@ export interface Config extends DataSetConfig {
   onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;
   onTabsChange?: (props: { activeKey: string, title: string, activeGroupKey?: string, groupTitle?: string, code?: string }) => void;
   onButtonClick?: (props: { title: string, icon?: string }) => void;
+  onValidate?: (props: { valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) => Promise<void> | void;
+  onValidateSelf?: (props: { valid: boolean; errors: ValidationSelfErrors[]; noLocate?: boolean }) => Promise<void> | void;
   /**
    * 开启性能监控
    */

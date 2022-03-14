@@ -18,6 +18,7 @@ timeline: true
 - 🌟 合并 hzero-ui。
 - 🌟 `configure`: 新增 modalMovable 属性。
 - 🌟 `Collapse.Panel`: 新增 dataSet 属性。
+- 🌟 `Tabs.TabPane`: 新增 dataSet 属性。
 - 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
 - 🌟 `<pro>DataSet.Record`: 新增 selectedTimestamp 值.
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
@@ -35,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化组合搜索条行内搜索没有自适应 rowHeight 的问题。
 - 💄 `<pro>Table`: 优化搜索条选择 Lov 条件按钮没有对齐的问题。
 - 💄 `<pro>Lov`: 优化 mode viewMode 类型声明。
+- 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。

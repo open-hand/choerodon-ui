@@ -28,6 +28,7 @@
     box-shadow: @shadow-3;
     transform: translateX(-50%);
     transform-origin: -10% center;
+
     a,
     a:hover {
       color: #fff;
@@ -70,8 +71,10 @@
     position: absolute;
     top: 0;
     right: 0;
+    font-size: inherit;
+    line-height: 1;
     transform: translate(50%, -50%);
-    transform-origin: 100% 0%;
+    transform-origin: 100% 0;
   }
 
   &-count,
@@ -92,12 +95,15 @@
       vertical-align: middle;
       border-radius: 50%;
     }
+
     &-success {
       background-color: @success-color;
     }
+
     &-processing {
       position: relative;
       background-color: @processing-color;
+
       &::after {
         position: absolute;
         top: 0;
@@ -110,12 +116,15 @@
         content: '';
       }
     }
+
     &-default {
       background-color: @normal-color;
     }
+
     &-error {
       background-color: @error-color;
     }
+
     &-warning {
       background-color: @warning-color;
     }
@@ -198,6 +207,7 @@
 .@{number-prefix-cls} {
   overflow: hidden;
   direction: ltr;
+
   &-only {
     position: relative;
     display: inline-block;

@@ -23,7 +23,7 @@ import debounce from 'lodash/debounce';
 import Button from 'choerodon-ui/pro/lib/button';
 import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { useModal } from 'choerodon-ui/pro/lib/modal-provider/ModalProvider';
-import { iteratorReduce } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
+import { iteratorReduce, iteratorSome } from 'choerodon-ui/pro/lib/_util/iteratorUtils';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
@@ -54,6 +54,7 @@ import CustomizationSettings from './customization-settings';
 import Count from './Count';
 import { TabPaneProps } from './TabPane';
 import TabsAddBtn from './TabsAddBtn';
+import InvalidBadge from './InvalidBadge';
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
@@ -102,6 +103,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     hideOnlyGroup = false,
     groupedPanelsMap,
     currentPanelMap,
+    validationMap,
     onTabClick,
     onPrevClick = noop,
     onNextClick = noop,
@@ -208,7 +210,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const length = currentPanelMap.size;
     const tabBarRef = [...currentPanelMap.entries()].map((item) => ({ key: item[0], value: item[1], ref: React.createRef<HTMLDivElement>() }));
     tabsRef.current = tabBarRef;
-    const isSecond = type === TabsType['second-level']
+    const isSecond = type === TabsType['second-level'];
     return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
       const { disabled, closable = true, showCount, count, overflowCount, countRenderer } = child;
       const classes = isSecond ? [`${prefixCls}-second-tab`] : [`${prefixCls}-tab`];
@@ -251,15 +253,19 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       rst.push(
         <Ripple disabled={disabled || rippleDisabled} key={key}>
           <TabBarInner ref={tabBarRef[index].ref} {...tabProps}>
-            {type === TabsType['editable-card'] ? (
-              <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
-                {title}
-                {closable && <Icon type="close" onClick={e => onRemoveTab(key, e)} />}
-              </div>
-            ) : title}
+            <InvalidBadge prefixCls={prefixCls} isInvalid={() => key !== activeKey && validationMap.get(key) === false}>
+              {
+                type === TabsType['editable-card'] ? (
+                  <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
+                    {title}
+                    {closable && <Icon type="close" onClick={e => onRemoveTab(key, e)} />}
+                  </div>
+                ) : title
+              }
+            </InvalidBadge>
           </TabBarInner>
         </Ripple>,
-      )
+      );
       return rst;
     }, []);
   };
@@ -342,12 +348,17 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     if (groupedPanelsMap.size > Number(hideOnlyGroup)) {
       const items: ReactElement<any>[] = [];
       groupedPanelsMap.forEach((pane, key) => {
-        const { group: { tab, disabled, dot } } = pane;
+        const { group: { tab, disabled, dot }, panelsMap } = pane;
         items.push(
           <MenuItem key={String(key)} disabled={disabled}>
-            <Badge dot={dot}>
-              {tab}
-            </Badge>
+            <InvalidBadge
+              prefixCls={prefixCls}
+              isInvalid={() => activeGroupKey !== key && iteratorSome(panelsMap.keys(), paneKey => validationMap.get(paneKey) === false)}
+            >
+              <Badge dot={dot}>
+                {tab}
+              </Badge>
+            </InvalidBadge>
           </MenuItem>,
         );
       });
@@ -356,7 +367,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
           prefixCls={`${prefixCls}-group`}
           selectedKeys={activeGroupKey ? [activeGroupKey] : []}
           onSelect={handleGroupSelect}
-          mode={isVertical(tabBarPosition) ? 'vertical' : 'horizontal'}
+          mode="vertical"
         >
           {items}
         </Menu>

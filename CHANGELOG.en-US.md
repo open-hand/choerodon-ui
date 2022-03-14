@@ -18,6 +18,7 @@ timeline: true
 - 🌟 merge `hzero-ui`.
 - 🌟 `configure`: Added `modalMovable` property.
 - 🌟 `Collapse.Panel`: Added `dataSet` property.
+- 🌟 `Tabs.TabPane`: Added `dataSet` property.
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
@@ -35,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized problem of adaptive `rowheight` in optimized combination search.
 - 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
+- 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
 - 🐞 `<pro>Modal`: Fix the problem that multiple modals may be closed by the ESC key.

@@ -95,6 +95,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
         onClose: this.handleIntlListClose,
         onOk: this.handleIntlListOk,
         onCancel: this.handleIntlListCancel,
+        okButton: !this.disabled && !this.readOnly,
         destroyOnClose: true,
         ...modalProps,
       } as ModalProps & { children });
