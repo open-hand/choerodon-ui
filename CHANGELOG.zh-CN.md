@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化错误提示的样式。
 - 💄 `<pro>Table`: 优化筛选条查询组件 hidden 时 limit 组件渲染。
 - 💄 `<pro>Range`: 优化数据值显示及相邻 marks 遮挡问题。
+- 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
