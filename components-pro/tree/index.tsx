@@ -60,12 +60,22 @@ export interface TreeProps extends C7NTreeProps {
   filter?: (record: Record, index: number, array: Record[]) => boolean;
 }
 
+type CheckedKeys = string[] | { checked: string[], halfChecked: string[] };
+
 export function defaultRenderer({ text }) {
   return text;
 }
 
 function defaultNodeCover() {
   return {};
+}
+
+function getCheckedKeys(checkedKeys: CheckedKeys): string[] {
+  return Array.isArray(checkedKeys)
+    ? checkedKeys
+    : typeof checkedKeys === 'object'
+      ? checkedKeys.checked
+      : [];
 }
 
 @observer
@@ -331,18 +341,20 @@ export default class Tree extends Component<TreeProps> {
   }
 
   @autobind
-  handleCheck(checkedKeys: string[], eventObj: CheckInfo, oldCheckedKeys: string[]) {
+  handleCheck(checkedKeys: CheckedKeys, eventObj: CheckInfo, oldCheckedKeys: CheckedKeys) {
+    const checkedKeysArr = getCheckedKeys(checkedKeys);
+    const oldCheckedKeysArr = getCheckedKeys(oldCheckedKeys);
     this.inCheckExpansion = true;
     const { dataSet, selectable } = this.props;
 
     if (this.setCheck(eventObj)) {
       runInAction(() => {
-        this.stateCheckedKeys = checkedKeys;
+        this.stateCheckedKeys = checkedKeysArr;
       });
     }
     if (dataSet && selectable === false) {
       const { idField } = dataSet.props;
-      const diffKeys = xor(oldCheckedKeys, checkedKeys);
+      const diffKeys = xor(oldCheckedKeysArr, checkedKeysArr);
       dataSet.forEach(record => {
         diffKeys.forEach((key) => {
           if (getKey(record, idField) === key) {

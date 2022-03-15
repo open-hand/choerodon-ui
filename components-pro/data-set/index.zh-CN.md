@@ -47,6 +47,7 @@ title: DataSet
 | childrenField | 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。适用于树形数据；变更节点层级需要操作 record.parent 和 record.children。 | string |  |
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |
+| treeCheckStrictly | 树形数据节点选中状态是否独自控制（父子节点选中状态不再关联） | boolean |  |
 | fields | 字段属性数组，详见[Field Props](#Field Props) | object\[\] |  |
 | record | 记录属性，详见[Record Props](#Record Props) | object |  |
 | queryFields | 查询字段属性数组，在内部生成 queryDataSet，优先级低于 queryDataSet 属性，详见[Field Props](#Field Props) | object\[\] |  |

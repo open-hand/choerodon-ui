@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
+- 🌟 `<pro>DataSet`: Added `treeCheckStrictly` property.
 - 💄 `<pro>Table`: The `hideable` of required columns is always false.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
@@ -57,6 +58,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 - 🐞 `<pro>TextField`: Fix the problem that the value is not synced to the DataSet when pressing ctrl+z to fallback in blur status.
+- 🐞 `<pro>Tree`: Fix parent and son nodes `checkable` status individual control error.
 
 ## 1.5.2
 
