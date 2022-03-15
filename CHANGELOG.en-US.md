@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
+- 🐞 `<pro>TextField`: Fix the problem that the value is not synced to the DataSet when pressing ctrl+z to fallback in blur status.
 
 ## 1.5.2
 
