@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
+- 🌟 `<pro>DataSet`: Added `treeCheckStrictly` property.
 - 💄 `<pro>Table`: The `hideable` of required columns is always false.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.

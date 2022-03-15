@@ -814,19 +814,18 @@ export function getRecordValue(
   record: Record,
   cb: (record: Record, fieldName: string) => boolean,
   fieldName?: string | string[],
-  checkStrictly?: boolean,
 ) {
   if (fieldName) {
     if (isArrayLike(fieldName)) {
       return fieldName.reduce<object>((value, key) => {
-        value[key] = getRecordValue(record, cb, key, checkStrictly);
+        value[key] = getRecordValue(record, cb, key);
         return value;
       }, {});
     }
     const { dataSet } = record;
     const chainFieldName = getChainFieldName(record, fieldName);
-    const { checkField } = dataSet.props;
-    if (checkStrictly !== true && checkField && chainFieldName === getChainFieldName(record, checkField)) {
+    const { checkField, treeCheckStrictly } = dataSet.props;
+    if (treeCheckStrictly !== true && checkField && chainFieldName === getChainFieldName(record, checkField)) {
       const field = dataSet.getField(checkField);
       const trueValue = field ? field.get(BooleanValue.trueValue, record) : true;
       const falseValue = field ? field.get(BooleanValue.falseValue, record) : false;

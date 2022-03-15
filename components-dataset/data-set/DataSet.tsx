@@ -386,6 +386,10 @@ export interface DataSetProps {
    */
   checkField?: string;
   /**
+   * 树形数据节点选中状态是否独自控制（父子节点选中状态不再关联）
+   */
+  treeCheckStrictly?: boolean;
+  /**
    * 缓存选中记录，使切换分页时仍保留选中状态。
    * 当设置了primaryKey或有字段设置了unique才起作用。
    */

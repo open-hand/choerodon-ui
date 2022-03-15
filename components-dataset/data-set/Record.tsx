@@ -728,24 +728,23 @@ export default class Record {
     }
   }
 
-  get(fieldName?: string | string [], checkStrictly?: boolean): any {
+  get(fieldName?: string | string []): any {
     return getRecordValue(
       this,
       (child, checkField) => child.get(checkField),
       fieldName,
-      checkStrictly,
     );
   }
 
   @action
-  set(item: string | object, value?: any, checkStrictly?: boolean): Record {
+  set(item: string | object, value?: any): Record {
     if (isString(item)) {
       const { dataSet } = this;
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
       const field = dataSet.getField(oldName) || dataSet.getField(fieldName) || findBindField(oldName, fieldName, this) || addDataSetField(dataSet, oldName);
       checkFieldType(value, field, this);
-      const oldValue = toJS(this.get(fieldName, checkStrictly));
+      const oldValue = toJS(this.get(fieldName));
       const newValue = processValue(value, field, this);
       const newValueForCompare = processToJSON(newValue, field, this);
       const { fields } = dataSet;
@@ -783,11 +782,11 @@ export default class Record {
           value: newValue,
           oldValue,
         });
-        const { checkField } = dataSet.props;
-        if (checkStrictly !== true && checkField && fieldName === getChainFieldName(this, checkField)) {
+        const { checkField, treeCheckStrictly } = dataSet.props;
+        if (treeCheckStrictly !== true && checkField && fieldName === getChainFieldName(this, checkField)) {
           const { children } = this;
           if (children) {
-            children.forEach(record => record.set(fieldName, value, checkStrictly));
+            children.forEach(record => record.set(fieldName, value));
           }
         }
         this.processTreeLevel({
@@ -800,7 +799,7 @@ export default class Record {
         oneField.checkValidity(this)
       ));
     } else if (isPlainObject(item)) {
-      Object.keys(item).forEach(key => this.set(key, item[key], checkStrictly));
+      Object.keys(item).forEach(key => this.set(key, item[key]));
     }
     return this;
   }

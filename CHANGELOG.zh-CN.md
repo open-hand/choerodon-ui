@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
+- 🌟 `<pro>DataSet`: 新增 treeCheckStrictly 属性。
 - 💄 `<pro>Table`: 优化必输列的 hideable 始终为 false。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。

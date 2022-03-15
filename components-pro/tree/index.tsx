@@ -153,7 +153,6 @@ export default class Tree extends Component<TreeProps> {
         checkable,
         selectable,
         defaultCheckedKeys,
-        checkStrictly,
       },
     } = this;
     this.stateCheckedKeys = this.dealDefaultCheckExpand(dataSet, defaultCheckedKeys);
@@ -163,7 +162,7 @@ export default class Tree extends Component<TreeProps> {
         if (checkField) {
           const field = dataSet.getField(checkField);
           dataSet.forEach(record => {
-            if (record.get(checkField, checkStrictly) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+            if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
               record.isSelected = true;
             }
           });
@@ -253,7 +252,7 @@ export default class Tree extends Component<TreeProps> {
   }
 
   get checkedKeys(): string[] {
-    const { dataSet, checkStrictly } = this.props;
+    const { dataSet } = this.props;
     if (dataSet) {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
@@ -261,7 +260,7 @@ export default class Tree extends Component<TreeProps> {
         const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
           const key = getKey(record, idField);
-          if (record.get(checkField, checkStrictly) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
             keys.push(key);
           }
         });
@@ -308,7 +307,7 @@ export default class Tree extends Component<TreeProps> {
   }
 
   setCheck(eventObj: C7nTreeNodeProps) {
-    const { dataSet, checkStrictly } = this.props;
+    const { dataSet } = this.props;
     if (dataSet) {
       const { checkField, idField } = dataSet.props;
       if (checkField) {
@@ -322,7 +321,6 @@ export default class Tree extends Component<TreeProps> {
           found.set(
             checkField,
             field ? checked ? field.get(BooleanValue.trueValue, found) : field.get(BooleanValue.falseValue, found) : checked,
-            checkStrictly,
           );
           return false;
         }
@@ -388,7 +386,6 @@ export default class Tree extends Component<TreeProps> {
   @autobind
   handleDataSetSelect({ dataSet, records }, checked) {
     if (!this.inCheckExpansion) {
-      const { checkStrictly } = this.props;
       const { checkField, idField } = dataSet.props;
       if (checkField) {
         const field = dataSet.getField(checkField);
@@ -396,7 +393,6 @@ export default class Tree extends Component<TreeProps> {
           record.set(
             checkField,
             field ? checked ? field.get(BooleanValue.trueValue, record) : field.get(BooleanValue.falseValue, record) : checked,
-            checkStrictly,
           );
         });
       } else {
@@ -448,7 +444,7 @@ export default class Tree extends Component<TreeProps> {
 
   @autobind
   handleAfterLoadData(event): void {
-    const { dataSet, selectable, checkStrictly } = this.props;
+    const { dataSet, selectable } = this.props;
     if (dataSet && selectable === false) {
       const { checkField, idField } = dataSet.props;
       const loadRootRecord = dataSet.find(record => getKey(record, idField) === String(event.key));
@@ -460,7 +456,7 @@ export default class Tree extends Component<TreeProps> {
       if (checkField) {
         const field = dataSet.getField(checkField);
         loadRecords.forEach(record => {
-          if (record.get(checkField, checkStrictly) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
             dataSet.select(record);
           }
         });
