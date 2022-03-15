@@ -32,6 +32,10 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the error tip style.
 - 💄 `<pro>Table`: Optimize the rendering of the limit component when the filter bar query component is `hidden`.
 - 💄 `<pro>Range`: Optimization of data value display and occlusion of adjacent marks.
+- 💄 `<pro>Table`: Optimized combination search bar is set with `bodyexpandable`, which blocks the problem of the search button.
+- 💄 `<pro>Table`: Optimized problem of adaptive `rowheight` in optimized combination search.
+- 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
+- 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
 - 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
@@ -51,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
+- 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 
 ## 1.5.2
 

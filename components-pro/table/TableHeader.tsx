@@ -29,7 +29,7 @@ export interface TableHeaderProps extends ElementProps {
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock } = props;
   const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
-  const { columnResizable, columnResizing, columnGroups, comboBarStatus } = tableStore;
+  const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight } = tableStore;
   const { columns } = columnGroups;
 
   const headerRows: ColumnGroup[][] = getTableHeaderRows(lock ? columns.filter((group) => group.lock === lock) : columns);
@@ -81,7 +81,8 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
     expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
   );
 
-  const getTrs = (): (ReactElement<TableHeaderRowProps> | undefined)[] => {
+  const getTrs = (isSearchTr?: boolean): (ReactElement<TableHeaderRowProps> | undefined)[] => {
+    const notRenderThKey = ['__selection-column__', '__combo-column__'];
     return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
       const { length } = row;
       const rowKey = String(rowIndex);
@@ -97,9 +98,13 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               columnGroup: col,
               getHeaderNode,
               rowIndex,
+              isSearchCell: isSearchTr,
             };
             if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
               cellProps.className = lastColumnClassName;
+            }
+            if (isSearchTr) {
+              cellProps.className = `${cellProps.className} ${prefixCls}-thead-inline-search`;
             }
             if (rowSpan > 1 || children) {
               cellProps.rowSpan = rowSpan;
@@ -109,7 +114,11 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
             }
             return (
               <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'}>
-                {rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined}
+                {
+                  !isSearchTr ?
+                    (rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined) :
+                    (!notRenderThKey.includes(String(key)) && getQueryFields({ width: '100%' }).find(field => field.key === key))
+                }
               </TableHeaderCell>
             );
           }
@@ -168,6 +177,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               ? cloneElement(element, {
                 placeholder: field.get('label'),
                 ...props,
+                style: { height: rowHeight },
               })
               : cloneElement(getEditorByField(field), {
                 placeholder: field.get('label'),
@@ -175,6 +185,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
                 style: {
                   ...props.style || {},
                   ...extraStyle,
+                  height: rowHeight,
                 },
                 ...(isObject(element) ? element : {}),
               }),
@@ -184,63 +195,6 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
       }, result);
     }
     return result;
-  };
-
-  const getInlineSearchTr = () => {
-    const notRenderThKey = ['__selection-column__', '__combo-column__'];
-    const fieldsComponent = getQueryFields({ width: 'calc(100% - 1px)' });
-    const lastthCls = classNames(`${prefixCls}-thead-inline-search`, `${prefixCls}-thead-inline-search-last`);
-    const notLockLeft = lock !== ColumnLock.left;
-
-    return headerRows.map<ReactElement<TableHeaderRowProps> | undefined>((row, rowIndex) => {
-      const { length } = row;
-      const rowKey = String(rowIndex);
-      const lastColumnClassName = notLockLeft ? `${prefixCls}-cell-last` : undefined;
-      const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
-      if (length) {
-        const tds = row.map((col, index) => {
-          if (!col.hidden) {
-            const { key, rowSpan, colSpan, children } = col;
-            const cellProps: TableHeaderCellProps = {
-              key,
-              columnGroup: col,
-              getHeaderNode,
-              rowIndex,
-              isSearchCell: true,
-            };
-            if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
-              cellProps.className = `${lastColumnClassName} ${prefixCls}-thead-inline-search`;
-            }
-            if (rowSpan > 1 || children) {
-              cellProps.rowSpan = rowSpan;
-            }
-            if (colSpan > 1 || children) {
-              cellProps.colSpan = colSpan;
-            }
-            return (
-              <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'}>
-                {!notRenderThKey.includes(String(key)) && fieldsComponent.find(field => field.key === key)}
-              </TableHeaderCell>
-            );
-          }
-          return undefined;
-        });
-        if (hasPlaceholder) {
-          tds.push(<th className={lastthCls}>&nbsp;</th>);
-        }
-        return (
-          <TableHeaderRow
-            key={rowKey}
-            rowIndex={rowIndex}
-            rows={headerRows}
-            lock={lock}
-          >
-            {tds}
-          </TableHeaderRow>
-        );
-      }
-      return <tr key={rowKey} />;
-    });
   };
   const theadProps: DetailedHTMLProps<React.HTMLAttributes<HTMLTableSectionElement>, HTMLTableSectionElement> = {
     ref: nodeRef,
@@ -257,7 +211,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   return (
     <thead {...theadProps}>
       {getTrs()}
-      {comboBarStatus && getInlineSearchTr()}
+      {comboBarStatus && getTrs(true)}
     </thead>
   );
 };

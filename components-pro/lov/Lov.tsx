@@ -35,6 +35,7 @@ import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
 import { modalChildrenProps } from '../modal/interface';
+import { TriggerViewMode } from '../trigger-field/TriggerField';
 
 export type Events = { [key: string]: Function };
 
@@ -73,6 +74,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   tableProps?: Partial<TableProps>;
   noCache?: boolean;
   mode?: ViewMode;
+  viewMode?: TriggerViewMode;
   // TODO：lovEvents deprecated
   lovEvents?: Events;
   /**
@@ -109,7 +111,7 @@ export default class Lov extends Select<LovProps> {
     dropdownMatchSelectWidth: false,
     searchAction: SearchAction.input,
     fetchSingle: false,
-    viewMode: 'modal',
+    viewMode: TriggerViewMode.modal,
   };
 
   @observable modal;
@@ -126,7 +128,7 @@ export default class Lov extends Select<LovProps> {
     }
     const { viewMode } = this.observableProps;
     const { textField } = this;
-    if (viewMode === 'popup') {
+    if (viewMode === TriggerViewMode.popup) {
       const { options: { queryDataSet } } = this;
       if (queryDataSet) {
         const queryFields = Array.from(queryDataSet.fields.keys());
@@ -169,7 +171,8 @@ export default class Lov extends Select<LovProps> {
    */
   get autoSelectSingle(): boolean | undefined {
     const { viewMode } = this.observableProps;
-    if ([ViewMode.button, ViewMode.popup].includes(viewMode)) {
+    const { mode } = this.props;
+    if (viewMode === TriggerViewMode.popup || mode === ViewMode.button) {
       return false;
     }
     if ('autoSelectSingle' in this.props) {
@@ -214,7 +217,7 @@ export default class Lov extends Select<LovProps> {
   getSearchFieldProps(): TextFieldProps {
     const searchFieldProps = super.getSearchFieldProps();
     const { viewMode } = this.observableProps;
-    if (viewMode === 'popup') {
+    if (viewMode === TriggerViewMode.popup) {
       return {
         multiple: true,
         ...searchFieldProps,
@@ -227,14 +230,14 @@ export default class Lov extends Select<LovProps> {
     const searchFieldInPopup = super.isSearchFieldInPopup();
     if (searchFieldInPopup === undefined) {
       const { viewMode } = this.observableProps;
-      return viewMode === 'popup';
+      return viewMode === TriggerViewMode.popup;
     }
     return searchFieldInPopup;
   }
 
   isEditable(): boolean {
     const { viewMode } = this.observableProps;
-    return viewMode !== 'popup' && super.isEditable();
+    return viewMode !== TriggerViewMode.popup && super.isEditable();
   }
 
   @autobind
@@ -331,7 +334,7 @@ export default class Lov extends Select<LovProps> {
   getPopupContent(): ReactNode {
     const { searchAction } = this.props;
     const { viewMode } = this.observableProps;
-    if (viewMode === 'popup') {
+    if (viewMode === TriggerViewMode.popup) {
       return this.getPopupLovView();
     }
     if (searchAction === SearchAction.input) {
@@ -348,7 +351,7 @@ export default class Lov extends Select<LovProps> {
     }
     const { viewMode, viewRenderer } = this.props;
     const { selected } = options;
-    if (viewMode === 'modal' || viewMode === 'drawer') {
+    if (viewMode === TriggerViewMode.modal || viewMode === TriggerViewMode.drawer) {
       options.unSelectAll();
       // TODO：lovEvents deprecated
       const { lovEvents } = this.props;
@@ -390,9 +393,9 @@ export default class Lov extends Select<LovProps> {
               }));
             }
           };
-          if (viewMode === 'popup') {
+          if (viewMode === TriggerViewMode.popup) {
             fetchCachedSelected();
-          } else if (viewMode === 'drawer' && viewRenderer !== undefined) {
+          } else if (viewMode === TriggerViewMode.drawer && viewRenderer !== undefined) {
             return {};
           } else {
             return {
@@ -448,8 +451,8 @@ export default class Lov extends Select<LovProps> {
     this.collapse();
     const { viewMode } = this.observableProps;
     const { onBeforeSelect, viewRenderer } = this.props;
-    const drawer = viewMode === 'drawer';
-    if (viewMode === 'modal' || drawer) {
+    const drawer = viewMode === TriggerViewMode.drawer;
+    if (viewMode === TriggerViewMode.modal || drawer) {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
@@ -506,8 +509,8 @@ export default class Lov extends Select<LovProps> {
   getModalClassName(modalProps: Partial<ModalProps>): string {
     const { viewMode } = this.props;
     return classNames(modalProps.className, {
-      [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === 'modal' && this.showSelectedInView,
-      [`${this.prefixCls}-lov-custom-drawer`]: viewMode === 'drawer' && this.multiple && this.showSelectedInView,
+      [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === TriggerViewMode.modal && this.showSelectedInView,
+      [`${this.prefixCls}-lov-custom-drawer`]: viewMode === TriggerViewMode.drawer && this.multiple && this.showSelectedInView,
     });
   }
 
@@ -524,7 +527,7 @@ export default class Lov extends Select<LovProps> {
   @action
   searchRemote(text?: string | string[] | undefined) {
     const { options, searchMatcher, observableProps: { viewMode } } = this;
-    if (isString(searchMatcher) && (viewMode === 'popup' || !isSearchTextEmpty(text))) {
+    if (isString(searchMatcher) && (viewMode === TriggerViewMode.popup || !isSearchTextEmpty(text))) {
       this.resetOptions(true);
       const searchPara = this.getSearchPara(searchMatcher, text);
       Object.keys(searchPara).forEach(key => {
@@ -571,7 +574,7 @@ export default class Lov extends Select<LovProps> {
   @autobind
   handleLovViewSelect(records: Record | Record[]) {
     const { viewMode } = this.observableProps;
-    if (viewMode === 'popup' && !this.multiple) {
+    if (viewMode === TriggerViewMode.popup && !this.multiple) {
       this.collapse();
     }
     if (isArrayLike(records)) {
@@ -642,7 +645,7 @@ export default class Lov extends Select<LovProps> {
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
     const { viewMode } = this.observableProps;
-    return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === 'popup' });
+    return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup });
   }
 
   syncValueOnBlur(value) {
@@ -766,7 +769,7 @@ export default class Lov extends Select<LovProps> {
   getSuffix(): ReactNode {
     const { viewMode } = this.observableProps;
     const { suffix } = this.props;
-    if (viewMode === 'popup') {
+    if (viewMode === TriggerViewMode.popup) {
       return super.getSuffix();
     }
     const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
