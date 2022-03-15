@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
 - 🐞 `<pro>TextField`: 修复在失焦情况下按ctrl+z回退值没有同步到DataSet中的问题。
+- 🐞 `<pro>Tree`: 修复父子节点 checkable 状态单独控制错误问题。
 
 
 ## 1.5.2

@@ -728,23 +728,24 @@ export default class Record {
     }
   }
 
-  get(fieldName?: string | string []): any {
+  get(fieldName?: string | string [], checkStrictly?: boolean): any {
     return getRecordValue(
       this,
       (child, checkField) => child.get(checkField),
       fieldName,
+      checkStrictly,
     );
   }
 
   @action
-  set(item: string | object, value?: any): Record {
+  set(item: string | object, value?: any, checkStrictly?: boolean): Record {
     if (isString(item)) {
       const { dataSet } = this;
       const oldName: string = item;
       const fieldName: string = getChainFieldName(this, oldName);
       const field = dataSet.getField(oldName) || dataSet.getField(fieldName) || findBindField(oldName, fieldName, this) || addDataSetField(dataSet, oldName);
       checkFieldType(value, field, this);
-      const oldValue = toJS(this.get(fieldName));
+      const oldValue = toJS(this.get(fieldName, checkStrictly));
       const newValue = processValue(value, field, this);
       const newValueForCompare = processToJSON(newValue, field, this);
       const { fields } = dataSet;
@@ -783,10 +784,10 @@ export default class Record {
           oldValue,
         });
         const { checkField } = dataSet.props;
-        if (checkField && fieldName === getChainFieldName(this, checkField)) {
+        if (checkStrictly !== true && checkField && fieldName === getChainFieldName(this, checkField)) {
           const { children } = this;
           if (children) {
-            children.forEach(record => record.set(fieldName, value));
+            children.forEach(record => record.set(fieldName, value, checkStrictly));
           }
         }
         this.processTreeLevel({
@@ -799,7 +800,7 @@ export default class Record {
         oneField.checkValidity(this)
       ));
     } else if (isPlainObject(item)) {
-      Object.keys(item).forEach(key => this.set(key, item[key]));
+      Object.keys(item).forEach(key => this.set(key, item[key], checkStrictly));
     }
     return this;
   }
