@@ -17,6 +17,7 @@ import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
+import isRegExp from 'lodash/isRegExp';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import findLastIndex from 'lodash/findLastIndex';
@@ -1458,30 +1459,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (type === 'compositionend') {
       this.lock = false;
     }
-
-    if (!this.lock) {
-      const restricted = this.restrictInput(value);
-      if (restricted !== value) {
-        const selectionEnd = target.selectionEnd + restricted.length - value.length;
-        target.value = restricted;
-        target.setSelectionRange(selectionEnd, selectionEnd);
-      }
-      this.setText(restricted);
-      if (valueChangeAction === ValueChangeAction.input) {
-        this.handleChangeWait(restricted);
-      }
-    } else {
-      this.setText(value);
-      if (valueChangeAction === ValueChangeAction.input) {
-        this.handleChangeWait(value);
-      }
+    const restricted = this.restrictInput(value);
+    if (restricted !== value) {
+      const selectionEnd = target.selectionEnd + restricted.length - value.length;
+      target.value = restricted;
+      target.setSelectionRange(selectionEnd, selectionEnd);
+    }
+    this.setText(restricted);
+    if (valueChangeAction === ValueChangeAction.input || !this.isFocus) {
+      this.handleChangeWait(restricted);
     }
   }
 
   restrictInput(value: string): string {
     const { restrict } = this.props;
-    if (restrict) {
-      const pattern = restrict instanceof RegExp ? restrict : new RegExp(`[^${restrict}]+`, 'g');
+    if (restrict && !this.lock) {
+      const pattern = isRegExp(restrict) ? restrict : new RegExp(`[^${restrict}]+`, 'g');
       return value.replace(pattern, '');
     }
     return value;
