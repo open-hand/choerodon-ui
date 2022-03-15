@@ -899,6 +899,7 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  @autobind
   handleDataSetValidateSelf(props: { valid: boolean; dataSet: DataSet; errors: ValidationSelfErrors[]; noLocate?: boolean }) {
     const onValidateSelf = this.getContextConfig('onValidateSelf');
     if (onValidateSelf) {
