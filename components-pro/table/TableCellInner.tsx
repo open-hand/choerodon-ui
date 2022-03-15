@@ -397,7 +397,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         const multiple = field && field.get('multiple', record);
         const borderPadding = isCheckBox || multiple ? 4 : 2;
         const heightPx = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
-        const lineHeightPx = hasEditor || isCheckBox || multiple || (renderer || hasEditor) ? rowHeight - borderPadding : rowHeight;
+        const lineHeightPx = hasEditor || isCheckBox || multiple ? rowHeight - borderPadding : rowHeight;
         return {
           height: pxToRem(heightPx),
           lineHeight: rows > 0 ? 'inherit' : pxToRem(lineHeightPx),
@@ -406,7 +406,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     return style;
-  }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor, renderer]);
+  }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
   const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, field, record))), [columnCommand, align, column, field, record]);
   const colSpanStyle = useMemo(() => (colSpan && colSpan > 1 && (textAlign === ColumnAlign.right || textAlign === ColumnAlign.center)) ? { width: `calc(100% - ${pxToRem(30)})` } : {}, [colSpan, textAlign]);
   const innerStyle = useMemo(() => {
@@ -630,9 +630,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }
   if (height !== undefined && rows === 0) {
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
-  }
-  if (renderer) {
-    innerClassName.push(`${prefixCls}-inner-custom`);
   }
 
   useEffect(() => {
