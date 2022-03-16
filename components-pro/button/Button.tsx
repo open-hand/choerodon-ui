@@ -99,8 +99,11 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @computed
   get loading(): boolean {
-    const { loading } = this.observableProps;
-    return loading;
+    const { type, dataSet, loading } = this.observableProps;
+    return (
+      loading ||
+      (type === ButtonType.submit && !!dataSet && dataSet.status === DataSetStatus.submitting)
+    );
   }
 
   set loading(loading: boolean) {
@@ -122,7 +125,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     return {
       ...super.getObservableProps(props, context),
       dataSet: 'dataSet' in props ? props.dataSet : context.dataSet,
-      loading: 'loading' in props ? props.loading : this.observableProps ? (props.type === ButtonType.submit && !!props.dataSet && props.dataSet.status === DataSetStatus.submitting) : false,
+      loading: 'loading' in props ? props.loading : this.observableProps ? this.observableProps.loading : false,
       type: props.type,
       disabled: context.disabled || props.disabled,
     };
