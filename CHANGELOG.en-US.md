@@ -53,6 +53,7 @@ timeline: true
 - 🐞 `<pro>Table`:Fixed the issue that the dynamic query bar Lov could not be echoed.
 - 🐞 `<pro>Table`: Fix the problem that the SelectBox editor cannot be switched in `aggregation` mode.
 - 🐞 `<pro>Form`: Fixed colon not showing under grid layout, and `Output` style issues.
+- 🐞 `<pro>Form`: Fix the label style issue under `vertical` layout.
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.

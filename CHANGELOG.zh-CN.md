@@ -53,6 +53,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态查询条 Lov 无法回显的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下 SelectBox 编辑器切换不了的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
+- 🐞 `<pro>Form`: 修复 vertical 布局下，label 样式问题。
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
