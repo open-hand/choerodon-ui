@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import scrollIntoView from 'dom-scroll-into-view';
 import classNames from 'classnames';
 import { connect } from 'mini-store';
+import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
 import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
@@ -187,7 +188,7 @@ export class MenuItem extends React.Component {
     return (
       <Ripple {...rippleProps}>
         <li
-          {...props}
+          {...omit(props, ['tooltipPlacement', 'tooltipTheme'])}
           {...attrs}
           {...mouseEvent}
           style={style}

@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 vertical 布局下，label 样式问题。
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
+- 🐞 `<pro>Lov`: 修复popup模式下多选值删除后下拉框中的勾选状态没同步的问题。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
 - 🐞 `<pro>Button`: 修复 loading 状态会失去焦点的问题。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。

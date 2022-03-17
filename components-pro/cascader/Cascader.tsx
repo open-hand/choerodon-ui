@@ -1163,6 +1163,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   // 移除所选值
+  @action
   removeValues(values: any[], index = 0) {
     if (!this.multiple) {
       const oldValues = this.getValues();

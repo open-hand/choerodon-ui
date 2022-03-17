@@ -20,11 +20,10 @@ import isString from 'lodash/isString';
 import isRegExp from 'lodash/isRegExp';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
-import findLastIndex from 'lodash/findLastIndex';
 import defaultTo from 'lodash/defaultTo';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
-import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
+import { action, computed, observable, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -51,7 +50,7 @@ import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
-import { fromRangeValue, toRangeValue } from '../field/utils';
+import { toRangeValue } from '../field/utils';
 
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
@@ -1243,18 +1242,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {children}
       </div>
     );
-  }
-
-  @action
-  removeLastValue() {
-    const values = this.getValues();
-    const index = findLastIndex(values, (value) => !this.isMultipleBlockDisabled(value));
-    if (index !== -1) {
-      const [value] = values.splice(index, 1);
-      const { range } = this;
-      this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
-      this.afterRemoveValue(fromRangeValue(value, range), -1);
-    }
   }
 
   handleTagAnimateEnd() {

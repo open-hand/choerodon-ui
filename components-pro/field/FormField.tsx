@@ -10,6 +10,7 @@ import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import uniqWith from 'lodash/uniqWith';
 import isFunction from 'lodash/isFunction';
+import findLastIndex from 'lodash/findLastIndex';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -1067,6 +1068,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
+  @action
   removeValues(values: any[], index = 0) {
     let repeat: number;
     const newValues = values.reduce((oldValues, value) => {
@@ -1089,6 +1091,19 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   removeValue(value: any, index = 0) {
     this.removeValues([value], index);
+  }
+
+  @action
+  removeLastValue(): any {
+    const values = this.getValues();
+    const index = findLastIndex(values, (value) => !this.isMultipleBlockDisabled(value));
+    if (index !== -1) {
+      const [value] = values.splice(index, 1);
+      const { range } = this;
+      this.setValue(isArrayLike(range) ? values.map(v => fromRangeValue(v, range)) : values);
+      this.afterRemoveValue(fromRangeValue(value, range), -1);
+      return value;
+    }
   }
 
   afterRemoveValue(_value, _repeat: number) {
