@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
+- 🌟 `<pro>DataSet`: 新增 treeCheckStrictly 属性。
 - 💄 `<pro>Table`: 优化必输列的 hideable 始终为 false。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。
@@ -52,11 +53,13 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态查询条 Lov 无法回显的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下 SelectBox 编辑器切换不了的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
+- 🐞 `<pro>Form`: 修复 vertical 布局下，label 样式问题。
 - 🐞 `<pro>Lov`: 修复多选模式下勾选记录会触发 onBeforeSelect 事件的问题。
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
 - 🐞 `<pro>TextField`: 修复在失焦情况下按ctrl+z回退值没有同步到DataSet中的问题。
+- 🐞 `<pro>Tree`: 修复父子节点 checkable 状态单独控制错误问题。
 
 
 ## 1.5.2

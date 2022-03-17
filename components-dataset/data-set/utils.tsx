@@ -824,8 +824,8 @@ export function getRecordValue(
     }
     const { dataSet } = record;
     const chainFieldName = getChainFieldName(record, fieldName);
-    const { checkField } = dataSet.props;
-    if (checkField && chainFieldName === getChainFieldName(record, checkField)) {
+    const { checkField, treeCheckStrictly } = dataSet.props;
+    if (treeCheckStrictly !== true && checkField && chainFieldName === getChainFieldName(record, checkField)) {
       const field = dataSet.getField(checkField);
       const trueValue = field ? field.get(BooleanValue.trueValue, record) : true;
       const falseValue = field ? field.get(BooleanValue.falseValue, record) : false;

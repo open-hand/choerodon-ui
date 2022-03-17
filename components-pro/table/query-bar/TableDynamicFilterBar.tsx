@@ -37,7 +37,6 @@ import { DynamicFilterBarConfig, Suffixes } from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
-import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 import QuickFilterMenu from './quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from './quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilterDataSet';
@@ -801,6 +800,28 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
+   * 查询字段初始顺序
+   * 排除动态属性影响
+   */
+  get originOrderQueryFields(): Field[] {
+    const { queryDataSet } = this.props;
+    const result: Field[] = [];
+    if (queryDataSet) {
+      const { fields, props: { fields: propFields = [] } } = queryDataSet;
+      const cloneFields: Map<string, Field> = fields.toJS();
+      propFields.forEach(({ name }) => {
+        if (name) {
+          const field = cloneFields.get(name);
+          if (field && !field.get('bind') && !field.get('name').includes('__tls')) {
+            result.push(field);
+          }
+        }
+      });
+    }
+    return result;
+  }
+
+  /**
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
@@ -892,7 +913,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: iteratorFilterToArray(queryDataSet.fields.values(), f => !f.get('bind') && !f.get('name').includes('__tls')).slice(queryFieldsLimit),
+                          fields: this.originOrderQueryFields.slice(queryFieldsLimit),
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}

@@ -782,8 +782,8 @@ export default class Record {
           value: newValue,
           oldValue,
         });
-        const { checkField } = dataSet.props;
-        if (checkField && fieldName === getChainFieldName(this, checkField)) {
+        const { checkField, treeCheckStrictly } = dataSet.props;
+        if (treeCheckStrictly !== true && checkField && fieldName === getChainFieldName(this, checkField)) {
           const { children } = this;
           if (children) {
             children.forEach(record => record.set(fieldName, value));
