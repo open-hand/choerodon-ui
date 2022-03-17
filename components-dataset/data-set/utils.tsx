@@ -673,6 +673,18 @@ export function findBindField(
   });
 }
 
+export function findMinOrMaxFields(myField: Field, fields: Fields, record: Record): Field[] {
+  const fieldName = myField.name;
+  const minOrMaxFields: Field[] = [];
+  fields.forEach((field) => {
+    const { name } = field;
+    if (fieldName !== name && !isNil(record.get(name)) && (field.get('min', record) === fieldName || field.get('max', record) === fieldName)) {
+      minOrMaxFields.push(field);
+    }
+  });
+  return minOrMaxFields;
+}
+
 export function generateRecordJSONData(array: object[], record: Record, dataToJSON: DataToJSON) {
   const normal = useNormal(dataToJSON);
   const json = normal

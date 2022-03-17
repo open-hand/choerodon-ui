@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized problem of adaptive `rowheight` in optimized combination search.
 - 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
+- 💄 `<pro>DataSet`: Optimize validation when the `min` or `max` attribute of a `field` is set to `fieldName`.
 - 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
