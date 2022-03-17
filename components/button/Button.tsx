@@ -190,10 +190,6 @@ export default class Button extends PureComponent<ButtonProps, any> {
     clearTimeout(this.timeout);
     this.timeout = window.setTimeout(() => this.setState({ clicked: false }), 500);
 
-    const { onClick } = this.props;
-    if (onClick) {
-      onClick(e);
-    }
     const { getConfig } = this.context;
     const onButtonClick = getConfig('onButtonClick');
     if (onButtonClick) {
@@ -201,6 +197,11 @@ export default class Button extends PureComponent<ButtonProps, any> {
       const { children, icon } = this.props;
       const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));
       promise.then(title => onButtonClick({ icon, title }));
+    }
+
+    const { onClick } = this.props;
+    if (onClick) {
+      onClick(e);
     }
   };
 
@@ -297,7 +298,7 @@ export default class Button extends PureComponent<ButtonProps, any> {
     const { style, onMouseEnter, onMouseLeave, ...otherProps } = others;
     const useWrapper = disabled && ComponentProp === 'button' && (onMouseEnter || onMouseLeave);
     const button = (
-      <Ripple disabled={disabled || rippleDisabled}>
+      <Ripple disabled={rippleDisabled || disabled}>
         <ComponentProp
           disabled={disabled}
           onMouseEnter={onMouseEnter}
@@ -309,7 +310,7 @@ export default class Button extends PureComponent<ButtonProps, any> {
           }
           style={useWrapper ? undefined : style}
           className={useWrapper ? undefined : classes}
-          onClick={this.handleClick}
+          onClick={loading ? undefined : this.handleClick}
           ref={this.saveRef}
         >
           {iconNode}{kids}

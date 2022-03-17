@@ -1,4 +1,5 @@
 import React, {
+  ClassAttributes,
   CSSProperties,
   FunctionComponent,
   HTMLAttributes,
@@ -27,17 +28,7 @@ import { iteratorReduce, iteratorSome } from 'choerodon-ui/pro/lib/_util/iterato
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import {
-  getActiveKeyByGroupKey,
-  getDataAttr,
-  getHeader,
-  getLeft,
-  getTop,
-  isTransformSupported,
-  isVertical,
-  getStyle,
-  setTransform,
-} from './utils';
+import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getStyle, getTop, isTransformSupported, isVertical, setTransform } from './utils';
 import warning from '../_util/warning';
 import Ripple, { RippleProps } from '../ripple';
 import TabBarInner, { TabBarInnerProps } from './TabBarInner';
@@ -147,9 +138,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     return undefined;
   }, [activeKey, currentPanelMap]);
   const handleKeyDown = useCallback(e => {
-    if (keyboard === false) {
-      return noop;
-    }
     const { keyCode } = e;
     if (keyCode === KeyCode.RIGHT || keyCode === KeyCode.DOWN) {
       e.preventDefault();
@@ -164,7 +152,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         changeActiveKey(previousKey);
       }
     }
-  }, [keyboard, changeActiveKey, getNextActiveKey]);
+  }, [changeActiveKey, getNextActiveKey]);
   const handleTabClick = useCallback((key: string) => {
     if (onTabClick) {
       onTabClick(key);
@@ -759,18 +747,24 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const tabs = getTabs();
   const groupNode = getGroupNode();
   const scrollbarNode = getScrollBarNode([inkBarNode, tabs]);
+  const classString = classnames(
+    `${prefixCls}-bar`,
+    { [`${prefixCls}-bar-with-groups`]: groupNode },
+    className,
+  );
+  const tabBarProps: ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> = {
+    role: 'tablist',
+    className: classString,
+    ref: rootRef,
+    style,
+  };
+  if (keyboard) {
+    tabBarProps.tabIndex = 0;
+    tabBarProps.onKeyDown = handleKeyDown;
+  }
   return (
     <div
-      role="tablist"
-      className={classnames(
-        `${prefixCls}-bar`,
-        { [`${prefixCls}-bar-with-groups`]: groupNode },
-        className,
-      )}
-      tabIndex={0}
-      ref={rootRef}
-      onKeyDown={handleKeyDown}
-      style={style}
+      {...tabBarProps}
       {...getDataAttr(restProps)}
     >
       <div className={`${prefixCls}-bar-inner`}>

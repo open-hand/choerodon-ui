@@ -175,6 +175,13 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   async handleClick(e) {
+    const onButtonClick = this.context.getConfig('onButtonClick');
+    if (onButtonClick) {
+      const { target } = e;
+      const { children, icon } = this.props;
+      const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));
+      promise.then(title => onButtonClick({ icon, title }));
+    }
     const { onClick } = this.props;
     if (onClick) {
       const afterClick: any = onClick(e);
@@ -184,17 +191,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
           await afterClick;
         } finally {
           this.loading = false;
-          // Fix asynchronous out of focus
-          this.focus();
         }
       }
-    }
-    const onButtonClick = this.context.getConfig('onButtonClick');
-    if (onButtonClick) {
-      const { target } = e;
-      const { children, icon } = this.props;
-      const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));
-      promise.then(title => onButtonClick({ icon, title }));
     }
   }
 
@@ -222,10 +220,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
     onMouseLeave(e);
   }
 
-  isDisabled(): boolean {
-    return super.isDisabled() || this.loading;
-  }
-
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'icon',
@@ -236,6 +230,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'waitType',
       'tooltip',
       'block',
+      'onClick',
     ]);
   }
 
@@ -243,7 +238,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const otherProps = super.getOtherProps();
     const { getTooltip } = this.context;
     const { tooltip = getTooltip('button') } = this.props;
-    if (!this.disabled) {
+    if (!this.disabled && !this.loading) {
       otherProps.onClick = this.handleClickIfBubble;
     }
     if (tooltip && [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) {
@@ -273,6 +268,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
           ? childrenCount === 0 || children === false
           : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON,
         [`${prefixCls}-block`]: block,
+        [`${prefixCls}-loading`]: this.loading,
       },
       ...props,
     );
@@ -280,7 +276,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   render() {
     const { children, icon, href, funcType } = this.props;
-    const buttonIcon: any = this.loading ? (
+    const { loading, disabled } = this;
+    const buttonIcon: any = loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
       icon && <Icon type={icon} />
@@ -288,15 +285,21 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
     const props = this.getMergedProps();
-    const { disabled } = this;
     const { onMouseEnter, onMouseLeave } = props;
     const tooltipWrapper = disabled && !href && (onMouseEnter || onMouseLeave);
-    const buttonProps = tooltipWrapper ? omit(props, ['className', 'style']) : props;
-    const hrefButtonProps = href ? omit(buttonProps, ['type']) : buttonProps;
-    const rippleDisabled = disabled || funcType === FuncType.link;
+    const omits: string[] = [];
+    if (tooltipWrapper) {
+      omits.push('className', 'style');
+    }
+    if (href) {
+      omits.push('type');
+      if (disabled || loading) {
+        omits.push('href');
+      }
+    }
     const button = (
-      <Ripple disabled={rippleDisabled}>
-        <Cmp {...(disabled ? omit(hrefButtonProps, ['href']) : hrefButtonProps)}>
+      <Ripple disabled={disabled || funcType === FuncType.link}>
+        <Cmp {...omit(props, omits)}>
           {buttonIcon}
           {hasString ? <span>{children}</span> : children}
         </Cmp>
