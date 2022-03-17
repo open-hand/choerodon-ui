@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
+- 🐞 `<pro>Button`: Fix the problem of losing focus in loading state.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 - 🐞 `<pro>TextField`: Fix the problem that the value is not synced to the DataSet when pressing ctrl+z to fallback in blur status.
 - 🐞 `<pro>Tree`: Fix parent and son nodes `checkable` status individual control error.
