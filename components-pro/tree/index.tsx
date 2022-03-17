@@ -4,6 +4,7 @@ import { action, computed, observable, runInAction } from 'mobx';
 import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import xor from 'lodash/xor';
+import isNil from 'lodash/isNil';
 import C7NTree, {
   C7nTreeNodeProps,
   EventDataNode,
@@ -280,6 +281,17 @@ export default class Tree extends Component<TreeProps> {
     return [];
   }
 
+  get checkStrictly(): boolean | undefined {
+    const { dataSet, checkStrictly } = this.props;
+    if (dataSet && !isNil(dataSet.props.treeCheckStrictly)) {
+      return dataSet.props.treeCheckStrictly;
+    }
+    if (dataSet && dataSet.props.checkField) {
+      return false;
+    }
+    return checkStrictly;
+  }
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -504,6 +516,7 @@ export default class Tree extends Component<TreeProps> {
       if (!('loadedKeys' in otherProps)) {
         props.loadedKeys = this.stateLoadedKeys.slice();
       }
+      props.checkStrictly = this.checkStrictly;
       return (
         <Spin dataSet={dataSet}>
           <C7NTree {...otherProps} {...props} />
