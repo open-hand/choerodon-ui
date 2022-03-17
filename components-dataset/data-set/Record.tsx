@@ -50,6 +50,7 @@ import {
   useDirtyField,
   useNormal,
   useSelected,
+  findMinOrMaxFields,
 } from './utils';
 import * as ObjectChainValue from '../object-chain-value';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -795,7 +796,12 @@ export default class Record {
           fieldName: oldName,
         });
       }
-      [field, ...findBindFields(field, fields, true, this), ...findBindTargetFields(field, fields, true, this)].forEach((oneField) => (
+      [
+        field,
+        ...findBindFields(field, fields, true, this),
+        ...findBindTargetFields(field, fields, true, this),
+        ...findMinOrMaxFields(field, fields, this),
+      ].forEach((oneField) => (
         oneField.checkValidity(this)
       ));
     } else if (isPlainObject(item)) {
