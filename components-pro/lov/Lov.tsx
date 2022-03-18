@@ -343,6 +343,49 @@ export default class Lov extends Select<LovProps> {
     return null;
   }
 
+  syncOptionsSelectedAfterValueRemove(values: any[]) {
+    const { viewMode } = this.props;
+    if (viewMode === TriggerViewMode.popup) {
+      const { options, valueField, primitive } = this;
+      if (options) {
+        const { selected } = options;
+        values.forEach(value => {
+          const primitiveValue = primitive ? value : value[valueField];
+          const oldSelected = selected.find(r => r.get(valueField) === primitiveValue);
+          if (oldSelected) {
+            options.unSelect(oldSelected);
+          }
+        });
+      }
+    }
+  }
+
+  @action
+  removeValues(values: any[], index?: number) {
+    super.removeValues(values, index);
+    this.syncOptionsSelectedAfterValueRemove(values);
+  }
+
+  removeLastValue(): any {
+    const value = super.removeLastValue();
+    if (value) {
+      this.syncOptionsSelectedAfterValueRemove([value]);
+    }
+    return value;
+  }
+
+  clear() {
+    super.clear();
+    const { viewMode } = this.props;
+    if (viewMode === TriggerViewMode.popup) {
+      const { options } = this;
+      if (options) {
+        options.unSelectAll();
+        options.clearCachedSelected();
+      }
+    }
+  }
+
   @action
   beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
     const { multiple, primitive, valueField } = this;

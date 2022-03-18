@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix the label style issue under `vertical` layout.
 - 🐞 `<pro>Lov`: Fixed the problem that the onBeforeSelect event would be triggered when checking records in multiple mode.
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
+- 🐞 `<pro>Lov`: Fix the problem that the check status in the drop-down box is not synchronized after deleting multiple selection values in popup mode.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 - 🐞 `<pro>Button`: Fix the problem of losing focus in loading state.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
