@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复 loading 状态会失去焦点的问题。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
 - 🐞 `<pro>TextField`: 修复在失焦情况下按ctrl+z回退值没有同步到DataSet中的问题。
+- 🐞 `<pro>TextField`: 修复多值时输入框遮挡输入内容的问题。
 - 🐞 `<pro>Tree`: 修复父子节点 checkable 状态单独控制错误问题。
 
 
