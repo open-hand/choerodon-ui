@@ -6,12 +6,25 @@ export {
   confirmProps,
 } from './utils';
 
-export type modalChildrenProps = {
+export type ModalChildrenProps = {
   close: () => void;
   update: (modalProps?: Partial<ModalProps>) => void;
   props: Readonly<ModalProps>;
   handleOk: (ok: Function) => void;
   handleCancel: (cancel: Function) => void;
+}
+
+/**
+ * @deprecated
+ */
+export {
+  ModalChildrenProps as modalChildrenProps,
+};
+
+export type ModalProxy = {
+  open: (props?: ModalProps) => void;
+  update: (props: ModalProps) => void;
+  close: (destroy?: boolean) => void;
 }
 
 export interface ModalCustomized {

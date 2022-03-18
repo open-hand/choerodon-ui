@@ -34,7 +34,7 @@ import { getLovPara } from '../stores/utils';
 import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/Table';
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
-import { modalChildrenProps } from '../modal/interface';
+import { ModalChildrenProps, ModalProxy } from '../modal/interface';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 
 export type Events = { [key: string]: Function };
@@ -52,7 +52,7 @@ export type ViewRenderer = ({
   textField: string | undefined;
   valueField: string | undefined;
   multiple: boolean;
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
 }) => ReactNode;
 
 export type NodeRenderer = (record: Record) => ReactNode;
@@ -75,7 +75,9 @@ export interface LovProps extends SelectProps, ButtonProps {
   noCache?: boolean;
   mode?: ViewMode;
   viewMode?: TriggerViewMode;
-  // TODO：lovEvents deprecated
+  /**
+   * @deprecated
+   */
   lovEvents?: Events;
   /**
    * 触发查询变更的动作， default: input
@@ -114,7 +116,7 @@ export default class Lov extends Select<LovProps> {
     viewMode: TriggerViewMode.modal,
   };
 
-  @observable modal;
+  @observable modal: ModalProxy | undefined;
 
   fetched?: boolean;
 
@@ -499,52 +501,57 @@ export default class Lov extends Select<LovProps> {
       const config = this.getConfig();
       this.autoCreate();
       const { options } = this;
-      if (!this.modal && config && options) {
-        const modalProps = this.getModalProps();
-        modalProps.className = this.getModalClassName(modalProps);
-        const tableProps = this.getTableProps();
-        const { width, title } = config;
-        const lovViewProps = this.beforeOpen(options);
-        const valueField = this.getProp('valueField');
-        const textField = this.getProp('textField');
-        this.modal = open({
-          title,
-          children: (
-            <LovView
-              {...lovViewProps}
-              viewMode={viewMode}
-              dataSet={options}
-              config={config}
-              context={this.context}
-              tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
-              onSelect={this.handleLovViewSelect}
-              onBeforeSelect={onBeforeSelect}
-              multiple={this.multiple}
-              values={this.getValues()}
-              valueField={valueField}
-              textField={textField}
-              viewRenderer={viewRenderer}
-              showSelectedInView={this.showSelectedInView}
-              getSelectionProps={this.getSelectionProps}
-            />
-          ),
-          onClose: this.handleLovViewClose,
-          destroyOnClose: true,
-          closable: true,
-          autoFocus: false,
-          bodyStyle: {
-            minHeight: isIE() ? pxToRem(Math.min(scaleSize(350), window.innerHeight), true) : 'min(3.5rem, 100vh)',
-          },
-          drawer,
-          drawerBorder: !drawer,
-          ...modalProps,
-          style: {
-            width: pxToRem(width),
-            ...(modalProps && modalProps.style),
-          },
-          afterClose: this.handleLovViewAfterClose,
-        } as ModalProps & { children });
-        this.afterOpen(options, fetchSingle);
+      if (config && options) {
+        const { modal } = this;
+        if (modal) {
+          modal.open();
+        } else {
+          const modalProps = this.getModalProps();
+          modalProps.className = this.getModalClassName(modalProps);
+          const tableProps = this.getTableProps();
+          const { width, title } = config;
+          const lovViewProps = this.beforeOpen(options);
+          const valueField = this.getProp('valueField');
+          const textField = this.getProp('textField');
+          this.modal = open({
+            title,
+            children: (
+              <LovView
+                {...lovViewProps}
+                viewMode={viewMode}
+                dataSet={options}
+                config={config}
+                context={this.context}
+                tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
+                onSelect={this.handleLovViewSelect}
+                onBeforeSelect={onBeforeSelect}
+                multiple={this.multiple}
+                values={this.getValues()}
+                valueField={valueField}
+                textField={textField}
+                viewRenderer={viewRenderer}
+                showSelectedInView={this.showSelectedInView}
+                getSelectionProps={this.getSelectionProps}
+              />
+            ),
+            onClose: this.handleLovViewClose,
+            destroyOnClose: true,
+            closable: true,
+            autoFocus: false,
+            bodyStyle: {
+              minHeight: isIE() ? pxToRem(Math.min(scaleSize(350), window.innerHeight), true) : 'min(3.5rem, 100vh)',
+            },
+            drawer,
+            drawerBorder: !drawer,
+            ...modalProps,
+            style: {
+              width: pxToRem(width),
+              ...(modalProps && modalProps.style),
+            },
+            afterClose: this.handleLovViewAfterClose,
+          } as ModalProps & { children });
+          this.afterOpen(options, fetchSingle);
+        }
       }
     }
   }

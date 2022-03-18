@@ -6,7 +6,7 @@ import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import Picture, { PictureForwardRef, PictureRef } from './Picture';
-import { modalChildrenProps } from '../modal/interface';
+import { ModalChildrenProps } from '../modal/interface';
 import transform, { toTransformValue } from '../_util/transform';
 import EventManager from '../_util/EventManager';
 import Toolbar from './Toolbar';
@@ -32,7 +32,7 @@ function getPreviewItem(item: string | PictureRef): PictureRef {
   return item as PictureRef;
 }
 
-const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: modalChildrenProps }> = function PictureViewer(props) {
+const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChildrenProps }> = function PictureViewer(props) {
   const { list, defaultIndex = 0, prefixCls, modal } = props;
   const { getProPrefixCls } = useContext(ConfigContext);
   const pictureRef = useRef<PictureForwardRef | null>(null);

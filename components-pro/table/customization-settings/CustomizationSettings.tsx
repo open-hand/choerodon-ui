@@ -28,7 +28,7 @@ import { ShowHelp } from '../../field/enum';
 import { ViewMode } from '../../radio/enum';
 import Icon from '../../icon';
 import Tooltip from '../../tooltip/Tooltip';
-import { modalChildrenProps } from '../../modal/interface';
+import { ModalChildrenProps } from '../../modal/interface';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
   return [...treeReduce<Map<Key, object>, ColumnProps>(columns, (map, column, _sort, parentColumn) => {
@@ -63,7 +63,7 @@ function diff(height = 0): number {
 const HEIGHT_CHANGE_KEY = '__heightChange__';
 
 export interface CustomizationSettingsProps {
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {

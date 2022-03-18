@@ -22,7 +22,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
-import { modalChildrenProps, ModalCustomized } from './interface';
+import { ModalChildrenProps, ModalCustomized } from './interface';
 import { getDocument, MousePosition } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
@@ -225,7 +225,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   contentNode: HTMLElement;
 
-  childrenProps: modalChildrenProps;
+  childrenProps: ModalChildrenProps;
 
   constructor(props, context) {
     super(props, context);
@@ -808,7 +808,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   };
 
-  getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, _modalChildrenProps: modalChildrenProps) => {
+  getDefaultFooter = (okBtn: ReactElement<ButtonProps>, cancelBtn: ReactElement<ButtonProps>, _modalChildrenProps: ModalChildrenProps) => {
     const { okCancel, okButton, cancelButton = okCancel !== false, okFirst = this.getContextConfig('modalOkFirst'), drawer } = this.props;
     const buttons: ReactNode[] = [];
     if (okButton !== false) {

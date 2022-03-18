@@ -21,6 +21,7 @@ import { stopEvent } from '../_util/EventManager';
 import { suffixCls, toUsefulDrawerTransitionName } from '../modal/utils';
 import { getDocument } from '../_util/DocumentUtils';
 import { ViewComponentProps } from '../core/ViewComponent';
+import { ModalProxy } from '../modal/interface';
 
 export { ModalContainerState };
 
@@ -480,9 +481,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           hiddenProp="hidden"
           {...animationProps}
         >
-          {
-            activeModal ? <Mask {...maskProps} /> : <div hidden={!this.active} />
-          }
+          <Mask {...maskProps} hidden={activeModal ? maskProps.hidden : !this.active} />
         </Animate>
         {items}
         {getContainer === false && <span ref={this.saveMount} />}
@@ -541,7 +540,7 @@ export async function getContainer(): Promise<IModalContainer> {
   return getContainer();
 }
 
-export function open(props: ModalProps) {
+export function open(props: ModalProps): ModalProxy {
   const containerPromise = getContainer();
 
   async function getCurrentContainer(): Promise<IModalContainer> {
@@ -561,7 +560,7 @@ export function open(props: ModalProps) {
     }
   }
 
-  async function update(newProps) {
+  async function update(newProps: ModalProps) {
     const $container = await getCurrentContainer();
     $container.update({ ...newProps, key: props.key });
   }
@@ -582,7 +581,7 @@ export function open(props: ModalProps) {
     $container.open(props);
   });
 
-  async function show(newProps) {
+  async function show(newProps?: ModalProps) {
     const $container = await getCurrentContainer();
     $container.open({ ...props, ...newProps });
   }
