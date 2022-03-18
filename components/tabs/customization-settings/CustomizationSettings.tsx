@@ -2,7 +2,7 @@ import React, { cloneElement, FunctionComponent, MouseEvent, useCallback, useCon
 import { observer } from 'mobx-react-lite';
 import merge from 'lodash/merge';
 import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
-import { modalChildrenProps } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalChildrenProps } from 'choerodon-ui/pro/lib/modal/interface';
 import Button from 'choerodon-ui/pro/lib/button';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
@@ -39,7 +39,7 @@ function normalizePanesToData(pair: [Map<string, TabPaneProps>, Map<string, Grou
 }
 
 export interface CustomizationSettingsProps {
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {

@@ -15,14 +15,14 @@ import SelectBox from '../select-box/SelectBox';
 import Option from '../option/Option';
 import ObserverTextField from '../text-field/TextField';
 import Button from '../button/Button';
-import { modalChildrenProps } from '../modal/interface';
+import { ModalChildrenProps } from '../modal/interface';
 import VerifySlider from './VerifySlider';
 import CountDownButton from './CountDownButton';
 import { ButtonColor } from '../button/enum';
 import { ValueChangeAction } from '../text-field/enum';
 
 export interface SecretFieldViewProps {
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
   readOnly?: boolean;
   name: string;
   record?: Record,

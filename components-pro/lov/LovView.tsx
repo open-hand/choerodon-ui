@@ -11,7 +11,7 @@ import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { DataSetEvents, DataSetSelection } from '../data-set/enum';
 import { ColumnProps } from '../table/Column';
-import { modalChildrenProps } from '../modal/interface';
+import { ModalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
 import { getColumnKey } from '../table/utils';
 import SelectionList, { SelectionsPosition } from './SelectionList';
@@ -29,7 +29,7 @@ export interface LovViewProps {
   viewMode?: TriggerViewMode;
   onSelect: (records: Record | Record[]) => void;
   onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
   popupHidden?: boolean;
   valueField?: string;
   textField?: string;

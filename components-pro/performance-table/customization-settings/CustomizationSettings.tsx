@@ -23,7 +23,7 @@ import { LabelLayout } from '../../form/enum';
 import { ShowHelp } from '../../field/enum';
 import Icon from '../../icon';
 import { treeReduce } from '../../_util/treeUtils';
-import { modalChildrenProps } from '../../modal/interface';
+import { ModalChildrenProps } from '../../modal/interface';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
@@ -50,7 +50,7 @@ function diff(height = 0): number {
 const HEIGHT_CHANGE_KEY = '__heightChange__';
 
 export interface CustomizationSettingsProps {
-  modal?: modalChildrenProps;
+  modal?: ModalChildrenProps;
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {

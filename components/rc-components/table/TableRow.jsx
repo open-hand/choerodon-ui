@@ -112,7 +112,7 @@ class TableRow extends Component {
     let { expandedRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
     const oldHeight = expandedRowsHeight && expandedRowsHeight[rowKey];
-    if (oldHeight !== height) {
+    if (height && oldHeight !== height) {
       expandedRowsHeight = {
         ...expandedRowsHeight,
         [rowKey]: height,
@@ -126,7 +126,7 @@ class TableRow extends Component {
     const { fixedColumnsBodyRowsHeight } = store.getState();
     const height = this.rowRef.getBoundingClientRect().height;
     const oldHeight = fixedColumnsBodyRowsHeight && fixedColumnsBodyRowsHeight[rowKey];
-    if (oldHeight !== height) {
+    if (height && oldHeight !== height) {
       store.setState({
         fixedColumnsBodyRowsHeight: {
           ...fixedColumnsBodyRowsHeight,
