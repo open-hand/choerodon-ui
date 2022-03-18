@@ -1,182 +1,625 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tabs tabPosition remove card 1`] = `
+exports[`Tabs second-level property should work 1`] = `
 <Tabs
+  defaultChangeable={true}
+  destroyInactiveTabPane={false}
   hideAdd={false}
-  tabBarExtraContent="xxx"
-  tabPosition="left"
+  keyboard={true}
+  onChange={[Function]}
+  showMore={false}
+  tabCountHideable={true}
+  tabDraggable={true}
+  tabPosition="top"
+  tabTitleEditable={true}
+  type="second-level"
 >
-  <Tabs
-    className="c7n-tabs-line c7n-tabs-vertical"
+  <TabsWithContext
+    customizable={false}
+    defaultChangeable={true}
     destroyInactiveTabPane={false}
     hideAdd={false}
+    keyboard={true}
     onChange={[Function]}
-    prefixCls="c7n-tabs"
-    renderTabBar={[Function]}
-    renderTabContent={[Function]}
-    style={Object {}}
-    tabBarExtraContent="xxx"
-    tabBarPosition="left"
-    tabPosition="left"
+    setCustomized={[Function]}
+    showMore={false}
+    tabCountHideable={true}
+    tabDraggable={true}
+    tabPosition="top"
+    tabTitleEditable={true}
+    type="second-level"
   >
     <div
-      className="c7n-tabs c7n-tabs-left c7n-tabs-line c7n-tabs-vertical"
-      style={Object {}}
+      className="c7n-tabs c7n-tabs-top c7n-tabs-second-level c7n-tabs-horizontal c7n-tabs-no-animation"
     >
-      <ScrollableInkTabBar
-        activeKey="1"
-        extraContent={
-          <div
-            className="c7n-tabs-extra-content"
-          >
-            xxx
-          </div>
-        }
+      <TabBar
+        hideAdd={false}
         inkBarAnimated={true}
         key="tabBar"
-        onKeyDown={[Function]}
-        onNextClick={[Function]}
-        onPrevClick={[Function]}
-        onTabClick={[Function]}
-        panels={
-          <TabPane
-            placeholder={null}
-            tab="foo"
-          >
-            foo
-          </TabPane>
-        }
-        prefixCls="c7n-tabs"
+        onRemoveTab={[Function]}
         scrollAnimated={true}
-        styles={Object {}}
-        tabBarPosition="left"
+        showMore={false}
+        type="second-level"
       >
         <div
           className="c7n-tabs-bar"
           onKeyDown={[Function]}
           role="tablist"
-          tabIndex="0"
+          tabIndex={0}
         >
           <div
-            className="c7n-tabs-nav-container"
-            key="content"
+            className="c7n-tabs-bar-inner"
           >
-            <span
-              className="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
-              onClick={null}
-              onTransitionEnd={[Function]}
-              unselectable="unselectable"
-            >
-              <span
-                className="c7n-tabs-tab-prev-icon"
-              />
-            </span>
-            <span
-              className="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
-              onClick={null}
-              unselectable="unselectable"
-            >
-              <span
-                className="c7n-tabs-tab-next-icon"
-              />
-            </span>
             <div
-              className="c7n-tabs-nav-wrap"
+              className="c7n-tabs-nav-container"
+              key="container"
             >
+              <span
+                className="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
+                onTransitionEnd={[Function]}
+                unselectable="on"
+              >
+                <span
+                  className="c7n-tabs-tab-prev-icon"
+                />
+              </span>
+              <span
+                className="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
+                unselectable="on"
+              >
+                <span
+                  className="c7n-tabs-tab-next-icon"
+                />
+              </span>
               <div
-                className="c7n-tabs-nav-scroll"
+                className="c7n-tabs-nav-wrap"
               >
                 <div
-                  className="c7n-tabs-nav c7n-tabs-nav-animated"
+                  className="c7n-tabs-nav-scroll"
                 >
                   <div
-                    className="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
-                    key="inkBar"
-                  />
-                  <Ripple
-                    key="1"
+                    className="c7n-tabs-second-nav c7n-tabs-second-nav-animated"
                   >
-                    <RippleChild
-                      key=".0"
-                      prefixCls="c7n-ripple"
+                    <div
+                      className="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
+                      key="inkBar"
+                    />
+                    <Memo(Ripple)
+                      key="0"
                     >
-                      <MouseDown
-                        rippleChild={
-                          <div
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-second-tab c7n-tabs-second-tab-active"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="0"
+                            >
+                              <React.Fragment>
+                                title 1
+                                <Memo(Count)
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                              </React.Fragment>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
                             aria-disabled="false"
                             aria-selected="true"
-                            className="c7n-tabs-tab-active c7n-tabs-tab"
-                            onClick={[Function]}
+                            className="c7n-tabs-second-tab c7n-tabs-second-tab-active"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
                             role="tab"
                             style={
                               Object {
                                 "marginRight": undefined,
                               }
                             }
-                          >
-                            foo
-                          </div>
-                        }
-                      >
-                        <div
-                          aria-disabled="false"
-                          aria-selected="true"
-                          className="c7n-tabs-tab-active c7n-tabs-tab"
-                          onClick={[Function]}
-                          onMouseDown={[Function]}
-                          role="tab"
-                          style={
-                            Object {
-                              "marginRight": undefined,
-                            }
-                          }
-                        >
-                          foo
-                          <Animate
-                            animation={Object {}}
-                            component="div"
-                            componentProps={
-                              Object {
-                                "className": "c7n-ripple-wrapper",
-                              }
-                            }
-                            hiddenProp="hidden"
-                            key="ripple"
-                            transitionAppear={false}
-                            transitionEnter={true}
-                            transitionLeave={true}
-                            transitionName="fade"
+                            tabKey="0"
                           >
                             <div
-                              className="c7n-ripple-wrapper"
-                            />
-                          </Animate>
-                        </div>
-                      </MouseDown>
-                    </RippleChild>
-                  </Ripple>
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-second-tab c7n-tabs-second-tab-active"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              title 1
+                              <Count
+                                asyncCount={[Function]}
+                                overflowCount={99}
+                                prefixCls="c7n-tabs"
+                              />
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="1"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-second-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="1"
+                            >
+                              <React.Fragment>
+                                title 2
+                                <Memo(Count)
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                              </React.Fragment>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-second-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="1"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-second-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              title 2
+                              <Count
+                                asyncCount={[Function]}
+                                overflowCount={99}
+                                prefixCls="c7n-tabs"
+                              />
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="2"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-second-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="2"
+                            >
+                              <React.Fragment>
+                                title 3
+                                <Memo(Count)
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                              </React.Fragment>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-second-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="2"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-second-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              title 3
+                              <Count
+                                asyncCount={[Function]}
+                                overflowCount={99}
+                                prefixCls="c7n-tabs"
+                              />
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="c7n-tabs-extra-content"
-            key="extra"
-            style={Object {}}
-          >
-            xxx
+            <div
+              className="c7n-tabs-extra-content"
+              key="extra"
+            />
           </div>
         </div>
-      </ScrollableInkTabBar>
+      </TabBar>
       <TabContent
-        activeKey="1"
+        animated={false}
+        animatedWithMargin={true}
+        destroyInactiveTabPane={false}
+        key="tabContent"
+      >
+        <div
+          className="c7n-tabs-content c7n-tabs-content-no-animated"
+        >
+          <TabPane
+            active={true}
+            destroyInactiveTabPane={false}
+            key="0"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={0}
+            tab="title 1"
+          >
+            <div
+              aria-hidden="false"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-active"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="1"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={1}
+            tab="title 2"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="2"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={2}
+            tab="title 3"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+        </div>
+      </TabContent>
+    </div>
+  </TabsWithContext>
+</Tabs>
+`;
+
+exports[`Tabs tabPosition remove card 1`] = `
+<Tabs
+  defaultChangeable={true}
+  destroyInactiveTabPane={false}
+  hideAdd={false}
+  keyboard={true}
+  onChange={[Function]}
+  showMore={false}
+  tabBarExtraContent="xxx"
+  tabCountHideable={true}
+  tabDraggable={true}
+  tabPosition="left"
+  tabTitleEditable={true}
+  type="line"
+>
+  <TabsWithContext
+    customizable={false}
+    defaultChangeable={true}
+    destroyInactiveTabPane={false}
+    hideAdd={false}
+    keyboard={true}
+    onChange={[Function]}
+    setCustomized={[Function]}
+    showMore={false}
+    tabBarExtraContent="xxx"
+    tabCountHideable={true}
+    tabDraggable={true}
+    tabPosition="left"
+    tabTitleEditable={true}
+    type="line"
+  >
+    <div
+      className="c7n-tabs c7n-tabs-left c7n-tabs-line c7n-tabs-vertical"
+    >
+      <TabBar
+        extraContent="xxx"
+        hideAdd={false}
+        inkBarAnimated={true}
+        key="tabBar"
+        onRemoveTab={[Function]}
+        scrollAnimated={true}
+        showMore={false}
+        type="line"
+      >
+        <div
+          className="c7n-tabs-bar"
+          onKeyDown={[Function]}
+          role="tablist"
+          tabIndex={0}
+        >
+          <div
+            className="c7n-tabs-bar-inner"
+          >
+            <div
+              className="c7n-tabs-nav-container"
+              key="container"
+            >
+              <span
+                className="c7n-tabs-tab-prev c7n-tabs-tab-btn-disabled"
+                onTransitionEnd={[Function]}
+                unselectable="on"
+              >
+                <span
+                  className="c7n-tabs-tab-prev-icon"
+                />
+              </span>
+              <span
+                className="c7n-tabs-tab-next c7n-tabs-tab-btn-disabled"
+                unselectable="on"
+              >
+                <span
+                  className="c7n-tabs-tab-next-icon"
+                />
+              </span>
+              <div
+                className="c7n-tabs-nav-wrap"
+              >
+                <div
+                  className="c7n-tabs-nav-scroll"
+                >
+                  <div
+                    className="c7n-tabs-nav c7n-tabs-nav-animated"
+                  >
+                    <div
+                      className="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
+                      key="inkBar"
+                    />
+                    <Memo(Ripple)
+                      key="1"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-tab c7n-tabs-tab-active"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="1"
+                            >
+                              <React.Fragment>
+                                foo
+                                <Memo(Count)
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                              </React.Fragment>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="true"
+                            className="c7n-tabs-tab c7n-tabs-tab-active"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="1"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-tab c7n-tabs-tab-active"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              foo
+                              <Count
+                                asyncCount={[Function]}
+                                overflowCount={99}
+                                prefixCls="c7n-tabs"
+                              />
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="c7n-tabs-extra-content c7n-tabs-extra-vertical-content"
+              key="extra"
+            >
+              xxx
+            </div>
+          </div>
+        </div>
+      </TabBar>
+      <TabContent
         animated={true}
         animatedWithMargin={true}
         destroyInactiveTabPane={false}
         key="tabContent"
-        onChange={[Function]}
-        prefixCls="c7n-tabs"
-        tabBarPosition="left"
       >
         <div
           className="c7n-tabs-content c7n-tabs-content-animated"
@@ -190,8 +633,10 @@ exports[`Tabs tabPosition remove card 1`] = `
             active={true}
             destroyInactiveTabPane={false}
             key="1"
-            placeholder={null}
+            overflowCount={99}
             rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={0}
             tab="foo"
           >
             <div
@@ -205,6 +650,743 @@ exports[`Tabs tabPosition remove card 1`] = `
         </div>
       </TabContent>
     </div>
-  </Tabs>
+  </TabsWithContext>
+</Tabs>
+`;
+
+exports[`Tabs test dom viewPort 1`] = `
+<Tabs
+  defaultChangeable={true}
+  destroyInactiveTabPane={false}
+  hideAdd={false}
+  keyboard={true}
+  onChange={[Function]}
+  showMore={true}
+  tabCountHideable={true}
+  tabDraggable={true}
+  tabPosition="top"
+  tabTitleEditable={true}
+  type="editable-card"
+>
+  <TabsWithContext
+    customizable={false}
+    defaultChangeable={true}
+    destroyInactiveTabPane={false}
+    hideAdd={false}
+    keyboard={true}
+    onChange={[Function]}
+    setCustomized={[Function]}
+    showMore={true}
+    tabCountHideable={true}
+    tabDraggable={true}
+    tabPosition="top"
+    tabTitleEditable={true}
+    type="editable-card"
+  >
+    <div
+      className="c7n-tabs c7n-tabs-top c7n-tabs-editable-card c7n-tabs-horizontal c7n-tabs-card c7n-tabs-no-animation"
+    >
+      <TabBar
+        extraContent={
+          <div
+            className="c7n-tabs-extra-bar"
+          />
+        }
+        hideAdd={false}
+        inkBarAnimated={true}
+        key="tabBar"
+        onRemoveTab={[Function]}
+        scrollAnimated={true}
+        showMore={true}
+        type="editable-card"
+      >
+        <div
+          className="c7n-tabs-bar"
+          onKeyDown={[Function]}
+          role="tablist"
+          tabIndex={0}
+        >
+          <div
+            className="c7n-tabs-bar-inner"
+          >
+            <div
+              className="c7n-tabs-nav-container"
+              key="container"
+            >
+              <div
+                className="c7n-tabs-nav-wrap"
+              >
+                <div
+                  className="c7n-tabs-nav-scroll"
+                >
+                  <div
+                    className="c7n-tabs-nav c7n-tabs-nav-animated"
+                  >
+                    <div
+                      className="c7n-tabs-ink-bar c7n-tabs-ink-bar-animated"
+                      key="inkBar"
+                    />
+                    <Memo(Ripple)
+                      key="title 0"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-tab c7n-tabs-tab-active"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="title 0"
+                            >
+                              <div>
+                                <React.Fragment>
+                                  title 0
+                                  <Memo(Count)
+                                    asyncCount={[Function]}
+                                    overflowCount={99}
+                                    prefixCls="c7n-tabs"
+                                  />
+                                </React.Fragment>
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                />
+                              </div>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="true"
+                            className="c7n-tabs-tab c7n-tabs-tab-active"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="title 0"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="true"
+                              className="c7n-tabs-tab c7n-tabs-tab-active"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              <div>
+                                title 0
+                                <Count
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                >
+                                  <i
+                                    className="icon icon-close"
+                                    onClick={[Function]}
+                                  />
+                                </Icon>
+                              </div>
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="title 1"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="title 1"
+                            >
+                              <div>
+                                <React.Fragment>
+                                  title 1
+                                  <Memo(Count)
+                                    asyncCount={[Function]}
+                                    overflowCount={99}
+                                    prefixCls="c7n-tabs"
+                                  />
+                                </React.Fragment>
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                />
+                              </div>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="title 1"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              <div>
+                                title 1
+                                <Count
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                >
+                                  <i
+                                    className="icon icon-close"
+                                    onClick={[Function]}
+                                  />
+                                </Icon>
+                              </div>
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="title 2"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="title 2"
+                            >
+                              <div>
+                                <React.Fragment>
+                                  title 2
+                                  <Memo(Count)
+                                    asyncCount={[Function]}
+                                    overflowCount={99}
+                                    prefixCls="c7n-tabs"
+                                  />
+                                </React.Fragment>
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                />
+                              </div>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="title 2"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              <div>
+                                title 2
+                                <Count
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                >
+                                  <i
+                                    className="icon icon-close"
+                                    onClick={[Function]}
+                                  />
+                                </Icon>
+                              </div>
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="title 3"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="title 3"
+                            >
+                              <div>
+                                <React.Fragment>
+                                  title 3
+                                  <Memo(Count)
+                                    asyncCount={[Function]}
+                                    overflowCount={99}
+                                    prefixCls="c7n-tabs"
+                                  />
+                                </React.Fragment>
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                />
+                              </div>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="title 3"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              <div>
+                                title 3
+                                <Count
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                >
+                                  <i
+                                    className="icon icon-close"
+                                    onClick={[Function]}
+                                  />
+                                </Icon>
+                              </div>
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(Ripple)
+                      key="title 4"
+                    >
+                      <RippleChild
+                        key=".0"
+                        prefixCls="c7n-ripple"
+                      >
+                        <Memo(MouseDown)
+                          rippleChild={
+                            <TabBarInner
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onTabClick={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                              tabKey="title 4"
+                            >
+                              <div>
+                                <React.Fragment>
+                                  title 4
+                                  <Memo(Count)
+                                    asyncCount={[Function]}
+                                    overflowCount={99}
+                                    prefixCls="c7n-tabs"
+                                  />
+                                </React.Fragment>
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                />
+                              </div>
+                            </TabBarInner>
+                          }
+                        >
+                          <TabBarInner
+                            aria-disabled="false"
+                            aria-selected="false"
+                            className="c7n-tabs-tab"
+                            onMouseDown={[Function]}
+                            onTabClick={[Function]}
+                            role="tab"
+                            style={
+                              Object {
+                                "marginRight": undefined,
+                              }
+                            }
+                            tabKey="title 4"
+                          >
+                            <div
+                              aria-disabled="false"
+                              aria-selected="false"
+                              className="c7n-tabs-tab"
+                              onClick={[Function]}
+                              onMouseDown={[Function]}
+                              role="tab"
+                              style={
+                                Object {
+                                  "marginRight": undefined,
+                                }
+                              }
+                            >
+                              <div>
+                                title 4
+                                <Count
+                                  asyncCount={[Function]}
+                                  overflowCount={99}
+                                  prefixCls="c7n-tabs"
+                                />
+                                <Icon
+                                  onClick={[Function]}
+                                  type="close"
+                                >
+                                  <i
+                                    className="icon icon-close"
+                                    onClick={[Function]}
+                                  />
+                                </Icon>
+                              </div>
+                              <Animate
+                                component="div"
+                                componentProps={
+                                  Object {
+                                    "className": "c7n-ripple-wrapper",
+                                  }
+                                }
+                                hiddenProp="hidden"
+                                key="ripple"
+                                transitionAppear={false}
+                                transitionEnter={true}
+                                transitionLeave={true}
+                                transitionName="fade"
+                              >
+                                <div
+                                  className="c7n-ripple-wrapper"
+                                />
+                              </Animate>
+                            </div>
+                          </TabBarInner>
+                        </Memo(MouseDown)>
+                      </RippleChild>
+                    </Memo(Ripple)>
+                    <Memo(TabsAddBtn)
+                      extraPrefixCls="inline-flex"
+                      prefixCls="c7n-tabs"
+                      vertical={false}
+                    >
+                      <div
+                        className="c7n-tabs-nav-add"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "display": "inline-flex",
+                          }
+                        }
+                      >
+                        <Icon
+                          type="add"
+                        >
+                          <i
+                            className="icon icon-add"
+                          />
+                        </Icon>
+                      </div>
+                    </Memo(TabsAddBtn)>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="c7n-tabs-extra-content"
+              key="extra"
+            >
+              <div
+                className="c7n-tabs-extra-bar"
+                key="tabBarExtraContent"
+              />
+            </div>
+          </div>
+        </div>
+      </TabBar>
+      <TabContent
+        animated={false}
+        animatedWithMargin={true}
+        destroyInactiveTabPane={false}
+        key="tabContent"
+      >
+        <div
+          className="c7n-tabs-content c7n-tabs-content-no-animated"
+        >
+          <TabPane
+            active={true}
+            destroyInactiveTabPane={false}
+            key="title 0"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={0}
+            tab="title 0"
+          >
+            <div
+              aria-hidden="false"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-active"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="title 1"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={1}
+            tab="title 1"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="title 2"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={2}
+            tab="title 2"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="title 3"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={3}
+            tab="title 3"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+          <TabPane
+            active={false}
+            destroyInactiveTabPane={false}
+            key="title 4"
+            overflowCount={99}
+            rootPrefixCls="c7n-tabs"
+            showCount={true}
+            sort={4}
+            tab="title 4"
+          >
+            <div
+              aria-hidden="true"
+              className="c7n-tabs-tabpane c7n-tabs-tabpane-inactive"
+              role="tabpanel"
+            />
+          </TabPane>
+        </div>
+      </TabContent>
+    </div>
+  </TabsWithContext>
 </Tabs>
 `;

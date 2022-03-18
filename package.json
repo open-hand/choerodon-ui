@@ -62,6 +62,7 @@
     "classnames": "~2.3.1",
     "codemirror": "5.58.2",
     "component-classes": "1.x",
+    "copy-to-clipboard": "^3.3.1",
     "core-js": "^2.5.1",
     "create-react-class": "^15.6.0",
     "css-animation": "^1.5.0",

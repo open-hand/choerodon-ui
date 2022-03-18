@@ -906,45 +906,52 @@ class Tree extends React.Component<TreeProps, TreeState> {
   onNodeLoad = (treeNode: EventDataNode) =>
     new Promise<void>(resolve => {
       // We need to get the latest state of loading/loaded keys
-      this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
-        const { loadData, onLoad } = this.props;
-        const { key } = treeNode;
+      const { loadedKeys = [], loadingKeys = [] } = this.state;
+      const { loadData, onLoad } = this.props;
+      const { key } = treeNode;
 
-        if (!loadData || loadedKeys.indexOf(key!) !== -1 || loadingKeys.indexOf(key!) !== -1) {
-          // react 15 will warn if return null
-          return {};
+      if (!loadData || loadedKeys.indexOf(key!) !== -1 || loadingKeys.indexOf(key!) !== -1) {
+        // react 15 will warn if return null
+        return {};
+      }
+
+      // Process load data
+      const promise = loadData(treeNode);
+      promise.then(() => {
+        const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
+        const newLoadedKeys = arrAdd(currentLoadedKeys, key);
+        const newLoadingKeys = arrDel(currentLoadingKeys, key);
+
+        // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
+        // https://github.com/ant-design/ant-design/issues/12464
+        if (onLoad) {
+          onLoad(newLoadedKeys, {
+            event: 'load',
+            node: treeNode,
+          });
         }
 
-        // Process load data
-        const promise = loadData(treeNode);
-        promise.then(() => {
-          const { loadedKeys: currentLoadedKeys, loadingKeys: currentLoadingKeys } = this.state;
-          const newLoadedKeys = arrAdd(currentLoadedKeys, key);
-          const newLoadingKeys = arrDel(currentLoadingKeys, key);
-
-          // onLoad should trigger before internal setState to avoid `loadData` trigger twice.
-          // https://github.com/ant-design/ant-design/issues/12464
-          if (onLoad) {
-            onLoad(newLoadedKeys, {
-              event: 'load',
-              node: treeNode,
-            });
-          }
-
-          this.setUncontrolledState({
-            loadedKeys: newLoadedKeys,
-          });
-          this.setState({
-            loadingKeys: newLoadingKeys,
-          });
-
-          resolve();
+        this.setUncontrolledState({
+          loadedKeys: newLoadedKeys,
+        });
+        this.setState({
+          loadingKeys: newLoadingKeys,
         });
 
-        return {
-          loadingKeys: arrAdd(loadingKeys, key),
-        };
+        resolve();
       });
+
+      this.setState({
+        loadingKeys: arrAdd(loadingKeys, key),
+      })
+
+      // this.setState(({ loadedKeys = [], loadingKeys = [] }): any => {
+       
+
+      //   return {
+         
+      //   };
+      // });
     });
 
   onNodeMouseEnter: NodeMouseEventHandler = (event, node) => {

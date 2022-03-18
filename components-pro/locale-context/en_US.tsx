@@ -251,6 +251,12 @@ const locale: Locale = {
     confirm: 'Confirm',
     cancel: 'Cancel',
   },
+  Typography: {
+    edit: 'Edit',
+    expand: 'Expand',
+    copy: 'Copy',
+    copied: 'Copied',
+  },
 };
 
 export default locale;
