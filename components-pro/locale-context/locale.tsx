@@ -254,6 +254,12 @@ export interface Locale extends DataSetLocale {
     confirm: string;
     cancel: string;
   };
+  Typography: {
+    edit: string;
+    expand: string;
+    copy: string;
+    copied: string;
+  };
 }
 
 export default zh_CN;
