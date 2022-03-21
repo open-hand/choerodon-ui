@@ -251,6 +251,11 @@ const locale: Locale = {
     confirm: '确认',
     cancel: '取消',
   },
+  Typography: {
+    expand: '展开',
+    copy: '复制',
+    copied: '已复制',
+  },
 };
 
 export default locale;

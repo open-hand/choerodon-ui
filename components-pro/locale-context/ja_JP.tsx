@@ -254,6 +254,11 @@ const locale: Locale = {
     confirm: '確認',
     cancel: 'キャンセル',
   },
+  Typography: {
+    expand: '展開',
+    copy: 'コピー',
+    copied: 'コピー済み',
+  },
 };
 
 export default locale;
