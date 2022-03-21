@@ -1,7 +1,7 @@
 import Mock from 'mockjs';
 import { treeMockTemple } from './tree';
 
-const dataSetLovTemple = {
+const dataSetLovTempleSize10Page1 = {
   rows: [
     {
       _token: '5fd2371f43d3c75c44682b0750e7bfb5',
@@ -123,6 +123,13 @@ const dataSetLovTemple = {
       parentCodeId: null,
       parentCodeDescription: null,
     },
+  ],
+  success: true,
+  total: 20,
+};
+
+const dataSetLovTempleSize10Page2 = {
+  rows: [
     {
       _token: '31cb91cfc0d1d59335ba6607e42c640c',
       objectVersionNumber: 1,
@@ -245,7 +252,17 @@ const dataSetLovTemple = {
     },
   ],
   success: true,
-  total: 35,
+  total: 20,
+};
+
+
+const dataSetLovTemple = {
+  rows: [
+    ...dataSetLovTempleSize10Page1.rows,
+    ...dataSetLovTempleSize10Page2.rows,
+  ],
+  success: true,
+  total: 20,
 };
 
 const dataSetLovMockTemple = {
@@ -516,6 +533,8 @@ const lovTreeDefineTemple = {
   },
 };
 
+const dataSetLovData10Page1 = Mock.mock(dataSetLovTempleSize10Page1);
+const dataSetLovData10Page2 = Mock.mock(dataSetLovTempleSize10Page2);
 const dataSetLovData = Mock.mock(dataSetLovTemple);
 const dataSetLovMockData = Mock.mock(dataSetLovMockTemple);
 const dataSetLovTreeData = Mock.mock(treeMockTemple);
@@ -524,6 +543,11 @@ const lovDefineData = Mock.mock(lovDefineTemple);
 const lovDefineMockData = Mock.mock(lovMockDefineTemple);
 const lovDefineTreeData = Mock.mock(lovTreeDefineTemple);
 
+const dataSetLovRuleSize10Page1 = /\/common\/lov\/dataset\/LOV_CODE\/10\/1/;
+const dataSetLovRuleSize10Page2 = /\/common\/lov\/dataset\/LOV_CODE\/10\/2/;
+const dataSetLovRuleSize20Page1 = /\/common\/lov\/dataset\/LOV_CODE\/20\/1/;
+const dataSetLovRuleSize50Page1 = /\/common\/lov\/dataset\/LOV_CODE\/50\/1/;
+const dataSetLovRuleSize100Page1 = /\/common\/lov\/dataset\/LOV_CODE\/100\/1/;
 const dataSetLovRule = /\/common\/lov\/dataset\/LOV_CODE/;
 const dataSetLovMockRule = /\/common\/lov\/dataset\/LOV_MOCK_CODE/;
 const dataSetLovTreeRule = /\/common\/lov\/dataset\/LOV_TREE_CODE/;
@@ -535,6 +559,16 @@ const lovTreeDefineRule = /\/sys\/lov\/lov_define\?code=LOV_TREE_CODE/;
 export default function () {
   if (typeof window !== 'undefined') {
     Mock.setup({ timeout: 0 });
+
+    Mock.mock(dataSetLovRuleSize10Page1, dataSetLovData10Page1);
+
+    Mock.mock(dataSetLovRuleSize10Page2, dataSetLovData10Page2);
+
+    Mock.mock(dataSetLovRuleSize20Page1, dataSetLovTemple);
+
+    Mock.mock(dataSetLovRuleSize50Page1, dataSetLovTemple);
+
+    Mock.mock(dataSetLovRuleSize100Page1, dataSetLovTemple);
 
     Mock.mock(dataSetLovRule, dataSetLovTemple);
 
@@ -551,6 +585,11 @@ export default function () {
 }
 
 export const lovTempleList = [
+  { rule: dataSetLovRuleSize10Page1, data: dataSetLovData10Page1 },
+  { rule: dataSetLovRuleSize10Page2, data: dataSetLovData10Page2 },
+  { rule: dataSetLovRuleSize20Page1, data: dataSetLovData },
+  { rule: dataSetLovRuleSize50Page1, data: dataSetLovData },
+  { rule: dataSetLovRuleSize100Page1, data: dataSetLovData },
   { rule: dataSetLovRule, data: dataSetLovData },
   { rule: dataSetLovMockRule, data: dataSetLovMockData },
   { rule: dataSetLovTreeRule, data: dataSetLovTreeData },

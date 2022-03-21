@@ -20,7 +20,7 @@ import { DataSet, Lov, message } from 'choerodon-ui/pro';
 
 configure({
   lovQueryCachedSelected() {
-    return Promise.resolve([{ code: 'c7n', description: 'Choerodon UI' }]);
+    return Promise.resolve([{ code: 'SYS.USER_STATUS11', description: '用户状态11' }]);
   }
 });
 
@@ -39,7 +39,7 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, c7n' , 'code_description': '性别,员工状态,c7n' }
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, SYS.USER_STATUS11' , 'code_description': '性别,员工状态' }
     ],
     fields: [
       {
@@ -91,6 +91,11 @@ class App extends React.Component {
         tableProps={tableProps}
         onBeforeSelect={this.handleBeforeSelect}
         showSelectedInView={true}
+        modalProps={
+          {
+            afterClose: () => console.log('afterClose'),
+          }
+        }
       />
     );
   }

@@ -59,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the modal width exception when reopens drawer mode.
 - 🐞 `<pro>Lov`: Fix the problem that the check status in the drop-down box is not synchronized after deleting multiple selection values in popup mode.
 - 🐞 `<pro>Lov`: Fixed an issue where the window might not be opened again.
+- 🐞 `<pro>Lov`: Fix `lovQueryCachedSelected` property doesn't take effect when switching pagination.
 - 🐞 `<pro>Button`: Fix related dataSet loading state exception.
 - 🐞 `<pro>Button`: Fix the problem of losing focus in loading state.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.

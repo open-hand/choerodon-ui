@@ -34,7 +34,7 @@ function getMath(value, min, max) {
       min,
     ),
     max,
-  )
+  );
 }
 
 function fixUnit(n) {
@@ -63,7 +63,7 @@ const HANDLE_MIN_SIZE = 50;
 export interface ModalProps extends ViewComponentProps {
   __deprecate__?: boolean;
   eventKey?: Key;
-  children?: any;
+  children?: AsyncCmpLoadingFunction | ReactNode;
   closable?: boolean;
   movable?: boolean;
   fullScreen?: boolean;
@@ -81,9 +81,9 @@ export interface ModalProps extends ViewComponentProps {
   cancelText?: ReactNode;
   okProps?: ButtonProps;
   cancelProps?: ButtonProps;
-  onClose?: () => Promise<boolean | undefined> | boolean | undefined;
-  onOk?: () => Promise<boolean | undefined> | boolean | undefined;
-  onCancel?: () => Promise<boolean | undefined> | boolean | undefined;
+  onClose?: () => Promise<boolean | undefined> | boolean | undefined | void;
+  onOk?: () => Promise<boolean | undefined> | boolean | undefined | void;
+  onCancel?: () => Promise<boolean | undefined> | boolean | undefined | void;
   afterClose?: () => void;
   close?: () => void;
   update?: (props?: ModalProps) => void;
@@ -346,7 +346,7 @@ export default class Modal extends ViewComponent<ModalProps> {
               case 'slide-up':
               case 'slide-down':
                 delete temp.width;
-                break
+                break;
               default:
                 break;
             }
@@ -724,7 +724,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   getWrappedHeader(header: ReactNode): ReactNode {
     const {
       prefixCls,
-      props: { title, closable, movable  = this.getContextConfig('modalMovable'), fullScreen, drawer },
+      props: { title, closable, movable = this.getContextConfig('modalMovable'), fullScreen, drawer },
     } = this;
     if (title || closable || movable || header) {
       const headerProps: any = {

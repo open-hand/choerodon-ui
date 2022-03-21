@@ -1,54 +1,78 @@
-import { CSSProperties } from 'react';
 import classNames from 'classnames';
+import isPromise from 'is-promise';
+import isNil from 'lodash/isNil';
+import isFunction from 'lodash/isFunction';
+import assignWith from 'lodash/assignWith';
+import { global } from 'choerodon-ui/shared';
+import { ChainsFunction } from 'choerodon-ui/shared/global';
 
-interface MergeProps {
-  style?: CSSProperties | undefined,
-  className?: string | undefined;
-
-  [key: string]: any;
+if (!global.FUNCTION_CHAINS_MAP) {
+  global.FUNCTION_CHAINS_MAP = new WeakMap<Function, ChainsFunction>();
 }
 
-function mergeStyle(style: CSSProperties | undefined, newStyle: CSSProperties | undefined) {
-  if (!style) {
-    return newStyle;
+const chainsMap: WeakMap<Function, ChainsFunction> = global.FUNCTION_CHAINS_MAP;
+
+function merge<T>(prop: T | undefined, other: T | undefined): T | undefined {
+  if (isNil(prop)) {
+    return other;
   }
-  if (newStyle) {
-    return {
-      ...style,
-      ...newStyle,
-    };
+  if (isNil(other)) {
+    return prop;
   }
-  return style;
+  return {
+    ...prop,
+    ...other,
+  };
 }
 
-function mergeClassNameAndStyle<P extends MergeProps>(props: Partial<P> | undefined, newProps: Partial<P> | undefined): Partial<P> | undefined {
-  if (!props) {
-    return newProps;
+function customizer(value: any, srcValue: any, key: string) {
+  if (key === 'style' || key.endsWith('Style')) {
+    return merge(value, srcValue);
   }
-  if (newProps) {
-    const style: CSSProperties | undefined = mergeStyle(props.style, newProps.style);
-    const className: string | undefined = classNames(props.className, newProps.className);
-    if (style || className) {
-      return {
-        style,
-        className,
-      } as P;
+  if (key === 'className' || key.endsWith('ClassName')) {
+    return classNames(value, srcValue);
+  }
+  if (key.endsWith('Props')) {
+    return mergeProps(value, srcValue);
+  }
+  if (isFunction(value) && isFunction(srcValue)) {
+    const chains = chainsMap.get(value);
+    if (chains) {
+      chains.fn = srcValue;
+      return chains;
     }
-    return undefined;
+    const newChains: Function = function (...args) {
+      const $chains = chainsMap.get(value);
+      const { fn } = $chains || {};
+      if (fn) {
+        const ret = fn(...args);
+        if (isPromise(ret)) {
+          return ret.then(result => {
+            if (result !== false) {
+              return value(...args);
+            }
+            return result;
+          });
+        }
+        if (ret === false) {
+          return false;
+        }
+      }
+      return value(...args);
+    };
+
+    (newChains as ChainsFunction).fn = srcValue;
+    chainsMap.set(value, newChains as ChainsFunction);
+    return newChains;
   }
-  return props;
 }
 
-export default function mergeProps<P extends MergeProps>(props: Partial<P> | undefined, newProps: Partial<P> | undefined): Partial<P> | undefined {
-  if (!props) {
-    return newProps;
+export default function mergeProps<P>(props: P | undefined, otherProps: P | undefined): P | undefined {
+  if (isNil(props)) {
+    return otherProps;
   }
-  if (newProps) {
-    return {
-      ...props,
-      ...newProps,
-      ...mergeClassNameAndStyle<P>(props, newProps),
-    };
+  if (isNil(otherProps)) {
+    return props;
   }
-  return props;
+  return assignWith<P, P>(props, otherProps, customizer);
 }

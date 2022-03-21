@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import { ConfigProvider, LocaleProvider } from 'choerodon-ui';
+import { ConfigProvider, configure as UIconfigure, LocaleProvider } from 'choerodon-ui';
 import { localeContext, ModalProvider } from 'choerodon-ui/pro';
 import moment from 'moment';
 import { configure } from 'mobx';
@@ -17,6 +17,16 @@ import mock from '../../mock';
 mock();
 
 configure({ enforceActions: 'always' });
+
+UIconfigure({
+  lovQueryUrl: undefined,
+  lovQueryAxiosConfig(code, lovConfig, props) {
+    const { params } = props || {};
+    return {
+      url: `/common/lov/dataset/${code}${code === 'LOV_CODE' ? `/${params.pagesize}/${params.page}` : ''}`,
+    };
+  },
+});
 
 export const uiConfigure = {
   performanceEnabled: { Table: true },

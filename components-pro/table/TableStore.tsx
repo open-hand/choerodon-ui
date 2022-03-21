@@ -457,8 +457,27 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
   }
 }
 
-function mergeCustomizedColumn(column: ColumnProps, tableStore: TableStore, customizedColumns?: { [key: string]: ColumnProps }, isChildrenHideDisabled?: boolean, key?: string): void {
-  const newProps = customizedColumns ? customizedColumns[key || getColumnKey(column).toString()] : undefined;
+function getCustomizedColumnByKey(key: string, customizedColumns): ColumnProps | undefined {
+  if (customizedColumns) {
+    return customizedColumns[key];
+  }
+}
+
+function getCustomizedColumn(column: ColumnProps, customizedColumns?: { [key: string]: ColumnProps }): ColumnProps | undefined {
+  if (customizedColumns) {
+    return getCustomizedColumnByKey(getColumnKey(column).toString(), customizedColumns);
+  }
+}
+
+function mergeColumnLock(column: ColumnProps, parent?: ColumnProps | null, customizedColumn?: ColumnProps) {
+  if (parent) {
+    column.lock = parent.lock;
+  } else if (customizedColumn && 'lock' in customizedColumn) {
+    column.lock = customizedColumn.lock;
+  }
+}
+
+function mergeCustomizedColumn(column: ColumnProps, tableStore: TableStore, customizedColumn?: ColumnProps, isChildrenHideDisabled?: boolean) {
   if (isChildrenHideDisabled) {
     column.hideable = false;
   } else {
@@ -471,21 +490,26 @@ function mergeCustomizedColumn(column: ColumnProps, tableStore: TableStore, cust
       }
     }
   }
-  if (newProps) {
+  if (customizedColumn) {
     if (column.hideable === false || !tableStore.columnHideable) {
-      delete newProps.hidden;
+      delete customizedColumn.hidden;
     }
     if (column.resizable === false || !tableStore.columnResizable) {
-      delete newProps.width;
+      delete customizedColumn.width;
     }
     if (column.titleEditable === false || !tableStore.columnTitleEditable) {
-      delete newProps.title;
+      delete customizedColumn.title;
     }
     if (!tableStore.columnDraggable) {
-      delete newProps.sort;
+      delete customizedColumn.sort;
     }
-    Object.assign(column, newProps);
+    Object.assign(column, customizedColumn);
   }
+}
+
+function findAndMergeCustomizedColumn(column: ColumnProps, tableStore: TableStore, customizedColumns?: { [key: string]: ColumnProps }, isChildrenHideDisabled?: boolean): void {
+  const customizedColumn = getCustomizedColumn(column, customizedColumns);
+  mergeCustomizedColumn(column, tableStore, customizedColumn, isChildrenHideDisabled);
 }
 
 type ChildrenInfo = {
@@ -522,6 +546,8 @@ function mergeDefaultProps(
         hasAggregationColumn = true;
       }
       if (tableAggregation || !aggregation) {
+        const customizedColumn = getCustomizedColumn(column, customizedColumns);
+        mergeColumnLock(newColumn, parent, customizedColumn);
         if (children) {
           const [, childrenColumns, , {
             hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
@@ -533,15 +559,12 @@ function mergeDefaultProps(
           if (!isHideDisabled && childrenIsHideDisabled) {
             isHideDisabled = true;
           }
-          mergeCustomizedColumn(newColumn, tableStore, customizedColumns, childrenIsHideDisabled);
+          mergeCustomizedColumn(newColumn, tableStore, customizedColumn, childrenIsHideDisabled);
         } else {
-          mergeCustomizedColumn(newColumn, tableStore, customizedColumns);
+          mergeCustomizedColumn(newColumn, tableStore, customizedColumn);
         }
         if (!isHideDisabled && newColumn.hideable === false) {
           isHideDisabled = true;
-        }
-        if (parent) {
-          newColumn.lock = parent.lock;
         }
         if (parent || !newColumn.lock) {
           if (newColumn.sort === undefined) {
@@ -634,6 +657,8 @@ function normalizeColumns(
           hasAggregationColumn = true;
         }
         if (tableAggregation || !aggregation) {
+          const customizedColumn = getCustomizedColumn(column, customizedColumns);
+          mergeColumnLock(column, parent, customizedColumn);
           const [, childrenColumns, , {
             hasAggregationColumn: childrenHasAggregationColumn, isHideDisabled: childrenIsHideDisabled,
           }] = normalizeColumns(tableStore, children, tableAggregation, customizedColumns, column, defaultKey);
@@ -644,12 +669,9 @@ function normalizeColumns(
           if (!isHideDisabled && childrenIsHideDisabled) {
             isHideDisabled = true;
           }
-          mergeCustomizedColumn(column, tableStore, customizedColumns, childrenIsHideDisabled);
+          mergeCustomizedColumn(column, tableStore, customizedColumn, childrenIsHideDisabled);
           if (!isHideDisabled && column.hideable === false) {
             isHideDisabled = true;
-          }
-          if (parent) {
-            column.lock = parent.lock;
           }
           if (parent || !column.lock) {
             if (column.sort === undefined) {
@@ -719,7 +741,7 @@ function getColumnGroupedColumns(tableStore: TableStore, groups: TableGroup[], c
         ...columnProps,
         children: columnProps && columnProps.children ? treeMap(columnProps.children, (col => {
           const newCol = { ...col, __tableGroup: group };
-          mergeCustomizedColumn(newCol, tableStore, customizedColumns);
+          findAndMergeCustomizedColumn(newCol, tableStore, customizedColumns);
           return newCol;
         }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2) : undefined,
         draggable: false,
@@ -728,7 +750,7 @@ function getColumnGroupedColumns(tableStore: TableStore, groups: TableGroup[], c
         name,
         __tableGroup: group,
       };
-      mergeCustomizedColumn(column, tableStore, customizedColumns);
+      findAndMergeCustomizedColumn(column, tableStore, customizedColumns);
       if (!column.lock) {
         groupedColumns.push(column);
       } else if (column.lock === true || column.lock === ColumnLock.left) {
@@ -765,7 +787,7 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
             __group: group,
             __originalKey,
           };
-          mergeCustomizedColumn(newCol, tableStore, customizedColumns);
+          findAndMergeCustomizedColumn(newCol, tableStore, customizedColumns);
           newCol.lock = false;
           generatedColumns.add(newCol);
         });
@@ -793,7 +815,8 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
               children: [oldColumn],
               __tableGroup: tableGroup,
             };
-            mergeCustomizedColumn(newColumn, tableStore, customizedColumns, false, newKey);
+            const customizedColumn = getCustomizedColumnByKey(newKey, customizedColumns);
+            mergeCustomizedColumn(newColumn, tableStore, customizedColumn);
             groupedColumns[length - 1] = newColumn;
           }
         }
@@ -817,7 +840,7 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
           __tableGroup: tableGroup,
           __group: group,
         };
-        mergeCustomizedColumn(column, tableStore, customizedColumns);
+        findAndMergeCustomizedColumn(column, tableStore, customizedColumns);
         generatedColumns.add(column);
       }
     } else if (subColumns.length) {
