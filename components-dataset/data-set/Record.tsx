@@ -227,15 +227,17 @@ export default class Record {
   }
 
   set isSelected(isSelected: boolean) {
-    const newState: object = {
-      [SELECT_TIMESTAMP]: isSelected ? Date.now() : undefined,
-    };
-    if (this.isDataSetInAllPageSelection) {
-      newState[UNSELECT_KEY] = !isSelected;
-    } else {
-      newState[SELECT_KEY] = isSelected;
+    if (isSelected !== this.isSelected) {
+      const newState: object = {
+        [SELECT_TIMESTAMP]: isSelected ? Date.now() : undefined,
+      };
+      if (this.isDataSetInAllPageSelection) {
+        newState[UNSELECT_KEY] = !isSelected;
+      } else {
+        newState[SELECT_KEY] = isSelected;
+      }
+      this.setState(newState);
     }
-    this.setState(newState);
   }
 
   @observable isCurrent?: boolean;

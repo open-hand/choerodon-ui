@@ -36,6 +36,7 @@ import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
 import { ModalChildrenProps, ModalProxy } from '../modal/interface';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
+import mergeProps from '../_util/mergeProps';
 
 export type Events = { [key: string]: Function };
 
@@ -300,19 +301,16 @@ export default class Lov extends Select<LovProps> {
           this.fetched = true;
         });
       }
-      const tableProps = this.getTableProps();
-      const mergedTableProps: TableProps = {
-        ...(lovViewProps && lovViewProps.tableProps),
-        ...tableProps,
+      const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
+      const mergedTableProps: Partial<TableProps> | undefined = mergeProps<Partial<TableProps>>(tableProps, {
         style: {
-          ...tableProps.style,
           maxHeight: 250,
         },
         pagination: { showSizeChanger: false },
         queryBar: this.renderSearchField,
         border: false,
         size: Size.small,
-      };
+      });
       const { onBeforeSelect, viewMode } = this.props;
       return (
         <LovView
@@ -450,6 +448,11 @@ export default class Lov extends Select<LovProps> {
                     fetchCachedSelected();
                   }
                 },
+                pagination: {
+                  onChange() {
+                    fetchCachedSelected();
+                  },
+                },
               },
             };
           }
@@ -506,14 +509,13 @@ export default class Lov extends Select<LovProps> {
         if (modal) {
           modal.open();
         } else {
-          const modalProps = this.getModalProps();
-          modalProps.className = this.getModalClassName(modalProps);
-          const tableProps = this.getTableProps();
           const { width, title } = config;
           const lovViewProps = this.beforeOpen(options);
+          const modalProps = this.getModalProps();
+          const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
           const valueField = this.getProp('valueField');
           const textField = this.getProp('textField');
-          this.modal = open({
+          this.modal = open(mergeProps<ModalProps>({
             title,
             children: (
               <LovView
@@ -522,7 +524,7 @@ export default class Lov extends Select<LovProps> {
                 dataSet={options}
                 config={config}
                 context={this.context}
-                tableProps={{ ...(lovViewProps && lovViewProps.tableProps), ...tableProps }}
+                tableProps={tableProps}
                 onSelect={this.handleLovViewSelect}
                 onBeforeSelect={onBeforeSelect}
                 multiple={this.multiple}
@@ -538,27 +540,26 @@ export default class Lov extends Select<LovProps> {
             destroyOnClose: true,
             closable: true,
             autoFocus: false,
+            className: this.getModalClassName(),
             bodyStyle: {
               minHeight: isIE() ? pxToRem(Math.min(scaleSize(350), window.innerHeight), true) : 'min(3.5rem, 100vh)',
             },
             drawer,
             drawerBorder: !drawer,
-            ...modalProps,
             style: {
               width: pxToRem(width),
-              ...(modalProps && modalProps.style),
             },
             afterClose: this.handleLovViewAfterClose,
-          } as ModalProps & { children });
+          }, modalProps) || {});
           this.afterOpen(options, fetchSingle);
         }
       }
     }
   }
 
-  getModalClassName(modalProps: Partial<ModalProps>): string {
+  getModalClassName(): string {
     const { viewMode } = this.props;
-    return classNames(modalProps.className, {
+    return classNames({
       [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === TriggerViewMode.modal && this.showSelectedInView,
       [`${this.prefixCls}-lov-custom-drawer`]: viewMode === TriggerViewMode.drawer && this.multiple && this.showSelectedInView,
     });
@@ -611,8 +612,6 @@ export default class Lov extends Select<LovProps> {
   handleLovViewAfterClose() {
     // TODO：lovEvents deprecated
     const { options, props: { lovEvents } } = this;
-    const { afterClose = noop } = this.getModalProps();
-    afterClose();
     if (lovEvents) {
       Object.keys(lovEvents).forEach(event => options.removeEventListener(event, lovEvents[event]));
     }
@@ -743,15 +742,15 @@ export default class Lov extends Select<LovProps> {
     return [];
   }
 
-  getModalProps(): Partial<ModalProps> {
+  getModalProps(): ModalProps {
     const { modalProps } = this.props;
     return { ...this.getContextConfig('lovModalProps'), ...modalProps };
   }
 
-  getTableProps(): Partial<TableProps> {
+  getTableProps(localTableProps?: Partial<TableProps>): Partial<TableProps> {
     const { tableProps } = this.props;
     const lovTablePropsConfig = this.getContextConfig('lovTableProps');
-    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...tableProps } : { ...lovTablePropsConfig, ...tableProps };
+    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) } : { ...lovTablePropsConfig, ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) };
   }
 
   @autobind

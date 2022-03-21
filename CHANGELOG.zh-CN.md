@@ -58,6 +58,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 drawer 模式下重新打开模态框宽度异常。
 - 🐞 `<pro>Lov`: 修复 popup 模式下多选值删除后下拉框中的勾选状态没同步的问题。
 - 🐞 `<pro>Lov`: 修复窗口可能无法再次打开的问题。
+- 🐞 `<pro>Lov`: 修复 lovQueryCachedSelected 属性在切换分页时没有生效的问题。
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
 - 🐞 `<pro>Button`: 修复 loading 状态会失去焦点的问题。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。

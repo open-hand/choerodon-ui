@@ -38,7 +38,7 @@ const App = () => {
             type: 'object',
             lovCode: 'LOV_CODE',
             multiple: true,
-            defaultValue: [{ description: 'Choerodon UI', code: 'c7n' }],
+            defaultValue: [{ code: 'SYS.USER_STATUS11' }],
           },
           {
             name: 'drawer_code',
