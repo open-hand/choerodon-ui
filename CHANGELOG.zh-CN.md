@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
 - 🌟 `<pro>DataSet`: 新增 treeCheckStrictly 属性。
+- 🌟 `<pro>Typography`: 新增 Typography 排版组件。
 - 💄 `<pro>Table`: 优化必输列的 hideable 始终为 false。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
 - 💄 `<pro>Table`: 优化错误提示的样式。
@@ -37,6 +38,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化组合搜索条行内搜索没有自适应 rowHeight 的问题。
 - 💄 `<pro>Table`: 优化搜索条选择 Lov 条件按钮没有对齐的问题。
 - 💄 `<pro>Lov`: 优化 mode viewMode 类型声明。
+- 💄 `<pro>DataSet`: 优化 field 的 min 或 max 属性设置为 fieldName 时的校验。
 - 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
@@ -63,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复 loading 状态会失去焦点的问题。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
 - 🐞 `<pro>TextField`: 修复在失焦情况下按ctrl+z回退值没有同步到DataSet中的问题。
+- 🐞 `<pro>TextField`: 修复多值时输入框遮挡输入内容的问题。
 - 🐞 `<pro>Tree`: 修复父子节点 checkable 状态单独控制错误问题。
 
 

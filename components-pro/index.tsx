@@ -20,6 +20,8 @@ export { default as Axios } from './axios';
 
 export { default as DataSet } from './data-set';
 
+export { default as Typography } from './typography';
+
 export { default as Form } from './form';
 
 export { default as Table } from './table';

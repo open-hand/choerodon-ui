@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
 - 🌟 `<pro>DataSet`: Added `treeCheckStrictly` property.
+- 🌟 `<pro>Typography`: Added `Typography` component.
 - 💄 `<pro>Table`: The `hideable` of required columns is always false.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
@@ -37,6 +38,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized problem of adaptive `rowheight` in optimized combination search.
 - 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
+- 💄 `<pro>DataSet`: Optimize validation when the `min` or `max` attribute of a `field` is set to `fieldName`.
 - 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
@@ -63,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix the problem of losing focus in loading state.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 - 🐞 `<pro>TextField`: Fix the problem that the value is not synced to the DataSet when pressing ctrl+z to fallback in blur status.
+- 🐞 `<pro>TextField`: Fix the problem where the input box obscured content when multi-value.
 - 🐞 `<pro>Tree`: Fix parent and son nodes `checkable` status individual control error.
 
 ## 1.5.2
