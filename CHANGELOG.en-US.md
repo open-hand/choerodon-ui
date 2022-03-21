@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix the problem of losing focus in loading state.
 - 🐞 `<pro>Table`: Fix the problem that the cell contents is not aligned.
 - 🐞 `<pro>TextField`: Fix the problem that the value is not synced to the DataSet when pressing ctrl+z to fallback in blur status.
+- 🐞 `<pro>TextField`: Fix the problem where the input box obscured content when multi-value.
 - 🐞 `<pro>Tree`: Fix parent and son nodes `checkable` status individual control error.
 
 ## 1.5.2
