@@ -94,15 +94,16 @@
     border-bottom-right-radius: 0;
   }
 
-  &-compact:hover &-wrapper {
-    z-index: 2;
-  }
+  &-compact:hover &-wrapper,
   &-compact:focus &-wrapper {
-    z-index: 2;
+    z-index: 3;
   }
 
-  &-compact &-invalid,
   &-compact &-focused {
+    z-index: 3;
+  }
+
+  &-compact &-invalid {
     z-index: 2;
   }
 
@@ -483,6 +484,7 @@
     &-wrapper {
       display: inline-block;
       width: 100%;
+      vertical-align: middle;
     }
 
     &-before,
