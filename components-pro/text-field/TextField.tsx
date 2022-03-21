@@ -173,8 +173,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   addonBeforeRef?: HTMLDivElement | null;
 
-  multipleInputRef?: HTMLInputElement | null;
-
   @observable renderedText?: {
     text: string;
     width: number;
@@ -313,11 +311,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   saveAddonBeforeRef(node) {
     this.addonBeforeRef = node;
-  }
-
-  @autobind
-  saveMultipleInputRef(node) {
-    this.multipleInputRef = node;
   }
 
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
@@ -825,9 +818,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       props.readOnly = true;
     } else if (text) {
       const computedStyle: CSSStyleDeclaration | undefined = 
-        this.multipleInputRef ?
-          getComputedStyle(this.multipleInputRef) :
-          undefined;
+      this.element ? 
+        getComputedStyle(this.element) :
+        undefined;
       editorStyle.width = pxToRem(measureTextWidth(text, computedStyle), true)!;
     }
     return (
@@ -904,7 +897,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               : this.renderMultipleEditor({
                 ...otherProps,
                 className: `${prefixCls}-multiple-input`,
-                ref: this.saveMultipleInputRef,
               } as T)
           }
         </Animate>
