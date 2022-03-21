@@ -203,11 +203,12 @@
 
   &-resizer-cursor {
     position: absolute;
+    z-index: 21;
+    user-select: none;
 
     &-modal {
       right: 0;
       bottom: 0;
-      z-index: 10;
       width: 0.14rem;
       height: 0.1rem;
       transform: rotate(-45deg);
@@ -254,7 +255,6 @@
     &-drawer-up,
     &-drawer-down {
       position: absolute;
-      z-index: 12;
       box-sizing: border-box;
 
       &::before,
@@ -266,7 +266,7 @@
 
       &::before {
         top: calc(50% - 0.13rem);
-        left: -0.02rem;
+        left: -0.01rem;
         width: 0.03rem;
         height: 0.26rem;
         margin-top: 0.07rem;
@@ -276,7 +276,7 @@
 
       &::after {
         top: calc(50% - 0.06rem);
-        left: -0.01rem;
+        left: 0;
         width: 0.02rem;
         height: 0.12rem;
         margin-top: 0.07rem;
