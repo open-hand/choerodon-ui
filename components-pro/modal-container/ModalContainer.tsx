@@ -481,7 +481,9 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           hiddenProp="hidden"
           {...animationProps}
         >
-          <Mask {...maskProps} hidden={activeModal ? maskProps.hidden : !this.active} />
+          {
+            activeModal ? <Mask {...maskProps} /> : <div hidden={!this.active} />
+          }
         </Animate>
         {items}
         {getContainer === false && <span ref={this.saveMount} />}
