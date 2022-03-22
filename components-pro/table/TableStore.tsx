@@ -546,7 +546,7 @@ function mergeDefaultProps(
         hasAggregationColumn = true;
       }
       if (tableAggregation || !aggregation) {
-        const customizedColumn = getCustomizedColumn(column, customizedColumns);
+        const customizedColumn = getCustomizedColumn(newColumn, customizedColumns);
         mergeColumnLock(newColumn, parent, customizedColumn);
         if (children) {
           const [, childrenColumns, , {
