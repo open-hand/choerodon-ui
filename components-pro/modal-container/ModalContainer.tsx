@@ -142,6 +142,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   @observable drawerOffsets: DrawerOffsets;
 
+  maskStyle?: CSSProperties | undefined;
+
   @computed
   get baseOffsets() {
     const offsets = {
@@ -456,9 +458,9 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       }
     }
     const maskProps: ViewComponentProps = {};
+    const style: CSSProperties = {};
     if (activeModal) {
       const { maskClosable = context.getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
-      maskProps.hidden = maskHidden;
       maskProps.className = maskClassName;
       maskProps.onMouseDown = stopEvent;
       if (maskClosable === 'dblclick') {
@@ -466,11 +468,22 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       } else {
         maskProps.onClick = this.handleMaskClick;
       }
-      maskProps.style = isEmbeddedContainer ? {
-        ...maskStyle,
-        position: 'absolute',
-        height: pxToRem(offsetContainer.scrollHeight, true)!,
-      } : maskStyle;
+      Object.assign(style, maskStyle);
+      if (isEmbeddedContainer) {
+        style.position = 'absolute';
+        style.height = pxToRem(offsetContainer.scrollHeight, true)!;
+      }
+    }
+    if (this.active) {
+      maskProps.hidden = false;
+      if (maskHidden) {
+        style.display = 'none';
+      }
+      maskProps.style = style;
+      this.maskStyle = style;
+    } else {
+      maskProps.hidden = true;
+      maskProps.style = this.maskStyle;
     }
     return (
       <>
@@ -481,9 +494,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           hiddenProp="hidden"
           {...animationProps}
         >
-          {
-            activeModal ? <Mask {...maskProps} /> : <div hidden={!this.active} />
-          }
+          <Mask {...maskProps} />
         </Animate>
         {items}
         {getContainer === false && <span ref={this.saveMount} />}
