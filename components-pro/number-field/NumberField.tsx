@@ -545,6 +545,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       if (this.allowDecimal) {
         restrict += '.';
       }
+      else if (value.indexOf('.') !== -1) {
+        let boforeValue = this.getCurrentInputValue();
+        boforeValue = !isNil(boforeValue) ? String(boforeValue) : '';
+        if (boforeValue.indexOf('.') === -1) {
+          return boforeValue;
+        }
+        value = String(this.stepGenerator(false).next().value);
+      }
       const isNegative = this.allowNegative && /^-/.test(value);
       value = super.restrictInput(value.replace(new RegExp(`[^${restrict}]+`, 'g'), ''));
       const values = value.split('.');
