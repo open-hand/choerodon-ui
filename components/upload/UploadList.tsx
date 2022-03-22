@@ -30,7 +30,7 @@ const reorder = (list, startIndex, endIndex): UploadFile[] => {
 
 function defaultRenderIcon(file: UploadFile, listType: UploadListType, prefixCls?: string) {
   if (listType === 'picture' || listType === 'picture-card') {
-    return <Icon type="file" style={{ fontSize: 48, color: 'rgba(0,0,0,0.5)' }} />;
+    return <Icon type="insert_drive_file" className={`${prefixCls}-list-item-icon`} />;
   }
   if (file.status === 'uploading') {
     return <Progress key='loading' type={ProgressType.loading} size={Size.small} />;
