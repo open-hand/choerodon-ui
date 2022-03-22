@@ -1,4 +1,5 @@
 import React, { isValidElement, createRef, useEffect, useRef } from 'react';
+import measureTextWidth from 'choerodon-ui/pro/lib/_util/measureTextWidth';
 import classNames from 'classnames';
 
 const Marks = ({
@@ -12,9 +13,6 @@ const Marks = ({
   onClickLabel,
 }) => {
   const marksKeys = Object.keys(marks);
-  const marksCount = marksKeys.length;
-  const unit = marksCount > 1 ? 100 / (marksCount - 1) : 100;
-  const markWidth = unit * 0.9;
   const range = max - min;
   const listRef = useRef([]);
 
@@ -64,9 +62,9 @@ const Marks = ({
       bottom: `${(point - min) / range * 100}%`,
     };
 
+    const markWidth = typeof markLabel === 'string' ? measureTextWidth(markLabel) : 0;
     const leftStyle = {
-      width: `${markWidth}%`,
-      marginLeft: `${-markWidth / 2}%`,
+      marginLeft: `${-markWidth / 2}px`,
       left: `${(point - min) / range * 100}%`,
     };
 
@@ -84,7 +82,7 @@ const Marks = ({
         onMouseDown={(e) => onClickLabel(e, point)}
         onTouchStart={(e) => onClickLabel(e, point)}
       >
-        <span >{markLabel}</span>
+        <span>{markLabel}</span>
       </span>
     );
   });
