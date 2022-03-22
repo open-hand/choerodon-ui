@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added `ItemGroup` combination input box.
 - 🌟 `<pro>DataSet`: Added `treeCheckStrictly` property.
 - 🌟 `<pro>Typography`: Added `Typography` component.
+- 💄 `Upload`: Optimize the display style of non-picture files in `picture-card` mode.
 - 💄 `<pro>Table`: The `hideable` of required columns is always false.
 - 💄 `<pro>Modal`: Optimized the resizing transition in Lov.
 - 💄 `<pro>Table`: Optimized the error tip style.
