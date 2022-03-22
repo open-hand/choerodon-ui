@@ -158,15 +158,12 @@ export class MenuItem extends React.Component {
       attrs.role = 'none';
     }
 
-    let mouseEvent = {};
-    if (!props.disabled) {
-      mouseEvent = {
-        onClick: this.onClick,
-        onMouseLeave: this.onMouseLeave,
-        onMouseEnter: this.onMouseEnter,
-        onMouseDown: this.props.onMouseDown,
-      };
-    }
+    const mouseEvent = {
+      onClick: props.disabled ? null : this.onClick,
+      onMouseLeave: props.disabled ? null : this.onMouseLeave,
+      onMouseEnter: props.disabled ? null : this.onMouseEnter,
+      onMouseDown: props.disabled ? null : props.onMouseDown,
+    };
     const style = {
       ...props.style,
     };
