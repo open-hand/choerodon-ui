@@ -78,14 +78,6 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   @autobind
-  async handleQuery() {
-    const { dataSet, queryDataSet } = this.props;
-    if (queryDataSet && await queryDataSet.validate()) {
-      dataSet.query();
-    }
-  }
-
-  @autobind
   createFields(element) {
     if (!element) {
       return React.createElement('span');
@@ -97,7 +89,6 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
     }
     const props: any = {
       onEnterDown: this.handleFieldEnter,
-      onChange: this.handleQuery,
       labelLayout: LabelLayout.none,
       dataSet: queryDataSet,
       name: fieldName,
