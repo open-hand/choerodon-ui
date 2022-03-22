@@ -622,7 +622,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getExpandNode(hidden): ReactNode {
     const { prefixCls, props: { refreshBtn } } = this;
-    if (!this.showExpandIcon && !hidden) return null;
+    if (!this.showExpandIcon && !hidden) return refreshBtn ? this.renderRefreshBtn() : null;
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}

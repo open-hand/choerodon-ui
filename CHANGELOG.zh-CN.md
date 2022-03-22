@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
 - 🐞 `<pro>Table`: 修复动态查询条 Lov 无法回显的问题。
+- 🐞 `<pro>Table`: 修复动态查询条刷新按钮不显示的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下 SelectBox 编辑器切换不了的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
 - 🐞 `<pro>Form`: 修复 vertical 布局下，label 样式问题。
