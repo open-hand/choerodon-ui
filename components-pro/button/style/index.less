@@ -353,6 +353,10 @@
     .@{progress-cls}-inner {
       width: 0.15rem;
       height: 0.15rem;
+
+      circle {
+        stroke: currentColor;
+      }
     }
   }
 
@@ -367,10 +371,6 @@
 
   &[disabled] > *, &-disabled > *, &-loading > * {
     pointer-events: none;
-  }
-
-  .@{progress-cls} circle {
-    stroke: currentColor;
   }
 }
 
