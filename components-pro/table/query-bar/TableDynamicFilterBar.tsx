@@ -73,7 +73,7 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
         return String(oldValue) === String(value);
       }
       const field = dataSet.getField(key);
-      if (field && field.get('lovCode') && oldValue) {
+      if (field && field.get('lovCode') && oldValue && value) {
         const valueField = dataSet.getField(key).get('valueField', record);
         const textField = dataSet.getField(key).get('textField', record);
         return value[valueField] === oldValue[valueField] && value[textField] === oldValue[textField];
