@@ -353,7 +353,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         <span className={`${prefixCls}-list-item-picture-card`}>
           {icon}
         </span>
-      ) : <>{icon}{preview}</>;
+      ) : <span className={`${prefixCls}-list-item-text`}>{icon}{preview}</span>;
 
       const iconAndPreviewTooltip =
         stat.isError ? (
