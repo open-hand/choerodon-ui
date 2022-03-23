@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化 mode viewMode 类型声明。
 - 💄 `<pro>DataSet`: 优化 field 的 min 或 max 属性设置为 fieldName 时的校验。
 - 💄 `<pro>NumberField`: 优化设置 step 属性且默认值为小数时, 修改值后, 整数和小数合并的问题。
+- 🐞 `version`: 修复 webpack5 下会报错的问题。
 - 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
