@@ -5,11 +5,11 @@ import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigCont
 
 export interface SliderMarks {
   [key: number]:
-    | ReactNode
-    | {
-        style: CSSProperties;
-        label: ReactNode;
-      };
+  | ReactNode
+  | {
+    style: CSSProperties;
+    label: ReactNode;
+  };
 }
 
 export type SliderValue = number | [number, number];
@@ -35,6 +35,7 @@ export interface SliderProps {
   included?: boolean;
   disabled?: boolean;
   vertical?: boolean;
+  tooltipVisible?: boolean;
   onChange?: (value: SliderValue) => void;
   onAfterChange?: (value: SliderValue) => void;
   tipFormatter?: null | ((value: number) => ReactNode);
@@ -54,6 +55,7 @@ export default class Slider extends Component<SliderProps, SliderState> {
   static displayName = 'Slider';
 
   static defaultProps = {
+    tooltipVisible: true,
     tipFormatter(value: number) {
       return value.toString();
     },
@@ -80,13 +82,13 @@ export default class Slider extends Component<SliderProps, SliderState> {
   };
 
   handleWithTooltip: HandleGeneratorFn = ({ value, dragging, index, ...restProps }) => {
-    const { tooltipPrefixCls, tipFormatter } = this.props;
+    const { tooltipPrefixCls, tooltipVisible, tipFormatter } = this.props;
     const { visibles } = this.state;
-    const visible = tipFormatter ? visibles[index] || dragging : false;
+    const visible = tooltipVisible ? visibles[index] || dragging : false;
     return (
       <Tooltip
         prefixCls={tooltipPrefixCls}
-        title={tipFormatter ? tipFormatter(value) : ''}
+        title={tipFormatter ? tipFormatter(value) : `${value}`}
         visible={visible}
         placement="top"
         transitionName="zoom-down"

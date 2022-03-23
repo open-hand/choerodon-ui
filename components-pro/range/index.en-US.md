@@ -27,6 +27,7 @@ Range。
 | range | dual thumb mode | boolean | false |
 | step | The granularity the slider can step through values. Must greater than 0, and be divided by (max - min) . When  `marks` no null, `step` can be `null`. | number\|null | 1 |
 | tipFormatter | Slider will pass its value to `tipFormatter`, and display its value in Tooltip, and hide Tooltip when return value is null. | Function\|null | IDENTITY |
+| tooltipVisible | When the value is true, the tooltip will always be displayed; Otherwise, it will never be displayed, even when dragging and moving in | boolean | true |
 | value | The value of slider. When `range` is `false`, use `number`, otherwise, use `[number, number]` | number\|number\[] |  |
 | vertical | If true, the slider will be vertical. | Boolean | false |
 | onAfterChange | Fire when  `onmouseup` is fired. | Function(value) | NOOP |
