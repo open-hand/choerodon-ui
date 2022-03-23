@@ -29,10 +29,10 @@ function isEvalSupport(): boolean {
 
 export function getRootFontSize(): number {
   let { ROOT_STYLE } = global;
-  if (!ROOT_STYLE) {
+  if (!ROOT_STYLE && typeof window !== 'undefined') {
     ROOT_STYLE = window.getComputedStyle(document.documentElement);
   }
-  return defaultTo(toPx(ROOT_STYLE.fontSize), () => 100);
+  return ROOT_STYLE ? defaultTo(toPx(ROOT_STYLE.fontSize), () => 100) : 100;
 }
 
 function calculate(n1: number | undefined, n2: number | undefined, operation: string): number | undefined {
