@@ -16,6 +16,7 @@ title: API
 | range | dual thumb mode | boolean | false | 1.5.0-beta.0 |
 | step | The granularity the slider can step through values. Must greater than 0, and be divided by (max - min) . When  `marks` no null, `step` can be `null`. | number\|null | 1 ||
 | tipFormatter | Slider will pass its value to `tipFormatter`, and display its value in Tooltip, and hide Tooltip when return value is null. | Function\|null | IDENTITY | 1.5.0-beta.0 |
+| tooltipVisible | 值为 true 时，Tooltip 将会始终显示；否则始终不显示，哪怕在拖拽及移入时 | boolean | true | 1.5.3 |
 | value | The value of slider. When `range` is `false`, use `number`, otherwise, use `[number, number]` | number\|number\[] |  | 1.5.0-beta.0 |
 | vertical | If true, the slider will be vertical. | boolean | false ||
 | onAfterChange | Fire when  `onmouseup` is fired. | Function(value) |  | 1.5.0-beta.0 |

@@ -44,6 +44,8 @@ title: API
 | count         | 选项卡头内显示数字          | number\| () => number | 无     |
 | countRenderer | 数字渲染器 | ({ text, count, overflowCount }) => ReactNode | ({ text }) => { if (text) return text; } | 1.5.0-beta.0 |
 | overflowCount         | 展示封顶的数字值         | number | 99     |
+| showCount         | 显示数字        | boolean | true     | 1.4.5 |
+| dataSet	| 数据集对象，当数据集校验失败时会出现提示标记 | DataSet \| DataSet[] |  | 1.5.3 |
 
 ### Tabs.TabGroup
 

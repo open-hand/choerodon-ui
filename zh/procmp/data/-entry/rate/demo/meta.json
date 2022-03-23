@@ -12,7 +12,7 @@
       },
       "description": {
         "zh": "最简单的用法。\n",
-        "en": "Basic Usage。\n"
+        "en": "Basic Usage.\n"
       },
       "order": 0,
       "screenshot": "",
@@ -28,9 +28,80 @@
         "zh": "绑定数据源\n",
         "en": "DataSet Binding\n"
       },
-      "order": 2,
+      "order": 1,
+      "height": 307,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "half.js",
+      "title": {
+        "zh": "半星",
+        "en": "Half star"
+      },
+      "description": {
+        "zh": "支持选中半星。\n",
+        "en": "Support select half star.\n"
+      },
+      "order": 2,
+      "category": "pro",
+      "screenshot": ""
+    },
+    {
+      "filename": "text.js",
+      "title": {
+        "zh": "文案展现",
+        "en": "Show copywriting"
+      },
+      "description": {
+        "zh": "给评分组件加上文案展示。\n",
+        "en": "Add copywriting in rate components.\n"
+      },
+      "order": 3,
+      "screenshot": ""
+    },
+    {
+      "filename": "disabled.js",
+      "title": {
+        "zh": "只读",
+        "en": "Read only"
+      },
+      "description": {
+        "zh": "只读，无法进行鼠标交互。\n",
+        "en": "Read only, can't use mouse to interact.\n"
+      },
+      "order": 4,
+      "category": "pro",
+      "screenshot": ""
+    },
+    {
+      "filename": "clear.js",
+      "title": {
+        "zh": "清除",
+        "en": "Clear star"
+      },
+      "description": {
+        "zh": "支持允许或者禁用清除。\n",
+        "en": "Support set allow to clear star when click again.\n"
+      },
+      "order": 5,
+      "category": "pro",
+      "screenshot": ""
+    },
+    {
+      "filename": "character.js",
+      "title": {
+        "zh": "其他字符",
+        "en": "Other Character"
+      },
+      "description": {
+        "zh": "可以将星星替换为其他字符，比如字母，数字，字体图标甚至中文。\n",
+        "en": "Replace the default star to other character like alphabet, digit, iconfont or even Chinese word.\n"
+      },
+      "order": 6,
+      "height": 207,
+      "category": "pro",
+      "screenshot": ""
     }
   ]
 }

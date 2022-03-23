@@ -64,6 +64,21 @@
       "height": 293,
       "category": "pro",
       "ignores": ["theme1", "theme3"]
+    },
+    {
+      "filename": "marks.js",
+      "title": {
+        "zh": "设置标签",
+        "en": "Setting Marks"
+      },
+      "description": {
+        "zh": "设置标签\n",
+        "en": "Setting Marks\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "height": 450,
+      "category": "pro"
     }
   ]
 }

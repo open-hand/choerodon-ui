@@ -22,9 +22,10 @@ title: API
 | onSuccess              | 提交成功回调                                                                                                                          | Function                    |                           |    |
 | onError                | 提交失败回调                                                                                                                          | Function                    |                           |    |
 | separateSpacing | 切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合 labelWidth 效果会更好 | number \| \[number, number \] \| {width:number,height:number} |  | |
-| spacingType | 间隔类型， 可选值 between\| aroung\| evenly | SpacingType \| \[SpacingType, SpacingType\] \| {width:SpacingType,height:SpacingType} | between | 1.5.2 |
+| spacingType | 间隔类型， 可选值 between\| around\| evenly | SpacingType \| \[SpacingType, SpacingType\] \| {width:SpacingType,height:SpacingType} | between | 1.5.2 |
 | fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |    |
 | showValidation | 校验信息提示方式 | tooltip \| newLine | | 1.4.4 |
+| autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
 
 更多属性请参考 [ViewComponent](/zh/procmp/abstract/ViewComponent#viewcomponent)。
 
@@ -52,6 +53,23 @@ title: API
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number  | 1.4.2 |
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | 1.4.2 |
 | hidden | 是否隐藏字段（依然会校验字段）| boolean | | 1.4.4 |
+
+#### Form.ItemGroup
+
+> 1.5.3 新增组件。
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| className | 自定义类名 | string |  |
+| style | 自定义样式 | React.CSSProperties |  |
+| label | 标签 | string \| ReactNode |  |
+| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number |  |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 none \| always \| overflow | string |  |
+| help | 帮助信息(显示在label旁) | string |  |
+| required | 是否显示必填样式(不做校验) | boolean |  |
+| useColon | 是否使用冒号, 当开启时会在所有的 label 后面加上冒号, 并且必填的 * 号会被移到最前方, 无 label 时不显示。未设置时沿用Form的useColon属性 | boolean | |
+| compact | 是否用紧凑模式 | boolean |  |
+| hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
 
 ### Form.FormVirtualGroup
 

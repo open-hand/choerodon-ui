@@ -1,5 +1,5 @@
 ---
-title: Upload
+title: Upload<pro>
 subtitle: 上传
 order: 0
 ---

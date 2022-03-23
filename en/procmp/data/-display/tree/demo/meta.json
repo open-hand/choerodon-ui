@@ -93,6 +93,81 @@
       "screenshot": "",
       "height": 600,
       "category": "pro"
+    },
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "基本",
+        "en": "basic"
+      },
+      "description": {
+        "zh": "不关联数据源基本使用，最简单的用法，展示可勾选，可选中，禁用，默认展开等功能。\n",
+        "en": "The most basic usage, tell you how to use checkable, selectable, disabled, defaultExpandKeys, and etc.\n"
+      },
+      "order": 7,
+      "height": 261,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "basic-controlled.js",
+      "title": {
+        "zh": "受控操作示例",
+        "en": "basic controlled example"
+      },
+      "description": {
+        "zh": "不关联数据源，受控操作示例\n",
+        "en": "basic controlled example\n"
+      },
+      "order": 8,
+      "height": 429,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "customized-icon.js",
+      "title": {
+        "zh": "自定义图标",
+        "en": "Customize Icon"
+      },
+      "description": {
+        "zh": "可以针对不同节点采用样式覆盖的方式定制图标。\n",
+        "en": "You can customize icons for different nodes by styles override.\n"
+      },
+      "order": 9,
+      "height": 261,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "directory.js",
+      "title": {
+        "zh": "目录",
+        "en": "directory"
+      },
+      "description": {
+        "zh": "内置的目录树，`multiple` 模式支持 `ctrl(Windows)` / `command(Mac)` 复选。\n",
+        "en": "Built-in directory tree. `multiple` support `ctrl(Windows)` / `command(Mac)` selection.\n"
+      },
+      "order": 10,
+      "height": 261,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "virtual-scroll.js",
+      "title": {
+        "zh": "虚拟滚动",
+        "en": "Virtual scroll"
+      },
+      "description": {
+        "zh": "使用 `height` 属性则切换为虚拟滚动。\n",
+        "en": "Use virtual list through `height` prop.\n"
+      },
+      "order": 11,
+      "height": 326,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

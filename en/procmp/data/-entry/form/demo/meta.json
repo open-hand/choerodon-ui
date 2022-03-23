@@ -32,7 +32,9 @@
       "order": 0,
       "screenshot": "",
       "height": 648,
-      "ignores": ["theme5"],
+      "ignores": [
+        "theme5"
+      ],
       "category": "pro"
     },
     {
@@ -90,7 +92,11 @@
         "zh": "浮动标签。\n",
         "en": "Float Label.\n"
       },
-      "ignores": ["theme1", "theme2", "theme3"],
+      "ignores": [
+        "theme1",
+        "theme2",
+        "theme3"
+      ],
       "order": 6,
       "screenshot": "",
       "height": 777,
@@ -170,7 +176,10 @@
       "screenshot": "",
       "height": 123,
       "category": "pro",
-      "ignores": ["theme1", "theme3"]
+      "ignores": [
+        "theme1",
+        "theme3"
+      ]
     },
     {
       "filename": "grid.js",
@@ -185,6 +194,21 @@
       "order": 13,
       "screenshot": "",
       "height": 768,
+      "category": "pro"
+    },
+    {
+      "filename": "item-group.js",
+      "title": {
+        "zh": "输入框组合",
+        "en": "Item group"
+      },
+      "description": {
+        "zh": "输入框的组合展现。\n",
+        "en": "Item group\n"
+      },
+      "order": 14,
+      "screenshot": "",
+      "height": 568,
       "category": "pro"
     }
   ]

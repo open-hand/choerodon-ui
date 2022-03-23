@@ -187,6 +187,20 @@
       "order": 13,
       "height": 165,
       "screenshot": ""
+    },
+    {
+      "filename": "dataset.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "DataSet"
+      },
+      "description": {
+        "zh": "页签结合数据源。\n",
+        "en": "Bind DataSet.\n"
+      },
+      "order": 14,
+      "height": 280,
+      "screenshot": ""
     }
   ]
 }

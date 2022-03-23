@@ -315,7 +315,7 @@
         "en": "AutoHeight"
       },
       "description": {
-        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
+        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动，并且保持表头固定。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
         "en": "AutoHeight.\n"
       },
       "order": 19,

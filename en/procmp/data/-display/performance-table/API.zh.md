@@ -26,12 +26,12 @@ title: API
 | minHeight                | number `(0)`                                                                      | 最小高度                                                     |     |
 | onDataUpdated            | (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void | 数据更新后的回调函数                                         |     |
 | onExpandChange           | (expanded:boolean, rowData:object) => void                                        | 树形表格，在展开节点的回调函数                               |     |
-| onRowClick               | (rowData:object) => void                                                          | 行点击后的回调函数， 返回 `rowDate`                          |     |
+| onRowClick               | (rowData:object) => void                                                          | 行点击后的回调函数， 返回 `rowData`                          |     |
 | onScroll                 | (scrollX:object, scrollY:object) => void                                          | 滚动条滚动时候的回调函数                                     |     |
 | onSortColumn             | (dataKey:string, sortType:string) => void                                         | 点击排序列的回调函数，返回 `sortColumn`, `sortType` 这两个值 |     |
 | renderEmpty              | (info: React.Node) => React.Node                                                  | 自定义渲染数据为空的状态                                     |     |
 | renderLoading            | (loading: React.Node) => React.Node                                               | 自定义渲染数据加载中的状态                                   |     |
-| renderRowExpanded        | (rowDate?: Object) => React.Node                                                  | 自定义可以展开区域的内容                                     |     |
+| renderRowExpanded        | (rowData?: Object) => React.Node                                                  | 自定义可以展开区域的内容                                     |     |
 | renderTreeToggle         | (icon:node, rowData:object, expanded:boolean) => node                             | 树形表格，在展开节点的回调函数                               |     |
 | rowClassName             | string , (rowData:object) => string                                               | 为行自定义 className                                         |     |
 | rowExpandedHeight        | number `(100)`                                                                    | 设置可展开区域的高度                                         |     |

@@ -12,7 +12,6 @@ title: API
 | footer                | 表脚                                                                                                                                                                                                                           | ReactNode \| (records) => ReactNode                                                                    |          |    |
 | border                | 是否显示边框                                                                                                                                                                                                                   | boolean                                                                                                | [globalConfig.tableBorder](/en/procmp/configure/configure)      |    |
 | columnEditorBorder | 是否显示编辑器边框 | boolean | [globalConfig.tableBorder](/zh/procmp/configure/configure) | 1.4.0 |
-| autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |    |
 | selectionMode         | 选择记录的模式, 可选值: rowbox \| treebox \| click \| dblclick \| mousedown \| none                                                                                                                                                         | string                                                                                                 | rowbox |    |
 | alwaysShowRowBox      | 是否一直显示 rowbox,开启后在其他模式下也会显示 rowbox                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | onRow                 | 设置行属性                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
@@ -47,7 +46,7 @@ title: API
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure) | 1.2.0  |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/zh/procmp/configure/configure) | 1.2.0   |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/zh/procmp/configure/configure) | 1.2.0  |
-| rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用 | boolean | [globalConfig.tableRowDraggable](/zh/procmp/configure/configure) | 1.2.0   |
+| rowDraggable | 行拖拽，实现行的拖拽 | boolean | [globalConfig.tableRowDraggable](/zh/procmp/configure/configure) | 1.2.0   |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left\|right |  |   |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |    |
 | onExpand              | 点击展开图标时触发                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |    |
@@ -79,9 +78,6 @@ title: API
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/zh/procmp/configure/configure)中的表格个性化钩子： customizedSave \| customizedLoad | string | | 1.2.0   |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | | 1.3.1   |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | | 1.4.0   |
-| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |   |
-| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |    |
-| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |    |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | | 1.4.0   |
 | cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
 | showHeader |	是否显示表头 |	boolean |	true | 1.4.2 |
@@ -90,7 +86,6 @@ title: API
 | searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5 |
 | rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5 |
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
-| groups | 分组 | 请查看TableGroup[配置项](#tablegroup) | | 1.5.1 |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/en/procmp/configure/configure) | 1.5.1 |
 | bodyExpandable | 表格体是否可展开 | boolean | | 1.5.1 |
 | defaultBodyExpanded | 默认表格体是否展开 | boolean | true | 1.5.1 |
@@ -99,6 +94,7 @@ title: API
 | onScrollTop | 纵向滚动事件 | (scrollTop) => void |  | 1.5.1 |
 | onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void | | 1.5.1 |
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
+| autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -255,7 +251,7 @@ title: API
 | droppableProps | droppableProps 参考文档 | object |
 | draggableProps | DraggableProps 参考文档 | object |
 | renderClone | 拖拽起来的时候会在 body 下面新增加一个 table 会在这个 table 注入元素 | (DragTableRowProps \| DragTableHeaderCellProps) => ReactElement<any> |
-| renderIcon | 可以自定义图标图标 | 当为 row 时候（{record}）=> ReactElement<any> 为column 时候 （{column，dataSet, snapshot}）=> ReactElement<any> |
+| renderIcon | 可以自定义图标 | 当为 row 时候（{record}）=> ReactElement<any> 为column 时候 （{column，dataSet, snapshot}）=> ReactElement<any> |
 
 
 ### spin

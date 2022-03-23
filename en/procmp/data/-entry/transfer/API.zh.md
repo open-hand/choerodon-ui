@@ -8,6 +8,8 @@ title: API
 
 | 参数      | 说明                                     | 类型        |默认值 |
 |-----------|------------------------------------------|------------|--------|
+| titles | 标题集合，顺序从左至右 | \[ReactNode, ReactNode] |  |
+| footer | 底部渲染函数 | (props) => ReactNode |  |
 | operations | 操作文案集合，顺序从下至上 | string\[] \| ReactNode[] | ['>', '<'] |
 | sortable | 是否显示排序按钮 | boolean | false |
 | sortOperations | 排序文案集合 | string\[] \| ReactNode[] | ['∧', '∨'] |

@@ -19,11 +19,12 @@ title: API
 
 ### Collapse.Panel
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| disabled | 禁用后的面板展开与否将无法通过用户交互改变 | boolean | false |
-| header | 面板头内容 | string\|ReactNode | 无 |
-| key | 对应 activeKey | string | 无 |
-| forceRender | 被隐藏时是否渲染 DOM 结构 | boolean | false |
-| showArrow	| 是否展示当前面板上的箭头	| boolean	|  true |
-| extra	| 自定义渲染每个面板右上角的内容 | ReactNode | 无 |	
+| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| disabled | 禁用后的面板展开与否将无法通过用户交互改变 | boolean | false | |
+| header | 面板头内容 | string\|ReactNode | 无 | |
+| key | 对应 activeKey | string | 无 | |
+| forceRender | 被隐藏时是否渲染 DOM 结构 | boolean | false | |
+| showArrow	| 是否展示当前面板上的箭头	| boolean	|  true | |
+| extra	| 自定义渲染每个面板右上角的内容 | ReactNode | 无 |	 |
+| dataSet	| 数据集对象，当数据集校验失败时会自动展开 | DataSet \| DataSet[] |  | 1.5.3 |	

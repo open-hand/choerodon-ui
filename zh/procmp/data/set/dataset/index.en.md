@@ -48,6 +48,7 @@ abstract: true
 | parentField | 树形数据当前父节点 id 字段名，与 idField 组合使用。适用于平铺数据；变更节点层级可直接修改 idField 和 parentField 对应的值| string |  | |
 | childrenField | 树形数据子数据集字段名， 如果要异步加载子节点需设置 idField 和 parentField 或者使用 appendData 方法。适用于树形数据；变更节点层级需要操作 record.parent 和 record.children | string |  | 1.4.5 |
 | expandField | 树形数据标记节点是否展开的字段名 | string |  |  |
+| treeCheckStrictly | 树形数据节点选中状态是否独自控制（父子节点选中状态不再关联） | boolean | | 1.5.3 |
 | checkField | 树形数据标记节点是否为选中的字段名，在展开按钮后面会显示 checkbox | string |  |  |
 | fields | 字段属性数组，详见[Field Props](#field-props) | object\[\] |  |  |
 | record | 记录属性，详见[Record Props](#record-props) | object |  |
@@ -189,6 +190,8 @@ abstract: true
 | unSelectAll | <废弃>撤销全选记录事件 | ({ dataSet }) =&gt; void | dataSet - 数据集 | 是 |   |
 | batchSelect | 批量选择记录事件, 由 select, selectAll, batchSelect 和 treeSelect 方法触发 | ({ dataSet, records }) =&gt; void | dataSet - 数据集 records - 选择的记录集 | 是 | |
 | batchUnSelect | 批量取消选择记录事件, 由 unSelect, unSelectAll, batchUnSelect 和 treeUnSelect 方法触发 | ({ dataSet, records }) =&gt; void | dataSet - 数据集 records - 选择的记录集 | 是 | 1.4.2  |
+| selectAllPage | 跨页全选事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集  | 是 | 1.5.3 |
+| unSelectAllPage | 取消跨页全选事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 | 1.5.3 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | dataSet - 数据集 record - 新当前记录 previous - 旧当前记录 | 是 | |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | dataSet - 数据集 record - 字段所属记录，dataSet 的字段无 record name - 字段名 propsName - 属性名 value - 新值 oldValue - 旧值 | 是 |    |
 | create | 记录创建事件 | ({ dataSet, record }) =&gt; void | dataSet - 数据集 record - 创建的记录 | 是 |    |
@@ -225,6 +228,7 @@ abstract: true
 | status         | 状态， 可选值 add \| update \| delete \| sync    | observable&lt;string&gt;  |
 | disabled(1.5.0)       | 禁用                                            | observable&lt;boolean&gt; |
 | selectable     | 可选                                            | observable&lt;boolean&gt; |
+| selectedTimestamp（1.5.3） | 选中时间戳, 可用于排序 | observable&lt;number&gt; |
 | isSelected     | 是否选中                                        | observable&lt;boolean&gt; |
 | isCurrent      | 是否当前记录                                    | observable&lt;boolean&gt; |
 | isExpanded | 树形节点是否展开 | observable&lt;boolean&gt; |

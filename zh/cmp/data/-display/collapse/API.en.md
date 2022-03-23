@@ -19,12 +19,13 @@ title: API
 
 ### Collapse.Panel
 
-| Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
-| disabled | If `true`, panel cannot be opened or closed | boolean | `false` |
-| header | Title of the panel | string\|ReactNode | - |
-| key | Unique key identifying the panel from among its siblings | string | - |
-| showArrow | If `false`, panel will not show arrow icon | boolean | `true` |
-| forceRender | Forced render of content on panel, instead of lazy rending after clicking on header | boolean | `false` |
-| showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
-| extra	| The extra element in the corner | ReactNode | - |	
+| Property | Description | Type | Default | Version | 
+| -------- | ----------- | ---- | ------- | ------- | 
+| disabled | If `true`, panel cannot be opened or closed | boolean | `false` | |
+| header | Title of the panel | string\|ReactNode | - | |
+| key | Unique key identifying the panel from among its siblings | string | - | |
+| showArrow | If `false`, panel will not show arrow icon | boolean | `true` | |
+| forceRender | Forced render of content on panel, instead of lazy rending after clicking on header | boolean | `false` ||
+| showArrow	| If false, panel will not show arrow icon	| boolean	|  true ||
+| extra	| The extra element in the corner | ReactNode | - |	|
+| dataSet	| 数据集对象，当数据集校验失败时会自动展开 | DataSet \| DataSet[] |  |1.5.3|	
