@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
-- 🌟 `<pro>Attachment`: Added `getUUID` property.
+- 🌟 `<pro>Attachment`: Added `getUUID`, `showSize` properties.
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
 - 💄 `<pro>DataSet`: Optimize validation when the `min` or `max` attribute of a `field` is set to `fieldName`.
+- 💄 `<pro>NumberField`: Optimize the problem of integer and decimal merging when setting `step` property and `defaultValue` to decimals then update value.
 - 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.
@@ -54,7 +55,8 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that the sortable interface will also be called when sortable is false.
 - 🐞 `<pro>Table`: Fix the problem of column misalignment caused by hidden aggregation columns in aggregation mode.
 - 🐞 `<pro>Table`: Fixed the problem that the table filterbar clicks the clear button to execute multiple queries.
-- 🐞 `<pro>Table`:Fixed the issue that the dynamic query bar Lov could not be echoed.
+- 🐞 `<pro>Table`: Fixed the issue that the dynamic query bar Lov could not be echoed.
+- 🐞 `<pro>Table`: Fix the problem that the refresh button of the dynamic query bar is not displayed.
 - 🐞 `<pro>Table`: Fix the problem that the SelectBox editor cannot be switched in `aggregation` mode.
 - 🐞 `<pro>Form`: Fixed colon not showing under grid layout, and `Output` style issues.
 - 🐞 `<pro>Form`: Fix the label style issue under `vertical` layout.

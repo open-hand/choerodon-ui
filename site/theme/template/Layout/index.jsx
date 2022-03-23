@@ -23,7 +23,7 @@ UIconfigure({
   lovQueryAxiosConfig(code, lovConfig, props) {
     const { params } = props || {};
     return {
-      url: `/common/lov/dataset/${code}${code === 'LOV_CODE' ? `/${params.pagesize}/${params.page}` : ''}`,
+      url: `/common/lov/dataset/${code}${code === 'LOV_CODE' && params ? `/${params.pagesize}/${params.page}` : ''}`,
     };
   },
 });

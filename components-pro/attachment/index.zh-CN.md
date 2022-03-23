@@ -37,6 +37,7 @@ title: Attachment
 | max | 同时上传文件的最大数量, `0` 表示无限制 | number |  |
 | listLimit | 上传列表最大显示数量，只适用于只读模式 | number |  |
 | showHistory | 可显示操作历史记录 | boolean |  |
+| showSize | 显示文件大小信息 | boolean | true |
 | downloadAll | 是否显示全部下载按钮，只适用于只读模式， 必须配置[attachment.getDownloadAllUrl](/component/configure/#Attachment) | boolean \| ButtonProps | true |
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |

@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 selectAllPage, unSelectAllPage 事件。
 - 🌟 `<pro>DataSet.Record`: 新增 selectedTimestamp 值.
 - 🌟 `<pro>Transfer`: 新增支持接收 children 自定义渲染列表。
-- 🌟 `<pro>Attachment`: 新增 getUUID 属性。
+- 🌟 `<pro>Attachment`: 新增 getUUID, showSize 属性。
 - 🌟 `<pro>Output`: 新增 labelLayout 为 float 模式时, label 的展示。
 - 🌟 `<pro>Table`: 新增 autoValidationLocate 属性。
 - 🌟 `<pro>Form`: 新增 autoValidationLocate 属性。
@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化搜索条选择 Lov 条件按钮没有对齐的问题。
 - 💄 `<pro>Lov`: 优化 mode viewMode 类型声明。
 - 💄 `<pro>DataSet`: 优化 field 的 min 或 max 属性设置为 fieldName 时的校验。
+- 💄 `<pro>NumberField`: 优化设置 step 属性且默认值为小数时, 修改值后, 整数和小数合并的问题。
 - 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
@@ -55,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复聚合模式下隐藏聚合列导致列错位的问题。
 - 🐞 `<pro>Table`: 修复 Table FilterBar 点击清除按钮执行多次查询的问题。
 - 🐞 `<pro>Table`: 修复动态查询条 Lov 无法回显的问题。
+- 🐞 `<pro>Table`: 修复动态查询条刷新按钮不显示的问题。
 - 🐞 `<pro>Table`: 修复聚合模式下 SelectBox 编辑器切换不了的问题。
 - 🐞 `<pro>Form`: 修复栅格布局下冒号不显示，以及 Output 样式问题。
 - 🐞 `<pro>Form`: 修复 vertical 布局下，label 样式问题。
