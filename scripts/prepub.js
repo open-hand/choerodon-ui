@@ -11,13 +11,17 @@ if (fs.existsSync(path.join(__dirname, '../lib'))) {
   // Build package.json version to lib/version/index.js
   // prevent json-loader needing in user-side
   const versionFilePath = path.join(process.cwd(), 'lib', 'version', 'index.js');
-  const versionFileContent = fs.readFileSync(versionFilePath).toString();
   fs.writeFileSync(
     versionFilePath,
-    versionFileContent.replace(
-      `require('../../package.json')`,
-      `{ version: '${packageInfo.version}' }`,
-    ),
+    `"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports["default"] = "${packageInfo.version}";
+//# sourceMappingURL=index.js.map
+`,
   );
   console.log('Wrote version into lib/version/index.js');
 
@@ -40,8 +44,8 @@ if (fs.existsSync(path.join(__dirname, '../dist'))) {
     let componentsLessContent = '';
 
     // Build components in one file: lib/style/components.less
-    fs.readdir(componentsPath, function(err, files) {
-      files.forEach(function(file) {
+    fs.readdir(componentsPath, function (err, files) {
+      files.forEach(function (file) {
         if (fs.existsSync(path.join(componentsPath, file, 'style', 'index.less'))) {
           componentsLessContent += `@import "${relativePath}${file}/style/index.less";\n`;
         }
