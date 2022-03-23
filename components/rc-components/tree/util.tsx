@@ -161,7 +161,8 @@ export function calcDropPosition(
   } else if (
     dropLevelOffset === 0
   ) {
-    if (rawDropLevelOffset > -1.5) {
+    const dropOffsetY = Math.abs((startMousePosition && startMousePosition.y || 0) - clientY);
+    if ((dropOffsetY < height) || (clientY < top + height / 2)) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after
@@ -196,6 +197,7 @@ export function calcDropPosition(
         dropAllowed = false;
       }
     }
+
   } else {
     // | Node1 | <- abstractDropNode
     //      |  Node2  |
