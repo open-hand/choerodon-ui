@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.3
+
+`2022-03-23`
+
 - 🌟 merge `hzero-ui`.
 - 🌟 `configure`: Added `modalMovable` property.
 - 🌟 `Collapse.Panel`: Added `dataSet` property.
