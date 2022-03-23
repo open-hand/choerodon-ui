@@ -38,6 +38,7 @@ export interface ItemProps {
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
+  showSize?: boolean;
   attachmentUUID?: string;
   provided: DraggableProvided;
   draggable?: boolean;
@@ -49,7 +50,7 @@ export interface ItemProps {
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -175,7 +176,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     return (
       <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>
         {nameNode}
-        {!isCardTitle && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
+        {!isCardTitle && showSize && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>
     );
   };

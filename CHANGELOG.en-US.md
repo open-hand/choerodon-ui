@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `selectAllPage`, `unSelectAllPage` events.
 - 🌟 `<pro>DataSet.Record`: Added `selectedTimestamp` value.
 - 🌟 `<pro>Transfer`: Added for receiving children's custom rendering list.
-- 🌟 `<pro>Attachment`: Added `getUUID` property.
+- 🌟 `<pro>Attachment`: Added `getUUID`, `showSize` properties.
 - 🌟 `<pro>Output`: Added display of `label` when `labelLayout` is `float` mode.
 - 🌟 `<pro>Table`: Added `autoValidationLocate` property.
 - 🌟 `<pro>Form`: Added `autoValidationLocate` property.
@@ -40,7 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized no alignment problem in selecting lov condition button in optimization search bar.
 - 💄 `<pro>Lov`: Optimize `mode` `viewMode` type declaration.
 - 💄 `<pro>DataSet`: Optimize validation when the `min` or `max` attribute of a `field` is set to `fieldName`.
-- 💄 `<pro>NumberField`: Optimize the problem of integer and decimal merging when setting `setp` property and `defaultValue` to decimals then update value.
+- 💄 `<pro>NumberField`: Optimize the problem of integer and decimal merging when setting `step` property and `defaultValue` to decimals then update value.
 - 🐞 `Tabs`: Fixed the problem that tabs are not aligned if one tab property is empty.
 - 🐞 `<pro>TreeSelect`: Fixed display error when using `lookupAxiosConfig` and returning tree data when selecting child node.
 - 🐞 `<pro>Lov`: Fix the problem of out-of-focus data change caused by repeated display values.

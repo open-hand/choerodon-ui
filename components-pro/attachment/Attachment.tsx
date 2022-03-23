@@ -50,6 +50,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   max?: number;
   listLimit?: number;
   showHistory?: boolean;
+  showSize?: boolean;
   showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
@@ -84,6 +85,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     suffixCls: 'attachment',
     multiple: true,
     sortable: true,
+    showSize: true,
     downloadAll: true,
     listType: 'text',
     viewMode: 'list',
@@ -289,6 +291,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'dragBoxRender',
       'dragUpload',
       'showHistory',
+      'showSize',
       'isPublic',
       'downloadAll',
       'attachments',
@@ -743,7 +746,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, previewTarget,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget,
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
@@ -762,6 +765,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           attachmentUUID={attachmentUUID}
           uploadButton={uploadButton}
           sortable={sortable}
+          showSize={showSize}
           readOnly={readOnly}
           isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
