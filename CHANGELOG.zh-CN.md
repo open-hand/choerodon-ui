@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.3
+
+`2022-03-23`
+
 - 🌟 合并 hzero-ui。
 - 🌟 `configure`: 新增 modalMovable 属性。
 - 🌟 `Collapse.Panel`: 新增 dataSet 属性。
