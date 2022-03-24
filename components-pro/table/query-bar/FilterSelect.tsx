@@ -19,7 +19,6 @@ import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import autobind from '../../_util/autobind';
 import { FormFieldProps, RenderProps } from '../../field/FormField';
-import measureTextWidth from '../../_util/measureTextWidth';
 import { getEditorByField } from '../utils';
 import ObserverSelect, { SelectProps } from '../../select/Select';
 import Option, { OptionProps } from '../../option/Option';
@@ -486,7 +485,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       onInput: this.handleInput,
       onEnterDown: this.handleFieldEnterDown,
       renderer: noop,
-      isFlat: selectField && selectField.get('range', current),
+      isFlat: true,
     };
 
     if ((editor.type as any).__PRO_SELECT) {
@@ -547,7 +546,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
   }
 
   renderMultipleEditor(props: FilterSelectProps) {
-    const { text, selectField, prefixCls, queryDataSet } = this;
+    const { selectField, prefixCls } = this;
     const editorProps: FilterSelectProps = {
       ...omit(props, ['multiple', 'prefixCls']),
       clearButton: false,
@@ -556,9 +555,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
       elementClassName: `${prefixCls}-inner-editor`,
       onChange: this.handleFieldChange,
     };
-    if (text && (!selectField || !queryDataSet || !selectField.get('range', queryDataSet.current))) {
-      editorProps.style = { width: pxToRem(measureTextWidth(text), true)! };
-    }
+    editorProps.style = { width: 'auto' };
     return (
       <li key="text">
         {selectField ? (
@@ -569,5 +566,14 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           : this.getFieldSelect(editorProps)}
       </li>
     );
+  }
+
+  @autobind
+  handleMouseDown(e) {
+    if (e.target !== this.element) {
+      if (!this.isFocused) {
+        this.focus();
+      }
+    }
   }
 }
