@@ -107,6 +107,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     mode: ViewMode.date,
   };
 
+  componentWillUnmount() {
+    if (this.timeID) {
+      clearTimeout(this.timeID);
+      delete this.timeID;
+    }
+  }
+
   @computed
   get value(): any | undefined {
     const { value } = this.observableProps;
@@ -161,6 +168,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @observable selectedDate?: Moment;
 
   @observable mode?: ViewMode;
+
+  timeID?: NodeJS.Timeout;
 
   /**
    * hover 时显示值
@@ -472,10 +481,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getSelectedDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;
-    const selectedDate =
-      this.selectedDate ||
+    let selectedDate =
       (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
+      this.selectedDate ||
       (!multiple && this.getValue());
+    if (range && !multiple && rangeTarget !== undefined && !isNil(selectedDate) && !isMoment(selectedDate)) {
+      selectedDate = typeof range === 'object' ? selectedDate[range[rangeTarget]] : selectedDate[rangeTarget];
+    }
     if (isMoment(selectedDate) && selectedDate.isValid()) {
       return selectedDate.clone();
     }
@@ -799,7 +811,17 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (this.isFocused && (target !== undefined && target !== this.rangeTarget)) {
       this.expand();
     }
-    this.selectedDate = undefined;
+    if (!isNil(target)) {
+      this.selectedDate = undefined;
+    }
+    else {
+      if (isNil(this.selectedDate)) {
+        this.selectedDate = this.getSelectedDate();
+      }
+      this.timeID = setTimeout(action(() => {
+        this.selectedDate = undefined;
+      }), (this.props.triggerHiddenDelay || 50) + 20);
+    }
     super.setRangeTarget(target);
   }
 

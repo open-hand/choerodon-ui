@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
+- 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 🐞 `Tabs`: Fix validation badge style priority issue.
 
 ## 1.5.3
