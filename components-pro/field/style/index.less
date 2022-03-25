@@ -112,16 +112,18 @@
   }
 
   &-label-help {
-    .icon-help_outline {
+    .icon-help {
       position: relative;
       top: 0.02rem;
       margin-left: 0.02rem;
-      font-size: 0.16rem;
+      color: @field-icon-help-color;
+      font-size: @icon-font-size-sm;
     }
 
-    & + .icon-help_outline {
+    & + .icon-help {
       margin-left: 0.02rem;
-      font-size: 0.16rem;
+      color: @field-icon-help-color;
+      font-size: @icon-font-size-sm;
 
       & + .@{field-prefix-cls}-wrapper {
         padding-top: 0;

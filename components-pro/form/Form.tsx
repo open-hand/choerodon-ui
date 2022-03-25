@@ -639,7 +639,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     if (help) {
       return (
         <Icon
-          type="help_outline"
+          type="help"
           onMouseEnter={(e) => this.handleHelpMouseEnter(e, help)}
           onMouseLeave={this.handleHelpMouseLeave}
         />

@@ -1,8 +1,13 @@
 import React, { ReactNode } from 'react';
-import { action, runInAction } from 'mobx';
+import { action, runInAction, computed } from 'mobx';
 import { observer } from 'mobx-react';
+import isString from 'lodash/isString';
+import { ShowHelp } from '../field/enum';
 import { Radio, RadioProps } from '../radio/Radio';
+import Icon from '../icon';
+import { hide, show } from '../tooltip/singleton';
 import { BooleanValue } from '../data-set/enum';
+import autobind from '../_util/autobind';
 
 export interface CheckBoxProps extends RadioProps {
   /**
@@ -64,11 +69,27 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     return true;
   }
 
+  @computed
+  get showHelp(): ShowHelp {
+    const { showHelp } = this.props;
+    if (isString(showHelp)) {
+      return showHelp;
+    }
+    return this.context.showHelp || this.getContextConfig('showHelp') || ShowHelp.newLine;
+  }
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
       this.value = this.props.defaultChecked ? this.checkedValue : this.unCheckedValue;
     });
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    if (this.showHelp === ShowHelp.tooltip) {
+      hide();
+    }
   }
 
   getOmitPropsKeys(): string[] {
@@ -78,6 +99,35 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       'unCheckedChildren',
       'indeterminate',
     ]);
+  }
+
+
+  @autobind
+  handleHelpMouseEnter(e) {
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
+    show(e.currentTarget, {
+      title: this.getProp('help'),
+      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
+      theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
+    });
+  }
+
+  handleHelpMouseLeave() {
+    hide();
+  }
+
+  renderTooltipHelp(): ReactNode {
+    const help = this.getProp('help');
+    if (help) {
+      return (
+        <Icon
+          type="help"
+          onMouseEnter={this.handleHelpMouseEnter}
+          onMouseLeave={this.handleHelpMouseLeave}
+        />
+      );
+    }
   }
 
   renderInner(): ReactNode {
