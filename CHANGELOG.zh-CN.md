@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
+
 ## 1.5.3
 
 `2022-03-23`
@@ -33,6 +35,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 ItemGroup 组合输入框。
 - 🌟 `<pro>DataSet`: 新增 treeCheckStrictly 属性。
 - 🌟 `<pro>Typography`: 新增 Typography 排版组件。
+- 🌟 `<pro>CheckBox`: 新增 showHelp 功能。
 - 💄 `Upload`: 优化 picture-card 模式下非图片文件的显示样式。
 - 💄 `<pro>Table`: 优化必输列的 hideable 始终为 false。
 - 💄 `<pro>Modal`: 优化了 Lov 中的调整大小动画。
