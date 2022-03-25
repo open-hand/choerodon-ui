@@ -11,6 +11,12 @@
   &-wrapper,
   &-wrapper.@{field-prefix-cls} {
     display: inline-flex;
+    
+    &>.icon-help {
+      margin-left: @label-wrapper-padding-horizontal;
+      color: @field-icon-help-color;
+      font-size: @icon-font-size-sm;
+    }
   }
 
   &-inner {

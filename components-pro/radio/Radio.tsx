@@ -3,6 +3,7 @@ import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { FormField, FormFieldProps } from '../field/FormField';
+import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import { ViewMode } from './enum';
@@ -108,12 +109,14 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
   renderWrapper(): ReactNode {
     const checked = this.isChecked();
     const floatLabel = super.hasFloatLabel ? this.renderSwitchFloatLabel() : undefined;
+    const tooltipHelp = this.showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : undefined;
     return (
       <>
         <label key="wrapper" {...this.getWrapperProps()}>
           <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
           {this.renderInner()}
           {this.getTextNode()}
+          {tooltipHelp}
           {this.renderFloatLabel()}
         </label>
         {floatLabel}
@@ -131,6 +134,10 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   renderInner(): ReactNode {
     return <span className={`${this.prefixCls}-inner`} />;
+  }
+
+  renderTooltipHelp(): ReactNode {
+    return undefined;
   }
 
   /**
