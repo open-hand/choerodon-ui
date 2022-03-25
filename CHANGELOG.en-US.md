@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
+
 ## 1.5.3
 
 `2022-03-23`
