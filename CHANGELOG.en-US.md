@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
+- 🐞 `Tabs`: Fix validation badge style priority issue.
 
 ## 1.5.3
 

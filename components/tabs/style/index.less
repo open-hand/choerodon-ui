@@ -116,12 +116,12 @@
         vertical-align: baseline;
       }
 
-      .@{tab-prefix-cls}-invalid-badge > .@{c7n-prefix}-scroll-number-custom-component {
+      .@{tab-prefix-cls}-invalid-badge.@{c7n-prefix}-badge > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
         top: -@tab-groups-padding;
         right: 0;
       }
 
-      &:last-child .@{tab-prefix-cls}-invalid-badge > .@{c7n-prefix}-scroll-number-custom-component {
+      &:last-child .@{tab-prefix-cls}-invalid-badge.@{c7n-prefix}-badge > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
         right: -@tab-groups-padding;
       }
     }
@@ -583,26 +583,12 @@
     vertical-align: baseline;
   }
 
-  &-invalid-badge {
+  &-invalid-badge.@{c7n-prefix}-badge {
     position: static;
 
-    > .@{c7n-prefix}-scroll-number-custom-component {
+    > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
       top: @tab-horizontal-padding-vertical;
       right: -0.1rem;
-      transform: initial;
-      transform-origin: center;
-
-      &.@{c7n-prefix}-badge-zoom-appear,
-      &.@{c7n-prefix}-badge-zoom-enter {
-        animation: c7nZoomInvalidBadgeIn @animation-duration-slow @ease-out-back;
-      }
-
-      &.@{c7n-prefix}-badge-zoom-leave {
-        animation: c7nZoomInvalidBadgeOut @animation-duration-slow @ease-in-back;
-      }
-    }
-
-    &-content {
       display: inline-block;
       width: 0.12rem;
       height: 0.12rem;
@@ -611,6 +597,8 @@
       text-align: center;
       background-color: @error-color;
       border-radius: 0.014rem;
+      transform: initial;
+      transform-origin: center;
 
       &::before {
         display: inline;
@@ -618,6 +606,15 @@
         font-size: 0.12rem;
         font-style: normal;
         content: '*';
+      }
+
+      &.@{c7n-prefix}-badge-zoom-appear,
+      &.@{c7n-prefix}-badge-zoom-enter {
+        animation: c7nZoomInvalidBadgeIn @animation-duration-slow @ease-out-back;
+      }
+
+      &.@{c7n-prefix}-badge-zoom-leave {
+        animation: c7nZoomInvalidBadgeOut @animation-duration-slow @ease-in-back;
       }
     }
   }
