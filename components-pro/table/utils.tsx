@@ -213,7 +213,8 @@ export function findCell(
   name?: Key,
   lock?: ColumnLock | boolean,
   record?: Record,
-): HTMLSpanElement | undefined {
+  extra?: boolean,
+): HTMLSpanElement | HTMLTableDataCellElement | undefined {
   const { node, dataSet, overflowX, currentEditRecord, prefixCls } = tableStore;
   const current = record || currentEditRecord || dataSet.current;
   if (name !== undefined && current && node.element) {
@@ -228,7 +229,7 @@ export function findCell(
       if (cell) {
         return cell;
       }
-      if (tableStore.virtualCell && !td.childElementCount) {
+      if (!extra && tableStore.virtualCell && !td.childElementCount) {
         return td;
       }
     }

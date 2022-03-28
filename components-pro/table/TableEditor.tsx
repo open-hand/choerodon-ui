@@ -86,6 +86,8 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   cellNode: HTMLSpanElement | undefined;
 
+  tdNode: HTMLTableDataCellElement | null | undefined;
+
   get lock(): ColumnLock | boolean | undefined {
     const { column } = this.props;
     return column.lock;
@@ -241,9 +243,15 @@ export default class TableEditor extends Component<TableEditorProps> {
         case KeyCode.TAB: {
           this.inTab = true;
           const { column } = this.props;
-          const cellNode = !isStickySupport() && column.lock ? findCell(tableStore, getColumnKey(column)) : this.cellNode;
-          if (cellNode) {
+          const cellNode = !isStickySupport() && column.lock ? findCell(tableStore, getColumnKey(column), undefined, undefined, true) : this.cellNode;
+          if (cellNode && cellNode.parentElement) {
             cellNode.focus();
+          } else {
+            const { tdNode } = this;
+            if (tdNode) {
+              tdNode.focus();
+              this.hideEditor();
+            }
           }
           break;
         }
@@ -339,36 +347,41 @@ export default class TableEditor extends Component<TableEditorProps> {
     const { tableStore } = this.context;
     if (!cellNode) {
       const { column } = this.props;
-      cellNode = findCell(tableStore, getColumnKey(column));
+      cellNode = findCell(tableStore, getColumnKey(column), undefined, undefined, true);
     }
     if (!this.cellNode && !tableStore.inlineEdit) {
       this.connect();
     }
-    this.cellNode = cellNode;
+    this.cellNode = undefined;
     if (cellNode) {
-      if (height === undefined) {
-        const { offsetHeight } = cellNode;
-        if (offsetHeight !== this.height) {
-          this.height = offsetHeight;
+      const { parentElement } = cellNode;
+      this.tdNode = parentElement as HTMLTableDataCellElement | null;
+      if (parentElement) {
+        this.cellNode = cellNode;
+        if (height === undefined) {
+          const { offsetHeight } = cellNode;
+          if (offsetHeight !== this.height) {
+            this.height = offsetHeight;
+          }
+        } else {
+          this.height = height;
         }
-      } else {
-        this.height = height;
-      }
-      if (!this.rendered) {
-        this.rendered = true;
-      } else if (editor && wrap) {
-        const { offsetWidth } = cellNode;
-        const [left, top] = offset(cellNode, wrap.parentElement);
-        if (this.originalCssText === undefined) {
-          this.originalCssText = wrap.style.cssText;
-        }
-        const width = pxToRem(offsetWidth, true);
-        if (width !== this.width) {
-          this.width = width;
-        }
-        wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left, true)}, ${pxToRem(top, true)})`)}`;
-        if (editor.forcePositionChanged) {
-          editor.forcePositionChanged();
+        if (!this.rendered) {
+          this.rendered = true;
+        } else if (editor && wrap) {
+          const { offsetWidth } = cellNode;
+          const [left, top] = offset(cellNode, wrap.parentElement);
+          if (this.originalCssText === undefined) {
+            this.originalCssText = wrap.style.cssText;
+          }
+          const width = pxToRem(offsetWidth, true);
+          if (width !== this.width) {
+            this.width = width;
+          }
+          wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left, true)}, ${pxToRem(top, true)})`)}`;
+          if (editor.forcePositionChanged) {
+            editor.forcePositionChanged();
+          }
         }
       }
     }
