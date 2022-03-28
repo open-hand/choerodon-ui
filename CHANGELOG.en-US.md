@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `Tabs`: Fix validation badge style priority issue.
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
+- 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 
 ## 1.5.3
 

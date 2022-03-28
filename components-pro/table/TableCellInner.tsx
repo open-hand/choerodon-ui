@@ -150,7 +150,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           editor.focus();
         } else {
           raf(() => {
-            editor.alignEditor(!isStickySupport() && lock ? findCell(tableStore, columnKey, lock) : cell);
+            editor.alignEditor(!isStickySupport() && lock ? findCell(tableStore, columnKey, lock, undefined, true) : cell);
             editor.focus();
           });
         }
@@ -561,13 +561,18 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   useLayoutEffect(() => {
     const { current } = innerRef;
     const { activeEmptyCell } = tableStore;
-    if (current && activeEmptyCell) {
-      if (activeEmptyCell.dataset.index === name) {
-        delete tableStore.activeEmptyCell;
+    if (current && activeEmptyCell && activeEmptyCell.dataset.index === name && tableStore.dataSet.current === record) {
+      delete tableStore.activeEmptyCell;
+      if (current.tabIndex === -1) {
+        const firstFocusableElement = findFirstFocusableElement(current);
+        if (firstFocusableElement) {
+          firstFocusableElement.focus();
+        }
+      } else {
         current.focus();
       }
     }
-  }, []);
+  }, [record]);
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
