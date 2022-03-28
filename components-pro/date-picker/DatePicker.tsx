@@ -169,7 +169,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @observable mode?: ViewMode;
 
-  timeID?: NodeJS.Timeout;
+  timeID?: number;
 
   /**
    * hover 时显示值
@@ -818,7 +818,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       if (isNil(this.selectedDate)) {
         this.selectedDate = this.getSelectedDate();
       }
-      this.timeID = setTimeout(action(() => {
+      this.timeID = window.setTimeout(action(() => {
         this.selectedDate = undefined;
       }), (this.props.triggerHiddenDelay || 50) + 20);
     }
