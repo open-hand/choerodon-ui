@@ -19,6 +19,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 🐞 `Tabs`: Fix validation badge style priority issue.
+- 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
+- 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 
 ## 1.5.3
 

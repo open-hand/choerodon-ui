@@ -19,6 +19,8 @@ timeline: true
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
 - 💄 `<pro>DatePicker`: 优化 range 模式下数据对调后面板日期显示的问题, 以及优化 range 模式下失焦后面板闪现当前日期的问题。
 - 🐞 `Tabs`: 修复校验徽章样式优先级问题。
+- 🐞 `Input`: 修复默认无法输入中文的问题。
+- 🐞 `Input`: 修复有 placeholder 且没有 label 时，输入第一个字符会自动失焦的问题。
 
 ## 1.5.3
 
