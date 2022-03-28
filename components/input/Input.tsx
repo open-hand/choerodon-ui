@@ -145,7 +145,7 @@ export default class Input extends Component<InputProps, any> {
     dbc2sbc: false,
     trim: false,
     trimAll: false,
-    inputChinese: false,
+    inputChinese: true,
     labelLayout: 'float',
   };
 
@@ -510,6 +510,7 @@ export default class Input extends Component<InputProps, any> {
         </div>
       );
     }
+    return <></>;
   }
 
   getSizeClassName(name: string, prefixCls?: string) {
@@ -527,7 +528,7 @@ export default class Input extends Component<InputProps, any> {
 
   renderPlaceholder(prefixCls?: string) {
     const { placeholder, border, labelLayout } = this.props;
-    if (!border && placeholder && labelLayout === 'float') {
+    if (!border && labelLayout === 'float') {
       return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
     }
   }
