@@ -697,8 +697,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  @action
   handleKeyDownTab() {
     // this.collapse();
+    if ((!this.range || this.rangeTarget === 1) && !isNil(this.hoverValue)) {
+      this.hoverValue = null;
+    }
   }
 
   handleKeyDownSpace(e) {
