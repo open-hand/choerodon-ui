@@ -238,7 +238,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
 
   handleTimeCellClick(date: Moment, unit: TimeUnit) {
     this.changeUnit(unit);
-    this.changeSelectedDate(date);
+    this.choose(date, true);
   }
 
   @autobind
@@ -287,7 +287,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       className: classNames(`${prefixCls}-footer-now-btn`, {
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick: !disabledNow ? this.choose.bind(this, moment()) : noop,
+      onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
       hidden: this.props.datetimeSide,
     };
 
@@ -295,12 +295,6 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       <div className={`${prefixCls}-footer`}>
         <a {...footerProps}>
           {$l('DatePicker', 'now')}
-        </a>
-        <a
-          className={`${prefixCls}-footer-view-select`}
-          onClick={this.choose.bind(this, this.props.date)}
-        >
-          {$l('DatePicker', 'ok')}
         </a>
       </div>
     );
@@ -417,9 +411,9 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     }
   }
 
-  choose(date: Moment) {
+  choose(date: Moment, expand?: boolean) {
     const { mode } = this.props;
-    super.choose(date);
+    super.choose(date, expand);
     if (mode !== ViewMode.time) {
       this.changeSelectedDate(date);
       this.changeViewMode(mode);
