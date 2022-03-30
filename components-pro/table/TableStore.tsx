@@ -1962,9 +1962,13 @@ export default class TableStore {
 
   @computed
   get currentData(): Record[] {
-    const { pristine } = this.props;
-    const { recordFilter: filter } = this;
+    const { pristine, filter: recordFilter, treeFilter } = this.props;
     const { dataSet, isTree } = this;
+    const filter = (
+      isTree
+        ? typeof treeFilter === 'function' ? treeFilter : recordFilter
+        : recordFilter
+    );
     let data = isTree ? dataSet.treeRecords : dataSet.records;
     if (typeof filter === 'function') {
       data = data.filter(filter);
@@ -1976,13 +1980,9 @@ export default class TableStore {
   }
 
   @computed
-  get recordFilter(): ((record: Record) => boolean) | undefined {
-    const { props: { filter, treeFilter }, isTree } = this;
-    return (
-      isTree
-        ? typeof treeFilter === 'function' ? treeFilter : filter
-        : filter
-    );
+  get treeFilter(): ((record: Record) => boolean) | undefined {
+    const { props: { treeFilter } } = this;
+    return treeFilter;
   }
 
   @computed
@@ -2035,8 +2035,7 @@ export default class TableStore {
   }
 
   private handleSelectAllChange = action(value => {
-    const { dataSet } = this.props;
-    const { recordFilter: filter } = this;
+    const { dataSet, filter } = this.props;
     const isSelectAll = value ? dataSet.currentSelected.length === dataSet.records.filter(record => record.selectable).length : !value;
     if (!isSelectAll) {
       dataSet.selectAll(filter);
@@ -2465,7 +2464,7 @@ export default class TableStore {
         if (this.allChecked) {
           dataSet.unSelectAll();
         } else {
-          const { recordFilter: filter } = this;
+          const { filter } = this.props;
           dataSet.selectAll(filter);
         }
         break;
