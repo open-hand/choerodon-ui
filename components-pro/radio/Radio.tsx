@@ -177,7 +177,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     const { prefixCls } = this;
     const text = this.getLabelText();
     if (text) {
-      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`} style={hasTooltipHelp && { flex: 'none' }}>{text}</span>;
+      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`} style={hasTooltipHelp ? { flex: 'none' } : {}}>{text}</span>;
     }
   }
 
