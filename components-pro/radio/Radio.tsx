@@ -115,7 +115,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
         <label key="wrapper" {...this.getWrapperProps()}>
           <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
           {this.renderInner()}
-          {this.getTextNode()}
+          {this.getTextNode(!!tooltipHelp)}
           {tooltipHelp}
           {this.renderFloatLabel()}
         </label>
@@ -173,11 +173,11 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return this.getChildrenText() || this.getLabelChildren();
   }
 
-  getTextNode() {
+  getTextNode(hasTooltipHelp) {
     const { prefixCls } = this;
     const text = this.getLabelText();
     if (text) {
-      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`}>{text}</span>;
+      return <span ref={this.saveLabelRef} className={`${prefixCls}-label`} style={hasTooltipHelp && { flex: 'none' }}>{text}</span>;
     }
   }
 
