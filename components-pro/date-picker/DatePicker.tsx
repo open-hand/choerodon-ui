@@ -171,6 +171,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   timeID?: number;
 
+  rangeValueExchange?: boolean;
+
   /**
    * hover 时显示值
    */
@@ -482,8 +484,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getSelectedDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;
     let selectedDate =
-      (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
       this.selectedDate ||
+      (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
       (!multiple && this.getValue());
     if (range && !multiple && rangeTarget !== undefined && !isNil(selectedDate) && !isMoment(selectedDate)) {
       selectedDate = typeof range === 'object' ? selectedDate[range[rangeTarget]] : selectedDate[rangeTarget];
@@ -697,8 +699,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  @action
   handleKeyDownTab() {
     // this.collapse();
+    if ((!this.range || this.rangeTarget === 1) && !isNil(this.hoverValue)) {
+      this.hoverValue = null;
+    }
   }
 
   handleKeyDownSpace(e) {
@@ -744,6 +750,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   exchangeRangeValue(start: Moment, end: Moment) {
+    this.rangeValueExchange = true;
     const { defaultTime } = this.props;
     if (defaultTime) {
       const [startDefaultTime, endDefaultTime] = this.getDefaultTime();
@@ -775,6 +782,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @action
   changeSelectedDate(selectedDate: Moment) {
+    if (this.rangeValueExchange && this.range && !isNil(this.rangeTarget) && this.rangeValue) {
+      const [start, end] = [...this.rangeValue];
+      selectedDate = this.rangeTarget === 0 ? start : end;
+    }
+    this.rangeValueExchange = false;
     this.selectedDate = this.getValidDate(selectedDate);
   }
 

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
 import { Select, SelectProps } from '../select/Select';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
@@ -53,6 +54,10 @@ export default class Transfer extends Select<TransferProps> {
       this.clearCurrentIndex();
     });
     this.isCustom = typeof props.children === 'function';
+  }
+
+  get range(): boolean | [string, string] {
+    return false;
   }
 
   @autobind
@@ -269,10 +274,14 @@ export default class Transfer extends Select<TransferProps> {
       };
     }
 
+    const childProps = omit<TransferProps, keyof TransferProps>(this.props, [
+      'help',
+    ]);
+
     return (
       <span key="wrapper" className={classNameString}>
         <TransferList
-          {...this.props}
+          {...childProps}
           options={this.options}
           selected={sourceSelected}
           header={titles[0]}
@@ -294,7 +303,7 @@ export default class Transfer extends Select<TransferProps> {
           oneWay={oneWay}
         />
         <TransferList
-          {...this.props}
+          {...childProps}
           options={this.options}
           selected={targetSelected}
           header={titles[1]}
