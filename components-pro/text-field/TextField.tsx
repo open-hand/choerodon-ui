@@ -315,7 +315,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
-    const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = rangeTarget === undefined && this.hasFloatLabel ? [] : this.getPlaceholders();
+    const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = this.hasFloatLabel && !this.isFocused ? [] : this.getPlaceholders();
     const { text } = this;
     if (rangeTarget === undefined) {
       if (text !== undefined) {
@@ -654,24 +654,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   getPlaceholders(): string[] {
     const { dataSet, record, props, labelLayout } = this;
     const placeholderOrigin = this.getProp('placeholder');
-    const label = getProperty(props, 'label', dataSet, record);
     let placeholder = placeholderOrigin;
     if (labelLayout === LabelLayout.placeholder) {
+      const label = getProperty(props, 'label', dataSet, record);
       placeholder = label && !this.isFocused ? label : placeholderOrigin || label;
     }
     const holders: string[] = [];
     return placeholder ? holders.concat(toJS(placeholder)) : holders;
-  }
-
-  getLabel() {
-    const [placeholder, endPlaceHolder] = this.getPlaceholders();
-    if (this.rangeTarget === 1 && !isNil(endPlaceHolder) && !this.isFocused && this.isEmpty()) {
-      return endPlaceHolder;
-    }
-    if (placeholder && (this.rangeTarget === 0 || !this.range) && !this.isFocused && this.isEmpty()) {
-      return placeholder;
-    }
-    return toJS(this.getProp('label'));
   }
 
   wrapGroupItem(node: ReactNode, category: GroupItemCategory, props?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, childrenProps?: any): ReactNode {
@@ -817,10 +806,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.zIndex = -1;
       props.readOnly = true;
     } else if (text) {
-      const computedStyle: CSSStyleDeclaration | undefined = 
-      this.element ? 
-        getComputedStyle(this.element) :
-        undefined;
+      const computedStyle: CSSStyleDeclaration | undefined =
+        this.element ?
+          getComputedStyle(this.element) :
+          undefined;
       editorStyle.width = pxToRem(measureTextWidth(text, computedStyle), true)!;
     }
     return (
@@ -1158,7 +1147,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderPlaceHolder(): ReactNode {
-    if ((this.multiple || !isPlaceHolderSupport()) && !this.hasFloatLabel && !this.range) {
+    if ((this.multiple || !isPlaceHolderSupport()) && (!this.hasFloatLabel || this.isFocused) && !this.range) {
       return this.getPlaceHolderNode();
     }
   }

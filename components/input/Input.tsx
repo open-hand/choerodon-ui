@@ -489,20 +489,8 @@ export default class Input extends Component<InputProps, any> {
     ) : null;
   }
 
-  getLabel() {
-    const { focused } = this.state;
-    const { placeholder, label } = this.props;
-    if (!this.hasValue() && placeholder) {
-      if (focused) {
-        return label || placeholder;
-      }
-      return placeholder;
-    }
-    return label;
-  }
-
   renderFloatLabel(prefixCls?: string): ReactNode {
-    const label = this.getLabel();
+    const { label } = this.props;
     if (label) {
       return (
         <div className={`${prefixCls}-label-wrapper`}>
@@ -510,7 +498,6 @@ export default class Input extends Component<InputProps, any> {
         </div>
       );
     }
-    return <></>;
   }
 
   getSizeClassName(name: string, prefixCls?: string) {
@@ -526,18 +513,10 @@ export default class Input extends Component<InputProps, any> {
     return value && value.length !== 0;
   }
 
-  renderPlaceholder(prefixCls?: string) {
-    const { placeholder, border, labelLayout } = this.props;
-    if (!border && labelLayout === 'float') {
-      return <div className={`${prefixCls}-placeholder`}>{placeholder}</div>;
-    }
-  }
-
   renderLabeledIcon(children: ReactElement<any>, prefixCls?: string) {
     const { props } = this;
     const hasBorder = props.border && props.labelLayout === 'float';
     const passwordEye = this.renderShowPassword(prefixCls);
-    const placeHolder = this.renderPlaceholder(prefixCls);
     const copyIcon = this.renderCopyIcon(prefixCls);
     const floatLabel = hasBorder && this.renderFloatLabel(prefixCls);
     const { className } = props;
@@ -555,15 +534,19 @@ export default class Input extends Component<InputProps, any> {
       </span>
     ) : null;
     if (hasBorder) {
-      children = cloneElement<InputProps>(children, { className: classNames(children.props.className, className) });
+      const { focused } = this.state;
+      const preProps = children.props;
+      children = cloneElement<InputProps>(children, {
+        className: classNames(preProps.className, className),
+        placeholder: (!floatLabel || focused) ? preProps.placeholder : null,
+      });
     }
-    if ($passwordEye || placeHolder || copyIcon || floatLabel) {
+    if ($passwordEye || copyIcon || floatLabel) {
       children = (
         <div
           className={this.getSizeClassName('rendered', prefixCls)}
           ref={this.saveRenderedRef}
         >
-          {placeHolder}
           {children}
           {floatLabel}
           {copyIcon}
@@ -599,7 +582,7 @@ export default class Input extends Component<InputProps, any> {
   }
 
   renderInput(prefixCls?: string) {
-    const { labelLayout, type } = this.props;
+    const { type } = this.props;
     const { value, showPassword } = this.state;
     const omits = [
       'prefixCls',
@@ -626,9 +609,6 @@ export default class Input extends Component<InputProps, any> {
       'inputChinese',
       'type',
     ];
-    if (labelLayout === 'float') {
-      omits.push('placeholder');
-    }
     const otherProps: Omit<InputProps,
       'prefixCls'
       | 'onPressEnter'

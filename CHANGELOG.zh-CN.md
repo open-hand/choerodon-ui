@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 range 模式下数据对调后面板日期显示的问题, 以及优化 range 模式下失焦后面板闪现当前日期的问题。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 和 time 时, 去除确定按钮, 失焦后自动选中值。
 - 💄 `<pro>DatePicker`: 优化当 hover 到日期面板时, 按 Tab 键会自动选中的问题。
+- 💄 `Input & <pro>TextField`: 优化浮动标签和 placeholder 之间的显示逻辑与 material design 保持一致。
 - 💄 `<pro>Transfer`: 优化设置 help 时的样式。以及去除 range 属性影响。
 - 🐞 `Tabs`: 修复校验徽章样式优先级问题。
 - 🐞 `Input`: 修复默认无法输入中文的问题。

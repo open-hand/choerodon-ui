@@ -2,7 +2,6 @@
 import React, { Children, cloneElement, Component } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import classnames from 'classnames';
-import classes from 'component-classes';
 import warning from '../../_util/warning';
 import noop from 'lodash/noop';
 import KeyCode from '../../_util/KeyCode';
@@ -52,53 +51,34 @@ function chaining(...fns) {
 
 const BUILT_IN_PLACEMENTS = {
   bottomLeft: {
-    points: ['tl', 'tl'],
+    points: ['tl', 'bl'],
     offset: [0, 4],
     overflow: {
-      adjustX: 0,
-      adjustY: 1,
-    },
-  },
-  topLeft: {
-    points: ['bl', 'bl'],
-    offset: [0, -4],
-    overflow: {
-      adjustX: 0,
+      adjustX: 1,
       adjustY: 1,
     },
   },
   bottomRight: {
-    points: ['tr', 'tr'],
+    points: ['tr', 'br'],
     offset: [0, 4],
     overflow: {
-      adjustX: 0,
-      adjustY: 1,
-    },
-  },
-};
-
-const BUILT_IN_PLACEMENTS_LABEL = {
-  bottomLeft: {
-    points: ['tl', 'tl'],
-    offset: [0, 19],
-    overflow: {
-      adjustX: 0,
+      adjustX: 1,
       adjustY: 1,
     },
   },
   topLeft: {
-    points: ['bl', 'bl'],
+    points: ['bl', 'tl'],
     offset: [0, -4],
     overflow: {
-      adjustX: 0,
+      adjustX: 1,
       adjustY: 1,
     },
   },
-  bottomRight: {
-    points: ['tr', 'tr'],
-    offset: [0, 19],
+  topRight: {
+    points: ['br', 'tr'],
+    offset: [0, -4],
     overflow: {
-      adjustX: 0,
+      adjustX: 1,
       adjustY: 1,
     },
   },
@@ -250,11 +230,12 @@ export default class Select extends Component {
 
   onDropdownVisibleChange = open => {
     if (this.needExpand) {
-      if (open && !this._focused) {
+      if (open && !this.state.focused) {
         this.clearBlurTime();
         this.timeoutFocus();
-        this._focused = true;
-        this.updateFocusClassName();
+        this.setState({
+          focused: true,
+        });
       }
       const { filter } = this.props;
       if (filter) {
@@ -416,11 +397,12 @@ export default class Select extends Component {
     ) {
       return;
     }
-    if (this._focused) {
+    if (this.state.focused) {
       return;
     }
-    this._focused = true;
-    this.updateFocusClassName();
+    this.setState({
+      focused: true,
+    });
     // only effect multiple or tag mode
     if (!isMultipleOrTags(this.props) || !this._mouseDown) {
       this.timeoutFocus();
@@ -438,8 +420,9 @@ export default class Select extends Component {
       return;
     }
     this.blurTimer = setTimeout(() => {
-      this._focused = false;
-      this.updateFocusClassName();
+      this.setState({
+        focused: false,
+      });
       const props = this.props;
       let { value } = this.state;
       const { inputValue } = this.state;
@@ -708,7 +691,7 @@ export default class Select extends Component {
     return this.dropdownContainer;
   };
 
-  getPlaceholderElement = () => {
+  getPlaceholderElement = (floatLabel) => {
     const { props, state } = this;
     let hidden = false;
     if (state.inputValue) {
@@ -720,8 +703,8 @@ export default class Select extends Component {
     if (isCombobox(props) && state.value.length === 1 && !state.value[0]) {
       hidden = false;
     }
-    const { placeholder, prefixCls, border } = this.props;
-    if (!border && placeholder) {
+    const { placeholder, prefixCls } = this.props;
+    if ((!floatLabel || state.focused) && placeholder) {
       return (
         <div
           onMouseDown={preventDefaultEvent}
@@ -954,16 +937,6 @@ export default class Select extends Component {
     }
   };
 
-  updateFocusClassName = () => {
-    const { rootRef, props } = this;
-    // avoid setState and its side effect
-    if (this._focused) {
-      classes(rootRef).add(`${props.prefixCls}-focused`);
-    } else {
-      classes(rootRef).remove(`${props.prefixCls}-focused`);
-    }
-  };
-
   maybeFocus = (open, needFocus) => {
     if (needFocus || open) {
       const input = this.getInputDOMNode();
@@ -971,12 +944,16 @@ export default class Select extends Component {
       if (input && (open || isMultipleOrTagsOrCombobox(this.props))) {
         if (activeElement !== input) {
           input.focus();
-          this._focused = true;
+          this.setState({
+            focused: true,
+          });
         }
       } else {
         if (activeElement !== this.selectionRef) {
           this.selectionRef.focus();
-          this._focused = true;
+          this.setState({
+            focused: true,
+          });
         }
       }
     }
@@ -1260,7 +1237,7 @@ export default class Select extends Component {
     return choiceRemove;
   };
 
-  renderTopControlNode = (isFloatLabel) => {
+  renderTopControlNode = (isFloatLabel, floatLabel) => {
     const { value, open, inputValue } = this.state;
     const props = this.props;
     const tags = isTags(props);
@@ -1310,7 +1287,7 @@ export default class Select extends Component {
           </div>
         );
       } else {
-        selectedValue = <div key="value" className={`${prefixCls}-selection-selected-value`} />
+        selectedValue = <div key="value" className={`${prefixCls}-selection-selected-value`} />;
       }
       if (!showSearch) {
         innerNode = [selectedValue];
@@ -1432,7 +1409,7 @@ export default class Select extends Component {
     }
     return (
       <div className={className} ref={this.saveTopCtrlRef}>
-        {this.getPlaceholderElement()}
+        {this.getPlaceholderElement(floatLabel)}
         {innerNode}
         {isFloatLabel && this.renderClear(isFloatLabel)}
         {isFloatLabel && (tags || !props.showArrow ? null : (
@@ -1452,14 +1429,11 @@ export default class Select extends Component {
   };
 
   getBuiltinPlacements() {
-    const { builtinPlacements, label } = this.props;
+    const { builtinPlacements } = this.props;
     if (builtinPlacements) {
       return builtinPlacements;
     }
     if (!isTags(this.props) && !isCombobox(this.props)) {
-      if (label) {
-        return BUILT_IN_PLACEMENTS_LABEL;
-      }
       return BUILT_IN_PLACEMENTS;
     }
   }
@@ -1523,19 +1497,8 @@ export default class Select extends Component {
     return null;
   }
 
-  getLabel() {
-    const { placeholder, label } = this.props;
-    if (!this.hasValue() && placeholder) {
-      if (this._focused) {
-        return label || placeholder;
-      }
-      return placeholder;
-    }
-    return label;
-  }
-
   renderFloatLabel() {
-    const label = this.getLabel();
+    const { label } = this.props;
     const { prefixCls, border } = this.props;
     if (label && border) {
       return (
@@ -1563,10 +1526,11 @@ export default class Select extends Component {
       border,
       labelLayout,
     } = props;
-    const { open, value, inputValue, filterValue, backfillValue } = this.state;
+    const { open, value, inputValue, filterValue, backfillValue, focused } = this.state;
     const multiple = isMultipleOrTags(props);
     const isFloatLabel = labelLayout === 'float';
-    const ctrlNode = this.renderTopControlNode(isFloatLabel);
+    const floatLabel = isFloatLabel && this.renderFloatLabel();
+    const ctrlNode = this.renderTopControlNode(isFloatLabel, floatLabel);
     if (open) {
       this._options = this.renderFilterOptions();
     }
@@ -1594,7 +1558,7 @@ export default class Select extends Component {
       [className]: !!className,
       [prefixCls]: 1,
       [`${prefixCls}-open`]: open,
-      [`${prefixCls}-focused`]: !isMultiple(props) && this._focused,
+      [`${prefixCls}-focused`]: !isMultiple(props) && focused,
       [`${prefixCls}-has-value`]: this.hasValue(),
       [`${prefixCls}-has-label`]: label,
       [`${prefixCls}-combobox`]: isCombobox(props),
@@ -1674,7 +1638,7 @@ export default class Select extends Component {
             {...extraSelectionProps}
           >
             {ctrlNode}
-            {isFloatLabel && this.renderFloatLabel()}
+            {floatLabel}
             {!isFloatLabel && this.renderClear(isFloatLabel)}
             {!isFloatLabel && (multiple || !props.showArrow ? null : (
               <span
