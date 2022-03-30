@@ -151,9 +151,9 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     this.choose(date);
   }
 
-  choose(date: Moment) {
+  choose(date: Moment, expand?: boolean) {
     const { onSelect = noop } = this.props;
-    onSelect(date);
+    onSelect(date, expand);
   }
 
   changeSelectedDate(selectedDate: Moment, mode?: ViewMode) {
