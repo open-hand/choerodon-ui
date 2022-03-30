@@ -480,6 +480,13 @@ export interface TableProps extends DataSetComponentProps {
    */
   filter?: (record: Record) => boolean;
   /**
+   * 树形数据过滤, 优先级高于filter
+   * 返回值 true - 显示 false - 不显示
+   * @param {Record} record 记录
+   * @return {boolean}
+   */
+  treeFilter?: (record: Record) => boolean;
+  /**
    * 表格展示的模式
    * tree需要配合dataSet的`idField`和`parentField`来展示
    * 可选值: `list` `tree`

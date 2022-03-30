@@ -169,8 +169,9 @@ function renderExpandedRows(
 ): ReactNode[] {
   const index = { count: 0 };
   const rows: ReactNode[] = [];
-  const { record: parent } = rowProps;
-  (parent.children || []).forEach((record) => generateRowAndChildRows(rows, {
+  const { record: parent, tableStore: { recordFilter } } = rowProps;
+  const records = parent.children || [];
+  (typeof recordFilter === 'function' ? records.filter(recordFilter) : records).forEach((record) => generateRowAndChildRows(rows, {
     ...rowProps,
     record,
     index,
@@ -216,11 +217,13 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
 
 function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): ReactNode[] {
   const { tableStore, record, isTree, virtual } = props;
+  const { recordFilter } = tableStore;
   rows.push(
     generateDraggableRow(props),
   );
   if (isTree && virtual && tableStore.isRowExpanded(record)) {
-    (record.children || []).forEach(record => {
+    const records = record.children || [];
+    (typeof recordFilter === 'function' ? records.filter(recordFilter) : records).forEach(record => {
       generateRowAndChildRows(rows, {
         ...props,
         index: { count: 0 },
@@ -474,14 +477,14 @@ VirtualRows.displayName = 'VirtualRows';
 
 const Rows: FunctionComponent<RowsProps> = function Rows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable } = props;
-  const { cachedData, currentData, groupedData } = tableStore;
+  const { cachedData, currentData, groupedData, recordFilter } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
     generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false }, onClearCache)
   ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable]);
   const hasCache = cachedRows.length > 0;
   const rows: ReactNode[] = useComputed(() => (
     generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, isTree, rowDraggable, virtual: false }, hasCache)
-  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender]);
+  ), [recordFilter, currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender]);
   useEffect(action(() => {
     if (tableStore.actualRows !== undefined) {
       tableStore.actualRows = undefined;

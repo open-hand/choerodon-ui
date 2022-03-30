@@ -46,6 +46,10 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   @observable resized?: boolean;
 
+  get multiple(): boolean {
+    return false;
+  }
+
   componentDidMount() {
     super.componentDidMount();
     if (this.element && this.props.autoSize) {

@@ -485,7 +485,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const { range, multiple, rangeTarget, rangeValue } = this;
     let selectedDate =
       this.selectedDate ||
-      (range && !multiple && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
+      (range && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
       (!multiple && this.getValue());
     if (range && !multiple && rangeTarget !== undefined && !isNil(selectedDate) && !isMoment(selectedDate)) {
       selectedDate = typeof range === 'object' ? selectedDate[range[rangeTarget]] : selectedDate[rangeTarget];

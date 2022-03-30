@@ -65,6 +65,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
     return this.observableProps.name || GroupIdGen.next().value;
   }
 
+  isSearchFieldInPopup(): boolean | undefined {
+    return false;
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'vertical',
