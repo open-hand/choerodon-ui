@@ -14,12 +14,17 @@ title:
 The most basic dropdown menu.
 
 ````jsx
-import { Menu, Dropdown, Icon, Button } from 'choerodon-ui/pro';
+import { Menu, Dropdown, Icon, Button, Tooltip } from 'choerodon-ui/pro';
 
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io">1st menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io">
+        1st menu item
+      </a>
+      <Tooltip title="help2">
+        <Icon type="help" style={{ position: 'relative' }} />
+      </Tooltip>
     </Menu.Item>
     <Menu.Item>
       <a target="_blank" rel="noopener noreferrer" href="https://choerodon.io">2nd menu item</a>

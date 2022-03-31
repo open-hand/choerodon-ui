@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Input & <pro>TextField`: Optimize the display logic between floating `label` and `placeholder` to be consistent with material design.
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
+- 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 🐞 `Tabs`: Fix validation badge style priority issue.
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
