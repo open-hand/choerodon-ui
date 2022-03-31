@@ -49,6 +49,10 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
     ]);
   }
 
+  isSearchFieldInPopup(): boolean | undefined {
+    return false;
+  }
+
   renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
     const { prefixCls } = this;
     return maxLength && maxLength > 0 ? (
