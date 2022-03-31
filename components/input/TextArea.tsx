@@ -227,20 +227,8 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     ) : null;
   }
 
-  getLabel() {
-    const { placeholder, label } = this.props;
-    const { inputLength, focused } = this.state;
-    if (inputLength === 0 && placeholder) {
-      if (focused) {
-        return label || placeholder;
-      }
-      return placeholder;
-    }
-    return label;
-  }
-
   renderFloatLabel(): ReactNode {
-    const label = this.getLabel();
+    const { label } = this.props;
     if (label) {
       const prefixCls = this.getPrefixCls();
       return (
@@ -253,21 +241,26 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
 
   render() {
     const props = this.props;
-    const { textareaStyles } = this.state;
+    const state = this.state;
     const prefixCls = this.getPrefixCls();
-    const otherProps: TextAreaProps & HTMLTextareaProps = omit(props, [
+    const omits = [
       'prefixCls',
       'onPressEnter',
       'autosize',
-      'placeholder',
       'focused',
       'showLengthInfo',
-    ]);
+      'labelLayout',
+    ];
+    const hasBorder = props.border && props.labelLayout === 'float';
+    const floatLabel = hasBorder && this.renderFloatLabel();
+    if (floatLabel && !state.focused) {
+      omits.push('placeholder');
+    }
+    const otherProps: TextAreaProps & HTMLTextareaProps = omit(props, omits);
     const style = {
       ...props.style,
-      ...textareaStyles,
+      ...state.textareaStyles,
     };
-    const hasBorder = props.border && props.labelLayout === 'float';
 
     // Make sure it could be reset when using form.getFieldDecorator
     if ('value' in otherProps) {
@@ -301,7 +294,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
           const labeledTextArea = hasBorder ? (
             <div className={`${prefixCls}-rendered-wrapper`}>
               {textarea}
-              {this.renderFloatLabel()}
+              {floatLabel}
             </div>
           ) : textarea;
 

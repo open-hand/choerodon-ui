@@ -166,7 +166,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return (
       <textarea
         {...elementProps}
-        placeholder={this.hasFloatLabel ? undefined : this.getPlaceholders()[0]}
+        placeholder={this.hasFloatLabel && !this.isFocused ? undefined : this.getPlaceholders()[0]}
         readOnly={!this.editable}
         value={isString(text) ? text : this.processValue(this.getValue()) as string}
       />

@@ -1538,7 +1538,9 @@ export default class Table extends DataSetComponent<TableProps> {
     } = this;
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
-    const tableSpinProps: SpinProps | undefined = mergeProps<SpinProps>(this.getContextConfig('tableSpinProps'), this.getSpinProps());
+    const globalTableSpinProps = this.getContextConfig('tableSpinProps');
+    const localTableSpinProps = this.getSpinProps();
+    const tableSpinProps: SpinProps | undefined = globalTableSpinProps ? mergeProps<SpinProps>(mergeProps<SpinProps>({}, globalTableSpinProps), localTableSpinProps) : localTableSpinProps;
     const tableButtonsLimit = isNil(buttonsLimit) ? this.getContextConfig('tableButtonsLimit') : buttonsLimit;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
