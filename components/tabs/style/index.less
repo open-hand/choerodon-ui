@@ -116,9 +116,13 @@
         vertical-align: baseline;
       }
 
-      .@{tab-prefix-cls}-invalid-badge.@{c7n-prefix}-badge > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
-        top: -@tab-groups-padding;
-        right: 0;
+      .@{tab-prefix-cls}-invalid-badge.@{c7n-prefix}-badge {
+        position: static;
+
+        > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
+          top: -@tab-groups-padding;
+          right: 0;
+        }
       }
 
       &:last-child .@{tab-prefix-cls}-invalid-badge.@{c7n-prefix}-badge > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
@@ -583,11 +587,8 @@
     vertical-align: baseline;
   }
 
-  &-invalid-badge.@{c7n-prefix}-badge {
-    position: static;
-
-    > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
-      top: @tab-horizontal-padding-vertical;
+  &-invalid-badge.@{c7n-prefix}-badge > .@{tab-prefix-cls}-invalid-badge-content.@{c7n-prefix}-scroll-number-custom-component {
+      top: -0.1rem;
       right: -0.1rem;
       display: inline-block;
       width: 0.12rem;
@@ -617,7 +618,6 @@
         animation: c7nZoomInvalidBadgeOut @animation-duration-slow @ease-in-back;
       }
     }
-  }
 }
 
 .@{tab-prefix-cls}-top > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated,
