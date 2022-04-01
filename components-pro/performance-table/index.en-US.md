@@ -37,12 +37,12 @@ cols: 1
 | minHeight                | number `(0)`                                                                      | Minimum height                                                                                |
 | onDataUpdated            | (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void | Callback after table data update.                                                             |
 | onExpandChange           | (expanded:boolean, rowData:object) => void                                        | Tree table, the callback function in the expanded node                                        |
-| onRowClick               | (rowData:object) => void                                                          | Click the callback function after the row and return to `rowDate`                             |
+| onRowClick               | (rowData:object) => void                                                          | Click the callback function after the row and return to `rowData`                             |
 | onScroll                 | (scrollX:object, scrollY:object) => void                                          | Callback function for scroll bar scrolling                                                    |
 | onSortColumn             | (dataKey:string, sortType:string) => void                                         | Click the callback function of the sort sequence to return the value `sortColumn`, `sortType` |
 | renderEmpty              | (info: React.Node) => React.Node                                                  | Customized data is empty display content                                                      |
 | renderLoading            | (loading: React.Node) => React.Node                                               | Customize the display content in the data load                                                |
-| renderRowExpanded        | (rowDate?: Object) => React.Node                                                  | Customize what you can do to expand a zone                                                    |
+| renderRowExpanded        | (rowData?: Object) => React.Node                                                  | Customize what you can do to expand a zone                                                    |
 | renderTreeToggle         | (icon:node, rowData:object, expanded:boolean) => node                             | Tree table, the callback function in the expanded node                                        |
 | rowClassName             | string , (rowData:object) => string                                               | Add an optional extra class name to row                                                       |
 | rowExpandedHeight        | number `(100)`                                                                    | Set the height of an expandable area                                                          |

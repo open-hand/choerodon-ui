@@ -17,3 +17,5 @@ import '../../modal-container/style';
 import '../../tooltip/style';
 import '../../menu/style';
 import '../../dropdown/style';
+import '../../table/style/customization.less';
+import '../../number-field/style';

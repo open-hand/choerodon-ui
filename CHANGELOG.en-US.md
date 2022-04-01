@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
+- 🐞 Fix an issue where component loading styles were missing on demand.
 
 ## 1.5.3
 
