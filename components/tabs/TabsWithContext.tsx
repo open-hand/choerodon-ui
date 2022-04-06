@@ -30,8 +30,19 @@ import ConfigContext from '../config-provider/ConfigContext';
 
 function handleScroll(e: UIEvent<HTMLDivElement>) {
   const { currentTarget } = e;
-  currentTarget.scrollLeft = 0;
-  currentTarget.scrollTop = 0;
+  const { ownerDocument } = currentTarget;
+  if (ownerDocument) {
+    const { defaultView } = ownerDocument;
+    if (defaultView) {
+      const computedStyle = defaultView.getComputedStyle(currentTarget);
+      if (computedStyle.overflowX === 'hidden') {
+        currentTarget.scrollLeft = 0;
+      }
+      if (computedStyle.overflowY === 'hidden') {
+        currentTarget.scrollTop = 0;
+      }
+    }
+  }
 }
 
 function isAnimated(animated?: boolean | Animated): animated is Animated {

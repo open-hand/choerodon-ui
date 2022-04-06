@@ -11,14 +11,14 @@ export interface InvalidBadgeProps {
 const InvalidBadge: FunctionComponent<InvalidBadgeProps> = function InvalidBadge(props) {
   const { children, isInvalid, prefixCls } = props;
   const invalid = isInvalid();
-  return (
+  return invalid ? (
     <Badge
       className={`${prefixCls}-invalid-badge`}
-      count={invalid ? <i className={`${prefixCls}-invalid-badge-content`} /> : undefined}
+      count={<i className={`${prefixCls}-invalid-badge-content`} />}
     >
       {children}
     </Badge>
-  );
+  ) : <>{children}</>;
 };
 
 InvalidBadge.displayName = 'InvalidBadge';
