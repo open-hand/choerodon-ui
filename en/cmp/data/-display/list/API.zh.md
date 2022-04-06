@@ -12,9 +12,9 @@ title: API
 | grid | 列表栅格配置 | object | - |
 | header | 列表头部 | string\|ReactNode | - |
 | itemLayout | 设置 `List.Item` 布局, 设置成 `vertical` 则竖直样式显示, 默认横排 | string | - |
-| loading | 当卡片内容还在加载中时，可以用 `loading` 展示一个占位 | boolean\|[object](/zh/cmp/feedback/spin-cn/#API) | false |
+| loading | 当卡片内容还在加载中时，可以用 `loading` 展示一个占位 | boolean\|[object](/zh/procmp/feedback/spin/#API) | false |
 | loadMore | 加载更多 | string\|ReactNode | - |
-| pagination | 对应的 `pagination` 配置, 设置 `false` 不显示 | boolean\|object | false |
+| pagination | 对应的 `pagination` [配置](#pagination), 设置 `false` 不显示 | boolean\|object | false |
 | size | list 的尺寸 | `default` \| `large` \| `small` | `default` |
 | split | 是否展示分割线 | boolean | true |
 
@@ -45,3 +45,24 @@ title: API
 | avatar | 列表元素的图标 | ReactNode | - |
 | description | 列表元素的描述内容 | string\|ReactNode | - |
 | title | 列表元素的标题 | string\|ReactNode | - |
+
+### Pagination
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| current | 当前页数 | number | - |
+| defaultCurrent | 默认的当前页数 | number | 1 |
+| defaultPageSize | 默认的每页条数 | number | 10 |
+| hideOnSinglePage | 只有一页时是否隐藏分页器 | boolean | false |
+| itemRender | 用于自定义页码的结构，可用于优化 SEO | (page, type: 'page' \| 'prev' \| 'next', originalElement) => React.ReactNode | - |
+| pageSize | 每页条数 | number | - |
+| pageSizeOptions | 指定每页可以显示多少条 | string\[] | ['10', '20', '30', '40'] |
+| showQuickJumper | 是否可以快速跳转至某页 | boolean | false |
+| showSizeChanger | 是否可以改变 pageSize | boolean | false |
+| showTotal | 用于显示数据总量和当前数据顺序 | Function(total, range) | - |
+| simple | 当添加该属性时，显示为简单分页 | boolean | - |
+| tiny | 当添加该属性时，显示为简单分页 | boolean | true |
+| size | 当为「small」时，是小尺寸分页 | string | "" |
+| total | 数据总数 | number | 0 |
+| onChange | 页码改变的回调，参数是改变后的页码及每页条数 | Function(page, pageSize) | noop |
+| onShowSizeChange | pageSize 变化的回调 | Function(current, size) | noop |

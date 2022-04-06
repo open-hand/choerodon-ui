@@ -35,14 +35,14 @@ title: API
 | renderTreeToggle         | (icon:node, rowData:object, expanded:boolean) => node                             | 树形表格，在展开节点的回调函数                               |     |
 | rowClassName             | string , (rowData:object) => string                                               | 为行自定义 className                                         |     |
 | rowExpandedHeight        | number `(100)`                                                                    | 设置可展开区域的高度                                         |     |
-| rowHeight                | (rowData:object) => number, number`(30)`                                          | 行高                                                         |     |
+| rowHeight                | (rowData:object) => number, number`(33)`                                          | 行高                                                         |     |
 | rowKey                   | string `('key')`                                                                  | 每一个行对应的 `data` 中的唯一 `key`                         |     |
 | shouldUpdateScroll       | boolean`(true)`                                                                   | 数据更新后更新滚动条位置                                     |     |
 | showHeader               | boolean `(true)`                                                                  | 显示表头                                                     |     |
 | showScrollArrow          | boolean `(false)`                                                                 | 显示滚动条箭头                                             |       |
 | sortColumn               | string                                                                            | 排序列名称                                                   |     |
 | sortType                 | enum: 'desc', 'asc'                                                               | 排序类型（受控）                                             |     |
-| clickScrollLength        | object `({horizontal?: 100;vertical?: 30;})`                                      | 滚动条箭头点击滚动距离                                        |        |
+| clickScrollLength        | object `({horizontal?: 100;vertical?: 33;})`                                      | 滚动条箭头点击滚动距离                                        |        |
 | virtualized              | boolean                                                                           | 呈现大表格数据                                               |     |
 | width                    | number                                                                            | 宽度                                                         |     |
 | wordWrap                 | boolean                                                                           | 单元格自动换行                                               |     |

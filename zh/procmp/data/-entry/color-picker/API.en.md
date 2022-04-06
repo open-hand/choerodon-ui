@@ -6,3 +6,5 @@ title: API
 -----|-----|-----|------
 defaultValue | 默认值 | string | #ff0000
 
+更多属性请参考 [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField)。
+
