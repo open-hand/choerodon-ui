@@ -25,7 +25,7 @@ timeline: true
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
-- 🐞 `Tabs`: Fix validation badge style priority issue.
+- 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.

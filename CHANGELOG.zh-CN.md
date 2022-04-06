@@ -25,7 +25,7 @@ timeline: true
 - 💄 `<pro>Transfer`: 优化设置 help 时的样式。以及去除 range 属性影响。
 - 💄 `<pro>TextArea`: 屏蔽 multiple 属性。
 - 💄 `Menu.Item`: 调整 a 元素的显示样式。
-- 🐞 `Tabs`: 修复校验徽章样式优先级问题。
+- 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Input`: 修复默认无法输入中文的问题。
 - 🐞 `Input`: 修复有 placeholder 且没有 label 时，输入第一个字符会自动失焦的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
