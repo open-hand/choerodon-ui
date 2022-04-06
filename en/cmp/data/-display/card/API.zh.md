@@ -27,14 +27,14 @@ title: API
 
 ### Card.Grid
 
-| Property | Description | Type | Default |
+| 属性 | 说明 | 类型 | 默认值 |
 | -------- | ----------- | ---- | ------- |
 | className | 网格容器类名 | string | - |
 | style | 定义网格容器类名的样式 | object | - |
 
 ### Card.Meta
 
-| Property | Description | Type | Default |
+| 属性 | 说明 | 类型 | 默认值 |
 | -------- | ----------- | ---- | ------- |
 | avatar | 头像/图标 | ReactNode | - |
 | className | 容器类名 | string | - |

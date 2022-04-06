@@ -6,10 +6,13 @@ import { useDataSet, Button, Form, TextField } from 'choerodon-ui/pro';
 const Panel = Collapse.Panel;
 
 const App = () => {
-  const ds = useDataSet(() => ({
-    autoCreate: true,
-    fields: [{ name: 'name', required: true, label: '姓名' }],
-  }), []);
+  const ds = useDataSet(
+    () => ({
+      autoCreate: true,
+      fields: [{ name: 'name', required: true, label: '姓名' }],
+    }),
+    [],
+  );
 
   return (
     <>
@@ -20,12 +23,21 @@ const App = () => {
             <TextField name="name" />
           </Form>
         </Panel>
-        <Panel header="Auto expand by context but need forceRender" key="2" forceRender>
+        <Panel
+          header="Auto expand by context but need forceRender"
+          key="2"
+          forceRender
+        >
           <Form dataSet={ds}>
             <TextField name="name" />
           </Form>
         </Panel>
-        <Panel header="Disabled will not auto expand" key="3" disabled dataSet={ds}>
+        <Panel
+          header="Disabled will not auto expand"
+          key="3"
+          disabled
+          dataSet={ds}
+        >
           <Form dataSet={ds}>
             <TextField name="name" />
           </Form>
@@ -33,9 +45,6 @@ const App = () => {
       </Collapse>
     </>
   );
-}
+};
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container'),
-);
+ReactDOM.render(<App />, document.getElementById('container'));

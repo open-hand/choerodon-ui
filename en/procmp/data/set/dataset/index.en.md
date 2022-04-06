@@ -7,7 +7,7 @@ abstract: true
 
 **注意事项**
 
-> 初次使用该组件库建议阅读[引导教程](https://huihuawk.gitee.io/c7n-ui/en/tutorials/introduction)。
+> 初次使用该组件库建议阅读[引导教程](/en/tutorials/introduction)。
 
 ## API
 

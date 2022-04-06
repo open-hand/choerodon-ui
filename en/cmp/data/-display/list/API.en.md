@@ -12,9 +12,9 @@ title: API
 | grid | The grid type of list. You can set grid to something like {gutter: 16, column: 4} | object | - |
 | header | List header renderer | string\|ReactNode | - |
 | itemLayout | The layout of list, default is `horizontal`, If a vertical list is desired, set the itemLayout property to `vertical` | string | - |
-| loading | Shows a loading indicator while the contents of the list are being fetched | boolean\|[object](/zh/cmp/feedback/spin/#API) | false |
+| loading | Shows a loading indicator while the contents of the list are being fetched | boolean\|[object](/zh/procmp/feedback/spin/#API) | false |
 | loadMore | Shows a load more content | string\|ReactNode | - |
-| pagination | Pagination [config](/zh/cmp/navigation/pagination/), hide it by setting it to false | boolean \| object | false |
+| pagination | Pagination [config](#pagination), hide it by setting it to false | boolean \| object | false |
 | split | Toggles rendering of the split under the list item | boolean | true |
 
 ### List grid props
@@ -45,3 +45,25 @@ title: API
 | avatar | The avatar of list item | ReactNode | - |
 | description | The description of list item | string\|ReactNode | - |
 | title | The title of list item | string\|ReactNode | - |
+
+
+### Pagination
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| current | current page number | number | - |
+| defaultCurrent | default initial page number | number | 1 |
+| defaultPageSize | default number of data items per page | number | 10 |
+| hideOnSinglePage | Whether to hide pager on single page | boolean | false |
+| itemRender | to customize item innerHTML | (page, type: 'page' \| 'prev' \| 'next', originalElement) => React.ReactNode | - |
+| pageSize | number of data items per page | number | - |
+| pageSizeOptions | specify the sizeChanger options | string\[] | ['10', '20', '30', '40'] |
+| showQuickJumper | determine whether you can jump to pages directly | boolean | false |
+| showSizeChanger | determine whether `pageSize` can be changed | boolean | false |
+| showTotal | to display the total number and range | Function(total, range) | - |
+| simple | whether to use simple mode | boolean | - |
+| tiny | whether to use simple mode | boolean | true |
+| size | specify the size of `Pagination`, can be set to `small` | string | "" |
+| total | total number of data items | number | 0 |
+| onChange | a callback function, executed when the page number is changed, and it takes the resulting page number and pageSize as its arguments | Function(page, pageSize) | noop |
+| onShowSizeChange | a callback function, executed when `pageSize` is changed | Function(current, size) | noop |
