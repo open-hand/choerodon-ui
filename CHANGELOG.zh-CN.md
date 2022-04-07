@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Input & <pro>TextField`: 优化浮动标签和 placeholder 之间的显示逻辑与 material design 保持一致。
 - 💄 `<pro>Transfer`: 优化设置 help 时的样式。以及去除 range 属性影响。
 - 💄 `<pro>TextArea`: 屏蔽 multiple 属性。
+- 💄 `<pro>TextArea`: 优化点击清除按钮会导致失焦。
 - 💄 `Menu.Item`: 调整 a 元素的显示样式。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Tabs`: 修复容器有自定义样式出现滚动条时无法滚动的问题。

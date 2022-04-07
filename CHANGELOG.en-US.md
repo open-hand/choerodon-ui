@@ -24,6 +24,7 @@ timeline: true
 - 💄 `Input & <pro>TextField`: Optimize the display logic between floating `label` and `placeholder` to be consistent with material design.
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
+- 💄 `<pro>TextArea`: Optimization clicking the clear button will cause defocus.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
