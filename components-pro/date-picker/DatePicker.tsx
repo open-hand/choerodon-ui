@@ -291,6 +291,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               value={rangeTarget === 0 ? defaultTo(defaultTo(popupHoverValue, text), startText) : startText}
               placeholder={startPlaceholder}
               ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
+              onKeyDown={this.handlePopupEditorKeyDown}
             />
             <span className={`${prefixCls}-range-split`}>~</span>
             <input
@@ -300,6 +301,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               value={rangeTarget === 1 ? defaultTo(defaultTo(popupHoverValue, text), endText) : endText}
               placeholder={endPlaceHolder}
               ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
+              onKeyDown={this.handlePopupEditorKeyDown}
             />
           </span>
         );
@@ -313,6 +315,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
           border={false}
           className={className}
           placeholder={startPlaceholder}
+          onKeyDown={this.handlePopupEditorKeyDown}
         />
       );
     }
@@ -573,11 +576,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
-  handleSelect(date: Moment, expand?: boolean) {
+  handleSelect(date: Moment, expand?: boolean, autoSetTarget?: boolean) {
     if (this.multiple && this.isSelected(date)) {
       this.unChoose(date);
     } else {
-      this.choose(date, expand);
+      this.choose(date, expand, autoSetTarget);
     }
   }
 
@@ -621,6 +624,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
           break;
         case KeyCode.SPACE:
           this.handleKeyDownSpace(e);
+          break;
+        case KeyCode.BACKSPACE:
+          this.handleKeyDownBackSpace(e);
+          break;
+        case KeyCode.DELETE:
+          this.handleKeyDownDelete(e);
           break;
         default:
       }
@@ -716,6 +725,56 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  handleKeyDownBackSpace(e) {
+    if (!this.isEditable() && !this.popup) {
+      e.preventDefault();
+    }
+    if (this.selectedDate && this.afterKeyDownInputIsClear(e)) {
+      runInAction(() => {
+        this.selectedDate = undefined;
+      });
+    }
+  }
+
+  handleKeyDownDelete(e) {
+    this.handleKeyDownBackSpace(e);
+  }
+
+  afterKeyDownInputIsClear(event) {
+    const { keyCode, target: { value, selectionStart, selectionEnd } } = event;
+    if (isNil(value)) {
+      return true;
+    }
+    const length = String(value).length;
+    const selectedLength = Math.abs(selectionEnd - selectionStart);
+    if (length === selectedLength) {
+      return true;
+    }
+    if (selectedLength !== 0) {
+      return false;
+    }
+    if ((keyCode === KeyCode.BACKSPACE && (length === 1 && selectionStart === 1)) ||
+    (keyCode === KeyCode.DELETE && (length === 1 && selectionStart === 0))) {
+      return true;
+    }
+    return false;
+  }
+
+  @autobind
+  handlePopupEditorKeyDown(e) {
+    if (!this.disabled && !this.readOnly) {
+      switch (e.keyCode) {
+        case KeyCode.BACKSPACE:
+          this.handleKeyDownBackSpace(e);
+          break;
+        case KeyCode.DELETE:
+          this.handleKeyDownDelete(e);
+          break;
+        default:
+      }
+    }
+  }
+
   @action
   handleEnterDown(e) {
     super.handleEnterDown(e);
@@ -728,6 +787,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   prepareSetValue(...value: any[]): void {
     super.prepareSetValue(...value.map(v => v === null ? null : this.checkMoment(v)));
+  }
+
+  @autobind
+  handleBlur(e) {
+    const mode = this.getViewMode();
+    if (!e.isDefaultPrevented() && [ViewMode.dateTime, ViewMode.time].includes(mode) && this.selectedDate && isMoment(this.selectedDate)) {
+      e.target.value = this.selectedDate.format(this.getDateFormat());
+    }
+    super.handleBlur(e);
   }
 
   syncValueOnBlur(value) {
@@ -802,8 +870,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    *
    * @param date 返回的时间
    * @param expand 是否保持时间选择器的展开
+   * @param autoSetTarget 是否自动设置rangeTarget
    */
-  choose(date: Moment, expand?: boolean) {
+  choose(date: Moment, expand?: boolean, autoSetTarget?: boolean) {
     date = this.getValidDate(date);
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
@@ -813,9 +882,27 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         this.collapse();
       }
     }
-    if (range && rangeTarget === 0 && this.popup && !expand) {
+    if (range && rangeTarget === 0 && this.popup && !expand && autoSetTarget !== false) {
       this.setRangeTarget(1);
     }
+  }
+
+  @autobind
+  handleRangeStart(event) {
+    const mode = this.getViewMode();
+    if (this.selectedDate && [ViewMode.dateTime, ViewMode.time].includes(mode)) {
+      this.handleSelect(this.selectedDate, undefined, false);
+    }
+    super.handleRangeStart(event);
+  }
+
+  @autobind
+  handleRangeEnd(event) {
+    const mode = this.getViewMode();
+    if (this.selectedDate && [ViewMode.dateTime, ViewMode.time].includes(mode)) {
+      this.handleSelect(this.selectedDate, undefined, false);
+    }
+    super.handleRangeEnd(event);
   }
 
   @action
