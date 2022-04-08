@@ -30,8 +30,68 @@ function isCompleteFailY(elFuturePos, elRegion, visibleRect) {
   );
 }
 
-function getVisibleRectForElement() {
-  const body = getDocument(window).body;
+function getParent(element: HTMLElement): HTMLElement | null {
+  let parent: HTMLElement | null = element;
+  do {
+    parent = parent.parentElement;
+  } while (parent && parent.nodeType !== 1 && parent.nodeType !== 9);
+  return parent;
+}
+
+function getOffsetParentAndStyle(el: HTMLElement, defaultView: Window): { parent: HTMLElement, style: CSSStyleDeclaration | null } | null {
+  const { position } = defaultView.getComputedStyle(el);
+  if (position !== 'absolute' && position !== 'fixed') {
+    if (el.nodeName.toLowerCase() !== 'html') {
+      const parent = getParent(el);
+      if (parent) {
+        return {
+          parent,
+          style: null,
+        };
+      }
+    }
+  } else {
+    const { body } = defaultView.document;
+    for (
+      let parent = getParent(el);
+      parent && parent !== body && parent.nodeType !== 9;
+      parent = getParent(parent)
+    ) {
+      const style = defaultView.getComputedStyle(parent);
+      if (style.position !== 'static') {
+        return { parent, style };
+      }
+    }
+  }
+  return null;
+}
+
+function getVisibleRectForElement(element: HTMLElement) {
+  const { ownerDocument } = element;
+  if (ownerDocument) {
+    const { defaultView } = ownerDocument;
+    if (defaultView) {
+      const { body, documentElement } = ownerDocument;
+      let offsetParentAndStyle = getOffsetParentAndStyle(element, defaultView);
+      while (offsetParentAndStyle) {
+        const { parent, style } = offsetParentAndStyle;
+        if (!parent || parent === body || parent === documentElement) {
+          break;
+        }
+        if ((style || defaultView.getComputedStyle(parent)).overflow !== 'visible') {
+          const rect = parent.getBoundingClientRect();
+          return {
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom,
+            left: rect.left,
+          };
+        }
+        offsetParentAndStyle = getOffsetParentAndStyle(parent, defaultView);
+      }
+    }
+  }
+  const { body } = getDocument(window);
   return {
     top: 0,
     right: body.clientWidth,
@@ -53,8 +113,8 @@ function getRegion(node: HTMLElement): regionType {
   };
 }
 
-function isOutOfVisibleRect(target) {
-  const visibleRect = getVisibleRectForElement();
+function isOutOfVisibleRect(target: HTMLElement) {
+  const visibleRect = getVisibleRectForElement(target);
   const targetRegion = getRegion(target);
 
   return (
@@ -191,7 +251,7 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
   const source: HTMLElement = align.source || el;
   const newOverflowCfg: overflowType = {};
   let fail = 0;
-  const visibleRect = getVisibleRectForElement();
+  const visibleRect = getVisibleRectForElement(el);
   const elRegion = getRegion(source);
   let elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset);
   let newElRegion = Object.assign(elRegion, elFuturePos);
