@@ -81,7 +81,6 @@ export default class Options extends Component {
           dropdownMatchSelectWidth={false}
           value={pageSize.toString()}
           onChange={this.changeSize}
-          getPopupContainer={triggerNode => triggerNode.parentNode}
           border={false}
         >
           {options}

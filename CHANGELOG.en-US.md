@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
+- 🐞 `Pagination`: Fix the problem that the pagination drop-down box will be blocked under the container whose `overflow` style is hidden.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 
