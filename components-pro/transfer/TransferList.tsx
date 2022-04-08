@@ -261,6 +261,10 @@ export default class TransferList extends Select<TransferListProps> {
     ViewComponent.prototype.handleBlur.call(this, e);
   }
 
+  renderHelpMessage(): ReactNode {
+    return null;
+  }
+
   renderWrapper() {
     const { header, footer, props: { style, children } } = this;
     const isCustom = typeof children === 'function';

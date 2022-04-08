@@ -238,7 +238,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
 
   handleTimeCellClick(date: Moment, unit: TimeUnit) {
     this.changeUnit(unit);
-    this.choose(date, true);
+    this.changeSelectedDate(date);
   }
 
   @autobind

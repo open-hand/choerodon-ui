@@ -116,6 +116,11 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return lengthElement;
   }
 
+  @autobind
+  handleClearButtonClick() {
+    this.clear();
+  }
+
   renderWrapper(): ReactNode {
     const { resize = ResizeType.none } = this.props;
     const resizable = resize !== ResizeType.none;
