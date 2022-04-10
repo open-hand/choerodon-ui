@@ -11,12 +11,16 @@ export function isIE(): boolean {
   return false;
 }
 
-export function isChrome() {
+export function isChrome(): boolean {
   if (typeof window !== 'undefined') {
     const win: any = window;
     return !!win.chrome; // && !!win.chrome.webstore;
   }
   return false;
+}
+
+export function isSafari(): boolean {
+  return !isChrome() && /Safari/.test(navigator.userAgent);
 }
 
 /**
