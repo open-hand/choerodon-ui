@@ -11,13 +11,21 @@ import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
 import focusable, { findFocusableParent } from 'choerodon-ui/pro/lib/_util/focusable';
 import { getIf } from 'choerodon-ui/pro/lib/data-set/utils';
-import { isIE } from '../_util/browser';
+import { isIE, isSafari } from '../_util/browser';
 import KeyCode from '../_util/KeyCode';
 import TaskRunner from '../_util/TaskRunner';
 import Popup from './Popup';
 import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
+
+function isHTMLInputElement(target: HTMLElement): target is HTMLInputElement {
+  return target.tagName.toLowerCase() === 'input';
+}
+
+function isButton(target: HTMLElement): target is HTMLButtonElement {
+  return target.tagName.toLowerCase() === 'button' || (isHTMLInputElement(target) && target.type === 'button');
+}
 
 function isPointsEq(a1: string[], a2: string[]): boolean {
   return a1[0] === a2[0] && a1[1] === a2[1];
@@ -138,7 +146,11 @@ export default class Trigger extends Component<TriggerProps> {
 
   activeElement?: HTMLElement | null;
 
+  relatedTarget?: HTMLButtonElement | null;
+
   activeElementEvent?: EventManager;
+
+  mouseDownEvent?: EventManager;
 
   currentTriggerChild?: ReactElement | null;
 
@@ -167,13 +179,22 @@ export default class Trigger extends Component<TriggerProps> {
     this.activeElement = activeElement;
     const activeElementEvent = getIf<Trigger, EventManager>(this, 'activeElementEvent', () => new EventManager());
     if (activeElement) {
-      activeElementEvent.clear().setTarget(activeElement).addEventListener('blur', () => {
+      if (this.relatedTarget) {
         const { target } = this;
         if (target && document.activeElement === document.body) {
-          this.setActiveElement(null);
+          this.activeElement = null;
           target.focus();
         }
-      }, { once: true });
+        this.relatedTarget = null;
+      } else {
+        activeElementEvent.clear().setTarget(activeElement).addEventListener('blur', () => {
+          const { target } = this;
+          if (target && document.activeElement === document.body) {
+            this.setActiveElement(null);
+            target.focus();
+          }
+        }, { once: true });
+      }
     } else {
       activeElementEvent.clear();
     }
@@ -257,6 +278,21 @@ export default class Trigger extends Component<TriggerProps> {
   @mobxAction
   componentDidMount() {
     this.mounted = true;
+    if (isSafari()) {
+      this.mouseDownEvent = new EventManager(document).addEventListener('mousedown', (e) => {
+        if (!this.popupHidden) {
+          const { target } = e;
+          if (isButton(target)) {
+            this.relatedTarget = target;
+          } else {
+            const parent = findFocusableParent(target);
+            if (parent && isButton(parent)) {
+              this.relatedTarget = parent;
+            }
+          }
+        }
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -280,6 +316,9 @@ export default class Trigger extends Component<TriggerProps> {
     }
     if (this.activeElementEvent) {
       this.activeElementEvent.clear();
+    }
+    if (this.mouseDownEvent) {
+      this.mouseDownEvent.clear();
     }
   }
 
@@ -308,8 +347,8 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   handleTargetBlur(e, child: ReactElement): boolean {
     const { popup, focusTarget } = this;
-    const relatedTarget: HTMLElement | null = isIE() ? document.activeElement : e.relatedTarget;
-    if (popup && popup.element.contains(relatedTarget)) {
+    const relatedTarget: HTMLElement | null = isIE() ? document.activeElement : e.relatedTarget || this.relatedTarget;
+    if (popup && relatedTarget && popup.element.contains(relatedTarget)) {
       e.stopPropagation();
       this.setActiveElement(relatedTarget);
       this.currentTriggerChild = child;
