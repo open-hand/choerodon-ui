@@ -11,7 +11,7 @@ import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
 import focusable, { findFocusableParent } from 'choerodon-ui/pro/lib/_util/focusable';
 import { getIf } from 'choerodon-ui/pro/lib/data-set/utils';
-import { isIE, isSafari } from '../_util/browser';
+import { isChrome, isIE, isSafari, isWeChat } from '../_util/browser';
 import KeyCode from '../_util/KeyCode';
 import TaskRunner from '../_util/TaskRunner';
 import Popup from './Popup';
@@ -278,7 +278,7 @@ export default class Trigger extends Component<TriggerProps> {
   @mobxAction
   componentDidMount() {
     this.mounted = true;
-    if (isSafari()) {
+    if (!isChrome() && (isSafari() || isWeChat())) {
       this.mouseDownEvent = new EventManager(document).addEventListener('mousedown', (e) => {
         if (!this.popupHidden) {
           const { target } = e;
