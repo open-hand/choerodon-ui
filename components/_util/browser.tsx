@@ -20,7 +20,11 @@ export function isChrome(): boolean {
 }
 
 export function isSafari(): boolean {
-  return !isChrome() && /Safari/.test(navigator.userAgent);
+  return /Safari/i.test(navigator.userAgent);
+}
+
+export function isWeChat(): boolean {
+  return /MicroMessenger/i.test(navigator.userAgent);
 }
 
 /**
