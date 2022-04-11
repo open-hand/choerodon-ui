@@ -541,6 +541,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @autobind
   handleSelectedDateChange(selectedDate: Moment, mode?: ViewMode) {
     if (this.isUnderRange(selectedDate, mode)) {
+      super.setText(selectedDate.format(this.getDateFormat()));
       this.changeSelectedDate(selectedDate);
     }
   }
@@ -576,11 +577,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
-  handleSelect(date: Moment, expand?: boolean, autoSetTarget?: boolean) {
+  handleSelect(date: Moment, expand?: boolean) {
     if (this.multiple && this.isSelected(date)) {
       this.unChoose(date);
     } else {
-      this.choose(date, expand, autoSetTarget);
+      this.choose(date, expand);
     }
   }
 
@@ -789,15 +790,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     super.prepareSetValue(...value.map(v => v === null ? null : this.checkMoment(v)));
   }
 
-  @autobind
-  handleBlur(e) {
-    const mode = this.getViewMode();
-    if (!e.isDefaultPrevented() && [ViewMode.dateTime, ViewMode.time].includes(mode) && this.selectedDate && isMoment(this.selectedDate)) {
-      e.target.value = this.selectedDate.format(this.getDateFormat());
-    }
-    super.handleBlur(e);
-  }
-
   syncValueOnBlur(value) {
     if (value) {
       this.prepareSetValue(value);
@@ -870,9 +862,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    *
    * @param date 返回的时间
    * @param expand 是否保持时间选择器的展开
-   * @param autoSetTarget 是否自动设置rangeTarget
    */
-  choose(date: Moment, expand?: boolean, autoSetTarget?: boolean) {
+  choose(date: Moment, expand?: boolean) {
     date = this.getValidDate(date);
     this.prepareSetValue(date);
     this.changeSelectedDate(date);
@@ -882,27 +873,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         this.collapse();
       }
     }
-    if (range && rangeTarget === 0 && this.popup && !expand && autoSetTarget !== false) {
+    if (range && rangeTarget === 0 && this.popup && !expand) {
       this.setRangeTarget(1);
     }
-  }
-
-  @autobind
-  handleRangeStart(event) {
-    const mode = this.getViewMode();
-    if (this.selectedDate && [ViewMode.dateTime, ViewMode.time].includes(mode)) {
-      this.handleSelect(this.selectedDate, undefined, false);
-    }
-    super.handleRangeStart(event);
-  }
-
-  @autobind
-  handleRangeEnd(event) {
-    const mode = this.getViewMode();
-    if (this.selectedDate && [ViewMode.dateTime, ViewMode.time].includes(mode)) {
-      this.handleSelect(this.selectedDate, undefined, false);
-    }
-    super.handleRangeEnd(event);
   }
 
   @action
