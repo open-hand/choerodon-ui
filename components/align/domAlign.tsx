@@ -80,11 +80,12 @@ function getVisibleRectForElement(element: HTMLElement) {
         }
         if ((style || defaultView.getComputedStyle(parent)).overflow !== 'visible') {
           const rect = parent.getBoundingClientRect();
+          const { x, y } = getMousePosition(rect.left, rect.top, defaultView, true);
           return {
-            top: rect.top,
-            right: rect.right,
-            bottom: rect.bottom,
-            left: rect.left,
+            top: y,
+            right: rect.right + x - rect.left,
+            bottom: rect.bottom + y - rect.top,
+            left: x,
           };
         }
         offsetParentAndStyle = getOffsetParentAndStyle(parent, defaultView);
@@ -329,11 +330,16 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
     source.style.height = height ? pxToRem(height, true)! : '0';
   }
   // const isTargetFixed = isFixedPosition(target);
-  const { offsetParent } = source;
+  const { offsetParent, ownerDocument } = source;
   if (offsetParent) {
     const { left, top } = offsetParent.getBoundingClientRect();
     newElRegion.left -= left;
     newElRegion.top -= top;
+  }
+  if (ownerDocument) {
+    const { x, y } = getMousePosition(0, 0, ownerDocument.defaultView, true);
+    newElRegion.left -= x;
+    newElRegion.top -= y;
   }
   Object.assign(source.style, {
     left: pxToRem(newElRegion.left, true),

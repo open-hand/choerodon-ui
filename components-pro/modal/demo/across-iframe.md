@@ -16,6 +16,7 @@ across: true
 Across iframe, Does not take effect when cross-domain.
 
 ```jsx
+import { Popover } from 'choerodon-ui';
 import { Modal, Button, Table, DataSet } from 'choerodon-ui/pro';
 
 const App = () => {
@@ -33,12 +34,21 @@ const App = () => {
     });
   }, []);
 
+  const renderer = React.useCallback(() => {
+    return (
+      <Popover content="xxx">
+        <span>操作</span>
+      </Popover>
+    );
+  }, []);
+
   return (
     <>
       <Button onClick={openModal}>Open</Button>
       <Table dataSet={ds}>
         <Table.Column name="id" />
         <Table.Column name="birth" editor />
+        <Table.Column renderer={renderer} />
       </Table>
     </>
   );
