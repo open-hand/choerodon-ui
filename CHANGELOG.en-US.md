@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
@@ -34,6 +35,7 @@ timeline: true
 - 🐞 `Pagination`: Fix the problem that the pagination drop-down box will be blocked under the container whose `overflow` style is hidden.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
+- 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 
 ## 1.5.3
