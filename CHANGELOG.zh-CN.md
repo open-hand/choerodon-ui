@@ -15,7 +15,8 @@ timeline: true
 
 ---
 
-- 🌟 `<pro>CheckBox`: 实现 showHelp.
+- 🌟 `Tabs`: 新增 flex 属性。
+- 🌟 `<pro>CheckBox`: 实现 showHelp 属性。
 - 🌟 `<pro>Table`: 新增 treeFilter 属性。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
 - 💄 `<pro>DatePicker`: 优化 range 模式下数据对调后面板日期显示的问题, 以及优化 range 模式下失焦后面板闪现当前日期的问题。

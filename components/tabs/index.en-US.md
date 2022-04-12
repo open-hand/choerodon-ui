@@ -46,6 +46,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true |
 | defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true |
 | showMore | Display more tabs than the width of the container | boolean | false |
+| flex | Whether flexible layout | boolean | - |
 
 ### Tabs.TabPane
 

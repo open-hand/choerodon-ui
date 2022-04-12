@@ -79,6 +79,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabTitleEditable,
     tabCountHideable,
     rippleDisabled,
+    flex,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -201,6 +202,9 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   if (type !== TabsType.line) {
     tabPaneAnimated = 'animated' in props ? tabPaneAnimated : false;
   }
+  if (flex) {
+    tabPaneAnimated = false;
+  }
 
   const isCard = type === TabsType.card || type === TabsType['editable-card'];
 
@@ -262,6 +266,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     {
       [`${prefixCls}-${size}`]: !!size,
       [`${prefixCls}-card`]: isCard,
+      [`${prefixCls}-flex`]: flex,
       [`${prefixCls}-no-animation`]: !tabPaneAnimated,
       'no-flex': !isFlexSupported(),
     },
