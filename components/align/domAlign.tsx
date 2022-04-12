@@ -337,7 +337,7 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
     newElRegion.top -= top;
   }
   if (ownerDocument) {
-    const { x, y } = getMousePosition(0, 0, ownerDocument.defaultView, true);
+    const { x, y } = getMousePosition(0, 0, ownerDocument.defaultView || window, true);
     newElRegion.left -= x;
     newElRegion.top -= y;
   }
