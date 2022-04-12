@@ -3,6 +3,7 @@ import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd
 import isString from 'lodash/isString';
 import { global } from 'choerodon-ui/shared';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
@@ -403,5 +404,22 @@ export function getMaxClientWidth(element: Element): number {
 export function onlyCustomizedColumn(tableStore: TableStore): boolean {
   const { rightLeafs } = tableStore.columnGroups;
   return rightLeafs.length === 0 || rightLeafs[0].key === CUSTOMIZED_KEY;
+}
+
+export function getCellVerticalSize(element: HTMLElement, prefixCls?: string) {
+  const { ownerDocument } = element;
+  if (ownerDocument) {
+    const { defaultView } = ownerDocument;
+    if (defaultView) {
+      const cell = element.querySelector(`.${prefixCls}-cell`);
+      if (cell) {
+        const style = defaultView.getComputedStyle(cell);
+        return (toPx(style.paddingTop) || 0)
+          + (toPx(style.paddingBottom) || 0)
+          + (toPx(style.borderTopWidth) || 0)
+          + (toPx(style.borderBottomWidth) || 0);
+      }
+    }
+  }
 }
 
