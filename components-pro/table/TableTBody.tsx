@@ -483,14 +483,14 @@ VirtualRows.displayName = 'VirtualRows';
 
 const Rows: FunctionComponent<RowsProps> = function Rows(props) {
   const { lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender, isTree, rowDraggable } = props;
-  const { cachedData, currentData, groupedData, treeFilter } = tableStore;
+  const { cachedData, currentData, groupedData } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
     generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false }, onClearCache)
   ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable]);
   const hasCache = cachedRows.length > 0;
   const rows: ReactNode[] = useComputed(() => (
     generateRows({ tableStore, columnGroups, expandIconColumnIndex, lock, rowDragRender, isTree, rowDraggable, virtual: false }, hasCache)
-  ), [treeFilter, currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender]);
+  ), [currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex, lock, isTree, rowDraggable, rowDragRender]);
   useEffect(action(() => {
     if (tableStore.actualRows !== undefined) {
       tableStore.actualRows = undefined;

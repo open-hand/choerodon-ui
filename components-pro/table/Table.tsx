@@ -82,6 +82,7 @@ import {
   isDropresult,
   isStickySupport,
   onlyCustomizedColumn,
+  getCellVerticalSize,
 } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -2089,6 +2090,9 @@ export default class Table extends DataSetComponent<TableProps> {
         `.${prefixCls}-thead`,
       ) : null;
       const tableFooter: HTMLDivElement | null = tableStore.hasFooter ? element.querySelector(`.${prefixCls}-tfoot`) : null;
+      if (tableStore.cellVerticalSize === undefined) {
+        tableStore.cellVerticalSize = getCellVerticalSize(element, prefixCls);
+      }
       tableStore.screenHeight = document.documentElement.clientHeight;
       tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
       tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
