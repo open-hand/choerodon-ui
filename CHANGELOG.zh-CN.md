@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 dateTimePickerOkButton 属性。
 - 🌟 `<pro>CheckBox`: 实现 showHelp.
 - 🌟 `<pro>Table`: 新增 treeFilter 属性。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。

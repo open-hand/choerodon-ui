@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `dateTimePickerOkButton` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
