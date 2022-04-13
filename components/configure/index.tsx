@@ -269,6 +269,10 @@ export interface Config extends DataSetConfig {
    */
   numberFieldKeyboard?: boolean;
   /**
+   * 日期时间控件是否显示确定按钮
+   */
+  dateTimePickerOkButton?: boolean;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;

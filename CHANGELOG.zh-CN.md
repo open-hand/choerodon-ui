@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 dateTimePickerOkButton 属性。
 - 🌟 `Tabs`: 新增 flex 属性。
 - 🌟 `<pro>CheckBox`: 实现 showHelp 属性。
 - 🌟 `<pro>Table`: 新增 treeFilter 属性。

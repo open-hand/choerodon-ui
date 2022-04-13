@@ -399,6 +399,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
             onDateMouseEnter: this.handleDateMouseEnter,
             onDateMouseLeave: this.handleDateMouseLeave,
+            okButton: this.getContextConfig('dateTimePickerOkButton'),
           } as DateViewProps)
         }
       </>
@@ -755,7 +756,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       return false;
     }
     if ((keyCode === KeyCode.BACKSPACE && (length === 1 && selectionStart === 1)) ||
-    (keyCode === KeyCode.DELETE && (length === 1 && selectionStart === 0))) {
+      (keyCode === KeyCode.DELETE && (length === 1 && selectionStart === 0))) {
       return true;
     }
     return false;
@@ -885,8 +886,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
     if (!isNil(target)) {
       this.selectedDate = undefined;
-    }
-    else {
+    } else {
       if (isNil(this.selectedDate)) {
         this.selectedDate = this.getSelectedDate();
       }

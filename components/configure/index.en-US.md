@@ -147,6 +147,7 @@ const prefixCls = getConfig('prefixCls');
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | numberFieldKeyboard | control `UP` `DOWN` keyboard events for `NumberField` component | boolean | true |
+| dateTimePickerOkButton | 日期时间控件是否显示确定按钮 | boolean | false |
 | lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录  | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |
 | lovSelectionProps | Lov 显示已选记录时的参数  | [SelectionProps](components-pro/lov#SelectionProps) |  |
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |

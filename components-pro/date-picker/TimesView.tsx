@@ -282,7 +282,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls, props: { disabledNow } } = this;
+    const { prefixCls, props: { disabledNow, okButton } } = this;
     const footerProps = {
       className: classNames(`${prefixCls}-footer-now-btn`, {
         [`${prefixCls}-now-disabled`]: disabledNow,
@@ -296,6 +296,16 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
         <a {...footerProps}>
           {$l('DatePicker', 'now')}
         </a>
+        {
+          okButton && (
+            <a
+              className={`${prefixCls}-footer-view-select`}
+              onClick={this.choose.bind(this, this.props.date, false)}
+            >
+              {$l('DatePicker', 'ok')}
+            </a>
+          )
+        }
       </div>
     );
   }
