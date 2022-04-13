@@ -30,8 +30,9 @@ export interface DateViewProps extends ViewComponentProps {
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
   disabledNow?: boolean;
-  onDateMouseEnter?: (date?: Moment) => void,
-  onDateMouseLeave?: () => void,
+  okButton?: boolean;
+  onDateMouseEnter?: (date?: Moment) => void;
+  onDateMouseLeave?: () => void;
 }
 
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
