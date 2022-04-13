@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>TextArea`: 屏蔽 multiple 属性。
 - 💄 `<pro>TextArea`: 优化点击清除按钮会导致失焦。
 - 💄 `Menu.Item`: 调整 a 元素的显示样式。
+- 💄 `Form`: 优化 spacingType between 时的显示样式。
 - 🐞 `Popover`: 修复在 iframe 内无法对齐的问题。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Tabs`: 修复容器有自定义样式出现滚动条时无法滚动的问题。
