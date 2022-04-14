@@ -139,14 +139,17 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     return this.isChecked() ? children : unCheckedChildren || children;
   }
 
-  getWrapperClassNames() {
+  getWrapperClassNames(...args) {
     const {
       prefixCls,
       props: { indeterminate },
     } = this;
-    return super.getWrapperClassNames({
-      [`${prefixCls}-indeterminate`]: indeterminate,
-    });
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-indeterminate`]: indeterminate,
+      },
+      ...args,
+    );
   }
 
   isChecked() {

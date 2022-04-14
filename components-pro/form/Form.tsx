@@ -879,6 +879,17 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     );
   }
 
+  getMergedProps(props = {}) {
+    const mergedProps = super.getMergedProps(props);
+    if (this.spacingType.width === SpacingType.between && this.separateSpacing && this.separateSpacing.width > 0) {
+      mergedProps.style = {
+        ...mergedProps.style,
+        overflowX: 'hidden',
+      }
+    }
+    return mergedProps;
+  }
+
   render() {
     const {
       labelWidth,
