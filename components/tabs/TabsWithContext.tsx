@@ -113,14 +113,17 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     if (defaultChangeable && customized) {
       const $defaultActiveKey = customized.defaultActiveKey;
       if ($defaultActiveKey !== undefined) {
-        if (onChange && $defaultActiveKey !== defaultActiveKey) {
-          onChange($defaultActiveKey);
+        const pane = totalPanelsMap.get($defaultActiveKey);
+        if (pane && !pane.disabled) {
+          if (onChange && $defaultActiveKey !== defaultActiveKey) {
+            onChange($defaultActiveKey);
+          }
+          return $defaultActiveKey;
         }
-        return $defaultActiveKey;
       }
     }
     return defaultActiveKey;
-  }, [defaultActiveKey, defaultChangeable]);
+  }, [defaultActiveKey, defaultChangeable, totalPanelsMap]);
   const [activeKey, setActiveKey] = useState<string | undefined>(actuallyDefaultActiveKey);
   const activeGroupKey = useMemo((): string | undefined => {
     if (groupedPanelsMap.size) {

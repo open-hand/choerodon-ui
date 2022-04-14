@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
+- 🐞 `Tabs`: Fix the problem that disabled tabs can be set as default.
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 - 🐞 `Pagination`: Fix the problem that the pagination drop-down box will be blocked under the container whose `overflow` style is hidden.
