@@ -14,6 +14,7 @@ import React, {
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Trigger, { RenderFunction } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
+import DropdownButton from './DropdownButton';
 import { Placements } from './enum';
 import builtinPlacements from './placements';
 
@@ -43,7 +44,11 @@ export interface DropDownProps {
   children?: ReactNode;
 }
 
-const Dropdown: FunctionComponent<DropDownProps> = function Dropdown(props) {
+interface DropdownInterface extends FunctionComponent<DropDownProps> {
+  Button?: typeof DropdownButton;
+}
+
+const Dropdown: DropdownInterface = function Dropdown(props) {
   const { getProPrefixCls } = useContext(ConfigContext);
   const {
     onOverlayClick, hidden: propsHidden, visible: propsVisible, trigger, overlay, children, placement, popupClassName,

@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.
 - 🌟 `<pro>Switch`: Added `loading` property.
+- 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 💄 `<pro>DatePicker`: Optimized an issue where clicking Tab will automatically select `hover` on the date panel.
