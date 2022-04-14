@@ -3,11 +3,11 @@ import { BaseQRCodeProps } from 'qrcode.react';
 import { BaseOptions as JsBarCodeBaseOption } from 'jsbarcode';
 import QRCode from './QRCode';
 import BarCode from './BarCode';
+import { CodeType } from './enum';
 
-export enum CodeType {
-  QR = 'qr',
-  BAR = 'bar',
-}
+export {
+  CodeType,
+};
 
 export interface QRBarCodeProps extends BaseQRCodeProps {
   type?: string;

@@ -3,6 +3,7 @@ import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isEmpty from 'lodash/isEmpty';
+import { MenuMode } from './enum';
 import Input from '../input';
 import Icon from '../icon';
 import RcCascader from '../rc-components/cascader';
@@ -17,7 +18,9 @@ export interface CascaderOptionType {
   label?: React.ReactNode;
   disabled?: boolean;
   children?: Array<CascaderOptionType>;
+
   [key: string]: any;
+
   __IS_FILTERED_OPTION?: boolean;
 }
 
@@ -47,10 +50,9 @@ export interface ShowSearchType {
   matchInputWidth?: boolean;
 }
 
-export enum MenuMode {
-  single = 'single',
-  multiple = 'multiple',
-}
+export {
+  MenuMode,
+};
 export type CascaderLocale = any;
 
 export interface CascaderProps {
@@ -102,8 +104,8 @@ export interface CascaderProps {
   /** 由于渲染在body下可以方便按照业务配置超出大小样式和最小宽度等 */
   singleMenuItemStyle?: CSSProperties;
   /** 设置需要的提示问题配置 */
-  singlePleaseRender?: ({key,className,text}: {key: string;className: string;text: string}) => ReactElement<any>;
-   /** 头部可以渲染出想要的tab样子 */
+  singlePleaseRender?: ({ key, className, text }: { key: string; className: string; text: string }) => ReactElement<any>;
+  /** 头部可以渲染出想要的tab样子 */
   singleMenuItemRender?: (title: string) => ReactElement<any>;
 }
 
@@ -182,7 +184,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     disabled: false,
     allowClear: true,
     notFoundContent: 'Not Found',
-    menuMode:MenuMode.multiple,
+    menuMode: MenuMode.multiple,
   };
 
   context: ConfigContextValue;
@@ -499,7 +501,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
      */
     const renderCascader = (locale: CascaderLocale) => {
       // 只配置部分语言其他英语即可
-      const cascaderLocal = isEmpty(locale) ? enUS.Cascader : locale
+      const cascaderLocal = isEmpty(locale) ? enUS.Cascader : locale;
       return (
         <RcCascader
           {...props}
@@ -515,8 +517,8 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
         >
           {input}
         </RcCascader>
-      )
-    }
+      );
+    };
 
     return (
       <LocaleReceiver componentName="Cascader" defaultLocale={enUS}>

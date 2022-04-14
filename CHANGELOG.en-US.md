@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>TextArea`: Optimization clicking the clear button will cause defocus.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 💄 `Form`: Optimize the display style of `spacingType` between.
+- 💄 Canonical enumeration type.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
@@ -43,6 +44,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
+
 
 ## 1.5.3
 

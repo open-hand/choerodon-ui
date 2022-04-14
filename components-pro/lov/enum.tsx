@@ -15,3 +15,8 @@ export enum SearchAction {
   blur = 'blur',
   input = 'input',
 }
+
+export enum SelectionsPosition {
+  side = 'side',
+  below = 'below',
+}

@@ -16,10 +16,10 @@ import Icon from '../icon';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
 import { SelectionProps } from './Lov';
+import { SelectionsPosition } from './enum';
 
-export enum SelectionsPosition {
-  side = 'side',
-  below = 'below',
+export {
+  SelectionsPosition,
 }
 
 export interface SelectionListProps {

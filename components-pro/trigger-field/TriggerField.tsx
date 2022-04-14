@@ -10,6 +10,7 @@ import autobind from '../_util/autobind';
 import Icon from '../icon';
 import TaskRunner from '../_util/TaskRunner';
 import BUILT_IN_PLACEMENTS from './placements';
+import { TriggerViewMode } from './enum';
 import { hide } from '../tooltip/singleton';
 
 export interface TriggerFieldPopupContentProps {
@@ -17,11 +18,9 @@ export interface TriggerFieldPopupContentProps {
   setPopup: (hidden: boolean) => void;
 }
 
-export enum TriggerViewMode {
-  popup = 'popup',
-  drawer = 'drawer',
-  modal = 'modal',
-}
+export {
+  TriggerViewMode,
+};
 
 export interface TriggerFieldProps<P extends TriggerFieldPopupContentProps = TriggerFieldPopupContentProps> extends TextFieldProps {
   /**
