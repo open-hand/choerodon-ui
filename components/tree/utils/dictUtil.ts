@@ -1,6 +1,6 @@
 import { DataNode, Key } from '../../rc-components/tree/interface';
 
-enum Record {
+const enum Record {
   None,
   Start,
   End,

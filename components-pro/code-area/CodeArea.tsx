@@ -14,6 +14,7 @@ import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
 import { FormField, FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
+import { ThemeSwitch } from './enum';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
@@ -25,10 +26,9 @@ if (typeof window !== 'undefined') {
   CodeMirror = require('react-codemirror2').Controlled;
 }
 
-export enum ThemeSwitch {
-  idea = 'idea',
-  material = 'material',
-}
+export {
+  ThemeSwitch,
+};
 
 export interface CodeAreaProps extends FormFieldProps {
   options?: EditorConfiguration;

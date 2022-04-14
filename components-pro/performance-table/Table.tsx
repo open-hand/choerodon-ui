@@ -48,6 +48,7 @@ import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import TableContext from './TableContext';
 import { CELL_PADDING_HEIGHT, SCROLLBAR_LARGE_WIDTH, SCROLLBAR_WIDTH } from './constants';
+import { TableQueryBarType } from './enum';
 import {
   cancelAnimationTimeout,
   defaultClassPrefix,
@@ -97,10 +98,9 @@ export interface TableScrollLength {
   vertical?: number;
 }
 
-export enum TableQueryBarType {
-  professionalBar = 'professionalBar',
-  filterBar = 'filterBar',
-}
+export {
+  TableQueryBarType,
+};
 
 export interface TableQueryBarProps {
   type?: TableQueryBarType;
@@ -747,8 +747,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               {
                 disabled: checkboxAllDisabled,
                 data: flatData,
-              }
-            )
+              },
+            ),
           },
         );
         this._cacheCells.headerCells[0] = checkboxAllHeaderCell;

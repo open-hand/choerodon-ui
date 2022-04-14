@@ -9,6 +9,7 @@ import { Size } from '../_util/enum';
 import { DropDownProps } from '../dropdown';
 import { MenuProps } from '../menu';
 import { InputNumberProps } from '../input-number';
+import { TableAutoHeightType } from './enum';
 
 export type CompareFn<T> = (a: T, b: T, sortOrder?: 'ascend' | 'descend') => number;
 export type ColumnFilterItem = { text: string; value: string; children?: ColumnFilterItem[] };
@@ -72,10 +73,7 @@ export interface TableLocale {
   selectInvert?: ReactNode;
 }
 
-export const enum TableAutoHeightType {
-  maxHeight = 'maxHeight',
-  minHeight = 'minHeight',
-}
+export { TableAutoHeightType };
 
 export type RowSelectionType = 'checkbox' | 'radio';
 export type SelectionSelectFn<T> = (record: T, selected: boolean, selectedRows: Record<string, any>[], nativeEvent: Event) => any;

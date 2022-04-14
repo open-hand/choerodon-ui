@@ -9,6 +9,7 @@ import Button, { ButtonProps } from '../button';
 import ButtonGroup from '../button/ButtonGroup';
 import Upload from '../upload';
 import AvatarUploader from './avatarUpload';
+import { ShapeCroper } from './enum';
 import { imageCrop } from '../locale-provider';
 import ConfigContext from '../config-provider/ConfigContext';
 
@@ -66,10 +67,9 @@ export interface ImageCropLocale {
   imageCrop?: string;
 }
 
-export enum ShapeCroper {
-  rect = 'rect',
-  round = 'round',
-}
+export {
+  ShapeCroper,
+};
 
 export declare type Area = {
   width: number;
