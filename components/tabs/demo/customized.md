@@ -43,7 +43,7 @@ const App = () => {
       <TabPane tab="Tab D" key="4" count={1}>
         Content of Tab Pane 4
       </TabPane>
-      <TabPane tab="Tab E" key="5" count={2}>
+      <TabPane tab="Tab E" key="5" count={2} disabled>
         Content of Tab Pane 5
       </TabPane>
     </Tabs>

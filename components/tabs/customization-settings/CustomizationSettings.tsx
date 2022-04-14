@@ -14,7 +14,7 @@ import { getDefaultActiveKey, normalizePanes } from '../utils';
 import { TabPaneProps } from '../TabPane';
 
 function processPaneToData(pane: TabPaneProps, key: string, group?: string) {
-  const { tab, title, sort, showCount } = pane;
+  const { tab, title, sort, showCount, disabled } = pane;
   return {
     key,
     tab,
@@ -22,6 +22,7 @@ function processPaneToData(pane: TabPaneProps, key: string, group?: string) {
     sort,
     showCount,
     group,
+    disabled,
   };
 }
 

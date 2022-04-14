@@ -53,7 +53,7 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
   };
   const getTreeNodesMenus = (): ReactElement<MenuProps> | undefined => {
     const menus: ReactElement<any>[] = [];
-    if (defaultChangeable && itemKey !== defaultKey) {
+    if (defaultChangeable && !record.get('disabled') && itemKey !== defaultKey) {
       menus.push(
         <Item key="set_default">
           <span>{$l('Tabs', 'set_default')}</span>
