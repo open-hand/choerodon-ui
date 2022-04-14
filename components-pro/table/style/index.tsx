@@ -32,4 +32,4 @@ import '../../switch/style';
 import '../../menu/style';
 import '../../dropdown/style';
 import '../../attachment/style';
-import '../../table-customization/style';
+import '../customization-settings/style';

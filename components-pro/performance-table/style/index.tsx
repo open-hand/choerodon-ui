@@ -18,5 +18,4 @@ import '../../tooltip/style';
 import '../../menu/style';
 import '../../dropdown/style';
 import '../../number-field/style';
-import '../../table/style';
-import '../../table-customization/style';
+import '../../table/customization-settings/style';
