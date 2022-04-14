@@ -31,3 +31,18 @@ You should use [Menu](/components/menu/) as `overlay`. The menu items and divide
 > Warning: You must set a unique `key` for `Menu.Item`.
 >
 > Menu of Dropdown is unselectable by default, you can make it selectable via `<Menu selectable>`.
+
+### Dropdown.Button
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| disabled | whether the dropdown menu is disabled | boolean | - |
+| overlay | the dropdown menu | [Menu](/components/menu) \| () => [Menu](/components/menu) | - |
+| size | button size, [Button](/components-pro/button/) | string | 'default' |
+| trigger | the trigger mode which executes the drop-down action | Array&lt;`click`\|`hover`\|`contextMenu`> | `['hover']` |
+| type | button type, [Button](/components-pro/button/) | string | 'default' |
+| visible | menu is visible | boolean | - |
+| onClick | click callback, [Button](/components-pro/button/) | Function | - |
+| onVisibleChange | menu visible callback，param is visible | Function | - |
+
+more props [Dropdown](/components-pro/dropdown#API) 和 [ButtonGroup](/components/button#API)

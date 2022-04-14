@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>CheckBox`: 实现 showHelp 属性。
 - 🌟 `<pro>Table`: 新增 treeFilter 属性。
 - 🌟 `<pro>Switch`: 新增 loading 属性。
+- 🌟 `<pro>Dropdown`: 新增 Dropdown.Button 组件。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
 - 💄 `<pro>DatePicker`: 优化 range 模式下数据对调后面板日期显示的问题, 以及优化 range 模式下失焦后面板闪现当前日期的问题。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 和 time 时, 去除确定按钮, 失焦后自动选中值。
