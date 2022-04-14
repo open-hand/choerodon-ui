@@ -1,11 +1,20 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { CheckBox, CheckBoxProps } from '../check-box/CheckBox';
+import Progress from '../progress';
+import { Size } from '../core/enum';
 import autobind from '../_util/autobind';
 
+interface SwitchProps extends CheckBoxProps {
+  /**
+   * 加载中
+   */
+  loading?: boolean;
+}
 @observer
-export default class Switch extends CheckBox<CheckBoxProps> {
+export default class Switch extends CheckBox<SwitchProps> {
   static displayName = 'Switch';
 
   /**
@@ -32,6 +41,17 @@ export default class Switch extends CheckBox<CheckBoxProps> {
     super.handleKeyDown(e);
   }
 
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'loading',
+    ]);
+  }
+
+  isDisabled(): boolean {
+    const { disabled = false, loading = false } = this.props;
+    return disabled || loading;
+  }
+
   getLabelText() {
     return undefined;
   }
@@ -56,7 +76,31 @@ export default class Switch extends CheckBox<CheckBoxProps> {
     );
   }
 
+  getWrapperClassNames() {
+    const {
+      prefixCls,
+      props: {
+        loading,
+      },
+    } = this;
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-loading`]: loading,
+      },
+    );
+  }
+
   renderInner(): ReactNode {
-    return undefined;
+    const { loading } = this.props;
+    if (loading) {
+      return (
+        <Progress
+          key="loading"
+          type={ProgressType.loading}
+          size={Size.small}
+        />
+      );
+    }
+    return null;
   }
 }
