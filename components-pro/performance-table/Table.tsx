@@ -601,6 +601,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       searchText: '',
       pivot: undefined,
       selectedRowKeys: [],
+      dragging: false,
     };
 
     this.scrollY = 0;
@@ -901,6 +902,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return typeof rowHeight === 'function' ? rowHeight(rowData) : rowHeight!;
   }
 
+  get getScrollBarYWidth(): number {
+    const { contentHeight } = this.state;
+    const height = this.getTableHeight();
+    if (contentHeight > height && !!this.scrollbarYRef) {
+      return SCROLLBAR_WIDTH;
+    }
+    return 0;
+  }
+
   /**
    * 获取表头高度
    */
@@ -964,7 +974,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (showScrollArrow) {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight! + SCROLLBAR_LARGE_WIDTH);
       } else {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight! + SCROLLBAR_WIDTH);
+        return Math.max(headerHeight + contentHeight + this.getScrollBarYWidth, minHeight! + this.getScrollBarYWidth);
       }
     } else {
       return tableHeight;
@@ -1628,7 +1638,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let dir = 'left';
 
     if (this.isRTL()) {
-      mouseAreaLeft += this.minScrollX + SCROLLBAR_WIDTH;
+      mouseAreaLeft += this.minScrollX + this.getScrollBarYWidth;
       dir = 'right';
     }
 
@@ -1820,6 +1830,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   handleDragStart = (initial: DragStart, provided: ResponderProvided) => {
     const { onDragStart } = this.props;
+    this.setState({
+      dragging: true,
+    });
     if (isFunction(onDragStart)) {
       onDragStart(initial, provided);
     }
@@ -1828,6 +1841,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   handleDragEnd = async (resultDrag: DropResult, provided: ResponderProvided) => {
     const { onDragEnd, onDragEndBefore } = this.props;
     const { data } = this.state;
+    this.setState({
+      dragging: false,
+    });
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
       const resultStatus = onDragEndBefore(resultDrag, provided);
@@ -1859,7 +1875,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       setTimeout(() => {
         const { contentWidth, width } = this.state;
 
-        this.scrollX = width - contentWidth - SCROLLBAR_WIDTH;
+        this.scrollX = width - contentWidth - this.getScrollBarYWidth;
         this.updatePosition();
         const { scrollbarXRef } = this;
         if (scrollbarXRef) {
@@ -1961,7 +1977,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const leftShadowClassName = this.addPrefix('cell-group-left-shadow');
     const rightShadowClassName = this.addPrefix('cell-group-right-shadow');
     const showLeftShadow = this.scrollX < 0;
-    const showRightShadow = width - contentWidth !== this.scrollX;
+    const showRightShadow = width - contentWidth - this.getScrollBarYWidth !== this.scrollX;
 
     toggleClass(fixedLeftGroups, leftShadowClassName, showLeftShadow);
     toggleClass(fixedRightGroups, rightShadowClassName, showRightShadow);
@@ -2050,11 +2066,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const row = table.querySelector(`.${this.addPrefix('row')}:not(.virtualized)`);
     const contentWidth = row ? getWidth(row) : 0;
 
-    const { contentHeight } = this.state;
-    const height = this.getTableHeight();
     this.setState({ contentWidth });
     // 这里 -SCROLLBAR_WIDTH 是为了让滚动条不挡住内容部分
-    this.minScrollX = -(contentWidth - this.state.width) - (contentHeight > height ? SCROLLBAR_WIDTH : 0);
+    this.minScrollX = -(contentWidth - this.state.width) - this.getScrollBarYWidth;
     /**
      * 1.判断 Table 列数是否发生变化
      * 2.判断 Table 内容区域是否宽度有变化
@@ -2106,7 +2120,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (!autoHeight) {
       // 这里 -SCROLLBAR_WIDTH 和 -SCROLLBAR_LARGE_WIDTH 是为了让滚动条不挡住内容部分
       if (!showScrollArrow) {
-        this.minScrollY = -(contentHeight - height) - SCROLLBAR_WIDTH;
+        this.minScrollY = -(contentHeight - height) - this.getScrollBarYWidth;
       } else {
         this.minScrollY = -(contentHeight - height) - SCROLLBAR_LARGE_WIDTH;
       }
@@ -2119,7 +2133,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     // 如果 scrollTop 的值大于可以滚动的范围 ，则重置 Y 坐标滚动条
     // 当 Table 为 virtualized 时， wheel 事件触发每次都会进入该逻辑， 避免在滚动到底部后滚动条重置, +SCROLLBAR_WIDTH
-    if (Math.abs(this.scrollY) + height - headerHeight > nextContentHeight + SCROLLBAR_WIDTH) {
+    if (Math.abs(this.scrollY) + height - headerHeight > nextContentHeight + this.getScrollBarYWidth) {
       this.scrollTop(this.scrollY);
     }
   }
@@ -2320,7 +2334,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName, highLightRow, virtualized, rowDraggable } = this.props;
-    const { shouldFixedColumn, width, contentWidth } = this.state;
+    const { shouldFixedColumn, width, contentWidth, dragging } = this.state;
     const { depth, rowIndex, isHeaderRow, ...restRowProps } = props;
 
     const rowKey = rowData && this.getRecordKey(rowData, rowIndex);
@@ -2341,39 +2355,31 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       rowRight = width - contentWidth;
       rowStyles.right = rowRight;
     }
-    // 修复合并行的最后一行没有borderBottom 和 合并行后的单元格被遮挡的问题
+    let rowSpanIsFixed = false;
+    // // 修复合并行的最后一行没有borderBottom 和 合并行后的单元格被遮挡的问题
     for (let i = 0; i < cells.length; i++) {
       const cellUnit = cells[i];
-      if (cellUnit.props.onCell) {
-        const cellExternalProps = cellUnit.props.onCell({
+      const { onCell, dataIndex, fixed } = cellUnit.props;
+      if (onCell && typeof onCell === 'function') {
+        const cellExternalProps = onCell({
           rowData,
+          dataIndex,
+          rowIndex,
         }) || {};
         if (cellExternalProps.rowSpan > 1) {
-          let setNextRow = rowIndex + cellExternalProps.rowSpan - 1;
-          const isExit: TableRowSpanIndex | undefined = this.rowSpanList.find(x => x.rowIndex === rowIndex && x.columnIndex === i);
-          if (!isExit) {
-            const filterIsContainer: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex >= x.start && setNextRow <= x.end && x.columnIndex != i);
-            this.rowSpanList.push({
-              rowIndex,
-              columnIndex: i,
-              start: rowIndex,
-              end: setNextRow,
-              zIndex: !filterIsContainer.length ? 0 : 0 - filterIsContainer.length,
-            });
+          if (fixed) {
+            rowSpanIsFixed = !!fixed;
           }
+        } else if (cellExternalProps.rowSpan <= 1 && !isHeaderRow) {
+          restRowProps.width = undefined;
         }
       }
     }
+    restRowProps.transformNone = (rowSpanIsFixed && !dragging);
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
         rowStyles.zIndex = 0;
-      }
-      const findSpanRow: Array<TableRowSpanIndex> = this.rowSpanList.filter(x => rowIndex > x.start && rowIndex <= x.end);
-      if (findSpanRow.length) {
-        rowStyles.zIndex = findSpanRow[findSpanRow.length - 1].zIndex;
-      } else if (this.rowSpanList.find(x => x.start === rowIndex)) {
-        rowStyles.zIndex = 1;
       }
       const {
         fixedLeftCells = [],
@@ -2436,12 +2442,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                     style={
                       this.isRTL()
                         ? { right: 0 - rowRight }
-                        : { left: width - fixedRightCellGroupWidth - SCROLLBAR_WIDTH }
+                        : { left: width - fixedRightCellGroupWidth - this.getScrollBarYWidth }
                     }
                     height={props.isHeaderRow ? props.headerHeight : props.height}
-                    width={fixedRightCellGroupWidth + SCROLLBAR_WIDTH}
+                    width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
                   >
-                    {mergeCells(resetLeftForCells(fixedRightCells, SCROLLBAR_WIDTH))}
+                    {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
                   </CellGroup>
                 ) : null}
 
@@ -2474,12 +2480,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               style={
                 this.isRTL()
                   ? { right: 0 - rowRight }
-                  : { left: width - fixedRightCellGroupWidth - SCROLLBAR_WIDTH }
+                  : { left: width - fixedRightCellGroupWidth - this.getScrollBarYWidth }
               }
               height={props.isHeaderRow ? props.headerHeight : props.height}
-              width={fixedRightCellGroupWidth + SCROLLBAR_WIDTH}
+              width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
             >
-              {mergeCells(resetLeftForCells(fixedRightCells, SCROLLBAR_WIDTH))}
+              {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
             </CellGroup>
           ) : null}
 
