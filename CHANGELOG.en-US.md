@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 💄 `<pro>DatePicker`: Optimized an issue where clicking Tab will automatically select `hover` on the date panel.
 - 💄 `<pro>DatePicker`: When `mode` is set to `dateTime` or `time`, remove the "Ok" button and automatically select the value after losing focus.
+- 💄 `<pro>DatePicker`: Optimized the sliding sensitivity of the touch pad When `mode` is set to `dateTime` or `time`.
 - 💄 `Input & <pro>TextField`: Optimize the display logic between floating `label` and `placeholder` to be consistent with material design.
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
