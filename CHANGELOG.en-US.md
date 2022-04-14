@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
+- 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 
 ## 1.5.3
 
