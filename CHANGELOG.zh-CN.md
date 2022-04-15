@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
 - 🐞 `<pro>Table`: 修复加载状态不会消除的问题。
 - 🐞 `<pro>Lov`: 修复在 safari 或企业微信浏览器中 popup 模式下点击分页按钮会直接关闭窗口的问题。
+- 🐞 `<pro>DatePicker`: 修复通过 filter 过滤的日期能用键盘来选择的问题。
 
 ## 1.5.3
 

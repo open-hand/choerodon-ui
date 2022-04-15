@@ -165,7 +165,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   view: DatePickerKeyboardEvent | null;
 
-  @observable selectedDate?: Moment;
+  @observable cursorDate?: Moment | undefined;
 
   @observable mode?: ViewMode;
 
@@ -176,7 +176,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   /**
    * hover 时显示值
    */
-  @observable hoverValue?: string | null;
+  @observable hoverValue?: Moment | undefined;
 
   popupRangeEditor?: HTMLInputElement | null;
 
@@ -267,6 +267,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     );
   }
 
+  @autobind
+  handlePopupRangeEditorBlur() {
+    const { text } = this;
+    if (text) {
+      this.syncValueOnBlur(text);
+    }
+  }
+
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
@@ -288,6 +296,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-start`}
               onChange={this.handleChange}
               onFocus={this.handleRangeStart}
+              onBlur={this.handlePopupRangeEditorBlur}
               value={rangeTarget === 0 ? defaultTo(defaultTo(popupHoverValue, text), startText) : startText}
               placeholder={startPlaceholder}
               ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
@@ -298,6 +307,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               className={`${prefixCls}-range-end`}
               onChange={this.handleChange}
               onFocus={this.handleRangeEnd}
+              onBlur={this.handlePopupRangeEditorBlur}
               value={rangeTarget === 1 ? defaultTo(defaultTo(popupHoverValue, text), endText) : endText}
               placeholder={endPlaceHolder}
               ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
@@ -321,33 +331,38 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
-  getHoverValue(isPopup: boolean): string | null | undefined {
+  getHoverValue(isPopup: boolean): string | undefined {
     const { editorInPopup } = this.props;
-    const { hoverValue } = this;
-    return (
-      isPopup && editorInPopup
-        ? hoverValue
-        : !isPopup && !editorInPopup
-          ? hoverValue
-          : undefined
-    );
+    if (((isPopup && editorInPopup) || (!isPopup && !editorInPopup))) {
+      const { hoverValue } = this;
+      if (hoverValue) {
+        return hoverValue.format(this.getDateFormat());
+      }
+    }
   }
 
   @action
   handleDateMouseEnter = (currentDate?: Moment): void => {
-    this.hoverValue = currentDate && currentDate.format(this.getDateFormat());
+    this.hoverValue = currentDate;
   };
 
   @action
   handleDateMouseLeave = (): void => {
-    this.hoverValue = null;
+    this.hoverValue = undefined;
   };
 
   // 处理 hover 值显示
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
     const hoverValue = this.getHoverValue(false);
-    if (!isNil(hoverValue)) {
+    if (hoverValue !== undefined) {
+      const { text } = this;
+      if (text !== undefined) {
+        return {
+          text,
+          width: isFlat ? measureTextWidth(text) : 0,
+        };
+      }
       if (rangeTarget === undefined || (rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1)) {
         return {
           text: hoverValue,
@@ -360,7 +375,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getRangeInputValue(startText: string, endText: string): string {
     const hoverValue = this.getHoverValue(false);
-    if (isNil(hoverValue)) {
+    if (hoverValue === undefined) {
       return super.getRangeInputValue(startText, endText);
     }
     return hoverValue;
@@ -376,7 +391,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getPopupContent() {
     const mode = this.getViewMode();
-    const date = this.getSelectedDate();
+    const date = this.getCursorDate();
     return (
       <>
         {
@@ -391,6 +406,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             renderer: this.getCellRenderer(mode),
             onSelect: this.handleSelect,
             onSelectedDateChange: this.handleSelectedDateChange,
+            onCursorDateChange: this.handleCursorDateChange,
             onViewModeChange: this.handelViewModeChange,
             isValidDate: this.isValidDate,
             format: this.getDateFormat(),
@@ -464,7 +480,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (text) {
       const date = this.toMoment(text);
       if (date && date.isValid()) {
-        this.changeSelectedDate(date);
+        this.changeCursorDate(date);
       }
     }
   }
@@ -485,17 +501,17 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   //   return super.processValue(this.checkMoment(value));
   // }
 
-  getSelectedDate(): Moment {
+  getCursorDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;
-    let selectedDate =
-      this.selectedDate ||
+    let cursorDate =
+      this.cursorDate ||
       (range && rangeTarget !== undefined && rangeValue && rangeValue[rangeTarget]) ||
       (!multiple && this.getValue());
-    if (range && !multiple && rangeTarget !== undefined && !isNil(selectedDate) && !isMoment(selectedDate)) {
-      selectedDate = typeof range === 'object' ? selectedDate[range[rangeTarget]] : selectedDate[rangeTarget];
+    if (range && !multiple && rangeTarget !== undefined && !isNil(cursorDate) && !isMoment(cursorDate)) {
+      cursorDate = typeof range === 'object' ? cursorDate[range[rangeTarget]] : cursorDate[rangeTarget];
     }
-    if (isMoment(selectedDate) && selectedDate.isValid()) {
-      return selectedDate.clone();
+    if (isMoment(cursorDate) && cursorDate.isValid()) {
+      return cursorDate.clone();
     }
     return this.getValidDate(this.getDefaultTime()[range && rangeTarget !== undefined ? rangeTarget : 0]);
   }
@@ -540,10 +556,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
+  handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
+    if (this.isUnderRange(cursorDate, mode) && this.isDateOutOfFilter(cursorDate, selectedDate)) {
+      this.changeCursorDate(cursorDate);
+    }
+  }
+
+  @autobind
   handleSelectedDateChange(selectedDate: Moment, mode?: ViewMode) {
-    if (this.isUnderRange(selectedDate, mode)) {
-      super.setText(selectedDate.format(this.getDateFormat()));
-      this.changeSelectedDate(selectedDate);
+    if (this.isUnderRange(selectedDate, mode) && this.isDateOutOfFilter(selectedDate, selectedDate)) {
+      this.setText(selectedDate.format(this.getDateFormat()));
     }
   }
 
@@ -570,7 +592,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         }
       } else {
         runInAction(() => {
-          this.selectedDate = undefined;
+          this.cursorDate = undefined;
           this.mode = undefined;
         });
       }
@@ -642,35 +664,35 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   handleKeyDownHome(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().startOf('M'));
+      this.choose(this.getCursorDate().startOf('M'));
     }
   }
 
   handleKeyDownEnd(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().endOf('M'));
+      this.choose(this.getCursorDate().endOf('M'));
     }
   }
 
   handleKeyDownLeft(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().subtract(1, 'd'));
+      this.choose(this.getCursorDate().subtract(1, 'd'));
     }
   }
 
   handleKeyDownRight(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().add(1, 'd'));
+      this.choose(this.getCursorDate().add(1, 'd'));
     }
   }
 
   handleKeyDownUp(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().subtract(1, 'w'));
+      this.choose(this.getCursorDate().subtract(1, 'w'));
     }
   }
 
@@ -679,27 +701,27 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.expand();
     } else if (!this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().add(1, 'w'));
+      this.choose(this.getCursorDate().add(1, 'w'));
     }
   }
 
   handleKeyDownPageUp(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().subtract(1, e.altKey ? 'y' : 'M'));
+      this.choose(this.getCursorDate().subtract(1, e.altKey ? 'y' : 'M'));
     }
   }
 
   handleKeyDownPageDown(e) {
     if (!this.multiple && !this.editable) {
       stopEvent(e);
-      this.choose(this.getSelectedDate().add(1, e.altKey ? 'y' : 'M'));
+      this.choose(this.getCursorDate().add(1, e.altKey ? 'y' : 'M'));
     }
   }
 
   handleKeyDownEnter(_e) {
     if (!this.multiple && !this.editable) {
-      this.choose(this.getSelectedDate());
+      this.choose(this.getCursorDate());
     }
   }
 
@@ -714,7 +736,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   handleKeyDownTab() {
     // this.collapse();
     if ((!this.range || this.rangeTarget === 1) && !isNil(this.hoverValue)) {
-      this.hoverValue = null;
+      this.hoverValue = undefined;
     }
   }
 
@@ -731,9 +753,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (!this.isEditable() && !this.popup) {
       e.preventDefault();
     }
-    if (this.selectedDate && this.afterKeyDownInputIsClear(e)) {
+    if (this.cursorDate && this.afterKeyDownInputIsClear(e)) {
       runInAction(() => {
-        this.selectedDate = undefined;
+        this.cursorDate = undefined;
       });
     }
   }
@@ -787,8 +809,25 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
+  @action
   prepareSetValue(...value: any[]): void {
-    super.prepareSetValue(...value.map(v => v === null ? null : this.checkMoment(v)));
+    let cursorDate;
+    super.prepareSetValue(...value.reduce((values, v) => {
+      if (v === null) {
+        values.push(null);
+      } else {
+        const m = this.checkMoment(v);
+        if (m) {
+          cursorDate = cursorDate || this.getCursorDate();
+          if (this.isDateOutOfFilter(m, cursorDate)) {
+            values.push(m);
+          }
+        } else {
+          values.push(m);
+        }
+      }
+      return values;
+    }, []));
   }
 
   syncValueOnBlur(value) {
@@ -842,13 +881,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @action
-  changeSelectedDate(selectedDate: Moment) {
+  changeCursorDate(cursorDate: Moment) {
     if (this.rangeValueExchange && this.range && !isNil(this.rangeTarget) && this.rangeValue) {
       const [start, end] = [...this.rangeValue];
-      selectedDate = this.rangeTarget === 0 ? start : end;
+      cursorDate = this.rangeTarget === 0 ? start : end;
     }
     this.rangeValueExchange = false;
-    this.selectedDate = this.getValidDate(selectedDate);
+    this.cursorDate = this.getValidDate(cursorDate);
   }
 
   isSelected(date: Moment) {
@@ -866,16 +905,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    */
   choose(date: Moment, expand?: boolean) {
     date = this.getValidDate(date);
-    this.prepareSetValue(date);
-    this.changeSelectedDate(date);
-    const { range, rangeTarget } = this;
-    if (range ? rangeTarget === 1 : !this.multiple) {
-      if (!expand) {
-        this.collapse();
+    if (this.isDateOutOfFilter(date, date)) {
+      this.prepareSetValue(date);
+      this.changeCursorDate(date);
+      const { range, rangeTarget } = this;
+      if (range ? rangeTarget === 1 : !this.multiple) {
+        if (!expand) {
+          this.collapse();
+        }
       }
-    }
-    if (range && rangeTarget === 0 && this.popup && !expand) {
-      this.setRangeTarget(1);
+      if (range && rangeTarget === 0 && this.popup && !expand) {
+        this.setRangeTarget(1);
+      }
     }
   }
 
@@ -885,13 +926,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.expand();
     }
     if (!isNil(target)) {
-      this.selectedDate = undefined;
+      this.cursorDate = undefined;
     } else {
-      if (isNil(this.selectedDate)) {
-        this.selectedDate = this.getSelectedDate();
+      if (isNil(this.cursorDate)) {
+        this.cursorDate = this.getCursorDate();
       }
       this.timeID = window.setTimeout(action(() => {
-        this.selectedDate = undefined;
+        this.cursorDate = undefined;
       }), (this.props.triggerHiddenDelay || 50) + 20);
     }
     super.setRangeTarget(target);
@@ -951,14 +992,17 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return true;
   }
 
-  @autobind
-  isValidDate(currentDate: Moment, selected: Moment): boolean {
+  isDateOutOfFilter(currentDate: Moment, selected: Moment): boolean {
     const { filter } = this.props;
-    const isValid = this.isUnderRange(currentDate);
-    if (isValid && filter) {
+    if (filter) {
       return filter(currentDate, selected, this.getViewMode());
     }
-    return isValid;
+    return true;
+  }
+
+  @autobind
+  isValidDate(currentDate: Moment, selected: Moment): boolean {
+    return this.isUnderRange(currentDate) && this.isDateOutOfFilter(currentDate, selected);
   }
 
   @autobind

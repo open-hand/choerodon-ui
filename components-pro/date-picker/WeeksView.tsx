@@ -24,14 +24,14 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
-      this.changeSelectedDate(this.getCloneDate().subtract(1, 'M'));
+      this.changeCursorDate(this.getCloneDate().subtract(1, 'M'));
     }
   }
 
   handleKeyDownRight(e) {
     stopEvent(e);
     if (!e.altKey) {
-      this.changeSelectedDate(this.getCloneDate().add(1, 'M'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'M'));
     }
   }
 

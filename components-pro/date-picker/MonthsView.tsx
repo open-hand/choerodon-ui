@@ -19,12 +19,12 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
 
   handleKeyDownHome(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().startOf('y'));
+    this.changeCursorDate(this.getCloneDate().startOf('y'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().endOf('y'));
+    this.changeCursorDate(this.getCloneDate().endOf('y'));
   }
 
   handleKeyDownLeft(e) {
@@ -32,7 +32,7 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
     if (e.altKey) {
       this.changeViewMode(ViewMode.year);
     } else {
-      this.changeSelectedDate(this.getCloneDate().subtract(1, 'M'));
+      this.changeCursorDate(this.getCloneDate().subtract(1, 'M'));
     }
   }
 
@@ -44,28 +44,28 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
         this.changeViewMode(mode);
       }
     } else {
-      this.changeSelectedDate(this.getCloneDate().add(1, 'M'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'M'));
     }
   }
 
   handleKeyDownUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(3, 'M'));
+    this.changeCursorDate(this.getCloneDate().subtract(3, 'M'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(3, 'M'));
+    this.changeCursorDate(this.getCloneDate().add(3, 'M'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(e.altKey ? 10 : 1, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(e.altKey ? 10 : 1, 'y'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(e.altKey ? 10 : 1, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(e.altKey ? 10 : 1, 'y'));
   }
 
   renderHeader(): ReactNode {
@@ -147,7 +147,7 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
   choose(date: Moment) {
     const { mode } = this.props;
     if (mode !== ViewMode.month) {
-      this.changeSelectedDate(date);
+      this.changeCursorDate(date);
       this.changeViewMode(mode);
     } else {
       super.choose(date);

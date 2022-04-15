@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
+- 🐞 `<pro>DatePicker`: Fix the issue that dates filtered by `filter` can be selected by keyboard.
 
 ## 1.5.3
 
