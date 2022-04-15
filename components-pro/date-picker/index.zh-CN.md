@@ -29,6 +29,7 @@ title: DatePicker
 | extraFooterPlacement | 额外的页脚的位置 可选值: `top` `bottom` | string | `bottom`  |
 | editorInPopup | 编辑器在下拉框中  | boolean |  |
 | defaultTime | 设置用户选择日期时默认的时分秒  | moment \| \[moment, moment\] | moment('00:00:00', 'HH:mm:ss') |
+| useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

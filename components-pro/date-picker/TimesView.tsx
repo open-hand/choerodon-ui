@@ -165,7 +165,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     stopEvent(e);
     const unit = this.getCurrentUnit();
     if (unit === TimeUnit.a) {
-      this.changeSelectedDate(this.getCloneDate().subtract(12, TimeUnit.hour));
+      this.changeCursorDate(this.getCloneDate().subtract(12, TimeUnit.hour));
     } else {
       const { step } = this.props;
       const unitStep = step[stepMapping[unit]] || 1;
@@ -179,11 +179,11 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
           if (preValue !== date.get(parentUnit)) {
             date.subtract(parentStep - 1, parentUnit);
           }
-          this.changeSelectedDate(date);
+          this.changeCursorDate(date);
           return;
         }
       }
-      this.changeSelectedDate(date.subtract(unitStep, unit));
+      this.changeCursorDate(date.subtract(unitStep, unit));
     }
   }
 
@@ -191,7 +191,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     stopEvent(e);
     const unit = this.getCurrentUnit();
     if (unit === TimeUnit.a) {
-      this.changeSelectedDate(this.getCloneDate().add(12, TimeUnit.hour));
+      this.changeCursorDate(this.getCloneDate().add(12, TimeUnit.hour));
     } else {
       const { step } = this.props;
       const unitStep = step[stepMapping[unit]] || 1;
@@ -205,11 +205,11 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
           if (preValue !== date.get(parentUnit)) {
             date.add(parentStep - 1, parentUnit);
           }
-          this.changeSelectedDate(date);
+          this.changeCursorDate(date);
           return;
         }
       }
-      this.changeSelectedDate(date.add(unitStep, unit));
+      this.changeCursorDate(date.add(unitStep, unit));
     }
   }
 
@@ -217,9 +217,9 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     stopEvent(e);
     const unit = this.getCurrentUnit();
     if (unit === TimeUnit.a) {
-      this.changeSelectedDate(this.getCloneDate().set(TimeUnit.hour, 0));
+      this.changeCursorDate(this.getCloneDate().set(TimeUnit.hour, 0));
     } else {
-      this.changeSelectedDate(this.getCloneDate().set(unit, 0));
+      this.changeCursorDate(this.getCloneDate().set(unit, 0));
     }
   }
 
@@ -227,12 +227,12 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     stopEvent(e);
     const unit = this.getCurrentUnit();
     if (unit === TimeUnit.a) {
-      this.changeSelectedDate(this.getCloneDate().set(TimeUnit.hour, 12));
+      this.changeCursorDate(this.getCloneDate().set(TimeUnit.hour, 12));
     } else {
       const { step } = this.props;
       const unitStep = step[stepMapping[unit]] || 1;
       const size = unit === TimeUnit.hour ? this.use12Hours ? 12 : 24 : 60;
-      this.changeSelectedDate(this.getCloneDate().set(unit, size - unitStep));
+      this.changeCursorDate(this.getCloneDate().set(unit, size - unitStep));
     }
   }
 
@@ -425,7 +425,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     const { mode } = this.props;
     super.choose(date, expand);
     if (mode !== ViewMode.time) {
-      this.changeSelectedDate(date);
+      this.changeCursorDate(date);
       this.changeViewMode(mode);
     }
   }

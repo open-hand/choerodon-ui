@@ -26,6 +26,7 @@ export interface DateViewProps extends ViewComponentProps {
   isValidDate?: (currentDate: Moment, selected: Moment) => boolean;
   onSelect?: (selectedDate: Moment, expand?: boolean) => void;
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
+  onCursorDateChange?: (cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) => void;
   onViewModeChange?: (mode: ViewMode) => void;
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
@@ -69,12 +70,12 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   @autobind
   handlePrevYearClick() {
-    this.changeSelectedDate(this.getCloneDate().subtract(1, 'y'), ViewMode.year);
+    this.changeCursorDate(this.getCloneDate().subtract(1, 'y'), ViewMode.year);
   }
 
   @autobind
   handlePrevMonthClick() {
-    this.changeSelectedDate(this.getCloneDate().subtract(1, 'M'), ViewMode.month);
+    this.changeCursorDate(this.getCloneDate().subtract(1, 'M'), ViewMode.month);
   }
 
   @autobind
@@ -89,22 +90,22 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   @autobind
   handleNextYearClick() {
-    this.changeSelectedDate(this.getCloneDate().add(1, 'y'), ViewMode.year);
+    this.changeCursorDate(this.getCloneDate().add(1, 'y'), ViewMode.year);
   }
 
   @autobind
   handleNextMonthClick() {
-    this.changeSelectedDate(this.getCloneDate().add(1, 'M'), ViewMode.month);
+    this.changeCursorDate(this.getCloneDate().add(1, 'M'), ViewMode.month);
   }
 
   handleKeyDownHome(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().startOf('M'));
+    this.changeCursorDate(this.getCloneDate().startOf('M'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().endOf('M'));
+    this.changeCursorDate(this.getCloneDate().endOf('M'));
   }
 
   handleKeyDownLeft(e) {
@@ -112,35 +113,35 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
-      this.changeSelectedDate(this.getCloneDate().subtract(1, 'd'));
+      this.changeCursorDate(this.getCloneDate().subtract(1, 'd'));
     }
   }
 
   handleKeyDownRight(e) {
     stopEvent(e);
     if (!e.altKey) {
-      this.changeSelectedDate(this.getCloneDate().add(1, 'd'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'd'));
     }
   }
 
   handleKeyDownUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(1, 'w'));
+    this.changeCursorDate(this.getCloneDate().subtract(1, 'w'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(1, 'w'));
+    this.changeCursorDate(this.getCloneDate().add(1, 'w'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(1, e.altKey ? 'y' : 'M'));
+    this.changeCursorDate(this.getCloneDate().subtract(1, e.altKey ? 'y' : 'M'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(1, e.altKey ? 'y' : 'M'));
+    this.changeCursorDate(this.getCloneDate().add(1, e.altKey ? 'y' : 'M'));
   }
 
   handleKeyDownEnter(e) {
@@ -160,6 +161,11 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   changeSelectedDate(selectedDate: Moment, mode?: ViewMode) {
     const { onSelectedDateChange = noop } = this.props;
     onSelectedDateChange(selectedDate, mode);
+  }
+
+  changeCursorDate(cursor: Moment, mode?: ViewMode) {
+    const { onCursorDateChange = noop, date } = this.props;
+    onCursorDateChange(cursor, date, mode);
   }
 
   changeViewMode(mode: ViewMode) {
@@ -265,7 +271,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   handleDateMouseEnter = (currentDate?: Moment): MouseEventHandler => {
     const { onDateMouseEnter = noop } = this.props;
     return onDateMouseEnter(currentDate);
-  }
+  };
 
   renderPanelBody(): ReactNode {
     const {

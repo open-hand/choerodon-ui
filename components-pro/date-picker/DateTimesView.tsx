@@ -34,7 +34,7 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
     if (e.altKey) {
       this.changeViewMode(ViewMode.time);
     } else {
-      this.changeSelectedDate(this.getCloneDate().add(1, 'd'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'd'));
     }
   }
 

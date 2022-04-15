@@ -17,30 +17,30 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
 
   @autobind
   handlePrevYearClick() {
-    this.changeSelectedDate(this.getCloneDate().subtract(100, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(100, 'y'));
   }
 
   @autobind
   handleNextYearClick() {
-    this.changeSelectedDate(this.getCloneDate().add(100, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(100, 'y'));
   }
 
   handleKeyDownHome(e) {
     stopEvent(e);
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.subtract(date.year() % 100, 'y'));
+    this.changeCursorDate(date.subtract(date.year() % 100, 'y'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.add(90 - (date.year() % 100), 'y'));
+    this.changeCursorDate(date.add(90 - (date.year() % 100), 'y'));
   }
 
   handleKeyDownLeft(e) {
     stopEvent(e);
     if (!e.altKey) {
-      this.changeSelectedDate(this.getCloneDate().subtract(10, 'y'));
+      this.changeCursorDate(this.getCloneDate().subtract(10, 'y'));
     }
   }
 
@@ -49,28 +49,28 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
     if (e.altKey) {
       this.changeViewMode(ViewMode.year);
     } else {
-      this.changeSelectedDate(this.getCloneDate().add(10, 'y'));
+      this.changeCursorDate(this.getCloneDate().add(10, 'y'));
     }
   }
 
   handleKeyDownUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(30, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(30, 'y'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(30, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(30, 'y'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(100, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(100, 'y'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(100, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(100, 'y'));
   }
 
   renderHeader(): ReactNode {
@@ -163,7 +163,7 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
   }
 
   choose(date: Moment): void {
-    this.changeSelectedDate(date);
+    this.changeCursorDate(date);
     this.changeViewMode(ViewMode.year);
   }
 }
