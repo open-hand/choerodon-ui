@@ -428,7 +428,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const getRenderedValue = () => {
     const processValue = (v) => {
       if (!isNil(v)) {
-        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, undefined, record));
+        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, undefined, record), tableStore.getConfig('showInvalidDate'));
         return processFieldValue(text, field, {
           getProp: (propName) => field && field.get(propName, record),
           lang: dataSet && dataSet.lang || localeContext.locale.lang,

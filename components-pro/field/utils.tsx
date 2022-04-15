@@ -171,8 +171,7 @@ export function getBigNumberFormatOptions(getProp: (name) => any, getValue?: () 
     if (currency) {
       options.currency = currency;
     }
-  }
-  else {
+  } else {
     const precisionInValue = isNumber(precision)
       ? precision
       : new BigNumber(isEmpty(value) ? getValue ? getValue() || 0 : 0 : value).decimalPlaces();
@@ -219,13 +218,13 @@ export function processFieldValue(value, field: Field | undefined, options: { ge
   return value;
 }
 
-export function processValue(value, format) {
+export function processValue(value: any, format?: string, showInvalidDate?: boolean) {
   if (!isNil(value)) {
     if (isMoment(value)) {
       if (value.isValid()) {
         return value.format(format);
       }
-      if (getConfig('showInvalidDate')) {
+      if (showInvalidDate) {
         return $l('DatePicker', 'invalid_date') as string;
       }
       return '';

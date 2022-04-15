@@ -927,7 +927,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   processValue(value: any): ReactNode {
-    return processValue(value, this.getDateFormat());
+    return processValue(value, this.getDateFormat(), this.getContextConfig('showInvalidDate'));
   }
 
   getDataSetValue(): any {

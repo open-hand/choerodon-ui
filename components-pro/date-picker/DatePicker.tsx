@@ -82,6 +82,10 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 默认显示
    */
   defaultTime?: Moment | [Moment, Moment];
+  /**
+   * 允许使用非法日期
+   */
+  useInvalidDate?: boolean;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -105,6 +109,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     ...TriggerField.defaultProps,
     suffixCls: 'calendar-picker',
     mode: ViewMode.date,
+    useInvalidDate: true,
   };
 
   componentWillUnmount() {
@@ -171,8 +176,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   timeID?: number;
 
-  rangeValueExchange?: boolean;
-
   /**
    * hover 时显示值
    */
@@ -208,6 +211,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'timeZone',
       'editorInPopup',
       'defaultTime',
+      'useInvalidDate',
     ]);
   }
 
@@ -268,11 +272,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
+  @action
   handlePopupRangeEditorBlur() {
     const { text } = this;
     if (text) {
       this.syncValueOnBlur(text);
     }
+    this.rangeTarget = undefined;
   }
 
   getPopupEditor() {
@@ -356,13 +362,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const { isFlat } = this.props;
     const hoverValue = this.getHoverValue(false);
     if (hoverValue !== undefined) {
-      const { text } = this;
-      if (text !== undefined) {
-        return {
-          text,
-          width: isFlat ? measureTextWidth(text) : 0,
-        };
-      }
       if (rangeTarget === undefined || (rangeTarget === 0 && this.rangeTarget === 0) || (rangeTarget === 1 && this.rangeTarget === 1)) {
         return {
           text: hoverValue,
@@ -812,15 +811,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @action
   prepareSetValue(...value: any[]): void {
     let cursorDate;
+    const { useInvalidDate } = this.props;
     super.prepareSetValue(...value.reduce((values, v) => {
       if (v === null) {
         values.push(null);
       } else {
         const m = this.checkMoment(v);
         if (m) {
-          cursorDate = cursorDate || this.getCursorDate();
-          if (this.isDateOutOfFilter(m, cursorDate)) {
-            values.push(m);
+          if (useInvalidDate || m.isValid()) {
+            cursorDate = cursorDate || this.getCursorDate();
+            if (this.isDateOutOfFilter(m, cursorDate)) {
+              values.push(m);
+            }
           }
         } else {
           values.push(m);
@@ -850,7 +852,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   exchangeRangeValue(start: Moment, end: Moment) {
-    this.rangeValueExchange = true;
     const { defaultTime } = this.props;
     if (defaultTime) {
       const [startDefaultTime, endDefaultTime] = this.getDefaultTime();
@@ -882,11 +883,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @action
   changeCursorDate(cursorDate: Moment) {
-    if (this.rangeValueExchange && this.range && !isNil(this.rangeTarget) && this.rangeValue) {
-      const [start, end] = [...this.rangeValue];
-      cursorDate = this.rangeTarget === 0 ? start : end;
-    }
-    this.rangeValueExchange = false;
     this.cursorDate = this.getValidDate(cursorDate);
   }
 

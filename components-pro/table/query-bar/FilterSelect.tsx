@@ -208,10 +208,11 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple', current)) {
             fieldValue = (fieldValue || [])[repeat];
           }
+          const showInvalidDate =  this.getContextConfig('showInvalidDate')
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
-                isPlainObject(v) ? v : processValue(v, this.getDateFormat(field)),
+                isPlainObject(v) ? v : processValue(v, this.getDateFormat(field), showInvalidDate),
                 field,
                 {
                   getProp: (name) => this.getProp(name),
@@ -221,7 +222,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
-          const text = this.processText(isNil(fieldValue) ? processValue(value, this.getDateFormat(field)) : isMoment(fieldValue) ? processValue(fieldValue, this.getDateFormat(field)) : fieldValue);
+          const text = this.processText(isNil(fieldValue) ? processValue(value, this.getDateFormat(field), showInvalidDate) : isMoment(fieldValue) ? processValue(fieldValue, this.getDateFormat(field), showInvalidDate) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : text,
             field,
