@@ -20,7 +20,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
 
   @autobind
   handlePrevYearClick() {
-    this.changeSelectedDate(this.getCloneDate().subtract(10, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(10, 'y'));
   }
 
   @autobind
@@ -30,19 +30,19 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
 
   @autobind
   handleNextYearClick() {
-    this.changeSelectedDate(this.getCloneDate().add(10, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(10, 'y'));
   }
 
   handleKeyDownHome(e) {
     stopEvent(e);
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.subtract(date.year() % 10, 'y'));
+    this.changeCursorDate(date.subtract(date.year() % 10, 'y'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
     const date = this.getCloneDate();
-    this.changeSelectedDate(date.add(9 - (date.year() % 10), 'y'));
+    this.changeCursorDate(date.add(9 - (date.year() % 10), 'y'));
   }
 
   handleKeyDownLeft(e) {
@@ -50,7 +50,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
     if (e.altKey) {
       this.changeViewMode(ViewMode.decade);
     } else {
-      this.changeSelectedDate(this.getCloneDate().subtract(1, 'y'));
+      this.changeCursorDate(this.getCloneDate().subtract(1, 'y'));
     }
   }
 
@@ -61,28 +61,28 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
         this.changeViewMode(ViewMode.month);
       }
     } else {
-      this.changeSelectedDate(this.getCloneDate().add(1, 'y'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'y'));
     }
   }
 
   handleKeyDownUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(3, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(3, 'y'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(3, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(3, 'y'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().subtract(e.altKey ? 100 : 10, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(e.altKey ? 100 : 10, 'y'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
-    this.changeSelectedDate(this.getCloneDate().add(e.altKey ? 100 : 10, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(e.altKey ? 100 : 10, 'y'));
   }
 
   renderHeader(): ReactNode {
@@ -176,7 +176,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
   choose(date: Moment): void {
     const { mode } = this.props;
     if (mode !== ViewMode.year) {
-      this.changeSelectedDate(date);
+      this.changeCursorDate(date);
       this.changeViewMode(ViewMode.month);
     } else {
       super.choose(date);

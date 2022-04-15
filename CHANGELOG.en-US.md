@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `treeFilter` property.
 - 🌟 `<pro>Switch`: Added `loading` property.
 - 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
+- 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 💄 `<pro>DatePicker`: Optimized an issue where clicking Tab will automatically select `hover` on the date panel.
@@ -44,6 +45,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the input box component cannot focus in the cells with rowspan.
+- 🐞 `<pro>DatePicker`: Fix the issue that dates filtered by `filter` can be selected by keyboard.
+- 🐞 `<pro>Output`: Fix floating label display issue when content wraps.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 
 

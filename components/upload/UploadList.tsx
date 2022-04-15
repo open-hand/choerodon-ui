@@ -257,38 +257,40 @@ export default class UploadList extends Component<UploadListProps, any> {
             pointerEvents: 'none',
             opacity: 0.5,
           } as CSSProperties);
-      const previewIcon =
+      const previewIcon = (
         isFunction(showPreviewIcon)
           ? (showPreviewIcon as UploadListIconFunc)(file)
-          : stat.isImg && showPreviewIcon ? (
-            <a
-              href={file.url || file.thumbUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={style}
-              onClick={e => this.handlePreview(file, e)}
-              title={locale.previewFile}
-            >
-              <Icon type="visibility" />
-            </a>
-          ) : null;
-      const reUploadIcon =
+          : stat.isImg && showPreviewIcon
+      ) ? (
+          <a
+            href={file.url || file.thumbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={style}
+            onClick={e => this.handlePreview(file, e)}
+            title={locale.previewFile}
+          >
+            <Icon type="visibility" />
+          </a>
+        ) : null;
+      const reUploadIcon = (
         isFunction(showReUploadIcon)
           ? (showReUploadIcon as UploadListIconFunc)(file)
-          : showReUploadIcon ? (
-            <PopConfirm
-              {...popconfirmProps}
-              title={reUploadPopConfirmTitle || locale.confirmReUpload}
-              onConfirm={(e) => {
-                this.handleReUpload(file, e);
-              }}
-            >
-              <Icon
-                type="file_upload"
-                title={reUploadText}
-              />
-            </PopConfirm>
-          ) : null;
+          : showReUploadIcon
+      ) ? (
+          <PopConfirm
+            {...popconfirmProps}
+            title={reUploadPopConfirmTitle || locale.confirmReUpload}
+            onConfirm={(e) => {
+              this.handleReUpload(file, e);
+            }}
+          >
+            <Icon
+              type="file_upload"
+              title={reUploadText}
+            />
+          </PopConfirm>
+        ) : null;
       const removeIcon = showRemoveIcon ? (
         <PopConfirm
           {...popconfirmProps}

@@ -158,11 +158,12 @@ export default class Output extends FormField<OutputProps> {
     const result = this.getRenderedValue();
     const { renderEmpty } = this.props;
     const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? renderEmpty ? renderEmpty() : this.getContextConfig('renderEmpty')('Output') : result;
-    return (
-      <>
-        <span {...this.getMergedProps()}>{text}</span>
-        {this.renderFloatLabel()}
-      </>
-    );
+    const floatLabel = this.renderFloatLabel();
+    return floatLabel ? (
+      <span {...this.getWrapperProps()}>
+        {floatLabel}
+        <span {...this.getOtherProps()}>{text}</span>
+      </span>
+    ) : <span {...this.getMergedProps()}>{text}</span>;
   }
 }
