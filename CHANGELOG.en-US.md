@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 - 🐞 `<pro>DatePicker`: Fix the issue that dates filtered by `filter` can be selected by keyboard.
+- 🐞 `<pro>Output`: Fix floating label display issue when content wraps.
 
 ## 1.5.3
 
