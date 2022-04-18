@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo, useContext, useEffect } from 'react';
-import { runInAction } from 'mobx';
+import { observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
 import isObject from 'lodash/isObject';
@@ -15,18 +15,28 @@ import { $l } from '../../../locale-context';
 import Button from '../../../button';
 import Select from '../../../select';
 import Modal from '../../../modal';
-import CheckBox from '../../../check-box';
 import TextField from '../../../text-field';
 import { ValueChangeAction } from '../../../text-field/enum';
 import Dropdown from '../../../dropdown';
 import Menu from '../../../menu';
+import Form from '../../../form';
+import Switch from '../../../switch';
+import SelectBox from '../../../select-box';
 import Record from '../../../data-set/Record';
 import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
-import { isEqualDynamicProps, omitData, parseValue, stringifyValue, SELECTFIELDS } from '../TableDynamicFilterBar';
+import {
+  isEqualDynamicProps,
+  omitData,
+  parseValue,
+  SELECTCHANGE,
+  SELECTFIELDS,
+  stringifyValue,
+} from '../TableDynamicFilterBar';
 
 import Store from './QuickFilterMenuContext';
+import Field from '../../../data-set/Field';
 
 const modalKey = Modal.key();
 
@@ -83,19 +93,21 @@ function isSelect(data) {
 
 /**
  * 编辑/新建筛选弹窗
- * @param prefixCls
  * @param modal
  * @param menuDataSet
  * @param queryDataSet
- * @param onLocateData
+ * @param onLoadData
+ * @param type
+ * @param selectFields
  * @constructor
  */
-const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
+const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
   const { getConfig } = useContext(ConfigContext);
   modal.handleOk(async () => {
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
     const statusAdd = getConfig('status').add;
+    const shouldSaveValue= menuDataSet.current.get('saveFilterValue');
     const status = {};
     status[statusKey] = statusAdd;
     if (type !== 'edit') {
@@ -107,7 +119,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
             putData.push({
               comparator: 'EQUAL',
               fieldName: fieldObj.name,
-              value: stringifyValue(fieldObj.value),
+              value: shouldSaveValue ? stringifyValue(fieldObj.value) : '',
               ...status,
             });
           }
@@ -121,7 +133,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
           putData.push({
             comparator: 'EQUAL',
             fieldName,
-            value: stringifyValue(value),
+            value: shouldSaveValue ? stringifyValue(value) : '',
             ...status,
           });
         }
@@ -149,35 +161,21 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ prefixCls, 
     menuDataSet.reset();
   });
 
-  const proPrefixCls = getConfig('proPrefixCls');
-
   return (
-    <>
-      <div className={`${prefixCls}-filter-modal-item`}>
-        <div className={`${proPrefixCls}-form ${proPrefixCls}-field-label ${proPrefixCls}-field-required`}>
-          {$l('Table', 'filter_name')}
-        </div>
-        <TextField
-          style={{ width: '100%' }}
-          name="searchName"
-          placeholder={$l('Table', 'please_enter')}
-          showLengthInfo
-          valueChangeAction={ValueChangeAction.input}
-          dataSet={menuDataSet}
-        />
-      </div>
-      {type !== 'edit' && (
-        <div className={`${prefixCls}-filter-modal-item`}>
-          <CheckBox
-            name="defaultFlag"
-            dataSet={menuDataSet}
-          />
-          <span className={`${proPrefixCls}-form ${proPrefixCls}-field-label`}>
-            {$l('Table', 'set_default')}
-          </span>
-        </div>
-      )}
-    </>
+    <Form dataSet={menuDataSet}>
+      <TextField
+        style={{ width: '100%' }}
+        name="searchName"
+        placeholder={$l('Table', 'please_enter')}
+        showLengthInfo
+        valueChangeAction={ValueChangeAction.input}
+      />
+      <SelectBox name="saveFilterValue" hidden={type === 'edit'}>
+        <SelectBox.Option value={1}>{$l('Table', 'query_option_yes')}</SelectBox.Option>
+        <SelectBox.Option value={0}>{$l('Table', 'query_option_no')}</SelectBox.Option>
+      </SelectBox>
+      <Switch name="defaultFlag" hidden={type === 'edit'} />
+    </Form>
   );
 };
 
@@ -191,6 +189,7 @@ const MemoModalContent = memo(ModalContent);
 const QuickFilterMenu = function QuickFilterMenu() {
   const { getConfig } = useContext(ConfigContext);
   const {
+    tempQueryFields,
     autoQuery,
     dataSet,
     menuDataSet,
@@ -199,15 +198,34 @@ const QuickFilterMenu = function QuickFilterMenu() {
     filterMenuDataSet,
     conditionDataSet,
     onChange = noop,
-    // expand,
     conditionStatus,
     onStatusChange = noop,
     selectFields,
     onOriginalChange = noop,
+    initConditionFields = noop,
     optionDataSet,
     shouldLocateData,
   } = useContext(Store);
+  const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
+  const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
+  const shouldSaveValue= menuDataSet && menuDataSet.current && menuDataSet.current.get('saveFilterValue');
 
+  /**
+   * 替换个性化字段
+   * @param conditionList
+   */
+  const initCustomFields = (conditionList): void => {
+    const fields = conditionList.map(condition => {
+      return {
+        ...condition,
+        name: condition.fieldName,
+        defaultValue: condition.value,
+      };
+    });
+    runInAction(() => {
+      queryDataSet.fields = observable.map<string, Field>(conditionList ? queryDataSet.initFields(fields) : undefined);
+    });
+  };
 
   /**
    * queryDS 筛选赋值并更新初始勾选项
@@ -220,6 +238,15 @@ const QuickFilterMenu = function QuickFilterMenu() {
     if (current) {
       const conditionList = current.get('conditionList');
       const initData = {};
+      const tenantSelectFields: string[] = [];
+      const isTenant = current.get('isTenant');
+      if (isTenant) {
+        initCustomFields(conditionList);
+      } else if (tempQueryFields) {
+        runInAction(() => {
+          queryDataSet.fields = tempQueryFields;
+        });
+      }
       const { current: currentQueryRecord } = queryDataSet;
       if (conditionList && conditionList.length) {
         map(conditionList, condition => {
@@ -228,15 +255,21 @@ const QuickFilterMenu = function QuickFilterMenu() {
             initData[fieldName] = parseValue(value);
             onChange(fieldName);
           }
+          if (condition.usedFlag) {
+            tenantSelectFields.push(condition.fieldName)
+          }
         });
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
-        dataSet.setState(SELECTFIELDS, Object.keys(initData));
+        dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
+        if (isTenant) {
+          initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current } );
+        }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
@@ -296,8 +329,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else if (searchId === null) {
       handleQueryReset();
     } else {
-      const defaultMenu = menuDataSet.findIndex((menu) => menu.get('defaultFlag'));
-      if (defaultMenu !== -1) {
+      const defaultMenus = menuDataSet.filter((menu) => menu.get('defaultFlag'));
+      const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus && defaultMenus[0].index;
+      if (defaultMenus.length && defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
@@ -387,7 +421,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
       title: getTitle(type),
       children: (
         <MemoModalContent
-          prefixCls={prefixCls}
           type={type}
           menuDataSet={menuDataSet}
           conditionDataSet={conditionDataSet}
@@ -575,6 +608,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     );
   };
 
+  // 租户预置筛选及仅保存条件时，无保存按钮
   return (
     <>
       <Select
@@ -596,14 +630,16 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName') && (
+          {isChooseMenu && (
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>
           )}
-          <Button onClick={handleSave}>
-            {$l('Table', 'save_button')}
-          </Button>
+          {((isChooseMenu && isTenant) || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue)) ? null : (
+            <Button onClick={handleSave}>
+              {$l('Table', 'save_button')}
+            </Button>
+          )}
           <Button onClick={handleQueryReset}>
             {$l('Table', 'reset_button')}
           </Button>

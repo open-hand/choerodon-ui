@@ -75,6 +75,9 @@ export interface Locale extends DataSetLocale {
     cancel_default: string;
     filter_rename: string;
     save_filter_as: string;
+    save_filter_value: string,
+    preset: string,
+    user: string,
     whether_delete_filter: string;
     filter_name: string;
     please_enter: string;

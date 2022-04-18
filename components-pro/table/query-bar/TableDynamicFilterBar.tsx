@@ -20,7 +20,7 @@ import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-import Field from '../../data-set/Field';
+import Field, { Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import { DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
@@ -155,6 +155,7 @@ export const OPTIONDATASET = '__OPTIONDATASET__';
 export const FILTERMENUDATASET = '__FILTERMENUDATASET__';
 export const MENURESULT = '__MENURESULT__';
 export const SEARCHTEXT = '__SEARCHTEXT__';
+export const SELECTCHANGE = '__SELECTCHANGE__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -181,10 +182,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   get queryFields(): React.ReactElement<any>[] {
-    const { queryFields } = this.props;
+    const { queryFields, queryDataSet, dataSet } = this.props;
+    const menuDataSet = dataSet.getState(MENUDATASET);
+    const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
     return queryFields.filter(component => {
+      if (component.props.hidden) {
+        return !component.props.hidden;
+      }
+      if (isTenant && queryDataSet && queryDataSet.getField(component.props.name)) {
+        return queryDataSet.getField(component.props.name)!.get('fieldVisible') !== 0;
+      }
       return !component.props.hidden;
-    })
+    });
   }
 
   @observable moreFields: Field[];
@@ -217,6 +226,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   originalValue: object;
 
   originalConditionFields: string[] = [];
+
+  tempFields: Fields;
 
   constructor(props, context) {
     super(props, context);
@@ -253,8 +264,34 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
   }
 
-  processDataSetListener(flag: boolean) {
-    const { queryDataSet, dataSet } = this.props;
+  componentWillReceiveProps(nextProps: Readonly<TableDynamicFilterBarProps>): void {
+    const { dataSet, fuzzyQueryOnly, queryDataSet } = nextProps;
+    // eslint-disable-next-line react/destructuring-assignment
+    if (dataSet !== this.props.dataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
+      runInAction(() => {
+        this.fieldSelectHidden = true;
+        this.expand = true;
+      });
+      if (!fuzzyQueryOnly) {
+        // 移除原有实例监听
+        this.processDataSetListener(false);
+        this.processDataSetListener(true, nextProps);
+        if (this.isSingleLineOpt() && this.refSingleWrapper) {
+          const { height } = this.refSingleWrapper.getBoundingClientRect();
+          const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
+          runInAction(() => {
+            this.showExpandIcon = height > (childHeight + 18);
+          });
+        }
+      }
+      if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
+        this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+      }
+    }
+  }
+
+  processDataSetListener(flag: boolean, nextProps?: TableDynamicFilterBarProps) {
+    const { queryDataSet, dataSet } = nextProps || this.props;
     if (queryDataSet) {
       const handler = flag ? queryDataSet.addEventListener : queryDataSet.removeEventListener;
       const dsHandler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
@@ -278,7 +315,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       await this.initMenuDataSet();
       const res = dataSet.getState(MENURESULT);
       if (res && res.length && res.filter(menu => menu.defaultFlag).length) {
-        const { conditionList } = res.filter(menu => menu.defaultFlag)[0];
+        const defaultMenus = res.filter(menu => menu.defaultFlag);
+        const { conditionList } = defaultMenus.length > 1 ? defaultMenus.find(menu => menu.isTenant !== 1) : defaultMenus[0];
         const initQueryData = {};
         if (conditionList && conditionList.length) {
           map(conditionList, condition => {
@@ -375,6 +413,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 初始化勾选值、条件字段
    * @param props
    */
+  @autobind
   @action
   initConditionFields(props) {
     const { dataSet, record } = props;
@@ -393,7 +432,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }
       if (isSelect(data) && !(dataSet.getState(SELECTFIELDS) || []).includes(name)) {
         const field = dataSet.getField(name);
-        if (!field || !field.get('bind', record)) {
+        if (!field || !field.get('bind', record) || field.get('usedFlag')) {
           this.originalConditionFields.push(name);
           this.handleSelect(name);
         }
@@ -417,6 +456,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       const conditionDataSet = new DataSet(ConditionDataSet());
       const optionDataSet = new DataSet({
         selection: DataSetSelection.single,
+        fields: [
+          {
+            // 是否租户默认配置
+            name: 'isTenant',
+            type: FieldType.string,
+            transformResponse: value => value ? $l('Table', 'preset') : $l('Table', 'user'),
+            group: true,
+          },
+        ],
       });
       const filterMenuDataSet = new DataSet({
         autoCreate: true,
@@ -455,6 +503,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         runInAction(() => {
           this.shouldLocateData = true;
         });
+        if (queryDataSet && queryDataSet.fields) {
+          this.tempFields = queryDataSet.snapshot().dataSet.fields;
+        }
       } else {
         const { current } = filterMenuDataSet;
         if (current) current.set('filterName', undefined);
@@ -576,6 +627,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
+    dataSet.setState(SELECTCHANGE, shouldUpdate);
   };
 
   /**
@@ -597,6 +649,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
+    dataSet.setState(SELECTCHANGE, shouldUpdate);
   };
 
   renderRefreshBtn(): ReactNode {
@@ -759,6 +812,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       const quickFilterMenu = this.tableFilterAdapter && searchCodes ? (
         <QuickFilterMenuContext.Provider
           value={{
+            tempQueryFields: this.tempFields,
             autoQuery,
             prefixCls,
             expand: this.expand,
@@ -774,6 +828,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             conditionDataSet: dataSet.getState(CONDITIONDATASET),
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
+            initConditionFields: this.initConditionFields,
           }}
         >
           <QuickFilterMenu />
@@ -812,7 +867,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       propFields.forEach(({ name }) => {
         if (name) {
           const field = cloneFields.get(name);
-          if (field && !field.get('bind') && !field.get('name').includes('__tls')) {
+          if (field && !field.get('bind') && !field.get('name').includes('__tls') && field.get('fieldVisible') !== 0) {
             result.push(field);
           }
         }
@@ -826,6 +881,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getQueryBar(): ReactNode {
     const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly } = this.props;
+    const menuDataSet = dataSet.getState(MENUDATASET);
+    let fieldsLimit = queryFieldsLimit;
+    if (menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant')) {
+      fieldsLimit = 0;
+    }
     const { prefixCls } = this;
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
     if (fuzzyQueryOnly) {
@@ -844,9 +904,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       return (
         <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
           {this.getFilterMenu()}
-          <div className={`${prefixCls}--dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
+          <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
-              {this.queryFields.slice(0, queryFieldsLimit).map(element => {
+              {this.queryFields.slice(0, fieldsLimit).map(element => {
                 const { name, hidden } = element.props;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -867,7 +927,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   </div>
                 );
               })}
-              {this.queryFields.slice(queryFieldsLimit).map(element => {
+              {this.queryFields.slice(fieldsLimit).map(element => {
                 const { name, hidden } = element.props;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -899,7 +959,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 }
                 return null;
               })}
-              {(queryFieldsLimit < this.queryFields.length) && (<div className={`${prefixCls}-filter-item`}>
+              {(fieldsLimit < this.queryFields.length) && (<div className={`${prefixCls}-filter-item`}>
                 <Dropdown
                   visible={!this.fieldSelectHidden}
                   overlay={(
@@ -913,7 +973,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: this.originOrderQueryFields.slice(queryFieldsLimit),
+                          fields: this.originOrderQueryFields.slice(fieldsLimit),
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}

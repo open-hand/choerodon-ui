@@ -2,6 +2,7 @@ import { Context, createContext } from 'react';
 import { DynamicFilterBarConfig } from '../../Table';
 import DataSet from '../../../data-set';
 import { RecordStatus } from '../../../data-set/enum';
+import { Fields } from '../../../data-set/Field';
 
 export interface QuickFilterProps {
   prefixCls?: string;
@@ -10,12 +11,14 @@ export interface QuickFilterProps {
   dynamicFilterBar?: DynamicFilterBarConfig;
   dataSet: DataSet;
   queryDataSet: DataSet;
+  tempQueryFields?: Fields;
   onChange?: (code: string) => void;
+  initConditionFields?: Function;
   conditionStatus?: RecordStatus;
   onStatusChange?: (status: RecordStatus, data?: object) => void;
   autoQuery?: boolean;
   selectFields?: string[];
-  onOriginalChange?: (fieldName?: string) => void;
+  onOriginalChange?: (fieldName?: string | string[]) => void;
 }
 
 export interface QuickFilterContextValue extends QuickFilterProps {
