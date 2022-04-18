@@ -51,7 +51,7 @@ interface DropdownInterface extends FunctionComponent<DropDownProps> {
 const Dropdown: DropdownInterface = function Dropdown(props) {
   const { getProPrefixCls } = useContext(ConfigContext);
   const {
-    onOverlayClick, hidden: propsHidden, visible: propsVisible, trigger, overlay, children, placement, popupClassName,
+    onOverlayClick, hidden: propsHidden, visible: propsVisible, trigger, overlay, children, placement, popupClassName, disabled,
     getPopupContainer, onHiddenBeforeChange, suffixCls, prefixCls: customizePrefixCls, onHiddenChange, onVisibleChange,
   } = props;
   const prefixCls = getProPrefixCls(suffixCls!, customizePrefixCls);
@@ -115,10 +115,13 @@ const Dropdown: DropdownInterface = function Dropdown(props) {
     }
   }, [propsHidden, propsVisible]);
 
+  const triggerActions = disabled ? [] : trigger;
+  const child = React.Children.only(children) as React.ReactElement<any>;
+
   return (
     <Trigger
       prefixCls={prefixCls}
-      action={trigger}
+      action={triggerActions}
       builtinPlacements={builtinPlacements}
       popupPlacement={placement}
       popupContent={renderPopupContent}
@@ -129,7 +132,9 @@ const Dropdown: DropdownInterface = function Dropdown(props) {
       popupHidden={hidden}
       getPopupContainer={getPopupContainer}
     >
-      {children}
+      {React.cloneElement(child, {
+        disabled,
+      })}
     </Trigger>
   );
 };
