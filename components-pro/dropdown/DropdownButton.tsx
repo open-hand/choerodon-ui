@@ -32,12 +32,14 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
     overlay,
     trigger,
     align,
-    visible,
-    onVisibleChange,
-    placement,
-    getPopupContainer,
+    hidden,
     buttonProps,
     buttonGroupPrefixCls,
+    placement,
+    onHiddenChange,
+    getPopupContainer,
+    onOverlayClick,
+    onHiddenBeforeChange,
     ...restProps
   } = props;
   const { getProPrefixCls } = useContext(ConfigContext);
@@ -47,15 +49,15 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
     prefixCls,
     align,
     overlay,
+    hidden,
     disabled,
     trigger: disabled ? [] : trigger,
-    onVisibleChange,
     placement,
+    onHiddenChange,
+    onHiddenBeforeChange,
     getPopupContainer,
+    onOverlayClick,
   };
-  if ('visible' in props) {
-    dropdownProps.visible = visible;
-  }
 
   return (
     <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className)}>

@@ -33,13 +33,8 @@ title: Dropdown
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| disabled | 菜单是否禁用 | boolean | - |
-| overlay | 菜单。建议使用函数返回菜单，可提高性能 | [Menu](/components/menu) \| () => [Menu](/components/menu) | - |
-| size | 按钮大小，和 [Button](/components-pro/button/) 一致 | string | 'default' |
-| trigger | 触发下拉的行为 | Array&lt;`click`\|`hover`\|`contextMenu`> | `['hover']` |
-| type | 按钮类型，和 [Button](/components-pro/button/) 一致 | string | 'default' |
-| visible | 菜单是否显示 | boolean | - |
+| buttonProps | 按钮属性，和 [Button](/components-pro/button/) 一致 | string | |
+| type | 按钮类型，和 [Button](/components-pro/button/) 一致 | string | 'button' |
 | onClick | 点击左侧按钮的回调，和 [Button](/components-pro/button/) 一致 | Function | - |
-| onVisibleChange | 菜单显示状态改变时调用，参数为 visible | Function | - |
 
-更多属性请参考 [Dropdown](/components-pro/dropdown#API) 和 [ButtonGroup](/components/button#API)
+更多属性请参考 [Dropdown](/components-pro/dropdown#API) 和 [Button](/components-pro/button#API)
