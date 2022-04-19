@@ -3,23 +3,29 @@
 exports[`renders ./components-pro/button/demo/block.md correctly 1`] = `
 <div>
   <button
-    class="undefined-btn-wrapper undefined-btn undefined-btn-flat undefined-btn-primary undefined-btn-block"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-block"
     type="button"
   >
     <span>
       flat按钮
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="undefined-btn-wrapper undefined-btn undefined-btn-raised undefined-btn-primary undefined-btn-block"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-block"
     type="button"
   >
     <span>
       raised按钮
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="undefined-btn-wrapper undefined-btn undefined-btn-link undefined-btn-primary undefined-btn-block"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-link c7n-pro-btn-primary c7n-pro-btn-block"
     type="button"
   >
     <span>
@@ -31,6 +37,21 @@ exports[`renders ./components-pro/button/demo/block.md correctly 1`] = `
 
 exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
 <div>
+  <label
+    class="c7n-pro-switch-wrapper"
+  >
+    <input
+      checked=""
+      class="c7n-pro-switch"
+      type="checkbox"
+      value="true"
+    />
+    <span
+      class="c7n-pro-switch-label"
+    >
+      Loading
+    </span>
+  </label>
   <div>
     <div
       style="margin:20px 0"
@@ -38,9 +59,85 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       Background Color(With raised funcType)
     </div>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-gray c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
+      <span>
+        Primary
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-loading"
+      type="button"
+    >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
+      <span>
+        Default
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-gray c7n-pro-btn-loading"
+      type="button"
+    >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Gray
       </span>
@@ -49,9 +146,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-blue c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Blue
       </span>
@@ -60,9 +175,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-green c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-green c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Green
       </span>
@@ -71,9 +204,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-red c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-red c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Red
       </span>
@@ -81,10 +232,30 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
         class="c7n-ripple-wrapper"
       />
     </button>
+    <br />
+    <br />
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-yellow c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-yellow c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Yellow
       </span>
@@ -93,9 +264,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-purple c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-purple c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Purple
       </span>
@@ -103,12 +292,28 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
         class="c7n-ripple-wrapper"
       />
     </button>
-    <br />
-    <br />
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-dark c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-dark c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Dark
       </span>
@@ -124,9 +329,85 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       Font Color(With flat funcType)
     </div>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-gray c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
+      <span>
+        Primary
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-loading"
+      type="button"
+    >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
+      <span>
+        Default
+      </span>
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-gray c7n-pro-btn-loading"
+      type="button"
+    >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Gray
       </span>
@@ -135,9 +416,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-blue c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Blue
       </span>
@@ -146,9 +445,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-green c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-green c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Green
       </span>
@@ -157,9 +474,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-red c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-red c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Red
       </span>
@@ -167,10 +502,30 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
         class="c7n-ripple-wrapper"
       />
     </button>
+    <br />
+    <br />
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-yellow c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-yellow c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Yellow
       </span>
@@ -179,9 +534,27 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-purple c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-purple c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Purple
       </span>
@@ -189,12 +562,28 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
         class="c7n-ripple-wrapper"
       />
     </button>
-    <br />
-    <br />
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-dark c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-dark c7n-pro-btn-loading"
       type="button"
     >
+      <div
+        class="c7n-progress c7n-progress-loading c7n-progress-status-normal c7n-progress-show-info c7n-progress-small"
+        trim="both"
+      >
+        <div
+          class="c7n-progress-inner"
+        >
+          <svg
+            viewBox="0 0 50 50"
+          >
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+            />
+          </svg>
+        </div>
+      </div>
       <span>
         Dark
       </span>
@@ -209,7 +598,7 @@ exports[`renders ./components-pro/button/demo/color.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
 <div>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -220,7 +609,7 @@ exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     disabled=""
     type="button"
   >
@@ -229,7 +618,7 @@ exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
     </span>
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary"
     disabled=""
     type="button"
   >
@@ -240,7 +629,7 @@ exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
   <br />
   <br />
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary"
     disabled=""
     type="button"
   >
@@ -249,7 +638,7 @@ exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
     </span>
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
     disabled=""
     type="button"
   >
@@ -263,7 +652,7 @@ exports[`renders ./components-pro/button/demo/disable.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/funcType.md correctly 1`] = `
 <div>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -274,7 +663,7 @@ exports[`renders ./components-pro/button/demo/funcType.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -285,7 +674,7 @@ exports[`renders ./components-pro/button/demo/funcType.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -295,13 +684,21 @@ exports[`renders ./components-pro/button/demo/funcType.md correctly 1`] = `
       class="c7n-ripple-wrapper"
     />
   </button>
+  <button
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-link c7n-pro-btn-default"
+    type="button"
+  >
+    <span>
+      link按钮
+    </span>
+  </button>
 </div>
 `;
 
 exports[`renders ./components-pro/button/demo/href.md correctly 1`] = `
 <div>
   <a
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     href="https://choerodon.io"
     target="_blank"
   >
@@ -313,7 +710,7 @@ exports[`renders ./components-pro/button/demo/href.md correctly 1`] = `
     />
   </a>
   <a
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default"
     href="https://choerodon.io"
     target="_blank"
   >
@@ -325,7 +722,7 @@ exports[`renders ./components-pro/button/demo/href.md correctly 1`] = `
     />
   </a>
   <a
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
     href="https://choerodon.io"
     target="_blank"
   >
@@ -342,7 +739,7 @@ exports[`renders ./components-pro/button/demo/href.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
 <div>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only"
     type="button"
   >
     <i
@@ -353,7 +750,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only"
     type="button"
   >
     <i
@@ -364,7 +761,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary"
     type="button"
   >
     <i
@@ -378,7 +775,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only"
     type="button"
   >
     <i
@@ -389,7 +786,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
     type="button"
   >
     <i
@@ -400,7 +797,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only"
     type="button"
   >
     <i
@@ -411,7 +808,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
     disabled=""
     style="color:#e12330"
     type="button"
@@ -426,8 +823,7 @@ exports[`renders ./components-pro/button/demo/icon.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
 <div>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
-    disabled=""
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-loading"
     type="button"
   >
     <div
@@ -451,10 +847,12 @@ exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
     <span>
       保存
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-wrapper c7n-pro-btn-disabled"
-    disabled=""
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-loading"
     type="button"
   >
     <div
@@ -478,10 +876,12 @@ exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
     <span>
       保存
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
-    disabled=""
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-loading"
     type="button"
   >
     <div
@@ -502,10 +902,12 @@ exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
         </svg>
       </div>
     </div>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-disabled"
-    disabled=""
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary c7n-pro-btn-icon-only c7n-pro-btn-loading"
     type="button"
   >
     <div
@@ -526,10 +928,12 @@ exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
         </svg>
       </div>
     </div>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-disabled"
-    disabled=""
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-loading"
     type="submit"
   >
     <div
@@ -553,11 +957,14 @@ exports[`renders ./components-pro/button/demo/loading.md correctly 1`] = `
     <span>
       数据源状态
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>
   <br />
   <br />
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -574,9 +981,12 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
 <div>
   <div>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
       type="button"
     >
+      <i
+        class="icon icon-search"
+      />
       <span>
         默认raised按钮
       </span>
@@ -585,9 +995,12 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-lg c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
       type="button"
     >
+      <i
+        class="icon icon-search"
+      />
       <span>
         大raised按钮
       </span>
@@ -596,9 +1009,12 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
       type="button"
     >
+      <i
+        class="icon icon-search"
+      />
       <span>
         小raised按钮
       </span>
@@ -609,7 +1025,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
   </div>
   <div>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default"
       type="button"
     >
       <span>
@@ -620,7 +1036,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-lg c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default"
       type="button"
     >
       <span>
@@ -631,7 +1047,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default"
       type="button"
     >
       <span>
@@ -644,7 +1060,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
   </div>
   <div>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper"
+      class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
       type="button"
     >
       <i
@@ -655,7 +1071,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-lg"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-lg c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
       type="button"
     >
       <i
@@ -666,7 +1082,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
       />
     </button>
     <button
-      class="c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only c7n-pro-btn-wrapper c7n-pro-btn-sm"
+      class="c7n-pro-btn-wrapper c7n-pro-btn-sm c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
       type="button"
     >
       <i
@@ -683,7 +1099,7 @@ exports[`renders ./components-pro/button/demo/size.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/throttle.md correctly 1`] = `
 <div>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -694,7 +1110,7 @@ exports[`renders ./components-pro/button/demo/throttle.md correctly 1`] = `
     />
   </button>
   <button
-    class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     type="button"
   >
     <span>
@@ -710,7 +1126,7 @@ exports[`renders ./components-pro/button/demo/throttle.md correctly 1`] = `
 exports[`renders ./components-pro/button/demo/tooltip.md correctly 1`] = `
 Array [
   <span
-    class="undefined-btn-wrapper undefined-btn-disabled undefined-btn undefined-btn-disabled-wrapper"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-disabled-wrapper"
   >
     <button
       disabled=""
@@ -722,18 +1138,20 @@ Array [
     </button>
   </span>,
   <button
-    class="undefined-btn-wrapper undefined-btn"
+    class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
     type="button"
   >
     <span>
       内容超长时显示气泡&lt;点击改变样式&gt;
     </span>
+    <div
+      class="c7n-ripple-wrapper"
+    />
   </button>,
   <a
-    class="undefined-btn-wrapper undefined-btn-disabled undefined-btn"
+    class="c7n-pro-btn-wrapper c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
     disabled=""
-    href="https://choerodon.io"
     target="_blank"
   >
     <span>

@@ -2,6 +2,7 @@
 @import "../../../components/style/mixins/index";
 
 @dropdown-prefix-cls: ~"@{c7n-pro-prefix}-dropdown";
+@dropdown-button-prefix-cls: ~"@{c7n-pro-prefix}-dropdown-button";
 
 .@{dropdown-prefix-cls}-popup {
   &.slide-down-enter.slide-down-enter-active&-placement-bottomLeft,
@@ -36,5 +37,11 @@
   .@{c7n-prefix}-menu-vertical>.@{c7n-prefix}-menu-submenu>.@{c7n-prefix}-menu-submenu-title {
     padding-right: 0.25rem;
     padding-left: 0.25rem;
+  }
+}
+
+.@{dropdown-button-prefix-cls} {
+  .@{c7n-pro-prefix}-btn + .@{c7n-pro-prefix}-btn {
+    margin: 0 ;
   }
 }

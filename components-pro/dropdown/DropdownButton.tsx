@@ -50,7 +50,7 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
     align,
     overlay,
     hidden,
-    disabled,
+    disabled: disabled || (buttonProps && buttonProps.loading),
     trigger: disabled ? [] : trigger,
     placement,
     onHiddenChange,
@@ -65,9 +65,7 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
         {children}
       </Button>
       <Dropdown {...dropdownProps}>
-        <span>
-          <Button funcType={FuncType.flat} icon="arrow_drop_down" {...buttonProps} type={type} disabled={disabled} />
-        </span>
+        <Button funcType={FuncType.flat} icon="arrow_drop_down" />
       </Dropdown>
     </ButtonGroup>
   );
