@@ -36,13 +36,8 @@ You should use [Menu](/components/menu/) as `overlay`. The menu items and divide
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| disabled | whether the dropdown menu is disabled | boolean | - |
-| overlay | the dropdown menu | [Menu](/components/menu) \| () => [Menu](/components/menu) | - |
-| size | button size, [Button](/components-pro/button/) | string | 'default' |
-| trigger | the trigger mode which executes the drop-down action | Array&lt;`click`\|`hover`\|`contextMenu`> | `['hover']` |
-| type | button type, [Button](/components-pro/button/) | string | 'default' |
-| visible | menu is visible | boolean | - |
+| buttonProps | button size, [Button](/components-pro/button/) | string | |
+| type | button type, [Button](/components-pro/button/) | string | 'button' |
 | onClick | click callback, [Button](/components-pro/button/) | Function | - |
-| onVisibleChange | menu visible callback，param is visible | Function | - |
 
-more props [Dropdown](/components-pro/dropdown#API) 和 [ButtonGroup](/components/button#API)
+more props [Dropdown](/components-pro/dropdown#API) 和 [Button](/components-pro/button#API)
