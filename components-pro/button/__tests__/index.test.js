@@ -9,6 +9,12 @@ describe('Button', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('have static property for components-pro type detecting', () => {
+    const wrapper = mount(<Button>Button-Pro Text</Button>);
+    // eslint-disable-next-line
+    expect(wrapper.type().__PRO_BUTTON).toBe(true);
+  });
+
   it('renders Chinese characters correctly', () => {
     const wrapper = render(<Button>按钮</Button>);
     expect(wrapper).toMatchSnapshot();
