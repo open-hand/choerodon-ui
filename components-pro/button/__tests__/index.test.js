@@ -12,7 +12,7 @@ describe('Button', () => {
   it('have static property for components-pro type detecting', () => {
     const wrapper = mount(<Button>Button-Pro Text</Button>);
     // eslint-disable-next-line
-    expect(wrapper.type().__Pro_BUTTON).toBe(true);
+    expect(wrapper.type().__PRO_BUTTON).toBe(true);
   });
 
   it('renders Chinese characters correctly', () => {
@@ -29,6 +29,22 @@ describe('Button', () => {
       </Button>,
     );
     expect(wrapper2).toMatchSnapshot();
+  });
+
+  it('renders color correctly', () => {
+    const wrapper = mount(<Button>按钮</Button>);
+    expect(wrapper.props().color).toEqual(undefined);
+    expect(wrapper.find('button.c7n-pro-btn-default')).toHaveLength(1);
+    
+    wrapper.setProps({ color: 'default', children: 'default' });
+    wrapper.update();
+    expect(wrapper.props().color).toEqual('default');
+    expect(wrapper.find('button.c7n-pro-btn-default')).toHaveLength(1);
+
+    wrapper.setProps({ color: 'primary', children: 'primary' });
+    wrapper.update();
+    expect(wrapper.props().color).toEqual('primary');
+    expect(wrapper.find('button.c7n-pro-btn-primary')).toHaveLength(1);
   });
 
   it('renders funcType of button color and background correctly', () => {

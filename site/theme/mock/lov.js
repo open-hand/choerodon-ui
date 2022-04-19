@@ -595,5 +595,5 @@ export const lovTempleList = [
   { rule: dataSetLovTreeRule, data: dataSetLovTreeData },
   { rule: lovDefineRule, data: lovDefineData },
   { rule: lovDefineMockRule, data: lovDefineMockData },
-  { rule: lovDefineTreeData, data: lovDefineTreeData },
+  { rule: lovTreeDefineRule, data: lovDefineTreeData },
 ];
