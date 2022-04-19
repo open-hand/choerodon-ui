@@ -1066,6 +1066,7 @@ export default class Record {
           });
         }
       }
+      ObjectChainValue.set(this.data, key, value[dataSet.lang]);
       ObjectChainValue.set(this.data, `${tlsKey}.${key}`, value);
     });
   }

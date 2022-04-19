@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import Record from '../data-set/Record';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
 import { ResizeType } from '../text-area/enum';
@@ -59,7 +60,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
         maxLengthList[key] = maxLengths && key !== lang ? maxLengths[key] || element.maxLength : element.maxLength;
         return null;
       });
-      if (record) {
+      if (record && name) {
         this.setLoading(true);
         try {
           if (element && !isSame(this.getValue(), element.value)) {
@@ -72,8 +73,8 @@ export default class IntlField extends TextArea<IntlFieldProps> {
         } finally {
           this.setLoading(false);
         }
+        this.storeLocales(record, name);
       }
-      this.storeLocales();
 
       this.modal = open({
         title: $l('IntlField', 'modal_title'),
@@ -130,10 +131,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   @autobind
   async handleIntlListCancel() {
-    const { name, record } = this;
-    if (record) {
-      const tlsKey = this.getContextConfig('tlsKey');
-      record.set(`${tlsKey}.${name}`, this.locales);
+    const { record, locales } = this;
+    if (record && locales) {
+      record.set(locales);
     }
   }
 
@@ -154,12 +154,16 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     super.handleBlur(e);
   }
 
-  storeLocales() {
-    const { name, record } = this;
-    if (record) {
-      const tlsKey = this.getContextConfig('tlsKey');
-      this.locales = { ...record.get(`${tlsKey}.${name}`) };
+  storeLocales(record: Record, name: string) {
+    const tlsKey = `${this.getContextConfig('tlsKey')}.${name}`;
+    const tls = record.get(tlsKey);
+    const locales = { [name]: record.get(name) };
+    if (tls) {
+      Object.keys(tls).forEach(lang => {
+        locales[`${tlsKey}.${lang}`] = tls[lang];
+      });
     }
+    this.locales = locales;
   }
 
   getOmitPropsKeys(): string[] {

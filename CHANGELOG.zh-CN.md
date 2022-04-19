@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复存在 rowspan 的单元格中，输入框组件无法聚焦的问题。
 - 🐞 `<pro>DatePicker`: 修复通过 filter 过滤的日期能用键盘来选择的问题。
 - 🐞 `<pro>Output`: 修复当内容换行时浮动标签的显示问题。
+- 🐞 `<pro>IntlField`: 修复弹窗取消后值没有重置的问题。
 - 🐞 修复组件按需加载样式缺失问题。
 
 ## 1.5.3
