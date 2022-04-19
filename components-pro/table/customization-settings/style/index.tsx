@@ -1,1 +1,1 @@
-import './customization.less';
+import './index.less';
