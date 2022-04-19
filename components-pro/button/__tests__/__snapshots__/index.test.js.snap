@@ -2,7 +2,7 @@
 
 exports[`Button button-pro should support link button 1`] = `
 <a
-  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
   href="https://choerodon.github.io/choerodon-ui/"
   target="_blank"
 >
@@ -17,7 +17,7 @@ exports[`Button button-pro should support link button 1`] = `
 
 exports[`Button renders Chinese characters correctly 1`] = `
 <button
-  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
   type="button"
 >
   <span>
@@ -31,7 +31,7 @@ exports[`Button renders Chinese characters correctly 1`] = `
 
 exports[`Button renders Chinese characters correctly 2`] = `
 <button
-  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
   type="button"
 >
   <i
@@ -48,7 +48,7 @@ exports[`Button renders Chinese characters correctly 2`] = `
 
 exports[`Button renders Chinese characters correctly 3`] = `
 <button
-  class="c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default c7n-pro-btn-wrapper"
+  class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-default"
   type="button"
 >
   <span>
