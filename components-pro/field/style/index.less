@@ -4,8 +4,11 @@
 @field-prefix-cls: ~'@{c7n-pro-prefix}-field';
 
 .@{field-prefix-cls} {
-  display: inline-block;
   width: 100%;
+  &,
+  &.@{c7n-prefix}-row {
+    display: inline-block;
+  }
 
   &-row &-label,
   &-label label > span,
