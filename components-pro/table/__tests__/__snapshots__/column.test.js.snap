@@ -940,3 +940,550 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
   </nav>
 </div>
 `;
+
+exports[`Table Column props header Set column headers in custom form 1`] = `
+<div
+  class="c7n-pro-table-wrapper"
+>
+  <div
+    class="c7n-pro-table-error"
+  />
+  <div
+    class="c7n-spin-nested-loading"
+  >
+    <div
+      class="c7n-spin-container"
+    >
+      <div
+        class="c7n-pro-table c7n-pro-table-bordered"
+        style="line-height: 0.3rem;"
+        tabindex="0"
+      >
+        <div
+          class="c7n-pro-table-content"
+        >
+          <table
+            class=""
+            style="width: 100%;"
+          >
+            <colgroup>
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+            </colgroup>
+            <thead
+              class="c7n-pro-table-thead c7n-pro-table-column-resizable"
+            >
+              <tr>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-last"
+                  data-index="firstName"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <div
+                      style="color: red;"
+                    >
+                      Header
+                    </div>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="c7n-pro-table-tbody"
+            >
+              <tr
+                class="c7n-pro-table-row c7n-pro-table-row-current"
+                data-index="1011"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    John
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1012"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    Jim
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="c7n-pro-table-split-line"
+        />
+      </div>
+    </div>
+  </div>
+  <nav
+    class="c7n-pro-pagination-wrapper c7n-pro-table-pagination c7n-pro-pagination"
+  >
+    <span
+      class="c7n-pro-pagination-perpage"
+    >
+      Number of items per page:
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-pagination-size-changer c7n-pro-select-sm c7n-pro-select-suffix-button c7n-pro-select-border c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="10"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="width: 4px; box-sizing: content-box;"
+          type="text"
+          value="10"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 2 / 2
+    </span>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+    </button>
+  </nav>
+</div>
+`;
+
+exports[`Table Column props help You can give an information prompt to the column header field 1`] = `
+<div
+  class="c7n-pro-table-wrapper"
+>
+  <div
+    class="c7n-pro-table-error"
+  />
+  <div
+    class="c7n-spin-nested-loading"
+  >
+    <div
+      class="c7n-spin-container"
+    >
+      <div
+        class="c7n-pro-table c7n-pro-table-bordered"
+        style="line-height: 0.3rem;"
+        tabindex="0"
+      >
+        <div
+          class="c7n-pro-table-content"
+        >
+          <table
+            class=""
+            style="width: 100%;"
+          >
+            <colgroup>
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+            </colgroup>
+            <thead
+              class="c7n-pro-table-thead c7n-pro-table-column-resizable"
+            >
+              <tr>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-last"
+                  data-index="firstName"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      姓名
+                    </span>
+                    <span
+                      class="c7n-pro-table-help-icon"
+                    />
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="c7n-pro-table-tbody"
+            >
+              <tr
+                class="c7n-pro-table-row c7n-pro-table-row-current"
+                data-index="1039"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    John
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1040"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    Jim
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="c7n-pro-table-split-line"
+        />
+      </div>
+    </div>
+  </div>
+  <nav
+    class="c7n-pro-pagination-wrapper c7n-pro-table-pagination c7n-pro-pagination"
+  >
+    <span
+      class="c7n-pro-pagination-perpage"
+    >
+      Number of items per page:
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-pagination-size-changer c7n-pro-select-sm c7n-pro-select-suffix-button c7n-pro-select-border c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="10"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="width: 4px; box-sizing: content-box;"
+          type="text"
+          value="10"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 2 / 2
+    </span>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+    </button>
+  </nav>
+</div>
+`;
+
+exports[`Table Column props style configuration can be made for column cells and takes effect 1`] = `
+<div
+  class="c7n-pro-table-wrapper"
+>
+  <div
+    class="c7n-pro-table-error"
+  />
+  <div
+    class="c7n-spin-nested-loading"
+  >
+    <div
+      class="c7n-spin-container"
+    >
+      <div
+        class="c7n-pro-table c7n-pro-table-bordered"
+        style="line-height: 0.3rem;"
+        tabindex="0"
+      >
+        <div
+          class="c7n-pro-table-content"
+        >
+          <table
+            class=""
+            style="width: 100%;"
+          >
+            <colgroup>
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+            </colgroup>
+            <thead
+              class="c7n-pro-table-thead c7n-pro-table-column-resizable"
+            >
+              <tr>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-last"
+                  data-index="firstName"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      姓名
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="c7n-pro-table-tbody"
+            >
+              <tr
+                class="c7n-pro-table-row c7n-pro-table-row-current"
+                data-index="1027"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                  style="color: red;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    John
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1028"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="firstName"
+                  style="color: red;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.3rem;"
+                    tabindex="-1"
+                  >
+                    Jim
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="c7n-pro-table-split-line"
+        />
+      </div>
+    </div>
+  </div>
+  <nav
+    class="c7n-pro-pagination-wrapper c7n-pro-table-pagination c7n-pro-pagination"
+  >
+    <span
+      class="c7n-pro-pagination-perpage"
+    >
+      Number of items per page:
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-pagination-size-changer c7n-pro-select-sm c7n-pro-select-suffix-button c7n-pro-select-border c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="10"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="width: 4px; box-sizing: content-box;"
+          type="text"
+          value="10"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 2 / 2
+    </span>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+    </button>
+  </nav>
+</div>
+`;

@@ -67,4 +67,67 @@ describe('Button', () => {
     );
     expect(wrapper.render()).toMatchSnapshot();
   });
+
+  describe('Button funcType', () => {
+    it('funType defalut value is raised', () => {
+      const wrapper = mount(<Button>Raised</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-raised').length).toBe(1);
+    });
+
+    it('set funType value is flat', () => {
+      const wrapper = mount(<Button funcType='flat'>flat</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-flat').length).toBe(1);
+    });
+
+    it('set funType value is link', () => {
+      const wrapper = mount(<Button funcType='link'>link</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-link').length).toBe(1);
+    });
+  })
+
+  describe('Button loading', () => {
+    it('loading defalut value is false', () => {
+      const wrapper = mount(<Button>has loading?</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-loading').length).toBe(0);
+    });
+
+    it('set loading value is false', () => {
+      const wrapper = mount(<Button loading={false}>has loading?</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-loading').length).toBe(0);
+    });
+
+    it('set loading value is true', () => {
+      const wrapper = mount(<Button loading>has loading?</Button>);
+
+      expect(wrapper.find('.c7n-pro-btn-loading').length).toBe(1);
+    });
+  })
+
+  describe('Button href', () => {
+    it('validator href is accuracy', () => {
+      const wrapper = mount(<Button href="https://choerodon.io">https://choerodon.io</Button>);
+
+      expect(wrapper.find('a').props().href).toBe('https://choerodon.io');
+    });
+
+    it('not set href and set target will invalid', () => {
+      const wrapper = mount(<Button target="_top">https://choerodon.io</Button>);
+
+      // 没有 href 都不会生成 a 标签
+      expect(wrapper.find('a').length).toBe(0);
+    });
+
+    it('validator target is accuracy', () => {
+      const wrapper = mount(<Button href="https://choerodon.io" target="_top">https://choerodon.io</Button>);
+
+      expect(wrapper.find('a').props().href).toBe('https://choerodon.io');
+      expect(wrapper.find('a').props().target).toBe('_top');
+    });
+  })
+
 });
