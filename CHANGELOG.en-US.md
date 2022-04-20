@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `dateTimePickerOkButton` property.
+- 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property.
 - 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.

@@ -156,6 +156,7 @@ const prefixCls = getConfig('prefixCls');
 | onPerformance | 性能监控埋点函数 | (type, event) => void |   |
 | onTabsChange | Tabs 变更事件， 初始化时也会触发， 可用于监控埋点 | (props: { activeKey:string, activeGroupKey?:string, title: string, groupTitle?:string, code?:string }) => void |   |
 | onButtonClick | 按钮点击事件， 可用于监控埋点 | (props: { title:string, icon?:string }) => void |   |
+| onComponentValidationReport | 组件触发校验报告事件 | (props: { showInvalid: boolean; component: object }) => void |   |
 | min | 最小值 | min: (FieldType) => value |   |
 | max | 最大值 | max: (FieldType) => value |   |
 | xlsx | 异步获取 xlsx 库 | () => import('xlsx') |   |

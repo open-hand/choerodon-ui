@@ -76,13 +76,13 @@ import {
   findCell,
   findIndexedSibling,
   findRow,
+  getCellVerticalSize,
   getHeight,
   getPaginationPosition,
   isCanEdictingRow,
   isDropresult,
   isStickySupport,
   onlyCustomizedColumn,
-  getCellVerticalSize,
 } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -909,20 +909,17 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   handleDataSetValidateSelf(props: { valid: boolean; dataSet: DataSet; errors: ValidationSelfErrors[]; noLocate?: boolean }) {
-    const onValidateSelf = this.getContextConfig('onValidateSelf');
-    if (onValidateSelf) {
-      onValidateSelf(props);
-    }
+    const { dataSet } = props;
+    const errors = dataSet.getAllValidationErrors();
+    this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
   }
 
   @autobind
   handleDataSetValidate(props: { valid: boolean; dataSet: DataSet; errors: ValidationErrors[]; noLocate?: boolean }) {
     const { valid, dataSet, errors: validationErrors, noLocate } = props;
     const { autoValidationLocate } = this.props;
-    const onValidate = this.getContextConfig('onValidate');
-    if (onValidate) {
-      onValidate(props);
-    }
+    const errors = dataSet.getAllValidationErrors();
+    this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
     if (autoValidationLocate !== false && !noLocate && !valid) {
       const { tableStore } = this;
       const [firstInvalidRecord] = validationErrors;
@@ -1447,6 +1444,20 @@ export default class Table extends DataSetComponent<TableProps> {
     this.disconnect();
     if (this.scrollId !== undefined) {
       raf.cancel(this.scrollId);
+    }
+    this.bubbleValidationReport(false);
+  }
+
+  bubbleValidationReport(showInvalid: boolean) {
+    const { pristine } = this.props;
+    if (!pristine) {
+      const onComponentValidationReport = this.getContextConfig('onComponentValidationReport');
+      if (onComponentValidationReport) {
+        onComponentValidationReport({
+          showInvalid,
+          component: this,
+        });
+      }
     }
   }
 
