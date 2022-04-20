@@ -1,4 +1,5 @@
 import React, { CSSProperties, FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { action } from 'mobx';
 import classnames from 'classnames';
 import DataSet from 'choerodon-ui/dataset';
 import { DataSetEvents } from 'choerodon-ui/dataset/data-set/enum';
@@ -47,25 +48,30 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   } = props;
   const { validationMap } = useContext(TabsContext);
   const dsList: DataSet[] = dataSet ? ([] as DataSet[]).concat(dataSet) : [];
-  const invalidDataSets: Set<DataSet> = useMemo(() => new Set<DataSet>(), []);
+  const invalidComponents: Set<any> = useMemo(() => new Set<any>(), []);
   const { length } = dsList;
   const [rendered, setRendered] = useState(active);
   const prefixCls = `${rootPrefixCls}-tabpane`;
   const cls = classnames(prefixCls, active ? `${prefixCls}-active` : `${prefixCls}-inactive`, className);
 
-  const handleValidate = useCallback(({ dataSet }) => {
+  const handleValidationReport = useCallback(action(({ showInvalid, component }) => {
     if (!disabled && eventKey) {
-      const errors = dataSet.getAllValidationErrors();
-      if (errors.dataSet.length || errors.records.length) {
-        invalidDataSets.add(dataSet);
+      if (showInvalid) {
+        invalidComponents.add(component);
       } else {
-        invalidDataSets.delete(dataSet);
+        invalidComponents.delete(component);
       }
-      validationMap.set(eventKey, invalidDataSets.size === 0);
+      validationMap.set(eventKey, invalidComponents.size === 0);
     }
-  }, [eventKey, disabled, invalidDataSets]);
+  }), [eventKey, disabled, invalidComponents]);
+  const handleValidate = useCallback(({ valid, dataSet }) => {
+    handleValidationReport({
+      showInvalid: !valid,
+      component: dataSet,
+    });
+  }, [handleValidationReport]);
 
-  useEffect(() => () => invalidDataSets.clear(), []);
+  useEffect(() => () => invalidComponents.clear(), []);
 
   useEffect(() => {
     if (!destroyInactiveTabPane && active) {
@@ -78,10 +84,10 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
       dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValidate).addEventListener(DataSetEvents.validateSelf, handleValidate));
       return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValidate).removeEventListener(DataSetEvents.validateSelf, handleValidate));
     }
-  }, [active, disabled, handleValidate, length, ...dsList]);
+  }, [active, disabled, handleValidationReport, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
-    <ConfigProvider onValidate={handleValidate} onValidateSelf={handleValidate}>
+    <ConfigProvider onComponentValidationReport={handleValidationReport}>
       {children}
     </ConfigProvider>
   );

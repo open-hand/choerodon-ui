@@ -3,13 +3,12 @@ import { CSSProperties, ReactNode } from 'react';
 import { configure as configureDataSet, overwriteConfigMergeProps, overwriteDefaultConfig } from 'choerodon-ui/dataset';
 import {
   AttachmentConfig as DataSetAttachmentConfig,
+  BigNumberTarget,
   Config as DataSetConfig,
   DefaultConfig as DataSetDefaultConfig,
   Formatter,
-  BigNumberTarget,
   Status,
 } from 'choerodon-ui/dataset/configure';
-import { ValidationErrors, ValidationSelfErrors } from 'choerodon-ui/dataset/data-set/DataSet';
 import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import {
   expandIconProps,
@@ -32,7 +31,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalProps, ModalCustomized } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
@@ -224,8 +223,7 @@ export interface Config extends DataSetConfig {
   onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;
   onTabsChange?: (props: { activeKey: string, title: string, activeGroupKey?: string, groupTitle?: string, code?: string }) => void;
   onButtonClick?: (props: { title: string, icon?: string }) => void;
-  onValidate?: (props: { valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) => Promise<void> | void;
-  onValidateSelf?: (props: { valid: boolean; errors: ValidationSelfErrors[]; noLocate?: boolean }) => Promise<void> | void;
+  onComponentValidationReport?: (props: { showInvalid: boolean; component: any; }) => void;
   /**
    * 开启性能监控
    */
