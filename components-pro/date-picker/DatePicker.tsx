@@ -496,9 +496,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return value;
   }
 
-  // processValue(value: any): ReactNode {
-  //   return super.processValue(this.checkMoment(value));
-  // }
+  getSelectedDate(): Moment {
+    return this.getCursorDate();
+  }
 
   getCursorDate(): Moment {
     const { range, multiple, rangeTarget, rangeValue } = this;
