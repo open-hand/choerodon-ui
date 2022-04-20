@@ -1,0 +1,942 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Column Columns render correctly and width correctly 1`] = `
+<div
+  class="c7n-pro-table-wrapper"
+>
+  <div
+    class="c7n-pro-table-toolbar"
+  >
+    <span
+      class="c7n-pro-table-query-bar"
+    >
+      <span
+        class="c7n-pro-input-wrapper c7n-pro-input-empty c7n-pro-input-border"
+        style="width: 1.3rem;"
+      >
+        <label>
+          <input
+            autocomplete="off"
+            class="c7n-pro-input"
+            name="name"
+            placeholder="姓名"
+            type="text"
+            value=""
+          />
+        </label>
+      </span>
+      <button
+        class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-raised c7n-pro-btn-primary"
+        type="button"
+      >
+        <span>
+          Query
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+      <button
+        class="c7n-pro-btn-wrapper c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-primary"
+        type="button"
+      >
+        <span>
+          Advanced Search
+        </span>
+        <div
+          class="c7n-ripple-wrapper"
+        />
+      </button>
+    </span>
+  </div>
+  <div
+    class="c7n-pro-table-error"
+  />
+  <div
+    class="c7n-spin-nested-loading"
+  >
+    <div
+      class="c7n-spin-container"
+    >
+      <div
+        class="c7n-pro-table c7n-pro-table-bordered"
+        style="line-height: 0.3rem;"
+        tabindex="0"
+      >
+        <div
+          class="c7n-pro-table-content"
+        >
+          <table
+            class=""
+            style="width: 100%;"
+          >
+            <colgroup>
+              <col
+                class="c7n-pro-table-col"
+                style="width: 0.5rem; min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="width: 1rem; min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="width: 1.5rem; min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="width: 1rem; min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+              <col
+                class="c7n-pro-table-col"
+                style="min-width: 0.5rem;"
+              />
+            </colgroup>
+            <thead
+              class="c7n-pro-table-thead c7n-pro-table-column-resizable"
+            >
+              <tr>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  rowspan="3"
+                  scope="col"
+                  style="text-align: center;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.9rem; line-height: 0.88rem;"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </div>
+                </th>
+                <th
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                  rowspan="3"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.9rem; line-height: 0.88rem;"
+                  >
+                    <span>
+                      姓名
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell"
+                  colspan="2"
+                  data-index="2-0"
+                  rowspan="2"
+                  scope="colgroup"
+                  style="text-align: center;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.6rem; line-height: 0.58rem;"
+                  >
+                    <span>
+                      组合
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-left"
+                  />
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-last"
+                  colspan="3"
+                  data-index="3-0"
+                  rowspan="1"
+                  scope="colgroup"
+                  style="text-align: center;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      组合3
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-left"
+                  />
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th
+                  class="c7n-pro-table-cell"
+                  colspan="2"
+                  data-index="3-1"
+                  rowspan="1"
+                  scope="colgroup"
+                  style="text-align: center;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      组合2
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell c7n-pro-table-cell-last"
+                  data-index="3-2"
+                  rowspan="2"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.6rem; line-height: 0.58rem;"
+                  >
+                    <span>
+                      性别（多值）
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-left"
+                  />
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+              <tr>
+                <th
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      姓名
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                  scope="col"
+                  style="text-align: right;"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      年龄
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-left"
+                  />
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      性别
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+                <th
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                  scope="col"
+                >
+                  <div
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                  >
+                    <span>
+                      开始日期
+                    </span>
+                  </div>
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-left"
+                  />
+                  <div
+                    class="c7n-pro-table-resizer c7n-pro-table-resizer-right"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="c7n-pro-table-tbody"
+            >
+              <tr
+                class="c7n-pro-table-row c7n-pro-table-row-current"
+                data-index="1002"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    彭霞
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    彭霞
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: right; height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    63
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    F
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    2020-09-01
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      F
+                    </span>
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      M
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1003"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    孔秀兰
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    孔秀兰
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: right; height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    84
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    M
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  />
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      F
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1004"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    孟艳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    孟艳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: right; height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    70
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    M
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  />
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      F
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1005"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    邱芳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    邱芳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: right; height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    86
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    M
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  />
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      F
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr
+                class="c7n-pro-table-row"
+                data-index="1006"
+                tabindex="-1"
+              >
+                <td
+                  class="c7n-pro-table-cell c7n-pro-table-cell-fix-left c7n-pro-table-selection-column"
+                  data-index="__selection-column__"
+                  style="left: 0px;"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: center; height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="-1"
+                  >
+                    <label
+                      class="c7n-pro-checkbox-wrapper"
+                    >
+                      <input
+                        class="c7n-pro-checkbox"
+                        data-selection-key="__selection-column__"
+                        type="checkbox"
+                        value="true"
+                      />
+                      <i
+                        class="c7n-pro-checkbox-inner"
+                      />
+                    </label>
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="1-0"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    叶芳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    叶芳
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="2-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="text-align: right; height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    45
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-1"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  >
+                    F
+                  </span>
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-1-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.28rem;"
+                    tabindex="0"
+                  />
+                </td>
+                <td
+                  class="c7n-pro-table-cell"
+                  data-index="3-2"
+                >
+                  <span
+                    class="c7n-pro-table-cell-inner c7n-pro-table-cell-inner-bordered c7n-pro-table-cell-inner-editable c7n-pro-table-cell-inner-row-height-fixed"
+                    style="height: 0.3rem; line-height: 0.26rem;"
+                    tabindex="0"
+                  >
+                    <span
+                      class="c7n-pro-table-cell-multiple-block"
+                    >
+                      F
+                    </span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="c7n-pro-table-split-line"
+        />
+      </div>
+    </div>
+  </div>
+  <nav
+    class="c7n-pro-pagination-wrapper c7n-pro-table-pagination c7n-pro-pagination"
+  >
+    <span
+      class="c7n-pro-pagination-perpage"
+    >
+      Number of items per page:
+    </span>
+    <span
+      class="c7n-pro-select-wrapper c7n-pro-pagination-size-changer c7n-pro-select-sm c7n-pro-select-suffix-button c7n-pro-select-border c7n-pro-select-not-editable"
+    >
+      <input
+        type="hidden"
+        value="5"
+      />
+      <label>
+        <input
+          autocomplete="off"
+          class="c7n-pro-select"
+          readonly=""
+          style="width: 4px; box-sizing: content-box;"
+          type="text"
+          value="5"
+        />
+        <div
+          class="c7n-pro-select-suffix"
+        >
+          <i
+            class="icon icon-baseline-arrow_drop_down c7n-pro-select-trigger"
+          />
+        </div>
+      </label>
+    </span>
+    <span
+      class="c7n-pro-pagination-page-info"
+    >
+      1 - 5 / 20
+    </span>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-first c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-first_page"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-prev c7n-pro-btn-disabled c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      disabled=""
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_before"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-next c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      type="button"
+    >
+      <i
+        class="icon icon-navigate_next"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+    <button
+      class="c7n-pro-btn-wrapper c7n-pro-pagination-pager c7n-pro-pagination-pager-last c7n-pro-btn c7n-pro-btn-flat c7n-pro-btn-default c7n-pro-btn-icon-only"
+      type="button"
+    >
+      <i
+        class="icon icon-last_page"
+      />
+      <div
+        class="c7n-ripple-wrapper"
+      />
+    </button>
+  </nav>
+</div>
+`;
