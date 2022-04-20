@@ -330,7 +330,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       handleQueryReset();
     } else {
       const defaultMenus = menuDataSet.filter((menu) => menu.get('defaultFlag'));
-      const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus && defaultMenus[0].index;
+      const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus.length && defaultMenus[0].index;
       if (defaultMenus.length && defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
         const menuRecord = menuDataSet.current;
@@ -599,11 +599,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
         {isSelected && <div className={`${prefixCls}-filter-menu-option-selected`}>
           <Icon type="check" />
         </div>}
-        <div className={`${prefixCls}-filter-menu-option-icons`}>
-          <Dropdown overlay={menu}>
-            <span style={{ userSelect: 'none' }}><Icon type="more_horiz" /></span>
-          </Dropdown>
-        </div>
+        {!isTenant && (
+          <div className={`${prefixCls}-filter-menu-option-icons`}>
+            <Dropdown overlay={menu}>
+              <span style={{ userSelect: 'none' }}><Icon type="more_horiz" /></span>
+            </Dropdown>
+          </div>
+        )}
       </div>
     );
   };
