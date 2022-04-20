@@ -84,7 +84,7 @@ const CollapsePanel = function CollapsePanel(props) {
       dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValidate).addEventListener(DataSetEvents.validateSelf, handleValidate));
       return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValidate).removeEventListener(DataSetEvents.validateSelf, handleValidate));
     }
-  }, [isActive, disabled, handleValidationReport, length, ...dsList]);
+  }, [isActive, disabled, handleValidate, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
     <ConfigProvider onComponentValidationReport={handleValidationReport}>

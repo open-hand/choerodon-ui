@@ -54,7 +54,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   const prefixCls = `${rootPrefixCls}-tabpane`;
   const cls = classnames(prefixCls, active ? `${prefixCls}-active` : `${prefixCls}-inactive`, className);
 
-  const handleValidationReport = useCallback(action(({ showInvalid, component }) => {
+  const handleValidationReport = useCallback(action<(props: { showInvalid, component }) => void>(({ showInvalid, component }) => {
     if (!disabled && eventKey) {
       if (showInvalid) {
         invalidComponents.add(component);
@@ -84,7 +84,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
       dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValidate).addEventListener(DataSetEvents.validateSelf, handleValidate));
       return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValidate).removeEventListener(DataSetEvents.validateSelf, handleValidate));
     }
-  }, [active, disabled, handleValidationReport, length, ...dsList]);
+  }, [active, disabled, handleValidate, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
     <ConfigProvider onComponentValidationReport={handleValidationReport}>
