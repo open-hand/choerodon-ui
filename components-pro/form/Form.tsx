@@ -570,6 +570,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       hide();
       delete this.isTooltipShown;
     }
+    this.bubbleValidationReport(false);
   }
 
   @mobxAction
@@ -592,14 +593,24 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     }
   }
 
+  bubbleValidationReport(showInvalid: boolean) {
+    const { pristine } = this.props;
+    if (!pristine) {
+      const onComponentValidationReport = this.getContextConfig('onComponentValidationReport');
+      if (onComponentValidationReport) {
+        onComponentValidationReport({
+          showInvalid,
+          component: this,
+        });
+      }
+    }
+  }
+
   // 处理校验失败定位
   @autobind
-  handleDataSetValidate(props: { valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) {
+  handleDataSetValidate(props: { dataSet: DataSet; valid: boolean; errors: ValidationErrors[]; noLocate?: boolean }) {
     const { valid, errors: validationErrors, noLocate } = props;
-    const onValidate = this.getContextConfig('onValidate');
-    if (onValidate) {
-      onValidate(props);
-    }
+    this.bubbleValidationReport(!valid);
     const { autoValidationLocate } = this.props;
     if (autoValidationLocate !== false && !noLocate && !valid) {
       const [firstInvalidRecord] = validationErrors;
@@ -885,7 +896,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       mergedProps.style = {
         ...mergedProps.style,
         overflowX: 'hidden',
-      }
+      };
     }
     return mergedProps;
   }

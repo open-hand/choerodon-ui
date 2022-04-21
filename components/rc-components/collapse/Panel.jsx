@@ -60,8 +60,8 @@ const CollapsePanel = function CollapsePanel(props) {
 
   const wrapRef = useRef(null);
 
-  const handleValidate = useCallback(({ valid, noLocate }) => {
-    if (!noLocate && !valid && !isActive && !disabled) {
+  const handleValidationReport = useCallback(({ showInvalid }) => {
+    if (showInvalid && !isActive && !disabled) {
       handleItemClick();
       const { current } = wrapRef;
       if (current) {
@@ -69,6 +69,12 @@ const CollapsePanel = function CollapsePanel(props) {
       }
     }
   }, [handleItemClick, isActive, disabled]);
+  const handleValidate = useCallback(({ valid, dataSet }) => {
+    handleValidationReport({
+      showInvalid: !valid,
+      component: dataSet,
+    });
+  }, [handleValidationReport]);
 
   const dsList = dataSet ? [].concat(dataSet) : [];
   const { length } = dsList;
@@ -81,7 +87,7 @@ const CollapsePanel = function CollapsePanel(props) {
   }, [isActive, disabled, handleValidate, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
-    <ConfigProvider onValidate={handleValidate} onValidateSelf={handleValidate}>
+    <ConfigProvider onComponentValidationReport={handleValidationReport}>
       {children}
     </ConfigProvider>
   );
