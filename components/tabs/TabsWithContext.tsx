@@ -109,21 +109,26 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     };
     return getDefaultActiveKey(totalPanelsMap, groupedPanelsMap, option);
   }, []);
-  const actuallyDefaultActiveKey = useMemo((): string | undefined => {
+  const customizedDefaultActiveKey: string | undefined = useMemo(() => {
     if (defaultChangeable && customized) {
       const $defaultActiveKey = customized.defaultActiveKey;
       if ($defaultActiveKey !== undefined) {
         const pane = totalPanelsMap.get($defaultActiveKey);
         if (pane && !pane.disabled) {
-          if (onChange && $defaultActiveKey !== defaultActiveKey) {
-            onChange($defaultActiveKey);
-          }
           return $defaultActiveKey;
         }
       }
     }
+  }, [defaultChangeable, customized, totalPanelsMap]);
+  const actuallyDefaultActiveKey = useMemo((): string | undefined => {
+    if (customizedDefaultActiveKey !== undefined) {
+      if (onChange && customizedDefaultActiveKey !== defaultActiveKey) {
+        onChange(customizedDefaultActiveKey);
+      }
+      return customizedDefaultActiveKey;
+    }
     return defaultActiveKey;
-  }, [defaultActiveKey, defaultChangeable, totalPanelsMap]);
+  }, [defaultActiveKey, customizedDefaultActiveKey]);
   const [activeKey, setActiveKey] = useState<string | undefined>(actuallyDefaultActiveKey);
   const activeGroupKey = useMemo((): string | undefined => {
     if (groupedPanelsMap.size) {
