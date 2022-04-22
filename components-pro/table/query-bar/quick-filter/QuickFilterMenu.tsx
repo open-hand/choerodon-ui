@@ -637,7 +637,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
               {$l('Table', 'save_as')}
             </Button>
           )}
-          {((isChooseMenu && isTenant) || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue)) ? null : (
+          {((isChooseMenu && isTenant) || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length) ? null : (
             <Button onClick={handleSave}>
               {$l('Table', 'save_button')}
             </Button>
