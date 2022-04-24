@@ -252,7 +252,14 @@ export default class Attachment extends FormField<AttachmentProps> {
         } else {
           const { batchFetchCount } = this.getContextConfig('attachment');
           if (batchFetchCount && !this.attachments) {
-            attachmentStore.fetchCountInBatch(value, undefined, isPublic).then(mobxAction((count) => {
+            const { bucketName, bucketDirectory, storageCode } = this;
+            attachmentStore.fetchCountInBatch({
+              attachmentUUID: value,
+              bucketName,
+              bucketDirectory,
+              storageCode,
+              isPublic,
+            }).then(mobxAction((count) => {
               this.observableProps.count = count || 0;
             }));
           }

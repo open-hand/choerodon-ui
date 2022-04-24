@@ -26,17 +26,15 @@ export class LookupCodeStore {
     return getGlobalConfig('axios', field) || axios;
   }
 
-  batchCallback = (codes: string[], args?: callbackArgs): Promise<{ [key: string]: responseData }> => {
-    if (args) {
-      const [lookupBatchAxiosConfig, field] = args;
-      if (lookupBatchAxiosConfig) {
-        return this.getAxios(field)(lookupBatchAxiosConfig(codes)) as any;
-      }
+  batchCallback = (codes: string[], args: callbackArgs): Promise<{ [key: string]: responseData }> => {
+    const [lookupBatchAxiosConfig, field] = args;
+    if (lookupBatchAxiosConfig) {
+      return this.getAxios(field)(lookupBatchAxiosConfig(codes)) as any;
     }
     return Promise.resolve({});
   };
 
-  merger: PromiseMerger<responseData, callbackArgs> = new PromiseMerger<responseData, callbackArgs>(
+  merger: PromiseMerger<responseData, callbackArgs, undefined> = new PromiseMerger<responseData, callbackArgs, undefined>(
     this.batchCallback,
     getConfig('lookupCache'),
   );

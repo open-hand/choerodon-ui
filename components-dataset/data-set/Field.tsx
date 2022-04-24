@@ -1336,7 +1336,13 @@ export default class Field {
   fetchAttachmentCount(uuid: string, isPublic?: boolean, record: Record | undefined = this.record) {
     const { batchFetchCount } = this.dataSet.getConfig('attachment');
     if (batchFetchCount && !this.attachments) {
-      attachmentStore.fetchCountInBatch(uuid, this, isPublic).then((count) => {
+      attachmentStore.fetchCountInBatch({
+        attachmentUUID: uuid,
+        bucketName: this.get('bucketName', record),
+        bucketDirectory: this.get('bucketDirectory', record),
+        storageCode: this.get('storageCode', record),
+        isPublic,
+      }, this).then((count) => {
         this.setAttachmentCount(count, record);
       });
     }
