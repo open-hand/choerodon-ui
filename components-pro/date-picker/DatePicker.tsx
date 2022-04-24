@@ -181,11 +181,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    */
   @observable hoverValue?: Moment | undefined;
 
-  popupRangeEditor?: HTMLInputElement | null;
+  popupInputEditor?: HTMLInputElement | ObserverTextField | null;
 
   @autobind
-  savePopupRangeEditor(node: HTMLInputElement | null) {
-    this.popupRangeEditor = node;
+  savePopupInputEditor(node: HTMLInputElement | ObserverTextField | null) {
+    this.popupInputEditor = node;
     if (node && this.popup) {
       raf(() => {
         node.focus();
@@ -284,7 +284,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getPopupEditor() {
     const { editorInPopup } = this.observableProps;
     if (editorInPopup) {
-      const { prefixCls, range, text, rangeTarget } = this;
+      const { prefixCls, range, text, rangeTarget, multiple } = this;
       const popupHoverValue = this.getHoverValue(true);
       const className = classNames(`${prefixCls}-popup-editor`, {
         [`${prefixCls}-popup-hover-value`]: !isNil(popupHoverValue) && !range,
@@ -305,7 +305,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               onBlur={this.handlePopupRangeEditorBlur}
               value={rangeTarget === 0 ? defaultTo(defaultTo(popupHoverValue, text), startText) : startText}
               placeholder={startPlaceholder}
-              ref={rangeTarget === 0 ? this.savePopupRangeEditor : undefined}
+              ref={rangeTarget === 0 ? this.savePopupInputEditor : undefined}
               onKeyDown={this.handlePopupEditorKeyDown}
             />
             <span className={`${prefixCls}-range-split`}>~</span>
@@ -316,13 +316,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               onBlur={this.handlePopupRangeEditorBlur}
               value={rangeTarget === 1 ? defaultTo(defaultTo(popupHoverValue, text), endText) : endText}
               placeholder={endPlaceHolder}
-              ref={rangeTarget === 1 ? this.savePopupRangeEditor : undefined}
+              ref={rangeTarget === 1 ? this.savePopupInputEditor : undefined}
               onKeyDown={this.handlePopupEditorKeyDown}
             />
           </span>
         );
       }
-      const value = isNil(popupHoverValue) ? this.getTextNode() : popupHoverValue;
+      const value = isNil(popupHoverValue) ? (multiple ? defaultTo(text, '') : this.getTextNode()) : popupHoverValue;
       return (
         <ObserverTextField
           key="popup-editor"
@@ -332,6 +332,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
           className={className}
           placeholder={startPlaceholder}
           onKeyDown={this.handlePopupEditorKeyDown}
+          ref={this.savePopupInputEditor}
         />
       );
     }
@@ -583,10 +584,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   handlePopupAnimateEnd(key, exists) {
     if (key === 'align') {
       if (exists) {
-        const { popupRangeEditor } = this;
-        if (popupRangeEditor) {
+        const { popupInputEditor } = this;
+        if (popupInputEditor) {
           raf(() => {
-            popupRangeEditor.focus();
+            popupInputEditor.focus();
           });
         }
       } else {
