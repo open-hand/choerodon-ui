@@ -42,24 +42,61 @@ export type Formatter = {
   timeZone?: TimeZone;
 };
 
+export type AttachmentBatchFetchCount = <T extends string | number | symbol>(attachmentUUIDs: T[], props: { isPublic?: boolean, items: AttachmentValue[] }) => Promise<{ [key in T]: number }>;
+
+export interface AttachmentOption {
+  bucketName?: string;
+  bucketDirectory?: string;
+  storageCode?: string;
+  isPublic?: boolean;
+}
+
+export interface AttachmentValue extends AttachmentOption {
+  attachmentUUID: string;
+}
+
+export interface AttachmentProps extends AttachmentOption {
+  attachmentUUID?: string | undefined;
+}
+
+export interface AttachmentsProps extends AttachmentValue {
+  attachments: AttachmentFile[];
+}
+
+export interface AttachmentFileProps extends AttachmentProps {
+  attachment: AttachmentFile;
+}
+
+export interface AttachmentUseChunkProps extends AttachmentOption {
+  useChunk?: boolean;
+}
+
+export interface AttachmentChunkProps extends AttachmentFileProps {
+  chunk: AttachmentFileChunk;
+}
+
+export interface AttachmentActionProps extends AttachmentFileProps {
+  chunk?: AttachmentFileChunk | undefined;
+}
+
 export interface AttachmentConfig {
   defaultFileKey: string;
   defaultFileSize: number;
   defaultChunkSize: number;
   defaultChunkThreads: number;
-  action?: AxiosRequestConfig | ((props: { attachment: AttachmentFile; chunk?: AttachmentFileChunk | undefined; bucketName?: string | undefined; bucketDirectory?: string | undefined; storageCode?: string | undefined; attachmentUUID: string; isPublic?: boolean | undefined }) => AxiosRequestConfig);
-  batchFetchCount?: <T extends string | number | symbol>(attachmentUUIDs: T[], props: { isPublic?: boolean }) => Promise<{ [key in T]: number }>;
-  fetchList?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | undefined;
-  getDownloadUrl?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID?: string; isPublic?: boolean; }) => string | Function | undefined;
-  getDownloadAllUrl?: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => string | Function | undefined;
+  action?: AxiosRequestConfig | ((props: AttachmentActionProps) => AxiosRequestConfig);
+  batchFetchCount?: AttachmentBatchFetchCount;
+  fetchList?: (props: AttachmentValue) => Promise<FileLike[]>;
+  getPreviewUrl?: (props: AttachmentFileProps) => string | undefined;
+  getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
+  getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
-  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], props: { useChunk?: boolean; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onBeforeUploadChunk?: (props: { chunk: AttachmentFileChunk; attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onUploadSuccess?: (response: any, attachment: AttachmentFile, props: { useChunk?: boolean; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => void;
+  onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], props: AttachmentUseChunkProps) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onBeforeUploadChunk?: (props: AttachmentChunkProps) => boolean | undefined | PromiseLike<boolean | undefined>;
+  onUploadSuccess?: (response: any, attachment: AttachmentFile, props: AttachmentUseChunkProps) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
-  onOrderChange?: (props: { attachmentUUID: string; attachments: AttachmentFile[]; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<void>;
-  onRemove?: (props: { attachment: AttachmentFile; attachmentUUID: string; bucketName?: string; bucketDirectory?: string; storageCode?: string; isPublic?: boolean; }) => Promise<boolean>;
+  onOrderChange?: (props: AttachmentsProps) => Promise<void>;
+  onRemove?: (props: AttachmentFileProps) => Promise<boolean>;
 }
 
 export interface Config {

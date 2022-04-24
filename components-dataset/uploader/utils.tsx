@@ -103,6 +103,7 @@ async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chu
       bucketDirectory: props.bucketDirectory,
       storageCode: props.storageCode,
       isPublic: props.isPublic,
+      attachmentUUID,
     }) !== false) {
       const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
         chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;

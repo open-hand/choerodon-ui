@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
 - 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
+- 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
