@@ -82,6 +82,7 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
       mode: ViewMode.time,
       datetimeSide: true,
       format,
+      renderExtraFooter: undefined,
     } as TimesViewProps;
     return timeProps;
   };
@@ -93,16 +94,18 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
     } = this;
     const classString = classNames(`${prefixCls}-view`, className, this.getViewClassName());
     return (
-      <div className={`${this.getViewClassName()}-wrapper`}>
-        <div className={classString}>
-          {this.renderHeader()}
-          {this.renderBody()}
-          {extraFooterPlacement === 'top' && this.customFooter}
-          {this.renderFooter()}
-          {extraFooterPlacement === 'bottom' && this.customFooter}
+      <>
+        <div className={`${this.getViewClassName()}-wrapper`}>
+          <div className={classString}>
+            {this.renderHeader()}
+            {this.renderBody()}
+          </div>
+          <TimesView {...this.getTimeProps()} />
         </div>
-        <TimesView {...this.getTimeProps()} />
-      </div>
+        {extraFooterPlacement === 'top' && this.customFooter}
+        {this.renderFooter()}
+        {extraFooterPlacement === 'bottom' && this.customFooter}
+      </>
     );
   }
 }
