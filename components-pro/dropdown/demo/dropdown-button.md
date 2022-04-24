@@ -37,7 +37,7 @@ const menu = (
 
 ReactDOM.render(
   <div>
-    <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
+    <Dropdown.Button onClick={handleButtonClick} overlay={menu} size="large" funcType="flat">
       Dropdown
     </Dropdown.Button>
     <Dropdown.Button

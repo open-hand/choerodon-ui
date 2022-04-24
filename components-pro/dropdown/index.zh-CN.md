@@ -35,6 +35,8 @@ title: Dropdown
 | --- | --- | --- | --- |
 | buttonProps | 按钮属性，和 [Button](/components-pro/button/) 一致 | string | |
 | type | 按钮类型，和 [Button](/components-pro/button/) 一致 | string | 'button' |
+| funcType | 按钮展现模式，和 [Button](/components-pro/button/) 一致 | string | 'raised' |
+| size | 整体大小，和 [Button](/components-pro/button/) 一致 | string | 'default' |
 | icon | 自定义下拉图标 | ReactNode | |
 | onClick | 点击左侧按钮的回调，和 [Button](/components-pro/button/) 一致 | Function | - |
 
