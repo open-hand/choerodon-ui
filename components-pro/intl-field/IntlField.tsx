@@ -159,7 +159,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     const tls = record.get(tlsKey);
     const locales = { [name]: record.get(name) };
     if (tls) {
-      Object.keys(tls).forEach(lang => {
+      Object.keys(localeContext.supports).forEach(lang => {
         locales[`${tlsKey}.${lang}`] = tls[lang];
       });
     }
