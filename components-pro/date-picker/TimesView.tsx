@@ -282,6 +282,9 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   }
 
   renderFooter(): ReactNode {
+    if (this.props.datetimeSide) {
+      return;
+    }
     const { prefixCls, props: { disabledNow, okButton } } = this;
     const footerProps = {
       className: classNames(`${prefixCls}-footer-now-btn`, {

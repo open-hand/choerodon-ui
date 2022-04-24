@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
 - 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
+- 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 💄 `<pro>DatePicker`: Optimized an issue where clicking Tab will automatically select `hover` on the date panel.
@@ -52,6 +53,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the problem that the value is not reset after the popup is canceled.
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
+- 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
 
 
 ## 1.5.3

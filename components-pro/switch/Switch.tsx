@@ -48,8 +48,11 @@ export default class Switch extends CheckBox<SwitchProps> {
   }
 
   isDisabled(): boolean {
-    const { disabled = false, loading = false } = this.props;
-    return disabled || loading;
+    if (super.isDisabled()) {
+      return true;
+    }
+    const { loading = false } = this.props;
+    return loading;
   }
 
   getLabelText() {

@@ -867,7 +867,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       propFields.forEach(({ name }) => {
         if (name) {
           const field = cloneFields.get(name);
-          if (field && !field.get('bind') && !field.get('name').includes('__tls') && field.get('fieldVisible') !== 0) {
+          if (field && !field.get('bind') && !field.get('name').includes('__tls')) {
             result.push(field);
           }
         }
@@ -882,8 +882,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   getQueryBar(): ReactNode {
     const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly } = this.props;
     const menuDataSet = dataSet.getState(MENUDATASET);
+    const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
     let fieldsLimit = queryFieldsLimit;
-    if (menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant')) {
+    if (isTenant) {
       fieldsLimit = 0;
     }
     const { prefixCls } = this;
@@ -973,7 +974,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: this.originOrderQueryFields.slice(fieldsLimit),
+                          fields: isTenant ? [...queryDataSet.fields.values()] : this.originOrderQueryFields.slice(fieldsLimit),
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}
