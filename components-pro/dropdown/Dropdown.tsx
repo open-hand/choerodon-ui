@@ -3,7 +3,6 @@ import React, {
   CSSProperties,
   FunctionComponent,
   isValidElement,
-  memo,
   ReactNode,
   useCallback,
   useContext,
@@ -45,7 +44,7 @@ export interface DropDownProps {
 }
 
 interface DropdownInterface extends FunctionComponent<DropDownProps> {
-  Button?: typeof DropdownButton;
+  Button: typeof DropdownButton;
 }
 
 const Dropdown: DropdownInterface = function Dropdown(props) {
@@ -140,14 +139,13 @@ const Dropdown: DropdownInterface = function Dropdown(props) {
 };
 
 Dropdown.displayName = 'Dropdown';
+Dropdown.Button = DropdownButton;
 
-const MemoDropdown: typeof Dropdown = memo(Dropdown);
-
-MemoDropdown.defaultProps = {
+Dropdown.defaultProps = {
   suffixCls: 'dropdown',
   placement: Placements.bottomLeft,
   trigger: [Action.hover, Action.focus],
   defaultHidden: true,
 };
 
-export default MemoDropdown;
+export default Dropdown;

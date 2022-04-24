@@ -7,11 +7,14 @@ import { ButtonProps } from '../button/Button';
 import { ButtonType, FuncType } from '../button/interface';
 import Button from '../button';
 import { Placements } from './enum';
+import { Size } from '../core/enum';
 
 export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
   type?: ButtonType;
   disabled?: boolean;
   icon?: ReactNode;
+  size?: Size;
+  funcType?: FuncType;
   onClick?: MouseEventHandler<any>;
   children?: any;
   buttonProps?: ButtonProps;
@@ -28,6 +31,8 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
     type,
     disabled,
     icon,
+    size,
+    funcType,
     onClick,
     children,
     className,
@@ -62,15 +67,18 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
   };
 
   return (
-    <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className)}>
-      <Button {...buttonProps} funcType={FuncType.flat} type={type} disabled={disabled} onClick={onClick}>
+    <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className, {
+      [`${prefixCls}-button-raised`]: !funcType || funcType === FuncType.raised,
+      [`${prefixCls}-button-flat`]: funcType === FuncType.flat,
+    })}>
+      <Button {...buttonProps} funcType={FuncType.flat} size={size} type={type} disabled={disabled} onClick={onClick}>
         {children}
       </Button>
       <Dropdown {...dropdownProps}>
         {
           icon ?
-            <Button funcType={FuncType.flat}>{icon}</Button> :
-            <Button funcType={FuncType.flat} icon="arrow_drop_down" />
+            <Button funcType={FuncType.flat} size={size}>{icon}</Button> :
+            <Button funcType={FuncType.flat} size={size} icon="arrow_drop_down" />
         }
       </Dropdown>
     </ButtonGroup>

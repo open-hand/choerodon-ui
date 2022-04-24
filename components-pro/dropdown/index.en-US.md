@@ -36,8 +36,10 @@ You should use [Menu](/components/menu/) as `overlay`. The menu items and divide
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| buttonProps | button size, [Button](/components-pro/button/) | string | |
+| buttonProps | button props, [Button](/components-pro/button/) | string | |
 | type | button type, [Button](/components-pro/button/) | string | 'button' |
+| funcType | button funcType, [Button](/components-pro/button/) | string | 'raised' |
+| size | buton size，和 [Button](/components-pro/button/) 一致 | string | 'default' |
 | icon | custom icon | ReactNode | |
 | onClick | click callback, [Button](/components-pro/button/) | Function | - |
 
