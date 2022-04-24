@@ -825,6 +825,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               values.push(m);
             }
           }
+          else {
+            this.setText();
+          }
         } else {
           values.push(m);
         }
