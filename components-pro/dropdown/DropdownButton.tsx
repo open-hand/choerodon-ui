@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useContext } from 'react';
+import React, { MouseEventHandler, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
 import ButtonGroup, { ButtonGroupProps } from 'choerodon-ui/lib/button/ButtonGroup';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -11,6 +11,7 @@ import { Placements } from './enum';
 export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
   type?: ButtonType;
   disabled?: boolean;
+  icon?: ReactNode;
   onClick?: MouseEventHandler<any>;
   children?: any;
   buttonProps?: ButtonProps;
@@ -26,6 +27,7 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
     prefixCls: customizePrefixCls,
     type,
     disabled,
+    icon,
     onClick,
     children,
     className,
@@ -61,11 +63,15 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
 
   return (
     <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className)}>
-      <Button funcType={FuncType.flat} {...buttonProps} type={type} disabled={disabled} onClick={onClick}>
+      <Button {...buttonProps} funcType={FuncType.flat} type={type} disabled={disabled} onClick={onClick}>
         {children}
       </Button>
       <Dropdown {...dropdownProps}>
-        <Button funcType={FuncType.flat} icon="arrow_drop_down" />
+        {
+          icon ?
+            <Button funcType={FuncType.flat}>{icon}</Button> :
+            <Button funcType={FuncType.flat} icon="arrow_drop_down" />
+        }
       </Dropdown>
     </ButtonGroup>
   );
