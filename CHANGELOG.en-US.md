@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property.
+- 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property and deprecated `bigNumberFormatter`.
 - 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.
@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
 - 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
+- 🌟 `<pro>NumberField`: Deprecated `stringMode`.
 - 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.

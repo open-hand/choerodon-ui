@@ -6,31 +6,27 @@ import isPlainObject from 'lodash/isPlainObject';
 import defaultTo from 'lodash/defaultTo';
 import isNil from 'lodash/isNil';
 import { BigNumber } from 'bignumber.js';
+import { math } from 'choerodon-ui/dataset';
+import { BigNumberOptions } from 'choerodon-ui/dataset/math';
 import { FormatNumberFuncOptions } from 'choerodon-ui/dataset/data-set/Field';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning, { KeepRunningProps } from '../_util/keepRunning';
 import Icon from '../icon';
-import { bigNumberToFixed, getNearStepValues, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, parseBigNumber, parseNumber, plus } from './utils';
+import { getNearStepValues, parseNumber } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
 import { FieldType } from '../data-set/enum';
 import defaultFormatNumber from '../formatter/formatNumber';
-import defaultFormatBigNumber from '../formatter/formatBigNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
-import { getBigNumberFormatOptions, getBigNumberFormatter, getNumberFormatOptions, getNumberFormatter } from '../field/utils';
+import { getNumberFormatOptions, getNumberFormatter } from '../field/utils';
 
-// BigNumber: https://mikemcl.github.io/bignumber.js/
-function getCurrentValidValue(value: string, stringMode?: boolean): number | string {
-  if (stringMode) {
-    const valueBig = new BigNumber(value.replace(/\.$/, ''));
-    const validateValue = bigNumberToFixed(valueBig, undefined, '0')!;
-    return validateValue;
-  }
-  return Number(value.replace(/\.$/, '')) || 0;
+function getCurrentValidValue(value: string, options: BigNumberOptions): BigNumber.Value {
+  const valueBig = new BigNumber(value.replace(/\.$/, ''));
+  return math.isValidBigNumber(valueBig) ? options.strict ? valueBig : math.fix(valueBig) : 0;
 }
 
 function getStepUpGenerator() {
@@ -94,15 +90,15 @@ export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
   /**
    * 最小值
    */
-  min?: number | string | null;
+  min?: BigNumber.Value | null;
   /**
    * 最大值
    */
-  max?: number | string | null;
+  max?: BigNumber.Value | null;
   /**
    * 步距
    */
-  step?: number | string;
+  step?: BigNumber.Value;
   /**
    * 非严格步距
    */
@@ -132,7 +128,7 @@ export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
    */
   keyboard?: boolean;
   /**
-   * 字符值模式，支持大数字
+   * @deprecated
    */
   stringMode?: boolean;
 }
@@ -144,13 +140,16 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     ...TextField.defaultProps,
     suffixCls: 'input-number',
     longPressPlus: true,
-    max: MAX_SAFE_INTEGER,
-    min: MIN_SAFE_INTEGER,
+    max: Infinity,
+    min: -Infinity,
   };
 
   static format = defaultFormatNumber;
 
-  static bigNumberFormat = defaultFormatBigNumber;
+  /**
+   * @deprecated
+   */
+  static bigNumberFormat = defaultFormatNumber;
 
   plusElement?: HTMLDivElement | null;
 
@@ -184,7 +183,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   @computed
   get allowDecimal(): boolean {
-    const { min, nonStrictStep, stringMode } = this;
+    const { min, nonStrictStep } = this;
     const precision = this.getProp('precision');
     if (precision === 0) {
       return false;
@@ -194,12 +193,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       return true;
     }
     const step = this.getProp('step');
-    if (stringMode) {
-      return !step
-        || !new BigNumber(step).modulo(1).isEqualTo(0)
-        || (!!min && !new BigNumber(min).modulo(1).isEqualTo(0));
-    }
-    return !step || (step as number) % 1 !== 0 || (!!min && (min as number) % 1 !== 0);
+    return !step || !math.eq(math.mod(step, 1), 0) || (!!min && !math.eq(math.mod(min, 1), 0));
   }
 
   @computed
@@ -222,12 +216,12 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   @computed
-  get min(): number | string | undefined | null {
+  get min(): BigNumber.Value | undefined | null {
     return this.getLimit('min');
   }
 
   @computed
-  get max(): number | string | undefined | null {
+  get max(): BigNumber.Value | undefined | null {
     return this.getLimit('max');
   }
 
@@ -263,13 +257,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return this.getContextConfig('numberFieldKeyboard') !== false;
   }
 
-  get stringMode(): boolean {
-    if ('stringMode' in this.props) {
-      return this.props.stringMode!;
-    }
-    return !!this.field && !!this.record && this.field.get('type', this.record) === FieldType.bigNumber;
-  }
-
   @autobind
   savePlusRef(ref) {
     this.plusElement = ref;
@@ -281,17 +268,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   isLowerRange(value1: number | string, value2: number | string): boolean {
-    if (this.stringMode) {
-      return new BigNumber(value1).isLessThan(value2);
-    }
-    return value1 < value2;
+    return math.lt(value1, value2);
   }
 
   getFieldType(): FieldType {
     return FieldType.number;
   }
 
-  getLimit(type: string): number | string | undefined | null {
+  getLimit(type: string): BigNumber | number | string | undefined | null {
     const { record } = this;
     const limit = this.getProp(type);
     if (record && isString(limit)) {
@@ -314,8 +298,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         return this.max;
       case 'nonStrictStep':
         return this.nonStrictStep;
-      case 'stringMode':
-        return this.stringMode;
       default:
         return super.getValidatorProp(key);
     }
@@ -454,14 +436,18 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     };
   }
 
-  stepGenerator(isPlus: boolean): IterableIterator<number | string> {
-    const { min, max, nonStrictStep, stringMode } = this;
+  stepGenerator(isPlus: boolean): IterableIterator<BigNumber.Value> {
+    const { min, max, nonStrictStep, field } = this;
+    const strict = field ? field.get('type', this.record) === FieldType.bigNumber : false;
+    const options: BigNumberOptions = {
+      strict,
+    };
     const step = defaultTo(this.getProp('step'), 1);
     const value = this.getCurrentInputValue();
-    const currentValue = getCurrentValidValue(String(value), stringMode);
-    return (function* (newValue: number | string) {
+    const currentValue = getCurrentValidValue(String(value), options);
+    return (function* (newValue: BigNumber.Value) {
       while (true) {
-        const nearStep = nonStrictStep === false ? getNearStepValues(newValue, step, min, max, stringMode) : undefined;
+        const nearStep = nonStrictStep === false ? getNearStepValues(newValue, step, min, max, options) : undefined;
         if (nonStrictStep === false && nearStep) {
           switch (nearStep.length) {
             case 1:
@@ -473,19 +459,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
             default:
           }
         } else {
-          let nextValue;
-          if (stringMode) {
-            const newValueBig = new BigNumber(newValue);
-            const nextValueBig = isPlus ? newValueBig.plus(step) : newValueBig.minus(step);
-            nextValue = bigNumberToFixed(nextValueBig, undefined, '0')!;
-          }
-          else {
-            nextValue = plus(Number(newValue), (isPlus ? Number(step) : -Number(step)));
-          }
-          if (!isEmpty(min) && ((stringMode && new BigNumber(nextValue).isLessThan(min)) || (!stringMode && nextValue < min))) {
+          const nextValue = math.plus(newValue, (isPlus ? step : -step), options);
+          if (!isEmpty(min) && math.lt(nextValue, min)) {
             newValue = min;
-          } else if (!isEmpty(max) && ((stringMode && new BigNumber(nextValue).isGreaterThan(max)) || (!stringMode && nextValue > max))) {
-            const nearMaxStep = nonStrictStep === false ? getNearStepValues(max, step, min, max, stringMode) : undefined;
+          } else if (!isEmpty(max) && math.gt(nextValue, max)) {
+            const nearMaxStep = nonStrictStep === false ? getNearStepValues(max, step, min, max, options) : undefined;
             if (nonStrictStep === false && nearMaxStep) {
               newValue = nearMaxStep[0];
             } else {
@@ -504,11 +482,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     let value;
     if (!isEmpty(this.text)) {
       value = this.text;
-    }
-    else if (this.range && !isNil(this.rangeTarget) && this.rangeValue) {
+    } else if (this.range && !isNil(this.rangeTarget) && this.rangeValue) {
       value = this.rangeValue[this.rangeTarget];
-    }
-    else {
+    } else {
       value = this.getValue();
     }
     return value;
@@ -529,12 +505,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   prepareSetValue(value: any): void {
     if (isNaN(value) || isEmpty(value)) {
       super.prepareSetValue(null);
-    }
-    else if (this.stringMode) {
-      const valueBig = new BigNumber(value);
-      super.prepareSetValue(parseBigNumber(valueBig, this.getProp('precision'), null));
-    }
-    else {
+    } else {
       super.prepareSetValue(parseNumber(value, this.getProp('precision')));
     }
   }
@@ -544,8 +515,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       let restrict = '0-9';
       if (this.allowDecimal) {
         restrict += '.';
-      }
-      else if (value.indexOf('.') !== -1) {
+      } else if (value.indexOf('.') !== -1) {
         let boforeValue = this.getCurrentInputValue();
         boforeValue = !isNil(boforeValue) ? String(boforeValue) : '';
         if (boforeValue.indexOf('.') === -1) {
@@ -566,7 +536,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return value;
   }
 
-  getFormatOptions(value?: number): FormatNumberFuncOptions {
+  getFormatOptions(value?: number | BigNumber): FormatNumberFuncOptions {
     return getNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), value, this.lang);
   }
 
@@ -574,26 +544,19 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return this.getProp('formatter') || getNumberFormatter();
   }
 
-  getBigNumberFormatValue(value: ReactNode, numberField: boolean): ReactNode {
-    if (isNil(value)) {
-      return value;
-    }
-    const formatOptions = getBigNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), String(value), this.lang,
-      numberField ? 'number-field' : 'currency');
-    const formatter = this.getProp('formatter') || getBigNumberFormatter();
-    return formatter(value, formatOptions.lang, formatOptions.options, numberField ? 'number-field' : 'currency');
-  }
-
   processText(value: ReactNode): ReactNode {
-    if (this.stringMode) {
-      return this.getBigNumberFormatValue(value, true);
-    }
-    const formatOptions = this.getFormatOptions(Number(value));
+    const fixedValue = math.fix(new BigNumber(String(value)));
+    const formatOptions = this.getFormatOptions(fixedValue);
     return this.getFormatter()(value, formatOptions.lang, formatOptions.options);
   }
 
   renderLengthInfo(): ReactNode {
     return undefined;
+  }
+
+  @autobind
+  compare(oldValue, newValue) {
+    return math.eq(oldValue, newValue);
   }
 }
 
@@ -603,5 +566,4 @@ export default class ObserverNumberField extends NumberField<NumberFieldProps> {
 
   static format = defaultFormatNumber;
 
-  static bigNumberFormat = defaultFormatBigNumber;
 }

@@ -22,6 +22,7 @@ import { SubmitTypes, TransportType, TransportTypes } from './Transport';
 import { formatString } from '../formatter';
 import { treeReduce } from '../tree-helper';
 import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome } from '../iterator-helper';
+import math from '../math';
 
 export const defaultTextField = 'meaning';
 export const defaultValueField = 'value';
@@ -496,9 +497,11 @@ function getValueType(value: any): FieldType {
         ? FieldType.string
         : isMoment(value)
           ? FieldType.date
-          : isObject(value)
-            ? FieldType.object
-            : FieldType.auto;
+          : math.isBigNumber(value)
+            ? FieldType.bigNumber
+            : isObject(value)
+              ? FieldType.object
+              : FieldType.auto;
 }
 
 export function getBaseType(type: FieldType): FieldType {
@@ -515,7 +518,6 @@ export function getBaseType(type: FieldType): FieldType {
     case FieldType.intl:
     case FieldType.url:
     case FieldType.email:
-    case FieldType.bigNumber:
       return FieldType.string;
     default:
       return type;
@@ -535,8 +537,10 @@ export function checkFieldType(value: any, field: Field, record?: Record): boole
           ? FieldType.boolean
           : getValueType(value);
       if (
-        fieldType !== FieldType.reactNode &&
-        fieldType !== valueType
+        fieldType !== FieldType.reactNode && (
+          fieldType === FieldType.number ? ![FieldType.number, FieldType.bigNumber].includes(valueType)
+            : fieldType !== valueType
+        )
       ) {
         warning(
           false,

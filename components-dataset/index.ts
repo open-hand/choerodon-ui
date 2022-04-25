@@ -30,13 +30,15 @@ export { default as Transport } from './data-set/Transport';
 
 export { default as EventManager, preventDefault, stopPropagation, stopEvent } from './event-manager';
 
-export { formatString, formatNumber, formatCurrency, formatTemplate, transformString, trimString, formatBigNumber } from './formatter';
+export { formatString, formatNumber, formatCurrency, formatTemplate, transformString, trimString } from './formatter';
 
 export { default as IteratorHelper } from './iterator-helper';
 
 export { default as LocaleContext } from './locale-context';
 
 export { default as supports, Supports } from './locale-context/supports';
+
+export { default as math } from './math';
 
 export { default as MobxHelper } from './mobx-helper';
 
