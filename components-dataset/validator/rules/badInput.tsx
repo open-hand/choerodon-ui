@@ -2,13 +2,14 @@ import { isEmpty, toRangeValue } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { FieldType } from '../../data-set/enum';
+import math from '../../math';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
 const isBadInput = (value, range) => {
   if (range) {
-    return toRangeValue(value, range).some(item => !isEmpty(item) && isNaN(item));
+    return toRangeValue(value, range).some(item => !isEmpty(item) && math.isNaN(item));
   }
-  return isNaN(value);
+  return math.isNaN(value);
 };
 
 export default function badInput(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {

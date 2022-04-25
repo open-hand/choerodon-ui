@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 dateTimePickerOkButton, onComponentValidationReport 属性。
+- 🌟 `configure`: 新增 dateTimePickerOkButton, onComponentValidationReport 属性, 废弃 bigNumberFormatter。
 - 🌟 `Tabs`: 新增 flex 属性。
 - 🌟 `<pro>CheckBox`: 实现 showHelp 属性。
 - 🌟 `<pro>Table`: 新增 treeFilter 属性。
@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增 useInvalidDate 属性。
 - 🌟 `<pro>Table`: 动态筛选条支持是否保存筛选值，租户个性化。
 - 🌟 `<pro>Table`: 新增 selectionBoxRenderer 属性支持勾选框渲染器。
+- 🌟 `<pro>NumberField`: 废弃 stringMode。
 - 💄 `configure`: 优化批量查询附件数目钩子能带上桶信息。
 - 💄 `<pro>Table`: 优化数字类型等宽在单元格中显示。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
@@ -47,6 +48,7 @@ timeline: true
 - 🐞 `Input`: 修复有 placeholder 且没有 label 时，输入第一个字符会自动失焦的问题。
 - 🐞 `Pagination`: 修复在 overflow 样式为 hidden 的容器下分页下拉框会被挡住的问题。
 - 🐞 `Table`: 修复筛选条失焦后无法查询的问题。
+- 🐞 `<pro>Attachment`: 修复 value 变更不会更新附件列表的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
 - 🐞 `<pro>Table`: 修复加载状态不会消除的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。

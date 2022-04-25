@@ -1,21 +1,21 @@
 import { isMoment } from 'moment';
-import { isEmpty, toRangeValue, getNearStepValues } from '../../utils';
+import { isEmpty, toRangeValue, getNearStepValues, getNearStepMomentValues } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
-function isStepMismatch(value, step, min, max, range, isBigNumber) {
+function isStepMismatch(value, step, min, max, range) {
   if (range) {
     let nearStepValues;
     toRangeValue(value, range).every(item => {
       if (!isEmpty(item)) {
-        nearStepValues = getNearStepValues(isMoment(item) ? item : Number(item), step, min, max, isBigNumber);
+        nearStepValues = isMoment(item) ? getNearStepMomentValues(item, step) : getNearStepValues(item, step, min, max);
       }
       return !nearStepValues;
     });
     return nearStepValues;
   }
-  return getNearStepValues(isMoment(value) ? value : Number(value), step, min, max, isBigNumber);
+  return isMoment(value) ? getNearStepMomentValues(value, step) : getNearStepValues(value, step, min, max);
 }
 
 export default function stepMismatch(value: any, validatorBaseProps: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
@@ -27,8 +27,7 @@ export default function stepMismatch(value: any, validatorBaseProps: ValidatorBa
         const min = getProp('min');
         const max = getProp('max');
         const range = getProp('range');
-        const stringMode = getProp('stringMode');
-        const nearStepValues = isStepMismatch(value, step, min, max, range, stringMode);
+        const nearStepValues = isStepMismatch(value, step, min, max, range);
         if (nearStepValues !== undefined) {
           const format = getProp('format');
           const [before, after] = nearStepValues;
