@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
+import throttle from 'lodash/throttle';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
@@ -9,7 +10,7 @@ import { TimeUnit, ViewMode } from './enum';
 import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
-import { stopEvent } from '../_util/EventManager';
+import { preventDefault, stopEvent } from '../_util/EventManager';
 
 const stepMapping = {
   [TimeUnit.hour]: 'hour',
@@ -104,6 +105,8 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     };
   }
 
+  throttleHandleWheel = throttle(this.handleWheel, 80);
+
   @autobind
   savePanel(node) {
     this.panel = node;
@@ -120,13 +123,13 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     super.componentDidMount();
     if (this.panel) {
       // 兼容Firefox wheel为通用事件
-      this.panel.addEventListener('wheel', this.handleWheel, { passive: false });
+      this.panel.addEventListener('wheel', this.throttleHandleWheel, { passive: false });
     }
   }
 
   componentWillUnmount(): void {
     if (this.panel) {
-      this.panel.removeEventListener('wheel', this.handleWheel);
+      this.panel.removeEventListener('wheel', this.throttleHandleWheel);
     }
   }
 
@@ -251,6 +254,16 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     }
   }
 
+  handleMouseEnterPanel() {
+    // 控件滚动时阻止页面发生滚动
+    window.addEventListener('wheel', preventDefault, { passive: false });
+  }
+
+  handleMouseLeavePanel() {
+    // 鼠标离开控件清除监听
+    window.removeEventListener('wheel', preventDefault);
+  }
+
   renderHeader(): ReactNode {
     const {
       prefixCls,
@@ -319,6 +332,8 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       <div
         ref={this.savePanel}
         className={className}
+        onMouseEnter={this.handleMouseEnterPanel}
+        onMouseLeave={this.handleMouseLeavePanel}
       >
         <div className={`${className}-inner`}>{this.renderPanelBody()}</div>
       </div>
