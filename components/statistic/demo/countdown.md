@@ -23,6 +23,14 @@ function onFinish() {
   console.log('finished!');
 }
 
+function countDownFormatter(value) {
+  return (
+    <>
+      <span style={{fontWeight: 400, fontSize: 14, marginRight: 10}}>COUNTDOWN:</span>
+      {value}
+    </>
+  );
+}
 
 ReactDOM.render(
   <Row gutter={16}>
@@ -31,6 +39,9 @@ ReactDOM.render(
     </Col>
     <Col span={12}>
       <Countdown title="Million Seconds" value={deadline} format="HH:mm:ss:SSS" />
+    </Col>
+    <Col span={24} style={{ marginTop: 32 }}>
+      <Countdown title="Countdown Formatter" value={deadline} formatter={countDownFormatter} />
     </Col>
     <Col span={24} style={{ marginTop: 32 }}>
       <Countdown title="Day Level" value={deadline} format="D 天 H 时 m 分 s 秒" />

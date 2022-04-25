@@ -39,3 +39,4 @@ title: Statistic
 | title | 数值的标题 | string \| ReactNode | - |  |
 | value | 数值内容 | number \| moment | - |  |
 | valueStyle | 设置数值的样式 | CSSProperties | - |  |
+| formatter        | 自定义数值展示   | (value) => ReactNode | -      |      |

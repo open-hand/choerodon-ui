@@ -15,8 +15,12 @@ function getTime(value?: countdownValueType) {
   return new Date(value as any).getTime();
 }
 
+function defaultFormatter(value: countdownValueType) {
+  return value;
+}
+
 const Countdown: React.FC<CountdownProps> = (props) => {
-  const { value, format, onFinish } = props;
+  const { value, format, onFinish, formatter = defaultFormatter } = props;
   // 强制渲染界面
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const timeStamp = getTime(value);
@@ -54,8 +58,16 @@ const Countdown: React.FC<CountdownProps> = (props) => {
       title: undefined,
     });
 
+  const countdownFormatter = (valueFormatter: countdownValueType, config: FormatConfig) => {
+    const value = formatCountdown(valueFormatter, { ...config, format });
+    if (typeof formatter === 'function') {
+      return formatter(value);
+    }
+    return value;
+  };
+
   return (
-    <Statistic valueRender={valueRender} {...props} formatter={(valueFormatter: countdownValueType, config: FormatConfig) => formatCountdown(valueFormatter, { ...config, format })} />
+    <Statistic valueRender={valueRender} {...props} formatter={countdownFormatter} />
   );
 }
 

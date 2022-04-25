@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`: 动态筛选条支持是否保存筛选值，租户个性化。
 - 🌟 `<pro>Table`: 新增 selectionBoxRenderer 属性支持勾选框渲染器。
 - 🌟 `<pro>NumberField`: 废弃 stringMode。
+- 🌟 `Statistic.Countdown`: 新增 formatter 属性。
 - 💄 `configure`: 优化批量查询附件数目钩子能带上桶信息。
 - 💄 `<pro>Table`: 优化数字类型等宽在单元格中显示。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
