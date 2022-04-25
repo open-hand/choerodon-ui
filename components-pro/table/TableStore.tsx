@@ -2336,6 +2336,11 @@ export default class TableStore {
 
   @autobind
   renderSelectionBox({ record }): ReactNode {
+    const { selectionBoxRenderer } = this.props;
+    if (selectionBoxRenderer && isFunction(selectionBoxRenderer)) {
+      const element = renderSelectionBox({ record, store: this });
+      return selectionBoxRenderer({ record, element });
+    }
     return renderSelectionBox({ record, store: this });
   }
 
