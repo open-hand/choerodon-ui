@@ -139,7 +139,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (field) {
       return field.getAttachments(this.record, this.tempAttachmentUUID);
     }
-    return this.observableProps.attachments;
+    if (this.getValue()) {
+      return this.observableProps.attachments;
+    }
   }
 
   set attachments(attachments: AttachmentFile[] | undefined) {
@@ -492,6 +494,12 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
+  @mobxAction
+  handleAttachmentsChange(attachments: AttachmentFile[] | undefined) {
+    this.observableProps.attachments = attachments;
+  }
+
+  @autobind
   handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) {
     const { field } = this;
     if (field) {
@@ -775,6 +783,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onUpload={this.uploadAttachment}
           onOrderChange={this.handleOrderChange}
           onFetchAttachments={this.handleFetchAttachment}
+          onAttachmentsChange={this.handleAttachmentsChange}
           onPreview={this.handlePreview}
           record={this.record}
         />
