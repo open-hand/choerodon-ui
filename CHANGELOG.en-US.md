@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: Added `Dropdown.Button` component.
 - 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
+- 🌟 `<pro>Table`: Added `selectionBoxRenderer` property to support checkbox renderer.
 - 🌟 `<pro>NumberField`: Deprecated `stringMode`.
 - 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
