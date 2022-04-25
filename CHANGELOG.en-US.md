@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property.
+- 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property and deprecated `bigNumberFormatter`.
 - 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
 - 🌟 `<pro>Table`: Added `treeFilter` property.
@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `useInvalidDate` property.
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
 - 🌟 `<pro>Table`: Added `selectionBoxRenderer` property to support checkbox renderer.
+- 🌟 `<pro>NumberField`: Deprecated `stringMode`.
 - 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 - 🐞 `Pagination`: Fix the problem that the pagination drop-down box will be blocked under the container whose `overflow` style is hidden.
+- 🐞 `<pro>Attachment`: Fix value change not updating attachment list.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.

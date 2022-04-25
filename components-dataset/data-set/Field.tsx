@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import merge from 'lodash/merge';
 import { AxiosRequestConfig } from 'axios';
-import { getDateFormatByField, isSame, isSameLike, MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, warning } from '../utils';
+import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
@@ -787,9 +787,9 @@ export default class Field {
     if (['min', 'max'].includes(propsName)) {
       if (this.get('type', record) === FieldType.number) {
         if (propsName === 'max') {
-          return MAX_SAFE_INTEGER;
+          return Infinity;
         }
-        return MIN_SAFE_INTEGER;
+        return -Infinity;
       }
     }
     return undefined;
@@ -1188,8 +1188,6 @@ export default class Field {
               ...this.dataSet.getConfig('defaultValidationMessages'),
               ...this.get('defaultValidationMessages', record),
             };
-          case 'stringMode':
-            return this.get('type', record) === FieldType.bigNumber;
           default:
             return this.get(key, record);
         }

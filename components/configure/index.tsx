@@ -3,7 +3,6 @@ import { CSSProperties, ReactNode } from 'react';
 import { configure as configureDataSet, overwriteConfigMergeProps, overwriteDefaultConfig } from 'choerodon-ui/dataset';
 import {
   AttachmentConfig as DataSetAttachmentConfig,
-  BigNumberTarget,
   Config as DataSetConfig,
   DefaultConfig as DataSetDefaultConfig,
   Formatter,
@@ -45,7 +44,7 @@ import defaults from './default';
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
 
-export { Status, Formatter, BigNumberTarget };
+export { Status, Formatter };
 
 export type renderEmptyHandler = (componentName?: string) => ReactNode;
 
@@ -78,8 +77,10 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
-
-export type FormatBigNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions, bigNumberTarget: BigNumberTarget) => string;
+/**
+ * @deprecated
+ */
+export type FormatBigNumberFunc = (value: string, lang: string, options: Intl.NumberFormatOptions, bigNumberTarget: 'currency' | 'number-field') => string;
 
 export type LovShowSelectedInViewHook = (viewMode?: LovViewTarget) => boolean;
 
@@ -204,7 +205,6 @@ export interface Config extends DataSetConfig {
   numberFieldFormatterOptions?: FormatNumberFuncOptions;
   currencyFormatter?: FormatNumberFunc;
   currencyFormatterOptions?: FormatNumberFuncOptions;
-  bigNumberFormatter?: FormatBigNumberFunc;
   /**
    * 是否显示长度信息
    */
@@ -328,6 +328,10 @@ export interface Config extends DataSetConfig {
    * @deprecated
    */
   tableCustomizedLoad?: CustomizedLoad;
+  /**
+   * @deprecated
+   */
+  bigNumberFormatter?: FormatBigNumberFunc;
 }
 
 export type ConfigKeys = keyof Config;

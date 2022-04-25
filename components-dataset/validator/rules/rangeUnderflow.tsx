@@ -1,22 +1,16 @@
 import { isMoment } from 'moment';
 import isNil from 'lodash/isNil';
-import { BigNumber } from 'bignumber.js';
 import { isEmpty, toRangeValue } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
+import math from '../../math';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
-const isUnderflow = (value, min, range, isBigNumber) => {
-  if (isBigNumber) {
-    if (range) {
-      return toRangeValue(value, range).some(item => !isEmpty(item) && new BigNumber(item).isLessThan(min));
-    }
-    return new BigNumber(value).isLessThan(min);
-  }
+const isUnderflow = (value, min, range) => {
   if (range) {
-    return toRangeValue(value, range).some(item => !isEmpty(item) && Number(item) < Number(min));
+    return toRangeValue(value, range).some(item => !isEmpty(item) && math.lt(item, min));
   }
-  return Number(value) < Number(min);
+  return math.lt(value, min);
 };
 
 export default function rangeUnderflow(value: any, validatorBaseProps: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
@@ -24,8 +18,7 @@ export default function rangeUnderflow(value: any, validatorBaseProps: Validator
     const min = getProp('min');
     if (!isNil(min)) {
       const range = getProp('range');
-      const stringMode = getProp('stringMode');
-      if (isUnderflow(value, min, range, stringMode)) {
+      if (isUnderflow(value, min, range)) {
         const format = getProp('format');
         const label = getProp('label');
         const injectionOptions = { min: isMoment(min) ? min.format(format) : min, label };

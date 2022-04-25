@@ -14,7 +14,7 @@ title:
 Basic Usage
 
 ````jsx
-import { configure, Row, Col } from 'choerodon-ui';
+import { configure, Row, Col, Button } from 'choerodon-ui';
 import { Attachment, Axios } from 'choerodon-ui/pro';
 import uuid from 'uuid/v4';
 import moment from 'moment';
@@ -84,9 +84,11 @@ configure({
     }
   }
 });
-
+const attachmentUUID1 = '4c74a34a-fa37-4e92-be9d-5cf726fb1472';
+const attachmentUUID2 = '88888888-fa37-4e92-be9d-5cf726fb1472';
 const App = () => {
-  const [value, setValue] = React.useState('4c74a34a-fa37-4e92-be9d-5cf726fb1472');
+  
+  const [value, setValue] = React.useState(attachmentUUID1);
   const props = {
     label: '技术附件',
     labelLayout: 'float',
@@ -104,6 +106,8 @@ const App = () => {
     <Row gutter={10}>
       <Col span={12}>
         <Attachment {...props} />
+        <Button onClick={() => setValue((pre)=> pre === attachmentUUID1 ? attachmentUUID2 : attachmentUUID1)}>切换附件</Button>
+        <Button onClick={() => setValue()}>置空</Button>
       </Col>
       <Col span={12}>
         <Attachment readOnly {...props} />

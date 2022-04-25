@@ -23,8 +23,6 @@ import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 
 export type TimeZone = string | ((moment: Moment) => string);
 
-export type BigNumberTarget = 'currency' | 'number-field';
-
 export type Status = {
   [RecordStatus.add]: string;
   [RecordStatus.update]: string;

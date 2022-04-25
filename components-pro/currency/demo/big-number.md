@@ -30,7 +30,7 @@ class App extends React.Component {
     fields: [
       { 
         name: 'age',
-        type: 'bigNumber',
+        type: 'currency',
         step: 2,
         required: true,
         max: '12345678901234567890123456',
@@ -52,7 +52,6 @@ class App extends React.Component {
         </Col>
         <Col span={24}>
           <Currency
-            stringMode
             max="1234567890"
             min="-1234567890"
             step="0.0000000001"

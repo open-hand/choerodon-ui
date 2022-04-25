@@ -1,4 +1,4 @@
-import moment, { isMoment, Moment, unitOfTime } from 'moment';
+import moment, { Moment, unitOfTime } from 'moment';
 import { get, isArrayLike, isObservableObject } from 'mobx';
 import warn from 'warning';
 import isNumber from 'lodash/isNumber';
@@ -14,7 +14,8 @@ import Field from '../data-set/Field';
 import { FieldType } from '../data-set/enum';
 import Record from '../data-set/Record';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
-import { formatNumber, formatFileSize } from '../formatter';
+import { formatFileSize } from '../formatter';
+import math, { BigNumberOptions } from '../math';
 
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || 1 - 2 ** 53;
@@ -41,134 +42,17 @@ export function isSameLike(newValue, oldValue) {
   return isSame(newValue, oldValue) || newValue == oldValue;
 }
 
-
-export function parseNumber(value: any, precision?: number): number {
-  if (isNil(precision)) {
-    return Number(value);
-  }
-  return Number(formatNumber(value, undefined, {
-    maximumFractionDigits: precision!,
-    useGrouping: false,
-  }));
+export function parseNumber(value: BigNumber.Value, precision?: number, strict?: boolean): number | BigNumber {
+  const result = new BigNumber(isNumber(precision) ? math.toFixed(value, precision) : value);
+  return strict ? result : math.fix(result);
 }
 
-export function parseBigNumber(value: any, precision?: number, defaultValue?: string | null): string | undefined | null {
-  const valueBig = new BigNumber(value);
-  precision = !isEmpty(precision) && precision >= 0 && isFinite(precision)
-    ? new BigNumber(precision).integerValue(BigNumber.ROUND_DOWN).toNumber()
-    : valueBig.decimalPlaces();
-  return bigNumberToFixed(valueBig, precision, defaultValue);
+export function parseBigNumber(value: BigNumber.Value, precision?: number): BigNumber {
+  return new BigNumber(isNumber(precision) ? math.toFixed(value, precision) : value);
 }
 
-export function getPrecision(value: number): number {
-  const valueString = value.toString();
-  if (valueString.indexOf('e-') >= 0) {
-    return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
-  }
-  if (valueString.indexOf('.') >= 0) {
-    return valueString.length - valueString.indexOf('.') - 1;
-  }
-  return 0;
-}
-
-function getMaxPrecision(value: number, step: number): number {
-  const stepPrecision = getPrecision(step);
-  const currentValuePrecision = getPrecision(value);
-  if (!value) {
-    return stepPrecision;
-  }
-  return Math.max(currentValuePrecision, stepPrecision);
-}
-
-function getPrecisionFactor(value: number, step: number): number {
-  return 10 ** getMaxPrecision(value, step);
-}
-
-function precisionFix(value: number, precisionFactor: number): number {
-  return Math.round(value * precisionFactor);
-}
-
-export function isValidBigNumber(bigNumber?: BigNumber): boolean {
-  return !!bigNumber && !bigNumber.isNaN() && bigNumber.isFinite();
-}
-
-export function bigNumberToFixed(bigNumber?: BigNumber, precision?: number, defaultValue?: string | null): string | undefined | null {
-  return isValidBigNumber(bigNumber)
-    ? bigNumber!.toFixed(defaultTo(precision, bigNumber!.decimalPlaces()))
-    : defaultValue;
-}
-
-function getBigBeforeStepValue(valueFactorBig: BigNumber, minOrMaxFactorBig: BigNumber, stepFactorBig: BigNumber): BigNumber {
-  // value - ((value - minFactor) % stepFactor)
-  return valueFactorBig.minus(valueFactorBig.minus(minOrMaxFactorBig).modulo(stepFactorBig));
-}
-
-function getBigNumberNearStepValues(
-  value: number | string,
-  step: number | string,
-  min?: number | string | null,
-  max?: number | string | null,
-): string[] | undefined {
-  if (isEmpty(min)) {
-    return undefined;
-  }
-  const valueBig = new BigNumber(value);
-  const minBig = new BigNumber(min);
-  const stepBig = new BigNumber(step);
-  let maxBig: BigNumber;
-  if (isEmpty(max)) {
-    maxBig = valueBig.plus(step);
-  } else {
-    maxBig = new BigNumber(max);
-  }
-
-  const maxDecimal = Math.max(valueBig.decimalPlaces(), stepBig.decimalPlaces());
-  const precisionFactorBig = new BigNumber(10).exponentiatedBy(maxDecimal);
-  const valueFactorBig = valueBig.multipliedBy(precisionFactorBig);
-  const minFactorBig = new BigNumber(minBig.multipliedBy(precisionFactorBig).toFixed(0));
-  const stepFactorBig = stepBig.multipliedBy(precisionFactorBig);
-  const maxFactorBig = new BigNumber(maxBig.multipliedBy(precisionFactorBig).toFixed(0));
-  // min 等于最小安全数时, 且 max 小于 0, 设置 step 计算起点为: Math.floor(max / step) * step
-  const minFactorBase = (
-    minBig.isEqualTo(-MAX_SAFE_INTEGER)
-      ? maxBig.isLessThan(0) ? stepBig.multipliedBy(maxBig.dividedBy(stepBig).toFormat(0, BigNumber.ROUND_FLOOR)) : new BigNumber(0)
-      : minBig
-  );
-  const minFactorBaseBig = new BigNumber(minFactorBase.multipliedBy(precisionFactorBig).toFixed(0));
-
-  let beforeStepFactorBig = getBigBeforeStepValue(valueFactorBig, minFactorBaseBig, stepFactorBig);
-  if (beforeStepFactorBig.isEqualTo(valueFactorBig)) {
-    return undefined;
-  }
-  if (beforeStepFactorBig.isGreaterThan(maxFactorBig)) {
-    beforeStepFactorBig = getBigBeforeStepValue(maxFactorBig, minFactorBaseBig, stepFactorBig);
-  } else if (beforeStepFactorBig.isLessThan(minFactorBig)) {
-    beforeStepFactorBig = minFactorBig;
-  }
-  const afterStepFactorBig = beforeStepFactorBig.plus(stepFactorBig);
-
-  const values = [bigNumberToFixed(beforeStepFactorBig.dividedBy(precisionFactorBig), undefined, String(value))!];
-  if (afterStepFactorBig.isLessThanOrEqualTo(maxFactorBig) && afterStepFactorBig.dividedBy(precisionFactorBig).isLessThanOrEqualTo(maxBig)) {
-    values.push(bigNumberToFixed(afterStepFactorBig.dividedBy(precisionFactorBig), undefined, String(value))!);
-  }
-  return values;
-}
-
-export function plus(...values: number[]) {
-  if (values.length > 2) {
-    return plus(values.shift() as number, plus(...values));
-  }
-  if (values.length < 2) {
-    return values[0];
-  }
-  const v1 = values[0];
-  const v2 = values[1];
-  const precisionFactor = getPrecisionFactor(v1, v2);
-  return (precisionFix(v1, precisionFactor) + precisionFix(v2, precisionFactor)) / precisionFactor;
-}
-
-function getBeforeStepValue(value: number, minFactor: number, stepFactor: number): number {
-  return value - ((value - minFactor) % stepFactor);
+function getBeforeStepValue(value: BigNumber.Value, min: BigNumber.Value, step: BigNumber.Value, options?: BigNumberOptions): BigNumber | number {
+  return math.minus(value, math.mod(math.minus(value, min, options), step, options), options);
 }
 
 function getNearStepMoments(
@@ -185,59 +69,51 @@ function getNearStepMoments(
   }
 }
 
-export function getNearStepValues<T extends Moment | number | string>(
-  value: T,
-  step: number | TimeStep | string,
-  min?: number | Moment | string | null,
-  max?: number | Moment | string | null,
-  isBigNumber?: boolean,
-): T[] | undefined {
-  if (isMoment(value)) {
-    if (!isNumber(step) && !isString(step)) {
-      const { hour, minute, second } = step;
-      if (second) {
-        return getNearStepMoments(value, second, TimeUnit.second) as T[];
-      }
-      if (minute) {
-        return getNearStepMoments(value, minute, TimeUnit.minute) as T[];
-      }
-      if (hour) {
-        return getNearStepMoments(value, hour, TimeUnit.hour) as T[];
-      }
+export function getNearStepMomentValues(
+  value: Moment,
+  step: BigNumber.Value | TimeStep,
+): Moment[] | undefined {
+  if (!isNumber(step) && !isString(step) && !math.isBigNumber(step)) {
+    const { hour, minute, second } = step;
+    if (second) {
+      return getNearStepMoments(value, second, TimeUnit.second);
     }
-  } else if (!isEmpty(value) && !!step && typeof step !== 'object') {
-    if (isBigNumber) {
-      return getBigNumberNearStepValues(value as number | string, step, min as any, max as any) as T[] | undefined;
+    if (minute) {
+      return getNearStepMoments(value, minute, TimeUnit.minute);
     }
+    if (hour) {
+      return getNearStepMoments(value, hour, TimeUnit.hour);
+    }
+  }
+}
 
-    min = defaultTo(Number(min), -MAX_SAFE_INTEGER);
-    max = defaultTo(Number(max), MAX_SAFE_INTEGER);
-    const precisionFactor = getPrecisionFactor(Number(value), Number(step));
-    const valueFactor = precisionFix(Number(value), precisionFactor);
-    const minFactor = precisionFix(min, precisionFactor);
+export function getNearStepValues(
+  value: BigNumber.Value,
+  step: BigNumber.Value | TimeStep,
+  min?: BigNumber.Value | null,
+  max?: BigNumber.Value | null,
+  options?: BigNumberOptions,
+): BigNumber.Value[] | undefined {
+  if (!isEmpty(value) && !!step && (math.isBigNumber(step) || typeof step !== 'object')) {
+    min = defaultTo(min, -Infinity);
+    max = defaultTo(max, Infinity);
     // min 等于最小安全数时, 且 max 小于 0, 设置 step 计算起点为: Math.floor(max / step) * step
-    const minFactorBase = (
-      min === -MAX_SAFE_INTEGER
-        ? max < 0 ? precisionFix(Math.floor(max / Number(step)) * Number(step), precisionFactor) : 0
-        : minFactor
-    );
-    const maxFactor = precisionFix(max, precisionFactor);
-    const stepFactor = precisionFix(Number(step), precisionFactor);
-    let beforeStepFactor = getBeforeStepValue(valueFactor, minFactorBase, stepFactor);
-    if (beforeStepFactor === valueFactor) {
+    const actualMin = math.isFinite(min) ? min : math.lt(max, 0) ? math.multipliedBy(math.floor(math.div(max, step, options), options), step, options) : 0;
+    let beforeStep: BigNumber.Value = getBeforeStepValue(value, actualMin, step, options);
+    if (math.eq(beforeStep, value)) {
       return undefined;
     }
-    if (beforeStepFactor > maxFactor) {
-      beforeStepFactor = getBeforeStepValue(maxFactor, minFactorBase, stepFactor);
-    } else if (beforeStepFactor < minFactor) {
-      beforeStepFactor = minFactor;
+    if (math.gt(beforeStep, max)) {
+      beforeStep = getBeforeStepValue(max, actualMin, step, options);
+    } else if (math.lt(beforeStep, min)) {
+      beforeStep = min;
     }
-    const afterStepFactor = beforeStepFactor + stepFactor;
-    const values: number[] = [beforeStepFactor / precisionFactor];
-    if (afterStepFactor <= maxFactor && (afterStepFactor / precisionFactor) <= max) {
-      values.push(afterStepFactor / precisionFactor);
+    const afterStep = math.plus(beforeStep, step, options);
+    const values: BigNumber.Value[] = [beforeStep];
+    if (math.lte(afterStep, max)) {
+      values.push(afterStep);
     }
-    return values as T[];
+    return values;
   }
 }
 
@@ -278,20 +154,6 @@ export function getDateFormatByField(field?: Field, type?: FieldType, record?: R
   return getGlobalConfig('formatter', field).jsonDate || moment.defaultFormat;
 }
 
-let supportsLocales;
-
-export function toLocaleStringSupportsLocales() {
-  if (supportsLocales === undefined) {
-    try {
-      (0).toLocaleString('i');
-      supportsLocales = false;
-    } catch (e) {
-      supportsLocales = e.name === 'RangeError';
-    }
-  }
-  return supportsLocales;
-}
-
 export function getNumberFormatOptions(
   type: FieldType,
   options?: Intl.NumberFormatOptions,
@@ -303,19 +165,6 @@ export function getNumberFormatOptions(
     return { style: 'currency' };
   }
   return { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 };
-}
-
-export function toLocaleStringPolyfill(
-  value: number,
-  type: FieldType,
-  options?: Intl.NumberFormatOptions,
-) {
-  if (type === FieldType.number) {
-    const fraction = String(value).split('.')[1];
-    return value.toLocaleString().split('.')[0] + (fraction ? `.${fraction}` : '');
-  }
-  const currency = options && options.currency;
-  return `${currency ? `${currency} ` : ''}${value.toLocaleString()}`;
 }
 
 export function toRangeValue(value: any, range?: boolean | [string, string]): [any, any] {
@@ -344,18 +193,12 @@ export default {
   isSame,
   isSameLike,
   parseNumber,
-  getPrecision,
-  plus,
   getNearStepValues,
   getDateFormatByFieldType,
   getDateFormatByField,
-  toLocaleStringSupportsLocales,
   getNumberFormatOptions,
-  toLocaleStringPolyfill,
   toRangeValue,
   normalizeLanguage,
-  isValidBigNumber,
-  bigNumberToFixed,
   parseBigNumber,
   formatFileSize,
 };
