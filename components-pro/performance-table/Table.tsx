@@ -2190,6 +2190,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const current = this.scrollbarXRef && this.scrollbarXRef.current;
     current && current.resetScrollBarPosition && current.resetScrollBarPosition(handleScrollX);
     this.updatePosition();
+    /**
+     * 这里的条件与 scrollTop 触发强制更新的条件相反，避免重复的渲染。
+     */
+    if (this.props.virtualized && this.state.contentHeight <= this.getTableHeight()) {
+      this.forceUpdate();
+    }
   };
 
   scrollTo = (coord: { x: number; y: number }) => {
