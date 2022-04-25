@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Output`: 修复当内容换行时浮动标签的显示问题。
 - 🐞 `<pro>Dropdown`: 修复设置了 disabled 无法生效的问题。
 - 🐞 `<pro>IntlField`: 修复弹窗取消后值没有重置的问题。
+- 🐞 `<pro>NumberField`: 修复 valueChangeAction 为 input 时无法输入小数的问题。
 - 🐞 `<pro>Form`: 修复 label 靠左时的星号样式。
 - 🐞 修复组件按需加载样式缺失问题。
 - 🐞 `<pro>DatePicker`: 修复 dateTime 模式下, renderExtraFooter 显示双份的问题。以及修复 multiple 和 editorInPopup 属性同时设置显示错误问题。

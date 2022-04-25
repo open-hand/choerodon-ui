@@ -562,6 +562,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   compare(oldValue, newValue) {
     return math.eq(oldValue, newValue);
   }
+
+  isValidInput(input: string): boolean {
+    return !input.endsWith('.');
+  }
 }
 
 @observer

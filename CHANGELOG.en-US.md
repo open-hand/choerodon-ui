@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Output`: Fix floating label display issue when content wraps.
 - 🐞 `<pro>Dropdown`: Fix the problem that setting `disabled` cannot take effect.
 - 🐞 `<pro>IntlField`: Fix the problem that the value is not reset after the popup is canceled.
+- 🐞 `<pro>NumberField`: Fix the problem that decimals cannot be entered when `valueChangeAction` is `input`.
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
