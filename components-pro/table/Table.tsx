@@ -688,6 +688,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   cellHighlightRenderer?: HighlightRenderer;
   /**
+   * 勾选框渲染器
+   */
+  selectionBoxRenderer?: ({ record: Record, element: ReactNode }) => ReactNode;
+  /**
    * 是否显示临时移除的行
    */
   showRemovedRow?: boolean;
@@ -1345,6 +1349,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'defaultBodyExpanded',
       'bodyExpanded',
       'onBodyExpanded',
+      'selectionBoxRenderer',
     ]);
   }
 
