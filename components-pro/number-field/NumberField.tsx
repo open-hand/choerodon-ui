@@ -181,6 +181,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     };
   }
 
+  get strict() {
+    const { field } = this;
+    return field ? field.get('type', this.record) === FieldType.bigNumber : false;
+  }
+
   @computed
   get allowDecimal(): boolean {
     const { min, nonStrictStep } = this;
@@ -437,8 +442,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   stepGenerator(isPlus: boolean): IterableIterator<BigNumber.Value> {
-    const { min, max, nonStrictStep, field } = this;
-    const strict = field ? field.get('type', this.record) === FieldType.bigNumber : false;
+    const { min, max, nonStrictStep, strict } = this;
     const options: BigNumberOptions = {
       strict,
     };
@@ -459,7 +463,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
             default:
           }
         } else {
-          const nextValue = math.plus(newValue, (isPlus ? step : -step), options);
+          const nextValue = isPlus ? math.plus(newValue, step, options) : math.minus(newValue, step, options);
           if (!isEmpty(min) && math.lt(nextValue, min)) {
             newValue = min;
           } else if (!isEmpty(max) && math.gt(nextValue, max)) {
@@ -506,7 +510,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     if (isNaN(value) || isEmpty(value)) {
       super.prepareSetValue(null);
     } else {
-      super.prepareSetValue(parseNumber(value, this.getProp('precision')));
+      super.prepareSetValue(parseNumber(value, this.getProp('precision'), this.strict));
     }
   }
 
@@ -565,5 +569,10 @@ export default class ObserverNumberField extends NumberField<NumberFieldProps> {
   static defaultProps = NumberField.defaultProps;
 
   static format = defaultFormatNumber;
+
+  /**
+   * @deprecated
+   */
+  static bigNumberFormat = defaultFormatNumber;
 
 }
