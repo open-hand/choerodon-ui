@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `Input`: 修复默认无法输入中文的问题。
 - 🐞 `Input`: 修复有 placeholder 且没有 label 时，输入第一个字符会自动失焦的问题。
 - 🐞 `Pagination`: 修复在 overflow 样式为 hidden 的容器下分页下拉框会被挡住的问题。
+- 🐞 `<pro>Attachment`: 修复 value 变更不会更新附件列表的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
 - 🐞 `<pro>Table`: 修复加载状态不会消除的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。

@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, ReactNode, useCallback, useEffect } from 'react';
+import React, { Fragment, FunctionComponent, ReactNode, useCallback, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
@@ -22,6 +22,7 @@ export interface AttachmentListProps {
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   onOrderChange: (props: { attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => void;
+  onAttachmentsChange: (attachments: AttachmentFile[] | undefined) => void;
   onPreview: () => void;
   previewTarget?: string;
   bucketName?: string;
@@ -54,6 +55,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     sortable,
     readOnly,
     onFetchAttachments,
+    onAttachmentsChange,
     limit,
     onHistory,
     onPreview,
@@ -64,6 +66,10 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
+  const oldValues = useRef<{
+    attachmentUUID?: string;
+    record?: Record;
+  } | undefined>();
   const handleDragEnd = useCallback((result: DropResult) => {
     const { destination, source } = result;
     if (destination && attachments) {
@@ -77,10 +83,17 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     }
   }, [attachments, onOrderChange]);
   useEffect(() => {
-    if (!attachments && attachmentUUID) {
-      onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+    if (attachmentUUID) {
+      const { current } = oldValues;
+      if (!current || current.attachmentUUID !== attachmentUUID || current.record !== record) {
+        if (attachments) {
+          onAttachmentsChange(undefined);
+        }
+        oldValues.current = { attachmentUUID, record };
+        onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+      }
     }
-  }, [onFetchAttachments, attachments, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, record]);
+  }, [onFetchAttachments, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, record]);
 
   if (attachments) {
     const { length } = attachments;
