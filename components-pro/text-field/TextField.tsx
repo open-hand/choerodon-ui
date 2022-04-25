@@ -1445,7 +1445,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
     this.setText(restricted);
-    if (valueChangeAction === ValueChangeAction.input || !this.isFocus) {
+    if (!this.isFocus || (valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
       this.handleChangeWait(restricted);
     }
   }
@@ -1464,6 +1464,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return value.join(',');
     }
     return value;
+  }
+
+  isValidInput(_input: string): boolean {
+    return true;
   }
 }
 
