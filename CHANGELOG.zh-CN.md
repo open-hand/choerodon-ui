@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>TextArea`: 优化清除按钮对失焦的问题。
 - 💄 `<pro>AutoComplete`: 优化 suffix 显示。
 - 💄 规范枚举类型。
+- 💄 `Tab`: 根据子级长度控制父级展示。
 - 🐞 `Popover`: 修复在 iframe 内无法对齐的问题。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Tabs`: 修复容器有自定义样式出现滚动条时无法滚动的问题。
