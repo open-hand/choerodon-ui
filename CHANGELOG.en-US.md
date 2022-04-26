@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
+- 🐞 `<pro>Table`: Fix the problem of row height changing in `aggregation` and `virtualCell` mode when all aggregate columns are not displayed.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the input box component cannot focus in the cells with rowspan.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of missing horizontal virtual scrolling data.

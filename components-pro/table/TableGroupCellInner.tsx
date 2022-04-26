@@ -12,11 +12,12 @@ export interface TableGroupCellInnerProps {
   group: Group;
   rowSpan?: number;
   children?: ReactNode;
+  isFixedRowHeight?: boolean;
 }
 
 const TableGroupCellInner: FunctionComponent<TableGroupCellInnerProps> = function TableGroupCellInner(props) {
   const { dataSet, rowHeight, indentSize, tableStore, prefixCls } = useContext(TableContext);
-  const { column, group, children: aggregationList, rowSpan } = props;
+  const { column, group, children: aggregationList, rowSpan, isFixedRowHeight } = props;
   const { children } = group;
   const { renderer = defaultAggregationRenderer, __tableGroup } = column;
   const handleExpandChange = useCallback(() => {
@@ -58,7 +59,7 @@ const TableGroupCellInner: FunctionComponent<TableGroupCellInnerProps> = functio
   const cellProps: { style?: CSSProperties, className: string } = {
     className: classNames(`${prefixCls}-cell-inner`, { [`${prefixCls}-cell-inner-row-height-fixed`]: rowHeight !== 'auto' }),
   };
-  if (rowSpan === undefined && tableStore.isFixedRowHeight && rowHeight !== 'auto') {
+  if (rowSpan === undefined && isFixedRowHeight && rowHeight !== 'auto') {
     cellProps.style = {
       height: pxToRem(rowHeight)!,
       lineHeight: pxToRem(rowHeight - 2)!,

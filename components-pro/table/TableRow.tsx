@@ -16,29 +16,26 @@ import { observer } from 'mobx-react-lite';
 import { action, get, reaction, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
-import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
-import { useInView } from 'react-intersection-observer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import TableCell, { TableCellProps } from './TableCell';
+import TableVirtualCell from './TableVirtualCell';
 import Record from '../data-set/Record';
-import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
 import { findCell, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
-import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY, VIRTUAL_ROOT_MARGIN } from './TableStore';
+import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import { RecordStatus } from '../data-set/enum';
 import ResizeObservedRow from './ResizeObservedRow';
 import Spin from '../spin';
 import useComputed from '../use-computed';
-import ColumnGroups from './ColumnGroups';
 import ColumnGroup from './ColumnGroup';
 import { iteratorSome } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
-import VirtualRowMetaData from './VirtualRowMetaData';
+import { TableVirtualRowProps } from './TableVirtualRow';
 
 function getGroupByPath(group: Group, groupPath: [Group, boolean][]): Group | undefined {
   const { subGroups } = group;
@@ -69,26 +66,18 @@ function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | und
 
 const VIRTUAL_HEIGHT = '__VIRTUAL_HEIGHT__';
 
-export interface TableRowProps extends ElementProps {
-  lock?: ColumnLock | boolean | undefined;
-  isExpanded?: boolean | undefined;
-  columnGroups: ColumnGroups;
-  record: Record;
-  index: number;
-  virtualIndex?: number | undefined;
-  headerGroupIndex?: number | undefined;
-  expandIconColumnIndex?: number | undefined;
-  snapshot?: DraggableStateSnapshot | undefined;
-  provided?: DraggableProvided | undefined;
-  groupPath?: [Group, boolean][] | undefined;
-  metaData?: VirtualRowMetaData;
-  children?: ReactNode;
+export interface TableRowProps extends TableVirtualRowProps {
+  intersectionRef?: (node?: Element | null) => void;
+  inView?: boolean;
+  columnsInView?: boolean;
+  virtualHeight?: string;
 }
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
     record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups,
     children, groupPath, expandIconColumnIndex, metaData, style: propStyle,
+    intersectionRef, inView = true, virtualHeight, isFixedRowHeight, virtualCell, columnsInView = true,
   } = props;
   const context = useContext(TableContext);
   const {
@@ -107,17 +96,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
   const dragRef = useRef<boolean>(false);
-  const needIntersection = !hidden && tableStore.virtualCell;
-  const columnsInView = needIntersection ? tableStore.columnGroups.inView : true;
-  const { ref: intersectionRef, inView, entry } = useInView({
-    root: needIntersection && tableStore.overflowY ? node.tableBodyWrap || node.element : null,
-    rootMargin: `${VIRTUAL_ROOT_MARGIN}px`,
-    initialInView: !needIntersection || mounted.current || tableStore.isRowInView(index),
-  });
+  const needIntersection = intersectionRef;
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual || needIntersection : (!lock && (!tableStore.isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -407,20 +390,26 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     expandIconColumnIndex !== undefined && expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
   );
 
-  const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => (
-    <TableCell
-      columnGroup={columnGroup}
-      record={headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record)}
-      isDragging={snapshot ? snapshot.isDragging : false}
-      provided={rest.key === DRAG_KEY ? provided : undefined}
-      inView={needIntersection ? inView : undefined}
-      groupPath={groupPath}
-      rowIndex={virtualIndex === undefined ? index : virtualIndex}
-      {...rest}
-    >
-      {hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined}
-    </TableCell>
-  );
+  const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => {
+    const cellProps: TableCellProps = {
+      columnGroup,
+      record: headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record),
+      isDragging: snapshot ? snapshot.isDragging : false,
+      isFixedRowHeight,
+      provided: rest.key === DRAG_KEY ? provided : undefined,
+      groupPath,
+      rowIndex: virtualIndex === undefined ? index : virtualIndex,
+      children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
+    };
+    if (!isFixedRowHeight && virtualCell && !hidden) {
+      return (
+        <TableVirtualCell {...cellProps} {...rest} />
+      );
+    }
+    return (
+      <TableCell {...cellProps} {...rest} inView={inView} />
+    );
+  };
 
   const getColumns = () => {
     const { customizable } = tableStore;
@@ -516,7 +505,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }
 
-  const height = needIntersection && (!inView || !columnsInView) ? entry && (entry.target as HTMLTableRowElement).offsetParent ? pxToRem(entry.boundingClientRect.height || (entry.target as HTMLTableRowElement).offsetHeight, true) :
+  const height = intersectionRef ? virtualHeight !== undefined ? virtualHeight :
     pxToRem(metaData ? metaData.height : record.getState(VIRTUAL_HEIGHT) || tableStore.virtualRowHeight, true) : lock ?
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number, true) : undefined;
   if (height) {

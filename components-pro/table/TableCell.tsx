@@ -1,24 +1,31 @@
-import React, { CSSProperties, FunctionComponent, HTMLProps, Key, ReactElement, useCallback, useContext } from 'react';
+import React, {
+  CSSProperties,
+  DetailedHTMLProps,
+  FunctionComponent,
+  HTMLAttributes,
+  HTMLProps,
+  Key,
+  ReactElement,
+  useCallback,
+  useContext,
+} from 'react';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
-import { DraggableProvided } from 'react-beautiful-dnd';
 import omit from 'lodash/omit';
 import { IteratorHelper } from 'choerodon-ui/dataset';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
-import Record from '../data-set/Record';
-import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import { getColumnLock, getEditorByColumnAndRecord, isStickySupport } from './utils';
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
-import ColumnGroup from './ColumnGroup';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
 import TableStore from './TableStore';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import AggregationTreeGroups from './AggregationTreeGroups';
+import { TableVirtualCellProps } from './TableVirtualCell';
 
 function getRowSpan(group: Group, tableStore: TableStore): number {
   if (tableStore.headerTableGroups.length) {
@@ -31,20 +38,17 @@ function getRowSpan(group: Group, tableStore: TableStore): number {
   return group.expandedRecords.length;
 }
 
-export interface TableCellProps extends ElementProps {
-  columnGroup: ColumnGroup;
-  record: Record | undefined;
-  rowIndex: number;
-  colSpan?: number;
-  isDragging: boolean;
-  provided?: DraggableProvided;
-  disabled?: boolean;
-  inView?: boolean | undefined;
-  groupPath?: [Group, boolean][];
+export interface TableCellProps extends TableVirtualCellProps {
+  intersectionRef?: (node?: Element | null) => void;
+  inView?: boolean;
+  virtualHeight?: string;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
-  const { columnGroup, record, isDragging, provided, colSpan, className, children, disabled, inView, groupPath, rowIndex } = props;
+  const {
+    columnGroup, record, isDragging, provided, colSpan, className, children, disabled,
+    inView = true, groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight,
+  } = props;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -93,6 +97,16 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
   });
+  const intersectionProps: DetailedHTMLProps<HTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement> = {};
+  if (intersectionRef) {
+    intersectionProps.ref = intersectionRef;
+    if (virtualHeight !== undefined) {
+      intersectionProps.style = {
+        ...baseStyle,
+        height: virtualHeight,
+      };
+    }
+  }
   if (!record) {
     return (
       <td
@@ -100,6 +114,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         style={baseStyle}
         data-index={key}
         colSpan={colSpan}
+        {...intersectionProps}
       />
     );
   }
@@ -140,7 +155,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const aggregationList = getAggregationTreeGroups($aggregation);
     if (groupCell && group && __tableGroup) {
       return (
-        <TableGroupCellInner rowSpan={rowSpan} group={group} column={column}>
+        <TableGroupCellInner rowSpan={rowSpan} group={group} column={column} isFixedRowHeight={isFixedRowHeight}>
           {aggregationList}
         </TableGroupCellInner>
       );
@@ -186,7 +201,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       'data-index': key,
       ...cellExternalProps,
       className: classNames(baseClassName, cellExternalProps.className),
-      style: { ...baseStyle, ...cellExternalProps.style },
       scope,
     };
     if (hasEditor) {
@@ -199,7 +213,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       emptyCellProps.tabIndex = 0;
     }
 
-    return <TCell {...emptyCellProps} />;
+    return <TCell {...emptyCellProps} {...intersectionProps} style={{ ...baseStyle, ...cellExternalProps.style, ...intersectionProps.style }} />;
   }
   const cellStyle: CSSProperties = {
     ...baseStyle,
@@ -237,7 +251,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       className={classString}
       data-index={key}
       {...(provided && provided.dragHandleProps)}
-      style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle() }}
+      {...intersectionProps}
+      style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style }}
       scope={scope}
     >
       {renderInnerNode(aggregation, onCellStyle)}

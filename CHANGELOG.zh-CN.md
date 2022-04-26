@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
 - 🐞 `<pro>Table`: 修复加载状态不会消除的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
+- 🐞 `<pro>Table`: 修复聚合和虚拟单元格模式下当所有聚合列都不显示时行高会变化的问题。
 - 🐞 `<pro>Lov`: 修复在 safari 或企业微信浏览器中 popup 模式下点击分页按钮会直接关闭窗口的问题。
 - 🐞 `<pro>PerformanceTable`: 修复存在 rowspan 的单元格中，输入框组件无法聚焦的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启虚拟滚动时横向滚动导致数据缺失的问题。
