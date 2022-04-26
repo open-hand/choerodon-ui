@@ -38,3 +38,4 @@ Display statistic number.
 | title | Display title | string \| ReactNode | - |  |
 | value | Set target countdown time | number \| moment | - |  |
 | valueStyle | Set value css style | CSSProperties | - |  |
+| formatter        | Customize value display logic | (value) => ReactNode | -       |         |

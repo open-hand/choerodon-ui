@@ -117,8 +117,13 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   }
 
   @autobind
-  handleClearButtonClick() {
+  handleClearButtonClick(e) {
+    e.preventDefault();
     this.clear();
+  }
+
+  handleInnerButtonMouseDown(e) {
+    e.preventDefault();
   }
 
   renderWrapper(): ReactNode {

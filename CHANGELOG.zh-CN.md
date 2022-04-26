@@ -25,12 +25,14 @@ timeline: true
 - 🌟 `<pro>Table`: 动态筛选条支持是否保存筛选值，租户个性化。
 - 🌟 `<pro>Table`: 新增 selectionBoxRenderer 属性支持勾选框渲染器。
 - 🌟 `<pro>NumberField`: 废弃 stringMode。
+- 🌟 `Statistic.Countdown`: 新增 formatter 属性。
 - 💄 `configure`: 优化批量查询附件数目钩子能带上桶信息。
 - 💄 `<pro>Table`: 优化数字类型等宽在单元格中显示。
 - 💄 `<pro>Table`: 优化在 advancedBar 中查询字段输入时显示宽度。
 - 💄 `<pro>DatePicker`: 优化 range 模式下数据对调后面板日期显示的问题, 以及优化 range 模式下失焦后面板闪现当前日期的问题。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 和 time 时, 去除确定按钮, 失焦后自动选中值。
 - 💄 `<pro>DatePicker`: 优化当 hover 到日期面板时, 按 Tab 键会自动选中的问题。
+- 💄 `<pro>DatePicker`: 优化 mode 为 time 模式下，触控板滚动速率较快的问题。
 - 💄 `Input & <pro>TextField`: 优化浮动标签和 placeholder 之间的显示逻辑与 material design 保持一致。
 - 💄 `<pro>Transfer`: 优化设置 help 时的样式。以及去除 range 属性影响。
 - 💄 `<pro>TextArea`: 屏蔽 multiple 属性。
@@ -38,7 +40,10 @@ timeline: true
 - 💄 `InputNumber`: 支持 BigNumber 大数字。
 - 💄 `Menu.Item`: 调整 a 元素的显示样式。
 - 💄 `Form`: 优化 spacingType between 时的显示样式。
+- 💄 `<pro>TextArea`: 优化清除按钮对失焦的问题。
+- 💄 `<pro>AutoComplete`: 优化 suffix 显示。
 - 💄 规范枚举类型。
+- 💄 `Tab`: 根据子级长度控制父级展示。
 - 🐞 `Popover`: 修复在 iframe 内无法对齐的问题。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Tabs`: 修复容器有自定义样式出现滚动条时无法滚动的问题。
@@ -46,12 +51,14 @@ timeline: true
 - 🐞 `Input`: 修复默认无法输入中文的问题。
 - 🐞 `Input`: 修复有 placeholder 且没有 label 时，输入第一个字符会自动失焦的问题。
 - 🐞 `Pagination`: 修复在 overflow 样式为 hidden 的容器下分页下拉框会被挡住的问题。
+- 🐞 `Table`: 修复筛选条失焦后无法查询的问题。
 - 🐞 `<pro>Attachment`: 修复 value 变更不会更新附件列表的问题。
 - 🐞 `<pro>Table`: 修复虚拟单元格模式下按 Tab 切换编辑器可能定位不准的问题。
 - 🐞 `<pro>Table`: 修复加载状态不会消除的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Lov`: 修复在 safari 或企业微信浏览器中 popup 模式下点击分页按钮会直接关闭窗口的问题。
 - 🐞 `<pro>PerformanceTable`: 修复存在 rowspan 的单元格中，输入框组件无法聚焦的问题。
+- 🐞 `<pro>PerformanceTable`: 修复开启虚拟滚动时横向滚动导致数据缺失的问题。
 - 🐞 `<pro>DatePicker`: 修复通过 filter 过滤的日期能用键盘来选择的问题。
 - 🐞 `<pro>Output`: 修复当内容换行时浮动标签的显示问题。
 - 🐞 `<pro>Dropdown`: 修复设置了 disabled 无法生效的问题。
@@ -60,6 +67,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 label 靠左时的星号样式。
 - 🐞 修复组件按需加载样式缺失问题。
 - 🐞 `<pro>DatePicker`: 修复 dateTime 模式下, renderExtraFooter 显示双份的问题。以及修复 multiple 和 editorInPopup 属性同时设置显示错误问题。
+- 🐞 `<pro>CheckBox`: 修复 Form 中的 showHelp 属性失效的问题。
 
 ## 1.5.3
 

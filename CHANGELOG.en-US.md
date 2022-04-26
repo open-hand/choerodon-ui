@@ -25,12 +25,14 @@ timeline: true
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
 - 🌟 `<pro>Table`: Added `selectionBoxRenderer` property to support checkbox renderer.
 - 🌟 `<pro>NumberField`: Deprecated `stringMode`.
+- 🌟 `Statistic.Countdown`: Added `formatter` property.
 - 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
 - 💄 `<pro>DatePicker`: Optimized when date switch in the `range` mode then the date display error in panel. And optimized when out of focus in the `range` mode, flash current date in panel problem.
 - 💄 `<pro>DatePicker`: Optimized an issue where clicking Tab will automatically select `hover` on the date panel.
 - 💄 `<pro>DatePicker`: When `mode` is set to `dateTime` or `time`, remove the "Ok" button and automatically select the value after losing focus.
+- 💄 `<pro>DatePicker`: When the optimization mode is `time` mode, the rolling speed of the touch panel is fast.
 - 💄 `Input & <pro>TextField`: Optimize the display logic between floating `label` and `placeholder` to be consistent with material design.
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
@@ -38,7 +40,10 @@ timeline: true
 - 💄 `InputNumber`: Support BigNumber.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 💄 `Form`: Optimize the display style of `spacingType` between.
+- 💄 `<pro>AutoComplete`: Optimize `suffix` display.
 - 💄 Canonical enumeration type.
+- 💄 `<pro>TextArea`: Optimize the defocus of the clear button.
+- 💄 `Tab`: Displays tabs based on the length of sub-tabs.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
@@ -46,12 +51,14 @@ timeline: true
 - 🐞 `Input`: Fix the problem that Chinese cannot be input by default.
 - 🐞 `Input`: Fix the problem that the input will automatically lose focus by first character inputted when there is a placeholder and no label property.
 - 🐞 `Pagination`: Fix the problem that the pagination drop-down box will be blocked under the container whose `overflow` style is hidden.
+- 🐞 `Table`: Fix the problem that cannot be queried after the filter bar is out of focus.
 - 🐞 `<pro>Attachment`: Fix value change not updating attachment list.
 - 🐞 `<pro>Table`: Fix the problem that pressing Tab to switch editors in virtual cell mode may be inaccurate.
 - 🐞 `<pro>Table`: Fix loading state not clearing.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Lov`: Fix the problem that clicking the button will directly close the window in popup mode and safari or Wechat browser.
 - 🐞 `<pro>PerformanceTable`: Fix the problem that the input box component cannot focus in the cells with rowspan.
+- 🐞 `<pro>PerformanceTable`: Fix the problem of missing horizontal virtual scrolling data.
 - 🐞 `<pro>DatePicker`: Fix the issue that dates filtered by `filter` can be selected by keyboard.
 - 🐞 `<pro>Output`: Fix floating label display issue when content wraps.
 - 🐞 `<pro>Dropdown`: Fix the problem that setting `disabled` cannot take effect.
@@ -60,6 +67,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
+- 🐞 `<pro>CheckBox`: Fixed the invalid showHelp property in Form.
 
 
 ## 1.5.3

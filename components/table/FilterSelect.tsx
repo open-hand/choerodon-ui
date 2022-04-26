@@ -145,7 +145,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
           getPopupContainer={getPopupContainer}
           allowClear
           labelInValue
-          blurChange={false}
+          blurChange
           border={false}
         >
           {this.getOptions()}
@@ -316,11 +316,9 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     let change = false;
     if (changedValue.length > all.length) {
       const value = changedValue.pop();
-      if (inputValue) {
-        if (rcSelect.state.inputValue && value) {
-          change = true;
-          filters.push(value.label as string);
-        }
+      if (inputValue && value) {
+        change = true;
+        filters.push(value.label as string);
         this.setState({
           selectColumn: undefined,
           inputValue: '',
