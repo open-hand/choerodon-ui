@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
-import isNegativeZero from 'is-negative-zero';
+import isNil from 'lodash/isNil';
+import { math, Utils } from 'choerodon-ui/dataset';
 import KeyCode from '../../_util/KeyCode';
 import InputHandler from './InputHandler';
 import Icon from '../../icon';
 import { preventDefault } from '../../_util/EventManager';
+import BigNumber from 'bignumber.js';
 
 function defaultParser(input) {
   return input.replace(/[^\w\.-]+/g, '');
@@ -21,25 +23,13 @@ const SPEED = 200;
  */
 const DELAY = 600;
 
-/**
- * Max Safe Integer -- on IE this is not available, so manually set the number in that case.
- * The reason this is used, instead of Infinity is because numbers above the MSI are unstable
- */
-const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
-
-const isValidProps = value => value !== undefined && value !== null;
-
-const isEqual = (oldValue, newValue) => newValue === oldValue ||
-  (typeof newValue === 'number' && typeof oldValue === 'number' &&
-    isNaN(newValue) && isNaN(oldValue));
-
 export default class InputNumber extends Component {
   static defaultProps = {
     focusOnUpDown: true,
     useTouch: false,
     prefixCls: 'rc-input-number',
-    max: MAX_SAFE_INTEGER,
-    min: -MAX_SAFE_INTEGER,
+    max: Infinity,
+    min: -Infinity,
     step: 1,
     style: {},
     onChange: noop,
@@ -93,9 +83,9 @@ export default class InputNumber extends Component {
 
     // Don't trigger in componentDidMount
     if (prevProps) {
-      if (!isEqual(prevProps.value, value) ||
-        !isEqual(prevProps.max, max) ||
-        !isEqual(prevProps.min, min)) {
+      if (!math.eq(prevProps.value, value) ||
+        !math.eq(prevProps.max, max) ||
+        !math.eq(prevProps.min, min)) {
         const validValue = focused ? value : this.getValidValue(value);
         let nextInputValue;
         if (this.pressingUpOrDown) {
@@ -116,18 +106,17 @@ export default class InputNumber extends Component {
       const nextValue = 'value' in this.props ? value : this.state.value;
       // ref: null < 20 === true
       // https://github.com/ant-design/ant-design/issues/14277
-      if ('max' in this.props &&
-        prevProps.max !== max &&
-        typeof nextValue === 'number' &&
-        nextValue > max &&
-        onChange) {
+      if (onChange && 'max' in this.props &&
+        !math.eq(prevProps.max, max) &&
+        math.isFinite(nextValue) &&
+        math.gt(nextValue, max)
+      ) {
         onChange(max);
       }
-      if ('min' in this.props &&
-        prevProps.min !== min &&
-        typeof nextValue === 'number' &&
-        nextValue < min &&
-        onChange) {
+      if (onChange && 'min' in this.props &&
+        !math.eq(prevProps.min, min) &&
+        math.isFinite(nextValue) &&
+        math.lt(nextValue, min)) {
         onChange(min);
       }
     }
@@ -305,7 +294,7 @@ export default class InputNumber extends Component {
     let val = value;
     if (val === '') {
       val = '';
-    } else if (!this.isNotCompleteNumber(parseFloat(val, 10))) {
+    } else if (!this.isNotCompleteNumber(val)) {
       val = this.getValidValue(val);
     } else {
       val = this.state.value;
@@ -327,7 +316,7 @@ export default class InputNumber extends Component {
     // optimize for chinese input expierence
     let value = e.target.value.trim().replace(/。/g, '.');
 
-    if (isValidProps(this.props.decimalSeparator)) {
+    if (!isNil(this.props.decimalSeparator)) {
       value = value.replace(this.props.decimalSeparator, '.');
     }
 
@@ -335,26 +324,25 @@ export default class InputNumber extends Component {
   }
 
   getValidValue(value, min = this.props.min, max = this.props.max) {
-    let val = parseFloat(value, 10);
-    if (isNaN(val)) {
+    if (math.isNaN(value)) {
       return value;
     }
-    if (val < min) {
-      val = min;
+    if (math.lt(value, min)) {
+      value = min;
     }
-    if (val > max) {
-      val = max;
+    if (math.gt(value, max)) {
+      value = max;
     }
-    return val;
+    return value;
   }
 
   setValue(v, callback) {
     // trigger onChange
     const { precision } = this.props;
-    const newValue = this.isNotCompleteNumber(parseFloat(v, 10)) ? null : parseFloat(v, 10);
+    const newValue = this.isNotCompleteNumber(v) ? null : v;
     const { value = null, inputValue = null } = this.state;
-    const newValueInString = typeof newValue === 'number'
-      ? newValue.toFixed(precision) : `${newValue}`;
+    const newValueInString = math.isFinite(newValue)
+      ? math.toFixed(newValue, precision) : `${newValue}`;
     const changed = newValue !== value || newValueInString !== `${inputValue}`;
     if (!('value' in this.props)) {
       this.setState({
@@ -375,18 +363,10 @@ export default class InputNumber extends Component {
   }
 
   getPrecision(value) {
-    if (isValidProps(this.props.precision)) {
+    if (!isNil(this.props.precision)) {
       return this.props.precision;
     }
-    const valueString = value.toString();
-    if (valueString.indexOf('e-') >= 0) {
-      return parseInt(valueString.slice(valueString.indexOf('e-') + 2), 10);
-    }
-    let precision = 0;
-    if (valueString.indexOf('.') >= 0) {
-      precision = valueString.length - valueString.indexOf('.') - 1;
-    }
-    return precision;
+    return math.dp(value);
   }
 
   // step={1.0} value={1.51}
@@ -396,22 +376,22 @@ export default class InputNumber extends Component {
   // https://github.com/react-component/input-number/issues/39
   getMaxPrecision(currentValue, ratio = 1) {
     const { precision } = this.props;
-    if (isValidProps(precision)) {
+    if (!isNil(precision)) {
       return precision;
     }
     const { step } = this.props;
     const ratioPrecision = this.getPrecision(ratio);
     const stepPrecision = this.getPrecision(step);
-    const currentValuePrecision = this.getPrecision(currentValue);
     if (!currentValue) {
       return ratioPrecision + stepPrecision;
     }
+    const currentValuePrecision = this.getPrecision(currentValue);
     return Math.max(currentValuePrecision, ratioPrecision + stepPrecision);
   }
 
   getPrecisionFactor(currentValue, ratio = 1) {
     const precision = this.getMaxPrecision(currentValue, ratio);
-    return Math.pow(10, precision);
+    return math.pow(10, precision);
   }
 
   getInputDisplayValue = (state) => {
@@ -428,7 +408,7 @@ export default class InputNumber extends Component {
     }
 
     let inputDisplayValueFormat = this.formatWrapper(inputDisplayValue);
-    if (isValidProps(this.props.decimalSeparator)) {
+    if (!isNil(this.props.decimalSeparator)) {
       inputDisplayValueFormat = inputDisplayValueFormat
         .toString()
         .replace('.', this.props.decimalSeparator);
@@ -523,7 +503,7 @@ export default class InputNumber extends Component {
 
   formatWrapper(num) {
     // http://2ality.com/2012/03/signedzero.html
-    if (isNegativeZero(num)) {
+    if (math.isNegativeZero(num)) {
       return '-0';
     }
     if (this.props.formatter) {
@@ -541,7 +521,7 @@ export default class InputNumber extends Component {
       return num.toString();
     }
     if (!isNaN(precision)) {
-      return Number(num).toFixed(precision);
+      return math.toFixed(num, precision);
     }
     return num.toString();
   }
@@ -549,7 +529,7 @@ export default class InputNumber extends Component {
   // '1.' '1x' 'xx' '' => are not complete numbers
   isNotCompleteNumber(num) {
     return (
-      isNaN(num) ||
+      math.isNaN(num) ||
       num === '' ||
       num === null ||
       (num && num.toString().indexOf('.') === num.toString().length - 1)
@@ -558,27 +538,18 @@ export default class InputNumber extends Component {
 
   toNumber(num) {
     const { precision } = this.props;
-    const { focused } = this.state;
-    // num.length > 16 => This is to prevent input of large numbers
-    const numberIsTooLarge = num && num.length > 16 && focused;
-    if (this.isNotCompleteNumber(num) || numberIsTooLarge) {
+    if (this.isNotCompleteNumber(num)) {
       return num;
     }
-    if (isValidProps(precision)) {
-      return Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
-    }
-    return Number(num);
+    return Utils.parseNumber(num, precision);
   }
 
   upStep(val, rat) {
     const { step, min } = this.props;
-    const precisionFactor = this.getPrecisionFactor(val, rat);
-    const precision = Math.abs(this.getMaxPrecision(val, rat));
     let result;
-    if (typeof val === 'number') {
-      result =
-        ((precisionFactor * val + precisionFactor * step * rat) /
-          precisionFactor).toFixed(precision);
+    if (math.isFinite(val)) {
+      const precision = Math.abs(this.getMaxPrecision(val, rat));
+      result = math.fix(new BigNumber(math.toFixed(math.plus(val, step), precision)));
     } else {
       result = min === -Infinity ? step : min;
     }
@@ -587,15 +558,12 @@ export default class InputNumber extends Component {
 
   downStep(val, rat) {
     const { step, min } = this.props;
-    const precisionFactor = this.getPrecisionFactor(val, rat);
-    const precision = Math.abs(this.getMaxPrecision(val, rat));
     let result;
-    if (typeof val === 'number') {
-      result =
-        ((precisionFactor * val - precisionFactor * step * rat) /
-          precisionFactor).toFixed(precision);
+    if (math.isFinite(val)) {
+      const precision = Math.abs(this.getMaxPrecision(val, rat));
+      result = math.fix(new BigNumber(math.toFixed(math.minus(val, step), precision)));
     } else {
-      result = min === -Infinity ? -step : min;
+      result = min === -Infinity ? math.negated(step) : min;
     }
     return this.toNumber(result);
   }
@@ -615,11 +583,13 @@ export default class InputNumber extends Component {
       return;
     }
     let val = this[`${type}Step`](value, ratio);
-    const outOfRange = val > props.max || val < props.min;
-    if (val > props.max) {
+    let outOfRange;
+    if (math.gt(val, props.max)) {
       val = props.max;
-    } else if (val < props.min) {
+      outOfRange = true;
+    } else if (math.lt(val, props.min)) {
       val = props.min;
+      outOfRange = true;
     }
     this.setValue(val);
     this.setState({
@@ -669,11 +639,11 @@ export default class InputNumber extends Component {
     const { value } = this.state;
     if (value || value === 0) {
       if (!isNaN(value)) {
-        const val = Number(value);
-        if (val >= props.max) {
+        const val = new BigNumber(value);
+        if (math.gte(val, props.max)) {
           upDisabledClass = `${prefixCls}-handler-up-disabled`;
         }
-        if (val <= props.min) {
+        if (math.lte(val, props.min)) {
           downDisabledClass = `${prefixCls}-handler-down-disabled`;
         }
       } else {
