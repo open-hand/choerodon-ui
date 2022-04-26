@@ -337,29 +337,33 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const items: ReactElement<any>[] = [];
       groupedPanelsMap.forEach((pane, key) => {
         const { group: { tab, disabled, dot }, panelsMap } = pane;
-        items.push(
-          <MenuItem key={String(key)} disabled={disabled}>
-            <InvalidBadge
-              prefixCls={prefixCls}
-              isInvalid={() => activeGroupKey !== key && iteratorSome(panelsMap.keys(), paneKey => validationMap.get(paneKey) === false)}
-            >
-              <Badge dot={dot}>
-                {tab}
-              </Badge>
-            </InvalidBadge>
-          </MenuItem>,
-        );
+        if (panelsMap.size) {
+          items.push(
+            <MenuItem key={String(key)} disabled={disabled}>
+              <InvalidBadge
+                prefixCls={prefixCls}
+                isInvalid={() => activeGroupKey !== key && iteratorSome(panelsMap.keys(), paneKey => validationMap.get(paneKey) === false)}
+              >
+                <Badge dot={dot}>
+                  {tab}
+                </Badge>
+              </InvalidBadge>
+            </MenuItem>,
+          );
+        }
       });
-      return (
-        <Menu
-          prefixCls={`${prefixCls}-group`}
-          selectedKeys={activeGroupKey ? [activeGroupKey] : []}
-          onSelect={handleGroupSelect}
-          mode="vertical"
-        >
-          {items}
-        </Menu>
-      );
+      if (items.length > 1) {
+        return (
+          <Menu
+            prefixCls={`${prefixCls}-group`}
+            selectedKeys={activeGroupKey ? [activeGroupKey] : []}
+            onSelect={handleGroupSelect}
+            mode="vertical"
+          >
+            {items}
+          </Menu>
+        );
+      }
     }
     return undefined;
   };

@@ -41,6 +41,7 @@ timeline: true
 - 💄 `Form`: Optimize the display style of `spacingType` between.
 - 💄 Canonical enumeration type.
 - 💄 `<pro>TextArea`: Optimize the defocus of the clear button.
+- 💄 `Tab`: Displays tabs based on the length of sub-tabs.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
