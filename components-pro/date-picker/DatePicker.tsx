@@ -176,6 +176,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   timeID?: number;
 
+  rangeValueExchange?: boolean;
+
   /**
    * hover 时显示值
    */
@@ -278,7 +280,6 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (text) {
       this.syncValueOnBlur(text);
     }
-    this.rangeTarget = undefined;
   }
 
   getPopupEditor() {
@@ -856,6 +857,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   exchangeRangeValue(start: Moment, end: Moment) {
+    this.rangeValueExchange = true;
     const { defaultTime } = this.props;
     if (defaultTime) {
       const [startDefaultTime, endDefaultTime] = this.getDefaultTime();
@@ -887,6 +889,14 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @action
   changeCursorDate(cursorDate: Moment) {
+    if (this.rangeValueExchange) {
+      if (this.range && !isNil(this.rangeTarget) && this.rangeValue) {
+        const [start, end] = [...this.rangeValue];
+        cursorDate = this.rangeTarget === 0 ? start : end;
+      }
+      this.setText(undefined);
+    }
+    this.rangeValueExchange = false;
     this.cursorDate = this.getValidDate(cursorDate);
   }
 
