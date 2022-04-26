@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
+- 🐞 `<pro>CheckBox`: Fixed the invalid showHelp property in Form.
 
 
 ## 1.5.3

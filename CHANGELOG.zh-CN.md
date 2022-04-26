@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复 label 靠左时的星号样式。
 - 🐞 修复组件按需加载样式缺失问题。
 - 🐞 `<pro>DatePicker`: 修复 dateTime 模式下, renderExtraFooter 显示双份的问题。以及修复 multiple 和 editorInPopup 属性同时设置显示错误问题。
+- 🐞 `<pro>CheckBox`: 修复 Form 中的 showHelp 属性失效的问题。
 
 ## 1.5.3
 
