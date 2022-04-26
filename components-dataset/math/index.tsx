@@ -7,6 +7,11 @@ export interface BigNumberOptions {
   strict?: boolean;
 }
 
+/**
+ * 当 BigNumber 能转换为普通数字则返回普通数字
+ * @param n1 BigNumber
+ * @return BigNumber | number
+ */
 function fix(number: BigNumber): BigNumber | number {
   return number.toString().length > 15 ? number : number.toNumber();
 }
@@ -16,7 +21,7 @@ function fix(number: BigNumber): BigNumber | number {
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function plus(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).plus(n2);
@@ -28,7 +33,7 @@ function plus(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOption
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function minus(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).minus(n2);
@@ -40,7 +45,7 @@ function minus(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptio
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function multipliedBy(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).multipliedBy(n2);
@@ -52,7 +57,7 @@ function multipliedBy(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumb
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function div(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).div(n2);
@@ -64,7 +69,7 @@ function div(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function mod(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).mod(n2);
@@ -76,7 +81,7 @@ function mod(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions
  * @param n1 string | number | BigNumber
  * @param n2 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function pow(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).pow(n2);
@@ -87,13 +92,19 @@ function pow(n1: BigNumber.Value, n2: BigNumber.Value, options: BigNumberOptions
  * 大数字平方根
  * @param n1 string | number | BigNumber
  * @param options Options
- * @return BigNumber
+ * @return BigNumber | number
  */
 function sqrt(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).sqrt();
   return options.strict ? result : fix(result);
 }
 
+/**
+ * 格式化小数精度
+ * @param n1 string | number | BigNumber
+ * @param decimalPlaces number
+ * @return string
+ */
 function toFixed(n1: BigNumber.Value, decimalPlaces: number): string {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toFixed(decimalPlaces);
 }
@@ -101,8 +112,8 @@ function toFixed(n1: BigNumber.Value, decimalPlaces: number): string {
 /**
  * 大数字小于
  * @param n1 string | number | BigNumber
- * @param options Options
- * @return BigNumber
+ * @param n2 string | number | BigNumber
+ * @return boolean
  */
 function lt(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).lt(n2);
@@ -111,7 +122,7 @@ function lt(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
 /**
  * 大数字小于等于
  * @param n1 string | number | BigNumber
- * @param options Options
+ * @param n2 string | number | BigNumber
  * @return BigNumber
  */
 function lte(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
@@ -121,8 +132,8 @@ function lte(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
 /**
  * 大数字大于
  * @param n1 string | number | BigNumber
- * @param options Options
- * @return BigNumber
+ * @param n2 string | number | BigNumber
+ * @return boolean
  */
 function gt(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).gt(n2);
@@ -131,8 +142,8 @@ function gt(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
 /**
  * 大数字大于等于
  * @param n1 string | number | BigNumber
- * @param options Options
- * @return BigNumber
+ * @param n2 string | number | BigNumber
+ * @return boolean
  */
 function gte(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).gte(n2);
@@ -141,11 +152,11 @@ function gte(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
 /**
  * 大数字等于
  * @param n1 string | number | BigNumber
- * @param options Options
- * @return BigNumber
+ * @param n2 string | number | BigNumber
+ * @return boolean
  */
 function eq(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
-  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).eq(n2);
+  return n1 === n2 || (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).eq(n2);
 }
 
 
@@ -153,6 +164,7 @@ function eq(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
  * 类似 Math.round
  * @param n1 string | number | BigNumber
  * @param options Options
+ * @return BigNumber | number
  */
 function round(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).dp(0);
@@ -163,6 +175,7 @@ function round(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber |
  * 类似 Math.floor
  * @param n1 string | number | BigNumber
  * @param options Options
+ * @return BigNumber | number
  */
 
 function floor(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
@@ -174,6 +187,7 @@ function floor(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber |
  * 类似 Math.ceil
  * @param n1 string | number | BigNumber
  * @param options Options
+ * @return BigNumber | number
  */
 function ceil(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
   const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).dp(0, BigNumber.ROUND_CEIL);
@@ -181,27 +195,87 @@ function ceil(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | 
 }
 
 /**
+ * 取负
+ * @param n1 string | number | BigNumber
+ * @param options Options
+ * @return BigNumber | number
+ */
+function negated(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
+  const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).negated();
+  return options.strict ? result : fix(result);
+}
+
+/**
  * 大数字小数位
  * @param n1
+ * @return number
  */
 function dp(n1: BigNumber.Value): number {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).dp();
 }
 
+/**
+ * 判断是不是 BigNumber
+ * @param n1 any
+ * @return boolean
+ */
 function isBigNumber(v1: any): v1 is BigNumber {
   return BigNumber.isBigNumber(v1);
 }
 
+/**
+ * 判断 BigNumber 是不是有限可用数
+ * @param n1 BigNumber
+ * @return boolean
+ */
 function isValidBigNumber(n1: BigNumber): boolean {
   return !n1.isNaN() && n1.isFinite();
 }
 
+/**
+ * 判断是不是有限数
+ * @param n1 string | number | BigNumber
+ * @return boolean
+ */
 function isFinite(n1: BigNumber.Value): boolean {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).isFinite();
 }
 
+/**
+ * 判断是不是 NaN
+ * @param n1 string | number | BigNumber
+ * @return boolean
+ */
 function isNaN(n1: BigNumber.Value): boolean {
   return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).isNaN();
+}
+
+/**
+ * 判断是不是负数
+ * @param n1 string | number | BigNumber
+ * @return boolean
+ */
+function isNegative(n1: BigNumber.Value): boolean {
+  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).isNegative();
+}
+
+/**
+ * 判断是不是0
+ * @param n1 string | number | BigNumber
+ * @return boolean
+ */
+function isZero(n1: BigNumber.Value): boolean {
+  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).isZero();
+}
+
+/**
+ * 判断是不是-0
+ * @param n1 string | number | BigNumber
+ * @return boolean
+ */
+function isNegativeZero(n1: BigNumber.Value): boolean {
+  const value = BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1);
+  return value.isZero() && value.isNegative();
 }
 
 export default {
@@ -223,8 +297,12 @@ export default {
   floor,
   ceil,
   dp,
+  negated,
   isFinite,
   isNaN,
+  isNegative,
+  isZero,
+  isNegativeZero,
   isBigNumber,
   isValidBigNumber,
 };

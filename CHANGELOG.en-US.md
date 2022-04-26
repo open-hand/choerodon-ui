@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Transfer`: Optimized the style when setting `help` property. And remove the influence of the `range` property.
 - 💄 `<pro>TextArea`: Mask the `multiple` property.
 - 💄 `<pro>TextArea`: Optimization clicking the clear button will cause defocus.
+- 💄 `InputNumber`: Support BigNumber.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 💄 `Form`: Optimize the display style of `spacingType` between.
 - 💄 `<pro>AutoComplete`: Optimize `suffix` display.

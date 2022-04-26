@@ -1,28 +1,29 @@
 import React, { Component, CSSProperties, FormEventHandler, ReactElement } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import BigNumber from 'bignumber.js';
 import RcInputNumber from '../rc-components/input-number';
 import Input, { AbstractInputProps } from '../input/Input';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 // omitting this attrs because they conflicts with the ones defined in InputNumberProps
-export type OmitAttrs = 'defaultValue' | 'onChange' | 'size';
+export type OmitAttrs = 'defaultValue' | 'onChange' | 'size' | 'value' | 'min' | 'max' | 'step';
 
 export interface InputNumberProps extends Omit<AbstractInputProps<HTMLInputElement>, OmitAttrs> {
   prefixCls?: string;
-  min?: number;
-  max?: number;
-  value?: number;
-  step?: number | string;
-  defaultValue?: number;
+  min?: BigNumber.Value;
+  max?: BigNumber.Value;
+  value?: BigNumber.Value;
+  step?: BigNumber.Value;
+  defaultValue?: BigNumber.Value;
   tabIndex?: number;
   onKeyDown?: FormEventHandler<any>;
-  onChange?: (value: number | string | undefined) => void;
+  onChange?: (value: BigNumber.Value | undefined) => void;
   disabled?: boolean;
   size?: Size;
-  formatter?: (value: number | string | undefined) => string;
-  parser?: (displayValue: string | undefined) => number;
+  formatter?: (value: BigNumber.Value | undefined) => string;
+  parser?: (displayValue: string | undefined) => BigNumber.Value;
   placeholder?: string;
   style?: CSSProperties;
   className?: string;
@@ -36,7 +37,7 @@ export interface InputNumberProps extends Omit<AbstractInputProps<HTMLInputEleme
   downHandler?: ReactElement;
 }
 
-export function formatNumber(value: number | string | undefined) {
+export function formatNumber(value: BigNumber.Value | undefined) {
   const vs = String(value).split('.');
   const v = vs[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return vs.length > 1 ? `${v}.${vs[1]}` : v;
@@ -68,13 +69,13 @@ export default class InputNumber extends Component<InputNumberProps, any> {
 
   private inputNumberRef: any;
 
-  numberFormatter = (value: number | string): any => {
+  numberFormatter = (value: BigNumber.Value | undefined): any => {
     const { formatter } = this.props;
     const v = formatNumber(value);
     return formatter ? formatter(v) : v;
   };
 
-  numberParser = (value: string): any => {
+  numberParser = (value: string): BigNumber.Value => {
     const { parser } = this.props;
     const v = parseNumber(value);
     return parser ? parser(v) : v;
