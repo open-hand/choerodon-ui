@@ -4,7 +4,6 @@ import React, {
   FunctionComponent,
   isValidElement,
   ReactElement,
-  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -12,7 +11,6 @@ import React, {
   useRef,
 } from 'react';
 import { action } from 'mobx';
-import { useInView } from 'react-intersection-observer';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -26,7 +24,6 @@ import { IconProps } from 'choerodon-ui/lib/icon';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
-import { ElementProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import EventManager from '../_util/EventManager';
 import { getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
@@ -40,20 +37,14 @@ import { CUSTOMIZED_KEY } from './TableStore';
 import ColumnGroup from './ColumnGroup';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import TableCellInner from './TableCellInner';
+import { TableVirtualHeaderCellProps } from './TableVirtualHeaderCell';
 
-export interface TableHeaderCellProps extends ElementProps {
-  columnGroup: ColumnGroup;
-  rowSpan?: number;
-  colSpan?: number;
-  rowIndex?: number;
-  getHeaderNode?: () => HTMLTableSectionElement | null;
-  scope?: string;
-  children?: ReactNode;
-  isSearchCell?: boolean;
+export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
+  intersectionRef?: (node?: Element | null) => void;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon, isSearchCell } = props;
+  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon, isSearchCell, intersectionRef } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -68,12 +59,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     lock,
   } = column;
   const field = dataSet.getField(name);
-  const needIntersection = tableStore.virtualCell && tableStore.overflowX;
-  const { ref, inView } = useInView({
-    root: needIntersection ? tableStore.node.wrapper : undefined,
-    rootMargin: '100px',
-    initialInView: true,
-  });
   const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
@@ -209,7 +194,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const delayResizeStart = useCallback(debounce(
     resizeStart,
     300,
-    { 
+    {
       leading: true,
       trailing: false,
     },
@@ -392,14 +377,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
   }, []);
 
-  useEffect(() => {
-    if (needIntersection) {
-      columnGroup.setInView(inView);
-    } else if (columnGroup.inView !== undefined) {
-      columnGroup.setInView(undefined);
-    }
-  }, [needIntersection, columnGroup, inView]);
-
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classList: string[] = [`${prefixCls}-cell`];
   const cellStyle: CSSProperties = {
@@ -495,8 +472,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     style: omit(cellStyle, ['width', 'height']),
     scope,
   };
-  if (needIntersection) {
-    thProps.ref = ref;
+  if (intersectionRef) {
+    thProps.ref = intersectionRef;
   }
   return (
     <th {...thProps}>

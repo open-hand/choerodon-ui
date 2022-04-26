@@ -15,6 +15,7 @@ import isObject from 'lodash/isObject';
 import classNames from 'classnames';
 import { ElementProps } from '../core/ViewComponent';
 import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell';
+import TableVirtualHeaderCell from './TableVirtualHeaderCell';
 import TableContext from './TableContext';
 import { ColumnLock } from './enum';
 import { getEditorByField, getTableHeaderRows, isStickySupport } from './utils';
@@ -31,7 +32,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
   const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight } = tableStore;
   const { columns } = columnGroups;
-
+  const needIntersection = tableStore.isFixedRowHeight && tableStore.virtualCell && tableStore.overflowX;
   const headerRows: ColumnGroup[][] = getTableHeaderRows(lock ? columns.filter((group) => group.lock === lock) : columns);
   const [isHeaderHover, setIsHeaderHover] = useState<boolean | undefined>();
   const nodeRef = useRef<HTMLTableSectionElement | null>(null);
@@ -99,6 +100,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               getHeaderNode,
               rowIndex,
               isSearchCell: isSearchTr,
+              scope: children ? 'colgroup' : 'col',
             };
             if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
               cellProps.className = lastColumnClassName;
@@ -112,13 +114,20 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
             if (colSpan > 1 || children) {
               cellProps.colSpan = colSpan;
             }
+            const icon =
+              !isSearchTr ?
+                (rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined) :
+                (!notRenderThKey.includes(String(key)) && getQueryFields({ width: '100%' }).find(field => field.key === key));
+            if (needIntersection) {
+              return (
+                <TableVirtualHeaderCell {...cellProps}>
+                  {icon}
+                </TableVirtualHeaderCell>
+              );
+            }
             return (
-              <TableHeaderCell {...cellProps} scope={children ? 'colgroup' : 'col'}>
-                {
-                  !isSearchTr ?
-                    (rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined) :
-                    (!notRenderThKey.includes(String(key)) && getQueryFields({ width: '100%' }).find(field => field.key === key))
-                }
+              <TableHeaderCell {...cellProps}>
+                {icon}
               </TableHeaderCell>
             );
           }
