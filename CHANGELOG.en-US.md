@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`: The dynamic filter bar supports whether to save the filter value, and the tenant is personalized.
 - 🌟 `<pro>Table`: Added `selectionBoxRenderer` property to support checkbox renderer.
 - 🌟 `<pro>NumberField`: Deprecated `stringMode`.
+- 🌟 `Statistic.Countdown`: Added `formatter` property.
 - 💄 `configure`: Optimize the hook parameters for the count of attachments in batch query can bring bucket information.
 - 💄 `<pro>Table`: Optimize the display of constant width of number type in cells.
 - 💄 `<pro>Table`: Optimized the display width of query fields entered in the `advancedBar`.
@@ -65,6 +66,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
+- 🐞 `<pro>CheckBox`: Fixed the invalid showHelp property in Form.
 
 
 ## 1.5.3

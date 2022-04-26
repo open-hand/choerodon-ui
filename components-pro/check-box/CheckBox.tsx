@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
-import { action, runInAction, computed } from 'mobx';
+import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import isString from 'lodash/isString';
 import { ShowHelp } from '../field/enum';
 import { Radio, RadioProps } from '../radio/Radio';
 import Icon from '../icon';
@@ -67,15 +66,6 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       return field.get(BooleanValue.trueValue);
     }
     return true;
-  }
-
-  @computed
-  get showHelp(): ShowHelp {
-    const { showHelp } = this.props;
-    if (isString(showHelp)) {
-      return showHelp;
-    }
-    return this.context.showHelp || this.getContextConfig('showHelp') || ShowHelp.newLine;
   }
 
   constructor(props, context) {
