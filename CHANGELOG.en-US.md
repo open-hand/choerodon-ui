@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>TextArea`: Optimization clicking the clear button will cause defocus.
 - 💄 `Menu.Item`: Adjust the display style of the `a` element.
 - 💄 `Form`: Optimize the display style of `spacingType` between.
+- 💄 `<pro>AutoComplete`: Optimize `suffix` display.
 - 💄 Canonical enumeration type.
 - 💄 `<pro>TextArea`: Optimize the defocus of the clear button.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.

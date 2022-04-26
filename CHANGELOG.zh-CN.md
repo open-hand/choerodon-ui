@@ -39,6 +39,7 @@ timeline: true
 - 💄 `Menu.Item`: 调整 a 元素的显示样式。
 - 💄 `Form`: 优化 spacingType between 时的显示样式。
 - 💄 `<pro>TextArea`: 优化清除按钮对失焦的问题。
+- 💄 `<pro>AutoComplete`: 优化 suffix 显示。
 - 💄 规范枚举类型。
 - 🐞 `Popover`: 修复在 iframe 内无法对齐的问题。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
