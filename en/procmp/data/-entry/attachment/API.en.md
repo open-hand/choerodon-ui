@@ -7,6 +7,7 @@ title: API
 | accept | 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 | data | 上传所需参数 | object |  |
 | headers | 设置上传的请求头部，IE10 以上有效 | object |  |
+| height | Attachment.Dragger的高度设置 | number |  |
 | multiple | 是否支持多选，IE10 以上有效 | boolean | true |
 | withCredentials | 上传请求时是否携带 cookie | boolean | false |
 | listType | 上传列表的内建样式，支持三种基本样式 text \| picture \| picture-card | string | text |

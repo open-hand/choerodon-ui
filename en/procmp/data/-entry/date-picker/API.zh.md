@@ -18,5 +18,6 @@ title: API
 | extraFooterPlacement	| 额外的页脚的位置 可选值: top bottom |	string |	bottom| |
 | editorInPopup | 编辑器在下拉框中  | boolean |  | 1.4.5 |
 | defaultTime | 设置用户选择日期时默认的时分秒，仅应用于 dateTime mode，DateTimePicker 组件 | moment \| \[moment, moment\] | | 1.4.5 |
+| useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true | 1.5.4 |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。

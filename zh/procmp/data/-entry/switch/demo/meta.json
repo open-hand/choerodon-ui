@@ -94,6 +94,21 @@
       "screenshot": "",
       "height": 165,
       "category": "pro"
+    },
+    {
+      "filename": "loading.js",
+      "title": {
+        "zh": "加载中。",
+        "en": ""
+      },
+      "description": {
+        "zh": "加载中的开关。\n",
+        "en": "Loading...\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 165,
+      "category": "pro"
     }
   ]
 }

@@ -27,4 +27,4 @@ title: API
 | blur() | 移除焦点 |
 | focus() | 获取焦点 |
 
-更多属性请参考 [Field](/zh/procmp/abstract/field#Field)。
+更多属性请参考 [FormField](/zh/procmp/abstract/field#Field)。

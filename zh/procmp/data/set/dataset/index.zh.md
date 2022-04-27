@@ -284,9 +284,9 @@ abstract: true
 | pattern | 正则校验 | string \| RegExp |  |    |
 | maxLength | 最大长度 | number |  |    |
 | minLength | 最小长度 | number |  |    |
-| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。type 为 bigNumber 时，传入 string 类型。 | number \| string \| MomentInput \| fieldName | MAX_SAFE_INTEGER(number 类型) |   |
-| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。type 为 bigNumber 时，传入 string 类型。 | number \| string \|  MomentInput \| fieldName | MIN_SAFE_INTEGER(number 类型) |   |
-| step | 步距。type 为 bigNumber 时，传入 string 类型。 | number \| { hour: number, minute: number, second: number } \| string |  | |
+| max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName | Infinity |  | |
+| min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName | -Infinity |   | |
+| step | 步距。| BigNumber.Value \| number \| { hour: number, minute: number, second: number } \| string |  | |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |    |
 | precision | 小数点精度, 提交时会截断 | number |  | 1.3.0 |
 | numberGrouping | 千分位分组显示 | boolean | true | 1.3.0   |

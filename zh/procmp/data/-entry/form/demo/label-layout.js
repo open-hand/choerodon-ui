@@ -49,8 +49,8 @@ const App = () => {
       <Form
         columns={2}
         labelLayout="vertical"
-        separateSpacing={{ width: 100, height: 20 }}
-        spacingType="between"
+        separateSpacing={{ width: 20, height: 20 }}
+        spacingType="around"
       >
         <SelectBox
           label="labelLayout"

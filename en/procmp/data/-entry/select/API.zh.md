@@ -11,6 +11,7 @@ title: API
 | reverse                | 是否显示反选按钮                                                                                                                                                               | boolean                                                        | true                                                                       | 1.0.0      |
 | searchMatcher             | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。                                                                                                                | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |      |
 | optionsFilter             | 选项过滤                                                                                                                                                                    | (record) => boolean                                            |                                                                             |      |
+| paramMatcher | 参数匹配器。当为字符串时，进行参数拼接 | string | ({ record, text, textField, valueField }) => string | | |
 | defaultActiveFirstOption | 是否默认高亮第一个选项。 | boolean | true | 1.5.0-beta.0 |
 | checkValueOnOptionsChange | 当选项改变时，检查并清除不在选项中的值                                                                                                                                      | boolean                                                        | true                                                                        |      |
 | dropdownMatchSelectWidth  | 下拉框匹配输入框宽度                                                                                                                                                        | boolean                                                        | true                                                                        |      |
@@ -20,6 +21,7 @@ title: API
 | optionRenderer            | 渲染 Option 本文的钩子                                                                                                                                                      | ({ record, text, value }) => ReactNode                         |                                                                             |      |
 | optionTooltip | 用tooltip显示选项内容 | string  |      none \| always \| overflow                   | 1.4.0 |
 | notFoundContent           | 当下拉列表为空时显示的内容                                                                                                                                                  | ReactNode                                                      |                                                                             |      |
+| pagingOptionContent | 渲染分页 option | ReactNode | | |
 | onOption                  | 设置选项属性，如 disabled         |
 | commonItem | 设置常用项 | Array&lt;string&gt; | |     |
 | maxCommonTagPlaceholder | 设置常用项标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |        |

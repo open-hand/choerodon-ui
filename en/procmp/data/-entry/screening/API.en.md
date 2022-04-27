@@ -31,6 +31,4 @@ title: API
 | handleClose | 点击关闭按钮需要触发的方法来删除值 | (key) => void | - |
 | key | 当前字段的标记配合handleClose以及定义为唯一值 | string | - |
 
-
-更多属性请参考 [ViewComponent](/en/procmp/abstract/ViewComponent#viewcomponent)。
-
+更多属性请参考 [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent)。

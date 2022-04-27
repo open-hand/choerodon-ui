@@ -13,6 +13,7 @@ title: API
 | labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#响应式), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 | |
 | labelAlign             | 标签文字对齐方式，只在 labelLayout 为 horizontal 时起作用，可选值：left \| center \| right，响应式参考[Responsive](#响应式) | string \| object            | right                     | |
 | labelLayout            | 标签位置，可选值 horizontal \| vertical \| placeholder \| float \| none，响应式参考[Responsive](#响应式)                       | string \| object            | horizontal                |  |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 'none'\|'always'\|'overflow' | string | 'none' | |
 | dataIndex              | 对照 record 在 DataSet 中的 index                                                                                                     | number                      | ds.currentIndex           |    |
 | record                 | 对照 record，优先级高于 dataSet 和 dataIndex                                                                                          | Record                      |                           |    |
 | columns                | 列数，响应式参考[Responsive](#响应式)                                                                                        | number \| object            | 1                         |    |
@@ -27,7 +28,7 @@ title: API
 | showValidation | 校验信息提示方式 | tooltip \| newLine | | 1.4.4 |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
 
-更多属性请参考 [ViewComponent](/zh/procmp/abstract/ViewComponent#viewcomponent)。
+更多属性请参考 [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent)。
 
 ### Form Layout
 
@@ -64,6 +65,7 @@ title: API
 | style | 自定义样式 | React.CSSProperties |  |
 | label | 标签 | string \| ReactNode |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number |  |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 'none'\|'always'\|'overflow' | string | 'none' | |
 | labelTooltip | 用 Tooltip 显示标签内容。可选值 none \| always \| overflow | string |  |
 | help | 帮助信息(显示在label旁) | string |  |
 | required | 是否显示必填样式(不做校验) | boolean |  |

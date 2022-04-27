@@ -31,6 +31,7 @@ title: API
 | tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true | 1.5.0 |
 | defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true | 1.5.0 |
 | showMore | Display more tabs than the width of the container | boolean | false | 1.5.0-beta.0 |
+| flex | 是否柔性布局 | boolean |  | 1.5.4 |
 
 ### Tabs.TabPane
 

@@ -13,6 +13,7 @@ title: API
 | border                | 是否显示边框                                                                                                                                                                                                                   | boolean                                                                                                | [globalConfig.tableBorder](/zh/procmp/configure/configure)     |    |
 | columnEditorBorder | 是否显示编辑器边框 | boolean | [globalConfig.tableBorder](/zh/procmp/configure/configure) | 1.4.0 |
 | selectionMode         | 选择记录的模式, 可选值: rowbox \| treebox \| click \| dblclick \| mousedown \| none                                                                                                                                                         | string                                                                                                 | rowbox |    |
+| selectionBoxRenderer | 勾选框渲染器  | ({ record, element }) => ReactNode | | 1.5.4 |
 | alwaysShowRowBox      | 是否一直显示 rowbox,开启后在其他模式下也会显示 rowbox                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | onRow                 | 设置行属性                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
 | buttons               | 功能按钮，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，可选值：add \| delete \| remove \| save \| query \| reset \| expandAll \| collapseAll \| export 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object                                                    |          |    |
@@ -22,6 +23,7 @@ title: API
 | queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| comboBar \| none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/zh/procmp/configure/configure) |   |
 | queryBarProps | 查询条参数，不同查询条参数配置应对应。当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性。 | object | | 1.4.1  |
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |    |
+| summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 | |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |   |
 | useMouseBatchChoose   | 是否使用鼠标批量选择,开启后在 rowbox 的情况下可以进行鼠标拖动批量选择,在起始的 rowbox 处按下,在结束位置松开                                                                                                                    | boolean                                                                                                | [globalConfig.tableUseMouseBatchChoose](/zh/procmp/configure/configure)    |    |
 | rowHeight             | 行高                                                                                                                                                                                                                           | number \| auto \| ({ size }) => number \| auto                                                                                         | [globalConfig.tableRowHeight](/zh/procmp/configure/configure)       |  1.5.2(支持钩子)  |
@@ -35,6 +37,7 @@ title: API
 | expandIconAsCell | 展开图标是否单独单元格展示 | boolean | true \| false(tree mode) |    |
 | indentSize            | 展示树形数据时，每层缩进的宽度                                                                                                                                                                                                 | number                                                                                                 | 15       |    |
 | filter                | 数据过滤， 返回值 true - 显示 false - 不显示                                                                                                                                                                                   | (record) => boolean                                                                                    |          |    |
+| treeFilter | 树形数据过滤, 优先级高于 filter, 返回值 true - 显示 false - 不显示 | (record) => boolean |  | 1.5.4 |
 | mode                  | 表格展示的模式，tree 需要配合 dataSet 的 idField 和 parentField 来展示，可选值: list \| tree                                                                                                                                  | string                                                                                                 | list   |   |
 | editMode              | 表格编辑的模式，可选值: cell \| inline                                                                                                                                                                                        | string                                                                                                 | cell   |   |
 | filterBarFieldName    | queryBar为bar时，直接输入的过滤条件的字段名                                                                                                                                                                                | string                                                                                                 | params |    |
@@ -229,6 +232,8 @@ title: API
 | buttonArea | 自定义按钮区域 | () => ReactNode | |
 | searchable | 筛选条头部是否配置查询  | boolean | false |
 | fold | 表格是否开启折叠收缩 | boolean | false |
+
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
 ### pagination
 
