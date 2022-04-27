@@ -108,7 +108,7 @@ const App = () => {
         <NumberField rowSpan={2} label="年龄—请填写大于18的数字" name="age" min={18} step={1} required addonAfter="周岁" />
         <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与左侧相同的密码" showHelp="tooltip" />
         <Switch label="是否冻结" name="flozen" required />
-        <CheckBox label="是否开启" name="enabled" />
+        <CheckBox label="是否开启" name="enabled" help="是否开启" />
         <Select label="语言" placeholder="请选择语言" name="language" required multiple>
           <Option value="zh-cn">简体中文</Option>
           <Option value="en-us">英语(美国)</Option>

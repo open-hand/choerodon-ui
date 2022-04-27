@@ -14,8 +14,7 @@ title:
 A button is on the left, and a related functional menu is on the right.
 
 ````jsx
-import { message, Menu, Icon } from 'choerodon-ui';
-import { Dropdown } from 'choerodon-ui/pro';
+import { Menu, Dropdown, Icon, message } from 'choerodon-ui/pro';
 
 function handleButtonClick(e) {
   message.info('Click on left button.');
@@ -37,7 +36,7 @@ const menu = (
 
 ReactDOM.render(
   <div>
-    <Dropdown.Button onClick={handleButtonClick} overlay={menu} size="large" funcType="flat">
+    <Dropdown.Button onClick={handleButtonClick} overlay={menu} funcType="flat">
       Dropdown
     </Dropdown.Button>
     <Dropdown.Button

@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.4
+
+`2022-04-27`
+
 - 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property and deprecated `bigNumberFormatter`.
 - 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
@@ -43,7 +47,7 @@ timeline: true
 - 💄 `<pro>AutoComplete`: Optimize `suffix` display.
 - 💄 Canonical enumeration type.
 - 💄 `<pro>TextArea`: Optimize the defocus of the clear button.
-- 💄 `Tab`: Displays tabs based on the length of sub-tabs.
+- 💄 `Tabs`: Displays tabs based on the length of sub-tabs.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
