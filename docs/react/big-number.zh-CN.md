@@ -92,6 +92,8 @@ ds.current.get('big'); // BigNumber(123456789012345678)
 
 2. 使用 json-bigint 库进行 json 的解析和字符串化。该库会自动将 json 中的大数字转换成 BigNumber 对象， 反之会将 BigNumber 对象转换成大数字。
 
+注意： json-bigint v1.0.0 版本转换的对象有原型链丢失的[issue](https://github.com/sidorares/json-bigint/issues/39),  在该issue修复前请使用 v0.4.0 版本。
+
 ###个例使用：
 ```
 import JSONBig from 'json-bigint';
