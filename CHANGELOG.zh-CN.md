@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.4
+
+`2022-04-27`
+
 - 🌟 `configure`: 新增 dateTimePickerOkButton, onComponentValidationReport 属性, 废弃 bigNumberFormatter。
 - 🌟 `Tabs`: 新增 flex 属性。
 - 🌟 `<pro>CheckBox`: 实现 showHelp 属性。
@@ -43,7 +47,7 @@ timeline: true
 - 💄 `<pro>TextArea`: 优化清除按钮对失焦的问题。
 - 💄 `<pro>AutoComplete`: 优化 suffix 显示。
 - 💄 规范枚举类型。
-- 💄 `Tab`: 根据子级长度控制父级展示。
+- 💄 `Tabs`: 根据子级长度控制父级展示。
 - 🐞 `Popover`: 修复在 iframe 内无法对齐的问题。
 - 🐞 `Tabs`: 修复校验徽章样式问题。
 - 🐞 `Tabs`: 修复容器有自定义样式出现滚动条时无法滚动的问题。
@@ -66,6 +70,7 @@ timeline: true
 - 🐞 `<pro>Dropdown`: 修复设置了 disabled 无法生效的问题。
 - 🐞 `<pro>IntlField`: 修复弹窗取消后值没有重置的问题。
 - 🐞 `<pro>NumberField`: 修复 valueChangeAction 为 input 时无法输入小数的问题。
+- 🐞 `<pro>NumberField`: 修复使用笔记本电脑触控板点击 step 按钮时, 步距变为 step 属性值两倍的问题。
 - 🐞 `<pro>Form`: 修复 label 靠左时的星号样式。
 - 🐞 修复组件按需加载样式缺失问题。
 - 🐞 `<pro>DatePicker`: 修复 dateTime 模式下, renderExtraFooter 显示双份的问题。以及修复 multiple 和 editorInPopup 属性同时设置显示错误问题。

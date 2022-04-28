@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.4
+
+`2022-04-27`
+
 - 🌟 `configure`: Added `dateTimePickerOkButton`, `onComponentValidationReport` property and deprecated `bigNumberFormatter`.
 - 🌟 `Tabs`: Added `flex` property.
 - 🌟 `<pro>CheckBox`: Implement `showHelp`.
@@ -43,7 +47,7 @@ timeline: true
 - 💄 `<pro>AutoComplete`: Optimize `suffix` display.
 - 💄 Canonical enumeration type.
 - 💄 `<pro>TextArea`: Optimize the defocus of the clear button.
-- 💄 `Tab`: Displays tabs based on the length of sub-tabs.
+- 💄 `Tabs`: Displays tabs based on the length of sub-tabs.
 - 🐞 `Popover`: Fix the problem of not aligning inside iframe.
 - 🐞 `Tabs`: Fix the problem of validation badge style.
 - 🐞 `Tabs`: Fix the problem that the container cannot be scrolled when there is a scroll bar with a custom style.
@@ -66,6 +70,7 @@ timeline: true
 - 🐞 `<pro>Dropdown`: Fix the problem that setting `disabled` cannot take effect.
 - 🐞 `<pro>IntlField`: Fix the problem that the value is not reset after the popup is canceled.
 - 🐞 `<pro>NumberField`: Fix the problem that decimals cannot be entered when `valueChangeAction` is `input`.
+- 🐞 `<pro>NumberField`: Fixed the problem that when you click the `step` button on the touch pad of laptop computer, the step distance becomes twice the value of `step` property.
 - 🐞 `<pro>Form`: Fix asterisk style when label is left.
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.

@@ -14,7 +14,7 @@ title:
 When setting a fixed height for the entire Tabs or using flex=1 to fill the entire outer container, the header of the inner label can be fixed but the content is flexible and scroll bars appear.
 
 ```jsx
-import { Tabs, Radio, Select } from 'choerodon-ui';
+import { Tabs, Select } from 'choerodon-ui';
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;

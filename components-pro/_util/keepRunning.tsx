@@ -34,6 +34,7 @@ function keep(fn, props: KeepRunningProps, e?: MouseEvent | KeyboardEvent) {
   if (!enabled || enabled.call(this) && ((!isKeyboardEvent(e) || !e.repeat))) {
     const generator = getStepGenerator.call(this);
     const firstValue = generator.next().value;
+    let currentValue = firstValue;
     if (isEvent(e)) {
       const { currentTarget, type } = e;
       const delayer = new TaskRunner();
@@ -46,7 +47,7 @@ function keep(fn, props: KeepRunningProps, e?: MouseEvent | KeyboardEvent) {
         }
         if (keeper.isRunning) {
           keeper.cancel();
-          fn.call(this, generator.next().value);
+          fn.call(this, currentValue);
         }
         event.clear();
       };
@@ -55,7 +56,8 @@ function keep(fn, props: KeepRunningProps, e?: MouseEvent | KeyboardEvent) {
           if (validator.call(this, currentTarget) === false) {
             stopFn();
           } else {
-            run.call(this, generator.next().value);
+            currentValue = generator.next().value;
+            run.call(this, currentValue);
           }
         });
       };

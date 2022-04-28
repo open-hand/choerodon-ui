@@ -974,7 +974,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (showScrollArrow) {
         return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight! + SCROLLBAR_LARGE_WIDTH);
       } else {
-        return Math.max(headerHeight + contentHeight + this.getScrollBarYWidth, minHeight! + this.getScrollBarYWidth);
+        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight! + SCROLLBAR_WIDTH);
       }
     } else {
       return tableHeight;
