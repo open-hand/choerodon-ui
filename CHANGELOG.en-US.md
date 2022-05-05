@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment`: Added `templateUrl` property.
+
 ## 1.5.4
 
 `2022-04-27`

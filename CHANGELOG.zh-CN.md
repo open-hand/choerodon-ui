@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
+
+
 ## 1.5.4
 
 `2022-04-27`

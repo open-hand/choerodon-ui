@@ -20,7 +20,7 @@ import { formatFileSize } from './utils';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 
-const ATTACHMENT_TARGET = 'attachment-preview';
+export const ATTACHMENT_TARGET = 'attachment-preview';
 
 export interface ItemProps {
   attachment: AttachmentFile;

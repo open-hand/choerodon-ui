@@ -14,11 +14,11 @@ title:
 DataSet Binding
 
 ````jsx
-import { Attachment, DataSet, Row, Col, Form } from 'choerodon-ui/pro';
+import { Attachment, DataSet, Form } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
-    fields: [{ name: 'attachment', type: 'attachment', label: <span>技术附件</span>, max: 9, required: true }],
+    fields: [{ name: 'attachment', type: 'attachment', label: <span>技术附件</span>, max: 9, required: true, templateUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' }],
   }), []);
   const props = {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
@@ -38,13 +38,9 @@ const App = () => {
   }, []);
 
   return (
-    <Row gutter={10}>
-      <Col span={12}>
-        <Form dataSet={ds}>
-            <Attachment {...props} />
-        </Form>
-      </Col>
-    </Row>
+    <Form dataSet={ds}>
+      <Attachment {...props} />
+    </Form>
   );
 }
 

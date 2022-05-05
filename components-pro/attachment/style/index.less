@@ -316,6 +316,10 @@
     content: '*';
   }
 
+  &.@{c7n-pro-prefix}-field {
+    width: auto;
+  }
+
   .@{c7n-pro-prefix}-field-help {
     margin-top: .04rem;
   }
@@ -398,25 +402,30 @@
 
     &-box {
       padding: 0.16rem 0;
+
       &-icon {
         .@{iconfont-css-prefix} {
           color: @primary-5;
           font-size: 0.18rem;
         }
+
         margin-bottom: 0.09rem;
       }
+
       &-text {
         color: @heading-color;
         font-weight: 400;
         font-size: @font-size-sm;
         line-height: 0.2rem;
       }
+
       &-hint {
         color: @text-color-secondary;
         font-size: @font-size-sm;
       }
     }
   }
+
   &-drag-hover {
     background-color: @background-color-light;
   }
