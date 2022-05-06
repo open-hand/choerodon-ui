@@ -37,6 +37,15 @@
     pointer-events: auto;
   }
 
+  &-two-chinese-chars::first-letter {
+    letter-spacing: 0.34em;
+  }
+
+  &-two-chinese-chars > *:not(.@{iconfont-css-prefix}) {
+    margin-right: -0.34em;
+    letter-spacing: 0.34em;
+  }
+
   &-disabled-wrapper > button {
     height: 100%;
     margin: 0;
