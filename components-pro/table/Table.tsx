@@ -1672,7 +1672,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (isTree && rowMetaData) {
       const { source } = initial;
       const currentRecord = rowMetaData[source.index].record;
-      if (currentRecord.children && currentRecord.children.length) {
+      if (currentRecord && currentRecord.children && currentRecord.children.length) {
         currentRecord.isExpanded = false;
       }
     }
@@ -1700,67 +1700,73 @@ export default class Table extends DataSetComponent<TableProps> {
     if (resultBefore && isTree && rowMetaData) {
       const { destination, source, combine } = resultBefore;
       const currentRecord = rowMetaData[source.index].record;
-      // 平铺数据
-      if (!childrenField && parentField && idField) {
-        // 拖拽组合关联
-        if (combine) {
-          const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
-          currentRecord.set(parentField, parentRecord.get(idField));
-          parentRecord.isExpanded = true;
-        }
-        // 拖拽排序更新
-        if (destination && destination.index !== source.index && rowMetaData) {
-          const destinationRecord = rowMetaData[destination.index].record;
-          const { parent } = destinationRecord;
-          if (parent) {
-            if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
-              currentRecord.set(parentField, parent.get(idField));
-            } else if (parent.children) {
-              const childIndex = parent.children.indexOf(destinationRecord);
-              this.removeSourceRecord(currentRecord);
-              parent.children.splice(childIndex, 0, currentRecord);
+      if (currentRecord) {
+        // 平铺数据
+        if (!childrenField && parentField && idField) {
+          // 拖拽组合关联
+          if (combine) {
+            const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
+            currentRecord.set(parentField, parentRecord.get(idField));
+            parentRecord.isExpanded = true;
+          }
+          // 拖拽排序更新
+          if (destination && destination.index !== source.index && rowMetaData) {
+            const destinationRecord = rowMetaData[destination.index].record;
+            if (destinationRecord) {
+              const { parent } = destinationRecord;
+              if (parent) {
+                if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
+                  currentRecord.set(parentField, parent.get(idField));
+                } else if (parent.children) {
+                  const childIndex = parent.children.indexOf(destinationRecord);
+                  this.removeSourceRecord(currentRecord);
+                  parent.children.splice(childIndex, 0, currentRecord);
+                }
+              } else {
+                currentRecord.set(parentField, undefined);
+                dataSet.move(currentRecord.index, destinationRecord.index);
+              }
             }
-          } else {
-            currentRecord.set(parentField, undefined);
-            dataSet.move(currentRecord.index, destinationRecord.index);
           }
         }
-      }
-      // 树形数据
-      if (childrenField) {
-        // 拖拽组合关联
-        if (combine) {
-          const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
-          this.removeSourceRecord(currentRecord);
-          currentRecord.parent = parentRecord;
-          if (parentRecord.children && parentRecord.children.length) {
-            parentRecord.children.unshift(currentRecord);
-          } else {
-            parentRecord.children = [currentRecord];
+        // 树形数据
+        if (childrenField) {
+          // 拖拽组合关联
+          if (combine) {
+            const parentRecord = dataSet.find(record => String(record.key) === combine.draggableId)!;
+            this.removeSourceRecord(currentRecord);
+            currentRecord.parent = parentRecord;
+            if (parentRecord.children && parentRecord.children.length) {
+              parentRecord.children.unshift(currentRecord);
+            } else {
+              parentRecord.children = [currentRecord];
+            }
+            parentRecord.isExpanded = true;
           }
-          parentRecord.isExpanded = true;
-        }
-        // 拖拽排序更新
-        if (destination && destination.index !== source.index && rowMetaData) {
-          const destinationRecord = rowMetaData[destination.index].record;
-          const { parent } = destinationRecord;
-          if (parent) {
-            if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
-              const childIndex = parent.children.indexOf(destinationRecord);
-              this.removeSourceRecord(currentRecord);
-              currentRecord.parent = parent;
-              parent.children.splice(childIndex, 0, currentRecord);
-            } else if (parent.children) {
-              const childIndex = parent.children.indexOf(destinationRecord);
-              this.removeSourceRecord(currentRecord);
-              parent.children.splice(childIndex, 0, currentRecord);
+          // 拖拽排序更新
+          if (destination && destination.index !== source.index && rowMetaData) {
+            const destinationRecord = rowMetaData[destination.index].record;
+            if (destinationRecord) {
+              const { parent } = destinationRecord;
+              if (parent) {
+                if (currentRecord.parent !== parent && parent !== currentRecord && parent.children) {
+                  const childIndex = parent.children.indexOf(destinationRecord);
+                  this.removeSourceRecord(currentRecord);
+                  currentRecord.parent = parent;
+                  parent.children.splice(childIndex, 0, currentRecord);
+                } else if (parent.children) {
+                  const childIndex = parent.children.indexOf(destinationRecord);
+                  this.removeSourceRecord(currentRecord);
+                  parent.children.splice(childIndex, 0, currentRecord);
+                }
+              } else {
+                if (currentRecord.parent) {
+                  this.removeSourceRecord(currentRecord);
+                  currentRecord.parent = undefined;
+                }
+                dataSet.move(currentRecord.index, destinationRecord.index);
+              }
             }
-          } else {
-            if (currentRecord.parent) {
-              this.removeSourceRecord(currentRecord);
-              currentRecord.parent = undefined;
-            }
-            dataSet.move(currentRecord.index, destinationRecord.index);
           }
         }
       }

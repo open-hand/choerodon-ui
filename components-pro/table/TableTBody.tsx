@@ -497,9 +497,30 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
 
   useEffect(action(() => {
-    tableStore.lastMeasuredIndex = 0;
-    tableStore.rowMetaData = statistics.rowMetaData;
-  }), [totalRows, statistics, tableStore]);
+    const { rowMetaData: oldRowMetaData } = tableStore;
+    const { rowMetaData } = statistics;
+    if (oldRowMetaData) {
+      oldRowMetaData.every(({ actualHeight, type }, index) => {
+        if (type === 'group') {
+          return true;
+        }
+        if (actualHeight !== undefined) {
+          const newMeta = rowMetaData[index];
+          if (newMeta) {
+            if (newMeta.type === 'row') {
+              newMeta.setHeight(actualHeight);
+            }
+            return true;
+          }
+        }
+        tableStore.lastMeasuredIndex = index;
+        return false;
+      });
+    } else {
+      tableStore.lastMeasuredIndex = 0;
+    }
+    tableStore.rowMetaData = rowMetaData;
+  }), [statistics, tableStore]);
 
   return totalRows.length ? (
     <VirtualVerticalContainer renderBefore={tableStore.hasRowGroups ? renderGroup : undefined}>

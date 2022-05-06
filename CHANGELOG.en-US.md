@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
+- 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 
 ## 1.5.4
 

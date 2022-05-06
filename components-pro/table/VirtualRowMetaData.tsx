@@ -13,7 +13,7 @@ export default class VirtualRowMetaData {
 
   @observable actualHeight?: number;
 
-  @observable record: Record;
+  @observable record?: Record;
 
   type: 'row' | 'group';
 

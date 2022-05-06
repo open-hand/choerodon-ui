@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
+- 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 
 
 ## 1.5.4
