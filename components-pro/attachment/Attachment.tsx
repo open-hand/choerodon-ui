@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { CSSProperties, ReactElement, ReactNode } from 'react';
 import { action as mobxAction, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -38,6 +38,9 @@ import { FIELD_SUFFIX } from '../form/utils';
 import { showValidationMessage } from '../field/utils';
 import { ShowValidation } from '../form/enum';
 import { getIf } from '../data-set/utils';
+import { ATTACHMENT_TARGET } from './Item';
+
+const templateStyle: CSSProperties = { marginLeft: 0 };
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -59,6 +62,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   previewTarget?: string;
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
+  templateUrl?: string;
   __inGroup?: boolean;
 }
 
@@ -599,6 +603,37 @@ export default class Attachment extends FormField<AttachmentProps> {
     return super.isValid();
   }
 
+  renderTemplateDownloadButton(): ReactElement<ButtonProps> | undefined {
+    const { previewTarget = ATTACHMENT_TARGET } = this.props;
+    const templateUrl = this.getProp('templateUrl');
+    if (templateUrl && !this.readOnly) {
+      const attachmentConfig: AttachmentConfig = getConfig('attachment');
+      const { getDownloadUrl } = attachmentConfig;
+      const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+      const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
+        attachment: new AttachmentFile({
+          url: templateUrl,
+        }),
+        bucketName,
+        bucketDirectory,
+        storageCode,
+        isPublic,
+      });
+
+      const downProps = {
+        funcType: FuncType.link,
+        href: isString(downloadUrl) ? downloadUrl : undefined,
+        onClick: isFunction(downloadUrl) ? downloadUrl : undefined,
+        target: previewTarget,
+        color: ButtonColor.primary,
+        style: templateStyle,
+      };
+      return (
+        <Button {...downProps}>({$l('Attachment', 'download_template')})</Button>
+      );
+    }
+  }
+
   renderUploadBtn(isCardButton: boolean, label?: ReactNode): ReactElement<ButtonProps> {
     const {
       count = 0,
@@ -805,6 +840,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (uploadBtn) {
       buttons.push(
         uploadBtn,
+        this.renderTemplateDownloadButton(),
       );
     }
     if (this.readOnly) {
@@ -1059,6 +1095,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             {this.renderDragUploadArea()}
             {readOnly ? this.renderViewButton(label) : this.renderUploadBtn(false, label)}
           </Trigger>
+          {this.renderTemplateDownloadButton()}
           {this.renderHelp(ShowHelp.tooltip)}
           {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         </>
