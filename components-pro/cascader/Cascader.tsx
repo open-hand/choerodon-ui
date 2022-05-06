@@ -318,6 +318,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         multiple,
         data: toJS(options),
         parentField,
+        getConfig: this.getContextConfig,
       });
     }
     return (

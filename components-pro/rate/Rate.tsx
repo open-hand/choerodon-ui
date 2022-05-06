@@ -47,10 +47,10 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   @autobind
   renderValidationResult(validationResult?: ValidationResult): ReactNode {
     const validationMessage = this.getValidationMessage(validationResult);
-    const { labelLayout, showValidation } = this.context;
+    const { labelLayout, showValidation, getProPrefixCls } = this.context;
     if (validationMessage) {
       const showIcon = !((labelLayout && [LabelLayout.float, LabelLayout.placeholder].includes(labelLayout)) || showValidation === ShowValidation.newLine);
-      return renderValidationMessage(validationMessage, showIcon);
+      return renderValidationMessage(validationMessage, showIcon, getProPrefixCls);
     }
   }
 

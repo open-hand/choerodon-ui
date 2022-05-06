@@ -236,7 +236,7 @@ export default class Screening extends DataSetComponent<ScreeningItemProps, Form
     return (
       options ||
       (field && field.getOptions(record)) ||
-      normalizeOptions({ textField, valueField, disabledField, multiple, children })
+      normalizeOptions({ textField, valueField, disabledField, multiple, children, getConfig: this.getContextConfig })
     );
   }
 

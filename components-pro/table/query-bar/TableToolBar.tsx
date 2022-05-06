@@ -2,7 +2,6 @@ import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import DataSet from '../../data-set/DataSet';
 import { ElementProps } from '../../core/ViewComponent';
 import Button, { ButtonProps } from '../../button/Button';
@@ -14,6 +13,7 @@ import Icon from '../../icon';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import TableButtons from './TableButtons';
+import TableContext, { TableContextValue } from '../TableContext';
 
 export interface TableToolBarProps extends ElementProps {
   dataSet: DataSet;
@@ -28,15 +28,30 @@ export interface TableToolBarProps extends ElementProps {
 
 @observer
 export default class TableToolBar extends Component<TableToolBarProps, any> {
+  static get contextType(): typeof TableContext {
+    return TableContext;
+  }
+
   static displayName = 'TableToolBar';
 
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 1,
     pagination: null,
   };
 
+  // @ts-ignore
+  context: TableContextValue;
+
   modal;
+
+  get prefixCls(): string {
+    if ('prefixCls' in this.props) {
+      const { prefixCls } = this.props;
+      return prefixCls!;
+    }
+    const { tableStore: { getProPrefixCls } } = this.context;
+    return getProPrefixCls('table');
+  }
 
   @autobind
   handleFieldEnter() {
@@ -77,7 +92,8 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit, queryFields, queryDataSet } = this.props;
+    const { queryFieldsLimit, queryFields, queryDataSet } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const currentFields = this.createFields(
         queryFields.slice(0, queryFieldsLimit),
@@ -113,7 +129,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
         return field ? field.isDirty(dataSet.current) : false;
       })
     ) {
-      const { prefixCls } = this.props;
+      const { prefixCls } = this;
       return (
         <span className={`${prefixCls}-query-bar-dirty-info`}>
           <Icon type="info" />
@@ -173,7 +189,8 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
   }
 
   render() {
-    const { prefixCls, pagination, buttons } = this.props;
+    const { pagination, buttons } = this.props;
+    const { prefixCls } = this;
     return [
       <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
         {this.getQueryBar()}

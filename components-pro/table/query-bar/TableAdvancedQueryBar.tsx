@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -18,6 +17,7 @@ import FilterSelect from './FilterSelect';
 import Modal from '../../modal';
 import Form from '../../form/Form';
 import { LabelLayout } from '../../form/enum';
+import TableContext, { TableContextValue } from '../TableContext';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   dataSet: DataSet;
@@ -32,14 +32,29 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
 
 @observer
 export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryBarProps> {
+  static get contextType(): typeof TableContext {
+    return TableContext;
+  }
+
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 1,
   };
+
+  // @ts-ignore
+  context: TableContextValue;
 
   moreFields: Field[];
 
   modal;
+
+  get prefixCls(): string {
+    if ('prefixCls' in this.props) {
+      const { prefixCls } = this.props;
+      return prefixCls!;
+    }
+    const { tableStore: { getProPrefixCls } } = this.context;
+    return getProPrefixCls('table');
+  }
 
   componentWillUnmount() {
     if (this.modal) {
@@ -103,7 +118,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit, queryFields, buttons, queryDataSet } = this.props;
+    const { queryFieldsLimit, queryFields, buttons, queryDataSet } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const currentFields = this.createFields(
         queryFields.slice(0, queryFieldsLimit),
@@ -174,7 +190,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   getFilterSelect() {
-    const { prefixCls, dataSet, queryDataSet, onQuery = noop } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop } = this.props;
+    const { prefixCls } = this;
     return (
       <FilterSelect
         key="filter"
@@ -192,7 +209,8 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   render() {
-    const { buttons, prefixCls } = this.props;
+    const { buttons } = this.props;
+    const { prefixCls } = this;
     const queryBar = this.getQueryBar();
 
     if (queryBar) {

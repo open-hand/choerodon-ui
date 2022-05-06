@@ -74,6 +74,7 @@ export default function normalizeOptions({
   disabledField,
   multiple,
   children,
+  getConfig,
 }) {
   const data: object[] = [];
   const fields = [
@@ -99,5 +100,5 @@ export default function normalizeOptions({
     paging: false,
     selection: multiple ? DataSetSelection.multiple : DataSetSelection.single,
     autoLocateFirst: false,
-  });
+  }, { getConfig });
 }

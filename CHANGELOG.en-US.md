@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `autoInsertSpaceInButton` property.
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
+- 💄 Optimize the impact of the `ConfigProvider` context.
 
 ## 1.5.4
 

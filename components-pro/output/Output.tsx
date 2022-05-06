@@ -78,7 +78,7 @@ export default class Output extends FormField<OutputProps> {
         getProp: (name) => this.getProp(name),
         getValue: () => this.getValue(),
         lang: this.lang,
-      }, true, this.record);
+      }, true, this.record, this.getContextConfig);
     }
     return '';
   }
