@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 autoInsertSpaceInButton 属性。
 - 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
 
 

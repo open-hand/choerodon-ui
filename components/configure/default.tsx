@@ -132,6 +132,7 @@ const defaults = {
   modalMovable: true,
   buttonColor: ButtonColor.default,
   buttonFuncType: FuncType.raised,
+  autoInsertSpaceInButton: true,
   renderEmpty: defaultRenderEmpty,
   icons: categories,
   dropdownMatchSelectWidth: true,
