@@ -155,6 +155,7 @@ const locale: Locale = {
     delete: '消去',
     file_list_max_length: 'ファイルの最大数は次のように制限されています：{count}',
     drag_info: 'ここでファイルをクリックまたはドラッグしてアップロードします',
+    download_template: 'テンプレートをダウンロード',
   },
   Modal: {
     ok: 'OK',

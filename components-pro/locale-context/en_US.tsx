@@ -152,6 +152,7 @@ const locale: Locale = {
     delete: 'Delete',
     file_list_max_length: 'The maximum number of files is limited to: {count}',
     drag_info: 'Click or drag files here to upload',
+    download_template: 'Download template',
   },
   Modal: {
     ok: 'OK',

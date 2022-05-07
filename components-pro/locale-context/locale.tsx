@@ -154,7 +154,8 @@ export interface Locale extends DataSetLocale {
     file_max_size: string;
     file_list_max_length: string;
     file_type_mismatch: string;
-    drag_info: string,
+    drag_info: string;
+    download_template: string;
   };
   Modal: {
     ok: string;

@@ -149,6 +149,7 @@ const locale: Locale = {
     operation_records: '操作记录',
     view_operation_records: '查看操作记录',
     download: '下载',
+    download_template: '下载模板',
     delete: '删除',
     file_list_max_length: '文件数量最大限制为：{count}',
     drag_info: '点击或将文件拖拽到这里上传',

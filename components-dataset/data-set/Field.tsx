@@ -418,6 +418,10 @@ export type FieldProps = {
    */
   attachmentCount?: number;
   /**
+   * 附件模板地址
+   */
+  templateUrl?: string;
+  /**
    * 附件上传属性名
    */
   fileKey?: string;
