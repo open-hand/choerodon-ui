@@ -184,6 +184,7 @@ export interface Config extends DataSetConfig {
   modalResizable?: boolean;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
+  autoInsertSpaceInButton?: boolean;
   renderEmpty?: renderEmptyHandler;
   highlightRenderer?: HighlightRenderer;
   icons?: { [key: string]: string[] } | string[];

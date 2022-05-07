@@ -5,9 +5,10 @@ import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
-import { computed, runInAction } from 'mobx';
+import { computed, observable, runInAction, action } from 'mobx';
 import { observer } from 'mobx-react';
 import isPromise from 'is-promise';
+import { isFragment as isReactFragment } from 'react-is';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import Icon from '../icon';
 import FormContext from '../form/FormContext';
@@ -21,6 +22,7 @@ import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import getReactNodeText from '../_util/getReactNodeText';
+import { cloneElement } from '../_util/reactNode';
 
 export interface ButtonProps extends DataSetComponentProps {
   /**
@@ -80,6 +82,59 @@ export interface ButtonProps extends DataSetComponentProps {
   children?: ReactNode;
 }
 
+const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
+const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
+
+// Insert one space between two chinese characters automatically.
+function insertSpace(child: React.ReactChild, needInserted: boolean) {
+  // Check the child if is undefined or null.
+  if (child == null) {
+    return;
+  }
+  const SPACE = needInserted ? ' ' : '';
+  // strictNullChecks oops.
+  if (
+    typeof child !== 'string' &&
+    typeof child !== 'number' &&
+    isString(child.type) &&
+    isTwoCNChar(child.props.children)
+  ) {
+    return cloneElement(child, {
+      children: child.props.children.split('').join(SPACE),
+    });
+  }
+  if (typeof child === 'string') {
+    return isTwoCNChar(child) ? <span>{child.split('').join(SPACE)}</span> : <span>{child}</span>;
+  }
+  if (isReactFragment(child)) {
+    return <span>{child}</span>;
+  }
+  return child;
+}
+
+function spaceChildren(children: React.ReactNode, needInserted: boolean) {
+  let isPrevChildPure = false;
+  const childList: React.ReactNode[] = [];
+  React.Children.forEach(children, child => {
+    const type = typeof child;
+    const isCurrentChildPure = type === 'string' || type === 'number';
+    if (isPrevChildPure && isCurrentChildPure) {
+      const lastIndex = childList.length - 1;
+      const lastChild = childList[lastIndex];
+      childList[lastIndex] = `${lastChild}${child}`;
+    } else {
+      childList.push(child);
+    }
+
+    isPrevChildPure = isCurrentChildPure;
+  });
+
+  // Pass to React.Children.map to auto fill key
+  return React.Children.map(childList, child =>
+    insertSpace(child as React.ReactChild, needInserted),
+  );
+}
+
 @observer
 export default class Button extends DataSetComponent<ButtonProps> {
   static displayName = 'Button';
@@ -96,6 +151,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     type: ButtonType.button,
     waitType: WaitType.throttle,
   };
+
+  @observable hasTwoCNChar: boolean;
 
   @computed
   get loading(): boolean {
@@ -129,6 +186,29 @@ export default class Button extends DataSetComponent<ButtonProps> {
       type: props.type,
       disabled: context.disabled || props.disabled,
     };
+  }
+
+  @autobind
+  @action
+  fixTwoCNChar() {
+    // For HOC usage
+    const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
+    if (!this.element || !autoInsertSpace) {
+      return;
+    }
+    const buttonText = this.element.textContent;
+    if (this.isNeedInserted() && isTwoCNChar(buttonText)) {
+      if (!this.hasTwoCNChar) {
+        this.hasTwoCNChar = true;
+      }
+    } else if (this.hasTwoCNChar) {
+      this.hasTwoCNChar = false;
+    }
+  }
+
+  componentDidMount(): void {
+    super.componentDidMount();
+    this.fixTwoCNChar();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -248,6 +328,18 @@ export default class Button extends DataSetComponent<ButtonProps> {
     return otherProps;
   }
 
+  isNeedInserted() {
+    const {
+      props: {
+        funcType = this.getContextConfig('buttonFuncType'),
+        children,
+        icon,
+      },
+    } = this;
+    return Children.count(children) === 1 && !icon && !(funcType === FuncType.link || funcType === FuncType.flat);
+  }
+
+
   getClassName(...props): string | undefined {
     const {
       prefixCls,
@@ -260,6 +352,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       },
     } = this;
     const childrenCount = Children.count(children);
+    const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
     return super.getClassName(
       {
         [`${prefixCls}-${funcType}`]: funcType,
@@ -269,6 +362,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
           : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON,
         [`${prefixCls}-block`]: block,
         [`${prefixCls}-loading`]: this.loading,
+        [`${prefixCls}-two-chinese-chars`]: this.hasTwoCNChar && autoInsertSpace,
       },
       ...props,
     );
@@ -277,6 +371,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   render() {
     const { children, icon, href, funcType } = this.props;
     const { loading, disabled } = this;
+    const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
     const buttonIcon: any = loading ? (
       <Progress key="loading" type={ProgressType.loading} size={Size.small} />
     ) : (
@@ -297,11 +392,15 @@ export default class Button extends DataSetComponent<ButtonProps> {
         omits.push('href');
       }
     }
+    const kids =
+      children || children === 0
+        ? spaceChildren(children, this.isNeedInserted() && autoInsertSpace)
+        : null;
     const button = (
       <Ripple disabled={disabled || funcType === FuncType.link}>
         <Cmp {...omit(props, omits)}>
           {buttonIcon}
-          {hasString ? <span>{children}</span> : children}
+          {hasString ? <span>{kids}</span> : kids}
         </Cmp>
       </Ripple>
     );

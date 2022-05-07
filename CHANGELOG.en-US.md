@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `autoInsertSpaceInButton` property.
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 
