@@ -58,14 +58,15 @@ export function getKey(record, idField) {
 
 function getTreeNode(record, children, idField, text, treeNodeProps, async, filterText): DataNode {
   const key = getKey(record, idField);
+  const nodeProps = record.get('__treeNodeProps') || {};
   return (
     {
       title: text,
       isLeaf: async ? undefined : (filterText ? (!children || !children.length) : !record.children || !record.children.length),
       children,
       record,
-      ...record.get('__treeNodeProps'),
-      selectable: record.dataSet.selection ? record.selectable : false,
+      ...nodeProps,
+      selectable: nodeProps.selectable !== false && (record.dataSet.selection ? record.selectable : false),
       eventKey: key,
       key,
       ...treeNodeProps,

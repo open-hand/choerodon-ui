@@ -575,7 +575,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const mergedDraggable = this.getMergedDraggable(draggable, data);
     return (
       <>
-        <Ripple disabled={disabled || !ripple}>
+        <Ripple disabled={disabled || !ripple || !this.isSelectable()}>
           <div
             ref={domRef}
             className={classNames(className, `${prefixCls}-treenode`, {

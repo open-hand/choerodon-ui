@@ -1,7 +1,8 @@
 import { Component } from 'react';
+import { TreeNodeProps as C7NTreeNodeProps } from 'choerodon-ui/lib/tree';
 import { ViewComponentProps } from '../core/ViewComponent';
 
-export interface TreeNodeProps extends ViewComponentProps {
+export interface TreeNodeProps extends C7NTreeNodeProps, Omit<ViewComponentProps, 'onMouseMove'> {
   /**
    * 选项值
    */
