@@ -608,17 +608,15 @@ export default class Attachment extends FormField<AttachmentProps> {
     const templateUrl = this.getProp('templateUrl');
     if (templateUrl && !this.readOnly) {
       const attachmentConfig: AttachmentConfig = getConfig('attachment');
-      const { getDownloadUrl } = attachmentConfig;
+      const { getTemplateDownloadUrl } = attachmentConfig;
       const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-      const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
-        attachment: new AttachmentFile({
-          url: templateUrl,
-        }),
+      const downloadUrl: string | Function | undefined = getTemplateDownloadUrl ? getTemplateDownloadUrl({
+        url: templateUrl,
         bucketName,
         bucketDirectory,
         storageCode,
         isPublic,
-      });
+      }) : templateUrl;
 
       const downProps = {
         funcType: FuncType.link,
