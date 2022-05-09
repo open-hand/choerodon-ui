@@ -48,12 +48,9 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   modal;
 
   get prefixCls(): string {
-    if ('prefixCls' in this.props) {
-      const { prefixCls } = this.props;
-      return prefixCls!;
-    }
+    const { prefixCls } = this.props;
     const { tableStore: { getProPrefixCls } } = this.context;
-    return getProPrefixCls('table');
+    return getProPrefixCls('table', prefixCls);
   }
 
   componentWillUnmount() {

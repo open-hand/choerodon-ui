@@ -53,12 +53,9 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   get prefixCls(): string {
-    if ('prefixCls' in this.props) {
-      const { prefixCls } = this.props;
-      return prefixCls!;
-    }
+    const { prefixCls } = this.props;
     const { tableStore: { getProPrefixCls } } = this.context;
-    return getProPrefixCls('table');
+    return getProPrefixCls('table', prefixCls);
   }
 
   componentDidMount(): void {

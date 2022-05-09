@@ -35,12 +35,9 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
   context: TableContextValue;
 
   get prefixCls(): string {
-    if ('prefixCls' in this.props) {
-      const { prefixCls } = this.props;
-      return prefixCls!;
-    }
+    const { prefixCls } = this.props;
     const { tableStore: { getProPrefixCls } } = this.context;
-    return getProPrefixCls('table');
+    return getProPrefixCls('table', prefixCls);
   }
 
   renderSuffix() {

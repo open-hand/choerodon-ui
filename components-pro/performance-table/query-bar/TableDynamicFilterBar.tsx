@@ -130,8 +130,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       const { prefixCls } = this.props;
       return prefixCls!;
     }
-    const { tableStore: { getProPrefixCls } } = this.context;
-    return getProPrefixCls('performance-table');
+    const { tableStore: { proPrefixCls } } = this.context;
+    return proPrefixCls;
   }
 
   @observable moreFields: Field[];

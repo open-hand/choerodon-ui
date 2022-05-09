@@ -410,11 +410,6 @@ export default class TableStore {
     return this.node.context.getConfig(key);
   }
 
-  @autobind
-  getProPrefixCls(suffixCls: string, customizePrefixCls?: string): string {
-    return this.node.context.getProPrefixCls(suffixCls, customizePrefixCls);
-  }
-
   constructor(node: PerformanceTable) {
     runInAction(() => {
       this.node = node;

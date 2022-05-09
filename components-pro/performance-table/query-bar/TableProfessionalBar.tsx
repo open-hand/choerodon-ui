@@ -48,8 +48,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       const { prefixCls } = this.props;
       return prefixCls!;
     }
-    const { tableStore: { getProPrefixCls } } = this.context;
-    return getProPrefixCls('performance-table');
+    const { tableStore: { prefixCls } } = this.context;
+    return prefixCls;
   }
 
   componentDidMount(): void {
