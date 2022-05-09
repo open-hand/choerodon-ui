@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `autoInsertSpaceInButton` property.
+- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` properties.
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
 - 💄 Optimize the impact of the `ConfigProvider` context.
+- 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 
 ## 1.5.4
 

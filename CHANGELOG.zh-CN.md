@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 autoInsertSpaceInButton 属性。
+- 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl 属性。
 - 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
 - 💄 优化 ConfigProvider 上下文影响。
+- 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 
 
 ## 1.5.4
