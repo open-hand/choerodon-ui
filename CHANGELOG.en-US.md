@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` properties.
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
+- 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
 
 ## 1.5.4
 
