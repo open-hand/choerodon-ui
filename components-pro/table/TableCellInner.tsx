@@ -418,7 +418,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
-      return utilRenderValidationMessage(validationResult.validationMessage, true);
+      return utilRenderValidationMessage(validationResult.validationMessage, true, tableStore.getProPrefixCls);
     }
   }, []);
   const isValidationMessageHidden = useCallback((message?: ReactNode): boolean | undefined => {
@@ -432,7 +432,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         return processFieldValue(text, field, {
           getProp: (propName) => field && field.get(propName, record),
           lang: dataSet && dataSet.lang || localeContext.locale.lang,
-        }, true, record);
+        }, true, record, tableStore.getConfig);
       }
       return '';
     };
@@ -472,7 +472,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,
-            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation')),
+            showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'), tableStore.getConfig),
             validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
@@ -511,7 +511,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message)) {
-        showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'));
+        showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'), tableStore.getConfig);
         return true;
       }
     }

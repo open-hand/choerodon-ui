@@ -446,14 +446,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   async initMenuDataSet(): Promise<boolean> {
     const { queryDataSet, dataSet, dynamicFilterBar, searchCode } = this.props;
+    const { getConfig } = this.context;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
     if (this.tableFilterAdapter) {
       const menuDataSet = new DataSet(QuickFilterDataSet({
         searchCode: searchCodes,
         queryDataSet,
         tableFilterAdapter: this.tableFilterAdapter,
-      }) as DataSetProps);
-      const conditionDataSet = new DataSet(ConditionDataSet());
+      }) as DataSetProps, { getConfig: getConfig as any });
+      const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
       const optionDataSet = new DataSet({
         selection: DataSetSelection.single,
         fields: [
@@ -465,7 +466,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             group: true,
           },
         ],
-      });
+      }, { getConfig: getConfig as any });
       const filterMenuDataSet = new DataSet({
         autoCreate: true,
         fields: [
@@ -478,7 +479,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             ignore: FieldIgnore.always,
           },
         ],
-      });
+      }, { getConfig: getConfig as any });
       let status = RecordStatus.update;
       if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;

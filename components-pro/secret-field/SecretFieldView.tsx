@@ -232,6 +232,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
   setFormDs() {
     const { name, label, pattern, required, countDown } = this.props;
     const { verifyTypeObj } = this;
+    const { getConfig } = this.context;
     const { verifyType } = countDown;
     let initData: object[] = [];
     let verifyValue = '';
@@ -277,6 +278,9 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
         events: {
           update: this.handleFormUpdate,
         },
+      },
+      {
+        getConfig: getConfig as any,
       },
     );
   }

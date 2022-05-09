@@ -541,11 +541,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number | BigNumber): FormatNumberFuncOptions {
-    return getNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), value, this.lang);
+    return getNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), value, this.lang, this.getContextConfig);
   }
 
   getFormatter() {
-    return this.getProp('formatter') || getNumberFormatter();
+    return this.getProp('formatter') || getNumberFormatter(this.getContextConfig);
   }
 
   processText(value: ReactNode): ReactNode {

@@ -46,13 +46,26 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
       return customizable[component];
     }
   }, [getLocalConfig]);
+  const getLocalUsefulTooltip = useCallback<typeof getUsefulTooltip>((target) => {
+    switch (target) {
+      case 'table-cell':
+        return getLocalConfig('tableColumnTooltip');
+      case 'button':
+        return getLocalConfig('buttonTooltip');
+      case 'select-option':
+        return getLocalConfig('selectOptionTooltip');
+      case 'label':
+        return getLocalConfig('labelTooltip');
+      default:
+    }
+  }, [getLocalConfig]);
   const getLocalTooltip = useCallback<typeof getTooltip>((target) => {
     const tooltip = getLocalConfig('tooltip');
     if (typeof tooltip === 'function') {
       return tooltip(target);
     }
-    return getUsefulTooltip(target) || tooltip;
-  }, [getLocalConfig]);
+    return getLocalUsefulTooltip(target) || tooltip;
+  }, [getLocalConfig, getLocalUsefulTooltip]);
   const getLocalTooltipTheme = useCallback<typeof getTooltipTheme>((target) => {
     const tooltipTheme = getLocalConfig('tooltipTheme');
     if (typeof tooltipTheme === 'function') {

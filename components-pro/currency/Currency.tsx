@@ -24,10 +24,10 @@ export default class Currency extends NumberField<CurrencyProps> {
   }
 
   getFormatter() {
-    return this.getProp('formatter') || getCurrencyFormatter();
+    return this.getProp('formatter') || getCurrencyFormatter(this.getContextConfig);
   }
 
   getFormatOptions(): FormatNumberFuncOptions {
-    return getCurrencyFormatOptions((name) => this.getProp(name), this.lang);
+    return getCurrencyFormatOptions((name) => this.getProp(name), this.lang, this.getContextConfig);
   }
 }

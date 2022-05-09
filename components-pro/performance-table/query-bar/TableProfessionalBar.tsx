@@ -4,7 +4,6 @@ import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -37,13 +36,21 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   static defaultProps = {
-    prefixCls: getProPrefixCls('performance-table'),
     queryFieldsLimit: 3,
   };
 
   static __TableQueryBarType = TableQueryBarType.professionalBar;
 
   @observable moreFields: ReactElement[];
+
+  get prefixCls(): string {
+    if ('prefixCls' in this.props) {
+      const { prefixCls } = this.props;
+      return prefixCls!;
+    }
+    const { tableStore: { prefixCls } } = this.context;
+    return prefixCls;
+  }
 
   componentDidMount(): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = this.props;
@@ -119,7 +126,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   };
 
   getResetButton() {
-    const { prefixCls } = this.props;
+    const { prefixCls } = this;
     return (
       <Button key='lov_reset_btn' className={`${prefixCls}-professional-reset-btn`} funcType={FuncType.raised} onClick={this.handleQueryReset}>
         {$l('Table', 'reset_button')}
@@ -128,7 +135,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getMoreFieldsButton(fields) {
-    const { prefixCls } = this.props;
+    const { prefixCls } = this;
     if (fields.length) {
       return (
         <Button
@@ -161,7 +168,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit, queryFields, queryDataSet, queryFormProps } = this.props;
+    const { queryFieldsLimit, queryFields, queryDataSet, queryFormProps } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const currentFields = (
         <Form

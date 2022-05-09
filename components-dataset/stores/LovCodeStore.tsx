@@ -186,7 +186,7 @@ export class LovCodeStore {
           dsProps.fields = fields;
         }
       }
-      return new DataSet(mergeDataSetProps(mergeDataSetProps(dsProps, configDataSetProps), dataSetProps));
+      return new DataSet(mergeDataSetProps(mergeDataSetProps(dsProps, configDataSetProps), dataSetProps), field && field.dataSet.context);
     }
     warning(false, `LOV: code<${code}> is not exists`);
     return undefined;

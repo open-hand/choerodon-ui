@@ -1043,10 +1043,10 @@ export default class Field {
                 parentField,
                 status: promise ? DataSetStatus.loading : DataSetStatus.ready,
               };
-              return new DataSet(mergeDataSetProps(props, optionsProps));
+              return new DataSet(mergeDataSetProps(props, optionsProps), this.dataSet.context);
             }
             if (promise) {
-              return new DataSet({ status: DataSetStatus.loading });
+              return new DataSet({ status: DataSetStatus.loading }, this.dataSet.context);
             }
           }
         }

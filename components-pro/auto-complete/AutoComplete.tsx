@@ -94,7 +94,7 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
             [this.textField]: inputText,
             [this.valueField]: inputText,
           }],
-        });
+        }, { getConfig: this.getContextConfig as any});
         this.choose(temDs.current);
       }
       super.handleBlur(e);

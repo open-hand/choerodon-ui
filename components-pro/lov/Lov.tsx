@@ -203,7 +203,7 @@ export default class Lov extends Select<LovProps> {
         return lovDataSet;
       }
     }
-    return new DataSet();
+    return new DataSet(undefined, { getConfig: this.getContextConfig as any });
   }
 
   get showSelectedInView(): boolean {

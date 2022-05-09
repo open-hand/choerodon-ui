@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
@@ -40,7 +39,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
   };
@@ -52,6 +50,12 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     return queryFields.filter(component => {
       return !component.props.hidden;
     })
+  }
+
+  get prefixCls(): string {
+    const { prefixCls } = this.props;
+    const { tableStore: { getProPrefixCls } } = this.context;
+    return getProPrefixCls('table', prefixCls);
   }
 
   componentDidMount(): void {
@@ -132,7 +136,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   };
 
   getResetButton() {
-    const { prefixCls } = this.props;
+    const { prefixCls } = this;
     return (
       <Button key='lov_reset_btn' className={`${prefixCls}-professional-reset-btn`} funcType={FuncType.raised} onClick={this.handleQueryReset}>
         {$l('Table', 'reset_button')}
@@ -141,7 +145,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getMoreFieldsButton(fields) {
-    const { prefixCls } = this.props;
+    const { prefixCls } = this;
     if (fields.length) {
       return (
         <Button
@@ -174,7 +178,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryFieldsLimit, queryFields, queryDataSet, formProps } = this.props;
+    const { queryFieldsLimit, queryFields, queryDataSet, formProps } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet && queryFields.length) {
       const currentFields = (
         <Form
@@ -224,7 +229,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   render() {
-    const { prefixCls, buttons, summaryBar } = this.props;
+    const { buttons, summaryBar } = this.props;
+    const { prefixCls } = this;
     const queryBar = this.getQueryBar();
     const tableButtons = buttons.length ? (
       <div key="professional_toolbar" className={`${prefixCls}-professional-toolbar`}>

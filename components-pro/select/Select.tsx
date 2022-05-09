@@ -364,7 +364,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return (
       options ||
       (field && field.getOptions(this.record)) ||
-      normalizeOptions({ textField, valueField, disabledField: DISABLED_FIELD, multiple, children })
+      normalizeOptions({ textField, valueField, disabledField: DISABLED_FIELD, multiple, children, getConfig: this.getContextConfig })
     );
   }
 
@@ -1128,7 +1128,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   @action
   createComboOption(value): void {
     const { textField, valueField, menu } = this;
-    const comboOptions = getIf<Select, DataSet>(this, 'comboOptions', () => new DataSet());
+    const comboOptions = getIf<Select, DataSet>(this, 'comboOptions', () => new DataSet(undefined, { getConfig: this.getContextConfig as any }));
     const initData = !this.primitive && isObservableObject(value) ? value : {
       [textField]: value,
       [valueField]: value,

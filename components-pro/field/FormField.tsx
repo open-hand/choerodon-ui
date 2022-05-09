@@ -484,7 +484,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @autobind
   showValidationMessage(e, message?: ReactNode) {
-    showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
+    showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'), this.getContextConfig);
   }
 
   isEmpty() {
@@ -738,10 +738,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   renderValidationResult(validationResult?: ValidationResult): ReactNode {
     const validationMessage = this.getValidationMessage(validationResult);
-    const { labelLayout } = this.context;
+    const { labelLayout, getProPrefixCls } = this.context;
     if (validationMessage) {
       const showIcon = !(labelLayout === LabelLayout.float || this.showValidation === ShowValidation.newLine);
-      return renderValidationMessage(validationMessage, showIcon);
+      return renderValidationMessage(validationMessage, showIcon, getProPrefixCls);
     }
   }
 
@@ -806,7 +806,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (!this.hasFloatLabel && this.showValidation === ShowValidation.tooltip) {
       const message = this.getTooltipValidationMessage();
       if (message) {
-        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'));
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'), this.getContextConfig);
         return true;
       }
     }

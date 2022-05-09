@@ -275,6 +275,7 @@ export default class LovView extends Component<LovViewProps> {
       viewMode,
       showSelectedInView,
       getSelectionProps,
+      context,
     } = this.props;
     if (!showSelectedInView || !multiple) {
       return null;
@@ -301,6 +302,7 @@ export default class LovView extends Component<LovViewProps> {
         textField={textField}
         selectionsPosition={selectionsPosition}
         selectionProps={getSelectionProps && getSelectionProps()}
+        context={context}
       />
     );
   }

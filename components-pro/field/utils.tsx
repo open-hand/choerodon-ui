@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import { isMoment } from 'moment';
 import { BigNumber } from 'bignumber.js';
 import { Utils, math } from 'choerodon-ui/dataset';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
+import { getConfig as getConfigDefault, getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import { TooltipTheme, TooltipPlacement } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
@@ -80,7 +80,7 @@ export function transformHighlightProps(highlight: true | ReactNode | HighlightP
   return props;
 }
 
-export function getCurrencyFormatter() {
+export function getCurrencyFormatter(getConfig = getConfigDefault) {
   const currencyFormatter = getConfig('currencyFormatter');
   if (currencyFormatter !== undefined) {
     return currencyFormatter;
@@ -88,7 +88,7 @@ export function getCurrencyFormatter() {
   return formatCurrency;
 }
 
-export function getNumberFormatter() {
+export function getNumberFormatter(getConfig = getConfigDefault) {
   const numberFieldFormatter = getConfig('numberFieldFormatter');
   if (numberFieldFormatter !== undefined) {
     return numberFieldFormatter;
@@ -96,7 +96,7 @@ export function getNumberFormatter() {
   return formatNumber;
 }
 
-export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string): FormatNumberFuncOptions {
+export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string, getConfig = getConfigDefault): FormatNumberFuncOptions {
   const precision = getProp('precision');
   const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
   const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || { options: {} };
@@ -122,7 +122,7 @@ export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: s
   };
 }
 
-export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => number | BigNumber | undefined, value?: number | BigNumber, controlLang?: string): FormatNumberFuncOptions {
+export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => number | BigNumber | undefined, value?: number | BigNumber, controlLang?: string, getConfig = getConfigDefault): FormatNumberFuncOptions {
   const precision = getProp('precision');
   const v: number | BigNumber | undefined = isNil(value) ? getValue && getValue() : value;
   const precisionInValue = isNumber(precision) ? precision : math.dp(v || 0);
@@ -144,19 +144,19 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
-export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean, record?: Record) {
+export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean, record?: Record, getConfig = getConfigDefault) {
   const { getProp, getValue, lang } = options;
   const type = getProp('type');
   const currency = getProp('currency');
   if (currency || type === FieldType.currency) {
-    const formatOptions = getCurrencyFormatOptions(getProp, lang);
+    const formatOptions = getCurrencyFormatOptions(getProp, lang, getConfig);
     const formatter = getProp('formatter');
-    return (formatter || getCurrencyFormatter())(value, formatOptions.lang, formatOptions.options);
+    return (formatter || getCurrencyFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
   if (type === FieldType.number || type === FieldType.bigNumber) {
-    const formatOptions = getNumberFormatOptions(getProp, getValue, value, lang);
+    const formatOptions = getNumberFormatOptions(getProp, getValue, value, lang, getConfig);
     const formatter = getProp('formatter');
-    return (formatter || getNumberFormatter())(value, formatOptions.lang, formatOptions.options);
+    return (formatter || getNumberFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
   if (field) {
     return field.getText(value, showValueIfNotFound, record);
@@ -427,7 +427,7 @@ export function renderMultiLine(options: MultiLineRenderOption): { lines?: React
   return { multipleValidateMessageLength };
 }
 
-export function renderValidationMessage(validationMessage: ReactNode, showIcon?: boolean): ReactNode {
+export function renderValidationMessage(validationMessage: ReactNode, showIcon?: boolean, getProPrefixCls = getProPrefixClsDefault): ReactNode {
   if (validationMessage) {
     return (
       <div className={getProPrefixCls('validation-message')}>
@@ -448,7 +448,7 @@ export function defaultRenderer(renderOption: RenderProps) {
     : text;
 }
 
-export function showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void {
+export function showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement, getConfig = getConfigDefault): void {
   show(e.currentTarget, {
     suffixCls: `form-tooltip ${getConfig('proPrefixCls')}-tooltip`,
     title: message,

@@ -573,7 +573,7 @@ export default class Record {
         childrenKeys.forEach((key) => {
           const snapshot = dataSetSnapshot && dataSetSnapshot[key];
           const ds = children[key];
-          const child = isCurrent ? ds : snapshot && new DataSet().restore(snapshot);
+          const child = isCurrent ? ds : snapshot && new DataSet(undefined, dataSet.context).restore(snapshot);
           if (child) {
             promises.push(child.validate());
           } else {
@@ -998,7 +998,7 @@ export default class Record {
         const keys = Object.keys(children);
         if (keys.length) {
           const { isCurrent } = this;
-          const tmpDs = new DataSet();
+          const tmpDs = new DataSet(undefined, dataSet.context);
           const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(this, 'dataSetSnapshot', {});
           keys.forEach(key => {
             const snapshot = dataSetSnapshot[key];
@@ -1226,7 +1226,7 @@ export default class Record {
         const { isCurrent } = this;
         keys.forEach(name => {
           const snapshot = dataSetSnapshot && dataSetSnapshot[name];
-          const child = (!isCurrent && snapshot && new DataSet().restore(snapshot)) || children[name];
+          const child = (!isCurrent && snapshot && new DataSet(undefined, dataSet.context).restore(snapshot)) || children[name];
           if (child) {
             const { dataToJSON } = child;
             const records = this.getCascadeRecordsIncludeDelete(name);

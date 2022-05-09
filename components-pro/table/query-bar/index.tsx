@@ -281,9 +281,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   @autobind
   async handleButtonExport() {
-    const { tableStore, prefixCls } = this.context;
+    const { tableStore, prefixCls, tableStore: { getConfig } } = this.context;
     const columnHeaders = await tableStore.getColumnHeaders();
-    this.exportDataSet = new DataSet({ data: columnHeaders, paging: false });
+    this.exportDataSet = new DataSet({ data: columnHeaders, paging: false }, { getConfig: getConfig as any});
     this.exportDataSet.selectAll();
     this.handleChangeExportStrategy('ALL');
     this.exportModal = Modal.open({

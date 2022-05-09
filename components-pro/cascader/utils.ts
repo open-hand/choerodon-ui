@@ -84,6 +84,7 @@ export default function normalizeOptions({
   multiple,
   parentField,
   idField,
+  getConfig,
 }): DataSet {
   const fields = [
     {
@@ -107,7 +108,7 @@ export default function normalizeOptions({
     selection: multiple ? DataSetSelection.multiple : DataSetSelection.single,
     autoLocateFirst: false,
     parentField,
-  });
+  }, { getConfig });
 }
 
 export function expandTreeRecords(records: Record[], isAllleaf = true): Record[] {
