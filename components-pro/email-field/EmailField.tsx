@@ -12,6 +12,10 @@ export default class EmailField extends TextField<EmailFieldProps> {
 
   type = 'email';
 
+  get range(): boolean {
+    return false;
+  }
+
   getFieldType(): FieldType {
     return FieldType.email;
   }

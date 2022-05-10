@@ -81,6 +81,10 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     });
   }
 
+  get range(): boolean {
+    return false;
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'pageSize',

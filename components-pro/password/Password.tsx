@@ -34,6 +34,14 @@ export default class Password extends TextField<PasswordProps> {
 
   selectionStart?: number;
 
+  get multiple(): boolean {
+    return false;
+  }
+
+  get range(): boolean {
+    return false;
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'reveal',
