@@ -36,6 +36,14 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   private secretEnable: Boolean = false;
 
+  get multiple(): boolean {
+    return false;
+  }
+
+  get range(): boolean {
+    return false;
+  }
+
   get isSecretEnable(): Boolean {
     const { record, name } = this;
     if (!record || !record.get('_token') || !record.get(name)) {

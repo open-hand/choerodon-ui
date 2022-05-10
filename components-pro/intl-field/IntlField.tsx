@@ -50,6 +50,10 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     this.prefixCls = this.getContextProPrefixCls(suffixCls, props.prefixCls);
   }
 
+  get range(): boolean {
+    return false;
+  }
+
   openModal = async () => {
     if (!this.modal) {
       const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
