@@ -20,6 +20,7 @@ timeline: true
 - 💄 优化 ConfigProvider 上下文影响。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
+- 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 
 ## 1.5.4

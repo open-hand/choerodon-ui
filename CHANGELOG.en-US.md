@@ -20,6 +20,7 @@ timeline: true
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
+- 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 
 ## 1.5.4
