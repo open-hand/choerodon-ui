@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
+- 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。
 
 ## 1.5.4
 
