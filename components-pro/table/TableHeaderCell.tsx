@@ -25,7 +25,7 @@ import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import Icon from '../icon';
-import EventManager from '../_util/EventManager';
+import EventManager, { stopEvent } from '../_util/EventManager';
 import { getColumnLock, getHeader, getMaxClientWidth, isStickySupport } from './utils';
 import { ColumnAlign, ColumnLock, TableColumnResizeTriggerType, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
@@ -134,7 +134,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { resizeColumnGroup } = current;
     if (resizeColumnGroup) {
       const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
-      let left = e.clientX;
+      let left = e.touches? e.touches[0].clientX : e.clientX;
       if (left < limit) {
         left = limit;
       }
@@ -145,7 +145,15 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const resizeEnd = useCallback(action<() => void>(() => {
     tableStore.columnResizing = false;
     setSplitLineHidden(true);
-    resizeEvent.removeEventListener('mousemove').removeEventListener('mouseup');
+    resizeEvent
+      .removeEventListener('mousemove')
+      .removeEventListener('touchmove')
+      .removeEventListener('mouseup')
+      .removeEventListener('touchend');
+    const { node: { tableBodyWrap } } = tableStore;
+    if (tableBodyWrap) {
+      tableBodyWrap.removeEventListener('scroll', stopEvent);
+    }
     const { resizePosition, resizeColumnGroup } = globalRef.current;
     if (resizePosition !== undefined && resizeColumnGroup) {
       const { column: resizeColumn } = resizeColumnGroup;
@@ -179,7 +187,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     tableStore.columnResizing = true;
     delete globalRef.current.resizePosition;
     setSplitLineHidden(false);
-    const { node: { element }, tableColumnResizeTrigger } = tableStore;
+    const { node: { element, tableBodyWrap }, tableColumnResizeTrigger } = tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) {
       const { left } = element.getBoundingClientRect();
       globalRef.current.bodyLeft = border ? left + 1 : left;
@@ -188,7 +196,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     resizeEvent
       .setTarget(element.ownerDocument)
       .addEventListener('mousemove', resize)
-      .addEventListener('mouseup', resizeEnd);
+      .addEventListener('touchmove', resize)
+      .addEventListener('mouseup', resizeEnd)
+      .addEventListener('touchend', resizeEnd);
+    e.stopPropagation();
+    if (tableBodyWrap) {
+      tableBodyWrap.addEventListener('scroll', stopEvent, { passive: true });
+    }
   }), [tableStore, globalRef, setSplitLineHidden, setSplitLinePosition, resizeEvent]);
 
   const delayResizeStart = useCallback(debounce(
@@ -330,7 +344,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         key="pre"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-left`}
         onDoubleClick={autoMaxWidth ? handleLeftDoubleClick : undefined}
-        onMouseDown={handleLeftResize}
+        onPointerDown={handleLeftResize}
         onMouseEnter={(e) => handleShowSplitLine(e, 'pre')}
         onMouseLeave={handleHideSplitLine}
       />
@@ -340,7 +354,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         key="next"
         className={`${resizerPrefixCls} ${resizerPrefixCls}-right`}
         onDoubleClick={autoMaxWidth ? handleRightDoubleClick : undefined}
-        onMouseDown={handleRightResize}
+        onPointerDown={handleRightResize}
         onMouseEnter={(e) => handleShowSplitLine(e, 'next')}
         onMouseLeave={handleHideSplitLine}
       />

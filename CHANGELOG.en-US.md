@@ -19,6 +19,8 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
+- 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
+- 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 
 ## 1.5.4
 
