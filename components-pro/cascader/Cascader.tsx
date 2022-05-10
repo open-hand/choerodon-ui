@@ -1135,6 +1135,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
       // 多选模式
     } else {
+      if (ExpandTrigger.hover === trigger) {
+        this.setActiveValue(targetOption.value);
+        return;
+      }
       this.setactiveEmpty();
       this.unChoose(targetOption.value);
       if (onUnChoose) {
@@ -1176,8 +1180,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       }
     }
     super.removeValues(values, index);
-    this.setActiveValue({});
-    this.collapse();
+    this.setactiveEmpty();
   }
 
   handleSearch(_text?: string) {
