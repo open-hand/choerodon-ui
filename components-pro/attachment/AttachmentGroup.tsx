@@ -27,7 +27,7 @@ function getRefCallback(callback, index) {
   return item => callback(item, index);
 }
 
-function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): ReactNode {
+function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = { count: 0 }): ReactNode {
   return Children.map(children, (child) => {
     if (isFragment(child)) {
       return normalizeAttachments(child.props.children, getRef, index);
@@ -35,8 +35,9 @@ function normalizeAttachments(children: ReactNode, getRef?: GetRef, index = 0): 
     if (isValidElement<AttachmentProps>(child) && (child.type as any).__PRO_ATTACHMENT) {
       const props: AttachmentProps & { ref?: GetRef } = { viewMode: 'list', readOnly: true, __inGroup: true };
       if (getRef) {
-        props.ref = getRefCallback(getRef, index);
-        index += 1;
+        const { count } = index;
+        props.ref = getRefCallback(getRef, count);
+        index.count = count + 1;
       }
       return cloneElement<AttachmentProps>(child, props);
     }
