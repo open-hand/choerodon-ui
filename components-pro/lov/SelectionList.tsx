@@ -5,7 +5,6 @@ import isUndefined from 'lodash/isUndefined';
 import sortBy from 'lodash/sortBy';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { LovConfig } from 'choerodon-ui/dataset/interface';
 import Tag from 'choerodon-ui/lib/tag';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -15,6 +14,7 @@ import Animate from '../animate';
 import Icon from '../icon';
 import { $l } from '../locale-context';
 import autobind from '../_util/autobind';
+import { FormContextValue } from '../form/FormContext';
 import { SelectionProps } from './Lov';
 import { SelectionsPosition } from './enum';
 
@@ -29,11 +29,15 @@ export interface SelectionListProps {
   textField: string;
   selectionsPosition?: SelectionsPosition;
   selectionProps?: SelectionProps;
+  context: FormContextValue;
 }
 
 @observer
 export default class SelectionList extends Component<SelectionListProps> {
-  prefixCls = getProPrefixCls('modal');
+  get prefixCls() {
+    const { context: { getProPrefixCls } } = this.props;
+    return getProPrefixCls('modal');
+  }
 
   selectionNode: HTMLElement;
 

@@ -2507,8 +2507,14 @@ export default class TableStore {
     );
   }
 
+  @autobind
   getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
     return this.node.getContextConfig(key);
+  }
+
+  @autobind
+  getProPrefixCls(suffixCls: string, customizePrefixCls?: string): string {
+    return this.node.getContextProPrefixCls(suffixCls, customizePrefixCls);
   }
 
   @autobind

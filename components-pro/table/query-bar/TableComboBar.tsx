@@ -2,7 +2,6 @@ import React, { cloneElement, Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import FilterSelect from './FilterSelect';
 import { FilterBarProps } from './TableFilterBar';
@@ -32,10 +31,15 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     paramName: 'params',
     queryHeaderConfig: {},
   };
+
+  get prefixCls(): string {
+    const { prefixCls } = this.props;
+    const { tableStore: { getProPrefixCls } } = this.context;
+    return getProPrefixCls('table', prefixCls);
+  }
 
   componentDidMount(): void {
     const { queryDataSet } = this.props;
@@ -46,7 +50,7 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   renderSuffix() {
-    const { prefixCls } = this.props;
+    const { prefixCls } = this;
     return <ColumnFilter prefixCls={prefixCls} />;
   }
 
@@ -82,7 +86,8 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
     if (!element) {
       return React.createElement('span');
     }
-    const { queryDataSet, prefixCls } = this.props;
+    const { queryDataSet } = this.props;
+    const { prefixCls } = this;
     const { onEnterDown, name: fieldName } = element.props;
     if (onEnterDown && isFunction(onEnterDown)) {
       return element;
@@ -111,7 +116,8 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   getQueryBar(): ReactNode {
-    const { prefixCls, queryDataSet, queryFields } = this.props;
+    const { queryDataSet, queryFields } = this.props;
+    const { prefixCls } = this;
     if (queryDataSet) {
       const currentField = this.createFields(queryFields.find(queryField => queryField.key === queryDataSet.getState('currentField')));
 
@@ -129,7 +135,8 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   getButtons(): ReactNode {
-    const { prefixCls, buttons } = this.props;
+    const { buttons } = this.props;
+    const { prefixCls } = this;
     if (buttons.length) {
       return (
         <div key="toolbar" className={`${prefixCls}-toolbar`}>
@@ -141,7 +148,8 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
 
   getFilterbar(): ReactNode | null {
     const { tableStore: { isFold } } = this.context;
-    const { prefixCls, buttonArea, dropDownArea, searchable, title, fold } = this.props;
+    const { buttonArea, dropDownArea, searchable, title, fold } = this.props;
+    const { prefixCls } = this;
     const queryBar: ReactNode = this.getQueryBar();
     const defaultPrefixCls = `${prefixCls}-combo-toolbar`;
     if (buttonArea || dropDownArea || searchable || title || fold) {
@@ -183,7 +191,8 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
   }
 
   render() {
-    const { prefixCls, dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), onQuery = noop, onReset = noop } = this.props;
+    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), onQuery = noop, onReset = noop } = this.props;
+    const { prefixCls } = this;
     const { tableStore: { isFold } } = this.context;
     const filterbBr: ReactNode | null = this.getFilterbar();
     const buttons = this.getButtons();

@@ -60,6 +60,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       parentField,
       multiple,
       observableProps: { children, options },
+      getContextConfig,
     } = this;
     return (
       options ||
@@ -72,6 +73,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         idField,
         multiple,
         children,
+        getConfig: getContextConfig as any,
       })
     );
   }

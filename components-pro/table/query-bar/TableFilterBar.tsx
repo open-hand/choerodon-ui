@@ -1,9 +1,9 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
+import TableContext, { TableContextValue } from '../TableContext';
 import DataSet from '../../data-set/DataSet';
 import { $l } from '../../locale-context';
 import { ButtonProps } from '../../button/Button';
@@ -23,18 +23,31 @@ export interface FilterBarProps {
 
 @observer
 export default class TableFilterBar extends Component<FilterBarProps, any> {
+  static get contextType(): typeof TableContext {
+    return TableContext;
+  }
+
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     paramName: 'params',
   };
 
-  renderSuffix() {
+  // @ts-ignore
+  context: TableContextValue;
+
+  get prefixCls(): string {
     const { prefixCls } = this.props;
+    const { tableStore: { getProPrefixCls } } = this.context;
+    return getProPrefixCls('table', prefixCls);
+  }
+
+  renderSuffix() {
+    const { prefixCls } = this;
     return <ColumnFilter prefixCls={prefixCls} />;
   }
 
   getButtons(): ReactNode {
-    const { prefixCls, buttons } = this.props;
+    const { buttons } = this.props;
+    const { prefixCls } = this;
     if (buttons.length) {
       return (
         <div key="toolbar" className={`${prefixCls}-toolbar`}>
@@ -45,7 +58,8 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
   }
 
   render() {
-    const { prefixCls, dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop } = this.props;
+    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop } = this.props;
+    const { prefixCls } = this;
     const buttons = this.getButtons();
     return [
       buttons,

@@ -59,6 +59,7 @@ export default function normalizeTreeNodes({
   idField,
   multiple,
   children,
+  getConfig,
 }) {
   const data: object[] = [];
   const fields = [
@@ -86,5 +87,5 @@ export default function normalizeTreeNodes({
     autoLocateFirst: false,
     parentField,
     idField,
-  });
+  }, { getConfig });
 }

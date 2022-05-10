@@ -438,14 +438,16 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >
-          <Modal
-            eventKey={key}
-            mousePosition={ModalManager.mousePosition}
-            {...props}
-            style={style}
-            active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
-            onTop={mask || drawer ? undefined : this.handleModalTopChange}
-          />
+          <ConfigContext.Provider value={this.context}>
+            <Modal
+              eventKey={key}
+              mousePosition={ModalManager.mousePosition}
+              {...props}
+              style={style}
+              active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
+              onTop={mask || drawer ? undefined : this.handleModalTopChange}
+            />
+          </ConfigContext.Provider>
         </Animate>
       );
     });

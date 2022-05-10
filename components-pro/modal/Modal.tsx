@@ -9,7 +9,6 @@ import classes from 'component-classes';
 import { pxToRem, toPx, pxToPercent } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
-import { getCustomizable } from 'choerodon-ui/lib/configure/utils';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -331,6 +330,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   async loadCustomized() {
+    const { getCustomizable } = this.context;
     const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable'), drawer } = this.props;
     if (resizable && customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
@@ -370,6 +370,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   saveCustomized() {
+    const { getCustomizable } = this.context;
     const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
     if (resizable && customizable && customizedCode) {
       const customizedSave = this.getContextConfig('customizedSave');

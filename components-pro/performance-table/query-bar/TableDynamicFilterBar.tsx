@@ -16,7 +16,6 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -117,7 +116,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   static defaultProps = {
-    prefixCls: getProPrefixCls('table'),
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
@@ -126,6 +124,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   };
 
   context: Props;
+
+  get prefixCls(): string {
+    if ('prefixCls' in this.props) {
+      const { prefixCls } = this.props;
+      return prefixCls!;
+    }
+    const { tableStore: { proPrefixCls } } = this.context;
+    return proPrefixCls;
+  }
 
   @observable moreFields: Field[];
 
@@ -291,16 +298,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   async initMenuDataSet(): Promise<void> {
     const { queryDataSet, dataSet, dynamicFilterBar, searchCode } = this.props;
+    const { tableStore: { getConfig } } = this.context;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
     const menuDataSet = new DataSet(QuickFilterDataSet({
       searchCode: searchCodes,
       queryDataSet,
       tableFilterAdapter: this.tableFilterAdapter,
-    }) as DataSetProps);
-    const conditionDataSet = new DataSet(ConditionDataSet());
+    }) as DataSetProps, { getConfig: getConfig as any });
+    const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
     const optionDataSet = new DataSet({
       selection: DataSetSelection.single,
-    });
+    }, { getConfig: getConfig as any });
     const filterMenuDataSet = new DataSet({
       autoCreate: true,
       fields: [
@@ -313,7 +321,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           ignore: FieldIgnore.always,
         },
       ],
-    });
+    }, { getConfig: getConfig as any });
     queryDataSet.setState('menuDataSet', menuDataSet);
     queryDataSet.setState('conditionDataSet', conditionDataSet);
     queryDataSet.setState('optionDataSet', optionDataSet);

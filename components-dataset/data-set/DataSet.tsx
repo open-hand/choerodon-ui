@@ -2869,7 +2869,7 @@ Then the query method will be auto invoke.`,
     if (queryFields) {
       queryDataSet = new DataSet({
         fields: queryFields,
-      });
+      }, this.context);
     }
     if (queryDataSet) {
       this.queryDataSet = queryDataSet;
@@ -3208,7 +3208,7 @@ Then the query method will be auto invoke.`,
       ds.read(1).then(resp => {
         const { current } = this;
         if (current !== currentRecord) {
-          ds = new DataSet().restore(oldSnapshot);
+          ds = new DataSet(undefined, this.context).restore(oldSnapshot);
         }
         ds.clearCachedRecords();
         const dataSetSnapshot = getIf<Record, { [key: string]: DataSetSnapshot }>(currentRecord, 'dataSetSnapshot', {});
