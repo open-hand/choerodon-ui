@@ -34,6 +34,14 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
     matcher: defaultMatcher,
   };
 
+  get multiple(): boolean {
+    return false;
+  }
+
+  get range(): boolean {
+    return false;
+  }
+
   getTriggerIconFont() {
     return '';
   }

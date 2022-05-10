@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl 属性。
 - 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
 - 💄 优化 ConfigProvider 上下文影响。
+- 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。

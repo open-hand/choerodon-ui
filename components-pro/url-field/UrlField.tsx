@@ -12,6 +12,10 @@ export default class UrlField extends TextField<UrlFieldProps> {
 
   type = 'url';
 
+  get range(): boolean {
+    return false;
+  }
+
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` properties.
 - 🌟 `<pro>Attachment`: Added `templateUrl` property.
 - 💄 Optimize the impact of the `ConfigProvider` context.
+- 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
