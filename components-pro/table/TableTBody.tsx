@@ -513,7 +513,7 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
             return true;
           }
         }
-        tableStore.lastMeasuredIndex = index;
+        tableStore.lastMeasuredIndex = Math.max(index - 1, 0);
         return false;
       });
     } else {

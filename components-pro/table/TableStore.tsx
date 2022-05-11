@@ -8,7 +8,6 @@ import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
-import findLastIndex from 'lodash/findLastIndex';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -1250,14 +1249,6 @@ export default class TableStore {
     if (rowMetaData) {
       let { lastMeasuredIndex } = this;
       let totalSizeOfMeasuredItems = 0;
-
-      if (lastMeasuredIndex === 0) {
-        const index = findLastIndex(rowMetaData, meta => meta.actualHeight !== undefined);
-        if (index > 0) {
-          this.lastMeasuredIndex = index;
-          lastMeasuredIndex = index;
-        }
-      }
 
       if (lastMeasuredIndex >= virtualEstimatedRows) {
         lastMeasuredIndex = virtualEstimatedRows - 1;
