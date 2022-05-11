@@ -428,27 +428,25 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         [`${prefixCls}-embedded`]: isEmbeddedContainer,
       });
       return (
-        <ConfigContext.Provider value={this.context} key={key}>
-          <Animate
-            key={key}
-            component="div"
-            // UED 用类名判断
-            className={wrapperClassName}
-            transitionAppear={transitionAppear}
-            transitionName={drawer ? transitionName : 'zoom'}
-            hiddenProp="hidden"
-            onEnd={this.handleAnimationEnd}
-          >
-            <Modal
-              eventKey={key}
-              mousePosition={ModalManager.mousePosition}
-              {...props}
-              style={style}
-              active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
-              onTop={mask || drawer ? undefined : this.handleModalTopChange}
-            />
-          </Animate>
-        </ConfigContext.Provider>
+        <Animate
+          key={key}
+          component="div"
+          // UED 用类名判断
+          className={wrapperClassName}
+          transitionAppear={transitionAppear}
+          transitionName={drawer ? transitionName : 'zoom'}
+          hiddenProp="hidden"
+          onEnd={this.handleAnimationEnd}
+        >
+          <Modal
+            eventKey={key}
+            mousePosition={ModalManager.mousePosition}
+            {...props}
+            style={style}
+            active={index === activeModalIndex || (isTop && !mask && index > activeModalIndex)}
+            onTop={mask || drawer ? undefined : this.handleModalTopChange}
+          />
+        </Animate>
       );
     });
     const animationProps: any = {};
