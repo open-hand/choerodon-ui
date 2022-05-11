@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { action as mobxAction, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -39,8 +39,7 @@ import { showValidationMessage } from '../field/utils';
 import { ShowValidation } from '../form/enum';
 import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
-
-const templateStyle: CSSProperties = { marginLeft: 0 };
+import TemplateDownloadButton from './TemplateDownloadButton';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -604,30 +603,21 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderTemplateDownloadButton(): ReactElement<ButtonProps> | undefined {
-    const { previewTarget = ATTACHMENT_TARGET } = this.props;
     const templateUrl = this.getProp('templateUrl');
     if (templateUrl && !this.readOnly) {
-      const attachmentConfig: AttachmentConfig = getConfig('attachment');
-      const { getTemplateDownloadUrl } = attachmentConfig;
       const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-      const downloadUrl: string | Function | undefined = getTemplateDownloadUrl ? getTemplateDownloadUrl({
-        url: templateUrl,
-        bucketName,
-        bucketDirectory,
-        storageCode,
-        isPublic,
-      }) : templateUrl;
-
-      const downProps = {
-        funcType: FuncType.link,
-        href: isString(downloadUrl) ? downloadUrl : undefined,
-        onClick: isFunction(downloadUrl) ? downloadUrl : undefined,
-        target: previewTarget,
-        color: ButtonColor.primary,
-        style: templateStyle,
-      };
+      const { previewTarget = ATTACHMENT_TARGET, viewMode, color, funcType = viewMode === 'popup' ? FuncType.flat : FuncType.link } = this.props;
       return (
-        <Button {...downProps}>({$l('Attachment', 'download_template')})</Button>
+        <TemplateDownloadButton
+          templateUrl={templateUrl}
+          bucketName={bucketName}
+          bucketDirectory={bucketDirectory}
+          storageCode={storageCode}
+          isPublic={isPublic}
+          target={previewTarget}
+          funcType={funcType}
+          color={color}
+        />
       );
     }
   }
