@@ -265,6 +265,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @observable $searchText?: string | string[] | undefined;
 
+  get range(): boolean | [string, string] {
+    if (this.multiple && super.range) {
+      return false;
+    }
+    return super.range;
+  }
+
   get searchText(): string | string[] | undefined {
     if (this.isSearchFieldInPopup()) {
       return this.$searchText;
