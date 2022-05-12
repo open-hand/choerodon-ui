@@ -29,13 +29,13 @@ const TemplateDownloadButton: FunctionComponent<TemplateDownloadButtonProps> = f
   }) : templateUrl, [
     getTemplateDownloadUrl, templateUrl, bucketName, bucketDirectory, storageCode, isPublic,
   ]);
-  const [templateDownloadUrl, setTemplateDownloadUrl] = useState<TemplateUrlType | Promise<TemplateUrlType>>(downloadUrl);
+  const [templateDownloadUrl, setTemplateDownloadUrl] = useState<TemplateUrlType | Promise<TemplateUrlType>>(() => downloadUrl);
 
   useEffect(() => {
     if (isPromise(downloadUrl)) {
-      downloadUrl.then(url => setTemplateDownloadUrl(url));
+      downloadUrl.then(url => setTemplateDownloadUrl(() => url));
     } else {
-      setTemplateDownloadUrl(downloadUrl);
+      setTemplateDownloadUrl(() => downloadUrl);
     }
   }, [downloadUrl]);
 
