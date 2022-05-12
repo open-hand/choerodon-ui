@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 templateUrl 属性。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
+- 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。

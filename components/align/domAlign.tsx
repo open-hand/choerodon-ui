@@ -1,4 +1,5 @@
 import { getDocument, getMousePosition } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
+import isString from 'lodash/isString';
 import { pxToRem } from '../_util/UnitConvertor';
 import { AlignPoint } from './Align';
 
@@ -41,7 +42,7 @@ function getParent(element: HTMLElement): HTMLElement | null {
 function getOffsetParentAndStyle(el: HTMLElement, defaultView: Window): { parent: HTMLElement, style: CSSStyleDeclaration | null } | null {
   const { position } = defaultView.getComputedStyle(el);
   if (position !== 'absolute' && position !== 'fixed') {
-    if (el.nodeName.toLowerCase() !== 'html') {
+    if (!isString(el.nodeName) || el.nodeName.toLowerCase() !== 'html') {
       const parent = getParent(el);
       if (parent) {
         return {
