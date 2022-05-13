@@ -319,7 +319,7 @@ title: DataSet
 | bucketName | 附件上传的桶名 | string |  |
 | bucketDirectory | 附件上传的桶目录 | string |  |
 | storageCode | 附件存储编码 | string |  |
-| templateUrl | 附件模板地址 | string |  |
+| template | 附件模板 | { bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean } |  |
 | attachmentCount | 附件数量， 一般使用 dynamicProps 来获取 record 中某个字段值作为附件数量， 优先级低于attachments.length | string |  |
 | fileKey | 附件上传属性名 | string | [AttachmentConfig.defaultFileKey](/components/configure/#AttachmentConfig) |
 | fileSize | 附件大小限制 | number | [AttachmentConfig.defaultFileSize](/components/configure/#AttachmentConfig) |

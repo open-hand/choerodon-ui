@@ -27,6 +27,7 @@ import AttachmentFile from './AttachmentFile';
 import { iteratorFind, iteratorSome } from '../iterator-helper';
 import { treeFind } from '../tree-helper';
 import LookupCache from './LookupCache';
+import { AttachmentValue } from '../configure';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {
@@ -418,9 +419,9 @@ export type FieldProps = {
    */
   attachmentCount?: number;
   /**
-   * 附件模板地址
+   * 附件模板
    */
-  templateUrl?: string;
+  template?: AttachmentValue;
   /**
    * 附件上传属性名
    */

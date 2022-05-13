@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent, useContext, useEffect, useMemo, useState } from 'react';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
-import { AttachmentOption, TemplateUrlType } from 'choerodon-ui/dataset/configure';
+import { AttachmentValue, TemplateUrlType } from 'choerodon-ui/dataset/configure';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import isPromise from 'is-promise';
@@ -9,25 +9,24 @@ import Button from '../button';
 import { $l } from '../locale-context';
 import { ButtonProps } from '../button/interface';
 
-export interface TemplateDownloadButtonProps extends AttachmentOption, ButtonProps {
-  templateUrl: string;
+export interface TemplateDownloadButtonProps extends AttachmentValue, ButtonProps {
 }
 
 
 const templateStyle: CSSProperties = { marginLeft: 0 };
 
 const TemplateDownloadButton: FunctionComponent<TemplateDownloadButtonProps> = function TempalteDownloadButton(props) {
-  const { templateUrl, bucketName, bucketDirectory, storageCode, isPublic, target, funcType, color = ButtonColor.primary } = props;
+  const { attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic, target, funcType, color = ButtonColor.primary } = props;
   const { getConfig } = useContext(ConfigContext);
   const { getTemplateDownloadUrl } = getConfig('attachment');
   const downloadUrl: TemplateUrlType | Promise<TemplateUrlType> = useMemo(() => getTemplateDownloadUrl ? getTemplateDownloadUrl({
-    url: templateUrl,
+    attachmentUUID,
     bucketName,
     bucketDirectory,
     storageCode,
     isPublic,
-  }) : templateUrl, [
-    getTemplateDownloadUrl, templateUrl, bucketName, bucketDirectory, storageCode, isPublic,
+  }) : attachmentUUID, [
+    getTemplateDownloadUrl, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic,
   ]);
   const [templateDownloadUrl, setTemplateDownloadUrl] = useState<TemplateUrlType | Promise<TemplateUrlType>>(() => downloadUrl);
 

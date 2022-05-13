@@ -19,6 +19,20 @@ import { Attachment, Axios } from 'choerodon-ui/pro';
 import uuid from 'uuid/v4';
 import moment from 'moment';
 
+const fetchList = ({ attachmentUUID }) => {
+  return Axios.get(`/attachment/${attachmentUUID}`).then(response => {
+    return response.map(file => ({
+      uid: file.fileId,
+      name: file.fileName,
+      size: file.fileSize,
+      type: file.fileType,
+      url: file.fileUrl,
+      creationDate: moment(file.creationDate).toDate(),
+      status: 'done',
+    }));
+  });
+}
+
 // 使用附件功能前需要在全局配置中配置如下， 开发者无需配置
 configure({
   attachment: {
@@ -32,19 +46,7 @@ configure({
         'Access-Control-Allow-Origin': '*',
       },
     },
-    fetchList({ attachmentUUID }) {
-      return Axios.get(`/attachment/${attachmentUUID}`).then(response => {
-        return response.map(file => ({
-          uid: file.fileId,
-          name: file.fileName,
-          size: file.fileSize,
-          type: file.fileType,
-          url: file.fileUrl,
-          creationDate: moment(file.creationDate).toDate(),
-          status: 'done',
-        }));
-      });
-    },
+    fetchList,
     batchFetchCount(uuids){
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },
@@ -62,6 +64,13 @@ configure({
     },
     getDownloadAllUrl({ attachmentUUID }) {
       return `/${attachmentUUID}`;
+    },
+    getTemplateDownloadUrl({ attachmentUUID }) {
+      return fetchList({ attachmentUUID }).then((res) => {
+        if (res && res.length > 0) {
+          return res[0].url;
+        }
+      });
     },
     onBeforeUploadChunk(chunk) {
       if (chunk) {

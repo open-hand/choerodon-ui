@@ -18,7 +18,7 @@ import { Attachment, DataSet, Form } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
-    fields: [{ name: 'attachment', type: 'attachment', label: <span>技术附件</span>, max: 9, required: true, templateUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png' }],
+    fields: [{ name: 'attachment', type: 'attachment', label: <span>技术附件</span>, max: 9, required: true, template: { attachmentUUID: '4c74a34a-fa37-4e92-be9d-5cf726fb1472' } }],
   }), []);
   const props = {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
