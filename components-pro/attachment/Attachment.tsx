@@ -7,6 +7,7 @@ import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import { getConfig, Uploader } from 'choerodon-ui/dataset';
+import { AttachmentValue } from 'choerodon-ui/dataset/configure';
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -61,7 +62,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   previewTarget?: string;
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
-  templateUrl?: string;
+  template?: AttachmentValue;
   __inGroup?: boolean;
 }
 
@@ -603,22 +604,26 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderTemplateDownloadButton(): ReactElement<ButtonProps> | undefined {
-    const templateUrl = this.getProp('templateUrl');
-    if (templateUrl && !this.readOnly) {
-      const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-      const { previewTarget = ATTACHMENT_TARGET, viewMode, color, funcType = viewMode === 'popup' ? FuncType.flat : FuncType.link } = this.props;
-      return (
-        <TemplateDownloadButton
-          templateUrl={templateUrl}
-          bucketName={bucketName}
-          bucketDirectory={bucketDirectory}
-          storageCode={storageCode}
-          isPublic={isPublic}
-          target={previewTarget}
-          funcType={funcType}
-          color={color}
-        />
-      );
+    if (!this.readOnly) {
+      const template = this.getProp('template');
+      if (template) {
+        const { bucketName, bucketDirectory, storageCode, isPublic, attachmentUUID } = template;
+        if (attachmentUUID) {
+          const { previewTarget = ATTACHMENT_TARGET, viewMode, color, funcType = viewMode === 'popup' ? FuncType.flat : FuncType.link } = this.props;
+          return (
+            <TemplateDownloadButton
+              attachmentUUID={attachmentUUID}
+              bucketName={bucketName}
+              bucketDirectory={bucketDirectory}
+              storageCode={storageCode}
+              isPublic={isPublic}
+              target={previewTarget}
+              funcType={funcType}
+              color={color}
+            />
+          );
+        }
+      }
     }
   }
 

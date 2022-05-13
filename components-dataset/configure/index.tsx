@@ -77,10 +77,6 @@ export interface AttachmentActionProps extends AttachmentFileProps {
   chunk?: AttachmentFileChunk | undefined;
 }
 
-export interface AttachmentTemplateProps extends AttachmentOption {
-  url: string;
-}
-
 export type TemplateUrlType = string | Function | undefined;
 
 export interface AttachmentConfig {
@@ -93,7 +89,7 @@ export interface AttachmentConfig {
   fetchList?: (props: AttachmentValue) => Promise<FileLike[]>;
   getPreviewUrl?: (props: AttachmentFileProps) => string | undefined;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
-  getTemplateDownloadUrl?: (props: AttachmentTemplateProps) => TemplateUrlType | Promise<TemplateUrlType>;
+  getTemplateDownloadUrl?: (props: AttachmentValue) => TemplateUrlType | Promise<TemplateUrlType>;
   getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
   onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], props: AttachmentUseChunkProps) => boolean | undefined | PromiseLike<boolean | undefined>;
