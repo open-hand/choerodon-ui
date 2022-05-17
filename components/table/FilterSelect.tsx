@@ -190,13 +190,16 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
 
   handleInputKeyDown = (e: any) => {
     const { value } = e.target;
-    if (e.keyCode === 13 && !e.isDefaultPrevented() && value) {
-      const { filters, columnFilters, selectColumn } = this.state;
+    const { filters, columnFilters, selectColumn } = this.state;
+    let filterText = value;
+    if (selectColumn && value) {
+      filterText = value.split(this.getColumnTitle(selectColumn)).slice(1);
+    }
+    if (e.keyCode === 13 && filterText[0]) {
       if (selectColumn) {
         const key = getColumnKey(selectColumn);
         if (key) {
           const { filters: columFilters } = selectColumn;
-          const filterText = value.split(this.getColumnTitle(selectColumn)).slice(1);
           columnFilters[key] = filterText;
           const found = columFilters && columFilters.find(filter => filter.text === filterText[0]);
           const filterValue = found ? String(found.value) : filterText[0];
@@ -318,7 +321,16 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
       const value = changedValue.pop();
       if (inputValue && value) {
         change = true;
-        filters.push(value.label as string);
+        if (selectColumn && !selectColumn.filterMultiple && value) {
+          const columnKey = getColumnKey(selectColumn);
+          const columnTitle = this.getColumnTitle(selectColumn);
+          const val = rcSelect.state.inputValue || value.key;
+          if (columnKey) {
+            this.fireColumnFilterChange(columnKey, [val.split(`${columnTitle}`)[1]]);
+          }
+        } else {
+          filters.push(value.label as string);
+        }
         this.setState({
           selectColumn: undefined,
           inputValue: '',
