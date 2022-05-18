@@ -319,7 +319,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
     let change = false;
     if (changedValue.length > all.length) {
       const value = changedValue.pop();
-      if (inputValue && value) {
+      if (inputValue && value && value.key === inputValue) {
         change = true;
         if (selectColumn && !selectColumn.filterMultiple && value) {
           const columnKey = getColumnKey(selectColumn);
@@ -346,7 +346,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
         if (!selectColumn.filterMultiple) {
           const columnKey = getColumnKey(selectColumn);
           if (rcSelect.state.inputValue && value && columnKey) {
-            this.fireColumnFilterChange(columnKey, [value.key]);
+            this.fireColumnFilterChange(columnKey, (selectColumn.filters && !selectColumn.filters.length && !inputValue) ? [] : [value.key]);
           }
           this.setState({
             selectColumn: undefined,
