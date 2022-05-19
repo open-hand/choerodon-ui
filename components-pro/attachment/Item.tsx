@@ -12,7 +12,7 @@ import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { AttachmentListType } from './Attachment';
-import Picture, { PictureForwardRef } from '../picture/Picture';
+import Picture, { PictureForwardRef, PictureProps } from '../picture/Picture';
 import Button, { ButtonProps } from '../button/Button';
 import { FuncType } from '../button/enum';
 import { hide, show } from '../tooltip/singleton';
@@ -105,12 +105,17 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
       const isSrcIcon = isString(icon);
       if (isPicture || isSrcIcon) {
+        const pictureProps: PictureProps = {};
+        if (isString(previewUrl)) {
+          pictureProps.previewUrl = previewUrl;
+        } else {
+          pictureProps.onClick = handleOpenPreview;
+        }
         return (
           <Picture
             width={14}
             height={14}
             alt={name}
-            previewUrl={isString(previewUrl) ? previewUrl : undefined}
             downloadUrl={downloadUrl}
             src={isSrcIcon ? icon as string : undefined}
             objectFit="contain"
@@ -121,6 +126,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             preview={preview}
             onPreview={onPreview}
             ref={pictureRef}
+            {...pictureProps}
           >
             {isValidElement(icon) ? icon : undefined}
           </Picture>
