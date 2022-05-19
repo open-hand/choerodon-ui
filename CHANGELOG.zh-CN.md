@@ -22,6 +22,7 @@ timeline: true
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
+- 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。

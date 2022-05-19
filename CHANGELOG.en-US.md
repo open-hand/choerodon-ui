@@ -22,6 +22,7 @@ timeline: true
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
+- 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
