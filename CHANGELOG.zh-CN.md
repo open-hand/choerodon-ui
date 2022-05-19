@@ -15,12 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl 属性。
+- 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl, autoCount, countKey 属性, generatePageQuery 钩子新增 totalCount, count, onlyCount 参数。
+- 🌟 `<pro>DataSet`: 新增 autoCount, countKey 属性， 新增 counting 值。
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
+- 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
+- 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。

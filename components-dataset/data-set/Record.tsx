@@ -917,17 +917,22 @@ export default class Record {
 
   @action
   reset(): Record {
-    const { status, dataSet, dirty, isRemoved } = this;
+    const { status, dataSet, dirty, isRemoved, validationErrors } = this;
+    let hasError = false;
+    if (validationErrors && validationErrors.size > 0) {
+      hasError = true;
+      validationErrors.clear();
+    }
     dataSet.fields.forEach(field => field.commit(this));
     if (status === RecordStatus.update || isRemoved) {
       this.status = RecordStatus.sync;
     }
-    if (isRemoved || dirty) {
+    if (hasError || isRemoved || dirty) {
       this.data = toJS(this.pristineData);
       this.dirtyData = undefined;
       this.memo = undefined;
       if (!dataSet.resetInBatch) {
-        dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet });
+        dataSet.fireEvent(DataSetEvents.reset, { records: [this], dataSet, record: this });
       }
     }
     return this;

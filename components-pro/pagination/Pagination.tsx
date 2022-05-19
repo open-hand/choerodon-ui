@@ -36,7 +36,7 @@ export interface PaginationProps extends DataSetComponentProps {
   showSizeChanger?: boolean;
   showQuickJumper?: boolean | { goButton?: React.ReactNode };
   showSizeChangerLabel?: boolean;
-  showTotal?: boolean | ((total: number, range: [number, number]) => React.ReactNode);
+  showTotal?: boolean | ((total: number, range: [number, number], counting?: boolean) => React.ReactNode);
   showPager?: boolean;
   hideOnSinglePage?: boolean;
   simple?: boolean;
@@ -364,19 +364,20 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   renderTotal(pageSize: number, page: number, total: number): ReactNode {
-    const { prefixCls, props: { showTotal } } = this;
+    const { prefixCls, props: { showTotal }, dataSet } = this;
     const from = pageSize * (page - 1) + 1;
     const to = Math.min(pageSize * page, total);
+    const counting = dataSet && dataSet.counting;
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
-          {showTotal(total, [from, to])}
+          {showTotal(total, [from, to], counting)}
         </span>
       );
     }
     return (
       <span key="total" className={`${prefixCls}-page-info`}>
-        {from} - {to} / {total}
+        {from} - {to} / {counting ? '...' : total}
       </span>
     );
   }

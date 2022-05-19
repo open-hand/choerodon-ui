@@ -315,11 +315,13 @@ export default class TableEditor extends Component<TableEditorProps> {
         current.setState(`__column_resize_height_${name}`, height);
       }
       if (inlineEdit) {
-        tableStore.editors.forEach((editor) => {
-          const editorCellNode = editor.cellNode;
-          if (editorCellNode) {
-            editor.alignEditor(editorCellNode, editor === this ? height : undefined);
-          }
+        raf(() => {
+          tableStore.editors.forEach((editor) => {
+            const editorCellNode = editor.cellNode;
+            if (editorCellNode) {
+              editor.alignEditor(editorCellNode, editor === this ? height : undefined);
+            }
+          });
         });
       } else {
         this.alignEditor(cellNode, height);

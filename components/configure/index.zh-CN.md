@@ -47,8 +47,10 @@ const prefixCls = getConfig('prefixCls');
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
+| autoCount | 默认 DataSet 的 autoCount | string | true |
 | dataKey | 默认 DataSet 的 dataKey | string | rows |
 | totalKey | 默认 DataSet 的 totalKey | string | total |
+| countKey | 默认 DataSet 的 countKey | string | needCountFlag |
 | statusKey | 默认 DataSet 提交的数据中标识状态的 key | string | \_\_status |
 | tlsKey | 默认 DataSet 数据中标识多语言的 key | string | \_\_tls |
 | status | 默认 DataSet 提交的数据的状态映射 | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
@@ -122,7 +124,7 @@ const prefixCls = getConfig('prefixCls');
 | defaultValidationMessages | 自定义校验信息, 详见[ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | validationMessageFormatter | 校验信息格式器 | ValidationMessageFormatter: (message?: string, injectOptons?: any) => Promise<any> \| any | (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message |
 | validationMessageReportFormatter | 校验报告信息格式器 | ValidationMessageReportFormatter: (message: any) => Promise<string \| undefined> \| string \| undefined | (message) => getReactNodeText(<span\>{message}</span\>) |
-| generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string, sort?: string[] }) => object | - |
+| generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, totalCount?: number, count?: 'Y' \| 'N', onlyCount?: 'Y' \| 'N', sortName?: string, sortOrder?: string, sort?: string[] }) => object | - |
 | feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set/#Transport) | Transport |  |
 | formatter | 日期格式化。其中 jsonDate 是数据请求和响应时的格式，为空时日期会转化为 timestamp。详见[Formatter](#Formatter) | Formatter |  |

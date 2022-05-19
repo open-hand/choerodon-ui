@@ -88,6 +88,8 @@ const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
 const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 
+const TOTAL_KEY = '__TOTAL__';  // TODO:Symbol
+
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
@@ -196,6 +198,14 @@ export interface ValidationSelfErrors extends ValidationRule {
   valid: boolean;
 }
 
+export interface QueryParams {
+  page?: number | undefined;
+  pagesize?: number | undefined;
+  count?: 'Y' | 'N' | undefined;
+  onlyCount?: 'Y' | 'N' | undefined;
+  totalCount?: number | undefined;
+}
+
 export interface DataSetProps {
   /**
    * 唯一标识
@@ -250,6 +260,13 @@ export interface DataSetProps {
    * @default false;
    */
   autoCreate?: boolean;
+  /**
+   * 查询时通知后端是否自动统计总数， 用于分页
+   * 当设为 false 时， 查询的参数默认会带上count=N的参数，参数名和值可以通过全局配置 generatePageQuery 设置
+   * 当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置
+   * @default true;
+   */
+  autoCount?: boolean;
   /**
    * 自动定位到第一条
    * @default true;
@@ -314,6 +331,11 @@ export interface DataSetProps {
    * @default "total"
    */
   totalKey?: string;
+  /**
+   * 查询返回的json中对应是否要发起异步计数的key
+   * @default "needCountFlag"
+   */
+  countKey?: string;
   /**
    * 查询条件数据源
    */
@@ -522,9 +544,30 @@ export default class DataSet extends EventManager {
 
   @observable pageSize: number;
 
-  @observable totalCount: number;
+  @computed
+  get totalCount(): number {
+    const total = this.getState(TOTAL_KEY);
+    if (total !== undefined && isFinite(total)) {
+      return total;
+    }
+    const { paging, props: { idField, parentField, childrenField } } = this;
+    if (paging === 'server' && ((idField && parentField) || childrenField)) {
+      return this.treeData.length;
+    }
+    return this.length;
+  }
+
+  set totalCount(totalCount: number) {
+    this.setState(TOTAL_KEY, totalCount);
+  }
+
+  private get realTotalCount(): number | undefined {
+    return this.getState(TOTAL_KEY);
+  }
 
   @observable status: DataSetStatus;
+
+  @observable counting?: boolean;
 
   @observable exportStatus: DataSetExportStatus | undefined;
 
@@ -563,6 +606,11 @@ export default class DataSet extends EventManager {
     return this.props.axios || this.getConfig('axios') || axios;
   }
 
+  get autoCount(): boolean {
+    const { autoCount = this.getConfig('autoCount') } = this.props;
+    return autoCount;
+  }
+
   get dataKey(): string {
     const { dataKey = this.getConfig('dataKey') } = this.props;
     return dataKey;
@@ -570,6 +618,10 @@ export default class DataSet extends EventManager {
 
   get totalKey(): string {
     return this.props.totalKey || this.getConfig('totalKey');
+  }
+
+  get countKey(): string {
+    return this.props.countKey || this.getConfig('countKey');
   }
 
   get lang(): Lang {
@@ -1015,7 +1067,6 @@ export default class DataSet extends EventManager {
       this.records = [];
       this.state = observable.map<string, any>();
       this.fields = observable.map<string, Field>(fields ? this.initFields(fields) : undefined);
-      this.totalCount = 0;
       this.status = status;
       this.currentPage = 1;
       this.cachedSelected = [];
@@ -1207,6 +1258,26 @@ export default class DataSet extends EventManager {
   async doQuery(page, params?: object, cache?: boolean): Promise<any> {
     const data = await this.read(page, params);
     this.loadDataFromResponse(data, cache);
+    const { countKey } = this;
+    const needCount: boolean = ObjectChainValue.get(data, countKey) === 'Y';
+    if (needCount) {
+      try {
+        runInAction(() => {
+          this.counting = true;
+        });
+        const countResult = await this.count(page, params);
+        const { totalKey } = this;
+        const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
+        if (total !== undefined) {
+          this.totalCount = total;
+          data[totalKey] = total;
+        }
+      } finally {
+        runInAction(() => {
+          this.counting = false;
+        });
+      }
+    }
     return data;
   }
 
@@ -2728,13 +2799,6 @@ Then the query method will be auto invoke.`,
     this.records = originalData;
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
-    } else if (paging === 'server' && ((idField && parentField) || childrenField)) {
-      // 异步情况复用以前的total
-      if (!this.totalCount) {
-        this.totalCount = this.treeData.length;
-      }
-    } else {
-      this.totalCount = sortedData.length;
     }
     this.releaseCachedSelected(cache);
     if (cache) {
@@ -2973,6 +3037,21 @@ Then the query method will be auto invoke.`,
         if (!more) {
           this.changeStatus(DataSetStatus.ready);
         }
+      }
+    }
+  }
+
+  private async count(page = 1, params?: object): Promise<any> {
+    const data = await this.generateQueryParameter(params);
+    const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, true));
+    if (newConfig.url) {
+      const countEventResult = await this.fireEvent(DataSetEvents.count, {
+        dataSet: this,
+        params: newConfig.params,
+        data: newConfig.data,
+      });
+      if (countEventResult) {
+        return this.axios(fixAxiosConfig(newConfig));
       }
     }
   }
@@ -3232,18 +3311,32 @@ Then the query method will be auto invoke.`,
    * page相关请求设置
    * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
+   * @param onlyCount 只做计数
    */
-  private generatePageQueryString(page: number, pageSizeInner?: number): { page?: number; pagesize?: number | undefined } {
+  private generatePageQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean): QueryParams {
+    const params: QueryParams = {};
     if (page >= 0) {
-      const { paging, pageSize } = this;
+      const { paging, pageSize, autoCount } = this;
       if (isNumber(pageSizeInner)) {
-        return { page, pagesize: pageSizeInner };
+        params.page = page;
+        params.pagesize = pageSizeInner;
       }
       if (paging === true || paging === 'server') {
-        return { page, pagesize: pageSize };
+        params.page = page;
+        params.pagesize = pageSize;
+      }
+      if (onlyCount) {
+        params.count = 'N';
+        params.onlyCount = 'Y';
+      } else if (!autoCount) {
+        params.count = 'N';
+        const { realTotalCount } = this;
+        if (realTotalCount !== undefined && isFinite(realTotalCount)) {
+          params.totalCount = realTotalCount;
+        }
       }
     }
-    return {};
+    return params;
   }
 
   private generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
@@ -3279,11 +3372,12 @@ Then the query method will be auto invoke.`,
    * 返回configure 配置的值
    * @param page 在那个页面, 小于0时不分页
    * @param pageSizeInner 页面大小
+   * @param onlyCount 只做计数
    */
-  private generateQueryString(page: number, pageSizeInner?: number) {
+  private generateQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean) {
     const { combineSort } = this.props;
     const order: any = this.generateOrderQueryString();
-    const pageQuery = this.generatePageQueryString(page, pageSizeInner);
+    const pageQuery = this.generatePageQueryString(page, pageSizeInner, onlyCount);
     const generatePageQuery = this.getConfig('generatePageQuery');
     const sortParams: {} = combineSort && order.length ? {
       sort: order,
@@ -3296,6 +3390,9 @@ Then the query method will be auto invoke.`,
         ...sortParams,
         pageSize: pageQuery.pagesize,
         page: pageQuery.page,
+        count: pageQuery.count,
+        totalCount: pageQuery.totalCount,
+        onlyCount: pageQuery.onlyCount,
       });
     }
     return { ...pageQuery, ...sortParams };
