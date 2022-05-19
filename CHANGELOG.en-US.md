@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
+- 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 
 ## 1.5.4
 

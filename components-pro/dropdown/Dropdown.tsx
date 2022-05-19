@@ -115,7 +115,6 @@ const Dropdown: DropdownInterface = function Dropdown(props) {
   }, [propsHidden, propsVisible]);
 
   const triggerActions = disabled ? [] : trigger;
-  const child = React.Children.only(children) as React.ReactElement<any>;
 
   return (
     <Trigger
@@ -131,9 +130,7 @@ const Dropdown: DropdownInterface = function Dropdown(props) {
       popupHidden={hidden}
       getPopupContainer={getPopupContainer}
     >
-      {React.cloneElement(child, {
-        disabled,
-      })}
+      {children}
     </Trigger>
   );
 };
