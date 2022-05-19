@@ -70,6 +70,20 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
       component: dataSet,
     });
   }, [handleValidationReport]);
+  const handleReset = useCallback(({ dataSet, record }) => {
+    if (record) {
+      const errors = dataSet.getAllValidationErrors();
+      handleValidationReport({
+        showInvalid: errors.dataSet.length > 0 || errors.records.length > 0,
+        component: dataSet,
+      });
+    } else {
+      handleValidationReport({
+        showInvalid: false,
+        component: dataSet,
+      });
+    }
+  }, []);
 
   useEffect(() => () => invalidComponents.clear(), []);
 
@@ -81,10 +95,20 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
 
   useEffect(() => {
     if (length && !disabled) {
-      dsList.forEach(ds => ds.addEventListener(DataSetEvents.validate, handleValidate).addEventListener(DataSetEvents.validateSelf, handleValidate));
-      return () => dsList.forEach(ds => ds.removeEventListener(DataSetEvents.validate, handleValidate).removeEventListener(DataSetEvents.validateSelf, handleValidate));
+      dsList.forEach(
+        ds => ds
+          .addEventListener(DataSetEvents.validate, handleValidate)
+          .addEventListener(DataSetEvents.validateSelf, handleValidate)
+          .addEventListener(DataSetEvents.reset, handleReset),
+      );
+      return () => dsList.forEach(
+        ds => ds
+          .removeEventListener(DataSetEvents.validate, handleValidate)
+          .removeEventListener(DataSetEvents.validateSelf, handleValidate)
+          .removeEventListener(DataSetEvents.reset, handleReset),
+      );
     }
-  }, [active, disabled, handleValidate, length, ...dsList]);
+  }, [active, disabled, handleValidate, handleReset, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
     <ConfigProvider onComponentValidationReport={handleValidationReport}>
