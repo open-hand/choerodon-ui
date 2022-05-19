@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
+- 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.

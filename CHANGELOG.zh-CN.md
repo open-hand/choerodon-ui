@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 autoCount, countKey 属性， 新增 counting 值。
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
+- 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
