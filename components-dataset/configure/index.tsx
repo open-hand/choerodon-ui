@@ -127,8 +127,10 @@ export interface Config {
   ) => AxiosRequestConfig);
   axios?: AxiosInstance;
   feedback?: FeedBack;
+  autoCount?: boolean;
   dataKey?: string;
   totalKey?: string;
+  countKey?: string;
   statusKey?: string;
   tlsKey?: string;
   status?: Status;
@@ -140,6 +142,9 @@ export interface Config {
   generatePageQuery?: (pageParams: {
     page?: number;
     pageSize?: number;
+    count?: 'Y' | 'N';
+    onlyCount?: 'Y' | 'N';
+    totalCount?: number;
     sortName?: string;
     sortOrder?: string;
     sort?: string[];
@@ -182,7 +187,9 @@ const defaultConfig = {
   lovDefineUrl: code => `/sys/lov/lov_define?code=${code}`,
   lovQueryUrl: code => `/common/lov/dataset/${code}`,
   dataKey: 'rows',
+  autoCount: true,
   totalKey: 'total',
+  countKey: 'needCountFlag',
   statusKey: '__status',
   tlsKey: '__tls',
   status: defaultStatus,

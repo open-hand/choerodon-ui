@@ -1,5 +1,6 @@
 export enum DataSetEvents {
   query = 'query',
+  count = 'count',
   beforeLoad = 'beforeLoad',
   beforeAppend = 'beforeAppend',
   load = 'load',

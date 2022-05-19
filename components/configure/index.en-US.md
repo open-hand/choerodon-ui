@@ -44,8 +44,10 @@ const prefixCls = getConfig('prefixCls');
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | Replace the built-in axios instance | AxiosInstance | |   |
+| autoCount | 默认 DataSet 的 autoCount | string | true |
 | dataKey | default dataKey of DataSet | string | rows |
 | totalKey | default totalKey of DataSet | string | total |
+| countKey | 默认 DataSet 的 countKey | string | needCountFlag |
 | statusKey | The status key in the data submitted by the DataSet by default. | string | \_\_status |
 | tlsKey | Multi-language key in the DataSet data by default. | string | \_\_tls |
 | status | Default status map of data submitted by DataSet. | { add: string, update: string, delete: string } | { add: 'add', update: 'update', delete: 'delete' } |
@@ -119,7 +121,7 @@ const prefixCls = getConfig('prefixCls');
 | defaultValidationMessages | Default validation messages. More info: [ValidationMessages](#ValidationMessages) | ValitionMessages | - |
 | validationMessageFormatter | 校验信息格式器 | ValidationMessageFormatter: (message?: string, injectOptons?: any) => Promise<any> \| any | (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message |
 | validationMessageReportFormatter | 校验报告信息格式器 | ValidationMessageReportFormatter: (message: any) => Promise<string \| undefined> \| string \| undefined | (message) => getReactNodeText(<span\>{message}</span\>) |
-| generatePageQuery | Hook for Paging Parameter Conversion | ({ page?: number, pageSize?: number, sortName?: string, sortOrder?: string, sort?: string[] }) => object | - |
+| generatePageQuery | 分页参数转换的钩子 | ({ page?: number, pageSize?: number, totalCount?: number, count?: 'Y' \| 'N', onlyCount?: 'Y' \| 'N', sortName?: string, sortOrder?: string, sort?: string[] }) => object | - |
 | feedback | The feedback of DataSet for query and submit. More info: [Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | Default transport of DataSet. More info: [Transport](/components-pro/data-set/#Transport) | Transport |  |
 | formatter | Date formatter. `jsonDate` is the format of the data in request and response, and the date is converted to timestamp when it is empty. More info:[Formatter](#Formatter) | Formatter |  |

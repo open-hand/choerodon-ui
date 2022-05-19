@@ -15,6 +15,7 @@ title: DataSet
 | --- | --- | --- | --- |
 | name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | string |  |
 | data | 初始化数据 | Array&lt;object&gt; |  |
+| autoCount | 查询时通知后端是否自动统计总数， 用于分页。当设为 false 时， 查询的参数默认会带上count=N的参数，参数名和值可以通过全局配置 generatePageQuery 设置。当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置 | boolean | [autoCount](components/configure) |
 | autoQuery | 初始化后自动查询 | boolean | false |
 | autoQueryAfterSubmit | 提交成功后响应的数据不符合回写条件时自动查询。注：回写条件是指响应数据中含有提交时的数据时，数据将按数据状态分组进行顺序回写，如果要更准确的回写，响应数据要含有提交时的\_\_id 字段值。 | boolean | true |
 | autoCreate | 初始化时，如果没有记录且 autoQuery 为 false，则自动创建记录 | boolean | false |
@@ -29,8 +30,9 @@ title: DataSet
 | pageSize | 分页大小 | number | 10 |
 | strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |
 | paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
-| dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null | rows |
-| totalKey | 查询返回的 json 中对应的总数的 key | string | total |
+| dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null |  [dataKey](components/configure) |
+| totalKey | 查询返回的 json 中对应的总数的 key | string | [totalKey](components/configure) |
+| countKey | 查询返回的 json 中对应的是否需要异步计数的 key | string | [countKey](components/configure) |
 | queryDataSet | 查询条件数据源 | DataSet |  |
 | queryUrl | 查询请求的 url。 当设定 name 时，默认 /dataset/{name}/queries | string |  |
 | queryParameter | 查询请求的初始参数 | object |  |
@@ -71,6 +73,7 @@ title: DataSet
 | totalPage | 总页数 | readonly observable&lt;number&gt; |
 | pageSize | 分页大小 | observable&lt;number&gt; |
 | paging | 是否分页 | observable&lt;boolean&gt; |
+| counting | 是否在异步计数查询 | observable&lt;boolean&gt; |
 | status | 状态，`loading` `submitting` `ready` | observable&lt;string&gt; |
 | selection | 选择的模式, 可选值：`false` `'multiple'` `'single'` | observable&lt;string\|boolean&gt; |
 | selectionStrategy | 树形选择记录策略， `SHOW_ALL` `SHOW_CHILD` `SHOW_PARENT` | observable&lt;string[]&gt; |
