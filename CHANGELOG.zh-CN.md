@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
+- 💄 `<pro>DatePicker`: 优化 filter 属性对选择面板的影响。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
 - 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。

@@ -20,7 +20,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
 
   @autobind
   handlePrevYearClick() {
-    this.changeCursorDate(this.getCloneDate().subtract(10, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(10, 'y'), ViewMode.decade);
   }
 
   @autobind
@@ -30,7 +30,7 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
 
   @autobind
   handleNextYearClick() {
-    this.changeCursorDate(this.getCloneDate().add(10, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(10, 'y'), ViewMode.decade);
   }
 
   handleKeyDownHome(e) {
