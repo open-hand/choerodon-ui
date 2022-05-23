@@ -23,7 +23,7 @@ export interface DateViewProps extends ViewComponentProps {
   format: string;
   step: TimeStep;
   renderer?: RenderFunction;
-  isValidDate?: (currentDate: Moment, selected: Moment) => boolean;
+  isValidDate?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
   onSelect?: (selectedDate: Moment, expand?: boolean) => void;
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
   onCursorDateChange?: (cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) => void;

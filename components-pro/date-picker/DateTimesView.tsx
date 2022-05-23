@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import { DatePickerKeyboardEvent } from './DatePicker';
-import DaysView, { DateViewProps } from './DaysView';
+import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
 import TimesView, { TimesViewProps } from './TimesView';
 import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
@@ -51,8 +51,11 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
   }
 
   choose(date: Moment, expand = true) {
-    const { onSelect = noop } = this.props;
-    onSelect(date, expand);
+    const { onSelect = noop, date: selectedDate, isValidDate = alwaysValidDate } = this.props;
+    const selected = selectedDate.clone();
+    if (isValidDate(date, selected) && isValidDate(date, selected, ViewMode.time)) {
+      onSelect(date, expand);
+    }
   }
 
   renderFooter(): ReactNode {
