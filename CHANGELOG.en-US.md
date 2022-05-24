@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey` properties. Added `totalCount`, `count`, `onlyCount` parameter for `generatePageQuery` hook.
+- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined` properties. Added `totalCount`, `count`, `onlyCount` parameter for `generatePageQuery` hook.
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.

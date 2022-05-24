@@ -1,4 +1,12 @@
-import React, { cloneElement, CSSProperties, isValidElement, Key, MouseEvent as ReactMouseEvent, ReactElement, ReactNode } from 'react';
+import React, {
+  cloneElement,
+  CSSProperties,
+  isValidElement,
+  Key,
+  MouseEvent as ReactMouseEvent,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import isEqual from 'lodash/isEqual';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
@@ -6,7 +14,7 @@ import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import classNames from 'classnames';
 import classes from 'component-classes';
-import { pxToRem, toPx, pxToPercent } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
@@ -216,6 +224,10 @@ export default class Modal extends ViewComponent<ModalProps> {
   get drawerTransitionName(): DrawerTransitionName {
     const { drawerTransitionName = this.getContextConfig('drawerTransitionName') } = this.props;
     return toUsefulDrawerTransitionName(drawerTransitionName);
+  }
+
+  get drawerHeaderFooterCombined(): boolean {
+    return this.getContextConfig('drawerHeaderFooterCombined');
   }
 
   get doc(): Document {
@@ -565,7 +577,12 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   render() {
-    const { prefixCls, drawerTransitionName, props: { contentStyle, drawer, resizable = this.getContextConfig('modalResizable'), fullScreen } } = this;
+    const {
+      prefixCls,
+      drawerHeaderFooterCombined,
+      drawerTransitionName,
+      props: { contentStyle, drawer, resizable = this.getContextConfig('modalResizable'), fullScreen },
+    } = this;
     const header = this.getHeader();
     const body = this.getBody();
     const footer = this.getFooter();
@@ -575,12 +592,15 @@ export default class Modal extends ViewComponent<ModalProps> {
       <div {...this.getMergedProps()}>
         <div
           ref={this.contentReference}
-          className={classNames(`${prefixCls}-content`, { [`${prefixCls}-drawer-content`]: drawer, [`${resizerPrefixCls}-content`]: resizable })}
+          className={classNames(`${prefixCls}-content`, {
+            [`${prefixCls}-drawer-content`]: drawer,
+            [`${resizerPrefixCls}-content`]: resizable,
+          })}
           style={contentStyle}
         >
           {header}
           {body}
-          {footer}
+          {drawerHeaderFooterCombined ? null : footer}
           {
             resizable && <div
               className={classNames(resizerCursorCls, {
@@ -592,7 +612,8 @@ export default class Modal extends ViewComponent<ModalProps> {
               })}
               onMouseDown={this.handleResize}
             >
-              {drawer ? <div className={`${resizerCursorCls}-line`} /> : <span className={`${resizerCursorCls}-icon`} />}
+              {drawer ? <div className={`${resizerCursorCls}-line`} /> :
+                <span className={`${resizerCursorCls}-icon`} />}
             </div>
           }
         </div>
@@ -724,15 +745,19 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   getWrappedHeader(header: ReactNode): ReactNode {
     const {
+      drawerHeaderFooterCombined,
       prefixCls,
       props: { title, closable, movable = this.getContextConfig('modalMovable'), fullScreen, drawer },
     } = this;
+    const footer = this.getFooter();
+
     if (title || closable || movable || header) {
       const headerProps: any = {
         className: classNames(`${prefixCls}-header`, {
           [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
           [`${prefixCls}-title-none`]: !title,
           [`${prefixCls}-drawer-header`]: drawer,
+          [`${prefixCls}-drawer-header-combined`]: drawerHeaderFooterCombined,
         }),
       };
       if (movable && !fullScreen && !drawer) {
@@ -741,6 +766,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       return (
         <div {...headerProps}>
           {header}
+          {drawerHeaderFooterCombined ? footer : null}
         </div>
       );
     }
@@ -784,21 +810,36 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   getWrappedFooter(footer: ReactNode) {
-    const { prefixCls } = this;
+    const { prefixCls, drawerHeaderFooterCombined } = this;
 
     const { drawer } = this.props;
 
-    const className = classNames(`${prefixCls}-footer`, {
-      [`${prefixCls}-footer-drawer`]: drawer, // deprecate
-      [`${prefixCls}-drawer-footer`]: drawer,
+    const className = classNames({
+      [`${prefixCls}-footer`]: !drawerHeaderFooterCombined,
+      [`${prefixCls}-footer-drawer`]: drawer && !drawerHeaderFooterCombined, // deprecate
+      [`${prefixCls}-drawer-footer`]: drawer && !drawerHeaderFooterCombined,
+      [`${prefixCls}-drawer-header-buttons-footer`]: drawerHeaderFooterCombined,
     });
     return <div className={className}>{footer}</div>;
   }
 
   getDefaultHeader = (title, closeButton: ReactNode, _okBtn: ReactElement<ButtonProps>, _cancelBtn: ReactElement<ButtonProps>) => {
-    const { prefixCls } = this;
+    const {
+      prefixCls,
+      drawerHeaderFooterCombined,
+      props: { closable },
+    } = this;
     if (title || closeButton) {
-      return (
+      return drawerHeaderFooterCombined ? (
+        <div className={`${prefixCls}-drawer-header-combined`}>
+          {closable ? (
+            <button type="button" className={`${prefixCls}-header-button ${prefixCls}-header-button-navigate`} onClick={this.handleCancel}>
+              <Icon type="navigate_next" />
+            </button>
+          ) : null}
+          <div className={`${prefixCls}-title`}>{title}</div>
+        </div>
+      ) : (
         <>
           <div className={`${prefixCls}-title`}>{title}</div>
           <div className={`${prefixCls}-header-buttons`}>
