@@ -1255,8 +1255,8 @@ export default class DataSet extends EventManager {
     return Promise.resolve();
   }
 
-  async doQuery(page, params?: object, cache?: boolean): Promise<any> {
-    const data = await this.read(page, params);
+  async doQuery(page, params?: object, cache?: boolean, paging?: boolean): Promise<any> {
+    const data = await this.read(page, params, paging);
     this.loadDataFromResponse(data, cache);
     const { countKey } = this;
     const needCount: boolean = ObjectChainValue.get(data, countKey) === 'Y';
@@ -1561,7 +1561,7 @@ export default class DataSet extends EventManager {
     if (paging === true || paging === 'server') {
       if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
         if (await this.modifiedCheck()) {
-          await this.query(Math.floor(index / pageSize) + 1, undefined, true);
+          await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {
             this.current = autoLocateFirst ? currentRecord : undefined;
@@ -3003,14 +3003,14 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page = 1, params?: object, more?: boolean): Promise<any> {
+  private async read(page = 1, params?: object, more?: boolean, paging?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
         if (!more) {
           this.changeStatus(DataSetStatus.loading);
         }
         const data = await this.generateQueryParameter(params);
-        const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page));
+        const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, undefined, paging));
         if (newConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
             dataSet: this,
@@ -3313,7 +3313,7 @@ Then the query method will be auto invoke.`,
    * @param pageSizeInner 页面大小
    * @param onlyCount 只做计数
    */
-  private generatePageQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean): QueryParams {
+  private generatePageQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean, usePaging?: boolean): QueryParams {
     const params: QueryParams = {};
     if (page >= 0) {
       const { paging, pageSize, autoCount } = this;
@@ -3330,9 +3330,11 @@ Then the query method will be auto invoke.`,
         params.onlyCount = 'Y';
       } else if (!autoCount) {
         params.count = 'N';
-        const { realTotalCount } = this;
-        if (realTotalCount !== undefined && isFinite(realTotalCount)) {
-          params.totalCount = realTotalCount;
+        if (usePaging) {
+          const { realTotalCount } = this;
+          if (realTotalCount !== undefined && isFinite(realTotalCount)) {
+            params.totalCount = realTotalCount;
+          }
         }
       }
     }
@@ -3374,10 +3376,10 @@ Then the query method will be auto invoke.`,
    * @param pageSizeInner 页面大小
    * @param onlyCount 只做计数
    */
-  private generateQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean) {
+  private generateQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean, paging?: boolean) {
     const { combineSort } = this.props;
     const order: any = this.generateOrderQueryString();
-    const pageQuery = this.generatePageQueryString(page, pageSizeInner, onlyCount);
+    const pageQuery = this.generatePageQueryString(page, pageSizeInner, onlyCount, paging);
     const generatePageQuery = this.getConfig('generatePageQuery');
     const sortParams: {} = combineSort && order.length ? {
       sort: order,
