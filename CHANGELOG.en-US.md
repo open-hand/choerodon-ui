@@ -23,6 +23,7 @@ timeline: true
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
+- 💄 `<pro>Switch`: Optimize styles.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.

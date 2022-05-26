@@ -218,9 +218,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @computed
   get showHelp(): ShowHelp {
-    const { showHelp } = this.props;
+    const { showHelp } = this.observableProps;
     if (isString(showHelp)) {
-      return showHelp;
+      return showHelp as ShowHelp;
     }
     return this.context.showHelp || this.getContextConfig('showHelp') || ShowHelp.newLine;
   }
