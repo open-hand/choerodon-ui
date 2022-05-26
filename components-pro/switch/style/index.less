@@ -48,13 +48,19 @@
     &.@{c7n-pro-prefix}-field {
       width: auto;
     }
+
+    & > .icon-help {
+      margin-left: @label-wrapper-padding-horizontal;
+      color: @field-icon-help-color;
+      font-size: @icon-font-size-sm;
+    }
   }
 
   .radio-btn;
 
   &-label {
     position: relative;
-    display: block;
+    display: inline-block;
     min-width: @switch-min-width;
     height: @switch-height;
     padding-right: 0.05rem;
@@ -62,6 +68,7 @@
     color: @switch-label-color;
     font-size: @font-size-sm;
     line-height: @switch-line-height;
+    vertical-align: middle;
     background-color: @switch-bg;
     border-radius: @switch-height / 2;
 
@@ -81,6 +88,10 @@
       cursor: inherit;
       transition: all @switch-duration @ease-in-out-circ;
       content: ' ';
+    }
+
+    & > .icon {
+      vertical-align: baseline;
     }
   }
 
