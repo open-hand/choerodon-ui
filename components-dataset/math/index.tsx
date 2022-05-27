@@ -159,6 +159,24 @@ function eq(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
   return n1 === n2 || (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).eq(n2);
 }
 
+/**
+ * 最大值
+ * @param n1 A numeric value.
+ * @return boolean
+ */
+function max(...n1: BigNumber.Value[]): BigNumber | number {
+  return fix(BigNumber.max(...n1));
+}
+
+/**
+ * 最小值
+ * @param n1 A numeric value.
+ * @return boolean
+ */
+function min(...n1: BigNumber.Value[]): BigNumber | number {
+  return fix(BigNumber.min(...n1));
+}
+
 
 /**
  * 类似 Math.round
@@ -297,6 +315,8 @@ export default {
   floor,
   ceil,
   dp,
+  max,
+  min,
   negated,
   isFinite,
   isNaN,

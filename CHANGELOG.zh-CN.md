@@ -20,11 +20,14 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
+- 🌟 `math`: 新增 max, min 方法。
+- 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 💄 `<pro>DatePicker`: 优化 filter 属性对选择面板的影响。
 - 💄 `<pro>Switch`: 优化样式。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
+- 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
 - 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。
@@ -35,6 +38,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。
 - 🐞 `<pro>TreeSelect`: 修复 showCheckedStrategy 属性值为 SHOW_PARENT 或 SHOW_CHILD 时, 部分情况值显示错误的问题。以及修复 TreeNode 组件设置 disabled 属性无效的问题。
+- 🐞 `<pro>Dropdown`: 修复 disabled 属性会影响子元素的问题。
 
 ## 1.5.4
 

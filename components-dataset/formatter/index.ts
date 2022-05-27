@@ -135,37 +135,42 @@ function getBigNumberFormatOption(lang: string | undefined): BigNumberFormatOpti
   return defaultBigNumberFormatOptions;
 }
 
+function $formatBigNumber(value: BigNumber, lang: string | undefined, options: Intl.NumberFormatOptions) {
+  const {
+    groupSeparator,
+    groupSize,
+    decimalSeparator,
+  } = getBigNumberFormatOption(lang);
+  const { prefix = '', suffix = '' } = getCurrencyOptions(lang, options) || {};
+  const { useGrouping } = options;
+  const fmt: BigNumber.Format = {
+    prefix,
+    decimalSeparator,
+    groupSeparator: useGrouping === false ? '' : groupSeparator,
+    groupSize: useGrouping === false ? 0 : groupSize,
+    secondaryGroupSize: 0,
+    fractionGroupSeparator: ' ',
+    fractionGroupSize: 0,
+    suffix,
+  };
+  const { maximumFractionDigits = Infinity, minimumFractionDigits = 0 } = options;
+  const dp = Math.min(Math.max(value.dp(), minimumFractionDigits), maximumFractionDigits);
+  return value.toFormat(dp, fmt);
+
+}
+
 export function formatCurrency(value: BigNumber.Value, lang: string | undefined, options?: Intl.NumberFormatOptions) {
   const bn = new BigNumber(value);
   if (math.isValidBigNumber(bn)) {
     const v = math.fix(bn);
-    if (math.isBigNumber(v)) {
-      const {
-        groupSeparator,
-        groupSize,
-        decimalSeparator,
-      } = getBigNumberFormatOption(lang);
-      const { prefix = '', suffix = '' } = options && getCurrencyOptions(lang, options) || {};
-      const useGrouping = options ? options.useGrouping : true;
-      const fmt: BigNumber.Format = {
-        prefix,
-        decimalSeparator,
-        groupSeparator: useGrouping === false ? '' : groupSeparator,
-        groupSize: useGrouping === false ? 0 : groupSize,
-        secondaryGroupSize: 0,
-        fractionGroupSeparator: ' ',
-        fractionGroupSize: 0,
-        suffix,
-      };
-      if (options && options.currency) {
-        return v.toFormat(fmt);
-      }
-      return v.toFormat(2, fmt);
-    }
-    return $formatNumber(v, lang, {
+    const currencyOptions = {
       ...getNumberFormatOptions(FieldType.currency, options),
       ...options,
-    });
+    };
+    if (math.isBigNumber(v)) {
+      return $formatBigNumber(v, lang, currencyOptions);
+    }
+    return $formatNumber(v, lang, currencyOptions);
   }
   return value;
 }
@@ -174,29 +179,14 @@ export function formatNumber(value: BigNumber.Value, lang: string | undefined, o
   const bn = new BigNumber(value);
   if (math.isValidBigNumber(bn)) {
     const v = math.fix(bn);
-    if (math.isBigNumber(v)) {
-      const {
-        groupSeparator,
-        groupSize,
-        decimalSeparator,
-      } = getBigNumberFormatOption(lang);
-      const useGrouping = options ? options.useGrouping : true;
-      const fmt: BigNumber.Format = {
-        prefix: '',
-        decimalSeparator,
-        groupSeparator: useGrouping === false ? '' : groupSeparator,
-        groupSize: useGrouping === false ? 0 : groupSize,
-        secondaryGroupSize: 0,
-        fractionGroupSeparator: ' ',
-        fractionGroupSize: 0,
-        suffix: '',
-      };
-      return v.toFormat(fmt);
-    }
-    return $formatNumber(v, lang, {
+    const numberOptions = {
       ...getNumberFormatOptions(FieldType.number, options),
       ...options,
-    });
+    };
+    if (math.isBigNumber(v)) {
+      return $formatBigNumber(v, lang, numberOptions);
+    }
+    return $formatNumber(v, lang, numberOptions);
   }
   return value;
 }
