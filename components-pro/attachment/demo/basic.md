@@ -32,7 +32,7 @@ const fetchList = ({ attachmentUUID }) => {
     }));
   });
 }
-
+const imgs = ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'];
 // 使用附件功能前需要在全局配置中配置如下， 开发者无需配置
 configure({
   attachment: {
@@ -60,7 +60,13 @@ configure({
       return uuid();
     },
     getPreviewUrl({ attachment }) {
-      return attachment.url;
+      const { ext, type, url } = attachment;
+      const isPicture = type.startsWith('image') || imgs.includes(ext)
+      if (isPicture) {
+        return url;
+      }
+      // 可以异步获取一些认证信息再跳转预览
+      return () => Promise.resolve(url);
     },
     getDownloadAllUrl({ attachmentUUID }) {
       return `/${attachmentUUID}`;

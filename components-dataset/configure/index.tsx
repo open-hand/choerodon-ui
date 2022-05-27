@@ -87,7 +87,7 @@ export interface AttachmentConfig {
   action?: AxiosRequestConfig | ((props: AttachmentActionProps) => AxiosRequestConfig);
   batchFetchCount?: AttachmentBatchFetchCount;
   fetchList?: (props: AttachmentValue) => Promise<FileLike[]>;
-  getPreviewUrl?: (props: AttachmentFileProps) => string | undefined;
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>)| undefined;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
   getTemplateDownloadUrl?: (props: AttachmentValue) => TemplateUrlType | Promise<TemplateUrlType>;
   getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;

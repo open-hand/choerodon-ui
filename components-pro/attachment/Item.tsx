@@ -12,8 +12,8 @@ import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { AttachmentListType } from './Attachment';
-import Picture, { PictureForwardRef } from '../picture/Picture';
-import Button from '../button/Button';
+import Picture, { PictureForwardRef, PictureProps } from '../picture/Picture';
+import Button, { ButtonProps } from '../button/Button';
 import { FuncType } from '../button/enum';
 import { hide, show } from '../tooltip/singleton';
 import { formatFileSize } from './utils';
@@ -58,7 +58,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
-  const src = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
+  const previewUrl = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,
     bucketName,
@@ -69,13 +69,21 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
-  const preview = !!src && (status === 'success' || status === 'done');
+  const preview = !!previewUrl && (status === 'success' || status === 'done');
   const handlePreview = useCallback(() => {
     const { current } = pictureRef;
     if (current) {
       current.preview();
     }
   }, [pictureRef]);
+  const handleOpenPreview = useCallback(async () => {
+    if (isFunction(previewUrl)) {
+      const result = await previewUrl();
+      if (isString(result)) {
+        window.open(result, previewTarget);
+      }
+    }
+  }, [previewUrl, previewTarget]);
   const renderDragger = (): ReactNode => {
     if (draggable && !isCard) {
       const iconProps = {
@@ -96,35 +104,52 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       const defaultIcon = <Icon type="insert_drive_file" />;
       const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
       const isSrcIcon = isString(icon);
-      return isPicture || isSrcIcon ? (
-        <Picture
-          width={14}
-          height={14}
-          alt={name}
-          previewUrl={src}
-          downloadUrl={downloadUrl}
-          src={isSrcIcon ? icon as string : undefined}
-          objectFit="contain"
-          status="loaded"
-          index={index}
-          className={`${prefixCls}-icon`}
-          previewTarget={isSrcIcon && !isPicture ? previewTarget : undefined}
-          preview={preview}
-          onPreview={onPreview}
-          ref={pictureRef}
-        >
-          {isValidElement(icon) ? icon : undefined}
-        </Picture>
-      ) : preview ? (
-        <Button
-          href={src}
-          target={previewTarget}
-          funcType={FuncType.link}
-          className={`${prefixCls}-icon`}
-        >
-          {icon}
-        </Button>
-      ) : (
+      if (isPicture || isSrcIcon) {
+        const pictureProps: PictureProps = {};
+        if (isString(previewUrl)) {
+          pictureProps.previewUrl = previewUrl;
+        } else {
+          pictureProps.onClick = handleOpenPreview;
+        }
+        return (
+          <Picture
+            width={14}
+            height={14}
+            alt={name}
+            downloadUrl={downloadUrl}
+            src={isSrcIcon ? icon as string : undefined}
+            objectFit="contain"
+            status="loaded"
+            index={index}
+            className={`${prefixCls}-icon`}
+            previewTarget={isSrcIcon && !isPicture ? previewTarget : undefined}
+            preview={preview}
+            onPreview={onPreview}
+            ref={pictureRef}
+            {...pictureProps}
+          >
+            {isValidElement(icon) ? icon : undefined}
+          </Picture>
+        );
+      }
+      if (preview) {
+        const previewButtonProps: ButtonProps = {
+          funcType: FuncType.link,
+          className: `${prefixCls}-icon`,
+        };
+        if (isString(previewUrl)) {
+          previewButtonProps.href = previewUrl;
+          previewButtonProps.target = previewTarget;
+        } else {
+          previewButtonProps.onClick = handleOpenPreview;
+        }
+        return (
+          <Button {...previewButtonProps}>
+            {icon}
+          </Button>
+        );
+      }
+      return (
         <div className={`${prefixCls}-icon`}>
           {icon}
         </div>
@@ -137,7 +162,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             width={width}
             height={width}
             alt={name}
-            src={src || url}
+            src={isString(previewUrl) ? previewUrl : url}
             downloadUrl={downloadUrl}
             lazy
             objectFit="contain"
@@ -167,7 +192,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     );
     const nameNode = preview && listType === 'text' ? (
       <a
-        {...isPicture ? { onClick: handlePreview } : { href: src, target: previewTarget }}
+        {
+          ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
+            href: previewUrl,
+            target: previewTarget,
+          } : { onClick: handleOpenPreview }
+        }
         className={`${prefixCls}-link`}
       >
         {fileName}
