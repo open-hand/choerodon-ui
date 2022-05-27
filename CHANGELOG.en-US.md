@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
 - 🐞 `<pro>Table`: Fix the positioning problem of the reload editor in `inline` editing mode.
+- 🐞 `<pro>Table`: Fix the issue of saving edits in the dynamic filter bar.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.

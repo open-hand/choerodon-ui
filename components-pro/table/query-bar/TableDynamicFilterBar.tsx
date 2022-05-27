@@ -434,7 +434,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         const field = dataSet.getField(name);
         if (!field || !field.get('bind', record) || field.get('usedFlag')) {
           this.originalConditionFields.push(name);
-          this.handleSelect(name);
+          this.handleSelect(name, record);
         }
       }
     });
@@ -618,16 +618,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 勾选
    * @param code
+   * @param record
    */
   @action
-  handleSelect = (code) => {
+  handleSelect = (code, record?: Record) => {
     const { dataSet } = this.props;
     const codes = Array.isArray(code) ? code : [code];
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
     dataSet.setState(SELECTFIELDS, uniq([...selectFields, ...codes]));
     const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
-    this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
+    const isDirty = record ? record.dirty : false;
+    this.setConditionStatus(shouldUpdate || isDirty ? RecordStatus.update : RecordStatus.sync);
     dataSet.setState(SELECTCHANGE, shouldUpdate);
   };
 

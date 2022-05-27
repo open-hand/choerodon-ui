@@ -74,7 +74,7 @@ const locale: Locale = {
     rename: '名前を変更',
     set_default: 'デフォルトとして設定',
     cancel_default: 'デフォルトをキャンセル',
-    filter_rename: 'フィルタの名前変更',
+    filter_edit: '構成の編集',
     save_filter_as: 'フィルタを名前を付けて保存',
     save_filter_value: 'フィルタ値を保存',
     preset: 'プリセット',
