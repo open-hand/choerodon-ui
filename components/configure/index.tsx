@@ -178,6 +178,7 @@ export interface Config extends DataSetConfig {
   modalAutoCenter?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
+  drawerHeaderFooterCombined?: boolean;
   modalButtonProps?: ButtonProps;
   modalKeyboard?: boolean;
   modalMaskClosable?: boolean | 'click' | 'dblclick';

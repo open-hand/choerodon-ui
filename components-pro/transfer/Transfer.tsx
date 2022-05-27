@@ -233,6 +233,10 @@ export default class Transfer extends Select<TransferProps> {
     this.clearCurrentIndex();
   }
 
+  handleSetTargetOption = (values: any[]) => {
+    this.setValue(values);
+  }
+
   renderWrapper() {
     const {
       disabled,
@@ -312,6 +316,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
           direction="right"
+          setTargetOption={this.handleSetTargetOption}
           {...customOption}
           {...oneWayProps}
         />

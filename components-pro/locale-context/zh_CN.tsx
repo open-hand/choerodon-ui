@@ -72,7 +72,7 @@ const locale: Locale = {
     set_default: '设为默认',
     cancel_default: '取消默认',
     restore_default: '恢复默认',
-    filter_rename: '筛选重命名',
+    filter_edit: '修改配置',
     save_filter_as: '筛选另存为',
     save_filter_value: '保存筛选值',
     preset: '预置',

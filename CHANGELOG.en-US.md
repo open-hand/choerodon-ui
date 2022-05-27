@@ -15,20 +15,26 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey` properties. Added `totalCount`, `count`, `onlyCount` parameter for `generatePageQuery` hook.
+- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined` properties. Added `totalCount`, `count`, `onlyCount` parameter for `generatePageQuery` hook.
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
+- 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
+- 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
+- 💄 `<pro>Switch`: Optimize styles.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
+- 🐞 `<pro>Table`: Fix the positioning problem of the reload editor in `inline` editing mode.
+- 🐞 `<pro>Table`: Fix the issue of saving edits in the dynamic filter bar.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
+- 🐞 `<pro>TreeSelect`: Fixed an issue where the `showCheckedStrategy` property value was `SHOW_PARENT` or `SHOW_CHILD` and some of the case values were displayed incorrectly. And fix the `TreeNode` component setting the `disabled` property incorrectly.
 
 ## 1.5.4
 

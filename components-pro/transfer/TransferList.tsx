@@ -24,6 +24,7 @@ export interface TransferListProps extends SelectProps {
   footer?: (options: Record[]) => ReactNode;
   onSelect: (e) => void;
   onSelectAll: (value: any) => void;
+  setTargetOption?: (value: any) => void;
   onRemove?: (e) => void;
 }
 
@@ -211,7 +212,7 @@ export default class TransferList extends Select<TransferListProps> {
       textField,
       valueField,
       multiple,
-      props: { selected, onSelect, onSelectAll, children, targetOption, direction },
+      props: { selected, onSelect, onSelectAll, setTargetOption, children, targetOption, direction },
     } = this;
     const searchField = searchable && this.getSearchField();
     const classString = classNames(`${prefixCls}-body`, {
@@ -221,7 +222,7 @@ export default class TransferList extends Select<TransferListProps> {
     if (typeof children === 'function') {
       return (
         <CustomArea targetOption={targetOption}>{
-          children({ direction, targetOption, onItemSelect: onSelectAll })}
+          children({ direction, targetOption, setTargetOption, onItemSelect: onSelectAll })}
         </CustomArea>
       );
     }

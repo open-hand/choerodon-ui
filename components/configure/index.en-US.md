@@ -107,6 +107,7 @@ const prefixCls = getConfig('prefixCls');
 | modalSectionBorder | Default if Modal header and foot have a border line | boolean | true |
 | drawerSectionBorder | Default if drawer header and foot have a border line | boolean | true |
 | drawerTransitionName | 抽屉模式使用的动画， 可选值： 'slide-right' 'slide-left' 'slide-up' 'slide-down' | string | 'slide-right' |
+| drawerHeaderFooterCombined | 抽屉模式头脚组合展示 | boolean | false |
 | modalOkFirst | Default the ok button of Modal is ranked first | boolean | true |
 | modalKeyboard | Does Modal support keyboard esc off | boolean | true |
 | modalAutoCenter | Whether Modal is centered by default | boolean | false |

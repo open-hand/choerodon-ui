@@ -23,7 +23,7 @@ title: DatePicker
 | format | 日期格式，如 `YYYY-MM-DD HH:mm:ss` | string |   |
 | timeZone | 时区显示 | string \| (moment) => string |   |
 | step | 时间步距 | { hour: number, minute: number, second: number } |  |
-| filter | 日期过滤 | (currentDate, selected, mode) => boolean |   |
+| filter | 日期过滤, 选择面板的 mode 会变化, 需要根据 mode 变化设置是否过滤 | (currentDate, selected, mode) => boolean |   |
 | cellRenderer | 单元格渲染, view可选值: `date` `dateTime` `time` `week` `month` `year` `decade` | (view) => (props, text, currentDate, selected) => ReactNode |   |
 | renderExtraFooter | 在面板中添加额外的页脚 | () => React.ReactNode |   |
 | extraFooterPlacement | 额外的页脚的位置 可选值: `top` `bottom` | string | `bottom`  |

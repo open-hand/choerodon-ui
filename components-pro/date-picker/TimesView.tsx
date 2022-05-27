@@ -374,7 +374,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     const last = pre.clone().add(size, finalUnit);
     while (pre.isBefore(last)) {
       const current = pre.clone();
-      const isDisabled = !isValidDate(current, selected);
+      const isDisabled = !isValidDate(current, selected, ViewMode.time);
       const text = unit === TimeUnit.a ?
         current.format(isUpperCase ? 'A' : 'a') :
         String(pre.get(unit) - (use12Hours && finalUnit === TimeUnit.hour && pre.get(unit) > 11 ? 12 : 0) || (use12Hours && finalUnit === TimeUnit.hour ? 12 : 0));

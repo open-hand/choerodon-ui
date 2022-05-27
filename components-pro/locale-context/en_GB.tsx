@@ -71,7 +71,7 @@ const locale: Locale = {
     rename: 'Rename',
     set_default: 'Set as Default',
     cancel_default: 'Cancel default',
-    filter_rename: 'Filter rename',
+    filter_edit: 'Filter edit',
     save_filter_as: 'Save filter as',
     save_filter_value: 'Save filter value',
     preset: 'Preset',
