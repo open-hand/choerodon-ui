@@ -24,6 +24,7 @@ timeline: true
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
+- 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
@@ -420,7 +421,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that spaces cannot be entered.
 - 🐞 `<pro>Table`: Fix the abnormal style when the last column of the personalized table is not aligned to the left.
 - 🐞 `<pro>Table`: Fix the problem that the table column will not refresh when `customizedCode` is changed.
-- 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode. 
+- 🐞 `<pro>Table`: Fix the problem that row misalignment when switching the page size in `virtual` mode.
 - 🐞 `<pro>Table`: Fix the problem of editor dislocation caused by `virtualCell`.
 - 🐞 `<pro>Table`: Fix an error rendering filter bar when the query field range property value is an array.
 - 🐞 `<pro>Table`: Fix the display problem when the editor is SelectBox in `multiple` mode.
@@ -469,7 +470,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `rowSelection` property, built-in check column.
 - 🌟 `<pro>PerformanceTable`: Added `rowDraggable` property to support row drag.
 - 🌟 `<pro>PerformanceTable`: Added horizontal virtual scroll.
-- 🌟 `<pro>Table`: Added `onResize` callback. 
+- 🌟 `<pro>Table`: Added `onResize` callback.
 - 🌟 `Tabs`: Added TabGroup component.
 - 🌟 `Icon`: Added a lot of icons.
 - 🌟 `<pro>Table`: Added `autoQueryAfterReset` property to support ProfessionalBar & DynamicFilterBar to reset whether to automatically query.
@@ -1020,7 +1021,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the query conditions does not show the loading effect by clicking the query.
 - 💄 `<pro>Table`: Optimize the TableButtonProps type, now you can correctly use children in ts to change the text of the default button.
 - 🐞 `<pro>FormField`: Fixed cascade mode error to disable sub-components.
-- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find. 
+- 🐞 `<pro>Switch`: Fixed switch when `labelLayout` is float, the label cant't find.
 - 🐞 `<pro>Table`: Fixed the issue that editable lines are automatically positioned to radio buttons.
 - 🐞 `<pro>Table.advancedBar`: Fixed the problem of undefined rendering of multi-select clear tags in the advanced search bar.
 
