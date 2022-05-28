@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
+- 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 
 ## 1.5.4
 

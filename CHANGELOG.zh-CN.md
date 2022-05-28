@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。
 - 🐞 `<pro>Dropdown`: 修复 disabled 属性会影响子元素的问题。
+- 🐞 `<pro>PerformanceTable`: 修复 selectedRowKeys 受控失效。
 
 ## 1.5.4
 
