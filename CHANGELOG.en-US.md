@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the `showCheckedStrategy` property value was `SHOW_PARENT` or `SHOW_CHILD` and some of the case values were displayed incorrectly. And fix the `TreeNode` component setting the `disabled` property incorrectly.
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
+- 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 
 ## 1.5.4
 

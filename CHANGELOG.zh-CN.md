@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。
 - 🐞 `<pro>TreeSelect`: 修复 showCheckedStrategy 属性值为 SHOW_PARENT 或 SHOW_CHILD 时, 部分情况值显示错误的问题。以及修复 TreeNode 组件设置 disabled 属性无效的问题。
 - 🐞 `<pro>Dropdown`: 修复 disabled 属性会影响子元素的问题。
+- 🐞 `<pro>PerformanceTable`: 修复 selectedRowKeys 受控失效。
 
 ## 1.5.4
 
