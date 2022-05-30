@@ -1,6 +1,7 @@
 import React, { Children, Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import { Size } from '../_util/enum';
 import Grid from './Grid';
 import Meta from './Meta';
@@ -43,6 +44,8 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
   activeTabKey?: string;
   defaultActiveTabKey?: string;
   tabsProps?: TabsProps;
+  selected?: boolean;
+  onSelectChange?: (selected: boolean) => void;
 }
 
 export interface CardState {
@@ -170,6 +173,8 @@ export default class Card extends Component<CardProps, CardState> {
       defaultActiveTabKey,
       onHeadClick,
       tabsProps,
+      selected,
+      onSelectChange = noop,
       ...others
     } = this.props;
     const { widerPadding } = this.state;
@@ -185,6 +190,7 @@ export default class Card extends Component<CardProps, CardState> {
       [`${prefixCls}-contain-grid`]: this.isContainGrid(),
       [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
       [`${prefixCls}-type-${type}`]: !!type,
+      [`${prefixCls}-selected`]: selected,
     });
 
     const loadingBlock = (
@@ -245,7 +251,11 @@ export default class Card extends Component<CardProps, CardState> {
     }
     const coverDom = cover ? <div className={`${prefixCls}-cover`}>{cover}</div> : null;
     const body = (
-      <div className={`${prefixCls}-body`} style={bodyStyle}>
+      <div
+        className={`${prefixCls}-body`}
+        style={{ ...bodyStyle, cursor: typeof onSelectChange === 'function' ? 'pointer' : 'none' }}
+        onClick={() => onSelectChange(!selected)}
+      >
         {loading ? loadingBlock : children}
       </div>
     );

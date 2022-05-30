@@ -27,6 +27,7 @@ A list can be used to display content related to a single subject. The content c
 | loadMore | Shows a load more content | string\|ReactNode | - |
 | pagination | Pagination [config](/components/pagination/), hide it by setting it to false | boolean \| object | false |
 | split | Toggles rendering of the split under the list item | boolean | true |
+| rowSelection | 是否可选择，[config](/#rowSelection) | boolean\|object | false |
 
 ### List grid props
 
@@ -46,6 +47,7 @@ A list can be used to display content related to a single subject. The content c
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
+| value | Unique key value. Assignment is required when using `rowSelection` | string \| number | - |
 | actions | The actions content of list item. If `itemLayout` is `vertical`, shows the content on bottom, otherwise shows content on the far right. | Array<ReactNode> | - |
 | extra | The extra content of list item. If `itemLayout` is `vertical`, shows the content on right, otherwise shows content on the far right. | string\|ReactNode | - |
 
@@ -56,3 +58,10 @@ A list can be used to display content related to a single subject. The content c
 | avatar | The avatar of list item | ReactNode | - |
 | description | The description of list item | string\|ReactNode | - |
 | title | The title of list item | string\|ReactNode | - |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | Selected value | Array[] | - |
+| onChange | Callback of select | function(selectedRowKeys) | - |

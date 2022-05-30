@@ -1,5 +1,6 @@
 import React, { Children, CSSProperties, FunctionComponent, memo, ReactElement, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
+import Checkbox from 'choerodon-ui/pro/lib/check-box';
 import { Col } from '../grid';
 import { ColumnType, ListGridType } from './index';
 import ConfigContext from '../config-provider/ConfigContext';
@@ -13,6 +14,7 @@ export interface ListItemProps {
   extra?: ReactNode;
   actions?: Array<ReactNode>;
   grid?: ListGridType;
+  value?: string | number;
 }
 
 export interface ListItemMetaProps {
@@ -56,17 +58,20 @@ function getGrid(grid: ListGridType, t: ColumnType) {
 }
 
 const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
-  const { grid, getPrefixCls } = useContext(ListContext);
+  const { grid, rowSelection, selectionDataSet, getPrefixCls } = useContext(ListContext);
   const {
     prefixCls: customizePrefixCls,
     children,
     actions,
     extra,
     className,
+    value,
     ...others
   } = props;
   const prefixCls = getPrefixCls('list', customizePrefixCls);
-  const classString = classNames(`${prefixCls}-item`, className);
+  const classString = classNames(`${prefixCls}-item`, className, {
+    [`${prefixCls}-selection`]: rowSelection,
+  });
 
   const metaContent: ReactElement<any>[] = [];
   const otherContent: ReactElement<any>[] = [];
@@ -130,10 +135,17 @@ const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
     </Col>
   ) : (
     <div {...others} className={classString}>
-      {extra && extraContent}
-      {!extra && metaContent}
-      {!extra && content}
-      {!extra && actionsContent}
+      {rowSelection &&
+        <div className={`${prefixCls}-selection-checkbox`}>
+          <Checkbox name="ckBox" value={value} dataSet={selectionDataSet} />
+        </div>
+      }
+      <>
+        {extra && extraContent}
+        {!extra && metaContent}
+        {!extra && content}
+        {!extra && actionsContent}
+      </>
     </div>
   );
 

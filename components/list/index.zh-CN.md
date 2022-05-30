@@ -29,6 +29,7 @@ cols: 1
 | pagination | 对应的 `pagination` 配置, 设置 `false` 不显示 | boolean\|object | false |
 | size | list 的尺寸 | `default` \| `large` \| `small` | `default` |
 | split | 是否展示分割线 | boolean | true |
+| rowSelection | 是否可选择，[配置项](/#rowSelection) | boolean\|object | false |
 
 ### List grid props
 
@@ -47,6 +48,7 @@ cols: 1
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| value | 唯一键值，在使用 `rowSelection` 时需要赋值 | string \| number | - |
 | actions | 列表操作组，根据 `itemLayout` 的不同, 位置在卡片底部或者最右侧 | Array&lt;ReactNode> | - |
 | extra | 额外内容, 通常用在 `itemLayout` 为 `vertical` 的情况下, 展示右侧内容; `horizontal` 展示在列表元素最右侧 | string\|ReactNode | - |
 
@@ -57,3 +59,10 @@ cols: 1
 | avatar | 列表元素的图标 | ReactNode | - |
 | description | 列表元素的描述内容 | string\|ReactNode | - |
 | title | 列表元素的标题 | string\|ReactNode | - |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | 指定选中项值 | Array[] | - |
+| onChange | 选中项发生变化时的回调 | function(selectedRowKeys) | - |
