@@ -227,7 +227,8 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   get drawerHeaderFooterCombined(): boolean {
-    return this.getContextConfig('drawerHeaderFooterCombined');
+    const {  drawer } = this.props;
+    return this.getContextConfig('drawerHeaderFooterCombined') && !!drawer;
   }
 
   get doc(): Document {
