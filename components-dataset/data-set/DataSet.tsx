@@ -3336,7 +3336,7 @@ Then the query method will be auto invoke.`,
             params.totalCount = realTotalCount;
           }
         }
-      } else {
+      } else if (autoCount === true) {
         params.count = 'Y';
       }
     }
