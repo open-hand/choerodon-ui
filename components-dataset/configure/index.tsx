@@ -187,7 +187,6 @@ const defaultConfig = {
   lovDefineUrl: code => `/sys/lov/lov_define?code=${code}`,
   lovQueryUrl: code => `/common/lov/dataset/${code}`,
   dataKey: 'rows',
-  autoCount: true,
   totalKey: 'total',
   countKey: 'needCountFlag',
   statusKey: '__status',

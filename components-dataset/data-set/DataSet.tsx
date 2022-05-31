@@ -606,7 +606,7 @@ export default class DataSet extends EventManager {
     return this.props.axios || this.getConfig('axios') || axios;
   }
 
-  get autoCount(): boolean {
+  get autoCount(): boolean | undefined {
     const { autoCount = this.getConfig('autoCount') } = this.props;
     return autoCount;
   }
@@ -3328,7 +3328,7 @@ Then the query method will be auto invoke.`,
       if (onlyCount) {
         params.count = 'N';
         params.onlyCount = 'Y';
-      } else if (!autoCount) {
+      } else if (autoCount === false) {
         params.count = 'N';
         if (usePaging) {
           const { realTotalCount } = this;
@@ -3336,6 +3336,8 @@ Then the query method will be auto invoke.`,
             params.totalCount = realTotalCount;
           }
         }
+      } else {
+        params.count = 'Y';
       }
     }
     return params;
