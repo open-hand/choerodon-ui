@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
+- 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
 
 ## 1.5.4
 
