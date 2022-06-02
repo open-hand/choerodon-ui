@@ -558,14 +558,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
-    if (this.isUnderRange(cursorDate, mode) && this.isDateOutOfFilter(cursorDate, selectedDate)) {
+    if (
+      this.isUnderRange(cursorDate, mode) && ((mode && mode !== ViewMode.date) || this.isDateOutOfFilter(cursorDate, selectedDate, mode))
+    ) {
       this.changeCursorDate(cursorDate);
     }
   }
 
   @autobind
   handleSelectedDateChange(selectedDate: Moment, mode?: ViewMode) {
-    if (this.isUnderRange(selectedDate, mode) && this.isDateOutOfFilter(selectedDate, selectedDate)) {
+    if (this.isUnderRange(selectedDate, mode) && this.isDateOutOfFilter(selectedDate, selectedDate, mode)) {
       this.setText(selectedDate.format(this.getDateFormat()));
     }
   }
@@ -573,6 +575,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @autobind
   handelViewModeChange(mode: ViewMode) {
     runInAction(() => {
+      this.hoverValue = undefined;
       this.mode = mode;
     });
   }
@@ -825,8 +828,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             if (this.isDateOutOfFilter(m, cursorDate)) {
               values.push(m);
             }
-          }
-          else {
+          } else {
             this.setText();
           }
         } else {
@@ -1002,17 +1004,17 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return true;
   }
 
-  isDateOutOfFilter(currentDate: Moment, selected: Moment): boolean {
+  isDateOutOfFilter(currentDate: Moment, selected: Moment, mode?: ViewMode): boolean {
     const { filter } = this.props;
     if (filter) {
-      return filter(currentDate, selected, this.getViewMode());
+      return filter(currentDate, selected, mode || this.getViewMode());
     }
     return true;
   }
 
   @autobind
-  isValidDate(currentDate: Moment, selected: Moment): boolean {
-    return this.isUnderRange(currentDate) && this.isDateOutOfFilter(currentDate, selected);
+  isValidDate(currentDate: Moment, selected: Moment, mode?: ViewMode): boolean {
+    return this.isUnderRange(currentDate, mode) && this.isDateOutOfFilter(currentDate, selected, mode);
   }
 
   @autobind
