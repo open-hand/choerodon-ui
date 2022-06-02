@@ -115,7 +115,6 @@ export interface Locale extends DataSetLocale {
     collapse_row: string;
     collapse_column: string;
     current_page_records: string;
-    created_records: string;
     cached_records: string;
     refresh: string;
     export_all: string,

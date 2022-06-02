@@ -27,7 +27,6 @@ timeline: true
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
 - 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
 - 💄 `<pro>Switch`: Optimize styles.
-- 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
 - 💄 `<pro>Table`: The display mode of optimized verification information is fixed to tooltip.
 - 💄 `<pro>Table`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 💄 `Notification`: Optimize long word wrapping rules.

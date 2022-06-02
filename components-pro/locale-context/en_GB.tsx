@@ -113,7 +113,6 @@ const locale: Locale = {
     collapse_row: 'Collapse the entire row',
     collapse_column: 'Collapse the entire column',
     current_page_records: 'Current page records',
-    created_records: 'New records',
     cached_records: 'Cached records',
     refresh: 'Refresh',
     export_all: 'Export all data',

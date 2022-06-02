@@ -116,7 +116,6 @@ const locale: Locale = {
     collapse_row: '行全体を折りたたむ',
     collapse_column: '列全体を折りたたむ',
     current_page_records: '現在のページレコード',
-    created_records: '新記録',
     cached_records: 'キャッシュされたレコード',
     refresh: '更新',
     export_all: 'すべてのデータ',
