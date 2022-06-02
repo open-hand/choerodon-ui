@@ -123,6 +123,7 @@ const defaults = {
   customizedLoad: defaultCustomizedLoad,
   tableShowRemovedRow: true,
   modalSectionBorder: true,
+  drawerHeaderFooterCombined: false,
   drawerSectionBorder: true,
   drawerTransitionName: 'slide-right',
   modalOkFirst: true,

@@ -173,7 +173,8 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   saveWrap(node) {
     this.wrap = node;
-    if (node) {
+    const { tableStore } = this.context;
+    if (node && !tableStore.inlineEdit) {
       this.alignEditor(this.cellNode);
     }
   }

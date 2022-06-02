@@ -45,6 +45,7 @@ title: Transfer
 |-----------|------------------------------------------|------------|--------|
 | direction | 渲染列表的方向 | `left` \| `right`  |  |
 | targetOption | 目标数据源 | Record[]  |  |
+| setTargetOption | 设置目标数据源 | (values: any[]) => void  |  |
 | onItemSelect | 勾选条目 | (Records: Record[])  |  |
 
 #### 参考示例

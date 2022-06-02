@@ -17,7 +17,7 @@ Use the tree component as a custom render list.
 import React from 'react';
 import { DataSet, Tree, Transfer } from 'choerodon-ui/pro';
 
-const treeData = [{
+const defaultLeftTreeData = [{
   expand: true,
   id: 2,
   text: '组织架构',
@@ -33,7 +33,7 @@ const treeData = [{
   parentId: 2,
 },
 {
-  expand: false,
+  expand: true,
   id: 12,
   text: '公司管理(react)',
   parentId: 2,
@@ -52,7 +52,16 @@ const treeData = [{
   id: 26,
   text: '报表设计',
   parentId: 24,
-  disabled: true,
+}];
+
+const defaultRightTreeData = [{
+  id: 13,
+  text: '绩效管理',
+  parentId: 12,
+},{
+  id: 14,
+  text: '考勤管理',
+  parentId: 12,
 }];
 
 function nodeRenderer({ record }) {
@@ -81,19 +90,24 @@ class App extends React.Component {
   render() {
     return (
       <Transfer style={{height: 300, width: 400, overflow: 'auto'}}>
-        {({ direction, targetOption, onItemSelect }) => {
+        {({ direction, targetOption, setTargetOption, onItemSelect }) => {
           if(direction === 'right'){
             if (!this.targetDs) {
               this.targetDs = new DataSet({
-                data: [],
+                data: defaultRightTreeData,
                 ...this.dsCommon,
+                events: {
+                  load:({ dataSet })=>{
+                    setTargetOption(dataSet.records)
+                  },
+                },
               });
             }
 
             // 当左边的数据转移到右边的时候，此时 targetOption 就会有数据
             // 这里的逻辑是模拟的数据穿梭，真实情况的数据请考虑 ds 结合接口查询
-            if (targetOption.length !== this.targetDs.records.length) {
-              if (targetOption.length < this.targetDs.records.length){
+            if (this.targetDs.status === 'ready' && targetOption.length !== this.targetDs.length) {
+              if (targetOption.length < this.targetDs.length){
                 // 向左 转移
                 const cacheRecords = [];
                 for(const record of this.targetDs.records){
@@ -102,7 +116,7 @@ class App extends React.Component {
                     cacheRecords.push(record);
                   }
                 }
-                let tempTreeData = treeData;
+                let tempTreeData = [...defaultLeftTreeData,...defaultRightTreeData];
                 for(const record of targetOption){
                   tempTreeData = tempTreeData.filter(x=>x.id !== Number(record.key));
                 }
@@ -112,10 +126,10 @@ class App extends React.Component {
                 
               } else {
                 // 向右 转移
-                this.targetDs.loadData(targetOption.map(x=>({
+                this.targetDs.loadData(targetOption.map(record=>({
                   expand: true,
-                  id: x.key,
-                  text: x.title,
+                  id: record.get('id'),
+                  text: record.get('text'),
                 })));
                 this.sourceDs.remove(this.sourceDs.selected, true);
               }
@@ -123,14 +137,14 @@ class App extends React.Component {
           } else if (direction === 'left') {
             if (!this.sourceDs) {
               this.sourceDs = new DataSet({
-                data: treeData,
+                data: defaultLeftTreeData,
                 ...this.dsCommon,
               });
             }
           }
           
           const onCheck = (checkedKeys, e) => {
-            onItemSelect(e.checkedNodes);
+            onItemSelect(e.checkedNodes.map(x=>x.record));
           }
           // 
           return (

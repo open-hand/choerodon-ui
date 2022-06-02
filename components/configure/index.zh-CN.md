@@ -110,6 +110,7 @@ const prefixCls = getConfig('prefixCls');
 | modalSectionBorder | 默认 Modal 的头和脚有边框线 | boolean | true |
 | drawerSectionBorder | 默认 Drawer 的头和脚有边框线 | boolean | true |
 | drawerTransitionName | 抽屉模式使用的动画， 可选值： 'slide-right' 'slide-left' 'slide-up' 'slide-down' | string | 'slide-right' |
+| drawerHeaderFooterCombined | 抽屉模式头脚组合展示 | boolean | false |
 | modalOkFirst | 默认 Modal 的 ok 按钮排在第一个 | boolean | true |
 | modalKeyboard | Modal 是否支持键盘 esc 关闭 | boolean | true |
 | modalAutoCenter | Modal 是否默认居中 | boolean | false |

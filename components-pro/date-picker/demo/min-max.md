@@ -27,9 +27,24 @@ import { ViewMode } from 'choerodon-ui/pro/lib/date-picker/enum';
 import moment from 'moment';
 import { observer } from 'mobx-react';
 
-function filterDate(currentDate) {
+function filterDate(currentDate, selected, mode) {
+  // currentDate 配合 mode，限制只能选择每周二
+  // 选择面板的mode会变化，需要根据mode变化设置是否过滤
+  if (mode !== 'date') {
+    // 设置日期之外的层级都可以点击，如月、年
+    return true;
+  }
   const dayInWeek = currentDate.get('d');
-  return dayInWeek !== 0 && dayInWeek !== 1;
+  return dayInWeek === 2;
+}
+
+function filterTime(currentDate, selected, mode) {
+  if (mode === 'time') {
+    // currentDate 配合 mode
+    // 限制只能选择每天的8点以后
+    return currentDate.get('hour') >= 8;
+  }
+  return true;
 }
 
 const minDisabledDate = (ds) => {
@@ -115,7 +130,7 @@ class App extends React.Component {
           <YearPicker max="2021-12-10" placeholder="string max"/>
         </Col>
         <Col span={12}>
-          <DateTimePicker min={moment()} placeholder="Select date time"/>
+          <DateTimePicker filter={filterTime} placeholder="Select date time" />
         </Col>
         <Col span={12}>
           <DatePicker dataSet={this.ds} name="startFilter" filter={minMaxFilter(minDisabledDate(this.ds))} placeholder="min by filter"/>

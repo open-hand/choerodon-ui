@@ -170,7 +170,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
         showLengthInfo
         valueChangeAction={ValueChangeAction.input}
       />
-      <SelectBox name="saveFilterValue" hidden={type === 'edit'}>
+      <SelectBox name="saveFilterValue">
         <SelectBox.Option value={1}>{$l('Table', 'query_option_yes')}</SelectBox.Option>
         <SelectBox.Option value={0}>{$l('Table', 'query_option_no')}</SelectBox.Option>
       </SelectBox>
@@ -401,7 +401,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       case 'create':
         return $l('Table', 'save_filter');
       case 'edit':
-        return $l('Table', 'filter_rename');
+        return $l('Table', 'filter_edit');
       default :
         return $l('Table', 'save_filter_as');
     }
@@ -556,13 +556,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const filterMenuRecord = filterMenuDataSet.current;
     const isSelected = String(filterMenuRecord && filterMenuRecord.get('filterName')) === String(record.get('searchId'));
     const isDefault = record.get('defaultFlag') === 1;
+    const isTenant = record.get('isTenant') === $l('Table', 'preset');
     const menu = (
       <Menu onClick={({ key, domEvent }) => {
         domEvent.preventDefault();
         domEvent.stopPropagation();
         if (key === 'filter_default') {
           setDefaultFlag(record.get('defaultFlag') ? 0 : 1, record);
-        } else if (key === 'filter_rename') {
+        } else if (key === 'filter_edit') {
           handleEdit(record);
         } else {
           handleDelete(record);
@@ -571,8 +572,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         <Menu.Item key='filter_default'>
           {record.get('defaultFlag') ? $l('Table', 'cancel_default') : $l('Table', 'set_default')}
         </Menu.Item>
-        <Menu.Item key='filter_rename'>
-          {$l('Table', 'rename')}
+        <Menu.Item key='filter_edit'>
+          {$l('Table', 'filter_edit')}
         </Menu.Item>
         <Menu.Item key='filter_delete'>
           {$l('Table', 'delete_button')}
@@ -637,7 +638,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
               {$l('Table', 'save_as')}
             </Button>
           )}
-          {((isChooseMenu && isTenant) || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length) ? null : (
+          {(isChooseMenu ? isTenant || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length : false) ? null : (
             <Button onClick={handleSave}>
               {$l('Table', 'save_button')}
             </Button>
