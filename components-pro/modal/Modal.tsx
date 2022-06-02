@@ -227,7 +227,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   get drawerHeaderFooterCombined(): boolean {
-    const {  drawer } = this.props;
+    const { drawer } = this.props;
     return this.getContextConfig('drawerHeaderFooterCombined') && !!drawer;
   }
 
@@ -254,23 +254,31 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   componentDidMount() {
     super.componentDidMount();
-    const { contentStyle, resizable = this.getContextConfig('modalResizable'), style } = this.props;
-    if (resizable) {
-      runInAction(() => {
-        this.minWidth = style && toPx(style.minWidth) || contentStyle && toPx(contentStyle.minWidth) || (this.element as HTMLDivElement).getBoundingClientRect().width;
-        this.minHeight = style && toPx(style.minHeight) || contentStyle && toPx(contentStyle.minHeight) || this.contentNode.offsetHeight;
-      });
-    }
+    this.initResizableRange(this.props);
   }
 
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     if (!isEqual(this.props, nextProps)) {
-      const { close = noop, update = noop } = nextProps;
+      const { close = noop, update = noop, resizable: nextResizable = false } = nextProps;
       Object.assign(this.childrenProps, {
         close,
         update,
         props: nextProps,
+      });
+
+      if (nextResizable !== this.props.resizable) {
+        this.initResizableRange(nextProps);
+      }
+    }
+  }
+
+  initResizableRange(props: ModalProps) {
+    const { resizable, contentStyle, style } = props;
+    if (resizable) {
+      runInAction(() => {
+        this.minWidth = style && toPx(style.minWidth) || contentStyle && toPx(contentStyle.minWidth) || (this.element as HTMLDivElement).getBoundingClientRect().width;
+        this.minHeight = style && toPx(style.minHeight) || contentStyle && toPx(contentStyle.minHeight) || this.contentNode.offsetHeight;
       });
     }
   }
