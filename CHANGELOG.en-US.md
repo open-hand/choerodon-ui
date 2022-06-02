@@ -40,6 +40,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the `showCheckedStrategy` property value was `SHOW_PARENT` or `SHOW_CHILD` and some of the case values were displayed incorrectly. And fix the `TreeNode` component setting the `disabled` property incorrectly.
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
+- 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 
 ## 1.5.4
 
