@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
 - 🌟 `math`: 新增 max, min 方法。
+- 🌟 `List`: 新增 DataSet 支持和新增 rowSelection 属性可选择支持。
+- 🌟 `Card`: 新增 selected、cornerPlacement 属性和 onSelectChange 回调。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。

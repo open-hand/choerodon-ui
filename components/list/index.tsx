@@ -1,11 +1,16 @@
-import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
+import React, { Children, cloneElement, ReactElement, ReactNode, ReactText } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import DataSetComponent from 'choerodon-ui/pro/lib/data-set/DataSetComponent';
+import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
+import DsRecord from 'choerodon-ui/pro/lib/data-set/Record';
+import Pagination from 'choerodon-ui/pro/lib/pagination';
+import { PaginationProps } from 'choerodon-ui/pro/lib/pagination/interface';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { Size } from '../_util/enum';
-import Pagination, { PaginationProps } from '../pagination';
 import { Row } from '../grid';
 import Item from './Item';
 import { ListContextProvider } from './ListContext';
@@ -28,6 +33,11 @@ export interface ListGridType {
   xxl?: ColumnCount;
 }
 
+export interface RowSelection {
+  selectedRowKeys?: ReactText[];
+  onChange?: (keys: ReactText[]) => void
+}
+
 export interface ListProps {
   bordered?: boolean;
   className?: string;
@@ -39,7 +49,14 @@ export interface ListProps {
   itemLayout?: string;
   loading?: boolean | SpinProps;
   loadMore?: ReactNode;
-  paginationProps?: PaginationProps;
+  paginationProps?: PaginationProps & {
+    current?: number,
+    defaultCurrent?: number,
+    defaultPageSize?: number,
+    tiny?: boolean,
+    size?: string,
+    onShowSizeChange?: Function;
+  };
   pagination?: any;
   prefixCls?: string;
   rowPrefixCls?: string;
@@ -52,13 +69,16 @@ export interface ListProps {
   footer?: ReactNode;
   empty?: ReactNode;
   locale?: Record<string, any>;
+  dataSet?: DataSet;
+  rowSelection?: RowSelection;
 }
 
 export interface ListLocale {
   emptyText: string;
 }
 
-export default class List extends Component<ListProps> {
+@observer
+export default class List extends DataSetComponent<ListProps> {
   static displayName = 'List';
 
   static Item: typeof Item = Item;
@@ -82,7 +102,7 @@ export default class List extends Component<ListProps> {
   };
 
   defaultPaginationProps = {
-    current: 1,
+    page: 1,
     pageSize: 10,
     onChange: (page: number, pageSize: number) => {
       const { pagination } = this.props;
@@ -98,17 +118,45 @@ export default class List extends Component<ListProps> {
 
   private keys: { [key: string]: string } = {};
 
+  selectionDataSet = new DataSet({
+    fields: [
+      { name: 'ckBox', multiple: true },
+    ],
+    data: [{ ckBox: [] }],
+    events: {
+      update: ({ value }) => {
+        const { rowSelection } = this.props;
+        if (rowSelection && rowSelection.onChange) {
+          rowSelection.onChange(value);
+          this.forceUpdate();
+        }
+      },
+    },
+  })
+
+  componentDidMount(): void {
+    const { rowSelection } = this.props;
+    if (rowSelection && rowSelection.selectedRowKeys) {
+      this.selectionDataSet.loadData([{ ckBox: [...rowSelection.selectedRowKeys] }])
+    }
+  }
+
   getContextValue() {
-    const { grid } = this.props;
+    const { grid, rowSelection } = this.props;
     const { getPrefixCls } = this.context;
     return {
       grid,
+      rowSelection,
       getPrefixCls,
+      selectionDataSet: rowSelection ? this.selectionDataSet : undefined,
     };
   }
 
-  renderItem = (item: ReactElement<any>, index: number) => {
-    const { dataSource, renderItem, rowKey } = this.props;
+  renderItem = (item: ReactElement<any> | DsRecord, index: number) => {
+    const { dataSource, renderItem, rowKey, dataSet } = this.props;
+    if (dataSet) {
+      return renderItem({ dataSet, record: item, index });
+    }
     let key;
 
     if (typeof rowKey === 'function') {
@@ -164,7 +212,7 @@ export default class List extends Component<ListProps> {
       loading,
       rowPrefixCls,
       spinPrefixCls,
-      paginationProps: propsPaginationProps,
+      dataSet,
       ...rest
     } = this.props;
     const prefixCls = this.getPrefixCls();
@@ -201,37 +249,45 @@ export default class List extends Component<ListProps> {
 
     const paginationProps = {
       ...this.defaultPaginationProps,
-      ...propsPaginationProps,
-      total: dataSource.length,
-      current: paginationCurrent,
       ...pagination || {},
+      total: dataSet ? dataSet.totalCount : dataSource.length,
+      page: (dataSet && dataSet.paging) ? dataSet.currentPage : paginationCurrent,
+      pageSize: (dataSet && dataSet.paging) ? dataSet.pageSize : pagination.pageSize,
     };
 
     const largestPage = Math.ceil(
       paginationProps.total / paginationProps.pageSize,
     );
-    if (paginationProps.current > largestPage) {
-      paginationProps.current = largestPage;
+    if (paginationProps.page > largestPage) {
+      paginationProps.page = largestPage;
     }
+    const isDsPagination = (dataSet && dataSet.paging);
     const paginationContent = pagination ? (
       <div className={`${prefixCls}-pagination`}>
         <Pagination
           {...paginationProps}
-          onChange={this.defaultPaginationProps.onChange}
+          onChange={!isDsPagination ? this.defaultPaginationProps.onChange : paginationProps.onChange}
+          dataSet={isDsPagination ? dataSet : undefined}
         />
       </div>
     ) : null;
 
-    let splitDataSource = [...dataSource];
+    let splitDataSource = dataSet ? dataSet.records : [...dataSource];
     if (pagination) {
       if (
+        !dataSet &&
         dataSource.length >
-        (paginationProps.current - 1) * paginationProps.pageSize
+        (paginationProps.page - 1) * paginationProps.pageSize
       ) {
         splitDataSource = [...dataSource].splice(
-          (paginationProps.current - 1) * paginationProps.pageSize,
+          (paginationProps.page - 1) * paginationProps.pageSize,
           paginationProps.pageSize,
         );
+      } else if (dataSet && !dataSet.paging) {
+        splitDataSource = dataSet.slice(
+          (paginationProps.page - 1) * paginationProps.pageSize,
+          paginationProps.pageSize * paginationProps.page,
+        )
       }
     }
 
