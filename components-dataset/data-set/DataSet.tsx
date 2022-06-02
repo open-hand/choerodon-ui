@@ -3396,6 +3396,7 @@ Then the query method will be auto invoke.`,
         pageSize: pageQuery.pagesize,
         page: pageQuery.page,
         count: pageQuery.count,
+        defaultCount: pageQuery.defaultCount,
         totalCount: pageQuery.totalCount,
         onlyCount: pageQuery.onlyCount,
       });
