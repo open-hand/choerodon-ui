@@ -202,6 +202,7 @@ export interface QueryParams {
   page?: number | undefined;
   pagesize?: number | undefined;
   count?: 'Y' | 'N' | undefined;
+  defaultCount?: 'Y' | 'N' | undefined;
   onlyCount?: 'Y' | 'N' | undefined;
   totalCount?: number | undefined;
 }
@@ -604,11 +605,6 @@ export default class DataSet extends EventManager {
 
   get axios(): AxiosInstance {
     return this.props.axios || this.getConfig('axios') || axios;
-  }
-
-  get autoCount(): boolean | undefined {
-    const { autoCount = this.getConfig('autoCount') } = this.props;
-    return autoCount;
   }
 
   get dataKey(): string {
@@ -3316,7 +3312,8 @@ Then the query method will be auto invoke.`,
   private generatePageQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean, usePaging?: boolean): QueryParams {
     const params: QueryParams = {};
     if (page >= 0) {
-      const { paging, pageSize, autoCount } = this;
+      const { paging, pageSize, props: { autoCount } } = this;
+      const defaultCount = this.getConfig('autoCount');
       if (isNumber(pageSizeInner)) {
         params.page = page;
         params.pagesize = pageSizeInner;
@@ -3325,19 +3322,23 @@ Then the query method will be auto invoke.`,
         params.page = page;
         params.pagesize = pageSize;
       }
-      if (onlyCount) {
+
+      if (autoCount === false) {
         params.count = 'N';
-        params.onlyCount = 'Y';
-      } else if (autoCount === false) {
-        params.count = 'N';
-        if (usePaging) {
-          const { realTotalCount } = this;
-          if (realTotalCount !== undefined && isFinite(realTotalCount)) {
-            params.totalCount = realTotalCount;
-          }
-        }
       } else if (autoCount === true) {
         params.count = 'Y';
+      } else if (defaultCount === false) {
+        params.defaultCount = 'N';
+      } else if (defaultCount === true) {
+        params.defaultCount = 'Y';
+      }
+      if (onlyCount) {
+        params.onlyCount = 'Y';
+      } else if (usePaging && (autoCount === false || defaultCount === false)) {
+        const { realTotalCount } = this;
+        if (realTotalCount !== undefined && isFinite(realTotalCount)) {
+          params.totalCount = realTotalCount;
+        }
       }
     }
     return params;

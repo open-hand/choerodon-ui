@@ -143,6 +143,7 @@ export interface Config {
     page?: number;
     pageSize?: number;
     count?: 'Y' | 'N';
+    defaultCount?: 'Y' | 'N';
     onlyCount?: 'Y' | 'N';
     totalCount?: number;
     sortName?: string;
