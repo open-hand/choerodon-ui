@@ -468,6 +468,25 @@ export default class Modal extends ViewComponent<ModalProps> {
     });
   }
 
+  getDrawerOffset(drawerTransitionName): number {
+    const { style } = this.props;
+    if (style) {
+      switch (drawerTransitionName) {
+        case 'slide-right':
+          return toPx(style.marginRight) || 0;
+        case 'slide-left':
+          return toPx(style.marginLeft) || 0;
+        case 'slide-up':
+          return toPx(style.marginTop) || 0;
+        case 'slide-down':
+          return toPx(style.marginBottom) || 0;
+        default:
+          return toPx(style.marginRight) || 0;
+      }
+    }
+    return 0;
+  }
+
   @autobind
   handleResize(e) {
     e.persist();
@@ -553,8 +572,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     const { contentNode, drawerTransitionName, element, element: { offsetParent, offsetLeft: elementOffsetTop, offsetTop: elementOffsetLeft }, minWidth, minHeight } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
-    const maxWidth = embeddedOffsetWidth || docClientWidth;
-    const maxHeight = embeddedOffsetHeight || docClientHeight;
+    const drawerOffset = this.getDrawerOffset(drawerTransitionName);
+    const maxWidth = (embeddedOffsetWidth || docClientWidth) - drawerOffset;
+    const maxHeight = (embeddedOffsetHeight || docClientHeight) - drawerOffset;
     let { offsetHeight: height, offsetWidth: width } = contentNode;
     return (me) => {
       let { clientX, clientY } = me;
@@ -567,10 +587,10 @@ export default class Modal extends ViewComponent<ModalProps> {
           width = getMath(maxWidth - clientX, minWidth, maxWidth);
           break;
         case 'slide-left':
-          width = getMath(clientX, minWidth, maxWidth);
+          width = getMath(clientX - drawerOffset, minWidth, maxWidth);
           break;
         case 'slide-up':
-          height = getMath(clientY, minHeight, maxHeight);
+          height = getMath(clientY - drawerOffset, minHeight, maxHeight);
           break;
         case 'slide-down':
           height = getMath(maxHeight - clientY, minHeight, maxHeight);
