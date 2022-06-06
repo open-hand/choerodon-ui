@@ -1,21 +1,43 @@
 import React, { CSSProperties, ReactNode } from 'react';
+import { colorHexReg } from 'choerodon-ui/dataset/validator/rules/typeMismatch';
+import Icon from 'choerodon-ui/lib/icon';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import defaultTo from 'lodash/defaultTo';
 import isEmpty from 'lodash/isEmpty';
 import isNil from 'lodash/isNil';
+import round from 'lodash/round';
+import pull from 'lodash/pull';
+import concat from 'lodash/concat';
+import classNames from 'classnames';
+import NumberField from '../number-field';
+import TextField from '../text-field';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
 import { FieldType } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
+import { ViewMode, ColorUnit } from './enum';
+import { defaultColorMap, commonColorMap } from './presetColorMap';
+
+const FILL_COLOR = '#FFFFFF';
+const COLOR_LINE_LENGTH = 9;
+const COLOR_STORAGE_ITEM = 'color.picker.customized.used';
+
+// 相对亮度计算公式：L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+// 最高亮度：L = (0.2126 * 255 + 0.7152 * 255 + 0.0722 * 255) - 1.05
+const COLOR_MAX_LIGHT = 253.95;
 
 function getNodeRect(node): ClientRect {
   return node.getBoundingClientRect();
 }
 
-export type ColorPickerProps = TriggerFieldProps
+export interface ColorPickerProps extends TriggerFieldProps {
+  mode?: ViewMode;
+  preset?: boolean;
+  buttonRenderer?: (color: string) => ReactNode;
+}
 
 @observer
 export default class ColorPicker extends TriggerField<ColorPickerProps> {
@@ -25,6 +47,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     ...TriggerField.defaultProps,
     suffixCls: 'color-picker',
     clearButton: false,
+    mode: ViewMode.default,
+    preset: false,
   };
 
   gradient: HTMLDivElement | null;
@@ -48,7 +72,18 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     a: 1,
   };
 
+  RGBA = {
+    r: 255,
+    g: 0,
+    b: 0,
+    a: 1,
+  };
+
   @observable hueColor?: string;
+
+  @observable footerEditFlag?: boolean;
+
+  @observable gradientHidden?: boolean;
 
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
@@ -58,6 +93,14 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       }),
       typeMismatch: $l('ColorPicker', 'type_mismatch'),
     };
+  }
+
+  get colorPickUsed(): string[] {
+    const list = JSON.parse(localStorage.getItem(COLOR_STORAGE_ITEM) || '[]');
+    if (list.length < COLOR_LINE_LENGTH) {
+      return concat(list, Array(COLOR_LINE_LENGTH - list.length).fill(FILL_COLOR));
+    }
+    return list;
   }
 
   saveGradientRef = node => (this.gradient = node);
@@ -72,14 +115,26 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   saveOpacityPointerRef = node => (this.opacityPointer = node);
 
+  constructor(props, context) {
+    super(props, context);
+    runInAction(() => {
+      this.gradientHidden = true;
+    });
+  }
+
   componentDidUpdate() {
     const { popup } = this;
     if (popup) {
-      const { h, s, v } = this.HSV;
-      const { huePointer, selectPointer, hue, gradient } = this;
+      const { h, s, v, a } = this.HSV;
+      const { huePointer, opacityPointer, selectPointer, hue, opacity, gradient } = this;
+      const { a: Alpha } = this.hsvToRGB(h, s, v, a);
       if (huePointer && hue) {
         const { width } = getNodeRect(hue);
-        this.setHuePointer((width * h) / 360, huePointer, hue, false);
+        this.setSliderPointer((width * h) / 360, huePointer, hue, false);
+      }
+      if (opacityPointer && opacity) {
+        const { width } = getNodeRect(opacity);
+        this.setSliderPointer(width * Alpha, opacityPointer, opacity, false);
       }
       if (selectPointer && gradient) {
         const { width, height } = getNodeRect(gradient);
@@ -91,10 +146,16 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   syncValueOnBlur(value) {
-    if (value !== '' && value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
-      value = `#${value}`;
+    const { footerEditFlag, gradientHidden, props: { preset } } = this;
+    if (!footerEditFlag) {
+      if (value !== '' && value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
+        value = `#${value}`;
+      }
+      super.syncValueOnBlur(value);
     }
-    super.syncValueOnBlur(value);
+    if (preset && !gradientHidden) {
+      this.setGradientHidden(true);
+    }
   }
 
   getFieldType(): FieldType {
@@ -103,38 +164,79 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   getPrefix(): ReactNode {
     const { prefixCls } = this;
-    return (
-      <div className={`${prefixCls}-prefix`}>
-        <span className={`${prefixCls}-color`} style={{ backgroundColor: this.getValue() }} />
-      </div>
-    );
+    const { mode } = this.props
+    if (mode !== ViewMode.button) {
+      return (
+        <div className={`${prefixCls}-prefix`}>
+          <span className={`${prefixCls}-color`} style={{ backgroundColor: this.getValue() }} />
+        </div>
+      );
+    }
   }
 
   getPopupFooter() {
-    const { prefixCls } = this;
+    const { prefixCls, RGBA } = this;
+    const className = `${prefixCls}-popup-footer-slider-pointer`;
     const huePointerProps = {
       onMouseDown: this.handleHPMouseDown,
       ref: this.saveHuePointerRef,
-      className: `${prefixCls}-popup-footer-slider-pointer`,
+      className,
     };
+    const opacityPointerProps = {
+      onMouseDown: this.handleOpacityMouseDown,
+      ref: this.saveOpacityPointerRef,
+      className,
+    };
+    const inputProps = {
+      onInput: this.handleFooterInput,
+      onFocus: this.handleFooterFocus,
+    };
+    const { r, g, b, a } = RGBA;
     return (
       <div className={`${prefixCls}-popup-footer`}>
-        <div ref={this.saveHueRef} className={`${prefixCls}-popup-footer-slider`}>
-          <div onClick={this.handleHueClick} className="hue" />
-          <div {...huePointerProps} />
+        <div className={`${prefixCls}-popup-footer-slide-bar`}>
+          <div>
+            <div ref={this.saveHueRef} className={`${prefixCls}-popup-footer-slider`}>
+              <div onClick={this.handleHueClick} className="hue" />
+              <div {...huePointerProps} />
+            </div>
+            <div ref={this.saveOpacityRef} className={`${prefixCls}-popup-footer-slider`}>
+              <div onClick={this.handleOpacityClick} className="opacity" style={{ background: `linear-gradient(to right, rgba(${r}, ${g}, ${b}, 0), rgb(${r}, ${g}, ${b}))` }} />
+              <div {...opacityPointerProps} />
+            </div>
+          </div>
+          <span className={`${prefixCls}-popup-footer-color`} style={{ background: `rgba(${r}, ${g}, ${b}, ${a})` }} />
         </div>
-        <div ref={this.saveOpacityRef} className={`${prefixCls}-popup-footer-slider opacity`}>
-          <div
-            ref={this.saveOpacityPointerRef}
-            className={`${prefixCls}-popup-footer-slider-pointer`}
-          />
+        <div className={`${prefixCls}-popup-footer-input`}>
+          <div className={`${prefixCls}-popup-footer-input-color`} >
+            <TextField
+              name={ColorUnit.hex}
+              restrict={colorHexReg}
+              value={this.getValue().replace('#', '')}
+              {...inputProps}
+            />
+            <span>{ColorUnit.hex}</span>
+          </div>
+          {
+            Object.keys(RGBA).map(item => (
+              <div className={`${prefixCls}-popup-footer-input-color`} key={item}>
+                <NumberField
+                  key={item}
+                  name={item}
+                  value={item === ColorUnit.a ? round(RGBA[item], 2) : RGBA[item]}
+                  {...inputProps}
+                />
+                <span>{ColorUnit[item]}</span>
+              </div>
+            ))
+          }
         </div>
       </div>
     );
   }
 
-  getPopupContent() {
-    const { prefixCls } = this;
+  getGradientPopupContent() {
+    const { gradientHidden, prefixCls, props: { preset } } = this;
     const gradientProps = {
       className: `${prefixCls}-popup-body-gradient`,
       onClick: this.handleGPClick,
@@ -149,7 +251,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.setColor(this.getValue());
     }
     return (
-      <div className={`${prefixCls}-popup-view`}>
+      <div className={`${prefixCls}-popup-view`} style={{ display: preset && !gradientHidden || !preset ? 'block' : 'none' }}>
+        <div className={`${prefixCls}-popup-view-picker-name`}>{$l('ColorPicker', 'pick_color_view')}</div>
         <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: defaultTo(this.hueColor, '#ff0000') }}>
           <div {...gradientProps} />
           <div {...gradientPointerProps} />
@@ -157,6 +260,59 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         {this.getPopupFooter()}
       </div>
     );
+  }
+
+  getPresetData(list: string[]) {
+    const { prefixCls, hexToRGB } = this;
+    const className = `${prefixCls}-popup-view-palettes`;
+    return (
+      <div className={className}>
+        {
+          [...list].map((item, index) => {
+            const { r, g, b } = hexToRGB(item);
+            const border = (0.2126 * r + 0.7152 * g + 0.0722 * b) > COLOR_MAX_LIGHT;
+            const key = `${item}_${index}`;
+            return (
+              <div
+                className={classNames(
+                  `${className}-block`,
+                  {
+                    [`${className}-block-border`]: border,
+                  })}
+                style={{ backgroundColor: item }}
+                key={key}
+                onClick={() => this.setColor(item)}
+              />)
+          })
+        }
+      </div>
+    )
+  }
+
+  getPopupContent() {
+    const { prefixCls, props: { preset } } = this;
+    if (preset) {
+      return (<div className={`${prefixCls}-popup-view-preset`}>
+        <div onClick={() => this.setGradientHidden(true)}>
+          {this.getPresetData(commonColorMap)}
+          {this.getPresetData(defaultColorMap)}
+          <div className={`${prefixCls}-popup-picker-name`}>{$l('ColorPicker', 'used_view')}</div>
+          {this.getPresetData(this.colorPickUsed)}
+        </div>
+        <div className={`${prefixCls}-popup-view-gradient`}>
+          <div className={`${prefixCls}-popup-picker-name`} onClick={this.onExpandChange}>
+            <div>
+              <Icon type="color_lens-o" />
+              <span>{$l('ColorPicker', 'custom_view')}</span>
+            </div>
+            <Icon type="navigate_next" />
+          </div>
+          {this.getGradientPopupContent()}
+        </div>
+      </div>);
+    }
+
+    return this.getGradientPopupContent();
   }
 
   setHSV(h, s, v, a) {
@@ -175,6 +331,27 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
   }
 
+  setRGBA(r, g, b, a) {
+    const { RGBA } = this;
+    if (!r || r > 255) r = 255;
+    if (!g || g > 255) g = 255;
+    if (!b || b > 255) b = 255;
+    if (!a || a > 1) a = 1;
+
+    if (r && r !== RGBA.r) {
+      RGBA.r = round(r);
+    }
+    if (g && g !== RGBA.g) {
+      RGBA.g = round(g);
+    }
+    if (b && b !== RGBA.b) {
+      RGBA.b = round(b);
+    }
+    if (a && a !== RGBA.a) {
+      RGBA.a = a;
+    }
+  }
+
   @action
   setHueColor(color) {
     if (color !== this.hueColor) {
@@ -182,13 +359,28 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
   }
 
+  @action
+  setFooterEditFlag(footerEditFlag: boolean) {
+    if (footerEditFlag !== this.footerEditFlag) {
+      this.footerEditFlag = footerEditFlag;
+    }
+  }
+
+  @action
+  setGradientHidden(gradientHidden: boolean) {
+    if (gradientHidden !== this.gradientHidden) {
+      this.gradientHidden = gradientHidden;
+    }
+  }
+
   @autobind
   setColor(color) {
     if (!isNil(color) && color.slice(0, 1) === '#' && color.length > 3) {
-      const { gradient, selectPointer, hue, huePointer } = this;
+      const { gradient, selectPointer, hue, huePointer, opacity, opacityPointer } = this;
       const { r, g, b, a } = this.hexToRGB(color);
       const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
       this.setHSV(h, s, v, a);
+      this.setRGBA(r, g, b, a);
       const { r: hr, g: hg, b: hb, a: ha } = this.hsvToRGB(h, 1, 1, 1);
       const hueColor = this.rgbToHEX(hr, hg, hb, ha);
       this.setHueColor(hueColor);
@@ -197,9 +389,15 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         const left = s * width;
         const top = height - v * height;
         const { width: hueWidth } = getNodeRect(hue);
+        const { width: opacityWidth } = getNodeRect(opacity);
         const hueLeft = (h / 360) * hueWidth;
-        this.setHuePointer(hueLeft, huePointer, hue, false);
+        const opacityLeft = a * opacityWidth;
+        this.setSliderPointer(hueLeft, huePointer, hue, false);
+        this.setSliderPointer(opacityLeft, opacityPointer, opacity, false);
         this.setGradientPointer(left, top, selectPointer, gradient, false);
+      }
+      if (this.getValue() !== color) {
+        this.prepareSetValue(color);
       }
     }
   }
@@ -218,11 +416,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   rgbToHEX(r, g, b, a) {
     function hex(num) {
       const hexNum = num.toString(16);
-      return hexNum.length === 1 ? `0${hexNum}` : hexNum;
+      return hexNum.length === 1 ? `0${hexNum}` : hexNum[1] === '.' ? `0${hexNum[0]}` : hexNum;
     }
 
     if (a !== 1) {
-      return `#${hex(r)}${hex(g)}${hex(b)}${hex((a * 255) / 10)}`;
+      return `#${hex(r)}${hex(g)}${hex(b)}${hex(round(a * 255))}`;
     }
     return `#${hex(r)}${hex(g)}${hex(b)}`;
   }
@@ -242,14 +440,15 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     } else {
       results = hex;
     }
-    results = results.slice(0, 6);
-    const result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(results);
+    const hasAlpha = results.length === 8;
+    results = results.slice(0, hasAlpha ? 8 : 6);
+    const result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i.exec(results);
     return result
       ? {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16),
-        a: 1,
+        a: hasAlpha ? parseInt(result[4], 16) / 255 : 1,
       }
       : {
         r: 255,
@@ -342,16 +541,17 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       const { positionToHSV, rgbToHEX, hsvToRGB } = this;
       const { left, top } = setGradientPointer(e.clientX, e.clientY, selectPointer, gradient, true);
       const { height, width } = getNodeRect(gradient);
-      const { h, s, v, a: opacity } = positionToHSV(left, top, width, height);
+      const { h, s, v, a: ha } = positionToHSV(left, top, width, height);
       this.setHSV(undefined, s, v, undefined);
-      const { r, g, b, a } = hsvToRGB(h, s, v, opacity);
+      const { r, g, b, a } = hsvToRGB(h, s, v, ha);
       const hexColor = rgbToHEX(r, g, b, a);
+      this.setRGBA(r, g, b, a);
       this.prepareSetValue(hexColor);
     }
   }
 
   @autobind
-  setHuePointer(x, pointer, wrap, isClient) {
+  setSliderPointer(x, pointer, wrap, isClient) {
     const { left: wrapX, width: wrapW } = getNodeRect(wrap);
     const { width: pointerW } = getNodeRect(pointer);
     let left;
@@ -361,27 +561,62 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       left = x;
     }
     pointer.style.left = `${left - pointerW / 2}px`;
-    if (left === wrapW) {
-      return { left: 0, wrapW };
-    }
     return { left, wrapW };
   }
 
   @autobind
   handleHueClick(e) {
-    const { hue, huePointer, setHuePointer, hsvToRGB, rgbToHEX } = this;
+    const { hue, huePointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
     if (hue && huePointer) {
-      const { left, wrapW } = setHuePointer(e.clientX, huePointer, hue, true);
+      const { left, wrapW } = setSliderPointer(e.clientX, huePointer, hue, true);
       const h = Math.floor((left / wrapW) * 360);
-      const { s, v, a: opacity } = this.HSV;
+      const { s, v, a: ha } = this.HSV;
       this.setHSV(h, undefined, undefined, undefined);
       const { r, g, b, a } = hsvToRGB(h, 1, 1, 1);
-      const { r: valueR, g: valueG, b: valueB, a: valueA } = hsvToRGB(h, s, v, opacity);
+      const { r: valueR, g: valueG, b: valueB, a: valueA } = hsvToRGB(h, s, v, ha);
       const hueColor = rgbToHEX(r, g, b, a);
       const valueColor = rgbToHEX(valueR, valueG, valueB, valueA);
+      this.setRGBA(valueR, valueG, valueB, valueA);
       this.setHueColor(hueColor);
       this.prepareSetValue(valueColor);
     }
+  }
+
+  @autobind
+  handleOpacityClick(e) {
+    const { opacity, opacityPointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
+    if (opacity && opacityPointer) {
+      const { left, wrapW } = setSliderPointer(e.clientX, opacityPointer, opacity, true);
+      const a = round(left / wrapW, 2);
+      const { h, s, v } = this.HSV;
+      const { r, g, b } = hsvToRGB(h, s, v, a);
+      this.setHSV(h, s, v, a);
+      this.setRGBA(r, g, b, a);
+      this.prepareSetValue(rgbToHEX(r, g, b, a));
+    }
+  }
+
+  @autobind
+  handleFooterInput(e: React.ChangeEvent<HTMLInputElement>) {
+    const { target, target: { name } }: { target: any } = e;
+    let { value } = target;
+
+    const rgba = this.RGBA;
+    if (name === ColorUnit.hex) {
+      const { r, g, b, a } = this.hexToRGB(value);
+      this.setRGBA(r, g, b, a);
+    } else {
+      value = Number(value);
+      if (!isNaN(value)) {
+        rgba[name] = value;
+        const { r, g, b, a } = rgba;
+        this.setRGBA(r, g, b, a);
+      }
+    }
+    const { r, g, b, a } = this.RGBA;
+    const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
+    this.setHSV(h, s, v, a);
+    this.prepareSetValue(this.rgbToHEX(r, g, b, a));
   }
 
   @autobind
@@ -406,10 +641,58 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   @autobind
+  handleOpacityMouseDown() {
+    this.eventManager
+      .addEventListener('mousemove', this.handleOpacityClick)
+      .addEventListener('mouseup', this.onOpacityMouseUp);
+  }
+
+  @autobind
   onHPMouseUp() {
     this.eventManager
       .removeEventListener('mousemove', this.handleHueClick)
       .removeEventListener('mouseup', this.onHPMouseUp);
+  }
+
+  @autobind
+  onOpacityMouseUp() {
+    this.eventManager
+      .removeEventListener('mousemove', this.handleOpacityClick)
+      .removeEventListener('mouseup', this.onOpacityMouseUp);
+  }
+
+  @autobind
+  onExpandChange(e) {
+    e.stopPropagation();
+    this.setGradientHidden(!this.gradientHidden);
+    this.forceUpdate();
+  }
+
+  @autobind
+  handleFocus(e) {
+    this.setFooterEditFlag(false);
+    super.handleFocus(e);
+  }
+
+  @autobind
+  handleFooterFocus() {
+    this.setFooterEditFlag(true);
+  }
+
+  @action
+  setPopup(statePopup: boolean) {
+    super.setPopup(statePopup);
+    const value = this.getValue();
+    if (!statePopup && colorHexReg.test(value)) {
+      let { colorPickUsed } = this;
+      const valueIndex = colorPickUsed.indexOf(value);
+      if (valueIndex === -1) {
+        colorPickUsed = [...new Set([value, ...colorPickUsed])].slice(0, COLOR_LINE_LENGTH);
+      } else {
+        colorPickUsed = [...new Set([value, ...pull(colorPickUsed, value)])];
+      }
+      localStorage.setItem(COLOR_STORAGE_ITEM, JSON.stringify(colorPickUsed));
+    }
   }
 
   @autobind
@@ -427,6 +710,24 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   getTriggerIconFont() {
     return 'palette';
+  }
+
+  getSuffix() {
+    const { prefixCls, props: { mode, renderer } } = this;
+    if (mode === ViewMode.button) {
+      const value = this.getValue();
+      if (renderer) {
+        return this.processRenderer(value);
+      }
+      return <span className={`${prefixCls}-button-color`} style={{ backgroundColor: value }} />
+    }
+  }
+
+  getWrapperClassNames() {
+    const { prefixCls } = this;
+    return super.getWrapperClassNames({
+      [`${prefixCls}-button`]: this.props.mode === ViewMode.button,
+    });
   }
 
   renderLengthInfo(): ReactNode {

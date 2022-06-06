@@ -2,35 +2,86 @@
 @import '../../trigger-field/style/mixin';
 
 @color-prefix: ~'@{c7n-pro-prefix}-color-picker';
-@color-picker-width: 2.8rem;
+@input-prefix: ~'@{c7n-pro-prefix}-input';
+@color-picker-width: 2.4rem;
 
 .@{color-prefix} {
   .trigger-field;
+
   // cursor: pointer;
   // width: 0.6rem;
   &-prefix {
     height: 0.18rem;
     padding: 0 0.03rem;
   }
+
   &-color {
     display: block;
     width: 100%;
     height: 100%;
     border-radius: @border-radius-base;
   }
+
   &-popup {
     width: @color-picker-width;
-    padding: 0.05rem;
     line-height: 1.5;
     background-clip: padding-box;
+
+    &-view {
+      padding: 0.08rem;
+
+      &-preset {
+        padding: 0.08rem 0;
+      }
+
+      &-palettes {
+        margin: 0.04rem 0;
+        padding: 0 0.12rem;
+
+        &-block {
+          display: inline-block;
+          width: 0.16rem;
+          height: 0.16rem;
+          margin: 0.01rem 0.04rem;
+
+          &-border {
+            border: @border-width-base @border-style-base rgba(226, 228, 232, 1);
+          }
+        }
+      }
+
+      &-gradient {
+        position: relative;
+        padding-top: 0.08rem;
+        border-top: @border-width-base @border-style-base #EEEFF1;
+
+        .@{color-prefix}-popup-view {
+          position: absolute;
+          top: 0;
+          left: 2.4rem;
+          display: none;
+          width: 2.4rem;
+          background-color: @component-background;
+          box-shadow: @box-shadow-base;
+        }
+      }
+
+      &-picker-name {
+        margin-bottom: 0.08rem;
+        font-size: 0.12rem;
+      }
+    }
+
     &-body {
       position: relative;
       height: 1.5rem;
+
       &-gradient {
         height: 100%;
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%),
           linear-gradient(to right, #fff 0, rgba(255, 255, 255, 0) 100%);
       }
+
       &-selector {
         position: absolute;
         // left: 0.2rem;
@@ -40,48 +91,164 @@
         height: 0.1rem;
         border: @border-width-base @border-style-base #fff;
         border-radius: 50%;
+
         &:hover,
         :active {
           cursor: pointer;
         }
       }
     }
+
     &-footer {
-      padding: 0.12rem 0.15rem;
+      padding-top: 0.09rem;
+
+      &-slide-bar {
+        display: flex;
+        padding: 0.01rem 0;
+
+        &>div {
+          flex: 1;
+          padding: 0.01rem 0;
+        }
+      }
+
       &-slider {
         position: relative;
-        height: 0.12rem;
-        // margin-bottom: 0.1rem;
+        height: 0.08rem;
+
         .hue {
           height: 100%;
-          background: linear-gradient(
-            to right,
-            red 0,
-            #ff0 16%,
-            #0f0 33%,
-            #0ff 50%,
-            #00f 67%,
-            #f0f 84%,
-            #ff0004 100%
-          );
-          border-radius: @border-radius-base;
+          background: linear-gradient(to right,
+              red 0,
+              #ff0 16%,
+              #0f0 33%,
+              #0ff 50%,
+              #00f 67%,
+              #f0f 84%,
+              #ff0004 100%);
+          border-radius: 0.05rem;
         }
-        &.opacity {
-          display: none;
-          background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0));
+
+        .opacity {
+          position: relative;
+          height: 100%;
+          margin-top: 0.04rem;
+          border-radius: 0.05rem;
+
+          &::after {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-conic-gradient(@background-color-light 0 25%, transparent 0 50%);
+            background-size: 8px 8px;
+            content: '';
+          }
         }
+
         &-pointer {
           position: absolute;
           top: -0.01rem;
-          left: -0.07rem;
-          width: 0.14rem;
-          height: 0.14rem;
+          left: -0.05rem;
+          width: 0.10rem;
+          height: 0.10rem;
           background-color: #fff;
+          border: @border-width-base @border-style-base rgba(0, 0, 0, 0.3);
           border-radius: 50%;
           box-shadow: @box-shadow-base;
           cursor: pointer;
         }
       }
+
+      &-color {
+        width: 0.22rem;
+        height: 0.22rem;
+        margin-left: 0.1rem;
+        border: @border-width-base @border-style-base rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+      }
+
+      &-input {
+        display: flex;
+        margin-top: 0.09rem;
+
+        &-color>span:last-of-type {
+          display: block;
+          margin-top: 0.04rem;
+          color: @text-color-secondary;
+          font-size: 0.12rem;
+        }
+
+        &-color:first-of-type {
+          position: relative;
+          width: 0.8rem;
+          text-align: center;
+
+          .@{input-prefix} {
+            padding-left: 0.2rem;
+          }
+
+          &::after {
+            position: absolute;
+            top: 0.06rem;
+            left: 0.08rem;
+            color: @text-color-secondary;
+            content: '#';
+          }
+        }
+
+        &-color:not(&-color:first-of-type) {
+          flex: 1;
+          margin-left: 0.04rem;
+          text-align: center;
+        }
+
+        .@{input-prefix}-number {
+          padding: 0.04rem;
+          font-size: 0.12rem;
+          text-align: left;
+          border-color: rgba(226, 228, 232, 1);
+        }
+      }
+    }
+
+    &-picker-name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.16rem;
+      font-size: 0.12rem;
+
+      .icon {
+        margin-right: 0.04rem;
+        font-size: 0.16rem;
+      }
+
+      .icon-color_lens-o {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  &-button {
+    &>label {
+      align-items: center;
+    }
+
+    input.@{color-prefix} {
+      width: 0;
+      padding: 0;
+      border: none;
+    }
+
+    .@{color-prefix}-suffix {
+      right: inherit;
+    }
+
+    &-color {
+      width: 0.2rem;
+      height: 0.2rem;
+      border: @border-width-base @border-style-base @border-color-base;
+      border-radius: @border-radius-base;
     }
   }
 }
