@@ -8,7 +8,7 @@ title:
 ## zh-CN
 
 查询时通知后端是否自动统计总数
-当 autoCount 设为 false 时， 查询的参数默认会带上count=N的参数，参数名和值可以通过全局配置 generatePageQuery 设置
+当 autoCount 设为 false 时， 查询的参数默认会带上count=N的参数（通过 configure 设置默认 autoCount 属性时，参数为defaultCount=N，用于区分全局设置和自定义设置），参数名和值可以通过全局配置 generatePageQuery 设置
 当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置
 
 ## en-US
