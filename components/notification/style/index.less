@@ -109,8 +109,13 @@
     box-shadow: @shadow-2;
     transition: all @animation-duration-slow @ease-in-out;
 
+    &-content {
+      word-wrap: break-word;
+    }
+
     &-message {
       display: inline-block;
+      width: 100%;
       margin-bottom: 0.08rem;
       color: @heading-color;
       font-size: @font-size-lg;

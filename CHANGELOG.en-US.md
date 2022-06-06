@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
 - 💄 `<pro>Switch`: Optimize styles.
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
+- 💄 `Notification`: Optimize long word wrapping rules.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
