@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
-- 🌟 `math`: Added `max`, `min` methods.
+- 🌟 `math`: Added `max`, `min`, `abs` methods.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
