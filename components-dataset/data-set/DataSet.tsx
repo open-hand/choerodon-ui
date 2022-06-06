@@ -202,6 +202,7 @@ export interface QueryParams {
   page?: number | undefined;
   pagesize?: number | undefined;
   count?: 'Y' | 'N' | undefined;
+  defaultCount?: 'Y' | 'N' | undefined;
   onlyCount?: 'Y' | 'N' | undefined;
   totalCount?: number | undefined;
 }
@@ -604,11 +605,6 @@ export default class DataSet extends EventManager {
 
   get axios(): AxiosInstance {
     return this.props.axios || this.getConfig('axios') || axios;
-  }
-
-  get autoCount(): boolean {
-    const { autoCount = this.getConfig('autoCount') } = this.props;
-    return autoCount;
   }
 
   get dataKey(): string {
@@ -3316,7 +3312,8 @@ Then the query method will be auto invoke.`,
   private generatePageQueryString(page: number, pageSizeInner?: number, onlyCount?: boolean, usePaging?: boolean): QueryParams {
     const params: QueryParams = {};
     if (page >= 0) {
-      const { paging, pageSize, autoCount } = this;
+      const { paging, pageSize, props: { autoCount } } = this;
+      const defaultCount = this.getConfig('autoCount');
       if (isNumber(pageSizeInner)) {
         params.page = page;
         params.pagesize = pageSizeInner;
@@ -3325,16 +3322,22 @@ Then the query method will be auto invoke.`,
         params.page = page;
         params.pagesize = pageSize;
       }
+
+      if (autoCount === false) {
+        params.count = 'N';
+      } else if (autoCount === true) {
+        params.count = 'Y';
+      } else if (defaultCount === false) {
+        params.defaultCount = 'N';
+      } else if (defaultCount === true) {
+        params.defaultCount = 'Y';
+      }
       if (onlyCount) {
-        params.count = 'N';
         params.onlyCount = 'Y';
-      } else if (!autoCount) {
-        params.count = 'N';
-        if (usePaging) {
-          const { realTotalCount } = this;
-          if (realTotalCount !== undefined && isFinite(realTotalCount)) {
-            params.totalCount = realTotalCount;
-          }
+      } else if (usePaging && (autoCount === false || defaultCount === false)) {
+        const { realTotalCount } = this;
+        if (realTotalCount !== undefined && isFinite(realTotalCount)) {
+          params.totalCount = realTotalCount;
         }
       }
     }
@@ -3393,6 +3396,7 @@ Then the query method will be auto invoke.`,
         pageSize: pageQuery.pagesize,
         page: pageQuery.page,
         count: pageQuery.count,
+        defaultCount: pageQuery.defaultCount,
         totalCount: pageQuery.totalCount,
         onlyCount: pageQuery.onlyCount,
       });

@@ -143,6 +143,7 @@ export interface Config {
     page?: number;
     pageSize?: number;
     count?: 'Y' | 'N';
+    defaultCount?: 'Y' | 'N';
     onlyCount?: 'Y' | 'N';
     totalCount?: number;
     sortName?: string;
@@ -187,7 +188,6 @@ const defaultConfig = {
   lovDefineUrl: code => `/sys/lov/lov_define?code=${code}`,
   lovQueryUrl: code => `/common/lov/dataset/${code}`,
   dataKey: 'rows',
-  autoCount: true,
   totalKey: 'total',
   countKey: 'needCountFlag',
   statusKey: '__status',

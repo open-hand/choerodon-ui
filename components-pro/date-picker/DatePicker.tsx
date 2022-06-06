@@ -558,7 +558,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
-    if (this.isUnderRange(cursorDate, mode) && this.isDateOutOfFilter(cursorDate, selectedDate, mode)) {
+    if (
+      this.isUnderRange(cursorDate, mode) && ((mode && mode !== ViewMode.date) || this.isDateOutOfFilter(cursorDate, selectedDate, mode))
+    ) {
       this.changeCursorDate(cursorDate);
     }
   }
@@ -826,8 +828,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             if (this.isDateOutOfFilter(m, cursorDate)) {
               values.push(m);
             }
-          }
-          else {
+          } else {
             this.setText();
           }
         } else {

@@ -113,6 +113,7 @@ const locale: Locale = {
     collapse_row: '收起整行',
     collapse_column: '收起整列',
     current_page_records: '当前页记录',
+    created_records: '新增的记录',
     cached_records: '缓存的记录',
     refresh: '刷新',
     export_all: '导出列所有数据',
