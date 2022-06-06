@@ -233,6 +233,17 @@ function dp(n1: BigNumber.Value): number {
 }
 
 /**
+ * 绝对值
+ * @param n1
+ * @param options Options
+ * @return BigNumber | number
+ */
+function abs(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | number {
+  const result = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).abs();
+  return options.strict ? result : fix(result);
+}
+
+/**
  * 判断是不是 BigNumber
  * @param n1 any
  * @return boolean
@@ -317,6 +328,7 @@ export default {
   dp,
   max,
   min,
+  abs,
   negated,
   isFinite,
   isNaN,

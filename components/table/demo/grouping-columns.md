@@ -14,7 +14,7 @@ title:
 Group table head with `columns[n].children`.
 
 ```jsx
-import { Table } from 'choerodon-ui';
+import { Table, Tabs } from 'choerodon-ui';
 
 const columns = [{
   title: 'Name',
@@ -95,11 +95,17 @@ for (let i = 0; i < 100; i++) {
 }
 
 ReactDOM.render(
-  <Table
-    columns={columns}
-    dataSource={data}
-    bordered
-    scroll={{ x: '130%', y: 240 }}
-  />,
+  <Tabs>
+    <Tabs.TabPane tab={1}>
+    </Tabs.TabPane>
+    <Tabs.TabPane tab={2} forceRender>
+      <Table
+        columns={columns}
+        dataSource={data}
+        bordered
+        scroll={{ x: '130%', y: 240 }}
+      />
+    </Tabs.TabPane>
+  </Tabs>,
   mountNode);
 ```

@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
-- 🌟 `math`: Added `max`, `min` methods.
+- 🌟 `math`: Added `max`, `min`, `abs` methods.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
@@ -30,6 +30,7 @@ timeline: true
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
+- 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.

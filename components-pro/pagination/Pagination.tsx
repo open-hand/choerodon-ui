@@ -371,7 +371,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
-          {showTotal(total, [from, to], counting)}
+          {showTotal(total, [from, to], counting !== undefined)}
         </span>
       );
     }

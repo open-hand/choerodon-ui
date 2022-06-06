@@ -568,7 +568,7 @@ export default class DataSet extends EventManager {
 
   @observable status: DataSetStatus;
 
-  @observable counting?: boolean;
+  @observable counting?: Promise<any>;
 
   @observable exportStatus: DataSetExportStatus | undefined;
 
@@ -1254,25 +1254,9 @@ export default class DataSet extends EventManager {
   async doQuery(page, params?: object, cache?: boolean, paging?: boolean): Promise<any> {
     const data = await this.read(page, params, undefined, paging);
     this.loadDataFromResponse(data, cache);
-    const { countKey } = this;
-    const needCount: boolean = ObjectChainValue.get(data, countKey) === 'Y';
-    if (needCount) {
-      try {
-        runInAction(() => {
-          this.counting = true;
-        });
-        const countResult = await this.count(page, params);
-        const { totalKey } = this;
-        const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
-        if (total !== undefined) {
-          this.totalCount = total;
-          data[totalKey] = total;
-        }
-      } finally {
-        runInAction(() => {
-          this.counting = false;
-        });
-      }
+    const { counting, totalKey } = this;
+    if (totalKey && counting) {
+      data[totalKey] = await counting;
     }
     return data;
   }
@@ -1280,12 +1264,20 @@ export default class DataSet extends EventManager {
   async doQueryMore(page, params?: object): Promise<any> {
     const data = await this.read(page, params, true);
     this.appendDataFromResponse(data);
+    const { counting, totalKey } = this;
+    if (totalKey && counting) {
+      data[totalKey] = await counting;
+    }
     return data;
   }
 
   async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
     const data = await this.read(page, params, true);
     this.appendDataFromResponse(data, parent);
+    const { counting, totalKey } = this;
+    if (totalKey && counting) {
+      data[totalKey] = await counting;
+    }
     return data;
   }
 
@@ -3021,6 +3013,21 @@ Then the query method will be auto invoke.`,
             runInAction(() => {
               if (page >= 0) {
                 this.currentPage = page;
+              }
+              const { countKey } = this;
+              const needCount: boolean = ObjectChainValue.get(result, countKey) === 'Y';
+              if (needCount) {
+                this.counting = this.count(page, params)
+                  .then(action((countResult) => {
+                    const { totalKey } = this;
+                    const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
+                    if (total !== undefined) {
+                      this.totalCount = total;
+                    }
+                    return countResult;
+                  })).finally(action(() => {
+                    this.counting = undefined;
+                  }));
               }
             });
             return this.handleLoadSuccess(result);

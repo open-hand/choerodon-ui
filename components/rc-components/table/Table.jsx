@@ -12,6 +12,7 @@ import BodyTable from './BodyTable';
 import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
 import { TableContextProvider } from './TableContext';
+import ViewSection from './ViewSection';
 
 export default class Table extends Component {
   static defaultProps = {
@@ -334,6 +335,12 @@ export default class Table extends Component {
     this[name] = node;
   };
 
+  handleInViewChange = (inView) => {
+    if (inView) {
+      this.syncFixedTableRowHeight();
+    }
+  };
+
   renderMainTable() {
     const { scroll, prefixCls } = this.props;
     const isAnyColumnsFixed = this.columnManager.isAnyColumnsFixed();
@@ -491,7 +498,8 @@ export default class Table extends Component {
             {(expander) => {
               this.expander = expander;
               return (
-                <div
+                <ViewSection
+                  onInViewChange={this.handleInViewChange}
                   ref={this.saveRef('tableNode')}
                   className={className}
                   style={props.style}
@@ -503,7 +511,7 @@ export default class Table extends Component {
                     {hasLeftFixed && this.renderLeftFixedTable()}
                     {hasRightFixed && this.renderRightFixedTable()}
                   </div>
-                </div>
+                </ViewSection>
               );
             }}
           </ExpandableTable>
