@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
+- 🐞 `Table`: 修复组合列头会没对齐的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
 - 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。
 - 🐞 `<pro>Table`: 修复 maxHeight 样式下虚拟滚动的问题。

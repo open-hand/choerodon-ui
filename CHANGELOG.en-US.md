@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
+- 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
