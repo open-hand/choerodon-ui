@@ -1252,7 +1252,7 @@ export default class DataSet extends EventManager {
   }
 
   async doQuery(page, params?: object, cache?: boolean, paging?: boolean): Promise<any> {
-    const data = await this.read(page, params, paging);
+    const data = await this.read(page, params, undefined, paging);
     this.loadDataFromResponse(data, cache);
     const { countKey } = this;
     const needCount: boolean = ObjectChainValue.get(data, countKey) === 'Y';
