@@ -15,7 +15,7 @@ title: DataSet
 | --- | --- | --- | --- |
 | name | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | string |  |
 | data | 初始化数据 | Array&lt;object&gt; |  |
-| autoCount | 查询时通知后端是否自动统计总数， 用于分页。当设为 false 时， 查询的参数默认会带上count=N的参数，参数名和值可以通过全局配置 generatePageQuery 设置。当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置 | boolean | [autoCount](components/configure) |
+| autoCount | 查询时通知后端是否自动统计总数， 用于分页。当设为 false 时， 查询的参数默认会带上count=N的参数（通过 configure 设置默认 autoCount 属性时，参数为defaultCount=N，用于区分全局设置和自定义设置），参数名和值可以通过全局配置 generatePageQuery 设置。当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置 | boolean | [autoCount](components/configure) |
 | autoQuery | 初始化后自动查询 | boolean | false |
 | autoQueryAfterSubmit | 提交成功后响应的数据不符合回写条件时自动查询。注：回写条件是指响应数据中含有提交时的数据时，数据将按数据状态分组进行顺序回写，如果要更准确的回写，响应数据要含有提交时的\_\_id 字段值。 | boolean | true |
 | autoCreate | 初始化时，如果没有记录且 autoQuery 为 false，则自动创建记录 | boolean | false |
