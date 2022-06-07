@@ -76,6 +76,8 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   inTab = false;
 
+  keep?: boolean;
+
   editor: FormField<FormFieldProps> | null;
 
   wrap: HTMLDivElement | null;
@@ -113,14 +115,28 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   connect() {
+    this.disconnect();
     const {
       tableStore,
     } = this.context;
     const { dataSet, virtual } = tableStore;
     if (virtual) {
-      this.reaction = reaction(() => [tableStore.virtualVisibleStartIndex, tableStore.virtualVisibleEndIndex], () => (
-        dataSet.current && findRow(tableStore, dataSet.current) && this.cellNode ? raf(() => this.alignEditor(this.cellNode)) : this.hideEditor()
-      ));
+      this.reaction = reaction(() => [tableStore.virtualVisibleStartIndex, tableStore.virtualVisibleEndIndex], () => {
+        const { current } = dataSet;
+        if (current && findRow(tableStore, current)) {
+          const { cellNode, keep } = this;
+          if (cellNode || keep) {
+            raf(() => {
+              this.alignEditor(cellNode);
+              if (keep) {
+                delete this.keep;
+              }
+            });
+          }
+        } else if (!this.keep) {
+          this.hideEditor(true);
+        }
+      });
     } else {
       this.reaction = reaction(() => dataSet.current, r => (
         r && this.cellNode ? raf(() => this.alignEditor()) : this.hideEditor()
@@ -348,7 +364,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   alignEditor(cellNode?: HTMLSpanElement | undefined, height?: number) {
     const { wrap, editor } = this;
     const { tableStore } = this.context;
-    if (!cellNode) {
+    if (!cellNode || !cellNode.offsetParent) {
       const { column } = this.props;
       cellNode = findCell(tableStore, getColumnKey(column), undefined, undefined, true);
     }
@@ -391,8 +407,11 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
-  hideEditor() {
+  hideEditor(keep?: boolean) {
     this.inTab = false;
+    if (keep) {
+      this.keep = true;
+    }
     if (this.cellNode) {
       const { tableStore } = this.context;
       tableStore.hideEditor();
@@ -404,7 +423,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
       }
       this.cellNode = undefined;
-      if (!tableStore.inlineEdit) {
+      if (!keep && !tableStore.inlineEdit) {
         this.disconnect();
       }
     }
