@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
 - 🌟 `math`: 新增 max, min, abs 方法。
+- 🌟 `List`: 新增 DataSet 支持和新增 rowSelection 属性可选择支持。
+- 🌟 `Card`: 新增 selected、cornerPlacement 属性和 onSelectChange 回调。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
@@ -29,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
+- 💄 `<pro>PerformanceTable`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。
@@ -39,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复在移动设备上无法调整列宽的问题。
 - 🐞 `<pro>Table`: 修复 inline 编辑模式下置空重加载编辑器定位问题。
 - 🐞 `<pro>Table`: 修复动态筛选条保存编辑问题。
+- 🐞 `<pro>Table`: 修复虚拟滚动时编辑器消失的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。

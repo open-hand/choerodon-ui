@@ -1,5 +1,6 @@
 import React, { Children, CSSProperties, FunctionComponent, memo, ReactElement, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import { Col } from '../grid';
 import { ColumnType, ListGridType } from './index';
 import ConfigContext from '../config-provider/ConfigContext';
@@ -13,6 +14,7 @@ export interface ListItemProps {
   extra?: ReactNode;
   actions?: Array<ReactNode>;
   grid?: ListGridType;
+  renderCheckBox?: { element:() => HTMLElement, isChecked: boolean };
 }
 
 export interface ListItemMetaProps {
@@ -55,7 +57,7 @@ function getGrid(grid: ListGridType, t: ColumnType) {
   return grid[t] && Math.floor(24 / grid[t]!);
 }
 
-const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
+const ListItem: FunctionComponent<ListItemProps> = observer(function ListItem(props) {
   const { grid, getPrefixCls } = useContext(ListContext);
   const {
     prefixCls: customizePrefixCls,
@@ -63,10 +65,14 @@ const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
     actions,
     extra,
     className,
+    renderCheckBox,
     ...others
   } = props;
   const prefixCls = getPrefixCls('list', customizePrefixCls);
-  const classString = classNames(`${prefixCls}-item`, className);
+  const classString = classNames(`${prefixCls}-item`, className, {
+    [`${prefixCls}-selection`]: renderCheckBox,
+    [`${prefixCls}-selected`]: renderCheckBox && renderCheckBox.isChecked,
+  });
 
   const metaContent: ReactElement<any>[] = [];
   const otherContent: ReactElement<any>[] = [];
@@ -130,15 +136,18 @@ const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
     </Col>
   ) : (
     <div {...others} className={classString}>
-      {extra && extraContent}
-      {!extra && metaContent}
-      {!extra && content}
-      {!extra && actionsContent}
+      {renderCheckBox && renderCheckBox.element()}
+      <>
+        {extra && extraContent}
+        {!extra && metaContent}
+        {!extra && content}
+        {!extra && actionsContent}
+      </>
     </div>
   );
 
   return mainContent;
-};
+});
 
 
 ListItem.displayName = 'ListItem';

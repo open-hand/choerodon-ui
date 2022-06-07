@@ -27,6 +27,8 @@ A list can be used to display content related to a single subject. The content c
 | loadMore | Shows a load more content | string\|ReactNode | - |
 | pagination | Pagination [config](/components/pagination/), hide it by setting it to false | boolean \| object | false |
 | split | Toggles rendering of the split under the list item | boolean | true |
+| rowKey | need to specify the primary key field when it can be checked | string \| function(record):string | |
+| rowSelection | 是否可选择，[config](/#rowSelection) | boolean\|object | false |
 
 ### List grid props
 
@@ -56,3 +58,10 @@ A list can be used to display content related to a single subject. The content c
 | avatar | The avatar of list item | ReactNode | - |
 | description | The description of list item | string\|ReactNode | - |
 | title | The title of list item | string\|ReactNode | - |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | Selected value | Array[] | - |
+| onChange | Callback of select | function(selectedRowKeys) | - |

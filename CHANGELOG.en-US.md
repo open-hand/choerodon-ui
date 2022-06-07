@@ -21,6 +21,8 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
 - 🌟 `math`: Added `max`, `min`, `abs` methods.
+- 🌟 `List`: Added `DataSet` support and added `rowSelection` props support select.
+- 🌟 `Card`: Added `selected` and `cornerPlacement` props and callback of `onSelectChange`.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
@@ -29,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 💄 `<pro>PerformanceTable`: Compatible with the global configuration `renderEmpty`.
+- 💄 `<pro>PerformanceTable`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.
@@ -39,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that column width cannot be adjusted on mobile devices.
 - 🐞 `<pro>Table`: Fix the positioning problem of the reload editor in `inline` editing mode.
 - 🐞 `<pro>Table`: Fix the issue of saving edits in the dynamic filter bar.
+- 🐞 `<pro>Table`: Fixed editor disappearing when virtual scrolling.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.

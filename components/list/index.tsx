@@ -1,11 +1,17 @@
-import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
+import React, { Children, cloneElement, Component, ReactElement, ReactNode, ReactText } from 'react';
 import classNames from 'classnames';
+import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
+import DataSet from 'choerodon-ui/pro/lib/data-set/DataSet';
+import DsRecord from 'choerodon-ui/pro/lib/data-set/Record';
+import Pagination from 'choerodon-ui/pro/lib/pagination';
+import ObserverCheckBox from 'choerodon-ui/pro/lib/check-box';
+import { PaginationProps } from 'choerodon-ui/pro/lib/pagination/interface';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { Size } from '../_util/enum';
-import Pagination, { PaginationProps } from '../pagination';
 import { Row } from '../grid';
 import Item from './Item';
 import { ListContextProvider } from './ListContext';
@@ -28,18 +34,30 @@ export interface ListGridType {
   xxl?: ColumnCount;
 }
 
+export interface RowSelection {
+  selectedRowKeys?: ReactText[];
+  onChange?: (keys: ReactText[]) => void
+}
+
 export interface ListProps {
   bordered?: boolean;
   className?: string;
   children?: ReactNode;
-  dataSource: any;
+  dataSource?: any;
   extra?: ReactNode;
   grid?: ListGridType;
   id?: string;
   itemLayout?: string;
   loading?: boolean | SpinProps;
   loadMore?: ReactNode;
-  paginationProps?: PaginationProps;
+  paginationProps?: PaginationProps & {
+    current?: number,
+    defaultCurrent?: number,
+    defaultPageSize?: number,
+    tiny?: boolean,
+    size?: string,
+    onShowSizeChange?: Function;
+  };
   pagination?: any;
   prefixCls?: string;
   rowPrefixCls?: string;
@@ -52,12 +70,15 @@ export interface ListProps {
   footer?: ReactNode;
   empty?: ReactNode;
   locale?: Record<string, any>;
+  dataSet?: DataSet;
+  rowSelection?: RowSelection;
 }
 
 export interface ListLocale {
   emptyText: string;
 }
 
+@observer
 export default class List extends Component<ListProps> {
   static displayName = 'List';
 
@@ -82,7 +103,7 @@ export default class List extends Component<ListProps> {
   };
 
   defaultPaginationProps = {
-    current: 1,
+    page: 1,
     pageSize: 10,
     onChange: (page: number, pageSize: number) => {
       const { pagination } = this.props;
@@ -107,16 +128,16 @@ export default class List extends Component<ListProps> {
     };
   }
 
-  renderItem = (item: ReactElement<any>, index: number) => {
-    const { dataSource, renderItem, rowKey } = this.props;
+  renderItem = (item: ReactElement<any> | DsRecord, index: number) => {
+    const { renderItem, rowKey, dataSet } = this.props;
     let key;
 
     if (typeof rowKey === 'function') {
-      key = rowKey(dataSource[index]);
+      key = rowKey(item);
     } else if (typeof rowKey === 'string') {
-      key = dataSource[rowKey];
+      key = dataSet ? (item as DsRecord).get(rowKey) : item[rowKey];
     } else {
-      key = dataSource.key;
+      key = item.key;
     }
 
     if (!key) {
@@ -125,6 +146,9 @@ export default class List extends Component<ListProps> {
 
     this.keys[index] = key;
 
+    if (dataSet) {
+      return renderItem({ dataSet, record: item, index: dataSet.indexOf(item as DsRecord) });
+    }
     return renderItem(item, index);
   };
 
@@ -143,6 +167,42 @@ export default class List extends Component<ListProps> {
     const { prefixCls } = this.props;
     const { getPrefixCls } = this.context;
     return getPrefixCls('list', prefixCls);
+  }
+
+  handleChange = (value, key) => {
+    const { rowSelection } = this.props;
+    if (rowSelection) {
+      const { selectedRowKeys = [], onChange = noop } = rowSelection;
+      if (value && !selectedRowKeys.includes(key!)) {
+        selectedRowKeys.push(key!);
+      } else if (!value) {
+        selectedRowKeys.splice(selectedRowKeys.indexOf(key!), 1);
+      }
+      onChange(selectedRowKeys);
+      this.forceUpdate();
+    }
+  }
+
+  renderCheckBox = (key) => {
+    const { rowSelection } = this.props;
+    if (rowSelection) {
+      const selectedKeys = rowSelection.selectedRowKeys || [];
+      const isChecked = selectedKeys.includes(key);
+      return {
+        element: () => (
+          <div className={`${this.getPrefixCls()}-selection-checkbox`}>
+            <ObserverCheckBox
+              name="ckBox"
+              value={key}
+              onChange={(val) => this.handleChange(val, key)}
+              checked={isChecked}
+            />
+          </div>
+        ),
+        isChecked, 
+      }
+    }
+    return undefined;
   }
 
   render() {
@@ -164,7 +224,7 @@ export default class List extends Component<ListProps> {
       loading,
       rowPrefixCls,
       spinPrefixCls,
-      paginationProps: propsPaginationProps,
+      dataSet,
       ...rest
     } = this.props;
     const prefixCls = this.getPrefixCls();
@@ -201,37 +261,45 @@ export default class List extends Component<ListProps> {
 
     const paginationProps = {
       ...this.defaultPaginationProps,
-      ...propsPaginationProps,
-      total: dataSource.length,
-      current: paginationCurrent,
       ...pagination || {},
+      total: dataSet ? dataSet.totalCount : dataSource.length,
+      page: (dataSet && dataSet.paging) ? dataSet.currentPage : paginationCurrent,
+      pageSize: (dataSet && dataSet.paging) ? dataSet.pageSize : pagination.pageSize,
     };
 
     const largestPage = Math.ceil(
       paginationProps.total / paginationProps.pageSize,
     );
-    if (paginationProps.current > largestPage) {
-      paginationProps.current = largestPage;
+    if (paginationProps.page > largestPage) {
+      paginationProps.page = largestPage;
     }
+    const isDsPagination = (dataSet && dataSet.paging);
     const paginationContent = pagination ? (
       <div className={`${prefixCls}-pagination`}>
         <Pagination
           {...paginationProps}
-          onChange={this.defaultPaginationProps.onChange}
+          onChange={!isDsPagination ? this.defaultPaginationProps.onChange : paginationProps.onChange}
+          dataSet={isDsPagination ? dataSet : undefined}
         />
       </div>
     ) : null;
 
-    let splitDataSource = [...dataSource];
+    let splitDataSource = dataSet ? dataSet.records : [...dataSource];
     if (pagination) {
       if (
+        !dataSet &&
         dataSource.length >
-        (paginationProps.current - 1) * paginationProps.pageSize
+        (paginationProps.page - 1) * paginationProps.pageSize
       ) {
         splitDataSource = [...dataSource].splice(
-          (paginationProps.current - 1) * paginationProps.pageSize,
+          (paginationProps.page - 1) * paginationProps.pageSize,
           paginationProps.pageSize,
         );
+      } else if (dataSet && !dataSet.paging) {
+        splitDataSource = dataSet.slice(
+          (paginationProps.page - 1) * paginationProps.pageSize,
+          paginationProps.pageSize * paginationProps.page,
+        )
       }
     }
 
@@ -239,11 +307,13 @@ export default class List extends Component<ListProps> {
     childrenContent = isLoading && <div style={{ minHeight: 53 }} />;
     if (splitDataSource.length > 0) {
       const items = splitDataSource.map((item: any, index: number) => this.renderItem(item, index));
-      const childrenList = Children.map(items, (child: any, index) =>
-        cloneElement(child, {
-          key: this.keys[index],
-        }),
-      );
+      const childrenList = Children.map(items, (child: any, index) => {
+        const recordKey = this.keys[index]
+        return cloneElement(child, {
+          key: recordKey,
+          renderCheckBox: this.renderCheckBox(recordKey),
+        });
+      });
 
       childrenContent = grid ? <Row prefixCls={rowPrefixCls} gutter={grid.gutter}>{childrenList}</Row> : childrenList;
     } else if (!children && !isLoading && !empty) {
@@ -267,7 +337,7 @@ export default class List extends Component<ListProps> {
 
     return (
       <ListContextProvider {...this.getContextValue()}>
-        <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem', 'selectable', 'rowKey', 'renderItem', 'locale'])}>
+        <div className={classString} {...omit(rest, ['prefixCls', 'rowKey', 'renderItem', 'selectable', 'renderItem', 'locale', 'rowSelection'])}>
           {(paginationPosition === 'top' || paginationPosition === 'both') && paginationContent}
           {header && <div className={`${prefixCls}-header`}>{header}</div>}
           {content}

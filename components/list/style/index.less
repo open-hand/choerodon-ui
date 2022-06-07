@@ -109,6 +109,26 @@
     }
   }
 
+  &-selection {
+    display: flex;
+    align-items: flex-start;
+    padding-left: 0.1rem;
+    cursor: pointer;
+    &-checkbox {
+      padding-right: 0.1rem;
+    }
+  }
+
+  &-selection:not(&-selected){
+    &:hover{
+      background-color: @table-row-hover-bg;
+    }
+  }
+
+  &-selected {
+    background-color: @table-selected-row-bg;
+  }
+
   &-header,
   &-footer {
     padding-top: 0.12rem;
