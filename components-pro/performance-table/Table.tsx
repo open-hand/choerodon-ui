@@ -802,12 +802,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           this.tableStore.originalColumns = nextColumns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
         });
       }
-      
+
       if (rowSelection) {
         runInAction(() => {
           this.tableStore.selectedRowKeys = rowSelection.selectedRowKeys || [];
         })
-      }      
+      }
 
       if (nextChildren) {
         shouldFixedColumn = Array.from(nextChildren as Iterable<any>).some(
@@ -2964,8 +2964,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     const emptyMessage = <div className={this.addPrefix('body-info')}>{locale.emptyMessage}</div>;
 
-    return renderEmpty ? renderEmpty(emptyMessage) : emptyMessage;
+    return renderEmpty ? renderEmpty(emptyMessage) : <div className={this.addPrefix('body-info')}>{this.tableStore.getConfig('renderEmpty')('Table')}</div>;
   }
+
 
   renderScrollbar() {
     const { disabledScroll, affixHorizontalScrollbar, id, showScrollArrow, clickScrollLength } = this.props;
