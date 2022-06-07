@@ -56,6 +56,7 @@ export const ConditionDataSet: () => DataSetProps = () => ({
 export const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) => ({
   paging: false,
   autoQuery: false,
+  autoLocateFirst: false,
   primaryKey: 'searchId',
   transport: {
     adapter: (config: AxiosRequestConfig, type: string) => getTransportConfig({

@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
+- 💄 `<pro>PerformanceTable`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。

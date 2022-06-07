@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 💄 `<pro>PerformanceTable`: Compatible with the global configuration `renderEmpty`.
+- 💄 `<pro>PerformanceTable`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.
