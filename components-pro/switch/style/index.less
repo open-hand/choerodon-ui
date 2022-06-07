@@ -91,6 +91,7 @@
     }
 
     & > .icon {
+      font-size: @switch-icon-font-size;
       vertical-align: baseline;
     }
   }
@@ -164,7 +165,12 @@
   &-sm &-label {
     min-width: @switch-sm-min-width;
     height: @switch-sm-height;
+    line-height: @switch-sm-line-height;
     border-radius: @switch-sm-button-size / 2;
+
+    .icon {
+      font-size: @switch-sm-icon-font-size;
+    }
 
     &::after {
       width: @switch-sm-button-size;
@@ -184,7 +190,12 @@
   &-lg &-label {
     min-width: @switch-lg-min-width;
     height: @switch-lg-height;
+    line-height: @switch-lg-line-height;
     border-radius: @switch-lg-button-size / 2;
+
+    .icon {
+      font-size: @switch-lg-icon-font-size;
+    }
 
     &::after {
       width: @switch-lg-button-size;
