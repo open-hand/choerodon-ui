@@ -1491,6 +1491,7 @@ export default class DataSet extends EventManager {
               if (!parent.children.length) parent.children = undefined;
             }
           }
+          record.cancelReportValidity();
           return false;
         }
         return record.reset();

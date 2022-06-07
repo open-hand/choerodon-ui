@@ -600,6 +600,13 @@ export default class Record {
       });
   }
 
+  cancelReportValidity() {
+    const { prepareForReport } = this;
+    if (prepareForReport && prepareForReport.timeout) {
+      window.clearTimeout(prepareForReport.timeout);
+    }
+  }
+
   reportValidity(result: RecordValidationErrors, fromField?: boolean) {
     const { dataSet } = this;
     if (!dataSet.validating) {
@@ -917,6 +924,7 @@ export default class Record {
 
   @action
   reset(): Record {
+    this.cancelReportValidity();
     const { status, dataSet, dirty, isRemoved, validationErrors } = this;
     let hasError = false;
     if (validationErrors && validationErrors.size > 0) {
