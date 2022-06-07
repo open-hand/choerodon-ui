@@ -352,8 +352,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   async loadCustomized() {
     const { getCustomizable } = this.context;
-    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable'), drawer } = this.props;
-    if (resizable && customizable && customizedCode) {
+    const { customizable = getCustomizable('Modal'), customizedCode, drawer } = this.props;
+    if (customizable && customizedCode) {
       const temp = await this.getContextConfig('customizedLoad')(customizedCode, 'Modal');
       if (temp) {
         const { contentNode, element, prefixCls } = this;
@@ -392,8 +392,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   saveCustomized() {
     const { getCustomizable } = this.context;
-    const { customizable = getCustomizable('Modal'), customizedCode, resizable = this.getContextConfig('modalResizable') } = this.props;
-    if (resizable && customizable && customizedCode) {
+    const { customizable = getCustomizable('Modal'), customizedCode } = this.props;
+    if (customizable && customizedCode) {
       const customizedSave = this.getContextConfig('customizedSave');
       customizedSave(customizedCode, this.tempCustomized || {}, 'Modal');
     }
