@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 filter 属性对选择面板的影响。
 - 💄 `<pro>Switch`: 优化样式。
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
+- 💄 `<pro>Table`: 优化校验信息展示方式固定为 tooltip。
 - 💄 `<pro>Table`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
