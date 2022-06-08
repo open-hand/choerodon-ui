@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复 selectedRowKeys 受控失效。
 - 🐞 `<pro>Modal`: 修复更新 resizable 后无效的问题。
 - 🐞 `<pro>Modal`: 修复多个 drawer 时 resizable 异常。
+- 🐞 `<pro>IconPicker`: 修复空值失焦未校验的问题。
 
 ## 1.5.4
 

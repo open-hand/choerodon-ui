@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
+- 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.
 
 ## 1.5.4
 
