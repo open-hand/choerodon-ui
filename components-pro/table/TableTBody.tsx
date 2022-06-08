@@ -634,9 +634,6 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
     if (target.offsetParent && height) {
-      if (tableStore.overflowY && height === tableStore.height) {
-        height += 1;
-      }
       tableStore.calcBodyHeight = height;
     }
   }), [tableStore]);

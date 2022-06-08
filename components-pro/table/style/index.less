@@ -1643,15 +1643,15 @@
   &-row:last-of-type:not(&-row-has-next) &-cell,
   &-row:not(&-row-has-next) + &-expanded-row:last-child &-cell,
   &-cell-last-group {
-    border-bottom-style: none;
+    border-bottom-color: transparent;
   }
   &-last-row-bordered &-cell-last-group {
-    border-bottom-style: @border-style-base;
+    border-bottom-color: @border-color-base;
   }
 
   &-last-row-bordered &-row:last-of-type &-cell,
   &-last-row-bordered &-row + &-expanded-row:last-child &-cell {
-    border-bottom-style: @border-style-base;
+    border-bottom-color: @border-color-base;
   }
 
   &-tfoot-bordered &-cell {
