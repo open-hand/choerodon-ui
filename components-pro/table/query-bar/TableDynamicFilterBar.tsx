@@ -239,7 +239,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   componentDidMount(): void {
-    const { fuzzyQueryOnly, queryDataSet } = this.props;
+    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
     if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
@@ -249,6 +249,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         runInAction(() => {
           this.showExpandIcon = height > (childHeight + 18);
         });
+      }
+      if (!dataSet.props.autoQuery) {
+        this.handleDataSetQuery({ dataSet });
       }
     }
     if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
@@ -327,7 +330,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             }
           });
           const { queryDataSet } = this.props;
-          if (queryDataSet && queryDataSet.current && !queryDataSet.current.dirty) {
+          if (queryDataSet && queryDataSet.current && dataSet.props.autoQuery) {
             if (Object.keys(initQueryData).length) {
               dataSet.query();
               return false;
@@ -485,10 +488,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         ],
       }, { getConfig: getConfig as any });
       let status = RecordStatus.update;
-      let dirtyQuery = true;
+      // let dirtyQuery = true;
       if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
-        dirtyQuery = !queryDataSet.current.dirty;
+        // dirtyQuery = !queryDataSet.current.dirty;
       }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
@@ -508,7 +511,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }
       if (result && result.length) {
         runInAction(() => {
-          this.shouldLocateData = dirtyQuery;
+          this.shouldLocateData = true;
         });
         if (queryDataSet && queryDataSet.fields) {
           this.tempFields = queryDataSet.snapshot().dataSet.fields;
@@ -517,7 +520,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         const { current } = filterMenuDataSet;
         if (current) current.set('filterName', undefined);
         runInAction(() => {
-          this.shouldLocateData = dirtyQuery;
+          this.shouldLocateData = true;
         });
       }
     }

@@ -27,9 +27,9 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
 - 💄 `<pro>Switch`: Optimize styles.
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
+- 💄 `<pro>Table`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 💄 `<pro>PerformanceTable`: Compatible with the global configuration `renderEmpty`.
-- 💄 `<pro>PerformanceTable`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.
