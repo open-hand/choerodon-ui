@@ -5,6 +5,7 @@ import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import Icon from 'choerodon-ui/lib/icon';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import DataSet from '../../data-set';
 import Button from '../../button';
 import TableContext from '../TableContext';
@@ -48,7 +49,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       const { prefixCls } = this.props;
       return prefixCls!;
     }
-    const { tableStore: { prefixCls } } = this.context;
+    const { tableStore: { prefixCls = getProPrefixCls('performance-table') } } = this.context;
     return prefixCls;
   }
 

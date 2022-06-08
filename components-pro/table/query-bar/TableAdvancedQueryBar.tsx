@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import Field from '../../data-set/Field';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -49,7 +50,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
 
   get prefixCls(): string {
     const { prefixCls } = this.props;
-    const { tableStore: { getProPrefixCls } } = this.context;
+    const { tableStore: { getProPrefixCls = getProPrefixClsDefault } } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 

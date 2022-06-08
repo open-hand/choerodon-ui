@@ -16,6 +16,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -130,7 +131,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       const { prefixCls } = this.props;
       return prefixCls!;
     }
-    const { tableStore: { proPrefixCls } } = this.context;
+    const { tableStore: { proPrefixCls = getProPrefixCls('performance-table') } } = this.context;
     return proPrefixCls;
   }
 

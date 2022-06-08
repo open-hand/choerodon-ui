@@ -17,6 +17,7 @@ import omit from 'lodash/omit';
 import difference from 'lodash/difference';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
+import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -178,7 +179,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   get prefixCls() {
     const { prefixCls } = this.props;
-    const { getProPrefixCls } = this.context;
+    const { getProPrefixCls = getProPrefixClsDefault } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 

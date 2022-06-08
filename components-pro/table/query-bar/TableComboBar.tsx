@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import Icon from 'choerodon-ui/lib/icon';
+import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import FilterSelect from './FilterSelect';
 import { FilterBarProps } from './TableFilterBar';
 import ColumnFilter from './ColumnFilter';
@@ -37,7 +38,7 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
 
   get prefixCls(): string {
     const { prefixCls } = this.props;
-    const { tableStore: { getProPrefixCls } } = this.context;
+    const { tableStore: { getProPrefixCls = getProPrefixClsDefault } } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 
