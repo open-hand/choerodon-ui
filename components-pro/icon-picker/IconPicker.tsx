@@ -347,6 +347,7 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
     } else {
       this.setText(undefined);
     }
+    super.syncValueOnBlur(value);
   }
 
   handlePopupAnimateAppear() {

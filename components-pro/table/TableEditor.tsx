@@ -29,7 +29,7 @@ import { TextAreaProps } from '../text-area/TextArea';
 import { ResizeType } from '../text-area/enum';
 import { ColumnLock } from './enum';
 import transform from '../_util/transform';
-import { LabelLayout } from '../form/enum';
+import { LabelLayout, ShowValidation } from '../form/enum';
 
 export interface TableEditorProps extends ElementProps {
   column: ColumnProps;
@@ -478,9 +478,11 @@ export default class TableEditor extends Component<TableEditorProps> {
               onClick: this.handleEditorClick,
               tabIndex: -1,
               showHelp: ShowHelp.none,
+              showValidation: ShowValidation.tooltip,
               labelLayout: LabelLayout.none,
               // 目前测试inline时候需要放开限制
               _inTable: !inlineEdit,
+              preventRenderer: true,
             };
             ref = false;
             const label = field.get('label', record);
@@ -535,6 +537,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           onBlur: this.handleEditorBlur,
           tabIndex: currentEditorName ? 0 : -1,
           showHelp: ShowHelp.none,
+          showValidation: ShowValidation.tooltip,
           labelLayout: LabelLayout.none,
           // 目前测试inline时候需要放开限制
           _inTable: !inlineEdit,

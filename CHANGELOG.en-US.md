@@ -27,6 +27,8 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize the effect of the `filter` property on the selection panel.
 - 💄 `<pro>Switch`: Optimize styles.
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
+- 💄 `<pro>Table`: The display mode of optimized verification information is fixed to tooltip.
+- 💄 `<pro>Table`: Optimize the scenario where the input query condition is overwritten when autoQuery false is optimized.
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 💄 `<pro>PerformanceTable`: Compatible with the global configuration `renderEmpty`.
 - 💄 `<pro>NumberField`: Optimized conversion of scientific notation to normal strings.
@@ -51,8 +53,9 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
+- 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
--
+
 ## 1.5.4
 
 `2022-04-27`

@@ -4,6 +4,7 @@ import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import Icon from 'choerodon-ui/lib/icon';
+import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -54,7 +55,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   get prefixCls(): string {
     const { prefixCls } = this.props;
-    const { tableStore: { getProPrefixCls } } = this.context;
+    const { tableStore: { getProPrefixCls = getProPrefixClsDefault } } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 

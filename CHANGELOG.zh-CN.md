@@ -27,6 +27,8 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 filter 属性对选择面板的影响。
 - 💄 `<pro>Switch`: 优化样式。
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
+- 💄 `<pro>Table`: 优化校验信息展示方式固定为 tooltip。
+- 💄 `<pro>Table`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
 - 💄 `<pro>NumberField`: 优化科学计数法转换成普通字符串。
@@ -51,6 +53,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复 selectedRowKeys 受控失效。
 - 🐞 `<pro>Modal`: 修复更新 resizable 后无效的问题。
 - 🐞 `<pro>Modal`: 修复多个 drawer 时 resizable 异常。
+- 🐞 `<pro>IconPicker`: 修复空值失焦未校验的问题。
 - 🐞 `<pro>DataSet.Record`: 修复大数字值可能没法更新的问题。
 
 ## 1.5.4
