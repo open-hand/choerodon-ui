@@ -34,7 +34,13 @@ export function isEmpty(value: any): value is '' | null | undefined {
 }
 
 export function isSame(newValue, oldValue) {
-  return newValue === oldValue || (isEmpty(newValue) && isEmpty(oldValue)) || isEqual(newValue, oldValue);
+  if (newValue === oldValue || (isEmpty(newValue) && isEmpty(oldValue))) {
+    return true;
+  }
+  if (math.isBigNumber(newValue) || math.isBigNumber(oldValue)) {
+    return math.eq(newValue, oldValue);
+  }
+  return isEqual(newValue, oldValue);
 }
 
 export function isSameLike(newValue, oldValue) {

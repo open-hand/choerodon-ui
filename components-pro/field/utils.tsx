@@ -9,9 +9,9 @@ import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
 import { isMoment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { Utils, math } from 'choerodon-ui/dataset';
+import { math, Utils } from 'choerodon-ui/dataset';
 import { getConfig as getConfigDefault, getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
-import { TooltipTheme, TooltipPlacement } from 'choerodon-ui/lib/tooltip';
+import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
@@ -179,6 +179,9 @@ export function processValue(value: any, format?: string, showInvalidDate?: bool
       // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
       return value;
     }
+    if (math.isValidNumber(value)) {
+      return math.toString(value);
+    }
     return value.toString();
   }
   return '';
@@ -277,8 +280,19 @@ export function getValueKey(v: any) {
 
 export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode; multipleValidateMessageLength: number } {
   const {
-    range, maxTagPlaceholder, prefixCls, validationResults, disabled, readOnly, isMultipleBlockDisabled, processRenderer,
-    renderValidationResult, handleMultipleValueRemove, getKey = getValueKey, isValidationMessageHidden, showValidationMessage: selfShowValidationMessage,
+    range,
+    maxTagPlaceholder,
+    prefixCls,
+    validationResults,
+    disabled,
+    readOnly,
+    isMultipleBlockDisabled,
+    processRenderer,
+    renderValidationResult,
+    handleMultipleValueRemove,
+    getKey = getValueKey,
+    isValidationMessageHidden,
+    showValidationMessage: selfShowValidationMessage,
     tooltipTheme,
   } = option;
   const values = toMultipleValue(value, range);
@@ -313,7 +327,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         multipleValidateMessageLength++;
       }
       const closeBtn = !blockDisabled && !readOnly && (
-        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
+        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat}/>
       );
       const inner = readOnly ? (
         <span key={String(index)} className={className}>{text}</span>
@@ -431,7 +445,7 @@ export function renderValidationMessage(validationMessage: ReactNode, showIcon?:
   if (validationMessage) {
     return (
       <div className={getProPrefixCls('validation-message')}>
-        {showIcon && <Icon type="error" />}
+        {showIcon && <Icon type="error"/>}
         <span>{validationMessage}</span>
       </div>
     );

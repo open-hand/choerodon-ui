@@ -47,7 +47,7 @@ export function formatString(value: any, { trim, format }: FormatOptions) {
   return value;
 }
 
-function $formatNumber(v: number, lang: string | undefined, options?: Intl.NumberFormatOptions) {
+function $formatNumber(v: number, lang: string | undefined, options?: Intl.NumberFormatOptions): string {
   return v.toLocaleString(normalizeLanguage(lang), options);
 }
 
@@ -135,7 +135,7 @@ function getBigNumberFormatOption(lang: string | undefined): BigNumberFormatOpti
   return defaultBigNumberFormatOptions;
 }
 
-function $formatBigNumber(value: BigNumber, lang: string | undefined, options: Intl.NumberFormatOptions) {
+function $formatBigNumber(value: BigNumber, lang: string | undefined, options: Intl.NumberFormatOptions): string {
   const {
     groupSeparator,
     groupSize,
@@ -159,7 +159,7 @@ function $formatBigNumber(value: BigNumber, lang: string | undefined, options: I
 
 }
 
-export function formatCurrency(value: BigNumber.Value, lang: string | undefined, options?: Intl.NumberFormatOptions) {
+export function formatCurrency(value: BigNumber.Value, lang: string | undefined, options?: Intl.NumberFormatOptions): string {
   const bn = new BigNumber(value);
   if (math.isValidBigNumber(bn)) {
     const v = math.fix(bn);
@@ -172,10 +172,10 @@ export function formatCurrency(value: BigNumber.Value, lang: string | undefined,
     }
     return $formatNumber(v, lang, currencyOptions);
   }
-  return value;
+  return value.toString();
 }
 
-export function formatNumber(value: BigNumber.Value, lang: string | undefined, options?: Intl.NumberFormatOptions) {
+export function formatNumber(value: BigNumber.Value, lang: string | undefined, options?: Intl.NumberFormatOptions): string {
   const bn = new BigNumber(value);
   if (math.isValidBigNumber(bn)) {
     const v = math.fix(bn);
@@ -188,7 +188,7 @@ export function formatNumber(value: BigNumber.Value, lang: string | undefined, o
     }
     return $formatNumber(v, lang, numberOptions);
   }
-  return value;
+  return value.toString();
 }
 
 const nargs = /\{([0-9a-zA-Z_]+)\}/g;

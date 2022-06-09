@@ -509,7 +509,7 @@ export default class InputNumber extends Component {
     if (this.props.formatter) {
       return this.props.formatter(num);
     }
-    return num;
+    return math.toString(num);
   }
 
   toPrecisionAsStep(num) {
@@ -518,12 +518,12 @@ export default class InputNumber extends Component {
     }
     const precision = Math.abs(this.getMaxPrecision(num));
     if (precision === 0) {
-      return num.toString();
+      return math.toString(num);
     }
     if (!isNaN(precision)) {
       return math.toFixed(num, precision);
     }
-    return num.toString();
+    return math.toString(num);
   }
 
   // '1.' '1x' 'xx' '' => are not complete numbers
