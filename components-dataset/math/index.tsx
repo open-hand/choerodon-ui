@@ -162,7 +162,7 @@ function eq(n1: BigNumber.Value, n2: BigNumber.Value): boolean {
 /**
  * 最大值
  * @param n1 A numeric value.
- * @return boolean
+ * @return BigNumber | number
  */
 function max(...n1: BigNumber.Value[]): BigNumber | number {
   return fix(BigNumber.max(...n1));
@@ -171,12 +171,31 @@ function max(...n1: BigNumber.Value[]): BigNumber | number {
 /**
  * 最小值
  * @param n1 A numeric value.
- * @return boolean
+ * @return BigNumber | number
  */
 function min(...n1: BigNumber.Value[]): BigNumber | number {
   return fix(BigNumber.min(...n1));
 }
 
+/**
+ * 总和
+ * @param n1 A numeric value.
+ * @return BigNumber | number
+ */
+function sum(...n1: BigNumber.Value[]): BigNumber | number {
+  return fix(BigNumber.sum(...n1));
+}
+
+/**
+ * 随机数
+ * @param decimalPlaces A numeric value.
+ * @param options Options
+ * @return BigNumber | number
+ */
+function random(decimalPlaces?: number, options: BigNumberOptions = {}): BigNumber | number {
+  const result = BigNumber.random(decimalPlaces);
+  return options.strict ? result : fix(result);
+}
 
 /**
  * 类似 Math.round
@@ -262,6 +281,15 @@ function isValidBigNumber(n1: BigNumber): boolean {
 }
 
 /**
+ * 判断数字是不是有限可用数
+ * @param n1 BigNumber.Value
+ * @return boolean
+ */
+function isValidNumber(n1: BigNumber.Value): boolean {
+  return !isNaN(n1) && isFinite(n1);
+}
+
+/**
  * 判断是不是有限数
  * @param n1 string | number | BigNumber
  * @return boolean
@@ -307,6 +335,16 @@ function isNegativeZero(n1: BigNumber.Value): boolean {
   return value.isZero() && value.isNegative();
 }
 
+/**
+ * 转换成字符串， 永远不会转换成科学计数法
+ * @param n1 string | number | BigNumber
+ * @return string
+ */
+function toString(n1: BigNumber.Value): string {
+  BigNumber.config({ EXPONENTIAL_AT: 1e+9 });
+  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toString();
+}
+
 export default {
   fix,
   plus,
@@ -316,7 +354,6 @@ export default {
   mod,
   pow,
   sqrt,
-  toFixed,
   lt,
   lte,
   gt,
@@ -330,12 +367,17 @@ export default {
   min,
   abs,
   negated,
+  random,
+  sum,
   isFinite,
   isNaN,
   isNegative,
   isZero,
   isNegativeZero,
   isBigNumber,
+  isValidNumber,
   isValidBigNumber,
+  toFixed,
+  toString,
 };
 

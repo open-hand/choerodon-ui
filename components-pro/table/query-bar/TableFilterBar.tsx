@@ -1,6 +1,7 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
+import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
 import TableContext, { TableContextValue } from '../TableContext';
@@ -36,7 +37,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
 
   get prefixCls(): string {
     const { prefixCls } = this.props;
-    const { tableStore: { getProPrefixCls } } = this.context;
+    const { tableStore: { getProPrefixCls = getProPrefixClsDefault } } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 

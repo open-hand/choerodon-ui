@@ -20,8 +20,8 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
-- 🌟 `math`: 新增 max, min, abs 方法。
 - 🌟 `<pro>ColorPicker`: 新增 mode, preset 属性，新增最近使用功能，支持 hex, rgba 定义。
+- 🌟 `math`: 新增 max, min, abs, sum, random, isValidNumber, toString 方法。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
@@ -32,6 +32,8 @@ timeline: true
 - 💄 `<pro>Table`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
+- 💄 `<pro>NumberField`: 优化科学计数法转换成普通字符串。
+- 💄 `InputNumber`: 优化科学计数法转换成普通字符串。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。
@@ -53,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复更新 resizable 后无效的问题。
 - 🐞 `<pro>Modal`: 修复多个 drawer 时 resizable 异常。
 - 🐞 `<pro>IconPicker`: 修复空值失焦未校验的问题。
+- 🐞 `<pro>DataSet.Record`: 修复大数字值可能没法更新的问题。
 
 ## 1.5.4
 
