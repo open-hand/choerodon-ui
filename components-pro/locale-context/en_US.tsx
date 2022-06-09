@@ -230,6 +230,9 @@ const locale: Locale = {
     value_missing_no_label: 'Please select a color.',
     value_missing: 'Please select {label}.',
     type_mismatch: 'Please select a valid color.',
+    used_view: 'Recently used',
+    custom_view: 'Custom colors',
+    pick_color_view: 'Pick color',
   },
   Icon: {
     icons: ' Icons',
