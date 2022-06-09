@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
+- 🌟 `<pro>ColorPicker`: Added `mode`, `preset` properties. Added recently used function. Support Hex, RGBA settings.
 - 🌟 `math`: Added `max`, `min`, `abs`, `sum`, `random`, `isValidNumber`, `toString` methods.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.

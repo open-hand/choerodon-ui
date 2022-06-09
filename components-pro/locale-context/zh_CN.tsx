@@ -230,6 +230,9 @@ const locale: Locale = {
     value_missing_no_label: '请选择颜色',
     value_missing: '请选择{label}。',
     type_mismatch: '请选择有效的颜色。',
+    used_view: '最近使用',
+    custom_view: '自定义颜色',
+    pick_color_view:  '拾色器',
   },
   Icon: {
     icons: '图标',

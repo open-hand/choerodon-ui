@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
+- 🌟 `<pro>ColorPicker`: 新增 mode, preset 属性，新增最近使用功能，支持 hex, rgba 定义。
 - 🌟 `math`: 新增 max, min, abs, sum, random, isValidNumber, toString 方法。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
