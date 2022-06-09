@@ -9,7 +9,7 @@ import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
 import { isMoment } from 'moment';
 import { BigNumber } from 'bignumber.js';
-import { math, toNumberString, Utils } from 'choerodon-ui/dataset';
+import { math, Utils } from 'choerodon-ui/dataset';
 import { getConfig as getConfigDefault, getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
@@ -180,7 +180,7 @@ export function processValue(value: any, format?: string, showInvalidDate?: bool
       return value;
     }
     if (math.isValidNumber(value)) {
-      return toNumberString(value);
+      return math.toString(value);
     }
     return value.toString();
   }

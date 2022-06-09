@@ -335,6 +335,16 @@ function isNegativeZero(n1: BigNumber.Value): boolean {
   return value.isZero() && value.isNegative();
 }
 
+/**
+ * 转换成字符串， 永远不会转换成科学计数法
+ * @param n1 string | number | BigNumber
+ * @return string
+ */
+function toString(n1: BigNumber.Value): string {
+  BigNumber.config({ EXPONENTIAL_AT: 1e+9 });
+  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toString();
+}
+
 export default {
   fix,
   plus,
@@ -344,7 +354,6 @@ export default {
   mod,
   pow,
   sqrt,
-  toFixed,
   lt,
   lte,
   gt,
@@ -368,5 +377,7 @@ export default {
   isBigNumber,
   isValidNumber,
   isValidBigNumber,
+  toFixed,
+  toString,
 };
 

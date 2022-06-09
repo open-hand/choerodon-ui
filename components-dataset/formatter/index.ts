@@ -191,12 +191,6 @@ export function formatNumber(value: BigNumber.Value, lang: string | undefined, o
   return value.toString();
 }
 
-export function toNumberString(value: BigNumber.Value): string {
-  return formatNumber(value, undefined, {
-    useGrouping: false,
-  });
-}
-
 const nargs = /\{([0-9a-zA-Z_]+)\}/g;
 
 export function formatTemplate(string: string, args: object | any[], lazy?: boolean) {
