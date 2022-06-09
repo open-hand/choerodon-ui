@@ -1535,7 +1535,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock, isFold },
+      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, isFold },
       props: {
         dataSet,
         treeQueryExpanded,
@@ -1625,7 +1625,7 @@ export default class Table extends DataSetComponent<TableProps> {
             <Spin {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
-                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && !overflowY })}
+                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
                   ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}
                 >
