@@ -342,7 +342,11 @@ function isNegativeZero(n1: BigNumber.Value): boolean {
  */
 function toString(n1: BigNumber.Value): string {
   BigNumber.config({ EXPONENTIAL_AT: 1e+9 });
-  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toString();
+  const value = (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1));
+  if (isNaN(value)) {
+    return '';
+  }
+  return value.toString();
 }
 
 export default {
