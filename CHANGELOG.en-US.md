@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
-- 🌟 `math`: Added `max`, `min`, `abs` methods.
+- 🌟 `math`: Added `max`, `min`, `abs`, `sum`, `random`, `isValidNumber` methods.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
@@ -29,6 +29,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display of new records and cache records separately.
 - 💄 `Notification`: Optimize long word wrapping rules.
 - 💄 `<pro>PerformanceTable`: Compatible with the global configuration `renderEmpty`.
+- 💄 `<pro>NumberField`: Optimized conversion of scientific notation to normal strings.
+- 💄 `InputNumber`: Optimized conversion of scientific notation to normal strings.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.

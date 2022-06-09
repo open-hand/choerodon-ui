@@ -1,5 +1,6 @@
 import { isMoment } from 'moment';
 import { isEmpty, toRangeValue, getNearStepValues, getNearStepMomentValues } from '../../utils';
+import { toNumberString } from '../../formatter';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
@@ -32,8 +33,8 @@ export default function stepMismatch(value: any, validatorBaseProps: ValidatorBa
           const format = getProp('format');
           const [before, after] = nearStepValues;
           const injectionOptions = {
-            0: isMoment(before) ? before.format(format) : before,
-            1: isMoment(after) ? after.format(format) : after,
+            0: isMoment(before) ? before.format(format) : toNumberString(before),
+            1: isMoment(after) ? after.format(format) : toNumberString(after),
           };
           const ruleName = nearStepValues.length === 2 ? 'stepMismatchBetween' : 'stepMismatch';
           const key = nearStepValues.length === 2 ? 'step_mismatch_between' : 'step_mismatch';

@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
-- 🌟 `math`: 新增 max, min, abs 方法。
+- 🌟 `math`: 新增 max, min, abs, sum, random, isValidNumber 方法。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
@@ -29,6 +29,8 @@ timeline: true
 - 💄 `<pro>Table`: 优化新建记录和缓存记录分开显示。
 - 💄 `Notification`: 优化长单词换行规则。
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
+- 💄 `<pro>NumberField`: 优化科学计数法转换成普通字符串。
+- 💄 `InputNumber`: 优化科学计数法转换成普通字符串。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。

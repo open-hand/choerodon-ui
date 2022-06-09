@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
-import { math, Utils } from 'choerodon-ui/dataset';
+import { math, Utils, toNumberString } from 'choerodon-ui/dataset';
 import KeyCode from '../../_util/KeyCode';
 import InputHandler from './InputHandler';
 import Icon from '../../icon';
@@ -509,7 +509,7 @@ export default class InputNumber extends Component {
     if (this.props.formatter) {
       return this.props.formatter(num);
     }
-    return num;
+    return toNumberString(num);
   }
 
   toPrecisionAsStep(num) {
@@ -518,12 +518,12 @@ export default class InputNumber extends Component {
     }
     const precision = Math.abs(this.getMaxPrecision(num));
     if (precision === 0) {
-      return num.toString();
+      return toNumberString(num);
     }
     if (!isNaN(precision)) {
       return math.toFixed(num, precision);
     }
-    return num.toString();
+    return toNumberString(num);
   }
 
   // '1.' '1x' 'xx' '' => are not complete numbers
