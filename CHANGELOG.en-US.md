@@ -51,7 +51,8 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
-
+- 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
+-
 ## 1.5.4
 
 `2022-04-27`
