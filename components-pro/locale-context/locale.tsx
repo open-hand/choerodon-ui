@@ -233,6 +233,9 @@ export interface Locale extends DataSetLocale {
     value_missing: string;
     value_missing_no_label: string;
     type_mismatch: string;
+    used_view: string;
+    custom_view: string;
+    pick_color_view: string;
   };
   Icon: {
     icons: string;
