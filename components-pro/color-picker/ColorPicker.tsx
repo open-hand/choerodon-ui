@@ -49,6 +49,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     clearButton: false,
     mode: ViewMode.default,
     preset: false,
+    defaultValue: '#ff0000',
   };
 
   gradient: HTMLDivElement | null;
@@ -84,6 +85,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   @observable footerEditFlag?: boolean;
 
   @observable gradientHidden?: boolean;
+
+  get preset(): boolean {
+    return this.props.preset || this.getContextConfig('colorPreset');
+  }
 
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
@@ -146,7 +151,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   syncValueOnBlur(value) {
-    const { footerEditFlag, gradientHidden, props: { preset } } = this;
+    const { footerEditFlag, gradientHidden, preset } = this;
     if (!footerEditFlag) {
       if (value !== '' && value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
         value = `#${value}`;
@@ -175,7 +180,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getPopupFooter() {
-    const { prefixCls, RGBA } = this;
+    const { prefixCls, RGBA, rgbToHEX } = this;
     const className = `${prefixCls}-popup-footer-slider-pointer`;
     const huePointerProps = {
       onMouseDown: this.handleHPMouseDown,
@@ -192,6 +197,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       onFocus: this.handleFooterFocus,
     };
     const { r, g, b, a } = RGBA;
+    const value = rgbToHEX(r, g, b, a).slice(1);
     return (
       <div className={`${prefixCls}-popup-footer`}>
         <div className={`${prefixCls}-popup-footer-slide-bar`}>
@@ -212,7 +218,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
             <TextField
               name={ColorUnit.hex}
               restrict={colorHexReg}
-              value={this.getValue().replace('#', '')}
+              value={value}
               {...inputProps}
             />
             <span>{ColorUnit.hex}</span>
@@ -236,7 +242,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getGradientPopupContent() {
-    const { gradientHidden, prefixCls, props: { preset } } = this;
+    const { gradientHidden, prefixCls, preset } = this;
     const gradientProps = {
       className: `${prefixCls}-popup-body-gradient`,
       onClick: this.handleGPClick,
@@ -262,15 +268,18 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     );
   }
 
-  getPresetData(list: string[]) {
+  getPresetData(list: string[], value?: string) {
     const { prefixCls, hexToRGB } = this;
     const className = `${prefixCls}-popup-view-palettes`;
+    const valueRgba = value ? hexToRGB(value) : { r: undefined, g: undefined, b: undefined, a: undefined };
     return (
       <div className={className}>
         {
           [...list].map((item, index) => {
-            const { r, g, b } = hexToRGB(item);
+            const { r, g, b, a } = hexToRGB(item);
             const border = (0.2126 * r + 0.7152 * g + 0.0722 * b) > COLOR_MAX_LIGHT;
+            const { r: vr, g: vg, b: vb, a: va } = valueRgba;
+            const active = r === vr && g === vg && b === vb && a === va;
             const key = `${item}_${index}`;
             return (
               <div
@@ -278,11 +287,14 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
                   `${className}-block`,
                   {
                     [`${className}-block-border`]: border,
+                    [`${className}-block-active`]: active,
                   })}
                 style={{ backgroundColor: item }}
                 key={key}
                 onClick={() => this.setColor(item)}
-              />)
+              >
+                {active && <Icon type="check" />}
+              </div>)
           })
         }
       </div>
@@ -290,12 +302,13 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getPopupContent() {
-    const { prefixCls, props: { preset } } = this;
+    const { prefixCls, preset } = this;
     if (preset) {
+      const value = this.getValue();
       return (<div className={`${prefixCls}-popup-view-preset`}>
         <div onClick={() => this.setGradientHidden(true)}>
-          {this.getPresetData(commonColorMap)}
-          {this.getPresetData(defaultColorMap)}
+          {this.getPresetData(commonColorMap, value)}
+          {this.getPresetData(defaultColorMap, value)}
           <div className={`${prefixCls}-popup-picker-name`}>{$l('ColorPicker', 'used_view')}</div>
           {this.getPresetData(this.colorPickUsed)}
         </div>
@@ -333,27 +346,27 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   setRGBA(r, g, b, a) {
     const { RGBA } = this;
-    if (!r || r > 255) r = 255;
-    if (!g || g > 255) g = 255;
-    if (!b || b > 255) b = 255;
-    if (!a || a > 1) a = 1;
+    if (isNil(r) || r > 255) r = 255;
+    if (isNil(g) || g > 255) g = 255;
+    if (isNil(b) || b > 255) b = 255;
+    if (isNil(a) || a > 1) a = 1;
 
-    if (r && r !== RGBA.r) {
+    if (r !== RGBA.r) {
       RGBA.r = round(r);
     }
-    if (g && g !== RGBA.g) {
+    if (g !== RGBA.g) {
       RGBA.g = round(g);
     }
-    if (b && b !== RGBA.b) {
+    if (b !== RGBA.b) {
       RGBA.b = round(b);
     }
-    if (a && a !== RGBA.a) {
+    if (a !== RGBA.a) {
       RGBA.a = a;
     }
   }
 
   @action
-  setHueColor(color) {
+  setHueColor(color: string) {
     if (color !== this.hueColor) {
       this.hueColor = color;
     }
@@ -374,7 +387,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   @autobind
-  setColor(color) {
+  setColor(color: string) {
     if (!isNil(color) && color.slice(0, 1) === '#' && color.length > 3) {
       const { gradient, selectPointer, hue, huePointer, opacity, opacityPointer } = this;
       const { r, g, b, a } = this.hexToRGB(color);
@@ -683,7 +696,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   setPopup(statePopup: boolean) {
     super.setPopup(statePopup);
     const value = this.getValue();
-    if (!statePopup && colorHexReg.test(value)) {
+    if (value && statePopup) {
+      this.setColor(value);
+    } else if (value && colorHexReg.test(value)) {
       let { colorPickUsed } = this;
       const valueIndex = colorPickUsed.indexOf(value);
       if (valueIndex === -1) {

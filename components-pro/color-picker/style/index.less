@@ -47,6 +47,17 @@
           &-border {
             border: @border-width-base @border-style-base rgba(226, 228, 232, 1);
           }
+
+          &-active {
+            position: relative;
+            .icon-check {
+              position: absolute;
+              top: 0.01rem;
+              left: 0.01rem;
+              color: #fff;
+              font-size: @btn-icon-size;
+            }
+          }
         }
       }
 
