@@ -153,6 +153,7 @@ const defaults = {
   showValidation: ShowValidation.tooltip,
   showHelp: ShowHelp.newLine,
   numberFieldKeyboard: true,
+  colorPreset: false,
   feedback: defaultFeedback,
   confirm: async (message) => (await confirm(message)) !== 'cancel',
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),

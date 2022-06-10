@@ -20,5 +20,5 @@ subtitle: 颜色选择器
 ----------------|-----------------------------------|--------|------
 defaultValue    | 默认值                             | string | `#ff0000`
 mode            | 显示模式，可选值: default \| button  | string | `default`
-preset          | 是否开启备选                        | boolean | `false`
+preset          | 是否开启备选色板                     | boolean | `false`
 

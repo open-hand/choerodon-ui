@@ -163,6 +163,7 @@ const prefixCls = getConfig('prefixCls');
 | min | 最小值 | min: (FieldType) => value |   |
 | max | 最大值 | max: (FieldType) => value |   |
 | xlsx | 异步获取 xlsx 库 | () => import('xlsx') |   |
+| colorPreset | ColorPicker是否开启备选色板 | boolean | false |
 
 ### Customizable
 

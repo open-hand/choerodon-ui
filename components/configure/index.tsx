@@ -273,6 +273,10 @@ export interface Config extends DataSetConfig {
    */
   dateTimePickerOkButton?: boolean;
   /**
+   * 是否开启备选色板
+   */
+  colorPreset?: boolean;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;

@@ -489,10 +489,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         ],
       }, { getConfig: getConfig as any });
       let status = RecordStatus.update;
-      // let dirtyQuery = true;
       if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
-        // dirtyQuery = !queryDataSet.current.dirty;
       }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
