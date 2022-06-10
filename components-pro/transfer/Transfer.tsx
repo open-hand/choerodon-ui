@@ -142,7 +142,13 @@ export default class Transfer extends Select<TransferProps> {
   @action
   handleMoveToRight() {
     const { valueField } = this;
-    this.prepareSetValue(...(this.isCustom? this.sourceSelected : this.sourceSelected.map(record => record.get(valueField))));
+
+    if (this.isCustom) {
+      this.setValue(this.sourceSelected, true);
+    } else {
+      this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));  
+    }
+    
     this.sourceSelected = [];
     this.updateIndex();
   }

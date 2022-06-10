@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 兼容全局配置 renderEmpty。
 - 💄 `<pro>NumberField`: 优化科学计数法转换成普通字符串。
 - 💄 `InputNumber`: 优化科学计数法转换成普通字符串。
+- 💄 `<pro>Transfer`: 优化自定义 Tansfer 在大数据量下全选穿梭时页面卡顿的情况。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。
