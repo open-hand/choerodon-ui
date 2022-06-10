@@ -479,7 +479,12 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
   return (
     <tr className={`${prefixCls}-empty-row`}>
       <td colSpan={columnGroups.leafs.length} style={tdStyle}>
-        <div style={styles}>{!lock && dataSet.status === DataSetStatus.ready && emptyText}</div>
+        <div
+          className={`${prefixCls}-empty-text-wrapper`}
+          style={styles}
+        >
+          {!lock && dataSet.status === DataSetStatus.ready && emptyText}
+        </div>
       </td>
     </tr>
   );
