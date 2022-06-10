@@ -23,7 +23,7 @@ import { getEditorByField } from '../utils';
 import ObserverSelect, { SelectProps } from '../../select/Select';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
-import { DataSetEvents } from '../../data-set/enum';
+import { DataSetEvents, FieldType } from '../../data-set/enum';
 import { processFieldValue, toRangeValue, processValue } from '../../field/utils';
 
 export interface FilterSelectProps extends TextFieldProps {
@@ -208,11 +208,15 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
           if (field.get('multiple', current)) {
             fieldValue = (fieldValue || [])[repeat];
           }
-          const showInvalidDate =  this.getContextConfig('showInvalidDate')
+          const showInvalidDate = this.getContextConfig('showInvalidDate');
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
-                isPlainObject(v) ? v : processValue(v, this.getDateFormat(field), showInvalidDate),
+                isPlainObject(v) ? v : processValue(v, {
+                  dateFormat: this.getDateFormat(field),
+                  showInvalidDate,
+                  isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
+                }),
                 field,
                 {
                   getProp: (name) => this.getProp(name),
@@ -222,7 +226,13 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
-          const text = this.processText(isNil(fieldValue) ? processValue(value, this.getDateFormat(field), showInvalidDate) : isMoment(fieldValue) ? processValue(fieldValue, this.getDateFormat(field), showInvalidDate) : fieldValue);
+          const text = this.processText(isNil(fieldValue) ? processValue(value, {
+            dateFormat: this.getDateFormat(field),
+            showInvalidDate,
+          }) : isMoment(fieldValue) ? processValue(fieldValue, {
+            dateFormat: this.getDateFormat(field),
+            showInvalidDate,
+          }) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : text,
             field,

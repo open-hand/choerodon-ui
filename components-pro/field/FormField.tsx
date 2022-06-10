@@ -40,6 +40,7 @@ import {
   getValueKey,
   isFieldValueEmpty,
   processValue,
+  ProcessValueOptions,
   renderMultipleValues,
   renderRangeValue,
   renderValidationMessage,
@@ -926,8 +927,15 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return getDateFormatByField(field, this.getFieldType(field), this.record);
   }
 
+  getProcessValueOptions(): ProcessValueOptions {
+    return {
+      dateFormat: this.getDateFormat(),
+      showInvalidDate: this.getContextConfig('showInvalidDate'),
+    };
+  }
+
   processValue(value: any): ReactNode {
-    return processValue(value, this.getDateFormat(), this.getContextConfig('showInvalidDate'));
+    return processValue(value, this.getProcessValueOptions());
   }
 
   getDataSetValue(): any {
