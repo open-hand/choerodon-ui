@@ -22,7 +22,7 @@ import { FieldType } from '../data-set/enum';
 import defaultFormatNumber from '../formatter/formatNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
-import { getNumberFormatOptions, getNumberFormatter } from '../field/utils';
+import { getNumberFormatOptions, getNumberFormatter, ProcessValueOptions } from '../field/utils';
 
 function getCurrentValidValue(value: string, options: BigNumberOptions): BigNumber.Value {
   const valueBig = new BigNumber(value.replace(/\.$/, ''));
@@ -512,6 +512,12 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     } else {
       super.prepareSetValue(parseNumber(value, this.getProp('precision'), this.strict));
     }
+  }
+
+  getProcessValueOptions(): ProcessValueOptions {
+    const options = super.getProcessValueOptions();
+    options.isNumber = true;
+    return options;
   }
 
   restrictInput(value: string): string {

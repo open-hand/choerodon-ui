@@ -87,7 +87,18 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { pristine, aggregation, inlineEdit, rowHeight, tableStore, dataSet, columnEditorBorder, indentSize, checkField, selectionMode } = useContext(TableContext);
+  const {
+    pristine,
+    aggregation,
+    inlineEdit,
+    rowHeight,
+    tableStore,
+    dataSet,
+    columnEditorBorder,
+    indentSize,
+    checkField,
+    selectionMode,
+  } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
   const { name, key, lock, renderer, command, align } = column;
@@ -428,7 +439,11 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const getRenderedValue = () => {
     const processValue = (v) => {
       if (!isNil(v)) {
-        const text = isPlainObject(v) ? v : utilProcessValue(v, getDateFormatByField(field, undefined, record), tableStore.getConfig('showInvalidDate'));
+        const text = isPlainObject(v) ? v : utilProcessValue(v, {
+          dateFormat: getDateFormatByField(field, undefined, record),
+          showInvalidDate: tableStore.getConfig('showInvalidDate'),
+          isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
+        });
         return processFieldValue(text, field, {
           getProp: (propName) => field && field.get(propName, record),
           lang: dataSet && dataSet.lang || localeContext.locale.lang,

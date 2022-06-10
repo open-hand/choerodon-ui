@@ -164,13 +164,19 @@ export function processFieldValue(value, field: Field | undefined, options: { ge
   return value;
 }
 
-export function processValue(value: any, format?: string, showInvalidDate?: boolean) {
+export type ProcessValueOptions = {
+  dateFormat?: string;
+  showInvalidDate?: boolean;
+  isNumber?: boolean;
+}
+
+export function processValue(value: any, options:ProcessValueOptions = {}) {
   if (!isNil(value)) {
     if (isMoment(value)) {
       if (value.isValid()) {
-        return value.format(format);
+        return value.format(options.dateFormat);
       }
-      if (showInvalidDate) {
+      if (options.showInvalidDate) {
         return $l('DatePicker', 'invalid_date') as string;
       }
       return '';
@@ -179,7 +185,7 @@ export function processValue(value: any, format?: string, showInvalidDate?: bool
       // For Select's Option and TreeSelect's TreeNode which type may be ReactElement
       return value;
     }
-    if (math.isValidNumber(value)) {
+    if (options.isNumber && math.isValidNumber(value)) {
       return math.toString(value);
     }
     return value.toString();
