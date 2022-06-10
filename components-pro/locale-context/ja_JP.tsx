@@ -233,6 +233,9 @@ const locale: Locale = {
     value_missing_no_label: '色を選択してください',
     value_missing: '{label}を選択してください。',
     type_mismatch: '有効な色を選択してください。',
+    used_view: '最近使っている',
+    custom_view: 'カスタムカラー',
+    pick_color_view: '色拾い器',
   },
   Icon: {
     icons: 'アイコン',

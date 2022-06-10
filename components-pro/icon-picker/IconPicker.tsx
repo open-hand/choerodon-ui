@@ -342,12 +342,15 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
   }
 
   syncValueOnBlur(value) {
-    if (this.filteredIcons.indexOf(value) !== -1) {
-      this.choose(value);
-    } else {
-      this.setText(undefined);
+    if (value) {
+      if (this.filteredIcons.indexOf(value) !== -1) {
+        this.choose(value);
+      } else {
+        this.setText(undefined);
+      }
+    } else if (!this.multiple) {
+      this.setValue(this.emptyValue);
     }
-    super.syncValueOnBlur(value);
   }
 
   handlePopupAnimateAppear() {

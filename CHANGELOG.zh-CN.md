@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl, autoCount, countKey, drawerHeaderFooterCombined 属性, generatePageQuery 钩子新增 totalCount, count, onlyCount, defaultCount 参数。
+- 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl, autoCount, countKey, drawerHeaderFooterCombined, colorPreset 属性, generatePageQuery 钩子新增 totalCount, count, onlyCount, defaultCount 参数。
 - 🌟 `<pro>DataSet`: 新增 autoCount, countKey 属性， 新增 counting 值。
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
 - 🌟 `<pro>Attachment`: 新增 template 属性。
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
+- 🌟 `<pro>ColorPicker`: 新增 mode, preset 属性，新增最近使用功能，支持 hex, rgba 定义。
 - 🌟 `math`: 新增 max, min, abs, sum, random, isValidNumber, toString 方法。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条保存编辑问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动时编辑器消失的问题。
 - 🐞 `<pro>Table`: 修复列头在一定高度下错位的问题。
+- 🐞 `<pro>Table`: 修复 renderEmpty 内容未居中问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。

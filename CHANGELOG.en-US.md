@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined` properties. Added `totalCount`, `count`, `onlyCount`, `, defaultCount` parameter for `generatePageQuery` hook.
+- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined`, `colorPreset` properties. Added `totalCount`, `count`, `onlyCount`, `, defaultCount` parameter for `generatePageQuery` hook.
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
+- 🌟 `<pro>ColorPicker`: Added `mode`, `preset` properties. Added recently used function. Support Hex, RGBA settings.
 - 🌟 `math`: Added `max`, `min`, `abs`, `sum`, `random`, `isValidNumber`, `toString` methods.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the issue of saving edits in the dynamic filter bar.
 - 🐞 `<pro>Table`: Fixed editor disappearing when virtual scrolling.
 - 🐞 `<pro>Table`: Fix the problem that the column header is misplaced at a certain height.
+- 🐞 `<pro>Table`: Fix an issue with the renderEmpty style.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
