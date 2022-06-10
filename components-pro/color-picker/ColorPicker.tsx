@@ -85,6 +85,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable gradientHidden?: boolean;
 
+  get preset(): boolean {
+    return this.props.preset || this.getContextConfig('colorPreset');
+  }
+
   get defaultValidationMessages(): ValidationMessages {
     const label = this.getProp('label');
     return {
@@ -146,7 +150,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   syncValueOnBlur(value) {
-    const { footerEditFlag, gradientHidden, props: { preset } } = this;
+    const { footerEditFlag, gradientHidden, preset } = this;
     if (!footerEditFlag) {
       if (value !== '' && value[0] !== '#' && !value.startsWith('rgb') && !value.startsWith('hls')) {
         value = `#${value}`;
@@ -236,7 +240,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getGradientPopupContent() {
-    const { gradientHidden, prefixCls, props: { preset } } = this;
+    const { gradientHidden, prefixCls, preset } = this;
     const gradientProps = {
       className: `${prefixCls}-popup-body-gradient`,
       onClick: this.handleGPClick,
@@ -290,7 +294,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getPopupContent() {
-    const { prefixCls, props: { preset } } = this;
+    const { prefixCls, preset } = this;
     if (preset) {
       return (<div className={`${prefixCls}-popup-view-preset`}>
         <div onClick={() => this.setGradientHidden(true)}>
