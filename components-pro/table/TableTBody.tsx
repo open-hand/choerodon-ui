@@ -254,86 +254,77 @@ function generateCachedRows(
   props: GenerateSimpleRowsProps,
   statistics?: Statistics | undefined,
 ): ReactNode[] {
-  const { cachedData: records, dataSet } = props.tableStore;
+  const { cachedData: records } = props.tableStore;
   if (records.length) {
     const index = { count: 0 };
+    const groups: { created?: ReactElement; cached?: ReactElement; } = {};
     const rows: ReactNode[] = [];
-    const createdRows: Record[] = [];
-    const cachedRows: Record[] = [];
     records.forEach(record => {
       if (record.isNew) {
-        createdRows.push(record);
+        const { created } = groups;
+        if (!created) {
+          const handleClearCreated = action(() => {
+            const { dataSet } = record;
+            dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => !r.isNew));
+            dataSet.setCachedModified(dataSet.cachedModified.filter(r => !r.isNew));
+          });
+          const group = generateRowGroup({
+            ...props,
+            key: '$$group-created-rows',
+            statistics,
+            children: (
+              <>
+                <span>{$l('Table', 'created_records')}</span>
+                <Button
+                  funcType={FuncType.link}
+                  color={ButtonColor.primary}
+                  icon="delete"
+                  size={Size.small}
+                  onClick={handleClearCreated}
+                />
+              </>
+            ),
+          });
+          rows.push(group);
+          groups.created = group;
+        }
       } else {
-        cachedRows.push(record);
+        const { cached } = groups;
+        if (!cached) {
+          const handleClearCache = action(() => {
+            const { dataSet } = record;
+            dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => r.isNew));
+            dataSet.setCachedModified(dataSet.cachedModified.filter(r => r.isNew));
+          });
+          const group = generateRowGroup({
+            ...props,
+            key: '$$group-cached-rows',
+            statistics,
+            children: (
+              <>
+                <span>{$l('Table', 'cached_records')}</span>
+                <Button
+                  funcType={FuncType.link}
+                  color={ButtonColor.primary}
+                  icon="delete"
+                  size={Size.small}
+                  onClick={handleClearCache}
+                />
+              </>
+            ),
+          });
+          rows.push(group);
+          groups.cached = group;
+        }
       }
+      rows.push(generateRow({
+        ...props,
+        record,
+        index,
+        statistics,
+        parentExpanded: true,
+      }));
     });
-    if (createdRows.length) {
-      const handleClearCreated = action(() => {
-        dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => !r.isNew));
-        dataSet.setCachedModified(dataSet.cachedModified.filter(r => !r.isNew));
-      });
-      const group = generateRowGroup({
-        ...props,
-        key: '$$group-created-rows',
-        statistics,
-        children: (
-          <>
-            <span>{$l('Table', 'created_records')}</span>
-            <Button
-              funcType={FuncType.link}
-              color={ButtonColor.primary}
-              icon="delete"
-              size={Size.small}
-              onClick={handleClearCreated}
-            />
-          </>
-        ),
-      });
-      rows.push(group);
-      createdRows.forEach(record => {
-        rows.push(generateRow({
-          ...props,
-          record,
-          index,
-          statistics,
-          parentExpanded: true,
-        }));
-      });
-    }
-
-    if (cachedRows.length) {
-      const handleClearCache = action(() => {
-        dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => r.isNew));
-        dataSet.setCachedModified(dataSet.cachedModified.filter(r => r.isNew));
-      });
-      const group = generateRowGroup({
-        ...props,
-        key: '$$group-cached-rows',
-        statistics,
-        children: (
-          <>
-            <span>{$l('Table', 'cached_records')}</span>
-            <Button
-              funcType={FuncType.link}
-              color={ButtonColor.primary}
-              icon="delete"
-              size={Size.small}
-              onClick={handleClearCache}
-            />
-          </>
-        ),
-      });
-      rows.push(group);
-      cachedRows.forEach(record => {
-        rows.push(generateRow({
-          ...props,
-          record,
-          index,
-          statistics,
-          parentExpanded: true,
-        }));
-      });
-    }
     return rows;
   }
   return [];

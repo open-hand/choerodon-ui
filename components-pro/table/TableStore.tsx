@@ -1954,13 +1954,12 @@ export default class TableStore {
     return [];
   }
 
-  @computed
   get cachedData(): Record[] {
     const { dataSet, showCachedSelection } = this;
     if (showCachedSelection) {
       return dataSet.cachedRecords;
     }
-    return dataSet.cachedRecords.filter(r => r.isNew);
+    return [];
   }
 
   @computed
