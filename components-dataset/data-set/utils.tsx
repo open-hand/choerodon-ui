@@ -23,6 +23,7 @@ import { formatString } from '../formatter';
 import { treeReduce } from '../tree-helper';
 import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome } from '../iterator-helper';
 import math from '../math';
+import { colorRgbaReg, colorHexReg } from '../validator/rules/typeMismatch';
 
 export const defaultTextField = 'meaning';
 export const defaultValueField = 'value';
@@ -489,19 +490,28 @@ export function checkParentByInsert({ parent }: DataSet) {
 }
 
 function getValueType(value: any): FieldType {
-  return isBoolean(value)
-    ? FieldType.boolean
-    : isNumber(value)
-      ? FieldType.number
-      : isString(value)
-        ? FieldType.string
-        : isMoment(value)
-          ? FieldType.date
-          : math.isBigNumber(value)
-            ? FieldType.bigNumber
-            : isObject(value)
-              ? FieldType.object
-              : FieldType.auto;
+  if (isBoolean(value)) {
+    return FieldType.boolean;
+  }
+  if (isNumber(value)) {
+    return FieldType.number;
+  }
+  if (colorRgbaReg.test(value) || colorHexReg.test(value)) {
+    return FieldType.color;
+  }
+  if (isString(value)) {
+    return FieldType.string;
+  }
+  if (isMoment(value)) {
+    return FieldType.date;
+  }
+  if (math.isBigNumber(value)) {
+    return FieldType.bigNumber;
+  }
+  if (isObject(value)) {
+    return FieldType.object;
+  }
+  return FieldType.auto;
 }
 
 export function getBaseType(type: FieldType): FieldType {
@@ -533,7 +543,7 @@ export function checkFieldType(value: any, field: Field, record?: Record): boole
       }
       const valueType =
         field.get('type', record) === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
+          [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -759,7 +769,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-  dataSet.getConfig('transport') || {};
+    dataSet.getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));

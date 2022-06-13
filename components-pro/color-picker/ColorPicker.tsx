@@ -168,19 +168,24 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getPrefix(): ReactNode {
-    const { prefixCls } = this;
-    const { mode } = this.props
-    if (mode !== ViewMode.button) {
-      return (
-        <div className={`${prefixCls}-prefix`}>
-          <span className={`${prefixCls}-color`} style={{ backgroundColor: this.getValue() }} />
-        </div>
-      );
+    const { prefixCls, props: { mode, renderer } } = this;
+    const backgroundColor = this.getValue();
+    if (mode === ViewMode.button) {
+      if (renderer) {
+        return this.processRenderer(backgroundColor);
+      }
+      return <span className={`${prefixCls}-button-color`} style={{ backgroundColor }} />
     }
+
+    return (
+      <div className={`${prefixCls}-prefix`}>
+        <span className={`${prefixCls}-color`} style={{ backgroundColor }} />
+      </div>
+    );
   }
 
   getPopupFooter() {
-    const { prefixCls, RGBA, rgbToHEX } = this;
+    const { prefixCls, RGBA } = this;
     const className = `${prefixCls}-popup-footer-slider-pointer`;
     const huePointerProps = {
       onMouseDown: this.handleHPMouseDown,
@@ -197,7 +202,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       onFocus: this.handleFooterFocus,
     };
     const { r, g, b, a } = RGBA;
-    const value = rgbToHEX(r, g, b, a).slice(1);
+    const value = (this.getEditorTextInfo().text || '').replace('#', '');
     return (
       <div className={`${prefixCls}-popup-footer`}>
         <div className={`${prefixCls}-popup-footer-slide-bar`}>
@@ -291,7 +296,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
                   })}
                 style={{ backgroundColor: item }}
                 key={key}
-                onClick={() => this.setColor(item)}
+                onClick={() => this.handlePreset(item)}
               >
                 {active && <Icon type="check" />}
               </div>)
@@ -616,20 +621,29 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
     const rgba = this.RGBA;
     if (name === ColorUnit.hex) {
-      const { r, g, b, a } = this.hexToRGB(value);
-      this.setRGBA(r, g, b, a);
+      value = `#${value}`;
+      this.prepareSetValue(value);
+      if (colorHexReg.test(value)) {
+        const { r, g, b, a } = this.hexToRGB(value);
+        const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
+        const hueColor = this.rgbToHEX(r, g, b, a);
+        this.setRGBA(r, g, b, a);
+        this.setHSV(h, s, v, a);
+        this.setHueColor(hueColor);
+      }
     } else {
       value = Number(value);
       if (!isNaN(value)) {
         rgba[name] = value;
         const { r, g, b, a } = rgba;
+        const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
+        const hueColor = this.rgbToHEX(r, g, b, a);
         this.setRGBA(r, g, b, a);
+        this.setHSV(h, s, v, a);
+        this.setHueColor(hueColor);
+        this.prepareSetValue(this.rgbToHEX(r, g, b, a));
       }
     }
-    const { r, g, b, a } = this.RGBA;
-    const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
-    this.setHSV(h, s, v, a);
-    this.prepareSetValue(this.rgbToHEX(r, g, b, a));
   }
 
   @autobind
@@ -711,6 +725,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   @autobind
+  handlePreset(color: string) {
+    this.setColor(color);
+    this.setPopup(false);
+  }
+
+  @autobind
   handlePopupAnimateAppear() {
     this.setColor(this.getValue());
   }
@@ -724,18 +744,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getTriggerIconFont() {
-    return 'palette';
-  }
-
-  getSuffix() {
-    const { prefixCls, props: { mode, renderer } } = this;
-    if (mode === ViewMode.button) {
-      const value = this.getValue();
-      if (renderer) {
-        return this.processRenderer(value);
-      }
-      return <span className={`${prefixCls}-button-color`} style={{ backgroundColor: value }} />
+    const { mode } = this.props;
+    if (mode !== ViewMode.button) {
+      return 'palette';
     }
+    return '';
   }
 
   getWrapperClassNames() {
