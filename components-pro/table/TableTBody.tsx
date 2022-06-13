@@ -80,6 +80,7 @@ interface GenerateRowsProps extends GenerateSimpleRowsProps {
 }
 
 export interface RowsProps extends GenerateRowsProps {
+  onClearCache: () => void;
   snapshot?: DroppableStateSnapshot;
   dragRowHeight?: number;
 }
@@ -196,7 +197,7 @@ function renderExpandedRows(
 function generateDraggableRow(props: GenerateRowProps): ReactElement {
   const { tableStore, record, lock, index, rowDragRender, statistics, isTree, virtual, rowDraggable } = props;
   const children = isTree && !virtual && (
-    <ExpandedRow {...props} renderExpandedRows={renderExpandedRows}/>
+    <ExpandedRow {...props} renderExpandedRows={renderExpandedRows} />
   );
   const draggableIndex = rowDraggable && isTree && statistics ? statistics.count : index.count;
   const row = generateRow({ ...props, children });
@@ -252,61 +253,14 @@ function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): Re
 
 function generateCachedRows(
   props: GenerateSimpleRowsProps,
+  handleClearCache: () => void,
   statistics?: Statistics | undefined,
 ): ReactNode[] {
-  const { cachedData: records, dataSet } = props.tableStore;
+  const { cachedData: records } = props.tableStore;
   if (records.length) {
     const index = { count: 0 };
-    const rows: ReactNode[] = [];
-    const createdRows: Record[] = [];
-    const cachedRows: Record[] = [];
-    records.forEach(record => {
-      if (record.isNew) {
-        createdRows.push(record);
-      } else {
-        cachedRows.push(record);
-      }
-    });
-    if (createdRows.length) {
-      const handleClearCreated = action(() => {
-        dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => !r.isNew));
-        dataSet.setCachedModified(dataSet.cachedModified.filter(r => !r.isNew));
-      });
-      const group = generateRowGroup({
-        ...props,
-        key: '$$group-created-rows',
-        statistics,
-        children: (
-          <>
-            <span>{$l('Table', 'created_records')}</span>
-            <Button
-              funcType={FuncType.link}
-              color={ButtonColor.primary}
-              icon="delete"
-              size={Size.small}
-              onClick={handleClearCreated}
-            />
-          </>
-        ),
-      });
-      rows.push(group);
-      createdRows.forEach(record => {
-        rows.push(generateRow({
-          ...props,
-          record,
-          index,
-          statistics,
-          parentExpanded: true,
-        }));
-      });
-    }
-
-    if (cachedRows.length) {
-      const handleClearCache = action(() => {
-        dataSet.setCachedSelected(dataSet.cachedSelected.filter(r => r.isNew));
-        dataSet.setCachedModified(dataSet.cachedModified.filter(r => r.isNew));
-      });
-      const group = generateRowGroup({
+    const rows: ReactNode[] = [
+      generateRowGroup({
         ...props,
         key: '$$group-cached-rows',
         statistics,
@@ -322,18 +276,15 @@ function generateCachedRows(
             />
           </>
         ),
-      });
-      rows.push(group);
-      cachedRows.forEach(record => {
-        rows.push(generateRow({
-          ...props,
-          record,
-          index,
-          statistics,
-          parentExpanded: true,
-        }));
-      });
-    }
+      }),
+    ];
+    records.forEach(record => rows.push(generateRow({
+      ...props,
+      record,
+      index,
+      statistics,
+      parentExpanded: true,
+    })));
     return rows;
   }
   return [];
@@ -391,7 +342,7 @@ function generateGroupRows(
           children: (
             <>
               {header}
-              {header && <span className={`${prefixCls}-row-group-divider`}/>}
+              {header && <span className={`${prefixCls}-row-group-divider`} />}
               {renderer({ text: group.value, rowGroup: group, name: groupName, dataSet, record: group.totalRecords[0] })}
             </>
           ),
@@ -492,7 +443,7 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
 
 const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const {
-    lock, columnGroups, expandIconColumnIndex, tableStore, rowDragRender,
+    lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender,
     isTree, rowDraggable, snapshot, dragRowHeight, isFixedRowHeight, virtualCell,
   } = props;
   const draggableId = snapshot && snapshot.draggingFromThisWith;
@@ -507,7 +458,7 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
       virtual: true,
       isFixedRowHeight,
       virtualCell,
-    }, $statistics);
+    }, onClearCache, $statistics);
     const rows = generateRows({
       tableStore,
       columnGroups,
@@ -525,7 +476,7 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
     return [cachedRows.concat(rows), $statistics];
   }, [
     tableStore, columnGroups, expandIconColumnIndex, lock, isTree, rowDraggable,
-    rowDragRender, draggableId, dragRowHeight, isFixedRowHeight, virtualCell,
+    rowDragRender, onClearCache, draggableId, dragRowHeight, isFixedRowHeight, virtualCell,
   ]);
   const renderGroup = useCallback((startIndex) => {
     const groups: ReactNode[] = [];
@@ -586,13 +537,13 @@ VirtualRows.displayName = 'VirtualRows';
 
 const Rows: FunctionComponent<RowsProps> = function Rows(props) {
   const {
-    lock, columnGroups, expandIconColumnIndex, tableStore,
+    lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore,
     rowDragRender, isTree, rowDraggable, isFixedRowHeight, virtualCell,
   } = props;
   const { cachedData, currentData, groupedData } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
-    generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false, isFixedRowHeight, virtualCell })
-  ), [cachedData, tableStore, columnGroups, lock, isTree, rowDraggable, isFixedRowHeight, virtualCell]);
+    generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false, isFixedRowHeight, virtualCell }, onClearCache)
+  ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable, isFixedRowHeight, virtualCell]);
   const hasCache = cachedRows.length > 0;
   const rows: ReactNode[] = useComputed(() => (
     generateRows({
@@ -633,7 +584,7 @@ const ObserverRows = observer(Rows);
 
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
-  const { prefixCls, tableStore, rowDragRender, expandRowByClick, expandedRowRenderer, isTree } = useContext(TableContext);
+  const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer, isTree } = useContext(TableContext);
   const { rowDraggable, virtualCell, isFixedRowHeight } = tableStore;
   const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
@@ -642,6 +593,10 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
       tableStore.calcBodyHeight = height;
     }
   }), [tableStore]);
+
+  const handleClearCache = useCallback(action(() => {
+    dataSet.clearCachedRecords();
+  }), [dataSet, tableStore]);
 
   useLayoutEffect(() => {
     if (!lock) {
@@ -659,6 +614,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
 
   const body = tableStore.propVirtual ? (
     <ObserverVirtualRows
+      onClearCache={handleClearCache}
       expandIconColumnIndex={expandIconColumnIndex}
       columnGroups={columnGroups}
       tableStore={tableStore}
@@ -673,6 +629,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     />
   ) : (
     <ObserverRows
+      onClearCache={handleClearCache}
       expandIconColumnIndex={expandIconColumnIndex}
       columnGroups={columnGroups}
       tableStore={tableStore}
