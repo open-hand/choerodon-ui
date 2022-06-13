@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactElement, useCallback, useContext } from 'react';
 import { action } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { ClickParam } from 'choerodon-ui/lib/menu';
 import Button from '../../../button/Button';
 import { FuncType } from '../../../button/enum';

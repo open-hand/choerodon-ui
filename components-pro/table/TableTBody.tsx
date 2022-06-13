@@ -10,7 +10,7 @@ import React, {
   useEffect,
   useLayoutEffect,
 } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';

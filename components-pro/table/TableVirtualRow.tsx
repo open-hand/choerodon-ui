@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode, useContext, useEffect, useRef } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { useInView } from 'react-intersection-observer';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
