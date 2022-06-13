@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement, useCallback, useContext } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import Button from 'choerodon-ui/pro/lib/button/Button';
 import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown/Dropdown';

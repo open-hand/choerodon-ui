@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimized conversion of scientific notation to normal strings.
 - 💄 `InputNumber`: Optimized conversion of scientific notation to normal strings.
 - 💄 `<pro>Transfer`: Optimize the situation of page jam when customizing tansfer to select all shuttles under large amount of data.
+- 🐞 Fix the bug of mobx-react in lower version.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.
 - 🐞 `Table`: Fix the problem that the combined column headers will be misaligned.

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import Badge from '../badge';
 
 export interface InvalidBadgeProps {

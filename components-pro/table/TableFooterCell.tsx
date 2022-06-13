@@ -1,5 +1,5 @@
 import React, { CSSProperties, FunctionComponent, ReactElement, ReactNode, useContext, useMemo } from 'react';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import omit from 'lodash/omit';
 import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
