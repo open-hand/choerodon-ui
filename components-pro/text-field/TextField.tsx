@@ -225,6 +225,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return this.context.showHelp || this.getContextConfig('showHelp') || ShowHelp.newLine;
   }
 
+  get border(): boolean | undefined {
+    return this.props.border;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -490,7 +494,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, multiple, range, props: { border } } = this;
+    const { prefixCls, multiple, range, border } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(

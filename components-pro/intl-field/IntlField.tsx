@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Record from '../data-set/Record';
@@ -20,11 +20,13 @@ import exception from '../_util/exception';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import isSame from '../_util/isSame';
+import { LabelLayout } from '../form/enum';
 
 export interface IntlFieldProps extends TextAreaProps {
   modalProps?: ModalProps;
   maxLengths?: object;
   type?: IntlType;
+  displayOutput?: boolean;
 }
 
 @observer
@@ -34,7 +36,6 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   static defaultProps = {
     ...TextArea.defaultProps,
     rows: 3,
-    resize: ResizeType.vertical,
     type: IntlType.singleLine,
   };
 
@@ -54,9 +55,54 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     return false;
   }
 
+  @computed
+  get readOnly(): boolean {
+    if (this.props.displayOutput) {
+      return true;
+    }
+    return this.isReadOnly();
+  }
+
+  get resize(): ResizeType | undefined {
+    if (this.props.resize) {
+      return this.props.resize;
+    }
+    if (this.props.displayOutput) {
+      return ResizeType.none;
+    }
+    return ResizeType.vertical;
+  }
+
+  get border(): boolean | undefined {
+    if (this.props.displayOutput) {
+      return false;
+    }
+    return this.props.border;
+  }
+
+  get labelLayout(): LabelLayout | undefined {
+    if (this.props.displayOutput && super.labelLayout === LabelLayout.float) {
+      return LabelLayout.vertical;
+    }
+    return super.labelLayout;
+  }
+
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
+    const superText = super.getEditorTextInfo(rangeTarget);
+    return this.props.displayOutput ? { ...superText, placeholder: undefined } : superText;
+  }
+
+  getPlaceholders(): string[] {
+    if (this.props.displayOutput) {
+      return [];
+    }
+    return super.getPlaceholders();
+  }
+
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
+      const { modalProps, maxLengths, type, rows, cols } = this.props;
+      const { resize } = this;
       const { record, lang, name, element } = this;
       const { supports } = localeContext;
       const maxLengthList = {};
@@ -114,7 +160,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   handleIntlListClose = async () => {
     delete this.modal;
-    this.focus();
+    if (!this.props.displayOutput) {
+      this.focus();
+    }
   };
 
   @autobind
@@ -135,6 +183,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   @autobind
   async handleIntlListCancel() {
+    if (this.disabled || this.readOnly) {
+      return;
+    }
     const { record, locales } = this;
     if (record && locales) {
       record.set(locales);
@@ -174,6 +225,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     if (this.props.type === IntlType.multipleLine) {
       return super.getOmitPropsKeys().concat([
         'type',
+        'displayOutput',
       ]);
     }
     return super.getOmitPropsKeys().concat([
@@ -184,6 +236,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
       'autoSize',
       'onResize',
       'type',
+      'displayOutput',
     ]);
   }
 
@@ -197,6 +250,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   getWrapperClassNames(...args): string {
     return super.getWrapperClassNames(
       `${this.prefixCls}-intl`,
+      this.props.displayOutput ? `${this.prefixCls}-intl-output` : '',
       ...args,
     );
   }
