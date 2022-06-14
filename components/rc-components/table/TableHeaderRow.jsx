@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'mini-store';
 
-function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
+function TableHeaderRow({ row, index, height, components, onHeaderRow, placeholder, rows }) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
@@ -18,8 +18,8 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
             minWidth: column.width,
             width: column.width,
             maxWidth: column.width,
-          }
-          customProps.style = { ...customProps.style, ...addStyle }
+          };
+          customProps.style = { ...customProps.style, ...addStyle };
         }
         if (column.align) {
           customProps.style = { ...customProps.style, textAlign: column.align };
@@ -32,6 +32,7 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow }) {
           />
         );
       })}
+      {placeholder && <th rowSpan={rows.length} style={{ fontSize: 0, padding: 0 }}>&nbsp;</th>}
     </HeaderRow>
   );
 }

@@ -150,11 +150,11 @@ const BaseTable = function BaseTable(props) {
   }
 
   const columns = getColumns();
-
+  const placeholder = hasHead && !hasBody && scroll.y && fixed !== 'left';
   return (
     <Table className={tableClassName} style={tableStyle} key="table">
-      <ColGroup columns={columns} fixed={fixed} />
-      {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} />}
+      <ColGroup columns={columns} fixed={fixed} placeholder={placeholder} />
+      {hasHead && <TableHeader expander={expander} columns={columns} fixed={fixed} placeholder={placeholder} />}
       {body}
       {hasFoot && <TableFooter onHover={handleRowHover} columns={columns} fixed={fixed} />}
     </Table>

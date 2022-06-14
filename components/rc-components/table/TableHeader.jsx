@@ -39,7 +39,7 @@ export default function TableHeader(props) {
   const table = useContext(TableContext);
   const { components } = table;
   const { prefixCls, showHeader, onHeaderRow } = table.props;
-  const { expander, columns, fixed } = props;
+  const { expander, columns, fixed, placeholder } = props;
 
   if (!showHeader) {
     return null;
@@ -64,6 +64,7 @@ export default function TableHeader(props) {
             row={row}
             components={components}
             onHeaderRow={onHeaderRow}
+            placeholder={index === 0 && placeholder}
           />
         ))
       }

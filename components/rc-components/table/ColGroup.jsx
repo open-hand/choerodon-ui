@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
+import measureScrollbar from '../../_util/measureScrollbar';
 import TableContext from './TableContext';
 
 export default function ColGroup(props) {
   const table = useContext(TableContext);
   const { prefixCls, expandIconAsCell } = table.props;
-  const { fixed } = props;
+  const { fixed, placeholder } = props;
 
   const expandCol = expandIconAsCell && fixed !== 'right' ? (
     <col
@@ -35,6 +36,7 @@ export default function ColGroup(props) {
     <colgroup>
       {expandCol}
       {cols}
+      {placeholder && <col style={{ width: measureScrollbar() }} />}
     </colgroup>
   );
 }
