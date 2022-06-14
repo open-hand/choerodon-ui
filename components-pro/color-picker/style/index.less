@@ -79,7 +79,7 @@
 
       &-picker-name {
         margin-bottom: 0.08rem;
-        font-size: 0.12rem;
+        font-size: @font-size-sm;
       }
     }
 
@@ -186,7 +186,7 @@
           display: block;
           margin-top: 0.04rem;
           color: @text-color-secondary;
-          font-size: 0.12rem;
+          font-size: @font-size-sm;
         }
 
         &-color:first-of-type {
@@ -215,7 +215,7 @@
 
         .@{input-prefix}-number {
           padding: 0.04rem;
-          font-size: 0.12rem;
+          font-size: @font-size-sm;
           text-align: left;
           border-color: rgba(226, 228, 232, 1);
         }
@@ -227,11 +227,12 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 0.16rem;
-      font-size: 0.12rem;
+      font-size: @font-size-sm;
+      cursor: pointer;
 
       .icon {
         margin-right: 0.04rem;
-        font-size: 0.16rem;
+        font-size: @font-size-lg;
       }
 
       .icon-color_lens-o {
@@ -249,10 +250,6 @@
       width: 0;
       padding: 0;
       border: none;
-    }
-
-    .@{color-prefix}-suffix {
-      right: inherit;
     }
 
     &-color {
