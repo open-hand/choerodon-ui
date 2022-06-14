@@ -144,7 +144,8 @@ export default class Transfer extends Select<TransferProps> {
     const { valueField } = this;
 
     if (this.isCustom) {
-      this.setValue(this.sourceSelected, true);
+      const currentValues = this.getValues();
+      this.setValue([...currentValues, ...this.sourceSelected], true);
     } else {
       this.prepareSetValue(...this.sourceSelected.map(record => record.get(valueField)));  
     }
