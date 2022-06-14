@@ -5,6 +5,8 @@
 @intl-prefix-intl: ~'@{intl-prefix-input}-intl';
 @intl-prefix-textarea: ~'@{c7n-pro-prefix}-textarea';
 @intl-prefix-textarea-intl: ~'@{intl-prefix-textarea}-intl';
+@form-prefix-cls: ~'@{c7n-pro-prefix}-form';
+@field-prefix-cls: ~'@{c7n-pro-prefix}-field';
 .@{intl-prefix-input} {
   &-suffix-button {
     .@{intl-prefix-intl} {
@@ -20,6 +22,59 @@
   label {
     .@{intl-prefix-textarea} {
       padding-right: 0.24rem;
+    }
+  }
+}
+
+.@{intl-prefix-input}-required-colors.@{intl-prefix-intl}-output,
+.@{intl-prefix-textarea}-required-colors.@{intl-prefix-textarea-intl}-output {
+  background-color: #fff;
+}
+
+// 多语言 output 形式
+.@{form-prefix-cls}-wrapper {
+  .@{field-prefix-cls}-label-intl-output-all {
+    label {
+      padding: 0.01rem 0;
+    }
+  }
+
+  .@{field-prefix-cls}-intl-output {
+    .@{intl-prefix-input}-required-colors,
+    .@{intl-prefix-textarea}-required-colors {
+      background-color: #fff;
+    }
+
+    .@{intl-prefix-input} {
+      height: 0.28rem;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+    }
+
+    .@{intl-prefix-textarea} {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+      line-height: 0.28rem;
+    }
+
+    &-all {
+      padding-top: 0.01rem;
+      padding-bottom: 0.01rem;
+    }
+  }
+}
+
+.@{form-prefix-cls}-float-label {
+  label.@{field-prefix-cls}-label-intl-output {
+    padding: 0.07rem 0 0 0.05rem;
+    font-size: 0.12rem;
+  }
+
+  .@{field-prefix-cls}-intl-output {
+    .@{intl-prefix-input} {
+      height: 0.18rem;
     }
   }
 }

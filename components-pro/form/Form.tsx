@@ -702,7 +702,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           const { type, props: outChildProps } = outChild;
           if (outChildProps.hidden) return null;
           if (type) {
-            if (isFunction(type) && !(type as any).__PRO_OUTPUT) {
+            if (isFunction(type) && !(type as any).__PRO_OUTPUT &&
+              !((type as any).displayName === 'IntlField' && outChildProps && outChildProps.displayOutput)) {
               isAllOutputCom = false;
             }
 
@@ -752,6 +753,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
+      const intlFieldOutput = TagName === 'IntlField' && props && props.displayOutput;
       const {
         rowSpan = 1,
         colSpan = 1,
@@ -803,17 +805,21 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const outputMix = !isAllOutputCom && isOutput ? 'mix' : '';
       const isLabelShowHelp = (fieldElementProps.showHelp || showHelp) === ShowHelp.label;
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
-        [`${prefixCls}-required`]: required && !isOutput,
+        [`${prefixCls}-required`]: required && !isOutput && !intlFieldOutput,
         [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
         [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
         [`${prefixCls}-label-help`]: isLabelShowHelp,
+        [`${prefixCls}-label-intl-output`]: intlFieldOutput,
+        [`${prefixCls}-label-intl-output-all`]: intlFieldOutput && isAllOutputCom && isLabelLayoutHorizontal,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
+        [`${prefixCls}-intl-output`]: intlFieldOutput,
+        [`${prefixCls}-intl-output-all`]: intlFieldOutput && isAllOutputCom && isLabelLayoutHorizontal,
       });
       if (!noLabel && !(type as typeof Item).__PRO_FORM_ITEM) {
         const columnLabelWidth = labelWidth[colIndex];
@@ -846,7 +852,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           className={fieldClassName}
           style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
         >
-          {labelLayout === LabelLayout.vertical && !!label && (
+          {((labelLayout === LabelLayout.vertical && !!label) || (labelLayout === LabelLayout.float && !!label && intlFieldOutput)) && (
             <>
               <label className={labelClassName}>
                 {toJS(label)}

@@ -94,9 +94,13 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       className: classNames(props.className, className, prefixCls),
       ...fieldProps,
     };
-    if ([LabelLayout.none, LabelLayout.float, LabelLayout.placeholder].includes(labelLayout)) {
+    const intlFieldOutput = (child.type as any).displayName === 'IntlField' && (fieldProps as any).displayOutput;
+    if ([LabelLayout.none, LabelLayout.placeholder].includes(labelLayout) || (LabelLayout.float === labelLayout && !intlFieldOutput)) {
+      const wrapperClass = classNames(`${prefixCls}-wrapper`, {
+        [`${prefixCls}-intl-output`]: intlFieldOutput,
+      });
       return (
-        <div className={`${prefixCls}-wrapper`}>
+        <div className={wrapperClass}>
           {cloneElement<FormFieldProps>(child, fieldElementProps)}
         </div>
       );
@@ -106,17 +110,19 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
     const isOutput = labelLayout === LabelLayout.horizontal && (child.type as any).displayName === 'Output';
     const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
-      [`${prefixCls}-required`]: required,
+      [`${prefixCls}-required`]: required && !intlFieldOutput,
       [`${prefixCls}-readonly`]: readOnly,
       [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
       [`${prefixCls}-label-output`]: isOutput,
       [`${prefixCls}-label-useColon`]: label && fieldUseColon,
+      [`${prefixCls}-label-intl-output`]: intlFieldOutput,
     });
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-output`]: isOutput,
+      [`${prefixCls}-intl-output`]: intlFieldOutput,
     });
     const tooltip = props.labelTooltip || labelTooltip;
-    if (labelLayout === LabelLayout.vertical) {
+    if (labelLayout === LabelLayout.vertical || (intlFieldOutput && labelLayout === LabelLayout.float)) {
       return (
         <>
           <Label className={labelClassName} tooltip={tooltip}>{label}</Label>
