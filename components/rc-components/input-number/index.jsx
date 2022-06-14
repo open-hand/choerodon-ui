@@ -509,7 +509,7 @@ export default class InputNumber extends Component {
     if (this.props.formatter) {
       return this.props.formatter(num);
     }
-    return math.toString(num);
+    return num;
   }
 
   toPrecisionAsStep(num) {
