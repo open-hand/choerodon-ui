@@ -66,6 +66,9 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
       if (oldValue === value) {
         return true;
       }
+      if (isEmpty(oldValue) && isEmpty(value)) {
+        return true;
+      }
       if (isNumber(oldValue) || isNumber(value)) {
         const oEp = isNumber(oldValue) ? isEmpty(oldValue) : isEnumEmpty(oldValue);
         const nEp = isNumber(value) ? isEmpty(value) : isEnumEmpty(value);
