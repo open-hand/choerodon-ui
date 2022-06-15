@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
+import isNumber from 'lodash/isNumber';
 import { math, Utils } from 'choerodon-ui/dataset';
 import KeyCode from '../../_util/KeyCode';
 import InputHandler from './InputHandler';
@@ -22,6 +23,11 @@ const SPEED = 200;
  * When click and hold on a button - the delay before auto changin the value.
  */
 const DELAY = 600;
+
+
+const isEqual = (oldValue, newValue) => newValue === oldValue ||
+  math.eq(newValue, oldValue) ||
+  (isNumber(newValue) && isNumber(oldValue) && math.isNaN(newValue) && math.isNaN(oldValue));
 
 export default class InputNumber extends Component {
   static defaultProps = {
@@ -83,9 +89,9 @@ export default class InputNumber extends Component {
 
     // Don't trigger in componentDidMount
     if (prevProps) {
-      if (!math.eq(prevProps.value, value) ||
-        !math.eq(prevProps.max, max) ||
-        !math.eq(prevProps.min, min)) {
+      if (!isEqual(prevProps.value, value) ||
+        !isEqual(prevProps.max, max) ||
+        !isEqual(prevProps.min, min)) {
         const validValue = focused ? value : this.getValidValue(value);
         let nextInputValue;
         if (this.pressingUpOrDown) {

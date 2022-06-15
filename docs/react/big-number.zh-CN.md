@@ -57,7 +57,7 @@ import { DataSet } from 'choerodon-ui/pro';
 const ds = new DataSet({
     autoCreate: true,
     fields: [
-      { 
+      {
         name: 'age',
         type: 'number',
         step: 2,
@@ -66,7 +66,7 @@ const ds = new DataSet({
         min: '-12345678901234567890123456',
         defaultValue: '123456789012345678',
       },
-      { 
+      {
         name: 'big',
         type: 'bigNumber',
         step: 2,
@@ -94,7 +94,7 @@ ds.current.get('big'); // BigNumber(123456789012345678)
 
 注意： json-bigint v1.0.0 版本转换的对象有原型链丢失的[issue](https://github.com/sidorares/json-bigint/issues/39),  在该issue修复前请使用 v0.4.0 版本。
 
-###个例使用：
+### 个例使用(使用全局替换无需此步骤)：
 ```
 import JSONBig from 'json-bigint';
 
@@ -135,11 +135,14 @@ new DataSet({
 
 ```
 
-###全局替换：
+### 全局替换：
 
 ```
 import JSONBig from 'json-bigint';
+import JSON3 from 'json3';
 
+// 如有第三方库使用了json3， 需要做如下处理， 不然 json3 会覆盖全局JSON对象。
+JSON3.noConflict();
 window.$JSON = window.JSON;
 window.JSON = JSONBig;
 
@@ -149,5 +152,43 @@ if (typeof Response !== 'undefined') {
     return this.text().then(text => JSON.parse(text))
   }
 }
+
+```
+
+### 如有数字作为 render 返回值的话需做一下全局处理，不然转换成BigNumber时会报错:
+
+```
+import BigNumber from 'bignumber.js';
+
+Object.assign(BigNumber.prototype, {
+  [Symbol.iterator]() {
+    return this.toString()[Symbol.iterator]();
+  },
+});
+
+```
+
+### 国际化处理
+
+```
+import { formatNumber } from 'choerodon-ui/dataset';
+import BigNumber from 'bignumber.js';
+
+Object.assign(BigNumber.prototype, {
+  toLocaleString(lang, options) {
+    return formatNumber(this, lang, options);
+  },
+});
+
+```
+
+### 兼容 lodash.isNumber
+
+```
+import BigNumber from 'bignumber.js';
+
+Object.defineProperty(BigNumber.prototype, Symbol.toStringTag, {
+  value: 'Number',
+});
 
 ```
