@@ -192,3 +192,18 @@ Object.defineProperty(BigNumber.prototype, Symbol.toStringTag, {
 });
 
 ```
+
+### 兼容 bigNumber.toFixed 不支持字符串参数
+
+```
+import BigNumber from 'bignumber.js';
+
+const { toFixed } = BigNumber.prototype;
+Object.assign(BigNumber.prototype, {
+  toFixed(decimalPlaces) {
+    const dp = Number(decimalPlaces);
+    return toFixed.call(this, isNaN(dp) ? 0 : dp);
+  },
+});
+
+```
