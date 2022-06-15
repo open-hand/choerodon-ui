@@ -2,6 +2,7 @@ import React from 'react';
 import { action, computed, get, observable, runInAction, set } from 'mobx';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import isObject from 'lodash/isObject';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -18,7 +19,7 @@ import Column, { ColumnProps } from './Column';
 import autobind from '../_util/autobind';
 import { ModalProps } from '../modal/Modal';
 import { $l } from '../locale-context';
-import { ColumnLock, TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
+import { ColumnLock, TableAutoHeightType, TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
 
 export function getRowSelection(props: TableProps): TableRowSelection {
   return props.rowSelection || {};
@@ -216,6 +217,25 @@ export default class TableStore {
       return this.getConfig('performanceTableCustomizable') || this.node.context.getCustomizable('PerformanceTable');
     }
     return false;
+  }
+  
+  @computed
+  get autoHeight(): { type: TableAutoHeightType; diff: number } | undefined {
+    const { autoHeight } = this.node.props;
+    if (autoHeight) {
+      const defaultAutoHeight = {
+        type: TableAutoHeightType.minHeight,
+        diff: 0,
+      };
+      if (isObject(autoHeight)) {
+        return {
+          ...defaultAutoHeight,
+          ...autoHeight,
+        };
+      }
+      return defaultAutoHeight;
+    }
+    return undefined;
   }
 
   @computed

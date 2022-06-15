@@ -79,7 +79,7 @@ import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
 import TableStore from './TableStore';
 import Toolbar, { ToolBarProps } from './tool-bar';
-import { TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
+import { TableAutoHeightType, TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
 import { isDropresult } from '../table/utils';
 import { arrayMove } from '../data-set/utils';
 import { $l } from '../locale-context';
@@ -236,7 +236,7 @@ export interface TableProps extends StandardProps {
   /** 渲染操作栏 */
   toolBarRender?: ToolBarProps['toolBarRender'] | false,
   columns?: ColumnProps[];
-  autoHeight?: boolean;
+  autoHeight?: boolean | { type: TableAutoHeightType; diff: number };
   affixHeader?: boolean | number;
   affixHorizontalScrollbar?: boolean | number;
   bodyRef?: (ref: HTMLElement) => void;
@@ -910,9 +910,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   get getScrollBarYWidth(): number {
     const { contentHeight } = this.state;
+    const { showScrollArrow } = this.props;
     const height = this.getTableHeight();
     if (contentHeight > height && !!this.scrollbarYRef) {
-      return SCROLLBAR_WIDTH;
+      return showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH;
     }
     return 0;
   }
@@ -937,16 +938,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    */
   getTableHeight() {
     const { contentHeight } = this.state;
-    const { minHeight, height, autoHeight, data, showScrollArrow } = this.props;
+    const { minHeight, height, data, showScrollArrow } = this.props;
     const headerHeight = this.getTableHeaderHeight();
     const {
       tableStore: {
         customized: { heightType, height: cusHeight, heightDiff },
         tempCustomized,
+        autoHeight,
       },
     } = this;
 
-    let tableHeight: number = height!;
+    let tableHeight: number = Math.max(height!, minHeight!);
 
     if (this.tableStore.customizable) {
       const tempHeightType = get(tempCustomized, 'heightType');
@@ -976,11 +978,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return tableHeight;
     }
 
-    if (autoHeight) {
-      if (showScrollArrow) {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_LARGE_WIDTH, minHeight! + SCROLLBAR_LARGE_WIDTH);
+    const tableRef = this.tableRef.current;
+    if (autoHeight && tableRef) {
+      const { parentNode } = tableRef;
+      const { type, diff } = autoHeight;
+      const {offsetHeight} = parentNode
+      if (type === TableAutoHeightType.minHeight) {
+        return offsetHeight - diff;
       } else {
-        return Math.max(headerHeight + contentHeight + SCROLLBAR_WIDTH, minHeight! + SCROLLBAR_WIDTH);
+        return Math.min(offsetHeight, headerHeight + contentHeight + (showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH) + diff) - diff;
       }
     } else {
       return tableHeight;
@@ -2094,7 +2100,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   calculateTableContextHeight(prevProps?: TableProps) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
-    const { autoHeight, affixHeader, showScrollArrow } = this.props;
+    const { affixHeader } = this.props;
     const height = this.getTableHeight();
 
     const headerHeight = this.getTableHeaderHeight();
@@ -2123,14 +2129,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.updatePosition();
     }
 
-    if (!autoHeight) {
-      // 这里 -SCROLLBAR_WIDTH 和 -SCROLLBAR_LARGE_WIDTH 是为了让滚动条不挡住内容部分
-      if (!showScrollArrow) {
-        this.minScrollY = -(contentHeight - height) - this.getScrollBarYWidth;
-      } else {
-        this.minScrollY = -(contentHeight - height) - SCROLLBAR_LARGE_WIDTH;
-      }
-    }
+    this.minScrollY = -(contentHeight - height) - this.getScrollBarYWidth;
 
     // 如果内容区域的高度小于表格的高度，则重置 Y 坐标滚动条
     if (contentHeight < height) {

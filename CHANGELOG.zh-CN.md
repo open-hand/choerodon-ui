@@ -36,6 +36,7 @@ timeline: true
 - 💄 `InputNumber`: 优化科学计数法转换成普通字符串。
 - 💄 `<pro>Transfer`: 优化自定义 Tansfer 在大数据量下全选穿梭时页面卡顿的情况。
 - 💄 `<pro>TextArea`: 优化 autoSize 模式下，dataSet 的数据变化后组件不会自动更新高度的问题。
+- 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 🐞 修复低版本 mobx-react 报错问题。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
