@@ -27,7 +27,7 @@ timeline: true
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
 - 💄 `<pro>DatePicker`: 优化 filter 属性对选择面板的影响。
-- 💄 `<pro>Switch`: 优化样式。。
+- 💄 `<pro>Switch`: 优化样式。
 - 💄 `<pro>Table`: 优化校验信息展示方式固定为 tooltip。
 - 💄 `<pro>Table`: 优化 autoQuery false 时输入查询条件被覆盖的场景。
 - 💄 `Notification`: 优化长单词换行规则。
@@ -40,6 +40,7 @@ timeline: true
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。
 - 🐞 `Table`: 修复组合列头会没对齐的问题。
+- 🐞 `Table`: 修复在 mac 电脑中固定头会有滚动条的问题。
 - 🐞 `Tabs`: 修复数据源校验标记重置无法清除的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet reset 时校验徽章没有消失的问题。
 - 🐞 `<pro>Table`: 修复整行编辑模式下 autoSize 的 TextArea 通过输入换行时其他编辑器错位的问题。
