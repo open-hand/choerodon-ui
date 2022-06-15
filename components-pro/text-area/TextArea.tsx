@@ -50,11 +50,30 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return false;
   }
 
+  get resize(): ResizeType | undefined {
+    return this.props.resize;
+  }
+
+  get autoSize(): boolean | AutoSizeType | undefined {
+    return this.props.autoSize;
+  }
+
   componentDidMount() {
     super.componentDidMount();
-    if (this.element && this.props.autoSize) {
+    if (this.element && this.autoSize) {
       // 自适应高度，挂载时渲染样式
       this.forceUpdate();
+    }
+  }
+
+  componentDidUpdate() {
+    const { element, autoSize } = this;
+    if (autoSize && element) {
+      const { minRows, maxRows } = autoSize as AutoSizeType;
+      const calculateStyle = calculateNodeHeight(element, true, minRows, maxRows);
+      if (`${calculateStyle.height}px` !== element.style.height) {
+        this.forceUpdate();
+      }
     }
   }
 
@@ -67,7 +86,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   }
 
   getOtherProps() {
-    const { resize = ResizeType.none, autoSize } = this.props;
+    const { resize = ResizeType.none, autoSize } = this;
     const otherProps = super.getOtherProps();
     const { style = {} } = otherProps;
     style.resize = resize;
@@ -127,7 +146,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   }
 
   renderWrapper(): ReactNode {
-    const { resize = ResizeType.none } = this.props;
+    const { resize = ResizeType.none } = this;
     const resizable = resize !== ResizeType.none;
     const wrapperProps = this.getWrapperProps() || {};
     const lengthElement = this.renderLengthInfoWrapper();

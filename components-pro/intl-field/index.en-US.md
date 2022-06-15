@@ -24,6 +24,7 @@ title: IntlField
 | type | Single or multiple lines of input, options: `singleLine` `multipleLine` | string | singleLine |
 | rows | Text field height(The property is available when type is multipleLine) | number  | 3 |
 | resize | Whether you can drag and drop to resize(The property is available when type is multipleLine), options： `none` `both` `vertical` `horizontal` | string  | vertical |
+| displayOutput | 显示为 `Output` 样式 | boolean |  |
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField) 或 [TextArea](/components-pro/text-area/#TextArea)。
 

@@ -702,7 +702,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           const { type, props: outChildProps } = outChild;
           if (outChildProps.hidden) return null;
           if (type) {
-            if (isFunction(type) && !(type as any).__PRO_OUTPUT) {
+            if (isFunction(type) && !(type as any).__PRO_OUTPUT &&
+              !((type as any).displayName === 'IntlField' && outChildProps && outChildProps.displayOutput)) {
               isAllOutputCom = false;
             }
 
@@ -752,6 +753,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
       const required = getProperty(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
+      const intlFieldOutput = TagName === 'IntlField' && props && props.displayOutput;
       const {
         rowSpan = 1,
         colSpan = 1,
@@ -799,7 +801,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         className: classNames(prefixCls, className),
         ...otherProps,
       };
-      const isOutput = (type as any).__PRO_OUTPUT;
+      const isOutput = (type as any).__PRO_OUTPUT || intlFieldOutput;
       const outputMix = !isAllOutputCom && isOutput ? 'mix' : '';
       const isLabelShowHelp = (fieldElementProps.showHelp || showHelp) === ShowHelp.label;
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {

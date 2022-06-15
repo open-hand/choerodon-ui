@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Transfer`: 新增 setTargetOption 属性，用于自定义组件穿梭框预置目标数据源。
 - 🌟 `<pro>ColorPicker`: 新增 mode, preset 属性，新增最近使用功能，支持 hex, rgba 定义。
 - 🌟 `math`: 新增 max, min, abs, sum, random, isValidNumber, toString 方法。
+- 🌟 `<pro>IntlField`: 新增 displayOutput 属性。
 - 💄 `configure`: attachment.getPreviewUrl 返回值支持 返回值为 string 和 Promise<string> 的钩子类型。
 - 💄 优化 ConfigProvider 上下文影响。
 - 💄 优化 range、multiple 属性对 AutoComplete 、EmailField、IconPicker、IntlField、Password、SecretField、Select、UrlField 组件的影响。
@@ -34,6 +35,7 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化科学计数法转换成普通字符串。
 - 💄 `InputNumber`: 优化科学计数法转换成普通字符串。
 - 💄 `<pro>Transfer`: 优化自定义 Tansfer 在大数据量下全选穿梭时页面卡顿的情况。
+- 💄 `<pro>TextArea`: 优化 autoSize 模式下，dataSet 的数据变化后组件不会自动更新高度的问题。
 - 🐞 修复低版本 mobx-react 报错问题。
 - 🐞 `Align`: 修复关键词 nodeName 导致的逻辑错误。
 - 🐞 `formatter`: 修复大数字格式化精度参数无效的问题。

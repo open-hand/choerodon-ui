@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Transfer`: Added `setTargetOption` property when used to customize the preset target data source of the component shuttle box.
 - 🌟 `<pro>ColorPicker`: Added `mode`, `preset` properties. Added recently used function. Support Hex, RGBA settings.
 - 🌟 `math`: Added `max`, `min`, `abs`, `sum`, `random`, `isValidNumber`, `toString` methods.
+- 🌟 `<pro>IntlField`: Added `displayOutput` property.
 - 💄 `configure`: `attachment.getPreviewUrl` return value supports hook types with return values of string and Promise<string>.
 - 💄 Optimize the impact of the `ConfigProvider` context.
 - 💄 Optimize the influence of `range` and `multiple` attributes on Autocomplete, EmailField, IconPicker, IntlField, Password, Secretfield, Select and UrlField components.
@@ -34,6 +35,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimized conversion of scientific notation to normal strings.
 - 💄 `InputNumber`: Optimized conversion of scientific notation to normal strings.
 - 💄 `<pro>Transfer`: Optimize the situation of page jam when customizing tansfer to select all shuttles under large amount of data.
+- 💄 `<pro>TextArea`: Optimized `autoSize` mode, the component will not automatically update the height after the `dataSet` of the data changes.
 - 🐞 Fix the bug of mobx-react in lower version.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.

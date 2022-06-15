@@ -94,6 +94,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       className: classNames(props.className, className, prefixCls),
       ...fieldProps,
     };
+    const intlFieldOutput = (child.type as any).displayName === 'IntlField' && (fieldProps as any).displayOutput;
     if ([LabelLayout.none, LabelLayout.float, LabelLayout.placeholder].includes(labelLayout)) {
       return (
         <div className={`${prefixCls}-wrapper`}>
@@ -104,9 +105,9 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const label = getProperty(fieldProps, 'label', dataSet, record);
     const required = getProperty(fieldProps, 'required', dataSet, record);
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
-    const isOutput = labelLayout === LabelLayout.horizontal && (child.type as any).displayName === 'Output';
+    const isOutput = labelLayout === LabelLayout.horizontal && ((child.type as any).displayName === 'Output' || intlFieldOutput);
     const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
-      [`${prefixCls}-required`]: required,
+      [`${prefixCls}-required`]: required && !((child.type as any).displayName === 'Output' || intlFieldOutput),
       [`${prefixCls}-readonly`]: readOnly,
       [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
       [`${prefixCls}-label-output`]: isOutput,

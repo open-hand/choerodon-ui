@@ -14,12 +14,15 @@ title:
 Use with other `FormField`s in a `Form` with `DataSet`.
 
 ````jsx
-import { DataSet, Form, Output, EmailField, NumberField } from 'choerodon-ui/pro';
+import { DataSet, Form, Output, EmailField, NumberField, IntlField } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
+    tlsUrl: '/dataset/user/languages',
     fields: [
+      { name: 'first-name', type: 'intl', defaultValue: 'Zhangsan', required: true, label: '姓名' },
+      { name: 'last-name', type: 'intl', defaultValue: '描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述', required: true, label: '名称' },
       { name: 'phone', defaultValue: '15888888888', type: 'string', label: '手机号', required: true },
       { name: 'age', defaultValue: 18, type: 'number', label: '年龄' },
       { name: 'sex', defaultValue: 'F', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
@@ -34,7 +37,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <Form dataSet={this.ds} style={{ width: '3.5rem' }} useColon labelLayout="float">
+      <Form dataSet={this.ds} style={{ width: '3.5rem' }} useColon labelLayout="float" columns={2}>
+        <IntlField name="first-name" displayOutput />
+        <IntlField name="last-name" type="multipleLine" displayOutput />
         <Output name="phone" />
         <NumberField name="age" />
         <Output name="sex" />
