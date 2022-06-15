@@ -10,8 +10,6 @@ import round from 'lodash/round';
 import pull from 'lodash/pull';
 import concat from 'lodash/concat';
 import classNames from 'classnames';
-import NumberField from '../number-field';
-import TextField from '../text-field';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -36,7 +34,6 @@ function getNodeRect(node): ClientRect {
 export interface ColorPickerProps extends TriggerFieldProps {
   mode?: ViewMode;
   preset?: boolean;
-  buttonRenderer?: (color: string) => ReactNode;
 }
 
 @observer
@@ -49,7 +46,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     clearButton: false,
     mode: ViewMode.default,
     preset: false,
-    defaultValue: '#ff0000',
   };
 
   gradient: HTMLDivElement | null;
@@ -120,6 +116,14 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   saveOpacityPointerRef = node => (this.opacityPointer = node);
 
+
+  getOmitPropsKeys(): string[] {
+    return super.getOmitPropsKeys().concat([
+      'mode',
+      'preset',
+    ]);
+  }
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -150,6 +154,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
   }
 
+  getBorder(r = 255, g = 0, b = 0): boolean {
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) > COLOR_MAX_LIGHT;
+  }
+
   syncValueOnBlur(value) {
     const { footerEditFlag, gradientHidden, preset } = this;
     if (!footerEditFlag) {
@@ -170,16 +178,21 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   getPrefix(): ReactNode {
     const { prefixCls, props: { mode, renderer } } = this;
     const backgroundColor = this.getValue();
-    if (mode === ViewMode.button) {
-      if (renderer) {
-        return this.processRenderer(backgroundColor);
-      }
-      return <span className={`${prefixCls}-button-color`} style={{ backgroundColor }} />
+    const isButtonMode = mode === ViewMode.button;
+    if (isButtonMode && renderer) {
+      return this.processRenderer(backgroundColor);
     }
 
+    const { r, g, b } = this.RGBA;
+    const className = classNames(
+      {
+        [`${prefixCls}-color`]: !isButtonMode,
+        [`${prefixCls}-button-color`]: isButtonMode,
+        [`${prefixCls}-prefix-border`]: !isButtonMode && this.getBorder(r, g, b),
+      });
     return (
       <div className={`${prefixCls}-prefix`}>
-        <span className={`${prefixCls}-color`} style={{ backgroundColor }} />
+        <span className={className} style={{ backgroundColor }} />
       </div>
     );
   }
@@ -220,26 +233,28 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         </div>
         <div className={`${prefixCls}-popup-footer-input`}>
           <div className={`${prefixCls}-popup-footer-input-color`} >
-            <TextField
+            <input
               name={ColorUnit.hex}
-              restrict={colorHexReg}
               value={value}
+              autoComplete="off"
               {...inputProps}
             />
             <span>{ColorUnit.hex}</span>
           </div>
           {
-            Object.keys(RGBA).map(item => (
-              <div className={`${prefixCls}-popup-footer-input-color`} key={item}>
-                <NumberField
-                  key={item}
-                  name={item}
-                  value={item === ColorUnit.a ? round(RGBA[item], 2) : RGBA[item]}
-                  {...inputProps}
-                />
-                <span>{ColorUnit[item]}</span>
-              </div>
-            ))
+            Object.keys(RGBA).map(item => {
+              return (
+                <div className={`${prefixCls}-popup-footer-input-color`} key={item}>
+                  <input
+                    name={item}
+                    value={value ? (item === 'a' ? round(RGBA[item], 2) : RGBA[item]) : ''}
+                    autoComplete="off"
+                    {...inputProps}
+                  />
+                  <span>{ColorUnit[item]}</span>
+                </div>
+              )
+            })
           }
         </div>
       </div>
@@ -274,7 +289,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getPresetData(list: string[], value?: string) {
-    const { prefixCls, hexToRGB } = this;
+    const { prefixCls, hexToRGB, getBorder } = this;
     const className = `${prefixCls}-popup-view-palettes`;
     const valueRgba = value ? hexToRGB(value) : { r: undefined, g: undefined, b: undefined, a: undefined };
     return (
@@ -282,7 +297,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         {
           [...list].map((item, index) => {
             const { r, g, b, a } = hexToRGB(item);
-            const border = (0.2126 * r + 0.7152 * g + 0.0722 * b) > COLOR_MAX_LIGHT;
+            const border = getBorder(r, g, b);
             const { r: vr, g: vg, b: vb, a: va } = valueRgba;
             const active = r === vr && g === vg && b === vb && a === va;
             const key = `${item}_${index}`;
@@ -634,6 +649,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     } else {
       value = Number(value);
       if (!isNaN(value)) {
+        if (name === 'a' && value > 1) {
+          value = 1;
+        }
+        if (name !== 'a' && value > 255) {
+          value = 255;
+        }
         rgba[name] = value;
         const { r, g, b, a } = rgba;
         const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
