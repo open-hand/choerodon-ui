@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, observable, computed } from 'mobx';
+import { action, observable, computed, isArrayLike } from 'mobx';
+import classNames from 'classnames';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Record from '../data-set/Record';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
-import { ResizeType } from '../text-area/enum';
+import { ResizeType, AutoSizeType } from '../text-area/enum';
 import Icon from '../icon';
 import { open } from '../modal-container/ModalContainer';
 import IntlList from './IntlList';
@@ -14,13 +15,15 @@ import { IntlType } from './enum';
 import { ModalProps } from '../modal/Modal';
 import localeContext, { $l } from '../locale-context';
 import Progress from '../progress';
-import { Size } from '../core/enum';
+import { Size, Tooltip as TextTooltip } from '../core/enum';
 import message from '../message';
 import exception from '../_util/exception';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
 import isSame from '../_util/isSame';
-import { LabelLayout } from '../form/enum';
+import isEmpty from '../_util/isEmpty';
+import { show } from '../tooltip/singleton';
+import isOverflow from '../overflow-tip/util';
 
 export interface IntlFieldProps extends TextAreaProps {
   modalProps?: ModalProps;
@@ -36,6 +39,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   static defaultProps = {
     ...TextArea.defaultProps,
     rows: 3,
+    resize: ResizeType.vertical,
     type: IntlType.singleLine,
   };
 
@@ -47,7 +51,9 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   constructor(props, context) {
     super(props, context);
-    const suffixCls = this.props.type !== IntlType.multipleLine ? 'input' : 'textarea';
+    const suffixCls = this.props.displayOutput
+      ? 'output'
+      : (this.props.type !== IntlType.multipleLine ? 'input' : 'textarea');
     this.prefixCls = this.getContextProPrefixCls(suffixCls, props.prefixCls);
   }
 
@@ -64,27 +70,24 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   get resize(): ResizeType | undefined {
-    if (this.props.resize) {
-      return this.props.resize;
-    }
     if (this.props.displayOutput) {
       return ResizeType.none;
     }
-    return ResizeType.vertical;
+    return super.resize;
+  }
+
+  get autoSize(): boolean | AutoSizeType | undefined {
+    if (this.props.displayOutput) {
+      return false;
+    }
+    return super.autoSize;
   }
 
   get border(): boolean | undefined {
     if (this.props.displayOutput) {
       return false;
     }
-    return this.props.border;
-  }
-
-  get labelLayout(): LabelLayout | undefined {
-    if (this.props.displayOutput && super.labelLayout === LabelLayout.float) {
-      return LabelLayout.vertical;
-    }
-    return super.labelLayout;
+    return super.border;
   }
 
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
@@ -99,10 +102,16 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     return super.getPlaceholders();
   }
 
+  isEditable(): boolean {
+    if (this.props.displayOutput) {
+      return false;
+    }
+    return super.isEditable();
+  }
+
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps, maxLengths, type, rows, cols } = this.props;
-      const { resize } = this;
+      const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
       const { record, lang, name, element } = this;
       const { supports } = localeContext;
       const maxLengthList = {};
@@ -222,7 +231,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   getOmitPropsKeys(): string[] {
-    if (this.props.type === IntlType.multipleLine) {
+    if (this.props.type === IntlType.multipleLine && !this.props.displayOutput) {
       return super.getOmitPropsKeys().concat([
         'type',
         'displayOutput',
@@ -250,7 +259,6 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   getWrapperClassNames(...args): string {
     return super.getWrapperClassNames(
       `${this.prefixCls}-intl`,
-      this.props.displayOutput ? `${this.prefixCls}-intl-output` : '',
       ...args,
     );
   }
@@ -292,9 +300,60 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   renderWrapper(): ReactNode {
+    if (this.props.displayOutput) {
+      return this.renderOutput();
+    }
     if (this.props.type === IntlType.multipleLine) {
       return super.renderWrapper();
     }
     return this.renderGroup();
+  }
+
+  showTooltip(e): boolean {
+    if (super.showTooltip(e)) {
+      return true;
+    }
+    if (this.props.displayOutput) {
+      const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
+      const { tooltip = getTooltip('output') } = this.props;
+      const { element, field } = this;
+      if (element && !(field && field.get('multiLine', this.record)) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+        const title = this.getRenderedValue();
+        if (title) {
+          show(element, {
+            title,
+            placement: getTooltipPlacement('output') || 'right',
+            theme: getTooltipTheme('output'),
+          });
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  renderOutput(): ReactNode {
+    const result = this.getRenderedValue();
+    const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? this.getContextConfig('renderEmpty')('Output') : result;
+    const floatLabel = this.renderFloatLabel();
+    const suffix = this.getSuffix();
+    const className = classNames(`${this.prefixCls}-intl-wrapper`);
+    if (floatLabel) {
+      return (
+        <span {...this.getWrapperProps()}>
+          {floatLabel}
+          <span className={className}>
+            <span {...this.getOtherProps()}>{text}</span>
+            {suffix}
+          </span>
+        </span>
+      );
+    }
+    return (
+      <span className={className}>
+        <span {...this.getMergedProps()}>{text}</span>
+        {suffix}
+      </span>
+    );
   }
 }

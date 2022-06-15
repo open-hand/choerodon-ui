@@ -801,25 +801,21 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         className: classNames(prefixCls, className),
         ...otherProps,
       };
-      const isOutput = (type as any).__PRO_OUTPUT;
+      const isOutput = (type as any).__PRO_OUTPUT || intlFieldOutput;
       const outputMix = !isAllOutputCom && isOutput ? 'mix' : '';
       const isLabelShowHelp = (fieldElementProps.showHelp || showHelp) === ShowHelp.label;
       const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
-        [`${prefixCls}-required`]: required && !isOutput && !intlFieldOutput,
+        [`${prefixCls}-required`]: required && !isOutput,
         [`${prefixCls}-readonly`]: readOnly,
         [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
         [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
         [`${prefixCls}-label-help`]: isLabelShowHelp,
-        [`${prefixCls}-label-intl-output`]: intlFieldOutput,
-        [`${prefixCls}-label-intl-output-all`]: intlFieldOutput && isAllOutputCom && isLabelLayoutHorizontal,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
-        [`${prefixCls}-intl-output`]: intlFieldOutput,
-        [`${prefixCls}-intl-output-all`]: intlFieldOutput && isAllOutputCom && isLabelLayoutHorizontal,
       });
       if (!noLabel && !(type as typeof Item).__PRO_FORM_ITEM) {
         const columnLabelWidth = labelWidth[colIndex];
@@ -852,7 +848,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           className={fieldClassName}
           style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
         >
-          {((labelLayout === LabelLayout.vertical && !!label) || (labelLayout === LabelLayout.float && !!label && intlFieldOutput)) && (
+          {labelLayout === LabelLayout.vertical && !!label && (
             <>
               <label className={labelClassName}>
                 {toJS(label)}
