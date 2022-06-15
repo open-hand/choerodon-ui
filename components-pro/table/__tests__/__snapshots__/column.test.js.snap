@@ -30,7 +30,9 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
         type="button"
       >
         <span>
-          Query
+          <span>
+            Query
+          </span>
         </span>
         <div
           class="c7n-ripple-wrapper"
@@ -41,7 +43,9 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
         type="button"
       >
         <span>
-          Advanced Search
+          <span>
+            Advanced Search
+          </span>
         </span>
         <div
           class="c7n-ripple-wrapper"
@@ -320,7 +324,7 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
             >
               <tr
                 class="c7n-pro-table-row c7n-pro-table-row-current"
-                data-index="1002"
+                data-index="1008"
                 tabindex="-1"
               >
                 <td
@@ -432,7 +436,7 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
               </tr>
               <tr
                 class="c7n-pro-table-row"
-                data-index="1003"
+                data-index="1009"
                 tabindex="-1"
               >
                 <td
@@ -537,7 +541,7 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
               </tr>
               <tr
                 class="c7n-pro-table-row"
-                data-index="1004"
+                data-index="1010"
                 tabindex="-1"
               >
                 <td
@@ -642,7 +646,7 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
               </tr>
               <tr
                 class="c7n-pro-table-row"
-                data-index="1005"
+                data-index="1011"
                 tabindex="-1"
               >
                 <td
@@ -747,7 +751,7 @@ exports[`Table Column Columns render correctly and width correctly 1`] = `
               </tr>
               <tr
                 class="c7n-pro-table-row"
-                data-index="1006"
+                data-index="1012"
                 tabindex="-1"
               >
                 <td
