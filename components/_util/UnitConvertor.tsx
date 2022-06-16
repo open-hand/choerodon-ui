@@ -3,6 +3,8 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import cssUnitConverter from 'css-unit-converter';
 import { global } from 'choerodon-ui/shared';
+import BigNumber from 'bignumber.js';
+import math from 'choerodon-ui/dataset/math';
 
 function defaultTo(value: number | undefined | null, callback: () => number): number {
   if (isNil(value)) {
@@ -84,8 +86,12 @@ export function pxToVw(num?: number | string | null, unit: 'vw' | 'vh' = 'vw'): 
   }
 }
 
-export function pxToPercent(num?: number | string | null, parentPx?: number | string | null) {
-  if (num !== undefined && num !== null) {
+export function pxToPercent(num?: BigNumber | number | string | null, parentPx?: BigNumber | number | string | null) {
+  if (!isNil(num)) {
+    num = math.floor(num);
+    if (!isNil(parentPx)) {
+      parentPx = math.floor(parentPx);
+    }
     if (isNumber(num) && isNumber(parentPx)) {
       return `${num / parentPx * 100}%`;
     }

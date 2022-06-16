@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { ModalProps, DrawerTransitionName } from './Modal';
 
 export { ModalProps, DrawerTransitionName };
@@ -28,6 +29,6 @@ export type ModalProxy = {
 }
 
 export interface ModalCustomized {
-  width?: string | number;
-  height?: string | number;
+  width?: BigNumber | string | number;
+  height?: BigNumber | string | number;
 }
