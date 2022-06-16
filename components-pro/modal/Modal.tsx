@@ -17,6 +17,7 @@ import classes from 'component-classes';
 import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import math from 'choerodon-ui/dataset/math';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -170,7 +171,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   minHeight: number;
 
-  @observable tempCustomized: ModalCustomized | null | undefined;
+  @observable tempCustomized: ModalCustomized;
 
   get okBtn(): ReactElement<ButtonProps> {
     const {
@@ -372,7 +373,7 @@ export default class Modal extends ViewComponent<ModalProps> {
                 break;
             }
           }
-          this.tempCustomized = temp;
+          this.tempCustomized = this.getTempCustomized(temp);
         });
         if (classes(element).has(`${prefixCls}-auto-center`)) {
           Object.assign(element.style, {
@@ -399,10 +400,20 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   }
 
+  getTempCustomized(tempCustomized = this.tempCustomized) {
+    const temp = {};
+    if (tempCustomized) {
+      Object.keys(tempCustomized).forEach(item => {
+        temp[item] = math.floor(tempCustomized[item]);
+      });
+    }
+    return temp;
+  }
+
   getOtherProps() {
     const otherProps = super.getOtherProps();
     const { hidden, mousePosition, keyboardClosable = this.getContextConfig('modalKeyboard'), style = {}, drawer, onTop } = this.props;
-    const currentStyle = { ...style, ...this.tempCustomized };
+    const currentStyle = { ...style, ...this.getTempCustomized() };
     if (keyboardClosable) {
       otherProps.autoFocus = true;
       otherProps.tabIndex = -1;
