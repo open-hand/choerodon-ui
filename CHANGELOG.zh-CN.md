@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复多个 drawer 时 resizable 异常。
 - 🐞 `<pro>IconPicker`: 修复空值失焦未校验的问题。
 - 🐞 `<pro>DataSet.Record`: 修复大数字值可能没法更新的问题。
+- 🐞 `<pro>Modal`: 修复大数字导致的个性化失效。
 
 ## 1.5.4
 
