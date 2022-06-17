@@ -155,5 +155,10 @@ export default function calculateNodeHeight(
     overflowY = 'hidden';
   }
 
-  return { height, minHeight, maxHeight, overflowY };
+  return {
+    height: height && Math.round(height),
+    minHeight: minHeight && Math.round(minHeight),
+    maxHeight: maxHeight && Math.round(maxHeight),
+    overflowY,
+  };
 }
