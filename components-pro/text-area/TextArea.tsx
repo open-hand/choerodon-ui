@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import isString from 'lodash/isString';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import { TextField, TextFieldProps } from '../text-field/TextField';
@@ -46,6 +46,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
 
   @observable resized?: boolean;
 
+  @observable autoSizeCalcHeight?: CSSProperties;
+
   get multiple(): boolean {
     return false;
   }
@@ -71,8 +73,11 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     if (autoSize && element) {
       const { minRows, maxRows } = autoSize as AutoSizeType;
       const calculateStyle = calculateNodeHeight(element, true, minRows, maxRows);
-      if (`${calculateStyle.height}px` !== element.style.height) {
-        this.forceUpdate();
+      const { autoSizeCalcHeight } = this;
+      if (!autoSizeCalcHeight || calculateStyle.height !== autoSizeCalcHeight.height) {
+        runInAction(() => {
+          this.autoSizeCalcHeight = calculateStyle;
+        });
       }
     }
   }
@@ -94,11 +99,12 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
       style.transition = 'none';
     }
     if (autoSize) {
-      const { minRows, maxRows } = autoSize as AutoSizeType;
+      const { minRows } = autoSize as AutoSizeType;
       otherProps.rows = minRows;
-      const { element } = this;
-      if (element) {
-        Object.assign(style, calculateNodeHeight(element, true, minRows, maxRows));
+
+      const { autoSizeCalcHeight } = this;
+      if (autoSizeCalcHeight) {
+        Object.assign(style, autoSizeCalcHeight);
       }
     }
     otherProps.style = style;
