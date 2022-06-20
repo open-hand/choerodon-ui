@@ -1622,22 +1622,22 @@ export default class Table extends DataSetComponent<TableProps> {
             />
             {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
             {!isFold &&
-            <Spin {...tableSpinProps} key="content">
-              <div {...this.getOtherProps()}>
-                <div
-                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
-                  ref={this.saveContentRef}
-                  onScroll={this.handleBodyScroll}
-                >
-                  {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                  {content}
-                  {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+              <Spin {...tableSpinProps} key="content">
+                <div {...this.getOtherProps()}>
+                  <div
+                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
+                    ref={this.saveContentRef}
+                    onScroll={this.handleBodyScroll}
+                  >
+                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                    {content}
+                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
+                  </div>
+                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
+                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
                 </div>
-                {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                {isStickySupport() && overflowX && <StickyShadow position="right" />}
-                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
-              </div>
-            </Spin>
+              </Spin>
             }
             {!isFold && this.getFooter()}
             {!isFold && this.getPagination(TablePaginationPosition.bottom)}
@@ -1819,7 +1819,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const { tableStore } = this;
     if (
       // (isStickySupport() && !tableStore.virtual) ||
-    // (![TableHeightType.fixed, TableHeightType.flex].includes(tableStore.heightType)) ||
+      // (![TableHeightType.fixed, TableHeightType.flex].includes(tableStore.heightType)) ||
       !tableStore.overflowY ||
       currentTarget !== target ||
       target === this.tableFootWrap
@@ -2113,23 +2113,21 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   syncSize(width: number = this.getWidth()) {
     const { element, tableStore } = this;
-    if (tableStore.hidden || !element.offsetParent) {
+    if (tableStore.hidden || !element || !element.offsetParent) {
       return;
     }
-    if (element) {
-      tableStore.width = Math.floor(width);
-      const { prefixCls } = this;
-      const tableHeader: HTMLTableSectionElement | null = tableStore.props.showHeader ? element.querySelector(
-        `.${prefixCls}-thead`,
-      ) : null;
-      const tableFooter: HTMLDivElement | null = tableStore.hasFooter ? element.querySelector(`.${prefixCls}-tfoot`) : null;
-      if (tableStore.cellVerticalSize === undefined) {
-        tableStore.cellVerticalSize = getCellVerticalSize(element, prefixCls);
-      }
-      tableStore.screenHeight = document.documentElement.clientHeight;
-      tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
-      tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
+    tableStore.width = Math.floor(width);
+    const { prefixCls } = this;
+    const tableHeader: HTMLTableSectionElement | null = tableStore.props.showHeader ? element.querySelector(
+      `.${prefixCls}-thead`,
+    ) : null;
+    const tableFooter: HTMLDivElement | null = tableStore.hasFooter ? element.querySelector(`.${prefixCls}-tfoot`) : null;
+    if (tableStore.cellVerticalSize === undefined) {
+      tableStore.cellVerticalSize = getCellVerticalSize(element, prefixCls);
     }
+    tableStore.screenHeight = document.documentElement.clientHeight;
+    tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
+    tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
     this.setScrollPositionClassName();
   }
 
