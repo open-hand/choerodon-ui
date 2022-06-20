@@ -178,7 +178,8 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     this.isKeyDown = false;
     const { onColumnResizeEnd } = this.props;
     if (onColumnResizeEnd) {
-      onColumnResizeEnd(this.columnWidth, this.cursorDelta);
+      const columnWidth = Math.round(this.columnWidth);
+      onColumnResizeEnd(columnWidth, this.cursorDelta);
     }
     const { mouseMoveTracker } = this;
     if (mouseMoveTracker) {

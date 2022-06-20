@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the `showCheckedStrategy` property value was `SHOW_PARENT` or `SHOW_CHILD` and some of the case values were displayed incorrectly. And fix the `TreeNode` component setting the `disabled` property incorrectly.
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
+- 🐞 `<pro>PerformanceTable`: Round the result of dragging the column width.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
 - 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.
