@@ -81,6 +81,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
+| performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight'} | false |
 | tableRowDraggable | Default Table rowDraggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |

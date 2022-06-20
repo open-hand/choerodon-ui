@@ -85,6 +85,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnDraggable | 默认 Table 个性化是否开启列拖拽 | boolean | false |
 | tableHeightChangeable | 默认 Table 个性化是否开启高度设置 | boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
+| performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight'} | false |
 | tableRowDraggable | Table是否开启行拖拽 | boolean | false |
 | tableDragColumnAlign | Table行拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |

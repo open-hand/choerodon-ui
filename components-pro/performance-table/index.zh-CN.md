@@ -18,12 +18,12 @@ cols: 1
 
 | 属性名称                 | 类型 `(默认值)`                                                                   | 描述                                                         |
 | ------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| columns | Column\[] | 表格列的配置描述，具体项见下表
+| columns                  | Column\[]                                                                         | 表格列的配置描述，具体项见下表                                |
 | affixHeader              | boolean,number                                                                    | 将表头固定到页面上的指定位置                                 |
 | affixHorizontalScrollbar | boolean,number                                                                    | 将横向滚动条固定在页面底部的指定位置                         |
-| autoHeight               | boolean                                                                           | 自动高度                                                     |
+| autoHeight               | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number }                     | 自适应高度(传入对象则自适应父节点高度，为 true 则由内容撑开高度)      |
 | bodyRef                  | React.Ref                                                                         | 表格主体部分上的 ref                                         |
-| bordered                 | boolean`(true)`                                                                           | 表格边框                                                     |
+| bordered                 | boolean`(true)`                                                                   | 表格边框                                                     |
 | data \*                  | Array&lt;Object&gt;                                                               | 表格数据                                                     |
 | defaultExpandAllRows     | boolean                                                                           | 默认展开所有节点                                             |
 | defaultExpandedRowKeys   | string[]                                                                          | 通过 rowKey 指定默认展开的行                                 |
@@ -65,9 +65,9 @@ cols: 1
 | columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |
 | columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 |
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
-| customizable | boolean | 是否显示个性化设置入口按钮  |  |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
-| rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  | 
+| customizable | boolean | 是否显示个性化设置入口按钮  |
+| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | string |
+| rowSelection | object | 表格行是否可选择，[配置项](#rowSelection) |
 | rowDraggable | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
