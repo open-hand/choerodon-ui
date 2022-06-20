@@ -6,6 +6,7 @@ import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
+import { math } from 'choerodon-ui/dataset';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { isCalcSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -46,7 +47,14 @@ export function mergeDefaultProps(
       }
       const { children } = newColumn;
       if (customizedColumns) {
-        Object.assign(newColumn, customizedColumns[getColumnKey(newColumn).toString()]);
+        const customized = customizedColumns[getColumnKey(newColumn).toString()];
+        if (customized) {
+          const { width } = customized;
+          if (width && math.isBigNumber(width)) {
+            customized.width = width.toNumber();
+          }
+          Object.assign(newColumn, customized);
+        }
       }
       if (parent) {
         newColumn.fixed = parent.fixed;
