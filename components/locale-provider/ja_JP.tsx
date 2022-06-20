@@ -44,6 +44,7 @@ export default {
     previewFile: 'ファイルをプレビュー',
     confirmRemove: '削除を確認しますか？',
     confirmReUpload: '再アップロードしてもよろしいですか？',
+    reUpload: '再アップロード',
   },
   Collapse: {
     fold: '折る',

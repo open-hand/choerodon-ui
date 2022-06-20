@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined`, `colorPreset` properties. Added `totalCount`, `count`, `onlyCount`, `, defaultCount` parameter for `generatePageQuery` hook.
+- 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined`, `colorPreset`, `uploadShowReUploadIcon` properties. Added `totalCount`, `count`, `onlyCount`, `, defaultCount` parameter for `generatePageQuery` hook.
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
 - 🌟 `<pro>Attachment`: Added `template` property.
@@ -36,6 +36,7 @@ timeline: true
 - 💄 `InputNumber`: Optimized conversion of scientific notation to normal strings.
 - 💄 `<pro>Transfer`: Optimize the situation of page jam when customizing tansfer to select all shuttles under large amount of data.
 - 💄 `<pro>TextArea`: Optimized `autoSize` mode, the component will not automatically update the height after the `dataSet` of the data changes.
+- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 🐞 Fix the bug of mobx-react in lower version.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.

@@ -33,7 +33,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | listType | Built-in stylesheets, support for three types: `text`, `picture` or `picture-card` | string | 'text' |
 | multiple | Whether to support selected multiple file. `IE10+` supported. You can select multiple files with CTRL holding down while multiple is set to be true | boolean | false |
 | name | The name of uploading file | string | 'file' |
-| showUploadList | Whether to show default upload list, could be an object to specify `showPreviewIcon` and `showRemoveIcon` individually | Boolean or { showPreviewIcon?: boolean, showRemoveIcon?: boolean } | true |
+| showUploadList | Whether to show default upload list, it is used to set whether to display preview button, remove button, download button, re-upload button, etc | Boolean or { showRemoveIcon?: boolean, showPreviewIcon?: boolean \| (file: UploadFile) => boolean, showDownloadIcon?: boolean \| (file: UploadFile) => boolean, showReUploadIcon?: boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text'), removePopConfirmTitle?: string, reUploadText?: string, reUploadPopConfirmTitle?: string, getCustomFilenameTitle?: (file: UploadFile) => string } | true |
 | supportServerRender | Need to be turned on while the server side is rendering. | boolean | false |
 | withCredentials | ajax upload with cookie sent | boolean | false |
 | onChange | A callback function, can be executed when uploading state is changing. See [onChange](#onChange) | Function | - |
@@ -45,6 +45,10 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | onDragEnd   | A callback function, will drag `picture-card`   | Function(fileList) | -   |
 | requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
 | showFileSize | Whether file sizes are displayed when `listType` is `text`   | boolean | false |
+| onStart | File upload starts   | (file: UploadFile) => void |  |
+| onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
+| renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
+| popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
 
 ### onChange
 

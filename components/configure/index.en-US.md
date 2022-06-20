@@ -161,6 +161,7 @@ const prefixCls = getConfig('prefixCls');
 | max | 最大值 | max: (FieldType) => value |   |
 | xlsx | 异步获取 xlsx 库 | () => import('xlsx') |   |
 | colorPreset | ColorPicker是否开启备选色板 | boolean | false |
+| uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 
 ### Customizable
 

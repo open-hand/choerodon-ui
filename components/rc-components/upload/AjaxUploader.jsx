@@ -43,18 +43,24 @@ class AjaxUploader extends Component {
     if (e.type === 'dragover') {
       return;
     }
-
+    let uploadCount = 0;
     if (this.props.directory) {
       traverseFileTree(
         e.dataTransfer.items,
-        this.uploadFiles,
+        (files) => {
+          uploadCount++;
+          if (this.props.multiple || uploadCount <= 1) {
+            this.uploadFiles(files);
+          }
+        },
         _file => attrAccept(_file, this.props.accept),
       );
     } else {
       const files = Array.prototype.slice.call(e.dataTransfer.files).filter(
         file => attrAccept(file, this.props.accept),
       );
-      this.uploadFiles(files);
+      const filesResult = this.props.multiple || (files.length <= 1) ? files : [files[0]];
+      this.uploadFiles(filesResult);
     }
   };
 
