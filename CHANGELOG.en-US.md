@@ -51,11 +51,13 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed editor disappearing when virtual scrolling.
 - 🐞 `<pro>Table`: Fix the problem that the column header is misplaced at a certain height.
 - 🐞 `<pro>Table`: Fix an issue with the renderEmpty style.
+- 🐞 `<pro>Table`: Fix offsetParent error.
 - 🐞 `<pro>Attachmen.Group`: Fix incorrect count when child node has `Fragment` in `popup` mode.
 - 🐞 `<pro>TreeSelect.TreeNode`: Fix `selectable` property not working.
 - 🐞 `<pro>Cascader`: Fixed `multiple` `changeOnSelect` being set to `true` and `expandTrigger` to `hover` being unchecked. As well as the optimization of multi-select value will automatically fold up the pop-up box.
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the `showCheckedStrategy` property value was `SHOW_PARENT` or `SHOW_CHILD` and some of the case values were displayed incorrectly. And fix the `TreeNode` component setting the `disabled` property incorrectly.
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
+- 🐞 `<pro>PerformanceTable`: Fix the display problem that the column width of personalized save may appear under large numbers.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.

@@ -193,16 +193,26 @@ Object.defineProperty(BigNumber.prototype, Symbol.toStringTag, {
 
 ```
 
-### 兼容 bigNumber.toFixed 不支持字符串参数
+### bigNumber.toFixed 和 number.toFixed 行为保持一致
+
+1. 支持字符串参数
+2. decimalPlaces 为 undefined 时，小数完全截取
+3. toFormat需要做相关处理，否则调用toFormat()时，小数会被丢弃
 
 ```
 import BigNumber from 'bignumber.js';
 
-const { toFixed } = BigNumber.prototype;
+const { toFixed, toFormat } = BigNumber.prototype;
 Object.assign(BigNumber.prototype, {
-  toFixed(decimalPlaces) {
+  toFixed(decimalPlaces, roundingMode) {
     const dp = Number(decimalPlaces);
-    return toFixed.call(this, isNaN(dp) ? 0 : dp);
+    return toFixed.call(this, isNaN(dp) ? 0 : dp, roundingMode);
+  },
+  toFormat(decimalPlaces, roundingMode, format) {
+    if (decimalPlaces === undefined) {
+      decimalPlaces = this.dp();
+    }
+    return toFormat.call(this, decimalPlaces, roundingMode, format);
   },
 });
 
