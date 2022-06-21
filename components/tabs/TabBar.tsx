@@ -395,13 +395,23 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         const transformSupported = isTransformSupported(navStyle);
         if (isVertical(tabBarPosition)) {
           if (transformSupported) {
-            navScroll.scrollTo({ top: Math.abs(target) });
+            const top = Math.abs(target);
+            if (navScroll.scrollTo) {
+              navScroll.scrollTo({ top });
+            } else {
+              navScroll.scrollTop = top;
+            }
           } else {
             navOffset.name = 'top';
             navOffset.value = `${target}px`;
           }
         } else if (transformSupported) {
-          navScroll.scrollTo({ left: Math.abs(target) });
+          const left = Math.abs(target);
+          if (navScroll.scrollTo) {
+            navScroll.scrollTo({ left });
+          } else {
+            navScroll.scrollLeft = left;
+          }
         } else {
           navOffset.name = 'left';
           navOffset.value = `${target}px`;
