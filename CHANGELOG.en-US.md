@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 - 🐞 `<pro>PerformanceTable`: Fix the display problem that the column width of personalized save may appear under large numbers.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
+- 🐞 `<pro>PerformanceTable`: Fix error by row click.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
 - 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.

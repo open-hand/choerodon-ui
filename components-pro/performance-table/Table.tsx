@@ -342,7 +342,7 @@ type StartRowSpan = {
 }
 
 interface ColumnCellProps extends ColumnProps {
-  parent?: React.ReactElement
+  parent?: React.ReactElement;
 }
 
 interface TableState {
@@ -806,7 +806,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       if (rowSelection) {
         runInAction(() => {
           this.tableStore.selectedRowKeys = rowSelection.selectedRowKeys || [];
-        })
+        });
       }
 
       if (nextChildren) {
@@ -2241,7 +2241,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       if (this._lastRowIndex !== rowNum && ref) {
         if (this._lastRowIndex || this._lastRowIndex === 0) {
-          this.tableRows[this._lastRowIndex][0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`, '');
+          const row = this.tableRows[this._lastRowIndex];
+          if (row && row[0]) {
+            row[0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`, '');
+          }
         }
         ref.className = `${ref.className} ${this.addPrefix('row-highLight')}`;
       }
@@ -2964,7 +2967,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     const emptyMessage = <div className={this.addPrefix('body-info')}>{locale.emptyMessage}</div>;
 
-    return renderEmpty ? renderEmpty(emptyMessage) : <div className={this.addPrefix('body-info')}>{this.tableStore.getConfig('renderEmpty')('Table')}</div>;
+    return renderEmpty ? renderEmpty(emptyMessage) : <div
+      className={this.addPrefix('body-info')}>{this.tableStore.getConfig('renderEmpty')('Table')}</div>;
   }
 
 
