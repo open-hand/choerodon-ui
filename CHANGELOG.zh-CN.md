@@ -60,11 +60,13 @@ timeline: true
 - 🐞 `<pro>Dropdown`: 修复 disabled 属性会影响子元素的问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化保存的列宽在大数字下可能出现的显示问题。
 - 🐞 `<pro>PerformanceTable`: 修复 selectedRowKeys 受控失效。
+- 🐞 `<pro>PerformanceTable`: 修复点击行报错的问题。
 - 🐞 `<pro>Modal`: 修复更新 resizable 后无效的问题。
 - 🐞 `<pro>Modal`: 修复多个 drawer 时 resizable 异常。
 - 🐞 `<pro>IconPicker`: 修复空值失焦未校验的问题。
 - 🐞 `<pro>DataSet.Record`: 修复大数字值可能没法更新的问题。
 - 🐞 `<pro>Modal`: 修复大数字导致的个性化失效。
+- 🐞 `<pro>Modal`: 修复 Cannot read property 'tagName' of null 的错误。
 
 ## 1.5.4
 

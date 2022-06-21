@@ -60,12 +60,14 @@ timeline: true
 - 🐞 `<pro>Dropdown`: Fix `disabled` attribute will affect child elements.
 - 🐞 `<pro>PerformanceTable`: Fix the display problem that the column width of personalized save may appear under large numbers.
 - 🐞 `<pro>PerformanceTable`: Fix `selectedRowKeys` controlled invalidation.
+- 🐞 `<pro>PerformanceTable`: Fix error by row click.
 - 🐞 `<pro>Modal`: Fixed an issue where updating `resizable` was invalid.
 - 🐞 `<pro>Modal`: Fix the `resizable` problem when multiple drawers.
 - 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
-
+- 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
+-
 ## 1.5.4
 
 `2022-04-27`

@@ -391,7 +391,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
     const offsetContainer = this.getOffsetContainer();
-    const isEmbeddedContainer = offsetContainer.tagName.toLowerCase() !== 'body';
+    const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
       const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
@@ -418,7 +418,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
               style.marginRight = offset;
           }
         }
-      } else if (isEmbeddedContainer) {
+      } else if (isEmbeddedContainer && offsetContainer) {
         style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100), true)!;
       }
       if (transitionAppear === false) {
@@ -450,7 +450,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       );
     });
     const animationProps: any = {};
-    if (mount) {
+    if (mount && offsetContainer) {
       if (containerInstances.every(instance => !instance.active || instance.getOffsetContainer() !== offsetContainer)) {
         animationProps.onEnd = () => showBodyScrollBar(offsetContainer);
       } else {
@@ -469,7 +469,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         maskProps.onClick = this.handleMaskClick;
       }
       Object.assign(style, maskStyle);
-      if (isEmbeddedContainer) {
+      if (isEmbeddedContainer && offsetContainer) {
         style.position = 'absolute';
         style.height = pxToRem(offsetContainer.scrollHeight, true)!;
       }
@@ -513,7 +513,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     return undefined;
   }
 
-  getOffsetContainer(): HTMLElement {
+  getOffsetContainer(): HTMLElement | null {
     const { mount } = this.state;
     if (mount) {
       const { parentElement } = mount;
@@ -525,6 +525,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     if (container && container !== ModalManager.root) {
       return container;
     }
+    // body maybe null ?
     return getDocument(window).body;
   }
 
@@ -545,7 +546,10 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 export async function getContainer(): Promise<IModalContainer> {
   const { length } = containerInstances;
   if (length) {
-    return containerInstances.find(instance => instance.getOffsetContainer().tagName.toLowerCase() === 'body') || containerInstances[0];
+    return containerInstances.find(instance => {
+      const container = instance.getOffsetContainer();
+      return container ? container.tagName.toLowerCase() === 'body' : false;
+    }) || containerInstances[0];
   }
   await new Promise(resolve => {
     render(<ModalContainer />, getRoot(), resolve);
