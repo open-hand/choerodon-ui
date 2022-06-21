@@ -28,7 +28,13 @@ export interface ListProps {
   ref?: MutableRefObject<ListRef> | null;
 }
 
-const List: ForwardRefExoticComponent<PropsWithoutRef<ListProps> & RefAttributes<ListRef>> = forwardRef<ListRef, ListProps>(({ data, prefixCls, children, height, itemKey }, ref) => {
+const List: ForwardRefExoticComponent<PropsWithoutRef<ListProps> & RefAttributes<ListRef>> = forwardRef<ListRef, ListProps>(({
+  data,
+  prefixCls,
+  children,
+  height,
+  itemKey,
+}, ref) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const innerStyle = useMemo(() => {
     const style: CSSProperties = {
@@ -52,7 +58,11 @@ const List: ForwardRefExoticComponent<PropsWithoutRef<ListProps> & RefAttributes
   const scrollTo = useCallback((scroll) => {
     const { current } = containerRef;
     if (current) {
-      current.scrollTo(0, scroll);
+      if (current.scrollTo) {
+        current.scrollTo(0, scroll);
+      } else {
+        current.scrollTop = scroll;
+      }
     }
   }, [containerRef]);
 

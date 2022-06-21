@@ -82,9 +82,17 @@ export default class IconCategory extends Component<IconItemProps> {
         const { offsetHeight, scrollTop } = ul;
         const { offsetTop, offsetHeight: height } = item;
         if (offsetTop < scrollTop) {
-          ul.scrollTo(0, offsetTop);
+          if (ul.scrollTo) {
+            ul.scrollTo(0, offsetTop);
+          } else {
+            ul.scrollTop = offsetTop;
+          }
         } else if (offsetTop + height > scrollTop + offsetHeight) {
-          ul.scrollTo(0, offsetTop + height - offsetHeight);
+          if (ul.scrollTo) {
+            ul.scrollTo(0, offsetTop + height - offsetHeight);
+          } else {
+            ul.scrollTop = offsetTop + height - offsetHeight;
+          }
         }
       }
     }
