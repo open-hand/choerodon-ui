@@ -65,7 +65,8 @@ timeline: true
 - 🐞 `<pro>IconPicker`: Fix the problem that the null value is out of focus and not checked.
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
-
+- 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
+-
 ## 1.5.4
 
 `2022-04-27`

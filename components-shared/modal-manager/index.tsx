@@ -27,7 +27,7 @@ export interface IModalContainer {
 
   getContainer(): HTMLElement | undefined;
 
-  getOffsetContainer(): HTMLElement;
+  getOffsetContainer(): HTMLElement | null;
 
   mergeModals(modals: ModalProps[]);
 
