@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.5
+
+`2022-06-22`
+
 - 🌟 `configure`: Added `autoInsertSpaceInButton`, `attachment.getTemplateDownloadUrl` `autoCount`, `countKey`, `drawerHeaderFooterCombined`, `colorPreset` properties. Added `totalCount`, `count`, `onlyCount`, `, defaultCount` parameter for `generatePageQuery` hook.
 - 🌟 `<pro>DataSet`: Added `autoCount`, `countKey` properties. Added `counting` value.
 - 🌟 `<pro>DataSet.Field`: Added `template` property.
