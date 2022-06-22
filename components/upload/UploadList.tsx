@@ -5,7 +5,7 @@ import isFunction from 'lodash/isFunction';
 import Icon from '../icon';
 import Tooltip from '../tooltip';
 import Progress from '../progress';
-import { UploadFile, UploadListIconFunc, UploadListProps, UploadListType } from './interface';
+import { UploadFile, UploadListIconFunc, UploadListReUploadIconFunc, UploadListProps, UploadListType, ShowReUploadIconType } from './interface';
 import Animate from '../animate';
 import PopConfirm from '../popconfirm';
 import { ProgressType } from '../progress/enum';
@@ -225,10 +225,7 @@ export default class UploadList extends Component<UploadListProps, any> {
           </div>
         );
       }
-      const infoUploadingClass = classNames({
-        [`${prefixCls}-list-item`]: true,
-        [`${prefixCls}-list-item-${file.status}`]: true,
-      });
+      const message = file.response && typeof file.response === 'string' ? file.response : ((file.error && file.error.statusText) || locale.uploadError);
       const preview = file.url ? (
         <a
           {...file.linkProps}
@@ -273,24 +270,33 @@ export default class UploadList extends Component<UploadListProps, any> {
             <Icon type="visibility" />
           </a>
         ) : null;
-      const reUploadIcon = (
-        isFunction(showReUploadIcon)
-          ? (showReUploadIcon as UploadListIconFunc)(file)
-          : showReUploadIcon
-      ) ? (
-          <PopConfirm
-            {...popconfirmProps}
-            title={reUploadPopConfirmTitle || locale.confirmReUpload}
-            onConfirm={(e) => {
-              this.handleReUpload(file, e);
-            }}
-          >
+      let showReUploadIconType: ShowReUploadIconType | undefined;
+      if (isFunction(showReUploadIcon)) {
+        const customReUploadIcon: boolean | 'text' = (showReUploadIcon as UploadListReUploadIconFunc)(file, listType!);
+        showReUploadIconType = customReUploadIcon ? customReUploadIcon === 'text' ? 'text' : 'icon' : undefined;
+      } else if (showReUploadIcon) {
+        showReUploadIconType = showReUploadIcon === 'text' ? 'text' : 'icon';
+      }
+      const reUploadIconOrText = showReUploadIconType && stat.isError ? (
+        <PopConfirm
+          {...popconfirmProps}
+          title={reUploadPopConfirmTitle || locale.confirmReUpload}
+          onConfirm={(e) => {
+            this.handleReUpload(file, e);
+          }}
+        >
+          {showReUploadIconType === 'icon' ? (
             <Icon
               type="file_upload"
               title={reUploadText}
             />
-          </PopConfirm>
-        ) : null;
+          ) : (
+            <Tooltip prefixCls={tooltipPrefixCls} title={message}>
+              <span className={`${prefixCls}-list-item-reupload-${listType}`} title={reUploadText}>{locale.reUpload}</span>
+            </Tooltip>
+          )}
+        </PopConfirm>
+      ) : null;
       const removeIcon = showRemoveIcon ? (
         <PopConfirm
           {...popconfirmProps}
@@ -323,15 +329,17 @@ export default class UploadList extends Component<UploadListProps, any> {
       const downloadIcon =
         !stat.isError && !stat.isUploading && (isFunction(showDownloadIcon) ? (showDownloadIcon as UploadListIconFunc)(file) : showDownloadIcon)
         && <a {...downloadPropsIntercept!(downloadLinkProps)}><Icon type="get_app" /></a>;
+      const actionsClass = classNames(`${prefixCls}-list-item-actions`, {
+        [`${prefixCls}-list-item-actions-reupload-text`]: showReUploadIconType === 'text' && stat.isError,
+      });
       const actions =
         stat.isPictureCard && !stat.isUploading ? (
-          <span className={`${prefixCls}-list-item-actions`}>
-            {stat.isError || previewIcon}{downloadIcon}{reUploadIcon}{removeIcon}
+          <span className={actionsClass}>
+            {stat.isError || previewIcon}{downloadIcon}{reUploadIconOrText}{removeIcon}
           </span>
         ) : (
           removeIcon
         );
-      const message = file.response && typeof file.response === 'string' ? file.response : ((file.error && file.error.statusText) || locale.uploadError);
 
       const fileName = (stat.isPictureCard && !stat.isUploading) ? (
         <Tooltip prefixCls={tooltipPrefixCls} title={getCustomFilenameTitle ? getCustomFilenameTitle(file) : file.name} placement="bottom">
@@ -366,11 +374,24 @@ export default class UploadList extends Component<UploadListProps, any> {
           iconAndPreview
         );
 
+      const reUpload = showReUploadIconType && (listType === 'text' || listType === 'picture') && file.status === 'error' ? (
+        <PopConfirm
+          {...popconfirmProps}
+          title={reUploadPopConfirmTitle || locale.confirmReUpload}
+          onConfirm={(e) => {
+            this.handleReUpload(file, e);
+          }}
+        >
+          <span className={`${prefixCls}-list-item-reupload-${listType}`} title={reUploadText}>{locale.reUpload}</span>
+        </PopConfirm>
+      ) : null;
+
       const listItemInfo = (
         <div className={`${prefixCls}-list-item-info`}>
           <span className={`${prefixCls}-list-item-span`}>
             {iconAndPreviewTooltip}
             {fileName}
+            {reUpload}
             {fileSize}
             {actions}
           </span>
@@ -379,6 +400,11 @@ export default class UploadList extends Component<UploadListProps, any> {
           </Animate>
         </div>
       );
+      const infoUploadingClass = classNames({
+        [`${prefixCls}-list-item`]: true,
+        [`${prefixCls}-list-item-${file.status}`]: true,
+        [`${prefixCls}-list-item-error-reupload`]: file.status === 'error' && showReUploadIconType,
+      });
 
       if (dragUploadList) {
         return (

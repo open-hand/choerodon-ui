@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 uploadShowReUploadIcon 属性。
+- 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
+
 ## 1.5.5
 
 `2022-06-22`
