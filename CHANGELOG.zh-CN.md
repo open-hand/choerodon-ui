@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.5
+
+`2022-06-22`
+
 - 🌟 `configure`: 新增 autoInsertSpaceInButton, attachment.getTemplateDownloadUrl, autoCount, countKey, drawerHeaderFooterCombined, colorPreset 属性, generatePageQuery 钩子新增 totalCount, count, onlyCount, defaultCount 参数。
 - 🌟 `<pro>DataSet`: 新增 autoCount, countKey 属性， 新增 counting 值。
 - 🌟 `<pro>DataSet.Field`: 新增 template 属性。
