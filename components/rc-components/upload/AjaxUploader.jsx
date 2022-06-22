@@ -23,7 +23,7 @@ class AjaxUploader extends Component {
     if (!el) {
       return;
     }
-    if (e.target === el) return;
+    if (e && e.target === el) return;
     if (this.props.fileInputClick) {
       this.props.fileInputClick(el);
     } else {

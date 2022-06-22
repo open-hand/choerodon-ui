@@ -43,6 +43,7 @@ timeline: true
 - 🐞 `Table`: Fixed scrollbar issue in fixed header on mac.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the reset method.
 - 🐞 `Tabs`: Fix scrollTo error in IE.
+- 🐞 `Upload`: Fix AjaxUploader reporting 'target' of undefined error.
 - 🐞 `<pro>Tabs`: Fixed the problem that the validation badges did not disappear when DataSet reset.
 - 🐞 `<pro>Table`: Fix other editors are misplaced in full line editing mode when the autoSize TextArea entering newlines.
 - 🐞 `<pro>Table`: Fix the problem of virtual scrolling in `maxHeight` style.
