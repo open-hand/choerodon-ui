@@ -40,6 +40,7 @@ import { TooltipPlacement, TooltipTheme } from '../tooltip';
 import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
+import { UploadListReUploadIconFunc } from '../upload/interface';
 
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
@@ -276,6 +277,11 @@ export interface Config extends DataSetConfig {
    * 是否开启备选色板
    */
   colorPreset?: boolean;
+  /**
+   * Upload 组件文件上传失败后是否显示重新上传按钮。
+   * 当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
+   */
+  uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   /**
    * @deprecated
    */

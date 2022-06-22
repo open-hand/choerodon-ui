@@ -44,6 +44,7 @@ export default {
     previewFile: '檔案預覽',
     confirmRemove: '確認刪除？',
     confirmReUpload: '確認重新上傳？',
+    reUpload: '重新上傳',
   },
   Collapse: {
     fold: '收起',

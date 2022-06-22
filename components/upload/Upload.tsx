@@ -1,6 +1,7 @@
 import React, { Component, DragEvent } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
+import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import Dragger from './Dragger';
@@ -62,7 +63,12 @@ export default class Upload extends Component<UploadProps, UploadState> {
     const nextFileList = [...fileList];
     const targetItem = fileToObject(file);
     targetItem.status = 'uploading';
-    nextFileList.push(targetItem);
+    const filterItem = getFileItem(file, nextFileList);
+    if (!filterItem) {
+      nextFileList.push(targetItem);
+    } else {
+      filterItem.status = 'uploading';
+    }
     this.onChange({
       file: targetItem,
       fileList: nextFileList,
@@ -179,6 +185,13 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.handleRemove(file);
   };
 
+  @autobind
+  defaultReUpload(file: UploadFile) {
+    if (this.upload && this.upload.uploader) {
+      this.upload.uploader.post(file);
+    }
+  }
+
   /**
    * 拖拽触发回调
    * @param uploadFiles 拖拽后文件列表
@@ -259,7 +272,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
   }
 
   renderUploadList = (uploadLocale: UploadLocale) => {
-    const { showUploadList, listType, onPreview, onReUpload, downloadPropsIntercept, locale, previewFile, dragUploadList, showFileSize, renderIcon, tooltipPrefixCls, popconfirmProps } = this.props;
+    const { getConfig } = this.context;
+    const { showUploadList, listType, onPreview, onReUpload = this.defaultReUpload, downloadPropsIntercept, locale, previewFile, dragUploadList, showFileSize, renderIcon, tooltipPrefixCls, popconfirmProps } = this.props;
     const prefixCls = this.getPrefixCls();
     const { fileList } = this.state;
     const {
@@ -267,7 +281,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
       removePopConfirmTitle,
       showPreviewIcon,
       showDownloadIcon,
-      showReUploadIcon, reUploadText,
+      showReUploadIcon = getConfig('uploadShowReUploadIcon'),
+      reUploadText,
       reUploadPopConfirmTitle,
       getCustomFilenameTitle,
     } = showUploadList as any;

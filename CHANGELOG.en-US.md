@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `uploadShowReUploadIcon` property.
+- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
+
 ## 1.5.5
 
 `2022-06-22`
