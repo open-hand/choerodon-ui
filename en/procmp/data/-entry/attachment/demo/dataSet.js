@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Attachment, DataSet, Row, Col } from 'choerodon-ui/pro';
+import { Attachment, DataSet, Form } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(
@@ -13,6 +13,9 @@ const App = () => {
             label: <span>技术附件</span>,
             max: 9,
             required: true,
+            template: {
+              attachmentUUID: '4c74a34a-fa37-4e92-be9d-5cf726fb1472',
+            },
           },
         ],
       }),
@@ -21,9 +24,9 @@ const App = () => {
   const props = {
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
     name: 'attachment',
-    dataSet: ds,
     labelLayout: 'float',
     showValidation: 'newLine',
+    viewMode: 'popup',
   };
 
   React.useEffect(() => {
@@ -37,11 +40,9 @@ const App = () => {
   }, []);
 
   return (
-    <Row gutter={10}>
-      <Col span={12}>
-        <Attachment {...props} />
-      </Col>
-    </Row>
+    <Form dataSet={ds}>
+      <Attachment {...props} />
+    </Form>
   );
 };
 

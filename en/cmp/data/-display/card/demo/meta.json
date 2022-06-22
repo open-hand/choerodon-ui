@@ -143,6 +143,21 @@
       "order": 1,
       "height": 314,
       "screenshot": ""
+    },
+    {
+      "filename": "selected.js",
+      "title": {
+        "zh": "可选中卡片",
+        "en": "Selected Card"
+      },
+      "description": {
+        "zh": "点击 Card 内容区域可以选中卡片。\n",
+        "en": "Click the card content area to select the card.\n"
+      },
+      "order": 10,
+      "height": 240,
+      "ignores": ["theme1", "theme3", "theme5"],
+      "screenshot": ""
     }
   ]
 }

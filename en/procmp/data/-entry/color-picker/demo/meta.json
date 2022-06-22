@@ -45,6 +45,20 @@
       "order": 2,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "button-mode.js",
+      "title": {
+        "zh": "按钮",
+        "en": "Button"
+      },
+      "description": {
+        "zh": "按钮模式。\n",
+        "en": "button mode.\n"
+      },
+      "order": 3,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

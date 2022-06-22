@@ -87,7 +87,6 @@ title: API
 | onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | | 1.4.4 |
 | searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5 |
 | rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5 |
-| renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
 | dragDropContextProps | react-beautiful-dnd DragDropContextProps | [DragDropContextProps](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md) | | 1.5.1 |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/zh/procmp/configure/configure) | 1.5.1 |
 | bodyExpandable | 表格体是否可展开 | boolean | | 1.5.1 |

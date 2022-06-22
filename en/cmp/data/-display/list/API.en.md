@@ -46,7 +46,6 @@ title: API
 | description | The description of list item | string\|ReactNode | - |
 | title | The title of list item | string\|ReactNode | - |
 
-
 ### Pagination
 
 | Property | Description | Type | Default |

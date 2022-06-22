@@ -11,5 +11,6 @@ title: API
 | type | 单行或多行输入，可选值：`singleLine` \| `multipleLine` | string | singleLine |
 | rows | 文本域高(type为multipleLine有效) | number  | 3 |
 | resize | 是否能够拖拽调整大小(type为multipleLine有效)，可选值： `none` \| `both` \| `vertical` \| `horizontal` | string  | vertical |
+| [displayOutput(1.5.5)](/zh/procmp/data-display/output#在表单中使用) | 显示为 Output 样式 | boolean | |
 
 更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField) 或 [TextArea](/zh/procmp/data-entry/text-area/#TextArea)。

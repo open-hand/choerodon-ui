@@ -88,6 +88,36 @@
       "order": 5,
       "height": 383,
       "screenshot": ""
+    },
+    {
+      "filename": "dataSet.js",
+      "title": {
+        "zh": "绑定数据源",
+        "en": "Bind DataSet"
+      },
+      "description": {
+        "zh": "通过绑定数据源实现列表。\n",
+        "en": "Implement list by binding data source.\n"
+      },
+      "order": 6,
+      "height": 400,
+      "ignores": ["theme1", "theme3", "theme5"],
+      "screenshot": ""
+    },
+    {
+      "filename": "selection.js",
+      "title": {
+        "zh": "可勾选列表",
+        "en": "Checkable list"
+      },
+      "description": {
+        "zh": "通过配置 rowSelection 实现可勾选列表。\n",
+        "en": "Implement checkable list by configuring rowSelection.\n"
+      },
+      "order": 7,
+      "height": 300,
+      "ignores": ["theme1", "theme3", "theme5"],
+      "screenshot": ""
     }
   ]
 }

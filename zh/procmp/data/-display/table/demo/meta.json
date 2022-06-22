@@ -113,7 +113,7 @@
       "filename": "tree-async.js",
       "title": {
         "zh": "树形数据异步懒加载",
-        "en": "Tree Data"
+        "en": "Lazy load of tree data asynchronously"
       },
       "description": {
         "zh": "点击展开图标时异步加载子数据。\n",
@@ -128,7 +128,7 @@
       "filename": "tree-async-paging.js",
       "title": {
         "zh": "树形数据异步分页",
-        "en": "Tree Data"
+        "en": "Tree data asynchronous paging"
       },
       "description": {
         "zh": "异步加载数据并对父亲节点进行分页处理，树形分页需要根节点 parentId 为 null。\n",
@@ -473,6 +473,21 @@
       "order": 29,
       "screenshot": "",
       "height": 680,
+      "category": "pro"
+    },
+    {
+      "filename": "async-count.js",
+      "title": {
+        "zh": "异步计数",
+        "en": "Async count"
+      },
+      "description": {
+        "zh": "查询时通知后端是否自动统计总数。\n当 autoCount 设为 false 时， 查询的参数默认会带上count=N的参数（通过 configure 设置默认 autoCount 属性时，参数为defaultCount=N，用于区分全局设置和自定义设置），参数名和值可以通过全局配置 generatePageQuery 设置\n当查询结果中 countKey 对应的值是 Y 时，会发起计数查询的请求，请求地址同 read 的地址， 请求参数会带上 onlyCount=Y 的参数，参数名和值可以通过全局配置 generatePageQuery 设置",
+        "en": "Notify the backend whether to automatically count the total number when querying.\nWhen autoCount is set to false, the parameters of the query will carry the parameter of count=N by default. The parameter name and value can be set through the global configuration generatePageQuery\nWhen querying When the value corresponding to countKey in the result is Y, a count query request will be initiated. The request address is the same as the read address. The request parameter will include the parameter of onlyCount=Y. The parameter name and value can be set through the global configuration generatePageQuery"
+      },
+      "order": 30,
+      "screenshot": "",
+      "height": 450,
       "category": "pro"
     },
     {

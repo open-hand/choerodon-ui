@@ -6,12 +6,29 @@ import {
   Output,
   EmailField,
   NumberField,
+  IntlField,
 } from 'choerodon-ui/pro';
 
 class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
+    tlsUrl: '/dataset/user/languages',
     fields: [
+      {
+        name: 'first-name',
+        type: 'intl',
+        defaultValue: 'Zhangsan',
+        required: true,
+        label: '姓名',
+      },
+      {
+        name: 'last-name',
+        type: 'intl',
+        defaultValue:
+          '描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述',
+        required: true,
+        label: '名称',
+      },
       {
         name: 'phone',
         defaultValue: '15888888888',
@@ -58,6 +75,8 @@ class App extends React.Component {
   render() {
     return (
       <Form dataSet={this.ds} style={{ width: '3.5rem' }}>
+        <IntlField name="first-name" displayOutput />
+        <IntlField name="last-name" type="multipleLine" displayOutput />
         <Output name="phone" />
         <NumberField name="age" />
         <Output name="sex" />
