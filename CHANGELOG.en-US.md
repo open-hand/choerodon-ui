@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `uploadShowReUploadIcon` property.
+- 🌟 `configure`: Added `uploadShowReUploadIcon`, `performanceTableAutoHeight` property.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
+- 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 
 ## 1.5.5
 

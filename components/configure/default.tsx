@@ -114,6 +114,7 @@ const defaults = {
   tableKeyboard: false,
   tableFilterSearchText: 'params',
   tableAutoHeightDiff: 80,
+  performanceTableAutoHeight: false,
   tableColumnDefaultWidth: 100,
   tableColumnDefaultMinWidth: 50,
   tableColumnResizeTrigger: TableColumnResizeTriggerType.mouseDown,
