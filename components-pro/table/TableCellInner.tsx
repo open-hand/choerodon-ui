@@ -67,6 +67,7 @@ import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 let inTab = false;
 
@@ -101,7 +102,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   } = useContext(TableContext);
   const innerPrefixCls = `${prefixCls}-inner`;
   const tooltip = tableStore.getColumnTooltip(column);
-  const { name, key, lock, renderer, command, align } = column;
+  const { name, key, lock, renderer, command, align, tooltipProps } = column;
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
   const { currentEditRecord } = tableStore;
@@ -533,10 +534,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     const element = e.target;
     if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
       if (text) {
+        const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
         show(element, {
           title: text,
           placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
+          ...tooltipConfig,
         });
         return true;
       }

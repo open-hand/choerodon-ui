@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 uploadShowReUploadIcon, performanceTableAutoHeight 属性。
+- 🌟 `<pro>Table`: 新增 tooltipProps 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 
