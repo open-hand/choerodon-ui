@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
+import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
@@ -466,7 +467,7 @@ export default class Lov extends Select<LovProps> {
     if (this.autoSelectSingle) {
       if (this.multiple) options.releaseCachedSelected();
     } else {
-      const noCache = this.getProp('noCache');
+      const noCache = defaultTo(this.getProp('noCache'), this.getContextConfig('lovNoCache'));
       if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
         options.query();
       } else if (this.multiple) {

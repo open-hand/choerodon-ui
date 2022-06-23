@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 lovNoCache 属性。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 
 ## 1.5.5
