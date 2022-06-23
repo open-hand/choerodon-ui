@@ -195,10 +195,10 @@ export default class TableComboBar extends Component<ComboBarProps, any> {
     const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), onQuery = noop, onReset = noop } = this.props;
     const { prefixCls } = this;
     const { tableStore: { isFold } } = this.context;
-    const filterbBr: ReactNode | null = this.getFilterbar();
+    const filterBar: ReactNode | null = this.getFilterbar();
     const buttons = this.getButtons();
     return [
-      filterbBr,
+      filterBar,
       !isFold && buttons,
       !isFold && <FilterSelect
         key="filter"
