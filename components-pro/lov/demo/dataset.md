@@ -80,7 +80,7 @@ class App extends React.Component {
       name="code"
       noCache
       autoSelectSingle
-      tableProps={{ 
+      tableProps={{
         queryBar: 'filterBar',
         queryBarProps: {
           fuzzyQuery: false,

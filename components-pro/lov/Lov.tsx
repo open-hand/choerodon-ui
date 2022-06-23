@@ -517,7 +517,7 @@ export default class Lov extends Select<LovProps> {
           const valueField = this.getProp('valueField');
           const textField = this.getProp('textField');
           this.modal = open(mergeProps<ModalProps>({
-            title,
+            title: title || this.getLabel(),
             children: (
               <LovView
                 {...lovViewProps}

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `lovNoCache` property.
+- 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 
 ## 1.5.5
