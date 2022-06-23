@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 lovNoCache 属性。
+- 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 
