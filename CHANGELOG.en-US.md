@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
+- 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 -
 ## 1.5.4
 

@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: 修复大数字值可能没法更新的问题。
 - 🐞 `<pro>Modal`: 修复大数字导致的个性化失效。
 - 🐞 `<pro>Modal`: 修复 Cannot read property 'tagName' of null 的错误。
+- 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 
 ## 1.5.4
 
