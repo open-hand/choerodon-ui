@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight` properties.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
+- 🌟 `<pro>Table.Column`: Added `tooltipProps` property.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
