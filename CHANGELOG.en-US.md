@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight` properties.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
+- 🌟 `<pro>Table`: Added `boxSizing` property.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
@@ -83,8 +84,8 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
-  
-  
+
+
 ## 1.5.4
 
 `2022-04-27`

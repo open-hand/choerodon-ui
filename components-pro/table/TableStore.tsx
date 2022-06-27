@@ -33,6 +33,7 @@ import {
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
+  TableBoxSizing,
   TableColumnResizeTriggerType,
   TableColumnTooltip,
   TableEditMode,
@@ -988,6 +989,8 @@ export default class TableStore {
     renderEnd: number;
   } = { renderStart: 0, renderEnd: 0 };
 
+  @observable siblingHeihgt?: { before?: number; after?: number };
+
   @observable parentHeight?: number | undefined;
 
   @observable parentPaddingTop?: number | undefined;
@@ -1046,9 +1049,14 @@ export default class TableStore {
   }
 
   get otherHeight() {
-    const { footerHeight } = this;
+    const { footerHeight, props: { boxSizing } } = this;
     const footerTotalHeight = footerHeight && this.overflowX ? measureScrollbar() + footerHeight : footerHeight;
-    return this.headerHeight + footerTotalHeight;
+    const otherHeight = this.headerHeight + footerTotalHeight;
+    if (boxSizing === TableBoxSizing.wrapper) {
+      const { before = 0, after = 0 } = this.siblingHeihgt || {};
+      return otherHeight + before + after;
+    }
+    return otherHeight;
   }
 
   @computed
