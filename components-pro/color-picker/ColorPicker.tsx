@@ -62,6 +62,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   opacityPointer: HTMLDivElement | null;
 
+  footerInputRef: HTMLInputElement | null = null;
+
   HSV = {
     h: 0,
     s: 1,
@@ -116,6 +118,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   saveOpacityPointerRef = node => (this.opacityPointer = node);
 
+  saveFooterAlphaRef = node => (this.footerInputRef = node);
 
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
@@ -183,7 +186,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       return this.processRenderer(backgroundColor);
     }
 
-    const { r, g, b } = this.RGBA;
+    const { r, g, b } = this.hexToRGB ? this.hexToRGB(backgroundColor) : this.RGBA;
     const className = classNames(
       {
         [`${prefixCls}-color`]: !isButtonMode,
@@ -247,8 +250,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
                 <div className={`${prefixCls}-popup-footer-input-color`} key={item}>
                   <input
                     name={item}
-                    value={value ? (item === 'a' ? round(RGBA[item], 2) : RGBA[item]) : ''}
+                    value={value ? this.RGBA[item] : ''}
                     autoComplete="off"
+                    ref={item === 'a' ? this.saveFooterAlphaRef : undefined}
                     {...inputProps}
                   />
                   <span>{ColorUnit[item]}</span>
@@ -481,7 +485,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         r: parseInt(result[1], 16),
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16),
-        a: hasAlpha ? parseInt(result[4], 16) / 255 : 1,
+        a: hasAlpha ? round(parseInt(result[4], 16) / 255, 2) : 1,
       }
       : {
         r: 255,
@@ -578,7 +582,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.setHSV(undefined, s, v, undefined);
       const { r, g, b, a } = hsvToRGB(h, s, v, ha);
       const hexColor = rgbToHEX(r, g, b, a);
-      this.setRGBA(r, g, b, a);
+      this.setRGBA(r, g, b, round(a, 2));
       this.prepareSetValue(hexColor);
     }
   }
@@ -641,27 +645,34 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       if (colorHexReg.test(value)) {
         const { r, g, b, a } = this.hexToRGB(value);
         const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
-        const hueColor = this.rgbToHEX(r, g, b, a);
+        const { r: hr, g: hg, b: hb, a: ha } = this.hsvToRGB(h, 1, 1, 1);
         this.setRGBA(r, g, b, a);
         this.setHSV(h, s, v, a);
-        this.setHueColor(hueColor);
+        this.setHueColor(this.rgbToHEX(hr, hg, hb, ha));
       }
     } else {
-      value = Number(value);
-      if (!isNaN(value)) {
-        if (name === 'a' && value > 1) {
-          value = 1;
-        }
-        if (name !== 'a' && value > 255) {
+      const valueToNumber = Number(value);
+      if (!isNaN(valueToNumber)) {
+        if (name === 'a') {
+          if (valueToNumber >= 1) {
+            value = 1;
+          } else if (value && value.slice(-1) === '.') {
+            const timer = setTimeout(() => {
+              clearTimeout(timer);
+              if (this.footerInputRef) {
+                this.footerInputRef.value = value;
+              }
+            }, 0);
+            return;
+          }
+        } else if (value > 255) {
           value = 255;
         }
-        rgba[name] = value;
+        rgba[name] = value || valueToNumber;
         const { r, g, b, a } = rgba;
         const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
-        const hueColor = this.rgbToHEX(r, g, b, a);
         this.setRGBA(r, g, b, a);
         this.setHSV(h, s, v, a);
-        this.setHueColor(hueColor);
         this.prepareSetValue(this.rgbToHEX(r, g, b, a));
       }
     }

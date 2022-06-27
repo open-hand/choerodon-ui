@@ -36,9 +36,9 @@ export interface UploadChangeParam {
 
 export interface ShowUploadListInterface {
   showRemoveIcon?: boolean;
-  showPreviewIcon?: boolean;
-  showDownloadIcon?: boolean;
-  showReUploadIcon?: boolean;
+  showPreviewIcon?: boolean | UploadListIconFunc;
+  showDownloadIcon?: boolean | UploadListIconFunc;
+  showReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   removePopConfirmTitle?: string;
   reUploadText?: string;
   reUploadPopConfirmTitle?: string;
@@ -52,10 +52,12 @@ export interface UploadLocale {
   previewFile?: string;
   confirmRemove?: string;
   confirmReUpload?: string;
+  reUpload?: string;
 }
 
 export type UploadType = 'drag' | 'select';
 export type UploadListType = 'text' | 'picture' | 'picture-card';
+export type ShowReUploadIconType = 'icon' | 'text';
 
 export interface UploadProps {
   type?: UploadType;
@@ -107,6 +109,8 @@ export interface UploadState {
 
 export type UploadListIconFunc = (file: UploadFile) => boolean;
 
+export type UploadListReUploadIconFunc = (file: UploadFile, listType: UploadListType) => (boolean | 'text');
+
 type PreviewFileHandler = (file: File | Blob) => PromiseLike<string>;
 
 export interface UploadListProps {
@@ -123,7 +127,7 @@ export interface UploadListProps {
   showDownloadIcon?: boolean | UploadListIconFunc;
   downloadPropsIntercept?: Function;
   removePopConfirmTitle?: string;
-  showReUploadIcon?: boolean | UploadListIconFunc;
+  showReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   reUploadText?: string;
   reUploadPopConfirmTitle?: string;
   onReUpload?: (file: UploadFile) => void | boolean;

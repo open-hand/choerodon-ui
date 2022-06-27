@@ -48,6 +48,7 @@ export default {
     previewFile: 'Preview file',
     confirmRemove: 'Are you sure to delete the file?',
     confirmReUpload: 'Are you sure to reupload?',
+    reUpload: 'Upload again',
   },
   Collapse: {
     fold: 'Fold',

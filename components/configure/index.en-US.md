@@ -82,6 +82,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
+| performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
 | tableRowDraggable | Default Table rowDraggable | boolean | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
@@ -162,6 +163,7 @@ const prefixCls = getConfig('prefixCls');
 | max | 最大值 | max: (FieldType) => value |   |
 | xlsx | 异步获取 xlsx 库 | () => import('xlsx') |   |
 | colorPreset | ColorPicker是否开启备选色板 | boolean | false |
+| uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 
 ### Customizable
 

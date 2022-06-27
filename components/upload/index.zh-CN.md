@@ -34,7 +34,7 @@ title: Upload
 | listType | 上传列表的内建样式，支持三种基本样式 `text`, `picture` 和 `picture-card` | string | 'text' |
 | multiple | 是否支持多选文件，`ie10+` 支持。开启后按住 ctrl 可选择多个文件。 | boolean | false |
 | name | 发到后台的文件参数名 | string | 'file' |
-| showUploadList | 是否展示 uploadList, 可设为一个对象，用于单独设定 showPreviewIcon 和 showRemoveIcon | Boolean or { showPreviewIcon?: boolean, showRemoveIcon?: boolean } | true |
+| showUploadList | 是否展示 uploadList, 可设为一个对象，用于单独设定是否显示 预览按钮、移除按钮、下载按钮、重新上传按钮 等 | Boolean or { showRemoveIcon?: boolean, showPreviewIcon?: boolean \| (file: UploadFile) => boolean, showDownloadIcon?: boolean \| (file: UploadFile) => boolean, showReUploadIcon?: boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text'), removePopConfirmTitle?: string, reUploadText?: string, reUploadPopConfirmTitle?: string, getCustomFilenameTitle?: (file: UploadFile) => string } | true |
 | supportServerRender | 服务端渲染时需要打开这个 | boolean | false |
 | withCredentials | 上传请求时是否携带 cookie | boolean | false |
 | onChange | 上传文件改变时的状态，详见 [onChange](#onChange) | Function | 无 |
@@ -46,6 +46,10 @@ title: Upload
 | onDragEnd   | 拖拽`picture-card`事件   | Function(fileList) | 无   |
 | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
 | showFileSize | `listType`为`text`时是否显示文件大小   | boolean | false |
+| onStart | 文件上传开始时   | (file: UploadFile) => void |  |
+| onReUpload | 文件重新上传的实现   | (file: UploadFile) => void \| boolean |  |
+| renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
+| popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
 
 
 ### onChange

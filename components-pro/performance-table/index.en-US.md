@@ -21,7 +21,7 @@ cols: 1
 | columns |  Column\[] | Columns of table 
 | affixHeader              | boolean,number                                                                    | Affix the table header to the specified location on the page                                  |
 | affixHorizontalScrollbar | boolean,number                                                                    | Affix the table horizontal scrollbar to the specified position on the page                    |
-| autoHeight               | boolean                                                                           | Automatic height                                                                              |
+| autoHeight               | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number }                     | Automatic |
 | bodyRef                  | React.Ref                                                                         | A ref attached to the table body element                                                      |
 | bordered                 | boolean`(true)`                                                                           | Show border                                                                                   |
 | data \*                  | Array&lt;Object&gt;                                                               | Table data                                                                                    |
@@ -67,9 +67,9 @@ cols: 1
 | columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |
 | columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 |
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 |
-| customizable | boolean | 是否显示个性化设置入口按钮  |  |
+| customizable | boolean | 是否显示个性化设置入口按钮  |
 | customizedCode | string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad`  |
-| rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  | 
+| rowSelection | object | 表格行是否可选择，[配置项](#rowSelection)  |
 | rowDraggable | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |

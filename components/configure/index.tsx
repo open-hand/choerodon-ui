@@ -21,7 +21,7 @@ import {
 import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { ColumnAlign, DragColumnAlign, HighLightRowType, TableColumnResizeTriggerType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import { ColumnAlign, DragColumnAlign, HighLightRowType, TableAutoHeightType, TableColumnResizeTriggerType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
@@ -40,6 +40,7 @@ import { TooltipPlacement, TooltipTheme } from '../tooltip';
 import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
+import { UploadListReUploadIconFunc } from '../upload/interface';
 
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
@@ -169,6 +170,7 @@ export interface Config extends DataSetConfig {
   tableFilterSuffix?: Suffixes[];
   tableFilterSearchText?: string;
   tableAutoHeightDiff?: number;
+  performanceTableAutoHeight?: boolean | { type: TableAutoHeightType, diff: number };
   tableShowRemovedRow?: boolean;
   tableButtonsLimit?: number;
   pagination?: TablePaginationConfig | false;
@@ -277,6 +279,11 @@ export interface Config extends DataSetConfig {
    * 是否开启备选色板
    */
   colorPreset?: boolean;
+  /**
+   * Upload 组件文件上传失败后是否显示重新上传按钮。
+   * 当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
+   */
+  uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   /**
    * @deprecated
    */
