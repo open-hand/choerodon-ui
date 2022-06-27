@@ -107,3 +107,8 @@ export enum TableColumnResizeTriggerType {
   hover = 'hover',
   mouseDown = 'mouseDown',
 }
+
+export enum TableBoxSizing {
+  content = 'content',
+  wrapper = 'wrapper',
+}
