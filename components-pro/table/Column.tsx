@@ -9,6 +9,7 @@ import { ShowHelp } from '../field/enum';
 import { Commands, TableGroup } from './Table';
 import TableStore from './TableStore';
 import { AggregationTreeProps } from './AggregationTree';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 export function defaultAggregationRenderer({ text }) {
   return text;
@@ -138,6 +139,10 @@ export interface ColumnPropsBase extends ElementProps {
    * 可选值：`none` `always` `overflow`
    */
   tooltip?: TableColumnTooltip;
+  /**
+   * tooltip 的属性配置
+   */
+   tooltipProps?: TooltipProps;
   /**
    * 设置单元格属性
    * @param {onCellProps} props
