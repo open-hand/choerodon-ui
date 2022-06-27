@@ -27,7 +27,8 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
--
+- 🐞 `<pro>Table`: Fix error when element may be null.
+
 ## 1.5.5
 
 `2022-06-22`

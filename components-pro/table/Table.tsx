@@ -819,24 +819,24 @@ export default class Table extends DataSetComponent<TableProps> {
   resizeObserver?: ResizeObserver;
 
   get currentRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row-current`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   get firstRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row:first-child`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   get lastRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row:last-child`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   @autobind
@@ -880,7 +880,7 @@ export default class Table extends DataSetComponent<TableProps> {
         return;
       }
     }
-    if (!element.offsetParent) {
+    if (element && !element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
       this.syncSizeInFrame(width);
@@ -1490,11 +1490,13 @@ export default class Table extends DataSetComponent<TableProps> {
     const [entry] = entries;
     const { contentRect: { height } } = entry;
     const { tableStore, element, wrapper } = this;
-    const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
-    if (wrapperHeight !== height) {
-      tableStore.parentHeight = height;
-      tableStore.parentPaddingTop =
-        (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
+    if (element) {
+      const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+      if (wrapperHeight !== height) {
+        tableStore.parentHeight = height;
+        tableStore.parentPaddingTop =
+          (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
+      }
     }
   }
 

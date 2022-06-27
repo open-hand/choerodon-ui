@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
+- 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 
 ## 1.5.5
 
