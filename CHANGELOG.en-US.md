@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
+- 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 
 ## 1.5.5
 
@@ -78,7 +79,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
--
+
 ## 1.5.4
 
 `2022-04-27`

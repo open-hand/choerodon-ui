@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
+- 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 
 ## 1.5.5
 

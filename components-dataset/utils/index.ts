@@ -7,6 +7,7 @@ import isObject from 'lodash/isObject';
 import isNil from 'lodash/isNil';
 import isEqual from 'lodash/isEqual';
 import isString from 'lodash/isString';
+import isBoolean from 'lodash/isBoolean';
 import { BigNumber } from 'bignumber.js';
 import { TimeStep } from '../interface';
 import { TimeUnit } from '../enum';
@@ -48,7 +49,11 @@ export function isSameLike(newValue, oldValue) {
   return isSame(newValue, oldValue) || newValue == oldValue;
 }
 
-export function parseNumber(value: BigNumber.Value, precision?: number, strict?: boolean): number | BigNumber {
+export function parseNumber(value: BigNumber.Value | boolean, precision?: number, strict?: boolean): number | BigNumber {
+  if (isBoolean(value)) {
+    const result = Number(value);
+    return strict ? new BigNumber(result) : result;
+  }
   const result = new BigNumber(isNumber(precision) ? math.toFixed(value, precision) : value);
   return strict ? result : math.fix(result);
 }
