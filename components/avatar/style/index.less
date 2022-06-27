@@ -37,6 +37,33 @@
     width: 100%;
     height: 100%;
   }
+
+  &-group {
+    display: inline-flex;
+  
+    .@{avatar-prefix-cls} {
+      border: 1px solid @avatar-color;
+  
+      &:not(:first-child) {
+        margin-left: @avatar-group-overlapping;
+      }
+    }
+  
+    &-popover {
+      .@{c7n-prefix}-avatar + .@{c7n-prefix}-avatar {
+        margin-left: @avatar-group-space;
+      }
+    }
+
+    &-lg {
+      .avatar-size(@avatar-size-lg, @avatar-font-size-lg);
+    }
+  
+    &-sm {
+      .avatar-size(@avatar-size-sm, @avatar-font-size-sm);
+    }
+  }
+  
 }
 
 .avatar-size(@size, @font-size) {
