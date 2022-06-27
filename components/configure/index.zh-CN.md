@@ -38,7 +38,6 @@ const prefixCls = getConfig('prefixCls');
 | lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) \| (multiple?: boolean) => [TableProps](/components-pro/table/) | {} |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
 | lovAutoSelectSingle | Lov 点击查询仅存在一条数据时自动选中且不弹窗 | boolean | false |
-| lovAutoSelectSingle | Lov 点击查询仅存在一条数据时自动选中且不弹窗 | boolean | false |
 | lovNoCache  | 默认 Lov noCache | boolean |  |
 | lovQueryBar | 默认 Lov Table 的 queryBar | string | normal |
 | lovQueryBarProps | 默认 Lov Table queryBar 的 queryBarProps | object | |

@@ -8,7 +8,8 @@ import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
 const isOverflow = (value, max, range) => {
   if (range) {
-    return toRangeValue(value, range).some(item => !isEmpty(item) && math.gt(item, max));
+    return toRangeValue(value, range).some(item => !isEmpty(item) &&
+      ((!isMoment(item) && math.gt(item, max)) || (isMoment(item) && item.isAfter(max))));
   }
   if (isMoment(value) && isMoment(max)) {
     return value.isAfter(max);
