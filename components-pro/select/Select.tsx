@@ -9,7 +9,7 @@ import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import isPlainObject from 'lodash/isPlainObject';
 import { observer } from 'mobx-react';
-import { action, computed, IReactionDisposer, isArrayLike, isObservableObject, observable, reaction, runInAction, toJS } from 'mobx';
+import { action, computed, get, IReactionDisposer, isArrayLike, isObservableObject, observable, reaction, runInAction, toJS } from 'mobx';
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
@@ -1107,12 +1107,17 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     });
   }
 
-  generateComboOption(value: string | any[], callback?: (text: string) => void): void {
+  generateComboOption(value: string | object | any[], callback?: (text: string) => void): void {
     const { currentComboOption, textField, valueField } = this;
     if (value) {
       if (isArrayLike(value)) {
         value.forEach(v => !isNil(v) && this.generateComboOption(v));
       } else {
+        if (isObservableObject(value)) {
+          value = get(value, textField);
+        } else if (isObject(value)) {
+          value = value[textField];
+        }
         const found = this.findByText(value) || this.findByValue(value);
         if (found) {
           const text = found.get(textField);

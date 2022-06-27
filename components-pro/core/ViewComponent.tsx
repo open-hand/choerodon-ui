@@ -287,9 +287,12 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
 
   constructor(props, context) {
     super(props, context);
-    this.setCode(props);
-    this.setObservableProps(props, context);
-    this.prefixCls = this.getContextProPrefixCls(props.suffixCls!, props.prefixCls);
+    // why the props is undefined ?
+    if (props) {
+      this.setCode(props);
+      this.setObservableProps(props, context);
+      this.prefixCls = this.getContextProPrefixCls(props.suffixCls!, props.prefixCls);
+    }
   }
 
   setCode(props) {

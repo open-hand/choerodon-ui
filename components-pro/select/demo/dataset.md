@@ -14,7 +14,7 @@ title:
 Select
 
 ````jsx
-import { DataSet, Select } from 'choerodon-ui/pro';
+import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log('[dataset newValue]', value, '[oldValue]', oldValue, `[record.get('${name}')]`, record.get(name));
@@ -24,6 +24,10 @@ const { Option } = Select;
 
 const data = [{
   user: 'wu',
+  user2: {
+    text: 'Wu',
+    value: 'wu',
+  },
 }];
 
 class App extends React.Component {
@@ -31,6 +35,7 @@ class App extends React.Component {
     data,
     fields: [
       { name: 'user', type: 'string', textField: 'text', label: '用户' },
+      { name: 'user2', type: 'object', textField: 'text', label: '用户object' },
     ],
     events: {
       update: handleDataSetChange,
@@ -39,11 +44,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <Select dataSet={this.ds} name="user">
-        <Option value="jack">Jack</Option>
-        <Option value="lucy">Lucy</Option>
-        <Option value="wu">Wu</Option>
-      </Select>
+      <Row>
+        <Col span={12}>
+          <Select dataSet={this.ds} combo name="user">
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="wu">Wu</Option>
+          </Select>
+        </Col>
+        <Col span={12}>
+          <Select dataSet={this.ds} combo name="user2">
+            <Option value="jack">Jack</Option>
+            <Option value="lucy">Lucy</Option>
+            <Option value="wu">Wu</Option>
+          </Select>
+        </Col>
+      </Row>
     );
   }
 }
