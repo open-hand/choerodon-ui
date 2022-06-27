@@ -10,6 +10,9 @@ const isUnderflow = (value, min, range) => {
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) && math.lt(item, min));
   }
+  if (isMoment(value) && isMoment(min)) {
+    return value.isBefore(min);
+  }
   return math.lt(value, min);
 };
 

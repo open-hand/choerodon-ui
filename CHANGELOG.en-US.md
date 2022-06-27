@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
+- 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 
 ## 1.5.5
 
