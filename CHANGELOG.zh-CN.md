@@ -15,10 +15,16 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 uploadShowReUploadIcon, performanceTableAutoHeight 属性。
-- 🌟 `<pro>Table`: 新增 tooltipProps 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight 属性。
+- 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
+- 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性。
+- 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
+- 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
+- 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
+- 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
+- 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 
 ## 1.5.5
 

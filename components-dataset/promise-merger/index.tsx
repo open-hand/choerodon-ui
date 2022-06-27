@@ -35,7 +35,7 @@ export default class PromiseMerger<K, ARGS, V> {
   add(code: string, getBatchKey: ((defaultKey: symbol) => string | symbol) | undefined, args: ARGS, data?: V): Promise<K> {
     const { cache, promiseMap, dataMap } = this;
     const item = cache.get(code);
-    if (item) {
+    if (item !== undefined) {
       return Promise.resolve(item);
     }
     if (data) {
@@ -77,11 +77,15 @@ export default class PromiseMerger<K, ARGS, V> {
           }, [])).then(res => {
             codeList.forEach((key) => {
               const value = promiseList.get(key);
-              const data = res[key];
-              this.cache.set(key, data);
               promiseList.delete(key);
               const { resolves = [] } = value || {};
-              resolves.forEach(r => r(data));
+              if (res) {
+                const data = res[key];
+                this.cache.set(key, data);
+                resolves.forEach(r => r(data));
+              } else {
+                resolves.forEach(r => r());
+              }
             });
           })
             .catch(error => {

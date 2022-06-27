@@ -284,8 +284,7 @@ More cases and properties please refer to [Spin](/components-pro/spin/)。
 | --- | --- | --- | --- |
 | setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |
 | setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |
-| setColumnWidth(width, indexOrKeyOrName) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name |  |
-
+| setColumnWidth(width, indexOrKeyOrName, saveToCustomization) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name  `saveToCustomization` - 是否保存到个性化，默认true |  |
 
 ### 分页配置
 
@@ -366,12 +365,12 @@ configure(
 > keyboard 控制是否开启
 
 - Alt + n，焦点在 table 单元格内（非 querybar 区）时，新增行（代码可配置是首行还是末行新建）
-- Ctrl + s，焦点在table单元格，则保存当前 table 
+- Ctrl + s，焦点在table单元格，则保存当前 table
 - Ctrl + d（或 Command + d）：
 - 焦点在 table 单元格，则复制上一行的单元格内容
 - 焦点在 table 某行， 则复制上一行的所有单元格内容
 - Delete，当前焦点元素内时，删除 1 个字符
-- Alt + delete，焦点在 table 单元格内，删除当前行，弹出二次提示框 
+- Alt + delete，焦点在 table 单元格内，删除当前行，弹出二次提示框
 - Shift + 方向键，焦点在 table 某行，当前 table 可多选的情况，可选择多行
 
 局部的使用 demo 方法参见[Table](/zh/procmp/data-display/table#components-pro-table-demo-basic);

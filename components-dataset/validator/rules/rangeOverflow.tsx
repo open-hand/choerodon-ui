@@ -10,6 +10,9 @@ const isOverflow = (value, max, range) => {
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) && math.gt(item, max));
   }
+  if (isMoment(value) && isMoment(max)) {
+    return value.isAfter(max);
+  }
   return math.gt(value, max);
 };
 
