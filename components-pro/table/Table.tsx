@@ -2164,11 +2164,11 @@ export default class Table extends DataSetComponent<TableProps> {
     return 0;
   }
 
-  public setColumnWidth(width: number, indexOrKeyOrName: number | string) {
+  public setColumnWidth(width: number, indexOrKeyOrName: number | string, saveToCustomization = true) {
     const { tableStore } = this;
     const target = tableStore.findColumnGroup(indexOrKeyOrName);
     if (target) {
-      tableStore.setColumnWidth(target, width);
+      tableStore.setColumnWidth(target, width, saveToCustomization);
     }
   }
 

@@ -2360,12 +2360,12 @@ export default class TableStore {
     return isNumber(indexOrKeyOrName) ? allLeafs[indexOrKeyOrName] : allLeafs.find(({ key }) => String(key) === indexOrKeyOrName);
   }
 
-  setColumnWidth(columnGroup: ColumnGroup, width: number) {
+  setColumnWidth(columnGroup: ColumnGroup, width: number, saveToCustomization = true) {
     const { column } = columnGroup;
     if (width !== column.width) {
       this.changeCustomizedColumnValue(column, {
         width,
-      });
+      }, saveToCustomization);
       const { onColumnResize } = this.props;
       if (onColumnResize) {
         const index = this.columnGroups.allLeafs.indexOf(columnGroup);
@@ -2381,7 +2381,7 @@ export default class TableStore {
   }
 
   @action
-  changeCustomizedColumnValue(column: ColumnProps, value: object) {
+  changeCustomizedColumnValue(column: ColumnProps, value: object, saveToCustomization = true) {
     const { customized: { columns } } = this;
     set(column, value);
     const columnKey = getColumnKey(column).toString();
@@ -2390,7 +2390,9 @@ export default class TableStore {
       ...oldCustomized,
       ...value,
     });
-    this.saveCustomizedDebounce();
+    if (saveToCustomization) {
+      this.saveCustomizedDebounce();
+    }
   }
 
   @action
