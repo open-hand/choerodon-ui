@@ -1,6 +1,7 @@
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
+import round from 'lodash/round';
 import cssUnitConverter from 'css-unit-converter';
 import { global } from 'choerodon-ui/shared';
 import BigNumber from 'bignumber.js';
@@ -93,7 +94,7 @@ export function pxToPercent(num?: BigNumber | number | string | null, parentPx?:
       parentPx = math.floor(parentPx);
     }
     if (isNumber(num) && isNumber(parentPx)) {
-      return `${num / parentPx * 100}%`;
+      return `${round(num / parentPx, 6) * 100}%`;
     }
     return num;
   }

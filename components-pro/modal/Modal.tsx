@@ -404,7 +404,8 @@ export default class Modal extends ViewComponent<ModalProps> {
     const temp = {};
     if (tempCustomized) {
       Object.keys(tempCustomized).forEach(item => {
-        temp[item] = math.floor(tempCustomized[item]);
+        const isEmbedded = !!this.element.offsetParent;
+        temp[item] = isEmbedded ? tempCustomized[item] : math.floor(tempCustomized[item]);
       });
     }
     return temp;
