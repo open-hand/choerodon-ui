@@ -19,3 +19,4 @@ import '../../menu/style';
 import '../../dropdown/style';
 import '../../number-field/style';
 import '../../table/customization-settings/style';
+import '../../table/query-bar/style';
