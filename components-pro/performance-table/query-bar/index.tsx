@@ -5,6 +5,7 @@ import { TableQueryBarHookProps, TableQueryBarProps, TableQueryBarType } from '.
 import TableContext from '../TableContext';
 import autobind from '../../_util/autobind';
 import { getEditorByField, getPlaceholderByField } from '../../table/utils';
+import Field from '../../data-set/Field';
 import TableProfessionalBar from './TableProfessionalBar';
 import TableDynamicFilterBar from './TableDynamicFilterBar';
 
@@ -52,8 +53,9 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
-      const { fields, current } = queryDataSet;
-      fields.forEach((field, name) => {
+      const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
+      const cloneFields: Map<string, Field> = fields.toJS();
+      const processField = (field, name) => {
         if (!field.get('bind', current) && !name.includes('__tls')) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
@@ -81,6 +83,18 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
               }),
           );
         }
+      };
+      propFields.forEach(({ name }) => {
+        if (name) {
+          const field = cloneFields.get(name);
+          if (field) {
+            cloneFields.delete(name);
+            processField(field, name);
+          }
+        }
+      });
+      cloneFields.forEach((field, name) => {
+        processField(field, name);
       });
     }
     return result;
