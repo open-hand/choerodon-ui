@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
 - 🌟 `<pro>Table`: 新增 boxSizing 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性。
+- 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
