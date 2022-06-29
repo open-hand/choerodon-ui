@@ -289,7 +289,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     setSplitLinePosition(newLeft);
   }, []);
 
-  const delayShowSplitLine = useCallback(debounce(showSplitLine, 300), []);
+  const delayShowSplitLine = useCallback(debounce(showSplitLine, 300, { leading: true, trailing: false }), []);
 
   const handleShowSplitLine = useCallback((e, type) => {
     const { tableColumnResizeTrigger } = tableStore;
@@ -301,7 +301,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const handleHideSplitLine = useCallback(() => {
     const { tableColumnResizeTrigger } = tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) return;
-    delayShowSplitLine.cancel();
     const { columnResizing } = tableStore;
     if (columnResizing) return;
     setSplitLineHidden(true);

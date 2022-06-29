@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
 - 🐞 `<pro>Table`: Fix error when element may be null.
+- 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 
 ## 1.5.5
 
