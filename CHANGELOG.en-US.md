@@ -22,11 +22,13 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
+- 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
+- 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 
 ## 1.5.5
 
