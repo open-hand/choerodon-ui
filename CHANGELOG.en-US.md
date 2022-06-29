@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight` properties.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
+- 🌟 `<pro>Table`: Added `boxSizing` property.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
@@ -28,6 +29,8 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
+- 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
+- 🐞 `<pro>Table`: Fix error when element may be null.
 
 ## 1.5.5
 
@@ -86,8 +89,8 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
-  
-  
+
+
 ## 1.5.4
 
 `2022-04-27`

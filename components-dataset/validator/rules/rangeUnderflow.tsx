@@ -9,9 +9,9 @@ import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 const isUnderflow = (value, min, range) => {
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) &&
-      ((!isMoment(item) && math.lt(item, min)) || (isMoment(item) && item.isBefore(min))));
+      (isMoment(item) ? item.isBefore(min) : math.lt(item, min)));
   }
-  if (isMoment(value) && isMoment(min)) {
+  if (isMoment(value)) {
     return value.isBefore(min);
   }
   return math.lt(value, min);

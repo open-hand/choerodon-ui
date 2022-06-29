@@ -63,6 +63,7 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
+  TableBoxSizing,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -96,6 +97,7 @@ import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames } from '../data-set/utils';
 import mergeProps from '../_util/mergeProps';
 import ErrorBar from './ErrorBar';
+import TableSibling from './TableSibling';
 
 export type TableGroup = {
   name: string;
@@ -735,6 +737,10 @@ export interface TableProps extends DataSetComponentProps {
    * 校验失败自动定位
    */
   autoValidationLocate?: boolean;
+  /**
+   * 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度
+   */
+  boxSizing?: TableBoxSizing;
 }
 
 @observer
@@ -813,24 +819,24 @@ export default class Table extends DataSetComponent<TableProps> {
   resizeObserver?: ResizeObserver;
 
   get currentRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row-current`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   get firstRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row:first-child`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   get lastRow(): HTMLTableRowElement | null {
-    const { prefixCls } = this;
-    return this.element.querySelector(
+    const { prefixCls, element } = this;
+    return element ? element.querySelector(
       `.${prefixCls}-row:last-child`,
-    ) as HTMLTableRowElement | null;
+    ) as HTMLTableRowElement | null : null;
   }
 
   @autobind
@@ -874,7 +880,7 @@ export default class Table extends DataSetComponent<TableProps> {
         return;
       }
     }
-    if (!element.offsetParent) {
+    if (element && !element.offsetParent) {
       tableStore.styledHidden = true;
     } else if (!tableStore.hidden) {
       this.syncSizeInFrame(width);
@@ -1360,6 +1366,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'bodyExpanded',
       'onBodyExpanded',
       'selectionBoxRenderer',
+      'boxSizing',
     ]);
   }
 
@@ -1407,16 +1414,17 @@ export default class Table extends DataSetComponent<TableProps> {
    */
   getSpinProps(): SpinProps {
     const { spin, dataSet } = this.props;
-    if (spin && !isUndefined(spin.spinning)) return { ...spin };
+    const spinProps: SpinProps = { ...spin };
+    if (spinProps && !isUndefined(spinProps.spinning)) return { ...spinProps };
     const { loading } = this.tableStore;
     if (loading) {
       return {
-        ...spin,
+        ...spinProps,
         spinning: true,
       };
     }
     return {
-      ...spin,
+      ...spinProps,
       dataSet,
     };
   }
@@ -1482,11 +1490,13 @@ export default class Table extends DataSetComponent<TableProps> {
     const [entry] = entries;
     const { contentRect: { height } } = entry;
     const { tableStore, element, wrapper } = this;
-    const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
-    if (wrapperHeight !== height) {
-      tableStore.parentHeight = height;
-      tableStore.parentPaddingTop =
-        (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
+    if (element) {
+      const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+      if (wrapperHeight !== height) {
+        tableStore.parentHeight = height;
+        tableStore.parentPaddingTop =
+          (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
+      }
     }
   }
 
@@ -1567,6 +1577,7 @@ export default class Table extends DataSetComponent<TableProps> {
         autoMaxWidth,
         summary,
         searchCode,
+        boxSizing,
       },
       tableStore,
       prefixCls,
@@ -1603,24 +1614,26 @@ export default class Table extends DataSetComponent<TableProps> {
             spinProps={tableSpinProps}
             isTree={mode === TableMode.tree}
           >
-            {!isFold && this.getHeader()}
-            <TableQueryBar
-              buttons={buttons}
-              buttonsLimit={tableButtonsLimit}
-              pagination={pagination}
-              queryFields={queryFields}
-              clientExportQuantity={clientExportQuantity}
-              summaryBar={summaryBar}
-              dynamicFilterBar={dynamicFilterBar}
-              queryFieldsLimit={queryFieldsLimit}
-              summaryBarFieldWidth={summaryBarFieldWidth}
-              summaryFieldsLimit={summaryFieldsLimit}
-              filterBarFieldName={filterBarFieldName}
-              filterBarPlaceholder={filterBarPlaceholder}
-              treeQueryExpanded={treeQueryExpanded}
-              searchCode={searchCode}
-            />
-            {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
+            <TableSibling position="before" boxSizing={boxSizing}>
+              {!isFold && this.getHeader()}
+              <TableQueryBar
+                buttons={buttons}
+                buttonsLimit={tableButtonsLimit}
+                pagination={pagination}
+                queryFields={queryFields}
+                clientExportQuantity={clientExportQuantity}
+                summaryBar={summaryBar}
+                dynamicFilterBar={dynamicFilterBar}
+                queryFieldsLimit={queryFieldsLimit}
+                summaryBarFieldWidth={summaryBarFieldWidth}
+                summaryFieldsLimit={summaryFieldsLimit}
+                filterBarFieldName={filterBarFieldName}
+                filterBarPlaceholder={filterBarPlaceholder}
+                treeQueryExpanded={treeQueryExpanded}
+                searchCode={searchCode}
+              />
+              {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
+            </TableSibling>
             {!isFold &&
               <Spin {...tableSpinProps} key="content">
                 <div {...this.getOtherProps()}>
@@ -1639,8 +1652,10 @@ export default class Table extends DataSetComponent<TableProps> {
                 </div>
               </Spin>
             }
-            {!isFold && this.getFooter()}
-            {!isFold && this.getPagination(TablePaginationPosition.bottom)}
+            <TableSibling position="after" boxSizing={boxSizing}>
+              {!isFold && this.getFooter()}
+              {!isFold && this.getPagination(TablePaginationPosition.bottom)}
+            </TableSibling>
           </TableContextProvider>
         </div>
       </ReactResizeObserver>

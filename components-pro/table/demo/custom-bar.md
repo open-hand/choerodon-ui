@@ -14,7 +14,7 @@ title:
 Customize Search Bar.
 
 ```jsx
-import { DataSet, Table, Button, Form } from 'choerodon-ui/pro';
+import { Button, DataSet, Form, Table } from 'choerodon-ui/pro';
 
 const { FilterBar } = Table;
 
@@ -66,7 +66,7 @@ class App extends React.Component {
       },
     },
     autoQuery: true,
-    pageSize: 5,
+    pageSize: 10,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
@@ -121,6 +121,8 @@ class App extends React.Component {
         queryBarProps={{ defaultShowMore: false }}
         columns={this.columns}
         queryFieldsLimit={3}
+        style={{ maxHeight: '60vh' }}
+        boxSizing="wrapper"
       />
     );
   }

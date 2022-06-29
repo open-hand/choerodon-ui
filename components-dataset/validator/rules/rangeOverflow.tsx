@@ -9,9 +9,9 @@ import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 const isOverflow = (value, max, range) => {
   if (range) {
     return toRangeValue(value, range).some(item => !isEmpty(item) &&
-      ((!isMoment(item) && math.gt(item, max)) || (isMoment(item) && item.isAfter(max))));
+      (isMoment(item) ? item.isAfter(max) : math.gt(item, max)));
   }
-  if (isMoment(value) && isMoment(max)) {
+  if (isMoment(value)) {
     return value.isAfter(max);
   }
   return math.gt(value, max);
