@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
+- 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 
 ## 1.5.5
 
