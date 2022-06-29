@@ -183,7 +183,11 @@ scrollLeft: (left: number) => void;
 | queryFormProps | FormProps         | 查询条表单属性                                    |
 | defaultExpanded | Boolean         | 是否默认展开                                    |
 | queryDataSet | DataSet         | 查询数据源                                   |
+| fuzzyQuery | 是否开启模糊查询 | boolean | true |
+| fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false |
+| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  |
 | queryFields | React.ReactElement<any>[]         | 自定义查询字段组件或默认组件属性                                    |
 | queryFieldsLimit | ReactElement         | 显示的查询字段的数量                                    |
 | onQuery | (props: object) => void         | 查询回调                                    |
+| onRefresh | (props: object) => void         | 刷新回调                                    |
 | onReset | () => void         | 重置回调                                    |

@@ -3,8 +3,9 @@ import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import isNumber from 'lodash/isNumber';
 import Icon from '../icon';
+import Group from './Group';
+import AvatarContext, { AvatarContextValue } from './AvatarContext';
 import { Size } from '../_util/enum';
-import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface AvatarProps {
   /** Shape of avatar, options:`circle`, `square` */
@@ -37,8 +38,8 @@ export interface AvatarState {
 export default class Avatar extends Component<AvatarProps, AvatarState> {
   static displayName = 'Avatar';
 
-  static get contextType(): typeof ConfigContext {
-    return ConfigContext;
+  static get contextType(): typeof AvatarContext {
+    return AvatarContext;
   }
 
   static defaultProps = {
@@ -46,11 +47,13 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
     size: Size.default,
   };
 
-  context: ConfigContextValue;
+  static Group = Group;
+
+  context: AvatarContextValue;
 
   private avatarChildren: any;
 
-  constructor(props: AvatarProps, context: ConfigContextValue) {
+  constructor(props: AvatarProps, context: AvatarContextValue) {
     super(props, context);
     this.state = {
       scale: 1,
@@ -105,7 +108,7 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
     const {
       prefixCls: customizePrefixCls,
       shape,
-      size,
+      size: customSize,
       src,
       icon,
       className,
@@ -113,7 +116,10 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
       renderIcon = (type) => <Icon type={type} />,
       ...others
     } = this.props;
-    const { getPrefixCls } = this.context;
+    const { getPrefixCls, size: groupSize } = this.context;
+
+    const size = customSize === Size.default ? groupSize : customSize;
+
     const prefixCls = getPrefixCls('avatar', customizePrefixCls);
 
     const { isImgExist, scale } = this.state;

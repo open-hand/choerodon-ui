@@ -19,6 +19,7 @@ const Symbols = {
   ProTableContext: Symbol('ProTableContext'),
   ProPerformanceTableContext: Symbol('ProPerformanceTableContext'),
   MentionsContext: Symbol('MentionsContext'),
+  AvatarContext: Symbol('AvatarContext'),
 };
 
 export default Symbols;
