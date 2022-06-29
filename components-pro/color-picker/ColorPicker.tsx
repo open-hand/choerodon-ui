@@ -4,6 +4,7 @@ import Icon from 'choerodon-ui/lib/icon';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import defaultTo from 'lodash/defaultTo';
+import isBoolean from 'lodash/isBoolean';
 import isEmpty from 'lodash/isEmpty';
 import isNil from 'lodash/isNil';
 import round from 'lodash/round';
@@ -45,7 +46,6 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     suffixCls: 'color-picker',
     clearButton: false,
     mode: ViewMode.default,
-    preset: false,
   };
 
   gradient: HTMLDivElement | null;
@@ -85,7 +85,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   @observable gradientHidden?: boolean;
 
   get preset(): boolean {
-    return this.props.preset || this.getContextConfig('colorPreset');
+    const { preset } = this.props;
+    if (isBoolean(preset)) {
+      return preset;
+    }
+    return this.getContextConfig('colorPreset');
   }
 
   get defaultValidationMessages(): ValidationMessages {
