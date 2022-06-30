@@ -190,7 +190,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       return this.processRenderer(backgroundColor);
     }
 
-    const { r, g, b } = this.hexToRGB ? this.hexToRGB(backgroundColor) : this.RGBA;
+    const { r, g, b } = backgroundColor && this.hexToRGB ? this.hexToRGB(backgroundColor) : this.RGBA;
     const className = classNames(
       {
         [`${prefixCls}-color`]: !isButtonMode,
