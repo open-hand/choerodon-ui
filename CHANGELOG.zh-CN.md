@@ -31,7 +31,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
-- 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题。
+- 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
 
 ## 1.5.5
 
