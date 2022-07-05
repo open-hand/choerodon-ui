@@ -24,11 +24,12 @@ import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
 import ExpandIcon from './ExpandIcon';
 
 export interface TableHeaderProps extends ElementProps {
+  queryFields?: { [key: string]: ReactElement<any> };
   lock?: ColumnLock;
 }
 
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
-  const { lock } = props;
+  const { lock, queryFields } = props;
   const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
   const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight } = tableStore;
   const { columns } = columnGroups;
@@ -168,7 +169,6 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
   };
 
   const getQueryFields = (extraStyle) => {
-    const { queryFields } = dataSet.props;
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
