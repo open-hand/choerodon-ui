@@ -2100,9 +2100,9 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   getTableHeader(lock?: ColumnLock): ReactNode {
-    const { showHeader } = this.props;
+    const { showHeader, queryFields } = this.props;
     return showHeader || this.tableStore.customizable ? (
-      <TableHeader key="thead" lock={lock} />
+      <TableHeader key="thead" lock={lock} queryFields={queryFields} />
     ) : undefined;
   }
 

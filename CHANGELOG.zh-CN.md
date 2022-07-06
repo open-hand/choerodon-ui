@@ -33,6 +33,8 @@ timeline: true
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 - 🐞 `<pro>Table`: 修复拖动表格列宽时拖拽线位置不正确的问题。
+- 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
+- 🐞 `<pro>Table`: 修复 filterbar 的字段设置 range 后删除该字段条件后查询条件不正确的问题。
 
 ## 1.5.5
 
