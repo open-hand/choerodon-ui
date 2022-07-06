@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, LegacyRef } from 'react';
 import { ViewComponentProps } from '../core/ViewComponent';
 
 export interface OptionProps extends ViewComponentProps {
@@ -6,6 +6,7 @@ export interface OptionProps extends ViewComponentProps {
    * 选项值
    */
   value?: any;
+  ref?: LegacyRef<any>;
 }
 
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */
