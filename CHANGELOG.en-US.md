@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix error when element may be null.
 - 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
+- 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 
 ## 1.5.5
 
