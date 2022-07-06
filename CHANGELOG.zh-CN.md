@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
+- 🐞 `<pro>Select`: 修复按 pageDown 建报错的问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 - 🐞 `<pro>Table`: 修复列分组的属性 columnProps.children 中的列配置没有 key 和 name 时报错的问题。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
