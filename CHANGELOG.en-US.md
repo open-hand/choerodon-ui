@@ -24,6 +24,8 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
+- 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
+- 💄 `<pro>Radio`: Optimize styles.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
@@ -33,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix error when element may be null.
 - 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
+- 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 
 ## 1.5.5
 

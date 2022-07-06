@@ -24,6 +24,8 @@ timeline: true
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
+- 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
+- 💄 `<pro>Radio`: 优化样式。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
@@ -33,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 - 🐞 `<pro>Table`: 修复列分组的属性 columnProps.children 中的列配置没有 key 和 name 时报错的问题。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
+- 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
 
 ## 1.5.5
 
