@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
 - 💄 `<pro>Radio`: Optimize styles.
+- 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.

@@ -1,12 +1,14 @@
 import React, { useCallback, useContext } from 'react';
 import { connect } from 'mini-store';
 import classNames from 'classnames';
+import isNumber from 'lodash/isNumber';
 import ColGroup from './ColGroup';
 import TableHeader from './TableHeader';
 import TableFooter from './TableFooter';
 import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 import TableContext from './TableContext';
+import measureScrollbar from '../../_util/measureScrollbar';
 
 const BaseTable = function BaseTable(props) {
   const table = useContext(TableContext);
@@ -125,12 +127,17 @@ const BaseTable = function BaseTable(props) {
     }
     return rows;
   };
+  const placeholder = hasHead && !hasBody && scroll.y && fixed !== 'left';
   if (!fixed && scroll.x) {
     // not set width, then use content fixed width
     if (scroll.x === true) {
       tableStyle.tableLayout = 'fixed';
     } else {
-      tableStyle.width = scroll.x;
+      if (placeholder && isNumber(scroll.x)) {
+        tableStyle.width = scroll.x + measureScrollbar();
+      } else {
+        tableStyle.width = scroll.x;
+      }
     }
   }
 
@@ -150,7 +157,6 @@ const BaseTable = function BaseTable(props) {
   }
 
   const columns = getColumns();
-  const placeholder = hasHead && !hasBody && scroll.y && fixed !== 'left';
   return (
     <Table className={tableClassName} style={tableStyle} key="table">
       <ColGroup columns={columns} fixed={fixed} placeholder={placeholder} />
