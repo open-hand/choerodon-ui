@@ -7,11 +7,6 @@
 .@{icon-picker-prefix} {
   .trigger-field;
 
-  &-item-selected div {
-    color: #fff;
-    background-color: @primary-color;
-  }
-
   &-popup {
     width: 7rem;
     ul {
@@ -42,6 +37,13 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+      }
+    }
+    .@{icon-picker-prefix}-item-selected {
+      div,
+      div:hover {
+        color: #fff;
+        background-color: @primary-color;
       }
     }
   }

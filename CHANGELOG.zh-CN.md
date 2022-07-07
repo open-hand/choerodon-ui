@@ -35,6 +35,9 @@ timeline: true
 - 🐞 `<pro>Table`: 修复拖动表格列宽时拖拽线位置不正确的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
 - 🐞 `<pro>Table`: 修复 filterbar 的字段设置 range 后删除该字段条件后查询条件不正确的问题。
+- 🐞 `<pro>IconPicker`: 修复选中样式被 hover 样式覆盖的问题。
+- 🐞 `Badge`: 修复 processing 状态点样式问题。
+- 🐞 `Upload`: 修复 picture-card 模式下的 margin-top 塌陷样式问题。
 
 ## 1.5.5
 
