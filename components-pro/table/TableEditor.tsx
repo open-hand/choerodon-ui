@@ -387,7 +387,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
         if (!this.rendered) {
           this.rendered = true;
-        } else if (editor && wrap) {
+        } else if (wrap) {
           const { offsetWidth } = cellNode;
           const [left, top] = offset(cellNode, wrap.parentElement);
           if (this.originalCssText === undefined) {
@@ -398,7 +398,7 @@ export default class TableEditor extends Component<TableEditorProps> {
             this.width = width;
           }
           wrap.style.cssText = `width:${width};${transform(`translate(${pxToRem(left, true)}, ${pxToRem(top, true)})`)}`;
-          if (editor.forcePositionChanged) {
+          if (editor && editor.forcePositionChanged) {
             editor.forcePositionChanged();
           }
         }

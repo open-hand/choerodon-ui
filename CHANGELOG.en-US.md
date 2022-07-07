@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
 - 🐞 `<pro>Table`: Fix error when element may be null.
+- 🐞 `<pro>Table`: Fix the problem that the custom function editor component editor cannot be located.
 - 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 - 🐞 `<pro>Table`: Fix the problem of using querydataset to report errors under the use of combined search bar.
 - 🐞 `<pro>Table`: Fix the problem of incorrect query conditions after deleting the field conditions after setting range in filterbar.

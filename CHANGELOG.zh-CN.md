@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 - 🐞 `<pro>Table`: 修复拖动表格列宽时拖拽线位置不正确的问题。
+- 🐞 `<pro>Table`: 修复自定义函数编辑器组件 editor 无法定位的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
 - 🐞 `<pro>Table`: 修复 filterbar 的字段设置 range 后删除该字段条件后查询条件不正确的问题。
 - 🐞 `<pro>IconPicker`: 修复选中样式被 hover 样式覆盖的问题。
