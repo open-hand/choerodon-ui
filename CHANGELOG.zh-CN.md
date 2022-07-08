@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `Badge`: 修复 processing 状态点样式问题。
 - 🐞 `Upload`: 修复 picture-card 模式下的 margin-top 塌陷样式问题。
 - 🐞 `<pro>PerformanceTable`: 修复固定列在行合并的情况下导致样式的问题。
+- 🐞 `<pro>PerformanceTable`: 修复开启虚拟滚动时高亮行异常的问题。
 - 🐞 `<pro>Range`: 修复配置了 readOnly 仍可以进行操作的问题。
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。

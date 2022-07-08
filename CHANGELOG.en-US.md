@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `Badge`: Fix a processing status point style issue.
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
+- 🐞 `<pro>PerformanceTable`: Fix an issue where the highlighted row was abnormal when scrolling virtually.
 - 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
