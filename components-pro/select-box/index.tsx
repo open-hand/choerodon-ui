@@ -1,3 +1,3 @@
-import SelectBox from './SelectBox';
+import ObserverSelectBox from './SelectBox';
 
-export default SelectBox;
+export default ObserverSelectBox;

@@ -11,7 +11,7 @@ import DataSet from '../data-set/DataSet';
 import message from '../message';
 import { FieldType } from '../data-set/enum';
 import Form from '../form/Form';
-import SelectBox from '../select-box/SelectBox';
+import ObserverSelectBox from '../select-box/SelectBox';
 import Option from '../option/Option';
 import ObserverTextField from '../text-field/TextField';
 import Button from '../button/Button';
@@ -370,11 +370,11 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
               {
                 flag === 'verify' && (
                   <>
-                    <SelectBox name="verifyType" colSpan={4} disabled={count}>
+                    <ObserverSelectBox name="verifyType" colSpan={4} disabled={count}>
                       {verifyTypeObj && verifyTypeObj.map(item => <Option value={item.type} key={item.type}>
                         {item.name}
                       </Option>)}
-                    </SelectBox>
+                    </ObserverSelectBox>
                     <ObserverTextField name="verifyNumber" colSpan={4} disabled />
                     <ObserverTextField name="verifyCode" colSpan={3} valueChangeAction={ValueChangeAction.input} />
                     <CountDownButton onClick={this.handleClickButton} countDown={countDown} verifyNumber={formDs.current.get('verifyNumber')} />

@@ -103,7 +103,8 @@ export default class Align extends Component<AlignProps, any> {
 
         // If source element size changed
         const preRect = this.sourceRect;
-        if (!reAlign && sourceRect && preRect && (preRect.width !== sourceRect.width || preRect.height !== sourceRect.height)) {
+        if (!reAlign && sourceRect
+          && (!preRect || (preRect && (preRect.width !== sourceRect.width || preRect.height !== sourceRect.height)))) {
           reAlign = true;
         }
       }

@@ -31,9 +31,9 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | fileList | List of files that have been uploaded (controlled) | object\[] | - |
 | headers | Set request headers, valid above IE10. | object | - |
 | listType | Built-in stylesheets, support for three types: `text`, `picture` or `picture-card` | string | 'text' |
-| multiple | Whether to support selected multiple file. `IE10+` supported. You can select multiple files with CTRL holding down while multiple is set to be true | boolean | false |
+| multiple | Whether to support selected multiple file. `IE10+` supported. You can select multiple files with CTRL holding down while multiple is set to be true | boolean | true |
 | name | The name of uploading file | string | 'file' |
-| showUploadList | Whether to show default upload list, it is used to set whether to display preview button, remove button, download button, re-upload button, etc | Boolean or { showRemoveIcon?: boolean, showPreviewIcon?: boolean \| (file: UploadFile) => boolean, showDownloadIcon?: boolean \| (file: UploadFile) => boolean, showReUploadIcon?: boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text'), removePopConfirmTitle?: string, reUploadText?: string, reUploadPopConfirmTitle?: string, getCustomFilenameTitle?: (file: UploadFile) => string } | true |
+| showUploadList | Whether to show default upload list, it is used to set whether to display preview button, remove button, download button, re-upload button, etc | boolean \| [ShowUploadListInterface](#ShowUploadListInterface) | true |
 | supportServerRender | Need to be turned on while the server side is rendering. | boolean | false |
 | withCredentials | ajax upload with cookie sent | boolean | false |
 | onChange | A callback function, can be executed when uploading state is changing. See [onChange](#onChange) | Function | - |
@@ -49,6 +49,18 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
+
+### ShowUploadListInterface
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| showRemoveIcon | 是否显示删除按钮   | boolean | true |
+| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/components/configure) |
+| removePopConfirmTitle | 删除弹框确认信息   | string |  |
+| reUploadText | 重新上传按钮 title 信息   | string |  |
+| reUploadPopConfirmTitle | 重新上传弹框确认信息   | string |  |
+| getCustomFilenameTitle | 文件名 title 信息   | (file: UploadFile) => string | 文件名 |
 
 ### onChange
 

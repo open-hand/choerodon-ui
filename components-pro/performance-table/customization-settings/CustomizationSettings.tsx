@@ -16,7 +16,7 @@ import { ButtonColor, FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
-import SelectBox from '../../select-box/SelectBox';
+import ObserverSelectBox from '../../select-box/SelectBox';
 import Option from '../../option/Option';
 import { TableHeightType } from '../../table/enum';
 import { LabelLayout } from '../../form/enum';
@@ -215,7 +215,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         }
       >
         <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
-          <SelectBox vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
+          <ObserverSelectBox vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
             <Option value={TableHeightType.auto}>
               {$l('Table', 'auto_height')}
             </Option>
@@ -245,7 +245,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
                 step={1}
               />
             </Option>
-          </SelectBox>
+          </ObserverSelectBox>
         </Form>
       </CollapsePanel>
       <CollapsePanel

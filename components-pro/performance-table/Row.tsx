@@ -57,7 +57,6 @@ class Row extends React.PureComponent<RowProps> {
       rowDraggable,
       provided,
       snapshot,
-      transformNone,
       ...rest
     } = this.props;
 
@@ -105,7 +104,7 @@ class Row extends React.PureComponent<RowProps> {
               top: 'auto !important',
               left: 'auto !important',
               cursor: 'move',
-              transform: transformNone ? 'none' : transform,
+              transform,
               // zIndex: snapshot.isDragging ? 999 : 1,
             };
           }

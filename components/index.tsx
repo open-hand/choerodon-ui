@@ -139,6 +139,8 @@ export { default as Tooltip } from './tooltip';
 
 export { default as Upload } from './upload';
 
+export { default as WaterMark } from './watermark';
+
 export { default as useConfig } from './use-config';
 
 export { default as version } from './version';
