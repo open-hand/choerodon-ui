@@ -23,11 +23,12 @@ timeline: true
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
-- 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
+- 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
 - 💄 `<pro>Typography`: 优化在 Form 下使用段落组件多出 margin-bottom 的样式值及改正了样式大写小的问题。
+- 💄 `<pro>Cascader`: 优化选择面板从右侧弹出的样式。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复固定列在行合并的情况下导致样式的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启虚拟滚动时高亮行异常的问题。
 - 🐞 `<pro>Range`: 修复配置了 readOnly 仍可以进行操作的问题。
+- 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 
 ## 1.5.5
 
