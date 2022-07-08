@@ -98,6 +98,8 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
   }
 
   componentDidUpdate() {
+    super.componentDidUpdate();
+
     // Sync measure div top with textarea for trigger usage
     if (this.measuring && this.measure && this.element) {
       this.measure.scrollTop = this.element.scrollTop;

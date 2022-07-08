@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
 - 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
+- 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 
 ## 1.5.5
 
