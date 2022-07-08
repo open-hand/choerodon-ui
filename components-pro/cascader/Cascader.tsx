@@ -557,6 +557,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         async,
         loadData,
         fieldNames,
+        popupPlacement,
       },
     } = this;
     let optGroups: any[] = [];
@@ -684,6 +685,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       });
     }
 
+    const iconDirection = popupPlacement && popupPlacement.toLowerCase().includes('right') ? 'left' : 'right';
+
     // 渲染成单项选择还是多项选择组件以及空组件
     if (options && options.length && optGroups.length) {
       if (menuMode === MenuMode.single) {
@@ -722,6 +725,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           onSelect={this.handleMenuSelect}
           dropdownMenuColumnStyle={dropdownMenuStyleMerge}
           visible={this.popup}
+          iconDirection={iconDirection}
         />
       );
     }

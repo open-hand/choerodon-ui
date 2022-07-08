@@ -22,12 +22,13 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
-- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
+- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
 - 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.
+- 💄 `<pro>Cascader`: Optimize the style of the selection panel that pops up from the right.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
 - 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
+- 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 
 ## 1.5.5
 
