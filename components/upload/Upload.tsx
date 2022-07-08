@@ -24,7 +24,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
 
   static defaultProps = {
     type: 'select' as UploadType,
-    multiple: false,
+    multiple: true,
     action: '',
     data: {},
     accept: '',

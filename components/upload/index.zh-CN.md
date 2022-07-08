@@ -32,9 +32,9 @@ title: Upload
 | fileList | 已经上传的文件列表（受控） | object\[] | 无 |
 | headers | 设置上传的请求头部，IE10 以上有效 | object | 无 |
 | listType | 上传列表的内建样式，支持三种基本样式 `text`, `picture` 和 `picture-card` | string | 'text' |
-| multiple | 是否支持多选文件，`ie10+` 支持。开启后按住 ctrl 可选择多个文件。 | boolean | false |
+| multiple | 是否支持多选文件，`ie10+` 支持。开启后按住 ctrl 可选择多个文件。 | boolean | true |
 | name | 发到后台的文件参数名 | string | 'file' |
-| showUploadList | 是否展示 uploadList, 可设为一个对象，用于单独设定是否显示 预览按钮、移除按钮、下载按钮、重新上传按钮 等 | Boolean or { showRemoveIcon?: boolean, showPreviewIcon?: boolean \| (file: UploadFile) => boolean, showDownloadIcon?: boolean \| (file: UploadFile) => boolean, showReUploadIcon?: boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text'), removePopConfirmTitle?: string, reUploadText?: string, reUploadPopConfirmTitle?: string, getCustomFilenameTitle?: (file: UploadFile) => string } | true |
+| showUploadList | 是否展示 uploadList, 可设为一个对象，用于单独设定是否显示 预览按钮、移除按钮、下载按钮、重新上传按钮 等 | boolean \| [ShowUploadListInterface](#ShowUploadListInterface) | true |
 | supportServerRender | 服务端渲染时需要打开这个 | boolean | false |
 | withCredentials | 上传请求时是否携带 cookie | boolean | false |
 | onChange | 上传文件改变时的状态，详见 [onChange](#onChange) | Function | 无 |
@@ -51,6 +51,18 @@ title: Upload
 | renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
 
+
+### ShowUploadListInterface
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| showRemoveIcon | 是否显示删除按钮   | boolean | true |
+| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/components/configure) |
+| removePopConfirmTitle | 删除弹框确认信息   | string |  |
+| reUploadText | 重新上传按钮 title 信息   | string |  |
+| reUploadPopConfirmTitle | 重新上传弹框确认信息   | string |  |
+| getCustomFilenameTitle | 文件名 title 信息   | (file: UploadFile) => string | 文件名 |
 
 ### onChange
 
