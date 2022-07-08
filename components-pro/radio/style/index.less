@@ -20,19 +20,19 @@
     height: @radio-size;
     vertical-align: middle;
     background-color: #fff;
-    border: @border-width-base @border-style-base @border-color-base;
+    border: @radio-border-width @border-style-base @radio-border-color;
     border-radius: 50%;
     transition: all @radio-duration;
 
     &::before {
       position: absolute;
-      top: 0.03rem;
-      left: 0.03rem;
-      width: 0.06rem;
-      height: 0.06rem;
+      top: 50%;
+      left: 50%;
+      width: 0.08rem;
+      height: 0.08rem;
       background-color: @primary-color;
-      border-radius: 0.03rem;
-      transform: scale(0);
+      border-radius: 50%;
+      transform: scale(1) translateX(-50%) translateY(-50%);
       opacity: 0;
       transition: all @radio-duration @ease-in-out-circ;
       content: ' ';
@@ -49,7 +49,7 @@
 
     &::before {
       background-color: @primary-color;
-      transform: scale(1);
+      transform: scale(1) translateX(-50%) translateY(-50%);
       opacity: 1;
     }
   }

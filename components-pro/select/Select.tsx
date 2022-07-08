@@ -1267,16 +1267,16 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   searchRemote(text?: string | string[] | undefined) {
-    const { field, searchMatcher, record } = this;
-    if (field && isString(searchMatcher)) {
+    const { searchMatcher } = this;
+    if (isString(searchMatcher)) {
       const searchPara = this.getSearchPara(searchMatcher, text);
-      const optionDs = field.get('options', record);
+      const { options, field } = this;
       Object.keys(searchPara).forEach(key => {
         const value = searchPara[key];
         const lovPara = value === '' ? undefined : value;
-        if (optionDs) {
-          optionDs.query(undefined, { [key]: lovPara });
-        } else {
+        if (options) {
+          options.query(undefined, { [key]: lovPara });
+        } else if (field) {
           field.setLovPara(key, lovPara);
         }
       });

@@ -103,6 +103,10 @@ export default class Menu extends Component {
     return this.innerMenu.getWrappedInstance().onKeyDown(e, callback);
   };
 
+  getFlatInstanceArray() {
+    return this.innerMenu.getWrappedInstance().getFlatInstanceArray();
+  }
+
   onOpenChange = event => {
     const props = this.props;
     const openKeys = this.store.getState().openKeys.concat();
