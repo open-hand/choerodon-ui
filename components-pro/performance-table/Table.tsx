@@ -10,6 +10,7 @@ import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import uniq from 'lodash/uniq';
+import isNil from 'lodash/isNil';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -2214,18 +2215,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   };
 
   onRowClick(rowData, event, rowIndex, index) {
-    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick } = this.props;
-    const rowNum = rowDraggable || isTree ? rowData[rowKey!] : rowIndex;
-    if (highLightRow) {
+    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, virtualized } = this.props;
+    const useRowKey = rowDraggable || isTree || virtualized;
+    const rowNum = useRowKey ? rowData[rowKey!] : rowIndex;
+    if (highLightRow && (!useRowKey || useRowKey && !isNil(rowNum))) {
       const tableRows = Object.values(this.tableRows);
-      let ref = this.tableRows[index] && this.tableRows[index][0];
-      if (rowDraggable || isTree) {
-        const findRow = tableRows.find(row => row[1] && row[1][rowKey!] === rowData[rowKey!]);
-        ref = findRow ? findRow![0] : this.tableRows[index][0];
-      }
+      if (tableRows[0][0].className.includes(`${this.addPrefix('row-header')}`)) tableRows.shift();
+      const ref = useRowKey ? this.tableRows[rowNum] && this.tableRows[rowNum][0] : tableRows[index] && tableRows[index][0];
       if (this._lastRowIndex !== rowNum && ref) {
         if (this._lastRowIndex || this._lastRowIndex === 0) {
-          const row = this.tableRows[this._lastRowIndex];
+          const row = useRowKey ? this.tableRows[this._lastRowIndex] : tableRows[this._lastRowIndex];
           if (row && row[0]) {
             row[0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`, '');
           }
