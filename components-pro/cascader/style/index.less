@@ -47,6 +47,33 @@
     }
   }
 
+  &-popup-placement-bottomRight,
+  &-popup-placement-topRight {
+    .@{cascader-prefix-cls} {
+      &-mode-multiple {
+        display: flex;
+        flex-direction: row-reverse;
+
+        .@{cascader-prefix-cls} {
+          &-menu {
+            border-right: none;
+            border-left: @border-width-base @border-style-base @border-color-split;
+
+            &-item {
+              display: flex;
+              padding: 0.05rem @control-padding-horizontal;
+
+              &-expand-icon {
+                position: relative;
+                right: unset;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
   &-menus {
     position: absolute;
     z-index: @zindex-dropdown;
