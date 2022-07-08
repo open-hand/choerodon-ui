@@ -29,6 +29,8 @@ cols: 1
 | pagination | 对应的 `pagination` 配置, 设置 `false` 不显示 | boolean\|object | false |
 | size | list 的尺寸 | `default` \| `large` \| `small` | `default` |
 | split | 是否展示分割线 | boolean | true |
+| rowKey | 配置可选择时需要指定主键字段 | string \| function(record):string | |
+| rowSelection | 是否可选择，[配置项](/#rowSelection) | boolean\|object | false |
 
 ### List grid props
 
@@ -57,3 +59,11 @@ cols: 1
 | avatar | 列表元素的图标 | ReactNode | - |
 | description | 列表元素的描述内容 | string\|ReactNode | - |
 | title | 列表元素的标题 | string\|ReactNode | - |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string[] \| number[] | - |
+| defaultSelectedRowKeys | 默认选中项的 key 数组 | string[] \| number[] | |
+| onChange | 选中项发生变化时的回调 | function(selectedRowKeys) | - |
