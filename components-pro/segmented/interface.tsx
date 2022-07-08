@@ -1,0 +1,3 @@
+export {
+  SegmentedProps,
+} from './Segmented';

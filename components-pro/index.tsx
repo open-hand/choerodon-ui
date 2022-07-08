@@ -153,3 +153,5 @@ export { default as Rate } from './rate';
 export { default as SecretField } from './secret-field';
 
 export { default as Mentions } from './mentions';
+
+export { default as Segmented } from './segmented';
