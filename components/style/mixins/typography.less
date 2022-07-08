@@ -16,8 +16,10 @@
 }
 
 // =============== Common ===============
-.typography-paragraph() {
-  margin-bottom: 0.13rem;
+.typography-paragraph(){
+  &:not(.@{c7n-pro-prefix}-field){
+    margin-bottom: 0.13rem;
+  }
 }
 
 .typography-title(@fontSize; @fontWeight; @lineHeight; @headingColor; @headingMarginBottom;) {

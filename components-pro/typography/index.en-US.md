@@ -23,7 +23,7 @@ Basic text writing, including headings, body text, lists, and more.
 | copyable | Whether to be copyable, customize it via setting an object | boolean \| [copyable](#copyable) | false |
 | delete | Deleted line style | boolean | false |
 | disabled | Disabled content | boolean | false |
-| ellipsis | Display ellipsis when text overflows，can't configure expandable、rows and onExpand by using object | boolean \| [ellipsis](#ellipsis) | false |
+| ellipsis | Display ellipsis when text overflows，can configure expandable、rows and onExpand by using object | boolean \| [ellipsis](#ellipsis) | false |
 | keyboard | Keyboard style | boolean | false |
 | mark | Marked style | boolean | false |
 | onClick | Set the handler to handle click event | (event) => void | - |

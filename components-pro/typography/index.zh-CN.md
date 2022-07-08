@@ -23,7 +23,7 @@ cols: 1
 | copyable | 是否可拷贝，为对象时可进行各种自定义 | boolean \| [copyable](#copyable) | false |
 | delete | 添加删除线样式 | boolean | false |
 | disabled | 禁用文本 | boolean | false |
-| ellipsis | 自动溢出省略，为对象时不能设置省略行数、是否可展开、onExpand 展开事件 | boolean \| [ellipsis](#ellipsis) | false |
+| ellipsis | 自动溢出省略，为对象时能设置省略行数、是否可展开、onExpand 展开事件 | boolean \| [ellipsis](#ellipsis) | false |
 | keyboard | 添加键盘样式 | boolean | false |
 | mark | 添加标记样式 | boolean | false |
 | onClick | 点击 Text 时的回调 | (event) => void | - |
