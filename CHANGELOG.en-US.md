@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
+- 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
@@ -40,6 +41,8 @@ timeline: true
 - 🐞 `<pro>IconPicker`: Fix an issue where the selected style was overwritten by the hover style.
 - 🐞 `Badge`: Fix a processing status point style issue.
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
+- 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
+- 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
 
 ## 1.5.5
 

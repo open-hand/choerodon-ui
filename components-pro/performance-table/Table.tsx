@@ -319,22 +319,6 @@ type Offset = {
   height?: number;
 };
 
-/**
- * 记录rowSpan的坐标
- * @property rowIndex 行坐标
- * @property columnIndex 列坐标
- * @property start rowSpan起始行
- * @property end rowSpan结束行
- * @property zIndex 当前行的zIndex
- */
-type TableRowSpanIndex = {
-  rowIndex: number;
-  columnIndex: number;
-  start: number;
-  end: number;
-  zIndex: number;
-}
-
 type StartRowSpan = {
   rowIndex: number;
   rowSpan: number;
@@ -532,7 +516,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   wheelListener: any;
   touchStartListener: any;
   touchMoveListener: any;
-  rowSpanList: Array<TableRowSpanIndex> = [];
   nextRowZIndex: Array<number> = [];
   calcStartRowSpan: StartRowSpan = { rowIndex: 0, rowSpan: 0, height: 0 };
 
@@ -601,7 +584,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       searchText: '',
       pivot: undefined,
       selectedRowKeys: [],
-      dragging: false,
+      dragRowIndex: '',
     };
 
     this.scrollY = 0;
@@ -1843,8 +1826,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   handleDragStart = (initial: DragStart, provided: ResponderProvided) => {
     const { onDragStart } = this.props;
+    const { draggableId } = initial;
     this.setState({
-      dragging: true,
+      dragRowIndex: draggableId,
     });
     if (isFunction(onDragStart)) {
       onDragStart(initial, provided);
@@ -1855,7 +1839,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { onDragEnd, onDragEndBefore } = this.props;
     const { data } = this.state;
     this.setState({
-      dragging: false,
+      dragRowIndex: '',
     });
     let resultBefore: DropResult | undefined = resultDrag;
     if (onDragEndBefore) {
@@ -2349,7 +2333,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName, highLightRow, virtualized, rowDraggable } = this.props;
-    const { shouldFixedColumn, width, contentWidth, dragging } = this.state;
+    const { shouldFixedColumn, width, contentWidth, dragRowIndex } = this.state;
     const { depth, rowIndex, isHeaderRow, ...restRowProps } = props;
 
     const rowKey = rowData && this.getRecordKey(rowData, rowIndex);
@@ -2370,8 +2354,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       rowRight = width - contentWidth;
       rowStyles.right = rowRight;
     }
-    let rowSpanIsFixed = false;
-    // // 修复合并行的最后一行没有borderBottom 和 合并行后的单元格被遮挡的问题
+    let currnetRowIndex: string = '';
+    // 修复合并行的最后一行没有borderBottom 和 合并行后的单元格被遮挡的问题
     for (let i = 0; i < cells.length; i++) {
       const cellUnit = cells[i];
       const { onCell, dataIndex, fixed } = cellUnit.props;
@@ -2381,16 +2365,19 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           dataIndex,
           rowIndex,
         }) || {};
-        if (cellExternalProps.rowSpan > 1) {
-          if (fixed) {
-            rowSpanIsFixed = !!fixed;
-          }
-        } else if (cellExternalProps.rowSpan <= 1 && !isHeaderRow) {
+        const { rowSpan = 1 } = cellExternalProps;
+        if (rowSpan > 1 && !currnetRowIndex) {
+          currnetRowIndex = `${rowIndex}`;
+          rowStyles.zIndex = fixed ? 1 : 0;
+        } else if (rowSpan < 1 && !isHeaderRow) {
           restRowProps.width = undefined;
         }
       }
     }
-    restRowProps.transformNone = (rowSpanIsFixed && !dragging);
+    // 优化拖拽行被 rowSpan 合并行覆盖的问题
+    if (dragRowIndex === `${rowIndex}`) {
+      rowStyles.zIndex = 1;
+    }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
       if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
@@ -2654,7 +2641,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let bottomHideHeight = 0;
 
     this._visibleRows = [];
-    this.rowSpanList = [];
     this.nextRowZIndex = [];
     this._cacheCalcStartRowSpan = [];
 
