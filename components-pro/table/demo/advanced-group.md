@@ -8,7 +8,7 @@ title:
 ## zh-CN
 
 进阶数据分组。
- 
+
 ## en-US
 
 Advanced Group.
@@ -34,21 +34,216 @@ const App = () => {
   const itemDs = useDataSet(() => ({
     paging: false,
     data: [
-      { id: 1, company: '厦门XX食品有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 9000, quantity: 10, amount: 90000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
-      { id: 2, company: '厦门XX食品有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 80000, quantity: 20, amount: 1600000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
-      { id: 3, company: '厦门XX食品有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 85000, quantity: 20, amount: 1700000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
-      { id: 4, company: '厦门XX食品有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 96000, quantity: 20, amount: 1920000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
-      { id: 5, company: '厦门XX食品有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 88000000, quantity: 20, amount: 1960000000, tax: 0.1, totalAmount: 1965310000, totalAmountNoTax: 1965000000, taxAmount: 310000 },
-      { id: 6, company: '山西XX科贸有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
-      { id: 7, company: '山西XX科贸有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
-      { id: 8, company: '山西XX科贸有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
-      { id: 9, company: '山西XX科贸有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
-      { id: 10, company: '山西XX科贸有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 76000, quantity: 10, amount: 760000, tax: 0.1, totalAmount: 2701740000, totalAmountNoTax: 2701700000, taxAmount: 40000 },
-      { id: 11, company: '上海XX商务有限公司', itemCode: 'A', itemName: '188836-笔记本电脑', itemSize: '15.9英寸', unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
-      { id: 12, company: '上海XX商务有限公司', itemCode: 'B', itemName: '2984-汽车', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
-      { id: 13, company: '上海XX商务有限公司', itemCode: 'C', itemName: '12294-打印机', itemSize: null, unitPrice: 90000000, quantity: 10, amount: 900000000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
-      { id: 14, company: '上海XX商务有限公司', itemCode: 'D', itemName: '43996-电子芯片', itemSize: null, unitPrice: 90000, quantity: 10, amount: 900000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
-      { id: 15, company: '上海XX商务有限公司', itemCode: 'E', itemName: '09761-洗衣机', itemSize: null, unitPrice: 98000, quantity: 10, amount: 980000, tax: 0.1, totalAmount: 2701880000, totalAmountNoTax: 2701880000, taxAmount: 80000 },
+      {
+        id: 1,
+        company: '厦门XX食品有限公司',
+        itemCode: 'A',
+        itemName: '188836-笔记本电脑',
+        itemSize: '15.9英寸',
+        unitPrice: 9000,
+        quantity: 10,
+        amount: 90000,
+        tax: 0.1,
+        totalAmount: 1965310000,
+        totalAmountNoTax: 1965000000,
+        taxAmount: 310000
+      },
+      {
+        id: 2,
+        company: '厦门XX食品有限公司',
+        itemCode: 'B',
+        itemName: '2984-汽车',
+        itemSize: null,
+        unitPrice: 80000,
+        quantity: 20,
+        amount: 1600000,
+        tax: 0.1,
+        totalAmount: 1965310000,
+        totalAmountNoTax: 1965000000,
+        taxAmount: 310000
+      },
+      {
+        id: 3,
+        company: '厦门XX食品有限公司',
+        itemCode: 'C',
+        itemName: '12294-打印机',
+        itemSize: null,
+        unitPrice: 85000,
+        quantity: 20,
+        amount: 1700000,
+        tax: 0.1,
+        totalAmount: 1965310000,
+        totalAmountNoTax: 1965000000,
+        taxAmount: 310000
+      },
+      {
+        id: 4,
+        company: '厦门XX食品有限公司',
+        itemCode: 'D',
+        itemName: '43996-电子芯片',
+        itemSize: null,
+        unitPrice: 96000,
+        quantity: 20,
+        amount: 1920000,
+        tax: 0.1,
+        totalAmount: 1965310000,
+        totalAmountNoTax: 1965000000,
+        taxAmount: 310000
+      },
+      {
+        id: 5,
+        company: '厦门XX食品有限公司',
+        itemCode: 'E',
+        itemName: '09761-洗衣机',
+        itemSize: null,
+        unitPrice: 88000000,
+        quantity: 20,
+        amount: 1960000000,
+        tax: 0.1,
+        totalAmount: 1965310000,
+        totalAmountNoTax: 1965000000,
+        taxAmount: 310000
+      },
+      {
+        id: 6,
+        company: '山西XX科贸有限公司',
+        itemCode: 'A',
+        itemName: '188836-笔记本电脑',
+        itemSize: '15.9英寸',
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701740000,
+        totalAmountNoTax: 2701700000,
+        taxAmount: 40000
+      },
+      {
+        id: 7,
+        company: '山西XX科贸有限公司',
+        itemCode: 'B',
+        itemName: '2984-汽车',
+        itemSize: null,
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701740000,
+        totalAmountNoTax: 2701700000,
+        taxAmount: 40000
+      },
+      {
+        id: 8,
+        company: '山西XX科贸有限公司',
+        itemCode: 'C',
+        itemName: '12294-打印机',
+        itemSize: null,
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701740000,
+        totalAmountNoTax: 2701700000,
+        taxAmount: 40000
+      },
+      {
+        id: 9,
+        company: '山西XX科贸有限公司',
+        itemCode: 'D',
+        itemName: '43996-电子芯片',
+        itemSize: null,
+        unitPrice: 98000,
+        quantity: 10,
+        amount: 980000,
+        tax: 0.1,
+        totalAmount: 2701740000,
+        totalAmountNoTax: 2701700000,
+        taxAmount: 40000
+      },
+      {
+        id: 10,
+        company: '山西XX科贸有限公司',
+        itemCode: 'E',
+        itemName: '09761-洗衣机',
+        itemSize: null,
+        unitPrice: 76000,
+        quantity: 10,
+        amount: 760000,
+        tax: 0.1,
+        totalAmount: 2701740000,
+        totalAmountNoTax: 2701700000,
+        taxAmount: 40000
+      },
+      {
+        id: 11,
+        company: '上海XX商务有限公司',
+        itemCode: 'A',
+        itemName: '188836-笔记本电脑',
+        itemSize: '15.9英寸',
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701880000,
+        totalAmountNoTax: 2701880000,
+        taxAmount: 80000
+      },
+      {
+        id: 12,
+        company: '上海XX商务有限公司',
+        itemCode: 'B',
+        itemName: '2984-汽车',
+        itemSize: null,
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701880000,
+        totalAmountNoTax: 2701880000,
+        taxAmount: 80000
+      },
+      {
+        id: 13,
+        company: '上海XX商务有限公司',
+        itemCode: 'C',
+        itemName: '12294-打印机',
+        itemSize: null,
+        unitPrice: 90000000,
+        quantity: 10,
+        amount: 900000000,
+        tax: 0.1,
+        totalAmount: 2701880000,
+        totalAmountNoTax: 2701880000,
+        taxAmount: 80000
+      },
+      {
+        id: 14,
+        company: '上海XX商务有限公司',
+        itemCode: 'D',
+        itemName: '43996-电子芯片',
+        itemSize: null,
+        unitPrice: 90000,
+        quantity: 10,
+        amount: 900000,
+        tax: 0.1,
+        totalAmount: 2701880000,
+        totalAmountNoTax: 2701880000,
+        taxAmount: 80000
+      },
+      {
+        id: 15,
+        company: '上海XX商务有限公司',
+        itemCode: 'E',
+        itemName: '09761-洗衣机',
+        itemSize: null,
+        unitPrice: 98000,
+        quantity: 10,
+        amount: 980000,
+        tax: 0.1,
+        totalAmount: 2701880000,
+        totalAmountNoTax: 2701880000,
+        taxAmount: 80000
+      },
     ],
     fields: [
       {
@@ -112,7 +307,7 @@ const App = () => {
       },
     ],
   }), []);
-   
+
   // 评分
   const scoreDs = useDataSet(() => ({
     paging: false,
@@ -171,33 +366,39 @@ const App = () => {
   }), []);
 
   const itemColumns = React.useMemo(() => [
-    { 
-      title: '头分组聚合列', // 可在个性化内显示
-      header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
-      renderer: ({ text, record, dataSet, aggregationTree }) => record.getState('editing') ? (
-        <Row>
-          <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }} onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
-            {aggregationTree[0]}
-            {record.isSelected ? <div>已选</div> : null}
-          </Col>
-          <Col span={12}>
-            {record.isSelected ? aggregationTree[1] : null}
-          </Col>
-        </Row>
-      ) : aggregationTree[0],
-      aggregation: true,
-      aggregationLimit: 3,
-      aggregationLimitDefaultExpanded: true,
-      titleEditable: false,
-      key: 'itemDetail',
-      align: 'left',
+    {
+      header: () => 'xxx',
       children: [
-        { name: 'unitPrice' },
-        { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
-        { name: 'amount' },
-        { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
-      ],
-      width: 300,
+        {
+          title: '头分组聚合列', // 可在个性化内显示
+          header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
+          renderer: ({ text, record, dataSet, aggregationTree }) => record.getState('editing') ? (
+            <Row>
+              <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }}
+                   onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
+                {aggregationTree[0]}
+                {record.isSelected ? <div>已选</div> : null}
+              </Col>
+              <Col span={12}>
+                {record.isSelected ? aggregationTree[1] : null}
+              </Col>
+            </Row>
+          ) : aggregationTree[0],
+          aggregation: true,
+          aggregationLimit: 3,
+          aggregationLimitDefaultExpanded: true,
+          titleEditable: false,
+          key: 'itemDetail',
+          align: 'left',
+          children: [
+            { name: 'unitPrice' },
+            { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
+            { name: 'amount' },
+            { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
+          ],
+          width: 300,
+        }
+      ]
     },
   ], []);
 
@@ -220,7 +421,7 @@ const App = () => {
   ], []);
 
   const itemGroups = React.useMemo(() => [
-    { 
+    {
       name: 'company',
       type: 'header',
       columnProps: {
@@ -235,7 +436,14 @@ const App = () => {
             const { totalRecords } = headerGroup;
             return (
               <>
-                <div>{text} <CheckBox value checked={totalRecords.some(r => r.getState('editing'))} onChange={action((value) => totalRecords.forEach(r => r.setState('editing', value)))}/></div>
+                <div>
+                  {text}
+                  <CheckBox
+                    value
+                    checked={totalRecords.some(r => r.getState('editing'))}
+                    onChange={action((value) => totalRecords.forEach(r => r.setState('editing', value)))}
+                  />
+                </div>
                 <div>排名：{headerGroup.index + 1}</div>
               </>
             );
@@ -253,18 +461,27 @@ const App = () => {
         headerStyle: { textAlign: 'left' },
       },
     },
-    { 
+    {
       name: 'itemCode',
       type: 'column',
       columnProps: {
+        header: () => '整包',
         align: 'left',
-        aggregation: true,
-        aggregationLimit: 2,
-        aggregationLimitDefaultExpanded: true,
         children: [
-          { name: 'itemSize' },
-          { name: 'origin' },
-          { name: 'unit' },
+          {
+            header: () => '报价信息',
+            key: 'key',
+            align: 'left',
+            aggregation: true,
+            aggregationLimit: 2,
+            aggregationLimitDefaultExpanded: true,
+            width: 200,
+            children: [
+              { name: 'itemSize' },
+              { name: 'origin' },
+              { name: 'unit' },
+            ]
+          }
         ],
         renderer: ({ record, dataSet, text }) => {
           const handleClick = action(() => {
@@ -281,13 +498,12 @@ const App = () => {
             </div>
           );
         },
-        width: 200,
       },
     },
   ], []);
 
   const scoreGroups = React.useMemo(() => [
-    { 
+    {
       name: 'company',
       type: 'header',
       columnProps: {
@@ -301,7 +517,7 @@ const App = () => {
         ],
       },
     },
-    { 
+    {
       name: 'scoreId',
       parentField: 'parentScoreId',
       type: 'column',

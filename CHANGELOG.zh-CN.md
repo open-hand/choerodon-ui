@@ -29,13 +29,19 @@ timeline: true
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
 - 💄 `<pro>Typography`: 优化在 Form 下使用段落组件多出 margin-bottom 的样式值及改正了样式大写小的问题。
 - 💄 `<pro>Cascader`: 优化选择面板从右侧弹出的样式。
+- 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
+- 💄 `<pro>Radio`: 优化样式。
+- 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
+- 🐞 `<pro>Select`: 修复按 pageDown 建报错的问题。
+- 🐞 `<pro>Select`: 修复使用 options 属性时 searchMatcher 没有作用的问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
+- 🐞 `<pro>Table`: 修复列分组的属性 columnProps.children 中的列配置没有 key 和 name 时报错的问题。
 - 🐞 `<pro>Table`: 修复拖动表格列宽时拖拽线位置不正确的问题。
 - 🐞 `<pro>Table`: 修复自定义函数编辑器组件 editor 无法定位的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
@@ -46,6 +52,8 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复固定列在行合并的情况下导致样式的问题。
 - 🐞 `<pro>Range`: 修复配置了 readOnly 仍可以进行操作的问题。
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
+- 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
+- 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
 
 ## 1.5.5
 

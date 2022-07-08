@@ -534,7 +534,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     const element = e.target;
     if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
-      if (text) {
+      const { current } = innerRef;
+      if (text && current && current.contains(element)) {
         const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
         show(element, {
           title: text,
@@ -546,7 +547,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     return false;
-  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && showTooltip(e)) {
       tooltipShownRef.current = true;

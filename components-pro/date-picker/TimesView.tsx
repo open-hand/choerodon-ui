@@ -247,9 +247,9 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   @autobind
   handleWheel(e) {
     e.preventDefault();
-    if (e.deltaY > 0) {
+    if (e.deltaY > 1) {
       this.handleKeyDownDown(e);
-    } else if (e.deltaY < 0) {
+    } else if (e.deltaY < -1) {
       this.handleKeyDownUp(e);
     }
   }

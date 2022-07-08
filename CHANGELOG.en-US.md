@@ -29,13 +29,19 @@ timeline: true
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
 - 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.
 - 💄 `<pro>Cascader`: Optimize the style of the selection panel that pops up from the right.
+- 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
+- 💄 `<pro>Radio`: Optimize styles.
+- 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
+- 🐞 `<pro>Select`: Fix error when pressing pageDown.
+- 🐞 `<pro>Select`: Fix `searchMatcher` not working when using options prop.
 - 🐞 `<pro>Table`: Fix error when element may be null.
+- 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
 - 🐞 `<pro>Table`: Fix the problem that the custom function editor component editor cannot be located.
 - 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 - 🐞 `<pro>Table`: Fix the problem of using querydataset to report errors under the use of combined search bar.
@@ -46,6 +52,8 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
 - 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
+- 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
+- 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 
 ## 1.5.5
 
