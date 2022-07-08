@@ -20,7 +20,7 @@ import { Size } from '../../core/enum';
 import { normalizeGroupColumns } from '../TableStore';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
-import SelectBox from '../../select-box/SelectBox';
+import ObserverSelectBox from '../../select-box/SelectBox';
 import Option from '../../option/Option';
 import { TableHeightType } from '../enum';
 import { LabelLayout } from '../../form/enum';
@@ -201,7 +201,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   if (tableStore.heightChangeable) {
     const tableHeightType = tableRecord.get('heightType');
     tableSettings.push(
-      <SelectBox key="heightType" vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
+      <ObserverSelectBox key="heightType" vertical name="heightType" label={$l('Table', 'height_settings')} onOption={handleOption}>
         <Option value={TableHeightType.auto}>
           {$l('Table', 'auto_height')}
         </Option>
@@ -231,12 +231,12 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
             step={1}
           />
         </Option>
-      </SelectBox>,
+      </ObserverSelectBox>,
     );
   }
   if (tableRecord.get('aggregation')) {
     tableSettings.push(
-      <SelectBox key="aggregationExpandType" name="aggregationExpandType" label={$l('Table', 'row_expand_settings')}>
+      <ObserverSelectBox key="aggregationExpandType" name="aggregationExpandType" label={$l('Table', 'row_expand_settings')}>
         <Option value="cell">
           {$l('Table', 'expand_cell')}
         </Option>
@@ -246,7 +246,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         <Option value="column">
           {$l('Table', 'expand_column')}
         </Option>
-      </SelectBox>,
+      </ObserverSelectBox>,
     );
   }
   return (
@@ -269,7 +269,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
           {
             tableStore.hasAggregationColumn && (tableStore.props.onAggregationChange || tableStore.props.aggregation === undefined) && (
-              <SelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
+              <ObserverSelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
                 <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
                   <Tooltip title={$l('Table', 'tiled_view')} placement="top">
                     <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-not-aggregation`} />
@@ -280,10 +280,10 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
                     <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-aggregation`} />
                   </Tooltip>
                 </Option>
-              </SelectBox>
+              </ObserverSelectBox>
             )
           }
-          <SelectBox name="size" label={$l('Table', 'density_display')} mode={ViewMode.button}>
+          <ObserverSelectBox name="size" label={$l('Table', 'density_display')} mode={ViewMode.button}>
             <Option value={Size.default} className={`${prefixCls}-customization-select-view-option`}>
               <Tooltip title={$l('Table', 'normal')} placement="top">
                 <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-default`} />
@@ -294,8 +294,8 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
                 <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-small`} />
               </Tooltip>
             </Option>
-          </SelectBox>
-          <SelectBox name="parityRow" label={$l('Table', 'parity_row')} mode={ViewMode.button}>
+          </ObserverSelectBox>
+          <ObserverSelectBox name="parityRow" label={$l('Table', 'parity_row')} mode={ViewMode.button}>
             <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
               <Tooltip title={$l('Table', 'normal')} placement="top">
                 <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-no-parity-row`} />
@@ -306,7 +306,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
                 <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-parity-row`} />
               </Tooltip>
             </Option>
-          </SelectBox>
+          </ObserverSelectBox>
         </Form>
       </CollapsePanel>
       {

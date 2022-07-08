@@ -404,8 +404,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
 
   getQueryValues(fieldName) {
     const current = this.getQueryRecord();
+    const field = this.getQueryField(fieldName);
+    const range = field && field.get('range', current);
+
     if (current) {
-      return [].concat(toJS(current.get(fieldName)) || []);
+      const value = toJS(current.get(fieldName)) || [];
+      return [].concat(!range ? value : [value]);
     }
     return [];
   }

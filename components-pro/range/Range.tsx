@@ -49,12 +49,16 @@ export default class Range extends NumberField<RangeProps> {
       props: { dataSet, onChange = noop, ...otherProps },
       prefixCls,
     } = this;
+    if (this.readOnly) {
+      otherProps.value = this.value;
+    }
     if (dataSet) {
-      const { fields = [] } = dataSet.props;
       let props: RangeProps = {};
       if (otherProps.name) {
-        const fieldProps = fields.find(x => x.name === otherProps.name) as RangeProps
-        props = fieldProps
+        const field = dataSet.getField(otherProps.name);
+        if (field) {
+          props = { ...field.getProps() } as RangeProps;
+        }
       }
 
       return (
@@ -64,6 +68,7 @@ export default class Range extends NumberField<RangeProps> {
         }} />
       );
     }
+    
     return (
       <Slider prefixCls={prefixCls} {...otherProps} onChange={onChange} />
     );

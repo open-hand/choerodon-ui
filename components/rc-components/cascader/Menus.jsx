@@ -14,7 +14,6 @@ export default class Menus extends Component {
     visible: false,
     selectedValues: [],
     expandTrigger: 'click',
-    expandIcon: <Icon type="navigate_next" />,
   };
 
   constructor(props) {
@@ -32,13 +31,26 @@ export default class Menus extends Component {
       this.scrollActiveItemToView();
     }
   }
+
+  get expandIcon() {
+    const { expandIcon, iconDirection } = this.props;
+    if (expandIcon) {
+      return expandIcon;
+    }
+    if (iconDirection === 'left') {
+      return <Icon type="navigate_before" />;
+    }
+    return <Icon type="navigate_next" />;
+  }
+
   getFieldName(name) {
     const { fieldNames, defaultFieldNames } = this.props;
     // 防止只设置单个属性的名字
     return fieldNames[name] || defaultFieldNames[name];
   }
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, expandIcon, selectedValues } = this.props;
+    const { prefixCls, expandTrigger, selectedValues, iconDirection } = this.props;
+    const { expandIcon } = this;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
       onClick: () => {
@@ -94,8 +106,9 @@ export default class Menus extends Component {
         title={title}
         {...expandProps}
       >
+        {iconDirection === 'left' && expandIconNode}
         {option[labelField]}
-        {expandIconNode}
+        {iconDirection !== 'left' && expandIconNode}
       </li>
     );
   }
@@ -157,7 +170,7 @@ export default class Menus extends Component {
   render() {
     const { prefixCls, dropdownMenuColumnStyle } = this.props;
     return (
-      <div>
+      <div className={`${prefixCls}-mode-multiple`}>
         {this.getShowOptions().map((options, menuIndex) =>
           <ul className={`${prefixCls}-menu`} key={menuIndex} style={dropdownMenuColumnStyle}>
             {options.map(option => this.getOption(option, menuIndex))}

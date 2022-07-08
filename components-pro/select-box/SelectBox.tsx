@@ -32,8 +32,7 @@ export interface SelectBoxProps extends SelectProps {
   mode?: ViewMode;
 }
 
-@observer
-export default class SelectBox extends Select<SelectBoxProps> {
+export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select<T> {
   static displayName = 'SelectBox';
 
   static defaultProps = {
@@ -65,6 +64,10 @@ export default class SelectBox extends Select<SelectBoxProps> {
     return this.observableProps.name || GroupIdGen.next().value;
   }
 
+  get mode(): ViewMode | undefined {
+    return this.props.mode;
+  }
+
   isSearchFieldInPopup(): boolean | undefined {
     return false;
   }
@@ -75,14 +78,17 @@ export default class SelectBox extends Select<SelectBoxProps> {
     ]);
   }
 
-  getClassName() {
+  getClassName(...props): string | undefined {
     const {
       prefixCls,
       props: { vertical },
     } = this;
-    return super.getClassName({
-      [`${prefixCls}-vertical`]: vertical,
-    });
+    return super.getClassName(
+      {
+        [`${prefixCls}-vertical`]: vertical,
+      },
+      ...props,
+    );
   }
 
   isEmpty() {
@@ -104,15 +110,20 @@ export default class SelectBox extends Select<SelectBoxProps> {
     }
   }
 
+  getOptionOtherProps(_: boolean): OptionProps {
+    return {};
+  }
+
   renderWrapper(): ReactNode {
-    const { name, options, filteredOptions, textField, valueField, readOnly, disabled } = this;
-    const { autoFocus, mode, onOption, optionRenderer, optionsFilter } = this.props;
+    const { name, options, filteredOptions, textField, valueField, readOnly, disabled, mode } = this;
+    const { autoFocus, onOption, optionRenderer, optionsFilter } = this.props;
     const highlight = this.getProp('highlight');
     const items = filteredOptions.reduce<ReactElement<any>[]>((arr, record, index, data) => {
       if (!optionsFilter || optionsFilter(record, index, data)) {
         const optionProps = onOption({ dataSet: options, record });
         const text = record.get(textField);
         const value = record.get(valueField);
+        const checked = this.isChecked(this.getValue(), value);
         const children = optionRenderer
           ? optionRenderer({ dataSet: options, record, text, value })
           : text;
@@ -122,7 +133,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
           dataSet: null,
           record: null,
           value,
-          checked: this.isChecked(this.getValue(), value),
+          checked,
           name,
           onChange: this.handleItemChange,
           children,
@@ -133,6 +144,7 @@ export default class SelectBox extends Select<SelectBoxProps> {
           noValidate: true,
           labelLayout: LabelLayout.none,
           highlight,
+          ...this.getOptionOtherProps(checked),
         };
         arr.push(this.renderItem(optionProps ? {
           ...optionProps,
@@ -147,13 +159,12 @@ export default class SelectBox extends Select<SelectBoxProps> {
       }
       return arr;
     }, []);
-    const className = this.getClassName();
-    const Element = this.context.formNode ? 'div' : 'form';
+
     return (
       <span key="wrapper" {...this.getWrapperProps()}>
         {this.renderSearcher()}
         {this.renderSelectAll()}
-        <Element className={className} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>{items}</Element>
+        {this.renderSelectItems(items)}
         {this.renderFloatLabel()}
         {
           options.paging && options.currentPage < options.totalPage && (
@@ -161,6 +172,17 @@ export default class SelectBox extends Select<SelectBoxProps> {
           )
         }
       </span>
+    );
+  }
+
+  @autobind
+  renderSelectItems(items: ReactNode): ReactNode {
+    const className = this.getClassName();
+    const Element = this.context.formNode ? 'div' : 'form';
+    return (
+      <Element className={className} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+        {items}
+      </Element>
     );
   }
 
@@ -204,4 +226,16 @@ export default class SelectBox extends Select<SelectBoxProps> {
     }
     return <ObserverRadio {...props} />;
   }
+}
+
+@observer
+export default class ObserverSelectBox extends SelectBox<SelectBoxProps> {
+  static defaultProps = SelectBox.defaultProps;
+
+  static Option = Option;
+
+  static OptGroup = OptGroup;
+
+  // eslint-disable-next-line camelcase
+  static __IS_IN_CELL_EDITOR = true;
 }

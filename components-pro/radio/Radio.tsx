@@ -189,6 +189,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     return super.getWrapperClassNames(
       {
         [`${prefixCls}-button`]: mode === ViewMode.button,
+        [`${prefixCls}-checked`]: this.isChecked(),
       },
       ...args,
     );

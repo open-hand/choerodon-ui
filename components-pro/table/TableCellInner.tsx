@@ -171,6 +171,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }, [column, name, columnKey, tableStore]);
   const handleFocus = useCallback((e) => {
     if (canFocus) {
+      handleMouseEnter(e);
       if (key !== SELECTION_KEY) {
         dataSet.current = record;
       }
