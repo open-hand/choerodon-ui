@@ -9,6 +9,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -17,12 +18,12 @@ import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
 import TableContext from './TableContext';
-import { getColumnLock, getEditorByColumnAndRecord, isStickySupport } from './utils';
+import { getColumnLock, getEditorByColumnAndRecord, isDisabledRow, isStickySupport } from './utils';
 import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
-import TableStore from './TableStore';
+import TableStore, { SELECTION_KEY } from './TableStore';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import AggregationTreeGroups from './AggregationTreeGroups';
 import { TableVirtualCellProps } from './TableVirtualCell';
@@ -53,7 +54,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
-  const { __tableGroup } = column;
+  const { __tableGroup, style, lock, onCell, aggregation } = column;
   const [group, isLast]: [Group | undefined, boolean] = __tableGroup && groupPath && groupPath.find(([path]) => path.name === __tableGroup.name) || [undefined, false];
   const [rowGroup]: [Group | undefined, boolean] = group || !groupPath || !groupPath.length ? [undefined, false] : groupPath[groupPath.length - 1];
   const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean, headerGroup?: Group) => record ? (
@@ -71,11 +72,30 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       {children}
     </TableCellInner>
   ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup]);
+  const isBuiltInColumn = tableStore.isBuiltInColumn(column);
 
+  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+  const cellExternalProps: HTMLProps<HTMLTableCellElement> =
+    typeof columnOnCell === 'function' && record
+      ? columnOnCell({
+        dataSet,
+        record,
+        column,
+      })
+      : {};
+
+  const handleClickCapture = useCallback(action<(e) => void>((e) => {
+    if (record && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
+      dataSet.current = record;
+    }
+    const { onClickCapture } = cellExternalProps;
+    if (typeof onClickCapture === 'function') {
+      onClickCapture(e);
+    }
+  }), [record, dataSet, cellExternalProps]);
   const aggregationTreeRenderer = useCallback(({ colGroup, style }) => {
     return getInnerNode(colGroup.column, style, true, colGroup.headerGroup);
   }, [getInnerNode]);
-  const { style, lock, onCell, aggregation } = column;
   const columnLock = isStickySupport() && getColumnLock(lock);
   const baseStyle: CSSProperties | undefined = (() => {
     if (columnLock) {
@@ -183,16 +203,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
-  const isBuiltInColumn = tableStore.isBuiltInColumn(column);
-  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
-  const cellExternalProps: HTMLProps<HTMLTableCellElement> =
-    typeof columnOnCell === 'function'
-      ? columnOnCell({
-        dataSet,
-        record,
-        column,
-      })
-      : {};
   if (inView === false || columnGroup.inView === false) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
     const emptyCellProps: HTMLProps<HTMLTableCellElement> & { 'data-index': Key } = {
@@ -202,6 +212,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       ...cellExternalProps,
       className: classNames(baseClassName, cellExternalProps.className),
       scope,
+      onClickCapture: handleClickCapture,
     };
     if (hasEditor) {
       emptyCellProps.onFocus = (e) => {
@@ -254,6 +265,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       {...intersectionProps}
       style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style }}
       scope={scope}
+      onClickCapture={handleClickCapture}
     >
       {renderInnerNode(aggregation, onCellStyle)}
     </TCell>

@@ -134,7 +134,7 @@ const BaseTable = function BaseTable(props) {
       tableStyle.tableLayout = 'fixed';
     } else {
       if (placeholder && isNumber(scroll.x)) {
-        tableStyle.width = scroll.x + measureScrollbar();
+        tableStyle.width = scroll.x + measureScrollbar() + 1;
       } else {
         tableStyle.width = scroll.x;
       }
