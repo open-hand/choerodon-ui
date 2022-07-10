@@ -39,6 +39,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
+- 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
+- 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 
 ## 1.5.5
 
