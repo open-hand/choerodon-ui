@@ -1271,7 +1271,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (isString(searchMatcher)) {
       const searchPara = this.getSearchPara(searchMatcher, text);
       const { field, record } = this;
-      const options = field && field.get('options', record) || this.options;
+      const options = field && field.get('options', record) || this.observableProps.options;
       Object.keys(searchPara).forEach(key => {
         const value = searchPara[key];
         const lovPara = value === '' ? undefined : value;
