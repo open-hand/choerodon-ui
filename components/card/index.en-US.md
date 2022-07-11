@@ -33,6 +33,9 @@ A card can be used to display content related to a single subject. The content c
 | defaultActiveTabKey | Initial active TabPane's key, if `activeTabKey` is not set. | string | - |
 | title | Card title | string\|ReactNode | - |
 | type | Card style type, can be set to `inner` or not set | string | - |
+| selected | Toggles selected | boolean | false |
+| cornerPlacement | Selected corner mark position | `bottomRight` \| `bottomLeft` \| `topLeft` \| `topRight` | bottomRight |
+| onSelectChange | Select the callback of the event and click the card content area to trigger | (selected) => void | - |
 | onTabChange | Callback when tab is switched | (key) => void | - |
 | onHeadClick | Callback while Click Card head | React.MouseEventHandler<any> | - |
 
@@ -42,6 +45,9 @@ A card can be used to display content related to a single subject. The content c
 | -------- | ----------- | ---- | ------- |
 | className | className of container | string | - |
 | style | style object of container | object | - |
+| selected | Toggles selected | boolean | false |
+| cornerPlacement | Selected corner mark position | `bottomRight` \| `bottomLeft` \| `topLeft` \| `topRight` | bottomRight |
+| onSelectChange | Callback for selected event | (selected) => void | - |
 
 ### Card.Meta
 

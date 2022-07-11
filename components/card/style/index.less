@@ -92,6 +92,19 @@
       z-index: 1;
       box-shadow: @box-shadow-base;
     }
+
+    &-selected {
+      position: relative;
+      box-shadow: 0.01rem 0 0 0 @primary-color, 0 0.01rem 0 0 @primary-color,
+        0.01rem 0.01rem 0 0 @primary-color, 0.01rem 0 0 0 @primary-color inset,
+        0 0.01rem 0 0 @primary-color inset;
+
+      &:hover {
+        box-shadow: 0 0 0.01rem 0.01rem @primary-color;
+      }
+    }
+
+    .common()
   }
 
   &-contain-tabs &-head-title {
@@ -244,6 +257,71 @@
     background-size: 600% 600%;
     border-radius: @border-radius-sm;
     animation: card-loading 1.4s ease infinite;
+  }
+
+  .common()
+}
+
+.cornerAfter() {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: @primary-color;
+  border-style: solid;
+  content: "";
+}
+
+.common() {
+  &-selected {
+    border-color: @primary-color;
+
+    &-xl::after {
+      border-width: 0.12rem;
+    }
+
+    &-xs::after {
+      border-width: 0.06rem;
+    }
+
+    &-topLeft::after {
+      top: 0;
+      left: 0;
+      .cornerAfter();
+      border-right-color: transparent;
+      border-right-style: solid;
+      border-bottom-color: transparent;
+      border-bottom-style: solid;
+    }
+
+    &-topRight::after {
+      top: 0;
+      right: 0;
+      .cornerAfter();
+      border-bottom-color: transparent;
+      border-bottom-style: solid;
+      border-left-color: transparent;
+      border-left-style: solid;
+    }
+
+    &-bottomLeft::after {
+      bottom: 0;
+      left: 0;
+      .cornerAfter();
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-right-color: transparent;
+      border-right-style: solid;  
+    }
+
+    &-bottomRight::after {
+      right: 0;
+      bottom: 0;
+      .cornerAfter();
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-left-color: transparent;
+      border-left-style: solid;
+    }
   }
 }
 
