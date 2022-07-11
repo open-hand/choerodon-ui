@@ -55,6 +55,8 @@ timeline: true
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
 - 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
+- 🐞 `<pro>Table`: 修复头分组单元格编辑时记录没有对应的问题。
+- 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
 
 ## 1.5.5
 
