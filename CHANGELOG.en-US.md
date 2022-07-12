@@ -23,6 +23,9 @@ timeline: true
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
+- 🌟 `List`: Added association `DataSet` support and `rowSelection` selectable support.
+- 🌟 `Card`: Added `selected` and `cornerplacement` attributes to cards and card groups.
+- 🌟 `<pro>Cascader`: Added `optionRenderer` property.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
@@ -56,6 +59,8 @@ timeline: true
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
+- 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
+- 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 
 ## 1.5.5
 

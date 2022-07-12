@@ -13,6 +13,7 @@ export interface ListItemProps {
   extra?: ReactNode;
   actions?: Array<ReactNode>;
   grid?: ListGridType;
+  renderCheckBox?: { element:() => HTMLElement, isChecked: boolean };
 }
 
 export interface ListItemMetaProps {
@@ -63,10 +64,14 @@ const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
     actions,
     extra,
     className,
+    renderCheckBox,
     ...others
   } = props;
   const prefixCls = getPrefixCls('list', customizePrefixCls);
-  const classString = classNames(`${prefixCls}-item`, className);
+  const classString = classNames(`${prefixCls}-item`, className, {
+    [`${prefixCls}-selection`]: renderCheckBox,
+    [`${prefixCls}-selected`]: renderCheckBox && renderCheckBox.isChecked,
+  });
 
   const metaContent: ReactElement<any>[] = [];
   const otherContent: ReactElement<any>[] = [];
@@ -130,10 +135,13 @@ const ListItem: FunctionComponent<ListItemProps> = function ListItem(props) {
     </Col>
   ) : (
     <div {...others} className={classString}>
-      {extra && extraContent}
-      {!extra && metaContent}
-      {!extra && content}
-      {!extra && actionsContent}
+      {renderCheckBox && renderCheckBox.element()}
+      <>
+        {extra && extraContent}
+        {!extra && metaContent}
+        {!extra && content}
+        {!extra && actionsContent}
+      </>
     </div>
   );
 

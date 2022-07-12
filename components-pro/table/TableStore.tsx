@@ -42,7 +42,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader } from './utils';
+import { getColumnKey, getHeader, isDisabledRow } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -2132,12 +2132,13 @@ export default class TableStore {
   }
 
   showNextEditor(name: string, reserve: boolean) {
-    if (reserve) {
-      this.dataSet.pre();
-    } else {
-      this.dataSet.next();
+    const { dataSet } = this;
+    const { currentIndex } = dataSet;
+    const record = dataSet.get(reserve ? currentIndex - 1 : currentIndex + 1);
+    if (record && !isDisabledRow(record)) {
+      dataSet.current = record;
+      this.showEditor(name);
     }
-    this.showEditor(name);
   }
 
   @action

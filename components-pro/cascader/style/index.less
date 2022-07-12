@@ -60,12 +60,12 @@
             border-left: @border-width-base @border-style-base @border-color-split;
 
             &-item {
-              display: flex;
               padding: 0.05rem @control-padding-horizontal;
 
               &-expand-icon {
                 position: relative;
                 right: unset;
+                padding-right: 0.05rem;
               }
             }
           }
@@ -201,6 +201,8 @@
   }
 
   &-menu-item {
+    display: flex;
+    align-items: center;
     padding: 0.05rem @control-padding-horizontal;
     line-height: 0.22rem;
     white-space: nowrap;
@@ -233,10 +235,12 @@
     }
     &-expand {
       position: relative;
-      padding-right: 0.24rem;
+      padding-right: 0.3rem;
       &-icon {
         position: absolute;
         right: @control-padding-horizontal;
+        display: flex;
+        align-items: center;
         color: @text-color-secondary;
       }
     }

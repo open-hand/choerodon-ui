@@ -13,7 +13,7 @@ import React, {
   useRef,
 } from 'react';
 import { observer } from 'mobx-react-lite';
-import { action, get, reaction, remove, set } from 'mobx';
+import { action, get, remove, set } from 'mobx';
 import classNames from 'classnames';
 import defer from 'lodash/defer';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -26,7 +26,7 @@ import TableContext from './TableContext';
 import ExpandIcon from './ExpandIcon';
 import { ColumnLock, DragColumnAlign, HighLightRowType, SelectionMode } from './enum';
 import { findCell, getColumnKey, getColumnLock, isDisabledRow, isSelectedRow, isStickySupport } from './utils';
-import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY, SELECTION_KEY } from './TableStore';
+import { CUSTOMIZED_KEY, DRAG_KEY, EXPAND_KEY } from './TableStore';
 import { ExpandedRowProps } from './ExpandedRow';
 import { RecordStatus } from '../data-set/enum';
 import ResizeObservedRow from './ResizeObservedRow';
@@ -52,14 +52,16 @@ function getGroupByPath(group: Group, groupPath: [Group, boolean][]): Group | un
   return group;
 }
 
-function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | undefined, index: number, record: Record): Record | undefined {
-  const { headerGroup } = columnGroup;
-  if (headerGroup && groupPath) {
-    const group = getGroupByPath(headerGroup, groupPath.slice());
-    if (group) {
-      return group.totalRecords[index];
+function getRecord(columnGroup: ColumnGroup, groupPath: [Group, boolean][] | undefined, index: number | undefined, record: Record): Record | undefined {
+  if (index !== undefined && groupPath) {
+    const { headerGroup } = columnGroup;
+    if (headerGroup) {
+      const group = getGroupByPath(headerGroup, groupPath.slice());
+      if (group) {
+        return group.totalRecords[index];
+      }
+      return undefined;
     }
-    return undefined;
   }
   return record;
 }
@@ -175,16 +177,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const handleSelection = useCallback(() => {
     dataSet[record.isSelected ? 'unSelect' : 'select'](record);
   }, [record, dataSet]);
-
-  const handleClickCapture = useCallback(action<(e) => void>((e) => {
-    if (!isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
-      dataSet.current = record;
-    }
-    const { onClickCapture } = rowExternalProps;
-    if (typeof onClickCapture === 'function') {
-      onClickCapture(e);
-    }
-  }), [record, dataSet, rowExternalProps]);
 
   const handleClick = useCallback(action<(e) => boolean | undefined>((e) => {
     const { onClick } = rowExternalProps;
@@ -304,10 +296,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }, [isLoading, expandable, isExpanded, isLoaded, tableStore, record]);
 
-  useEffect(() => {
-    return reaction(() => record.isCurrent, isCurrent => isCurrent && focusRow());
-  }, [record, focusRow]);
-
   const renderExpandRow = (): ReactElement<ExpandedRowProps>[] => {
     if (expandable && (isExpanded || childrenRenderedRef.current)) {
       const expandRows: ReactElement<ExpandedRowProps>[] = [];
@@ -390,10 +378,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     expandIconColumnIndex !== undefined && expandIconColumnIndex > -1 && (columnIndex + expandIconColumnIndex) === tableStore.expandIconColumnIndex
   );
 
-  const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): ReactNode => {
+  const getCell = (columnGroup: ColumnGroup, columnIndex: number, rest: Partial<TableCellProps>): [ReactNode, Record | undefined] => {
+    const actualRecord = getRecord(columnGroup, groupPath, headerGroupIndex, record);
     const cellProps: TableCellProps = {
       columnGroup,
-      record: headerGroupIndex === undefined ? record : getRecord(columnGroup, groupPath, headerGroupIndex, record),
+      record: actualRecord,
       isDragging: snapshot ? snapshot.isDragging : false,
       isFixedRowHeight,
       provided: rest.key === DRAG_KEY ? provided : undefined,
@@ -402,20 +391,22 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
     };
     if (!isFixedRowHeight && virtualCell && !hidden) {
-      return (
-        <TableVirtualCell {...cellProps} {...rest} />
-      );
+      return [
+        <TableVirtualCell {...cellProps} {...rest} key={rest.key} />,
+        actualRecord,
+      ];
     }
-    return (
-      <TableCell {...cellProps} {...rest} inView={inView} />
-    );
+    return [
+      <TableCell {...cellProps} {...rest} inView={inView} key={rest.key} />,
+      actualRecord,
+    ];
   };
 
-  const getColumns = () => {
+  const [columns, { isCurrent }] = (() => {
     const { customizable } = tableStore;
     const { leafs } = columnGroups;
     const columnLength = leafs.length;
-    return leafs.map((columnGroup, columnIndex) => {
+    return leafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
@@ -426,16 +417,27 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         if (colSpan > 1) {
           rest.colSpan = colSpan;
         }
-        return getCell(columnGroup, columnIndex, rest);
+        const [cell, actualRecord] = getCell(columnGroup, columnIndex, rest);
+        result[0].push(cell);
+        if (highLightRow && actualRecord && actualRecord.isCurrent) {
+          result[1].isCurrent = true;
+        }
       }
-      return undefined;
-    });
-  };
+      return result;
+    }, [[], {}]);
+  })();
+
+  useEffect(() => {
+    if (isCurrent) {
+      focusRow();
+    }
+  }, [isCurrent, focusRow]);
+
   const rowPrefixCls = `${prefixCls}-row`;
   const classString = classNames(
     rowPrefixCls,
     {
-      [`${rowPrefixCls}-current`]: highLightRow && record.isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
+      [`${rowPrefixCls}-current`]: isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
       [`${rowPrefixCls}-hover`]: !isStickySupport() && highLightRow && isHover,
       [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
       [`${rowPrefixCls}-disabled`]: disabled,
@@ -454,7 +456,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     ref: saveRef,
     className: classString,
     onClick: handleClick,
-    onClickCapture: handleClickCapture,
     tabIndex: -1,
     disabled,
     'data-index': id,
@@ -518,7 +519,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       {...rowProps}
       style={rowStyle}
     >
-      {getColumns()}
+      {columns}
     </Element>
   );
   return (
