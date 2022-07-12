@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
+- 🌟 `<pro>Button`: Add the secondary color.
 - 🌟 `List`: Added association `DataSet` support and `rowSelection` selectable support.
 - 🌟 `Card`: Added `selected` and `cornerplacement` attributes to cards and card groups.
 - 🌟 `<pro>Cascader`: Added `optionRenderer` property.

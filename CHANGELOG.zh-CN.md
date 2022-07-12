@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
+- 🌟 `<pro>Button`: 新增 secondary 颜色。
 - 🌟 `List`: 新增关联 DataSet 支持及 rowSelection 可选择支持。
 - 🌟 `Card`: 卡片和卡片组新增 selected 和 cornerPlacement 属性。
 - 🌟 `<pro>Cascader`: 新增 optionRenderer 属性。
