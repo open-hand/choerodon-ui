@@ -22,6 +22,10 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
+- 🌟 `<pro>Button`: 新增 secondary 颜色。
+- 🌟 `List`: 新增关联 DataSet 支持及 rowSelection 可选择支持。
+- 🌟 `Card`: 卡片和卡片组新增 selected 和 cornerPlacement 属性。
+- 🌟 `<pro>Cascader`: 新增 optionRenderer 属性。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
@@ -50,6 +54,7 @@ timeline: true
 - 🐞 `Badge`: 修复 processing 状态点样式问题。
 - 🐞 `Upload`: 修复 picture-card 模式下的 margin-top 塌陷样式问题。
 - 🐞 `<pro>PerformanceTable`: 修复固定列在行合并的情况下导致样式的问题。
+- 🐞 `<pro>PerformanceTable`: 修复开启虚拟滚动时高亮行异常的问题。
 - 🐞 `<pro>Range`: 修复配置了 readOnly 仍可以进行操作的问题。
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。

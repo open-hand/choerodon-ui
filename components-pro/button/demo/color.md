@@ -31,6 +31,7 @@ class App extends React.PureComponent {
         <div>
           <div style={{ margin: '20px 0' }}>Background Color(With raised funcType)</div>
           <Button loading={loading} color="primary">Primary</Button>
+          <Button loading={loading} color="secondary">secondary</Button>
           <Button loading={loading} color="default">Default</Button>
           <Button loading={loading} color="gray">Gray</Button>
           <Button loading={loading} color="blue">Blue</Button>

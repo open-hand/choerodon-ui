@@ -1,6 +1,7 @@
 import React, { Children, Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import { Size } from '../_util/enum';
 import Grid from './Grid';
 import Meta from './Meta';
@@ -14,6 +15,8 @@ export { CardGridProps } from './Grid';
 export { CardMetaProps } from './Meta';
 
 export type CardType = 'inner';
+
+export type CornerPlacement = 'bottomRight' | 'bottomLeft' | 'topLeft' | 'topRight';
 
 export interface CardTabListType {
   key: string;
@@ -43,10 +46,14 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
   activeTabKey?: string;
   defaultActiveTabKey?: string;
   tabsProps?: TabsProps;
+  selected?: boolean;
+  cornerPlacement?: CornerPlacement;
+  onSelectChange?: (selected: boolean) => void;
 }
 
 export interface CardState {
   widerPadding: boolean;
+  size: string;
 }
 
 export default class Card extends Component<CardProps, CardState> {
@@ -60,6 +67,10 @@ export default class Card extends Component<CardProps, CardState> {
 
   static Meta: typeof Meta = Meta;
 
+  static defaultProps = {
+    cornerPlacement: 'bottomRight',
+  }
+
   context: ConfigContextValue;
 
   private resizeEvent: any;
@@ -68,12 +79,14 @@ export default class Card extends Component<CardProps, CardState> {
 
   state = {
     widerPadding: false,
+    size: 'xl',
   };
 
   private container: HTMLDivElement;
 
   componentDidMount() {
     this.updateWiderPadding();
+    this.updateWiderSize();
     this.resizeEvent = addEventListener(window, 'resize', this.updateWiderPadding);
 
     if ('noHovering' in this.props) {
@@ -110,6 +123,16 @@ export default class Card extends Component<CardProps, CardState> {
       this.setState({ widerPadding: false }, () => {
         this.updateWiderPaddingCalled = true; // first render without css transition
       });
+    }
+  }
+
+  updateWiderSize() {
+    if (this.container) {
+      if (this.container.offsetHeight <= 50) {
+        this.setState({
+          size: 'xs',
+        })
+      }
     }
   }
 
@@ -170,11 +193,15 @@ export default class Card extends Component<CardProps, CardState> {
       defaultActiveTabKey,
       onHeadClick,
       tabsProps,
+      selected,
+      cornerPlacement,
+      onSelectChange = noop,
       ...others
     } = this.props;
-    const { widerPadding } = this.state;
+    const { widerPadding, size } = this.state;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('card', customizePrefixCls);
+    const selectedPrefixCls = `${prefixCls}-selected`;
 
     const classString = classNames(prefixCls, className, {
       [`${prefixCls}-loading`]: loading,
@@ -185,6 +212,7 @@ export default class Card extends Component<CardProps, CardState> {
       [`${prefixCls}-contain-grid`]: this.isContainGrid(),
       [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
       [`${prefixCls}-type-${type}`]: !!type,
+      [`${selectedPrefixCls} ${selectedPrefixCls}-${cornerPlacement} ${selectedPrefixCls}-${size}`]: selected,
     });
 
     const loadingBlock = (
@@ -245,7 +273,11 @@ export default class Card extends Component<CardProps, CardState> {
     }
     const coverDom = cover ? <div className={`${prefixCls}-cover`}>{cover}</div> : null;
     const body = (
-      <div className={`${prefixCls}-body`} style={bodyStyle}>
+      <div
+        className={`${prefixCls}-body`}
+        style={{ ...bodyStyle, cursor: typeof onSelectChange === 'function' ? 'pointer' : 'none' }}
+        onClick={() => onSelectChange(!selected)}
+      >
         {loading ? loadingBlock : children}
       </div>
     );

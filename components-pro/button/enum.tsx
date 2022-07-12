@@ -3,6 +3,7 @@ export { Tooltip as ButtonTooltip } from '../core/enum';
 export enum ButtonColor {
   default = 'default',
   primary = 'primary',
+  secondary = 'secondary',
   gray = 'gray',
   blue = 'blue',
   red = 'red',

@@ -22,6 +22,10 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
+- 🌟 `<pro>Button`: Add the secondary color.
+- 🌟 `List`: Added association `DataSet` support and `rowSelection` selectable support.
+- 🌟 `Card`: Added `selected` and `cornerplacement` attributes to cards and card groups.
+- 🌟 `<pro>Cascader`: Added `optionRenderer` property.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
@@ -50,6 +54,7 @@ timeline: true
 - 🐞 `Badge`: Fix a processing status point style issue.
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
 - 🐞 `<pro>PerformanceTable`: Fix the problem of style caused by fixed columns in the case of row merging.
+- 🐞 `<pro>PerformanceTable`: Fix an issue where the highlighted row was abnormal when scrolling virtually.
 - 🐞 `<pro>Range`: Fix the problem that `readOnly` throw is configured for operation.
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
