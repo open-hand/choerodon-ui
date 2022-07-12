@@ -1196,8 +1196,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { value },
     },
   }) {
-    const { searchMatcher, searchText } = this;
     if (key === MORE_KEY) {
+      const { searchMatcher, searchText } = this;
       this.options.queryMore(this.options.currentPage + 1, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
     } else if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
@@ -1270,7 +1270,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const { searchMatcher } = this;
     if (isString(searchMatcher)) {
       const searchPara = this.getSearchPara(searchMatcher, text);
-      const { options, field } = this;
+      const { field, record } = this;
+      const options = field && field.get('options', record) || this.observableProps.options;
       Object.keys(searchPara).forEach(key => {
         const value = searchPara[key];
         const lovPara = value === '' ? undefined : value;
