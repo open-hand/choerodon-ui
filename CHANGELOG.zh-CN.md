@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
+- 🌟 `<pro>Button`: 新增 secondary 颜色。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
@@ -55,7 +56,6 @@ timeline: true
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
 - 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
-- 🌟 `<pro>Button`: 新增 secondary 颜色。
 
 ## 1.5.5
 

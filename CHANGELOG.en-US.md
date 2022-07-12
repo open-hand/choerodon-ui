@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
+- 🌟 `<pro>Button`: Add the secondary color.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
@@ -55,7 +56,6 @@ timeline: true
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
-- 🌟 `<pro>Button`: Add the secondary color.
 
 ## 1.5.5
 
