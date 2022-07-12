@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化选择面板从右侧弹出的样式。
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
+- 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
