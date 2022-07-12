@@ -103,6 +103,16 @@ function defaultSearchMatcher({ record, text, textField }) {
 
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
+export type RenderProps = {
+  value?: any;
+  text?: ReactNode;
+  record?: Record | null;
+  dataSet?: DataSet | null;
+  isFilterSearch?: boolean;
+};
+
+type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
+
 export interface CascaderProps extends TriggerFieldProps {
   /**
    * 次级菜单的展开方式，可选 'click' 和 'hover'
@@ -164,6 +174,8 @@ export interface CascaderProps extends TriggerFieldProps {
    */
   pagingOptionContent?: string | ReactNode;
   fieldNames?: FieldNamesType;
+  /** 渲染Option文本的钩子 */
+  optionRenderer?: Renderer;
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -422,6 +434,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'pagingOptionContent',
       'loadData',
       'async',
+      'fieldNames',
+      'optionRenderer',
     ]);
   }
 
@@ -581,10 +595,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
             children = treePropsChange(recordItem.children);
           }
           const isLeaf = (async || !!loadData) ? undefined : (this.text ? (!children || !children.length) : !recordItem.children || !recordItem.children.length);
-
+          const itemContent = this.getMenuItem({ record: recordItem, text, value, isFilterSearch });
           return (children ? {
             disabled: optionDisabled,
-            label: text,
+            label: itemContent,
             value: recordItem,
             children,
             isLeaf,
@@ -592,7 +606,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
             key,
           } : {
             disabled: optionDisabled,
-            label: text,
+            label: itemContent,
             value: recordItem,
             isLeaf,
             ...optionProps,
@@ -740,6 +754,16 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         </ul>
       </div>
     );
+  }
+
+  getMenuItem({ record, text, value, isFilterSearch }: RenderProps): string | ReactNode {
+    const {
+      options,
+      props: { optionRenderer },
+    } = this;
+    return optionRenderer
+      ? optionRenderer({ dataSet: options, record, text, value, isFilterSearch })
+      : text;
   }
 
   get searchable(): boolean {
