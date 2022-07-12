@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Mentions`: 修复设置 autoSize 属性无效。
 - 🐞 `<pro>ColorPicker`: 修复 preset 参数失败的问题，修复没有 value 时计算相对亮度计算导致的异常。
 - 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
+- 🌟 `<pro>Button`: 新增 secondary 颜色。
 
 ## 1.5.5
 

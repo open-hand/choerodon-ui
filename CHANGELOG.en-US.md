@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Mentions`: Fix setting `autoSize` property invalid.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
+- 🌟 `<pro>Button`: Add the secondary color.
 
 ## 1.5.5
 
