@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
+- 💄 `<pro>Table`: Optimized combobar mode when help and sort icons appear in the in-line search.
 - 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.
 - 💄 `<pro>Cascader`: Optimize the style of the selection panel that pops up from the right.
 - 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
