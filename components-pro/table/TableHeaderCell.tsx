@@ -363,7 +363,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   };
 
   const getHelpIcon = () => {
-    if (column.showHelp !== ShowHelp.none) {
+    if (column.showHelp !== ShowHelp.none && !isSearchCell) {
 
       const fieldHelp = defaultTo(field && field.get('help'), column.help);
       if (fieldHelp) {
@@ -423,7 +423,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
   // 排序按钮
-  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name ? (
+  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? (
     <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />
   ) : undefined;
   const childNodes = [

@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
+- 💄 `<pro>Table`: 优化 combobar 模式下，行内搜索出现 help、sort 图标的问题。
 - 💄 `<pro>Typography`: 优化在 Form 下使用段落组件多出 margin-bottom 的样式值及改正了样式大写小的问题。
 - 💄 `<pro>Cascader`: 优化选择面板从右侧弹出的样式。
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
