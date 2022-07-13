@@ -36,6 +36,8 @@ timeline: true
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
+- 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
+- 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。

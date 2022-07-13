@@ -812,8 +812,8 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get loading(): boolean {
-    const { options, props: { searchAction } } = this;
-    return (searchAction === SearchAction.blur || Boolean(this.autoSelectSingle)) && options.status === DataSetStatus.loading && !this.popup;
+    const { options } = this;
+    return options.status === DataSetStatus.loading;
   }
 
   getSuffix(): ReactNode {

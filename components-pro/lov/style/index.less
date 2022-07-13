@@ -140,10 +140,18 @@
 }
 
 .@{lov-prefix-cls} {
-  &-spin .@{progress-prefix-cls}-inner {
-    width: 0.2rem;
-    height: 0.2rem;
-    margin-right: 0.03rem;
+  &-spin {
+    .@{progress-prefix-cls} {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &-inner {
+        width: 0.2rem;
+        height: 0.2rem;
+        margin-right: 0.03rem;
+      }
+    }
   }
 
   &-popup {
