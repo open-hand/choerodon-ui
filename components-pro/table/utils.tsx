@@ -43,7 +43,7 @@ import { AggregationTreeProps } from './AggregationTree';
 export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const type = field.get('type', record);
   const { name } = field;
-  const flatProps = isFlat ? { isFlat, maxTagCount: 4, maxTagTextLength: 4 } : {};
+  const flatProps = isFlat ? { isFlat, maxTagCount: 3 } : {};
 
   if (
     field.get('lookupCode', record) ||

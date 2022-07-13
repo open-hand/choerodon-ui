@@ -484,6 +484,20 @@
     .@{c7n-pro-prefix}-input-number-multiple-block > div:not(:last-child) {
       max-width: calc(100% - 0.2rem);
     }
+
+    .@{c7n-pro-prefix}-select,
+    .@{c7n-pro-prefix}-input,
+    .@{c7n-pro-prefix}-input-number,
+    .@{c7n-pro-prefix}-calendar-picker,
+    .@{c7n-pro-prefix}-cascader {
+      & > ul {
+        flex-wrap: nowrap;
+      }
+
+      &-multiple-block-more {
+        overflow: visible;
+      }
+    }
   }
 
   // professional-query-bar
