@@ -16,7 +16,6 @@ import Form from '../../form';
 import { FormProps } from '../../form/Form';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
-import { LabelLayout } from '../../form/enum';
 import { Tooltip as LabelTooltip } from '../../core/enum';
 
 export interface TableProfessionalBarProps extends ElementProps {
@@ -186,7 +185,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
         <Form
           dataSet={queryDataSet}
           columns={queryFieldsLimit}
-          labelLayout={LabelLayout.horizontal}
           labelTooltip={LabelTooltip.overflow}
           labelWidth={80}
           {...formProps}
