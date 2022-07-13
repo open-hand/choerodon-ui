@@ -21,7 +21,14 @@ import {
 import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
-import { ColumnAlign, DragColumnAlign, HighLightRowType, TableAutoHeightType, TableColumnResizeTriggerType, TableQueryBarType } from 'choerodon-ui/pro/lib/table/enum';
+import {
+  ColumnAlign,
+  DragColumnAlign,
+  HighLightRowType,
+  TableAutoHeightType,
+  TableColumnResizeTriggerType,
+  TableQueryBarType,
+} from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
@@ -275,6 +282,8 @@ export interface Config extends DataSetConfig {
    * 日期时间控件是否显示确定按钮
    */
   dateTimePickerOkButton?: boolean;
+  fieldMaxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
+  fieldMaxTagCount?: number;
   /**
    * 是否开启备选色板
    */
