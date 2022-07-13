@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
+- 🐞 `<pro>DatePicker`: Fix the issue that when there is a min value in `range` and `editorInPopup` modes, an error may be reported after entering the value.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
 - 🐞 `<pro>Select`: Fix error when pressing pageDown.

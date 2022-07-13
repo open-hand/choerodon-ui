@@ -899,7 +899,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.setText(undefined);
     }
     this.rangeValueExchange = false;
-    this.cursorDate = this.getValidDate(cursorDate);
+    this.cursorDate = cursorDate && this.getValidDate(cursorDate);
   }
 
   isSelected(date: Moment) {
