@@ -331,7 +331,7 @@ function generateGroupRows(
       const { columnProps } = tableGroup;
       const { renderer = defaultAggregationRenderer } = columnProps || {};
       const groupName = tableGroup.name;
-      const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
+      const header = getHeader({ ...columnProps, name: groupName, dataSet, group, groups });
       rows.push(
         generateRowGroup({
           key: `$group-${path.map(([g]) => g.value).join('-')}`,
