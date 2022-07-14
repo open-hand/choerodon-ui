@@ -113,6 +113,14 @@ export default class ColumnGroup {
     return this.parent.headerGroup;
   }
 
+  get headerGroups(): Group[] | undefined {
+    const { __groups } = this.column;
+    if (__groups) {
+      return __groups;
+    }
+    return this.parent.headerGroups;
+  }
+
   get tableGroup(): TableGroup | undefined {
     const { __tableGroup } = this.column;
     if (__tableGroup) {

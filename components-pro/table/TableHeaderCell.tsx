@@ -44,7 +44,18 @@ export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
-  const { columnGroup, rowSpan, colSpan, className, rowIndex, getHeaderNode = noop, scope, children: expandIcon, isSearchCell, intersectionRef } = props;
+  const {
+    columnGroup,
+    rowSpan,
+    colSpan,
+    className,
+    rowIndex,
+    getHeaderNode = noop,
+    scope,
+    children: expandIcon,
+    isSearchCell,
+    intersectionRef,
+  } = props;
   const { column, key, prev } = columnGroup;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -92,7 +103,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       }
     }
   }, [columnGroup, aggregation]);
-  const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup, aggregationTree });
+  const header = getHeader({ ...column, dataSet, aggregation, group: columnGroup.headerGroup, groups: columnGroup.headerGroups, aggregationTree });
   const globalRef = useRef<{
     bodyLeft: number;
     resizeBoundary: number;
@@ -134,7 +145,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { resizeColumnGroup } = current;
     if (resizeColumnGroup) {
       const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
-      let left = e.touches? e.touches[0].clientX : e.clientX;
+      let left = e.touches ? e.touches[0].clientX : e.clientX;
       if (left < limit) {
         left = limit;
       }

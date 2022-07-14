@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder 属性。
+- 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
 - 🌟 `<pro>Table`: 新增 boxSizing 属性。
-- 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性。
+- 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
+- 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Select`: 修复按 pageDown 建报错的问题。

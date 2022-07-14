@@ -43,7 +43,7 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
       const { hidden, column: col } = colGroup;
       const { hiddenInAggregation } = col;
       if (!hidden && !(typeof hiddenInAggregation === 'function' ? record ? hiddenInAggregation(record) : false : hiddenInAggregation)) {
-        const { key: columnKey, headerGroup } = colGroup;
+        const { key: columnKey } = colGroup;
         const isBuiltInColumn = tableStore.isBuiltInColumn(col);
         const columnOnCell = !isBuiltInColumn && (col.onCell || tableColumnOnCell);
         const cellExternalProps: Partial<TreeNodeProps> =
@@ -54,7 +54,7 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
               column: col,
             })
             : {};
-        const header = getHeader({ ...col, dataSet, aggregation: tableAggregation, group: headerGroup });
+        const header = getHeader({ ...col, dataSet, aggregation: tableAggregation, group: colGroup.headerGroup, groups: colGroup.headerGroups });
         const childColumns = colGroup.children;
         if (childColumns) {
           const { columns: colGroups } = childColumns;
