@@ -278,11 +278,12 @@ function getLabel(dataSet, name) {
 export interface HeaderOptions extends ColumnProps {
   dataSet: DataSet;
   group?: Group | undefined;
+  groups?: Group[] | undefined;
   aggregationTree?: ReactElement<AggregationTreeProps>[];
 }
 
 export function getHeader(column: HeaderOptions): ReactNode {
-  const { header, name, title, dataSet, aggregation, group, aggregationTree } = column;
+  const { header, name, title, dataSet, aggregation, group, groups, aggregationTree } = column;
   if (typeof header === 'function') {
     const $title = title === undefined ? getLabel(dataSet, name) : title;
     const options: HeaderHookOptions = {
@@ -291,6 +292,7 @@ export function getHeader(column: HeaderOptions): ReactNode {
       title: $title,
       aggregation,
       group,
+      groups,
       aggregationTree,
     };
     try {

@@ -1245,7 +1245,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       prefixCls,
       range,
       disabled,
-      props: { maxTagCount, maxTagPlaceholder },
+      props: {
+        maxTagCount = this.getContextConfig('fieldMaxTagCount'),
+        maxTagPlaceholder = this.getContextConfig('fieldMaxTagPlaceholder'),
+      },
     } = this;
     const values = renderMultipleValues(this.getValue(), {
       range,
