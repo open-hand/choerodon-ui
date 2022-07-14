@@ -288,6 +288,8 @@ spin的配置项。
 | setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |
 | setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |
 | setColumnWidth(width, indexOrKeyOrName, saveToCustomization) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name  `saveToCustomization` - 是否保存到个性化，默认true |  |
+| getHeaderGroups() | 获取所有头分组 |  | Group[] |
+| getGroups() | 获取所有列分组 |  | Group[] |
 
 ### 分页配置
 
