@@ -46,10 +46,18 @@ import { getColumnKey, getHeader, isDisabledRow } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
-import Table, { expandIconProps, TableCustomized, TableGroup, TablePaginationConfig, TableProps, TableQueryBarHook } from './Table';
+import Table, {
+  expandIconProps,
+  TableCustomized,
+  TableGroup,
+  TablePaginationConfig,
+  TableProps,
+  TableQueryBarHook,
+} from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
 import CustomizationColumnHeader from './customization-settings/CustomizationColumnHeader';
+import ComboCustomizationSettings from './combo-customization-settings';
 import TableEditor from './TableEditor';
 import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
@@ -1004,8 +1012,6 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
-  @observable isFold: boolean | undefined;
-
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -1122,7 +1128,7 @@ export default class TableStore {
 
   get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
-    if (customizedCode) {
+    if (customizedCode || this.queryBar === TableQueryBarType.comboBar) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -1673,6 +1679,9 @@ export default class TableStore {
 
   @autobind
   customizedColumnHeader() {
+    if (this.queryBar === TableQueryBarType.comboBar) {
+      return <ComboCustomizationSettings />;
+    }
     return <CustomizationColumnHeader onHeaderClick={this.openCustomizationModal} />;
   }
 
@@ -1766,8 +1775,9 @@ export default class TableStore {
 
   @computed
   get comboQueryColumn(): ColumnProps | undefined {
-    if (this.queryBar === 'comboBar') {
-      const { prefixCls, props: { bodyExpandable } } = this;
+    if (this.queryBar === TableQueryBarType.comboBar) {
+      const { prefixCls, props: { bodyExpandable, queryBarProps } } = this;
+      const showInlineSearch = queryBarProps && queryBarProps.inlineSearch;
       const className = `${prefixCls}-inline-query`;
 
       const lock: ColumnLock | boolean = ColumnLock.left;
@@ -1780,11 +1790,12 @@ export default class TableStore {
         headerClassName: className,
         className,
         footerClassName: className,
+        renderer: this.renderInlineSearchRender,
         align: ColumnAlign.center,
         width: scaleSize(bodyExpandable ? 65 : 50),
         lock,
       };
-      return queryColumn;
+      return showInlineSearch === false ? undefined : queryColumn;
     }
     return undefined;
   }
@@ -2348,6 +2359,19 @@ export default class TableStore {
   }
 
   @autobind
+  renderInlineSearchRender(): ReactNode {
+    const { props: { queryBarProps } } = this.node;
+    const actions: ReactNode[] = [];
+    if (queryBarProps) {
+      const { inlineSearchRender } = queryBarProps;
+      if (inlineSearchRender && Array.isArray(inlineSearchRender) && Array.isArray(inlineSearchRender.slice())) {
+        actions.push(...inlineSearchRender);
+      }
+    }
+    return actions;
+  }
+
+  @autobind
   renderRowNumber({ record, dataSet }): ReactNode {
     const { isTree, props: { rowNumber } } = this;
     const numbers = getRowNumbers(record, dataSet, isTree);
@@ -2445,14 +2469,17 @@ export default class TableStore {
 
   async loadCustomized() {
     const { customizedCode } = this.props;
-    if (this.customizable && customizedCode) {
+    if ((this.customizable && customizedCode) || this.queryBar === TableQueryBarType.comboBar) {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;
         this.loading = true;
       });
       try {
-        const customized: TableCustomized | undefined | null = await tableCustomizedLoad(customizedCode, 'Table');
+        let customized: TableCustomized | undefined | null;
+        if (customizedCode) {
+          customized = await tableCustomizedLoad(customizedCode, 'Table');
+        }
         runInAction(() => {
           const newCustomized: TableCustomized = { columns: {}, ...customized };
           this.customized = newCustomized;
@@ -2581,10 +2608,5 @@ export default class TableStore {
     const visibleStartIndex = getVisibleStartIndex(this, () => scrollTop);
     return index >= getStartIndex(this, () => visibleStartIndex) &&
       index <= getEndIndex(this, () => getVisibleEndIndex(this, () => visibleStartIndex, () => scrollTop));
-  }
-
-  @action
-  setFold() {
-    this.isFold = !this.isFold;
   }
 }

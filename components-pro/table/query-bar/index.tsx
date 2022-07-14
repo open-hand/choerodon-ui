@@ -12,7 +12,7 @@ import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
 import Table, {
-  Buttons,
+  Buttons, ComboFilterBarConfig,
   DynamicFilterBarConfig,
   SummaryBar,
   SummaryBarHook,
@@ -64,6 +64,9 @@ export interface TableQueryBarProps {
   onQuery?: () => void;
   onReset?: () => void;
   treeQueryExpanded?: boolean;
+  comboFilterBar?: ComboFilterBarConfig;
+  otherFilterAction?: ReactNode;
+  advancedFilter?: ReactNode;
 }
 
 const ExportBody = observer((props) => {
@@ -759,17 +762,24 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               clearButton: true,
             };
           }
+          if (queryBar === TableQueryBarType.comboBar) {
+            filterBarProps = {
+              placeholder: field.get('label'),
+              border: true,
+              clearButton: true,
+            };
+          }
           const props: any = {
             key: name,
             name,
             dataSet: queryDataSet,
-            isFlat: queryBar === TableQueryBarType.filterBar,
+            isFlat: queryBar === TableQueryBarType.filterBar || queryBar === TableQueryBarType.comboBar,
             ...filterBarProps,
           };
           result.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar), {
+              : cloneElement(getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar || queryBar === TableQueryBarType.comboBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),
@@ -830,8 +840,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderComboBar(props: TableQueryBarHookProps) {
+    const { comboFilterBar } = this.props;
     const { prefixCls } = this.context;
-    return <TableComboBar key="toolbar" prefixCls={prefixCls} {...props} />;
+    return <TableComboBar key="toolbar" comboFilterBar={comboFilterBar} prefixCls={prefixCls} {...props} />;
   }
 
   @autobind

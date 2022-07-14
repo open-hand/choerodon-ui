@@ -119,6 +119,14 @@ export interface Locale extends DataSetLocale {
     refresh: string;
     export_all: string,
     export_selected: string,
+    filter_header_title: string,
+    please_enter_search_content: string,
+    field_settings: string,
+    lock_first_column: string,
+    filter_copy: string,
+    advanced_filter: string,
+    collapse_filter: string,
+    advanced_filter_setting: string,
   };
   Pagination: {
     page: string;

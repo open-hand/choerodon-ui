@@ -546,97 +546,170 @@
   }
 
   // combo-bar
+  &-combo-filter-bar {
 
-  &-combo-toolbar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    height: 0.3rem;
-    margin-bottom: 0.08rem;
-
-    &-select {
-      width: 1.6rem;
-      margin: -0.01rem -0.06rem;
+    .@{table-prefix-cls}-combo-filter-toolbar {
+      margin-right: 0.08rem;
+      margin-left: auto;
     }
 
-    &-fold-icon {
-      position: absolute;
-      right: 0.16rem;
-      cursor: pointer;
-    }
+    .@{table-prefix-cls}-filter-menu {
+      margin: 0.08rem 0.12rem 0.08rem 0.16rem;
 
-    &-action-button {
-      margin: 0 0.16rem 0 0;
-      padding: 0.04rem;
-      background: @table-row-search-bg;
-      border: 0;
-
-      &:hover {
-        background: #e8e8e8;
-      }
-    }
-
-    &-action-menu {
-      .c7n-menu-submenu-title {
-        min-width: 1.2rem;
-        padding-left: 0.16rem;
-      }
-    }
-
-    &-filter {
-      display: flex;
-      align-items: center;
-
-      > span {
-        margin-right: 0.04rem;
-        color: #595959;
-        font-size: 0.14rem;
-        line-height: 0.22rem;
+      .@{table-prefix-cls}-combo-filter-bar-title {
+        font-weight: 500;
       }
 
-      &-title {
-        margin-right: 0.16rem;
-
-        &:first-child {
-          margin-left: 0;
-        }
-
-        color: rgba(0, 0, 0, 0.85);
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 22px;
+      .@{table-prefix-cls}-combo-filter-menu-divide {
+        margin-left: 0.08rem;
+        color: #CBD2DC;
       }
 
-      &-buttons {
-        flex-shrink: 0;
-        margin-right: 0.16rem;
-      }
+      .@{table-prefix-cls}-filterName-select {
+        margin-left: 0.08rem;
 
-      .toolbar-icon {
-        width: 0.16rem;
-        height: 0.16rem;
-        margin-right: 0.16rem;
-        color: rgba(0, 0, 0, 0.65);
-        cursor: pointer;
-
-        &:hover,
-        &.active {
+        &:hover {
           color: @primary-color;
+          background-color: fade(@primary-color, 10%);
+          border-radius: 0.02rem;
+
+          input {
+            color: @primary-color;
+          }
         }
+      }
+
+      .@{table-prefix-cls}-combo-filter-action {
+        margin-left: auto;
+
+        &-button {
+          border-radius: @border-radius-base;
+        }
+      }
+
+      .@{table-prefix-cls}-combo-filter-toolbar + .@{table-prefix-cls}-combo-filter-action {
+        margin-left: 0;
       }
     }
 
-    &-fold {
-      position: absolute;
-      right: 0;
-      cursor: pointer;
-      transition: all @animation-duration-slow @ease-in-out-circ;
+    .@{table-prefix-cls}-combo-menu-divide {
+      height: 0.01rem;
+      background-color: #CBD2DC;
+    }
 
-      &:hover,
-      &.active {
-        color: @primary-color;
+    .@{table-prefix-cls}-combo-filter-single-wrapper {
+      display: flex;
+      margin: 0 0.12rem 0.08rem 0.16rem;
+
+      .@{table-prefix-cls}-filter-search {
+        margin: 0.08rem 0 0;
+        color: #12274D;
       }
+
+      .@{table-prefix-cls}-filter-wrapper {
+        margin-top: 0.04rem;
+        padding: 0 0.12rem 0 0.08rem;
+        background-color: #fff;
+
+        .@{table-prefix-cls}-filter-content {
+          margin: 0.04rem 0.08rem 0 0;
+          padding-left: 0;
+          background-color: #fff;
+          border-radius: @border-radius-base;
+
+          .@{table-prefix-cls}-filter-item {
+            input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+              height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+              padding: @input-padding-vertical-base @input-icon-width-base @input-padding-vertical-base @input-padding-horizontal;
+              border: @border-width-base solid @input-border-color;
+            }
+
+            .@{c7n-pro-prefix}-calendar-picker-range > label,
+            .@{c7n-pro-prefix}-input-number-multiple > label,
+            .@{c7n-pro-prefix}-select-multiple > label {
+              box-sizing: content-box;
+              height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+              padding: @input-padding-vertical-base @input-icon-width-base @input-padding-vertical-base @input-padding-horizontal;
+              border: @border-width-base solid @input-border-color;
+              border-radius: @border-radius-base;
+            }
+
+            .@{c7n-pro-prefix}-input-number-multiple .@{c7n-pro-prefix}-input-number,
+            .@{c7n-pro-prefix}-select-multiple .@{c7n-pro-prefix}-select {
+              min-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;;
+            }
+          }
+
+          &:focus-within,
+          &:hover {
+            background-color: transparent;
+            border-radius: @border-radius-base;
+          }
+
+          .@{table-prefix-cls}-filter-item-close {
+            top: -0.05rem;
+            right: -0.05rem;
+            display: inline-block !important;
+            font-size: 0.12rem;
+          }
+        }
+
+        .@{table-prefix-cls}-filter-add-fields {
+          display: flex;
+          align-items: center;
+          margin: 0.04rem 0.08rem 0 0;
+          font-size: @font-size-base;
+
+          span.@{table-prefix-cls}-add-fields {
+            height: 100%;
+            color: @primary-color;
+
+            &:focus,
+            &:active,
+            &:hover {
+              background-color: fade(@primary-color, 8);
+              border-radius: @border-radius-base;
+            }
+          }
+        }
+
+      }
+
+      .@{table-prefix-cls}-combo-advanced-filter-divide {
+        width: 1px;
+        height: 18px;
+        margin: 0.10rem 0.08rem 0.06rem 0.08rem;
+        background-color: #CBD2DC;
+      }
+
+      .@{table-prefix-cls}-combo-filter-buttons {
+        display: flex;
+        flex-shrink: 0;
+        gap: .08rem;
+        margin-top: 0.08rem;
+      }
+
+      .@{table-prefix-cls}-combo-filter-bar-single-action {
+        display: flex;
+      }
+
+      .@{table-prefix-cls}-filter-query-buttons,
+      .@{table-prefix-cls}-filter-reset-buttons {
+        display: flex;
+        flex-shrink: 0;
+        margin-top: 0.08rem;
+        margin-left: 0.08rem;
+      }
+    }
+  }
+
+  &-filterName-select-content {
+    .@{c7n-pro-prefix}-select-dropdown-menu-item-group-title {
+      height: 0.46rem;
+      color: #262626;
+      font-weight: 500;
+      font-size: 14px;
+      border-bottom: 1px solid #CBD2DC;
     }
   }
 

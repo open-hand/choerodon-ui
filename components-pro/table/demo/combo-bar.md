@@ -1,5 +1,6 @@
 ---
 order: 29
+only: true
 title:
   zh-CN: 组合搜索条
   en-US: Bar for Combo
@@ -14,12 +15,49 @@ title:
 Bar for Combo
 
 ```jsx
-import React from 'react'
 import { DataSet, Table, Button } from 'choerodon-ui/pro';
-import { Menu, Dropdown, Icon } from 'choerodon-ui';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx-react-lite';
+import { action, toJS } from 'mobx';
+
+const { DynamicFilterBar } = Table;
 
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
+const codeDynamicProps = {
+  lovCode({ record }) {
+    if (record) {
+      return 'LOV_CODE';
+    }
+  },
+};
+
+const codeCodeDynamicProps = {
+  // 代码code_code值绑定 为 字段code 的 值列表的值字段为code.codevalue
+  bind({ record, dataSet }) {
+    if (record) {
+      const field = dataSet.getField('code');
+      if (field) {
+        const valueField = field.get('valueField', record);
+        return `code.${valueField}`;
+      }
+    }
+  },
+};
+
+const codeDescriptionDynamicProps = {
+  bind({ record, dataSet }) {
+    if (record) {
+      const field = dataSet.getField('code');
+      if (field) {
+        const textField = field.get('textField', record);
+        return `code.${textField}`;
+      }
+    }
+  },
+};
+
+@observer
 class App extends React.Component {
   optionDs = new DataSet({
     data: optionData,
@@ -35,20 +73,81 @@ class App extends React.Component {
         };
       },
     },
-    autoQuery: true,
+    autoQuery: false,
     pageSize: 5,
     queryFields: [
-      { name: 'name', type: 'string', label: '姓名', autoFocus: true },
-      { name: 'age', type: 'number', label: '年龄', autoFocus: true },
+      { name: 'name', type: 'string', label: '姓名' },
+      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      {
+        name: 'email',
+        type: 'email',
+        label: '邮箱',
+      },
+      {
+        name: 'numberMultiple',
+        type: 'number',
+        label: '数值多值',
+        multiple: true,
+        min: 10,
+        max: 100,
+        step: 0.5,
+      },
+      {
+        name: 'code_code',
+        type: 'string',
+        label: '代码',
+        maxLength: 20,
+        // required: true,
+        computedProps: codeCodeDynamicProps,
+      },
+      {
+        name: 'code_description',
+        computedProps: codeDescriptionDynamicProps,
+        type: 'string',
+        label: '代码描述',
+      },
+      {
+        name: 'code_select',
+        type: 'string',
+        label: '代码描述(下拉)',
+        lovCode: 'LOV_CODE',
+        // required: true,
+      },
+      {
+        name: 'codeMultiple',
+        type: 'object',
+        label: '代码描述（多值）',
+        lovCode: 'LOV_CODE',
+        multiple: true,
+        // required: true,
+      },
+      {
+        name: 'codeMultiple_code',
+        bind: 'codeMultiple.code',
+        type: 'string',
+        label: '代码（多值）',
+        multiple: true,
+      },
+      {
+        name: 'codeMultiple_description',
+        bind: 'codeMultiple.description',
+        type: 'string',
+        label: '代码描述',
+        multiple: ',',
+      },
       {
         name: 'sex.text',
         type: 'string',
-        label: '性别',
+        label: '添加筛选',
         textField: 'text',
         valueField: 'value',
-        options: this.optionDs,
+        options: this.optionDs, // 下拉框组件的菜单数据集
+        defaultValue: 'F',
       },
       { name: 'date.startDate', type: 'date', label: '开始日期' },
+      { name: 'datee', type: 'date', label: '开始日期', range: true },
+      { name: 'status', type: 'string', label: 'status' },
       {
         name: 'sexMultiple',
         type: 'string',
@@ -56,7 +155,6 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: true,
       },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE', multiple: true },
     ],
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true },
@@ -73,50 +171,68 @@ class App extends React.Component {
       },
     ],
     events: {
-      query: ({ params, data }) => console.log('custom bar query parameter', params, data),
+      query: ({ params, data }) => console.log('advanced bar query parameter', params, data),
     },
   });
 
   get columns() {
-    return [{ name: 'name', width: 450 }, { name: 'age', editor: true }, { name: 'sex' }, { name: 'date.startDate' }, { name: 'code' }, { name: 'userid', lock: "right" }];
+    return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
-
   render() {
-    const menu=()=>(
-      <Menu>
-        <Menu.Item key="1">
-          类别
-        </Menu.Item>
-        <Menu.Item key="2">
-          明细
-        </Menu.Item>
-      </Menu>
-    )
     return (
-      <div>
-        <Table
-          dataSet={this.ds}
-          queryBar="comboBar"
-          buttons={['add']}
-          style={{height: 400}}
-          queryBarProps={{ 
-            title: '燕千云',
-            dropDownArea: ()=>(
-              <Dropdown overlay={menu}>
-                <Icon type="menu" />
-              </Dropdown>
-            ),
-            fold: true,
-            buttonArea: ()=>(
-              <Button>默认按钮</Button>
-            ),
-            searchable: true,
-          }}
-          columns={this.columns}
-          queryFieldsLimit={3}
-        />
-      </div>
+      <Table
+        buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
+        dataSet={this.ds}
+        queryBar="comboBar"
+        customizable
+        columnDraggable
+        queryBarProps={{
+          // title: '测试Title',
+          // rowActions: () => [],
+          // fuzzyQuery: false,
+          // inlineSearch: false,
+          queryReplacePrefix: 'searc_',
+          comboFilterBar: {
+            tableFilterAdapter: (props) => {
+              const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+              console.log('defaultTableFilterAdapter config', config);
+              const userId = 1;
+              const tenantId = 0;
+              switch (type) {
+                case 'read':
+                  return {
+                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                    method: 'get',
+                  };
+                case 'create':
+                  return {
+                    url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'update':
+                  return {
+                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'destroy':
+                  return {
+                    // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
+                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                    data: data[0],
+                    method: 'delete',
+                  };
+              }
+            },
+          }
+        }}
+        border={false}
+        columns={this.columns}
+        queryFieldsLimit={2}
+      />
     );
   }
 }
