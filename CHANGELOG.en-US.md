@@ -31,7 +31,6 @@ timeline: true
 - 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
 - 💄 `<pro>Radio`: Optimize styles.
 - 💄 `<pro>NumberField`: Optimized to input decimal point in Chinese input method.
-- 🐞 `Align`: Fix infinite loop when zooming.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
@@ -53,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
+- 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 
 ## 1.5.5
 

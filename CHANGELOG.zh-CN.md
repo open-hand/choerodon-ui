@@ -31,7 +31,6 @@ timeline: true
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
-- 🐞 `Align`: 修复缩放时死循环的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
@@ -53,6 +52,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复头分组单元格编辑时记录没有对应的问题。
 - 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
+- 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 
 ## 1.5.5
 
