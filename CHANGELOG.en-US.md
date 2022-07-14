@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
+- 🐞 `<pro>DataSet`: Fix the wrong count value obtained by query method in asynchronous count mode.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>DatePicker`: Fix the issue that when there is a min value in `range` and `editorInPopup` modes, an error may be reported after entering the value.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
