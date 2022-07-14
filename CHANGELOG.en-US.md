@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
+- 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 
 ## 1.5.5
 
