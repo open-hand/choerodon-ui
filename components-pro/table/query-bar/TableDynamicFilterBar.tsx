@@ -881,7 +881,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       propFields.forEach(({ name }) => {
         if (name) {
           const field = cloneFields.get(name);
-          if (field && !field.get('bind') && !field.get('name').includes('__tls')) {
+          const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
+          if (field &&
+            !field.get('bind') &&
+            !hasBindProps('computedProps') &&
+            !hasBindProps('dynamicProps') &&
+            !field.get('name').includes('__tls')
+          ) {
             result.push(field);
           }
         }

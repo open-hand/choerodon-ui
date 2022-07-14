@@ -31,11 +31,15 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
+- 💄 `<pro>Table`: 优化 combobar 模式下，行内搜索出现 help、sort 图标的问题。
 - 💄 `<pro>Typography`: 优化在 Form 下使用段落组件多出 margin-bottom 的样式值及改正了样式大写小的问题。
 - 💄 `<pro>Cascader`: 优化选择面板从右侧弹出的样式。
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
+- 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
+- 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
+- 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。

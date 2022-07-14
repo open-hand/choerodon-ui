@@ -305,12 +305,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   const valueLength = values.length;
   const { maxTagCount = valueLength } = option;
   const repeats: Map<any, number> = new Map<any, number>();
-  const blockClassName = classNames(
-    {
-      [`${prefixCls}-multiple-block-disabled`]: disabled,
-    },
-    `${prefixCls}-multiple-block`,
-  );
+
   let multipleValidateMessageLength = 0;
   const tags = values.slice(0, maxTagCount).map((v, index) => {
     const key = getKey(v);
@@ -356,6 +351,13 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   });
 
   if (valueLength > maxTagCount) {
+    const blockClassName = classNames(
+      {
+        [`${prefixCls}-multiple-block-disabled`]: disabled,
+      },
+      `${prefixCls}-multiple-block`,
+      `${prefixCls}-multiple-block-more`,
+    );
     let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
     if (maxTagPlaceholder) {
       const omittedValues = values.slice(maxTagCount, valueLength);
