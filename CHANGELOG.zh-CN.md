@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
+- 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
 - 🌟 `<pro>Table`: 新增 boxSizing 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
@@ -46,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
+- 🐞 `<pro>DataSet`: 修复异步计数模式下 query 方法获得的计数值有误。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。

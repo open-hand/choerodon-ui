@@ -1254,9 +1254,14 @@ export default class DataSet extends EventManager {
   async doQuery(page, params?: object, cache?: boolean, paging?: boolean): Promise<any> {
     const data = await this.read(page, params, undefined, paging);
     this.loadDataFromResponse(data, cache);
-    const { counting, totalKey } = this;
-    if (totalKey && counting) {
-      data[totalKey] = await counting;
+    if (data) {
+      const { counting, totalKey } = this;
+      if (totalKey && counting) {
+        const count = await counting;
+        if (count !== undefined) {
+          data[totalKey] = count;
+        }
+      }
     }
     return data;
   }
@@ -1264,9 +1269,14 @@ export default class DataSet extends EventManager {
   async doQueryMore(page, params?: object): Promise<any> {
     const data = await this.read(page, params, true);
     this.appendDataFromResponse(data);
-    const { counting, totalKey } = this;
-    if (totalKey && counting) {
-      data[totalKey] = await counting;
+    if (data) {
+      const { counting, totalKey } = this;
+      if (totalKey && counting) {
+        const count = await counting;
+        if (count !== undefined) {
+          data[totalKey] = count;
+        }
+      }
     }
     return data;
   }
@@ -1274,9 +1284,14 @@ export default class DataSet extends EventManager {
   async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
     const data = await this.read(page, params, true);
     this.appendDataFromResponse(data, parent);
-    const { counting, totalKey } = this;
-    if (totalKey && counting) {
-      data[totalKey] = await counting;
+    if (data) {
+      const { counting, totalKey } = this;
+      if (totalKey && counting) {
+        const count = await counting;
+        if (count !== undefined) {
+          data[totalKey] = count;
+        }
+      }
     }
     return data;
   }
@@ -3025,7 +3040,7 @@ Then the query method will be auto invoke.`,
                     if (total !== undefined) {
                       this.totalCount = total;
                     }
-                    return countResult;
+                    return total;
                   })).finally(action(() => {
                     this.counting = undefined;
                   }));

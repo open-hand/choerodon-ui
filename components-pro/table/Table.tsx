@@ -23,6 +23,7 @@ import {
   DropResult,
   ResponderProvided,
 } from 'react-beautiful-dnd';
+import Group from 'choerodon-ui/dataset/data-set/Group';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -2177,6 +2178,14 @@ export default class Table extends DataSetComponent<TableProps> {
       return wrapper.offsetWidth;
     }
     return 0;
+  }
+
+  public getHeaderGroups(): Group[] {
+    return this.tableStore.groupedDataWithHeader;
+  }
+
+  public getGroups(): Group[] {
+    return this.tableStore.groupedData;
   }
 
   public setColumnWidth(width: number, indexOrKeyOrName: number | string, saveToCustomization = true) {
