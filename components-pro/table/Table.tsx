@@ -341,6 +341,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionTips?: boolean;
   /**
+   * 显示缓存提示， 优先级高于 showSelectionTips
+   */
+  showCachedTips?: boolean;
+  /**
    * 显示缓存选中记录的按钮
    */
   showSelectionCachedButton?: boolean;
@@ -1970,7 +1974,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       props: { dataSet, selectionMode },
       prefixCls,
-      tableStore: { pagination, showSelectionTips },
+      tableStore: { pagination, showSelectionTips, showCachedSelection },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1980,7 +1984,7 @@ export default class Table extends DataSetComponent<TableProps> {
           <Pagination
             key={`pagination-${position}`}
             {...paginationProps}
-            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips })}
+            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips || showCachedSelection })}
             dataSet={dataSet}
           >
             {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}

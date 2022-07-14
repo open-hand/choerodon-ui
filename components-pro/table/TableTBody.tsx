@@ -22,7 +22,7 @@ import TableRow, { TableRowProps } from './TableRow';
 import Record from '../data-set/Record';
 import { ColumnLock, DragColumnAlign, GroupType } from './enum';
 import ExpandedRow from './ExpandedRow';
-import { DataSetStatus } from '../data-set/enum';
+import { DataSetStatus, RecordCachedType } from '../data-set/enum';
 import { DragRender, instance } from './Table';
 import { getHeader, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
@@ -39,6 +39,7 @@ import VirtualRowMetaData from './VirtualRowMetaData';
 import { toTransformValue } from '../_util/transform';
 import { useRenderClone } from './hooks';
 import TableVirtualRow from './TableVirtualRow';
+import { cachedTypeIntlMap } from './SelectionTips';
 
 export interface TableTBodyProps extends ElementProps {
   lock?: ColumnLock | undefined;
@@ -80,7 +81,7 @@ interface GenerateRowsProps extends GenerateSimpleRowsProps {
 }
 
 export interface RowsProps extends GenerateRowsProps {
-  onClearCache: () => void;
+  onClearCache: (type?: RecordCachedType) => void;
   snapshot?: DroppableStateSnapshot;
   dragRowHeight?: number;
 }
@@ -253,10 +254,12 @@ function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): Re
 
 function generateCachedRows(
   props: GenerateSimpleRowsProps,
-  handleClearCache: () => void,
+  handleClearCache: (type?: RecordCachedType) => void,
   statistics?: Statistics | undefined,
 ): ReactNode[] {
-  const { cachedData: records } = props.tableStore;
+  const { tableStore } = props;
+  const { showCachedTips, recordCachedType = showCachedTips ? RecordCachedType.selected : undefined } = tableStore;
+  const records = showCachedTips ? tableStore.cachedDataInType : tableStore.cachedData;
   if (records.length) {
     const index = { count: 0 };
     const rows: ReactNode[] = [
@@ -266,13 +269,13 @@ function generateCachedRows(
         statistics,
         children: (
           <>
-            <span>{$l('Table', 'cached_records')}</span>
+            <span>{$l('Table', recordCachedType ? cachedTypeIntlMap[recordCachedType] : 'cached_records')}</span>
             <Button
               funcType={FuncType.link}
               color={ButtonColor.primary}
               icon="delete"
               size={Size.small}
-              onClick={handleClearCache}
+              onClick={() => handleClearCache(recordCachedType)}
             />
           </>
         ),
@@ -393,7 +396,7 @@ function generateRows(
   statistics?: Statistics | undefined,
 ): ReactNode[] {
   const { tableStore } = props;
-  const { currentData, groupedData } = tableStore;
+  const { currentData, groupedData, showCachedTips } = tableStore;
   const rows: ReactNode[] = [];
   if (hasCached && currentData.length) {
     const { columnGroups, lock } = props;
@@ -404,7 +407,7 @@ function generateRows(
         lock,
         tableStore,
         statistics,
-        children: $l('Table', 'current_page_records'),
+        children: $l('Table', showCachedTips ? 'current_page' : 'current_page_records'),
       }),
     );
   }
@@ -540,10 +543,9 @@ const Rows: FunctionComponent<RowsProps> = function Rows(props) {
     lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore,
     rowDragRender, isTree, rowDraggable, isFixedRowHeight, virtualCell,
   } = props;
-  const { cachedData, currentData, groupedData } = tableStore;
   const cachedRows: ReactNode[] = useComputed(() => (
     generateCachedRows({ tableStore, columnGroups, lock, isTree, rowDraggable, virtual: false, isFixedRowHeight, virtualCell }, onClearCache)
-  ), [cachedData, tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable, isFixedRowHeight, virtualCell]);
+  ), [tableStore, columnGroups, onClearCache, lock, isTree, rowDraggable, isFixedRowHeight, virtualCell]);
   const hasCache = cachedRows.length > 0;
   const rows: ReactNode[] = useComputed(() => (
     generateRows({
@@ -559,7 +561,7 @@ const Rows: FunctionComponent<RowsProps> = function Rows(props) {
       virtualCell,
     }, hasCache)
   ), [
-    currentData, groupedData, tableStore, columnGroups, hasCache, expandIconColumnIndex,
+    tableStore, columnGroups, hasCache, expandIconColumnIndex,
     lock, isTree, rowDraggable, rowDragRender, isFixedRowHeight, virtualCell,
   ]);
   useEffect(action(() => {
@@ -595,8 +597,24 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
     }
   }), [tableStore]);
 
-  const handleClearCache = useCallback(action(() => {
-    dataSet.clearCachedRecords();
+  const handleClearCache = useCallback(action((type?: RecordCachedType) => {
+    switch (type) {
+      case RecordCachedType.selected:
+        dataSet.setCachedSelected([]);
+        break;
+      case RecordCachedType.add:
+        dataSet.setCachedCreated([]);
+        break;
+      case RecordCachedType.update:
+        dataSet.setCachedUpdated([]);
+        break;
+      case RecordCachedType.delete:
+        dataSet.setCachedDestroyed([]);
+        break;
+      default:
+        dataSet.clearCachedRecords();
+    }
+    tableStore.recordCachedType = undefined;
   }), [dataSet, tableStore]);
 
   useLayoutEffect(() => {

@@ -15,11 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder` properties.
+- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `cacheRecords`, `tableShowCachedTips` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
-- 🌟 `<pro>Table`: Added `boxSizing` property.
+- 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips` properties.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.

@@ -15,11 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, cacheRecords, tableShowCachedTips 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
-- 🌟 `<pro>Table`: 新增 boxSizing 属性。
+- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。

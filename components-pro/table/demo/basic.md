@@ -265,7 +265,7 @@ class App extends React.Component {
         type: 'object',
         label: '代码描述',
         computedProps: codeDynamicProps,
-        transformResponse(value, data) { 
+        transformResponse(value, data) {
           return data
         },
         transformRequest(value) {
@@ -356,9 +356,9 @@ class App extends React.Component {
     ],
     record: {
       dynamicProps: {
-        selectable: (record) => record.index !== 0,
-        defaultSelected: (record) => record.index === 0,
-        disabled: (record) => record.index === 0,
+        selectable: (record) => record.get('userid') !== '0',
+        defaultSelected: (record) => record.get('userid') === '0',
+        disabled: (record) => record.get('userid') === '0',
       },
     },
     events: {
@@ -512,7 +512,7 @@ class App extends React.Component {
         summary="BASIC DEMO"
         virtual
         virtualCell
-        pagination={{ 
+        pagination={{
           pageSizeEditable: true,
           showQuickJumper: true,
           pageSizeOptions: ['10', '20', '100', '200', '500', '1000'],

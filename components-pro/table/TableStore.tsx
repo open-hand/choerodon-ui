@@ -23,7 +23,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
 import ObserverRadio from '../radio/Radio';
-import { DataSetSelection } from '../data-set/enum';
+import { DataSetSelection, RecordCachedType } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
@@ -1599,6 +1599,8 @@ export default class TableStore {
 
   @observable showCachedSelection?: boolean;
 
+  @observable recordCachedType?: RecordCachedType;
+
   get isTree(): boolean {
     return this.props.mode === TableMode.tree;
   }
@@ -1623,6 +1625,18 @@ export default class TableStore {
       return useMouseBatchChoose;
     }
     return this.getConfig('tableUseMouseBatchChoose');
+  }
+
+  get showCachedTips(): boolean {
+    const { showCachedTips } = this.props;
+    if (showCachedTips !== undefined) {
+      return showCachedTips;
+    }
+    const tableShowCachedTips = this.getConfig('tableShowCachedTips');
+    if (tableShowCachedTips !== undefined) {
+      return tableShowCachedTips;
+    }
+    return false;
   }
 
   get showSelectionTips(): boolean {
@@ -1964,6 +1978,24 @@ export default class TableStore {
       const { dataSet } = this;
       const groupNames = groups.map(({ name }) => name);
       return normalizeGroups(groupNames, [], dataSet.records);
+    }
+    return [];
+  }
+
+  get cachedDataInType(): Record[] {
+    const { dataSet, showCachedSelection, recordCachedType = RecordCachedType.selected } = this;
+    if (showCachedSelection) {
+      switch (recordCachedType) {
+        case RecordCachedType.selected:
+          return dataSet.cachedSelected;
+        case RecordCachedType.add:
+          return dataSet.cachedCreated;
+        case RecordCachedType.update:
+          return dataSet.cachedUpdated;
+        case RecordCachedType.delete:
+          return dataSet.cachedDestroyed;
+        default:
+      }
     }
     return [];
   }

@@ -61,6 +61,13 @@ export enum RecordStatus {
   sync = 'sync',
 }
 
+export enum RecordCachedType {
+  selected = 'selected',
+  delete = 'delete',
+  update = 'update',
+  add = 'add',
+}
+
 export enum FieldType {
   auto = 'auto',
   boolean = 'boolean',

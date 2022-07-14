@@ -89,7 +89,7 @@
     }
   }
 
-  &:not(&-aggregation) &-thead &-cell-inner>* {
+  &:not(&-aggregation) &-thead &-cell-inner > * {
     vertical-align: middle;
   }
 
@@ -986,8 +986,16 @@
     .dropdown-menu;
   }
 
-  .sm;
+  &-cached-type {
+    margin: 0 0.05rem;
 
+    &-count {
+      margin: 0 0.05rem;
+      color: @text-color-secondary;
+    }
+  }
+
+  .sm;
 }
 
 .border() {

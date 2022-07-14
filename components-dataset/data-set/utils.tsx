@@ -543,7 +543,7 @@ export function checkFieldType(value: any, field: Field, record?: Record): boole
       }
       const valueType =
         field.get('type', record) === FieldType.boolean &&
-          [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
+        [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -769,7 +769,7 @@ export function axiosConfigAdapter(
   };
 
   const { [type]: globalConfig, adapter: globalAdapter = defaultAxiosConfigAdapter } =
-    dataSet.getConfig('transport') || {};
+  dataSet.getConfig('transport') || {};
   const { [type]: config, adapter } = dataSet.transport;
   if (globalConfig) {
     Object.assign(newConfig, generateConfig(globalConfig, dataSet, data, params, options));
@@ -993,7 +993,7 @@ export function getUniqueKeysAndPrimaryKey(dataSet: DataSet): string[] {
   return keys;
 }
 
-export function isDirtyRecord(record) {
+export function isDirtyRecord(record: Record) {
   return record.status !== RecordStatus.sync || record.dirty;
 }
 

@@ -15,9 +15,7 @@ export default class DataSetSnapshot {
 
   originalData: Record[];
 
-  cachedSelected: Record[];
-
-  cachedModified: Record[];
+  cachedRecords: Record[];
 
   totalCount: number;
 
@@ -36,8 +34,7 @@ export default class DataSetSnapshot {
     this.totalCount = dataSet.totalCount;
     this.currentPage = dataSet.currentPage;
     this.pageSize = dataSet.pageSize;
-    this.cachedSelected = dataSet.cachedSelected;
-    this.cachedModified = dataSet.cachedModified;
+    this.cachedRecords = dataSet.cachedRecords;
     this.dataToJSON = dataSet.dataToJSON;
     this.children = dataSet.children;
     this.events = dataSet.events;
