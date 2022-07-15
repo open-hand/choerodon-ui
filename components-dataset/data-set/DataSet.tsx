@@ -1093,7 +1093,7 @@ export default class DataSet extends EventManager {
   }
 
   get dirty(): boolean {
-    return this.records.some(isDirtyRecord);
+    return this.all.some(isDirtyRecord);
   }
 
   private inBatchSelection = false;
@@ -2932,13 +2932,18 @@ Then the query method will be auto invoke.`,
     if (record) {
       record.isSelected = false;
       record.isCurrent = false;
-      const { selected, records } = this;
+      const { selected, records, cachedRecords } = this;
       const selectedIndex = selected.indexOf(record);
       if (selectedIndex !== -1) {
         selected.splice(selectedIndex, 1);
       }
       if (record.isNew || forceRemove) {
-        {
+        if (record.isCached) {
+          const index = cachedRecords.indexOf(record);
+          if (index !== -1) {
+            cachedRecords.splice(index, 1);
+          }
+        } else {
           const index = records.indexOf(record);
           if (index !== -1) {
             records.splice(index, 1);

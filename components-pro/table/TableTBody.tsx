@@ -270,13 +270,17 @@ function generateCachedRows(
         children: (
           <>
             <span>{$l('Table', recordCachedType ? cachedTypeIntlMap[recordCachedType] : 'cached_records')}</span>
-            <Button
-              funcType={FuncType.link}
-              color={ButtonColor.primary}
-              icon="delete"
-              size={Size.small}
-              onClick={() => handleClearCache(recordCachedType)}
-            />
+            {
+              !showCachedTips && (
+                <Button
+                  funcType={FuncType.link}
+                  color={ButtonColor.primary}
+                  icon="delete"
+                  size={Size.small}
+                  onClick={() => handleClearCache(recordCachedType)}
+                />
+              )
+            }
           </>
         ),
       }),
