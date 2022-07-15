@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips` properties.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
+- 🌟 `Notification`: Added `icons` configuration.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
