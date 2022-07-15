@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix `searchMatcher` not working when using options prop.
 - 🐞 `<pro>Table`: Fix error when element may be null.
 - 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
+- 🐞 `<pro>Table`: Fix group state loss problem.
 - 🐞 `<pro>ColorPicker`: Fix the problem of get `preset` parameter failed, and fixed an exception caused by calculating relative brightness without value.
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.

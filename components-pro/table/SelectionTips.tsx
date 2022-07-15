@@ -112,6 +112,7 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
                 value={recordCachedType}
                 onChange={handleChangeRecordCachedType}
                 size={Size.small}
+                clearButton={false}
               >
                 {options}
               </ObserverSelect>
@@ -135,6 +136,7 @@ const SelectionTips: FunctionComponent<any> = function SelectionTips() {
   const cachedButton = showSelectionCachedButton && (dataSet.cacheSelectionKeys || dataSet.cacheModifiedKeys) && dataSet.cachedRecords.length > 0 ? (
     <Tooltip title={getTitle}>
       <Button
+        size={Size.small}
         className={`${prefixCls}-switch`}
         funcType={FuncType.flat}
         icon={showCachedSelection ? 'visibility_off' : 'visibility'}

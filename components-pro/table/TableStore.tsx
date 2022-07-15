@@ -56,7 +56,7 @@ import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 import { treeMap, treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
-import { getIf, normalizeGroups } from '../data-set/utils';
+import { getIf, mergeGroupStates, normalizeGroups } from '../data-set/utils';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
@@ -1924,63 +1924,11 @@ export default class TableStore {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
-  @computed
-  get groups(): TableGroup[] {
-    const { groups = [] } = this.props;
-    const header: TableGroup[] = [];
-    const row: TableGroup[] = [];
-    const column: TableGroup[] = [];
-    groups.forEach((group) => {
-      const { type } = group;
-      switch (type) {
-        case GroupType.header:
-          header.push(group);
-          break;
-        case GroupType.row:
-          row.push(group);
-          break;
-        case GroupType.none:
-          break;
-        default:
-          column.push(group);
-      }
-    });
-    return [...header, ...row, ...column];
-  }
+  @observable groups: TableGroup[];
 
-  @computed
-  get groupedData(): Group[] {
-    const { groups } = this;
-    if (groups.length) {
-      const headerGroupNames: string[] = [];
-      const groupNames: string[] = [];
-      const parentFields: Map<string | symbol, string> = new Map();
-      groups.forEach(({ type, name, parentField }) => {
-        if (type === GroupType.header) {
-          headerGroupNames.push(name);
-        } else {
-          groupNames.push(name);
-        }
-        if (parentField) {
-          parentFields.set(name, parentField);
-        }
-      }, []);
-      const { dataSet } = this;
-      return normalizeGroups(groupNames, headerGroupNames, dataSet.records, parentFields);
-    }
-    return [];
-  }
+  @observable groupedData: Group[];
 
-  @computed
-  get groupedDataWithHeader(): Group[] {
-    const { groups } = this;
-    if (groups.length) {
-      const { dataSet } = this;
-      const groupNames = groups.map(({ name }) => name);
-      return normalizeGroups(groupNames, [], dataSet.records);
-    }
-    return [];
-  }
+  @observable groupedDataWithHeader: Group[];
 
   get cachedDataInType(): Record[] {
     const { dataSet, showCachedSelection, recordCachedType = RecordCachedType.selected } = this;
@@ -2179,6 +2127,7 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    this.initGroups();
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;
@@ -2204,6 +2153,51 @@ export default class TableStore {
       }
     }
     this.initColumns();
+  }
+
+  @action
+  initGroups() {
+    const { groups = [] } = this.props;
+    if (groups.length) {
+      const headerGroupNames: string[] = [];
+      const rowGroupNames: string[] = [];
+      const groupNames: string[] = [];
+      const parentFields: Map<string | symbol, string> = new Map();
+      const { dataSet } = this;
+      const header: TableGroup[] = [];
+      const row: TableGroup[] = [];
+      const column: TableGroup[] = [];
+      groups.forEach((group) => {
+        const { type, name, parentField } = group;
+        switch (type) {
+          case GroupType.header:
+            header.push(group);
+            headerGroupNames.push(name);
+            break;
+          case GroupType.row:
+            row.push(group);
+            rowGroupNames.push(name);
+            break;
+          case GroupType.none:
+            break;
+          default: {
+            column.push(group);
+            groupNames.push(name);
+          }
+        }
+        if (parentField) {
+          parentFields.set(name, parentField);
+        }
+      });
+
+      this.groupedData = mergeGroupStates(normalizeGroups(rowGroupNames.concat(groupNames), headerGroupNames, dataSet.records, parentFields), this.groupedData);
+      this.groupedDataWithHeader = mergeGroupStates(normalizeGroups(headerGroupNames.concat(rowGroupNames, groupNames), [], dataSet.records), this.groupedDataWithHeader);
+      this.groups = [...header, ...row, ...column];
+    } else {
+      this.groups = [];
+      this.groupedData = [];
+      this.groupedDataWithHeader = [];
+    }
   }
 
   @action

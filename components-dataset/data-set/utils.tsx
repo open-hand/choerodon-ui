@@ -23,7 +23,7 @@ import { formatString } from '../formatter';
 import { treeReduce } from '../tree-helper';
 import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome } from '../iterator-helper';
 import math from '../math';
-import { colorRgbaReg, colorHexReg } from '../validator/rules/typeMismatch';
+import { colorHexReg, colorRgbaReg } from '../validator/rules/typeMismatch';
 
 export const defaultTextField = 'meaning';
 export const defaultValueField = 'value';
@@ -1127,6 +1127,41 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
     ];
   }
   return optGroups;
+}
+
+function mergeHGroupStates(newGroups: Set<Group> | undefined, oldGroups: Set<Group> | undefined) {
+  if (newGroups && oldGroups && newGroups.size && oldGroups.size) {
+    oldGroups.forEach((oldGroup) => {
+      const { state } = oldGroup;
+      if (state) {
+        const { name, value } = oldGroup;
+        const newGroup = iteratorFind(newGroups.values(), group => group.name === name && group.value === value);
+        if (newGroup) {
+          newGroup.mergeState(state);
+          mergeGroupStates(newGroup.subGroups, oldGroup.subGroups);
+          mergeHGroupStates(newGroup.subHGroups, oldGroup.subHGroups);
+        }
+      }
+    });
+  }
+}
+
+export function mergeGroupStates(newGroups: Group[], oldGroups: Group[] | undefined): Group[] {
+  if (oldGroups && oldGroups.length && newGroups.length) {
+    oldGroups.forEach((oldGroup) => {
+      const { state } = oldGroup;
+      if (state) {
+        const { name, value } = oldGroup;
+        const newGroup = newGroups.find(group => group.name === name && group.value === value);
+        if (newGroup) {
+          newGroup.mergeState(state);
+          mergeGroupStates(newGroup.subGroups, oldGroup.subGroups);
+          mergeHGroupStates(newGroup.subHGroups, oldGroup.subHGroups);
+        }
+      }
+    });
+  }
+  return newGroups;
 }
 
 /**
