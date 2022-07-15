@@ -193,6 +193,7 @@ export interface Config extends DataSetConfig {
   modalKeyboard?: boolean;
   modalMaskClosable?: boolean | 'click' | 'dblclick';
   modalResizable?: boolean;
+  modalClosable?: boolean;
   buttonFuncType?: FuncType;
   buttonColor?: ButtonColor;
   autoInsertSpaceInButton?: boolean;
