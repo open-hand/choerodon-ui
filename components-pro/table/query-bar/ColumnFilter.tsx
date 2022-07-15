@@ -119,9 +119,9 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     const { allLeafs } = tableStore.columnGroups;
     const selectedKeys: Key[] = [];
     const columns: [ColumnProps, ReactNode, Key][] = [];
-    allLeafs.forEach(({ column, key, headerGroup }) => {
+    allLeafs.forEach(({ column, key, headerGroup, headerGroups }) => {
       if (column.hideable) {
-        const header = getHeader({ ...column, dataSet, aggregation, group: headerGroup });
+        const header = getHeader({ ...column, dataSet, aggregation, group: headerGroup, groups: headerGroups });
         if (header) {
           if (!column.hidden) {
             selectedKeys.push(key);

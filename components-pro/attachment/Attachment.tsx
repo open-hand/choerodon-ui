@@ -3,6 +3,7 @@ import { action as mobxAction, IReactionDisposer, observable, reaction, runInAct
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
@@ -57,6 +58,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
+  onRemove?: (attachment: AttachmentFile) => boolean | void;
   getUUID?: () => Promise<string> | string;
   downloadAll?: ButtonProps | boolean;
   previewTarget?: string;
@@ -313,6 +315,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'onUploadProgress',
       'onUploadSuccess',
       'onUploadError',
+      'onRemove',
     ]);
   }
 
@@ -453,29 +456,33 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  @mobxAction
   doRemove(attachment: AttachmentFile): Promise<any> | undefined {
-    const { onRemove } = this.getContextConfig('attachment');
-    if (onRemove) {
-      if (attachment.status === 'error' || attachment.invalid) {
-        return this.removeAttachment(attachment);
+    const { onRemove: onAttachmentRemove = noop } = this.props;
+    return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
+      if (ret !== false) {
+        const { onRemove } = this.getContextConfig('attachment');
+        if (onRemove) {
+          if (attachment.status === 'error' || attachment.invalid) {
+            return this.removeAttachment(attachment);
+          }
+          const attachmentUUID = this.getValue();
+          if (attachmentUUID) {
+            const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+            attachment.status = 'deleting';
+            return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
+              .then(mobxAction((result) => {
+                if (result !== false) {
+                  this.removeAttachment(attachment);
+                }
+                attachment.status = 'done';
+              }))
+              .catch(mobxAction(() => {
+                attachment.status = 'done';
+              }));
+          }
+        }
       }
-      const attachmentUUID = this.getValue();
-      if (attachmentUUID) {
-        const { bucketName, bucketDirectory, storageCode, isPublic } = this;
-        attachment.status = 'deleting';
-        return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
-          .then(mobxAction((result) => {
-            if (result !== false) {
-              this.removeAttachment(attachment);
-            }
-            attachment.status = 'done';
-          }))
-          .catch(mobxAction(() => {
-            attachment.status = 'done';
-          }));
-      }
-    }
+    }));
   }
 
   @autobind

@@ -35,6 +35,7 @@ export interface HeaderHookOptions extends FooterHookOptions {
   title?: string | undefined;
   aggregation?: boolean | undefined;
   group?: Group | undefined;
+  groups?: Group[] | undefined;
 }
 
 export interface ColumnPropsBase extends ElementProps {
@@ -198,6 +199,7 @@ export interface ColumnProps extends ColumnPropsBase {
   children?: ColumnProps[];
   __tableGroup?: TableGroup;
   __group?: Group;
+  __groups?: Group[];
   __originalKey?: Key;
 }
 

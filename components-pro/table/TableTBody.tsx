@@ -331,7 +331,7 @@ function generateGroupRows(
       const { columnProps } = tableGroup;
       const { renderer = defaultAggregationRenderer } = columnProps || {};
       const groupName = tableGroup.name;
-      const header = getHeader({ ...columnProps, name: groupName, dataSet, group });
+      const header = getHeader({ ...columnProps, name: groupName, dataSet, group, groups });
       rows.push(
         generateRowGroup({
           key: `$group-${path.map(([g]) => g.value).join('-')}`,
@@ -589,7 +589,8 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
-    if (target.offsetParent && height) {
+    // why target is undefined ?
+    if (target && target.offsetParent && height) {
       tableStore.calcBodyHeight = height;
     }
   }), [tableStore]);

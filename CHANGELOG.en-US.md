@@ -15,10 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight` properties.
+- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder` properties.
+- 🌟 `<pro>Attachment`: Added `onRemove` property.
+- 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
 - 🌟 `<pro>Table`: Added `boxSizing` property.
-- 🌟 `<pro>Table.Column`: Added `tooltipProps` property.
+- 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
@@ -40,11 +42,14 @@ timeline: true
 - 💄 `<pro>Lov`: Optimized disable the selection drop-down option during input field search.
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
+- 💄 `<pro>SelectBox`: Optimized required styles.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
+- 🐞 `<pro>DataSet`: Fix the wrong count value obtained by query method in asynchronous count mode.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
+- 🐞 `<pro>DatePicker`: Fix the issue that when there is a min value in `range` and `editorInPopup` modes, an error may be reported after entering the value.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
 - 🐞 `<pro>Select`: Fix error when pressing pageDown.
@@ -66,6 +71,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
+- 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 
 ## 1.5.5
 

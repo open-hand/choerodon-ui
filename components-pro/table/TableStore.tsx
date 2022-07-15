@@ -797,6 +797,7 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
             key: colKey,
             __tableGroup: tableGroup,
             __group: group,
+            __groups: groups,
             __originalKey,
           };
           findAndMergeCustomizedColumn(newCol, tableStore, customizedColumns);
@@ -812,6 +813,7 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
             name: groupName,
             dataSet,
             group,
+            groups,
           });
           if (header) {
             const oldColumn: ColumnProps = groupedColumns[length - 1];
@@ -851,6 +853,7 @@ function getHeaderGroupedColumns(tableStore: TableStore, groups: Group[], tableG
           }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2),
           __tableGroup: tableGroup,
           __group: group,
+          __groups: groups,
         };
         findAndMergeCustomizedColumn(column, tableStore, customizedColumns);
         generatedColumns.add(column);
