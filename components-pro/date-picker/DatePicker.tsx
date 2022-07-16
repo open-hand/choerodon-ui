@@ -53,7 +53,29 @@ const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.time]: TimesView,
 };
 
-const createDefaultTime = () => moment('00:00:00', 'HH:mm:ss');
+function createDefaultTime() {
+  return moment('00:00:00', 'HH:mm:ss');
+}
+
+function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null): Moment {
+  if (min && defaultTime.isBefore(min)) {
+    defaultTime.year(min.year());
+    defaultTime.month(min.month());
+    defaultTime.date(min.date());
+    if (defaultTime.isBefore(min)) {
+      defaultTime.add(1, 'd');
+    }
+  }
+  if (max && defaultTime.isAfter(max)) {
+    defaultTime.year(max.year());
+    defaultTime.month(max.month());
+    defaultTime.date(max.date());
+    if (defaultTime.isAfter(max)) {
+      defaultTime.subtract(1, 'd');
+    }
+  }
+  return defaultTime;
+}
 
 export interface DatePickerProps extends TriggerFieldProps {
   /**
@@ -250,10 +272,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getDefaultTime(): [Moment, Moment] {
     const { defaultTime = createDefaultTime() } = this.props;
+    const { min, max } = this;
     if (isArrayLike(defaultTime)) {
-      return [defaultTime[0] || createDefaultTime(), defaultTime[1] || createDefaultTime()];
+      return [getInRangeDefaultTime(defaultTime[0], min, max), getInRangeDefaultTime(defaultTime[1], min, max)];
     }
-    return [defaultTime, defaultTime];
+    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max);
+    return [inRangeDefaultTime, inRangeDefaultTime];
   }
 
   getDefaultViewMode() {

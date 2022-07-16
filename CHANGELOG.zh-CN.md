@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复缓存的新增数据无法删除。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
+- 🐞 `<pro>DatePicker`: 修复 defaultTime 超出 min 和 max 时值错误的问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Select`: 修复按 pageDown 建报错的问题。
