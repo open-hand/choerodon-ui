@@ -19,6 +19,8 @@ export default class VirtualRowMetaData {
 
   groupLevel?: number;
 
+  aggregation?: boolean;
+
   node?: ReactNode;
 
   get height(): number {
@@ -55,5 +57,6 @@ export default class VirtualRowMetaData {
   @action
   setHeight(height: number) {
     this.actualHeight = height;
+    this.aggregation = this.store.aggregation;
   }
 }

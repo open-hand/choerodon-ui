@@ -509,14 +509,14 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const renderRow = useCallback(rIndex => totalRows[rIndex], [totalRows]);
 
   useEffect(action(() => {
-    const { rowMetaData: oldRowMetaData } = tableStore;
+    const { rowMetaData: oldRowMetaData, aggregation: tableAggregation } = tableStore;
     const { rowMetaData } = statistics;
     if (oldRowMetaData) {
-      oldRowMetaData.every(({ actualHeight, type }, index) => {
+      oldRowMetaData.every(({ actualHeight, type, aggregation }, index) => {
         if (type === 'group') {
           return true;
         }
-        if (actualHeight !== undefined) {
+        if (actualHeight !== undefined && aggregation === tableAggregation) {
           const newMeta = rowMetaData[index];
           if (newMeta) {
             if (newMeta.type === 'row') {

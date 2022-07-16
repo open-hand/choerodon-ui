@@ -49,6 +49,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
+- 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 
 ## 1.5.5
 
