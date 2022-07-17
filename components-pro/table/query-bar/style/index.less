@@ -553,7 +553,6 @@
   &-combo-filter-bar {
 
     .@{table-prefix-cls}-combo-filter-toolbar {
-      margin-right: 0.08rem;
       margin-left: auto;
     }
 
@@ -592,7 +591,7 @@
       }
 
       .@{table-prefix-cls}-combo-filter-toolbar + .@{table-prefix-cls}-combo-filter-action {
-        margin-left: 0;
+        margin-left: 0.08rem;
       }
     }
 
@@ -731,6 +730,7 @@
 
       .@{table-prefix-cls}-combo-filter-bar-single-action {
         display: flex;
+        flex-shrink: 0;
       }
 
       .@{table-prefix-cls}-filter-query-buttons,

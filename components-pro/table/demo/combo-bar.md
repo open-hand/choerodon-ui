@@ -176,7 +176,11 @@ class App extends React.Component {
   });
 
   get columns() {
-    return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
+    return [
+        { name: 'name', width: 450, editor: true },
+        { name: 'age', editor: true },
+        { header: '操作' }
+    ];
   }
 
   searchRender() {
@@ -188,7 +192,7 @@ class App extends React.Component {
   render() {
     return (
       <Table
-        buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
+        // buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
         dataSet={this.ds}
         queryBar="comboBar"
         customizable
@@ -198,43 +202,42 @@ class App extends React.Component {
           // rowActions: () => [],
           // fuzzyQuery: false,
           // inlineSearch: false,
-          singleMode: true,
           inlineSearchRender: this.searchRender(),
-          comboFilterBar: {
-            tableFilterAdapter: (props) => {
-              const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
-              console.log('defaultTableFilterAdapter config', config);
-              const userId = 1;
-              const tenantId = 0;
-              switch (type) {
-                case 'read':
-                  return {
-                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
-                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
-                    method: 'get',
-                  };
-                case 'create':
-                  return {
-                    url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-                    method: 'put',
-                    data: data[0],
-                  };
-                case 'update':
-                  return {
-                    // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-                    method: 'put',
-                    data: data[0],
-                  };
-                case 'destroy':
-                  return {
-                    // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
-                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
-                    data: data[0],
-                    method: 'delete',
-                  };
-              }
-            },
-          }
+          // comboFilterBar: {
+          //   tableFilterAdapter: (props) => {
+          //     const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+          //     console.log('defaultTableFilterAdapter config', config);
+          //     const userId = 1;
+          //     const tenantId = 0;
+          //     switch (type) {
+          //       case 'read':
+          //         return {
+          //           // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+          //           url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+          //           method: 'get',
+          //         };
+          //       case 'create':
+          //         return {
+          //           url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+          //           method: 'put',
+          //           data: data[0],
+          //         };
+          //       case 'update':
+          //         return {
+          //           // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+          //           method: 'put',
+          //           data: data[0],
+          //         };
+          //       case 'destroy':
+          //         return {
+          //           // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
+          //           url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+          //           data: data[0],
+          //           method: 'delete',
+          //         };
+          //     }
+          //   },
+          // }
         }}
         border={false}
         columns={this.columns}

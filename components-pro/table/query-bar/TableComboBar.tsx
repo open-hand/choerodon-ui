@@ -540,7 +540,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    * tableFilterSuffix 预留自定义区域
    */
   renderSuffix() {
-    const { buttons = [], tableActions = [{name: 'test'}] } = this.props;
+    const { buttons = [], tableActions = [] } = this.props;
     const { prefixCls } = this;
     const tableButtons = buttons.length ? (
       <TableButtons key="toolbar" prefixCls={`${prefixCls}-combo-filter`} buttons={buttons} />
@@ -916,7 +916,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
 
     if (queryDataSet && queryFields.length) {
-      const singleLineModeAction = !singleMode &&
+      const singleLineModeAction = !singleMode && !this.tableFilterAdapter &&
         <div className={`${prefixCls}-combo-filter-bar-single-action`}>
           {this.getResetButton()}
           {this.renderRefreshBtn()}
