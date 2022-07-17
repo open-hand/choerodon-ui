@@ -76,7 +76,6 @@ export interface TableComboBarProps extends ElementProps {
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
-  fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
   searchCode?: string;
   autoQuery?: boolean;
@@ -112,7 +111,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
-    fuzzyQueryOnly: false,
     autoQuery: true,
     refreshBtn: true,
     buttons: [],
@@ -170,8 +168,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   }
 
   componentDidMount(): void {
-    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
-    if (!fuzzyQueryOnly) {
+    const {singleMode, queryDataSet, dataSet } = this.props;
+    if (!singleMode) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
       if (!dataSet.props.autoQuery) {
@@ -185,21 +183,21 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
 
   componentWillUnmount(): void {
-    const { fuzzyQueryOnly } = this.props;
-    if (!fuzzyQueryOnly) {
+    const { singleMode } = this.props;
+    if (!singleMode) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
     }
   }
 
   componentWillReceiveProps(nextProps: Readonly<TableComboBarProps>): void {
-    const { dataSet, fuzzyQueryOnly, queryDataSet } = nextProps;
+    const { dataSet, singleMode, queryDataSet } = nextProps;
     // eslint-disable-next-line react/destructuring-assignment
-    if (dataSet !== this.props.dataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
+    if (dataSet !== this.props.dataSet || singleMode !== this.props.singleMode) {
       runInAction(() => {
         this.fieldSelectHidden = true;
       });
-      if (!fuzzyQueryOnly) {
+      if (!singleMode) {
         // 移除原有实例监听
         this.processDataSetListener(false);
         this.processDataSetListener(true, nextProps);
