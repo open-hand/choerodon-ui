@@ -306,9 +306,9 @@ const QuickFilterButton = function QuickFilterButton() {
   };
 
   return (
-    <>
+    <div className={`${prefixCls}-combo-filter-button`}>
       {conditionStatus === RecordStatus.update && (
-        <div className={`${prefixCls}-combo-filter-button`}>
+        <>
           {isChooseMenu && (
             <Button onClick={handleSaveOther} color={ButtonColor.primary}>
               {$l('Table', 'save_as')}
@@ -317,17 +317,17 @@ const QuickFilterButton = function QuickFilterButton() {
           <Button onClick={handleQueryReset}>
             {$l('Table', 'reset_button')}
           </Button>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              dataSet.query();
-            }}
-          >
-            {$l('Table', 'query_button')}
-          </Button>
-        </div>
+        </>
       )}
-    </>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          dataSet.query();
+        }}
+      >
+        {$l('Table', 'query_button')}
+      </Button>
+    </div>
   );
 };
 

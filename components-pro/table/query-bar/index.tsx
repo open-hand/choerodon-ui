@@ -1,4 +1,12 @@
-import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  isValidElement,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+  useState,
+} from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
@@ -12,7 +20,8 @@ import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
 import Table, {
-  Buttons, ComboFilterBarConfig,
+  Buttons,
+  ComboFilterBarConfig,
   DynamicFilterBarConfig,
   SummaryBar,
   SummaryBarHook,
@@ -65,8 +74,6 @@ export interface TableQueryBarProps {
   onReset?: () => void;
   treeQueryExpanded?: boolean;
   comboFilterBar?: ComboFilterBarConfig;
-  otherFilterAction?: ReactNode;
-  advancedFilter?: ReactNode;
 }
 
 const ExportBody = observer((props) => {

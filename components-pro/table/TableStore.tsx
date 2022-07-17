@@ -2105,7 +2105,7 @@ export default class TableStore {
 
   isBuiltInColumn({ key }: ColumnProps) {
     if (isString(key)) {
-      return [DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY, CUSTOMIZED_KEY, EXPAND_KEY].includes(key);
+      return [DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY, CUSTOMIZED_KEY, EXPAND_KEY, COMBOBAR_KEY].includes(key);
     }
   }
 
@@ -2472,7 +2472,9 @@ export default class TableStore {
 
   async loadCustomized() {
     const { customizedCode } = this.props;
-    if ((this.customizable && customizedCode) || this.queryBar === TableQueryBarType.comboBar) {
+    const { props: { queryBarProps } } = this.node;
+    const showSingleMode = queryBarProps && queryBarProps.singleMode;
+    if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSingleMode)) {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;

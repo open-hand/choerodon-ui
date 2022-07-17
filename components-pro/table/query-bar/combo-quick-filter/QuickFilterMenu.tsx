@@ -14,7 +14,7 @@ import {
   isEqualDynamicProps,
   parseValue,
   SELECTFIELDS,
-} from '../TableDynamicFilterBar';
+} from '../TableComboBar';
 import Store from './QuickFilterMenuContext';
 import Field from '../../../data-set/Field';
 

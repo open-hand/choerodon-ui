@@ -32,7 +32,7 @@ import TableContext from './TableContext';
 import { TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
-import { SELECTION_KEY } from './TableStore';
+import { COMBOBAR_KEY, SELECTION_KEY } from './TableStore';
 import { ColumnAlign, SelectionMode, TableCommandType } from './enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
@@ -406,11 +406,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         };
       }
       if (rowHeight !== 'auto') {
+        const isComboQueryColumn = key === COMBOBAR_KEY;
         const isCheckBox = fieldType === FieldType.boolean || key === SELECTION_KEY;
         const multiple = field && field.get('multiple', record);
         const borderPadding = isCheckBox || multiple ? 4 : 2;
         const heightPx = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
-        const lineHeightPx = hasEditor || isCheckBox || multiple ? rowHeight - borderPadding : rowHeight;
+        const lineHeightPx = hasEditor || isCheckBox || multiple || isComboQueryColumn ? rowHeight - borderPadding : rowHeight;
         return {
           height: pxToRem(heightPx),
           lineHeight: rows > 0 ? 'inherit' : pxToRem(lineHeightPx),

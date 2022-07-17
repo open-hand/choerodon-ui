@@ -15,12 +15,12 @@ title:
 Bar for Combo
 
 ```jsx
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table, Button, Icon } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx-react-lite';
 import { action, toJS } from 'mobx';
 
-const { DynamicFilterBar } = Table;
+const { comboFilterBar } = Table;
 
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
@@ -179,6 +179,12 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
+  searchRender() {
+      return [
+        <Icon type="info" />,
+      ];
+  }
+
   render() {
     return (
       <Table
@@ -188,11 +194,12 @@ class App extends React.Component {
         customizable
         columnDraggable
         queryBarProps={{
-          // title: '测试Title',
+          title: '测试Title',
           // rowActions: () => [],
           // fuzzyQuery: false,
           // inlineSearch: false,
-          queryReplacePrefix: 'searc_',
+          singleMode: true,
+          inlineSearchRender: this.searchRender(),
           comboFilterBar: {
             tableFilterAdapter: (props) => {
               const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;

@@ -23,7 +23,7 @@ import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-import Field, { Fields, FieldProps } from '../../data-set/Field';
+import Field, { Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
@@ -90,14 +90,6 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
     });
   }
   return isEqual(newValue, originalValue);
-}
-
-function strMapToObj(strMap) {
-  const obj = Object.create(null);
-  for (const [k,v] of strMap) {
-    obj[k] = v;
-  }
-  return obj;
 }
 
 /**
@@ -171,11 +163,9 @@ export interface TableComboBarProps extends ElementProps {
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
-  fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
   singleMode?: boolean;
   autoQuery?: boolean;
-  queryReplacePrefix?: string;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -187,7 +177,6 @@ export const FILTERMENUDATASET = '__FILTERMENUDATASET__';
 export const MENURESULT = '__MENURESULT__';
 export const SEARCHTEXT = '__SEARCHTEXT__';
 export const SELECTCHANGE = '__SELECTCHANGE__';
-export const FIELDPREFIX = '__FIELDPREFIX__';
 
 @observer
 export default class TableComboBar extends Component<TableComboBarProps> {
@@ -199,7 +188,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
-    fuzzyQueryOnly: false,
     autoQuery: true,
     buttons: [],
     singleMode: false,
@@ -260,15 +248,14 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   constructor(props, context) {
     super(props, context);
-    this.replaceField();
     runInAction(() => {
       this.fieldSelectHidden = true;
     });
   }
 
   componentDidMount(): void {
-    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
-    if (!fuzzyQueryOnly) {
+    const {singleMode, queryDataSet, dataSet } = this.props;
+    if (!singleMode) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
       if (this.isSingleLineOpt() && this.refSingleWrapper) {
@@ -289,21 +276,21 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
 
   componentWillUnmount(): void {
-    const { fuzzyQueryOnly } = this.props;
-    if (!fuzzyQueryOnly) {
+    const { singleMode } = this.props;
+    if (!singleMode) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
     }
   }
 
   componentWillReceiveProps(nextProps: Readonly<TableComboBarProps>): void {
-    const { dataSet, fuzzyQueryOnly, queryDataSet } = nextProps;
+    const { dataSet, singleMode, queryDataSet } = nextProps;
     // eslint-disable-next-line react/destructuring-assignment
-    if (dataSet !== this.props.dataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
+    if (dataSet !== this.props.dataSet || singleMode !== this.props.singleMode) {
       runInAction(() => {
         this.fieldSelectHidden = true;
       });
-      if (!fuzzyQueryOnly) {
+      if (!singleMode) {
         // 移除原有实例监听
         this.processDataSetListener(false);
         this.processDataSetListener(true, nextProps);
@@ -330,40 +317,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       handler.call(queryDataSet, DataSetEvents.update, this.handleDataSetUpdate);
       handler.call(queryDataSet, DataSetEvents.create, this.handleDataSetCreate);
       dsHandler.call(dataSet, DataSetEvents.query, this.handleDataSetQuery);
-    }
-  }
-
-  replaceField(): void {
-    const { queryDataSet, queryReplacePrefix } = this.props;
-    const { tableStore: { getConfig }} = this.context;
-    let queryBarProps;
-    if (getConfig('queryBarProps')) {
-      queryBarProps = getConfig('queryBarProps');
-    }
-    const fieldPrefix = queryReplacePrefix || queryBarProps && queryBarProps.queryReplacePrefix;
-    if (fieldPrefix && queryDataSet) {
-      queryDataSet.setState(FIELDPREFIX, fieldPrefix);
-      const newFields: FieldProps[] = [];
-      runInAction(() => {
-        for (const [fieldName, field] of queryDataSet.fields) {
-          if (!fieldName.startsWith(fieldPrefix)) {
-            newFields.push({
-              ...strMapToObj(field.props),
-              bind: fieldName,
-              name: `${fieldPrefix}${fieldName}`,
-              ignore: FieldIgnore.never,
-            });
-          } else {
-            newFields.push({
-              ...strMapToObj(field.props),
-              name: fieldName,
-              ignore: fieldName.startsWith(fieldPrefix) ? FieldIgnore.never : FieldIgnore.always,
-            });
-          }
-        }
-        queryDataSet.fields.clear();
-        queryDataSet.fields = observable.map<string, Field>(queryDataSet.initFields(newFields));
-      })
     }
   }
 
@@ -961,12 +914,11 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
     const { prefixCls } = this;
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
-    const resetButton = this.tableFilterAdapter ? null : this.getResetButton();
 
     if (queryDataSet && queryFields.length) {
-      const singleLineModeAction = !singleMode && this.isSingleLineOpt() &&
+      const singleLineModeAction = !singleMode &&
         <div className={`${prefixCls}-combo-filter-bar-single-action`}>
-          {resetButton}
+          {this.getResetButton()}
           {this.renderRefreshBtn()}
         </div>;
 

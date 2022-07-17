@@ -22,7 +22,6 @@ import { getEditorByField, getTableHeaderRows, isStickySupport } from './utils';
 import ColumnGroup from './ColumnGroup';
 import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow';
 import ExpandIcon from './ExpandIcon';
-import { FIELDPREFIX } from './query-bar/TableComboBar';
 
 export interface TableHeaderProps extends ElementProps {
   queryFields?: { [key: string]: ReactElement<any> };
@@ -116,12 +115,10 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
             if (colSpan > 1 || children) {
               cellProps.colSpan = colSpan;
             }
-            const { queryDataSet } = dataSet;
-            const fieldPrefix = queryDataSet && queryDataSet.getState(FIELDPREFIX);
             const icon =
               !isSearchTr ?
                 (rowIndex === headerRows.length - 1 && hasExpandIcon(index) ? renderExpandIcon() : undefined) :
-                (!notRenderThKey.includes(String(key)) && getQueryFields({ width: '100%' }).find(field => field.key === (fieldPrefix ? `${fieldPrefix}${key}` : key)));
+                (!notRenderThKey.includes(String(key)) && getQueryFields({ width: '100%' }).find(field => field.key === key));
             if (needIntersection) {
               return (
                 <TableVirtualHeaderCell {...cellProps}>

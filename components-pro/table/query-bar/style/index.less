@@ -628,6 +628,12 @@
               border: @border-width-base solid @input-border-color;
             }
 
+            .@{c7n-pro-prefix}-calendar-picker {
+              height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+              padding-top: 0;
+              padding-bottom: 0;
+            }
+
             .@{c7n-pro-prefix}-calendar-picker-range > label,
             .@{c7n-pro-prefix}-input-number-multiple > label,
             .@{c7n-pro-prefix}-select-multiple > label {
@@ -640,7 +646,25 @@
 
             .@{c7n-pro-prefix}-input-number-multiple .@{c7n-pro-prefix}-input-number,
             .@{c7n-pro-prefix}-select-multiple .@{c7n-pro-prefix}-select {
-              min-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;;
+              min-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+              padding-top: 0;
+              padding-bottom: 0;
+            }
+
+            .@{c7n-pro-prefix}-input-number-multiple .@{c7n-pro-prefix}-input-number > ul {
+              padding-top: 0;
+              padding-bottom: 0;
+            }
+
+            .@{c7n-pro-prefix}-select-multiple .@{c7n-pro-prefix}-select > ul {
+              padding-top: 0;
+              padding-bottom: 0;
+            }
+
+            .@{c7n-pro-prefix}-calendar-picker-range .@{c7n-pro-prefix}-calendar-picker-range-text {
+              height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+              padding-top: 0;
+              padding-bottom: 0;
             }
           }
 
@@ -648,6 +672,18 @@
           &:hover {
             background-color: transparent;
             border-radius: @border-radius-base;
+
+            .@{table-prefix-cls}-filter-item {
+              input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+                border-color: @input-hover-border-color;
+              }
+
+              .@{c7n-pro-prefix}-calendar-picker-range > label,
+              .@{c7n-pro-prefix}-input-number-multiple > label,
+              .@{c7n-pro-prefix}-select-multiple > label {
+                border-color: @input-hover-border-color;
+              }
+            }
           }
 
           .@{table-prefix-cls}-filter-item-close {
