@@ -1974,7 +1974,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       props: { dataSet, selectionMode },
       prefixCls,
-      tableStore: { pagination, showSelectionTips, showCachedSelection },
+      tableStore: { pagination, showSelectionTips, showCachedTips, showCachedSelection },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1984,7 +1984,7 @@ export default class Table extends DataSetComponent<TableProps> {
           <Pagination
             key={`pagination-${position}`}
             {...paginationProps}
-            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips || showCachedSelection })}
+            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips || showCachedTips || showCachedSelection })}
             dataSet={dataSet}
           >
             {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}

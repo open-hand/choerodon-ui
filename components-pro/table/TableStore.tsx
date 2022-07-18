@@ -42,7 +42,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader, isDisabledRow } from './utils';
+import { getCachedCounts, getCachedRecords, getColumnKey, getHeader, isDisabledRow } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -1599,7 +1599,13 @@ export default class TableStore {
 
   @observable showCachedSelection?: boolean;
 
+  @observable defaultRecordCachedType?: RecordCachedType;
+
   @observable recordCachedType?: RecordCachedType;
+
+  get computedRecordCachedType(): RecordCachedType | undefined {
+    return this.recordCachedType || this.defaultRecordCachedType;
+  }
 
   get isTree(): boolean {
     return this.props.mode === TableMode.tree;
@@ -1931,9 +1937,9 @@ export default class TableStore {
   @observable groupedDataWithHeader: Group[];
 
   get cachedDataInType(): Record[] {
-    const { dataSet, showCachedSelection, recordCachedType = RecordCachedType.selected } = this;
+    const { dataSet, showCachedSelection, computedRecordCachedType = RecordCachedType.selected } = this;
     if (showCachedSelection) {
-      switch (recordCachedType) {
+      switch (computedRecordCachedType) {
         case RecordCachedType.selected:
           return dataSet.cachedSelected;
         case RecordCachedType.add:
@@ -1986,23 +1992,75 @@ export default class TableStore {
   }
 
   @computed
-  get indeterminate(): boolean {
-    const { dataSet } = this;
+  get cachedIndeterminate(): boolean {
+    const { dataSet, showCachedSelection } = this;
     if (dataSet) {
-      const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength !== dataSet.records.length;
+      const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
+        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+      if (cachedSelectedLength) {
+        return cachedSelectedLength !== cachedRecordsLength;
+      }
     }
     return false;
   }
 
   @computed
-  get allChecked(): boolean {
+  get allCachedChecked(): boolean {
+    const { dataSet, showCachedSelection } = this;
+    if (dataSet) {
+      const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
+        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+      if (cachedSelectedLength) {
+        return cachedSelectedLength === cachedRecordsLength;
+      }
+    }
+    return false;
+  }
+
+  @computed
+  get currentIndeterminate(): boolean {
     const { dataSet } = this;
     if (dataSet) {
       const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength === dataSet.records.length;
+      if (selectedLength) {
+        return selectedLength !== dataSet.records.length;
+      }
     }
     return false;
+  }
+
+
+  @computed
+  get allCurrentChecked(): boolean {
+    const { dataSet } = this;
+    if (dataSet) {
+      const selectedLength = dataSet.currentSelected.length;
+      if (selectedLength) {
+        return selectedLength === dataSet.records.length;
+      }
+    }
+    return false;
+  }
+
+  @computed
+  get indeterminate(): boolean {
+    const { showCachedSelection } = this;
+    if (showCachedSelection) {
+      const { dataSet } = this;
+      const [cachedSelectedLength, cachedRecordsLength] =
+        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
+      return (cachedSelectedLength + dataSet.currentSelected.length) !== (cachedRecordsLength + dataSet.records.length);
+    }
+    return this.currentIndeterminate;
+  }
+
+  @computed
+  get allChecked(): boolean {
+    const { allCurrentChecked, showCachedSelection } = this;
+    if (showCachedSelection) {
+      return this.allCachedChecked && allCurrentChecked;
+    }
+    return allCurrentChecked;
   }
 
   get expandIconAsCell(): boolean {
@@ -2029,16 +2087,41 @@ export default class TableStore {
     return this.props.editMode === TableEditMode.inline;
   }
 
-  private handleSelectAllChange = action(value => {
+  checkAllCurrent() {
     const { dataSet, filter } = this.props;
-    const isSelectAll = value ? dataSet.currentSelected.length === dataSet.records.filter(record => record.selectable).length : !value;
-    if (!isSelectAll) {
-      dataSet.selectAll(filter);
+    dataSet.selectAll(filter);
+  }
+
+  unCheckAllCurrent() {
+    const { dataSet } = this.props;
+    dataSet.unSelectAll();
+  }
+
+  checkAllCached() {
+    if (this.showCachedSelection) {
+      const { dataSet } = this;
+      dataSet.batchSelect(
+        getCachedRecords(dataSet, this.computedRecordCachedType, this.showCachedTips),
+      );
+    }
+  }
+
+  unCheckAllCached() {
+    if (this.showCachedSelection) {
+      const { dataSet } = this;
+      dataSet.batchUnSelect(
+        getCachedRecords(dataSet, this.computedRecordCachedType, this.showCachedTips),
+      );
+    }
+  }
+
+  private handleSelectAllChange = action(() => {
+    if (this.allChecked) {
+      this.unCheckAllCurrent();
+      this.unCheckAllCached();
     } else {
-      dataSet.unSelectAll();
-      if (this.showCachedSelection) {
-        dataSet.clearCachedSelected();
-      }
+      this.checkAllCurrent();
+      this.checkAllCached();
     }
   });
 
@@ -2511,10 +2594,11 @@ export default class TableStore {
     switch (key) {
       case 'current': {
         if (this.allChecked) {
-          dataSet.unSelectAll();
+          this.unCheckAllCurrent();
+          this.unCheckAllCached();
         } else {
-          const { filter } = this.props;
-          dataSet.selectAll(filter);
+          this.checkAllCurrent();
+          this.checkAllCached();
         }
         break;
       }
@@ -2565,7 +2649,7 @@ export default class TableStore {
     if (this.props.showAllPageSelectionButton) {
       buttons.push(
         <Dropdown key="selectAllPage" overlay={this.renderAllPageSelectionMenu}>
-          <Icon type="baseline-arrow_drop_down" />
+          <Icon type="baseline-arrow_drop_down" className={`${this.prefixCls}-page-all-select`} />
         </Dropdown>,
       );
     }

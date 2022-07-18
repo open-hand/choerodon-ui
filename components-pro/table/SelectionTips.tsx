@@ -12,6 +12,7 @@ import ObserverSelect from '../select/Select';
 import { FuncType } from '../button/enum';
 import { Locale } from '../locale-context/locale';
 import TableStore from './TableStore';
+import { getCount } from './utils';
 
 const { Option } = ObserverSelect;
 
@@ -21,21 +22,6 @@ export const cachedTypeIntlMap: Record<RecordCachedType, keyof Locale['Table']> 
   [RecordCachedType.update]: 'cached_type_updated',
   [RecordCachedType.delete]: 'cached_type_destroyed',
 };
-
-function getCount(dataSet: DataSet, type?: RecordCachedType): number {
-  switch (type) {
-    case RecordCachedType.selected:
-      return dataSet.isAllPageSelection ? dataSet.totalCount - dataSet.unSelected.length : dataSet.selected.length;
-    case RecordCachedType.add:
-      return dataSet.created.length;
-    case RecordCachedType.update:
-      return dataSet.updated.length;
-    case RecordCachedType.delete:
-      return dataSet.destroyed.length;
-    default:
-      return 0;
-  }
-}
 
 interface CachedTipProps {
   dataSet: DataSet;
@@ -49,7 +35,7 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
     tableStore,
     prefixCls,
   } = props;
-  let { recordCachedType } = tableStore;
+  let { recordCachedType, defaultRecordCachedType } = tableStore;
   const options: ReactElement[] = [];
   const {
     selected: { length: selectedLength },
@@ -72,11 +58,16 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
           {$l('Table', cachedTypeIntlMap[key])}
         </Option>,
       );
-      if (!recordCachedType) {
-        recordCachedType = key;
+      if (!defaultRecordCachedType || key === RecordCachedType.add) {
+        defaultRecordCachedType = key;
       }
-    } else if (recordCachedType === key) {
-      recordCachedType = undefined;
+    } else {
+      if (recordCachedType === key) {
+        recordCachedType = undefined;
+      }
+      if (defaultRecordCachedType === key) {
+        defaultRecordCachedType = undefined;
+      }
     }
   });
   const optionsRenderer = useCallback(({ text, value }) => {
@@ -99,6 +90,15 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
     }
   }), [tableStore, recordCachedType]);
 
+  useEffect(action(() => {
+    if (tableStore.defaultRecordCachedType !== defaultRecordCachedType) {
+      tableStore.defaultRecordCachedType = defaultRecordCachedType;
+      if (defaultRecordCachedType === RecordCachedType.add) {
+        tableStore.showCachedSelection = true;
+      }
+    }
+  }), [tableStore, defaultRecordCachedType]);
+
   if (options.length) {
     return (
       <span>
@@ -109,15 +109,15 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
                 className={`${prefixCls}-cached-type`}
                 optionRenderer={optionsRenderer}
                 isFlat
-                value={recordCachedType}
+                value={recordCachedType || defaultRecordCachedType }
                 onChange={handleChangeRecordCachedType}
                 size={Size.small}
                 clearButton={false}
               >
                 {options}
               </ObserverSelect>
-            ) : $l('Table', cachedTypeIntlMap[recordCachedType || RecordCachedType.selected]),
-            count: getCount(dataSet, recordCachedType),
+            ) : $l('Table', cachedTypeIntlMap[recordCachedType || defaultRecordCachedType || RecordCachedType.selected]),
+            count: getCount(dataSet, recordCachedType || defaultRecordCachedType),
           })
         }
       </span>

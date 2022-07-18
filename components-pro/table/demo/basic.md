@@ -505,7 +505,6 @@ class App extends React.Component {
         dataSet={this.userDs}
         header="User"
         style={{ maxHeight: 'calc(100vh - 400px)' }}
-        rowNumber
         showAllPageSelectionButton
         showSelectionTips
         parityRow

@@ -2156,7 +2156,7 @@ export default class DataSet extends EventManager {
         }
         record.isSelected = true;
         if (!this.inBatchSelection) {
-          if (this.isAllPageSelection && (!this.cacheModifiedKeys || !record.dirty)) {
+          if (this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
             const cachedIndex = this.cachedRecords.indexOf(record);
             if (cachedIndex !== -1) {
               this.cachedRecords.splice(cachedIndex, 1);
@@ -2183,7 +2183,7 @@ export default class DataSet extends EventManager {
       if (record && record.selectable && record.isSelected) {
         record.isSelected = false;
         if (!this.inBatchSelection) {
-          if (!this.isAllPageSelection && (!this.cacheModifiedKeys || !record.dirty)) {
+          if (!this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
             const cachedIndex = this.cachedRecords.indexOf(record);
             if (cachedIndex !== -1) {
               this.cachedRecords.splice(cachedIndex, 1);

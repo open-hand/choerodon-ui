@@ -7,7 +7,7 @@ import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
-import { FieldType, RecordStatus } from '../data-set/enum';
+import { FieldType, RecordCachedType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
 import TreeSelect from '../tree-select/TreeSelect';
@@ -425,3 +425,40 @@ export function getCellVerticalSize(element: HTMLElement, prefixCls?: string) {
   }
 }
 
+export function getCachedRecords(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean): Record[] {
+  if (showCachedTips) {
+    switch (type) {
+      case RecordCachedType.selected:
+        return dataSet.cachedSelected;
+      case RecordCachedType.add:
+        return dataSet.cachedCreated;
+      case RecordCachedType.update:
+        return dataSet.cachedUpdated;
+      case RecordCachedType.delete:
+        return dataSet.cachedDestroyed;
+      default:
+        return [];
+    }
+  }
+  return dataSet.cachedRecords;
+}
+
+export function getCachedCounts(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean): [number, number] {
+  const cachedRecords = getCachedRecords(dataSet, type, showCachedTips);
+  return [cachedRecords.filter(r => r.isSelected).length, cachedRecords.length];
+}
+
+export function getCount(dataSet: DataSet, type?: RecordCachedType): number {
+  switch (type) {
+    case RecordCachedType.selected:
+      return dataSet.isAllPageSelection ? dataSet.totalCount - dataSet.unSelected.length : dataSet.selected.length;
+    case RecordCachedType.add:
+      return dataSet.created.length;
+    case RecordCachedType.update:
+      return dataSet.updated.length;
+    case RecordCachedType.delete:
+      return dataSet.destroyed.length;
+    default:
+      return 0;
+  }
+}

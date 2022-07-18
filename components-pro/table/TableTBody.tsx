@@ -16,6 +16,7 @@ import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, Droppa
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
+import ObserverCheckBox from '../check-box/CheckBox';
 import { ElementProps } from '../core/ViewComponent';
 import TableContext from './TableContext';
 import TableRow, { TableRowProps } from './TableRow';
@@ -258,7 +259,7 @@ function generateCachedRows(
   statistics?: Statistics | undefined,
 ): ReactNode[] {
   const { tableStore } = props;
-  const { showCachedTips, recordCachedType = showCachedTips ? RecordCachedType.selected : undefined } = tableStore;
+  const { showCachedTips, computedRecordCachedType = showCachedTips ? RecordCachedType.selected : undefined } = tableStore;
   const records = showCachedTips ? tableStore.cachedDataInType : tableStore.cachedData;
   if (records.length) {
     const index = { count: 0 };
@@ -269,7 +270,23 @@ function generateCachedRows(
         statistics,
         children: (
           <>
-            <span>{$l('Table', recordCachedType ? cachedTypeIntlMap[recordCachedType] : 'cached_records')}</span>
+            {
+              showCachedTips && (
+                <ObserverCheckBox
+                  className={`${tableStore.prefixCls}-cached-group-check`}
+                  checked={tableStore.allCachedChecked}
+                  indeterminate={tableStore.cachedIndeterminate}
+                  onChange={() => {
+                    if (tableStore.allCachedChecked) {
+                      tableStore.unCheckAllCached();
+                    } else {
+                      tableStore.checkAllCached();
+                    }
+                  }}
+                />
+              )
+            }
+            <span>{$l('Table', computedRecordCachedType ? cachedTypeIntlMap[computedRecordCachedType] : 'cached_records')}</span>
             {
               !showCachedTips && (
                 <Button
@@ -277,7 +294,7 @@ function generateCachedRows(
                   color={ButtonColor.primary}
                   icon="delete"
                   size={Size.small}
-                  onClick={() => handleClearCache(recordCachedType)}
+                  onClick={() => handleClearCache(computedRecordCachedType)}
                 />
               )
             }
@@ -411,7 +428,29 @@ function generateRows(
         lock,
         tableStore,
         statistics,
-        children: $l('Table', showCachedTips ? 'current_page' : 'current_page_records'),
+        children: (
+          <>
+            {
+              showCachedTips && (
+                <ObserverCheckBox
+                  className={`${tableStore.prefixCls}-cached-group-check`}
+                  checked={tableStore.allCurrentChecked}
+                  indeterminate={tableStore.currentIndeterminate}
+                  onChange={() => {
+                    if (tableStore.allCurrentChecked) {
+                      tableStore.unCheckAllCurrent();
+                    } else {
+                      tableStore.checkAllCurrent();
+                    }
+                  }}
+                />
+              )
+            }
+            {
+              $l('Table', showCachedTips ? 'current_page' : 'current_page_records')
+            }
+          </>
+        ),
       }),
     );
   }

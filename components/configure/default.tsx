@@ -160,6 +160,7 @@ const defaults = {
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),
   validationMessageFormatter: (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message,
   modalResizable: false,
+  tableShowCachedTips: true,
 };
 
 export default defaults;
