@@ -3179,7 +3179,7 @@ Then the query method will be auto invoke.`,
     if (cacheSelectionKeys || cacheModifiedKeys) {
       this.cachedRecords = cachedRecords.concat(records).reduce<Record[]>((list, record) => {
         if (
-          (cacheModifiedKeys && (isAllPageSelection ? !record.isSelected : record.isSelected)) ||
+          (cacheSelectionKeys && (isAllPageSelection ? !record.isSelected : record.isSelected)) ||
           (cacheModifiedKeys && isDirtyRecord(record))
         ) {
           record.isCurrent = false;
