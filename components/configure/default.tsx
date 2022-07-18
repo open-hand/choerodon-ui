@@ -132,6 +132,7 @@ const defaults = {
   modalKeyboard: true,
   modalMaskClosable: false,
   modalMovable: true,
+  modalClosable: false,
   buttonColor: ButtonColor.default,
   buttonFuncType: FuncType.raised,
   autoInsertSpaceInButton: false,
