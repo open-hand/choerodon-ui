@@ -2154,13 +2154,13 @@ export default class DataSet extends EventManager {
           });
         }
         record.isSelected = true;
-        if (!this.inBatchSelection) {
-          if (this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
-            const cachedIndex = this.cachedRecords.indexOf(record);
-            if (cachedIndex !== -1) {
-              this.cachedRecords.splice(cachedIndex, 1);
-            }
+        if (this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
+          const cachedIndex = this.cachedRecords.indexOf(record);
+          if (cachedIndex !== -1) {
+            this.cachedRecords.splice(cachedIndex, 1);
           }
+        }
+        if (!this.inBatchSelection) {
           this.fireEvent(DataSetEvents.select, { dataSet: this, record, previous });
           this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records: [record] });
         }
@@ -2181,13 +2181,13 @@ export default class DataSet extends EventManager {
       }
       if (record && record.selectable && record.isSelected) {
         record.isSelected = false;
-        if (!this.inBatchSelection) {
-          if (!this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
-            const cachedIndex = this.cachedRecords.indexOf(record);
-            if (cachedIndex !== -1) {
-              this.cachedRecords.splice(cachedIndex, 1);
-            }
+        if (!this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
+          const cachedIndex = this.cachedRecords.indexOf(record);
+          if (cachedIndex !== -1) {
+            this.cachedRecords.splice(cachedIndex, 1);
           }
+        }
+        if (!this.inBatchSelection) {
           this.fireEvent(DataSetEvents.unSelect, { dataSet: this, record });
           this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: [record] });
         }
