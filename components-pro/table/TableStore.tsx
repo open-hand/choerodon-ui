@@ -2049,7 +2049,8 @@ export default class TableStore {
       const { dataSet } = this;
       const [cachedSelectedLength, cachedRecordsLength] =
         getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
-      return (cachedSelectedLength + dataSet.currentSelected.length) !== (cachedRecordsLength + dataSet.records.length);
+      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
+      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.length);
     }
     return this.currentIndeterminate;
   }

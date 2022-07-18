@@ -28,7 +28,6 @@ import {
   checkParentByInsert,
   concurrentPromise,
   doExport,
-  exchangeTreeNode,
   exportExcel,
   findBindFieldBy,
   findRootParent,
@@ -2358,7 +2357,9 @@ export default class DataSet extends EventManager {
   }
 
   clearCachedSelected(): void {
+    const cachedSelected = this.cachedSelected.slice();
     this.setCachedSelected([]);
+    this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
   @action
@@ -2380,7 +2381,6 @@ export default class DataSet extends EventManager {
     } else if (selectionStrategy === CheckedStrategy.SHOW_CHILD) {
       cachedSelected.forEach(record => treeSelectParent(this, record, []));
     }
-    this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
   @action
@@ -3222,25 +3222,8 @@ Then the query method will be auto invoke.`,
     this.releaseCachedRecords();
   }
 
-  @action
-  releaseCachedSelected(cache?: boolean) {
-    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
-    if (cacheSelectionKeys) {
-      this.records = this.records.map(record => {
-        const index = cachedSelected.findIndex(cached =>
-          cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
-        );
-        if (index !== -1) {
-          const selected = cachedSelected.splice(index, 1)[0];
-          selected.isCached = false;
-          if (cache) {
-            return exchangeTreeNode(selected, record);
-          }
-          record.isSelected = !isAllPageSelection;
-        }
-        return record;
-      });
-    }
+  releaseCachedSelected() {
+    this.releaseCachedRecords();
   }
 
   @action
