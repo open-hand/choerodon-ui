@@ -233,8 +233,10 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   get modalClosable(): boolean {
-    const { closable } = this.props;
-    return this.getContextConfig('modalClosable') && !!closable;
+    if ('closable' in this.props) {
+      return this.props.closable!;
+    }
+    return this.getContextConfig('modalClosable');
   }
 
   get doc(): Document {
