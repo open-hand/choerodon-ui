@@ -732,6 +732,7 @@
       position: sticky;
       top: 0;
       z-index: 3;
+      color: @table-row-group-title-color;
       font-size: @font-size-sm;
       line-height: 2;
       background-color: @table-row-group-title-bg;
@@ -996,11 +997,11 @@
   }
 
   &-cached-group-check {
-    margin: 0 0.06rem;
+    margin: 0 0.07rem;
   }
 
   &-page-all-select {
-    margin-right: -0.17rem;
+    margin-right: -0.18rem;
   }
 
   .sm;
@@ -1084,6 +1085,14 @@
 
     .@{table-prefix-cls}-row.dragging-row > .@{table-prefix-cls}-cell:last-child {
       border-right: @table-border;
+    }
+
+    .@{table-prefix-cls}-cached-group-check {
+      margin: 0 0.06rem;
+    }
+
+    .@{table-prefix-cls}-page-all-select {
+      margin-right: -0.17rem;
     }
   }
 }
