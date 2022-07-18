@@ -91,8 +91,8 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
     );
   }
 
-  isEmpty() {
-    return false;
+  getWrapperClassNamesExcludeOutput(prefixCls, _): object | undefined {
+    return super.getWrapperClassNamesExcludeOutput(prefixCls, false);
   }
 
   renderSearcher(): ReactNode {
