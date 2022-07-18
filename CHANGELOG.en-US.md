@@ -42,6 +42,7 @@ timeline: true
 - 💄 `<pro>Lov`: Optimized disable the selection drop-down option during input field search.
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
+- 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
