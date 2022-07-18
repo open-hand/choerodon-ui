@@ -117,6 +117,7 @@ const prefixCls = getConfig('prefixCls');
 | drawerOkFirst | The ok button of the default Modal drawer is ranked first, and has a higher priority than modalOkFirst | boolean \| undefined | undefined |
 | modalResizable | modal是否可调整大小 | boolean |   |
 | modalMovable | modal是否可移动 | boolean |   |
+| modalClosable | modal关闭按钮 | boolean |   |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |
 | autoInsertSpaceInButton | 设置为 true 时，添加按钮中 2 个汉字之间的空格 | boolean | false |

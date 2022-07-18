@@ -232,6 +232,13 @@ export default class Modal extends ViewComponent<ModalProps> {
     return this.getContextConfig('drawerHeaderFooterCombined') && !!drawer;
   }
 
+  get modalClosable(): boolean {
+    if ('closable' in this.props) {
+      return this.props.closable!;
+    }
+    return this.getContextConfig('modalClosable');
+  }
+
   get doc(): Document {
     return getDocument(window);
   }
@@ -788,11 +795,12 @@ export default class Modal extends ViewComponent<ModalProps> {
     const {
       drawerHeaderFooterCombined,
       prefixCls,
-      props: { title, closable, movable = this.getContextConfig('modalMovable'), fullScreen, drawer },
+      props: { title, movable = this.getContextConfig('modalMovable'), fullScreen, drawer },
+      modalClosable,
     } = this;
     const footer = this.getFooter();
 
-    if (title || closable || movable || header) {
+    if (title || modalClosable || movable || header) {
       const headerProps: any = {
         className: classNames(`${prefixCls}-header`, {
           [`${prefixCls}-movable`]: movable && !fullScreen && !drawer,
@@ -816,9 +824,9 @@ export default class Modal extends ViewComponent<ModalProps> {
   getCloseButton(): ReactNode {
     const {
       prefixCls,
-      props: { closable },
+      modalClosable,
     } = this;
-    if (closable) {
+    if (modalClosable) {
       return (
         <button type="button" className={`${prefixCls}-header-button`} onClick={this.handleCancel}>
           <Icon type="close" />
@@ -868,12 +876,12 @@ export default class Modal extends ViewComponent<ModalProps> {
     const {
       prefixCls,
       drawerHeaderFooterCombined,
-      props: { closable },
+      modalClosable,
     } = this;
     if (title || closeButton) {
       return drawerHeaderFooterCombined ? (
         <div className={`${prefixCls}-drawer-header-combined`}>
-          {closable ? (
+          {modalClosable ? (
             <button type="button" className={`${prefixCls}-header-button ${prefixCls}-header-button-navigate`} onClick={this.handleCancel}>
               <Icon type="navigate_next" />
             </button>
