@@ -125,7 +125,6 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   static defaultProps = {
     suffixCls,
-    closable: false,
     mask: true,
     okButton: true,
     okCancel: true,
