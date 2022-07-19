@@ -95,6 +95,8 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
       tableStore.defaultRecordCachedType = defaultRecordCachedType;
       if (defaultRecordCachedType === RecordCachedType.add) {
         tableStore.showCachedSelection = true;
+      } else if (!defaultRecordCachedType) {
+        tableStore.showCachedSelection = false;
       }
     }
   }), [tableStore, defaultRecordCachedType]);
@@ -109,7 +111,7 @@ const CachedTips: FunctionComponent<CachedTipProps> = function CachedTip(props) 
                 className={`${prefixCls}-cached-type`}
                 optionRenderer={optionsRenderer}
                 isFlat
-                value={recordCachedType || defaultRecordCachedType }
+                value={recordCachedType || defaultRecordCachedType}
                 onChange={handleChangeRecordCachedType}
                 size={Size.small}
                 clearButton={false}

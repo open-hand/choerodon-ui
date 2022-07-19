@@ -487,6 +487,19 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
   );
 }
 
+function findRowMeta(rowMetaData: VirtualRowMetaData[], count: { index: number }): VirtualRowMetaData | undefined {
+  let { index } = count;
+  let meta = rowMetaData[index];
+  while (meta) {
+    if (meta.type === 'row') {
+      return meta;
+    }
+    index += 1;
+    count.index = index;
+    meta = rowMetaData[index];
+  }
+}
+
 const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
   const {
     lock, columnGroups, onClearCache, expandIconColumnIndex, tableStore, rowDragRender,
@@ -551,20 +564,20 @@ const VirtualRows: FunctionComponent<RowsProps> = function VirtualRows(props) {
     const { rowMetaData: oldRowMetaData, aggregation: tableAggregation } = tableStore;
     const { rowMetaData } = statistics;
     if (oldRowMetaData) {
-      oldRowMetaData.every(({ actualHeight, type, aggregation }, index) => {
+      const count = { index: -1 };
+      oldRowMetaData.every(({ actualHeight, type, aggregation }) => {
         if (type === 'group') {
           return true;
         }
+        count.index += 1;
         if (actualHeight !== undefined && aggregation === tableAggregation) {
-          const newMeta = rowMetaData[index];
+          const newMeta = findRowMeta(rowMetaData, count);
           if (newMeta) {
-            if (newMeta.type === 'row') {
-              newMeta.setHeight(actualHeight);
-            }
+            newMeta.setHeight(actualHeight);
             return true;
           }
         }
-        tableStore.lastMeasuredIndex = Math.max(index - 1, 0);
+        tableStore.lastMeasuredIndex = Math.max(count.index - 1, 0);
         return false;
       });
     } else {
