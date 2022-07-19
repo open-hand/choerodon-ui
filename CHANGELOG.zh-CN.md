@@ -44,6 +44,7 @@ timeline: true
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
 - 💄 `<pro>Table`: 优化动态筛选条查询支持数据源 modifiedCheck 提示。
 - 💄 `<pro>SelectBox`: 优化必填样式。
+- 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。

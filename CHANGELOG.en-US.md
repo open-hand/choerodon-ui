@@ -44,6 +44,7 @@ timeline: true
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
 - 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
 - 💄 `<pro>SelectBox`: Optimized required styles.
+- 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
