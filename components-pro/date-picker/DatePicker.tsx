@@ -281,7 +281,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getDefaultViewMode() {
-    const { mode } = this.props;
+    const mode = this.getProp('mode', 'dateMode');
     if (mode === ViewMode.decade || mode === undefined) {
       return ViewMode.date;
     }

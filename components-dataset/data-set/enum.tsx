@@ -144,3 +144,13 @@ export enum ValidationSelfType {
   minLength = 'minLength',
   maxLength = 'maxLength',
 }
+
+export enum DateMode {
+  time = 'time',
+  dateTime = 'dateTime',
+  week = 'week',
+  date = 'date',
+  month = 'month',
+  year = 'year',
+  decade = 'decade',
+}

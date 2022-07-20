@@ -11,7 +11,18 @@ import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import { CheckedStrategy, DataSetEvents, DataSetSelection, DataSetStatus, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import {
+  CheckedStrategy,
+  DataSetEvents,
+  DataSetSelection,
+  DataSetStatus,
+  DateMode,
+  FieldFormat,
+  FieldIgnore,
+  FieldTrim,
+  FieldType,
+  SortOrder,
+} from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
@@ -446,6 +457,7 @@ export type FieldProps = {
    * 值变化前，拦截并返回新的值
    */
   processValue?: (value: any, range?: 0 | 1) => any;
+  dateMode?: DateMode;
 };
 
 const defaultProps: FieldProps = {

@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
 - 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips` properties.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
+- 🌟 `<pro>DataSet.Field`: Added `dateMode` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.

@@ -1370,9 +1370,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return (field && field.get('type', this.record)) || FieldType.string;
   }
 
-  getProp(propName: string) {
+  getProp(propName: string, fieldPropName = propName) {
     const { field, observableProps, record } = this;
-    return defaultTo(field && field.get(propName, record), propName in observableProps ? observableProps[propName] : this.props[propName]);
+    return defaultTo(field && field.get(fieldPropName, record), propName in observableProps ? observableProps[propName] : this.props[propName]);
   }
 
   @autobind
