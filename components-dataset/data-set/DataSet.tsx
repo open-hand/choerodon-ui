@@ -2356,6 +2356,7 @@ export default class DataSet extends EventManager {
     this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
+  @action
   clearCachedSelected(): void {
     const cachedSelected = this.cachedSelected.slice();
     this.setCachedSelected([]);
@@ -2867,8 +2868,13 @@ Then the query method will be auto invoke.`,
   @action
   loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
-    if (cache) {
-      this.storeRecords();
+    const cacheRecords = this.getConfig('cacheRecords');
+    if (cacheRecords) {
+      if (cache) {
+        this.storeRecords();
+      }
+    } else {
+      this.storeRecords(cache === true);
     }
     const {
       paging,
@@ -2898,10 +2904,19 @@ Then the query method will be auto invoke.`,
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
     }
-    if (cache) {
-      this.releaseCachedRecords();
+    if (cacheRecords) {
+      if (cache) {
+        this.releaseCachedRecords();
+      } else {
+        this.clearCachedRecords();
+      }
     } else {
-      this.clearCachedRecords();
+      this.releaseCachedSelected();
+      if (cache) {
+        this.releaseCachedModified();
+      } else {
+        this.clearCachedModified();
+      }
     }
     const nextRecord =
       autoLocateFirst && ((idField && parentField || childrenField) ? this.getFromTree(0) : this.get(0));
@@ -3174,13 +3189,13 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  private storeRecords() {
+  private storeRecords(cacheModified = true) {
     const { cacheSelectionKeys, cacheModifiedKeys, records, cachedRecords, isAllPageSelection } = this;
-    if (cacheSelectionKeys || cacheModifiedKeys) {
+    if (cacheSelectionKeys || (cacheModified && cacheModifiedKeys)) {
       this.cachedRecords = cachedRecords.concat(records).reduce<Record[]>((list, record) => {
         if (
           (cacheSelectionKeys && (isAllPageSelection ? !record.isSelected : record.isSelected)) ||
-          (cacheModifiedKeys && isDirtyRecord(record))
+          ((cacheModified && cacheModifiedKeys) && isDirtyRecord(record))
         ) {
           record.isCurrent = false;
           record.isCached = true;
@@ -3192,8 +3207,9 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  releaseCachedRecords() {
-    const { cacheModifiedKeys, cacheSelectionKeys } = this;
+  releaseCachedRecords(onlySelected?: boolean) {
+    const { cacheSelectionKeys } = this;
+    const cacheModifiedKeys = onlySelected ? undefined : this.cacheModifiedKeys;
     if (cacheModifiedKeys || cacheSelectionKeys) {
       const cachedKeys = union(cacheModifiedKeys, cacheSelectionKeys);
       const { records } = this;
@@ -3204,12 +3220,16 @@ Then the query method will be auto invoke.`,
         );
         if (index !== -1) {
           const cached = cachedRecords.splice(index, 1)[0];
-          record.isSelected = cached.isSelected;
-          const { dirtyData } = cached;
-          if (dirtyData) {
-            dirtyData.forEach((_, key) => {
-              record.set(key, cached.get(key));
-            });
+          if (cacheSelectionKeys) {
+            record.isSelected = cached.isSelected;
+          }
+          if (cacheModifiedKeys) {
+            const { dirtyData } = cached;
+            if (dirtyData) {
+              dirtyData.forEach((_, key) => {
+                record.set(key, cached.get(key));
+              });
+            }
           }
         }
         return record;
@@ -3223,7 +3243,7 @@ Then the query method will be auto invoke.`,
   }
 
   releaseCachedSelected() {
-    this.releaseCachedRecords();
+    this.releaseCachedRecords(!this.getConfig('cacheRecords'));
   }
 
   @action

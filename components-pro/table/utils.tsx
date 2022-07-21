@@ -443,9 +443,37 @@ export function getCachedRecords(dataSet: DataSet, type?: RecordCachedType, show
   return dataSet.cachedRecords;
 }
 
-export function getCachedCounts(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean): [number, number] {
+function isRecordSelectable(record: Record, filter?: (record: Record) => boolean): boolean {
+  return record.selectable && (!filter || filter(record));
+}
+
+export function getCachedSelectableRecords(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean, filter?: (record: Record) => boolean): Record[] {
+  return getCachedRecords(dataSet, type, showCachedTips).filter(r => isRecordSelectable(r, filter));
+}
+
+export function getCurrentSelectableCounts(dataSet: DataSet, filter?: (record: Record) => boolean): [number, number] {
+  return dataSet.records.reduce<[number, number]>(([selectedLength, recordLength], r) => {
+    if (isRecordSelectable(r, filter)) {
+      recordLength += 1;
+      if (r.isSelected) {
+        selectedLength += 1;
+      }
+    }
+    return [selectedLength, recordLength];
+  }, [0, 0]);
+}
+
+export function getCachedSelectableCounts(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean, filter?: (record: Record) => boolean): [number, number] {
   const cachedRecords = getCachedRecords(dataSet, type, showCachedTips);
-  return [cachedRecords.filter(r => r.isSelected).length, cachedRecords.length];
+  return cachedRecords.reduce<[number, number]>(([selectedLength, recordLength], r) => {
+    if (isRecordSelectable(r, filter)) {
+      recordLength += 1;
+      if (r.isSelected) {
+        selectedLength += 1;
+      }
+    }
+    return [selectedLength, recordLength];
+  }, [0, 0]);
 }
 
 export function getCount(dataSet: DataSet, type?: RecordCachedType): number {

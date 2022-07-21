@@ -42,7 +42,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getCachedCounts, getCachedRecords, getColumnKey, getHeader, isDisabledRow } from './utils';
+import { getCachedSelectableCounts, getCachedSelectableRecords, getColumnKey, getCurrentSelectableCounts, getHeader, isDisabledRow } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -1996,7 +1996,7 @@ export default class TableStore {
     const { dataSet, showCachedSelection } = this;
     if (dataSet) {
       const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
-        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
       if (cachedSelectedLength) {
         return cachedSelectedLength !== cachedRecordsLength;
       }
@@ -2009,7 +2009,7 @@ export default class TableStore {
     const { dataSet, showCachedSelection } = this;
     if (dataSet) {
       const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
-        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
       if (cachedSelectedLength) {
         return cachedSelectedLength === cachedRecordsLength;
       }
@@ -2019,11 +2019,11 @@ export default class TableStore {
 
   @computed
   get currentIndeterminate(): boolean {
-    const { dataSet } = this;
+    const { dataSet, filter } = this.props;
     if (dataSet) {
-      const selectedLength = dataSet.currentSelected.length;
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
       if (selectedLength) {
-        return selectedLength !== dataSet.records.length;
+        return selectedLength !== currentLength;
       }
     }
     return false;
@@ -2032,11 +2032,11 @@ export default class TableStore {
 
   @computed
   get allCurrentChecked(): boolean {
-    const { dataSet } = this;
+    const { dataSet, filter } = this.props;
     if (dataSet) {
-      const selectedLength = dataSet.currentSelected.length;
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
       if (selectedLength) {
-        return selectedLength === dataSet.records.length;
+        return selectedLength === currentLength;
       }
     }
     return false;
@@ -2048,7 +2048,7 @@ export default class TableStore {
     if (showCachedSelection) {
       const { dataSet } = this;
       const [cachedSelectedLength, cachedRecordsLength] =
-        getCachedCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
       const allLength = cachedSelectedLength + dataSet.currentSelected.length;
       return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.length);
     }
@@ -2100,18 +2100,18 @@ export default class TableStore {
 
   checkAllCached() {
     if (this.showCachedSelection) {
-      const { dataSet } = this;
+      const { dataSet, filter } = this.props;
       dataSet.batchSelect(
-        getCachedRecords(dataSet, this.computedRecordCachedType, this.showCachedTips),
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
       );
     }
   }
 
   unCheckAllCached() {
     if (this.showCachedSelection) {
-      const { dataSet } = this;
+      const { dataSet, filter } = this.props;
       dataSet.batchUnSelect(
-        getCachedRecords(dataSet, this.computedRecordCachedType, this.showCachedTips),
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
       );
     }
   }
