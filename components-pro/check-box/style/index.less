@@ -11,7 +11,7 @@
   &-wrapper,
   &-wrapper.@{field-prefix-cls} {
     display: inline-flex;
-    
+
     &>.icon-help {
       margin-left: @label-wrapper-padding-horizontal;
       color: @field-icon-help-color;
@@ -44,10 +44,10 @@
 
   &:hover + &-inner,
   &-wrapper:hover &-inner {
-    border-color: @primary-7;
+    border-color: @primary-color;
   }
   &:focus + &-inner {
-    border-color: @primary-7;
+    border-color: @primary-color;
     box-shadow: 0 0 @outline-blur-size @outline-width fade(@outline-color, 20%);
   }
 
@@ -60,8 +60,8 @@
   &:hover &:checked + &-inner,
   &-indeterminate:hover &-inner,
   &:focus:checked + &-inner {
-    background-color: @primary-7;
-    border-color: @primary-7;
+    background-color: @primary-color;
+    border-color: @primary-color;
   }
 
   &-indeterminate &-inner {
