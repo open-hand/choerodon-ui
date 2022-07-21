@@ -1216,13 +1216,23 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   handleOptionSelect(record: Record | Record[]) {
+    const searchText = this.searchText as string;
     this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
+    this.multipleSearch(searchText);
   }
 
   handleOptionUnSelect(record: Record | Record[]) {
     const { valueField } = this;
+    const searchText = this.searchText as string;
     const newValues = isArrayLike(record) ? record.map(r => r.get(valueField)) : [record.get(valueField)];
     this.removeValues(newValues, -1);
+    this.multipleSearch(searchText);
+  }
+
+  multipleSearch(text: string) {
+    if (this.multiple && this.searchable && !isSearchTextEmpty(text)) {
+      this.setText(text);
+    }
   }
 
   handleSearch(_text?: string | string[] | undefined) {
@@ -1442,6 +1452,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { onOption },
     } = this;
     const values = this.getValues();
+    const searchText = this.searchText as string;
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
       const value = record.get(valueField);
@@ -1455,11 +1466,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect);
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
+    this.multipleSearch(searchText);
+
   }
 
   @autobind
   unChooseAll() {
+    const searchText = this.searchText as string;
     this.clear();
+    this.multipleSearch(searchText);
   }
 
   @autobind
