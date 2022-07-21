@@ -61,8 +61,6 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @observable text?: string;
 
-  midText: string;
-
   disposer: IReactionDisposer;
 
   @observable theme?: string;
@@ -80,12 +78,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       // 原因在于 record 中的值为 raw的非格式化数据 blur后因为进行了一次record数据的修改 所以再次重新那数据必然导致
       // 当数据存在错误的时候  codeArea去格式化 因为格式化失败了
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
-      // 因此需要使用中间变量进行处理
       const { formatter } = props;
       const recordValue = this.getValue();
       const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
-      // 判断跟中间值是否一致 通过这个判断 数据的来源是 blur的时候设置的值 还是直接通过外部进行修改的值
-      if (recordValue !== this.midText) {
+      // 当 dataSet 作为数据源时，通过 field.getValue 进行最新值监听，完成显示值 text 的更新
+      if (this.dataSet && this.name) {
         this.setText(value);
       }
     });
@@ -250,7 +247,6 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     // 更新DataSet的值之前，先去拿到原始的raw格式
     const codeMirrorText = codeMirrorInstance.getValue();
     const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText;
-    this.midText = value;
     this.setValue(value);
     this.isFocused = false;
     this.isFocus = false;

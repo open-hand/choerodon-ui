@@ -396,7 +396,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  handleDataSetUpdate({ record }) {
+  async handleDataSetUpdate({ record, name, oldValue }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
@@ -404,8 +404,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     this.setConditionStatus(status);
     if (autoQuery) {
-      dataSet.query();
-      onQuery();
+      if (await dataSet.modifiedCheck()) {
+        dataSet.query();
+        onQuery();
+      } else {
+        record.init(name, oldValue);
+      }
     }
   }
 
@@ -671,9 +675,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return (
       <span
         className={`${prefixCls}-filter-menu-query`}
-        onClick={(e) => {
+        onClick={async (e) => {
           e.stopPropagation();
-          dataSet.query();
+          if (await dataSet.modifiedCheck()) dataSet.query();
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
@@ -1030,10 +1034,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @autobind
-  handleQuery(collapse?: boolean) {
+  async handleQuery(collapse?: boolean) {
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      dataSet.query();
+      if (await dataSet.modifiedCheck()) dataSet.query();
     }
     if (!collapse) {
       onQuery();

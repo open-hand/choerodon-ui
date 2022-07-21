@@ -317,11 +317,18 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   @autobind
-  handleQuery() {
+  async handleQuery() {
     const {
+      tableStore,
       dataSet,
     } = this.context;
-    return dataSet.query();
+    if (tableStore.queryBar === TableQueryBarType.filterBar) {
+      if (await dataSet.modifiedCheck()) {
+        return dataSet.query();
+      }
+    } else {
+      return dataSet.query();
+    }
   }
 
   @autobind

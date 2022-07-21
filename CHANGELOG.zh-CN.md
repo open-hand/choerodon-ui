@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder modalClosable 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
@@ -42,7 +42,9 @@ timeline: true
 - 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
 - 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
+- 💄 `<pro>Table`: 优化动态筛选条查询支持数据源 modifiedCheck 提示。
 - 💄 `<pro>SelectBox`: 优化必填样式。
+- 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
@@ -72,6 +74,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复头分组单元格编辑时记录没有对应的问题。
 - 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
+- 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 
 ## 1.5.5
 

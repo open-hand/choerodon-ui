@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder` properties.
+- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder` `modalClosable` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
@@ -42,7 +42,9 @@ timeline: true
 - 💄 `<pro>Lov`: Optimized disable the selection drop-down option during input field search.
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
+- 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
 - 💄 `<pro>SelectBox`: Optimized required styles.
+- 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
@@ -72,6 +74,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
+- 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 
 ## 1.5.5
 

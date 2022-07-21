@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
+import classNames from 'classnames';
 import Icon from 'choerodon-ui/lib/icon';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import TableButtons from './TableButtons';
@@ -14,6 +15,7 @@ import { ButtonColor, FuncType } from '../../button/enum';
 import { ButtonProps } from '../../button/Button';
 import Form from '../../form';
 import { FormProps } from '../../form/Form';
+import { LabelLayout } from '../../form/enum';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import { Tooltip as LabelTooltip } from '../../core/enum';
@@ -200,7 +202,11 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       return (
         <div key="query_bar" className={`${prefixCls}-professional-query-bar`}>
           {currentFields}
-          <span className={`${prefixCls}-professional-query-bar-button`}>
+          <span
+            className={classNames(`${prefixCls}-professional-query-bar-button`, {
+              [`${prefixCls}-professional-query-bar-button-vertical`]: formProps && formProps.labelLayout ? formProps.labelLayout === LabelLayout.vertical : false})
+            }
+          >
             {moreFieldsButton}
             {this.getResetButton()}
             <Button color={ButtonColor.primary} wait={500} onClick={() => this.handleQuery()}>
