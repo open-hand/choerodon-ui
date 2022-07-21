@@ -66,6 +66,10 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
     if (hasPlaceHolder) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar(), true) }} />);
     }
+    if (overflowX) {
+      // 增加一个没有宽度的 col, 解决拖拽列宽回弹的问题。
+      cols.push(<col key="undefined-column" />);
+    }
     return <colgroup>{cols}</colgroup>;
   }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder, overflowX]);
 
