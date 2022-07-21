@@ -2057,11 +2057,15 @@ export default class TableStore {
 
   @computed
   get allChecked(): boolean {
-    const { allCurrentChecked, showCachedSelection } = this;
+    const { showCachedSelection } = this;
     if (showCachedSelection) {
-      return this.allCachedChecked && allCurrentChecked;
+      const { dataSet } = this;
+      const [cachedSelectedLength, cachedRecordsLength] =
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
+      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
+      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.length);
     }
-    return allCurrentChecked;
+    return this.allCurrentChecked;
   }
 
   get expandIconAsCell(): boolean {
