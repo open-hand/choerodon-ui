@@ -44,7 +44,7 @@
     }
   }
 
-  &:checked + &-inner {
+  &&:checked + &-inner {
     border-color: @primary-color;
 
     &::before {
@@ -54,9 +54,9 @@
     }
   }
 
-  &:hover:not(:checked) + &-inner,
-  &-wrapper:hover &:not(:checked) + &-inner,
-  &:focus:not(:checked) + &-inner {
+  &&:hover:not(:checked) + &-inner,
+  &-wrapper:hover &&:not(:checked) + &-inner,
+  &&:focus:not(:checked) + &-inner {
     border-color: @radio-uncheck-hover-border-color;
 
     &::before {
@@ -68,7 +68,7 @@
     border-color: @input-highlight-border-color;
   }
 
-  &-highlight &:checked + &-inner {
+  &-highlight &&:checked + &-inner {
     border-color: @input-highlight-border-color;
 
     &::before {
@@ -76,11 +76,11 @@
     }
   }
 
-  &:focus + &-inner {
+  &&:focus + &-inner {
     box-shadow: 0 0 @outline-blur-size @outline-width @radio-shadow-color;
   }
 
-  &:disabled + &-inner {
+  &&:disabled + &-inner {
     color: @radio-disabled-color;
     background-color: @radio-disabled-bg;
     border-color: @radio-disabled-border-color !important;
@@ -90,7 +90,7 @@
     }
   }
 
-  &:disabled:checked + &-inner {
+  &&:disabled:checked + &-inner {
     color: @radio-disabled-check-color;
     background-color: @radio-disabled-check-bg;
     border-color: @radio-disabled-check-border-color !important;

@@ -316,7 +316,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
               default:
             }
           };
-          const defaultButtonProps = getButtonProps(button);
+          const defaultButtonProps = getButtonProps(button as TableCommandType);
           if (defaultButtonProps) {
             const { afterClick, ...buttonProps } = tableButtonProps;
             if (afterClick) {

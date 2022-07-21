@@ -426,7 +426,7 @@ export default class Lov extends Select<LovProps> {
         if (lovQueryCachedSelected) {
           const fetchCachedSelected = () => {
             if (needToFetch.size) {
-              lovQueryCachedSelected(lovCode, needToFetch).then(action((results) => {
+              lovQueryCachedSelected(lovCode, needToFetch).then(action((results: object[]) => {
                 results.forEach((data) => {
                   const record = needToFetch.get(data[valueField]);
                   if (record) {

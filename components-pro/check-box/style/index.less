@@ -58,23 +58,23 @@
     .check;
   }
 
-  &:checked + &-inner {
+  &&:checked + &-inner {
     background-color: @primary-color !important;
   }
 
-  &:hover &:checked + &-inner,
-  &-indeterminate:hover &-inner,
-  &:focus:checked + &-inner {
+  &&:hover:checked + &-inner,
+  &-indeterminate:hover & + &-inner,
+  &&:focus:checked + &-inner {
     background-color: @primary-color;
     border-color: @primary-color;
   }
 
-  &-indeterminate &-inner {
+  &-indeterminate & + &-inner {
     background-color: @checkbox-indeterminate-bg !important;
     .indeterminate;
   }
 
-  &:disabled + &-inner {
+  &&:disabled + &-inner {
     color: @checkbox-disabled-color;
     background-color: @checkbox-disabled-bg !important;
     background-clip: content-box;
@@ -85,7 +85,7 @@
     }
   }
 
-  &:disabled:checked + &-inner {
+  &&:disabled:checked + &-inner {
     color: @checkbox-disabled-check-color;
     background-color: @checkbox-disabled-check-bg !important;
     border-color: @checkbox-disabled-check-border-color !important;

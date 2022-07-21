@@ -10,8 +10,7 @@ import React, {
   ReactElement,
   ReactNode,
 } from 'react';
-// @ts-expect-error: Cancelable is removed from the new lodash
-import { Cancelable, DebounceSettings } from 'lodash';
+import { DebouncedFunc, DebounceSettings } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
@@ -167,7 +166,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   tagContainer: HTMLUListElement | null;
 
-  handleChangeWait: Function & Cancelable;
+  handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
 
   addonAfterRef?: HTMLDivElement | null;
 
@@ -1416,7 +1415,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  getHandleChange(props): Function & Cancelable {
+  getHandleChange(props): DebouncedFunc<(...value: any[]) => void> {
     const { wait, waitType } = props;
     if (wait && waitType) {
       const options: DebounceSettings = { leading: true, trailing: true };
