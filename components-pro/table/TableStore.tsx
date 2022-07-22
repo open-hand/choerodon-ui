@@ -1820,9 +1820,9 @@ export default class TableStore {
 
   @computed
   get leftColumns(): ColumnProps[] {
-    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
+    const { dragColumnAlign, leftOriginalColumns, expandColumn, expandIconColumnIndex, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
     return observable.array([
-      expandColumn,
+      expandIconColumnIndex ? undefined : expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
       selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
@@ -1844,15 +1844,27 @@ export default class TableStore {
 
   @computed
   get columns(): ColumnProps[] {
-    const { leftColumns, rightColumns, selectionColumn, props: { rowBoxPlacement } } = this;
+    const { leftColumns, rightColumns, selectionColumn, expandColumn, expandIconColumnIndex, props: { rowBoxPlacement } } = this;
     const originalColumns = this.originalColumns.slice();
     if (isNumber(rowBoxPlacement) && selectionColumn) {
       originalColumns.splice(rowBoxPlacement as number, 0, selectionColumn);
     }
-    return observable.array([
+    const allColumns = Array.from([
       ...leftColumns,
       ...originalColumns,
       ...rightColumns,
+    ]);
+    if (expandIconColumnIndex && expandColumn) {
+      let lock: boolean | ColumnLock = true;
+      if (expandIconColumnIndex > leftColumns.length && expandIconColumnIndex <= leftColumns.length + originalColumns.length) {
+        lock = false;
+      } else if (expandIconColumnIndex > leftColumns.length + originalColumns.length) {
+        lock = ColumnLock.right;
+      }
+      allColumns.splice(expandIconColumnIndex, 0, { ...expandColumn, lock });
+    }
+    return observable.array([
+      ...allColumns,
     ]);
   }
 
@@ -2034,15 +2046,15 @@ export default class TableStore {
   }
 
   get expandIconColumnIndex(): number {
-    if (this.expandIconAsCell) {
-      return 0;
-    }
     const {
       dragColumnAlign,
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
+    if (!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') {
+      return 0;
+    }
+    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
   }
 
   get inlineEdit() {

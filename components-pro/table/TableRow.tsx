@@ -326,13 +326,14 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
           rowProps.hidden = true;
         }
         const Element = isExpanded || !parityRow ? 'tr' : 'div';
+        const hasExpandTd = expandIconAsCell && !tableStore.expandIconColumnIndex;
         expandRows.push(
           <Element {...expandRowExternalProps} {...rowProps}>
-            {expandIconAsCell && <td className={`${prefixCls}-cell`} key={EXPAND_KEY} />}
+            {hasExpandTd && <td className={`${prefixCls}-cell`} key={EXPAND_KEY} />}
             <td
               key={`${EXPAND_KEY}-rest`}
               className={`${prefixCls}-cell`}
-              colSpan={columnGroups.leafs.length - (expandIconAsCell ? 1 : 0)}
+              colSpan={columnGroups.leafs.length - (hasExpandTd ? 1 : 0)}
             >
               <div className={`${prefixCls}-cell-inner`}>
                 {expandedRowRenderer({ dataSet, record })}
