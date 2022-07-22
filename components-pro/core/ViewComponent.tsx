@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import shallowEqual from 'shallowequal';
 import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
@@ -331,10 +332,13 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
 
   @action
   updateObservableProps(props, context: any) {
-    Object.assign(
-      this.observableProps,
-      this.getObservableProps(props, context),
-    );
+    const newProps = this.getObservableProps(props, context);
+    if (!shallowEqual(newProps, this.observableProps)) {
+      Object.assign(
+        this.observableProps,
+        newProps,
+      );
+    }
   }
 
   getOmitPropsKeys(): string[] {
