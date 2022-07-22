@@ -174,10 +174,10 @@ export default class Align extends Component<AlignProps, any> {
         const r1 = (source as HTMLElement).getBoundingClientRect();
         const r2 = (element as HTMLElement).getBoundingClientRect();
         if (adjustX) {
-          translate.x = r1.left + r1.width / 2 - r2.left - r2.width / 2;
+          translate.x = Math.round(r1.left + r1.width / 2 - r2.left - r2.width / 2);
         }
         if (adjustY) {
-          translate.y = r1.top + r1.height / 2 - r2.top - r2.height / 2;
+          translate.y = Math.round(r1.top + r1.height / 2 - r2.top - r2.height / 2);
         }
       }
       onAlign(source, result, element, translate, point);
