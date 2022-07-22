@@ -33,12 +33,9 @@ export default class Menus extends Component {
   }
 
   get expandIcon() {
-    const { expandIcon, iconDirection } = this.props;
+    const { expandIcon } = this.props;
     if (expandIcon) {
       return expandIcon;
-    }
-    if (iconDirection === 'left') {
-      return <Icon type="navigate_before" />;
     }
     return <Icon type="navigate_next" />;
   }
@@ -49,7 +46,7 @@ export default class Menus extends Component {
     return fieldNames[name] || defaultFieldNames[name];
   }
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, selectedValues, iconDirection } = this.props;
+    const { prefixCls, expandTrigger, selectedValues } = this.props;
     const { expandIcon } = this;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
@@ -106,9 +103,8 @@ export default class Menus extends Component {
         title={title}
         {...expandProps}
       >
-        {iconDirection === 'left' && expandIconNode}
         {option[labelField]}
-        {iconDirection !== 'left' && expandIconNode}
+        {expandIconNode}
       </li>
     );
   }
