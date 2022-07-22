@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import difference from 'lodash/difference';
+import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
@@ -970,14 +971,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
               {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden, showHelp } = element.props;
+                const { name, hidden, showHelp, disabled } = element.props;
                 const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const itemClassName = `${prefixCls}-filter-item`;
+                const itemContentClassName = classNames(`${prefixCls}-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 return (
                   <div
-                    className={`${prefixCls}-filter-content`}
+                    className={itemContentClassName}
                     key={name}
                     onClick={() => {
                       const editor = this.refEditors.get(name);
@@ -990,19 +994,25 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       {queryField && queryField.get('label')}
                       {isLabelShowHelp ? this.renderTooltipHelp(queryField && queryField.get('help')) : null}
                     </span>
-                    <span className={itemClassName}>{this.createFields(element, name)}</span>
+                    <span className={`${prefixCls}-filter-item`}>
+                      {this.createFields(element, name)}
+                    </span>
                   </div>
                 );
               })}
               {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden, showHelp } = element.props;
+                const { name, hidden, showHelp, disabled } = element.props;
                 const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const itemContentClassName = classNames(`${prefixCls}-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 if (selectFields.includes(name)) {
                   return (
                     <div
-                      className={`${prefixCls}-filter-content`}
+                      className={itemContentClassName}
                       key={name}
                       onClick={() => {
                         const editor = this.refEditors.get(name);
