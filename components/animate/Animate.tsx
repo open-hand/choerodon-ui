@@ -123,10 +123,11 @@ export default class Animate extends PureComponent<AnimateProps> {
     } else {
       newChildren = mergeChildren(currentChildren, nextChildren);
     }
-
-    this.setState({
-      children: newChildren,
-    });
+    if (!isSameChildren(children, newChildren, hiddenProp)) {
+      this.setState({
+        children: newChildren,
+      });
+    }
 
     nextChildren.forEach(child => {
       const key = child && child.key;
