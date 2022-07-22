@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
+- 💄 `<pro>Table`: Optimize dynamic filter bar help rendering.
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
 - 💄 `<pro>Table`: Optimized combobar mode when help and sort icons appear in the in-line search.
 - 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.

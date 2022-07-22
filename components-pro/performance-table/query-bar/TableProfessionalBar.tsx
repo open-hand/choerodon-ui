@@ -15,7 +15,6 @@ import Form from '../../form';
 import { FormProps } from '../../form/Form';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
-import { LabelLayout } from '../../form/enum';
 import isEmpty from '../../_util/isEmpty';
 import { TableQueryBarType } from '../../table/enum';
 
@@ -176,7 +175,6 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
         <Form
           dataSet={queryDataSet}
           columns={queryFieldsLimit}
-          labelLayout={LabelLayout.horizontal}
           {...queryFormProps}
         >
           {this.createFields(queryFields.slice(0, queryFieldsLimit))}
