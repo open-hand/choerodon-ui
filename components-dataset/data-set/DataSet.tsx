@@ -2911,10 +2911,8 @@ Then the query method will be auto invoke.`,
         this.clearCachedRecords();
       }
     } else {
-      this.releaseCachedSelected();
-      if (cache) {
-        this.releaseCachedModified();
-      } else {
+      this.releaseCachedRecords(cache);
+      if (!cache) {
         this.clearCachedModified();
       }
     }
@@ -3207,10 +3205,10 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  releaseCachedRecords(onlySelected?: boolean) {
-    const { cacheSelectionKeys } = this;
-    const cacheModifiedKeys = onlySelected ? undefined : this.cacheModifiedKeys;
+  releaseCachedRecords(cache?: boolean) {
+    const { cacheSelectionKeys, cacheModifiedKeys } = this;
     if (cacheModifiedKeys || cacheSelectionKeys) {
+      const cacheRecords = this.getConfig('cacheRecords');
       const cachedKeys = union(cacheModifiedKeys, cacheSelectionKeys);
       const { records } = this;
       const cachedRecords = this.cachedRecords.slice();
@@ -3223,7 +3221,7 @@ Then the query method will be auto invoke.`,
           if (cacheSelectionKeys) {
             record.isSelected = cached.isSelected;
           }
-          if (cacheModifiedKeys) {
+          if (((cache || cacheRecords) && cacheModifiedKeys) || (cache && !cacheRecords && cacheSelectionKeys)) {
             const { dirtyData } = cached;
             if (dirtyData) {
               dirtyData.forEach((_, key) => {
@@ -3243,7 +3241,7 @@ Then the query method will be auto invoke.`,
   }
 
   releaseCachedSelected() {
-    this.releaseCachedRecords(!this.getConfig('cacheRecords') && !this.cacheModifiedKeys);
+    this.releaseCachedRecords();
   }
 
   @action
