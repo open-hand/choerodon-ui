@@ -3243,7 +3243,7 @@ Then the query method will be auto invoke.`,
   }
 
   releaseCachedSelected() {
-    this.releaseCachedRecords(!this.getConfig('cacheRecords'));
+    this.releaseCachedRecords(!this.getConfig('cacheRecords') && !this.cacheModifiedKeys);
   }
 
   @action
