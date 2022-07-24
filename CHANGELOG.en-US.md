@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
 - 💄 `<pro>Radio`: Optimize styles.
 - 💄 `<pro>NumberField`: Optimized to input decimal point in Chinese input method.
+- 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
