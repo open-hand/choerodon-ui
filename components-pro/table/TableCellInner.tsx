@@ -129,7 +129,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           const { leftLeafColumnsWidth, rightLeafColumnsWidth } = tableStore.columnGroups;
           const { offsetLeft, offsetWidth } = cell;
           const { scrollLeft } = tableBodyWrap;
-          const { width } = tableBodyWrap.getBoundingClientRect();
+          const width = Math.round(tableBodyWrap.getBoundingClientRect().width);
           const leftSide = offsetLeft - leftLeafColumnsWidth;
           const rightSide =
             offsetLeft + offsetWidth - width + rightLeafColumnsWidth + measureScrollbar();

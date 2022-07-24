@@ -336,7 +336,7 @@ export function getPaginationPosition(pagination?: TablePaginationConfig): Table
 }
 
 export function getHeight(el: HTMLElement): number {
-  return el.getBoundingClientRect().height;
+  return Math.round(el.getBoundingClientRect().height);
 }
 
 export function getTableHeaderRows(
