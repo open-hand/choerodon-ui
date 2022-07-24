@@ -1489,20 +1489,24 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  @autobind
   @action
-  syncParentSize(entries: ResizeObserverEntry[]) {
-    const [entry] = entries;
-    const height = Math.round(entry.contentRect.height);
+  syncParentSize(height: number, target: HTMLElement) {
     const { tableStore, element, wrapper } = this;
     if (element) {
       const wrapperHeight = Math.round((wrapper as HTMLDivElement).getBoundingClientRect().height);
       if (wrapperHeight !== height) {
         tableStore.parentHeight = height;
         tableStore.parentPaddingTop =
-          Math.round((element as HTMLDivElement).getBoundingClientRect().top) - Math.round((entry.target as HTMLDivElement).getBoundingClientRect().top);
+          Math.round((element as HTMLDivElement).getBoundingClientRect().top) - Math.round((target as HTMLDivElement).getBoundingClientRect().top);
       }
     }
+  }
+
+  @autobind
+  handleParentResize(entries: ResizeObserverEntry[]) {
+    const [entry] = entries;
+    const height = Math.round(entry.contentRect.height);
+    this.syncParentSize(height, entry.target as HTMLDivElement);
   }
 
   connect() {
@@ -1513,9 +1517,10 @@ export default class Table extends DataSetComponent<TableProps> {
       if (wrapper) {
         const { parentNode } = wrapper;
         if (parentNode) {
-          const resizeObserver = new ResizeObserver(this.syncParentSize);
+          const resizeObserver = new ResizeObserver(this.handleParentResize);
           resizeObserver.observe(parentNode);
           this.resizeObserver = resizeObserver;
+          this.syncParentSize(parentNode.offsetHeight, parentNode);
         }
       }
     }
