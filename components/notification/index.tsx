@@ -11,10 +11,10 @@ export { NotificationPlacement };
 export type IconType = 'success' | 'info' | 'error' | 'warning';
 const { config } = NotificationManager;
 
-export type ConfigProps = Partial<ConfigOptions>
+export type ConfigProps = Partial<ConfigOptions> & { icon?: Partial<ConfigOptions['icons']> }
 
 function setNotificationConfig(options: ConfigProps) {
-  const { duration, placement, bottom, top, getContainer, maxCount, foldCount } = options;
+  const { duration, placement, bottom, top, getContainer, maxCount, foldCount, icons } = options;
   if (duration !== undefined) {
     config.duration = duration;
   }
@@ -35,6 +35,12 @@ function setNotificationConfig(options: ConfigProps) {
   }
   if (foldCount !== undefined) {
     config.foldCount = foldCount;
+  }
+  if (icons !== undefined) {
+    config.icons = {
+      ...config.icons,
+      ...icons,
+    };
   }
 }
 
@@ -108,13 +114,6 @@ function getNotificationInstance(
   }));
 }
 
-const typeToIcon = {
-  success: 'check',
-  info: 'info',
-  error: 'error',
-  warning: 'warning',
-};
-
 export interface ArgsProps {
   message: ReactNode;
   description: ReactNode;
@@ -139,7 +138,7 @@ function notice(args: ArgsProps) {
   if (args.icon) {
     iconNode = <span className={`${prefixCls}-icon`}>{args.icon}</span>;
   } else if (args.type) {
-    const iconType = typeToIcon[args.type];
+    const iconType = config.icons[args.type];
     iconNode = (
       <Icon className={`${prefixCls}-icon ${prefixCls}-icon-${args.type}`} type={iconType} />
     );

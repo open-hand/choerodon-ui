@@ -30,7 +30,8 @@ class App extends React.Component {
     return (
       <form>
         <Radio name="rd" disabled>A</Radio>
-        <Radio name="rd" readOnly>B</Radio>
+        <Radio name="rd2" checked disabled>B</Radio>
+        <Radio name="rd" readOnly>C</Radio>
         <Radio dataSet={this.ds} name="rd" value="C">C</Radio>
       </form>
     );

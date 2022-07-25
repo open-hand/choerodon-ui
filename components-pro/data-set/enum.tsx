@@ -5,6 +5,7 @@ export {
   DataSetStatus,
   DataSetExportStatus,
   RecordStatus,
+  RecordCachedType,
   FieldType,
   SortOrder,
   BooleanValue,

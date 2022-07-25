@@ -2,7 +2,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import round from 'lodash/round';
-import cssUnitConverter from 'css-unit-converter';
+import cssUnitConverter, { CSSUnits } from 'css-unit-converter';
 import { global } from 'choerodon-ui/shared';
 import BigNumber from 'bignumber.js';
 import math from 'choerodon-ui/dataset/math';
@@ -176,7 +176,7 @@ export function toPx(num?: number | string | null, getRelationSize?: (unit: 'vh'
                 return number * defaultTo(getRelationSize && getRelationSize('em'), () => defaultTo(toPx(window.getComputedStyle(document.body).fontSize), () => 12));
               default:
                 try {
-                  return cssUnitConverter(number, u, 'px');
+                  return cssUnitConverter(number, u as CSSUnits, 'px');
                 } catch (e) {
                   return undefined;
                 }

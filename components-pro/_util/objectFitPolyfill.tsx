@@ -1,4 +1,4 @@
-import { ObjectFitProperty, ObjectPositionProperty } from 'csstype';
+import { Property } from 'csstype';
 
 let OBJECT_FIT_SUPPORT: boolean | undefined;
 
@@ -141,8 +141,8 @@ function setPosition(axis, $media, objectPosition) {
 
 export default function objectFitPolyfill(
   $media: HTMLImageElement,
-  fit: ObjectFitProperty,
-  position: ObjectPositionProperty<string | 0>,
+  fit: Property.ObjectFit,
+  position: Property.ObjectPosition,
 ) {
   // If necessary, make the parent container work with absolutely positioned elements
   const $container: HTMLElement | null = $media.parentNode as HTMLElement | null;

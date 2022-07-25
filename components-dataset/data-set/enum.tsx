@@ -61,6 +61,13 @@ export enum RecordStatus {
   sync = 'sync',
 }
 
+export enum RecordCachedType {
+  selected = 'selected',
+  delete = 'delete',
+  update = 'update',
+  add = 'add',
+}
+
 export enum FieldType {
   auto = 'auto',
   boolean = 'boolean',
@@ -136,4 +143,14 @@ export enum CheckedStrategy {
 export enum ValidationSelfType {
   minLength = 'minLength',
   maxLength = 'maxLength',
+}
+
+export enum DateMode {
+  time = 'time',
+  dateTime = 'dateTime',
+  week = 'week',
+  date = 'date',
+  month = 'month',
+  year = 'year',
+  decade = 'decade',
 }

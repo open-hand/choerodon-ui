@@ -4,7 +4,6 @@ import classes from 'component-classes';
 import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import { EditorConfiguration } from 'codemirror';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
@@ -31,7 +30,7 @@ export {
 };
 
 export interface CodeAreaProps extends FormFieldProps {
-  options?: EditorConfiguration;
+  options?: any;
   formatHotKey?: string;
   unFormatHotKey?: string;
   formatter?: CodeAreaFormatter;
@@ -39,7 +38,7 @@ export interface CodeAreaProps extends FormFieldProps {
   themeSwitch?: ThemeSwitch,
 }
 
-const defaultCodeMirrorOptions: EditorConfiguration = {
+const defaultCodeMirrorOptions: any = {
   theme: 'idea',
   lineNumbers: true,
   lint: true,
@@ -57,7 +56,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     unFormatHotKey: 'Alt-R',
   };
 
-  cmOptions: EditorConfiguration = this.getCodeMirrorOptions();
+  cmOptions: any = this.getCodeMirrorOptions();
 
   @observable text?: string;
 
@@ -112,7 +111,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     onKeyDown(e);
   }
 
-  getCodeMirrorOptions(options: EditorConfiguration = this.props.options!): EditorConfiguration {
+  getCodeMirrorOptions(options: any = this.props.options!): any {
     return { ...defaultCodeMirrorOptions, ...options };
   }
 

@@ -10,6 +10,13 @@ export interface ConfigProps<P = NotificationPlacement> {
   getContainer?: () => HTMLElement;
   maxCount?: number;
   foldCount?: number;
+  icons: {
+    success: string;
+    info: string;
+    error: string;
+    warning: string;
+    loading: string;
+  };
 }
 
 export interface NotificationInterface {
@@ -42,6 +49,13 @@ const manager: NotificationManagerType = {
     top: 24,
     bottom: 24,
     placement: 'topRight',
+    icons: {
+      success: 'check',
+      info: 'info',
+      error: 'error',
+      warning: 'warning',
+      loading: 'loading',
+    },
   },
   instances: new Map<string, NotificationInterface | Promise<NotificationInterface>>(),
   remove(key: string) {

@@ -398,10 +398,11 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   handlePopupMouseDown(e) {
     let fix = false;
+    const { popup } = this;
+    const popupElement = popup && popup.element;
+    const { target } = e;
     if (!e.isDefaultPrevented()) {
-      const { target } = e;
-      const { popup } = this;
-      const element = focusable(target) ? target : findFocusableParent(target, popup && popup.element);
+      const element = focusable(target) ? target : findFocusableParent(target, popupElement);
       if (element) {
         e.stopPropagation();
       } else {
@@ -411,7 +412,16 @@ export default class Trigger extends Component<TriggerProps> {
       fix = true;
     }
     if (fix && this.isBlurToHide()) {
-      e.preventDefault();
+      const { ownerDocument } = target;
+      if (ownerDocument) {
+        const { activeElement } = ownerDocument;
+        if (activeElement && activeElement !== ownerDocument.body) {
+          const el = findDOMNode(this);
+          if (el && el.contains(activeElement)) {
+            e.preventDefault();
+          }
+        }
+      }
     }
   }
 

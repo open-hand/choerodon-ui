@@ -167,6 +167,7 @@ export interface Config extends DataSetConfig {
   tableColumnResizeTrigger?: TableColumnResizeTriggerType;
   tableAggregationColumnDefaultWidth?: number;
   tableAggregationColumnDefaultMinWidth?: number;
+  tableShowCachedTips?: boolean;
   tableShowSelectionTips?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;

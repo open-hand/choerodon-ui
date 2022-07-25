@@ -11,6 +11,7 @@ import isString from 'lodash/isString';
 import isPlainObject from 'lodash/isPlainObject';
 import isFunction from 'lodash/isFunction';
 import debounce from 'lodash/debounce';
+import union from 'lodash/union';
 import { isEmpty, warning } from '../utils';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import localeContext, { $l } from '../locale-context';
@@ -27,7 +28,6 @@ import {
   checkParentByInsert,
   concurrentPromise,
   doExport,
-  exchangeTreeNode,
   exportExcel,
   findBindFieldBy,
   findRootParent,
@@ -79,7 +79,7 @@ import PromiseQueue from '../promise-queue';
 import DataSetRequestError from './DataSetRequestError';
 import defaultFeedback, { FeedBack } from './FeedBack';
 import ValidationResult from '../validator/ValidationResult';
-import { iteratorReduce } from '../iterator-helper';
+import { iteratorReduce, iteratorSliceToArray } from '../iterator-helper';
 import Validator from '../validator/Validator';
 import LookupCache from './LookupCache';
 import { treeReduce } from '../tree-helper';
@@ -167,6 +167,19 @@ function processTreeData(dataSet: DataSet, allData: (object | Record)[], status:
 
 function processNormalData(dataSet: DataSet, allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, childrenField?: string, parent?: Record, all?: Record[]): Record[] {
   return allData.map(data => processOneData(dataSet, data, status, childrenField, parent, all));
+}
+
+function updateCachedRecords(dataSet: DataSet, cachedRecords, status?: RecordStatus) {
+  if (dataSet.cacheSelectionKeys) {
+    dataSet.cachedRecords = iteratorSliceToArray(dataSet.cachedRecords.reduce<Set<Record>>((set, record) => {
+      if (!set.has(record) && ((status && record.status !== status) || (dataSet.isAllPageSelection ? !record.isSelected : record.isSelected))) {
+        set.add(record);
+      }
+      return set;
+    }, new Set(cachedRecords)).values());
+  } else {
+    dataSet.cachedRecords = cachedRecords;
+  }
 }
 
 export interface RecordValidationErrors {
@@ -578,9 +591,63 @@ export default class DataSet extends EventManager {
 
   @observable selection: DataSetSelection | false;
 
-  @observable cachedSelected: Record[];
+  @computed
+  get cachedSelected(): Record[] {
+    return this.cachedRecords.filter(r => r.isSelected);
+  }
 
-  @observable cachedModified: Record[];
+  set cachedSelected(cachedSelected: Record[]) {
+    this.setCachedSelected(cachedSelected);
+  }
+
+  get cachedDirtyRecords(): [Record[], Record[], Record[]] {
+    const created: Record[] = [];
+    const updated: Record[] = [];
+    const destroyed: Record[] = [];
+    this.cachedRecords.forEach(record => {
+      switch (record.status) {
+        case RecordStatus.add:
+          created.push(record);
+          break;
+        case RecordStatus.update:
+          updated.push(record);
+          break;
+        case RecordStatus.delete:
+          destroyed.push(record);
+          break;
+        default: {
+          if (record.dirty) {
+            updated.push(record);
+          }
+        }
+      }
+    });
+    return [created, updated, destroyed];
+  }
+
+  @computed
+  get cachedCreated(): Record[] {
+    return this.cachedDirtyRecords[0];
+  }
+
+  @computed
+  get cachedUpdated(): Record[] {
+    return this.cachedDirtyRecords[1];
+  }
+
+  @computed
+  get cachedDestroyed(): Record[] {
+    return this.cachedDirtyRecords[2];
+  }
+
+  @computed
+  get cachedModified(): Record[] {
+    return this.cachedCreated.concat(this.cachedUpdated, this.cachedDestroyed);
+  }
+
+  set cachedModified(cachedModified: Record[]) {
+    this.setCachedModified(cachedModified);
+  }
 
   @observable dataToJSON: DataToJSON;
 
@@ -988,12 +1055,20 @@ export default class DataSet extends EventManager {
     return undefined;
   }
 
+  get cacheKeys(): string[] | undefined {
+    const cacheRecords = this.getConfig('cacheRecords');
+    if (cacheRecords) {
+      return this.uniqueKeys;
+    }
+    return undefined;
+  }
+
   get cacheSelectionKeys(): string[] | undefined {
     const { cacheSelection, selection } = this.props;
     if (cacheSelection && selection === DataSetSelection.multiple) {
       return this.uniqueKeys;
     }
-    return undefined;
+    return this.cacheKeys;
   }
 
   get cacheModifiedKeys(): string[] | undefined {
@@ -1001,13 +1076,10 @@ export default class DataSet extends EventManager {
     if (cacheModified) {
       return this.uniqueKeys;
     }
-    return undefined;
+    return this.cacheKeys;
   }
 
-  @computed
-  get cachedRecords(): Record[] {
-    return [...new Set([...this.cachedSelected, ...this.cachedModified])];
-  }
+  @observable cachedRecords: Record[];
 
   /**
    * 获取所有记录包括缓存的选择记录
@@ -1020,7 +1092,7 @@ export default class DataSet extends EventManager {
   }
 
   get dirty(): boolean {
-    return this.records.some(isDirtyRecord);
+    return this.all.some(isDirtyRecord);
   }
 
   private inBatchSelection = false;
@@ -1065,8 +1137,7 @@ export default class DataSet extends EventManager {
       this.fields = observable.map<string, Field>(fields ? this.initFields(fields) : undefined);
       this.status = status;
       this.currentPage = 1;
-      this.cachedSelected = [];
-      this.cachedModified = [];
+      this.cachedRecords = [];
       this.queryParameter = queryParameter;
       this.pageSize = pageSize!;
       this.selection = selection!;
@@ -1134,8 +1205,7 @@ export default class DataSet extends EventManager {
     this.totalCount = snapshot.totalCount;
     this.currentPage = snapshot.currentPage;
     this.pageSize = snapshot.pageSize;
-    this.cachedSelected = snapshot.cachedSelected;
-    this.cachedModified = snapshot.cachedModified;
+    this.cachedRecords = snapshot.cachedRecords;
     this.dataToJSON = snapshot.dataToJSON;
     this.children = snapshot.children;
     this.current = snapshot.current;
@@ -1542,8 +1612,8 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   modifiedCheck(message?: any): Promise<boolean> {
-    const { modifiedCheck, modifiedCheckMessage, cacheModified } = this.props;
-    if (cacheModified || !modifiedCheck || !this.dirty) {
+    const { modifiedCheck, modifiedCheckMessage } = this.props;
+    if (this.cacheModifiedKeys || !modifiedCheck || !this.dirty) {
       return Promise.resolve(true);
     }
     return this.getConfig('confirm')(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'));
@@ -2084,13 +2154,13 @@ export default class DataSet extends EventManager {
           });
         }
         record.isSelected = true;
-        if (!this.inBatchSelection) {
-          if (this.isAllPageSelection) {
-            const cachedIndex = this.cachedSelected.indexOf(record);
-            if (cachedIndex !== -1) {
-              this.cachedSelected.splice(cachedIndex, 1);
-            }
+        if (this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
+          const cachedIndex = this.cachedRecords.indexOf(record);
+          if (cachedIndex !== -1) {
+            this.cachedRecords.splice(cachedIndex, 1);
           }
+        }
+        if (!this.inBatchSelection) {
           this.fireEvent(DataSetEvents.select, { dataSet: this, record, previous });
           this.fireEvent(DataSetEvents.batchSelect, { dataSet: this, records: [record] });
         }
@@ -2111,13 +2181,13 @@ export default class DataSet extends EventManager {
       }
       if (record && record.selectable && record.isSelected) {
         record.isSelected = false;
-        if (!this.inBatchSelection) {
-          if (!this.isAllPageSelection) {
-            const cachedIndex = this.cachedSelected.indexOf(record);
-            if (cachedIndex !== -1) {
-              this.cachedSelected.splice(cachedIndex, 1);
-            }
+        if (!this.isAllPageSelection && (!this.cacheModifiedKeys || !isDirtyRecord(record))) {
+          const cachedIndex = this.cachedRecords.indexOf(record);
+          if (cachedIndex !== -1) {
+            this.cachedRecords.splice(cachedIndex, 1);
           }
+        }
+        if (!this.inBatchSelection) {
           this.fireEvent(DataSetEvents.unSelect, { dataSet: this, record });
           this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: [record] });
         }
@@ -2280,20 +2350,32 @@ export default class DataSet extends EventManager {
 
   @action
   clearCachedRecords() {
-    this.clearCachedSelected();
-    this.clearCachedModified();
+    const { cachedRecords } = this;
+    const cachedSelected = cachedRecords.filter(record => record.isSelected);
+    this.cachedRecords = [];
+    this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
   @action
   clearCachedSelected(): void {
     const cachedSelected = this.cachedSelected.slice();
-    this.cachedSelected = [];
+    this.setCachedSelected([]);
     this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records: cachedSelected });
   }
 
   @action
   setCachedSelected(cachedSelected: Record[]): void {
-    this.cachedSelected = cachedSelected;
+    if (this.cacheModifiedKeys) {
+      const { cachedRecords } = this;
+      this.cachedRecords = iteratorSliceToArray(cachedRecords.reduce<Set<Record>>((set, record) => {
+        if (!set.has(record) && record.dirty) {
+          set.add(record);
+        }
+        return set;
+      }, new Set(cachedSelected)).values());
+    } else {
+      this.cachedRecords = cachedSelected;
+    }
     const { selectionStrategy } = this;
     if (selectionStrategy === CheckedStrategy.SHOW_PARENT) {
       cachedSelected.forEach(record => treeSelect(this, record, []));
@@ -2302,13 +2384,28 @@ export default class DataSet extends EventManager {
     }
   }
 
+  @action
+  setCachedCreated(cachedCreated: Record[]): void {
+    updateCachedRecords(this, cachedCreated, RecordStatus.add);
+  }
+
+  @action
+  setCachedUpdated(cachedUpdated: Record[]): void {
+    updateCachedRecords(this, cachedUpdated, RecordStatus.update);
+  }
+
+  @action
+  setCachedDestroyed(cachedDestroyed: Record[]): void {
+    updateCachedRecords(this, cachedDestroyed, RecordStatus.delete);
+  }
+
   clearCachedModified(): void {
     this.setCachedModified([]);
   }
 
   @action
   setCachedModified(cachedModified: Record[]): void {
-    this.cachedModified = cachedModified;
+    updateCachedRecords(this, cachedModified);
   }
 
   /**
@@ -2764,17 +2861,20 @@ Then the query method will be auto invoke.`,
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
     appendRecords(this, this.processData(sortedData, undefined, parent), parent);
     this.fireEvent(DataSetEvents.append, { dataSet: this });
-    this.releaseCachedSelected(true);
-    this.releaseCachedModified();
+    this.releaseCachedRecords();
     return this;
   }
 
   @action
   loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
-    this.storeSelected();
-    if (cache) {
-      this.storeModified();
+    const cacheRecords = this.getConfig('cacheRecords');
+    if (cacheRecords) {
+      if (cache) {
+        this.storeRecords();
+      }
+    } else {
+      this.storeRecords(cache === true);
     }
     const {
       paging,
@@ -2804,11 +2904,17 @@ Then the query method will be auto invoke.`,
     if (total !== undefined && (paging === true || paging === 'server')) {
       this.totalCount = total;
     }
-    this.releaseCachedSelected(cache);
-    if (cache) {
-      this.releaseCachedModified();
+    if (cacheRecords) {
+      if (cache) {
+        this.releaseCachedRecords();
+      } else {
+        this.clearCachedRecords();
+      }
     } else {
-      this.clearCachedModified();
+      this.releaseCachedRecords(cache);
+      if (!cache) {
+        this.clearCachedModified();
+      }
     }
     const nextRecord =
       autoLocateFirst && ((idField && parentField || childrenField) ? this.getFromTree(0) : this.get(0));
@@ -2839,13 +2945,18 @@ Then the query method will be auto invoke.`,
     if (record) {
       record.isSelected = false;
       record.isCurrent = false;
-      const { selected, records } = this;
+      const { selected, records, cachedRecords } = this;
       const selectedIndex = selected.indexOf(record);
       if (selectedIndex !== -1) {
         selected.splice(selectedIndex, 1);
       }
       if (record.isNew || forceRemove) {
-        {
+        if (record.isCached) {
+          const index = cachedRecords.indexOf(record);
+          if (index !== -1) {
+            cachedRecords.splice(index, 1);
+          }
+        } else {
           const index = records.indexOf(record);
           if (index !== -1) {
             records.splice(index, 1);
@@ -3034,7 +3145,7 @@ Then the query method will be auto invoke.`,
               const needCount: boolean = ObjectChainValue.get(result, countKey) === 'Y';
               if (needCount) {
                 this.counting = this.count(page, params)
-                  .then(action((countResult) => {
+                  .then(action((countResult: object) => {
                     const { totalKey } = this;
                     const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
                     if (total !== undefined) {
@@ -3076,75 +3187,61 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  private storeModified() {
-    if (this.cacheModifiedKeys) {
-      this.setCachedModified([
-        ...this.cachedModified.filter(record => isDirtyRecord(record)),
-        ...this.records.reduce<Record[]>((list, record) => {
-          if (isDirtyRecord(record)) {
-            record.isCurrent = false;
-            record.isCached = true;
-            list.push(record);
-          }
-          return list;
-        }, []),
-      ]);
-    }
-  }
-
-  @action
-  releaseCachedModified() {
-    const { cacheModifiedKeys, cachedModified } = this;
-    if (cacheModifiedKeys) {
-      this.records = this.records.map(record => {
-        const index = cachedModified.findIndex(cached =>
-          cacheModifiedKeys.every(key => record.get(key) === cached.get(key)),
-        );
-        if (index !== -1) {
-          const cached = cachedModified.splice(index, 1)[0];
-          cached.isCached = false;
-          return exchangeTreeNode(cached, record);
-        }
-        return record;
-      });
-    }
-  }
-
-  @action
-  private storeSelected() {
-    if (this.cacheSelectionKeys) {
-      const { isAllPageSelection } = this;
-      this.setCachedSelected([
-        ...this.cachedSelected.filter(record => isAllPageSelection ? !record.isSelected : record.isSelected),
-        ...(isAllPageSelection ? this.currentUnSelected : this.currentSelected).map(record => {
-          record.isSelected = !isAllPageSelection;
+  private storeRecords(cacheModified = true) {
+    const { cacheSelectionKeys, cacheModifiedKeys, records, cachedRecords, isAllPageSelection } = this;
+    if (cacheSelectionKeys || (cacheModified && cacheModifiedKeys)) {
+      this.cachedRecords = cachedRecords.concat(records).reduce<Record[]>((list, record) => {
+        if (
+          (cacheSelectionKeys && (isAllPageSelection ? !record.isSelected : record.isSelected)) ||
+          ((cacheModified && cacheModifiedKeys) && isDirtyRecord(record))
+        ) {
           record.isCurrent = false;
           record.isCached = true;
-          return record;
-        }),
-      ]);
+          list.push(record);
+        }
+        return list;
+      }, []);
     }
   }
 
   @action
-  releaseCachedSelected(cache?: boolean) {
-    const { cacheSelectionKeys, cachedSelected, isAllPageSelection } = this;
-    if (cacheSelectionKeys) {
-      this.records = this.records.map(record => {
-        const index = cachedSelected.findIndex(cached =>
-          cacheSelectionKeys.every(key => record.get(key) === cached.get(key)),
+  releaseCachedRecords(cache?: boolean) {
+    const { cacheSelectionKeys, cacheModifiedKeys } = this;
+    if (cacheModifiedKeys || cacheSelectionKeys) {
+      const cacheRecords = this.getConfig('cacheRecords');
+      const cachedKeys = union(cacheModifiedKeys, cacheSelectionKeys);
+      const { records } = this;
+      const cachedRecords = this.cachedRecords.slice();
+      this.records = records.map(record => {
+        const index = cachedRecords.findIndex(cached =>
+          cachedKeys.every(key => record.get(key) === cached.get(key)),
         );
         if (index !== -1) {
-          const selected = cachedSelected.splice(index, 1)[0];
-          selected.isCached = false;
-          if (cache) {
-            return exchangeTreeNode(selected, record);
+          const cached = cachedRecords.splice(index, 1)[0];
+          if (cacheSelectionKeys) {
+            record.isSelected = cached.isSelected;
           }
-          record.isSelected = !isAllPageSelection;
+          if (((cache || cacheRecords) && cacheModifiedKeys) || (cache && !cacheRecords && cacheSelectionKeys)) {
+            const { dirtyData } = cached;
+            if (dirtyData) {
+              dirtyData.forEach((_, key) => {
+                record.set(key, cached.get(key));
+              });
+            }
+          }
         }
         return record;
       });
+      this.cachedRecords = cachedRecords;
     }
+  }
+
+  releaseCachedModified() {
+    this.releaseCachedRecords();
+  }
+
+  releaseCachedSelected() {
+    this.releaseCachedRecords();
   }
 
   @action

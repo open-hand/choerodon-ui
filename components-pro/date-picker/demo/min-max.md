@@ -98,12 +98,12 @@ class App extends React.Component {
     fields: [
       {
         name: 'startDate',
-        type: 'date',
+        type: 'dateTime',
         max: 'endDate',
       },
       {
         name: 'endDate',
-        type: 'date',
+        type: 'dateTime',
         min: 'startDate',
       },
       { name: 'startFilter', type: 'date' },
@@ -115,33 +115,33 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
-          <DatePicker dataSet={this.ds} name="startDate" placeholder="start date"/>
+          <DateTimePicker dataSet={this.ds} name="startDate" placeholder="start date" defaultTime={moment('00:00:10', 'HH:mm:ss')} />
         </Col>
         <Col span={12}>
-          <DatePicker dataSet={this.ds} name="endDate" placeholder="end date"/>
+          <DateTimePicker dataSet={this.ds} name="endDate" placeholder="end date" defaultTime={moment('23:59:59', 'HH:mm:ss')} />
         </Col>
         <Col span={12}>
-          <DatePicker min={moment()} filter={filterDate} placeholder="Moment min & filter"/>
+          <DatePicker min={moment()} filter={filterDate} placeholder="Moment min & filter" />
         </Col>
         <Col span={12}>
-          <MonthPicker min={new Date()} placeholder="Date min"/>
+          <MonthPicker min={new Date()} placeholder="Date min" />
         </Col>
         <Col span={12}>
-          <YearPicker max="2021-12-10" placeholder="string max"/>
+          <YearPicker max="2021-12-10" placeholder="string max" />
         </Col>
         <Col span={12}>
           <DateTimePicker filter={filterTime} placeholder="Select date time" />
         </Col>
         <Col span={12}>
-          <DatePicker dataSet={this.ds} name="startFilter" filter={minMaxFilter(minDisabledDate(this.ds))} placeholder="min by filter"/>
+          <DatePicker dataSet={this.ds} name="startFilter" filter={minMaxFilter(minDisabledDate(this.ds))} placeholder="min by filter" />
         </Col>
         <Col span={12}>
-          <DatePicker dataSet={this.ds} name="endFilter" filter={minMaxFilter(maxDisabledDate(this.ds))} placeholder="max by filter"/>
+          <DatePicker dataSet={this.ds} name="endFilter" filter={minMaxFilter(maxDisabledDate(this.ds))} placeholder="max by filter" />
         </Col>
       </Row>
     );
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+ReactDOM.render(<App />, mountNode);
 ```

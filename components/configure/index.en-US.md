@@ -23,6 +23,7 @@ const prefixCls = getConfig('prefixCls');
 | proPrefixCls | set prefix class for pro components | string | c7n-pro |
 | iconfontPrefix | iconfont css prefix | string | icon |
 | icons | List of iconfont, used for IconPicker. | string[] \| { \[categoryName: string\]: string[] } | import { categories } from 'choerodon-ui-font' |
+| cacheRecords | 默认缓存选中和变更的记录 | boolean |  |
 | ripple | Whether to open the ripple effect | boolean | true |
 | lookupCache | lookup cache config. `maxAge` - cache max age `max` - cache max length | object | { maxAge: 1000 _ 60 _ 10, max: 100 } |
 | lookupUrl | Lookup value url or hook which return url | string \| ((code: string) => string) | code => \`/common/code/\${code}/\` |
@@ -71,6 +72,7 @@ const prefixCls = getConfig('prefixCls');
 | tableButtonsLimit | 默认 Table 头部显示功能按钮的数量，超出限制放入更多下拉 | number | |
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
+| tableShowCachedTips | Table默认显示缓存记录提示， 优先级高于 tableShowSelectionTips | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false || pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |

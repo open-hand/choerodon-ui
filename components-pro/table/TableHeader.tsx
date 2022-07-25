@@ -1,5 +1,5 @@
 import React, {
-  cloneElement,
+  cloneElement, CSSProperties,
   DetailedHTMLProps,
   FunctionComponent,
   isValidElement,
@@ -135,13 +135,18 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
           return undefined;
         });
         if (hasPlaceholder) {
-          const placeHolderProps: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement> = {
+          const placeHolderProps: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement> & { style: CSSProperties } = {
             key: 'fixed-column',
             rowSpan: headerRows.length,
+            style: {
+              lineHeight: 1,
+            },
           };
           const classList = [`${prefixCls}-cell`, lastColumnClassName];
           if (isStickySupport() && tableStore.overflowX) {
-            placeHolderProps.style = tableStore.isAnyColumnsRightLock ? { right: 0 } : {};
+            if (tableStore.isAnyColumnsRightLock) {
+              placeHolderProps.style.right = 0;
+            }
             classList.push(`${prefixCls}-cell-fix-right`);
           }
           placeHolderProps.className = classList.join(' ');
