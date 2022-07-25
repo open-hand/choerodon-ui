@@ -195,6 +195,13 @@
     padding-left: 0.08rem;
     cursor: pointer;
 
+    &-disabled {
+      .@{table-prefix-cls}-filter-label {
+        color: rgba(0, 0, 0, .25);
+        cursor: not-allowed;
+      }
+    }
+
     &:focus-within,
     &:hover {
       background-color: rgba(0, 0, 0, .05);
@@ -312,6 +319,12 @@
     padding-top: 0.005rem;
     color: #6A6A6A;
     font-size: 0.12rem;
+
+    i {
+      margin-left: 0.02rem;
+      color: rgba(0, 0, 0, 0.45);
+      font-size: 0.12rem;
+    }
   }
 
   &-filter-search {
