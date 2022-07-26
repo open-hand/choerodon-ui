@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
 - 💄 `<pro>Table`: 优化动态筛选条查询支持数据源 modifiedCheck 提示。
 - 💄 `<pro>Table`: 优化非 Tree 模式下的展开行控制。
+- 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
