@@ -84,6 +84,14 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable gradientHidden?: boolean;
 
+  get multiple(): boolean {
+    return false;
+  }
+
+  get range(): boolean {
+    return false;
+  }
+
   get preset(): boolean {
     const { preset } = this.props;
     if (isBoolean(preset)) {
