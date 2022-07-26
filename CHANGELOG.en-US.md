@@ -86,6 +86,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
+- 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 
 ## 1.5.5
 

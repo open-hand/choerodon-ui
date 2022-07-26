@@ -933,6 +933,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  handleDataSetRemove({ records, dataSet }) {
+    if (records) {
+      const errors = dataSet.getAllValidationErrors();
+      this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
+    }
+  }
+
+  @autobind
   handleDataSetValidateSelf(props: { valid: boolean; dataSet: DataSet; errors: ValidationSelfErrors[]; noLocate?: boolean }) {
     const { dataSet } = props;
     const errors = dataSet.getAllValidationErrors();
@@ -1550,6 +1558,7 @@ export default class Table extends DataSetComponent<TableProps> {
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetValidateSelf);
       handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
+      handler.call(dataSet, DataSetEvents.remove, this.handleDataSetRemove);
     }
   }
 
