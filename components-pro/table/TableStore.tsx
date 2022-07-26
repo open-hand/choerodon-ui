@@ -1914,6 +1914,12 @@ export default class TableStore {
   }
 
   @computed
+  get getLastEmptyWidthColumn(): ColumnProps | undefined {
+    const emptyWidthColumns = this.columnGroups.leafs.filter(({ column }) => isNil(get(column, 'width')));
+    return emptyWidthColumns.length ? emptyWidthColumns[emptyWidthColumns.length - 1].column : undefined;
+  }
+
+  @computed
   get hasCheckFieldColumn(): boolean {
     const { checkField } = this.dataSet.props;
     if (checkField) {

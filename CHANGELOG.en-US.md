@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
 - 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
 - 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
+- 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
