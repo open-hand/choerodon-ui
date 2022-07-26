@@ -11,7 +11,18 @@ import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
 import Validator, { CustomValidator, ValidationMessages } from '../validator/Validator';
-import { CheckedStrategy, DataSetEvents, DataSetSelection, DataSetStatus, FieldFormat, FieldIgnore, FieldTrim, FieldType, SortOrder } from './enum';
+import {
+  CheckedStrategy,
+  DataSetEvents,
+  DataSetSelection,
+  DataSetStatus,
+  DateMode,
+  FieldFormat,
+  FieldIgnore,
+  FieldTrim,
+  FieldType,
+  SortOrder,
+} from './enum';
 import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
@@ -23,7 +34,7 @@ import { LovConfig, TimeStep } from '../interface';
 import { TransportHookProps } from './Transport';
 import { buildURLWithAxiosConfig } from '../axios/utils';
 import { getLovPara } from '../stores/utils';
-import AttachmentFile from './AttachmentFile';
+import AttachmentFile, { FileLike } from './AttachmentFile';
 import { iteratorFind, iteratorSome } from '../iterator-helper';
 import { treeFind } from '../tree-helper';
 import LookupCache from './LookupCache';
@@ -446,6 +457,7 @@ export type FieldProps = {
    * 值变化前，拦截并返回新的值
    */
   processValue?: (value: any, range?: 0 | 1) => any;
+  dateMode?: DateMode;
 };
 
 const defaultProps: FieldProps = {
@@ -1251,7 +1263,7 @@ export default class Field {
         promise = cachedLookup.promise;
       }
       if (!promise) {
-        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result) => {
+        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result: object[]) => {
           if (result) {
             cachedLookup.items = result;
             cachedLookup.promise = undefined;
@@ -1277,7 +1289,7 @@ export default class Field {
           }
         }
         if (!promise) {
-          promise = lookupStore.fetchLookupData(axiosConfig, undefined, this).then(action((result) => {
+          promise = lookupStore.fetchLookupData(axiosConfig, undefined, this).then(action((result: object[]) => {
             if (result) {
               cachedLookup.items = result;
               cachedLookup.promise = undefined;
@@ -1330,7 +1342,7 @@ export default class Field {
     const { bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic } = props;
     const { fetchList } = this.dataSet.getConfig('attachment');
     if (fetchList) {
-      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results) => {
+      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results: FileLike[]) => {
         this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
       }));
     }

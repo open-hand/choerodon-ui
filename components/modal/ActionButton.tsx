@@ -35,7 +35,7 @@ export default class ActionButton extends Component<ActionButtonProps, ActionBut
     const { autoFocus } = this.props;
     if (autoFocus) {
       const $this = findDOMNode(this) as HTMLInputElement;
-      this.timeoutId = setTimeout(() => $this.focus());
+      this.timeoutId = window.setTimeout(() => $this.focus());
     }
   }
 

@@ -22,7 +22,7 @@ const TableSibling: FunctionComponent<TableSiblingProps> = function TableSibling
   if (boxSizing === TableBoxSizing.wrapper) {
     return (
       <ReactResizeObserver resizeProp="height" onResize={handleResize}>
-        <div>
+        <div className={`${tableStore.prefixCls}-sibling`}>
           {children}
         </div>
       </ReactResizeObserver>

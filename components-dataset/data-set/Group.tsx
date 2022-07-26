@@ -88,4 +88,9 @@ export default class Group {
       return state.set(key, value);
     }
   }
+
+  mergeState(newState: ObservableMap<string, any>) {
+    const state = getIf<Group, ObservableMap>(this, 'state', () => observable.map());
+    state.merge(newState);
+  }
 }

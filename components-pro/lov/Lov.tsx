@@ -426,7 +426,7 @@ export default class Lov extends Select<LovProps> {
         if (lovQueryCachedSelected) {
           const fetchCachedSelected = () => {
             if (needToFetch.size) {
-              lovQueryCachedSelected(lovCode, needToFetch).then(action((results) => {
+              lovQueryCachedSelected(lovCode, needToFetch).then(action((results: object[]) => {
                 results.forEach((data) => {
                   const record = needToFetch.get(data[valueField]);
                   if (record) {
@@ -469,10 +469,10 @@ export default class Lov extends Select<LovProps> {
     } else {
       const noCache = defaultTo(this.getProp('noCache'), this.getContextConfig('lovNoCache'));
       if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
-        options.query();
+        options.query(1, undefined, true);
       } else if (this.multiple) {
         if (this.resetOptions(noCache)) {
-          options.query();
+          options.query(1, undefined, true);
         }
         options.releaseCachedSelected();
       }
@@ -587,7 +587,7 @@ export default class Lov extends Select<LovProps> {
         options.setQueryParameter(key, value === '' ? undefined : value);
       });
       if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
-        options.query().then(() => delete this.searching);
+        options.query(1, undefined, true).then(() => delete this.searching);
       }
     }
   }
@@ -708,7 +708,7 @@ export default class Lov extends Select<LovProps> {
       }
       if (searchAction === SearchAction.blur && value && !hasRecord) {
         const { options } = this;
-        options.query().then(() => {
+        options.query(1, undefined, true).then(() => {
           const { length } = options;
           if ((length > 1 && !fetchSingle) || length === 1) {
             this.choose(options.get(0));
@@ -759,7 +759,7 @@ export default class Lov extends Select<LovProps> {
   async selectSingle() {
     const { options } = this;
     this.resetOptions(options.length === 1);
-    await options.query();
+    await options.query(1, undefined, true);
     if (options.length === 1) {
       this.choose(options.get(0));
     } else {

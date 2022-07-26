@@ -17,7 +17,7 @@ import React, {
   useState,
 } from 'react';
 import classNames from 'classnames';
-import { ObjectFitProperty, ObjectPositionProperty } from 'csstype';
+import { Property } from 'csstype';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import isNumber from 'lodash/isNumber';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -41,8 +41,8 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   previewUrl?: string;
   downloadUrl?: string | Function;
   previewTarget?: string;
-  objectFit?: ObjectFitProperty;
-  objectPosition?: ObjectPositionProperty<string | 0>;
+  objectFit?: Property.ObjectFit;
+  objectPosition?: Property.ObjectPosition;
   sources?: SourceHTMLAttributes<HTMLSourceElement>[];
   status?: ImageStatus;
   onClick?: MouseEventHandler<HTMLPictureElement>;

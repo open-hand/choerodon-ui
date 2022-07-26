@@ -200,7 +200,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     setSplitLineHidden(false);
     const { node: { element, tableBodyWrap }, tableColumnResizeTrigger } = tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) {
-      const { left } = element.getBoundingClientRect();
+      const left = Math.round(element.getBoundingClientRect().left);
       globalRef.current.bodyLeft = border ? left + 1 : left;
     }
     setSplitLinePosition(e.clientX);
@@ -293,8 +293,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     if (columnResizing) return;
     setSplitLineHidden(false);
     const { node: { element } } = tableStore;
-    const { left } = element.getBoundingClientRect();
-    const { left: resizerLeft, width } = e.target.getBoundingClientRect();
+    const left = Math.round(element.getBoundingClientRect().left);
+    const rect = e.target.getBoundingClientRect();
+    const width = Math.round(rect.width);
+    const resizerLeft = Math.round(rect.left);
     const newLeft = resizerLeft + (type === 'pre' ? 0 : width);
     globalRef.current.bodyLeft = border ? left + 1 : left;
     setSplitLinePosition(newLeft);

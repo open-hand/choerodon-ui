@@ -7,7 +7,7 @@ import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
-import { FieldType, RecordStatus } from '../data-set/enum';
+import { FieldType, RecordCachedType, RecordStatus } from '../data-set/enum';
 import Field from '../data-set/Field';
 import ObserverSelect from '../select/Select';
 import TreeSelect from '../tree-select/TreeSelect';
@@ -336,7 +336,7 @@ export function getPaginationPosition(pagination?: TablePaginationConfig): Table
 }
 
 export function getHeight(el: HTMLElement): number {
-  return el.getBoundingClientRect().height;
+  return Math.round(el.getBoundingClientRect().height);
 }
 
 export function getTableHeaderRows(
@@ -425,3 +425,68 @@ export function getCellVerticalSize(element: HTMLElement, prefixCls?: string) {
   }
 }
 
+export function getCachedRecords(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean): Record[] {
+  if (showCachedTips) {
+    switch (type) {
+      case RecordCachedType.selected:
+        return dataSet.cachedSelected;
+      case RecordCachedType.add:
+        return dataSet.cachedCreated;
+      case RecordCachedType.update:
+        return dataSet.cachedUpdated;
+      case RecordCachedType.delete:
+        return dataSet.cachedDestroyed;
+      default:
+        return [];
+    }
+  }
+  return dataSet.cachedRecords;
+}
+
+function isRecordSelectable(record: Record, filter?: (record: Record) => boolean): boolean {
+  return record.selectable && (!filter || filter(record));
+}
+
+export function getCachedSelectableRecords(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean, filter?: (record: Record) => boolean): Record[] {
+  return getCachedRecords(dataSet, type, showCachedTips).filter(r => isRecordSelectable(r, filter));
+}
+
+export function getCurrentSelectableCounts(dataSet: DataSet, filter?: (record: Record) => boolean): [number, number] {
+  return dataSet.records.reduce<[number, number]>(([selectedLength, recordLength], r) => {
+    if (isRecordSelectable(r, filter)) {
+      recordLength += 1;
+      if (r.isSelected) {
+        selectedLength += 1;
+      }
+    }
+    return [selectedLength, recordLength];
+  }, [0, 0]);
+}
+
+export function getCachedSelectableCounts(dataSet: DataSet, type?: RecordCachedType, showCachedTips?: boolean, filter?: (record: Record) => boolean): [number, number] {
+  const cachedRecords = getCachedRecords(dataSet, type, showCachedTips);
+  return cachedRecords.reduce<[number, number]>(([selectedLength, recordLength], r) => {
+    if (isRecordSelectable(r, filter)) {
+      recordLength += 1;
+      if (r.isSelected) {
+        selectedLength += 1;
+      }
+    }
+    return [selectedLength, recordLength];
+  }, [0, 0]);
+}
+
+export function getCount(dataSet: DataSet, type?: RecordCachedType): number {
+  switch (type) {
+    case RecordCachedType.selected:
+      return dataSet.isAllPageSelection ? dataSet.totalCount - dataSet.unSelected.length : dataSet.selected.length;
+    case RecordCachedType.add:
+      return dataSet.created.length;
+    case RecordCachedType.update:
+      return dataSet.updated.length;
+    case RecordCachedType.delete:
+      return dataSet.destroyed.length;
+    default:
+      return 0;
+  }
+}

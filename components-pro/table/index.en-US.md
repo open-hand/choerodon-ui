@@ -93,6 +93,7 @@ subtitle: 表格
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 |
 | showSelectionTips | 是否显示选中记录提示  | boolean | [globalConfig.tableShowSelectionTips](/components/configure#API) |
+| showCachedTips | 是否显示缓存记录提示， 优先级高于 showSelectionTips  | boolean | [globalConfig.tableShowCachedTipsTips](/components/configure#API) |
 | showCachedSelection | 是否显示缓存选中记录  | boolean | |
 | onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |
 | showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
