@@ -24,12 +24,14 @@ import {
   Switch,
   Row,
   Col,
+  Button,
 } from 'choerodon-ui/pro';
 import { action } from 'mobx';
 
 const { Option } = SelectBox;
 
 const App = () => {
+  const [bodyExpanded, setBodyExpanded] = React.useState(false);
   // 物料
   const itemDs = useDataSet(() => ({
     paging: false,
@@ -372,7 +374,7 @@ const App = () => {
         {
           title: '头分组聚合列', // 可在个性化内显示
           header: ({ aggregationTree, title }) => aggregationTree ? aggregationTree : title,
-          renderer: ({ text, record, dataSet, aggregationTree }) => record.getState('editing') ? (
+          renderer: ({ text, record, dataSet, aggregationTree, headerGroup }) => headerGroup && headerGroup.getState('editing') ? (
             <Row>
               <Col span={12} style={{ cursor: 'pointer', borderRight: '1px solid #eee' }}
                    onClick={() => record.isSelected ? dataSet.unSelect(record) : dataSet.select(record)}>
@@ -433,15 +435,14 @@ const App = () => {
         ),
         renderer: ({ text, headerGroup, record, dataSet }) => {
           if (headerGroup) {
-            const { totalRecords } = headerGroup;
             return (
               <>
                 <div>
                   {text}
                   <CheckBox
                     value
-                    checked={totalRecords.some(r => r.getState('editing'))}
-                    onChange={action((value) => totalRecords.forEach(r => r.setState('editing', value)))}
+                    checked={headerGroup.getState('editing') || false}
+                    onChange={action((value) => headerGroup.setState('editing', value))}
                   />
                 </div>
                 <div>排名：{headerGroup.index + 1}</div>
@@ -555,9 +556,16 @@ const App = () => {
       current.setColumnWidth(width, index);
     }
   }, []);
+  const showGroupInfo = React.useCallback(() => {
+    const { current } = group1Ref;
+    if (current) {
+      console.log(current.getHeaderGroups()[0].getState('editing'))
+    }
+  }, [])
 
   return (
     <>
+      <Button onClick={showGroupInfo}>showGroupInfo</Button>
       <Table
         customizable
         customizedCode="advanced-group"
@@ -593,7 +601,8 @@ const App = () => {
         ref={group2Ref}
         selectionMode="none"
         bodyExpandable
-        defaultBodyExpanded={false}
+        bodyExpanded={bodyExpanded}
+        onBodyExpand={setBodyExpanded}
       />
     </>
   );

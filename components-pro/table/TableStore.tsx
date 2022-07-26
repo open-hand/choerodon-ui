@@ -23,7 +23,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
 import ObserverRadio from '../radio/Radio';
-import { DataSetSelection } from '../data-set/enum';
+import { DataSetSelection, RecordCachedType } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
@@ -42,7 +42,7 @@ import {
   TableQueryBarType,
 } from './enum';
 import { stopPropagation } from '../_util/EventManager';
-import { getColumnKey, getHeader, isDisabledRow } from './utils';
+import { getCachedSelectableCounts, getCachedSelectableRecords, getColumnKey, getCurrentSelectableCounts, getHeader, isDisabledRow } from './utils';
 import getReactNodeText from '../_util/getReactNodeText';
 import ColumnGroups from './ColumnGroups';
 import autobind from '../_util/autobind';
@@ -64,7 +64,7 @@ import Menu from '../menu';
 import { ModalProps } from '../modal/Modal';
 import { treeMap, treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
-import { getIf, normalizeGroups } from '../data-set/utils';
+import { getIf, mergeGroupStates, normalizeGroups } from '../data-set/utils';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
@@ -1605,6 +1605,14 @@ export default class TableStore {
 
   @observable showCachedSelection?: boolean;
 
+  @observable defaultRecordCachedType?: RecordCachedType;
+
+  @observable recordCachedType?: RecordCachedType;
+
+  get computedRecordCachedType(): RecordCachedType | undefined {
+    return this.recordCachedType || this.defaultRecordCachedType;
+  }
+
   get isTree(): boolean {
     return this.props.mode === TableMode.tree;
   }
@@ -1629,6 +1637,18 @@ export default class TableStore {
       return useMouseBatchChoose;
     }
     return this.getConfig('tableUseMouseBatchChoose');
+  }
+
+  get showCachedTips(): boolean {
+    const { showCachedTips } = this.props;
+    if (showCachedTips !== undefined) {
+      return showCachedTips;
+    }
+    const tableShowCachedTips = this.getConfig('tableShowCachedTips');
+    if (tableShowCachedTips !== undefined) {
+      return tableShowCachedTips;
+    }
+    return false;
   }
 
   get showSelectionTips(): boolean {
@@ -1831,9 +1851,9 @@ export default class TableStore {
 
   @computed
   get leftColumns(): ColumnProps[] {
-    const { dragColumnAlign, leftOriginalColumns, expandColumn, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
+    const { dragColumnAlign, leftOriginalColumns, expandColumn, expandIconColumnIndex, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
     return observable.array([
-      expandColumn,
+      expandIconColumnIndex ? undefined : expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
       rowNumberColumn,
       selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
@@ -1855,15 +1875,27 @@ export default class TableStore {
 
   @computed
   get columns(): ColumnProps[] {
-    const { leftColumns, rightColumns, selectionColumn, props: { rowBoxPlacement } } = this;
+    const { leftColumns, rightColumns, selectionColumn, expandColumn, expandIconColumnIndex, props: { rowBoxPlacement } } = this;
     const originalColumns = this.originalColumns.slice();
     if (isNumber(rowBoxPlacement) && selectionColumn) {
       originalColumns.splice(rowBoxPlacement as number, 0, selectionColumn);
     }
-    return observable.array([
+    const allColumns = Array.from([
       ...leftColumns,
       ...originalColumns,
       ...rightColumns,
+    ]);
+    if (expandIconColumnIndex && expandColumn) {
+      let lock: boolean | ColumnLock = true;
+      if (expandIconColumnIndex > leftColumns.length && expandIconColumnIndex <= leftColumns.length + originalColumns.length) {
+        lock = false;
+      } else if (expandIconColumnIndex > leftColumns.length + originalColumns.length) {
+        lock = ColumnLock.right;
+      }
+      allColumns.splice(expandIconColumnIndex, 0, { ...expandColumn, lock });
+    }
+    return observable.array([
+      ...allColumns,
     ]);
   }
 
@@ -1890,6 +1922,12 @@ export default class TableStore {
   @computed
   get hasEmptyWidthColumn(): boolean {
     return this.columnGroups.leafs.some(({ column }) => isNil(get(column, 'width')));
+  }
+
+  @computed
+  get getLastEmptyWidthColumn(): ColumnProps | undefined {
+    const emptyWidthColumns = this.columnGroups.leafs.filter(({ column }) => isNil(get(column, 'width')));
+    return emptyWidthColumns.length ? emptyWidthColumns[emptyWidthColumns.length - 1].column : undefined;
   }
 
   @computed
@@ -1921,60 +1959,26 @@ export default class TableStore {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
-  @computed
-  get groups(): TableGroup[] {
-    const { groups = [] } = this.props;
-    const header: TableGroup[] = [];
-    const row: TableGroup[] = [];
-    const column: TableGroup[] = [];
-    groups.forEach((group) => {
-      const { type } = group;
-      switch (type) {
-        case GroupType.header:
-          header.push(group);
-          break;
-        case GroupType.row:
-          row.push(group);
-          break;
-        case GroupType.none:
-          break;
+  @observable groups: TableGroup[];
+
+  @observable groupedData: Group[];
+
+  @observable groupedDataWithHeader: Group[];
+
+  get cachedDataInType(): Record[] {
+    const { dataSet, showCachedSelection, computedRecordCachedType = RecordCachedType.selected } = this;
+    if (showCachedSelection) {
+      switch (computedRecordCachedType) {
+        case RecordCachedType.selected:
+          return dataSet.cachedSelected;
+        case RecordCachedType.add:
+          return dataSet.cachedCreated;
+        case RecordCachedType.update:
+          return dataSet.cachedUpdated;
+        case RecordCachedType.delete:
+          return dataSet.cachedDestroyed;
         default:
-          column.push(group);
       }
-    });
-    return [...header, ...row, ...column];
-  }
-
-  @computed
-  get groupedData(): Group[] {
-    const { groups } = this;
-    if (groups.length) {
-      const headerGroupNames: string[] = [];
-      const groupNames: string[] = [];
-      const parentFields: Map<string | symbol, string> = new Map();
-      groups.forEach(({ type, name, parentField }) => {
-        if (type === GroupType.header) {
-          headerGroupNames.push(name);
-        } else {
-          groupNames.push(name);
-        }
-        if (parentField) {
-          parentFields.set(name, parentField);
-        }
-      }, []);
-      const { dataSet } = this;
-      return normalizeGroups(groupNames, headerGroupNames, dataSet.records, parentFields);
-    }
-    return [];
-  }
-
-  @computed
-  get groupedDataWithHeader(): Group[] {
-    const { groups } = this;
-    if (groups.length) {
-      const { dataSet } = this;
-      const groupNames = groups.map(({ name }) => name);
-      return normalizeGroups(groupNames, [], dataSet.records);
     }
     return [];
   }
@@ -2017,23 +2021,80 @@ export default class TableStore {
   }
 
   @computed
-  get indeterminate(): boolean {
-    const { dataSet } = this;
+  get cachedIndeterminate(): boolean {
+    const { dataSet, showCachedSelection } = this;
     if (dataSet) {
-      const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength !== dataSet.records.length;
+      const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+      if (cachedSelectedLength) {
+        return cachedSelectedLength !== cachedRecordsLength;
+      }
     }
     return false;
   }
 
   @computed
-  get allChecked(): boolean {
-    const { dataSet } = this;
+  get allCachedChecked(): boolean {
+    const { dataSet, showCachedSelection } = this;
     if (dataSet) {
-      const selectedLength = dataSet.currentSelected.length;
-      return !!selectedLength && selectedLength === dataSet.records.length;
+      const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+      if (cachedSelectedLength) {
+        return cachedSelectedLength === cachedRecordsLength;
+      }
     }
     return false;
+  }
+
+  @computed
+  get currentIndeterminate(): boolean {
+    const { dataSet, filter } = this.props;
+    if (dataSet) {
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
+      if (selectedLength) {
+        return selectedLength !== currentLength;
+      }
+    }
+    return false;
+  }
+
+
+  @computed
+  get allCurrentChecked(): boolean {
+    const { dataSet, filter } = this.props;
+    if (dataSet) {
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
+      if (selectedLength) {
+        return selectedLength === currentLength;
+      }
+    }
+    return false;
+  }
+
+  @computed
+  get indeterminate(): boolean {
+    const { showCachedSelection } = this;
+    if (showCachedSelection) {
+      const { dataSet } = this;
+      const [cachedSelectedLength, cachedRecordsLength] =
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
+      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
+      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.length);
+    }
+    return this.currentIndeterminate;
+  }
+
+  @computed
+  get allChecked(): boolean {
+    const { showCachedSelection } = this;
+    if (showCachedSelection) {
+      const { dataSet } = this;
+      const [cachedSelectedLength, cachedRecordsLength] =
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
+      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
+      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.length);
+    }
+    return this.allCurrentChecked;
   }
 
   get expandIconAsCell(): boolean {
@@ -2045,31 +2106,56 @@ export default class TableStore {
   }
 
   get expandIconColumnIndex(): number {
-    if (this.expandIconAsCell) {
-      return 0;
-    }
     const {
       dragColumnAlign,
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable].filter(Boolean).length;
+    if (!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') {
+      return 0;
+    }
+    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
   }
 
   get inlineEdit() {
     return this.props.editMode === TableEditMode.inline;
   }
 
-  private handleSelectAllChange = action(value => {
+  checkAllCurrent() {
     const { dataSet, filter } = this.props;
-    const isSelectAll = value ? dataSet.currentSelected.length === dataSet.records.filter(record => record.selectable).length : !value;
-    if (!isSelectAll) {
-      dataSet.selectAll(filter);
+    dataSet.selectAll(filter);
+  }
+
+  unCheckAllCurrent() {
+    const { dataSet } = this.props;
+    dataSet.unSelectAll();
+  }
+
+  checkAllCached() {
+    if (this.showCachedSelection) {
+      const { dataSet, filter } = this.props;
+      dataSet.batchSelect(
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
+      );
+    }
+  }
+
+  unCheckAllCached() {
+    if (this.showCachedSelection) {
+      const { dataSet, filter } = this.props;
+      dataSet.batchUnSelect(
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
+      );
+    }
+  }
+
+  private handleSelectAllChange = action(() => {
+    if (this.allChecked) {
+      this.unCheckAllCurrent();
+      this.unCheckAllCached();
     } else {
-      dataSet.unSelectAll();
-      if (this.showCachedSelection) {
-        dataSet.clearCachedSelected();
-      }
+      this.checkAllCurrent();
+      this.checkAllCached();
     }
   });
 
@@ -2158,6 +2244,7 @@ export default class TableStore {
   @action
   setProps(props) {
     this.props = props;
+    this.initGroups();
     const { showCachedSelection } = props;
     if (showCachedSelection !== undefined) {
       this.showCachedSelection = showCachedSelection;
@@ -2183,6 +2270,51 @@ export default class TableStore {
       }
     }
     this.initColumns();
+  }
+
+  @action
+  initGroups() {
+    const { groups = [] } = this.props;
+    if (groups.length) {
+      const headerGroupNames: string[] = [];
+      const rowGroupNames: string[] = [];
+      const groupNames: string[] = [];
+      const parentFields: Map<string | symbol, string> = new Map();
+      const { dataSet } = this;
+      const header: TableGroup[] = [];
+      const row: TableGroup[] = [];
+      const column: TableGroup[] = [];
+      groups.forEach((group) => {
+        const { type, name, parentField } = group;
+        switch (type) {
+          case GroupType.header:
+            header.push(group);
+            headerGroupNames.push(name);
+            break;
+          case GroupType.row:
+            row.push(group);
+            rowGroupNames.push(name);
+            break;
+          case GroupType.none:
+            break;
+          default: {
+            column.push(group);
+            groupNames.push(name);
+          }
+        }
+        if (parentField) {
+          parentFields.set(name, parentField);
+        }
+      });
+
+      this.groupedData = mergeGroupStates(normalizeGroups(rowGroupNames.concat(groupNames), headerGroupNames, dataSet.records, parentFields), this.groupedData);
+      this.groupedDataWithHeader = mergeGroupStates(normalizeGroups(headerGroupNames.concat(rowGroupNames, groupNames), [], dataSet.records), this.groupedDataWithHeader);
+      this.groups = [...header, ...row, ...column];
+    } else {
+      this.groups = [];
+      this.groupedData = [];
+      this.groupedDataWithHeader = [];
+    }
   }
 
   @action
@@ -2514,10 +2646,11 @@ export default class TableStore {
     switch (key) {
       case 'current': {
         if (this.allChecked) {
-          dataSet.unSelectAll();
+          this.unCheckAllCurrent();
+          this.unCheckAllCached();
         } else {
-          const { filter } = this.props;
-          dataSet.selectAll(filter);
+          this.checkAllCurrent();
+          this.checkAllCached();
         }
         break;
       }
@@ -2568,7 +2701,7 @@ export default class TableStore {
     if (this.props.showAllPageSelectionButton) {
       buttons.push(
         <Dropdown key="selectAllPage" overlay={this.renderAllPageSelectionMenu}>
-          <Icon type="baseline-arrow_drop_down" />
+          <Icon type="baseline-arrow_drop_down" className={`${this.prefixCls}-page-all-select`} />
         </Dropdown>,
       );
     }

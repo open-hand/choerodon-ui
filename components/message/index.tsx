@@ -74,13 +74,7 @@ function notice(
   onClose?: ConfigOnClose,
   placement?: MessagePlacement,
 ): MessageType {
-  const iconType = {
-    info: 'info',
-    success: 'check_circle',
-    error: 'error',
-    warning: 'warning',
-    loading: 'loading',
-  }[type];
+  const iconType = config.icons[type];
 
   if (isString(onClose)) {
     placement = onClose;
@@ -132,7 +126,7 @@ function notice(
   return result;
 }
 
-export type ConfigOptions = Partial<ConfigProps>;
+export type ConfigOptions = Partial<ConfigProps> & { icons?: Partial<ConfigProps['icons']> };
 
 export default {
   info(
@@ -211,6 +205,12 @@ export default {
     }
     if (options.maxCount !== undefined) {
       config.maxCount = options.maxCount;
+    }
+    if (options.icons !== undefined) {
+      config.icons = {
+        ...config.icons,
+        ...options.icons,
+      };
     }
   },
   destroy() {

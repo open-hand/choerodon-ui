@@ -39,6 +39,13 @@ const manager: MessageManagerType = {
     bottom: 24,
     placement: 'leftBottom',
     transitionName: 'move-up',
+    icons: {
+      info: 'info',
+      success: 'check_circle',
+      error: 'error',
+      warning: 'warning',
+      loading: 'loading',
+    },
   },
   remove(key: string) {
     const { instance } = this;

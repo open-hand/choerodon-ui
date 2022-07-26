@@ -18,10 +18,13 @@ export interface Locale extends DataSetLocale {
     customization_settings: string;
   };
   Table: {
-    show_cached_seletion: string;
-    hide_cached_seletion: string;
-    show_cached_modified: string;
-    hide_cached_modified: string;
+    show_cached_records: string;
+    hide_cached_records: string;
+    cached_tips: string;
+    cached_type_selected: string;
+    cached_type_created: string;
+    cached_type_updated: string;
+    cached_type_destroyed: string;
     selection_tips: string;
     select_current_page: string;
     unselect_current_page: string;
@@ -114,6 +117,7 @@ export interface Locale extends DataSetLocale {
     collapse_cell: string;
     collapse_row: string;
     collapse_column: string;
+    current_page: string;
     current_page_records: string;
     cached_records: string;
     refresh: string;

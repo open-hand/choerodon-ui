@@ -223,7 +223,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
     const { props } = this;
     const target = props.target || getDefaultTarget;
     // Wait for parent component ref has its value
-    this.timeout = setTimeout(() => {
+    this.timeout = window.setTimeout(() => {
       this.setTargetEventListeners(target);
       // Mock Event object.
       this.updatePosition({} as Event);

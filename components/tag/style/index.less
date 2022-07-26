@@ -44,7 +44,7 @@
     transition: all @animation-duration-slow;
   }
 
-  &-has-color {
+  &&-has-color {
     border-color: transparent;
 
     &,
@@ -108,12 +108,12 @@
     @lightColor: '@{color}-1';
     @lightBorderColor: '@{color}-3';
     @darkColor: '@{color}-6';
-    &-@{color} {
+    &&-@{color} {
       color: @@darkColor;
       background-color: @@lightColor;
       border-color: @@lightBorderColor;
     }
-    &-@{color}-inverse {
+    &&-@{color}-inverse {
       color: #fff;
       background-color: @@darkColor;
       border-color: @@darkColor;

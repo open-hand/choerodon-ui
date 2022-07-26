@@ -1,5 +1,5 @@
 import React, { Children, ReactNode } from 'react';
-import { Cancelable, DebounceSettings } from 'lodash';
+import { DebouncedFunc, DebounceSettings } from 'lodash';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -171,7 +171,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   isTooltipShown?: boolean;
 
-  handleClickWait: Function & Cancelable;
+  handleClickWait: DebouncedFunc<(e) => Promise<void>>;
 
   constructor(props, context) {
     super(props, context);
@@ -227,7 +227,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     }
   }
 
-  getHandleClick(props): Function & Cancelable {
+  getHandleClick(props): DebouncedFunc<(e) => Promise<void>> {
     const { wait, waitType } = props;
     if (wait && waitType) {
       const options: DebounceSettings = { leading: true, trailing: true };

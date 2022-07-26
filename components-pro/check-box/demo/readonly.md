@@ -32,8 +32,11 @@ class App extends React.Component {
         <Tooltip title="disabled">
           <CheckBox name="rd" disabled>A</CheckBox>
         </Tooltip>
-        <CheckBox name="rd" readOnly>B</CheckBox>
-        <CheckBox dataSet={this.ds} name="rd" value="C">C</CheckBox>
+        <CheckBox name="rd" checked disabled>B</CheckBox>
+        <CheckBox name="rd" indeterminate disabled>C</CheckBox>
+        <CheckBox name="rd" readOnly>D</CheckBox>
+        <CheckBox name="rd" indeterminate readOnly>E</CheckBox>
+        <CheckBox dataSet={this.ds} name="rd" value="C">F</CheckBox>
       </div>
     );
   }

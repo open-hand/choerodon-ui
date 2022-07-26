@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEvent, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import uniq from 'lodash/uniq';
@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import difference from 'lodash/difference';
+import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
@@ -43,6 +44,8 @@ import QuickFilterMenu from './quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from './quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
+import { hide, show } from '../../tooltip/singleton';
+import { ShowHelp } from '../../field/enum';
 
 /**
  * 当前数据是否有值并需要选中
@@ -234,6 +237,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   tempFields: Fields;
 
+  isTooltipShown?: boolean;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -269,6 +274,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (!fuzzyQueryOnly) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
+    }
+    if (this.isTooltipShown) {
+      hide();
+      delete this.isTooltipShown;
     }
   }
 
@@ -396,7 +405,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  handleDataSetUpdate({ record }) {
+  async handleDataSetUpdate({ record, name, oldValue }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
@@ -404,8 +413,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     this.setConditionStatus(status);
     if (autoQuery) {
-      dataSet.query();
-      onQuery();
+      if (await dataSet.modifiedCheck()) {
+        dataSet.query();
+        onQuery();
+      } else {
+        record.init(name, oldValue);
+      }
     }
   }
 
@@ -671,9 +684,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return (
       <span
         className={`${prefixCls}-filter-menu-query`}
-        onClick={(e) => {
+        onClick={async (e) => {
           e.stopPropagation();
-          dataSet.query();
+          if (await dataSet.modifiedCheck()) dataSet.query();
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
@@ -896,10 +909,40 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return result;
   }
 
+  @autobind
+  handleHelpMouseEnter(e: MouseEvent, help: string) {
+    const { target } = e;
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
+    show(target as HTMLElement, {
+      title: help,
+      theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
+    });
+    this.isTooltipShown = true;
+  }
+
+  @autobind
+  handleHelpMouseLeave() {
+    hide();
+  }
+
+  renderTooltipHelp(help) {
+    if (help) {
+      return (
+        <Icon
+          type="help"
+          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help)}
+          onMouseLeave={this.handleHelpMouseLeave}
+        />
+      );
+    }
+  }
+
   /**
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
+    const { getConfig } = this.context;
     const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly } = this.props;
     const menuDataSet = dataSet.getState(MENUDATASET);
     const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -928,13 +971,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
               {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden } = element.props;
+                const { name, hidden, showHelp, disabled } = element.props;
+                const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const itemClassName = `${prefixCls}-filter-item`;
+                const itemContentClassName = classNames(`${prefixCls}-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 return (
                   <div
-                    className={`${prefixCls}-filter-content`}
+                    className={itemContentClassName}
                     key={name}
                     onClick={() => {
                       const editor = this.refEditors.get(name);
@@ -943,19 +990,29 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       }
                     }}
                   >
-                    <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
-                    <span className={itemClassName}>{this.createFields(element, name)}</span>
+                    <span className={`${prefixCls}-filter-label`}>
+                      {queryField && queryField.get('label')}
+                      {isLabelShowHelp ? this.renderTooltipHelp(queryField && queryField.get('help')) : null}
+                    </span>
+                    <span className={`${prefixCls}-filter-item`}>
+                      {this.createFields(element, name)}
+                    </span>
                   </div>
                 );
               })}
               {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden } = element.props;
+                const { name, hidden, showHelp, disabled } = element.props;
+                const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const itemContentClassName = classNames(`${prefixCls}-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 if (selectFields.includes(name)) {
                   return (
                     <div
-                      className={`${prefixCls}-filter-content`}
+                      className={itemContentClassName}
                       key={name}
                       onClick={() => {
                         const editor = this.refEditors.get(name);
@@ -971,7 +1028,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           this.handleUnSelect([name]);
                         }}
                       />
-                      <span className={`${prefixCls}-filter-label`}>{queryField && queryField.get('label')}</span>
+                      <span className={`${prefixCls}-filter-label`}>
+                        {queryField && queryField.get('label')}
+                        {isLabelShowHelp ? this.renderTooltipHelp(queryField && queryField.get('help')) : null}
+                      </span>
                       <span className={`${prefixCls}-filter-item`}>
                         {this.createFields(element, name)}
                       </span>
@@ -1030,10 +1090,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @autobind
-  handleQuery(collapse?: boolean) {
+  async handleQuery(collapse?: boolean) {
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      dataSet.query();
+      if (await dataSet.modifiedCheck()) dataSet.query();
     }
     if (!collapse) {
       onQuery();

@@ -15,13 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder` `modalClosable` properties.
+- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `modalClosable`, `cacheRecords`, `tableShowCachedTips` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
-- 🌟 `<pro>Table`: Added `boxSizing` property.
+- 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips` properties.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
+- 🌟 `<pro>DataSet.Field`: Added `dateMode` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
+- 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
@@ -32,6 +34,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
+- 💄 `<pro>Table`: Optimize dynamic filter bar help rendering.
 - 💄 `<pro>Table`: The cell tooltip will pop up automatically after optimizing the check positioning.
 - 💄 `<pro>Table`: Optimized combobar mode when help and sort icons appear in the in-line search.
 - 💄 `<pro>Typography`: Optimize the use of paragraph components under form to increase the style value of margin bottom and correct the problem of small style capitalization.
@@ -42,20 +45,28 @@ timeline: true
 - 💄 `<pro>Lov`: Optimized disable the selection drop-down option during input field search.
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
+- 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
+- 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
+- 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
 - 💄 `<pro>SelectBox`: Optimized required styles.
+- 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
+- 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>DataSet`: Fix the wrong count value obtained by query method in asynchronous count mode.
+- 🐞 `<pro>DataSet`: Fixed cached created data cannot be deleted.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>DatePicker`: Fix the issue that when there is a min value in `range` and `editorInPopup` modes, an error may be reported after entering the value.
+- 🐞 `<pro>DatePicker`: Fix `defaultTime` value error when it exceeds `min` and `max`.
 - 🐞 `<pro>Modal`: Fix the problem of customize fail in embedded mode.
 - 🐞 `<pro>Select`: Fix the error of value type object in combo mode.
 - 🐞 `<pro>Select`: Fix error when pressing pageDown.
 - 🐞 `<pro>Select`: Fix `searchMatcher` not working when using options prop.
 - 🐞 `<pro>Table`: Fix error when element may be null.
 - 🐞 `<pro>Table`: Fix error when the column configuration in the `columnProps.children` property of column grouping has no key and name.
+- 🐞 `<pro>Table`: Fix group state loss problem.
 - 🐞 `<pro>Table`: Fix the problem that the custom function editor component editor cannot be located.
 - 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 - 🐞 `<pro>Table`: Fix the problem of using querydataset to report errors under the use of combined search bar.
@@ -71,8 +82,12 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed multiple tooltips when using PopConfirm.
 - 🐞 `<pro>Table`: Fix the problem that the record does not correspond when editing the header grouping cell.
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
+- 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
+- 🐞 `<pro>Table`: Fix browser zoom issue.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
+- 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
+- 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 
 ## 1.5.5
 

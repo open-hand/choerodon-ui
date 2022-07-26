@@ -349,6 +349,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   showSelectionTips?: boolean;
   /**
+   * 显示缓存提示， 优先级高于 showSelectionTips
+   */
+  showCachedTips?: boolean;
+  /**
    * 显示缓存选中记录的按钮
    */
   showSelectionCachedButton?: boolean;
@@ -937,6 +941,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  handleDataSetRemove({ records, dataSet }) {
+    if (records) {
+      const errors = dataSet.getAllValidationErrors();
+      this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
+    }
+  }
+
+  @autobind
   handleDataSetValidateSelf(props: { valid: boolean; dataSet: DataSet; errors: ValidationSelfErrors[]; noLocate?: boolean }) {
     const { dataSet } = props;
     const errors = dataSet.getAllValidationErrors();
@@ -1493,20 +1505,24 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  @autobind
   @action
-  syncParentSize(entries: ResizeObserverEntry[]) {
-    const [entry] = entries;
-    const { contentRect: { height } } = entry;
+  syncParentSize(height: number, target: HTMLElement) {
     const { tableStore, element, wrapper } = this;
     if (element) {
-      const wrapperHeight = (wrapper as HTMLDivElement).getBoundingClientRect().height;
+      const wrapperHeight = Math.round((wrapper as HTMLDivElement).getBoundingClientRect().height);
       if (wrapperHeight !== height) {
         tableStore.parentHeight = height;
         tableStore.parentPaddingTop =
-          (element as HTMLDivElement).getBoundingClientRect().top - (entry.target as HTMLDivElement).getBoundingClientRect().top;
+          Math.round((element as HTMLDivElement).getBoundingClientRect().top) - Math.round((target as HTMLDivElement).getBoundingClientRect().top);
       }
     }
+  }
+
+  @autobind
+  handleParentResize(entries: ResizeObserverEntry[]) {
+    const [entry] = entries;
+    const height = Math.round(entry.contentRect.height);
+    this.syncParentSize(height, entry.target as HTMLDivElement);
   }
 
   connect() {
@@ -1517,9 +1533,10 @@ export default class Table extends DataSetComponent<TableProps> {
       if (wrapper) {
         const { parentNode } = wrapper;
         if (parentNode) {
-          const resizeObserver = new ResizeObserver(this.syncParentSize);
+          const resizeObserver = new ResizeObserver(this.handleParentResize);
           resizeObserver.observe(parentNode);
           this.resizeObserver = resizeObserver;
+          this.syncParentSize(parentNode.offsetHeight, parentNode);
         }
       }
     }
@@ -1549,6 +1566,7 @@ export default class Table extends DataSetComponent<TableProps> {
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(dataSet, DataSetEvents.validateSelf, this.handleDataSetValidateSelf);
       handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
+      handler.call(dataSet, DataSetEvents.remove, this.handleDataSetRemove);
     }
   }
 
@@ -1976,7 +1994,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const {
       props: { dataSet, selectionMode },
       prefixCls,
-      tableStore: { pagination, showSelectionTips },
+      tableStore: { pagination, showSelectionTips, showCachedTips },
     } = this;
     if (pagination !== false && dataSet && dataSet.paging) {
       const paginationPosition = getPaginationPosition(pagination);
@@ -1986,7 +2004,7 @@ export default class Table extends DataSetComponent<TableProps> {
           <Pagination
             key={`pagination-${position}`}
             {...paginationProps}
-            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips })}
+            className={classNames(`${prefixCls}-pagination`, paginationProps.className, { [`${prefixCls}-pagination-with-selection-tips`]: showSelectionTips || showCachedTips })}
             dataSet={dataSet}
           >
             {selectionMode !== SelectionMode.none && dataSet.selection === DataSetSelection.multiple && <SelectionTips />}

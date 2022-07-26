@@ -28,12 +28,14 @@
     }
   }
 
-  &-selected {
-    background-color: @item-focus-bg;
+  &-active {
+    color: @item-active-color;
+    background-color: @item-active-bg;
   }
 
-  &-active {
-    background-color: @item-active-bg;
+  &-selected {
+    color: @item-focus-color;
+    background-color: @item-focus-bg;
   }
 
 }
@@ -70,7 +72,8 @@
   &-item {
     .dropdown-menu-item-properties;
 
-    &:hover {
+    &:not(&-selected):hover {
+      color: @item-active-color;
       background-color: @item-active-bg;
     }
 

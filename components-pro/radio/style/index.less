@@ -26,13 +26,13 @@
 
     &::before {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0.08rem;
-      height: 0.08rem;
+      top: @radio-size  / 4 - @radio-border-width / 2;
+      left: @radio-size / 4 - @radio-border-width / 2;
+      width: @radio-size / 2 - @radio-border-width;
+      height: @radio-size / 2 - @radio-border-width;
       background-color: @primary-color;
       border-radius: 50%;
-      transform: scale(1) translateX(-50%) translateY(-50%);
+      transform: scale(0);
       opacity: 0;
       transition: all @radio-duration @ease-in-out-circ;
       content: ' ';
@@ -44,24 +44,23 @@
     }
   }
 
-  &:checked + &-inner {
+  &&:checked + &-inner {
     border-color: @primary-color;
 
     &::before {
       background-color: @primary-color;
-      transform: scale(1) translateX(-50%) translateY(-50%);
+      transform: scale(1);
       opacity: 1;
     }
   }
 
-  &:hover + &-inner,
-  &-wrapper:hover &-inner,
-  &:focus + &-inner {
-    z-index: 1;
-    border-color: @primary-7;
+  &&:hover:not(:checked) + &-inner,
+  &-wrapper:hover &&:not(:checked) + &-inner,
+  &&:focus:not(:checked) + &-inner {
+    border-color: @radio-uncheck-hover-border-color;
 
     &::before {
-      background-color: @primary-7;
+      background-color: @radio-uncheck-hover-border-color;
     }
   }
 
@@ -69,7 +68,7 @@
     border-color: @input-highlight-border-color;
   }
 
-  &-highlight &:checked + &-inner {
+  &-highlight &&:checked + &-inner {
     border-color: @input-highlight-border-color;
 
     &::before {
@@ -77,16 +76,27 @@
     }
   }
 
-  &:focus + &-inner {
-    box-shadow: 0 0 @outline-blur-size @outline-width fade(@outline-color, 20%);
+  &&:focus + &-inner {
+    box-shadow: 0 0 @outline-blur-size @outline-width @radio-shadow-color;
   }
 
-  &:disabled + &-inner {
-    background-color: @input-disabled-bg;
-    border-color: @disabled-color !important;
+  &&:disabled + &-inner {
+    color: @radio-disabled-color;
+    background-color: @radio-disabled-bg;
+    border-color: @radio-disabled-border-color !important;
 
     &::before {
-      background-color: @disabled-color;
+      background-color: @radio-disabled-color;
+    }
+  }
+
+  &&:disabled:checked + &-inner {
+    color: @radio-disabled-check-color;
+    background-color: @radio-disabled-check-bg;
+    border-color: @radio-disabled-check-border-color !important;
+
+    &::before {
+      background-color: @radio-disabled-check-color;
     }
   }
 

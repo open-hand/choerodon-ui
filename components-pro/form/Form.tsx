@@ -591,6 +591,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(dataSet, DataSetEvents.reset, this.handleDataSetReset);
+      handler.call(dataSet, DataSetEvents.remove, this.handleDataSetRemove);
     }
   }
 
@@ -614,6 +615,14 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
     } else {
       this.bubbleValidationReport(false);
+    }
+  }
+  
+  @autobind
+  handleDataSetRemove({ records, dataSet }) {
+    if (records) {
+      const errors = dataSet.getAllValidationErrors();
+      this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
     }
   }
 

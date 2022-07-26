@@ -15,13 +15,15 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder modalClosable 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, modalClosable, cacheRecords, tableShowCachedTips 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
-- 🌟 `<pro>Table`: 新增 boxSizing 属性。
+- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
+- 🌟 `<pro>DataSet.Field`: 新增 dateMode 属性。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
+- 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -32,6 +34,7 @@ timeline: true
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
+- 💄 `<pro>Table`: 优化动态筛选条 help 渲染。
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
 - 💄 `<pro>Table`: 优化 combobar 模式下，行内搜索出现 help、sort 图标的问题。
 - 💄 `<pro>Typography`: 优化在 Form 下使用段落组件多出 margin-bottom 的样式值及改正了样式大写小的问题。
@@ -42,20 +45,28 @@ timeline: true
 - 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
 - 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
+- 💄 `<pro>Table`: 优化动态筛选条查询支持数据源 modifiedCheck 提示。
+- 💄 `<pro>Table`: 优化非 Tree 模式下的展开行控制。
+- 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
 - 💄 `<pro>SelectBox`: 优化必填样式。
+- 💄 `<pro>Select`: 优化多选搜索交互处理。
+- 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>DataSet`: 修复异步计数模式下 query 方法获得的计数值有误。
+- 🐞 `<pro>DataSet`: 修复缓存的新增数据无法删除。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
+- 🐞 `<pro>DatePicker`: 修复 defaultTime 超出 min 和 max 时值错误的问题。
 - 🐞 `<pro>Modal`: 修复内嵌模式下个性化失效的问题。
 - 🐞 `<pro>Select`: 修复在 combo 模式下值类型为 object 的报错问题。
 - 🐞 `<pro>Select`: 修复按 pageDown 建报错的问题。
 - 🐞 `<pro>Select`: 修复使用 options 属性时 searchMatcher 没有作用的问题。
 - 🐞 `<pro>Table`: 修复 element 可能是 null 时的报错问题。
 - 🐞 `<pro>Table`: 修复列分组的属性 columnProps.children 中的列配置没有 key 和 name 时报错的问题。
+- 🐞 `<pro>Table`: 修复分组状态丢失的问题。
 - 🐞 `<pro>Table`: 修复拖动表格列宽时拖拽线位置不正确的问题。
 - 🐞 `<pro>Table`: 修复自定义函数编辑器组件 editor 无法定位的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
@@ -71,8 +82,12 @@ timeline: true
 - 🐞 `<pro>Table`: 修复了使用 PopConfirm 时出现多个提示的问题 。
 - 🐞 `<pro>Table`: 修复头分组单元格编辑时记录没有对应的问题。
 - 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
+- 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
+- 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
+- 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
+- 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 
 ## 1.5.5
 

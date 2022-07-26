@@ -1,12 +1,4 @@
-export enum ViewMode {
-  time = 'time',
-  dateTime = 'dateTime',
-  week = 'week',
-  date = 'date',
-  month = 'month',
-  year = 'year',
-  decade = 'decade',
-}
+export { DateMode as ViewMode } from 'choerodon-ui/dataset/data-set/enum';
 
 export enum TimeUnit {
   'hour' = 'h',
