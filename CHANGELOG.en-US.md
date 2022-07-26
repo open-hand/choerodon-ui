@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 - 🐞 `<pro>Table`: Fix browser zoom issue.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
+- 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 
 ## 1.5.5
 
