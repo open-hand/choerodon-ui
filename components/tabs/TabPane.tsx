@@ -85,6 +85,16 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
     }
   }, []);
 
+  const handleRemove = useCallback(({ dataSet, records }) => {
+    if (records) {
+      const errors = dataSet.getAllValidationErrors();
+      handleValidationReport({
+        showInvalid: errors.dataSet.length > 0 || errors.records.length > 0,
+        component: dataSet,
+      });
+    }
+  }, []);
+
   useEffect(() => () => invalidComponents.clear(), []);
 
   useEffect(() => {
@@ -99,16 +109,18 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
         ds => ds
           .addEventListener(DataSetEvents.validate, handleValidate)
           .addEventListener(DataSetEvents.validateSelf, handleValidate)
+          .addEventListener(DataSetEvents.remove, handleRemove)
           .addEventListener(DataSetEvents.reset, handleReset),
       );
       return () => dsList.forEach(
         ds => ds
           .removeEventListener(DataSetEvents.validate, handleValidate)
           .removeEventListener(DataSetEvents.validateSelf, handleValidate)
+          .removeEventListener(DataSetEvents.remove, handleRemove)
           .removeEventListener(DataSetEvents.reset, handleReset),
       );
     }
-  }, [active, disabled, handleValidate, handleReset, length, ...dsList]);
+  }, [active, disabled, handleValidate, handleReset, handleRemove, length, ...dsList]);
 
   const childrenWithProvider = length ? children : (
     <ConfigProvider onComponentValidationReport={handleValidationReport}>

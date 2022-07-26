@@ -46,6 +46,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
 - 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
+- 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
@@ -85,6 +86,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
+- 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 
 ## 1.5.5
 
