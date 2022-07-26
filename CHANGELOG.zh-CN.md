@@ -84,8 +84,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
-- 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
+- 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 
 ## 1.5.5
