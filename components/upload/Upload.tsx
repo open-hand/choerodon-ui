@@ -239,7 +239,15 @@ export default class Upload extends Component<UploadProps, UploadState> {
   };
 
   beforeUpload = (file: UploadFile, uploadFiles: UploadFile[]) => {
-    const { beforeUpload } = this.props;
+    const { multiple, beforeUpload } = this.props;
+    if (!multiple) {
+      const { fileList: nowFileList } = this.state;
+      nowFileList.map(this.handleManualRemove);
+      this.onChange({
+        file,
+        fileList: uploadFiles,
+      });
+    }
     if (beforeUpload) {
       const result = beforeUpload(file, uploadFiles);
       if (result === false) {
