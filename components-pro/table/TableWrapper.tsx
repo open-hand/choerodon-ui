@@ -60,14 +60,14 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
       <TableCol
         key={key}
         column={column}
-        last={!overflowX && index === array.length - fixedColumnLength}
+        last={index === array.length - fixedColumnLength}
       />
     ));
     if (hasPlaceHolder) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar(), true) }} />);
     }
     return <colgroup>{cols}</colgroup>;
-  }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder, overflowX]);
+  }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder]);
 
   const style = useMemo(() => ({ width: tableWidth }), [tableWidth]);
 

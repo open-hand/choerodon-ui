@@ -1914,6 +1914,12 @@ export default class TableStore {
   }
 
   @computed
+  get getLastEmptyWidthColumn(): ColumnProps | undefined {
+    const emptyWidthColumns = this.columnGroups.leafs.filter(({ column }) => isNil(get(column, 'width')));
+    return emptyWidthColumns.length ? emptyWidthColumns[emptyWidthColumns.length - 1].column : undefined;
+  }
+
+  @computed
   get hasCheckFieldColumn(): boolean {
     const { checkField } = this.dataSet.props;
     if (checkField) {
@@ -2094,7 +2100,7 @@ export default class TableStore {
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    if (!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') {
+    if ((!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') && !this.isTree) {
       return 0;
     }
     return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
