@@ -61,6 +61,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @observable text?: string;
 
+  midText: string;
+
   disposer: IReactionDisposer;
 
   @observable theme?: string;
@@ -80,9 +82,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
       const { formatter } = props;
       const recordValue = this.getValue();
-      const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
-      // 当 dataSet 作为数据源时，通过 field.getValue 进行最新值监听，完成显示值 text 的更新
-      if (this.dataSet && this.name) {
+      const value  = formatter ? formatter.getFormatted(recordValue) : recordValue;
+      // 分别监听 受控 及 DataSet 进行管理时值的变化
+      if (recordValue !== this.midText || (this.dataSet && this.name)) {
         this.setText(value);
       }
     });
@@ -247,6 +249,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     // 更新DataSet的值之前，先去拿到原始的raw格式
     const codeMirrorText = codeMirrorInstance.getValue();
     const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText;
+    this.midText = value;
     this.setValue(value);
     this.isFocused = false;
     this.isFocus = false;
