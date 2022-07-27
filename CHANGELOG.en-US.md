@@ -113,7 +113,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
-
+- 🐞 `Upload`: Fix the problem that the loading status does not change after uploading successfully.
 
 ## 1.5.4
 
