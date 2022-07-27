@@ -215,7 +215,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
 
   onChange = (info: UploadChangeParam) => {
     const { onChange } = this.props;
-    if (!('fileList' in this.props) && !onChange) {
+    if (!('fileList' in this.props) || !onChange) {
       this.setState({ fileList: info.fileList });
     }
     if (onChange) {
