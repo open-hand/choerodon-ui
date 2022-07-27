@@ -20,7 +20,7 @@ export interface TableFooterProps extends ElementProps {
 
 const TableFooter: FunctionComponent<TableFooterProps> = function TableFooter(props) {
   const { lock, columnGroups } = props;
-  const { prefixCls, rowHeight, tableStore } = useContext(TableContext);
+  const { prefixCls, rowHeight, tableStore, fullColumnWidth } = useContext(TableContext);
   const { overflowX } = tableStore;
 
   const handleResize = useCallback(action<(index: Key, height: number) => void>((index: Key, height: number) => {
@@ -29,7 +29,7 @@ const TableFooter: FunctionComponent<TableFooterProps> = function TableFooter(pr
 
   const getTds = () => {
     const { customizable, rowDraggable, dragColumnAlign } = tableStore;
-    const hasPlaceholder = tableStore.overflowY && lock !== ColumnLock.left;
+    const hasPlaceholder = lock !== ColumnLock.left && tableStore.overflowY;
     const right = hasPlaceholder ? measureScrollbar() : 0;
     const tds = columnGroups.leafs.map((columnGroup, index, cols) => {
       const { key } = columnGroup;
@@ -50,10 +50,20 @@ const TableFooter: FunctionComponent<TableFooterProps> = function TableFooter(pr
       }
       return undefined;
     });
-
+    const useEmptyColumn = !fullColumnWidth && lock !== ColumnLock.left && !tableStore.overflowX && !tableStore.hasEmptyWidthColumn;
+    if (useEmptyColumn) {
+      tds.push(
+        <th
+          key="empty-column"
+          className={`${prefixCls}-cell`}
+          style={{ lineHeight: 1 }}
+        />,
+      );
+    }
     if (hasPlaceholder) {
       const placeHolderProps: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement> = {
         key: 'fixed-column',
+        style: { lineHeight: 1 },
       };
       const classList = [`${prefixCls}-cell`];
       if (isStickySupport() && overflowX) {

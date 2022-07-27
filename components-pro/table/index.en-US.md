@@ -113,6 +113,7 @@ subtitle: 表格
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度  | 'content' \| 'wrapper' | 'content' |
+| fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

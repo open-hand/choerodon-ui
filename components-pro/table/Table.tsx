@@ -543,6 +543,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnTitleEditable?: boolean;
   /**
+   * 是否让列宽撑满表格
+   * @default true
+   */
+  fullColumnWidth?:boolean;
+  /**
    * 可设置高度
    */
   heightChangeable?: boolean;
@@ -791,6 +796,7 @@ export default class Table extends DataSetComponent<TableProps> {
     clientExportQuantity: 100,
     showSelectionCachedButton: true,
     showHeader: true,
+    fullColumnWidth: true,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1588,6 +1594,7 @@ export default class Table extends DataSetComponent<TableProps> {
         summary,
         searchCode,
         boxSizing,
+        fullColumnWidth,
       },
       tableStore,
       prefixCls,
@@ -1622,6 +1629,7 @@ export default class Table extends DataSetComponent<TableProps> {
             summary={summary}
             virtualSpin={virtualSpin}
             spinProps={tableSpinProps}
+            fullColumnWidth={fullColumnWidth}
             isTree={mode === TableMode.tree}
           >
             <TableSibling position="before" boxSizing={boxSizing}>

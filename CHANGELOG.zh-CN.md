@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
-- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips 属性。
+- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips, fullColumnWidth 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
 - 🌟 `<pro>DataSet.Field`: 新增 dateMode 属性。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
