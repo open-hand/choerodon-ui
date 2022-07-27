@@ -2100,7 +2100,7 @@ export default class TableStore {
       rowDraggable,
       props: { expandIconColumnIndex = 0, rowNumber },
     } = this;
-    if (!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') {
+    if ((!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') && !this.isTree) {
       return 0;
     }
     return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
