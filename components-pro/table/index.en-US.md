@@ -43,8 +43,8 @@ subtitle: 表格
 | rowHeight | 行高 | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/components/configure#API) |
 | headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
 | footerRowHeight | 脚行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
-| onScrollLeft | 横向滚动事件 | (scrollLeft) => void |  |
-| onScrollTop | 纵向滚动事件 | (scrollTop) => void |  |
+| onScrollLeft | 横向滚动事件 | (scrollLeft, getScrollInfo) => void |  |
+| onScrollTop | 纵向滚动事件 | (scrollTop, getScrollInfo) => void |  |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
 | expandedRowRenderer | 展开行渲染器 | ({ dataSet, record }) => ReactNode |  |
@@ -113,6 +113,7 @@ subtitle: 表格
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度  | 'content' \| 'wrapper' | 'content' |
+| fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
