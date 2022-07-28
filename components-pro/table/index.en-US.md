@@ -43,8 +43,8 @@ subtitle: 表格
 | rowHeight | 行高 | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/components/configure#API) |
 | headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
 | footerRowHeight | 脚行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
-| onScrollLeft | 横向滚动事件 | (scrollLeft) => void |  |
-| onScrollTop | 纵向滚动事件 | (scrollTop) => void |  |
+| onScrollLeft | 横向滚动事件 | (scrollLeft, getScrollInfo) => void |  |
+| onScrollTop | 纵向滚动事件 | (scrollTop, getScrollInfo) => void |  |
 | defaultRowExpanded | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效 | boolean | false |
 | expandRowByClick | 通过点击行来展开子行 | boolean | false |
 | expandedRowRenderer | 展开行渲染器 | ({ dataSet, record }) => ReactNode |  |

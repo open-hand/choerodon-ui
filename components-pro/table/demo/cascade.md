@@ -300,10 +300,9 @@ class App extends React.Component {
         buttons={['add', 'delete']}
         dataSet={this.enemyDs}
         pagination={{ position: 'both' }}
-        fullColumnWidth={false}
       >
-        <Column name="name" editor width={150} sortable footer="xxx" />
-        <Column name="age" editor width={150} sortable />
+        <Column name="name" editor sortable />
+        <Column name="age" editor sortable />
         <Column name="sex" editor width={150} />
       </Table>,
       <Table
