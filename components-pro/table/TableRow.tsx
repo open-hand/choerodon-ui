@@ -84,7 +84,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
-    expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData,
+    expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData, fullColumnWidth,
   } = context;
   const {
     highLightRow,
@@ -511,6 +511,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     pxToRem(get(tableStore.lockColumnsBodyRowsHeight, rowKey) as number, true) : undefined;
   if (height) {
     rowStyle.height = height;
+  }
+  const useEmptyColumn = !fullColumnWidth && lock !== ColumnLock.left && !tableStore.overflowX && !tableStore.hasEmptyWidthColumn;
+  if (useEmptyColumn) {
+    columns.push(
+      <td key="empty-column" />,
+    );
   }
   const tr = (
     <Element

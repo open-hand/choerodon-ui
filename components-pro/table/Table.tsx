@@ -36,7 +36,7 @@ import DataSet, { ValidationErrors, ValidationSelfErrors } from '../data-set/Dat
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
-import TableStore from './TableStore';
+import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
 import Pagination, { PaginationProps } from '../pagination/Pagination';
@@ -57,6 +57,7 @@ import {
   ScrollPosition,
   SelectionMode,
   TableAutoHeightType,
+  TableBoxSizing,
   TableButtonType,
   TableCommandType,
   TableEditMode,
@@ -64,7 +65,6 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
-  TableBoxSizing,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -151,6 +151,12 @@ export interface TableQueryBarCustomProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+}
+
+export interface ScrollInfo {
+  start: number;
+  end: number;
+  groups: Group[];
 }
 
 export interface TableQueryBarHookProps extends TableQueryBarBaseProps, TableQueryBarCustomProps {
@@ -543,6 +549,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnTitleEditable?: boolean;
   /**
+   * 是否让列宽撑满表格
+   * @default true
+   */
+  fullColumnWidth?: boolean;
+  /**
    * 可设置高度
    */
   heightChangeable?: boolean;
@@ -713,11 +724,11 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 横向滚动事件
    */
-  onScrollLeft?: (left: number) => void;
+  onScrollLeft?: (left: number, getScrollInfo: () => ScrollInfo) => void;
   /**
    * 纵向滚动事件
    */
-  onScrollTop?: (top: number) => void;
+  onScrollTop?: (top: number, getScrollInfo: () => ScrollInfo) => void;
   /**
    * 表格体是否可展开
    */
@@ -791,6 +802,7 @@ export default class Table extends DataSetComponent<TableProps> {
     clientExportQuantity: 100,
     showSelectionCachedButton: true,
     showHeader: true,
+    fullColumnWidth: true,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1588,6 +1600,7 @@ export default class Table extends DataSetComponent<TableProps> {
         summary,
         searchCode,
         boxSizing,
+        fullColumnWidth,
       },
       tableStore,
       prefixCls,
@@ -1622,6 +1635,7 @@ export default class Table extends DataSetComponent<TableProps> {
             summary={summary}
             virtualSpin={virtualSpin}
             spinProps={tableSpinProps}
+            fullColumnWidth={fullColumnWidth}
             isTree={mode === TableMode.tree}
           >
             <TableSibling position="before" boxSizing={boxSizing}>
@@ -2223,8 +2237,36 @@ export default class Table extends DataSetComponent<TableProps> {
       this.lastScrollTop = scrollTop;
       tableStore.setLastScrollTop(scrollTop);
       if (target) {
-        const { onScrollTop = noop } = this.props;
-        onScrollTop(scrollTop);
+        const { onScrollTop } = this.props;
+        if (onScrollTop) {
+          onScrollTop(scrollTop, () => {
+            const { groupedData } = tableStore;
+            const trs = Array.from(target.querySelectorAll('tr'));
+            let start = -1;
+            let end = -1;
+            let index = 0;
+            trs.some((tr) => {
+              const { offsetTop, offsetHeight } = tr;
+              if (start === -1 && (offsetTop + offsetHeight) >= scrollTop) {
+                start = index;
+              }
+              if (end === -1 && offsetTop >= (target.clientHeight + scrollTop)) {
+                end = index;
+                return true;
+              }
+              index += 1;
+              return false;
+            });
+            if (end === -1) {
+              end = index;
+            }
+            return {
+              groups: groupedData,
+              start,
+              end,
+            };
+          });
+        }
       }
     }
   }
@@ -2259,8 +2301,46 @@ export default class Table extends DataSetComponent<TableProps> {
       this.setScrollPositionClassName(target);
       this.lastScrollLeft = scrollLeft;
       if (target) {
-        const { onScrollLeft = noop } = this.props;
-        onScrollLeft(scrollLeft);
+        const { onScrollLeft } = this.props;
+        if (onScrollLeft) {
+          onScrollLeft(scrollLeft, () => {
+            const { groupedDataWithHeader, columnGroups } = tableStore;
+            let start = -1;
+            let end = -1;
+            let leftLocks = 0;
+            let leftWidth = 0;
+            let index = 0;
+            const rightWidth = tableStore.rightColumnGroups.columns.reduce<number>((width, column) => (
+              column.key === CUSTOMIZED_KEY ? width : width + column.width
+            ), 0);
+            columnGroups.columns.some((colGroup) => {
+              if (colGroup.lock !== ColumnLock.right) {
+                if (colGroup.lock === ColumnLock.left) {
+                  leftLocks += 1;
+                  leftWidth += colGroup.width;
+                } else {
+                  if (start === -1 && (colGroup.left + colGroup.width - leftWidth) >= scrollLeft) {
+                    start = index;
+                  }
+                  if (end === -1 && colGroup.left >= (target.clientWidth - rightWidth + scrollLeft)) {
+                    end = index;
+                    return true;
+                  }
+                }
+                index += 1;
+              }
+              return false;
+            });
+            if (end === -1) {
+              end = index;
+            }
+            return {
+              groups: groupedDataWithHeader,
+              start: start - leftLocks,
+              end: end - leftLocks,
+            };
+          });
+        }
       }
     }
   }

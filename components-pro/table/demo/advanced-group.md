@@ -1,8 +1,8 @@
 ---
 order: 28
 title:
-  zh-CN: 进阶数据分组
-  en-US: Advanced Group
+zh-CN: 进阶数据分组
+en-US: Advanced Group
 ---
 
 ## zh-CN
@@ -532,11 +532,15 @@ const App = () => {
 
   const group1Ref = React.useRef(null);
   const group2Ref = React.useRef(null);
-  const handleGroup1ScrollLeft = React.useCallback((scrollLeft) => {
+  const handleGroup1ScrollLeft = React.useCallback((scrollLeft, getScrollInfo) => {
     const { current } = group2Ref;
     if (current) {
       current.setScrollLeft(scrollLeft);
     }
+    console.log('scrollLeft', getScrollInfo());
+  }, []);
+  const handleGroup1ScrollTop = React.useCallback((scrollTop, getScrollInfo) => {
+    console.log('scrollTop', getScrollInfo());
   }, []);
   const handleGroup2ScrollLeft = React.useCallback((scrollLeft) => {
     const { current } = group1Ref;
@@ -578,11 +582,13 @@ const App = () => {
         groups={itemGroups}
         headerRowHeight="auto"
         onScrollLeft={handleGroup1ScrollLeft}
+        onScrollTop={handleGroup1ScrollTop}
         onColumnResize={handleGroup1ColumnResize}
         ref={group1Ref}
         style={{ height: 500 }}
         selectionMode="none"
         bodyExpandable
+        fullColumnWidth={false}
       />
       <Table
         customizable

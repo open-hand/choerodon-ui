@@ -740,20 +740,20 @@ function getColumnGroupedColumns(tableStore: TableStore, groups: TableGroup[], c
         ...ColumnDefaultProps,
         lock: ColumnLock.left,
         ...columnProps,
-        children: columnProps && columnProps.children ? treeMap(columnProps.children, ((col, index, parentNode) => {
-          const newCol = { ...col, __tableGroup: group };
-          if (!getColumnKey(col)) {
-            newCol.key = parentNode ? `${parentNode.key}-${index}` : `__group-${name}-${index}`;
-          }
-          findAndMergeCustomizedColumn(newCol, tableStore, customizedColumns);
-          return newCol;
-        }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2) : undefined,
         draggable: false,
         hideable: false,
         key: `__group-${name}`,
         name,
         __tableGroup: group,
       };
+      column.children = columnProps && columnProps.children ? treeMap(columnProps.children, ((col, index, parentNode) => {
+        const newCol = { ...col, __tableGroup: group, lock: column.lock };
+        if (!getColumnKey(col)) {
+          newCol.key = parentNode ? `${parentNode.key}-${index}` : `__group-${name}-${index}`;
+        }
+        findAndMergeCustomizedColumn(newCol, tableStore, customizedColumns);
+        return newCol;
+      }), ({ sort = Infinity }, { sort: sort2 = Infinity }) => sort - sort2) : undefined;
       findAndMergeCustomizedColumn(column, tableStore, customizedColumns);
       if (!column.lock) {
         groupedColumns.push(column);
