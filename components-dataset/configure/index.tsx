@@ -154,7 +154,7 @@ export interface Config {
   formatter?: Formatter;
   attachment?: AttachmentConfig;
   numberFieldNonStrictStep?: boolean;
-  confirm?: (message: any) => Promise<boolean>;
+  confirm?: (message: any, dataSet?: DataSet, source?: string) => Promise<boolean>;
   min?: (type: FieldType) => number | MomentInput | string | null;
   max?: (type: FieldType) => number | MomentInput | string | null;
   xlsx?: () => Promise<any>;
@@ -197,7 +197,7 @@ const defaultConfig = {
   feedback: defaultFeedback,
   formatter: defaultFormatter,
   attachment: defaultAttachment,
-  confirm: (_) => Promise.resolve(true),
+  confirm: (_message: any, _dataSet?: DataSet, _source?: string) => Promise.resolve(true),
   validationMessageFormatter: defaultValidationMessageFormatter,
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
   xlsx: noop,

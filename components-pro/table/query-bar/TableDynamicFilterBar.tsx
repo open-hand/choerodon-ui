@@ -413,7 +413,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     this.setConditionStatus(status);
     if (autoQuery) {
-      if (await dataSet.modifiedCheck()) {
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
         dataSet.query();
         onQuery();
       } else {
@@ -686,7 +686,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         className={`${prefixCls}-filter-menu-query`}
         onClick={async (e) => {
           e.stopPropagation();
-          if (await dataSet.modifiedCheck()) dataSet.query();
+          if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
@@ -1093,7 +1093,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   async handleQuery(collapse?: boolean) {
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      if (await dataSet.modifiedCheck()) dataSet.query();
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
     }
     if (!collapse) {
       onQuery();

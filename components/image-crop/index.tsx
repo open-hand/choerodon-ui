@@ -131,7 +131,7 @@ export interface ImgCropProps {
   cropContent?: (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>;
   onCropComplete?: ({ url: string, blob: Blob, area: Area }) => void;
   prefixCls?: string;
-  serverCrop: boolean;
+  serverCrop?: boolean;
   rotateStep?: number;
 }
 
