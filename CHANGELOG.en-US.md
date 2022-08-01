@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `List`: Added association `DataSet` support and `rowSelection` selectable support.
 - 🌟 `Card`: Added `selected` and `cornerplacement` attributes to cards and card groups.
 - 🌟 `<pro>Cascader`: Added `optionRenderer` property.
+- 💄 `configure`: extend the confirm configuration parameter to support dynamic filter bar query related prompts and paging prompts to be distinguishable.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
