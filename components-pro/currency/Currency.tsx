@@ -28,6 +28,6 @@ export default class Currency extends NumberField<CurrencyProps> {
   }
 
   getFormatOptions(): FormatNumberFuncOptions {
-    return getCurrencyFormatOptions((name) => this.getProp(name), this.lang, this.getContextConfig);
+    return getCurrencyFormatOptions((name) => this.getProp(name), (name) => this.getDisplayProp(name), this.lang, this.getContextConfig);
   }
 }

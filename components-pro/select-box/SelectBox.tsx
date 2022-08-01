@@ -117,7 +117,7 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
   renderWrapper(): ReactNode {
     const { name, options, filteredOptions, textField, valueField, readOnly, disabled, mode } = this;
     const { autoFocus, onOption, optionRenderer, optionsFilter } = this.props;
-    const highlight = this.getProp('highlight');
+    const highlight = this.getDisplayProp('highlight');
     const items = filteredOptions.reduce<ReactElement<any>[]>((arr, record, index, data) => {
       if (!optionsFilter || optionsFilter(record, index, data)) {
         const optionProps = onOption({ dataSet: options, record });

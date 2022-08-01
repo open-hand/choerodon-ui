@@ -222,6 +222,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
                   getProp: (name) => this.getProp(name),
                   getValue: () => this.getValue(),
                   lang: this.lang,
+                  getDisplayProp: (name) => this.getDisplayProp(name),
                 }, undefined, current, this.getContextConfig);
             }).join('~')}`;
           }
@@ -240,6 +241,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
               getProp: (name) => this.getProp(name),
               getValue: () => this.getValue(),
               lang: this.lang,
+              getDisplayProp: (name) => this.getDisplayProp(name),
             }, undefined, current, this.getContextConfig,
           )}`;
         }

@@ -117,7 +117,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable tempAttachmentUUID?: string | undefined;
 
   get help() {
-    return this.getProp('help');
+    return this.getDisplayProp('help');
   }
 
   get bucketName() {
@@ -987,7 +987,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderHelp(forceHelpMode?: ShowHelp): ReactNode {
     const { showHelp } = this.props;
-    const help = this.getProp('help');
+    const { help } = this;
     if (help === undefined || showHelp === ShowHelp.none) return;
     switch (forceHelpMode) {
       case ShowHelp.tooltip:
@@ -1032,7 +1032,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderDefaultDragBox() {
-    const { prefixCls } = this;
+    const { prefixCls, help } = this;
     return (
       <div className={`${prefixCls}-drag-box`}>
         <p className={`${prefixCls}-drag-box-icon`}>
@@ -1040,7 +1040,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         </p>
         <p className={`${prefixCls}-drag-box-text`}>{$l('Attachment', 'file_type_mismatch')}</p>
         <p className={`${prefixCls}-drag-box-hint`}>
-          {this.getProp('help')}
+          {help}
         </p>
       </div>
     );

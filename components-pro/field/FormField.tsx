@@ -431,7 +431,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   get range(): boolean | [string, string] {
-    return this.getProp('range');
+    const { field, observableProps, record } = this;
+    if (field) {
+      return field && field.get('range', record);
+    }
+    return 'range' in observableProps ? observableProps('range') : this.props.range;
   }
 
   @computed
@@ -440,7 +444,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   get highlight(): boolean | ReactNode {
-    return this.getProp('highlight');
+    return this.getDisplayProp('highlight');
   }
 
   @computed
@@ -638,7 +642,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   renderHelpMessage(): ReactNode {
     const { showHelp } = this;
     if (showHelp === ShowHelp.newLine) {
-      const help = this.getProp('help');
+      const help = this.getDisplayProp('help');
       if (help) {
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
@@ -1373,6 +1377,17 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   getProp(propName: string, fieldPropName = propName) {
     const { field, observableProps, record } = this;
     return defaultTo(field && field.get(fieldPropName, record), propName in observableProps ? observableProps[propName] : this.props[propName]);
+  }
+
+  /**
+   * 显示类属性值获取（组件属性优先级高于 DataSet Field 属性优先级）
+   * @param propName 组件属性名
+   * @param fieldPropName Field 字段属性名
+   * @returns 
+   */
+  getDisplayProp(propName: string, fieldPropName = propName) {
+    const { field, observableProps, record } = this;
+    return defaultTo(propName in observableProps ? observableProps[propName] : this.props[propName], field && field.get(fieldPropName, record));
   }
 
   @autobind

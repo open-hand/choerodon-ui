@@ -96,7 +96,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
-      title: this.getProp('help'),
+      title: this.getDisplayProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
@@ -108,7 +108,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   }
 
   renderTooltipHelp(): ReactNode {
-    const help = this.getProp('help');
+    const help = this.getDisplayProp('help');
     if (help) {
       return (
         <Icon

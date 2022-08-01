@@ -15,7 +15,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import FormContext from './FormContext';
-import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth } from './utils';
+import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth, getPropertyDSFirst } from './utils';
 import { LabelLayout } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import Row from '../row';
@@ -103,7 +103,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       );
     }
     const label = getProperty(fieldProps, 'label', dataSet, record);
-    const required = getProperty(fieldProps, 'required', dataSet, record);
+    const required = getPropertyDSFirst(fieldProps, 'required', dataSet, record);
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
     const isOutput = labelLayout === LabelLayout.horizontal && ((child.type as any).displayName === 'Output' || intlFieldOutput);
     const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {

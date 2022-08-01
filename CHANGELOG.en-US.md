@@ -51,6 +51,7 @@ timeline: true
 - 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
+- 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.

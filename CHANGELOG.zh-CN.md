@@ -51,6 +51,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
+- 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
