@@ -958,7 +958,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       });
     }
 
-    if ((data.length === 0 && autoHeight) || !autoHeight) {
+    if ((data.length === 0 && !autoHeight)) {
       return tableHeight;
     }
 
