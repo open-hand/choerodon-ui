@@ -337,6 +337,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       children,
       dragUploadList,
       overwriteDefaultEvent,
+      beforeUploadFiles,
     } = this.props;
     const { fileList, dragState } = this.state;
 
@@ -350,6 +351,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       onSuccess: this.onSuccess,
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
+      beforeUploadFiles,
       prefixCls,
     };
 
