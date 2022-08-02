@@ -90,6 +90,7 @@ timeline: true
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
+- 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
 
 ## 1.5.5
 
