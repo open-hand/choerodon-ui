@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `List`: 新增关联 DataSet 支持及 rowSelection 可选择支持。
 - 🌟 `Card`: 卡片和卡片组新增 selected 和 cornerPlacement 属性。
 - 🌟 `<pro>Cascader`: 新增 optionRenderer 属性。
+- 🌟 `<pro>Cascader`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 💄 `configure`: 扩展 confirm 配置参数支持动态筛选条查询相关提示与分页提示可区分。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
