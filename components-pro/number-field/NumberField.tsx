@@ -548,7 +548,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getFormatOptions(value?: number | BigNumber): FormatNumberFuncOptions {
-    return getNumberFormatOptions((name) => this.getProp(name), () => this.getValue(), value, this.lang, this.getContextConfig);
+    return getNumberFormatOptions((name) => this.getProp(name), (name) => this.getDisplayProp(name), () => this.getValue(), value, this.lang, this.getContextConfig);
   }
 
   getFormatter() {

@@ -37,6 +37,7 @@ import {
   defaultLabelWidth,
   FIELD_SUFFIX,
   getProperty,
+  getPropertyDSFirst,
   getSpacingFieldStyle,
   getSpacingLabelStyle,
   getSpacingProperties,
@@ -760,7 +761,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const label = getProperty(props, 'label', dataSet, record);
       const help = getProperty(props, 'help', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
-      const required = getProperty(props, 'required', dataSet, record);
+      const required = getPropertyDSFirst(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
       const intlFieldOutput = TagName === 'IntlField' && props && props.displayOutput;
       const {

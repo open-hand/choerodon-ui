@@ -96,9 +96,14 @@ export function getNumberFormatter(getConfig = getConfigDefault) {
   return formatNumber;
 }
 
-export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: string, getConfig = getConfigDefault): FormatNumberFuncOptions {
+export function getCurrencyFormatOptions(
+  getProp: (name) => any,
+  getDisplayProp: (name) => any,
+  controlLang?: string,
+  getConfig = getConfigDefault,
+): FormatNumberFuncOptions {
   const precision = getProp('precision');
-  const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
+  const formatterOptions: FormatNumberFuncOptions = getDisplayProp('formatterOptions') || {};
   const currencyFormatterOptions: FormatNumberFuncOptions = getConfig('currencyFormatterOptions') || { options: {} };
   const lang = formatterOptions.lang || currencyFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {};
@@ -108,7 +113,7 @@ export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: s
   }
   Object.assign(options, currencyFormatterOptions.options, formatterOptions.options);
 
-  const numberGrouping = getProp('numberGrouping');
+  const numberGrouping = getDisplayProp('numberGrouping');
   const currency = getProp('currency');
   if (currency) {
     options.currency = currency;
@@ -122,11 +127,18 @@ export function getCurrencyFormatOptions(getProp: (name) => any, controlLang?: s
   };
 }
 
-export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => number | BigNumber | undefined, value?: number | BigNumber, controlLang?: string, getConfig = getConfigDefault): FormatNumberFuncOptions {
+export function getNumberFormatOptions(
+  getProp: (name) => any,
+  getDisplayProp: (name) => any,
+  getValue?: () => number | BigNumber | undefined,
+  value?: number | BigNumber,
+  controlLang?: string,
+  getConfig = getConfigDefault,
+): FormatNumberFuncOptions {
   const precision = getProp('precision');
   const v: number | BigNumber | undefined = isNil(value) ? getValue && getValue() : value;
   const precisionInValue = isNumber(precision) ? precision : math.dp(v || 0);
-  const formatterOptions: FormatNumberFuncOptions = getProp('formatterOptions') || {};
+  const formatterOptions: FormatNumberFuncOptions = getDisplayProp('formatterOptions') || {};
   const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || { options: {} };
   const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {
@@ -134,7 +146,7 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
     ...numberFieldFormatterOptions.options,
     ...formatterOptions.options,
   };
-  const numberGrouping = getProp('numberGrouping');
+  const numberGrouping = getDisplayProp('numberGrouping');
   if (numberGrouping === false) {
     options.useGrouping = false;
   }
@@ -144,17 +156,33 @@ export function getNumberFormatOptions(getProp: (name) => any, getValue?: () => 
   };
 }
 
-export function processFieldValue(value, field: Field | undefined, options: { getProp(name: string): any; getValue?(): any; lang?: string }, showValueIfNotFound?: boolean, record?: Record, getConfig = getConfigDefault) {
-  const { getProp, getValue, lang } = options;
+export function processFieldValue(
+  value,
+  field: Field | undefined,
+  options: {
+    getProp(name: string): any;
+    getValue?(): any;
+    lang?: string;
+    /**
+     * 显示类属性值获取（组件属性优先级高于 DataSet Field 属性优先级）
+     * @param name 
+     */
+    getDisplayProp?(name: string): any;
+  },
+  showValueIfNotFound?: boolean,
+  record?: Record,
+  getConfig = getConfigDefault,
+) {
+  const { getProp, getValue, lang, getDisplayProp = getProp } = options;
   const type = getProp('type');
   const currency = getProp('currency');
   if (currency || type === FieldType.currency) {
-    const formatOptions = getCurrencyFormatOptions(getProp, lang, getConfig);
+    const formatOptions = getCurrencyFormatOptions(getProp, getDisplayProp, lang, getConfig);
     const formatter = getProp('formatter');
     return (formatter || getCurrencyFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
   if (type === FieldType.number || type === FieldType.bigNumber) {
-    const formatOptions = getNumberFormatOptions(getProp, getValue, value, lang, getConfig);
+    const formatOptions = getNumberFormatOptions(getProp, getDisplayProp, getValue, value, lang, getConfig);
     const formatter = getProp('formatter');
     return (formatter || getNumberFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
