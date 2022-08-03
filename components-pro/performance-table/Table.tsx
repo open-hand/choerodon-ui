@@ -749,9 +749,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, height, virtualized, children, columns } = prevProps;
+    const { rowHeight, data, autoHeight, height, virtualized, children, columns } = prevProps;
     const { props, state } = this;
-    const { data: nextData, onDataUpdated, shouldUpdateScroll, columns: nextColumns, rowSelection, children: nextChildren } = props;
+    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, rowSelection, children: nextChildren } = props;
     if (data !== nextData) {
       this.calculateRowMaxHeight();
       if (onDataUpdated) {
@@ -812,6 +812,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       data !== nextData ||
       // 当 Table 内容区的高度发生变化需要重新计算
       height !== props.height ||
+      autoHeight !== nextAutoHeight ||
       // 当 Table 内容区的高度发生变化需要重新计算
       prevState.contentHeight !== state.contentHeight ||
       // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
