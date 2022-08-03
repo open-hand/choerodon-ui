@@ -1013,26 +1013,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   syncValueOnBlur(value) {
-    if (value) {
-      if (this.options) {
-        this.options.ready().then(() => {
-          const record = this.findByTextWithValue(value);
-          if (record) {
-            this.choose(record);
-          }
-        });
-      }
-    } else if (!this.multiple) {
+    if (!value && !this.multiple) {
       this.setValue(this.emptyValue);
-    }
-  }
-
-  findByTextWithValue(text): Record | undefined {
-    if (text) {
-      const found = this.findByText(text);
-      if (found) {
-        return found;
-      }
     }
   }
 
