@@ -92,6 +92,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 - 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。
+- 🐞 `<pro>Cascader`: 修复当设置 searchable 属性为 ture 且下拉数据源中同一层级显示值相同时，选择值出错的问题。
 
 ## 1.5.5
 

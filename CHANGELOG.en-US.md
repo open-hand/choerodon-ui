@@ -92,6 +92,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
+- 🐞 `<pro>Cascader`: Fixed when the `searchable` property is set to `true` and the same value is displayed at the same level in the `options`, choose value error.
 
 ## 1.5.5
 
