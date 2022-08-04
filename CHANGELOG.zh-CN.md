@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `List`: 新增关联 DataSet 支持及 rowSelection 可选择支持。
 - 🌟 `Card`: 卡片和卡片组新增 selected 和 cornerPlacement 属性。
 - 🌟 `<pro>Cascader`: 新增 optionRenderer 属性。
+- 🌟 `<pro>Cascader`: popupContent 钩子新增 content dataSet textField valueField setValue 和 setPopup 参数。
 - 💄 `configure`: 扩展 confirm 配置参数支持动态筛选条查询相关提示与分页提示可区分。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
@@ -51,6 +52,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
+- 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
@@ -89,6 +91,8 @@ timeline: true
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
+- 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。
+- 🐞 `<pro>Cascader`: 修复当设置 searchable 属性为 ture 且下拉数据源中同一层级显示值相同时，选择值出错的问题。
 
 ## 1.5.5
 

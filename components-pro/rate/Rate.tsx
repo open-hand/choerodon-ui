@@ -62,7 +62,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
-      title: this.getProp('help'),
+      title: this.getDisplayProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
@@ -74,7 +74,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   }
 
   renderTooltipHelp(): ReactNode {
-    const help = this.getProp('help');
+    const help = this.getDisplayProp('help');
     if (help) {
       return (
         <Icon
@@ -139,7 +139,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   renderHelpMessage(): ReactNode {
     const label = this.getLabel();
     if (!this.hasFloatLabel || !label) {
-      const help = this.getProp('help');
+      const help = this.getDisplayProp('help');
       if (help) {
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>

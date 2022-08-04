@@ -378,7 +378,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const getHelpIcon = () => {
     if (column.showHelp !== ShowHelp.none && !isSearchCell) {
 
-      const fieldHelp = defaultTo(field && field.get('help'), column.help);
+      const fieldHelp = defaultTo(column.help, field && field.get('help'));
       if (fieldHelp) {
         return (
           <Tooltip

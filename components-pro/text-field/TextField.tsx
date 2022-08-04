@@ -481,7 +481,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
-      title: this.getProp('help'),
+      title: this.getDisplayProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
@@ -634,7 +634,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderTooltipHelp(): ReactNode {
-    const help = this.getProp('help');
+    const help = this.getDisplayProp('help');
     if (help) {
       return (
         <Icon

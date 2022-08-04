@@ -330,6 +330,7 @@ title: DataSet
 | chunkSize | 附件分片大小 | number | [AttachmentConfig.defaultChunkSize](/components/configure/#AttachmentConfig)  |
 | chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](/components/configure/#AttachmentConfig) |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
+| help | 额外信息，常用于提示 | string |  |
 
 ### Field Values
 

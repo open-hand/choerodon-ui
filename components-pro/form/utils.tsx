@@ -42,6 +42,29 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
   }
 }
 
+/**
+ * 有ds时，仅以ds field属性为准；无ds则以组件属性为准
+ * @param props 
+ * @param key 
+ * @param dataSet 
+ * @param record 
+ * @returns 
+ */
+export function getPropertyDSFirst(props: any, key: string, dataSet?: DataSet, record?: Record): any {
+  const { name } = props;
+  const field = dataSet && dataSet.getField(name);
+
+  if (field) {
+    const fieldProperty = field.get(key, record);
+    if (fieldProperty) {
+      return fieldProperty;
+    }
+  }
+  else if (props[key]) {
+    return props[key];
+  }
+}
+
 export const defaultExcludeUseColonTag: string[] = ['div', 'button', 'Button'];
 
 export function hasParentElement(parentElement: HTMLElement | null, tagName: string): boolean {
