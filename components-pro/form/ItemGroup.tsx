@@ -21,6 +21,9 @@ export interface ItemGroupProps {
   useColon?: boolean;
   compact?: boolean;
   hidden?: boolean;
+  colSpan?: number;
+  rowSpan?: number;
+  newLine?: boolean;
 }
 
 const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
@@ -90,6 +93,9 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     'showHelp',
     'required',
     'useColon',
+    'colSpan',
+    'rowSpan',
+    'newLine',
   ]);
 
   return (
