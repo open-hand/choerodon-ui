@@ -1633,7 +1633,8 @@ export default class DataSet extends EventManager {
       return currentRecord;
     }
     if (paging === true || paging === 'server') {
-      if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
+      index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      if (index >= 0 && index < totalCount) {
         if (await this.modifiedCheck()) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
           currentRecord = this.findInAllPage(index);

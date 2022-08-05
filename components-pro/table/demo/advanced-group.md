@@ -1,8 +1,8 @@
 ---
 order: 28
 title:
-zh-CN: 进阶数据分组
-en-US: Advanced Group
+  zh-CN: 进阶数据分组
+  en-US: Advanced Group
 ---
 
 ## zh-CN
