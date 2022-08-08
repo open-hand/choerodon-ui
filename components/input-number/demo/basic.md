@@ -1,8 +1,8 @@
 ---
 order: 0
 title:
-    zh-CN: 基本
-    en-US: Basic
+  zh-CN: 基本
+  en-US: Basic
 ---
 
 ## zh-CN
@@ -16,11 +16,20 @@ Numeric-only input box.
 ````jsx
 import { InputNumber } from 'choerodon-ui';
 
-function onChange(value) {
-  console.log('changed', value);
+const App = () => {
+  const [value, setValue] = React.useState(3);
+
+  function onChange(value) {
+    console.log('changed', value);
+    setValue(value)
+  }
+
+  return (
+    <InputNumber label="数字" min={1} max={10} value={value} onChange={onChange} />
+  )
 }
 
 ReactDOM.render(
-  <InputNumber label="数字" min={1} max={10} defaultValue={3} onChange={onChange} />,
+  <App />,
   mountNode);
 ````
