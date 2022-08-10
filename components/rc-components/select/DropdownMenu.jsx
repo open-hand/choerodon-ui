@@ -45,25 +45,26 @@ export default class DropdownMenu extends Component {
   scrollActiveItemToView = () => {
     // scroll into view
     const itemComponent = findDOMNode(this.firstActiveItem);
-    const props = this.props;
 
     if (itemComponent) {
-      const scrollIntoViewOpts = {
-        onlyScrollIfNeeded: true,
-      };
-      if (
-        (!props.value || props.value.length === 0) &&
-        props.firstActiveValue
-      ) {
-        scrollIntoViewOpts.alignWithTop = true;
-      }
-
       raf(() => {
-        scrollIntoView(
-          itemComponent,
-          findDOMNode(this.menuRef),
-          scrollIntoViewOpts,
-        );
+        if (itemComponent) {
+          const { props } = this;
+          const scrollIntoViewOpts = {
+            onlyScrollIfNeeded: true,
+          };
+          if (
+            (!props.value || props.value.length === 0) &&
+            props.firstActiveValue
+          ) {
+            scrollIntoViewOpts.alignWithTop = true;
+          }
+          scrollIntoView(
+            itemComponent,
+            findDOMNode(this.menuRef),
+            scrollIntoViewOpts,
+          );
+        }
       });
     }
   };
