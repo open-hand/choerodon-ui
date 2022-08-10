@@ -2240,23 +2240,38 @@ export default class Table extends DataSetComponent<TableProps> {
         const { onScrollTop } = this.props;
         if (onScrollTop) {
           onScrollTop(scrollTop, () => {
-            const { groupedData } = tableStore;
-            const trs = Array.from(target.querySelectorAll('tr'));
+            const { groupedData, rowMetaData } = tableStore;
             let start = -1;
             let end = -1;
             let index = 0;
-            trs.some((tr) => {
-              const { offsetTop, offsetHeight } = tr;
-              if (start === -1 && (offsetTop + offsetHeight) >= scrollTop) {
-                start = index;
-              }
-              if (end === -1 && offsetTop >= (target.clientHeight + scrollTop)) {
-                end = index;
-                return true;
-              }
-              index += 1;
-              return false;
-            });
+            if (rowMetaData) {
+              rowMetaData.some(((meta) => {
+                const { offset, height } = meta;
+                if (start === -1 && (offset + height) >= scrollTop) {
+                  start = index;
+                }
+                if (end === -1 && offset >= (target.clientHeight + scrollTop)) {
+                  end = index;
+                  return true;
+                }
+                index += 1;
+                return false;
+              }));
+            } else {
+              const trs = Array.from(target.querySelectorAll('tr'));
+              trs.some((tr) => {
+                const { offsetTop, offsetHeight } = tr;
+                if (start === -1 && (offsetTop + offsetHeight) >= scrollTop) {
+                  start = index;
+                }
+                if (end === -1 && offsetTop >= (target.clientHeight + scrollTop)) {
+                  end = index;
+                  return true;
+                }
+                index += 1;
+                return false;
+              });
+            }
             if (end === -1) {
               end = index;
             }
