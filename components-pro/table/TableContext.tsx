@@ -31,6 +31,7 @@ export interface TableContextProviderProps {
   summary?: string;
   virtualSpin?: boolean;
   spinProps?: SpinProps;
+  fullColumnWidth?: boolean;
 }
 
 export interface TableContextValue extends TableContextProviderProps {

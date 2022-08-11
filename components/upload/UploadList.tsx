@@ -228,8 +228,8 @@ export default class UploadList extends Component<UploadListProps, any> {
       const message = file.response && typeof file.response === 'string' ? file.response : ((file.error && file.error.statusText) || locale.uploadError);
       const preview = file.url ? (
         <a
-          {...file.linkProps}
           href={file.url}
+          {...file.linkProps}
           target="_blank"
           rel="noopener noreferrer"
           className={`${prefixCls}-list-item-name`}

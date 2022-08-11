@@ -19,11 +19,13 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
-- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips 属性。
+- 🌟 `<pro>Table`: onScrollTop 和 onScrollLeft 钩子参数新增 getScrollInfo 方法。
+- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips, fullColumnWidth 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
 - 🌟 `<pro>DataSet.Field`: 新增 dateMode 属性。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `Notification`: 新增 icons 配置。
+- 🌟 `Upload`: 新增 beforeUploadFiles 属性。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -44,6 +46,7 @@ timeline: true
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
+- 💄 `<pro>Lov`: 优化 onBeforeSelect 回调函数，支持返回一个 Promise 对象。
 - 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
 - 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
@@ -88,9 +91,11 @@ timeline: true
 - 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
+- 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
+- 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 - 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。
 - 🐞 `<pro>Cascader`: 修复当设置 searchable 属性为 ture 且下拉数据源中同一层级显示值相同时，选择值出错的问题。

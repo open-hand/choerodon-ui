@@ -660,16 +660,16 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   useEffect(() => {
     // 兼容Table Tree模式嵌套过深样式
     const { current } = prefixRef;
-    if (children && current) {
+    if (current && paddingLeft !== 0) {
       const { parentElement, offsetWidth: prefixWidth } = current;
       if (parentElement) {
         const parentWidth = parentElement.clientWidth;
         if (prefixWidth > parentWidth) {
-          setPaddingLeft(paddingLeft - (prefixWidth - parentWidth));
+          setPaddingLeft(Math.max(paddingLeft - (prefixWidth - parentWidth), 0));
         }
       }
     }
-  }, [children, prefixRef, paddingLeft, setPaddingLeft]);
+  }, [prefixRef, paddingLeft, setPaddingLeft]);
 
   const indentText = children && (
     <span style={{ paddingLeft: pxToRem(paddingLeft) }} />

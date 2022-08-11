@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
@@ -74,10 +75,15 @@ class AjaxUploader extends Component {
   }
 
   uploadFiles = (files) => {
-    const postFiles = Array.prototype.slice.call(files);
-    postFiles.forEach((file) => {
-      file.uid = getUid();
-      this.upload(file, postFiles);
+    const { beforeUploadFiles = noop } = this.props;
+    Promise.resolve(beforeUploadFiles(files)).then((res) => {
+      if (res !== false) {
+        const postFiles = Array.prototype.slice.call(files);
+        postFiles.forEach((file) => {
+          file.uid = getUid();
+          this.upload(file, postFiles);
+        });
+      }
     });
   };
 

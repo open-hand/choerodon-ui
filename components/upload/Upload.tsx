@@ -112,7 +112,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       targetItem.response = response;
       this.onChange({
         file: { ...targetItem },
-        fileList,
+        fileList: fileList.slice(),
       });
     }
     const { onSuccess } = this.props;
@@ -214,11 +214,10 @@ export default class Upload extends Component<UploadProps, UploadState> {
   };
 
   onChange = (info: UploadChangeParam) => {
-    if (!('fileList' in this.props)) {
+    const { onChange } = this.props;
+    if (!('fileList' in this.props) || !onChange) {
       this.setState({ fileList: info.fileList });
     }
-
-    const { onChange } = this.props;
     if (onChange) {
       onChange(info);
     }
@@ -281,7 +280,20 @@ export default class Upload extends Component<UploadProps, UploadState> {
 
   renderUploadList = (uploadLocale: UploadLocale) => {
     const { getConfig } = this.context;
-    const { showUploadList, listType, onPreview, onReUpload = this.defaultReUpload, downloadPropsIntercept, locale, previewFile, dragUploadList, showFileSize, renderIcon, tooltipPrefixCls, popconfirmProps } = this.props;
+    const {
+      showUploadList,
+      listType,
+      onPreview,
+      onReUpload = this.defaultReUpload,
+      downloadPropsIntercept,
+      locale,
+      previewFile,
+      dragUploadList,
+      showFileSize,
+      renderIcon,
+      tooltipPrefixCls,
+      popconfirmProps,
+    } = this.props;
     const prefixCls = this.getPrefixCls();
     const { fileList } = this.state;
     const {
@@ -333,6 +345,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       children,
       dragUploadList,
       overwriteDefaultEvent,
+      beforeUploadFiles,
     } = this.props;
     const { fileList, dragState } = this.state;
 
@@ -346,6 +359,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       onSuccess: this.onSuccess,
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
+      beforeUploadFiles,
       prefixCls,
     };
 
