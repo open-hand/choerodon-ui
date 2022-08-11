@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 - 🐞 `<pro>Table`: Fix browser zoom issue.
+- 🐞 `<pro>Table`: Fix infinite loop in tree mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 
