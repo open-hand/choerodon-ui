@@ -16,12 +16,13 @@ import cloneDeep from 'lodash/cloneDeep';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
 import { FieldNamesType, MenuMode } from 'choerodon-ui/lib/cascader';
-import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
+import TriggerField, { TriggerFieldPopupContentProps, TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import { ValidationMessages } from '../validator/Validator';
 import { DataSetStatus, FieldType } from '../data-set/enum';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
+import Field from '../data-set/Field';
 import Spin from '../spin';
 import { stopEvent } from '../_util/EventManager';
 import normalizeOptions, { expandTreeRecords } from './utils';
@@ -112,6 +113,16 @@ export type RenderProps = {
 };
 
 type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
+
+
+export interface CascaderPopupContentProps extends TriggerFieldPopupContentProps {
+  dataSet: DataSet;
+  textField: string;
+  valueField: string;
+  field?: Field | undefined;
+  record?: Record | undefined;
+  content: ReactNode;
+}
 
 export interface CascaderProps extends TriggerFieldProps {
   /**
@@ -792,6 +803,23 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return menu;
   }
 
+  /**
+   * 增加 popupContent 回调参数 用于控制对应交互
+   */
+  @autobind
+  getPopupProps(): CascaderPopupContentProps {
+    const { options, textField, field, record, valueField } = this;
+    return {
+      ...super.getPopupProps(),
+      dataSet: options,
+      textField,
+      valueField,
+      field,
+      record,
+      content: this.getPopupContent(),
+    };
+  }
+
   @autobind
   getPopupStyleFromAlign(target): CSSProperties | undefined {
     if (target) {
@@ -985,26 +1013,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   syncValueOnBlur(value) {
-    if (value) {
-      if (this.options) {
-        this.options.ready().then(() => {
-          const record = this.findByTextWithValue(value);
-          if (record) {
-            this.choose(record);
-          }
-        });
-      }
-    } else if (!this.multiple) {
+    if (!value && !this.multiple) {
       this.setValue(this.emptyValue);
-    }
-  }
-
-  findByTextWithValue(text): Record | undefined {
-    if (text) {
-      const found = this.findByText(text);
-      if (found) {
-        return found;
-      }
     }
   }
 

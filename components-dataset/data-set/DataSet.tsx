@@ -1609,14 +1609,16 @@ export default class DataSet extends EventManager {
   /**
    * 变更检查，当有变更时会弹确认框
    * @param message 提示信息或者是confirm的参数
+   * @param dataSet 触发查询数据源
+   * @param source 修改提示信息来源 查询条：'query' 翻页： undefined
    * @return Promise
    */
-  modifiedCheck(message?: any): Promise<boolean> {
+  modifiedCheck(message?: any, dataSet?: DataSet, source?: string): Promise<boolean> {
     const { modifiedCheck, modifiedCheckMessage } = this.props;
     if (this.cacheModifiedKeys || !modifiedCheck || !this.dirty) {
       return Promise.resolve(true);
     }
-    return this.getConfig('confirm')(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'));
+    return this.getConfig('confirm')(message || modifiedCheckMessage || $l('DataSet', 'unsaved_data_confirm'), dataSet, source);
   }
 
   /**
