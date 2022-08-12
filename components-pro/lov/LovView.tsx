@@ -29,7 +29,7 @@ export interface LovViewProps {
   values: any[];
   viewMode?: TriggerViewMode;
   onSelect: (records: Record | Record[]) => void;
-  onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
+  onBeforeSelect?: (records: Record | Record[]) => boolean | Promise<boolean | undefined> | undefined;
   modal?: ModalChildrenProps;
   popupHidden?: boolean;
   valueField?: string;
