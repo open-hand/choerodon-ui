@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
+- 🐞 `<pro>IntlField`: 修复弹窗取消时会清空值的问题。
 - 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
 
 ## 1.5.5
