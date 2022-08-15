@@ -19,11 +19,13 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
-- 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips` properties.
+- 🌟 `<pro>Table`: Added `getScrollInfo` method for `onScrollTop` and `onScrollLeft` hook parameters.
+- 🌟 `<pro>Table`: Added `boxSizing`, `showCachedTips`, `fullColumnWidth` properties.
 - 🌟 `<pro>Table.Column`: Added `tooltipProps` property, added `groups` parameter on `header` property.
 - 🌟 `<pro>DataSet.Field`: Added `dateMode` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
+- 🌟 `Upload`: Added `beforeUploadFiles` property.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
@@ -44,6 +46,7 @@ timeline: true
 - 💄 `<pro>TimePicker`: Optimize mouse scrolling speed on the timeline.
 - 💄 `<pro>Radio`: Optimize styles.
 - 💄 `<pro>NumberField`: Optimized to input decimal point in Chinese input method.
+- 💄 `<pro>Lov`: Optimized `onBeforeSelect` callback, support for returning a Promise object.
 - 💄 `<pro>Lov`: Optimized disable the selection drop-down option during input field search.
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
@@ -88,9 +91,11 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the disabled row can be navigated to edit by enter key.
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 - 🐞 `<pro>Table`: Fix browser zoom issue.
+- 🐞 `<pro>Table`: Fix infinite loop in tree mode.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
+- 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
 - 🐞 `<pro>Cascader`: Fixed when the `searchable` property is set to `true` and the same value is displayed at the same level in the `options`, choose value error.
@@ -152,7 +157,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Record`: Fix an issue where big number values may not be updated.
 - 🐞 `<pro>Modal`: Fixed custom failure caused by bigNumber.
 - 🐞 `<pro>Modal`: Fixed the problem of `Cannot read property 'tagName' of null`.
-
+- 🐞 `Upload`: Fix the problem that the loading status does not change after uploading successfully.
 
 ## 1.5.4
 

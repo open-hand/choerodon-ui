@@ -410,8 +410,9 @@ export default class Modal extends ViewComponent<ModalProps> {
   getTempCustomized(tempCustomized = this.tempCustomized) {
     const temp = {};
     if (tempCustomized) {
+      const { element } = this;
+      const isEmbedded = !!(element && element.offsetParent);
       Object.keys(tempCustomized).forEach(item => {
-        const isEmbedded = !!this.element.offsetParent;
         temp[item] = isEmbedded ? tempCustomized[item] : math.floor(tempCustomized[item]);
       });
     }
@@ -554,7 +555,15 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   handleModalMouseResize(e) {
-    const { contentNode, element, element: { offsetParent }, minHeight, minWidth, prefixCls, props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
+    const {
+      contentNode,
+      element,
+      element: { offsetParent },
+      minHeight,
+      minWidth,
+      prefixCls,
+      props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') },
+    } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { clientX, clientY } = e;
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
@@ -588,7 +597,14 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   handleDrawerMouseResize(e) {
-    const { contentNode, drawerTransitionName, element, element: { offsetParent, offsetLeft: elementOffsetTop, offsetTop: elementOffsetLeft }, minWidth, minHeight } = this;
+    const {
+      contentNode,
+      drawerTransitionName,
+      element,
+      element: { offsetParent, offsetLeft: elementOffsetTop, offsetTop: elementOffsetLeft },
+      minWidth,
+      minHeight,
+    } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const drawerOffset = this.getDrawerOffset(drawerTransitionName);

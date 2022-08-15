@@ -30,6 +30,16 @@ const dsQueriesSize5Page1TCount = {
   success: true,
   needCountFlag: 'Y',
 };
+const dsQueriesSize1Page1T = {
+  rows: dataBlock1.slice(0, 1),
+  total: 20,
+  success: true,
+};
+const dsQueriesSize1Page2T = {
+  rows: dataBlock1.slice(1, 2),
+  total: 20,
+  success: true,
+};
 const dsQueriesSize5Page1T = {
   rows: dataBlock1,
   total: 20,
@@ -104,6 +114,8 @@ const dsMutationsR = /\/dataset\/user\/mutations/;
 const dsQueriesR = /\/dataset\/user\/queries/;
 const dsQueriesRCount = /\/dataset\/user\/count/;
 const dsQueriesRSize5Page1RCount = /\/dataset\/user\/page\/asynccount\/5\/1/;
+const dsQueriesRSize1Page1R = /\/dataset\/user\/page\/1\/1/;
+const dsQueriesRSize1Page2R = /\/dataset\/user\/page\/1\/2/;
 const dsQueriesRSize5Page1R = /\/dataset\/user\/page\/5\/1/;
 const dsQueriesRSize5Page2R = /\/dataset\/user\/page\/5\/2/;
 const dsQueriesRSize5Page3R = /\/dataset\/user\/page\/5\/3/;
@@ -120,6 +132,8 @@ const dsMutationsD = Mock.mock(dsMutationsT);
 const dsQueriesD = Mock.mock(dsQueriesT);
 const dsQueriesDCount = Mock.mock(dsQueriesTCount);
 const dsQueriesSize5Page1DCount = Mock.mock(dsQueriesSize5Page1TCount);
+const dsQueriesSize1Page1D = Mock.mock(dsQueriesSize1Page1T);
+const dsQueriesSize1Page2D = Mock.mock(dsQueriesSize1Page2T);
 const dsQueriesSize5Page1D = Mock.mock(dsQueriesSize5Page1T);
 const dsQueriesSize5Page2D = Mock.mock(dsQueriesSize5Page2T);
 const dsQueriesSize5Page3D = Mock.mock(dsQueriesSize5Page3T);
@@ -140,6 +154,8 @@ export default function () {
 
     Mock.mock(dsQueriesRCount, dsQueriesDCount);
     Mock.mock(dsQueriesRSize5Page1RCount, dsQueriesSize5Page1TCount);
+    Mock.mock(dsQueriesRSize1Page1R, dsQueriesSize1Page1T);
+    Mock.mock(dsQueriesRSize1Page2R, dsQueriesSize1Page2T);
     Mock.mock(dsQueriesRSize5Page1R, dsQueriesSize5Page1T);
     Mock.mock(dsQueriesRSize5Page2R, dsQueriesSize5Page2T);
     Mock.mock(dsQueriesRSize5Page3R, dsQueriesSize5Page3T);
@@ -163,6 +179,8 @@ export const dsTempleList = [
   { rule: dsQueriesR, data: dsQueriesD },
   { rule: dsQueriesRCount, data: dsQueriesDCount },
   { rule: dsQueriesRSize5Page1RCount, data: dsQueriesSize5Page1DCount },
+  { rule: dsQueriesRSize1Page1R, data: dsQueriesSize1Page1D },
+  { rule: dsQueriesRSize1Page2R, data: dsQueriesSize1Page2D },
   { rule: dsQueriesRSize5Page1R, data: dsQueriesSize5Page1D },
   { rule: dsQueriesRSize5Page2R, data: dsQueriesSize5Page2D },
   { rule: dsQueriesRSize5Page3R, data: dsQueriesSize5Page3D },

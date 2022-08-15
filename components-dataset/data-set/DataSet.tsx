@@ -1599,7 +1599,7 @@ export default class DataSet extends EventManager {
    */
   page(page: number): Promise<any> {
     if (page > 0 && this.paging) {
-      return this.locate((page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.destroyed.length : 0));
+      return this.locate((page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length : 0));
     }
     warning(page > 0, 'Page number is incorrect.');
     warning(!!this.paging, 'Can not paging query util the property<paging> of DataSet is true or `server`.');
@@ -1635,7 +1635,8 @@ export default class DataSet extends EventManager {
       return currentRecord;
     }
     if (paging === true || paging === 'server') {
-      if (index >= 0 && index < totalCount + this.created.length - this.destroyed.length) {
+      index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      if (index >= 0 && index < totalCount) {
         if (await this.modifiedCheck()) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
           currentRecord = this.findInAllPage(index);
