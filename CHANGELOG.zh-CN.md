@@ -58,6 +58,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
+- 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
+- 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>IntlField`: 修复弹窗取消时会清空值的问题。
@@ -353,7 +355,6 @@ timeline: true
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Table`: 修复 queryBarProps 配置优先级。
 - 🐞 `<pro>Table`: 修复动态筛选条初始数据状态判断。
-- 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。

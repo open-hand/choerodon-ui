@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Key, MouseEvent, ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, Key, MouseEvent, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
@@ -12,7 +12,7 @@ import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { treeReduce } from '../../_util/treeUtils';
 import { ColumnProps } from '../Column';
-import TableContext from '../TableContext';
+import TableContext, { TableContextValue } from '../TableContext';
 import { $l } from '../../locale-context';
 import Button from '../../button/Button';
 import { ButtonColor, FuncType } from '../../button/enum';
@@ -64,12 +64,13 @@ const HEIGHT_CHANGE_KEY = '__heightChange__';
 
 export interface CustomizationSettingsProps {
   modal?: ModalChildrenProps;
+  context: TableContextValue;
 }
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {
-  const { modal } = props;
+  const { modal, context } = props;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
-  const { prefixCls, tableStore } = useContext(TableContext);
+  const { prefixCls, tableStore } = context;
   const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
   const tableRecord: Record = useMemo(() => new DataSet({
@@ -250,114 +251,116 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     );
   }
   return (
-    <Collapse
-      activeKey={tableStore.customizedActiveKey.slice()}
-      onChange={handleCollapseChange}
-      expandIcon={renderIcon}
-      expandIconPosition="text-right"
-      className={`${prefixCls}-customization`}
-      ghost
-    >
-      <CollapsePanel
-        header={
-          <span className={`${prefixCls}-customization-panel-title`}>
-            {$l('Table', 'display_settings')}
-          </span>
-        }
-        key="display"
+    <TableContext.Provider value={context}>
+      <Collapse
+        activeKey={tableStore.customizedActiveKey.slice()}
+        onChange={handleCollapseChange}
+        expandIcon={renderIcon}
+        expandIconPosition="text-right"
+        className={`${prefixCls}-customization`}
+        ghost
       >
-        <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
-          {
-            tableStore.hasAggregationColumn && (tableStore.props.onAggregationChange || tableStore.props.aggregation === undefined) && (
-              <SelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
-                <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
-                  <Tooltip title={$l('Table', 'tiled_view')} placement="top">
-                    <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-not-aggregation`} />
-                  </Tooltip>
-                </Option>
-                <Option value className={`${prefixCls}-customization-select-view-option`}>
-                  <Tooltip title={$l('Table', 'aggregation_view')} placement="top">
-                    <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-aggregation`} />
-                  </Tooltip>
-                </Option>
-              </SelectBox>
-            )
+        <CollapsePanel
+          header={
+            <span className={`${prefixCls}-customization-panel-title`}>
+              {$l('Table', 'display_settings')}
+            </span>
           }
-          <SelectBox name="size" label={$l('Table', 'density_display')} mode={ViewMode.button}>
-            <Option value={Size.default} className={`${prefixCls}-customization-select-view-option`}>
-              <Tooltip title={$l('Table', 'normal')} placement="top">
-                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-default`} />
-              </Tooltip>
-            </Option>
-            <Option value={Size.small} className={`${prefixCls}-customization-select-view-option`}>
-              <Tooltip title={$l('Table', 'compact')} placement="top">
-                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-small`} />
-              </Tooltip>
-            </Option>
-          </SelectBox>
-          <SelectBox name="parityRow" label={$l('Table', 'parity_row')} mode={ViewMode.button}>
-            <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
-              <Tooltip title={$l('Table', 'normal')} placement="top">
-                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-no-parity-row`} />
-              </Tooltip>
-            </Option>
-            <Option value className={`${prefixCls}-customization-select-view-option`}>
-              <Tooltip title={$l('Table', 'parity_row')} placement="top">
-                <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-parity-row`} />
-              </Tooltip>
-            </Option>
-          </SelectBox>
-        </Form>
-      </CollapsePanel>
-      {
-        tableSettings.length ? (
-          <CollapsePanel
-            header={
-              <span className={`${prefixCls}-customization-panel-title`}>
-                {$l('Table', 'table_settings')}
-              </span>
+          key="display"
+        >
+          <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
+            {
+              tableStore.hasAggregationColumn && (tableStore.props.onAggregationChange || tableStore.props.aggregation === undefined) && (
+                <SelectBox name="aggregation" label={$l('Table', 'view_display')} mode={ViewMode.button}>
+                  <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
+                    <Tooltip title={$l('Table', 'tiled_view')} placement="top">
+                      <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-not-aggregation`} />
+                    </Tooltip>
+                  </Option>
+                  <Option value className={`${prefixCls}-customization-select-view-option`}>
+                    <Tooltip title={$l('Table', 'aggregation_view')} placement="top">
+                      <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-aggregation`} />
+                    </Tooltip>
+                  </Option>
+                </SelectBox>
+              )
             }
-            key="table"
-            extra={
-              <Button
-                className={`${prefixCls}-customization-header-button`}
-                color={ButtonColor.primary}
-                funcType={FuncType.flat}
-                size={Size.small}
-                onClick={handleRestoreTable}
-              >
-                {$l('Table', 'restore_default')}
-              </Button>
-            }
-          >
-            <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
-              {tableSettings}
-            </Form>
-          </CollapsePanel>
-        ) : null
-      }
-      <CollapsePanel
-        header={
-          <span className={`${prefixCls}-customization-panel-title`}>
-            {$l('Table', 'column_settings')}
-          </span>
+            <SelectBox name="size" label={$l('Table', 'density_display')} mode={ViewMode.button}>
+              <Option value={Size.default} className={`${prefixCls}-customization-select-view-option`}>
+                <Tooltip title={$l('Table', 'normal')} placement="top">
+                  <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-default`} />
+                </Tooltip>
+              </Option>
+              <Option value={Size.small} className={`${prefixCls}-customization-select-view-option`}>
+                <Tooltip title={$l('Table', 'compact')} placement="top">
+                  <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-size-small`} />
+                </Tooltip>
+              </Option>
+            </SelectBox>
+            <SelectBox name="parityRow" label={$l('Table', 'parity_row')} mode={ViewMode.button}>
+              <Option value={false} className={`${prefixCls}-customization-select-view-option`}>
+                <Tooltip title={$l('Table', 'normal')} placement="top">
+                  <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-no-parity-row`} />
+                </Tooltip>
+              </Option>
+              <Option value className={`${prefixCls}-customization-select-view-option`}>
+                <Tooltip title={$l('Table', 'parity_row')} placement="top">
+                  <div className={`${prefixCls}-customization-select-view-option-inner ${prefixCls}-customization-parity-row`} />
+                </Tooltip>
+              </Option>
+            </SelectBox>
+          </Form>
+        </CollapsePanel>
+        {
+          tableSettings.length ? (
+            <CollapsePanel
+              header={
+                <span className={`${prefixCls}-customization-panel-title`}>
+                  {$l('Table', 'table_settings')}
+                </span>
+              }
+              key="table"
+              extra={
+                <Button
+                  className={`${prefixCls}-customization-header-button`}
+                  color={ButtonColor.primary}
+                  funcType={FuncType.flat}
+                  size={Size.small}
+                  onClick={handleRestoreTable}
+                >
+                  {$l('Table', 'restore_default')}
+                </Button>
+              }
+            >
+              <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
+                {tableSettings}
+              </Form>
+            </CollapsePanel>
+          ) : null
         }
-        key="columns"
-        extra={
-          <Button
-            className={`${prefixCls}-customization-header-button`}
-            color={ButtonColor.primary}
-            funcType={FuncType.flat}
-            size={Size.small}
-            onClick={handleRestoreColumns}
-          >
-            {$l('Table', 'restore_default')}
-          </Button>
-        }
-      >
-        <ColumnGroups dataSet={columnDataSet} />
-      </CollapsePanel>
-    </Collapse>
+        <CollapsePanel
+          header={
+            <span className={`${prefixCls}-customization-panel-title`}>
+              {$l('Table', 'column_settings')}
+            </span>
+          }
+          key="columns"
+          extra={
+            <Button
+              className={`${prefixCls}-customization-header-button`}
+              color={ButtonColor.primary}
+              funcType={FuncType.flat}
+              size={Size.small}
+              onClick={handleRestoreColumns}
+            >
+              {$l('Table', 'restore_default')}
+            </Button>
+          }
+        >
+          <ColumnGroups dataSet={columnDataSet} />
+        </CollapsePanel>
+      </Collapse>
+    </TableContext.Provider>
   );
 };
 

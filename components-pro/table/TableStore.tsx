@@ -53,7 +53,7 @@ import CustomizationColumnHeader from './customization-settings/CustomizationCol
 import TableEditor from './TableEditor';
 import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
-import { ModalProps } from '../modal/Modal';
+import Modal, { ModalProps } from '../modal/Modal';
 import { treeMap, treeSome } from '../_util/treeUtils';
 import { HighlightRenderer } from '../field/FormField';
 import { getIf, mergeGroupStates, normalizeGroups } from '../data-set/utils';
@@ -2542,14 +2542,14 @@ export default class TableStore {
 
   @autobind
   @action
-  openCustomizationModal(modal) {
+  openCustomizationModal(context) {
     const { customizedCode } = this.props;
     const modalProps: ModalProps = {
       key: 'TABLE_CUSTOMIZATION_MODAL',
       drawer: true,
       size: Size.small,
       title: $l('Table', 'customization_settings'),
-      children: <CustomizationSettings />,
+      children: <CustomizationSettings context={context} />,
       bodyStyle: {
         overflow: 'hidden auto',
         padding: 0,
@@ -2558,7 +2558,7 @@ export default class TableStore {
     if (customizedCode) {
       modalProps.okText = $l('Table', 'save_button');
     }
-    modal.open(modalProps);
+    Modal.open(modalProps);
   }
 
   async loadCustomized() {
