@@ -67,6 +67,7 @@ export type RenderProps = {
   repeat?: number;
   maxTagTextLength?: number;
   multiLineFields?: Field[];
+  showHelp?: ShowHelp;
 };
 
 export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;

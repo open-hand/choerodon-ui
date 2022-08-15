@@ -474,6 +474,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         repeat,
         headerGroup,
         rowGroup,
+        showHelp: field && field.get('type', record) === FieldType.attachment ? ShowHelp.none : undefined,
       } as ColumnRenderProps);
     };
     if (field) {

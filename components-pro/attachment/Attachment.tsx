@@ -986,9 +986,9 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderHelp(forceHelpMode?: ShowHelp): ReactNode {
-    const { showHelp } = this.props;
+    const { showHelp } = this;
     const { help } = this;
-    if (help === undefined || showHelp === ShowHelp.none) return;
+    if (help === undefined || showHelp === ShowHelp.none || showHelp === ShowHelp.label) return;
     switch (forceHelpMode) {
       case ShowHelp.tooltip:
         return (

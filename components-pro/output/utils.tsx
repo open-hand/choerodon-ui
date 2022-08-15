@@ -25,7 +25,7 @@ const SimpleCheckBox: FunctionComponent<SimpleCheckBoxProps> = function (props) 
 SimpleCheckBox.displayName = 'SimpleCheckBox';
 
 export function defaultOutputRenderer(renderOption: RenderProps) {
-  const { value, name, record } = renderOption;
+  const { value, name, record, showHelp } = renderOption;
   if (record) {
     const field = record.dataSet.getField(name);
     if (field) {
@@ -43,6 +43,7 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
             viewMode="popup"
             record={record}
             funcType={FuncType.link}
+            showHelp={showHelp}
           />
         );
       }
