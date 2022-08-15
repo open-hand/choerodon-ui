@@ -110,7 +110,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   }
 
   getOtherProps() {
-    return omit(this.props, ['style', 'toolbar', 'className', 'defaultValue', 'onChange', 'value']);
+    return omit(this.props, ['style', 'toolbar', 'className', 'defaultValue', 'onChange', 'value', 'ref']);
   }
 
   handleOpenLightBox = (e) => {

@@ -59,6 +59,8 @@ timeline: true
 - 💄 `<pro>Form.ItemGroup`: Optimized the `TS` type declarations for component properties.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
+- 🐞 `<pro>RichText`: Fix rich text editor validation issues.
+- 🐞 `<pro>RichText`: Fixed an issue where line breaks were retained after clearing the rich text editor.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
