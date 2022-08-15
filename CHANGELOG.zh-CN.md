@@ -353,6 +353,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复过滤条内布尔变量渲染值错误。
 - 🐞 `<pro>Table`: 修复 queryBarProps 配置优先级。
 - 🐞 `<pro>Table`: 修复动态筛选条初始数据状态判断。
+- 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Lov`: 修复 button 模式下关闭弹窗后按钮没有聚焦的问题。
 - 🐞 `<pro>FormField`: 修复在多选自定义范围值模式下删除单个值会清除所有值的问题。
 - 🐞 `Slider`: 修复 range 模式下 Tooltip 不关闭的问题。

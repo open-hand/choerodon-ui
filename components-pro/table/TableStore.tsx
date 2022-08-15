@@ -2545,6 +2545,7 @@ export default class TableStore {
   openCustomizationModal(modal) {
     const { customizedCode } = this.props;
     const modalProps: ModalProps = {
+      key: 'TABLE_CUSTOMIZATION_MODAL',
       drawer: true,
       size: Size.small,
       title: $l('Table', 'customization_settings'),
