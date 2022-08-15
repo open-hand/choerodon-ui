@@ -532,7 +532,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         return true;
       }
     }
-    const element = e.target;
+    const element = e.currentTarget;
     if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
       const { current } = innerRef;
       if (text && current && current.contains(element)) {

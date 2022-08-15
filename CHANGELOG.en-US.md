@@ -80,6 +80,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 - 🐞 `<pro>Table`: Fix the problem of using querydataset to report errors under the use of combined search bar.
 - 🐞 `<pro>Table`: Fix the problem of incorrect query conditions after deleting the field conditions after setting range in filterbar.
+- 🐞 `<pro>Table`: Fix tooltip width calculation error overflow prompt problem.
 - 🐞 `<pro>IconPicker`: Fix an issue where the selected style was overwritten by the hover style.
 - 🐞 `Badge`: Fix a processing status point style issue.
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.
