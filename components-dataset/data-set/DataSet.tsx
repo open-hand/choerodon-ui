@@ -3136,9 +3136,8 @@ Then the query method will be auto invoke.`,
           if (queryEventResult) {
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
-            const result = await this.axios(fixAxiosConfig(newConfig));
-            this.performance.timing.fetchEnd = Date.now();
-            runInAction(() => {
+            return this.axios(fixAxiosConfig(newConfig)).then(action((result) => {
+              this.performance.timing.fetchEnd = Date.now();
               if (page >= 0) {
                 this.currentPage = page;
               }
@@ -3157,8 +3156,8 @@ Then the query method will be auto invoke.`,
                     this.counting = undefined;
                   }));
               }
-            });
-            return this.handleLoadSuccess(result);
+              return this.handleLoadSuccess(result);
+            }));
           }
         }
       } catch (e) {
