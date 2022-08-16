@@ -3119,56 +3119,57 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page = 1, params?: object, more?: boolean, paging?: boolean): Promise<any> {
+  private read(page = 1, params?: object, more?: boolean, paging?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
-      try {
-        if (!more) {
-          this.changeStatus(DataSetStatus.loading);
-        }
-        const data = await this.generateQueryParameter(params);
+      if (!more) {
+        this.changeStatus(DataSetStatus.loading);
+      }
+      return this.generateQueryParameter(params).then(data => {
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, undefined, paging));
         if (newConfig.url) {
-          const queryEventResult = await this.fireEvent(DataSetEvents.query, {
+          return this.fireEvent(DataSetEvents.query, {
             dataSet: this,
             params: newConfig.params,
             data: newConfig.data,
+          }).then(queryEventResult => {
+            if (queryEventResult) {
+              this.performance.timing.fetchStart = Date.now();
+              this.performance.url = newConfig.url;
+              return this.axios(fixAxiosConfig(newConfig)).then(action((result: AxiosResponse<any>) => {
+                this.performance.timing.fetchEnd = Date.now();
+                if (page >= 0) {
+                  this.currentPage = page;
+                }
+                const { countKey } = this;
+                const needCount: boolean = ObjectChainValue.get(result, countKey) === 'Y';
+                if (needCount && !this.counting) {
+                  this.counting = this.count(page, params)
+                    .then(action((countResult: object) => {
+                      const { totalKey } = this;
+                      const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
+                      if (total !== undefined) {
+                        this.totalCount = total;
+                      }
+                      return total;
+                    })).finally(action(() => {
+                      this.counting = undefined;
+                    }));
+                }
+                return this.handleLoadSuccess(result);
+              }));
+            }
           });
-          if (queryEventResult) {
-            this.performance.timing.fetchStart = Date.now();
-            this.performance.url = newConfig.url;
-            return this.axios(fixAxiosConfig(newConfig)).then(action((result: AxiosResponse<any>) => {
-              this.performance.timing.fetchEnd = Date.now();
-              if (page >= 0) {
-                this.currentPage = page;
-              }
-              const { countKey } = this;
-              const needCount: boolean = ObjectChainValue.get(result, countKey) === 'Y';
-              if (needCount && !this.counting) {
-                this.counting = this.count(page, params)
-                  .then(action((countResult: object) => {
-                    const { totalKey } = this;
-                    const total: number | undefined = ObjectChainValue.get(countResult, totalKey);
-                    if (total !== undefined) {
-                      this.totalCount = total;
-                    }
-                    return total;
-                  })).finally(action(() => {
-                    this.counting = undefined;
-                  }));
-              }
-              return this.handleLoadSuccess(result);
-            }));
-          }
         }
-      } catch (e) {
+      }).catch(e => {
         this.handleLoadFail(e);
         throw new DataSetRequestError(e);
-      } finally {
+      }).finally(() => {
         if (!more) {
           this.changeStatus(DataSetStatus.ready);
         }
-      }
+      });
     }
+    return Promise.resolve();
   }
 
   private async count(page = 1, params?: object): Promise<any> {
