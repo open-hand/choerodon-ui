@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
+- 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.

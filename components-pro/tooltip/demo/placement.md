@@ -20,6 +20,18 @@ const text = <span>prompt text</span>;
 
 const buttonWidth = 70;
 
+const Text = () => {
+  const [height, setHeight] = React.useState('auto');
+  React.useEffect(() => {
+    setTimeout(() => setHeight(100), 1000);
+  }, []);
+  return (
+    <div style={{ height }}>
+      {text}
+    </div>
+  )
+}
+
 const App = () => {
   const [theme, setTheme] = React.useState();
   return (
@@ -28,7 +40,7 @@ const App = () => {
         <Tooltip placement="topLeft" title={text} theme={theme}>
           <Button>TL</Button>
         </Tooltip>
-        <Tooltip placement="top" title={text} theme={theme}>
+        <Tooltip placement="top" title={() => <Text />} theme={theme}>
           <Button>Top</Button>
         </Tooltip>
         <Tooltip placement="topRight" title={text} theme={theme}>
