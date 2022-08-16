@@ -248,15 +248,7 @@ const QuickFilterButton = function QuickFilterButton() {
           </Button>
         </div>
       )}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          dataSet.query();
-        }}
-      >
-        {$l('Table', 'query_button')}
-      </Button>
-    </div>
+    </>
   );
 };
 

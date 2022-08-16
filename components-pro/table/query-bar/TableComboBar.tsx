@@ -51,6 +51,7 @@ import QuickFilterButton from './combo-quick-filter/QuickFilterButton';
 import QuickFilterMenuContext from './combo-quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './combo-quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
+import { hide } from '../../tooltip/singleton';
 import TableContext, { TableContextValue } from '../TableContext';
 import { isEqualDynamicProps, isSelect, parseValue } from './TableDynamicFilterBar';
 import ColumnFilter from './ColumnFilter';
@@ -76,6 +77,7 @@ export interface TableComboBarProps extends ElementProps {
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
+  fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
   searchCode?: string;
   autoQuery?: boolean;
@@ -111,6 +113,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
+    fuzzyQueryOnly: false,
     autoQuery: true,
     refreshBtn: true,
     buttons: [],
@@ -160,6 +163,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   tempFields: Fields;
 
+  isTooltipShown?: boolean;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -168,8 +173,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   }
 
   componentDidMount(): void {
-    const {singleMode, queryDataSet, dataSet } = this.props;
-    if (!singleMode) {
+    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
+    if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
       if (!dataSet.props.autoQuery) {
@@ -183,21 +188,25 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
 
   componentWillUnmount(): void {
-    const { singleMode } = this.props;
-    if (!singleMode) {
+    const { fuzzyQueryOnly } = this.props;
+    if (!fuzzyQueryOnly) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
+    }
+    if (this.isTooltipShown) {
+      hide();
+      delete this.isTooltipShown;
     }
   }
 
   componentWillReceiveProps(nextProps: Readonly<TableComboBarProps>): void {
-    const { dataSet, singleMode, queryDataSet } = nextProps;
+    const { dataSet, fuzzyQueryOnly, queryDataSet } = nextProps;
     // eslint-disable-next-line react/destructuring-assignment
-    if (dataSet !== this.props.dataSet || singleMode !== this.props.singleMode) {
+    if (dataSet !== this.props.dataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
       runInAction(() => {
         this.fieldSelectHidden = true;
       });
-      if (!singleMode) {
+      if (!fuzzyQueryOnly) {
         // 移除原有实例监听
         this.processDataSetListener(false);
         this.processDataSetListener(true, nextProps);
