@@ -1,15 +1,28 @@
 @import '../../../components/style/themes/default';
+@import '../../../components/style/mixins/index';
+@import '../../text-field/style/mixin';
 
 .@{c7n-pro-prefix}-rich-text {
+  .input;
+
+  height: 100%;
+  padding: 0;
+
   &-quill {
     height: calc(100% - 0.42rem);
 
     .ql-container {
-      border-top: none !important;
+      border: none !important;
     }
   }
 
+  &-toolbar, .ql-toolbar {
+    background-color: #fff;
+    border-width: 0 0 1px 0 !important;
+  }
+
   &-wrapper {
+    width: 100%;
     height: 100%;
   }
 }

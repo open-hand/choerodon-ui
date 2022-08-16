@@ -30,7 +30,7 @@ export interface TableHeaderProps extends ElementProps {
 
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock, queryFields } = props;
-  const { prefixCls, border, tableStore, dataSet } = useContext(TableContext);
+  const { prefixCls, border, tableStore, dataSet, fullColumnWidth } = useContext(TableContext);
   const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight } = tableStore;
   const { columns } = columnGroups;
   const needIntersection = tableStore.isFixedRowHeight && tableStore.virtualCell && tableStore.overflowX;
@@ -92,6 +92,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
         const notLockLeft = lock !== ColumnLock.left;
         const lastColumnClassName = notLockLeft ? `${prefixCls}-cell-last` : undefined;
         const hasPlaceholder = tableStore.overflowY && rowIndex === 0 && notLockLeft;
+        const useEmptyColumn = !fullColumnWidth && rowIndex === 0 && notLockLeft && !tableStore.overflowX && !tableStore.hasEmptyWidthColumn;
         const tds = row.map((col, index) => {
           if (!col.hidden) {
             const { key, rowSpan, colSpan, children } = col;
@@ -103,7 +104,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               isSearchCell: isSearchTr,
               scope: children ? 'colgroup' : 'col',
             };
-            if (notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
+            if (!useEmptyColumn && notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
               cellProps.className = lastColumnClassName;
             }
             if (isSearchTr) {
@@ -134,6 +135,16 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
           }
           return undefined;
         });
+        if (useEmptyColumn) {
+          tds.push(
+            <th
+              key="empty-column"
+              className={`${prefixCls}-cell ${lastColumnClassName}`}
+              rowSpan={headerRows.length}
+              style={{ lineHeight: 1 }}
+            />,
+          );
+        }
         if (hasPlaceholder) {
           const placeHolderProps: DetailedHTMLProps<ThHTMLAttributes<HTMLTableHeaderCellElement>, HTMLTableHeaderCellElement> & { style: CSSProperties } = {
             key: 'fixed-column',

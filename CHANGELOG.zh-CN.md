@@ -19,11 +19,13 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
-- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips 属性。
+- 🌟 `<pro>Table`: onScrollTop 和 onScrollLeft 钩子参数新增 getScrollInfo 方法。
+- 🌟 `<pro>Table`: 新增 boxSizing, showCachedTips, fullColumnWidth 属性。
 - 🌟 `<pro>Table.Column`: 新增 tooltipProps 属性, header 属性新增 groups 参数。
 - 🌟 `<pro>DataSet.Field`: 新增 dateMode 属性。
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `Notification`: 新增 icons 配置。
+- 🌟 `Upload`: 新增 beforeUploadFiles 属性。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -44,6 +46,7 @@ timeline: true
 - 💄 `<pro>TimePicker`: 优化鼠标在时间轴上的滚动速度。
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
+- 💄 `<pro>Lov`: 优化 onBeforeSelect 回调函数，支持返回一个 Promise 对象。
 - 💄 `<pro>Lov`: 优化在输入框搜索过程中，禁用选择下拉选项。
 - 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
@@ -53,8 +56,12 @@ timeline: true
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
+- 💄 `<pro>Form.ItemGroup`: 优化组件属性的 TS 类型声明。
+- 💄 `<pro>Attachment`: 优化组件 help 渲染。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
+- 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
+- 🐞 `<pro>RichText`: 修复富文本编辑器清除还保留换行符的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
@@ -74,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复自定义函数编辑器组件 editor 无法定位的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
 - 🐞 `<pro>Table`: 修复 filterbar 的字段设置 range 后删除该字段条件后查询条件不正确的问题。
+- 🐞 `<pro>Table`: 修复 tooltip 宽度计算错误溢出提示的问题。
 - 🐞 `<pro>IconPicker`: 修复选中样式被 hover 样式覆盖的问题。
 - 🐞 `Badge`: 修复 processing 状态点样式问题。
 - 🐞 `Upload`: 修复 picture-card 模式下的 margin-top 塌陷样式问题。
@@ -87,9 +95,11 @@ timeline: true
 - 🐞 `<pro>Table`: 修复通过回车键能定位到禁用行进行编辑的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
+- 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
+- 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 - 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。
 - 🐞 `<pro>Cascader`: 修复当设置 searchable 属性为 ture 且下拉数据源中同一层级显示值相同时，选择值出错的问题。

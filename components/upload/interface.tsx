@@ -73,6 +73,7 @@ export interface UploadProps {
   dragUploadList?: boolean;
   accept?: string;
   beforeUpload?: (file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>;
+  beforeUploadFiles?: (FileList: UploadFile[]) => boolean;
   onChange?: (info: UploadChangeParam) => void;
   listType?: UploadListType;
   className?: string;

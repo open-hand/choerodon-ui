@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import BigNumber from 'bignumber.js';
+import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
@@ -8,7 +10,6 @@ import KeyCode from '../../_util/KeyCode';
 import InputHandler from './InputHandler';
 import Icon from '../../icon';
 import { preventDefault } from '../../_util/EventManager';
-import BigNumber from 'bignumber.js';
 
 function defaultParser(input) {
   return input.replace(/[^\w\.-]+/g, '');
@@ -26,7 +27,7 @@ const DELAY = 600;
 
 
 const isEqual = (oldValue, newValue) => newValue === oldValue ||
-  math.eq(newValue, oldValue) ||
+  ((!isString(newValue) || !newValue.endsWith('.')) && (!isString(oldValue) || !oldValue.endsWith('.')) && math.eq(newValue, oldValue)) ||
   (isNumber(newValue) && isNumber(oldValue) && math.isNaN(newValue) && math.isNaN(oldValue));
 
 export default class InputNumber extends Component {

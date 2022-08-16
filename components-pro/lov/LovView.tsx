@@ -1,6 +1,7 @@
 import React, { Component, Key } from 'react';
 import classNames from 'classnames';
 import { action, toJS } from 'mobx';
+import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -112,13 +113,21 @@ export default class LovView extends Component<LovViewProps> {
       : undefined;
   }
 
+  closeModal(record: Record | Record[] | undefined) {
+    if (record) {
+      const { onSelect, modal } = this.props;
+      if (modal) {
+        modal.close();
+      }
+      onSelect(record);
+    }
+  }
+
   @autobind
   handleSelect(event?: React.MouseEvent) {
     const { selectionMode } = this;
     const {
-      onSelect,
       onBeforeSelect = noop,
-      modal,
       multiple,
       dataSet,
       tableProps,
@@ -131,11 +140,15 @@ export default class LovView extends Component<LovViewProps> {
       records = dataSet.selected;
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
-    if (record && onBeforeSelect(record) !== false) {
-      if (modal) {
-        modal.close();
-      }
-      onSelect(record);
+    const beforeSelect = onBeforeSelect(record);
+    if (isPromise(beforeSelect)) {
+      beforeSelect.then(result => {
+        if (result !== false) {
+          this.closeModal(record);
+        }
+      });
+    } else if (beforeSelect !== false) {
+      this.closeModal(record);
     }
     return false;
   }

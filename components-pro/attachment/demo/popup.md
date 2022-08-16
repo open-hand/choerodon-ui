@@ -25,6 +25,7 @@ const App = () => {
     max: 9,
     value,
     onChange: setValue,
+    help: '支持文件类型： .deb .txt .pdf image/*',
     viewMode: 'popup',
   };
 

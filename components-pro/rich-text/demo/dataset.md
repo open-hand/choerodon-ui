@@ -24,7 +24,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'content', type: 'object', defaultValue: defaultValue, required: true },
+      { name: 'content', type: 'object', required: true },
     ],
   });
 

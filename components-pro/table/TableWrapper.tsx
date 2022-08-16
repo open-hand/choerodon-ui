@@ -23,7 +23,7 @@ export interface TableWrapperProps extends ElementProps {
 
 const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper(props) {
   const { children, hasBody, lock, hasHeader, hasFooter, columnGroups } = props;
-  const { prefixCls, summary, tableStore } = useContext(TableContext);
+  const { prefixCls, summary, tableStore, fullColumnWidth } = useContext(TableContext);
   const { leafs, width } = columnGroups;
   const { overflowX, customizable, rowDraggable, dragColumnAlign } = tableStore;
   const hasPlaceHolder = lock !== ColumnLock.left && (hasHeader || hasFooter) && tableStore.overflowY;
@@ -60,14 +60,17 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
       <TableCol
         key={key}
         column={column}
-        last={index === array.length - fixedColumnLength}
+        last={fullColumnWidth! && index === array.length - fixedColumnLength}
       />
     ));
+    if (!fullColumnWidth && lock !== ColumnLock.left && !overflowX && !tableStore.hasEmptyWidthColumn) {
+      cols.push(<col key="empty-column" />);
+    }
     if (hasPlaceHolder) {
       cols.push(<col key="fixed-column" style={{ width: pxToRem(measureScrollbar(), true) }} />);
     }
     return <colgroup>{cols}</colgroup>;
-  }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder]);
+  }, [leafs, customizable, rowDraggable, dragColumnAlign, hasPlaceHolder, lock, fullColumnWidth]);
 
   const style = useMemo(() => ({ width: tableWidth }), [tableWidth]);
 
