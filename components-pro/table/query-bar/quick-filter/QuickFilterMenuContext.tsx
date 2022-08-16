@@ -27,6 +27,7 @@ export interface QuickFilterContextValue extends QuickFilterProps {
   conditionDataSet: DataSet;
   optionDataSet: DataSet;
   shouldLocateData: boolean;
+  refEditors?: Map<string, any>;
 }
 
 const ds = {} as DataSet;

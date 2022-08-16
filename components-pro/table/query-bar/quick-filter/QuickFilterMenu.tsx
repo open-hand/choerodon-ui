@@ -107,7 +107,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
     const statusAdd = getConfig('status').add;
-    const shouldSaveValue= menuDataSet.current.get('saveFilterValue');
+    const shouldSaveValue = menuDataSet.current.get('saveFilterValue');
     const status = {};
     status[statusKey] = statusAdd;
     if (type !== 'edit') {
@@ -205,10 +205,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
     initConditionFields = noop,
     optionDataSet,
     shouldLocateData,
+    refEditors,
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
-  const shouldSaveValue= menuDataSet && menuDataSet.current && menuDataSet.current.get('saveFilterValue');
+  const shouldSaveValue = menuDataSet && menuDataSet.current && menuDataSet.current.get('saveFilterValue');
 
   /**
    * 替换个性化字段
@@ -256,7 +257,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
             onChange(fieldName);
           }
           if (condition.usedFlag) {
-            tenantSelectFields.push(condition.fieldName)
+            tenantSelectFields.push(condition.fieldName);
           }
         });
         onOriginalChange(Object.keys(initData));
@@ -268,7 +269,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
           queryDataSet.current = emptyRecord;
         });
         if (isTenant) {
-          initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current } );
+          initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
         }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
@@ -287,7 +288,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
   };
 
-  const handleQueryReset = () => {
+  const handleQueryReset = async () => {
     if (filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
@@ -303,7 +304,17 @@ const QuickFilterMenu = function QuickFilterMenu() {
       }
       onOriginalChange();
       if (autoQuery) {
-        dataSet.query();
+        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+          dataSet.query();
+        } else if (refEditors) {
+          let hasFocus = false;
+          for (const [key, value] of refEditors.entries()) {
+            if (!value.valid && !hasFocus) {
+              refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
       }
     }
     onStatusChange(RecordStatus.sync);
@@ -521,7 +532,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     if (shouldLocateData) {
       locateData(undefined, true);
     }
-  }, [shouldLocateData]);
+  }, [shouldLocateData, menuDataSet && menuDataSet.length]);
 
   /**
    * 默认设置

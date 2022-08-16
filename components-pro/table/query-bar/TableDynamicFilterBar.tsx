@@ -414,8 +414,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     this.setConditionStatus(status);
     if (autoQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
-        dataSet.query();
-        onQuery();
+        if (queryDataSet && await queryDataSet.validate()) {
+          dataSet.query();
+          onQuery();
+        } else {
+          let hasFocus = false;
+          for (const [key, value] of this.refEditors.entries()) {
+            if (!value.valid && !hasFocus) {
+              this.refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
       } else {
         record.init(name, oldValue);
       }
@@ -480,6 +490,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }) as DataSetProps, { getConfig: getConfig as any });
       const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
       const optionDataSet = new DataSet({
+        paging: false,
         selection: DataSetSelection.single,
         fields: [
           {
@@ -612,6 +623,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   createFields(element, name): ReactElement {
     const props: any = {
       ref: (node) => this.refEditors.set(name, node),
+      border: false,
+      clearButton: true,
     };
     return cloneElement(element, props);
   }
@@ -679,14 +692,32 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     dataSet.setState(SELECTCHANGE, shouldUpdate);
   };
 
+  /**
+   * 查询前修改提示及校验定位
+   */
+  async modifiedCheckQuery(): Promise<void> {
+    const { props: { dataSet, queryDataSet } } = this;
+    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+      dataSet.query();
+    } else {
+      let hasFocus = false;
+      for (const [key, value] of this.refEditors.entries()) {
+        if (!value.valid && !hasFocus) {
+          this.refEditors.get(key).focus();
+          hasFocus = true;
+        }
+      }
+    }
+  }
+
   renderRefreshBtn(): ReactNode {
-    const { prefixCls, props: { dataSet } } = this;
+    const { prefixCls } = this;
     return (
       <span
         className={`${prefixCls}-filter-menu-query`}
         onClick={async (e) => {
           e.stopPropagation();
-          if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
+          await this.modifiedCheckQuery();
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
@@ -845,6 +876,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             expand: this.expand,
             dataSet,
             queryDataSet,
+            refEditors: this.refEditors,
             onChange: this.handleSelect,
             conditionStatus: dataSet.getState(CONDITIONSTATUS),
             onStatusChange: this.setConditionStatus,
@@ -971,8 +1003,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
               {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled } = element.props;
-                const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
+                const { name, hidden, showHelp, disabled, help } = element.props;
+                const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
@@ -983,7 +1015,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   <div
                     className={itemContentClassName}
                     key={name}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       const editor = this.refEditors.get(name);
                       if (editor) {
                         this.refEditors.get(name).focus();
@@ -992,7 +1025,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   >
                     <span className={`${prefixCls}-filter-label`}>
                       {queryField && queryField.get('label')}
-                      {isLabelShowHelp ? this.renderTooltipHelp(queryField && queryField.get('help')) : null}
+                      {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                     </span>
                     <span className={`${prefixCls}-filter-item`}>
                       {this.createFields(element, name)}
@@ -1001,8 +1034,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 );
               })}
               {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled } = element.props;
-                const isLabelShowHelp = (getConfig('showHelp') || showHelp) === ShowHelp.label;
+                const { name, hidden, showHelp, disabled, help } = element.props;
+                const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
@@ -1030,7 +1063,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       />
                       <span className={`${prefixCls}-filter-label`}>
                         {queryField && queryField.get('label')}
-                        {isLabelShowHelp ? this.renderTooltipHelp(queryField && queryField.get('help')) : null}
+                        {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                       </span>
                       <span className={`${prefixCls}-filter-item`}>
                         {this.createFields(element, name)}
@@ -1091,9 +1124,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   async handleQuery(collapse?: boolean) {
-    const { dataSet, onQuery = noop, autoQuery } = this.props;
+    const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
+      await this.modifiedCheckQuery();
     }
     if (!collapse) {
       onQuery();
