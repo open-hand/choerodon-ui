@@ -27,45 +27,47 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
   const getTreeNodes = () => {
     const lock = record.get('lock');
     if (columnDraggable && record.get('draggable') !== false) {
-      if (!record.parent) {
-        if (lock) {
+      if (index === 0) {
+        if (!record.parent) {
+          if (lock) {
+            return (
+              <Tooltip title={$l('Table', 'lock_first_column')}>
+                <Button
+                  funcType={FuncType.flat}
+                  size={Size.small}
+                  icon="lock-o"
+                  onClick={() => changeLock(false)}
+                />
+              </Tooltip>
+            );
+          }
           return (
-            <Tooltip title={$l('Table', 'lock_first_column')}>
+            <Tooltip title={$l('Table', 'cancel_lock_first_column')}>
               <Button
                 funcType={FuncType.flat}
                 size={Size.small}
                 icon="lock_open"
-                onClick={() => changeLock(false)}
+                onClick={() => changeLock(ColumnLock.left)}
+                tooltip={ButtonTooltip.always}
               />
             </Tooltip>
           );
         }
-      }
-      if (index === 0) {
-        return (
-          <Tooltip title={$l('Table', 'lock_first_column')}>
-            <Button
-              funcType={FuncType.flat}
-              size={Size.small}
-              icon="lock-o"
-              onClick={() => changeLock(ColumnLock.left)}
-              tooltip={ButtonTooltip.always}
-            />
-          </Tooltip>
-        );
       }
     }
   };
   return (
     <>
       {getTreeNodes()}
-      <Button
-        funcType={FuncType.flat}
-        size={Size.small}
-        disabled={!columnHideable || record.get('hideable') === false || (record.parent && record.parent.get('hidden'))}
-        icon={record.get('hidden') === false ? 'visibility_off' : 'visibility'}
-        onClick={() => changeHidden(!record.get('hidden'))}
-      />
+      <Tooltip title={record.get('hidden') === false ? $l('Table', 'show') : $l('Table', 'hide')}>
+        <Button
+          funcType={FuncType.flat}
+          size={Size.small}
+          disabled={!columnHideable || record.get('hideable') === false || (record.parent && record.parent.get('hidden'))}
+          icon={record.get('hidden') === false ? 'visibility' : 'visibility_off'}
+          onClick={() => changeHidden(!record.get('hidden'))}
+        />
+      </Tooltip>
     </>
   );
 };

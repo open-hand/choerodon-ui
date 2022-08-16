@@ -1,6 +1,7 @@
 import React, { FunctionComponent, Key, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { action, runInAction, toJS } from 'mobx';
+import { action, toJS } from 'mobx';
+import isUndefined from 'lodash/isUndefined';
 import { getColumnKey, getColumnLock } from '../utils';
 import ColumnGroups from './column-groups';
 import DataSet from '../../data-set/DataSet';
@@ -31,7 +32,7 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
       });
     }
     return map;
-  }, new Map()).values()];
+  }, new Map()).values()].filter((item: ColumnProps) => item && !isUndefined(item.name));
 }
 
 function diff(height = 0): number {
@@ -59,6 +60,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     parentField: 'parentKey',
     fields: [
       { name: 'lock' },
+      { name: 'sort' },
     ],
     events: {
       update({ record, name, value }) {
@@ -86,27 +88,18 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       ...toJS(customized),
     };
   }), [tableStore]);
-  const saveCustomized = useCallback(() => {
-    runInAction(() => {
-      const { tempCustomized, aggregation, props: { onAggregationChange } } = tableStore;
-      tableStore.tempCustomized = { columns: {} };
-      tableStore.saveCustomized(tempCustomized);
-      tableStore.initColumns();
-      tableStore.node.handleHeightTypeChange();
-      const { aggregation: customAggregation } = tempCustomized;
-      if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
-        onAggregationChange(customAggregation);
-      }
-      setVisible(!visible);
-    });
-  }, [columnDataSet, tableStore])
-  const cancelCustomized = useCallback(() => {
-    runInAction(() => {
-      tableStore.tempCustomized = { columns: {} };
-      tableStore.node.handleHeightTypeChange();
-      setVisible(!visible);
-    })
-  }, [columnDataSet, tableStore])
+  const saveCustomized = useCallback(action(() => {
+    const { tempCustomized } = tableStore;
+    tableStore.tempCustomized = { columns: {} };
+    tableStore.saveCustomized(tempCustomized);
+    tableStore.initColumns();
+    setVisible(!visible);
+  }), [columnDataSet, tableStore])
+  const cancelCustomized = useCallback(action(() => {
+    tableStore.tempCustomized = { columns: {} };
+    tableStore.node.handleHeightTypeChange();
+    setVisible(!visible);
+  }), [columnDataSet, tableStore])
   return (
     <>
       <ColumnGroups dataSet={columnDataSet} />

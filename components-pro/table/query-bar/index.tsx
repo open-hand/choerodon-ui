@@ -1,12 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  isValidElement,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
-  useState,
-} from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
@@ -777,18 +769,11 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               clearButton: true,
             };
           }
-          if (queryBar === TableQueryBarType.comboBar) {
-            filterBarProps = {
-              placeholder: field.get('label'),
-              border: true,
-              clearButton: true,
-            };
-          }
           const props: any = {
             key: name,
             name,
             dataSet: queryDataSet,
-            isFlat: queryBar === TableQueryBarType.filterBar || queryBar === TableQueryBarType.comboBar,
+            isFlat: queryBar === TableQueryBarType.filterBar,
             ...filterBarProps,
           };
           result.push(

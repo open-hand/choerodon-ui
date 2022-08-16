@@ -409,7 +409,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         const isComboQueryColumn = key === COMBOBAR_KEY;
         const isCheckBox = fieldType === FieldType.boolean || key === SELECTION_KEY;
         const multiple = field && field.get('multiple', record);
-        const borderPadding = isCheckBox || multiple ? 4 : 2;
+        const borderPadding = isCheckBox || multiple || isComboQueryColumn ? 4 : 2;
         const heightPx = rows > 0 ? (rowHeight + 2) * rows + 1 : rowHeight;
         const lineHeightPx = hasEditor || isCheckBox || multiple || isComboQueryColumn ? rowHeight - borderPadding : rowHeight;
         return {

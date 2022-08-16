@@ -1131,7 +1131,9 @@ export default class TableStore {
 
   get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
-    if (customizedCode || this.queryBar === TableQueryBarType.comboBar) {
+    const { props: { queryBarProps } } = this.node;
+    const isSimpleMode = queryBarProps && queryBarProps.simpleMode;
+    if (customizedCode || (this.queryBar === TableQueryBarType.comboBar && !isSimpleMode)) {
       if ('customizable' in this.props) {
         return this.props.customizable;
       }
@@ -1801,13 +1803,26 @@ export default class TableStore {
     if (this.queryBar === TableQueryBarType.comboBar) {
       const { prefixCls, props: { bodyExpandable, queryBarProps } } = this;
       const showInlineSearch = queryBarProps && queryBarProps.inlineSearch;
+      const showInlineSearchRender = queryBarProps && queryBarProps.inlineSearchRender;
       const className = `${prefixCls}-inline-query`;
 
       const lock: ColumnLock | boolean = ColumnLock.left;
 
       const queryColumn: ColumnProps = {
         key: COMBOBAR_KEY,
-        header: <Icon type="manage_search" className={className} onClick={action(() => this.comboBarStatus = !this.comboBarStatus)} />,
+        header: (
+          showInlineSearch && (
+            <Icon
+              type="manage_search"
+              className={className}
+              onClick={action(
+                () => {
+                  this.comboBarStatus = !this.comboBarStatus;
+                  this.node.handleHeightTypeChange();
+                })}
+            />
+          )
+        ),
         resizable: false,
         titleEditable: false,
         headerClassName: className,
@@ -1818,7 +1833,7 @@ export default class TableStore {
         width: scaleSize(bodyExpandable ? 65 : 50),
         lock,
       };
-      return showInlineSearch === false ? undefined : queryColumn;
+      return showInlineSearch === true || showInlineSearchRender ? queryColumn : undefined;
     }
     return undefined;
   }
@@ -2605,8 +2620,8 @@ export default class TableStore {
   async loadCustomized() {
     const { customizedCode } = this.props;
     const { props: { queryBarProps } } = this.node;
-    const showSingleMode = queryBarProps && queryBarProps.singleMode;
-    if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSingleMode)) {
+    const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
+    if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;

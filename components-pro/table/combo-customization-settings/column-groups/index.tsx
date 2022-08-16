@@ -20,12 +20,20 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
   const { tableStore: { columnDraggable }, prefixCls } = useContext(TableContext);
   const handleDragTree = useCallback(action((srcIndex: number, destIndex: number) => {
     const [removed] = treeRecords.splice(srcIndex, 1);
+    const removedLock = removed.get('lock');
     removed.set('lock', false);
-    treeRecords.splice(destIndex, 0, removed);
-    treeRecords.forEach((r, index) => {
-      r.set('sort', index);
-    });
-  }), []);
+    if (removedLock) {
+      treeRecords.splice(destIndex + treeRecords.reduce((sum, r) => sum + (r.get('draggable') === false ? 1 : 0), 0), 0, removed);
+      treeRecords.forEach((r, index) => {
+        r.set('sort', index);
+      });
+    } else {
+      treeRecords.splice(destIndex, 0, removed);
+      treeRecords.forEach((r, index) => {
+        r.set('sort', index);
+      });
+    }
+  }), [treeRecords]);
   const handleDragTreeNode = useCallback(action((srcIndex: number, destIndex: number, parentId: string) => {
     const parent = dataSet.find(r => String(r.key) === parentId);
     if (parent) {

@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { observable, runInAction } from 'mobx';
+import React, {useContext, useEffect, useState} from 'react';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
 import isObject from 'lodash/isObject';
@@ -7,22 +7,18 @@ import isEnumEmpty from 'lodash/isEmpty';
 import isArray from 'lodash/isArray';
 import noop from 'lodash/noop';
 import omit from 'lodash/omit';
+import isEqual from 'lodash/isEqual';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import isSampleEmpty from '../../../_util/isEmpty';
 import { $l } from '../../../locale-context';
 import Button from '../../../button';
 import { ButtonColor } from '../../../button/enum';
 import Record from '../../../data-set/Record';
-import { RecordStatus } from '../../../data-set/enum';
-import {
-  isEqualDynamicProps,
-  omitData,
-  parseValue,
-  SELECTFIELDS,
-  stringifyValue,
-} from '../TableComboBar';
-
+import { RecordStatus} from '../../../data-set/enum';
+import { isEqualDynamicProps, parseValue, SELECTFIELDS, stringifyValue, omitData } from '../TableComboBar';
 import Store from './QuickFilterMenuContext';
-import Field from '../../../data-set/Field';
+import { TableCustomized } from '../../Table';
+
 
 /**
  * 判断查询值是否为空
@@ -79,6 +75,8 @@ function isSelect(data) {
  * 快速筛选下拉
  */
 const QuickFilterButton = function QuickFilterButton() {
+  const [customizedChange, setCustomizedChange] = useState<boolean>(false);
+  const { getConfig } = useContext(ConfigContext);
   const {
     tempQueryFields,
     autoQuery,
@@ -93,30 +91,22 @@ const QuickFilterButton = function QuickFilterButton() {
     onStatusChange = noop,
     selectFields,
     onOriginalChange = noop,
-    initConditionFields = noop,
-    optionDataSet,
+    filterSave = true,
     filterSaveCallback = noop,
-    customizedColumns,
-    filterCallback = noop,
+    onReset = noop,
+    tableStore,
   } = useContext(Store);
-  const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
 
-  /**
-   * 替换个性化字段
-   * @param conditionList
-   */
-  const initCustomFields = (conditionList): void => {
-    const fields = conditionList.map(condition => {
-      return {
-        ...condition,
-        name: condition.fieldName,
-        defaultValue: condition.value,
-      };
-    });
-    runInAction(() => {
-      queryDataSet.fields = observable.map<string, Field>(conditionList ? queryDataSet.initFields(fields) : undefined);
-    });
-  };
+  const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
+  const personalColumn = menuDataSet && menuDataSet.current && menuDataSet.current.get('personalColumn') && parseValue(menuDataSet.current.get('personalColumn')) || {};
+  const customized = tableStore && tableStore.customized;
+
+  useEffect(() => {
+    if (customized || personalColumn) {
+      const columns = customized && customized.columns;
+      setCustomizedChange(isEqual(parseValue(columns), personalColumn))
+    }
+  }, [customized, personalColumn])
 
   /**
    * queryDS 筛选赋值并更新初始勾选项
@@ -127,13 +117,9 @@ const QuickFilterButton = function QuickFilterButton() {
     const { current } = menuDataSet;
     let shouldQuery = false;
     if (current) {
-      const conditionList = current.get('conditionList');
+      const conditionList = current.get('personalFilter') && parseValue(current.get('personalFilter'));
       const initData = {};
-      const tenantSelectFields: string[] = [];
-      const isTenant = current.get('isTenant');
-      if (isTenant) {
-        initCustomFields(conditionList);
-      } else if (tempQueryFields) {
+      if (tempQueryFields) {
         runInAction(() => {
           queryDataSet.fields = tempQueryFields;
         });
@@ -141,26 +127,18 @@ const QuickFilterButton = function QuickFilterButton() {
       const { current: currentQueryRecord } = queryDataSet;
       if (conditionList && conditionList.length) {
         map(conditionList, condition => {
-          if (condition.comparator === 'EQUAL') {
-            const { fieldName, value } = condition;
-            initData[fieldName] = parseValue(value);
-            onChange(fieldName);
-          }
-          if (condition.usedFlag) {
-            tenantSelectFields.push(condition.fieldName)
-          }
+          const { fieldName, value } = condition;
+          initData[fieldName] = parseValue(value);
+          onChange(fieldName);
         });
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
-        dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
+        dataSet.setState(SELECTFIELDS, Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
-        if (isTenant) {
-          initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current } );
-        }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
@@ -171,6 +149,14 @@ const QuickFilterButton = function QuickFilterButton() {
           queryDataSet.current = emptyRecord;
         });
         onStatusChange(RecordStatus.sync);
+      }
+      const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
+      if (tableStore) {
+        runInAction(() => {
+          const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+          tableStore.saveCustomized(newCustomized);
+          tableStore.initColumns();
+        })
       }
       if (!init && shouldQuery && autoQuery) {
         dataSet.query();
@@ -197,140 +183,87 @@ const QuickFilterButton = function QuickFilterButton() {
         dataSet.query();
       }
     }
+    onReset();
     onStatusChange(RecordStatus.sync);
   };
 
-  /**
-   * 定位数据源
-   * @param searchId
-   * @param init 初始化
-   */
-  const locateData = (searchId?: string | null, init?: boolean) => {
-    const { current } = filterMenuDataSet;
-    if (searchId) {
-      menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
-      const menuRecord = menuDataSet.current;
-      if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
-      }
-      if (current) {
-        current.set('filterName', searchId);
-      }
-      conditionAssign(init);
-      filterCallback(searchId);
-    } else if (searchId === null) {
-      handleQueryReset();
-    } else {
-      menuDataSet.locate(0);
-      const menuRecord = menuDataSet.current;
-      if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
-        if (current) {
-          current.set('filterName', menuRecord.get('searchId'));
+  const handleSave = async () => {
+    const { current } = queryDataSet;
+    if (current && conditionDataSet) {
+      const conditionData = Object.entries(omit(current.toData(), ['__dirty']));
+      conditionDataSet.reset();
+      conditionDataSet.map(record => {
+        if (!selectFields || !selectFields.includes(record.get('fieldName'))) {
+          conditionDataSet.remove(record);
         }
-      }
-      conditionAssign(init);
-    }
-  };
-
-  /**
-   * 加载筛选数据并赋值查询
-   * @param searchId
-   */
-  const loadData = async (searchId?: string) => {
-    const result = await menuDataSet.query();
-    if (optionDataSet) {
-      optionDataSet.loadData(result);
-    }
-    const menuRecord = menuDataSet.current;
-    if (menuRecord) {
-      conditionDataSet.loadData(menuRecord.get('conditionList'));
-    }
-    if (result && result.length) {
-      locateData(searchId);
-    } else {
-      const { current } = filterMenuDataSet;
-      if (current) current.set('filterName', undefined);
-      locateData();
-      if (dataSet.props.autoQuery) {
-        dataSet.query();
-      }
-    }
-  };
-
-  const filerSave = async (menuDataSet) => {
-    conditionDataSet.loadData(menuDataSet.current.get('conditionList'));
-    const putData: any[] = [];
-    const conditionData = Object.entries(omit(queryDataSet.current && queryDataSet.current.toData(), ['__dirty']));
-    map(conditionData, data => {
-      if (isSelect(data)) {
+        return null;
+      });
+      map(conditionData, data => {
         const fieldObj = findFieldObj(queryDataSet, data);
-        if (fieldObj && fieldObj.name) {
+        if (fieldObj) {
+          const { name } = fieldObj;
+          if (name) {
+            const currentRecord = conditionDataSet.find(record => record.get('fieldName') === name);
+            if (currentRecord) {
+              currentRecord.set('value', fieldObj.value);
+            } else if (isSelect(data)) {
+              conditionDataSet.create({
+                fieldName: name,
+                value: fieldObj.value,
+              });
+            }
+          }
+        }
+      });
+      const putData: any = [];
+      map(selectFields, fieldName => {
+        const value = current.get(fieldName);
+        const statusKey = getConfig('statusKey');
+        const statusAdd = getConfig('status').add;
+        const status = {};
+        const toJSONFields = conditionDataSet.toJSONData().map((condition) => (condition as { fieldName }).fieldName);
+        status[statusKey] = statusAdd;
+        // 处理空值已勾选条件
+        if (!toJSONFields.includes(fieldName)) {
           putData.push({
-            fieldName: fieldObj.name,
-            value: stringifyValue(fieldObj.value),
+            fieldName,
+            value,
+            ...status,
           });
         }
+      });
+      const data = [...conditionDataSet.toJSONData(), ...putData];
+      const customizedColumns = tableStore && tableStore.customized && tableStore.customized.columns;
+      const menuRecord = menuDataSet.current;
+      if (menuRecord) {
+        menuRecord.set('personalFilter', stringifyValue(data));
+        menuRecord.set('personalColumn', stringifyValue(customizedColumns));
       }
-    });
-    const hasValueFields = putData.map(pt => pt.fieldName);
-    map(selectFields, fieldName => {
-      const value = queryDataSet.current && queryDataSet.current.get(fieldName);
-      // 加入空值勾选字段
-      if (!hasValueFields.includes(fieldName)) {
-        putData.push({
-          fieldName,
-          value: stringifyValue(value),
-        });
-      }
-    });
-    const otherRecord = menuDataSet.current.clone();
-    otherRecord.set('conditionList', putData);
-    menuDataSet.current.reset();
-    filterSaveCallback({ ...omitData(otherRecord.toData()), personalColumns: customizedColumns })
-    const res = await menuDataSet.submit();
-    if (res && res.success) {
-      loadData(res.content ? res.content[0].searchId : undefined);
-      return true;
+      filterSaveCallback({ ...omitData({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) }) });
+    } else {
+      dataSet.query();
     }
-    return !((res && res.failed) || !res);
-  }
-
-  const handleSaveOther = () => {
-    const { current } = menuDataSet;
-    if (!current) {
-      menuDataSet.locate(0);
-    }
-    filerSave(menuDataSet);
-
   };
 
+
   return (
-    <div className={`${prefixCls}-combo-filter-button`}>
-      {conditionStatus === RecordStatus.update && (
-        <>
-          {isChooseMenu && (
-            <Button onClick={handleSaveOther} color={ButtonColor.primary}>
-              {$l('Table', 'save_as')}
+    <>
+      {(conditionStatus === RecordStatus.update || !customizedChange) && (
+        <div className={`${prefixCls}-combo-filter-buttons`}>
+          {isChooseMenu && filterSave && (
+            <Button onClick={handleSave} color={ButtonColor.primary}>
+              {$l('Table', 'save_button')}
             </Button>
           )}
-          <Button onClick={handleQueryReset}>
+          <Button onClick={handleQueryReset} color={ButtonColor.secondary}>
             {$l('Table', 'reset_button')}
           </Button>
-        </>
+        </div>
       )}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          dataSet.query();
-        }}
-      >
-        {$l('Table', 'query_button')}
-      </Button>
-    </div>
+    </>
   );
 };
 
-QuickFilterButton.displayName = 'ComboQuickFilterButton';
+QuickFilterButton.displayName = 'QuickFilterButton';
 
 export default observer(QuickFilterButton);

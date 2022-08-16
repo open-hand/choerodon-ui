@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { observable, runInAction } from 'mobx';
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
 import noop from 'lodash/noop';
@@ -15,8 +15,9 @@ import {
   parseValue,
   SELECTFIELDS,
 } from '../TableComboBar';
+import { TableCustomized } from '../../Table';
+
 import Store from './QuickFilterMenuContext';
-import Field from '../../../data-set/Field';
 
 /**
  * 快速筛选下拉
@@ -34,29 +35,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
     onChange = noop,
     onStatusChange = noop,
     onOriginalChange = noop,
-    initConditionFields = noop,
+    // optionDataSet,
     shouldLocateData,
-    searchId,
+    initSearchId,
     filterCallback = noop,
-    filerMenuAction,
+    filterOptionRenderer = noop,
+    tableStore,
   } = useContext(Store);
-
-  /**
-   * 替换个性化字段
-   * @param conditionList
-   */
-  const initCustomFields = (conditionList): void => {
-    const fields = conditionList.map(condition => {
-      return {
-        ...condition,
-        name: condition.fieldName,
-        defaultValue: condition.value,
-      };
-    });
-    runInAction(() => {
-      queryDataSet.fields = observable.map<string, Field>(conditionList ? queryDataSet.initFields(fields) : undefined);
-    });
-  };
 
   /**
    * queryDS 筛选赋值并更新初始勾选项
@@ -67,13 +52,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const { current } = menuDataSet;
     let shouldQuery = false;
     if (current) {
-      const conditionList = current.get('conditionList');
+      const conditionList = current.get('personalFilter') && parseValue(current.get('personalFilter'));
       const initData = {};
-      const tenantSelectFields: string[] = [];
-      const isTenant = current.get('isTenant');
-      if (isTenant) {
-        initCustomFields(conditionList);
-      } else if (tempQueryFields) {
+      if (tempQueryFields) {
         runInAction(() => {
           queryDataSet.fields = tempQueryFields;
         });
@@ -81,26 +62,18 @@ const QuickFilterMenu = function QuickFilterMenu() {
       const { current: currentQueryRecord } = queryDataSet;
       if (conditionList && conditionList.length) {
         map(conditionList, condition => {
-          if (condition.comparator === 'EQUAL') {
-            const { fieldName, value } = condition;
-            initData[fieldName] = parseValue(value);
-            onChange(fieldName);
-          }
-          if (condition.usedFlag) {
-            tenantSelectFields.push(condition.fieldName)
-          }
+          const { fieldName, value } = condition;
+          initData[fieldName] = parseValue(value);
+          onChange(fieldName);
         });
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
-        dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
+        dataSet.setState(SELECTFIELDS, Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
         });
-        if (isTenant) {
-          initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current } );
-        }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
@@ -111,6 +84,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
           queryDataSet.current = emptyRecord;
         });
         onStatusChange(RecordStatus.sync);
+      }
+      const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
+      if (tableStore) {
+        runInAction(() => {
+          const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+          tableStore.saveCustomized(newCustomized);
+          tableStore.initColumns();
+        })
       }
       if (!init && shouldQuery && autoQuery) {
         dataSet.query();
@@ -145,35 +126,55 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * @param searchId
    * @param init 初始化
    */
-  const locateData = (searchId?: string | null, init?: boolean) => {
+  const locateData = (searchId?: number | null, init?: boolean) => {
     const { current } = filterMenuDataSet;
     if (searchId) {
+      filterCallback(searchId);
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        const conditionList = menuRecord.get('personalFilter') && parseValue(menuRecord.get('personalFilter'));
+        conditionDataSet.loadData(conditionList);
+        const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
+        if (tableStore) {
+          runInAction(() => {
+            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            tableStore.saveCustomized(newCustomized);
+            tableStore.initColumns();
+          })
+        }
       }
       if (current) {
         current.set('filterName', searchId);
       }
       conditionAssign(init);
-      filterCallback(searchId);
     } else if (searchId === null) {
       handleQueryReset();
-    } else {
+    } else if (menuDataSet.length) {
       menuDataSet.locate(0);
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        const conditionList = menuRecord.get('personalFilter') && parseValue(menuRecord.get('personalFilter'));
+        conditionDataSet.loadData(conditionList);
         if (current) {
           current.set('filterName', menuRecord.get('searchId'));
         }
+        const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
+        if (tableStore) {
+          runInAction(() => {
+            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            tableStore.saveCustomized(newCustomized);
+            tableStore.initColumns();
+          })
+        }
       }
       conditionAssign(init);
+    } else if (current) {
+      current.set('filterName', undefined);
     }
   };
 
-  const handleChange = (value?: string) => {
+  const handleChange = (value?: number) => {
     const { current } = queryDataSet;
     if (current) {
       current.reset();
@@ -183,21 +184,22 @@ const QuickFilterMenu = function QuickFilterMenu() {
 
   useEffect(() => {
     if (shouldLocateData) {
-      locateData(searchId, true);
+      locateData(initSearchId, true);
     }
-  }, [shouldLocateData]);
-
+  }, [shouldLocateData, initSearchId]);
 
   /**
    * 渲染下拉选项
    * @param record
    * @param text
    */
-  const optionRenderer = ({ text }) => {
+  const optionRenderer = ({ value, text }) => {
+    const menuRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === value.toString());
+    const icon = menuRecord && menuRecord.get('searchIcon');
     return (
-      <div className={`${prefixCls}-filter-menu-option`}>
+      <div className={`${prefixCls}-combo-filter-menu-option`}>
         <span
-          className={`${prefixCls}-filter-menu-option-content`}
+          className={`${prefixCls}-combo-filter-menu-option-content`}
           onMouseEnter={(e) => {
             const { currentTarget } = e;
             if (isOverflow(currentTarget)) {
@@ -208,7 +210,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
           }}
           onMouseLeave={() => hide()}
         >
-          {text}
+          {filterOptionRenderer(value, text, icon) || text}
         </span>
       </div>
     );
@@ -219,22 +221,21 @@ const QuickFilterMenu = function QuickFilterMenu() {
       <Select
         isFlat
         placeholder={$l('Table', 'fast_filter')}
-        className={`${prefixCls}-filterName-select`}
+        className={`${prefixCls}-combo-filterName-select`}
+        popupCls={`${prefixCls}-combo-filterName-select-content`}
         dataSet={filterMenuDataSet}
         name="filterName"
         dropdownMatchSelectWidth={false}
-        dropdownMenuStyle={{ width: '1.98rem' }}
-        popupCls={`${prefixCls}-filterName-select-content`}
+        dropdownMenuStyle={{ width: '1.72rem' }}
         optionRenderer={optionRenderer}
         onChange={handleChange}
         notFoundContent={$l('Table', 'no_save_filter')}
         clearButton={false}
       />
-      {filerMenuAction}
     </>
   );
 };
 
-QuickFilterMenu.displayName = 'ComboQuickFilterMenu';
+QuickFilterMenu.displayName = 'QuickFilterMenu';
 
 export default observer(QuickFilterMenu);

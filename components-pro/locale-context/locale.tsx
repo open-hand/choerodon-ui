@@ -124,13 +124,13 @@ export interface Locale extends DataSetLocale {
     export_all: string,
     export_selected: string,
     filter_header_title: string,
-    please_enter_search_content: string,
     field_settings: string,
     lock_first_column: string,
-    filter_copy: string,
-    advanced_filter: string,
-    collapse_filter: string,
-    advanced_filter_setting: string,
+    cancel_lock_first_column: string,
+    enter_search_filter: string,
+    clear: string,
+    show: string,
+    hide: string,
   };
   Pagination: {
     page: string;

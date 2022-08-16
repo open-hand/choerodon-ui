@@ -1,11 +1,10 @@
 @import '../../../../components/style/themes/default';
-@import '../../../check-box/style/mixin';
 
 @table-customization-prefix-cls: ~'@{c7n-pro-prefix}-table-combo-customization';
 
 .@{table-customization-prefix-cls} {
   width: 2.4rem;
-  max-height: 4.66rem;
+  //max-height: 4.66rem;
 
   .@{c7n-prefix}-popover-title {
     height: 0.46rem;
@@ -17,9 +16,10 @@
   }
 
   &-panel-content {
-    max-height: 3.72rem;
+    max-height: 3.21rem;
     padding: 0.08rem;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   &-footer {
@@ -57,9 +57,9 @@
         &::before {
           position: absolute;
           top: 0;
-          right: -4%;
+          right: 0;
           bottom: 0;
-          left: -4%;
+          left: 0;
           display: block;
           background-color: @item-hover-bg;
           border-radius: @border-radius-base;
@@ -81,6 +81,10 @@
         line-height: .24rem;
         background: transparent;
         border-radius: .02rem 0 0 .02rem;
+
+        button {
+          border-radius: 0.01rem;
+        }
       }
 
       &-title {
@@ -131,6 +135,14 @@
       &-dragging {
         background-color: @component-background;
         box-shadow: @shadow-4;
+      }
+
+      &-content-hidden {
+        color: fade(@text-color, 45%);
+
+        .@{table-customization-prefix-cls}-tree-treenode-drag-icon {
+          color: fade(@text-color, 45%);
+        }
       }
     }
 

@@ -89,7 +89,7 @@ const TreeNode: FunctionComponent<TreeNodeProps> = function TreeNode(props) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className={`${selfPrefixCls}-content`}>
+        <div className={classNames({ [`${selfPrefixCls}-content`]: true, [`${selfPrefixCls}-content-hidden`]: record.get('hidden') })}>
           {getIcon()}
           <div className={`${selfPrefixCls}-title`}>
             <span className={`${selfPrefixCls}-title-text`}>

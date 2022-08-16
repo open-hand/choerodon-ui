@@ -53,6 +53,7 @@ export const QuickFilterDataSet = ({ queryDataSet, tableFilterAdapter }) => ({
   autoQuery: false,
   autoLocateFirst: false,
   primaryKey: 'searchId',
+  dataToJSON: DataToJSON.all,
   transport: {
     adapter: (config: AxiosRequestConfig, type: string) => getTransportConfig({
       config,
@@ -64,13 +65,8 @@ export const QuickFilterDataSet = ({ queryDataSet, tableFilterAdapter }) => ({
   fields: [
     { name: 'searchName', label: $l('Table', 'filter_name'), type: 'string', maxLength: 20, required: true },
     { name: 'searchId', type: 'string' },
-    { name: 'conditionList', type: 'object' },
-    {
-      // 是否租户默认配置
-      name: 'isTenant',
-      type: 'boolean',
-      falseValue: 0,
-      trueValue: 1,
-    },
+    { name: 'searchIcon', type: 'string' },
+    { name: 'personalFilter', type: 'string' },
+    { name: 'personalColumn', type: 'string' },
   ],
 });

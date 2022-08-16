@@ -20,6 +20,7 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx-react-lite';
 import { action, toJS } from 'mobx';
 
+
 const { comboFilterBar } = Table;
 
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
@@ -74,6 +75,7 @@ class App extends React.Component {
       },
     },
     autoQuery: false,
+    selection: false,
     pageSize: 5,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
@@ -158,7 +160,7 @@ class App extends React.Component {
     ],
     fields: [
       { name: 'userid', type: 'string', label: '编号', required: true },
-      { name: 'name', type: 'string', label: '姓名' },
+      { name: 'name', type: 'string', label: '姓名', required: true },
       { name: 'age', type: 'number', label: '年龄', max: 100, step: 1 },
       { name: 'sex', type: 'string', label: '性别', lookupCode: 'HR.EMPLOYEE_GENDER' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
@@ -177,9 +179,12 @@ class App extends React.Component {
 
   get columns() {
     return [
-        { name: 'name', width: 450, editor: true },
-        { name: 'age', editor: true },
-        { header: '操作' }
+        { name: 'name', width: 150, editor: true, lock: 'left' },
+        { name: 'age', width: 150, editor: true },
+        { name: 'sex', width: 150, editor: true },
+        { name: 'date.startDate', width: 150 },
+        { name: 'sexMultiple', width: 150 },
+        { header: '操作', width: 150 }
     ];
   }
 
@@ -189,60 +194,80 @@ class App extends React.Component {
       ];
   }
 
+  advancedFilter() {
+    return (
+      <Icon type="info" />
+    );
+  }
+
+  handleChangeStatus = () => {
+    if (this.ds.getState('__CONDITIONSTATUS__')) {
+      this.ds.setState('__CONDITIONSTATUS__', 'update');
+    }
+  };
+
   render() {
     return (
-      <Table
-        // buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
-        dataSet={this.ds}
-        queryBar="comboBar"
-        customizable
-        columnDraggable
-        queryBarProps={{
-          title: '测试Title',
-          // rowActions: () => [],
-          // fuzzyQuery: false,
-          // inlineSearch: false,
-          inlineSearchRender: this.searchRender(),
-          // comboFilterBar: {
-          //   tableFilterAdapter: (props) => {
-          //     const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
-          //     console.log('defaultTableFilterAdapter config', config);
-          //     const userId = 1;
-          //     const tenantId = 0;
-          //     switch (type) {
-          //       case 'read':
-          //         return {
-          //           // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
-          //           url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
-          //           method: 'get',
-          //         };
-          //       case 'create':
-          //         return {
-          //           url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-          //           method: 'put',
-          //           data: data[0],
-          //         };
-          //       case 'update':
-          //         return {
-          //           // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-          //           method: 'put',
-          //           data: data[0],
-          //         };
-          //       case 'destroy':
-          //         return {
-          //           // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
-          //           url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
-          //           data: data[0],
-          //           method: 'delete',
-          //         };
-          //     }
-          //   },
-          // }
-        }}
-        border={false}
-        columns={this.columns}
-        queryFieldsLimit={2}
-      />
+      <>
+        <Table
+          buttons={[]}
+          dataSet={this.ds}
+          queryBar="comboBar"
+          customizable
+          columnDraggable
+          queryBarProps={{
+            // title: '测试Title',
+            // rowActions: () => [],
+            // fuzzyQuery: false,
+            // inlineSearch: true,
+            // simpleMode: true,
+            // singleLineMode: false,
+            // inlineSearchRender: this.searchRender(),
+            // advancedFilter: '323',
+            // filerMenuAction: '789',
+            comboFilterBar: {
+              searchId: '23',
+              // filterSave: false,
+              tableFilterAdapter: (props) => {
+                const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+                console.log('defaultTableFilterAdapter config', config);
+                const userId = 1;
+                const tenantId = 0;
+                switch (type) {
+                  case 'read':
+                    return {
+                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+                      url: 'https://www.fastmock.site/mock/0936acaa98f364b842d4997788e3f00e/mock/mock/filterlist',
+                      method: 'get',
+                    };
+                  case 'create':
+                    return {
+                      url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'update':
+                    return {
+                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'destroy':
+                    return {
+                      // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
+                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                      data: data[0],
+                      method: 'delete',
+                    };
+                }
+              },
+            }
+          }}
+          border={false}
+          columns={this.columns}
+          queryFieldsLimit={0}
+        />
+      </>
     );
   }
 }

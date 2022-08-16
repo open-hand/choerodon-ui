@@ -1,28 +1,31 @@
 import { Context, createContext, ReactNode } from 'react';
-import { ComboFilterBarConfig } from '../../Table';
+import { DynamicFilterBarConfig } from '../../Table';
 import DataSet from '../../../data-set';
 import { RecordStatus } from '../../../data-set/enum';
 import { Fields } from '../../../data-set/Field';
+import TableStore from '../../TableStore';
 
 export interface QuickFilterProps {
   prefixCls?: string;
   searchCode?: string;
-  comboFilterBar?: ComboFilterBarConfig;
+  dynamicFilterBar?: DynamicFilterBarConfig;
   dataSet: DataSet;
   queryDataSet: DataSet;
   tempQueryFields?: Fields;
   onChange?: (code: string) => void;
-  initConditionFields?: Function;
   conditionStatus?: RecordStatus;
   onStatusChange?: (status: RecordStatus, data?: object) => void;
   autoQuery?: boolean;
   selectFields?: string[];
   onOriginalChange?: (fieldName?: string | string[]) => void;
-  searchId?: string;
+  initSearchId?: number | null,
+  setSearchId?: (searchId: string | number) => void;
   filterCallback?: (searchId: string) => void;
-  filterSaveCallback?: (any) => void;
-  filerMenuAction?: ReactNode,
-  customizedColumns?: string | undefined,
+  filterSave?: boolean;
+  filterSaveCallback?: (object) => void;
+  filterOptionRenderer?: (searchId, searchIcon, text) => ReactNode;
+  onReset?: () => void;
+  tableStore?: TableStore;
 }
 
 export interface QuickFilterContextValue extends QuickFilterProps {

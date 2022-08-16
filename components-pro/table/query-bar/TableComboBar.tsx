@@ -1,10 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  ReactElement,
-  ReactNode,
-  MouseEventHandler,
-} from 'react';
+import React, {cloneElement, Component, MouseEventHandler, ReactElement, ReactNode} from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import uniq from 'lodash/uniq';
@@ -19,6 +13,8 @@ import isArray from 'lodash/isArray';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import difference from 'lodash/difference';
+import pullAllWith from 'lodash/pullAllWith';
+import classNames from 'classnames';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import Icon from 'choerodon-ui/lib/icon';
@@ -32,19 +28,22 @@ import Dropdown from '../../dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
 import { ValueChangeAction } from '../../text-field/enum';
+import Tooltip from '../../tooltip';
 import { ElementProps } from '../../core/ViewComponent';
 import { ButtonProps } from '../../button/Button';
+import { ButtonColor } from '../../button/enum';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { ComboFilterBarConfig } from '../Table';
-import FieldList from './FieldList';
+import {ComboFilterBarConfig, TableCustomized} from '../Table';
+import ComboFieldList from './ComboFieldList';
 import TableButtons from './TableButtons';
 import QuickFilterMenu from './combo-quick-filter/QuickFilterMenu';
 import QuickFilterButton from './combo-quick-filter/QuickFilterButton';
 import QuickFilterMenuContext from './combo-quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './combo-quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
+import { hide } from '../../tooltip/singleton';
 import TableContext, { TableContextValue } from '../TableContext';
 
 /**
@@ -106,9 +105,6 @@ export function omitData(data) {
     'objectVersionNumber',
     '_token',
     'searchId',
-    'searchConditionId',
-    'searchQueryId',
-    'searchOrderId',
   );
 }
 
@@ -151,21 +147,25 @@ export interface TableComboBarProps extends ElementProps {
   queryFields: ReactElement<any>[];
   queryFieldsLimit?: number;
   buttons?: ReactElement<ButtonProps>[];
-  tableActions?: TableAction[];
   summaryBar?: ReactElement<any>;
-  advancedFilter?: ReactNode;
-  filerMenuAction?: ReactNode;
   comboFilterBar?: ComboFilterBarConfig;
-  inlineSearchRender?: ReactNode[];
-  inlineSearch?: boolean;
-  title?: string | ReactNode;
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
+  fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
-  singleMode?: boolean;
+  searchCode?: string;
   autoQuery?: boolean;
+  refreshBtn?: boolean;
+  simpleMode?: boolean;
+  singleLineMode?: boolean;
+  inlineSearchRender?: ReactNode[];
+  inlineSearch?: boolean;
+  tableActions?: TableAction[];
+  title?: string | ReactNode;
+  advancedFilter?: ReactNode;
+  filerMenuAction?: ReactNode;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -188,30 +188,27 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     queryFieldsLimit: 3,
     autoQueryAfterReset: true,
     fuzzyQuery: true,
+    fuzzyQueryOnly: false,
     autoQuery: true,
+    refreshBtn: true,
     buttons: [],
-    singleMode: false,
+    simpleMode: false,
+    singleLineMode: true,
   };
 
   context: TableContextValue;
 
   get prefixCls() {
     const { prefixCls } = this.props;
-    const { tableStore: { getProPrefixCls = getProPrefixClsDefault }} = this.context;
-    // const { getProPrefixCls = getProPrefixClsDefault } = this.context;
+    const { tableStore: { getProPrefixCls = getProPrefixClsDefault } } = this.context;
     return getProPrefixCls('table', prefixCls);
   }
 
   get queryFields(): React.ReactElement<any>[] {
-    const { queryFields, queryDataSet, dataSet } = this.props;
-    const menuDataSet = dataSet.getState(MENUDATASET);
-    const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
+    const { queryFields } = this.props;
     return queryFields.filter(component => {
       if (component.props.hidden) {
         return !component.props.hidden;
-      }
-      if (isTenant && queryDataSet && queryDataSet.getField(component.props.name)) {
-        return queryDataSet.getField(component.props.name)!.get('fieldVisible') !== 0;
       }
       return !component.props.hidden;
     });
@@ -224,7 +221,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    */
   @observable fieldSelectHidden: boolean;
 
-
   /**
    * 搜索值
    */
@@ -232,11 +228,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   @observable shouldLocateData: boolean;
 
-  @observable showExpandIcon: boolean;
-
   refDropdown: HTMLDivElement | null = null;
-
-  refSingleWrapper: HTMLDivElement | null = null;
 
   refEditors: Map<string, any> = new Map();
 
@@ -246,6 +238,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   tempFields: Fields;
 
+  isTooltipShown?: boolean;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -254,17 +248,10 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   }
 
   componentDidMount(): void {
-    const {singleMode, queryDataSet, dataSet } = this.props;
-    if (!singleMode) {
+    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
+    if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
       document.addEventListener('click', this.handleClickOut);
-      if (this.isSingleLineOpt() && this.refSingleWrapper) {
-        const { height } = this.refSingleWrapper.getBoundingClientRect();
-        const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
-        runInAction(() => {
-          this.showExpandIcon = height > (childHeight + 18);
-        });
-      }
       if (!dataSet.props.autoQuery) {
         this.handleDataSetQuery({ dataSet });
       }
@@ -276,31 +263,28 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
 
   componentWillUnmount(): void {
-    const { singleMode } = this.props;
-    if (!singleMode) {
+    const { fuzzyQueryOnly } = this.props;
+    if (!fuzzyQueryOnly) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
+    }
+    if (this.isTooltipShown) {
+      hide();
+      delete this.isTooltipShown;
     }
   }
 
   componentWillReceiveProps(nextProps: Readonly<TableComboBarProps>): void {
-    const { dataSet, singleMode, queryDataSet } = nextProps;
+    const { dataSet, fuzzyQueryOnly, queryDataSet } = nextProps;
     // eslint-disable-next-line react/destructuring-assignment
-    if (dataSet !== this.props.dataSet || singleMode !== this.props.singleMode) {
+    if (dataSet !== this.props.dataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
       runInAction(() => {
         this.fieldSelectHidden = true;
       });
-      if (!singleMode) {
+      if (!fuzzyQueryOnly) {
         // 移除原有实例监听
         this.processDataSetListener(false);
         this.processDataSetListener(true, nextProps);
-        if (this.isSingleLineOpt() && this.refSingleWrapper) {
-          const { height } = this.refSingleWrapper.getBoundingClientRect();
-          const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
-          runInAction(() => {
-            this.showExpandIcon = height > (childHeight + 18);
-          });
-        }
       }
       if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
         this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
@@ -329,20 +313,17 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   @autobind
   async handleDataSetQuery({ dataSet }) {
-    const { singleMode } = this.props;
-    if (!dataSet.getState(MENURESULT) && this.tableFilterAdapter && !singleMode) {
+    const { initSearchId } = this;
+    if (!dataSet.getState(MENURESULT) && this.tableFilterAdapter) {
       await this.initMenuDataSet();
       const res = dataSet.getState(MENURESULT);
-      if (res && res.length && res.filter(menu => menu.defaultFlag).length) {
-        const defaultMenus = res.filter(menu => menu.defaultFlag);
-        const { conditionList } = defaultMenus.length > 1 ? defaultMenus.find(menu => menu.isTenant !== 1) : defaultMenus[0];
+      if (res && res.length) {
+        const { conditionList } = initSearchId ? res.find(menu => menu.searchId === initSearchId) : res[0];
         const initQueryData = {};
         if (conditionList && conditionList.length) {
           map(conditionList, condition => {
-            if (condition.comparator === 'EQUAL') {
-              const { fieldName, value } = condition;
-              initQueryData[fieldName] = parseValue(value);
-            }
+            const { fieldName, value } = condition;
+            initQueryData[fieldName] = parseValue(value);
           });
           const { queryDataSet } = this.props;
           if (queryDataSet && queryDataSet.current && dataSet.props.autoQuery) {
@@ -372,11 +353,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
           }
         });
       });
-      const { refSingleWrapper } = this;
-      if (refSingleWrapper) {
-        refSingleWrapper.style.height = '';
-        refSingleWrapper.style.overflow = '';
-      }
     }
   }
 
@@ -406,7 +382,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  handleDataSetUpdate({ record }) {
+  async handleDataSetUpdate({ record, name, oldValue }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
@@ -414,8 +390,12 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     }
     this.setConditionStatus(status);
     if (autoQuery) {
-      dataSet.query();
-      onQuery();
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
+        dataSet.query();
+        onQuery();
+      } else {
+        record.init(name, oldValue);
+      }
     }
   }
 
@@ -453,7 +433,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       }
       if (isSelect(data) && !(dataSet.getState(SELECTFIELDS) || []).includes(name)) {
         const field = dataSet.getField(name);
-        if (!field || !field.get('bind', record) || field.get('usedFlag')) {
+        if (!field || !field.get('bind', record)) {
           this.originalConditionFields.push(name);
           this.handleSelect(name, record);
         }
@@ -467,7 +447,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   @autobind
   async initMenuDataSet(): Promise<boolean> {
     const { queryDataSet, dataSet } = this.props;
-    const { tableStore: { getConfig }} = this.context;
+    const { initSearchId } = this;
+    const { tableStore, tableStore: { getConfig } } = this.context;
     if (this.tableFilterAdapter) {
       const menuDataSet = new DataSet(QuickFilterDataSet({
         queryDataSet,
@@ -476,6 +457,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
       const optionDataSet = new DataSet({
         selection: DataSetSelection.single,
+        paging: false,
         fields: [
           {
             name: 'title',
@@ -503,20 +485,34 @@ export default class TableComboBar extends Component<TableComboBarProps> {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
       }
       // 初始化状态
-      dataSet.setState(MENUDATASET, menuDataSet);
       dataSet.setState(CONDITIONDATASET, conditionDataSet);
       dataSet.setState(OPTIONDATASET, optionDataSet);
       dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
       dataSet.setState(CONDITIONSTATUS, status);
       dataSet.setState(SEARCHTEXT, '');
       const result = await menuDataSet.query();
-      dataSet.setState(MENURESULT, result);
       if (optionDataSet) {
         optionDataSet.loadData(result);
       }
+      if (initSearchId) {
+        menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === initSearchId.toString()));
+      } else {
+        menuDataSet.locate(0)
+      }
+      dataSet.setState(MENURESULT, result);
+      dataSet.setState(MENUDATASET, menuDataSet);
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        const conditionList = menuRecord.get('personalFilter') && parseValue(menuRecord.get('personalFilter'));
+        conditionDataSet.loadData(conditionList);
+        const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
+        if (tableStore) {
+          runInAction(() => {
+            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            tableStore.saveCustomized(newCustomized);
+            tableStore.initColumns();
+          })
+        }
       }
       if (result && result.length) {
         runInAction(() => {
@@ -545,7 +541,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     const tableButtons = buttons.length ? (
       <TableButtons key="toolbar" prefixCls={`${prefixCls}-combo-filter`} buttons={buttons} />
     ) : null;
-    const menu = tableActions.length > 0 ? (
+    const actions = tableActions.length ? (
       <Menu className={`${prefixCls}-combo-filter-action-menu`}>
         {tableActions.map(({ name, onClick, disabled, style, children, element }) => {
           if (children && Array.isArray(children)) {
@@ -570,23 +566,26 @@ export default class TableComboBar extends Component<TableComboBarProps> {
         })}
       </Menu>
     ) : null;
-    const tableAction = menu && (
+
+    const suffixesDom = actions && (
       <div key="action_menu" className={`${prefixCls}-combo-filter-action`}>
-        <Dropdown overlay={menu} trigger={[Action.click]}>
-          <Button className={`${prefixCls}-combo-filter-action-button`} icon='more_horiz' />
+        <Dropdown overlay={actions} trigger={[Action.click]}>
+          <Button className={`${prefixCls}-combo-filter-action-button`} icon='more_horiz' color={ButtonColor.secondary} />
         </Dropdown>
       </div>
     );
-
-    return tableButtons || tableAction ? [tableButtons, tableAction] : null;
+    return [
+      tableButtons,
+      suffixesDom,
+    ];
   }
 
   getPrefix(): ReactNode {
-    const { title } = this.props;
+    const { title, singleLineMode } = this.props;
     const { prefixCls } = this;
-    if (title) {
+    if (title && !singleLineMode) {
       return (
-        <div className={`${prefixCls}-combo-filter-bar-title`}>
+        <div className={`${prefixCls}-combo-filter-title`}>
           {title}
         </div>
       );
@@ -594,14 +593,20 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     return null;
   }
 
+
   /**
    * 注入 refEditors
    * @param element
    * @param name
    */
-  createFields(element, name): ReactElement {
+  createFields(element, name, field): ReactElement {
     const props: any = {
       ref: (node) => this.refEditors.set(name, node),
+      placeholder: field.get('label'),
+      maxTagCount: 2,
+      border: true,
+      clearButton: true,
+      isFlat: true,
     };
     return cloneElement(element, props);
   }
@@ -619,7 +624,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     return comboFilterBar && comboFilterBar.tableFilterAdapter;
   }
 
-  get searchId(): string | undefined {
+  get initSearchId(): number | null | undefined {
     const { comboFilterBar } = this.props;
     return comboFilterBar && comboFilterBar.searchId;
   }
@@ -629,17 +634,67 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     return comboFilterBar && comboFilterBar.filterCallback;
   }
 
+  get filterSave(): boolean | undefined {
+    const { comboFilterBar } = this.props;
+    return comboFilterBar && comboFilterBar.filterSave;
+  }
+
   get filterSaveCallback(): ((any) => void) | undefined {
     const { comboFilterBar } = this.props;
     return comboFilterBar && comboFilterBar.filterSaveCallback;
   }
 
-  /**
-   * 是否单行操作
-   */
-  isSingleLineOpt(): boolean {
-    const { fuzzyQuery } = this.props;
-    return !(fuzzyQuery || this.tableFilterAdapter);
+  get filterOptionRenderer(): ((searchId, searchIcon, text) => React.ReactNode) | undefined {
+    const { comboFilterBar } = this.props;
+    return comboFilterBar && comboFilterBar.filterOptionRenderer;
+  }
+
+  dynamicLimit(): number {
+    const { queryFieldsLimit = 3, dataSet } = this.props;
+    const conditionList = dataSet.getState(CONDITIONDATASET);
+    if (conditionList) {
+      return conditionList.length;
+    }
+    return queryFieldsLimit;
+  }
+
+  updateQueryFields(): React.ReactElement<any>[] {
+    const { dataSet } = this.props;
+    const conditionList = dataSet.getState(CONDITIONDATASET);
+    if (conditionList) {
+      const result: ReactElement<any>[] = [];
+      const conditionData = conditionList.toData();
+      const fields = this.queryFields;
+      map(conditionData, data => {
+        const name = data.fieldName;
+        const findField = fields.find(component => component.props.name === name);
+        if (findField) {
+          result.push(findField);
+          pullAllWith(fields, [findField], isEqual);
+        }
+      });
+      return result.concat(fields);
+    }
+    return this.queryFields;
+  }
+
+  updateOriginOrderQueryFields(): Field[] {
+    const { dataSet } = this.props;
+    const conditionList = dataSet.getState(CONDITIONDATASET);
+    const result: Field[] = [];
+    const cloneFields = this.originOrderQueryFields;
+    if (conditionList) {
+      const conditionData = conditionList.toData();
+      map(conditionData, data => {
+        const name = data.fieldName;
+        const findField = cloneFields.find(field => field.name === name);
+        if (findField) {
+          result.push(findField);
+          pullAllWith(cloneFields, [findField], isEqual);
+        }
+      });
+    }
+    return result.concat(cloneFields);
   }
 
   /**
@@ -685,16 +740,17 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   renderRefreshBtn(): ReactNode {
     const { prefixCls, props: { dataSet } } = this;
     return (
-      <div className={`${prefixCls}-filter-query-buttons`}>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            dataSet.query();
-          }}
-        >
-          {$l('Table', 'query_button')}
-        </Button>
-      </div>
+      <span
+        className={`${prefixCls}-filter-menu-query`}
+        onClick={async (e) => {
+          e.stopPropagation();
+          if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
+        }}
+      >
+        <Tooltip title={$l('Table', 'refresh')}>
+          <Icon type="refresh" />
+        </Tooltip>
+      </span>
     );
   }
 
@@ -703,12 +759,12 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    */
   getFuzzyQuery(): ReactNode {
     const { dataSet, comboFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
-    const { tableStore: { getConfig }} = this.context;
+    const { tableStore: { getConfig } } = this.context;
     const { prefixCls } = this;
     const searchText = comboFilterBar && comboFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
-    const placeholder = fuzzyQueryPlaceholder || $l('Table', 'please_enter_search_content');
+    const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_filter');
     if (!fuzzyQuery) return null;
-    return (<div className={`${prefixCls}-filter-search`}>
+    return (<div className={`${prefixCls}-combo-filter-search`}>
       <TextField
         style={{ width: 182 }}
         clearButton
@@ -740,7 +796,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     const { queryDataSet, dataSet, autoQueryAfterReset, onReset = noop } = this.props;
     const { prefixCls } = this;
     return (
-      <div className={`${prefixCls}-filter-reset-buttons`}>
+      <div className={`${prefixCls}-filter-buttons`}>
         {
           dataSet.getState(CONDITIONSTATUS) === RecordStatus.update && (
             <Button
@@ -761,6 +817,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
                   this.handleQuery();
                 }
               }}
+              color={ButtonColor.secondary}
             >
               {$l('Table', 'reset_button')}
             </Button>
@@ -772,14 +829,14 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   /**
    * 筛选头
-   * quickFilterMenu
+   * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { queryFields, queryDataSet, dataSet, autoQuery, singleMode, filerMenuAction, title } = this.props;
-    const { prefixCls, context: { tableStore: { customized }} } = this;
+    const { queryFields, queryDataSet, dataSet, autoQuery, filerMenuAction, onReset = noop, singleLineMode } = this.props;
+    const { tableStore } = this.context;
+    const { prefixCls, initSearchId } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
-
     if (queryDataSet && queryFields.length) {
       const quickFilterMenu = this.tableFilterAdapter ? (
         <QuickFilterMenuContext.Provider
@@ -799,41 +856,55 @@ export default class TableComboBar extends Component<TableComboBarProps> {
             conditionDataSet: dataSet.getState(CONDITIONDATASET),
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
-            initConditionFields: this.initConditionFields,
-            searchId: this.searchId,
+            initSearchId,
             filterCallback: this.filterCallback,
+            filterSave: this.filterSave,
             filterSaveCallback: this.filterSaveCallback,
-            filerMenuAction,
-            customizedColumns: JSON.stringify(customized),
+            filterOptionRenderer: this.filterOptionRenderer,
+            onReset,
+            tableStore,
           }}
         >
           <QuickFilterMenu />
         </QuickFilterMenuContext.Provider>
       ) : null;
 
-      return (prefix || quickFilterMenu || suffix) && !singleMode ? (
-        <div className={`${prefixCls}-filter-menu`}>
-          {prefix}
-          {quickFilterMenu && (
-            <>
-              {title && (<span className={`${prefixCls}-combo-filter-menu-divide`}>/</span>)}
+      return singleLineMode ? (
+        <>
+          {(quickFilterMenu || filerMenuAction) && (
+            <div className={`${prefixCls}-combo-filter-menu`}>
               {quickFilterMenu}
-            </>
+              {filerMenuAction && (
+                <div className={`${prefixCls}-combo-filter-menu-action`}>
+                  {filerMenuAction}
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className={`${prefixCls}-combo-filter-menu`}>
+          {prefix}
+          {prefix && quickFilterMenu && (
+            <span className={`${prefixCls}-combo-filter-title-divide`}>/</span>
+          )}
+          {quickFilterMenu}
+          {filerMenuAction && (
+            <div className={`${prefixCls}-combo-filter-menu-action`}>
+              {filerMenuAction}
+            </div>
           )}
           {suffix}
         </div>
-      ) : null;
+      );
     }
   }
 
-  /**
-   * 筛选按钮
-   * quickFilterButtons
-   */
   getFilterButton(): ReactNode {
-    const { queryFields, queryDataSet, dataSet, autoQuery, filerMenuAction } = this.props;
-    const { prefixCls, context: { tableStore: { customized }} } = this;
-
+    const { queryFields, queryDataSet, dataSet, autoQuery, onReset = noop, singleLineMode } = this.props;
+    const { tableStore } = this.context;
+    const { prefixCls, initSearchId } = this;
+    const suffix = this.renderSuffix();
     if (queryDataSet && queryFields.length) {
       const quickFilterButton = this.tableFilterAdapter ? (
         <QuickFilterMenuContext.Provider
@@ -853,21 +924,31 @@ export default class TableComboBar extends Component<TableComboBarProps> {
             conditionDataSet: dataSet.getState(CONDITIONDATASET),
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
-            initConditionFields: this.initConditionFields,
-            searchId: this.searchId,
+            initSearchId,
             filterCallback: this.filterCallback,
+            filterSave: this.filterSave,
             filterSaveCallback: this.filterSaveCallback,
-            filerMenuAction,
-            customizedColumns: JSON.stringify(customized),
+            filterOptionRenderer: this.filterOptionRenderer,
+            onReset,
+            tableStore,
           }}
         >
           <QuickFilterButton />
         </QuickFilterMenuContext.Provider>
       ) : null;
+      const resetButton = this.tableFilterAdapter ? null : this.getResetButton();
 
-      return (
-        <div className={`${prefixCls}-combo-filter-buttons`}>
+      return singleLineMode ? (
+        <div className={`${prefixCls}-combo-filter-menu-button`}>
           {quickFilterButton}
+          {resetButton}
+          {dataSet.getState(CONDITIONSTATUS) === RecordStatus.update && suffix && (quickFilterButton || resetButton) && (<span className={`${prefixCls}-combo-filter-menu-button-singleLine-divide`} />)}
+          {suffix}
+        </div>
+      ) : (
+        <div className={`${prefixCls}-combo-filter-menu-button`}>
+          {quickFilterButton}
+          {resetButton}
         </div>
       );
     }
@@ -901,47 +982,65 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     return result;
   }
 
+
   /**
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
-    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, advancedFilter, singleMode } = this.props;
+    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly, simpleMode, advancedFilter, singleLineMode } = this.props;
     let fieldsLimit = queryFieldsLimit;
-    if (singleMode) {
+    if (simpleMode) {
       fieldsLimit = this.originOrderQueryFields.length;
     }
-    const fuzzyQuery = this.getFuzzyQuery();
-
+    if (this.tableFilterAdapter && !simpleMode) {
+      fieldsLimit = this.dynamicLimit();
+    }
+    const updateQueryFields = this.updateQueryFields();
+    const updateOriginOrderQueryFields = this.updateOriginOrderQueryFields();
     const { prefixCls } = this;
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
-
-    if (queryDataSet && queryFields.length) {
-      const singleLineModeAction = !singleMode && !this.tableFilterAdapter &&
-        <div className={`${prefixCls}-combo-filter-bar-single-action`}>
-          {this.getResetButton()}
-          {this.renderRefreshBtn()}
-        </div>;
-
-      const filterMenu = this.getFilterMenu();
-
+    const fuzzyQuery = this.getFuzzyQuery();
+    if (fuzzyQueryOnly) {
       return (
         <div key="query_bar" className={`${prefixCls}-combo-filter-bar`}>
-          {filterMenu && (
+          {this.getFilterMenu()}
+        </div>
+      );
+    }
+    if (queryDataSet && queryFields.length) {
+      const showAdvancedFilter = advancedFilter && !simpleMode && (
+        <>
+          <span className={`${prefixCls}-combo-filter-advanced-divide`} />
+          {advancedFilter}
+        </>
+      );
+      return (
+        <div key="query_bar" className={`${prefixCls}-combo-filter-bar`}>
+          {this.getFilterMenu() && !singleLineMode && (
             <>
-              {filterMenu}
-              <div className={`${prefixCls}-combo-menu-divide`} />
+              {this.getFilterMenu()}
+              <div className={`${prefixCls}-combo-filter-menu-divide`} />
             </>
           )}
-          <div className={`${prefixCls}-combo-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
+          <div className={`${prefixCls}-combo-filter-single-wrapper`}>
+            {this.getFilterMenu() && singleLineMode && (
+              <>
+                {this.getFilterMenu()}
+              </>
+            )}
             {fuzzyQuery}
-            <div className={`${prefixCls}-filter-wrapper`}>
-              {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden } = element.props;
+            <div className={`${prefixCls}-combo-filter-wrapper`}>
+              {updateQueryFields.slice(0, fieldsLimit).map(element => {
+                const { name, hidden, disabled } = element.props;
                 if (hidden) return null;
-                const itemClassName = `${prefixCls}-filter-item`;
+                const queryField = queryDataSet.getField(name);
+                const itemContentClassName = classNames(`${prefixCls}-combo-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 return (
                   <div
-                    className={`${prefixCls}-filter-content`}
+                    className={itemContentClassName}
                     key={name}
                     onClick={() => {
                       const editor = this.refEditors.get(name);
@@ -950,17 +1049,24 @@ export default class TableComboBar extends Component<TableComboBarProps> {
                       }
                     }}
                   >
-                    <span className={itemClassName}>{this.createFields(element, name)}</span>
+                    <span className={`${prefixCls}-combo-filter-item`}>
+                      {this.createFields(element, name, queryField)}
+                    </span>
                   </div>
                 );
               })}
-              {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden } = element.props;
+              {updateQueryFields.slice(fieldsLimit).map(element => {
+                const { name, hidden, disabled } = element.props;
                 if (hidden) return null;
+                const queryField = queryDataSet.getField(name);
+                const itemContentClassName = classNames(`${prefixCls}-combo-filter-content`,
+                  {
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                  });
                 if (selectFields.includes(name)) {
                   return (
                     <div
-                      className={`${prefixCls}-filter-content`}
+                      className={itemContentClassName}
                       key={name}
                       onClick={() => {
                         const editor = this.refEditors.get(name);
@@ -971,20 +1077,20 @@ export default class TableComboBar extends Component<TableComboBarProps> {
                     >
                       <Icon
                         type="cancel"
-                        className={`${prefixCls}-filter-item-close`}
+                        className={`${prefixCls}-combo-filter-item-close`}
                         onClick={() => {
                           this.handleUnSelect([name]);
                         }}
                       />
-                      <span className={`${prefixCls}-filter-item`}>
-                        {this.createFields(element, name)}
+                      <span className={`${prefixCls}-combo-filter-item`}>
+                        {this.createFields(element, name, queryField)}
                       </span>
                     </div>
                   );
                 }
                 return null;
               })}
-              {(fieldsLimit < this.queryFields.length) && !singleMode && (<div className={`${prefixCls}-filter-add-fields`}>
+              {(fieldsLimit < updateQueryFields.length) && (<div className={`${prefixCls}-combo-filter-item`}>
                 <Dropdown
                   visible={!this.fieldSelectHidden}
                   overlay={(
@@ -995,23 +1101,24 @@ export default class TableComboBar extends Component<TableComboBarProps> {
                         e.stopPropagation();
                       }}
                     >
-                      <FieldList
+                      <ComboFieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: this.originOrderQueryFields.slice(fieldsLimit),
+                          fields: updateOriginOrderQueryFields.slice(fieldsLimit),
                         }]}
-                        prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
+                        prefixCls={`${prefixCls}-combo-filter-list` || 'c7n-pro-table-combo-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}
                         value={selectFields}
                         onSelect={this.handleSelect}
                         onUnSelect={this.handleUnSelect}
+                        fieldsLimit={fieldsLimit}
                       />
                     </div>
                   )}
                   trigger={[Action.click]}
                 >
                   <span
-                    className={`${prefixCls}-add-fields`}
+                    className={`${prefixCls}-combo-add-fields`}
                     onClick={(e: any) => {
                       e.nativeEvent.stopImmediatePropagation();
                       runInAction(() => {
@@ -1024,27 +1131,29 @@ export default class TableComboBar extends Component<TableComboBarProps> {
                   </span>
                 </Dropdown>
               </div>)}
-              {!singleMode && advancedFilter && (
-                <>
-                  <div className={`${prefixCls}-combo-advanced-filter-divide`} />
-                  {advancedFilter}
-                </>
-              )}
+              {showAdvancedFilter}
             </div>
-            {!singleMode && this.getFilterButton()}
-            {singleLineModeAction}
+            {this.getFilterButton()}
           </div>
         </div>
       );
     }
-    return null;
+    return (
+      <div key="query_bar" className={`${prefixCls}-combo-filter-bar`}>
+        {this.getFilterMenu() && (
+          <>
+            {this.getFilterMenu()}
+          </>
+        )}
+      </div>
+    );
   }
 
   @autobind
-  handleQuery(collapse?: boolean) {
+  async handleQuery(collapse?: boolean) {
     const { dataSet, onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      dataSet.query();
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
     }
     if (!collapse) {
       onQuery();
@@ -1058,7 +1167,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     if (queryBar) {
       return [queryBar, summaryBar];
     }
-    return <TableButtons key="toolbar" prefixCls={`${prefixCls}-dynamic-filter-buttons`} buttons={buttons as ReactElement<ButtonProps>[]}>
+    return <TableButtons key="toolbar" prefixCls={`${prefixCls}-combo-filter-buttons`} buttons={buttons as ReactElement<ButtonProps>[]}>
       {summaryBar}
     </TableButtons>;
   }

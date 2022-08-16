@@ -222,10 +222,12 @@ export interface DynamicFilterBarConfig {
 }
 
 export interface ComboFilterBarConfig {
+  searchId?: number;
   searchText?: string;
-  searchId?: string;
   filterCallback?: (searchId: string) => void;
+  filterSave?: boolean; // 是否出现保存按钮
   filterSaveCallback?: (object) => void;
+  filterOptionRenderer?: (searchId, searchIcon, text) => ReactNode;
   tableFilterAdapter?: TransportProps;
 }
 
