@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { action as mobxAction, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
+import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -118,6 +118,21 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   get help() {
     return this.getDisplayProp('help');
+  }
+
+
+  @computed
+  get showAttachmentHelp() {
+    const defaultShowHelp = this.getContextConfig('showHelp');
+    const { viewMode, showHelp } = this.props;
+    const { formNode } = this.context;
+    if (viewMode === 'popup' && (showHelp || defaultShowHelp) === ShowHelp.label && formNode) {
+      return ShowHelp.none;
+    }
+    if (viewMode === 'popup') {
+      return showHelp || ShowHelp.tooltip;
+    }
+    return ShowHelp.newLine;
   }
 
   get bucketName() {
@@ -972,7 +987,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       <div className={classes.join(' ')}>
         {this.renderDragUploadArea()}
         {this.renderHeader(!isCard && uploadBtn)}
-        {!__inGroup && viewMode !== 'popup' && this.renderHelp(ShowHelp.newLine)}
+        {!__inGroup && viewMode !== 'popup' && this.renderHelp()}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         {!__inGroup && this.renderEmpty()}
         {viewMode !== 'none' && this.renderUploadList(isCard && uploadBtn)}
@@ -985,11 +1000,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     return pictureWidth || (listType === 'picture-card' ? 100 : 48);
   }
 
-  renderHelp(forceHelpMode?: ShowHelp): ReactNode {
-    const { showHelp } = this.props;
-    const { help } = this;
-    if (help === undefined || showHelp === ShowHelp.none) return;
-    switch (forceHelpMode) {
+  renderHelp(): ReactNode {
+    const { help, showAttachmentHelp } = this;
+    if (help === undefined || showAttachmentHelp === ShowHelp.none) return;
+    switch (showAttachmentHelp) {
       case ShowHelp.tooltip:
         return (
           <Tooltip title={help} openClassName={`${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
@@ -1096,7 +1110,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             {readOnly ? this.renderViewButton(label) : this.renderUploadBtn(false, label)}
           </Trigger>
           {this.renderTemplateDownloadButton()}
-          {this.renderHelp(ShowHelp.tooltip)}
+          {this.renderHelp()}
           {this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         </>
       );

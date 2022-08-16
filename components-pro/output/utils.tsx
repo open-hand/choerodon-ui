@@ -5,6 +5,7 @@ import { BooleanValue, FieldType } from '../data-set/enum';
 import Attachment from '../attachment/Attachment';
 import { FuncType } from '../button/enum';
 import { defaultRenderer } from '../field/utils';
+import { ShowHelp } from '../field/enum';
 
 interface SimpleCheckBoxProps {
   checked: boolean;
@@ -43,6 +44,7 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
             viewMode="popup"
             record={record}
             funcType={FuncType.link}
+            showHelp={ShowHelp.none}
           />
         );
       }

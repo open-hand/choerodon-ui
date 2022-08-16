@@ -57,6 +57,7 @@ timeline: true
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
 - 💄 `<pro>Form.ItemGroup`: Optimized the `TS` type declarations for component properties.
+- 💄 `<pro>Attachment`: Optimize component help rendering.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>RichText`: Fix rich text editor validation issues.

@@ -57,6 +57,7 @@ timeline: true
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 💄 `<pro>Form.ItemGroup`: 优化组件属性的 TS 类型声明。
+- 💄 `<pro>Attachment`: 优化组件 help 渲染。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
