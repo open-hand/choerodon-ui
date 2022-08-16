@@ -1,12 +1,4 @@
-import React, {
-  cloneElement,
-  Component,
-  isValidElement,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
-  useState,
-} from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
