@@ -25,6 +25,7 @@ const App = () => {
     listType: 'picture',
     value,
     onChange: setValue,
+    help: '支持文件类型： .deb .txt .pdf image/*',
   };
 
   return (

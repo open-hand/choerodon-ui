@@ -57,8 +57,11 @@ timeline: true
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
 - 💄 `<pro>Form.ItemGroup`: Optimized the `TS` type declarations for component properties.
+- 💄 `<pro>Attachment`: Optimize component help rendering.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
+- 🐞 `<pro>RichText`: Fix rich text editor validation issues.
+- 🐞 `<pro>RichText`: Fixed an issue where line breaks were retained after clearing the rich text editor.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
 - 🐞 `<pro>Validator`: Fixed the issue that the value range check of the date type did not take effect.
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
@@ -78,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix an issue where the splitLine position was incorrect when dragging the table column width.
 - 🐞 `<pro>Table`: Fix the problem of using querydataset to report errors under the use of combined search bar.
 - 🐞 `<pro>Table`: Fix the problem of incorrect query conditions after deleting the field conditions after setting range in filterbar.
+- 🐞 `<pro>Table`: Fix tooltip width calculation error overflow prompt problem.
 - 🐞 `<pro>IconPicker`: Fix an issue where the selected style was overwritten by the hover style.
 - 🐞 `Badge`: Fix a processing status point style issue.
 - 🐞 `Upload`: Fix an issue with margin-top collapse style in picture-card mode.

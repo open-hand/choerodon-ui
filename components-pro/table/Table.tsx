@@ -1392,6 +1392,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'onBodyExpanded',
       'selectionBoxRenderer',
       'boxSizing',
+      'fullColumnWidth',
     ]);
   }
 

@@ -30,7 +30,7 @@ const App = () => {
 
   const ds = React.useMemo(() => new DataSet({
     data: [{ attachment: '88888888-fa37-4e92-be9d-5cf726fb1472' }],
-    fields: [{ name: 'attachment', type: 'attachment', label: <span>管理附件</span>, max: 9, required: true }],
+    fields: [{ help: '1支持文件类型： .deb .txt .pdf image/*', name: 'attachment', type: 'attachment', label: <span>管理附件</span>, max: 9, required: true }],
   }), []);
 
   return (

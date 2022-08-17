@@ -1,5 +1,4 @@
 import React, { CSSProperties, FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
-import isString from 'lodash/isString';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
@@ -48,7 +47,7 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(
       rowSpan={rowSpan}
       style={style}
     >
-      <label title={isString(children) && ![LabelTooltip.always, LabelTooltip.overflow].includes(tooltip!) ? children : undefined}>
+      <label>
         <span
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}

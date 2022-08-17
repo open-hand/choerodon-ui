@@ -57,8 +57,11 @@ timeline: true
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 💄 `<pro>Form.ItemGroup`: 优化组件属性的 TS 类型声明。
+- 💄 `<pro>Attachment`: 优化组件 help 渲染。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
+- 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
+- 🐞 `<pro>RichText`: 修复富文本编辑器清除还保留换行符的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
 - 🐞 `<pro>Validator`: 修复日期类型的值范围校验未生效的问题。
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
@@ -78,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复自定义函数编辑器组件 editor 无法定位的问题。
 - 🐞 `<pro>Table`: 修复在使用组合搜索条下使用 queryDataSet 报错的问题。
 - 🐞 `<pro>Table`: 修复 filterbar 的字段设置 range 后删除该字段条件后查询条件不正确的问题。
+- 🐞 `<pro>Table`: 修复 tooltip 宽度计算错误溢出提示的问题。
 - 🐞 `<pro>IconPicker`: 修复选中样式被 hover 样式覆盖的问题。
 - 🐞 `Badge`: 修复 processing 状态点样式问题。
 - 🐞 `Upload`: 修复 picture-card 模式下的 margin-top 塌陷样式问题。
