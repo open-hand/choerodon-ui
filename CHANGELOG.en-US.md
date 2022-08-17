@@ -25,7 +25,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `dateMode` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
-- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
+- 🌟 `Upload`: Added `beforeUploadFiles` property.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
