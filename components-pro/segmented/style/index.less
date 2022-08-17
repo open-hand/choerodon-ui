@@ -84,8 +84,18 @@
       margin-left: 0;
     }
 
+    .@{pro-radio-prefix-cls}:focus + .@{pro-radio-prefix-cls}-inner {
+      box-shadow: none;
+    }
+
+    .@{pro-radio-prefix-cls}:hover:not(:checked) + .@{pro-radio-prefix-cls}-inner {
+      border-color: @segmented-interval-border-color;
+      border-radius: 0;
+    }
+
     .@{pro-radio-prefix-cls}-inner {
       border: none;
+      border-radius: 0;
       box-shadow: none;
     }
 
