@@ -26,6 +26,8 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
+- 💄 `Trigger`: Optimize auto-alignment when content size changes.
+- 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
@@ -96,9 +98,12 @@ timeline: true
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 - 🐞 `<pro>Table`: Fix browser zoom issue.
 - 🐞 `<pro>Table`: Fix infinite loop in tree mode.
+- 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
+- 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
+- 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
