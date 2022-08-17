@@ -1,5 +1,5 @@
 import { _isComputingDerivation, action, computed, get, IMapEntry, isArrayLike, observable, ObservableMap, runInAction, set, toJS } from 'mobx';
-import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axiosStatic, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from 'axios';
 import omit from 'lodash/omit';
 import flatMap from 'lodash/flatMap';
 import isNumber from 'lodash/isNumber';
@@ -3136,7 +3136,7 @@ Then the query method will be auto invoke.`,
           if (queryEventResult) {
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
-            return this.axios(fixAxiosConfig(newConfig)).then(action((result: AxiosResponse<any>) => {
+            return this.axios(fixAxiosConfig(newConfig)).then(action((result) => {
               this.performance.timing.fetchEnd = Date.now();
               if (page >= 0) {
                 this.currentPage = page;
