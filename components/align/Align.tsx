@@ -162,6 +162,9 @@ export default class Align extends Component<AlignProps, any> {
         const element: HTMLElement | null = getElement(target) as HTMLElement | null;
         const point = getPoint(target);
         if (element) {
+          if (!element.offsetParent) {
+            return;
+          }
           result = alignElement(source, element, align);
         } else if (point) {
           result = alignPoint(source, point, align);

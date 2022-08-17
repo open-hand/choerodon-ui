@@ -10,7 +10,6 @@ import ViewComponent, { ViewComponentProps } from 'choerodon-ui/pro/lib/core/Vie
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { findFocusableElements } from 'choerodon-ui/pro/lib/_util/focusable';
 import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
-import ReactResizeObserver from '../_util/resizeObserver';
 import Align from '../align';
 import { getProPrefixCls } from '../configure/utils';
 import Animate from '../animate';
@@ -121,9 +120,14 @@ export default class Popup extends ViewComponent<PopupProps> {
     const className = this.getMergedClassNames(this.currentAlignClassName ||
       getClassNameFromAlign(align));
     return (
-      <ReactResizeObserver onResize={this.handlePopupResize}>
-        <PopupInner {...omit(this.getMergedProps(), ['ref', 'className'])} className={className} innerRef={innerRef}>{children}</PopupInner>
-      </ReactResizeObserver>
+      <PopupInner
+        {...omit(this.getMergedProps(), ['ref', 'className'])}
+        className={className}
+        innerRef={innerRef}
+        onResize={this.handlePopupResize}
+      >
+        {children}
+      </PopupInner>
     );
   }
 
