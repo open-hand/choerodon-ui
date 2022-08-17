@@ -39,7 +39,6 @@ timeline: true
 - 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
-- 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `<pro>Table`: 优化动态筛选条 help 渲染。
 - 💄 `<pro>Table`: 优化校验定位后单元格 tooltip 自动弹出。
 - 💄 `<pro>Table`: 优化 combobar 模式下，行内搜索出现 help、sort 图标的问题。
