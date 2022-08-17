@@ -42,7 +42,6 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix number field cannot convert boolean values to 1 and 0.
 - 🐞 `<pro>DataSet`: Fix the wrong count value obtained by query method in asynchronous count mode.
 - 🐞 `<pro>DataSet`: Fixed cached created data cannot be deleted.
-- 🐞 `<pro>DataSet`: Fix async count may trigger query multiple times.
 - 🐞 `<pro>ColorPicker`: Fixed the problem that opacity not being able to enter '.', and fix the prefix border style when default color is light.
 - 🐞 `<pro>DatePicker`: Fix the issue that when there is a min value in `range` and `editorInPopup` modes, an error may be reported after entering the value.
 - 🐞 `<pro>DatePicker`: Fix `defaultTime` value error when it exceeds `min` and `max`.

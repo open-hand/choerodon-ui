@@ -3144,7 +3144,7 @@ Then the query method will be auto invoke.`,
               }
               const { countKey } = this;
               const needCount: boolean = ObjectChainValue.get(result, countKey) === 'Y';
-              if (needCount && !this.counting) {
+              if (needCount) {
                 this.counting = this.count(page, params)
                   .then(action((countResult: object) => {
                     const { totalKey } = this;

@@ -42,7 +42,6 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>DataSet`: 修复异步计数模式下 query 方法获得的计数值有误。
 - 🐞 `<pro>DataSet`: 修复缓存的新增数据无法删除。
-- 🐞 `<pro>DataSet`: 修复异步计数可能会多次触发查询的问题。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
 - 🐞 `<pro>DatePicker`: 修复 defaultTime 超出 min 和 max 时值错误的问题。
