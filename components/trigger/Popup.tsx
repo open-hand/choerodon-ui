@@ -10,6 +10,7 @@ import ViewComponent, { ViewComponentProps } from 'choerodon-ui/pro/lib/core/Vie
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { findFocusableElements } from 'choerodon-ui/pro/lib/_util/focusable';
 import { getDocument } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
+import ReactResizeObserver from '../_util/resizeObserver';
 import Align from '../align';
 import { getProPrefixCls } from '../configure/utils';
 import Animate from '../animate';
@@ -63,6 +64,12 @@ export default class Popup extends ViewComponent<PopupProps> {
 
   popupKey: string = PopupManager.getKey();
 
+  size?: {
+    width?: number;
+
+    height?: number;
+  };
+
   saveRef = align => (this.align = align);
 
   getOmitPropsKeys(): string[] {
@@ -114,7 +121,9 @@ export default class Popup extends ViewComponent<PopupProps> {
     const className = this.getMergedClassNames(this.currentAlignClassName ||
       getClassNameFromAlign(align));
     return (
-      <PopupInner {...omit(this.getMergedProps(), ['ref', 'className'])} className={className} innerRef={innerRef}>{children}</PopupInner>
+      <ReactResizeObserver onResize={this.handlePopupResize}>
+        <PopupInner {...omit(this.getMergedProps(), ['ref', 'className'])} className={className} innerRef={innerRef}>{children}</PopupInner>
+      </ReactResizeObserver>
     );
   }
 
@@ -214,6 +223,19 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
     onAlign(source, align, target, translate);
     this.target = source;
+  }
+
+  @autobind
+  handlePopupResize(width, height) {
+    if (width !== 0 && height !== 0) {
+      const { width: oldWidth, height: oldHeight } = this.size || {};
+      if (width !== oldWidth || height !== oldHeight) {
+        this.size = { width, height };
+        if (oldWidth !== undefined && oldHeight !== undefined) {
+          this.forceAlign();
+        }
+      }
+    }
   }
 
   forceAlign() {

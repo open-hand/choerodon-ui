@@ -6,7 +6,6 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { DragRender, expandedRowRendererProps, onColumnResizeProps, onRowProps } from './Table';
 import { SelectionMode } from './enum';
-import ModalProvider from '../modal-provider';
 import { SpinProps } from '../spin';
 
 export interface TableContextProviderProps {
@@ -56,7 +55,7 @@ const TableContext = getContext<TableContextValue>(Symbols.ProTableContext, {
 const TableContextProvider: FunctionComponent<TableContextProviderProps> = function TableContextProvider(props) {
   const { children, tableStore, dataSet, ...other } = props;
 
-  const value = {
+  const value: TableContextValue = {
     ...other,
     dataSet,
     tableStore,
@@ -73,13 +72,7 @@ const TableContextProvider: FunctionComponent<TableContextProviderProps> = funct
 
   return (
     <TableContext.Provider value={value}>
-      {
-        tableStore.customizable ? (
-          <ModalProvider>
-            {children}
-          </ModalProvider>
-        ) : children
-      }
+      {children}
     </TableContext.Provider>
   );
 };

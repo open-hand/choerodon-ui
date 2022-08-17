@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useCallback, memo } from 'react';
+import React, { FunctionComponent, useCallback, memo, useContext } from 'react';
 import { FuncType } from '../../button/enum';
 import { Size } from '../../core/enum';
 import Button from '../../button/Button';
-import useModal from '../../use-modal';
+import TableContext, { TableContextValue } from '../TableContext';
 
 export interface CustomizationColumnHeaderProps {
-  onHeaderClick: (modal: { open: Function }) => void;
+  onHeaderClick: (context: TableContextValue) => void;
 }
 
 const CustomizationColumnHeader: FunctionComponent<CustomizationColumnHeaderProps> = function CustomizationColumnHeader(props) {
   const { onHeaderClick } = props;
-  const modal = useModal();
-  const openCustomizationModal = useCallback(() => onHeaderClick(modal), [modal, onHeaderClick]);
+  const context = useContext(TableContext);
+  const openCustomizationModal = useCallback(() => onHeaderClick(context), [context, onHeaderClick]);
   return (
     <Button funcType={FuncType.flat} size={Size.small} icon="predefine" onClick={openCustomizationModal} />
   );

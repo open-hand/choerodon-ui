@@ -96,7 +96,7 @@ export interface LovProps extends SelectProps, ButtonProps {
    */
   autoSelectSingle?: boolean;
   showCheckedStrategy?: CheckedStrategy;
-  onBeforeSelect?: (records: Record | Record[]) => boolean | undefined;
+  onBeforeSelect?: (records: Record | Record[]) => boolean | Promise<boolean | undefined> | undefined;
   onSearchMatcherChange?: (searchMatcher?: string) => void;
   viewRenderer?: ViewRenderer;
   nodeRenderer?: NodeRenderer;
