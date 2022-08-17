@@ -26,8 +26,6 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `Upload`: 新增 beforeUploadFiles 属性。
-- 💄 `Trigger`: 优化内容大小变更时自动对齐。
-- 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -38,6 +36,7 @@ timeline: true
 - 💄 `configure`: 扩展 confirm 配置参数支持动态筛选条查询相关提示与分页提示可区分。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
+- 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。

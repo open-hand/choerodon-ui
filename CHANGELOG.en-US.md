@@ -25,8 +25,6 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: Added `dateMode` property.
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
-- 🌟 `Upload`: Added `beforeUploadFiles` property.
-- 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
@@ -37,6 +35,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 💄 `configure`: extend the confirm configuration parameter to support dynamic filter bar query related prompts and paging prompts to be distinguishable.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
+- 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
