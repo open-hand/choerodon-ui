@@ -36,6 +36,7 @@ timeline: true
 - 💄 `configure`: 扩展 confirm 配置参数支持动态筛选条查询相关提示与分页提示可区分。
 - 💄 `<pro>Lov`: Lov 配置中如无标题属性则使用 label 属性。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化 multiple 属性为 false 的场景, 修改 multiple 属性默认值为 true。
+- 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
 - 💄 `<pro>PerformanceTable`: 优化 filter 查询条功能。
 - 💄 `<pro>Table`: 优化动态筛选条 help 渲染。
@@ -97,9 +98,12 @@ timeline: true
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Table`: 修复个性化跨锁定列拖拽排序的问题。
+- 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
+- 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
+- 🐞 `<pro>IntlField`: 修复弹窗取消时会清空值的问题。
 - 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 - 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。

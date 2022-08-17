@@ -53,7 +53,7 @@ export default class Align extends Component<AlignProps, any> {
 
   bufferMonitor: TaskRunner | null;
 
-  source;
+  source?: HTMLElement;
 
   sourceRect: ClientRect | DOMRect | null;
 
@@ -79,8 +79,8 @@ export default class Align extends Component<AlignProps, any> {
     let reAlign = false;
 
     if (!hidden) {
-      const { source = findDOMNode(this) } = this;
-      const sourceRect = source ? (source as HTMLElement).getBoundingClientRect() : null;
+      const { source = findDOMNode(this) as HTMLElement } = this;
+      const sourceRect = source ? source.getBoundingClientRect() : null;
       if (preHidden || preAlign !== align) {
         reAlign = true;
       } else {
@@ -156,32 +156,36 @@ export default class Align extends Component<AlignProps, any> {
   forceAlign() {
     const { hidden, onAlign = noop, target, align } = this.props;
     if (!hidden && target) {
-      const { source = findDOMNode(this) } = this;
-
-      let result;
-      const element = getElement(target);
-      const point = getPoint(target);
-      if (element) {
-        result = alignElement(source as HTMLElement, element as HTMLElement, align);
-      } else if (point) {
-        result = alignPoint(source as HTMLElement, point, align);
-      }
-      const translate = {
-        x: 0,
-        y: 0,
-      };
-      const { points, overflow: { adjustX, adjustY } } = result;
-      if (source && element && (adjustX || adjustY) && (points.includes('bc') || points.includes('tc'))) {
-        const r1 = (source as HTMLElement).getBoundingClientRect();
-        const r2 = (element as HTMLElement).getBoundingClientRect();
-        if (adjustX) {
-          translate.x = Math.round(r1.left + r1.width / 2 - r2.left - r2.width / 2);
+      const { source = findDOMNode(this) as HTMLElement } = this;
+      if (source && source.offsetParent) {
+        let result;
+        const element: HTMLElement | null = getElement(target) as HTMLElement | null;
+        const point = getPoint(target);
+        if (element) {
+          if (!element.offsetParent) {
+            return;
+          }
+          result = alignElement(source, element, align);
+        } else if (point) {
+          result = alignPoint(source, point, align);
         }
-        if (adjustY) {
-          translate.y = Math.round(r1.top + r1.height / 2 - r2.top - r2.height / 2);
+        const translate = {
+          x: 0,
+          y: 0,
+        };
+        const { points, overflow: { adjustX, adjustY } } = result;
+        if (element && (adjustX || adjustY) && (points.includes('bc') || points.includes('tc'))) {
+          const r1 = source.getBoundingClientRect();
+          const r2 = element.getBoundingClientRect();
+          if (adjustX) {
+            translate.x = Math.round(r1.left + r1.width / 2 - r2.left - r2.width / 2);
+          }
+          if (adjustY) {
+            translate.y = Math.round(r1.top + r1.height / 2 - r2.top - r2.height / 2);
+          }
         }
+        onAlign(source, result, element, translate, point);
       }
-      onAlign(source, result, element, translate, point);
     }
   }
 

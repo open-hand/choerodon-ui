@@ -110,8 +110,8 @@ function getRegion(node: HTMLElement): regionType {
   return {
     top: position.y,
     left: position.x,
-    width: rect.width,
-    height: rect.height,
+    width: rect.width || node.offsetWidth,
+    height: rect.height || node.offsetHeight,
   };
 }
 

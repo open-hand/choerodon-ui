@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: `popupContent` hook adds `content` `dataSet` `textField` `valueField` `setValue` and `setPopup` parameters.
 - 💄 `configure`: extend the confirm configuration parameter to support dynamic filter bar query related prompts and paging prompts to be distinguishable.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where the `multiple` property is `false` and change the default value of the `multiple` property to `true`.
+- 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
 - 💄 `<pro>PerformanceTable`: Optimize the filter query bar function.
 - 💄 `<pro>Lov`: If there is no title property in the Lov configuration, use the label property.
@@ -97,9 +98,12 @@ timeline: true
 - 🐞 `<pro>Table`: Fix browser zoom issue.
 - 🐞 `<pro>Table`: Fix infinite loop in tree mode.
 - 🐞 `<pro>Table`: Fixed an issue with drag-and-drop sorting across locked columns.
+- 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
+- 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
+- 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
