@@ -86,6 +86,7 @@ export interface AttachmentConfig {
   defaultChunkThreads: number;
   action?: AxiosRequestConfig | ((props: AttachmentActionProps) => AxiosRequestConfig);
   batchFetchCount?: AttachmentBatchFetchCount;
+  fetchFileSize?: (props: AttachmentOption) => Promise<number>;
   fetchList?: (props: AttachmentValue) => Promise<FileLike[]>;
   getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;

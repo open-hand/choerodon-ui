@@ -210,7 +210,16 @@ export async function beforeUploadFile(
     });
     return;
   }
-  const { fileSize = globalConfig.defaultFileSize } = props;
+  let { fileSize = globalConfig.defaultFileSize } = props;
+  const { fetchFileSize } = globalConfig;
+  if (fetchFileSize) {
+    fileSize = await fetchFileSize({
+      bucketName: props.bucketName,
+      bucketDirectory: props.bucketDirectory,
+      storageCode: props.storageCode,
+      isPublic: props.isPublic,
+    });
+  }
   if (fileSize && fileSize > 0 && attachment.size > fileSize) {
     runInAction(() => {
       attachment.status = 'error';

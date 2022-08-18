@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, cacheRecords, tableShowCachedTips 属性。
+- 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, cacheRecords, tableShowCachedTips, attachment.fetchFileSize 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
 - 🌟 `<pro>Table`: setColumnWidth 方法新增 saveToCustomization 参数。
