@@ -93,6 +93,12 @@
       border-radius: 0;
     }
 
+    &:hover {
+      .@{pro-radio-prefix-cls}:not(:checked) + .@{pro-radio-prefix-cls}-inner {
+        border-color: @segmented-interval-border-color;
+      }
+    }
+
     .@{pro-radio-prefix-cls}-inner {
       border: none;
       border-radius: 0;
