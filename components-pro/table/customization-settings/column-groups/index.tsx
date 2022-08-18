@@ -61,6 +61,7 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
             r.set('sort', index);
           });
           destRecords.forEach((r, index) => {
+            r.init('sort', undefined);
             r.set('sort', index);
           });
         }
