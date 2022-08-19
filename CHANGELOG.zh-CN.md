@@ -59,6 +59,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 💄 `<pro>Form.ItemGroup`: 优化组件属性的 TS 类型声明。
 - 💄 `<pro>Attachment`: 优化组件 help 渲染。
+- 💄 `<pro>Lov`: 优化当设置 multiple 以及 isFlat 属性后, 宽度样式计算问题。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
@@ -97,6 +98,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟滚动和虚拟单元格模式下从聚合切换到平铺时行高问题。
 - 🐞 `<pro>Table`: 修复浏览器缩放产生的问题。
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
+- 🐞 `<pro>Table`: 修复个性化跨锁定列拖拽排序的问题。
 - 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。

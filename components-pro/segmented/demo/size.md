@@ -25,7 +25,7 @@ function handleChange(value, oldValue) {
 class App extends React.Component {
   optionRenderer = ({ text }) => {
     return (
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
         {text && <Icon type="flag-o" />} {text}
       </div>
     );

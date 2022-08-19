@@ -59,6 +59,7 @@ timeline: true
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
 - 💄 `<pro>Form.ItemGroup`: Optimized the `TS` type declarations for component properties.
 - 💄 `<pro>Attachment`: Optimize component help rendering.
+- 💄 `<pro>Lov`: Optimized the width style calculation problem when setting the `multiple` and `isFlat` properties.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>RichText`: Fix rich text editor validation issues.
@@ -97,6 +98,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix row height problem when switching from aggregate to tile in `virtual` and `virtualCell` mode.
 - 🐞 `<pro>Table`: Fix browser zoom issue.
 - 🐞 `<pro>Table`: Fix infinite loop in tree mode.
+- 🐞 `<pro>Table`: Fixed an issue with drag-and-drop sorting across locked columns.
 - 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
 - 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
