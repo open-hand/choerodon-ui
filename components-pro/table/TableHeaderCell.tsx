@@ -14,6 +14,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
+import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
@@ -57,6 +58,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     intersectionRef,
   } = props;
   const { column, key, prev } = columnGroup;
+  const { tooltipProps } = column;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const { columnResizable, headerRowHeight } = tableStore;
@@ -239,10 +241,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const tooltip = tableStore.getColumnTooltip(column);
     const { currentTarget } = e;
     if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
+      const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
       show(currentTarget, {
         title: header,
         placement: getTooltipPlacement('table-cell') || 'right',
         theme: getTooltipTheme('table-cell'),
+        ...tooltipConfig,
       });
       globalRef.current.tooltipShown = true;
     }
