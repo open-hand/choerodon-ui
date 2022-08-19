@@ -235,9 +235,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       const { width: oldWidth, height: oldHeight } = this.size || {};
       if (width !== oldWidth || height !== oldHeight) {
         this.size = { width, height };
-        if (oldWidth !== undefined && oldHeight !== undefined) {
-          this.forceAlign();
-        }
+        this.forceAlign();
       }
     }
   }

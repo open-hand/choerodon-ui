@@ -47,6 +47,7 @@ configure({
       },
     },
     fetchList,
+    fetchFileSize: () => Promise.resolve(500 * 1024 * 1024),
     batchFetchCount(uuids){
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },
@@ -102,7 +103,7 @@ configure({
 const attachmentUUID1 = '4c74a34a-fa37-4e92-be9d-5cf726fb1472';
 const attachmentUUID2 = '88888888-fa37-4e92-be9d-5cf726fb1472';
 const App = () => {
-  
+
   const [value, setValue] = React.useState(attachmentUUID1);
   const props = {
     label: '技术附件',
