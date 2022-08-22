@@ -655,6 +655,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   if (height !== undefined && rows === 0) {
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
   }
+  if (isString(innerProps.children) && innerProps.children.includes('\n')) {
+    innerClassName.push(`${prefixCls}-inner-pre`);
+  }
 
   useEffect(() => {
     // 兼容Table Tree模式嵌套过深样式
