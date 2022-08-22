@@ -62,6 +62,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
+- 🐞 `<pro>Table`: 修复行高变化时编辑器错位的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>IntlField`: 修复弹窗取消时会清空值的问题。

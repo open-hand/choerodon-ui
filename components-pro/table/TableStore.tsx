@@ -2202,14 +2202,16 @@ export default class TableStore {
     this.mouseBatchChooseIdList = idList;
   }
 
-  showNextEditor(name: string, reserve: boolean) {
+  showNextEditor(name: string, reserve: boolean): boolean {
     const { dataSet } = this;
     const { currentIndex } = dataSet;
     const record = dataSet.get(reserve ? currentIndex - 1 : currentIndex + 1);
     if (record && !isDisabledRow(record)) {
       dataSet.current = record;
       this.showEditor(name);
+      return true;
     }
+    return false;
   }
 
   @action
@@ -2705,5 +2707,15 @@ export default class TableStore {
   @action
   setFold() {
     this.isFold = !this.isFold;
+  }
+
+  alignEditor() {
+    const { currentEditorName } = this;
+    if (currentEditorName) {
+      const currentEditor = this.editors.get(currentEditorName);
+      if (currentEditor) {
+        currentEditor.alignEditor();
+      }
+    }
   }
 }

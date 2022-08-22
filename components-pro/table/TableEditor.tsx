@@ -434,9 +434,10 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (name) {
       this.blur();
       const { tableStore } = this.context;
-      tableStore.showNextEditor(name, reserve);
-      this.alignEditor();
-      this.focus();
+      if (tableStore.showNextEditor(name, reserve)) {
+        this.alignEditor();
+        this.focus();
+      }
     }
   }
 

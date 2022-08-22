@@ -1461,13 +1461,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   componentDidUpdate() {
     const { tableStore } = this;
-    const { currentEditorName } = tableStore;
-    if (currentEditorName) {
+    if (tableStore.currentEditorName) {
       const { columns: { length } } = tableStore;
-      const currentEditor = tableStore.editors.get(currentEditorName);
-      if (currentEditor && length !== this.columnsSize) {
+      if (length !== this.columnsSize) {
         this.columnsSize = length;
-        currentEditor.alignEditor();
+        tableStore.alignEditor();
       }
     }
   }

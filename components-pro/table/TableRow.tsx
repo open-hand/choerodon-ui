@@ -102,7 +102,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? tableStore.propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight ||tableStore.propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -142,6 +142,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
           set(tableStore.lockColumnsBodyRowsHeight, key, height);
         }
       }
+      tableStore.alignEditor();
     }
   }), [tableStore, metaData, inView, columnsInView, needIntersection, record]);
 
