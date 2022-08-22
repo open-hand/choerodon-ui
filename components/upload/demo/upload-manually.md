@@ -77,6 +77,7 @@ class Demo extends React.Component {
         return false;
       },
       fileList: this.state.fileList,
+      multiple: true,
     };
 
     return (
