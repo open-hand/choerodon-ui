@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>Radio`: 优化样式。
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
 - 💄 `<pro>Lov`: 优化 onBeforeSelect 回调函数，支持返回一个 Promise 对象。
+- 💄 `<pro>Table`: 优化使用 TextArea 时输入值换行展示。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
