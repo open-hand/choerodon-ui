@@ -1015,11 +1015,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   <div
                     className={itemContentClassName}
                     key={name}
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={debounce(() => {
                       const editor = this.refEditors.get(name);
                       if (editor) {
+                        if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
+                          editor.element.className += ' c7n-pro-suffix-click'
+                        }
                         this.refEditors.get(name).focus();
+                      }
+                    }, 200)}
+                    onBlur={() => {
+                      const editor = this.refEditors.get(name);
+                      if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
+                        editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
                       }
                     }}
                   >
@@ -1047,10 +1055,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     <div
                       className={itemContentClassName}
                       key={name}
-                      onClick={() => {
+                      onClick={debounce(() => {
                         const editor = this.refEditors.get(name);
                         if (editor) {
+                          if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
+                            editor.element.className += ' c7n-pro-suffix-click'
+                          }
                           this.refEditors.get(name).focus();
+                        }
+                      }, 200)}
+                      onBlur={() => {
+                        const editor = this.refEditors.get(name);
+                        if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
+                          editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
                         }
                       }}
                     >

@@ -52,6 +52,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
 - 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar Lov component click popup interaction.
 - 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
 - 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
 - 💄 `<pro>SelectBox`: Optimized required styles.

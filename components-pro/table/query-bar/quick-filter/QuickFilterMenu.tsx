@@ -309,7 +309,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         } else if (refEditors) {
           let hasFocus = false;
           for (const [key, value] of refEditors.entries()) {
-            if (!value.valid && !hasFocus) {
+            if (value && !value.valid && !hasFocus) {
               refEditors.get(key).focus();
               hasFocus = true;
             }
