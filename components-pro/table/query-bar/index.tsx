@@ -326,7 +326,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       dataSet: { queryDataSet },
     } = this.context;
     if (tableStore.queryBar === TableQueryBarType.filterBar) {
-      if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
         return dataSet.query();
       }
     } else {
