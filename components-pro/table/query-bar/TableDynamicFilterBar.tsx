@@ -58,7 +58,7 @@ export function isSelect(data) {
   return data[0] !== '__dirty' && !isEmpty(data[1]);
 }
 
-export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
+export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?: DataSet, record?: Record, name?: string) {
   if (isEqual(newValue, originalValue)) {
     return true;
   }
@@ -72,6 +72,9 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
       if (isEmpty(oldValue) && isEmpty(value)) {
         return true;
       }
+      if (name && name.includes('.')) {
+        return isEmpty(oldValue) && isEmpty(record!.get(name))
+      }
       if (isNumber(oldValue) || isNumber(value)) {
         const oEp = isNumber(oldValue) ? isEmpty(oldValue) : isEnumEmpty(oldValue);
         const nEp = isNumber(value) ? isEmpty(value) : isEnumEmpty(value);
@@ -80,10 +83,10 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
         }
         return String(oldValue) === String(value);
       }
-      const field = dataSet.getField(key);
+      const field = dataSet!.getField(key);
       if (field && field.get('lovCode') && oldValue && value) {
-        const valueField = dataSet.getField(key).get('valueField', record);
-        const textField = dataSet.getField(key).get('textField', record);
+        const valueField = dataSet!.getField(key)!.get('valueField', record);
+        const textField = dataSet!.getField(key)!.get('textField', record);
         return value[valueField] === oldValue[valueField] && value[textField] === oldValue[textField];
       }
       return isEqual(oldValue, value);
@@ -409,12 +412,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     if (autoQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
-        if (queryDataSet && await queryDataSet.validate()) {
+        if (queryDataSet && queryDataSet.current &&  await queryDataSet.current.validate()) {
           dataSet.query();
           onQuery();
         } else {
@@ -697,7 +700,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   async modifiedCheckQuery(): Promise<void> {
     const { props: { dataSet, queryDataSet } } = this;
-    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
       dataSet.query();
     } else {
       let hasFocus = false;

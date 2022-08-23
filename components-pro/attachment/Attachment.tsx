@@ -482,9 +482,9 @@ export default class Attachment extends FormField<AttachmentProps> {
           }
           const attachmentUUID = this.getValue();
           if (attachmentUUID) {
-            const { bucketName, bucketDirectory, storageCode, isPublic } = this;
+            const { bucketName, bucketDirectory, storageCode, isPublic, multiple } = this;
             attachment.status = 'deleting';
-            return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic })
+            return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic }, multiple)
               .then(mobxAction((result) => {
                 if (result !== false) {
                   this.removeAttachment(attachment);
