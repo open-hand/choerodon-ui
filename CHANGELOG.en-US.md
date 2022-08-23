@@ -52,14 +52,18 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the display of multiple selected field values in the dynamic filter bar.
 - 💄 `<pro>Table`: Removed form layout controls for pro search bar.
 - 💄 `<pro>Table`: Optimized dynamic filter bar queries support `modifiedCheck` prompt.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar Lov component click popup interaction.
 - 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
 - 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
+- 💄 `<pro>Table`: Optimized setting when tree data is loaded asynchronously, the parent level is selected and the child level is selected after expansion.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
 - 💄 `<pro>Form.ItemGroup`: Optimized the `TS` type declarations for component properties.
 - 💄 `<pro>Attachment`: Optimize component help rendering.
 - 💄 `<pro>Lov`: Optimized the width style calculation problem when setting the `multiple` and `isFlat` properties.
+- 💄 `<pro>IntlField`: Optimized multi-line display.
+- 💄 `<pro>RichText`: Optimized required style and height.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>RichText`: Fix rich text editor validation issues.

@@ -52,14 +52,18 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条中的多选字段值显示。
 - 💄 `<pro>Table`: 去掉专业搜索条表单布局控制。
 - 💄 `<pro>Table`: 优化动态筛选条查询支持数据源 modifiedCheck 提示。
+- 💄 `<pro>Table`: 优化动态筛选条 Lov 组件点击弹出交互。
 - 💄 `<pro>Table`: 优化非 Tree 模式下的展开行控制。
 - 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
+- 💄 `<pro>Table`: 优化设置树形数据异步加载时，父级选中且展开后同时选中子级。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
 - 💄 `<pro>Form.ItemGroup`: 优化组件属性的 TS 类型声明。
 - 💄 `<pro>Attachment`: 优化组件 help 渲染。
 - 💄 `<pro>Lov`: 优化当设置 multiple 以及 isFlat 属性后, 宽度样式计算问题。
+- 💄 `<pro>IntlField`: 优化多行下显示。
+- 💄 `<pro>RichText`: 优化必填样式和高度。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。

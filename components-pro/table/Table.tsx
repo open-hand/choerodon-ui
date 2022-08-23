@@ -71,7 +71,7 @@ import ToolBar from './query-bar/TableToolBar';
 import FilterBar from './query-bar/TableFilterBar';
 import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar, { TableProfessionalBarProps } from './query-bar/TableProfessionalBar';
-import ComboBar, { ComboBarProps } from './query-bar/TableComboBar';
+import ComboBar, { TableComboBarProps } from './query-bar/TableComboBar';
 import DynamicFilterBar, { TableDynamicFilterBarProps } from './query-bar/TableDynamicFilterBar';
 import FilterSelect from './query-bar/FilterSelect';
 import {
@@ -193,7 +193,7 @@ export interface onColumnResizeProps {
 export type TableQueryBarHookCustomProps =
   Omit<object, keyof TableQueryBarBaseProps>
   & TableQueryBarCustomProps
-  & ComboBarProps
+  & TableComboBarProps
   & TableProfessionalBarProps
   & TableDynamicFilterBarProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
@@ -218,6 +218,17 @@ export interface DynamicFilterBarConfig {
   searchText?: string;
   suffixes?: Suffixes[];
   prefixes?: React.ReactElement<any>[];
+  tableFilterAdapter?: TransportProps;
+}
+
+export interface ComboFilterBarConfig {
+  searchId?: number;
+  searchText?: string;
+  filterCallback?: (searchId: string) => void;
+  filterSave?: boolean; // 是否出现保存按钮
+  filterSaveCallback?: (object) => void;
+  suffixes?: Suffixes[];
+  filterOptionRenderer?: (searchId, searchIcon, text) => ReactNode;
   tableFilterAdapter?: TransportProps;
 }
 
@@ -1577,7 +1588,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock, isFold },
+      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
       props: {
         dataSet,
         treeQueryExpanded,
@@ -1649,7 +1660,7 @@ export default class Table extends DataSetComponent<TableProps> {
             isTree={mode === TableMode.tree}
           >
             <TableSibling position="before" boxSizing={boxSizing}>
-              {!isFold && this.getHeader()}
+              {this.getHeader()}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}
@@ -1666,29 +1677,27 @@ export default class Table extends DataSetComponent<TableProps> {
                 treeQueryExpanded={treeQueryExpanded}
                 searchCode={searchCode}
               />
-              {!isFold && <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />}
+              <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             </TableSibling>
-            {!isFold &&
-              <Spin {...tableSpinProps} key="content">
-                <div {...this.getOtherProps()}>
-                  <div
-                    className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
-                    ref={this.saveContentRef}
-                    onScroll={this.handleBodyScroll}
-                  >
-                    {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
-                    {content}
-                    {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
-                  </div>
-                  {isStickySupport() && overflowX && <StickyShadow position="left" />}
-                  {isStickySupport() && overflowX && <StickyShadow position="right" />}
-                  <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+            <Spin {...tableSpinProps} key="content">
+              <div {...this.getOtherProps()}>
+                <div
+                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
+                  ref={this.saveContentRef}
+                  onScroll={this.handleBodyScroll}
+                >
+                  {!isStickySupport() && isAnyColumnsLeftLock && overflowX && this.getLeftFixedTable()}
+                  {content}
+                  {!isStickySupport() && isAnyColumnsRightLock && overflowX && this.getRightFixedTable()}
                 </div>
-              </Spin>
-            }
+                {isStickySupport() && overflowX && <StickyShadow position="left" />}
+                {isStickySupport() && overflowX && <StickyShadow position="right" />}
+                <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+              </div>
+            </Spin>
             <TableSibling position="after" boxSizing={boxSizing}>
-              {!isFold && this.getFooter()}
-              {!isFold && this.getPagination(TablePaginationPosition.bottom)}
+              {this.getFooter()}
+              {this.getPagination(TablePaginationPosition.bottom)}
             </TableSibling>
           </TableContextProvider>
         </div>

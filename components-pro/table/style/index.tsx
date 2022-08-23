@@ -33,4 +33,5 @@ import '../../menu/style';
 import '../../dropdown/style';
 import '../../attachment/style';
 import '../customization-settings/style';
+import '../combo-customization-settings/style';
 import '../query-bar/style';

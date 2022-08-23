@@ -123,6 +123,15 @@ export interface Locale extends DataSetLocale {
     refresh: string;
     export_all: string,
     export_selected: string,
+    filter_header_title: string,
+    field_settings: string,
+    lock_first_column: string,
+    cancel_lock_first_column: string,
+    enter_search_filter: string,
+    search: string,
+    clear: string,
+    show: string,
+    hide: string,
   };
   Pagination: {
     page: string;

@@ -61,6 +61,22 @@
   }
 }
 
+.rang-placeholder(@color: @input-placeholder-color) {
+  // Firefox
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  // Internet Explorer 10+
+  &:-ms-input-placeholder {
+    color: @color;
+  }
+  // Safari and Chrome
+  &::-webkit-input-placeholder {
+    color: @color;
+  }
+}
+
 // Basic style for input
 .input(@prefix-width: @input-prefix-width-base, @suffix-width: @input-suffix-width-base) {
   position: relative;
@@ -436,8 +452,10 @@
     &-input {
       display: inline-block;
       height: 100%;
-      line-height: 0.26rem;
+      line-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
       vertical-align: middle;
+
+      .rang-placeholder;
     }
 
     &-start-rendered-value,

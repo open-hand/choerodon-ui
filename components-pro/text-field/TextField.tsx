@@ -1125,7 +1125,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (isFlat) {
       const hasValue = !this.isEmpty();
       const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-      width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22 + (this.getSuffix() ? 14 : 0);
+      width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22 + (this.getSuffix() ? 20 : 0);
     }
     if (multiple) {
       return (
