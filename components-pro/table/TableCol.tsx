@@ -17,6 +17,11 @@ const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   const { tableStore, prefixCls } = useContext(TableContext);
   const { getLastEmptyWidthColumn: lastEmptyWidthColumn } = tableStore;
   let width = last && !tableStore.hasEmptyWidthColumn ? undefined : tableStore.overflowX ? columnWidth(column, tableStore) : get(column, 'width');
+  const innerClassName: string[] = [];
+  if (tableStore.isBuiltInColumn(column)) {
+    innerClassName.push(get(column, 'headerClassName'));
+  }
+  innerClassName.push(`${prefixCls}-col`);
   const minWidth = minColumnWidth(column, tableStore);
   if (lastEmptyWidthColumn && isEqual(column, lastEmptyWidthColumn)) {
     width = undefined;
@@ -29,7 +34,7 @@ const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   }), [width, minWidth]);
   return (
     <col
-      className={`${prefixCls}-col`}
+      className={innerClassName.join(' ')}
       style={style}
     />
   );

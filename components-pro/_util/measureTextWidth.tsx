@@ -6,7 +6,7 @@ export default function measureTextWidth(text: string, style?: CSSProperties | C
     span.style.cssText = 'position: absolute;top: -9999px;display: inline-block';
     span.innerHTML = text.replace(/\s/g, '&nbsp;');
     if (style) {
-      ['font', 'letterSpacing', 'wordSpacing'].forEach((property) => {
+      ['font', 'fontSize', 'letterSpacing', 'wordSpacing'].forEach((property) => {
         if (property in style) {
           span.style[property] = style[property];
         }

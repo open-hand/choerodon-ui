@@ -51,7 +51,7 @@ import { ShowHelp } from '../../field/enum';
  * 当前数据是否有值并需要选中
  * @param data
  */
-function isSelect(data) {
+export function isSelect(data) {
   if (isObject(data[1])) {
     return !isEnumEmpty(data[1]);
   }
