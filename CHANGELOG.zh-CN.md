@@ -64,6 +64,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化当设置 multiple 以及 isFlat 属性后, 宽度样式计算问题。
 - 💄 `<pro>IntlField`: 优化多行下显示。
 - 💄 `<pro>RichText`: 优化必填样式和高度。
+- 💄 `<pro>Table`: 优化使用 TextArea 时输入值换行展示。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
@@ -105,6 +106,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复个性化跨锁定列拖拽排序的问题。
 - 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
+- 🐞 `<pro>Table`: 修复行高变化时编辑器错位的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
