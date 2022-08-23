@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
 - 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
 - 🐞 `<pro>Table`: Fix editor misalignment when row height changes.
+- 🐞 `<pro>Table`: Fix `headerRowHeight` and `footerRowHeight` not working when `rowHeight` is auto.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
