@@ -55,6 +55,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条 Lov 组件点击弹出交互。
 - 💄 `<pro>Table`: 优化非 Tree 模式下的展开行控制。
 - 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
+- 💄 `<pro>Table`: 优化设置树形数据异步加载时，父级选中且展开后同时选中子级。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
