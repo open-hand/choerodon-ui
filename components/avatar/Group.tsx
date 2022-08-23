@@ -17,7 +17,7 @@ export interface GroupProps {
   maxStyle?: React.CSSProperties;
   maxPopoverPlacement?: 'top' | 'bottom';
   maxPopoverTrigger?: 'hover' | 'focus' | 'click';
-  size?: Size;
+  size?: Size | number;
 }
 
 export default class Group extends React.Component<GroupProps> {

@@ -1,6 +1,6 @@
 import React, { Children, cloneElement, Component, ReactElement, ReactNode, ReactText } from 'react';
 import classNames from 'classnames';
-import { action, observable } from 'mobx';
+import { action, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -77,7 +77,7 @@ export interface ListProps {
   empty?: ReactNode;
   locale?: Record<string, any>;
   dataSet?: DataSet;
-  rowSelection?: RowSelection;
+  rowSelection?: RowSelection | boolean;
 }
 
 export interface ListLocale {
@@ -125,8 +125,9 @@ export default class List extends Component<ListProps> {
 
   get rowSelectionKeys(): ReactText[] | undefined {
     const { rowSelection } = this.props;
-    if (rowSelection) {
-      return rowSelection.selectedRowKeys || rowSelection.defaultSelectedRowKeys || []
+    if (rowSelection && typeof rowSelection === 'object') {
+      const { selectedRowKeys, defaultSelectedRowKeys} = rowSelection;
+      return selectedRowKeys || defaultSelectedRowKeys;
     }
   }
 
@@ -147,7 +148,7 @@ export default class List extends Component<ListProps> {
       }
       return dataSet.selected.map(selected => String(primaryKey ? selected.get(primaryKey) : selected.id));
     }
-    return this.rowSelectionKeys || this.stateCheckedKeys;
+    return this.rowSelectionKeys || this.stateCheckedKeys || [];
   }
 
   get paginationProps() {
@@ -166,6 +167,9 @@ export default class List extends Component<ListProps> {
   componentWillMount() {
     this.handleDataSetLoad();
     this.processDataSetListener(true);
+    runInAction(() => {
+      this.stateCheckedKeys = [];
+    })
   }
 
   componentWillUnmount() {
@@ -190,11 +194,10 @@ export default class List extends Component<ListProps> {
     const {
       props: {
         dataSet,
-        rowSelection,
       },
     } = this;
     if (dataSet && dataSet.selection) {
-      const { checkField, primaryKey } = dataSet.props;
+      const { checkField } = dataSet.props;
       if (checkField) {
         const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
@@ -202,19 +205,6 @@ export default class List extends Component<ListProps> {
             record.isSelected = true;
           }
         });
-      } else if (rowSelection) {
-        const { selectedRowKeys, defaultSelectedRowKeys } = rowSelection;
-        const initSelectKeys = selectedRowKeys || defaultSelectedRowKeys || [];
-        initSelectKeys.forEach(key => {
-          const len = dataSet.records.length;
-          for (let i = 0; i < len; i++) {
-            const record = dataSet.records[i];
-            if (record.get(primaryKey) === key) {
-              record.isSelected = true;
-              break;
-            }
-          }
-        })
       }
     }
   }
@@ -269,7 +259,17 @@ export default class List extends Component<ListProps> {
     return getPrefixCls('list', prefixCls);
   }
 
-  handleChange = (value, key) => { 
+  @action
+  updateStateKey(value, key) {
+    if (value && !this.stateCheckedKeys.includes(key!)) {
+      this.stateCheckedKeys = [...this.stateCheckedKeys, key]
+    } else if (!value) {
+      this.stateCheckedKeys = this.stateCheckedKeys.filter(x => x !== key)
+    }
+    return this.stateCheckedKeys;
+  }
+
+  handleChange(value, key) {
     const { rowSelection, dataSet } = this.props;
     if (dataSet && dataSet.selection) {
       const { primaryKey } = dataSet.props;
@@ -282,22 +282,34 @@ export default class List extends Component<ListProps> {
           }
         }
       });
+      return;
     }
     if (rowSelection) {
-      const { selectedRowKeys = [], onChange = noop } = rowSelection;
-      let resultKeys: ReactText[] = []
-      if (value && !selectedRowKeys.includes(key!)) {
-        resultKeys = [...selectedRowKeys, key]
-      } else if (!value) {
-        resultKeys = selectedRowKeys.filter(x => x !== key)
+      if (typeof rowSelection === 'object') {
+        const { selectedRowKeys, onChange = noop } = rowSelection;
+        let resultKeys: ReactText[] = []
+        if (selectedRowKeys) {
+          if (value && !selectedRowKeys.includes(key!)) {
+            resultKeys = [...selectedRowKeys, key];
+          } else if (!value) {
+            resultKeys = selectedRowKeys.filter(x => x !== key);
+          }
+          onChange(resultKeys);
+          return;
+        }
+        const newKeys = this.updateStateKey(value, key);
+        onChange(newKeys);
+        
+      } else if (typeof rowSelection === 'boolean') {
+        this.updateStateKey(value, key);
       }
-      onChange(resultKeys);
     }
   }
 
-  renderCheckBox = (key) => {
+  renderCheckBox(key) {
     const { rowSelection, dataSet } = this.props;
-    if (rowSelection || (dataSet && dataSet.selection)) {
+
+    const checkboxWrapper = () => {
       const isChecked = this.checkedKeys.includes(key);
       return {
         element: () => (
@@ -312,6 +324,16 @@ export default class List extends Component<ListProps> {
         ),
         isChecked,
       }
+    }
+
+    if (dataSet) {
+      if (dataSet.selection) {
+        return checkboxWrapper();
+      }
+      return undefined;
+    }
+    if (rowSelection) {
+      return checkboxWrapper();
     }
     return undefined;
   }
