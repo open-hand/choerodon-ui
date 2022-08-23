@@ -51,7 +51,6 @@ export const ConditionDataSet: () => DataSetProps = () => ({
 export const QuickFilterDataSet = ({ queryDataSet, tableFilterAdapter }) => ({
   paging: false,
   autoQuery: false,
-  autoLocateFirst: false,
   primaryKey: 'searchId',
   dataToJSON: DataToJSON.all,
   transport: {

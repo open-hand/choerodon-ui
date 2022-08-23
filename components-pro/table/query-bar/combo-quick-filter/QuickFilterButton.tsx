@@ -9,24 +9,16 @@ import noop from 'lodash/noop';
 import omit from 'lodash/omit';
 import isEqual from 'lodash/isEqual';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
-import isSampleEmpty from '../../../_util/isEmpty';
 import { $l } from '../../../locale-context';
 import Button from '../../../button';
 import { ButtonColor } from '../../../button/enum';
 import Record from '../../../data-set/Record';
 import { RecordStatus} from '../../../data-set/enum';
-import { isEqualDynamicProps, parseValue, SELECTFIELDS, stringifyValue, omitData } from '../TableComboBar';
+import { SELECTFIELDS } from '../TableComboBar';
+import { isEqualDynamicProps, parseValue, stringifyValue, isSelect } from '../TableDynamicFilterBar';
 import Store from './QuickFilterMenuContext';
 import { TableCustomized } from '../../Table';
 
-
-/**
- * 判断查询值是否为空
- * @param value
- */
-function isEmpty(value) {
-  return isArray(value) ? !value.length : isSampleEmpty(value);
-}
 
 /**
  * 根据数据查找需要处理的字段对象
@@ -61,17 +53,6 @@ function findFieldObj(queryDataSet, data) {
 }
 
 /**
- * 当前数据是否有值并需要选中
- * @param data
- */
-function isSelect(data) {
-  if (isObject(data[1])) {
-    return !isEnumEmpty(data[1]);
-  }
-  return data[0] !== '__dirty' && !isEmpty(data[1]);
-}
-
-/**
  * 快速筛选下拉
  */
 const QuickFilterButton = function QuickFilterButton() {
@@ -95,6 +76,7 @@ const QuickFilterButton = function QuickFilterButton() {
     filterSaveCallback = noop,
     onReset = noop,
     tableStore,
+    refEditors,
   } = useContext(Store);
 
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
@@ -154,6 +136,7 @@ const QuickFilterButton = function QuickFilterButton() {
       if (tableStore) {
         runInAction(() => {
           const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+          tableStore.tempCustomized = newCustomized;
           tableStore.saveCustomized(newCustomized);
           tableStore.initColumns();
         })
@@ -164,7 +147,7 @@ const QuickFilterButton = function QuickFilterButton() {
     }
   };
 
-  const handleQueryReset = () => {
+  const handleQueryReset = async () => {
     if (filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName')) {
       // 筛选项重置重新赋值
       conditionAssign();
@@ -180,7 +163,17 @@ const QuickFilterButton = function QuickFilterButton() {
       }
       onOriginalChange();
       if (autoQuery) {
-        dataSet.query();
+        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+          dataSet.query();
+        } else if (refEditors) {
+          let hasFocus = false;
+          for (const [key, value] of refEditors.entries()) {
+            if (value && !value.valid && !hasFocus) {
+              refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
       }
     }
     onReset();
@@ -234,12 +227,12 @@ const QuickFilterButton = function QuickFilterButton() {
       });
       const data = [...conditionDataSet.toJSONData(), ...putData];
       const customizedColumns = tableStore && tableStore.customized && tableStore.customized.columns;
-      const menuRecord = menuDataSet.current;
-      if (menuRecord) {
-        menuRecord.set('personalFilter', stringifyValue(data));
-        menuRecord.set('personalColumn', stringifyValue(customizedColumns));
-      }
-      filterSaveCallback({ ...omitData({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) }) });
+      // const menuRecord = menuDataSet.current;
+      // if (menuRecord) {
+      //   menuRecord.set('personalFilter', stringifyValue(data));
+      //   menuRecord.set('personalColumn', stringifyValue(customizedColumns));
+      // }
+      filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) });
     } else {
       dataSet.query();
     }

@@ -578,23 +578,23 @@
     margin-bottom: 0.08rem;
 
     input::-webkit-input-placeholder {
-      color: #6A6A6A;
+      color: @input-placeholder-color;
     }
 
     input:-moz-placeholder {
-      color: #6A6A6A;
+      color: @input-placeholder-color;
     }
 
     input::-moz-placeholder {
-      color: #6A6A6A;
+      color: @input-placeholder-color;
     }
 
     input:-ms-input-placeholder {
-      color: #6A6A6A;
+      color: @input-placeholder-color;
     }
 
     .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-      color: #6A6A6A;
+      color: @input-placeholder-color;
     }
   }
 
@@ -632,20 +632,6 @@
     }
   }
 
-  &-combo-filter-bar-suffix {
-    gap: 0.08rem;
-    margin-left: 0.1rem;
-
-    .@{table-prefix-cls}-columns-chooser {
-      width: unset;
-      border-left: none;
-
-      &-dropdown-menu {
-        min-width: 1.8rem;
-      }
-    }
-  }
-
   &-combo-filter-bar-prefix {
     gap: 0.08rem;
 
@@ -670,7 +656,24 @@
     }
   }
 
-  &-combo-filter-toolbar + &-combo-filter-action {
+  &-combo-filter-bar-suffix {
+    gap: 0.08rem;
+    margin-left: auto;
+
+    .@{table-prefix-cls}-columns-chooser {
+      width: unset;
+      border-left: none;
+
+      &-dropdown-menu {
+        min-width: 1.8rem;
+      }
+    }
+  }
+
+  &-combo-filter-toolbar + &-combo-filter-action,
+  &-combo-filter-toolbar + &-combo-filter-bar-suffix,
+  &-combo-filter-action + &-combo-filter-bar-suffix,
+  &-combo-filter-toolbar + &-combo-filter-action + &-combo-filter-bar-suffix {
     margin-left: 0.08rem;
   }
 
@@ -688,6 +691,7 @@
   &-combo-filter-menu {
     display: flex;
     align-items: center;
+    height: @input-height-base;
     margin: 0.08rem 0.12rem 0 0.05rem;
 
     .@{c7n-pro-prefix}-select {
@@ -725,7 +729,7 @@
   }
 
   &-combo-filter-menu-action {
-    margin-left: 0.1rem;
+    margin-left: 0.08rem;
   }
 
   &-combo-filter-content {
@@ -815,7 +819,6 @@
     }
 
     &:hover {
-      color: @primary-color;
       background-color: fade(@primary-color, 10%);
     }
   }
@@ -826,7 +829,10 @@
 
   &-combo-filterName-select.@{c7n-pro-prefix}-select-focused {
     color: @primary-color;
-    background-color: fade(@primary-color, 10%);
+
+    input.@{c7n-pro-prefix}-select {
+      color: @primary-color;
+    }
   }
 
   &-combo-filterName-select-content {
@@ -871,6 +877,14 @@
 
   &-combo-filter-search {
     margin-top: 0.08rem;
+  }
+
+  &-combo-filter-search-title {
+    flex-shrink: 0;
+    width: 0.42rem;
+    height: @input-height-base;
+    margin-top: 0.08rem;
+    line-height: @input-height-base;
   }
 
   &-combo-filter-item {

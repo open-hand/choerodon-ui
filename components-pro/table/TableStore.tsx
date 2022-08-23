@@ -1131,7 +1131,7 @@ export default class TableStore {
 
   get customizable(): boolean | undefined {
     const { customizedCode } = this.props;
-    const { props: { queryBarProps } } = this.node;
+    const { props: { queryBarProps } } = this;
     const isSimpleMode = queryBarProps && queryBarProps.simpleMode;
     if (customizedCode || (this.queryBar === TableQueryBarType.comboBar && !isSimpleMode)) {
       if ('customizable' in this.props) {
@@ -1801,7 +1801,7 @@ export default class TableStore {
   @computed
   get comboQueryColumn(): ColumnProps | undefined {
     if (this.queryBar === TableQueryBarType.comboBar) {
-      const { prefixCls, props: { bodyExpandable, queryBarProps } } = this;
+      const { prefixCls, props: { queryBarProps } } = this;
       const showInlineSearch = queryBarProps && queryBarProps.inlineSearch;
       const showInlineSearchRender = queryBarProps && queryBarProps.inlineSearchRender;
       const className = `${prefixCls}-inline-query`;
@@ -1828,9 +1828,9 @@ export default class TableStore {
         headerClassName: className,
         className,
         footerClassName: className,
-        renderer: this.renderInlineSearchRender,
+        renderer: () => queryBarProps && queryBarProps.inlineSearchRender,
         align: ColumnAlign.center,
-        width: scaleSize(bodyExpandable ? 65 : 50),
+        width: scaleSize(50),
         lock,
       };
       return showInlineSearch === true || showInlineSearchRender ? queryColumn : undefined;
@@ -2508,18 +2508,6 @@ export default class TableStore {
     return renderSelectionBox({ record, store: this });
   }
 
-  @autobind
-  renderInlineSearchRender(): ReactNode {
-    const { props: { queryBarProps } } = this.node;
-    const actions: ReactNode[] = [];
-    if (queryBarProps) {
-      const { inlineSearchRender } = queryBarProps;
-      if (inlineSearchRender && Array.isArray(inlineSearchRender) && Array.isArray(inlineSearchRender.slice())) {
-        actions.push(...inlineSearchRender);
-      }
-    }
-    return actions;
-  }
 
   @autobind
   renderRowNumber({ record, dataSet }): ReactNode {
@@ -2620,7 +2608,7 @@ export default class TableStore {
 
   async loadCustomized() {
     const { customizedCode } = this.props;
-    const { props: { queryBarProps } } = this.node;
+    const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
     if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');

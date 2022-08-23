@@ -1,6 +1,5 @@
 ---
 order: 29
-only: true
 title:
   zh-CN: 组合搜索条
   en-US: Bar for Combo
@@ -75,7 +74,7 @@ class App extends React.Component {
       },
     },
     autoQuery: false,
-    selection: false,
+    // selection: false,
     pageSize: 5,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
@@ -119,10 +118,11 @@ class App extends React.Component {
       {
         name: 'codeMultiple',
         type: 'object',
-        label: '代码描述（多值）',
+        label: '代码描',
         lovCode: 'LOV_CODE',
         multiple: true,
         // required: true,
+        placeholder: '代码描',
       },
       {
         name: 'codeMultiple_code',
@@ -147,13 +147,12 @@ class App extends React.Component {
         options: this.optionDs, // 下拉框组件的菜单数据集
         defaultValue: 'F',
       },
-      { name: 'date.startDate', type: 'date', label: '开始日期' },
-      { name: 'datee', type: 'date', label: '开始日期', range: true },
+      { name: 'date.startDate', type: 'date', label: '开始日期', range: true },
       { name: 'status', type: 'string', label: 'status' },
       {
         name: 'sexMultiple',
         type: 'string',
-        label: '性别（多值）',
+        label: '性别',
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: true,
       },
@@ -189,9 +188,7 @@ class App extends React.Component {
   }
 
   searchRender() {
-      return [
-        <Icon type="info" />,
-      ];
+      return <Icon type="info" />;
   }
 
   advancedFilter() {
@@ -210,7 +207,7 @@ class App extends React.Component {
     return (
       <>
         <Table
-          buttons={[]}
+          // buttons={['add']}
           dataSet={this.ds}
           queryBar="comboBar"
           customizable
@@ -220,44 +217,24 @@ class App extends React.Component {
             // rowActions: () => [],
             // fuzzyQuery: false,
             // inlineSearch: true,
+            fuzzyQuery: false,
             // simpleMode: true,
             // singleLineMode: false,
-            // inlineSearchRender: this.searchRender(),
+            inlineSearchRender: this.searchRender(),
             // advancedFilter: '323',
             // filerMenuAction: '789',
             comboFilterBar: {
-              searchId: '23',
-              // filterSave: false,
+              // suffixes: ['filter'],
+              // searchId: '25',
+              filterSave: false,
               tableFilterAdapter: (props) => {
                 const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
-                console.log('defaultTableFilterAdapter config', config);
-                const userId = 1;
-                const tenantId = 0;
                 switch (type) {
                   case 'read':
                     return {
                       // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
-                      url: 'https://www.fastmock.site/mock/0936acaa98f364b842d4997788e3f00e/mock/mock/filterlist',
+                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/combo-filterList',
                       method: 'get',
-                    };
-                  case 'create':
-                    return {
-                      url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-                      method: 'put',
-                      data: data[0],
-                    };
-                  case 'update':
-                    return {
-                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config/${data[0].searchId}`,
-                      method: 'put',
-                      data: data[0],
-                    };
-                  case 'destroy':
-                    return {
-                      // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
-                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
-                      data: data[0],
-                      method: 'delete',
                     };
                 }
               },

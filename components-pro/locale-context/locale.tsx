@@ -128,6 +128,7 @@ export interface Locale extends DataSetLocale {
     lock_first_column: string,
     cancel_lock_first_column: string,
     enter_search_filter: string,
+    search: string,
     clear: string,
     show: string,
     hide: string,

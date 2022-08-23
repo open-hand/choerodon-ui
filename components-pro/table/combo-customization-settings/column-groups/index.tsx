@@ -25,6 +25,7 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
     if (removedLock) {
       treeRecords.splice(destIndex + treeRecords.reduce((sum, r) => sum + (r.get('draggable') === false ? 1 : 0), 0), 0, removed);
       treeRecords.forEach((r, index) => {
+        r.init('sort', undefined);
         r.set('sort', index);
       });
     } else {

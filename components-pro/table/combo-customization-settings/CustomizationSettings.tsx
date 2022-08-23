@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Key, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, Key, useCallback, useContext, useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, toJS } from 'mobx';
 import isUndefined from 'lodash/isUndefined';
@@ -51,7 +51,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const { visible, setVisible } = props;
   const { prefixCls, tableStore } = useContext(TableContext);
   const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
-  const [customizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
+  const customizedColumns:ColumnProps[]  = useMemo(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns], [leftOriginalColumns, originalColumns, rightOriginalColumns, customized]);
   const columnDataSet = useMemo(() => new DataSet({
     data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
@@ -94,12 +94,14 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     tableStore.saveCustomized(tempCustomized);
     tableStore.initColumns();
     setVisible(!visible);
-  }), [columnDataSet, tableStore])
+  }), [columnDataSet, tableStore, visible])
   const cancelCustomized = useCallback(action(() => {
+    const { customized } = tableStore;
     tableStore.tempCustomized = { columns: {} };
-    tableStore.node.handleHeightTypeChange();
+    tableStore.saveCustomized(customized);
+    tableStore.initColumns();
     setVisible(!visible);
-  }), [columnDataSet, tableStore])
+  }), [columnDataSet, tableStore, visible])
   return (
     <>
       <ColumnGroups dataSet={columnDataSet} />

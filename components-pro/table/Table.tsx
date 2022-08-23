@@ -227,6 +227,7 @@ export interface ComboFilterBarConfig {
   filterCallback?: (searchId: string) => void;
   filterSave?: boolean; // 是否出现保存按钮
   filterSaveCallback?: (object) => void;
+  suffixes?: Suffixes[];
   filterOptionRenderer?: (searchId, searchIcon, text) => ReactNode;
   tableFilterAdapter?: TransportProps;
 }

@@ -49,6 +49,9 @@ if (fs.existsSync(path.join(__dirname, '../dist'))) {
         if (fs.existsSync(path.join(componentsPath, file, 'style', 'index.less'))) {
           componentsLessContent += `@import "${relativePath}${file}/style/index.less";\n`;
         }
+        if (fs.existsSync(path.join(componentsPath, file, 'combo-customization-settings', 'style', 'index.less'))) {
+          componentsLessContent += `@import "${relativePath}${file}/combo-customization-settings/style/index.less";\n`;
+        }
         if (fs.existsSync(path.join(componentsPath, file, 'customization-settings', 'style', 'index.less'))) {
           componentsLessContent += `@import "${relativePath}${file}/customization-settings/style/index.less";\n`;
         }

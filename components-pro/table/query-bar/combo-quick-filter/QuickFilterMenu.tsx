@@ -11,10 +11,9 @@ import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
 import {
-  isEqualDynamicProps,
-  parseValue,
   SELECTFIELDS,
 } from '../TableComboBar';
+import { isEqualDynamicProps, parseValue } from '../TableDynamicFilterBar';
 import { TableCustomized } from '../../Table';
 
 import Store from './QuickFilterMenuContext';
