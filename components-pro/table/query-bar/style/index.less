@@ -355,10 +355,16 @@
     align-items: center;
     font-size: 0.12rem;
 
-    &:focus-within {
-      input {
-        min-width: 1.34rem !important;
+    span:not(.@{c7n-pro-prefix}-select-suffix-button) {
+      &:focus-within {
+        input {
+          min-width: 1.34rem !important;
+        }
       }
+    }
+
+    .@{c7n-pro-prefix}-suffix-click {
+      min-width: 1.34rem !important;
     }
 
     label {

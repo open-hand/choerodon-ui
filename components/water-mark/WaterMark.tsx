@@ -126,7 +126,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
     if (wrapperRef.current && !removeable) {
       const wrapperDom = getContainer && isElement(getContainer()) ? getContainer() : wrapperRef.current;
       // 监听浏览器控制台样式变化
-      const styleStr = `position: absolute;left: 0;top: 0;width: 100%;height: 100%;z-index:${zIndex};pointer-events: none;background-repeat: repeat;background-size: ${gapX! + width!}px;background-image: url('${imgSrc}');opacity:${markStyle!.opacity}`;
+      const styleStr = `position: absolute !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;z-index:${zIndex} !important;pointer-events: none !important;background-repeat: repeat !important;background-size: ${gapX! + width!}px !important;background-image: url('${imgSrc}') !important;opacity:${markStyle!.opacity} !important`;
       const MutationObserver = window.MutationObserver;
       if (MutationObserver) {
         let mo: MutationObserver | null = new MutationObserver(() => {
@@ -179,9 +179,10 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
             callback(canvas.toDataURL());
           };
         } else if (content) {
-          const { fontSize, fontWeight, fontFamily, color, fontStyle } = markStyle!;
+          const { fontSize = 16, fontWeight = 'normal', fontFamily = 'sans-serif', color = 'rgba(0,0,0,.15)', fontStyle = 'normal' } = markStyle!;
           const markSize = Number(fontSize) * ratio;
-          ctx.font = `${fontStyle} normal ${fontWeight} ${markSize}px/${markHeight}px ${fontFamily}`;
+          ctx.font = `${fontStyle} normal ${fontWeight} ${markSize}px ${fontFamily}`;
+
           ctx.fillStyle = color!;
           ctx.fillText(content, 0, 0);
           setBase64Url(canvas.toDataURL());

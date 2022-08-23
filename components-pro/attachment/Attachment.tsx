@@ -130,7 +130,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       return ShowHelp.none;
     }
     if (viewMode === 'popup') {
-      return showHelp || ShowHelp.tooltip;
+      return showHelp === ShowHelp.none ? showHelp : ShowHelp.tooltip;
     }
     return ShowHelp.newLine;
   }

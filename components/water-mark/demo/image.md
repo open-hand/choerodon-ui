@@ -19,9 +19,9 @@ import { WaterMark } from 'choerodon-ui';
 
 ReactDOM.render(
   <WaterMark
-    height={36}
+    height={200}
     width={200}
-    image="/1bf6a5fa3f014f7d70d24574cfac2e36.svg"
+    image="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-8c8d380247c1b2f6eaaef1cdbe3a3081_xs.jpg%3Fsource%3D172ae18b&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1663752192&t=89fab4f5bc22f04a744676288517002c"
     markStyle={{opacity: 0.2}}
   >
     <div style={{ height: 500 }}>
