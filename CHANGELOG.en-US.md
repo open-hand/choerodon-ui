@@ -55,6 +55,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the dynamic filter bar Lov component click popup interaction.
 - 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
 - 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
+- 💄 `<pro>Table`: Optimized setting when tree data is loaded asynchronously, the parent level is selected and the child level is selected after expansion.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
