@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `Upload`: 新增 beforeUploadFiles 属性。
+- 🌟 `<pro>Lov`: Lov 配置新增 transformSelectedData 钩子。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -159,6 +160,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复列头在一定高度下错位的问题。
 - 🐞 `<pro>Table`: 修复 renderEmpty 内容未居中问题。
 - 🐞 `<pro>Table`: 修复 offsetParent 报错问题。
+- 🐞 `<pro>Table`: 修复当 rowHeight 为 auto 时， headerRowHeight 和 footerRowHeight 不起作用的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。

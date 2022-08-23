@@ -477,13 +477,16 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       </span>,
     );
   }
-  if (headerRowHeight !== 'auto' && rowHeight !== 'auto' && !isSearchCell) {
-    const height: number = Number(cellStyle.height) || ((headerRowHeight === undefined ? rowHeight : headerRowHeight) * (rowSpan || 1));
-    innerProps.style = {
-      height: pxToRem(height),
-      lineHeight: pxToRem(height - 2),
-    };
-    innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+  if (!isSearchCell) {
+    const $rowHeight = headerRowHeight === undefined ? rowHeight : headerRowHeight;
+    if ($rowHeight !== 'auto') {
+      const height: number = Number(cellStyle.height) || ($rowHeight * (rowSpan || 1));
+      innerProps.style = {
+        height: pxToRem(height),
+        lineHeight: pxToRem(height - 2),
+      };
+      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+    }
   }
 
   if (isSearchCell) {

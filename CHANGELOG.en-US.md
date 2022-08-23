@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
+- 🌟 `<pro>Lov`: Add `transformSelectedData` hook in Lov configuration.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
@@ -107,6 +108,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
 - 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
 - 🐞 `<pro>Table`: Fix editor misalignment when row height changes.
+- 🐞 `<pro>Table`: Fix `headerRowHeight` and `footerRowHeight` not working when `rowHeight` is auto.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.

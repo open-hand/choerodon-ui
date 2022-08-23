@@ -1635,7 +1635,9 @@ export default class DataSet extends EventManager {
       return currentRecord;
     }
     if (paging === true || paging === 'server') {
-      index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      if (index > this.currentIndex) {
+        index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      }
       if (index >= 0 && index < totalCount) {
         if (await this.modifiedCheck()) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
