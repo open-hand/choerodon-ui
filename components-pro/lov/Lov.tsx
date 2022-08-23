@@ -634,6 +634,18 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  processRecordToObject(record: Record) {
+    const config = this.getConfig();
+    if (config) {
+      const { transformSelectedData } = config;
+      if (transformSelectedData) {
+        const data = transformSelectedData(record.toData());
+        return this.primitive ? this.restrictInput(data[this.valueField]) : data;
+      }
+    }
+    return super.processRecordToObject(record);
+  }
+
   resetOptions(noCache = false): boolean {
     const { field, record, options } = this;
     const { queryDataSet, props: { pageSize } } = options;

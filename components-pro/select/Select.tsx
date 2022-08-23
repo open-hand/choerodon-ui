@@ -1314,10 +1314,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   processRecordToObject(record: Record) {
-    const { primitive, valueField } = this;
     // 如果为原始值那么 restricted 失效
-    const restricted = this.restrictInput(record.get(valueField));
-    return primitive ? restricted : record.toData();
+    return this.primitive ? this.restrictInput(record.get(this.valueField)) : record.toData();
   }
 
   processObjectValue(value, textField) {
