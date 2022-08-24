@@ -229,6 +229,7 @@ export default class LovView extends Component<LovViewProps> {
       },
       queryBarProps: {
         ...(tableProps && tableProps.queryBarProps),
+        ...(configTableProps && configTableProps.queryBarProps),
         ...getConfig('lovQueryBarProps'),
       } as TableQueryBarHookCustomProps,
     };

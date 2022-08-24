@@ -1635,7 +1635,9 @@ export default class DataSet extends EventManager {
       return currentRecord;
     }
     if (paging === true || paging === 'server') {
-      index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      if (index > this.currentIndex) {
+        index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
+      }
       if (index >= 0 && index < totalCount) {
         if (await this.modifiedCheck()) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
@@ -3549,8 +3551,9 @@ Then the query method will be auto invoke.`,
     const parentParams = this.getParentParams();
     if (queryDataSet) {
       await queryDataSet.ready();
-      if (validateBeforeQuery && !(await queryDataSet.validate())) {
-        throw new Error($l('DataSet', 'invalid_query_dataset'));
+      if (validateBeforeQuery && queryDataSet && queryDataSet.current && !(await queryDataSet.current.validate())) {
+        const validationMessage = queryDataSet.current.getValidationErrors().map(error => error.errors[0].validationMessage).join(' ');
+        throw new Error(`${$l('DataSet', 'invalid_query_dataset')}: ${validationMessage}`);
       }
     }
     let data: any = {};

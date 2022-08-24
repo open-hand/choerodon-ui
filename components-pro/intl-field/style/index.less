@@ -40,6 +40,11 @@
     }
   }
 
+  label:hover .@{intl-prefix-textarea}-suffix,
+  .@{intl-prefix-textarea}:hover ~ .@{intl-prefix-textarea}-suffix {
+    border-color: @input-hover-border-color;
+  }
+
   /* 有border */
   &.@{intl-prefix-textarea}-border {
     .@{intl-prefix-textarea} {
@@ -91,6 +96,15 @@
   &.@{intl-prefix-textarea}-float-label {
     .@{intl-prefix-textarea}-suffix {
       border: none;
+    }
+  }
+
+  /* 禁用 */
+  &.@{intl-prefix-textarea}-disabled .@{intl-prefix-textarea},
+  &.@{intl-prefix-textarea}-disabled label:hover .@{intl-prefix-textarea},
+  & .@{intl-prefix-textarea}:disabled {
+    & ~ .@{intl-prefix-textarea}-suffix {
+      border-color: @input-border-color;
     }
   }
 }

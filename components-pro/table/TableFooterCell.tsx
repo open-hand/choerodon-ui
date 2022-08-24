@@ -30,11 +30,14 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   }, className, footerClassName);
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {};
-  if (footerRowHeight !== 'auto' && rowHeight !== 'auto' && !autoFootHeight) {
-    innerProps.style = {
-      height: pxToRem(footerRowHeight === undefined ? rowHeight : footerRowHeight),
-    };
-    innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+  if (!autoFootHeight) {
+    const $rowHeight = footerRowHeight === undefined ? rowHeight : footerRowHeight;
+    if ($rowHeight !== 'auto') {
+      innerProps.style = {
+        height: pxToRem($rowHeight),
+      };
+      innerClassNames.push(`${prefixCls}-cell-inner-row-height-fixed`);
+    }
   }
   const cellStyle: CSSProperties = {
     textAlign: align || (command ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, dataSet.getField(name))),

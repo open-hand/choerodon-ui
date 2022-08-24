@@ -232,7 +232,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
    */
-  const conditionAssign = (init?: boolean) => {
+  const conditionAssign = async (init?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
@@ -283,7 +283,17 @@ const QuickFilterMenu = function QuickFilterMenu() {
         onStatusChange(RecordStatus.sync);
       }
       if (!init && shouldQuery && autoQuery) {
-        dataSet.query();
+        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
+          dataSet.query();
+        } else if (refEditors) {
+          let hasFocus = false;
+          for (const [key, value] of refEditors.entries()) {
+            if (value && !value.valid && !hasFocus) {
+              refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
       }
     }
   };
@@ -304,7 +314,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       }
       onOriginalChange();
       if (autoQuery) {
-        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet.current && await queryDataSet.current.validate()) {
           dataSet.query();
         } else if (refEditors) {
           let hasFocus = false;

@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Avatar`: 新增 Avatar.Group 头像组支持。
 - 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `Upload`: 新增 beforeUploadFiles 属性。
+- 🌟 `<pro>Lov`: Lov 配置新增 transformSelectedData 钩子。
 - 🌟 `WaterMark`: 新增 WaterMark 组件。
 - 🌟 `<pro>Segmented`: 新增 Segmented 组件。
 - 🌟 `<pro>Button`: 新增 secondary 颜色。
@@ -55,6 +56,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条 Lov 组件点击弹出交互。
 - 💄 `<pro>Table`: 优化非 Tree 模式下的展开行控制。
 - 💄 `<pro>Table`: 优化列拖拽出现列宽回弹的问题。
+- 💄 `<pro>Table`: 优化设置树形数据异步加载时，父级选中且展开后同时选中子级。
 - 💄 `<pro>SelectBox`: 优化必填样式。
 - 💄 `<pro>Select`: 优化多选搜索交互处理。
 - 💄 `<pro>DataSet.Field`: 优化 numberGrouping, formatterOptions, required, range, highlight, help 属性优先级。
@@ -63,6 +65,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化当设置 multiple 以及 isFlat 属性后, 宽度样式计算问题。
 - 💄 `<pro>IntlField`: 优化多行下显示。
 - 💄 `<pro>RichText`: 优化必填样式和高度。
+- 💄 `<pro>Table`: 优化使用 TextArea 时输入值换行展示。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>RichText`: 修复富文本编辑器校验问题。
@@ -104,6 +107,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复个性化跨锁定列拖拽排序的问题。
 - 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
 - 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
+- 🐞 `<pro>Table`: 修复行高变化时编辑器错位的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
@@ -156,6 +160,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复列头在一定高度下错位的问题。
 - 🐞 `<pro>Table`: 修复 renderEmpty 内容未居中问题。
 - 🐞 `<pro>Table`: 修复 offsetParent 报错问题。
+- 🐞 `<pro>Table`: 修复当 rowHeight 为 auto 时， headerRowHeight 和 footerRowHeight 不起作用的问题。
 - 🐞 `<pro>Attachmen.Group`: 修复在 popup 模式下子节点有 Fragment 时计数不正确的问题。
 - 🐞 `<pro>TreeSelect.TreeNode`: 修复 selectable 属性没有效果的问题。
 - 🐞 `<pro>Cascader`: 修复同时设置 multiple changeOnSelect 属性为 true 且 expandTrigger 设置为 hover 时, 会取消选中值的问题。以及优化多选中取消选中值后会自动收起弹框。

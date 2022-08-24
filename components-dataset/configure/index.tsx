@@ -98,7 +98,7 @@ export interface AttachmentConfig {
   onUploadSuccess?: (response: any, attachment: AttachmentFile, props: AttachmentUseChunkProps) => void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: AttachmentsProps) => Promise<void>;
-  onRemove?: (props: AttachmentFileProps) => Promise<boolean>;
+  onRemove?: (props: AttachmentFileProps, multiple: boolean) => Promise<boolean>;
 }
 
 export interface Config {

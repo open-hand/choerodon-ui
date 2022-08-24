@@ -2246,14 +2246,16 @@ export default class TableStore {
     this.mouseBatchChooseIdList = idList;
   }
 
-  showNextEditor(name: string, reserve: boolean) {
+  showNextEditor(name: string, reserve: boolean): boolean {
     const { dataSet } = this;
     const { currentIndex } = dataSet;
     const record = dataSet.get(reserve ? currentIndex - 1 : currentIndex + 1);
     if (record && !isDisabledRow(record)) {
       dataSet.current = record;
       this.showEditor(name);
+      return true;
     }
+    return false;
   }
 
   @action
@@ -2481,7 +2483,7 @@ export default class TableStore {
 
   @autobind
   async onTreeNodeLoad({ record }: { record: Record }): Promise<any> {
-    const { dataSet, treeLoadData, treeAsync } = this.props;
+    const { dataSet, treeLoadData, treeAsync, selectionMode } = this.props;
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
@@ -2490,8 +2492,33 @@ export default class TableStore {
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));
     }
+    // 由子选父
+    const parentSelect = (parent: Record) => {
+      if (!parent.isSelected &&
+        parent.children &&
+        parent.children.length > 0 &&
+        parent.children.every(child => child.isSelected)) {
+        dataSet.select(parent);
+        if (parent.parent) {
+          parentSelect(parent.parent);
+        }
+      }
+    }
     try {
       await Promise.all(promises);
+      if (selectionMode === SelectionMode.treebox) {
+        // 由父选子
+        if (record.isSelected) {
+          defaultTo(record.children, []).forEach(child => {
+            if (!child.isSelected) {
+              dataSet.select(child);
+            }
+          });
+        }
+        else {
+          parentSelect(record);
+        }
+      }
       this.setRowLoaded(record, true);
     } finally {
       this.setRowPending(record, false);
@@ -2750,5 +2777,15 @@ export default class TableStore {
     const visibleStartIndex = getVisibleStartIndex(this, () => scrollTop);
     return index >= getStartIndex(this, () => visibleStartIndex) &&
       index <= getEndIndex(this, () => getVisibleEndIndex(this, () => visibleStartIndex, () => scrollTop));
+  }
+
+  alignEditor() {
+    const { currentEditorName } = this;
+    if (currentEditorName) {
+      const currentEditor = this.editors.get(currentEditorName);
+      if (currentEditor) {
+        currentEditor.alignEditor();
+      }
+    }
   }
 }

@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Avatar`: Added `Avatar.Group` supports.
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
+- 🌟 `<pro>Lov`: Add `transformSelectedData` hook in Lov configuration.
 - 🌟 `WaterMark`: Added component of WaterMark.
 - 🌟 `<pro>Segmented`: Added component of `Segmented`.
 - 🌟 `<pro>Button`: Add the secondary color.
@@ -55,6 +56,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the dynamic filter bar Lov component click popup interaction.
 - 💄 `<pro>Table`: Optimize expanded row control in non tree mode.
 - 💄 `<pro>Table`: The problem of column width rebound occurs when optimizing column dragging.
+- 💄 `<pro>Table`: Optimized setting when tree data is loaded asynchronously, the parent level is selected and the child level is selected after expansion.
 - 💄 `<pro>SelectBox`: Optimized required styles.
 - 💄 `<pro>Select`: Optimize the interactive processing of multi-choice search.
 - 💄 `<pro>DataSet.Field`: Optimized the priority of the `numberGrouping`, `formatterOptions`, `required`, `range`, `highlight`, `help` properties.
@@ -63,6 +65,7 @@ timeline: true
 - 💄 `<pro>Lov`: Optimized the width style calculation problem when setting the `multiple` and `isFlat` properties.
 - 💄 `<pro>IntlField`: Optimized multi-line display.
 - 💄 `<pro>RichText`: Optimized required style and height.
+- 💄 `<pro>Table`: Optimized newline display of input values when used TextArea.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>RichText`: Fix rich text editor validation issues.
@@ -104,6 +107,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue with drag-and-drop sorting across locked columns.
 - 🐞 `<pro>Table`: Fix the problem that the customization modal may pop up multiple times.
 - 🐞 `<pro>Table`: Fix the problem that Popover cannot be closed when the Table's customization modal pops up which inside the Popover.
+- 🐞 `<pro>Table`: Fix editor misalignment when row height changes.
+- 🐞 `<pro>Table`: Fix `headerRowHeight` and `footerRowHeight` not working when `rowHeight` is auto.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>CodeArea`: Fix the problem that the value display is not synchronized through the data source assignment after out of focus in the data source mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
