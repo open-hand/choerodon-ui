@@ -227,11 +227,6 @@ const QuickFilterButton = function QuickFilterButton() {
       });
       const data = [...conditionDataSet.toJSONData(), ...putData];
       const customizedColumns = tableStore && tableStore.customized && tableStore.customized.columns;
-      // const menuRecord = menuDataSet.current;
-      // if (menuRecord) {
-      //   menuRecord.set('personalFilter', stringifyValue(data));
-      //   menuRecord.set('personalColumn', stringifyValue(customizedColumns));
-      // }
       filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) });
     } else {
       dataSet.query();

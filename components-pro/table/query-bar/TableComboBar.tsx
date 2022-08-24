@@ -1,4 +1,12 @@
-import React, {cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode} from 'react';
+import React, {
+  cloneElement,
+  Component,
+  CSSProperties,
+  isValidElement,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import uniq from 'lodash/uniq';
@@ -43,7 +51,6 @@ import QuickFilterButton from './combo-quick-filter/QuickFilterButton';
 import QuickFilterMenuContext from './combo-quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './combo-quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
-import { hide } from '../../tooltip/singleton';
 import TableContext, { TableContextValue } from '../TableContext';
 import { isEqualDynamicProps, isSelect, parseValue } from './TableDynamicFilterBar';
 import ColumnFilter from './ColumnFilter';
@@ -82,6 +89,7 @@ export interface TableComboBarProps extends ElementProps {
   title?: string | ReactNode;
   advancedFilter?: ReactNode;
   filerMenuAction?: ReactNode;
+  queryFieldsStyle?: { [key: string]: CSSProperties };
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -154,8 +162,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   tempFields: Fields;
 
-  isTooltipShown?: boolean;
-
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -183,10 +189,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     if (!fuzzyQueryOnly) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
-    }
-    if (this.isTooltipShown) {
-      hide();
-      delete this.isTooltipShown;
     }
   }
 
@@ -549,14 +551,28 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    * @param name
    */
   createFields(element, name, field): ReactElement {
-    const props: any = {
+    const { queryFieldsStyle } = this.props;
+    const styleCss: CSSProperties | undefined = queryFieldsStyle && queryFieldsStyle[name];
+    let fieldWidth;
+    if (styleCss) {
+      fieldWidth = styleCss.width;
+    }
+    let props: any = {
       ref: (node) => this.refEditors.set(name, node),
       placeholder: field.get('label'),
       maxTagCount: 2,
       border: true,
       clearButton: true,
-      isFlat: true,
+      isFlat: !fieldWidth,
     };
+    if (fieldWidth) {
+      props = {
+        ...props,
+        style: {
+          width: fieldWidth,
+        },
+      };
+    }
     return cloneElement(element, props);
   }
 

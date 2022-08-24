@@ -217,6 +217,23 @@ class App extends React.Component {
             // rowActions: () => [],
             // fuzzyQuery: false,
             // inlineSearch: true,
+            // queryFieldsStyle: {
+            //   name: {
+            //       width: 100,
+            //   },
+            //   age: {
+            //       width: 100,
+            //   },
+            //   code_select: {
+            //     width: 150,
+            //   },
+            //   'date.startDate': {
+            //     width: 200,
+            //   },
+            //   sexMultiple: {
+            //     width: 120,
+            //   },
+            // },
             fuzzyQuery: false,
             // simpleMode: true,
             // singleLineMode: false,
@@ -227,22 +244,21 @@ class App extends React.Component {
               // suffixes: ['filter'],
               // searchId: '25',
               filterSave: false,
-              tableFilterAdapter: (props) => {
-                const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
-                switch (type) {
-                  case 'read':
-                    return {
-                      // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
-                      url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/combo-filterList',
-                      method: 'get',
-                    };
-                }
-              },
+              // tableFilterAdapter: (props) => {
+              //   const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
+              //   switch (type) {
+              //     case 'read':
+              //       return {
+              //         // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
+              //         url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/combo-filterList',
+              //         method: 'get',
+              //       };
+              //   }
+              // },
             }
           }}
           border={false}
           columns={this.columns}
-          queryFieldsLimit={0}
         />
       </>
     );
