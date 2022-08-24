@@ -51,4 +51,5 @@ export interface LovConfig {
   editableFlag?: 'Y' | 'N';
   queryColumns?: number;
   dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps);
+  transformSelectedData?: (value: object) => object;
 }
