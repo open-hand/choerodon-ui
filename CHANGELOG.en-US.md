@@ -68,6 +68,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: Fix the problem of value error setting in the `range` and `multiple` mode.
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
+- 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
 
 ## 1.5.5
 
