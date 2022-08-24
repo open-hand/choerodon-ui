@@ -216,22 +216,20 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   return (
-    <>
-      <Select
-        isFlat
-        placeholder={$l('Table', 'fast_filter')}
-        className={`${prefixCls}-combo-filterName-select`}
-        popupCls={`${prefixCls}-combo-filterName-select-content`}
-        dataSet={filterMenuDataSet}
-        name="filterName"
-        dropdownMatchSelectWidth={false}
-        dropdownMenuStyle={{ width: '1.72rem' }}
-        optionRenderer={optionRenderer}
-        onChange={handleChange}
-        notFoundContent={$l('Table', 'no_save_filter')}
-        clearButton={false}
-      />
-    </>
+    <Select
+      isFlat
+      placeholder={$l('Table', 'fast_filter')}
+      className={`${prefixCls}-combo-filterName-select`}
+      popupCls={`${prefixCls}-combo-filterName-select-content`}
+      dataSet={filterMenuDataSet}
+      name="filterName"
+      dropdownMatchSelectWidth={false}
+      dropdownMenuStyle={{ width: '1.72rem' }}
+      optionRenderer={optionRenderer}
+      onChange={handleChange}
+      notFoundContent={$l('Table', 'no_save_filter')}
+      clearButton={false}
+    />
   );
 };
 
