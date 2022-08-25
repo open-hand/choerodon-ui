@@ -117,6 +117,7 @@ timeline: true
 - 🐞 `Tabs`: Fix the problem that the dataset validation badge cannot be cleared when call the remove method.
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
 - 🐞 `<pro>Cascader`: Fixed when the `searchable` property is set to `true` and the same value is displayed at the same level in the `options`, choose value error.
+- 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
 
 ## 1.5.5
 

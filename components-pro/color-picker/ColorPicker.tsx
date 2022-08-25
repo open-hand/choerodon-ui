@@ -464,7 +464,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   rgbToHEX(r, g, b, a) {
     function hex(num) {
-      const hexNum = num.toString(16);
+      const hexNum = Number(num).toString(16);
       return hexNum.length === 1 ? `0${hexNum}` : hexNum[1] === '.' ? `0${hexNum[0]}` : hexNum;
     }
 
@@ -663,11 +663,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         this.setHueColor(this.rgbToHEX(hr, hg, hb, ha));
       }
     } else {
-      const valueToNumber = Number(value);
-      if (!isNaN(valueToNumber)) {
+      let valueToNumber = Number(value);
+      if (!isNaN(valueToNumber) || name === 'a') {
         if (name === 'a') {
           if (valueToNumber >= 1) {
-            value = 1;
+            valueToNumber = 1;
           } else if (value && value.slice(-1) === '.') {
             const timer = setTimeout(() => {
               clearTimeout(timer);
@@ -678,9 +678,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
             return;
           }
         } else if (value > 255) {
-          value = 255;
+          valueToNumber = 255;
         }
-        rgba[name] = value || valueToNumber;
+        rgba[name] = valueToNumber;
         const { r, g, b, a } = rgba;
         const { h, s, v } = this.rgbToHSV(r / 255, g / 255, b / 255, a);
         this.setRGBA(r, g, b, a);
