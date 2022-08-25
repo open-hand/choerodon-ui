@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.6
+
+`2022-08-25`
+
 - 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, modalClosable, cacheRecords, tableShowCachedTips, attachment.fetchFileSize 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
@@ -116,7 +120,8 @@ timeline: true
 - 🐞 `<pro>Tabs`: 修复 DataSet remove 时校验徽章没有消失的问题。
 - 🐞 `<pro>Button`: 修复按钮更改 disabled 属性后仍有 focus 样式的问题。
 - 🐞 `<pro>Cascader`: 修复当设置 searchable 属性为 ture 且下拉数据源中同一层级显示值相同时，选择值出错的问题。
-- 🐞 `<pro>ColorPicker`: 修复输入 RGBA 时转换十六进制失败的问题.
+- 🐞 `<pro>ColorPicker`: 修复输入 RGBA 时转换十六进制失败的问题。
+- 🐞 `<pro>TextArea`: 修复 autoSize 最大最小行配置相等时无法滚动的问题。
 
 ## 1.5.5
 

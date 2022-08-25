@@ -37,7 +37,6 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   static defaultProps = {
     ...TextField.defaultProps,
     suffixCls: 'textarea',
-    rows: 4,
     autoSize: false,
   };
 
@@ -53,11 +52,34 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   }
 
   get resize(): ResizeType | undefined {
-    return this.props.resize;
+    const { autoSize, resize } = this.props;
+    if (autoSize) {
+      const { minRows, maxRows } = autoSize as AutoSizeType;
+      if (minRows && minRows === maxRows) {
+        return undefined;
+      }
+    }
+    return resize;
   }
 
   get autoSize(): boolean | AutoSizeType | undefined {
-    return this.props.autoSize;
+    const { autoSize } = this.props;
+    if (autoSize) {
+      const { minRows, maxRows } = autoSize as AutoSizeType;
+      if (minRows && minRows === maxRows) {
+        return false;
+      }
+    }
+    return autoSize;
+  }
+
+  get rows(): number {
+    const { rows = 4, autoSize } = this.props;
+    if (autoSize) {
+      const { minRows } = autoSize as AutoSizeType;
+      return minRows || rows;
+    }
+    return rows;
   }
 
   componentDidMount() {
@@ -91,7 +113,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
   }
 
   getOtherProps() {
-    const { resize = ResizeType.none, autoSize } = this;
+    const { resize = ResizeType.none, autoSize, rows } = this;
     const otherProps = super.getOtherProps();
     const { style = {} } = otherProps;
     style.resize = resize;
@@ -99,14 +121,12 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
       style.transition = 'none';
     }
     if (autoSize) {
-      const { minRows } = autoSize as AutoSizeType;
-      otherProps.rows = minRows;
-
       const { autoSizeCalcHeight } = this;
       if (autoSizeCalcHeight) {
         Object.assign(style, autoSizeCalcHeight);
       }
     }
+    otherProps.rows = rows;
     otherProps.style = style;
     return otherProps;
   }

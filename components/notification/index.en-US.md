@@ -63,3 +63,4 @@ notification.config({
 | top | Distance from the top of the viewport, when `placement` is `topRight` or `topLeft` (unit: pixels). | number | 24 |
 | maxCount | Max message show, drop oldest if exceed limit | number |  |
 | foldCount | Over count will collapse display | number | |
+| icons | 各类型通知 icon 配置 | object | { success: 'check', info: 'info',error: 'error',warning: 'warning',loading: 'loading' } |

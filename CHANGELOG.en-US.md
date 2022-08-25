@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.6
+
+`2022-08-25`
+
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `modalClosable`, `cacheRecords`, `tableShowCachedTips`, `attachment.fetchFileSize` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
@@ -118,6 +122,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fix the problem of focus style after changing the `disabled` attribute of the button.
 - 🐞 `<pro>Cascader`: Fixed when the `searchable` property is set to `true` and the same value is displayed at the same level in the `options`, choose value error.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
+- 🐞 `<pro>TextArea`: Fix autoSize not scrolling when maxRows and minRows line configurations are equal.
 
 ## 1.5.5
 

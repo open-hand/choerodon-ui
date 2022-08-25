@@ -14,9 +14,8 @@ import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
 import { LovViewTarget } from 'choerodon-ui/lib/configure';
 import Icon from '../icon';
-import { open } from '../modal-container/ModalContainer';
 import LovView, { LovViewProps } from './LovView';
-import { ModalProps } from '../modal/Modal';
+import Modal, { ModalProps } from '../modal/Modal';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Spin from '../spin';
@@ -516,7 +515,7 @@ export default class Lov extends Select<LovProps> {
           const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
           const valueField = this.getProp('valueField');
           const textField = this.getProp('textField');
-          this.modal = open(mergeProps<ModalProps>({
+          this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
             children: (
               <LovView
