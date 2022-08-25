@@ -203,7 +203,7 @@ export function processValue(value: any, field?: Field, record?: Record, isCreat
   if (field) {
     const multiple = field.get('multiple', record);
     const range = field.get('range', record);
-    if (multiple && field.get('type', record) !== FieldType.attachment) {
+    if (multiple && ![FieldType.attachment, FieldType.color].includes(field.get('type', record))) {
       if (isEmpty(value)) {
         if (isCreated) {
           // for defaultValue
