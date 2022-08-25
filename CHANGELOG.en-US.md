@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.6
+
+`2022-08-25`
+
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `modalClosable`, `cacheRecords`, `tableShowCachedTips`, `attachment.fetchFileSize` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.

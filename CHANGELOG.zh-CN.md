@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.6
+
+`2022-08-25`
+
 - 🌟 `configure`: 新增 lovNoCache, uploadShowReUploadIcon, performanceTableAutoHeight, fieldMaxTagCount, fieldMaxTagPlaceholder, modalClosable, cacheRecords, tableShowCachedTips, attachment.fetchFileSize 属性。
 - 🌟 `<pro>Attachment`: 新增 onRemove 属性。
 - 🌟 `<pro>Table`: 新增 getHeaderGroups, getGroups 方法。
