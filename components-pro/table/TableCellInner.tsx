@@ -400,7 +400,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (height !== undefined && rows === 0) {
         return {
           height: pxToRem(height),
-          lineHeight: 1,
+          lineHeight: 1.5,
           ...style,
         };
       }
