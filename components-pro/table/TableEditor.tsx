@@ -557,7 +557,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         const {
           column: { lock },
         } = this.props;
-        const { prefixCls } = this.context;
+        const { prefixCls, rowHeight } = this.context;
         const props: any = {
           className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
         };
@@ -567,6 +567,9 @@ export default class TableEditor extends Component<TableEditorProps> {
           editorProps.resize = resize;
           if (resize !== ResizeType.none) {
             editorProps.onResize = this.handleEditorResize;
+            if (rowHeight === 'auto') {
+              editorProps.autoSize = true;
+            }
           }
         }
         return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
