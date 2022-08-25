@@ -89,9 +89,17 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     };
   }), [tableStore]);
   const saveCustomized = useCallback(action(() => {
-    const { tempCustomized } = tableStore;
+    const { tempCustomized, customized } = tableStore;
+    const newCustomized = {
+      ...customized,
+      ...tempCustomized,
+      columns: {
+        ...customized.columns,
+        ...tempCustomized.columns,
+      },
+    };
     tableStore.tempCustomized = { columns: {} };
-    tableStore.saveCustomized(tempCustomized);
+    tableStore.saveCustomized(newCustomized);
     tableStore.initColumns();
     setVisible(!visible);
   }), [columnDataSet, tableStore, visible])
