@@ -5,15 +5,15 @@
  */
 
 const HIDDEN_TEXTAREA_STYLE = `
-  min-height:0 !important;
-  max-height:none !important;
-  height:0 !important;
-  visibility:hidden !important;
-  overflow:hidden !important;
-  position:absolute !important;
-  z-index:-1000 !important;
-  top:0 !important;
-  right:0 !important
+ min-height:0 !important;
+ max-height:none !important;
+ height:0 !important;
+ visibility:hidden !important;
+ overflow:hidden !important;
+ position:absolute !important;
+ z-index:-1000 !important;
+ top:0 !important;
+ right:0 !important
 `;
 
 const SIZING_STYLE = [
@@ -24,6 +24,7 @@ const SIZING_STYLE = [
   'font-family',
   'font-weight',
   'font-size',
+  'font-variant',
   'text-rendering',
   'text-transform',
   'width',
@@ -32,6 +33,7 @@ const SIZING_STYLE = [
   'padding-right',
   'border-width',
   'box-sizing',
+  'word-break',
 ];
 
 export interface NodeType {
@@ -44,7 +46,7 @@ export interface NodeType {
 const computedStyleCache: { [key: string]: NodeType } = {};
 let hiddenTextarea: HTMLTextAreaElement;
 
-function calculateNodeStyling(node: HTMLElement, useCache = false) {
+export function calculateNodeStyling(node: HTMLElement, useCache = false) {
   const nodeRef = (node.getAttribute('id') ||
     node.getAttribute('data-reactid') ||
     node.getAttribute('name')) as string;
@@ -68,7 +70,9 @@ function calculateNodeStyling(node: HTMLElement, useCache = false) {
     parseFloat(style.getPropertyValue('border-bottom-width')) +
     parseFloat(style.getPropertyValue('border-top-width'));
 
-  const sizingStyle = SIZING_STYLE.map(name => `${name}:${style.getPropertyValue(name)}`).join(';');
+  const sizingStyle = SIZING_STYLE.map(
+    (name) => `${name}:${style.getPropertyValue(name)}`,
+  ).join(';');
 
   const nodeInfo: NodeType = {
     sizingStyle,
@@ -89,31 +93,36 @@ export default function calculateNodeHeight(
   useCache = false,
   minRows: number | null = null,
   maxRows: number | null = null,
-) {
+): React.CSSProperties {
   if (!hiddenTextarea) {
     hiddenTextarea = document.createElement('textarea');
+    hiddenTextarea.setAttribute('tab-index', '-1');
+    hiddenTextarea.setAttribute('aria-hidden', 'true');
     document.body.appendChild(hiddenTextarea);
   }
 
   // Fix wrap="off" issue
-
   if (uiTextNode.getAttribute('wrap')) {
-    hiddenTextarea.setAttribute('wrap', uiTextNode.getAttribute('wrap') as string);
+    hiddenTextarea.setAttribute(
+      'wrap',
+      uiTextNode.getAttribute('wrap') as string,
+    );
   } else {
     hiddenTextarea.removeAttribute('wrap');
   }
 
   // Copy all CSS properties that have an impact on the height of the content in
   // the textbox
-  const { paddingSize, borderSize, boxSizing, sizingStyle } = calculateNodeStyling(
-    uiTextNode,
-    useCache,
-  );
+  const { paddingSize, borderSize, boxSizing, sizingStyle } =
+    calculateNodeStyling(uiTextNode, useCache);
 
   // Need to have the overflow attribute to hide the scrollbar otherwise
   // text-lines will not calculated properly as the shadow will technically be
   // narrower for content
-  hiddenTextarea.setAttribute('style', `${sizingStyle};${HIDDEN_TEXTAREA_STYLE}`);
+  hiddenTextarea.setAttribute(
+    'style',
+    `${sizingStyle};${HIDDEN_TEXTAREA_STYLE}`,
+  );
   hiddenTextarea.value = uiTextNode.value || uiTextNode.placeholder || '';
 
   let minHeight = Number.MIN_SAFE_INTEGER;
