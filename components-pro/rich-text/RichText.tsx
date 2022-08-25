@@ -7,6 +7,8 @@ import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import { Delta } from './quill';
 import DataSet from '../data-set/DataSet';
+import { showValidationMessage } from '../field/utils';
+import { ShowValidation } from '../form/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import BaseEditor from './BaseEditor';
@@ -30,6 +32,7 @@ export interface RichTextProps extends FormFieldProps {
    * @default true
    */
   border?: boolean;
+  showValidation?: ShowValidation;
 }
 
 const defaultRichTextOptions: ReactQuillProps = {
@@ -77,6 +80,18 @@ export default class RichText extends FormField<RichTextProps> {
 
   get border(): boolean | undefined {
     return this.props.border;
+  }
+
+  
+  showTooltip(e): boolean {
+    if (this.showValidation === ShowValidation.tooltip) {
+      const message = this.getTooltipValidationMessage();
+      if (message) {
+        showValidationMessage(e, message, this.context.getTooltipTheme('validation'), this.context.getTooltipPlacement('validation'), this.getContextConfig);
+        return true;
+      }
+    }
+    return false;
   }
 
   getOmitPropsKeys(): string[] {
@@ -155,7 +170,11 @@ export default class RichText extends FormField<RichTextProps> {
     this.rtOptions.readOnly = this.disabled || this.readOnly;
     const deltaOps = this.getValue() || defaultValue;
     return (
-      <div {...this.getWrapperProps()}>
+      <div
+        {...this.getWrapperProps()}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         <BaseEditor
           {...this.getOtherProps()}
           {...this.rtOptions}
