@@ -322,7 +322,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   handleEditorResize(width, height, target) {
     const { editorProps, cellNode } = this;
     const { column: { name } } = this.props;
-    if (cellNode && editorProps) {
+    if (editorProps) {
       const { tableStore, dataSet, inlineEdit, rowHeight } = this.context;
       const { currentEditRecord } = tableStore;
       const { onResize = noop } = editorProps;
@@ -340,7 +340,7 @@ export default class TableEditor extends Component<TableEditorProps> {
             }
           });
         });
-      } else {
+      } else if (cellNode) {
         this.alignEditor(cellNode, height);
       }
     }
