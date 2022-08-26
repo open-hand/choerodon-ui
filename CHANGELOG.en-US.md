@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+
 ## 1.5.6
 
 `2022-08-25`

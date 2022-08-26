@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
+
 ## 1.5.6
 
 `2022-08-25`
