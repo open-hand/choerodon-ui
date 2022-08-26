@@ -1,0 +1,92 @@
+## 实例运行数量
+replicaCount: 1
+
+## 设置默认的 image、imageTag 和 imagePullPolicy。
+image:
+  repository: registry.cn-shanghai.aliyuncs.com/hzero-hzero-c7n-hips/c7n-website
+  # tag: ~
+  pullPolicy: IfNotPresent
+
+## Deployment 更新策略
+deploymentUpdate:
+  type: RollingUpdate
+  maxUnavailable: 0
+  maxSurge: 100%
+
+## Pod 优先级设置
+## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+##
+priorityClassName: ""
+
+## Pod 节点分配
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+## 给 Pod 附加的 annotations
+podAnnotations: {}
+
+## ## Pod 附加的 labels
+podLabels: {}
+
+## 实例运行时的环境变量
+env:
+  open:
+    # 本地化
+    LOCAL: false
+## 资源请求和限制相关配置
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  limits:
+    # cpu: 100m
+    memory: 128Mi
+  requests:
+    # cpu: 100m
+    memory: 128Mi
+
+## service 相关设置
+## ref: http://kubernetes.io/docs/user-guide/services/
+##
+service:
+  # 是否启用 service 暴露本服务
+  enabled: false
+  # Service 名称
+  name: c7n-website
+  # Service 类型
+  type: ClusterIP
+  # 指定 service 的 clusterIP
+  clusterIP: ~
+  # 端口设置
+  ports:
+    # 服务端口
+    http:
+      port: 80
+  ## externalIPs 设置
+  # externalIPs:
+  #   - externalIp1
+  annotations: {}
+
+# 是否收集日志至EFK
+logs:
+  enabled: false
+  # 日志收集格式
+  parser: nginx
+
+## Ingress 相关配置
+## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/
+##
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+  path: /
+  host: choerodon.example.com
+  tls: []
+  # - secretName: choerodon-example-tls
+  #   hosts:
+  #   - choerodon.example.com
