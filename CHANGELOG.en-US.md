@@ -69,6 +69,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
+- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 
 ## 1.5.5
 

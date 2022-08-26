@@ -68,7 +68,8 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复 range 和 multiple 模式下设值会报错的问题。
 - 🐞 `<pro>IntlField`: 修复弹窗取消时会清空值的问题。
 - 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
-- 🐞 `<pro>ColorPicker`: 修复输入 RGBA 时转换十六进制失败的问题.
+- 🐞 `<pro>ColorPicker`: 修复输入 RGBA 时转换十六进制失败的问题。
+- 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 
 ## 1.5.5
 
