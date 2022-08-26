@@ -9,10 +9,9 @@ import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
 import { ResizeType, AutoSizeType } from '../text-area/enum';
 import Icon from '../icon';
-import { open } from '../modal-container/ModalContainer';
 import IntlList from './IntlList';
 import { IntlType } from './enum';
-import { ModalProps } from '../modal/Modal';
+import Modal, { ModalProps } from '../modal/Modal';
 import localeContext, { $l } from '../locale-context';
 import Progress from '../progress';
 import { Size, Tooltip as TextTooltip } from '../core/enum';
@@ -135,7 +134,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
         this.storeLocales(record, name);
       }
 
-      this.modal = open({
+      this.modal = Modal.open({
         title: $l('IntlField', 'modal_title'),
         children: (
           <IntlList
