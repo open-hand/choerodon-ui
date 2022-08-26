@@ -143,6 +143,34 @@
       "order": 10,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "placement.js",
+      "title": {
+        "zh": "弹出位置",
+        "en": "popupPlacement"
+      },
+      "description": {
+        "zh": "可以设置弹出位置: bottomLeft | bottomRight | topLeft | topRight\n",
+        "en": "popupPlacement: `bottomLeft` | `bottomRight` | `topLeft` | `topRight`.\n"
+      },
+      "order": 11,
+      "screenshot": "",
+      "category": "pro"
+    },
+    {
+      "filename": "option-renderer.js",
+      "title": {
+        "zh": "optionRenderer 输入属性",
+        "en": "optionRenderer Input Property"
+      },
+      "description": {
+        "zh": "使用`optionRenderer`属性。\n",
+        "en": "Use `optionRenderer` input property.\n"
+      },
+      "order": 11,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

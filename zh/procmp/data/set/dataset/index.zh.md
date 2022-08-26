@@ -270,7 +270,6 @@ abstract: true
 | restore() | 从缓存恢复保存的数据 |  |  |  |
 | clear() | 清除所有数据 |  |  |    |
 | getValidationErrors() | 获取校验错误信息 | | | 1.4.0   |
-| getAllValidationErrors() | 获取所有校验错误信息 |  |  | 1.5.1 |
 
 ### Field Props
 
@@ -299,7 +298,7 @@ abstract: true
 | readOnly | 是否只读 | boolean | false |   |
 | disabled | 是否禁用 | boolean | false |   |
 | [textField](/zh/datasetapi/field-props/text-field) | 值列表的文本字段 | string | meaning | |
-| [valueField](/zh/datasetapi/field-props/value-field) | 值列表的值字段 | string | value |    |
+| [valueField](/zh/datasetapi/field-props/text-field) | 值列表的值字段 | string | value |    |
 | [trueValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，true 对应的值 | boolean \|string \|number | true | |
 | [falseValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，false 对应的值 | boolean \|string \|number | false |   |
 | options | 下拉框组件的菜单数据集 | DataSet |  |   |
@@ -321,7 +320,7 @@ abstract: true
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/zh/procmp/configure/configure#axiosrequestconfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.0.0 |
 | bind | 内部字段别名绑定 | string |  | |
 | [dynamicProps](/zh/datasetapi/other/dynamic-props) | [动态属性对象](/zh/tutorials/dataSet-more#dynamicprops)。对象为字段属性和返回该字段值的钩子的键值对。| { fieldProp: ({ dataSet, record, name }) => value } |  |  |
-| [computedProps](/zh/datasetapi/other/computed-props) | 计算属性对象。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，一般用于计算量大的场景，避免重复计算，提高性能。请确保计算依赖的值是可观察的。  | { fieldProp: ({ dataSet, record, name }) => value } |  | 1.4.0 |
+| [computedProps](/zh/datasetapi/other/dynamic-props) | 计算属性对象。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，一般用于计算量大的场景，避免重复计算，提高性能。请确保计算依赖的值是可观察的。  | { fieldProp: ({ dataSet, record, name }) => value } |  | 1.4.0 |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射，详见[级联](/zh/tutorials/select#级联)。 | object |  |   |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |   |
 | ignore | 忽略提交, 可选值: always - 总是忽略 clean - 值未变化时忽略 never - 从不忽略 | string | |   |
@@ -342,7 +341,8 @@ abstract: true
 | chunkSize | 附件分片大小 | number | [AttachmentConfig.defaultChunkSize](zh/procmp/configure/configure#attachmentconfig)  | 1.5.2 |
 | chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   | 1.4.4 |
-
+| help | 额外信息，常用于提示 | string |  |
+| dateMode | 日期组件显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  | 1.5.6 |
 ### Field Values
 
 > 详细介绍：[Field](/zh/tutorials/dataSet-more#fields)

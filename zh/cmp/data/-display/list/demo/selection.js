@@ -25,10 +25,7 @@ ReactDOM.render(
   <List
     itemLayout="horizontal"
     dataSource={data}
-    rowSelection={{
-      selectedRowKeys: [1, 3],
-      onChange: (selectedRowKeys) => console.log('选中了：', selectedRowKeys),
-    }}
+    rowSelection
     renderItem={(item) => (
       <List.Item value={item.id}>
         <List.Item.Meta

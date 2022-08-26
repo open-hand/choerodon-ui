@@ -1,21 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { action } from 'mobx';
 import {
   useDataSet,
   Table,
-  Form,
-  TextField,
   CheckBox,
-  SelectBox,
-  Switch,
   Row,
   Col,
+  Button,
 } from 'choerodon-ui/pro';
-import { action } from 'mobx';
-
-const { Option } = SelectBox;
 
 const App = () => {
+  const [bodyExpanded, setBodyExpanded] = React.useState(false);
   // 物料
   const itemDs = useDataSet(
     () => ({
@@ -564,24 +560,55 @@ const App = () => {
   const itemColumns = React.useMemo(
     () => [
       {
-        title: '头分组聚合列', // 可在个性化内显示
-        header: ({ aggregationTree, title }) =>
-          aggregationTree ? aggregationTree : title,
-        renderer: ({ text, record, dataSet, aggregationTree }) =>
-          record.getState('editing') ? text : aggregationTree[0],
-        aggregation: true,
-        aggregationLimit: 3,
-        aggregationLimitDefaultExpanded: true,
-        titleEditable: false,
-        key: 'itemDetail',
-        align: 'left',
+        header: () => 'xxx',
         children: [
-          { name: 'unitPrice' },
-          { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
-          { name: 'amount' },
-          { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
+          {
+            title: '头分组聚合列', // 可在个性化内显示
+            header: ({ aggregationTree, title }) =>
+              aggregationTree ? aggregationTree : title,
+            renderer: ({
+              text,
+              record,
+              dataSet,
+              aggregationTree,
+              headerGroup,
+            }) =>
+              headerGroup && headerGroup.getState('editing') ? (
+                <Row>
+                  <Col
+                    span={12}
+                    style={{ cursor: 'pointer', borderRight: '1px solid #eee' }}
+                    onClick={() =>
+                      record.isSelected
+                        ? dataSet.unSelect(record)
+                        : dataSet.select(record)
+                    }
+                  >
+                    {aggregationTree[0]}
+                    {record.isSelected ? <div>已选</div> : null}
+                  </Col>
+                  <Col span={12}>
+                    {record.isSelected ? aggregationTree[1] : null}
+                  </Col>
+                </Row>
+              ) : (
+                aggregationTree[0]
+              ),
+            aggregation: true,
+            aggregationLimit: 3,
+            aggregationLimitDefaultExpanded: true,
+            titleEditable: false,
+            key: 'itemDetail',
+            align: 'left',
+            children: [
+              { name: 'unitPrice' },
+              { name: 'quantity', editor: true, aggregationTreeIndex: 1 },
+              { name: 'amount' },
+              { name: 'tax', renderer: ({ value }) => `${value * 100}%` },
+            ],
+            width: 300,
+          },
         ],
-        width: 300,
       },
     ],
     [],
@@ -627,18 +654,15 @@ const App = () => {
           ),
           renderer: ({ text, headerGroup, record, dataSet }) => {
             if (headerGroup) {
-              const { totalRecords } = headerGroup;
               return (
                 <>
                   <div>
                     {text}
                     <CheckBox
                       value
-                      checked={totalRecords.some((r) => r.getState('editing'))}
+                      checked={headerGroup.getState('editing') || false}
                       onChange={action((value) =>
-                        totalRecords.forEach((r) =>
-                          r.setState('editing', value),
-                        ),
+                        headerGroup.setState('editing', value),
                       )}
                     />
                   </div>
@@ -663,14 +687,23 @@ const App = () => {
         name: 'itemCode',
         type: 'column',
         columnProps: {
+          header: () => '整包',
           align: 'left',
-          aggregation: true,
-          aggregationLimit: 2,
-          aggregationLimitDefaultExpanded: true,
           children: [
-            { name: 'itemSize' },
-            { name: 'origin' },
-            { name: 'unit' },
+            {
+              header: () => '报价信息',
+              key: 'key',
+              align: 'left',
+              aggregation: true,
+              aggregationLimit: 2,
+              aggregationLimitDefaultExpanded: true,
+              width: 200,
+              children: [
+                { name: 'itemSize' },
+                { name: 'origin' },
+                { name: 'unit' },
+              ],
+            },
           ],
           renderer: ({ record, dataSet, text }) => {
             const handleClick = action(() => {
@@ -685,7 +718,6 @@ const App = () => {
               </div>
             );
           },
-          width: 200,
         },
       },
     ],
@@ -724,12 +756,22 @@ const App = () => {
 
   const group1Ref = React.useRef(null);
   const group2Ref = React.useRef(null);
-  const handleGroup1ScrollLeft = React.useCallback((scrollLeft) => {
-    const { current } = group2Ref;
-    if (current) {
-      current.setScrollLeft(scrollLeft);
-    }
-  }, []);
+  const handleGroup1ScrollLeft = React.useCallback(
+    (scrollLeft, getScrollInfo) => {
+      const { current } = group2Ref;
+      if (current) {
+        current.setScrollLeft(scrollLeft);
+      }
+      console.log('scrollLeft', getScrollInfo());
+    },
+    [],
+  );
+  const handleGroup1ScrollTop = React.useCallback(
+    (scrollTop, getScrollInfo) => {
+      console.log('scrollTop', getScrollInfo());
+    },
+    [],
+  );
   const handleGroup2ScrollLeft = React.useCallback((scrollLeft) => {
     const { current } = group1Ref;
     if (current) {
@@ -748,9 +790,16 @@ const App = () => {
       current.setColumnWidth(width, index);
     }
   }, []);
+  const showGroupInfo = React.useCallback(() => {
+    const { current } = group1Ref;
+    if (current) {
+      console.log(current.getHeaderGroups()[0].getState('editing'));
+    }
+  }, []);
 
   return (
     <>
+      <Button onClick={showGroupInfo}>showGroupInfo</Button>
       <Table
         customizable
         customizedCode="advanced-group"
@@ -763,11 +812,13 @@ const App = () => {
         groups={itemGroups}
         headerRowHeight="auto"
         onScrollLeft={handleGroup1ScrollLeft}
+        onScrollTop={handleGroup1ScrollTop}
         onColumnResize={handleGroup1ColumnResize}
         ref={group1Ref}
         style={{ height: 500 }}
         selectionMode="none"
         bodyExpandable
+        fullColumnWidth={false}
       />
       <Table
         customizable
@@ -786,7 +837,8 @@ const App = () => {
         ref={group2Ref}
         selectionMode="none"
         bodyExpandable
-        defaultBodyExpanded={false}
+        bodyExpanded={bodyExpanded}
+        onBodyExpand={setBodyExpanded}
       />
     </>
   );

@@ -155,8 +155,7 @@
         "en": "Click the card content area to select the card.\n"
       },
       "order": 10,
-      "height": 240,
-      "ignores": ["theme1", "theme3", "theme5"],
+      "height": 350,
       "screenshot": ""
     }
   ]

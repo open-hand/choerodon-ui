@@ -17,6 +17,7 @@ import {
   Range,
   Icon,
   Button,
+  Output,
 } from 'choerodon-ui/pro';
 
 const { Option } = Select;
@@ -162,6 +163,7 @@ const App = () => {
           help="请输入与左侧相同的密码"
           showHelp="tooltip"
         />
+        <Output label="文本展示" value="这里是Output文本展示" />
         <Switch label="是否冻结" name="flozen" required />
         <CheckBox label="是否开启" name="enabled" />
         <Select label="语言" name="language" required multiple>

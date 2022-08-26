@@ -59,6 +59,20 @@
       "height": 125,
       "order": 3,
       "screenshot": ""
+    },
+    {
+      "filename": "group.js",
+      "title": {
+        "zh": "头像组",
+        "en": "Avatar Group"
+      },
+      "description": {
+        "zh": "头像组合展现。\n",
+        "en": "Head portrait combination display.\n"
+      },
+      "height": 500,
+      "order": 4,
+      "screenshot": ""
     }
   ]
 }

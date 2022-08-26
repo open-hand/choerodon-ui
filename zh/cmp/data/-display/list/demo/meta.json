@@ -96,12 +96,11 @@
         "en": "Bind DataSet"
       },
       "description": {
-        "zh": "通过绑定数据源实现列表。\n",
+        "zh": "通过绑定数据源实现列表。开启勾选项 DataSet 必须指定 primaryKey 来确定勾选项的值。\n",
         "en": "Implement list by binding data source.\n"
       },
       "order": 6,
       "height": 400,
-      "ignores": ["theme1", "theme3", "theme5"],
       "screenshot": ""
     },
     {
@@ -116,7 +115,6 @@
       },
       "order": 7,
       "height": 300,
-      "ignores": ["theme1", "theme3", "theme5"],
       "screenshot": ""
     }
   ]

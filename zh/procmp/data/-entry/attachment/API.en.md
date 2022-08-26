@@ -21,7 +21,7 @@ title: API
 | chunkThreads | 分片上传并发数 | number | [attachment.defaultChunkThreads](/zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
 | pictureWidth | 图片尺寸， 只适用于 listType 为 picture 和 picture-card | number |  | |
 | count | 自定义附件数量 | number |  | |
-| max | 同时上传文件的最大数量, `0` 表示无限制 | number |  | |
+| max | 同时上传文件的最大数量, `0` 表示无限制(设置 `multiple` 为 `false` 后, `max` 无效) | number |  | |
 | showHistory | 可显示操作历史记录 | boolean |  | |
 | listLimit | 上传列表最大显示数量，只适用于只读模式 | number |  | |
 | downloadAll | 是否显示全部下载按钮，只适用于只读模式， 必须配置[attachment.getDownloadAllUrl](/zh/procmp/configure/configure#attachmentconfig) | boolean \| ButtonProps | true | |
@@ -40,6 +40,7 @@ title: API
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | | |
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void |  | |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void |  | | |
+| onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }, multiple: boolean) => boolean | | |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield) 和 [Button](/zh/procmp/general/button#API)。
 

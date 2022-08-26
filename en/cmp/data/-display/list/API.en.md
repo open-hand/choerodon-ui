@@ -66,3 +66,11 @@ title: API
 | total | total number of data items | number | 0 |
 | onChange | a callback function, executed when the page number is changed, and it takes the resulting page number and pageSize as its arguments | Function(page, pageSize) | noop |
 | onShowSizeChange | a callback function, executed when `pageSize` is changed | Function(current, size) | noop |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | Specify the key array of the selected item, which needs to be matched with onchange | string[] \| number[] | - |
+| defaultSelectedRowKeys | Key array of default selected items | string[] \| number[] | |
+| onChange | Callback when the selected item changes | function(selectedRowKeys) | - |

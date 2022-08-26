@@ -32,6 +32,7 @@ configure({
         }));
       });
     },
+    fetchFileSize: () => Promise.resolve(500 * 1024 * 1024),
     batchFetchCount(uuids) {
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },

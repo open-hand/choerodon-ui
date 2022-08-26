@@ -9,13 +9,15 @@ function getListData(value) {
       listData = [
         { type: 'warning', content: 'This is warning event.' },
         { type: 'success', content: 'This is usual event.' },
-      ]; break;
+      ];
+      break;
     case 10:
       listData = [
         { type: 'warning', content: 'This is warning event.' },
         { type: 'success', content: 'This is usual event.' },
         { type: 'error', content: 'This is error event.' },
-      ]; break;
+      ];
+      break;
     case 15:
       listData = [
         { type: 'warning', content: 'This is warning event' },
@@ -24,7 +26,8 @@ function getListData(value) {
         { type: 'error', content: 'This is error event 2.' },
         { type: 'error', content: 'This is error event 3.' },
         { type: 'error', content: 'This is error event 4.' },
-      ]; break;
+      ];
+      break;
     default:
   }
   return listData || [];
@@ -33,14 +36,12 @@ function getListData(value) {
 function dateCellRender(value) {
   const listData = getListData(value);
   return (
-    <ul className="events">
-      {
-        listData.map(item => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))
-      }
+    <ul style={{ margin: 0, padding: 0 }}>
+      {listData.map((item) => (
+        <li key={item.content}>
+          <Badge status={item.type} text={item.content} />
+        </li>
+      ))}
     </ul>
   );
 }
@@ -62,5 +63,9 @@ function monthCellRender(value) {
 }
 
 ReactDOM.render(
-  <Calendar dateCellRender={dateCellRender} monthCellRender={monthCellRender} />,
-  document.getElementById('container'));
+  <Calendar
+    dateCellRender={dateCellRender}
+    monthCellRender={monthCellRender}
+  />,
+  document.getElementById('container'),
+);

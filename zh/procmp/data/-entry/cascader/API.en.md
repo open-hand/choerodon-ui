@@ -20,6 +20,7 @@ title: API
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 | 1.3.0   |
 | loadData |	用于动态加载选项，无法与 showSearch 一起使用 |	(selectedOptions) => void	| | 1.4.4 |
 | async |	用于数据源异步加载选项，无法与 showSearch 一起使用 |	boolean | | 1.4.4 |
+| optionRenderer(1.5.6) | 渲染 Option 本文的钩子。isFilterSearch 代表是否搜索过滤中 | ({ text, value, record, dataSet, isFilterSearch }) => ReactNode |  |
 
 `menuMode` 为 `single`，其中可以添加的配置：
 

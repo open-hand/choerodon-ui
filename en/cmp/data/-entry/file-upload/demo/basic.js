@@ -19,6 +19,10 @@ const props = {
     }
   },
   showFileSize: true,
+  showUploadList: {
+    // showReUploadIcon: Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
+    showReUploadIcon: true,
+  },
 };
 
 ReactDOM.render(
