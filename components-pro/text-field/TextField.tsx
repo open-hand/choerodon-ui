@@ -316,6 +316,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
+  measureTextWidth(text: string): number {
+    const computedStyle: CSSStyleDeclaration | undefined =
+      this.element ?
+        getComputedStyle(this.element) :
+        undefined;
+    return measureTextWidth(text, computedStyle);
+  }
+
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const { isFlat } = this.props;
     const [startPlaceHolder, endPlaceHolder = startPlaceHolder] = this.hasFloatLabel && !this.isFocused ? [] : this.getPlaceholders();
@@ -324,7 +332,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       if (text !== undefined) {
         return {
           text,
-          width: isFlat ? measureTextWidth(text) : 0,
+          width: isFlat ? this.measureTextWidth(text) : 0,
         };
       }
       const { renderedText } = this;
@@ -338,14 +346,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         if (isString(processedText) && processedText.length) {
           return {
             text: processedText,
-            width: isFlat ? measureTextWidth(processedText) : 0,
+            width: isFlat ? this.measureTextWidth(processedText) : 0,
           };
         }
       }
       if (startPlaceHolder) {
         return {
           text: '',
-          width: isFlat ? measureTextWidth(startPlaceHolder) : 0,
+          width: isFlat ? this.measureTextWidth(startPlaceHolder) : 0,
           placeholder: startPlaceHolder,
         };
       }
@@ -367,12 +375,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         if (isString(startText) && startText.length) {
           return {
             text: startText,
-            width: isFlat ? measureTextWidth(startText) : 0,
+            width: isFlat ? this.measureTextWidth(startText) : 0,
           };
         }
       }
       if (!isNil(startPlaceHolder) || !isNil(text)) {
-        const width = !isNil(text) ? measureTextWidth(text) : !isNil(startPlaceHolder) ? measureTextWidth(startPlaceHolder) : 0;
+        const width = !isNil(text) ? this.measureTextWidth(text) : !isNil(startPlaceHolder) ? this.measureTextWidth(startPlaceHolder) : 0;
         return {
           text: '',
           width: isFlat ? width : 0,
@@ -392,12 +400,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         if (isString(endText) && endText.length) {
           return {
             text: endText,
-            width: isFlat ? measureTextWidth(endText) : 0,
+            width: isFlat ? this.measureTextWidth(endText) : 0,
           };
         }
       }
       if (!isNil(endPlaceHolder) || !isNil(text)) {
-        const width = !isNil(text) ? measureTextWidth(text) : !isNil(endPlaceHolder) ? measureTextWidth(endPlaceHolder) : 0;
+        const width = !isNil(text) ? this.measureTextWidth(text) : !isNil(endPlaceHolder) ? this.measureTextWidth(endPlaceHolder) : 0;
         return {
           text: '',
           width: isFlat ? width : 0,
@@ -809,11 +817,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.zIndex = -1;
       props.readOnly = true;
     } else if (text) {
-      const computedStyle: CSSStyleDeclaration | undefined =
-        this.element ?
-          getComputedStyle(this.element) :
-          undefined;
-      editorStyle.width = pxToRem(measureTextWidth(text, computedStyle), true)!;
+      editorStyle.width = pxToRem(this.measureTextWidth(text), true)!;
     }
     return (
       <li key="text">
@@ -1012,7 +1016,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.lengthElement = this.renderLengthInfo(maxLength, inputLength);
 
       if (this.lengthElement) {
-        this.lengthInfoWidth = measureTextWidth(`${inputLength} / ${maxLength}`);
+        this.lengthInfoWidth = this.measureTextWidth(`${inputLength} / ${maxLength}`);
       } else {
         this.lengthInfoWidth = undefined;
       }
@@ -1055,7 +1059,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     } else if (children && children !== true) {
-      this.suffixWidth = measureTextWidth(children.toString()) + 2;
+      this.suffixWidth = this.measureTextWidth(children.toString()) + 2;
       divStyle = {
         width: this.suffixWidth,
       };
@@ -1109,7 +1113,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         this.prefixWidth = calculateWidth != null ? calculateWidth : 24;
       }
     } else if (children && children !== true) {
-      this.prefixWidth = measureTextWidth(children.toString()) + 4;
+      this.prefixWidth = this.measureTextWidth(children.toString()) + 4;
       divStyle = {
         width: this.prefixWidth > 24 ? this.prefixWidth : undefined,
       };
@@ -1125,7 +1129,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (isFlat) {
       const hasValue = !this.isEmpty();
       const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-      width = hasValue ? 'auto' : measureTextWidth(placeholder || '') + 22;
+      width = hasValue ? 'auto' : this.measureTextWidth(placeholder || '') + 22;
     }
     if (multiple) {
       return (
