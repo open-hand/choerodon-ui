@@ -45,7 +45,7 @@ title: API
 | virtualized              | boolean                                                                           | Effectively render large tabular data                                                         |    |
 | width                    | number                                                                            | Table width                                                                                   |    |
 | wordWrap                 | boolean                                                                           | The cell wraps automatically                                                                  |    |
-| highLightRow             | boolean`(true)`                                                                   | Click on the row to display the highlighted row                                       | 1.4.1   |
+| highLightRow             | boolean`(true)`                                                                   | Click on the row to display the highlighted row, rowkey needs to be specified when virtual scrolling is enabled                                       | 1.4.1   |
 | queryBar             | queryBarProps                                                                | 查询条                                  |   |
 | toolbar             | toolbarProps                                                                | 工具栏                                  | |
 | toolBarRender            | (props: object) => React.ReactNode[]                                             | 工具栏渲染                                                  |   |

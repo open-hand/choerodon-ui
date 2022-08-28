@@ -16,12 +16,13 @@ class App extends React.Component {
     if (value) {
       values.push(value);
     } else {
-      values.splice(values.indexOf(value), 1);
+      values.splice(values.indexOf(oldValue), 1);
     }
+    console.log('checkedValues', values);
     this.setState({
       values,
     });
-  }
+  };
 
   render() {
     const { values } = this.state;
@@ -32,28 +33,28 @@ class App extends React.Component {
           value="A"
           checked={values.indexOf('A') !== -1}
           onChange={this.handleChange}
-        >A
+        >
+          A
         </CheckBox>
         <CheckBox
           name="controlled"
           value="B"
           checked={values.indexOf('B') !== -1}
           onChange={this.handleChange}
-        >B
+        >
+          B
         </CheckBox>
         <CheckBox
           name="controlled"
           value="C"
           checked={values.indexOf('C') !== -1}
           onChange={this.handleChange}
-        >C
+        >
+          C
         </CheckBox>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

@@ -36,6 +36,7 @@ class PicturesWall extends React.Component {
         <div className="c7n-upload-text">Upload</div>
       </div>
     );
+    // showReUploadIcon: Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
     return (
       <div className="clearfix">
         <Upload
@@ -44,6 +45,15 @@ class PicturesWall extends React.Component {
           fileList={fileList}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
+          showUploadList={{
+            showRemoveIcon: true,
+            showPreviewIcon: true,
+            showDownloadIcon: true,
+            showReUploadIcon: 'text',
+            removePopConfirmTitle: '是否要删除？',
+            reUploadText: '重新上传？',
+            reUploadPopConfirmTitle: '是否要重新上传？',
+          }}
         >
           {fileList.length >= 3 ? null : uploadButton}
         </Upload>

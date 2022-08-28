@@ -66,3 +66,11 @@ title: API
 | total | 数据总数 | number | 0 |
 | onChange | 页码改变的回调，参数是改变后的页码及每页条数 | Function(page, pageSize) | noop |
 | onShowSizeChange | pageSize 变化的回调 | Function(current, size) | noop |
+
+### rowSelection
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string[] \| number[] | - |
+| defaultSelectedRowKeys | 默认选中项的 key 数组 | string[] \| number[] | |
+| onChange | 选中项发生变化时的回调 | function(selectedRowKeys) | - |

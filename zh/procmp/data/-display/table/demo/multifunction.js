@@ -393,9 +393,9 @@ class App extends React.Component {
     ],
     record: {
       dynamicProps: {
-        selectable: (record) => record.index !== 0,
-        defaultSelected: (record) => record.index === 0,
-        disabled: (record) => record.index === 0,
+        selectable: (record) => record.get('userid') !== '0',
+        defaultSelected: (record) => record.get('userid') === '0',
+        disabled: (record) => record.get('userid') === '0',
       },
     },
     events: {

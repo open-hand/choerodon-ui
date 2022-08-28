@@ -230,7 +230,6 @@
       "order": 14,
       "screenshot": "",
       "height": 625,
-      "ignores": ["theme5"],
       "category": "pro"
     },
     {
@@ -246,7 +245,8 @@
       "order": 14,
       "screenshot": "",
       "height": 625,
-      "category": "pro"
+      "category": "pro",
+      "ignores": ["theme1", "theme3", "theme5"]
     },
     {
       "filename": "query-dataset.js",
@@ -428,6 +428,7 @@
       "order": 26,
       "screenshot": "",
       "height": 570,
+      "ignores": ["theme1", "theme3", "theme5"],
       "category": "pro"
     },
     {

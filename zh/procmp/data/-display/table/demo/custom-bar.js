@@ -64,7 +64,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     name: 'user',
     autoQuery: true,
-    pageSize: 5,
+    pageSize: 10,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
@@ -125,6 +125,8 @@ class App extends React.Component {
         queryBarProps={{ defaultShowMore: false }}
         columns={this.columns}
         queryFieldsLimit={2}
+        style={{ maxHeight: '60vh' }}
+        boxSizing="wrapper"
       />
     );
   }

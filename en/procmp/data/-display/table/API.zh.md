@@ -72,6 +72,7 @@ title: API
 | rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | | 1.1.0  |
 | clientExportQuantity | 导出一次轮询数量 | number | 100 | 1.3.0   |
 | showSelectionTips | 是否显示选中记录提示  | boolean | [globalConfig.tableShowSelectionTips](/zh/procmp/configure/configure) | 1.3.0  |
+| showCachedTips | 是否显示缓存记录提示， 优先级高于 showSelectionTips | boolean | [globalConfig.tableShowCachedTipsTips](/zh/procmp/configure/configure) | 1.5.6 |
 | showCachedSelection | 是否显示缓存选中记录  | boolean | | 1.4.4 |
 | onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |1.4.4 |
 | showSelectionCachedButton | 是否显示缓存选中记录按钮 | boolean | | 1.4.1   |
@@ -93,10 +94,12 @@ title: API
 | defaultBodyExpanded | 默认表格体是否展开 | boolean | true | 1.5.1 |
 | bodyExpanded | 表格体是否展开 | boolean | true | 1.5.1 |
 | onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void | | 1.5.1 |
-| onScrollTop | 纵向滚动事件 | (scrollTop) => void | | 1.5.1 |
-| onScrollLeft | 横向滚动事件 | (scrollLeft) => void | | 1.5.1 |
+| onScrollTop | 纵向滚动事件(getScrollInfo - 1.5.6) | (scrollTop, getScrollInfo) => void | | 1.5.1 |
+| onScrollLeft | 横向滚动事件(getScrollInfo - 1.5.6) | (scrollLeft, getScrollInfo) => void | | 1.5.1 |
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
+| boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度 | 'content' \| 'wrapper' | 'content' | 1.5.6 |
+| fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true | 1.5.6 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -132,6 +135,7 @@ title: API
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，数组可选值：edit \| delete 或 \[edit\| delete , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
 | hidden          | 隐藏                                                                                                                                                                                              | boolean                                                                                                                            |           |  |
 | tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | [globalConfig.tooltip](/zh/procmp/configure/configure) |  |
+| tooltipProps | 用于配置 Tooltip 相关参数  | [TooltipProps](/zh/procmp/data-display/tooltip/#API) | | 1.5.6 |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |  |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |  |
@@ -218,7 +222,7 @@ title: API
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
-### ComboBar
+<!-- ### ComboBar
 
 > 1.5.2 版本新增属性。
 
@@ -232,7 +236,7 @@ title: API
 | searchable | 筛选条头部是否配置查询  | boolean | false |
 | fold | 表格是否开启折叠收缩 | boolean | false |
 
-更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+更多属性请参考 `Table` `queryBar` 属性的钩子参数。 -->
 
 ### pagination
 
@@ -273,14 +277,13 @@ spin 的配置项。
 
 ### instance methods
 
-> 1.5.1 版本新增方法。
-
 | 名称 | 说明 | 参数 | 返回值类型 | 版本 |
 | --- | --- | --- | --- | --- |
-| setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  |  |
-| setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  |  |
-| setColumnWidth(width, indexOrKeyOrName) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name |  | 1.5.2 |
-
+| setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  | 1.5.1 |
+| setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  | 1.5.1 |
+| setColumnWidth(width, indexOrKeyOrName, saveToCustomization) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name `saveToCustomization`(1.5.6) - 是否保存到个性化，默认true | | 1.5.2 |
+| getHeaderGroups() | 获取所有头分组 |  | Group[] | 1.5.6 |
+| getGroups() | 获取所有列分组 |  | Group[] | 1.5.6 |
 ### 分页配置
 
 分页功能配置可以按照如下配置进行全局配置

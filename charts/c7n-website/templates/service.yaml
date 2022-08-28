@@ -1,0 +1,36 @@
+{{- if .Values.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+{{ include "service.labels.standard" . | indent 4 }}
+spec:
+{{- if (or (eq .Values.service.type "ClusterIP" "") (empty .Values.service.type)) }}
+  type: ClusterIP
+  {{- if not (empty .Values.service.clusterIP) }}
+  clusterIP: {{ .Values.service.clusterIP }}
+  {{end}}
+{{- else if eq .Values.service.type "LoadBalancer" }}
+  type: {{ .Values.service.type }}
+  loadBalancerIP: {{ default "" .Values.service.loadBalancerIP }}
+{{- else }}
+  type: {{ .Values.service.type }}
+{{- end }}
+  ports:
+    - port: {{ .Values.service.ports.http.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.ports.http.nodePort }}
+      nodePort: {{ .Values.service.ports.http.nodePort }}
+      {{- end }}
+{{- if .Values.service.externalIPs }}
+  externalIPs:
+{{- range $i , $ip := .Values.service.externalIPs }}
+  - {{ $ip }}
+{{- end }}
+{{- end }}
+  selector:
+{{ include "service.labels.standard" . | indent 4 }}
+{{- end }}

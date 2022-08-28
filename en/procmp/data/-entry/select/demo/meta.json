@@ -176,8 +176,8 @@
         "en": "Options Cascade"
       },
       "description": {
-        "zh": "选项级联，详见[级联](/zh/tutorials/select#级联)。\n",
-        "en": "Options Cascade, See details [Cascading](/en/tutorials/select#cascading).\n"
+        "zh": "选项级联，详见[级联](/choerodon-ui/zh/tutorials/select#级联)。\n",
+        "en": "Options Cascade, See details [Cascading](/choerodon-ui/en/tutorials/select#cascading).\n"
       },
       "order": 11,
       "screenshot": "",

@@ -46,7 +46,7 @@ title: API
 | virtualized              | boolean                                                                           | 呈现大表格数据                                               |     |
 | width                    | number                                                                            | 宽度                                                         |     |
 | wordWrap                 | boolean                                                                           | 单元格自动换行                                               |     |
-| highLightRow             | boolean`(true)`                                                                   | 点击行显示高亮行                                             | 1.4.1    |
+| highLightRow             | boolean`(true)`                                                                   | 点击行显示高亮行, 开启虚拟滚动时需指定 rowKey                                             | 1.4.1    |
 | queryBar             | queryBarProps                                                                | 查询条                                  | 1.4.2      |
 | toolbar             | toolbarProps                                                                | 工具栏                                  | 1.4.2    |
 | toolBarRender            | (props: object) => React.ReactNode[]                                             | 工具栏渲染                                                  |       |
