@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+- 🐞 `<pro>DataSet`: In `cacheRecords` mode, check the cache and keep the old logic consistent.
+
+## 1.5.6
+
+`2022-08-25`
+
 - 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `cacheRecords`, `tableShowCachedTips`, `attachment.fetchFileSize` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
@@ -69,7 +76,6 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
-- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 
 ## 1.5.5
 

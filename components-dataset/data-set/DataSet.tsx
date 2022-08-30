@@ -2875,6 +2875,8 @@ Then the query method will be auto invoke.`,
     if (cacheRecords) {
       if (cache) {
         this.storeRecords();
+      } else if (cache !== false) {
+        this.storeRecords(false);
       }
     } else {
       this.storeRecords(cache === true);
@@ -2910,8 +2912,11 @@ Then the query method will be auto invoke.`,
     if (cacheRecords) {
       if (cache) {
         this.releaseCachedRecords();
-      } else {
+
+      } else if (cache === false) {
         this.clearCachedRecords();
+      } else {
+        this.releaseCachedSelected();
       }
     } else {
       this.releaseCachedRecords(cache);
