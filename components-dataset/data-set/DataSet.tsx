@@ -1065,10 +1065,14 @@ export default class DataSet extends EventManager {
 
   get cacheSelectionKeys(): string[] | undefined {
     const { cacheSelection, selection } = this.props;
-    if (cacheSelection && selection === DataSetSelection.multiple) {
-      return this.uniqueKeys;
+    if (selection === DataSetSelection.multiple) {
+      if (cacheSelection) {
+        return this.uniqueKeys;
+      }
+      if (cacheSelection !== false) {
+        return this.cacheKeys;
+      }
     }
-    return this.cacheKeys;
   }
 
   get cacheModifiedKeys(): string[] | undefined {
@@ -1076,7 +1080,9 @@ export default class DataSet extends EventManager {
     if (cacheModified) {
       return this.uniqueKeys;
     }
-    return this.cacheKeys;
+    if (cacheModified !== false) {
+      return this.cacheKeys;
+    }
   }
 
   @observable cachedRecords: Record[];
