@@ -16,6 +16,10 @@ timeline: true
 ---
 
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+- 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
+- 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
+- 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
+- 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
 
 ## 1.5.6
 

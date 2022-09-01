@@ -16,6 +16,10 @@ timeline: true
 ---
 
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
+- 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
+- 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 配置 dblclick 后，双击会显示并马上关闭的问题。
 
 ## 1.5.6
 
