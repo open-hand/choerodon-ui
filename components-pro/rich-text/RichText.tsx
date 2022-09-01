@@ -154,7 +154,7 @@ export default class RichText extends FormField<RichTextProps> {
   handleRichTextBlur(props) {
     const { onBlur = noop } = this.props;
     onBlur(props);
-    if (!props.index) {
+    if (!props.length) {
       this.setValue(null);
     }
   }
