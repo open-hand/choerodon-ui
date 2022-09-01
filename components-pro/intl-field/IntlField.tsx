@@ -4,6 +4,7 @@ import { action, observable, computed, isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import debounce from 'lodash/debounce';
 import Record from '../data-set/Record';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
@@ -278,7 +279,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
         suffix || <Icon className={`${this.prefixCls}-intl`} type="language" />
       ),
       {
-        onClick: this.openModal,
+        onClick: debounce(this.openModal, 200),
       },
     );
   }
