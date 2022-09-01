@@ -195,7 +195,7 @@
         "en": "DataSet"
       },
       "description": {
-        "zh": "页签结合数据源。\n",
+        "zh": "页签结合数据源，控制是否可切换。\n",
         "en": "Bind DataSet.\n"
       },
       "order": 14,
