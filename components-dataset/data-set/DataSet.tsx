@@ -1064,14 +1064,12 @@ export default class DataSet extends EventManager {
   }
 
   get cacheSelectionKeys(): string[] | undefined {
-    const { cacheSelection, selection } = this.props;
-    if (selection === DataSetSelection.multiple) {
-      if (cacheSelection) {
-        return this.uniqueKeys;
-      }
-      if (cacheSelection !== false) {
-        return this.cacheKeys;
-      }
+    const { cacheSelection } = this.props;
+    if (cacheSelection) {
+      return this.uniqueKeys;
+    }
+    if (cacheSelection !== false) {
+      return this.cacheKeys;
     }
   }
 
