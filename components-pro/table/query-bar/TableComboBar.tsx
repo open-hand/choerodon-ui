@@ -229,6 +229,14 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     }
   };
 
+  @action
+  handleTableHeight = () => {
+    const { tableStore } = this.context;
+    if (tableStore) {
+      tableStore.node.handleHeightTypeChange(true);
+    }
+  }
+
   @autobind
   async handleDataSetQuery({ dataSet }) {
     const { initSearchId } = this;
@@ -336,6 +344,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     if (queryDataSet) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
     }
+    this.handleTableHeight();
   }
 
   /**
@@ -552,6 +561,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    */
   createFields(element, name, field): ReactElement {
     const { queryFieldsStyle } = this.props;
+    const { prefixCls } = this;
     const styleCss: CSSProperties | undefined = queryFieldsStyle && queryFieldsStyle[name];
     let fieldWidth;
     if (styleCss) {
@@ -564,10 +574,12 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       border: true,
       clearButton: true,
       isFlat: !fieldWidth,
+      maxTagTextLength: 3,
     };
     if (fieldWidth) {
       props = {
         ...props,
+        className: `${prefixCls}-combo-filter-item-overlay`,
         style: {
           width: fieldWidth,
         },
@@ -678,6 +690,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     const isDirty = record ? record.dirty : false;
     this.setConditionStatus(shouldUpdate || isDirty ? RecordStatus.update : RecordStatus.sync);
     dataSet.setState(SELECTCHANGE, shouldUpdate);
+    this.handleTableHeight();
   };
 
   /**
@@ -700,6 +713,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
     this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
     dataSet.setState(SELECTCHANGE, shouldUpdate);
+    this.handleTableHeight();
   };
 
   /**
@@ -707,7 +721,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    */
   async modifiedCheckQuery(): Promise<void> {
     const { props: { dataSet, queryDataSet } } = this;
-    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && await queryDataSet.validate()) {
+    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
       dataSet.query();
     } else {
       let hasFocus = false;
@@ -1140,9 +1154,9 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   @autobind
   async handleQuery(collapse?: boolean) {
-    const { dataSet, onQuery = noop, autoQuery } = this.props;
+    const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) dataSet.query();
+      await this.modifiedCheckQuery();
     }
     if (!collapse) {
       onQuery();
