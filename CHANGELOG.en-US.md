@@ -20,7 +20,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
-
+- 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 ## 1.5.6
 
 `2022-08-25`

@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 配置 dblclick 后，双击会显示并马上关闭的问题。
+- 🐞 `<pro>RichText`: 修复选中内容失焦清空的问题。
 
 ## 1.5.6
 
