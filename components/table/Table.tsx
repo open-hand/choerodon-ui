@@ -2,6 +2,7 @@ import React, { Component, ComponentType, Key, ReactChildren, ReactNode, Synthet
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import smoothScrollIntoView from 'smooth-scroll-into-view-if-needed';
@@ -861,7 +862,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
         render: this.renderSelectionBox(rowSelection.type),
         className: selectionColumnClass,
         fixed: rowSelection.fixed,
-        width: rowSelection.columnWidth,
+        width: defaultTo(rowSelection.columnWidth, 50),
       };
       if (rowSelection.type !== 'radio') {
         const checkboxAllDisabled = data.every(

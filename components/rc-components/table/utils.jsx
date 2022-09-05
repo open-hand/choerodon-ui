@@ -12,7 +12,7 @@ const scrollbarMeasure = {
 };
 
 export function columnWidth(col) {
-  const { width, minWidth } = col;
+  const { width, minWidth = 50 } = col;
   if (width === undefined) {
     return Math.max(minWidth, 100);
   }
