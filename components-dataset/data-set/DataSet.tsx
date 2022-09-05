@@ -2876,10 +2876,11 @@ Then the query method will be auto invoke.`,
   loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
     const cacheRecords = this.getConfig('cacheRecords');
+    const { cacheSelection } = this.props;
     if (cacheRecords) {
       if (cache) {
         this.storeRecords();
-      } else if (cache !== false) {
+      } else if (cache !== false && cacheSelection) {
         this.storeRecords(false);
       }
     } else {
@@ -2917,7 +2918,7 @@ Then the query method will be auto invoke.`,
       if (cache) {
         this.releaseCachedRecords();
 
-      } else if (cache === false) {
+      } else if (cache === false || !cacheSelection) {
         this.clearCachedRecords();
       } else {
         this.releaseCachedSelected();
