@@ -84,6 +84,11 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
         return String(oldValue) === String(value);
       }
       const field = dataSet!.getField(key);
+      if (field && field.get('range', record)) {
+        const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+        const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+        return rangeValue === rangeOldValue;
+      }
       if (field && field.get('lovCode') && oldValue && value) {
         const valueField = dataSet!.getField(key)!.get('valueField', record);
         const textField = dataSet!.getField(key)!.get('textField', record);
@@ -408,14 +413,21 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  async handleDataSetUpdate({ record, name, oldValue }) {
+  async handleDataSetUpdate({ record, name, oldValue, value }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
+    const field = queryDataSet && queryDataSet.getField(name);
+    let shouldQuery = true;
+    if (field && field.get('range', record)) {
+      const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+      const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+      shouldQuery = rangeValue !== rangeOldValue;
+    }
     let status = RecordStatus.update;
     if (record) {
       status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
-    if (autoQuery) {
+    if (autoQuery && shouldQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
         if (queryDataSet && queryDataSet.current &&  await queryDataSet.current.validate()) {
           dataSet.query();
@@ -830,7 +842,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   if (current) {
                     shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(), ['__dirty']), queryDataSet, current);
                     current.reset();
-                    dataSet.setState(SEARCHTEXT, '');
                     dataSet.setState(SELECTFIELDS, [...this.originalConditionFields]);
                   }
                 }
