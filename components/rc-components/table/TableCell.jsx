@@ -28,7 +28,7 @@ export default class TableCell extends Component {
       column,
       component: BodyCell,
     } = this.props;
-    const { dataIndex, render, className = '' } = column;
+    const { dataIndex, render, className = '', style } = column;
 
     // We should return undefined if no dataIndex is specified, but in order to
     // be compatible with object-path's behavior, we return the record object instead.
@@ -55,7 +55,7 @@ export default class TableCell extends Component {
     }
 
     if (column.onCell) {
-      tdProps = { ...tdProps, ...column.onCell(record,  column) };
+      tdProps = { ...tdProps, ...column.onCell(record, column) };
     }
     if (isInvalidRenderCellText(text)) {
       text = null;
@@ -81,6 +81,10 @@ export default class TableCell extends Component {
         className={className}
         onClick={this.handleClick}
         {...tdProps}
+        style={{
+          ...style,
+          ...tdProps.style,
+        }}
       >
         {indentText}
         {expandIcon}

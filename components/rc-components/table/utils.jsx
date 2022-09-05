@@ -11,6 +11,14 @@ const scrollbarMeasure = {
   overflow: 'scroll',
 };
 
+export function columnWidth(col) {
+  const { width, minWidth } = col;
+  if (width === undefined) {
+    return Math.max(minWidth, 100);
+  }
+  return width;
+}
+
 export function measureScrollbar(direction = 'vertical') {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return 0;
@@ -37,6 +45,7 @@ export function measureScrollbar(direction = 'vertical') {
 
 export function debounce(func, wait, immediate) {
   let timeout;
+
   function debounceFunc(...args) {
     const context = this;
     // https://fb.me/react-event-pooling
@@ -56,6 +65,7 @@ export function debounce(func, wait, immediate) {
       func.apply(context, args);
     }
   }
+
   debounceFunc.cancel = function cancel() {
     if (timeout) {
       clearTimeout(timeout);
@@ -66,6 +76,7 @@ export function debounce(func, wait, immediate) {
 }
 
 const warned = {};
+
 export function warningOnce(condition, format, args) {
   if (!warned[format]) {
     warning(condition, format, args);

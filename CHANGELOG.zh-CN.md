@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
+- 💄 `Table`: 优化固定列。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下勾选缓存和旧逻辑保持一致。
 

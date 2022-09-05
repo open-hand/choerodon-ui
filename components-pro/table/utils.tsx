@@ -1,9 +1,9 @@
 import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
-import { global } from 'choerodon-ui/shared';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import isStickySupport from 'choerodon-ui/lib/_util/isStickySupport';
 import { ColumnProps, HeaderHookOptions } from './Column';
 import Record from '../data-set/Record';
 import ObserverCheckBox from '../check-box/CheckBox';
@@ -39,6 +39,10 @@ import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
 import { AggregationTreeProps } from './AggregationTree';
+
+export {
+  isStickySupport,
+};
 
 export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
   const type = field.get('type', record);
@@ -179,28 +183,6 @@ export function isInCellEditor(element?: ReactElement<FormFieldProps>): boolean 
     return !!(element.type as any).__IS_IN_CELL_EDITOR;
   }
   return false;
-}
-
-
-export function isStickySupport(): boolean {
-  const { STICKY_SUPPORT } = global;
-  if (STICKY_SUPPORT !== undefined) {
-    return STICKY_SUPPORT;
-  }
-  if (typeof window !== 'undefined') {
-    const vendorList = ['', '-webkit-', '-ms-', '-moz-', '-o-'];
-    const stickyElement = document.createElement('div');
-    const support = vendorList.some(vendor => {
-      stickyElement.style.position = `${vendor}sticky`;
-      if (stickyElement.style.position !== '') {
-        return true;
-      }
-      return false;
-    });
-    global.STICKY_SUPPORT = support;
-    return support;
-  }
-  return true;
 }
 
 export function findRow(tableStore: TableStore, record: Record): HTMLTableRowElement | null {

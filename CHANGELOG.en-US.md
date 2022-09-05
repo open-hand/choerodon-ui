@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
+- 💄 `Table`: Optimize fixed columns.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: In `cacheRecords` mode, check the cache and keep the old logic consistent.
 
