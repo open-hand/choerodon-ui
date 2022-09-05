@@ -21,6 +21,9 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
+- 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
+- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode.
+
 ## 1.5.6
 
 `2022-08-25`
