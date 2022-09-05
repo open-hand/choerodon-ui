@@ -19,6 +19,7 @@ timeline: true
 - 💄 `Table`: Optimize fixed columns.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
+- 🐞 `Upload`: Fix `beforeUpload` async issue.
 
 ## 1.5.6
 

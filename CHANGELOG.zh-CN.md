@@ -19,6 +19,7 @@ timeline: true
 - 💄 `Table`: 优化固定列。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
+- 🐞 `Upload`: 修复 beforeUpload 异步问题。
 
 ## 1.5.6
 

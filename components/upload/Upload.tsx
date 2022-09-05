@@ -241,16 +241,24 @@ export default class Upload extends Component<UploadProps, UploadState> {
     const { beforeUpload } = this.props;
     if (beforeUpload) {
       const result = beforeUpload(file, uploadFiles);
-      if (result === false) {
+      const rejectCall = () => {
         const { fileList } = this.state;
         this.onChange({
           file,
           fileList: uniqBy(fileList.concat(uploadFiles.map(fileToObject)), (item: UploadFile) => item.uid),
         });
+      };
+      if (result === false) {
+        rejectCall();
         return false;
       }
       if (result && (result as PromiseLike<any>).then) {
-        return result;
+        return (result as PromiseLike<any>).then((re) => {
+          if (re === false) {
+            rejectCall();
+          }
+          return re;
+        });
       }
     }
     return true;
