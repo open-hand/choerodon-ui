@@ -32,6 +32,7 @@ import TextField from '../../text-field';
 import { ValueChangeAction } from '../../text-field/enum';
 import Tooltip from '../../tooltip';
 import { ElementProps } from '../../core/ViewComponent';
+import { WaitType } from '../../core/enum';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -710,18 +711,30 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(): Promise<void> {
-    const { props: { dataSet, queryDataSet } } = this;
-    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
-      dataSet.query();
-    } else {
-      let hasFocus = false;
-      for (const [key, value] of this.refEditors.entries()) {
-        if (value && !value.valid && !hasFocus) {
-          this.refEditors.get(key).focus();
-          hasFocus = true;
+  async modifiedCheckQuery(fuzzyValue?: string): Promise<void> {
+    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
+    const { getConfig } = this.context;
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
+    if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
+      if ((queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) || fuzzyQueryOnly) {
+        if (fuzzyValue) {
+          runInAction(() => {
+            dataSet.setState(SEARCHTEXT, fuzzyValue || '');
+          });
+          dataSet.setQueryParameter(searchText, fuzzyValue);
+        }
+        dataSet.query();
+      } else {
+        let hasFocus = false;
+        for (const [key, value] of this.refEditors.entries()) {
+          if (value && !value.valid && !hasFocus) {
+            this.refEditors.get(key).focus();
+            hasFocus = true;
+          }
         }
       }
+    } else {
+      this.forceUpdate();
     }
   }
 
@@ -793,10 +806,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
-    const { getConfig } = this.context;
+    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { prefixCls } = this;
-    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
@@ -807,13 +818,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         prefix={<Icon type="search" />}
         value={dataSet.getState(SEARCHTEXT)}
         valueChangeAction={ValueChangeAction.input}
-        onChange={debounce((value: string) => {
-          runInAction(() => {
-            dataSet.setState(SEARCHTEXT, value || '');
-          });
-          dataSet.setQueryParameter(searchText, value);
-          this.handleQuery();
-        }, 500)}
+        waitType={WaitType.debounce}
+        wait={500}
+        onChange={(value: string) => {
+          this.handleQuery(undefined, value);
+        }}
         onClear={() => {
           runInAction(() => {
             dataSet.setState(SEARCHTEXT, '');
@@ -1153,11 +1162,16 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return null;
   }
 
+  /**
+   * 
+   * @param collapse 
+   * @param value 模糊查询参数
+   */
   @autobind
-  async handleQuery(collapse?: boolean) {
+  async handleQuery(collapse?: boolean, value?: string) {
     const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      await this.modifiedCheckQuery();
+      await this.modifiedCheckQuery(value);
     }
     if (!collapse) {
       onQuery();
