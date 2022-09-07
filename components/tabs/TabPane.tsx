@@ -29,6 +29,7 @@ export interface TabPaneProps {
   sort?: number;
   dataSet?: DataSet | DataSet[];
   children?: ReactNode;
+  hidden?: boolean;
 }
 
 const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
@@ -136,6 +137,7 @@ const MemoTabPane: typeof TabPane = memo(TabPane, (props, nextProps) => !nextPro
 MemoTabPane.defaultProps = {
   overflowCount: 99,
   showCount: true,
+  hidden: false,
 };
 
 export default MemoTabPane;

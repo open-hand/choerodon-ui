@@ -41,3 +41,4 @@ A content area which can be collapsed and expanded.
 | showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
 | extra	| The extra element in the corner | ReactNode | - |	
 | dataSet	| DataSet， The panel will automatically expanded when dataset validation fails | DataSet \| DataSet[] | 无 |	
+| hidden | 是否隐藏 | boolean  | false |

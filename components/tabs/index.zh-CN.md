@@ -65,6 +65,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | overflowCount         | 展示封顶的数字值         | number | 99     |
 | showCount         | 显示数字        | boolean | true     |
 | dataSet	| 数据集对象，当数据集校验失败时会出现提示标记 | DataSet \| DataSet[] | 无 |	
+| hidden | 是否隐藏 | boolean  | false |
 
 ### Tabs.TabGroup
 

@@ -37,6 +37,8 @@ timeline: true
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
 - 🌟 `<pro>Lov`: Add `transformSelectedData` hook in Lov configuration.
+- 🌟 `Collapse`: Added `hidden` property.
+- 🌟 `Tabs`: Added `hidden` property.
 - 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
@@ -79,7 +81,6 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
-- 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
 
 ## 1.5.5
 

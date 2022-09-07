@@ -37,6 +37,8 @@ timeline: true
 - 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `Upload`: 新增 beforeUploadFiles 属性。
 - 🌟 `<pro>Lov`: Lov 配置新增 transformSelectedData 钩子。
+- 🌟 `Collapse`: 新增 `hidden` 属性。
+- 🌟 `Tabs`: 新增 `hidden` 属性。
 - 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
