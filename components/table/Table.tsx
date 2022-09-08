@@ -924,7 +924,18 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   }
 
   renderColumnsDropdown(columns: ColumnProps<T>[], locale: TableLocale) {
-    const { dropdownPrefixCls: customizeDropdownPrefixCls, radioPrefixCls, checkboxPrefixCls, rippleDisabled, filterBar, customCode, filterBarLocale, renderSorter, dropdownProps: $dropdownProps, inputNumberProps } = this.props;
+    const {
+      dropdownPrefixCls: customizeDropdownPrefixCls,
+      radioPrefixCls,
+      checkboxPrefixCls,
+      rippleDisabled,
+      filterBar,
+      customCode,
+      filterBarLocale,
+      renderSorter,
+      dropdownProps: $dropdownProps,
+      inputNumberProps,
+    } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = this.getPrefixCls();
     const dropdownProps = {
@@ -1352,15 +1363,10 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
   handleResize = (col: ColumnProps<T>) => (_: any, dragCallbackData: any) => {
     const { columnAdjust } = this.state;
     const { scroll } = this.store.getState();
-    let index = -1;
-    for (let i = 0; i < this.columns.length; i++) {
-      if (this.columns[i].key === col.key || this.columns[i].dataIndex === col.dataIndex) {
-        index = i;
-      }
-    }
-    let width = this.columns[index].width + dragCallbackData.x;
-    if (index !== -1) {
-      const key = this.columns[index].dataIndex;
+    const c = this.columns.find(column => column.key === col.key || column.dataIndex === col.dataIndex);
+    if (c) {
+      let width = c.width + dragCallbackData.x;
+      const key = c.dataIndex;
       /**
        * 使用以前存储的拖动的宽度值
        */
