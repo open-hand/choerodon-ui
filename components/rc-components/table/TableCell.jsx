@@ -1,4 +1,5 @@
 import React, { Component, isValidElement } from 'react';
+import classNames from 'classnames';
 import get from 'lodash/get';
 
 function isInvalidRenderCellText(text) {
@@ -78,13 +79,13 @@ export default class TableCell extends Component {
 
     return (
       <BodyCell
-        className={className}
         onClick={this.handleClick}
         {...tdProps}
         style={{
           ...style,
           ...tdProps.style,
         }}
+        className={classNames(className, tdProps.className)}
       >
         {indentText}
         {expandIcon}
