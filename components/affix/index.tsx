@@ -167,7 +167,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
     const targetRect = getTargetRect(targetNode);
     const targetInnerHeight =
       (targetNode as Window).innerHeight || (targetNode as HTMLElement).clientHeight;
-    if (scrollTop >= elemOffset.top - (offsetTop as number) && offsetMode.top) {
+    if (scrollTop > elemOffset.top - (offsetTop as number) && offsetMode.top) {
       // Fixed Top
       const width = elemOffset.width;
       const top = targetRect.top + (offsetTop as number);
@@ -182,7 +182,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
         height: elemSize.height,
       });
     } else if (
-      scrollTop <=
+      scrollTop <
         elemOffset.top + elemSize.height + (offsetBottom as number) - targetInnerHeight &&
       offsetMode.bottom
     ) {
