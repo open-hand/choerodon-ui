@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode.
+- 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 
 ## 1.5.6
 
