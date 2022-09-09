@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
+- 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 
 ## 1.5.6
 

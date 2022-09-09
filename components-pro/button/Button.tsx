@@ -213,12 +213,9 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   componentWillReceiveProps(nextProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
-    const { wait, waitType, disabled } = this.props;
+    const { wait, waitType } = this.props;
     if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
       this.handleClickWait = this.getHandleClick(nextProps);
-    }
-    if (disabled !== nextProps.disabled) {
-      this.isFocus = false;
     }
   }
 

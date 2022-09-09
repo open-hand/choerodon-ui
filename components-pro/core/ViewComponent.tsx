@@ -527,13 +527,16 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   }
 
   componentWillReceiveProps(nextProps: P, nextContext) {
-    const { code, prefixCls } = this.props;
+    const { code, prefixCls, disabled, hidden } = this.props;
     const { prefixCls: nextPrefixCls } = nextProps;
     if (prefixCls !== nextPrefixCls) {
       this.prefixCls = this.getContextProPrefixCls(nextProps.suffixCls!, nextPrefixCls);
     }
     if (nextProps.code !== code) {
       this.setCode(nextProps);
+    }
+    if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
+      this.blur();
     }
     this.updateObservableProps(nextProps, nextContext);
   }
