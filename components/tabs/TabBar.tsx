@@ -200,10 +200,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     tabsRef.current = tabBarRef;
     const isSecond = type === TabsType['second-level'];
     return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
-      const { disabled, closable = true, showCount, count, overflowCount, countRenderer, hidden } = child;
-      if (hidden) {
-        return rst;
-      }
+      const { disabled, closable = true, showCount, count, overflowCount, countRenderer } = child;
       const classes = isSecond ? [`${prefixCls}-second-tab`] : [`${prefixCls}-tab`];
       const tabProps: PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> = {
         tabKey: key,
