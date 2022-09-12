@@ -98,8 +98,8 @@
         "en": "other mode"
       },
       "description": {
-        "zh": "其他展示模式，popup & draw。\n",
-        "en": "Other popup & draw.\n"
+        "zh": "其他展示模式，popup & drawer\n",
+        "en": "Other popup & drawer.\n"
       },
       "order": 6,
       "screenshot": "",
