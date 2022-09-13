@@ -30,6 +30,8 @@ timeline: true
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
+- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
+- 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 
 ## 1.5.6
 
