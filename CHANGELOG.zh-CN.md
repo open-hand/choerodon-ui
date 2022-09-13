@@ -34,6 +34,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
 
 ## 1.5.6
 
@@ -130,7 +131,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复树模式下死循环的问题。
 - 🐞 `<pro>Table`: 修复个性化跨锁定列拖拽排序的问题。
 - 🐞 `<pro>Table`: 修复个性化窗口可能会多次弹出的问题。
-- 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover无法关闭的问题。
+- 🐞 `<pro>Table`: 修复 Popover 中的 Table 个性化窗口弹出时，Popover 无法关闭的问题。
 - 🐞 `<pro>Table`: 修复行高变化时编辑器错位的问题。
 - 🐞 `<pro>Tooltip`: 修复 Tooltip 缩放模式下报错的问题。
 - 🐞 `<pro>CodeArea`: 修复数据源模式下，失焦后通过数据源赋值，值显示不同步的问题。
@@ -295,7 +296,7 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化 field 的 min 或 max 属性设置为 fieldName 时的校验。
 - 💄 `<pro>NumberField`: 优化设置 step 属性且默认值为小数时, 修改值后, 整数和小数合并的问题。
 - 🐞 `version`: 修复 webpack5 下会报错的问题。
-- 🐞 `Tabs`: 修复当有一个标签的tab属性为空时，标签对齐问题。
+- 🐞 `Tabs`: 修复当有一个标签的 tab 属性为空时，标签对齐问题。
 - 🐞 `<pro>TreeSelect`: 修复使用 lookupAxiosConfig 且返回树形数据, 选择子节点回显错误问题。
 - 🐞 `<pro>Lov`: 修复重复展示值导致失焦数据变更的问题。
 - 🐞 `<pro>Modal`: 修复 esc 键可能会关闭多个模态框的问题。
@@ -322,10 +323,9 @@ timeline: true
 - 🐞 `<pro>Button`: 修复关联数据源 loading 状态异常。
 - 🐞 `<pro>Button`: 修复 loading 状态会失去焦点的问题。
 - 🐞 `<pro>Table`: 修复单元格内容没有对齐的问题。
-- 🐞 `<pro>TextField`: 修复在失焦情况下按ctrl+z回退值没有同步到DataSet中的问题。
+- 🐞 `<pro>TextField`: 修复在失焦情况下按 ctrl+z 回退值没有同步到 DataSet 中的问题。
 - 🐞 `<pro>TextField`: 修复多值时输入框遮挡输入内容的问题。
 - 🐞 `<pro>Tree`: 修复父子节点 checkable 状态单独控制错误问题。
-
 
 ## 1.5.2
 
@@ -425,7 +425,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复查询条字段排序问题。
 - 🐞 `<pro>Button`: 修复 href 按钮禁用状态下仍可跳转的问题。
 - 🐞 `Notification`: 修复多个非同时打开的消息会同时关闭的问题。
-- 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现bug的问题。
+- 🐞 `Divider`: 修复分割线标题不居中时使用 dashed 属性出现 bug 的问题。
 - 🐞 `Menu`: 修复菜单收起时鼠标移入 Menu.Item 时报错的问题。
 - 🐞 `<pro>DataSet`: 修复导出失效问题。
 - 🐞 `<pro>DataSet`: 修复当 Record 变更 state 时， selected 值会重新计算的问题。
@@ -500,7 +500,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复表格内容更新后勾选列消失的问题。
 - 🐞 `List.Item.Meta`: 修复文字类头像不显示的问题。
 - 🐞 `Notification`: 修复首次在 useEffect 中多次调用时重叠的问题。
-- 🐞 `<pro>Tree`: 修复开启异步且设置 selectable 为 false 时, dataset选中记录不对的问题。
+- 🐞 `<pro>Tree`: 修复开启异步且设置 selectable 为 false 时, dataset 选中记录不对的问题。
 
 ## 1.5.0-beta.0
 
@@ -536,7 +536,7 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化 step 按钮执行效率。
 - 💄 `ImageCrop.AvatarUploader`: 优化裁剪功能和界面样式。
 - 🐞 `<pro>Table`：修复 selectable 为 false 时会清除已勾选的记录问题。
-- 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过Tab键显示时没有进入视区的问题。
+- 🐞 `<pro>Table`：修复虚拟单元格在校验失败或编辑器通过 Tab 键显示时没有进入视区的问题。
 - 🐞 `<pro>Table`：修复通过 Modal 跨 iframe 时无法调整列宽。
 - 🐞 `<pro>Table`：修复过滤条输入框中内容不能对齐的问题。
 - 🐞 `<pro>Table`：修复 virtualCell 模式下 maxHeight 样式可能导致死循环的问题。
@@ -553,7 +553,7 @@ timeline: true
 - 🐞 `<pro>Output`： 修复显示冒号时会显示必输星号的问题。
 - 🐞 `<pro>Modal`： 修复 drawerTransitionName 非法导致页面报错的问题。
 - 🐞 `<pro>PerformanceTable`： 修复开启虚拟滚动导致合并行消失的问题。
-- 🐞 `<pro>ColorPicker`：修复配置 clearButton 属性报错，以及选择#00000颜色时指针跳动问题。
+- 🐞 `<pro>ColorPicker`：修复配置 clearButton 属性报错，以及选择#00000 颜色时指针跳动问题。
 
 ## 1.4.5
 
@@ -678,7 +678,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复编辑器会浮动到禁用单元格上的问题。
 - 🐞 `<pro>NumberField`：修复 suffix，prefix 属性支持，样式。
 - 🐞 `<pro>Output`: 修复使用 useColon 必输字段冒号无效的问题。
-- 🐞 `<pro>Table`：修复过滤条过滤条件为数值0时渲染错误问题。
+- 🐞 `<pro>Table`：修复过滤条过滤条件为数值 0 时渲染错误问题。
 - 🐞 `<pro>Table`：修复 footer dom 位置。
 - 🐞 `<pro>Table`：修复 queryBarProps onReset & onQuery 事件无效问题。
 
@@ -745,9 +745,9 @@ timeline: true
 - 💄 `<pro>DataSet.Record`: 在没有 field 的情况下， addField 方法会对该 field 已有值进行处理。
 - 💄 `<pro>NumberField`: 移除 suffix，prefix 属性支持。
 - 🐞 `<pro>Table`: 修正 maxHeight 和 minHeight 的计算逻辑。
-- 🐞 `<pro>Pagination`: 修复最大分页没有设置时，分页选项有超过默认最大100分页无法选择的问题。
+- 🐞 `<pro>Pagination`: 修复最大分页没有设置时，分页选项有超过默认最大 100 分页无法选择的问题。
 - 🐞 `<pro>IconPicker`: 修复当点击分页按钮并按钮成禁用状态时，弹窗无法关闭的问题。
-- 🐞 `<pro>Table`: 修复在孔雀蓝主题下，当Column的editor为function的时候，进入编辑态点击退出后会导致下次进入编辑态组件宽度不正确的问题
+- 🐞 `<pro>Table`: 修复在孔雀蓝主题下，当 Column 的 editor 为 function 的时候，进入编辑态点击退出后会导致下次进入编辑态组件宽度不正确的问题
 - 🐞 `<pro>Table`: 修复行内编辑时无法取消编辑的问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动条事件。
 - 🐞 `<pro>PerformanceTable`: 修复表格内点击无效问题。
@@ -773,25 +773,25 @@ timeline: true
 - 🌟 `<pro>Table`：修复本地导出在超大数据量时的效果。
 - 💄 `<pro>PerformanceTable`：兼容移动端拖拽列宽。
 - 💄 `<pro>Table.Column`: 优化聚合列的 command 按钮纵向排列。
-- 💄 `<pro>DataSet.Field`: intl类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
+- 💄 `<pro>DataSet.Field`: intl 类型的字段创建的各种语言字段支持 transformResponse 和 transformRequest 属性。
 - 💄 `<pro>DataSet.Field`: 优化被绑定的字段也会因绑定字段的值变更而触发校验。
 - 💄 `<pro>RichText`：优化预览样式及 RichTextViewer 样式。
 - 🐞 `<pro>DataSet.Field`: 修复递归调用 dynamicProps 时的问题。
-- 🐞 `<pro>TextField`: 修复有 addonBefore， addonAfter 或 help 时， Tooltip无法显示的问题。
+- 🐞 `<pro>TextField`: 修复有 addonBefore， addonAfter 或 help 时， Tooltip 无法显示的问题。
 - 🐞 `Menu`: 修复菜单事件报错。
 - 🐞 `<pro>TextField`: 修复空值渲染时浮动标签和渲染值重叠的问题。
-- 🐞 `<pro>TriggerField`: 修复 popupContent 中输入框无法获焦的问题， 修复IE下多选模式下拉框滚动条无法拖动的问题。
+- 🐞 `<pro>TriggerField`: 修复 popupContent 中输入框无法获焦的问题， 修复 IE 下多选模式下拉框滚动条无法拖动的问题。
 - 🐞 `<pro>DataSet.Record`: 修复 init 和 getPristineValue 中链式绑定的问题。
 - 🐞 `Dropdown`: 修复 overlay 为钩子函数时 overlayProps 未定义的问题。
 - 🐞 `<pro>Table.Column`： 修复 dynamicProps.label 对于列头无效的问题。
 - 🐞 `<pro>Button`：修复样式问题。
-- 🐞 `<pro>DataSet`：修复object类型字段使用transformRequest转成字符串值时绑定的字段为空值的问题。
+- 🐞 `<pro>DataSet`：修复 object 类型字段使用 transformRequest 转成字符串值时绑定的字段为空值的问题。
 - 🐞 `<pro>Modal`：修复 autoCenter 开启时宽度样式无效，影响抽屉和全屏模式的问题。
 - 🐞 `<pro>Table`：修复冻结列 hover 穿透问题。
 - 🐞 `<pro>Table`：修复导出问题,优化本地导出。
 - 🐞 `<pro>PerformanceTable`：修复虚拟滚动下渲染异步导致的滚动条异常。
 - 🐞 `<pro>PerformanceTable`：修复移动端滚动卡顿的问题。
-- 🐞 `<pro>Screening`：修复dataSet没有初始值的时候的显示问题。
+- 🐞 `<pro>Screening`：修复 dataSet 没有初始值的时候的显示问题。
 
 ## 1.4.0
 
@@ -834,12 +834,12 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化 precision 属性会转换小数点位数。
 - 🐞 `<pro>Table.Column`: 修复编辑器 addonBefore 和 addonAfter 中的元素无法获取焦点的问题。
 - 🐞 `<pro>Table`: 修复鼠标批量选择记录不准确的问题。
-- 🐞 `<pro>DataSet`：修复清除object类型字段的值时，其绑定字段不会提交null值的问题。
+- 🐞 `<pro>DataSet`：修复清除 object 类型字段的值时，其绑定字段不会提交 null 值的问题。
 - 🐞 `Responsive`：修复多个响应式组件其中一个禁用或销毁时其他组件无法触发响应的问题。
 - 🐞 `Select`：修复 OptGroup 模式下全选失效问题。
 - 🐞 `<pro>Modal`：修复没有取消按钮时 keyboardClosable 属性没有效果。
 - 🐞 `<pro>Modal`：修复非 ModalProvider 提供的 Modal 的一些异常行为。
-- 🐞 `<pro>DataSet`：修复在仅删除以及dataToJSON为selected的情况下，提交后对dataSet状态修改不正确的问题。
+- 🐞 `<pro>DataSet`：修复在仅删除以及 dataToJSON 为 selected 的情况下，提交后对 dataSet 状态修改不正确的问题。
 - 🐞 `<pro>Table`：修复编辑器在 DataSet 当前记录发生变化时的定位问题。
 - 🐞 `<pro>RichText`：修复编辑器 onBlur 事件。
 - 🐞 `<pro>FormField`：修复 ref 属性无效的问题。
@@ -857,7 +857,6 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复多选模式下表格属性 selectionMode 为 click 时数据处理错误的问题。
 - 🐞 `<pro>Table`: 修复 queryBar 多语言类型字段渲染问题。
 - 🐞 `<pro>PerformanceTable`: 修复 ColumnGroup 中列不能排序的问题。
-
 
 ## 1.3.2
 
@@ -979,7 +978,6 @@ timeline: true
 - 🐞 `<pro>Tootip`: 修复当 Children 为 undefined 时候导致组件报错。
 - 🐞 `<pro>Select`: 修复 searchMatcher 默认配置获取 textField 字段值可能为空时的报错。
 
-
 ## 1.1.0
 
 `2021-03-02`
@@ -1039,7 +1037,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: 优化 tooltip 为 overflow 时的性能。
 - 💄 `<pro>Modal`: 优化关闭按钮与取消按钮的行为保持一致。
 - 💄 `<pro>Table`: 优化 autoMaxWidth 的性能。
-- 💄 `<pro>DataSet`: delete 和 deleteAll 的 confirmMessage 参数可以通过设置false禁止显示提示框。
+- 💄 `<pro>DataSet`: delete 和 deleteAll 的 confirmMessage 参数可以通过设置 false 禁止显示提示框。
 - 💄 `<pro>Table`: 优化树展开合并的性能。
 - 🐞 `<pro>Table`: 修复拖拽列无法失焦。
 - 🐞 `<pro>Table`: 修复 filterBar 存在的交互问题。
@@ -1056,7 +1054,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: 修复 dynamicProps 的 defaultValue 属性不生效的问题。
 - 🐞 `<pro>DataSet`: 修复 splice 方法的问题。
 - 🐞 `<pro>DataSet`: 修复在父级联记录中查找深级联记录的问题。
-- 🐞 `<pro>DataSet`: 修复布尔值类型未设置值时默认会设成false。
+- 🐞 `<pro>DataSet`: 修复布尔值类型未设置值时默认会设成 false。
 - 🐞 `<pro>DataSet.Record`: 优化 isExpanded 属性受控。
 - 🐞 `<pro>Validator`: 修复 object 类型字段在组合唯一校验时传值的问题。
 - 🐞 `<pro>DataSet.Record`: 修复 getCascadeRecords 方法可能会死循环的问题。
@@ -1154,7 +1152,6 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 table 组合列宽度调整，如果拖动多列后的单列会出现下一列表宽度异常。
 - 🐞 `<pro>Table`: 修复出现横向滚动条时多行模式 lock 列错位问题。
 
-
 ## 0.8.74
 
 `2020-10-14`
@@ -1174,8 +1171,7 @@ timeline: true
 - 🐞 `<pro>Pagination`: 修复输入页面的时候，快速跳转框里面的数字不会自动清除。
 - 🐞 `<pro>PerformanceTable`: 修复在 Tabs 中使用偶发的滚动条宽度计算错误问题。
 - 🐞 `<pro>TextField`: 修复在多个 modal 下面低层级的 modal 框里面 input 没有被覆盖会导致重叠。
-- 🐞 `<pro>NumberField`: 修复在绑定了数据源的情况下step无法进行正常的校验的问题。
-
+- 🐞 `<pro>NumberField`: 修复在绑定了数据源的情况下 step 无法进行正常的校验的问题。
 
 ## 0.8.73
 
@@ -1218,15 +1214,14 @@ timeline: true
 - 🐞 `Table`: 修复基础 Table 出现的展开 icon 无法响应展开事件。
 - 🐞 `Tabs`: 修复在 Modal 中使用的时候当设置的 defaultActiveKey 不为第一个的时候, activeBar 的位置不正确的问题。
 
-
 ## 0.8.71
 
 `2020-08-21`
 
-- 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty文档修改。
+- 🌟 `configure`: 新增 numberFieldFormatter, numberFieldFormatterOptions 全局配置，renderEmpty 文档修改。
 - 🌟 `Upload`: 新增 dragUploadList，onDragEnd 属性。
 - 🌟 `Breadcrumb`: 新增 breadcrumbItem menuList overlay 属性。
-- 🌟 `Cascader`: 新增 Cascader menuMode 单弹框属性，支持singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
+- 🌟 `Cascader`: 新增 Cascader menuMode 单弹框属性，支持 singleMenuStyle，singleMenuItemStyle，singlePleaseRender，singleMenuItemRender 属性配置。
 - 🌟 `<pro>Lov`: 新增 paramMatcher 参数匹配器属性。
 - 🌟 `<pro>NumberField`: 新增 formatter, formatterOptions 属性。
 - 🌟 `<pro>Table`: 新增 columnsMergeCoverage columnsOnChange columnsEdictType 属性实现表头修改。
@@ -1242,7 +1237,7 @@ timeline: true
 - 🐞 `<pro>TriggerField`: 修复 getPopupContainer API。
 - 🐞 `<pro>TextArea`: 修复 TextArea 组件必输、禁用样式问题。
 - 🐞 `<pro>DatePicker`: 修复 TimePicker 在 Firefox 下无法滚动的问题。
-- 🐞 `<pro>FormField`: 修复 _inTable 下给 Fragment 设置了属性的错误。
+- 🐞 `<pro>FormField`: 修复 \_inTable 下给 Fragment 设置了属性的错误。
 - 🐞 `<pro>TextField`: 修复 TextField 在中文输入无法正确的控制 maxLength 的问题，并优化中文输入体验。
 
 ## 0.8.69
@@ -1276,31 +1271,30 @@ timeline: true
 - 🌟 `<pro>Table`: 新增控制行内编辑器回车跳转下一行编辑器属性 editorNextKeyEnterDown。
 - 🐞 `<pro>Table`: 修复在 IE 浏览器下滑动条回弹问题。
 - 🐞 `<pro>Table`: 修复使用 inline 模式出现 lookup 自动收起问题。
-- 🐞 `<pro>Table`: 修复 table autoHeight 为auto时候出现样式问题。
+- 🐞 `<pro>Table`: 修复 table autoHeight 为 auto 时候出现样式问题。
 - 🐞 `<pro>Table`: 修复在 IE && 火狐浏览器下 scrollIntoViewIfNeeded 方法兼容性问题。
 - 🐞 `<pro>Table`: 修复在 autoHeight 属性 type: maxHeight 下固定列滑动不同步问题。
 - 🐞 `<pro>Table`: 修改了 useMouseBatchChoose 的判定机制，修复在全局设置与组件设置优先级问题。
-- 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的label颜色不一致的问题。
+- 🐞 `<pro>Form`: 修改了在冒号模式下,必填项与非必填项的 label 颜色不一致的问题。
 - 🐞 `<pro>Button`: 修改 loading 机制，修复 query 按钮在 Table 中不进入 loading 状态的问题。
 - 🐞 `<pro>TextArea`: 修复在 Form 中同时设置了 required 跟 resize 属性后，背景色不跟着宽高一起变化的问题。
-
 
 ## 0.8.67
 
 `2020-07-14`
 
-- 🌟 `<pro>Table`: 新增Table拖拽功能。
-- 🌟 `Steps`: 新增 Steps.Group 组件可以配置Step分组。
+- 🌟 `<pro>Table`: 新增 Table 拖拽功能。
+- 🌟 `Steps`: 新增 Steps.Group 组件可以配置 Step 分组。
 - 🌟 `configure`: 新增 collapseExpandIconPosition, collapseExpandIcon, collapseTrigger 全局配置。
 - 🌟 `Collapse`: 新增 expandIcon, expandIconPosition, trigger 属性。
 - 🌟 `<pro>Select`: 新增 commonItem, maxCommonTagPlaceholder, maxCommonTagCount, maxCommonTagTextLength 常用项相关属性。
-- 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor属性颜色的问题。
+- 🐞 `Progress`: 修复无法修改 Circle Progress strokeColor 属性颜色的问题。
 - 🐞 `<pro>DatePciker`: 文档修复。
 - 🐞 `<pro>Select`: 修复点击全选按钮导致禁用选项也被勾选的问题。
-- 🐞 `<pro>Form`: 修复当设置 useColon为true, labelLayout为vertical 的时候 required 的字段 label 显示不正确的问题.
+- 🐞 `<pro>Form`: 修复当设置 useColon 为 true, labelLayout 为 vertical 的时候 required 的字段 label 显示不正确的问题.
 - 🐞 `<pro>Form`: 修复在 typescript 中使用的 Form 的时候,无法使用 pristine 属性的问题.
-- 🐞 `<pro>Lov`: 修复在单选模式下lov table自动定位到数据第一条并且在显示rowbox的情况点击确定会选择current作为选项即使此时没有选中选项.
-- 🐞 `<pro>DataSet`: 修复在设置了primaryKey的情况下,在新增一条未提交的情况下删除一条数据,当接口返回204时,会将response作为数据填入到record中的问题。
+- 🐞 `<pro>Lov`: 修复在单选模式下 lov table 自动定位到数据第一条并且在显示 rowbox 的情况点击确定会选择 current 作为选项即使此时没有选中选项.
+- 🐞 `<pro>DataSet`: 修复在设置了 primaryKey 的情况下,在新增一条未提交的情况下删除一条数据,当接口返回 204 时,会将 response 作为数据填入到 record 中的问题。
 
 ## 0.8.66
 
@@ -1308,12 +1302,12 @@ timeline: true
 
 - 🌟 `configure`: 新增 lovTableProps 属性全局配置。
 - 💄 `Icon`: 更新 Icon 列表。
-- 🐞 `<pro>Lov`: 修复当blur的时候触发了 onChange 事件的问题。
-- 🐞 `<pro>Lov`: 调整tableProps中selectionMode的优先级为最高.
+- 🐞 `<pro>Lov`: 修复当 blur 的时候触发了 onChange 事件的问题。
+- 🐞 `<pro>Lov`: 调整 tableProps 中 selectionMode 的优先级为最高.
 - 🐞 `<pro>Select`: 修复 Select 对于 restrict 的效果支持, 实现文字输入限制。
 - 🐞 `<pro>Select`: 修复 Select 在 IE 无法使用 element.scrollTo 的方法。
 - 🐞 `<pro>Form`: 修复 Form 中只有单个的 FormVirtualGroup 的时候没有 label 的问题。
-- 🐞 `<pro>Table`: 修复 autoLocateFirst 在table切换页面时候也存在自动定位第一条问题。
+- 🐞 `<pro>Table`: 修复 autoLocateFirst 在 table 切换页面时候也存在自动定位第一条问题。
 - 🐞 `<pro>Table`: 修复设置 mask 为 false 的情况下隐藏 modal 后 body 未恢复滚动的问题。
 
 ## 0.8.65
@@ -1323,12 +1317,12 @@ timeline: true
 - 🌟 `configure`: 新增 tableDefaultRenderer 属性。
 - 🌟 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🌟 `<pro>DataSet`: 新增 modifiedCheckMessage 属性。
-- 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal添加 closable。
+- 💄 `<pro>Table`: 修改 handleSelection 触发时机，导出 modal 添加 closable。
 - 💄 `<pro>Form`: 新增 FormVirtualGroup 子组件。
 - 🐞 修复 select lov 等组件的 suffix icon 消失的问题。
 - 🐞 `<pro>Table`: 修复 alwaysShowRowBox 优先级问题。
 - 🐞 `<pro>TextArea`: 修复 TextArea autofocus 无效问题。
-- 🐞 `<pro>DatePicker`: 修复range模式下设置disabled后点击第二个input依旧会弹出选择框的问题。
+- 🐞 `<pro>DatePicker`: 修复 range 模式下设置 disabled 后点击第二个 input 依旧会弹出选择框的问题。
 
 ## 0.8.64
 
@@ -1349,13 +1343,13 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 useMouseBatchChoose 属性以及全局配置 tableUseMouseBatchChoose。
 - 🌟 `<pro>Pagination`: 增加 pagination pager 的类名区别。
 - 🐞 修复基础组件 input,form, autoComplete 的样式问题。
-- 🐞 `Table`: 修复table 勾选后样式无法取消。
+- 🐞 `Table`: 修复 table 勾选后样式无法取消。
 - 🐞 `Cascader`: 修复 Cascader 缺失展开符号的问题。
-- 🐞 `Pagination`: 修复pagination在不同size下样式错位问题。
-- 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入pageSize的问题。
+- 🐞 `Pagination`: 修复 pagination 在不同 size 下样式错位问题。
+- 🐞 `<pro>Table`: 修复 Table 中 pagination 可以输入 pageSize 的问题。
 - 🐞 `<pro>Form`: 修复 Form 单行 colSpan 不生效问题。
 - 🐞 `<pro>Select`: 修复 ie11 设置 dropdownMatchSelectWidth 文字显示不全。
-- 🐞 `<pro>Table`: 修复在非 rowbox 模式下,对点击已选择的内容无法取消选择的问题以及hover类在current行上不被添加的问题。
+- 🐞 `<pro>Table`: 修复在非 rowbox 模式下,对点击已选择的内容无法取消选择的问题以及 hover 类在 current 行上不被添加的问题。
 
 ## 0.8.63
 
@@ -1365,12 +1359,12 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 autoHeight 属性，支持高度自适应。
 - 🌟 `<pro>Trigger`: 新增 getPopupContainer 属性。
 - 🌟 `<pro>Lov`: 新增 tableProps triggerMode 属性。
-- 🌟 `<pro>Modal`: 新增 mask, maskStyle, maskClass 属性，支持Modal自定义遮罩样式。
+- 🌟 `<pro>Modal`: 新增 mask, maskStyle, maskClass 属性，支持 Modal 自定义遮罩样式。
 - 💄 `<pro>Table`: 优化切换 pageSize 未保存提示。
 - 🐞 `<pro>DatePicker`: 修复 range 模式下必输校验错误问题。
 - 🐞 `<pro>Lov`: 修复未关闭路由切换后无法打开问题。
 - 🐞 `<pro>Table.FilterSelect`: 修复 FilterSelect 编辑器下拉宽度。
-- 🐞 `<pro>CodeArea`: 修复在绑定dataSet的情况下,手动修改过codeArea中的数据后使用record.set更新数据但是组件视图不更新的问题。
+- 🐞 `<pro>CodeArea`: 修复在绑定 dataSet 的情况下,手动修改过 codeArea 中的数据后使用 record.set 更新数据但是组件视图不更新的问题。
 - 🐞 `<pro>Form`: 修复 Form disabled 由 true 改为 false 后，TextField & TextArea 只读的问题。
 
 ## 0.8.62
@@ -1380,7 +1374,7 @@ timeline: true
 - 🌟 `configure`: 新增 tableSelectedHighLightRow 属性。
 - 🌟 `<pro>Table`: 添加 tree Table 对于分页的支持.
 - 🌟 `<pro>Table`: 添加 selectedHighLightRow 属性，支持勾选行高亮。
-- 💄 优化在create-react-app中使用的文档。
+- 💄 优化在 create-react-app 中使用的文档。
 - 🐞 `<pro>Table`: 修复 filterBar 下拉样式。
 - 🐞 `<pro>Table`: 修复使用 column 属性支持不全面。
 - 🐞 `<pro>SelectBox`: 修复 DataSet 必输控制样式。
@@ -1396,9 +1390,9 @@ timeline: true
 - 🌟 `<pro>Table`: 添加切换字段编辑器（lov / select）demo。
 - 🌟 `<pro>Tree`: 添加 TreeNodeRenderer 属性支持客制化 tree node 结点渲染。
 - 💄 `AutoComplete`: 优化 dataSource 属性的类型。
-- 💄 `<pro>Tree`: 优化了 treePro, 使用treeData来构造子节点。
+- 💄 `<pro>Tree`: 优化了 treePro, 使用 treeData 来构造子节点。
 - 🐞 `<pro>Form`: 修复 label 样式。
-- 🐞 `<pro>Upload`: 修复上传成功response解析问题。
+- 🐞 `<pro>Upload`: 修复上传成功 response 解析问题。
 - 🐞 `<pro>DatePicker`: 修复多选出现无法赋值的问题。
 - 🐞 `inputNumber`: 修复数字输入框银行家舍入改为四舍五入。
 - 🐞 `<pro>Select`: 修复 dropdownMatchSelectWidth 属性无效的问题。
@@ -1409,7 +1403,7 @@ timeline: true
 `2020-04-21`
 
 - 🌟 `<pro>IntlField`: 新增 maxLengths 属性。
-- 🌟 `<pro>Table`: 新增 virtual 属性，支持虚拟滚动，新增demo。
+- 🌟 `<pro>Table`: 新增 virtual 属性，支持虚拟滚动，新增 demo。
 - 🐞 `<pro>Table`: 修复新增行横向滚动 lock 列错误错位问题。
 - 🐞 `<pro>DatePicker`: 修复选择后 onChange 多次触发的问题。
 - 🐞 `<pro>Tooltip`: 修复 Button disabled 状态下不触发问题。
@@ -1422,7 +1416,7 @@ timeline: true
 
 `2020-04-01`
 
-- 🐞 `TreeSelect`: 修复样式和tree check事件错误。
+- 🐞 `TreeSelect`: 修复样式和 tree check 事件错误。
 - 🐞 `<pro>Tooltip`: 修复 button disabled 状态下无法触发显示。
 - 🐞 `<pro>TextArea`: 修复 autoSize 属性。
 - 🐞 `<pro>CodeArea`: 修复失焦更新错误。
@@ -1440,9 +1434,9 @@ timeline: true
 - 🌟 `Tree`: 新增 treeDatatreeNodes, treeData, blockNode 属性。
 - 🌟 `Tree.TreeNode`: 新增 checkable 属性。
 - 🌟 `Tree.DirectoryTree`: 新增内置的目录树。
-- 🌟 `Skeleton`: 新增Skeleton组件。
+- 🌟 `Skeleton`: 新增 Skeleton 组件。
 - 🌟 `configure`: 新增 tableSpinProps 全局配置。
-- 🌟 `<pro>Spin`: 新增绑定数据源demo。
+- 🌟 `<pro>Spin`: 新增绑定数据源 demo。
 - 🌟 `<pro>DataSet.Field`: 新增 disabled 属性。
 - 🌟 `<pro>DataSet.Field`: 扩展 step 属性，用于时间组件的步距限制。
 - 🌟 `<pro>TimePicker`: format 和 step 能影响组件的显示。
@@ -1450,12 +1444,12 @@ timeline: true
 - 🌟 `<pro>Skeleton`: 新增 Skeleton Pro 组件。
 - 🌟 `<pro>Tree`: 支持虚拟滚动。
 - 🌟 `<pro>Tree`: 新增 defaultExpandAll, defaultExpandedKeys, defaultCheckedKeys, defaultSelectKeys 属性。
-- 🌟 `<pro>TextArea`: 新增 autoSize属性。
+- 🌟 `<pro>TextArea`: 新增 autoSize 属性。
 - 🌟 `<pro>Pagination`: 新增 hideOnSinglePage 属性。
 - 🌟 `<pro>Upload`: 新增 beforeUpload, onRemoveFile 回调。
 - 🌟 `<pro>Upload`: 新增 defaultFileList, uploadFileList, withCredentials, appendUpload, partialUpload 属性。
 - 💄 `<pro>Table`: 优化 table tooltip、table border-bottom 样式问题。
-- 💄 `<pro>Upload`: 完善Upload文档。
+- 💄 `<pro>Upload`: 完善 Upload 文档。
 - 💄 `<pro>LocaleContext`: 优化日语配置, 完善文档。
 - 💄 `<pro>Pagination`: 优化 showTotal, showQuickJumper 属性。
 - 💄 `<pro>DataSet`: 优化 autoLocateAfterRemove, 删除失败后重置保留选中状态并定位到删除项第一条。
