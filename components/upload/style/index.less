@@ -19,6 +19,10 @@
     outline: none;
   }
 
+  &.@{upload-prefix-cls}-disabled {
+    cursor: not-allowed;
+  }
+  
   input[type='file'] {
     cursor: pointer;
   }
@@ -51,7 +55,7 @@
       vertical-align: middle;
     }
 
-    &:hover {
+    &:not(.@{upload-prefix-cls}-disabled):hover {
       border-color: @primary-color;
     }
   }

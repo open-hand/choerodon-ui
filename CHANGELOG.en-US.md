@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 - 🐞 `<pro>Cascader`: Fixed the display problem of active item after selecting values in controlled mode without using `DataSet`.
+- 🐞 `<pro>Upload`: Fixed the interaction style of upload type components Upload, &lt;pro&gt;Upload and &lt;pro&gt;Attachment in disabled mode.
 
 ## 1.5.6
 

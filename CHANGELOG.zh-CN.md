@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
 - 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
 - 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
+- 🐞 `<pro>Upload`: 修复上传类型组件 Upload、&lt;pro&gt;Upload 及 &lt;pro&gt;Attachment 在禁用模式下的交互样式问题。
 
 ## 1.5.6
 
