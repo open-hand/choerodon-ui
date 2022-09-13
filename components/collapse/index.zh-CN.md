@@ -29,6 +29,7 @@ cols: 1
 | destroyInactivePanel | 销毁折叠隐藏的面板 | boolean | false |
 | trigger | 切换面板的触发位置 | `header` \| `icon` | `header` |
 | ghost | 使折叠面板透明且无边框 | boolean | false |
+| collapsible(1.5.7) | 所有子面板是否可折叠或指定可折叠触发区域 | `header` \| `disabled` | |
 
 ### Collapse.Panel
 
@@ -40,4 +41,5 @@ cols: 1
 | forceRender | 被隐藏时是否渲染 DOM 结构 | boolean | false |
 | showArrow	| 是否展示当前面板上的箭头	| boolean	|  true |
 | extra	| 自定义渲染每个面板右上角的内容 | ReactNode | 无 |	
-| dataSet	| 数据集对象，当数据集校验失败时会自动展开 | DataSet \| DataSet[] | 无 |	
+| dataSet	| 数据集对象，当数据集校验失败时会自动展开 | DataSet \| DataSet[] | 无 |
+| collapsible(1.5.7) | 是否可折叠或指定可折叠触发区域，优先级高于 disabled | `header` \| `disabled` | |

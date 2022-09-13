@@ -1,7 +1,10 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+import React, { cloneElement, Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
+import omit from 'lodash/omit';
+import toArray from 'lodash/toArray';
+import isArray from 'lodash/isArray';
 import animation from '../_util/openAnimation';
-import CollapsePanel from './CollapsePanel';
+import CollapsePanel, { CollapsibleType } from './CollapsePanel';
 import RcCollapse from '../rc-components/collapse';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
@@ -20,6 +23,7 @@ export interface PanelProps {
   forceRender?: boolean;
   disabled?: boolean;
   extra?: ReactNode;
+  collapsible?: CollapsibleType;
 }
 
 export interface CollapseProps {
@@ -36,6 +40,7 @@ export interface CollapseProps {
   expandIconPosition?: ExpandIconPosition;
   trigger?: TriggerMode;
   ghost?: boolean;
+  collapsible?: CollapsibleType;
 }
 
 export default class Collapse extends Component<CollapseProps, any> {
@@ -51,7 +56,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     bordered: true,
     openAnimation: {
       ...animation,
-      appear() {/* noop */},
+      appear() {/* noop */ },
     },
   };
 
@@ -80,11 +85,34 @@ export default class Collapse extends Component<CollapseProps, any> {
     return (
       <>
         {expandIconPositionCof === 'left' && icon}
-        {panelProps.isActive ? <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem'}}>{locale.fold}</span> :
-          <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem'}}>{locale.unfold}</span>}
+        {panelProps.isActive ? <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem' }}>{locale.fold}</span> :
+          <span className={`${prefixCls}-expand-text`} style={{ minWidth: localeCode === 'zh-cn' ? '0.38rem' : '0.52rem' }}>{locale.unfold}</span>}
         {expandIconPositionCof === 'right' && icon}
       </>
     );
+  };
+
+  renderItems = () => {
+    const { children, collapsible: parentCollapsible } = this.props
+
+    let arrayChildren: ReactNode = children;
+    if (!isArray(children)) {
+      arrayChildren = [children];
+    }
+
+    return toArray(arrayChildren).map((child: React.ReactElement, index: number) => {
+      const key = child.key || String(index);
+      const { disabled, collapsible } = child.props;
+      if (disabled) {
+        const childProps: PanelProps & { key: React.Key } = {
+          ...omit(child.props, 'disabled'),
+          key,
+          disabled: collapsible && collapsible === 'header' ? false : disabled,
+        };
+        return cloneElement(child, childProps);
+      }
+      return cloneElement(child, { ...child.props, key, disabled: collapsible ? collapsible === 'disabled' : parentCollapsible === 'disabled' });
+    });
   };
 
   render() {
@@ -133,7 +161,9 @@ export default class Collapse extends Component<CollapseProps, any> {
         expandIconPosition={expandIconPositionCof}
         prefixCls={prefixCls}
         className={collapseClassName}
-      />
+      >
+        {this.renderItems()}
+      </RcCollapse>
     );
   }
 }
