@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 && range 模式字段值比对的问题。
 - 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
 - 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
+- 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
 
 ## 1.5.6
 

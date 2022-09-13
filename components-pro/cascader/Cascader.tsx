@@ -208,12 +208,21 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @observable clickTab;
 
+  optionsIsChange: boolean | undefined;
+
   get isClickTab() {
     return this.clickTab;
   }
 
   get activeValue(): any {
-    return this.activeValues;
+    const { options, optionsIsChange, activeValues, valueField } = this;
+    if (optionsIsChange && activeValues && activeValues instanceof Record) {
+      const newActiveValue = options.find(r => r.get(valueField) === activeValues.get(valueField));
+      if (newActiveValue && newActiveValue !== activeValues) {
+        return newActiveValue;
+      }
+    }
+    return activeValues;
   }
 
   get itemMenuWidth(): number {
@@ -252,6 +261,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   @action
   setActiveValue(activeValues: any) {
+    this.optionsIsChange = false;
     this.activeValues = activeValues;
   }
 
@@ -333,6 +343,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       observableProps: { options },
     } = this;
     if (isArrayLike(options)) {
+      this.optionsIsChange = true;
       return normalizeOptions({
         textField,
         valueField,
