@@ -33,7 +33,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
-- 🐞 `<pro>Lov`: Fix `popup` mode table width.
+- 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 
 ## 1.5.6
 
