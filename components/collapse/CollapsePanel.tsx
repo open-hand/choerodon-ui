@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import DataSet from 'choerodon-ui/dataset';
 import RcCollapse from '../rc-components/collapse';
 
+export type CollapsibleType = 'header' | 'disabled';
+
 export interface CollapsePanelProps {
   key: string;
   header: ReactNode;
@@ -15,6 +17,7 @@ export interface CollapsePanelProps {
   id?: string;
   extra?: ReactNode;
   dataSet?: DataSet | DataSet[];
+  collapsible?: CollapsibleType;
 }
 
 const CollapsePanel: FunctionComponent<CollapsePanelProps> = function CollapsePanel(props: CollapsePanelProps) {

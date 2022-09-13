@@ -153,6 +153,12 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     }
   }
 
+  blur() {
+    if (this.editor) {
+      this.editor.blur();
+    }
+  }
+
   @autobind
   renderContent() {
     const { style, className, toolbarId, toolbar, dataSet, value, mode } = this.props;

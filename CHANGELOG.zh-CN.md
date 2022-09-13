@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `Collapse`: 新增 collapsible 属性。
+- 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
+- 💄 `Table`: 优化固定列。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
@@ -22,7 +25,14 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复 Modal 配置 dblclick 后，双击会显示并马上关闭的问题。
 - 🐞 `<pro>RichText`: 修复选中内容失焦清空的问题。
 - 🐞 `<pro>RichText`: 修复内容溢出的高度问题和 placeholder 样式问题。
+- 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
 - 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 && range 模式字段值比对的问题。
+- 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
+- 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
+- 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
+- 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
+- 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
+- 🐞 `Upload`: 修复 beforeUpload 异步问题。
 
 ## 1.5.6
 

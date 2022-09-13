@@ -65,6 +65,7 @@ export default function TableHeader(props) {
             components={components}
             onHeaderRow={onHeaderRow}
             placeholder={index === 0 && placeholder}
+            prefixCls={prefixCls}
           />
         ))
       }

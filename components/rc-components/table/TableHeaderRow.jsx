@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'mini-store';
+import isStickySupport from '../../_util/isStickySupport';
 
-function TableHeaderRow({ row, index, height, components, onHeaderRow, placeholder, rows }) {
+function TableHeaderRow({ prefixCls, fixed, row, index, height, components, onHeaderRow, placeholder, rows }) {
   const HeaderRow = components.header.row;
   const HeaderCell = components.header.cell;
   const rowProps = onHeaderRow(row.map(cell => cell.column), index);
@@ -28,11 +29,20 @@ function TableHeaderRow({ row, index, height, components, onHeaderRow, placehold
           <HeaderCell
             {...cellProps}
             {...customProps}
+            style={{ ...column.style, ...customProps.style }}
             key={column.key || column.dataIndex || i}
           />
         );
       })}
-      {placeholder && <th rowSpan={rows.length} style={{ fontSize: 0, padding: 0 }}>&nbsp;</th>}
+      {
+        placeholder && (
+          <th
+            className={fixed || !isStickySupport() ? undefined : `${prefixCls}-sticky-column`}
+            rowSpan={rows.length}
+            style={{ fontSize: 0, padding: 0, right: 0 }}
+          >&nbsp;</th>
+        )
+      }
     </HeaderRow>
   );
 }

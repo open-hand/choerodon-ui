@@ -9,6 +9,8 @@ import TableRow from './TableRow';
 import ExpandableRow from './ExpandableRow';
 import TableContext from './TableContext';
 import measureScrollbar from '../../_util/measureScrollbar';
+import isStickySupport from '../../_util/isStickySupport';
+import { columnWidth } from './utils';
 
 const BaseTable = function BaseTable(props) {
   const table = useContext(TableContext);
@@ -31,14 +33,44 @@ const BaseTable = function BaseTable(props) {
   const { store, expander, tableClassName, hasHead, hasBody, hasFoot, fixed, getRowKey, isAnyColumnsFixed } = props;
   const tableStyle = {};
 
-  const getColumns = (cols = props.columns || []) => {
-    return cols.map(column => ({
-      ...column,
-      className:
-        !!column.fixed && !fixed
-          ? classNames(`${prefixCls}-fixed-columns-in-body`, column.className)
-          : column.className,
-    }));
+  const getColumns = (cols = props.columns || [], isBody) => {
+    const sticky = {
+      stickyLeft: 0,
+      stickyRight: !isBody && scroll && scroll.y ? measureScrollbar() : 0,
+    };
+    if (isStickySupport()) {
+      sticky.stickyRight = cols.reduce((right, col) => {
+        if (col.fixed === 'right') {
+          return right + columnWidth(col);
+        }
+        return right;
+      }, sticky.stickyRight);
+    }
+    return cols.map(column => {
+      const newColumn = {
+        ...column,
+        className:
+          !!column.fixed && !fixed
+            ? classNames(isStickySupport() ? `${prefixCls}-sticky-column` : `${prefixCls}-fixed-columns-in-body`, column.className)
+            : column.className,
+      };
+      if (isStickySupport()) {
+        if (column.fixed === 'right') {
+          sticky.stickyRight -= columnWidth(column);
+          newColumn.style = {
+            ...newColumn.style,
+            right: sticky.stickyRight,
+          };
+        } else if (column.fixed) {
+          newColumn.style = {
+            ...newColumn.style,
+            left: sticky.stickyLeft,
+          };
+          sticky.stickyLeft += columnWidth(column);
+        }
+      }
+      return newColumn;
+    });
   };
 
   const handleRowHover = useCallback((isHover, key) => {
@@ -66,7 +98,7 @@ const BaseTable = function BaseTable(props) {
       } else if (fixed === 'right') {
         leafColumns = columnManager.rightLeafColumns();
       } else {
-        leafColumns = getColumns(columnManager.leafColumns());
+        leafColumns = getColumns(columnManager.leafColumns(), true);
       }
 
       const rowPrefixCls = `${prefixCls}-row`;
