@@ -2,6 +2,10 @@
 @import '../../../components/style/mixins/index';
 @import '../../text-field/style/mixin';
 
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
+}
+
 .@{c7n-pro-prefix}-rich-text {
   .input;
 
@@ -9,8 +13,6 @@
   padding: 0;
 
   &-quill {
-    height: calc(100% - 0.42rem);
-
     .ql-container {
       border: none !important;
     }

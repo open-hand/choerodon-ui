@@ -32,6 +32,7 @@ import TextField from '../../text-field';
 import { ValueChangeAction } from '../../text-field/enum';
 import Tooltip from '../../tooltip';
 import { ElementProps } from '../../core/ViewComponent';
+import { WaitType } from '../../core/enum';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -84,6 +85,11 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
         return String(oldValue) === String(value);
       }
       const field = dataSet!.getField(key);
+      if (field && field.get('range', record)) {
+        const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+        const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+        return rangeValue === rangeOldValue;
+      }
       if (field && field.get('lovCode') && oldValue && value) {
         const valueField = dataSet!.getField(key)!.get('valueField', record);
         const textField = dataSet!.getField(key)!.get('textField', record);
@@ -408,14 +414,21 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  async handleDataSetUpdate({ record, name, oldValue }) {
+  async handleDataSetUpdate({ record, name, oldValue, value }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
+    const field = queryDataSet && queryDataSet.getField(name);
+    let shouldQuery = true;
+    if (field && field.get('range', record)) {
+      const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+      const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+      shouldQuery = rangeValue !== rangeOldValue;
+    }
     let status = RecordStatus.update;
     if (record) {
       status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
-    if (autoQuery) {
+    if (autoQuery && shouldQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
         if (queryDataSet && queryDataSet.current &&  await queryDataSet.current.validate()) {
           dataSet.query();
@@ -698,18 +711,30 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(): Promise<void> {
-    const { props: { dataSet, queryDataSet } } = this;
-    if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
-      dataSet.query();
-    } else {
-      let hasFocus = false;
-      for (const [key, value] of this.refEditors.entries()) {
-        if (value && !value.valid && !hasFocus) {
-          this.refEditors.get(key).focus();
-          hasFocus = true;
+  async modifiedCheckQuery(fuzzyValue?: string): Promise<void> {
+    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
+    const { getConfig } = this.context;
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
+    if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
+      if ((queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) || fuzzyQueryOnly) {
+        if (fuzzyValue) {
+          runInAction(() => {
+            dataSet.setState(SEARCHTEXT, fuzzyValue || '');
+          });
+          dataSet.setQueryParameter(searchText, fuzzyValue);
+        }
+        dataSet.query();
+      } else {
+        let hasFocus = false;
+        for (const [key, value] of this.refEditors.entries()) {
+          if (value && !value.valid && !hasFocus) {
+            this.refEditors.get(key).focus();
+            hasFocus = true;
+          }
         }
       }
+    } else {
+      this.forceUpdate();
     }
   }
 
@@ -781,10 +806,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
-    const { getConfig } = this.context;
+    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { prefixCls } = this;
-    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
@@ -795,13 +818,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         prefix={<Icon type="search" />}
         value={dataSet.getState(SEARCHTEXT)}
         valueChangeAction={ValueChangeAction.input}
-        onChange={debounce((value: string) => {
-          runInAction(() => {
-            dataSet.setState(SEARCHTEXT, value || '');
-          });
-          dataSet.setQueryParameter(searchText, value);
-          this.handleQuery();
-        }, 500)}
+        waitType={WaitType.debounce}
+        wait={500}
+        onChange={(value: string) => {
+          this.handleQuery(undefined, value);
+        }}
         onClear={() => {
           runInAction(() => {
             dataSet.setState(SEARCHTEXT, '');
@@ -830,7 +851,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   if (current) {
                     shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(), ['__dirty']), queryDataSet, current);
                     current.reset();
-                    dataSet.setState(SEARCHTEXT, '');
                     dataSet.setState(SELECTFIELDS, [...this.originalConditionFields]);
                   }
                 }
@@ -1142,11 +1162,16 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return null;
   }
 
+  /**
+   * 
+   * @param collapse 
+   * @param value 模糊查询参数
+   */
   @autobind
-  async handleQuery(collapse?: boolean) {
+  async handleQuery(collapse?: boolean, value?: string) {
     const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      await this.modifiedCheckQuery();
+      await this.modifiedCheckQuery(value);
     }
     if (!collapse) {
       onQuery();

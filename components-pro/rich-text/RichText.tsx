@@ -152,9 +152,10 @@ export default class RichText extends FormField<RichTextProps> {
 
   @autobind
   handleRichTextBlur(props) {
-    const { onBlur = noop } = this.props;
+    const { onBlur = noop, defaultValue } = this.props;
     onBlur(props);
-    if (!props.index) {
+    const deltaOps = this.getValue() || defaultValue || [];
+    if (props.length === 0 && props.index === 0 && deltaOps.length === 0) {
       this.setValue(null);
     }
   }

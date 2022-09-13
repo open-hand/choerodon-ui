@@ -124,6 +124,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   context: ConfigContextValue;
 
+  openTime?: number;
+
   state: ModalContainerState = {
     modals: [],
   };
@@ -463,8 +465,14 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       const { maskClosable = context.getConfig('modalMaskClosable'), maskStyle, maskClassName } = activeModal;
       maskProps.className = maskClassName;
       maskProps.onMouseDown = stopEvent;
+      this.openTime = new Date().valueOf();
       if (maskClosable === 'dblclick') {
-        maskProps.onDoubleClick = this.handleMaskClick;
+        maskProps.onDoubleClick = () => {
+          const nowTime = new Date().valueOf();
+          if (nowTime - this.openTime! > 500) {
+            this.handleMaskClick();
+          }
+        };
       } else {
         maskProps.onClick = this.handleMaskClick;
       }

@@ -110,7 +110,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   }
 
   getOtherProps() {
-    return omit(this.props, ['style', 'toolbar', 'className', 'defaultValue', 'onChange', 'value', 'ref']);
+    return omit(this.props, ['toolbar', 'className', 'defaultValue', 'onChange', 'value', 'ref']);
   }
 
   handleOpenLightBox = (e) => {
@@ -187,11 +187,11 @@ export default class BaseEditor extends Component<BaseEditorProps> {
 
   render() {
     const { imgOpen, images, srcIndex } = this.state;
-    const { className, style } = this.props;
+    const { className } = this.props;
     const content = this.renderContent();
     return (
       <>
-        <div className={className} style={style}>
+        <div className={className}>
           {content}
         </div>
         {

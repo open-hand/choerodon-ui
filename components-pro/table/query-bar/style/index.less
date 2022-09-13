@@ -611,6 +611,11 @@
     .@{table-prefix-cls}-combo-filterName-select {
       margin-left: 0;
     }
+
+    .@{table-prefix-cls}-combo-filter-menu-action {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &-combo-filter-bar-single-action {
@@ -724,7 +729,7 @@
   &-combo-filter-menu-button-singleLine-divide {
     width: 0.01rem;
     height: 0.18rem;
-    margin: 0.1rem 0.08rem 0.06rem 0.08rem;
+    margin: 0.08rem 0.08rem 0.06rem 0.08rem;
     background-color: @border-color-split !important;
   }
 
@@ -962,7 +967,6 @@
 
     input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
       box-sizing: content-box;
-      width: auto;
       min-width: unset;
       max-width: 4rem;
       height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
@@ -1029,6 +1033,12 @@
         .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
           color: @error-color;
         }
+      }
+    }
+
+    span:not(.@{table-prefix-cls}-combo-filter-item-overlay) {
+      input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+        width: auto;
       }
     }
 
