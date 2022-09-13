@@ -1064,11 +1064,13 @@ export default class DataSet extends EventManager {
   }
 
   get cacheSelectionKeys(): string[] | undefined {
-    const { cacheSelection, selection } = this.props;
-    if (cacheSelection && selection === DataSetSelection.multiple) {
+    const { cacheSelection } = this.props;
+    if (cacheSelection) {
       return this.uniqueKeys;
     }
-    return this.cacheKeys;
+    if (cacheSelection !== false) {
+      return this.cacheKeys;
+    }
   }
 
   get cacheModifiedKeys(): string[] | undefined {
@@ -1076,7 +1078,9 @@ export default class DataSet extends EventManager {
     if (cacheModified) {
       return this.uniqueKeys;
     }
-    return this.cacheKeys;
+    if (cacheModified !== false) {
+      return this.cacheKeys;
+    }
   }
 
   @observable cachedRecords: Record[];
@@ -2874,9 +2878,12 @@ Then the query method will be auto invoke.`,
   loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
     this.performance.timing.loadStart = Date.now();
     const cacheRecords = this.getConfig('cacheRecords');
+    const { cacheSelection } = this.props;
     if (cacheRecords) {
       if (cache) {
         this.storeRecords();
+      } else if (cache !== false && cacheSelection) {
+        this.storeRecords(false);
       }
     } else {
       this.storeRecords(cache === true);
@@ -2912,8 +2919,11 @@ Then the query method will be auto invoke.`,
     if (cacheRecords) {
       if (cache) {
         this.releaseCachedRecords();
-      } else {
+
+      } else if (cache === false || !cacheSelection) {
         this.clearCachedRecords();
+      } else {
+        this.releaseCachedSelected();
       }
     } else {
       this.releaseCachedRecords(cache);
