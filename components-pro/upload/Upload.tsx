@@ -302,6 +302,7 @@ export default class Upload extends FormField<UploadProps> {
         showUploadBtn,
         showUploadList,
         extra,
+        disabled,
       },
     } = this;
 
@@ -317,7 +318,7 @@ export default class Upload extends FormField<UploadProps> {
     };
 
     const inputWrapperBtn = [
-      <Button key="upload-btn" onClick={this.handleWrapperBtnClick}>
+      <Button key="upload-btn" onClick={this.handleWrapperBtnClick} disabled={disabled}>
         <Icon type="insert_drive_file" />
         <span>{children || $l('Upload', 'file_selection')}</span>
       </Button>,
@@ -326,7 +327,7 @@ export default class Upload extends FormField<UploadProps> {
 
     const uploadBtn = (
       <Tooltip title={$l('Upload', 'click_to_upload')} placement="right">
-        <Button color={ButtonColor.primary} onClick={this.handleUploadBtnClick}>
+        <Button color={ButtonColor.primary} onClick={this.handleUploadBtnClick} disabled={disabled}>
           <Icon type="file_upload" />
         </Button>
       </Tooltip>
