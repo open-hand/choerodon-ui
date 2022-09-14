@@ -154,6 +154,7 @@ export interface Config extends DataSetConfig {
   performanceTableColumnTitleEditable?: boolean;
   tableDragColumnAlign?: DragColumnAlign;
   tableColumnDraggable?: boolean;
+  tableColumnResizeTransition?: boolean;
   performanceTableColumnDraggable?: boolean;
   tableRowDraggable?: boolean;
   tableExpandIcon?: (props: expandIconProps) => ReactNode;

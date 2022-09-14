@@ -1232,6 +1232,10 @@ export default class TableStore {
     return false;
   }
 
+  get tableColumnResizeTransition(): boolean | undefined {
+    return this.getConfig('tableColumnResizeTransition');
+  }
+
   @observable actualRows: number | undefined;
 
   @observable rowMetaData?: VirtualRowMetaData[] | undefined;
