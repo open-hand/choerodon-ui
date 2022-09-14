@@ -51,7 +51,6 @@ import QuickFilterButton from './combo-quick-filter/QuickFilterButton';
 import QuickFilterMenuContext from './combo-quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from './combo-quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
-import { hide } from '../../tooltip/singleton';
 import TableContext, { TableContextValue } from '../TableContext';
 import { isEqualDynamicProps, isSelect, parseValue } from './TableDynamicFilterBar';
 import ColumnFilter from './ColumnFilter';
@@ -163,8 +162,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
 
   tempFields: Fields;
 
-  isTooltipShown?: boolean;
-
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -192,10 +189,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     if (!fuzzyQueryOnly) {
       document.removeEventListener('click', this.handleClickOut);
       this.processDataSetListener(false);
-    }
-    if (this.isTooltipShown) {
-      hide();
-      delete this.isTooltipShown;
     }
   }
 

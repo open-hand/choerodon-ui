@@ -40,7 +40,7 @@ timeline: true
 
 `2022-08-25`
 
-- 🌟 `configure`: Added `lovNoCache`, `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `modalClosable`, `cacheRecords`, `tableShowCachedTips`, `attachment.fetchFileSize` properties.
+- 🌟 `configure`: Added `lovNoCache`,  `uploadShowReUploadIcon`, `performanceTableAutoHeight`, `fieldMaxTagCount`, `fieldMaxTagPlaceholder`, `modalClosable`, `cacheRecords`, `tableShowCachedTips`, `attachment.fetchFileSize` properties.
 - 🌟 `<pro>Attachment`: Added `onRemove` property.
 - 🌟 `<pro>Table`: Added `getHeaderGroups`, `getGroups` methods.
 - 🌟 `<pro>Table`: Added `saveToCustomization` parameter on `setColumnWidth` method.
@@ -264,6 +264,7 @@ timeline: true
 - 🐞 Fix the issue where the style was missing when the component was loaded on demand.
 - 🐞 `<pro>DatePicker`: Fixed bug `renderExtraFooter` displays double copies in `dateTime` mode. And fixed display error when `multiple` and `editorInPopup` properties settings at the same time.
 - 🐞 `<pro>CheckBox`: Fixed the invalid showHelp property in Form.
+
 
 ## 1.5.3
 
@@ -751,8 +752,8 @@ timeline: true
 - 🐞 `<pro>IconPicker`: Fix the problem that the pop-up window cannot be closed when the pagination button is clicked and the button is disabled.
 - 🐞 `<pro>Table`: Fix the issue that under the peacock blue theme, when the editor of the Column is function, after entering the editing mode and clicking exit, the width of the component in the editing mode will be incorrect next time.
 - 🐞 `<pro>Table`: Fix the problem that editing cannot be cancelled when editing in-line.
-- 🐞 `<pro>PerformanceTable`: Fix scroll bar events.
-- 🐞 `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
+- 🐞  `<pro>PerformanceTable`: Fix scroll bar events.
+- 🐞  `<pro>PerformanceTable`: Fix the problem of invalid clicks in the table.
 - 🐞 `<pro>Form`: Fix the problem that the `dataSet` property of nested forms does not work.
 - 🐞 `<pro>Select`: Fix the problem that the custom pop-up window may not be closed.
 - 🐞 `<pro>TextField`: Fix the value rendered by the renderer cannot be displayed in the disabled state.
@@ -775,7 +776,7 @@ timeline: true
 - 💄 `<pro>PerformanceTable`: Compatible with dragging the column width on the mobile terminal.
 - 💄 `<pro>Table.Column`: Optimize the command buttons of the aggregate column be aligned in vertical.
 - 💄 `<pro>DataSet.Field`: Each language field created by intl typed Field supports `transformResponse` and `transformRequest` properties.
-- 💄 `<pro>DataSet.Field`: Optimize the field bounded will also trigger verification due to the value change of it's bound field.
+- 💄 `<pro>DataSet.Field`: Optimize the field bounded will also trigger verification due to the  value change of it's bound field.
 - 🐞 `<pro>DataSet.Field`: Fix the problem when `dynamicProps` is called recursively.
 - 🐞 `<pro>TextField`: Fix the problem that Tooltip cannot be displayed when there is `addonBefore`, `addonAfter` or `help`.
 - 🐞 `Menu`：Fix menu event reporting error.
@@ -857,6 +858,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem of data processing error when the table property `selectionMode` is `click` in `multiple` mode.
 - 🐞 `<pro>Table`: Fix queryBar multilingual field rendering problem.
 - 🐞 `<pro>PerformanceTable`: Fix column cannot be sorted in ColumnGroup.
+
 
 ## 1.3.2
 
@@ -964,6 +966,7 @@ timeline: true
 
 `2021-03-12`
 
+
 - 🌟 `<pro>Select`: Added option paging function.
 - 🌟 `<pro>Lov`: Added `searchAction` & `fetchSingle` properties.
 - 💄 `configure`: Extend the `defaultRenderEmpty` property to support the `Output`.
@@ -978,6 +981,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the problem that the query page jumps after selecting a certain page in the default value.
 - 🐞 `<pro>Tootip`: Fixed the component reporting error when children is undefined。
 - 🐞 `<pro>Select`: Fixed the error when the `searchMatcher` default configuration gets the `textField` may be empty.
+
 
 ## 1.1.0
 
@@ -1238,7 +1242,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed the style problem of `TextArea` component.
 - 🐞 `<pro>Form`: Fix the conflict between `useColon` and global configuration.
 - 🐞 `<pro>DatePicker`: Fix the problem that TimePicker cannot scroll under Firefox.
-- 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under \_inTable.
+- 🐞 `<pro>FormField`: Fixed an error setting a property to the Fragment under _inTable.
 - 🐞 `<pro>TextField`: Fix the problem that TextField cannot correctly control maxLength in Chinese input, and optimize the Chinese input experience.
 
 ## 0.8.69
@@ -1382,6 +1386,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed the problem of unable to continue selecting values and popover interaction after clearing in range mode.
 - 🐞 `<pro>Trigger`: Fixed the problem where the pop-up box that lost focus after double-clicking the selection reappeared.
 
+
 ## 0.8.61
 
 `2020-04-28`
@@ -1433,9 +1438,9 @@ timeline: true
 - 🌟 `Tree`: Added `onLoad` callback.
 - 🌟 `Tree`: Added `treeDatatreeNodes`, `treeData`, `blockNode` properties.
 - 🌟 `Tree.TreeNode`: Added `checkable` property.
-- 🌟 `Tree.DirectoryTree`: Added a built-in directory tree.
+- 🌟 `Tree.DirectoryTree`:  Added a built-in directory tree.
 - 🌟 `Skeleton`: Added `Skeleton` component.
-- 🌟 `configure`: Added `tableSpinProps` global configuration.
+- 🌟 `configure`:  Added `tableSpinProps` global configuration.
 - 🌟 `<pro>Spin`: Added demo.
 - 🌟 `<pro>DataSet.Field`: Added `disabled` property.
 - 🌟 `<pro>DataSet.Field`: Extended `step` property, used for step limit of time component.
