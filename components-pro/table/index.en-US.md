@@ -69,6 +69,7 @@ subtitle: 表格
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnHideable](/components/configure#API) |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/components/configure#API) |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/components/configure#API) |
+| disabledColumnDragTransition | 禁用列拖拽的过度效果 | boolean | [globalConfig.tableDisabledColumnDragTransition](/components/configure#API) |
 | rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用 | boolean | [globalConfig.tableRowDraggable](/components/configure#API) |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/components/configure#API) |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |

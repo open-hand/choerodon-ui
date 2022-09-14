@@ -82,6 +82,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
+| tableDisabledColumnDragTransition | Disable excessive effect of column dragging | boolean | false |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |

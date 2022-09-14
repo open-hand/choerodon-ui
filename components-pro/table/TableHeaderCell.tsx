@@ -497,6 +497,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(`${prefixCls}-cell-sticky-shadow`);
   }
 
+  if (tableStore.disabledColumnDragTransition) {
+    classList.push(`${prefixCls}-cell-no-transition`);
+  }
+
   const thProps: any = {
     className: classList.join(' '),
     rowSpan,

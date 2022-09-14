@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableDisabledColumnDragTransition 属性。
 - 🌟 `Collapse`: 新增 collapsible 属性。
+- 🌟 `<pro>Table`: 新增 disabledColumnDragTransition 属性。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。

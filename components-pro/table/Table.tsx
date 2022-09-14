@@ -621,6 +621,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnDraggable?: boolean;
   /**
+   * 禁用列拖拽过度
+   */
+  disabledColumnDragTransition?: boolean;
+  /**
    * 开启行拖拽
    */
   rowDraggable?: boolean;
@@ -1371,6 +1375,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'autoMaxWidth',
       'dragColumnAlign',
       'columnDraggable',
+      'disabledColumnDragTransition',
       'rowDraggable',
       'onDragEnd',
       'rowDragRender',

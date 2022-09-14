@@ -1232,6 +1232,13 @@ export default class TableStore {
     return false;
   }
 
+  get disabledColumnDragTransition(): boolean | undefined {
+    if ('disabledColumnDragTransition' in this.props) {
+      return this.props.disabledColumnDragTransition;
+    }
+    return this.getConfig('tableDisabledColumnDragTransition');
+  }
+
   @observable actualRows: number | undefined;
 
   @observable rowMetaData?: VirtualRowMetaData[] | undefined;

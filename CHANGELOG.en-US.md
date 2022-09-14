@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableDisabledColumnDragTransition` properties.
 - 🌟 `Collapse`: Added property of `collapsible`.
+- 🌟 `<pro>Table`: Added property of `disabledColumnDragTransition`.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
