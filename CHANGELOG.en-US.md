@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableColumnResizeTransition` properties.
 - 🌟 `Collapse`: Added property of `collapsible`.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
