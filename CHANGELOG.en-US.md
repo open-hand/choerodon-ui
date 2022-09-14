@@ -16,6 +16,8 @@ timeline: true
 ---
 
 - 🌟 `Collapse`: Added property of `collapsible`.
+- 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
+- 💄 `Table`: Optimize fixed columns.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -23,11 +25,15 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
+- 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
 - 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 - 🐞 `<pro>Cascader`: Fixed the display problem of active item after selecting values in controlled mode without using `DataSet`.
 - 🐞 `<pro>Upload`: Fixed the interaction style of upload type components Upload, &lt;pro&gt;Upload and &lt;pro&gt;Attachment in disabled mode.
+- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+- 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
+- 🐞 `Upload`: Fix `beforeUpload` async issue.
 
 ## 1.5.6
 

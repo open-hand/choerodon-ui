@@ -13,6 +13,8 @@ import FootTable from './FootTable';
 import ExpandableTable from './ExpandableTable';
 import { TableContextProvider } from './TableContext';
 import ViewSection from './ViewSection';
+import StickyShadow from './StickyShadow';
+import isStickySupport from '../../_util/isStickySupport';
 
 export default class Table extends Component {
   static defaultProps = {
@@ -361,28 +363,28 @@ export default class Table extends Component {
   }
 
   renderLeftFixedTable() {
-    const { prefixCls } = this.props;
-
+    const { prefixCls, scroll } = this.props;
+    const columns = this.columnManager.leftColumns();
     return (
-      <div className={`${prefixCls}-fixed-left`}>
+      <StickyShadow prefixCls={prefixCls} position="left" columns={columns} scroll={scroll}>
         {this.renderTable({
-          columns: this.columnManager.leftColumns(),
+          columns,
           fixed: 'left',
         })}
-      </div>
+      </StickyShadow>
     );
   }
 
   renderRightFixedTable() {
     const { prefixCls } = this.props;
-
+    const columns = this.columnManager.rightColumns();
     return (
-      <div className={`${prefixCls}-fixed-right`}>
+      <StickyShadow prefixCls={prefixCls} position="right" columns={columns} scroll={scroll}>
         {this.renderTable({
-          columns: this.columnManager.rightColumns(),
+          columns,
           fixed: 'right',
         })}
-      </div>
+      </StickyShadow>
     );
   }
 
@@ -508,9 +510,29 @@ export default class Table extends Component {
                   {this.renderTitle()}
                   <div ref={this.saveRef('tableContent')} className={`${prefixCls}-content`}>
                     {this.renderMainTable()}
-                    {hasLeftFixed && this.renderLeftFixedTable()}
-                    {hasRightFixed && this.renderRightFixedTable()}
+                    {!isStickySupport() && hasLeftFixed && this.renderLeftFixedTable()}
+                    {!isStickySupport() && hasRightFixed && this.renderRightFixedTable()}
                   </div>
+                  {
+                    isStickySupport() && hasLeftFixed && (
+                      <StickyShadow
+                        prefixCls={prefixCls}
+                        position="left"
+                        columns={this.columnManager.leftColumns()}
+                        scroll={props.scroll}
+                      />
+                    )
+                  }
+                  {
+                    isStickySupport() && hasRightFixed && (
+                      <StickyShadow
+                        prefixCls={prefixCls}
+                        position="right"
+                        columns={this.columnManager.rightColumns()}
+                        scroll={props.scroll}
+                      />
+                    )
+                  }
                 </ViewSection>
               );
             }}
