@@ -197,12 +197,11 @@ export default class SecretField extends TextField<SecretFieldProps> {
     const { readOnly, prefixCls } = this;
     const result = this.getRenderedValue();
     const { renderEmpty } = this.props;
-    const text = renderEmpty ? renderEmpty() : this.getContextConfig('renderEmpty')('SecretField') || '-';
     // 脱敏组件只读且值为空时，renderEmpty
     return readOnly && (isEmpty(result) || (isArrayLike(result) && !result.length)) ? (
       <span {...this.getMergedProps()}>
         <span className={`${prefixCls}-secret-empty`}>
-          {text}
+          {renderEmpty ? renderEmpty() : this.getContextConfig('renderEmpty')('SecretField') || '-'}
         </span>
       </span>
     ) : super.renderWrapper();
