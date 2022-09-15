@@ -19,11 +19,11 @@
 
 // input status
 // == when focus or actived
-.active(@color: @input-focus-border-color) {
+.active(@color: @input-focus-border-color, @active-shadow: @input-active-box-shadow) {
   color: @input-active-color;
   border-color: @color;
   outline: 0;
-  box-shadow: @input-active-box-shadow;
+  box-shadow: @active-shadow;
 }
 
 // == when hoverd
@@ -96,7 +96,7 @@
   transition-property: opacity, color, background-color, border;
 
   &-compact:not(:last-child) {
-    margin-right: -@border-width-base;
+    margin-right: calc(-1 * @border-width-base);
     border-right-width: @border-width-base;
   }
 
@@ -170,6 +170,11 @@
     .hover(@input-required-hover-border-color);
   }
 
+  &-required-colors:not(&-invalid) &:focus,
+  &-focused&-required-colors:not(&-invalid) & {
+    .active(@input-required-hover-border-color, @input-required-active-box-shadow);
+  }
+  
   &:focus,
   &-focused & {
     .active;
@@ -322,7 +327,7 @@
   }
 
   &-suffix-button &-suffix:not(&-allow-clear) + &-clear-button {
-    right: @suffix-width + 0.01rem;
+    right: calc(@suffix-width + 0.01rem);
   }
 
   &-clear-button {
@@ -414,7 +419,7 @@
   }
 
   &-multiple&-lov &:not(:last-child) {
-    padding-right: @suffix-width * 2;
+    padding-right: calc(@suffix-width * 2);
   }
 
   &-multiple:not(&-suffix-button) &:not(:last-child) {
@@ -452,7 +457,7 @@
     &-input {
       display: inline-block;
       height: 100%;
-      line-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      line-height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
       vertical-align: middle;
 
       .rang-placeholder;
@@ -626,6 +631,9 @@
   &-float-label&-required-colors:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
     border-color: @input-float-required-hover-border-color;
   }
+  &-float-label&-required-colors&-focused:not(&-disabled):not(&-invalid)::before {
+    border-color: @input-float-required-focus-border-color;
+  }
 
   &-float-label&-focused::before {
     border-color: @input-float-focus-border-color;
@@ -663,16 +671,16 @@
     border-radius: @input-float-border-radius;
   }
   &-float-label &:-webkit-autofill {
-    height: @float-label-height-base - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-base - @float-label-autofill-margin * 2);
     margin: @float-label-autofill-margin;
-    padding-left: @input-padding-horizontal - @float-label-autofill-margin;
+    padding-left: calc(@input-padding-horizontal - @float-label-autofill-margin);
     border-radius: @input-float-border-radius;
   }
   &-float-label&-sm &:-webkit-autofill {
-    height: @float-label-height-sm - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-sm - @float-label-autofill-margin * 2);
   }
   &-float-label&-lg &:-webkit-autofill {
-    height: @float-label-height-lg - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-lg - @float-label-autofill-margin * 2);
   }
 
   &-float-label textarea&:-webkit-autofill {
@@ -680,7 +688,7 @@
   }
 
   &-prefix-button&-float-label &:-webkit-autofill {
-    padding-left: @prefix-width - 0.02rem;
+    padding-left: calc(@prefix-width - 0.02rem);
   }
 }
 
@@ -690,7 +698,7 @@
   /* stylelint-disable */
   &-underline {
     position: absolute;
-    bottom: -@border-width-base;
+    bottom: calc(-1 * @border-width-base);
     width: 100%;
     height: 0;
     border-bottom: @border-width-base @border-style-base @input-baseline-color;

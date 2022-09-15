@@ -3,12 +3,6 @@
 @import '../../trigger-field/style/mixin';
 
 @date-picker-prefix: ~'@{c7n-pro-prefix}-calendar';
-@date-picker-width: 2.8rem;
-@datetime-picker-width: 4.3rem;
-@date-picker-horizontal-padding: 0.12rem;
-@date-picker-border-base: @border-width-base @border-style-base @input-border-color;
-@date-time-list-width: (@date-picker-width - @date-picker-horizontal-padding * 2 + 0.02rem) / 3;
-@date-time-list-item-height: 0.29rem;
 
 .@{date-picker-prefix} {
   &-picker {
@@ -66,7 +60,7 @@
 
     table {
       width: 100%;
-      font-size: @font-size-lg;
+      font-size: @date-picker-calendar-body-table-font-size;
     }
 
     th {
@@ -85,10 +79,10 @@
 
     &-inner {
       display: block;
-      height: 0.24rem;
+      height: @date-picker-calendar-cell-inner-height;
       margin: 0 auto;
       padding: 0;
-      line-height: 0.22rem;
+      line-height: calc(@date-picker-calendar-cell-inner-height - 2 * @border-width-base);
       text-align: center;
       background-color: transparent;
       border: @border-width-base @border-style-base transparent;
@@ -101,7 +95,7 @@
       }
 
       &:active {
-        color: #fff;
+        color: @date-picker-calendar-active-color;
         background-color: @primary-5;
       }
     }
@@ -165,7 +159,7 @@
   }
 
   &-day-panel &-cell-inner {
-    width: 0.24rem;
+    width: @date-picker-calendar-cell-inner-height;
   }
 
   &-month-panel &-cell,
@@ -181,14 +175,14 @@
 
   &-time-panel &-cell-inner {
     width: .4rem;
-    height: @date-time-list-item-height - 0.06rem;
-    line-height: @date-time-list-item-height - 0.07rem;
+    height: calc(@date-time-list-item-height - 0.06rem);
+    line-height: calc(@date-time-list-item-height - 0.07rem);
   }
 
   &-header {
-    height: 0.4rem;
-    padding: 0 0.07rem;
-    line-height: 0.4rem;
+    height: @date-picker-calendar-header-height;
+    padding: @date-picker-calendar-header-padding;
+    line-height: calc(@date-picker-calendar-header-height - 2 * @border-width-base);
     text-align: center;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     user-select: none;
@@ -227,8 +221,8 @@
 
   &-footer-extra, &-footer {
     position: relative;
-    height: 0.39rem;
-    line-height: 0.39rem;
+    height: @date-picker-calendar-footer-height;
+    line-height: @date-picker-calendar-footer-height;
     text-align: center;
     border-top: @border-width-base @border-style-base @border-color-split;
 

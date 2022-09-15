@@ -9,7 +9,6 @@
 @import 'combo-field-list';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
-@table-border: @border-width-base @border-style-base @table-border-color;
 
 .@{table-prefix-cls} {
   position: relative;
@@ -279,7 +278,7 @@
       &-treenode {
         display: flex;
         align-items: flex-start;
-        padding: 0 0 (@padding-xs / 2) 0;
+        padding: 0 0 calc(@padding-xs / 2) 0;
         outline: none;
 
         .@{table-prefix-cls}-cell-inner:not(.@{table-prefix-cls}-cell-inner-editable) {
@@ -600,11 +599,11 @@
     user-select: none;
 
     &-left {
-      left: @border-width-base / -2;
+      left: calc(@border-width-base / -2);
     }
 
     &-right {
-      right: @border-width-base / -2;
+      right: calc(@border-width-base / -2);
     }
   }
 

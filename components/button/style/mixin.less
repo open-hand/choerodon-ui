@@ -97,7 +97,7 @@
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-lg / 8;
+      margin-right: calc(@btn-height-lg / 8);
       font-size: @icon-font-size-lg;
       line-height: @btn-height-lg;
     }
@@ -107,7 +107,7 @@
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @btn-border-radius-sm);
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-sm / 8;
+      margin-right: calc(@btn-height-sm / 8);
       font-size: @icon-font-size-sm;
       line-height: @btn-height-sm;
     }
@@ -134,7 +134,7 @@
   .button-size(@btn-height-base; @btn-padding-base; @font-size-base; @btn-border-radius-base);
 
   > .@{iconfont-css-prefix} {
-    margin-right: @btn-height-base / 8;
+    margin-right: calc(@btn-height-base / 8);
     font-size: @icon-font-size-base;
   }
 
@@ -165,14 +165,14 @@
     .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-lg / 8;
+      margin-right: calc(@btn-height-lg / 8);
       font-size: @icon-font-size-lg;
     }
   }
   &&-lg&-dashed {
-    line-height: @btn-height-lg - 0.04rem;
+    line-height: calc(@btn-height-lg - 0.04rem);
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-lg - 0.04rem;
+      line-height: calc(@btn-height-lg - 0.04rem);
     }
   }
 
@@ -180,15 +180,15 @@
     .button-size(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; @btn-border-radius-sm);
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
-      margin-right: @btn-height-sm / 8;
+      margin-right: calc(@btn-height-sm / 8);
       font-size: @icon-font-size-sm;
     }
   }
 
   &&-sm&-dashed {
-    line-height: @btn-height-sm - 0.04rem;
+    line-height: calc(@btn-height-sm - 0.04rem);
     > .@{iconfont-css-prefix} {
-      line-height: @btn-height-sm - 0.04rem;
+      line-height: calc(@btn-height-sm - 0.04rem);
     }
   }
 }
@@ -234,11 +234,11 @@
 // circle button: the content only contains icon
 .btn-circle(@btnClassName: btn) {
   .square(@btn-circle-size);
-  .button-size(@btn-circle-size; 0; @font-size-base + .02rem; 50%);
+  .button-size(@btn-circle-size; 0; calc(@font-size-base + 0.02rem); 50%);
 
   &.@{btnClassName}-lg {
     .square(@btn-circle-size-lg);
-    .button-size(@btn-circle-size-lg; 0; @btn-font-size-lg + .02rem; 50%);
+    .button-size(@btn-circle-size-lg; 0; calc(@btn-font-size-lg + 0.02rem); 50%);
     > .@{iconfont-css-prefix} {
       margin-right: 0;
       font-size: @icon-font-size-lg;
