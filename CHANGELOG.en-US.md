@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimized to input decimal point in Chinese input method.
 - 💄 `<pro>Lov`: Optimized `onBeforeSelect` callback, support for returning a Promise object.
 - 💄 `<pro>Table`: Optimized newline display of input values when used TextArea.
+- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.

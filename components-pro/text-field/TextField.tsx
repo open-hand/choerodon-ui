@@ -874,6 +874,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
       const { record } = this;
+      const maxTagCount = this.getContextConfig('fieldMaxTagCount');
+      const value = this.getValue();
+      const isOverflow = maxTagCount && value && value.length > maxTagCount;
       const tags = (
         <Animate
           component="ul"
@@ -910,7 +913,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           onMouseLeave={onMouseLeave}
         >
           {
-            isFlat ? (
+            isFlat || isOverflow ? (
               <Tooltip title={this.getMultipleText()}>
                 {tags}
               </Tooltip>

@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
 - 💄 `<pro>Lov`: 优化 onBeforeSelect 回调函数，支持返回一个 Promise 对象。
 - 💄 `<pro>Table`: 优化使用 TextArea 时输入值换行展示。
+- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
