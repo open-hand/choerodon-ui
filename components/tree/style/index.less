@@ -16,6 +16,11 @@
     border-radius: @border-radius-base;
     transition: background-color @animation-duration-slow;
 
+    // Tree 组件中不存在 -focused 类名添加
+    &-focused:not(:hover):not(&-active-focused) {
+      background: @primary-1;
+    }
+
     // =================== Virtual List ===================
     &-list-holder-inner {
       align-items: flex-start;
@@ -170,11 +175,11 @@
       transition: all @animation-duration-slow, border 0s, line-height 0s;
 
       &:hover {
-        color: @tree-active-font-color;
+        color: @tree-active-color;
         background-color: @tree-node-hover-bg;
       }
       &.@{tree-prefix-cls}-node-selected {
-        color: @tree-active-font-color;
+        color: @tree-active-color;
         background-color: @tree-node-selected-bg;
       }
 
@@ -211,7 +216,7 @@
     .@{tree-node-prefix-cls}.drag-over {
       > [draggable] {
         color: white;
-        background-color: @tree-node-drag-over-bg;
+        background-color: @item-drag-over-bg;
         opacity: 0.8;
       }
     }

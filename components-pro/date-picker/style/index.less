@@ -35,7 +35,7 @@
     }
 
     &-popup-datetime {
-      width: @datetime-picker-width;
+      width: @date-time-picker-width;
     }
 
     &-popup-hover-value .@{c7n-pro-prefix}-input,
@@ -60,7 +60,7 @@
 
     table {
       width: 100%;
-      font-size: @date-picker-calendar-body-table-font-size;
+      font-size: @date-picker-body-table-font-size;
     }
 
     th {
@@ -79,10 +79,10 @@
 
     &-inner {
       display: block;
-      height: @date-picker-calendar-cell-inner-height;
+      height: @date-picker-cell-inner-height;
       margin: 0 auto;
       padding: 0;
-      line-height: calc(@date-picker-calendar-cell-inner-height - 2 * @border-width-base);
+      line-height: calc(@date-picker-cell-inner-height - 2 * @border-width-base);
       text-align: center;
       background-color: transparent;
       border: @border-width-base @border-style-base transparent;
@@ -95,7 +95,7 @@
       }
 
       &:active {
-        color: @date-picker-calendar-active-color;
+        color: @date-picker-active-color;
         background-color: @primary-5;
       }
     }
@@ -159,7 +159,7 @@
   }
 
   &-day-panel &-cell-inner {
-    width: @date-picker-calendar-cell-inner-height;
+    width: @date-picker-cell-inner-height;
   }
 
   &-month-panel &-cell,
@@ -180,9 +180,9 @@
   }
 
   &-header {
-    height: @date-picker-calendar-header-height;
-    padding: @date-picker-calendar-header-padding;
-    line-height: calc(@date-picker-calendar-header-height - 2 * @border-width-base);
+    height: @date-picker-header-height;
+    padding: @date-picker-header-padding;
+    line-height: calc(@date-picker-header-height - 2 * @border-width-base);
     text-align: center;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     user-select: none;
@@ -221,8 +221,8 @@
 
   &-footer-extra, &-footer {
     position: relative;
-    height: @date-picker-calendar-footer-height;
-    line-height: @date-picker-calendar-footer-height;
+    height: @date-picker-footer-height;
+    line-height: @date-picker-footer-height;
     text-align: center;
     border-top: @border-width-base @border-style-base @border-color-split;
 
