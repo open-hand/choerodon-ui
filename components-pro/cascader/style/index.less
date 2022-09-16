@@ -64,7 +64,7 @@
             }
 
             &-item {
-              padding: 0.05rem @control-padding-horizontal 0.05rem 0.3rem;
+              padding: @cascader-menu-item-padding-vertical @control-padding-horizontal @cascader-menu-item-padding-vertical 0.3rem;
 
               &-expand-icon {
                 right: unset;
@@ -128,7 +128,7 @@
     min-width: 1.11rem;
     height: 1.8rem;
     margin: 0;
-    padding: 0;
+    padding: @cascader-menu-padding;
     overflow: auto;
     vertical-align: top;
     list-style: none;
@@ -214,8 +214,8 @@
   &-menu-item {
     display: flex;
     align-items: center;
-    padding: 0.05rem @control-padding-horizontal;
-    line-height: 0.22rem;
+    padding: @cascader-menu-item-padding-vertical @control-padding-horizontal;
+    line-height: @cascader-menu-item-line-height;
     white-space: nowrap;
     cursor: pointer;
     transition: all @animation-duration-slow;
@@ -232,7 +232,7 @@
     &-selected:not(&-disabled) {
       &,
       &:hover {
-        font-weight: 600;
+        font-weight: @cascader-menu-item-active-font-weight;
         background: @background-color-base;
       }
     }
@@ -240,7 +240,7 @@
       &,
       &:hover {
         color: @primary-color;
-        font-weight: 600;
+        font-weight: @cascader-menu-item-active-font-weight;
         background: @background-color-base;
       }
     }

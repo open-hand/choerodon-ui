@@ -957,8 +957,16 @@ sans-serif;
 
 // Transfer
 // ---
+@transfer-width: 1.8rem;
+@transfer-height: 2rem;
+@transfer-header-height: 0.32rem;
+@transfer-header-padding-vertical: .06rem;
+@transfer-header-padding-horizontal: @control-padding-horizontal;
+@transfer-footer-height: 0.32rem;
 @transfer-disabled-bg: @disabled-bg;
 @transfer-selected-bg: @item-active-bg;
+@transfer-btn-height: .24rem;
+@transfer-btn-border-radius: @border-radius-base;
 
 // Skeleton
 // ---
@@ -997,6 +1005,9 @@ sans-serif;
 @dropdown-menu-max-height: 2.5rem;
 @dropdown-menu-padding-vertical-base: 0.08rem;
 @dropdown-menu-padding-horizontal-base: 0;
+@dropdown-menu-item-line-height: .2rem;
+@dropdown-menu-item-padding-vertical: .04rem;
+@dropdown-menu-item-padding-horizontal: @control-padding-horizontal;
 
 // Alert
 @alert-icon-top: 0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2;
@@ -1028,3 +1039,11 @@ sans-serif;
 @segmented-item-line-height-sm: 0.24rem;
 @segmented-item-line-height-lg: 0.36rem;
 @segmented-item-padding-sm: 0 0.08rem;
+
+// Cascader
+@cascader-menu-padding-horizontal: 0;
+@cascader-menu-padding-vertical: 0;
+@cascader-menu-padding: @cascader-menu-padding-vertical @cascader-menu-padding-horizontal;
+@cascader-menu-item-line-height: .22rem;
+@cascader-menu-item-active-font-weight: 600;
+@cascader-menu-item-padding-vertical: .05rem;
