@@ -5,15 +5,12 @@
 
 @transfer-prefix-cls: ~'@{c7n-pro-prefix}-transfer';
 
-@transfer-header-height: 0.32rem;
-@transfer-footer-height: 0.32rem;
-
 .@{transfer-prefix-cls} {
   .reset-component;
   position: relative;
   display: inline-block;
-  width: 1.8rem;
-  height: 2rem;
+  width: @transfer-width;
+  height: @transfer-height;
   vertical-align: middle;
   border: @border-width-base @border-style-base @border-color-base;
   border-radius: @border-radius-base;
@@ -79,7 +76,7 @@
     left: 0;
     width: 100%;
     height: @transfer-header-height;
-    padding: 0.06rem @control-padding-horizontal;
+    padding: @transfer-header-padding-vertical @transfer-header-padding-horizontal;
     overflow: hidden;
     color: @text-color;
     background: @component-background;
@@ -147,10 +144,11 @@
 
     .@{c7n-pro-prefix}-btn {
       display: block;
-      min-width: 0.24rem;
-      height: 0.24rem;
+      min-width: @transfer-btn-height;
+      height: @transfer-btn-height;
       margin-bottom: 0.08rem;
       padding: 0;
+      border-radius: @transfer-btn-border-radius;
 
       + .@{c7n-pro-prefix}-btn {
         margin-left: 0;

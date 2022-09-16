@@ -683,6 +683,37 @@
   --collapse-content-padding: var(--padding-md);
   --collapse-content-bg: var(--component-background);
   --collapse-panel-border-radius: var(--border-radius-base);
+
+  // Transfer
+  // ---
+  --transfer-width: 1.8rem;
+  --transfer-height: 2rem;
+  --transfer-header-height: 0.32rem;
+  --transfer-header-padding-vertical: .06rem;
+  --transfer-header-padding-horizontal: var(--control-padding-horizontal);
+  --transfer-footer-height: 0.32rem;
+  --transfer-disabled-bg: var(--disabled-bg);
+  --transfer-selected-bg: var(--item-active-bg);
+  --transfer-btn-height: .24rem;
+  --transfer-btn-border-radius: var(--border-radius-base);
+
+  // Dropdown Menu
+  // ---
+  --dropdown-menu-max-width: none;
+  --dropdown-menu-max-height: 2.5rem;
+  --dropdown-menu-padding-vertical-base: 0.08rem;
+  --dropdown-menu-padding-horizontal-base: 0;
+  --dropdown-menu-item-line-height: .2rem;
+  --dropdown-menu-item-padding-vertical: .04rem;
+  --dropdown-menu-item-padding-horizontal: var(--control-padding-horizontal);
+
+  // Cascader
+  --cascader-menu-padding-horizontal: 0;
+  --cascader-menu-padding-vertical: 0;
+  --cascader-menu-padding: var(--cascader-menu-padding-horizontal) var(--cascader-menu-padding-vertical);
+  --cascader-menu-item-line-height: .22rem;
+  --cascader-menu-item-active-font-weight: 600;
+  --cascader-menu-item-padding-vertical: .05rem;
 }
 
 
@@ -1637,8 +1668,16 @@ sans-serif;
 
 // Transfer
 // ---
-@transfer-disabled-bg: @disabled-bg;
-@transfer-selected-bg: @item-active-bg;
+@transfer-width: var(--transfer-width);
+@transfer-height: var(--transfer-height);
+@transfer-header-height: var(--transfer-header-height);
+@transfer-header-padding-vertical: var(--transfer-header-padding-vertical);
+@transfer-header-padding-horizontal: var(--transfer-header-padding-horizontal);
+@transfer-footer-height: var(--transfer-footer-height);
+@transfer-disabled-bg: var(--transfer-disabled-bg);
+@transfer-selected-bg: var(--transfer-selected-bg);
+@transfer-btn-height: var(--transfer-btn-height);
+@transfer-btn-border-radius: var(--transfer-btn-border-radius);
 
 // Skeleton
 // ---
@@ -1673,10 +1712,13 @@ sans-serif;
 
 // Dropdown Menu
 // ---
-@dropdown-menu-max-width: none;
-@dropdown-menu-max-height: 2.5rem;
-@dropdown-menu-padding-vertical-base: 0.08rem;
-@dropdown-menu-padding-horizontal-base: 0;
+@dropdown-menu-max-width: var(--dropdown-menu-max-width);
+@dropdown-menu-max-height: var(--dropdown-menu-max-height);
+@dropdown-menu-padding-vertical-base: var(--dropdown-menu-padding-vertical-base);
+@dropdown-menu-padding-horizontal-base: var(--dropdown-menu-padding-horizontal-base);
+@dropdown-menu-item-line-height: var(--dropdown-menu-item-line-height);
+@dropdown-menu-item-padding-vertical: var(--dropdown-menu-item-padding-vertical);
+@dropdown-menu-item-padding-horizontal: var(--dropdown-menu-item-padding-horizontal);
 
 // Alert
 @alert-icon-top: calc(0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2);
@@ -1708,3 +1750,11 @@ sans-serif;
 @segmented-item-line-height-sm: 0.24rem;
 @segmented-item-line-height-lg: 0.36rem;
 @segmented-item-padding-sm: 0 0.08rem;
+
+// Cascader
+@cascader-menu-padding-horizontal: var(--cascader-menu-padding-horizontal);
+@cascader-menu-padding-vertical: var(--cascader-menu-padding-vertical);
+@cascader-menu-padding: var(--cascader-menu-padding);
+@cascader-menu-item-line-height: var(--cascader-menu-item-line-height);
+@cascader-menu-item-active-font-weight: var(--cascader-menu-item-active-font-weight);
+@cascader-menu-item-padding-vertical: var(--cascader-menu-item-padding-vertical);
