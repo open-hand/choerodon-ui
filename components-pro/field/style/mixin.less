@@ -9,6 +9,13 @@
     opacity: 1;
   }
 
+  &-invalid &:focus,
+  &-invalid&-focused & {
+    color: @error-color;
+    border-color: @input-error-border-color;
+    box-shadow: @input-error-active-box-shadow;
+  }
+
   &-invalid&-wrapper {
     background-color: @input-error-bg;
   }

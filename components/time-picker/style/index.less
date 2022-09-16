@@ -65,7 +65,7 @@
     width: 0.18rem;
     height: 0.18rem;
     color: @disabled-color;
-    font-size: @font-size-base - 0.02rem;
+    font-size: calc(@font-size-base - 0.02rem);
     line-height: 1;
     transition: color @animation-duration-slow ease;
     .iconfont-font('\e62e');
@@ -225,6 +225,6 @@
   }
 
   &-small &-icon {
-    right: @control-padding-horizontal-sm - 0.01rem;
+    right: calc(@control-padding-horizontal-sm - 0.01rem);
   }
 }

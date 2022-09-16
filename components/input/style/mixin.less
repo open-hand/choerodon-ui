@@ -88,7 +88,7 @@
   }
 
   &-has-copy {
-    padding-right: @icon-font-size-base + 0.02rem;
+    padding-right: calc(@icon-font-size-base + 0.02rem);
   }
 
   &-has-value &-icon {
@@ -433,7 +433,7 @@
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select {
-      margin: -(@input-padding-vertical-base + 0.01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
+      margin: calc(-1 * (@input-padding-vertical-base + 0.01rem)) calc(-1 * @input-padding-horizontal-base); // lesshint spaceAroundOperator: false
 
       .@{c7n-prefix}-select-selection {
         margin: -0.01rem;

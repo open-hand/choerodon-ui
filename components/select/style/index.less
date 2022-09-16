@@ -132,7 +132,7 @@
     border: none;
     // strange align fix for chrome but works
     // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
-    border-top-width: @border-width-base + 0.0002rem;
+    border-top-width: calc(@border-width-base + 0.0002rem);
     outline: none;
     cursor: pointer;
     transition: all @animation-duration-slow @ease-in-out;
@@ -238,7 +238,7 @@
     font-size: @font-size-lg;
     .@{select-prefix-cls}-selection__rendered {
       height: @input-height-lg;
-      line-height: @input-height-lg - 0.02rem;
+      line-height: calc(@input-height-lg - 0.02rem);
     }
     i.@{iconfont-css-prefix} {
       font-size: 0.24rem;
@@ -252,8 +252,8 @@
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
-          height: @input-height-lg - 0.1rem;
-          line-height: @input-height-lg - 0.1rem;
+          height: calc(@input-height-lg - 0.1rem);
+          line-height: calc(@input-height-lg - 0.1rem);
         }
       }
     }
@@ -262,7 +262,7 @@
   &-sm {
     .@{select-prefix-cls}-selection__rendered {
       height: @input-height-sm;
-      line-height: @input-height-sm - 0.02rem;
+      line-height: calc(@input-height-sm - 0.02rem);
     }
     i.@{iconfont-css-prefix} {
       font-size: 0.16rem;
@@ -276,8 +276,8 @@
         > ul > li,
         .@{select-prefix-cls}-selection__rendered > ul > li,
         .@{select-prefix-cls}-selection__choice__remove > i.@{iconfont-css-prefix} {
-          height: @input-height-sm - 0.1rem;
-          line-height: @input-height-sm - 0.1rem;
+          height: calc(@input-height-sm - 0.1rem);
+          line-height: calc(@input-height-sm - 0.1rem);
         }
       }
     }
@@ -380,8 +380,8 @@
       .@{select-prefix-cls}-selection__rendered > ul > li {
         // for tree-select
         box-sizing: content-box;
-        height: @input-height-base - 0.1rem;
-        line-height: @input-height-base - 0.1rem;
+        height: calc(@input-height-base - 0.1rem);
+        line-height: calc(@input-height-base - 0.1rem);
       }
 
       .@{select-prefix-cls}-selection__choice {
@@ -413,10 +413,10 @@
           cursor: pointer;
           > i.@{iconfont-css-prefix} {
             float: right;
-            height: @input-height-base - 0.1rem;
+            height: calc(@input-height-base - 0.1rem);
             color: @tag-multiple-color;
             font-size: 0.16rem;
-            line-height: @input-height-base - 0.1rem;
+            line-height: calc(@input-height-base - 0.1rem);
           }
         }
       }

@@ -26,10 +26,10 @@
 
     &::before {
       position: absolute;
-      top: @radio-size  / 4 - @radio-border-width / 2;
-      left: @radio-size / 4 - @radio-border-width / 2;
-      width: @radio-size / 2 - @radio-border-width;
-      height: @radio-size / 2 - @radio-border-width;
+      top: calc(@radio-size / 4 - @radio-border-width / 2);
+      left: calc(@radio-size / 4 - @radio-border-width / 2);
+      width: calc(@radio-size / 2 - @radio-border-width);
+      height: calc(@radio-size / 2 - @radio-border-width);
       background-color: @primary-color;
       border-radius: 50%;
       transform: scale(0);

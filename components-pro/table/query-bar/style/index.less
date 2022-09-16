@@ -777,7 +777,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
 
     .@{iconfont-css-prefix} {
@@ -820,11 +820,11 @@
     border-radius: @border-radius-base;
 
     input.@{c7n-pro-prefix}-select {
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
     }
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
   }
 
@@ -904,23 +904,23 @@
 
     label {
       input::-webkit-input-placeholder { // 谷歌
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input:-moz-placeholder { //火狐
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input::-moz-placeholder {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input:-ms-input-placeholder { //微软
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
     }
 
@@ -969,7 +969,7 @@
       box-sizing: content-box;
       min-width: unset;
       max-width: 4rem;
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
       margin: 0;
       overflow: hidden;
       white-space: nowrap;
@@ -1064,7 +1064,7 @@
   }
 
   &-thead-inline-search-last {
-    box-shadow: -@border-width-base 0 0 @table-border-color;
+    box-shadow: calc(-1 * @border-width-base) 0 0 @table-border-color;
   }
 
   &-inline-query {
