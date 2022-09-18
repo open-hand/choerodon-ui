@@ -714,6 +714,25 @@
   --cascader-menu-item-line-height: .22rem;
   --cascader-menu-item-active-font-weight: 600;
   --cascader-menu-item-padding-vertical: .05rem;
+
+  // Upload
+  --upload-picture-card-size: 0.98rem;
+
+  // Slider
+  --slider-margin: 0.14rem 0.06rem 0.1rem;
+  --slider-rail-background-color: var(--background-color-base);
+  --slider-rail-background-color-hover: #e1e1e1;
+  --slider-track-background-color: var(--primary-color);
+  --slider-track-background-color-hover: var(--primary-7);
+  --slider-handle-color: var(--primary-color);
+  --slider-handle-color-hover: var(--primary-7);
+  --slider-handle-color-focus: var(--primary-tint-2);
+  --slider-handle-color-focus-shadow: var(--primary-tint-5);
+  --slider-handle-color-tooltip-open: var(--primary-color);
+  --slider-dot-border-color: var(--border-color-split);
+  --slider-dot-border-color-active: var(--primary-tint-5);
+  --slider-disabled-color: var(--disabled-color);
+  --slider-disabled-background-color: var(--component-background);
 }
 
 
@@ -1636,20 +1655,20 @@ sans-serif;
 
 // Slider
 // ---
-@slider-margin: 0.14rem 0.06rem 0.1rem;
-@slider-rail-background-color: @background-color-base;
-@slider-rail-background-color-hover: #e1e1e1;
-@slider-track-background-color: @primary-color;
-@slider-track-background-color-hover: @primary-7;
-@slider-handle-color: @primary-color;
-@slider-handle-color-hover: @primary-7;
-@slider-handle-color-focus: var(--primary-tint-2);
-@slider-handle-color-focus-shadow: var(--primary-tint-5);
-@slider-handle-color-tooltip-open: @primary-color;
-@slider-dot-border-color: @border-color-split;
-@slider-dot-border-color-active: var(--primary-tint-5);
-@slider-disabled-color: @disabled-color;
-@slider-disabled-background-color: @component-background;
+@slider-margin: var(--slider-margin);
+@slider-rail-background-color: var(--slider-rail-background-color);
+@slider-rail-background-color-hover: var(--slider-rail-background-color-hover);
+@slider-track-background-color: var(--slider-track-background-color);
+@slider-track-background-color-hover: var(--slider-track-background-color-hover);
+@slider-handle-color: var(--slider-handle-color);
+@slider-handle-color-hover: var(--slider-handle-color-hover);
+@slider-handle-color-focus: var(--slider-handle-color-focus);
+@slider-handle-color-focus-shadow: var(--slider-handle-color-focus-shadow);
+@slider-handle-color-tooltip-open: var(--slider-handle-color-tooltip-open);
+@slider-dot-border-color: var(--slider-dot-border-color);
+@slider-dot-border-color-active: var(--slider-dot-border-color-active);
+@slider-disabled-color: var(--slider-disabled-color);
+@slider-disabled-background-color: var(--slider-disabled-background-color);
 
 //Ripple
 // ---
@@ -1758,3 +1777,6 @@ sans-serif;
 @cascader-menu-item-line-height: var(--cascader-menu-item-line-height);
 @cascader-menu-item-active-font-weight: var(--cascader-menu-item-active-font-weight);
 @cascader-menu-item-padding-vertical: var(--cascader-menu-item-padding-vertical);
+
+// Upload
+@upload-picture-card-size: var(--upload-picture-card-size);
