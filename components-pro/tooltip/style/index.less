@@ -87,7 +87,7 @@
   &-placement-top &-arrow,
   &-placement-topLeft &-arrow,
   &-placement-topRight &-arrow {
-    bottom: @tooltip-distance - @tooltip-arrow-width;
+    bottom: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
     border-top-color: @tooltip-arrow-color;
 
@@ -98,21 +98,21 @@
 
   &-placement-top &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-topLeft &-arrow {
-    left: 0.08rem + @tooltip-distance;
+    left: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-topRight &-arrow {
-    right: 0.08rem + @tooltip-distance;
+    right: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-right &-arrow,
   &-placement-rightTop &-arrow,
   &-placement-rightBottom &-arrow {
-    left: @tooltip-distance - @tooltip-arrow-width;
+    left: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
     border-right-color: @tooltip-arrow-color;
 
@@ -123,21 +123,21 @@
 
   &-placement-right &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-rightTop &-arrow {
-    top: 0.08rem + @tooltip-distance;
+    top: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-rightBottom &-arrow {
-    bottom: 0.08rem + @tooltip-distance;
+    bottom: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-left &-arrow,
   &-placement-leftTop &-arrow,
   &-placement-leftBottom &-arrow {
-    right: @tooltip-distance - @tooltip-arrow-width;
+    right: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-left-color: @tooltip-arrow-color;
 
@@ -148,21 +148,21 @@
 
   &-placement-left &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(-1 * @tooltip-arrow-width)
   }
 
   &-placement-leftTop &-arrow {
-    top: 0.08rem + @tooltip-distance;
+    top: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-leftBottom &-arrow {
-    bottom: 0.08rem + @tooltip-distance;
+    bottom: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-bottom &-arrow,
   &-placement-bottomLeft &-arrow,
   &-placement-bottomRight &-arrow {
-    top: @tooltip-distance - @tooltip-arrow-width;
+    top: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-bottom-color: @tooltip-arrow-color;
 
@@ -173,14 +173,14 @@
 
   &-placement-bottom &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-bottomLeft &-arrow {
-    left: 0.08rem + @tooltip-distance;
+    left: calc(0.08rem + @tooltip-distance);
   }
 
   &-placement-bottomRight &-arrow {
-    right: 0.08rem + @tooltip-distance;
+    right: calc(0.08rem + @tooltip-distance);
   }
 }

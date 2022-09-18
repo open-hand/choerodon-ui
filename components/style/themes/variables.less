@@ -645,6 +645,18 @@
   --table-combo-add-fields-hover-bg: var(--primary-fade-1);
   --table-combo-filter-name-select-hover-bg: var(--primary-fade-1);
 
+  // PerformanceTable
+  --performance-table-header-bg: #f5f5f5;
+  --performance-table-active-row-bg: rgb(240, 243, 255);
+  --performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
+  --performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
+  --performance-table-scrollbar-handle-border-radius: 4px;
+  --performance-table-cell-font-weight: bold;
+
+  // Loader
+  --loader-spin-ring-wide: 3px;
+  --loader-duration-normal: 0.6s;
+
   // Tree
 	--tree-bg: var(--component-background);
 	--tree-title-height: 24px;
@@ -733,6 +745,19 @@
   --slider-dot-border-color-active: var(--primary-tint-5);
   --slider-disabled-color: var(--disabled-color);
   --slider-disabled-background-color: var(--component-background);
+
+  // Tooltip
+  --tooltip-max-width: 4rem;
+  --tooltip-min-width: 0.3rem;
+  --tooltip-min-height: 0.32rem;
+  --tooltip-color: var(--text-color-dark);
+  --tooltip-bg: rgba(0, 0, 0, 0.75);
+  --tooltip-arrow-width: 0.05rem;
+  --tooltip-distance: calc(var(--tooltip-arrow-width) - 0.03rem);
+  --tooltip-arrow-color: var(--tooltip-bg);
+  --tooltip-color-light: var(--text-color);
+  --tooltip-bg-light: var(--component-background);
+  --tooltip-arrow-color-light: var(--tooltip-bg-light);
 }
 
 
@@ -1318,23 +1343,23 @@ sans-serif;
 // Tooltip
 // ---
 // Tooltip max width
-@tooltip-max-width: 4rem;
-@tooltip-min-width: 0.3rem;
-@tooltip-min-height: 0.32rem;
+@tooltip-max-width: var(--tooltip-max-width);
+@tooltip-min-width: var(--tooltip-min-width);
+@tooltip-min-height: var(--tooltip-min-height);
 // Tooltip text color
-@tooltip-color: @text-color-dark;
+@tooltip-color: var(--tooltip-color);
 // Tooltip background color
-@tooltip-bg: rgba(0, 0, 0, 0.75);
+@tooltip-bg: var(--tooltip-bg);
 // Tooltip arrow width
-@tooltip-arrow-width: 0.05rem;
+@tooltip-arrow-width: var(--tooltip-arrow-width);
 // Tooltip distance with trigger
-@tooltip-distance: @tooltip-arrow-width + 0.03rem;
+@tooltip-distance: var(--tooltip-distance);
 // Tooltip arrow color
-@tooltip-arrow-color: @tooltip-bg;
+@tooltip-arrow-color: var(--tooltip-arrow-color);
 // Tooltip light theme colors
-@tooltip-color-light: @text-color;
-@tooltip-bg-light: @component-background;
-@tooltip-arrow-color-light: @tooltip-bg-light;
+@tooltip-color-light: var(--tooltip-color-light);
+@tooltip-bg-light: var(--tooltip-bg-light);
+@tooltip-arrow-color-light: var(--tooltip-arrow-color-light);
 
 // Popover
 // ---
@@ -1462,16 +1487,19 @@ sans-serif;
 @table-border: @border-width-base @border-style-base @table-border-color;
 
 // PerformanceTable
-@performance-table-header-bg: #f5f5f5;
-@performance-table-active-row-bg: rgb(240 243 255);
-
+@performance-table-header-bg: var(--performance-table-header-bg);
+@performance-table-active-row-bg: var(--performance-table-active-row-bg);
+@performance-table-scrollbar-bg: var(--performance-table-scrollbar-bg);
+@performance-table-scrollbar-handle-bg: var(--performance-table-scrollbar-handle-bg);
+@performance-table-scrollbar-handle-border-radius: var(--performance-table-scrollbar-handle-border-radius);
+@performance-table-cell-font-weight: var(--performance-table-cell-font-weight);
 
 // Loader
 
-@loader-spin-ring-wide: 3px;
+@loader-spin-ring-wide: var(--loader-spin-ring-wide);
 @loader-spin-ring-color: var(--primary-fade-8);
-@loader-spin-ring-active-color: @B500;
-@loader-duration-normal: 0.6s;
+@loader-spin-ring-active-color: var(--B500);
+@loader-duration-normal: var(--loader-duration-normal);
 
 //@head-background: #f5f5f5;
 //@body-background: #fff;
