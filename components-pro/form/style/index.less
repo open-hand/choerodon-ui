@@ -58,8 +58,11 @@
   }
 
   &-item-group {
-    display: flex;
-    box-sizing: border-box;
+    .@{field-prefix-cls}&,
+    & {
+      display: flex;
+      box-sizing: border-box;
+    }
 
     &-item {
       display: inline-block;
