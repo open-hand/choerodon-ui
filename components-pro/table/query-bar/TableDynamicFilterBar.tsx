@@ -534,6 +534,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       let status = RecordStatus.update;
       if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
+      } else {
+        status = RecordStatus.sync;
       }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
@@ -806,9 +808,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { prefixCls } = this;
+    const { getConfig } = this.context;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
       <TextField
@@ -822,6 +826,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         wait={500}
         onChange={(value: string) => {
           this.handleQuery(undefined, value);
+          if (!value) {
+            dataSet.setState(SEARCHTEXT, '');
+            dataSet.setQueryParameter(searchText, value);
+          }
         }}
         onClear={() => {
           runInAction(() => {
