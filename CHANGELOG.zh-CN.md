@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
+- 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
 
 ## 1.5.6
 
