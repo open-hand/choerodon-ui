@@ -3,9 +3,6 @@
 
 @alert-prefix-cls: ~'@{c7n-prefix}-alert';
 
-@alert-message-color: @heading-color;
-@alert-text-color: @text-color;
-
 .@{alert-prefix-cls} {
   .reset-component;
   position: relative;
@@ -41,8 +38,8 @@
   }
 
   &-success {
-    background-color: ~`colorPalette('@{success-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{success-color}', 3) `;
+    background-color: @success-1;
+    border: @border-width-base @border-style-base @success-3;
 
     .@{alert-prefix-cls}-icon {
       color: @success-color;
@@ -50,8 +47,8 @@
   }
 
   &-info {
-    background-color: ~`colorPalette('@{info-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{info-color}', 3) `;
+    background-color: @info-1;
+    border: @border-width-base @border-style-base @info-3;
 
     .@{alert-prefix-cls}-icon {
       color: @info-color;
@@ -59,8 +56,8 @@
   }
 
   &-warning {
-    background-color: ~`colorPalette('@{warning-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{warning-color}', 3) `;
+    background-color: @warning-1;
+    border: @border-width-base @border-style-base @warning-3;
 
     .@{alert-prefix-cls}-icon {
       color: @warning-color;
@@ -68,8 +65,8 @@
   }
 
   &-error {
-    background-color: ~`colorPalette('@{error-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{error-color}', 3) `;
+    background-color: @error-1;
+    border: @border-width-base @border-style-base @error-3;
 
     .@{alert-prefix-cls}-icon {
       color: @error-color;

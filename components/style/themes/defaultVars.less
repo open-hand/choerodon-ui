@@ -32,6 +32,16 @@
 @primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
 @primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
 
+// Variables derived from functional colors
+@info-1: color(~`colorPalette('@{info-color}', 1) `);
+@info-3: color(~`colorPalette('@{info-color}', 3) `);
+@success-1: color(~`colorPalette('@{success-color}', 1) `);
+@success-3: color(~`colorPalette('@{success-color}', 3) `);
+@error-1: color(~`colorPalette('@{error-color}', 1) `);
+@error-3: color(~`colorPalette('@{error-color}', 3) `);
+@warning-1: color(~`colorPalette('@{warning-color}', 1) `);
+@warning-3: color(~`colorPalette('@{warning-color}', 3) `);
+
 // Base Scaffolding Variables
 // ---
 
@@ -86,6 +96,7 @@ sans-serif;
 @item-focus-bg: @background-color-light;
 @item-active-color: @text-color;
 @item-focus-color: @text-color;
+@item-drag-over-bg: @primary-color;
 
 // use choerodon-ui-font
 // ICONFONT
@@ -991,10 +1002,10 @@ sans-serif;
 @collapse-content-bg: @component-background;
 @collapse-active-bg: @background-color-base;
 
-//CollapsePanel
+// CollapsePanel
 @collapse-panel-border-radius: @border-radius-base;
 
-//  Result
+// Result
 // ---
 @result-title-font-size: 24px;
 @result-subtitle-font-size: @font-size-base;
@@ -1021,6 +1032,8 @@ sans-serif;
 // Alert
 @alert-icon-top: 0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2;
 @alert-icon-left: 0.16rem;
+@alert-message-color: @heading-color;
+@alert-text-color: @text-color;
 
 // Lov
 @lov-selection-list-bg: transparent;
@@ -1059,3 +1072,11 @@ sans-serif;
 
 // Upload
 @upload-picture-card-size: 0.98rem;
+
+// Timeline
+@timeline-color: @border-color-split;
+@timeline-item-padding-bottom: 0.20rem;
+@timeline-item-content-padding-left: 0.18rem;
+
+// Message
+@message-notice-content-padding: 0.1rem 0.16rem;

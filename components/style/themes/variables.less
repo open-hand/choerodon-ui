@@ -55,6 +55,15 @@
 @primary-tint-9-calculate: tint(@primary-color-calculate, 90%);
 @primary-tint-10-calculate: tint(@primary-color-calculate, 100%);
 
+@info-1-calculate: color(~`colorPalette('@{info-color-calculate}', 1) `);
+@info-3-calculate: color(~`colorPalette('@{info-color-calculate}', 3) `);
+@success-1-calculate: color(~`colorPalette('@{success-color-calculate}', 1) `);
+@success-3-calculate: color(~`colorPalette('@{success-color-calculate}', 3) `);
+@error-1-calculate: color(~`colorPalette('@{error-color-calculate}', 1) `);
+@error-3-calculate: color(~`colorPalette('@{error-color-calculate}', 3) `);
+@warning-1-calculate: color(~`colorPalette('@{warning-color-calculate}', 1) `);
+@warning-3-calculate: color(~`colorPalette('@{warning-color-calculate}', 3) `);
+
 // Base Scaffolding Variables
 @body-background-calculate: #fff;
 @component-background-calculate: #fff;
@@ -138,7 +147,6 @@
 @skeleton-color-calculate: #f2f2f2;
 @skeleton-to-color-calculate: shade(@skeleton-color-calculate, 5%);
 
-
 // css 变量
 :root {
   // -------- Colors -----------
@@ -185,6 +193,16 @@
   --primary-tint-8: @primary-tint-8-calculate;
   --primary-tint-9: @primary-tint-9-calculate;
   --primary-tint-10: @primary-tint-10-calculate;
+
+  // Variables derived from functional colors
+  --info-1: @info-1-calculate;
+  --info-3: @info-3-calculate;
+  --success-1: @success-1-calculate;
+  --success-3: @success-3-calculate;
+  --error-1: @error-1-calculate;
+  --error-3: @error-3-calculate;
+  --warning-1: @warning-1-calculate;
+  --warning-3: @warning-3-calculate;
 
   // Base Scaffolding Variables
   --body-background: @body-background-calculate;
@@ -755,7 +773,15 @@
   --collapse-header-bg: var(--background-color-light);
   --collapse-content-padding: var(--padding-md);
   --collapse-content-bg: var(--component-background);
+
+  // CollapsePanel
   --collapse-panel-border-radius: var(--border-radius-base);
+
+  // Result
+  --result-title-font-size: 0.24rem;
+  --result-subtitle-font-size: var(--font-size-base);
+  --result-icon-font-size: 0.72rem;
+  --result-extra-margin: 0.32rem 0 0 0;
 
   // Dropdown Menu
   // ---
@@ -767,6 +793,12 @@
   --dropdown-menu-item-padding-vertical: .04rem;
   --dropdown-menu-item-padding-horizontal: var(--control-padding-horizontal);
 
+  // Alert
+  --alert-icon-top: calc(0.05rem + var(--font-size-base) * var(--line-height-base) / 2 - var(--font-size-base) / 2);
+  --alert-icon-left: 0.16rem;
+  --alert-message-color: var(--heading-color);
+  --alert-text-color: var(--text-color); // 全局未使用
+
   // Cascader
   --cascader-menu-padding-horizontal: 0;
   --cascader-menu-padding-vertical: 0;
@@ -777,6 +809,14 @@
 
   // Upload
   --upload-picture-card-size: 0.98rem;
+
+  // Timeline
+  --timeline-color: var(--border-color-split);
+  --timeline-item-padding-bottom: 0.20rem;
+  --timeline-item-content-padding-left: 0.18rem;
+
+  // Message
+  --message-notice-content-padding: 0.1rem 0.16rem;
 }
 
 
@@ -810,6 +850,18 @@
 @primary-8: var(--primary-8); // unused
 @primary-9: var(--primary-9); // unused
 @primary-10: var(--primary-10); // unused
+
+@info-1: var(--info-1);
+@info-3: var(--info-3);
+
+@success-1: var(--success-1);
+@success-3: var(--success-3);
+
+@error-1: var(--error-1);
+@error-3: var(--error-3);
+
+@warning-1: var(--warning-1);
+@warning-3: var(--warning-3);
 
 // Base Scaffolding Variables
 // ---
@@ -1764,15 +1816,15 @@ sans-serif;
 @collapse-content-bg: var(--collapse-content-bg);
 @collapse-active-bg: var(--background-color-base);
 
-//CollapsePanel
+// CollapsePanel
 @collapse-panel-border-radius: var(--collapse-panel-border-radius);
 
-//  Result
+// Result
 // ---
-@result-title-font-size: 24px;
-@result-subtitle-font-size: @font-size-base;
-@result-icon-font-size: 72px;
-@result-extra-margin: 32px 0 0 0;
+@result-title-font-size: var(--result-title-font-size);
+@result-subtitle-font-size: var(--result-subtitle-font-size);
+@result-icon-font-size: var(--result-icon-font-size);
+@result-extra-margin: var(--result-extra-margin);
 
 // Statistic
 // ---
@@ -1792,8 +1844,10 @@ sans-serif;
 @dropdown-menu-item-padding-horizontal: var(--dropdown-menu-item-padding-horizontal);
 
 // Alert
-@alert-icon-top: calc(0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2);
-@alert-icon-left: 0.16rem;
+@alert-icon-top: var(--alert-icon-top);
+@alert-icon-left: var(--alert-icon-left);
+@alert-message-color: var(--alert-message-color);
+@alert-text-color: var(--alert-text-color);
 
 // Lov
 @lov-selection-list-bg: transparent;
@@ -1832,3 +1886,11 @@ sans-serif;
 
 // Upload
 @upload-picture-card-size: var(--upload-picture-card-size);
+
+// Timeline
+@timeline-color: var(--timeline-color);
+@timeline-item-padding-bottom: var(--timeline-item-padding-bottom);
+@timeline-item-content-padding-left: var(--timeline-item-content-padding-left);
+
+// Message
+@message-notice-content-padding: var(--message-notice-content-padding);
