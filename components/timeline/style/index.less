@@ -2,7 +2,6 @@
 @import '../../style/mixins/index';
 
 @timeline-prefix-cls: ~'@{c7n-prefix}-timeline';
-@timeline-color: @border-color-split;
 
 .@{timeline-prefix-cls} {
   .reset-component;
@@ -13,7 +12,7 @@
   &-item {
     position: relative;
     margin: 0;
-    padding: 0 0 0.2rem;
+    padding: 0 0 @timeline-item-padding-bottom;
     font-size: @font-size-base;
     list-style: none;
 
@@ -72,8 +71,8 @@
 
     &-content {
       position: relative;
-      top: calc(-1 * ((@font-size-base * @line-height-base - @font-size-base) + 0.01rem));
-      padding: 0 0 0 0.18rem;
+      top: calc(-1 * ((@font-size-base * @line-height-base - @font-size-base) - 0.01rem));
+      padding: 0 0 0 @timeline-item-content-padding-left;
     }
 
     &-last {
