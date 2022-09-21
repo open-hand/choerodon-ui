@@ -2381,7 +2381,7 @@ export default class DataSet extends EventManager {
     if (this.cacheModifiedKeys) {
       const { cachedRecords } = this;
       this.cachedRecords = iteratorSliceToArray(cachedRecords.reduce<Set<Record>>((set, record) => {
-        if (!set.has(record) && record.dirty) {
+        if (!set.has(record) && isDirtyRecord(record)) {
           record.isSelected = false;
           set.add(record);
         }
