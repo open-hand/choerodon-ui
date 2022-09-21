@@ -9,12 +9,16 @@
   }
 
   &-size-changer:not(&-size-editable) .@{c7n-pro-prefix}-select,
-  &-size-changer&-size-editable .@{c7n-pro-prefix}-select:not(:hover):not(:focus) {
+  &-size-changer&-size-editable:not(:hover):not(:focus) .@{c7n-pro-prefix}-select {
     border-color: @pagination-size-changer-not-editable-border-color;
   }
 
   &-size-changer {
     margin: @pagination-size-changer-margin;
+
+    + .@{c7n-pro-prefix}-btn-wrapper {
+      margin-left: 0.1rem;
+    }
   }
 
   &-page-info {

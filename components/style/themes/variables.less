@@ -102,6 +102,7 @@
 @disabled-color-dark-calculate: fade(#fff, 35%);
 
 // Shadow
+@shadow-color-calculate: rgba(0, 0, 0, 0.12);
 @shadow-4-calculate: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
 0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
@@ -277,6 +278,14 @@
   --disabled-color-dark: @disabled-color-dark-calculate;
 
   // Shadow
+  --shadow-color: @shadow-color-calculate;
+  --box-shadow-base: var(--shadow-1-down);
+  --shadow-1-up: 0 -0.02rem 0.08rem var(--shadow-color);
+  --shadow-1-down: 0 0.02rem 0.08rem var(--shadow-color);
+  --shadow-1-left: -0.02rem 0 0.08rem var(--shadow-color);
+  --shadow-1-right: 0.02rem 0 0.08rem var(--shadow-color);
+  --shadow-2: 0 0.04rem 0.12rem var(--shadow-color);
+  --shadow-3: 0 0 0 0.01rem var(--component-background);
   --shadow-4: @shadow-4-calculate;
 
   // Buttons
@@ -631,6 +640,28 @@
   --tooltip-bg-light: var(--component-background);
   --tooltip-arrow-color-light: var(--tooltip-bg-light);
 
+  // Modal
+  // --
+  --modal-font-size-lg: 0.18rem; // deprecated
+  --modal-font-size-base: var(--modal-font-size-lg); // deprecated
+  --modal-title-color: var(--heading-color);
+  --modal-title-font-size-base: var(--modal-font-size-base);
+  --modal-title-font-weight: 500;
+  --modal-title-line-height: 0.24rem;
+  --modal-confirm-title-color: var(--modal-title-color);
+  --modal-confirm-title-font-size-base: 0.2rem;
+  --modal-confirm-title-font-weight: var(--modal-title-font-weight);
+  --modal-confirm-title-line-height: 0.32rem;
+  --modal-mask-bg: rgba(0, 0, 0, 0.288);
+  --modal-content-shadow: var(--shadow-2);
+  --modal-header-padding: 0.15rem 0.24rem;
+  --modal-body-padding: 0.24rem;
+  --modal-footer-padding: 0.12rem 0.24rem;
+  --modal-drawer-header-padding: var(--modal-header-padding);
+  --modal-drawer-body-padding: var(--modal-body-padding);
+  --modal-drawer-footer-padding: var(--modal-footer-padding);
+  --modal-confirm-content-margin: 0.08rem;
+
   // Table
   // --
   --table-header-bg: var(--background-color-light);
@@ -973,14 +1004,14 @@ sans-serif;
 @disabled-color-dark: var(--disabled-color-dark);
 
 // Shadow
-@shadow-color: rgba(0, 0, 0, 0.12);
-@box-shadow-base: @shadow-1-down;
-@shadow-1-up: 0 -0.02rem 0.08rem @shadow-color;
-@shadow-1-down: 0 0.02rem 0.08rem @shadow-color;
-@shadow-1-left: -0.02rem 0 0.08rem @shadow-color;
-@shadow-1-right: 0.02rem 0 0.08rem @shadow-color;
-@shadow-2: 0 0.04rem 0.12rem @shadow-color;
-@shadow-3: 0 0 0 0.01rem @component-background;
+@shadow-color: var(--shadow-color);
+@box-shadow-base: var(--box-shadow-base);
+@shadow-1-up: var(--shadow-1-up);
+@shadow-1-down: var(--shadow-1-down);
+@shadow-1-left: var(--shadow-1-left);
+@shadow-1-right: var(--shadow-1-right);
+@shadow-2: var(--shadow-2);
+@shadow-3: var(--shadow-3);
 @shadow-4: var(--shadow-4);
 
 // Buttons
@@ -1455,24 +1486,25 @@ sans-serif;
 
 // Modal
 // --
-@modal-font-size-lg: 0.18rem; // deprecated
-@modal-font-size-base: @modal-font-size-lg; // deprecated
-@modal-title-color: @heading-color;
-@modal-title-font-size-base: @modal-font-size-base;
-@modal-title-font-weight: 500;
-@modal-title-line-height: 0.24rem;
-@modal-confirm-title-color: @modal-title-color;
-@modal-confirm-title-font-size-base: 0.2rem;
-@modal-confirm-title-font-weight: @modal-title-font-weight;
-@modal-confirm-title-line-height: 0.32rem;
-@modal-mask-bg: rgba(0, 0, 0, 0.288);
-@modal-content-shadow: @shadow-2;
-@modal-header-padding: 0.15rem 0.24rem;
-@modal-body-padding: 0.24rem;
-@modal-footer-padding: 0.12rem 0.24rem;
-@modal-drawer-header-padding: @modal-header-padding;
-@modal-drawer-body-padding: @modal-body-padding;
-@modal-drawer-footer-padding: @modal-footer-padding;
+@modal-font-size-lg: var(--modal-font-size-lg); // deprecated
+@modal-font-size-base: var(--modal-font-size-base); // deprecated
+@modal-title-color: var(--modal-title-color);
+@modal-title-font-size-base: var(--modal-title-font-size-base);
+@modal-title-font-weight: var(--modal-title-font-weight);
+@modal-title-line-height: var(--modal-title-line-height);
+@modal-confirm-title-color: var(--modal-confirm-title-color);
+@modal-confirm-title-font-size-base: var(--modal-confirm-title-font-size-base);
+@modal-confirm-title-font-weight: var(--modal-confirm-title-font-weight);
+@modal-confirm-title-line-height: var(--modal-confirm-title-line-height);
+@modal-mask-bg: var(--modal-mask-bg);
+@modal-content-shadow: var(--modal-content-shadow);
+@modal-header-padding: var(--modal-header-padding);
+@modal-body-padding: var(--modal-body-padding);
+@modal-footer-padding: var(--modal-footer-padding);
+@modal-drawer-header-padding: var(--modal-drawer-header-padding);
+@modal-drawer-body-padding: var(--modal-drawer-body-padding);
+@modal-drawer-footer-padding: var(--modal-drawer-footer-padding);
+@modal-confirm-content-margin: var(--modal-confirm-content-margin);
 
 // Sidebar
 @sidebar-font-size-lg: 0.18rem;
