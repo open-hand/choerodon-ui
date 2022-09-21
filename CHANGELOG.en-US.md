@@ -20,6 +20,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
+- 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 
 ## 1.5.6
