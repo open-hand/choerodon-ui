@@ -64,13 +64,13 @@
     min-width: @switch-min-width;
     height: @switch-height;
     padding-right: 0.05rem;
-    padding-left: @switch-button-size * 1.2;
+    padding-left: calc(@switch-button-size * 1.2);
     color: @switch-label-color;
     font-size: @font-size-sm;
     line-height: @switch-line-height;
     vertical-align: middle;
     background-color: @switch-bg;
-    border-radius: @switch-height / 2;
+    border-radius: calc(@switch-height / 2);
 
     &::after {
       position: absolute;
@@ -137,13 +137,13 @@
 
   &:checked + &-label,
   &:checked + .@{c7n-prefix}-progress-loading + &-label {
-    padding-right: @switch-button-size * 1.2;
+    padding-right: calc(@switch-button-size * 1.2);
     padding-left: 0.05rem;
     background-color: @switch-checked-bg;
 
     &::after {
       left: 100%;
-      margin-left: -@switch-padding-horizontal;
+      margin-left: calc(-1 * @switch-padding-horizontal);
       background-color: @switch-checked-button-bg;
       transform: translateX(-100%);
     }
@@ -166,7 +166,7 @@
     min-width: @switch-sm-min-width;
     height: @switch-sm-height;
     line-height: @switch-sm-line-height;
-    border-radius: @switch-sm-button-size / 2;
+    border-radius: calc(@switch-sm-button-size / 2);
 
     .icon {
       font-size: @switch-sm-icon-font-size;
@@ -191,7 +191,7 @@
     min-width: @switch-lg-min-width;
     height: @switch-lg-height;
     line-height: @switch-lg-line-height;
-    border-radius: @switch-lg-button-size / 2;
+    border-radius: calc(@switch-lg-button-size / 2);
 
     .icon {
       font-size: @switch-lg-icon-font-size;
