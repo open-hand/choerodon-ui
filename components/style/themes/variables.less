@@ -779,7 +779,7 @@
   --switch-button-active-width: 0.24rem;
   --switch-sm-button-active-width: 0.2rem;
   --switch-lg-button-active-width: 0.28rem;
-  --switch-sm-checked-margin-left: 0.03rem - var(--switch-sm-height);
+  --switch-sm-checked-margin-left: calc(0.03rem - var(--switch-sm-height));
   --switch-disabled-opacity: 0.4;
   --switch-label-color: var(--text-color-dark);
   --switch-checked-color: var(--primary-color); // deprecated
@@ -1235,7 +1235,7 @@ sans-serif;
 @btn-default-flat-color: var(--btn-default-flat-color);
 
 // Checkbox
-@checkbox-size: 0.16rem;
+@checkbox-size: var(--checkbox-size);
 @checkbox-color: var(--checkbox-color);
 @checkbox-border-color: var(--checkbox-border-color);
 @checkbox-border-width: var(--checkbox-border-width);
