@@ -67,7 +67,7 @@ import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
-import { TooltipProps } from '../tooltip/Tooltip';
+import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 
 let inTab = false;
 
@@ -452,20 +452,20 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
       return '';
     };
-    const processRenderer = (v, repeat?: number) => {
+    const processRenderer = (value, repeat?: number) => {
       let processedValue;
       if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
-        // Cascader 值集处理
-        if (isArrayLike(v)) {
-          processedValue = v.map(v => field.getText(v, undefined, record)).join('/');
+        if (isArrayLike(value)) {
+          const isCascader = !field.get('multiple', record) || value.some(v => isArrayLike(v));
+          processedValue = value.map(v => field.getText(v, undefined, record)).join(isCascader ? '/' : '、');
         } else {
-          processedValue = field.getText(v, undefined, record) as string;
+          processedValue = field.getText(value, undefined, record) as string;
         }
       }
       // 值集中不存在 再去取直接返回的值
-      const text = isNil(processedValue) ? processValue(v) : processedValue;
+      const text = isNil(processedValue) ? processValue(value) : processedValue;
       return (cellRenderer || defaultOutputRenderer)({
-        value: v,
+        value,
         text,
         record,
         dataSet,
@@ -480,7 +480,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         const multiple = field.get('multiple', record);
         const range = field.get('range', record);
         if (multiple) {
-          const { tags, multipleValidateMessageLength } = renderMultipleValues(value, {
+          const { tags, multipleValidateMessageLength, isOverflowMaxTagCount } = renderMultipleValues(value, {
             disabled,
             readOnly: true,
             range,
@@ -492,6 +492,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             validationResults: field.getValidationErrorValues(record),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
+          if (isOverflowMaxTagCount) {
+            return (<Tooltip title={processRenderer(value)}>{tags}</Tooltip>)
+          }
           return tags;
         }
         if (range) {
