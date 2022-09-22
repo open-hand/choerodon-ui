@@ -43,11 +43,11 @@
         background-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
 
       &::after {
-        @check-width: (@checkbox-size / 14) * 5;
-        @check-height: (@checkbox-size / 14) * 10;
+        @check-width: calc((@checkbox-size / 14) * 5);
+        @check-height: calc((@checkbox-size / 14) * 10);
         position: absolute;
-        top: (@checkbox-size - @check-height) / 2 - @check-height * 0.3;
-        left: (@checkbox-size - @check-width) / 2 - @check-width * 0.3;
+        top: calc((@checkbox-size - @check-height) / 2 - @check-height * 0.3);
+        left: calc((@checkbox-size - @check-width) / 2 - @check-width * 0.3);
         display: table;
         width: @check-width;
         height: @check-height;
@@ -176,11 +176,11 @@
 
   // 半选状态
   .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}::after {
-    @indeterminate-width: (@checkbox-size / 14) * 8;
-    @indeterminate-height: @checkbox-size / 14;
+    @indeterminate-width: calc((@checkbox-size / 14) * 8);
+    @indeterminate-height: calc(@checkbox-size / 14);
     position: absolute;
-    top: (@checkbox-size - 0.04rem - @indeterminate-height) / 2;
-    left: (@checkbox-size - 0.03rem - @indeterminate-width) / 2;
+    top: calc((@checkbox-size - 0.04rem - @indeterminate-height) / 2);
+    left: calc((@checkbox-size - 0.03rem - @indeterminate-width) / 2);
     width: @indeterminate-width;
     height: @indeterminate-height;
     transform: scale(1);
