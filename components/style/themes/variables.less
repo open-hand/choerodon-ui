@@ -458,9 +458,20 @@
   --btn-default-flat-color: var(--btn-default-color);
 
   // Checkbox
+  --checkbox-size: 0.16rem;
+  --checkbox-color: var(--primary-color);
   --checkbox-border-color: @checkbox-border-color-calculate;
   --checkbox-border-width: @checkbox-border-width-calculate;
+  --checkbox-disabled-bg: var(--input-disabled-bg);
+  --checkbox-disabled-color: var(--disabled-color);
+  --checkbox-disabled-border-color: var(--disabled-color);
+  --checkbox-disabled-check-bg: var(--checkbox-disabled-bg);
+  --checkbox-disabled-check-border-color: var(--checkbox-disabled-border-color);
+  --checkbox-disabled-check-color: var(--checkbox-disabled-color);
+  --checkbox-uncheck-hover-border-color: var(--primary-color);
   --checkbox-shadow-color: @checkbox-shadow-color-calculate;
+  --checkbox-indeterminate-bg: var(--primary-color);
+  --checkbox-indeterminate-color: #fff;
 
   // DatePicker
   // 从组件内部迁移的变量
@@ -749,7 +760,47 @@
 
   // Switch
   // ---
+  --switch-wrapper-padding: 0.03rem;
+  --switch-padding-horizontal: 0;
+  --switch-sm-wrapper-padding: 0;
+  --switch-lg-wrapper-padding: var(--switch-wrapper-padding) 0;
+  --switch-min-width: 0.36rem;
+  --switch-sm-min-width: 0.3rem;
+  --switch-lg-min-width: 0.4rem;
+  --switch-height: 0.16rem;
+  --switch-sm-height: 0.12rem;
+  --switch-lg-height: 0.2rem;
+  --switch-line-height: 0.16rem;
+  --switch-sm-line-height: 0.12rem;
+  --switch-lg-line-height: 0.2rem;
+  --switch-button-size: 0.20rem;
+  --switch-sm-button-size: 0.16rem;
+  --switch-lg-button-size: 0.24rem;
+  --switch-button-active-width: 0.24rem;
+  --switch-sm-button-active-width: 0.2rem;
+  --switch-lg-button-active-width: 0.28rem;
+  --switch-sm-checked-margin-left: 0.03rem - var(--switch-sm-height);
+  --switch-disabled-opacity: 0.4;
+  --switch-label-color: var(--text-color-dark);
+  --switch-checked-color: var(--primary-color); // deprecated
+  --switch-color: var(--primary-3); // deprecated
+  --switch-checked-bg: var(--switch-color);
+  --switch-checked-button-bg: var(--switch-checked-color);
+  --switch-bg: rgba(0, 0, 0, 0.38);
+  --switch-button-bg: var(--component-background);
   --switch-box-shadow: 0 0 0 0.02rem fade(@primary-3-calculate, 20%);
+  --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
+  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+  --switch-lg-loading-inner-size: 0.2rem;
+  --switch-loading-inner-size: 0.16rem;
+  --switch-sm-loading-inner-size: 0.12rem;
+  --switch-lg-loading-inner-distance: 0.02rem;
+  --switch-loading-inner-distance: 0.05rem;
+  --switch-sm-loading-inner-distance: 0.02rem;
+  --switch-checked-loading-stroke: #FFF;
+  --switch-icon-font-size: 0.16rem;
+  --switch-sm-icon-font-size: 0.12rem;
+  --switch-lg-icon-font-size: 0.2rem;
 
   // Pagination
   // ---
@@ -1185,19 +1236,19 @@ sans-serif;
 
 // Checkbox
 @checkbox-size: 0.16rem;
-@checkbox-color: @primary-color;
+@checkbox-color: var(--checkbox-color);
 @checkbox-border-color: var(--checkbox-border-color);
 @checkbox-border-width: var(--checkbox-border-width);
-@checkbox-disabled-bg: @input-disabled-bg;
-@checkbox-disabled-color: @disabled-color;
-@checkbox-disabled-border-color: @disabled-color;
-@checkbox-disabled-check-bg: @checkbox-disabled-bg;
-@checkbox-disabled-check-border-color: @checkbox-disabled-border-color;
-@checkbox-disabled-check-color: @checkbox-disabled-color;
-@checkbox-uncheck-hover-border-color: @primary-color;
+@checkbox-disabled-bg: var(--checkbox-disabled-bg);
+@checkbox-disabled-color: var(--checkbox-disabled-color);
+@checkbox-disabled-border-color: var(--checkbox-disabled-border-color);
+@checkbox-disabled-check-bg: var(--checkbox-disabled-check-bg);
+@checkbox-disabled-check-border-color: var(--checkbox-disabled-check-border-color);
+@checkbox-disabled-check-color: var(--checkbox-disabled-check-color);
+@checkbox-uncheck-hover-border-color: var(--checkbox-uncheck-hover-border-color);
 @checkbox-shadow-color: var(--checkbox-shadow-color);
-@checkbox-indeterminate-bg: @primary-color;
-@checkbox-indeterminate-color: #fff;
+@checkbox-indeterminate-bg: var(--checkbox-indeterminate-bg);
+@checkbox-indeterminate-color: var(--checkbox-indeterminate-color);
 
 // DatePicker
 // 从组件内部迁移的变量
@@ -1724,47 +1775,46 @@ sans-serif;
 
 // Switch
 // ---
-@switch-wrapper-padding: 0.03rem;
-@switch-padding-horizontal: 0;
-@switch-sm-wrapper-padding: 0;
-@switch-lg-wrapper-padding: @switch-wrapper-padding 0;
-@switch-min-width: 0.36rem;
-@switch-sm-min-width: 0.3rem;
-@switch-lg-min-width: 0.4rem;
-@switch-height: 0.16rem;
-@switch-sm-height: 0.12rem;
-@switch-lg-height: 0.2rem;
-@switch-line-height: 0.16rem;
-@switch-sm-line-height: 0.12rem;
-@switch-lg-line-height: 0.2rem;
-@switch-button-size: 0.20rem;
-@switch-sm-button-size: 0.16rem;
-@switch-lg-button-size: 0.24rem;
-@switch-button-active-width: 0.24rem;
-@switch-sm-button-active-width: 0.2rem;
-@switch-lg-button-active-width: 0.28rem;
-@switch-sm-checked-margin-left: 0.03rem - @switch-sm-height;
-@switch-disabled-opacity: 0.4;
-@switch-label-color: @text-color-dark;
-@switch-checked-color: @primary-color; // deprecated
-@switch-color: @primary-3; // deprecated
-@switch-checked-bg: @switch-color;
-@switch-checked-button-bg: @switch-checked-color;
-@switch-bg: rgba(0, 0, 0, 0.38);
-@switch-button-bg: @component-background;
+@switch-wrapper-padding: var(--switch-wrapper-padding);
+@switch-padding-horizontal: var(--switch-padding-horizontal);
+@switch-sm-wrapper-padding: var(--switch-sm-wrapper-padding);
+@switch-lg-wrapper-padding: var(--switch-lg-wrapper-padding);
+@switch-min-width: var(--switch-min-width);
+@switch-sm-min-width: var(--switch-sm-min-width);
+@switch-lg-min-width: var(--switch-lg-min-width);
+@switch-height: var(--switch-height);
+@switch-sm-height: var(--switch-sm-height);
+@switch-lg-height: var(--switch-lg-height);
+@switch-line-height: var(--switch-line-height);
+@switch-sm-line-height: var(--switch-sm-line-height);
+@switch-lg-line-height: var(--switch-lg-line-height);
+@switch-button-size: var(--switch-button-size);
+@switch-sm-button-size: var(--switch-sm-button-size);
+@switch-lg-button-size: var(--switch-lg-button-size);
+@switch-button-active-width: var(--switch-button-active-width);
+@switch-sm-button-active-width: var(--switch-sm-button-active-width);
+@switch-lg-button-active-width: var(--switch-lg-button-active-width);
+@switch-sm-checked-margin-left: var(--switch-sm-checked-margin-left);
+@switch-disabled-opacity: var(--switch-disabled-opacity);
+@switch-label-color: var(--switch-label-color);
+@switch-checked-color: var(--switch-checked-color); // deprecated
+@switch-color: var(--switch-color); // deprecated
+@switch-checked-bg: var(--switch-checked-bg);
+@switch-checked-button-bg: var(--switch-checked-button-bg);
+@switch-bg: var(--switch-bg);
+@switch-button-bg: var(--switch-button-bg);
 @switch-box-shadow: var(--switch-box-shadow);
-@switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
-@switch-lg-loading-inner-size: 0.2rem;
-@switch-loading-inner-size: 0.16rem;
-@switch-sm-loading-inner-size: 0.12rem;
-@switch-lg-loading-inner-distance: 0.02rem;
-@switch-loading-inner-distance: 0.05rem;
-@switch-sm-loading-inner-distance: 0.02rem;
-@switch-checked-loading-stroke: #FFF;
-@switch-icon-font-size: 0.16rem;
-@switch-sm-icon-font-size: 0.12rem;
-@switch-lg-icon-font-size: 0.2rem;
+@switch-button-box-shadow: var(--switch-button-box-shadow);
+@switch-lg-loading-inner-size: var(--switch-lg-loading-inner-size);
+@switch-loading-inner-size: var(--switch-loading-inner-size);
+@switch-sm-loading-inner-size: var(--switch-sm-loading-inner-size);
+@switch-lg-loading-inner-distance: var(--switch-lg-loading-inner-distance);
+@switch-loading-inner-distance: var(--switch-loading-inner-distance);
+@switch-sm-loading-inner-distance: var(--switch-sm-loading-inner-distance);
+@switch-checked-loading-stroke: var(--switch-checked-loading-stroke);
+@switch-icon-font-size: var(--switch-icon-font-size);
+@switch-sm-icon-font-size: var(--switch-sm-icon-font-size);
+@switch-lg-icon-font-size: var(--switch-lg-icon-font-size);
 // Pagination
 // ---
 @pagination-item-size: 0.32rem;
