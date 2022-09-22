@@ -7,7 +7,7 @@
   .reset-component;
   position: relative;
   display: flex;
-  padding: 0.08rem 0.15rem 0.08rem 0.37rem;
+  padding: @alert-padding;
   word-break: break-all;
   border-radius: @border-radius-base;
 
@@ -16,13 +16,13 @@
   }
 
   &-close-wrapper {
-    margin-left: 0.16rem;
+    margin: @alert-close-wrapper-margin;
     background-color: transparent;
     border: none;
   }
 
   &&-no-icon {
-    padding: 0.08rem 0.15rem;
+    padding: @alert-no-icon-padding;
   }
 
   &-icon {
@@ -34,12 +34,12 @@
   &-description {
     display: none;
     font-size: @font-size-base;
-    line-height: 0.22rem;
+    line-height: @alert-description-line-height;
   }
 
   &-success {
-    background-color: @success-1;
-    border: @border-width-base @border-style-base @success-3;
+    background-color: @alert-success-bg;
+    border: @border-width-base @border-style-base @alert-success-border-color;
 
     .@{alert-prefix-cls}-icon {
       color: @success-color;
@@ -47,8 +47,8 @@
   }
 
   &-info {
-    background-color: @info-1;
-    border: @border-width-base @border-style-base @info-3;
+    background-color: @alert-info-bg;
+    border: @border-width-base @border-style-base @alert-info-border-color;
 
     .@{alert-prefix-cls}-icon {
       color: @info-color;
@@ -56,8 +56,8 @@
   }
 
   &-warning {
-    background-color: @warning-1;
-    border: @border-width-base @border-style-base @warning-3;
+    background-color: @alert-warning-bg;
+    border: @border-width-base @border-style-base @alert-warning-border-color;
 
     .@{alert-prefix-cls}-icon {
       color: @warning-color;
@@ -65,8 +65,8 @@
   }
 
   &-error {
-    background-color: @error-1;
-    border: @border-width-base @border-style-base @error-3;
+    background-color: @alert-error-bg;
+    border: @border-width-base @border-style-base @alert-error-border-color;
 
     .@{alert-prefix-cls}-icon {
       color: @error-color;
@@ -96,21 +96,21 @@
 
   &-with-description {
     align-items: flex-start;
-    padding: 0.15rem 0.15rem 0.15rem 0.64rem;
+    padding: @alert-with-description-padding;
     color: @text-color;
     line-height: @line-height-base;
     border-radius: @border-radius-base;
   }
 
   &-with-description&-no-icon {
-    padding: 0.15rem;
+    padding: @alert-with-description-no-icon-padding;
   }
 
   &-with-description &-icon {
     position: absolute;
     top: 0.16rem;
     left: 0.24rem;
-    font-size: 0.24rem;
+    font-size: @alert-with-description-icon-size;
   }
 
   &-with-description &-close-icon {
@@ -120,7 +120,7 @@
 
   &-with-description &-message {
     display: block;
-    margin-bottom: 0.04rem;
+    margin: @alert-with-description-message-margin;
     color: @alert-message-color;
     font-size: @font-size-lg;
   }
