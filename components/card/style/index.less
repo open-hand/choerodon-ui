@@ -2,8 +2,6 @@
 @import '../../style/mixins/index';
 
 @card-prefix-cls: ~'@{c7n-prefix}-card';
-@card-head-height: 0.48rem;
-@card-hover-border: rgba(0, 0, 0, 0.09);
 
 .@{card-prefix-cls} {
   .reset-component;
@@ -63,7 +61,7 @@
     float: right;
     // https://stackoverflow.com/a/22429853/3040605
     margin-left: auto;
-    padding: @card-head-padding + 0.015rem 0;
+    padding: calc(@card-head-padding + 0.015rem) 0;
     text-align: right;
   }
 
@@ -108,7 +106,7 @@
   }
 
   &-contain-tabs &-head-title {
-    min-height: @card-head-height - @card-head-padding;
+    min-height: calc(@card-head-height - @card-head-padding);
     padding-bottom: 0;
   }
 
@@ -199,7 +197,7 @@
   }
 
   &-type-inner &-extra {
-    padding: @card-inner-head-padding + 0.015rem 0;
+    padding: calc(@card-inner-head-padding + 0.015rem) 0;
   }
 
   &-meta {
