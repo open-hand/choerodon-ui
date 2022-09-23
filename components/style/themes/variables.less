@@ -880,6 +880,23 @@
   --alert-icon-left: 0.16rem;
   --alert-message-color: var(--heading-color);
   --alert-text-color: var(--text-color); // 全局未使用
+  --alert-padding: 0.08rem 0.15rem 0.08rem 0.37rem;
+  --alert-close-wrapper-margin: 0 0 0 0.16rem;
+  --alert-no-icon-padding: 0.08rem 0.15rem;
+  --alert-description-line-height: 0.22rem;
+  --alert-with-description-padding: 0.15rem 0.15rem 0.15rem 0.64rem;
+  --alert-with-description-message-margin: 0 0 0.04rem 0;
+  --alert-with-description-no-icon-padding: 0.15rem;
+  --alert-with-description-icon-size: 0.24rem;
+  // Alert Colors
+  --alert-success-bg: var(--success-1);
+  --alert-success-border-color: var(--success-3);
+  --alert-info-bg: var(--info-1);
+  --alert-info-border-color: var(--info-3);
+  --alert-error-bg: var(--error-1);
+  --alert-error-border-color: var(--error-3);
+  --alert-warning-bg: var(--warning-1);
+  --alert-warning-border-color: var(--warning-3);
 
   // Cascader
   --cascader-menu-padding-horizontal: 0;
@@ -899,6 +916,20 @@
 
   // Message
   --message-notice-content-padding: 0.1rem 0.16rem;
+
+  // Notification
+  --notification-width: 3.84rem;
+  --notification-padding-vertical: 0.16rem;
+  --notification-padding-horizontal: 0.24rem;
+  --notification-padding: var(--notification-padding-vertical) var(--notification-padding-horizontal);
+  --notification-margin-bottom: 0.16rem;
+  --notification-message-margin-bottom: 0.08rem;
+  --notification-message-line-height: 0.24rem;
+  --notification-with-icon-message-margin-bottom: 0.04rem;
+  --notification-with-icon-message-margin-left: 0.48rem;
+  --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
+  --notification-icon-size: 0.24rem;
+  --notification-icon-margin-left: 0.04rem;
 }
 
 
@@ -1930,6 +1961,23 @@ sans-serif;
 @alert-icon-left: var(--alert-icon-left);
 @alert-message-color: var(--alert-message-color);
 @alert-text-color: var(--alert-text-color);
+@alert-padding: var(--alert-padding);
+@alert-close-wrapper-margin: var(--alert-close-wrapper-margin);
+@alert-no-icon-padding: var(--alert-no-icon-padding);
+@alert-description-line-height: var(--alert-description-line-height);
+@alert-with-description-padding: var(--alert-with-description-padding);
+@alert-with-description-message-margin: var(--alert-with-description-message-margin);
+@alert-with-description-no-icon-padding: var(--alert-with-description-no-icon-padding);
+@alert-with-description-icon-size: var(--alert-with-description-icon-size);
+// Alert Colors
+@alert-success-bg: var(--alert-success-bg);
+@alert-success-border-color: var(--alert-success-border-color);
+@alert-info-bg: var(--alert-info-bg);
+@alert-info-border-color: var(--alert-info-border-color);
+@alert-error-bg: var(--alert-error-bg);
+@alert-error-border-color: var(--alert-error-border-color);
+@alert-warning-bg: var(--alert-warning-bg);
+@alert-warning-border-color: var(--alert-warning-border-color);
 
 // Lov
 @lov-selection-list-bg: transparent;
@@ -1976,3 +2024,17 @@ sans-serif;
 
 // Message
 @message-notice-content-padding: var(--message-notice-content-padding);
+
+// Notification
+@notification-width: var(--notification-width);
+@notification-padding-vertical: var(--notification-padding-vertical);
+@notification-padding-horizontal: var(--notification-padding-horizontal);
+@notification-padding: var(--notification-padding);
+@notification-margin-bottom: var(--notification-margin-bottom);
+@notification-message-margin-bottom: var(--notification-message-margin-bottom);
+@notification-message-line-height: var(--notification-message-line-height);
+@notification-with-icon-message-margin-bottom: var(--notification-with-icon-message-margin-bottom);
+@notification-with-icon-message-margin-left: var(--notification-with-icon-message-margin-left);
+@notification-with-icon-description-margin-left: var(--notification-with-icon-description-margin-left);
+@notification-icon-size: var(--notification-icon-size);
+@notification-icon-margin-left: var(--notification-icon-margin-left);
