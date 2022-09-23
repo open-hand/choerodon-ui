@@ -916,6 +916,20 @@
 
   // Message
   --message-notice-content-padding: 0.1rem 0.16rem;
+
+  // Notification
+  --notification-width: 3.84rem;
+  --notification-padding-vertical: 0.16rem;
+  --notification-padding-horizontal: 0.24rem;
+  --notification-padding: var(--notification-padding-vertical) var(--notification-padding-horizontal);
+  --notification-margin-bottom: 0.16rem;
+  --notification-message-margin-bottom: 0.08rem;
+  --notification-message-line-height: 0.24rem;
+  --notification-with-icon-message-margin-bottom: 0.04rem;
+  --notification-with-icon-message-margin-left: 0.48rem;
+  --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
+  --notification-icon-size: 0.24rem;
+  --notification-icon-margin-left: 0.04rem;
 }
 
 
@@ -928,15 +942,12 @@
 // -------- Colors -----------
 @primary-color: var(--primary-color);
 @info-color: var(--info-color);
-@info-bg-color: var(--info-bg-color);
 @success-color: var(--success-color);
-@success-bg-color: var(--success-bg-color);
 @processing-color: var(--processing-color);
 @error-color: var(--error-color);
 @error-bg-color: var(--error-bg-color);
 @highlight-color: var(--highlight-color);
 @warning-color: var(--warning-color);
-@warning-bg-color: var(--warning-bg-color);
 @normal-color: var(--normal-color);
 @B500: var(--B500);
 
@@ -2013,3 +2024,17 @@ sans-serif;
 
 // Message
 @message-notice-content-padding: var(--message-notice-content-padding);
+
+// Notification
+@notification-width: var(--notification-width);
+@notification-padding-vertical: var(--notification-padding-vertical);
+@notification-padding-horizontal: var(--notification-padding-horizontal);
+@notification-padding: var(--notification-padding);
+@notification-margin-bottom: var(--notification-margin-bottom);
+@notification-message-margin-bottom: var(--notification-message-margin-bottom);
+@notification-message-line-height: var(--notification-message-line-height);
+@notification-with-icon-message-margin-bottom: var(--notification-with-icon-message-margin-bottom);
+@notification-with-icon-message-margin-left: var(--notification-with-icon-message-margin-left);
+@notification-with-icon-description-margin-left: var(--notification-with-icon-description-margin-left);
+@notification-icon-size: var(--notification-icon-size);
+@notification-icon-margin-left: var(--notification-icon-margin-left);
