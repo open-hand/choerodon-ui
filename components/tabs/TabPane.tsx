@@ -54,14 +54,18 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   const prefixCls = `${rootPrefixCls}-tabpane`;
   const cls = classnames(prefixCls, active ? `${prefixCls}-active` : `${prefixCls}-inactive`, className);
 
-  const handleValidationReport = useCallback(action<(props: { showInvalid, component }) => void>(({ showInvalid, component }) => {
-    if (!disabled && eventKey) {
-      if (showInvalid) {
-        invalidComponents.add(component);
-      } else {
-        invalidComponents.delete(component);
+  const handleValidationReport = useCallback(action<(props: { showInvalid, component }) => void>((validationProps) => {
+    // why validationProps is undefined?
+    if (validationProps) {
+      const { showInvalid, component } = validationProps;
+      if (!disabled && eventKey) {
+        if (showInvalid) {
+          invalidComponents.add(component);
+        } else {
+          invalidComponents.delete(component);
+        }
+        validationMap.set(eventKey, invalidComponents.size === 0);
       }
-      validationMap.set(eventKey, invalidComponents.size === 0);
     }
   }), [eventKey, disabled, invalidComponents]);
   const handleValidate = useCallback(({ valid, dataSet }) => {
