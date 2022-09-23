@@ -758,6 +758,43 @@
   --tag-margin: 0 0.02rem;
   --tag-padding: 0 0.08rem;
 
+  // Badge
+  // ---
+  --badge-height: 0.2rem;
+  --badge-height-sm: 0.14rem;
+  --badge-dot-size: 0.06rem;
+  --badge-font-size: var(--font-size-sm);
+  --badge-font-size-sm: var(--font-size-sm);
+  --badge-font-weight: normal;
+  --badge-status-size: 0.06rem;
+
+  // Card
+  // ---
+  --card-head-color: var(--heading-color);
+  --card-head-background: var(--component-background);
+  --card-head-padding: 0.16rem;
+  --card-inner-head-padding: 0.12rem;
+  --card-padding-base: 0.24rem;
+  --card-padding-wider: 0.32rem;
+  --card-actions-background:var(--background-color-light);
+  --card-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.09);
+  --card-head-height: 0.48rem;
+  --card-hover-border: rgba(0, 0, 0, 0.09);
+
+  // Avatar
+  // --
+  --avatar-size-base: 0.32rem;
+  --avatar-size-lg: 0.4rem;
+  --avatar-size-sm: 0.24rem;
+  --avatar-font-size-base: 0.18rem;
+  --avatar-font-size-lg: 0.24rem;
+  --avatar-font-size-sm: 0.14rem;
+  --avatar-bg: #ccc;
+  --avatar-color: #fff;
+  --avatar-border-radius: var(--border-radius-base);
+  --avatar-group-overlapping: -0.08rem;
+  --avatar-group-space: 0.03rem;
+
   // Switch
   // ---
   --switch-wrapper-padding: 0.03rem;
@@ -930,6 +967,16 @@
   --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
   --notification-icon-size: 0.24rem;
   --notification-icon-margin-left: 0.04rem;
+
+  // Typography
+  --heading-1-size: calc(var(--font-size-base) * 2.71);
+  --heading-2-size: calc(var(--font-size-base) * 2.14);
+  --heading-3-size: calc(var(--font-size-base) * 1.71);
+  --heading-4-size: calc(var(--font-size-base) * 1.42);
+  --heading-5-size: calc(var(--font-size-base) * 1.14);
+  --typography-title-font-weight: 600;
+  --typography-title-margin-top: 0.3rem;
+  --typography-title-margin-bottom: 0.2rem;
 }
 
 
@@ -1729,13 +1776,13 @@ sans-serif;
 
 // Badge
 // ---
-@badge-height: 0.2rem;
-@badge-height-sm: 0.14rem;
-@badge-dot-size: 0.06rem;
-@badge-font-size: @font-size-sm;
-@badge-font-size-sm: @font-size-sm;
-@badge-font-weight: normal;
-@badge-status-size: 0.06rem;
+@badge-height: var(--badge-height);
+@badge-height-sm: var(--badge-height-sm);
+@badge-dot-size: var(--badge-dot-size);
+@badge-font-size: var(--badge-font-size);
+@badge-font-size-sm: var(--badge-font-size-sm);
+@badge-font-weight: var(--badge-font-weight);
+@badge-status-size: var(--badge-status-size);
 
 // Rate
 // ---
@@ -1744,14 +1791,16 @@ sans-serif;
 
 // Card
 // ---
-@card-head-color: @heading-color;
-@card-head-background: @component-background;
-@card-head-padding: 0.16rem;
-@card-inner-head-padding: 0.12rem;
-@card-padding-base: 0.24rem;
-@card-padding-wider: 0.32rem;
-@card-actions-background: @background-color-light;
-@card-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.09);
+@card-head-color: var(--card-head-color);
+@card-head-background: var(--card-head-background);
+@card-head-padding: var(--card-head-padding);
+@card-inner-head-padding: var(--card-inner-head-padding);
+@card-padding-base: var(--card-padding-base);
+@card-padding-wider: var(--card-padding-wider);
+@card-actions-background: var(--card-actions-background);
+@card-shadow: var(--card-shadow);
+@card-head-height: var(--card-head-height);
+@card-hover-border: var(--card-hover-border);
 
 // Tabs
 // ---
@@ -1792,17 +1841,17 @@ sans-serif;
 
 // Avatar
 // ---
-@avatar-size-base: 0.32rem;
-@avatar-size-lg: 0.4rem;
-@avatar-size-sm: 0.24rem;
-@avatar-font-size-base: 0.18rem;
-@avatar-font-size-lg: 0.24rem;
-@avatar-font-size-sm: 0.14rem;
-@avatar-bg: #ccc;
-@avatar-color: #fff;
-@avatar-border-radius: @border-radius-base;
-@avatar-group-overlapping: -0.08rem;
-@avatar-group-space: 0.03rem;
+@avatar-size-base: var(--avatar-size-base);
+@avatar-size-lg: var(--avatar-size-lg);
+@avatar-size-sm:var(--avatar-size-sm);
+@avatar-font-size-base: var(--avatar-font-size-base);
+@avatar-font-size-lg: var(--avatar-font-size-lg);
+@avatar-font-size-sm: var(--avatar-font-size-sm);
+@avatar-bg: var(--avatar-bg);
+@avatar-color: var(--avatar-color);
+@avatar-border-radius: var(--avatar-border-radius);
+@avatar-group-overlapping: var(--avatar-group-overlapping);
+@avatar-group-space: var(--avatar-group-space);
 
 // Switch
 // ---
@@ -1983,14 +2032,14 @@ sans-serif;
 @lov-selection-list-bg: transparent;
 
 // Typography
-@heading-1-size: calc(@font-size-base * 2.71);
-@heading-2-size: calc(@font-size-base * 2.14);
-@heading-3-size: calc(@font-size-base * 1.71);
-@heading-4-size: calc(@font-size-base * 1.42);
-@heading-5-size: calc(@font-size-base * 1.14);
-@typography-title-font-weight: 600;
-@typography-title-margin-top: 0.3rem;
-@typography-title-margin-bottom: 0.2rem;
+@heading-1-size: var(--heading-1-size);
+@heading-2-size: var(--heading-2-size);
+@heading-3-size: var(--heading-3-size);
+@heading-4-size: var(--heading-4-size);
+@heading-5-size: var(--heading-5-size);
+@typography-title-font-weight: var(--typography-title-font-weight);
+@typography-title-margin-top: var(--typography-title-margin-top);
+@typography-title-margin-bottom: var(--typography-title-margin-bottom);
 
 // Segmented
 @segmented-padding: 0.04rem;
