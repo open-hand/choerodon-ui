@@ -40,6 +40,7 @@ timeline: true
 - 🌟 `Collapse`: 新增 `hidden` 属性。
 - 🌟 `Tabs.TabPane`: 新增 `hidden` 属性。
 - 🌟 `Tabs.TabGroup`: 新增 `hidden` 属性。
+- 🌟  新增主题变量。
 - 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。

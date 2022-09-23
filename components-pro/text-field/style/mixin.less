@@ -313,11 +313,11 @@
     background: transparent;
 
     &:hover {
-      color: @primary-5;
+      color: @input-hover-border-color;
     }
 
     &:active {
-      color: @primary-3;
+      color: @input-focus-border-color;
     }
   }
 
@@ -459,7 +459,7 @@
 
     &-input {
       position: absolute;
-      color: @primary-color;
+      color: @input-primary-color;
       font-weight: bold;
       opacity: 0;
     }
@@ -683,7 +683,7 @@
     left: 0;
     width: 100%;
     height: 0;
-    border-bottom: 0.02rem @border-style-base @primary-color;
+    border-bottom: 0.02rem @border-style-base @input-primary-color;
     transform: scaleX(0.5);
     transform-origin: 50%;
     opacity: 0;

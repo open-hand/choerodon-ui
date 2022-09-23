@@ -1,6 +1,7 @@
 @import '../../style/themes/default';
 @import '../../style/mixins/index';
 @import '../../input/style/mixin';
+@import '../../checkbox/style/mixin';
 
 @select-prefix-cls: ~'@{c7n-prefix}-select';
 @checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
@@ -86,7 +87,7 @@
   &-multiple&-open {
     .@{select-prefix-cls}-selection-label {
       margin-top: 0 !important;
-      color: @primary-color;
+      color: @select-primary-color;
       transform: scale(0.75) translateY(-0.2rem) translateZ(0.00001rem);
       transition: transform 300ms @ease-out, color 100ms @ease-out, background-color 300ms @ease-out;
     }
@@ -96,7 +97,7 @@
     .@{select-prefix-cls}-selection {
       &-label {
         margin-top: 0 !important;
-        color: @primary-color;
+        color: @select-primary-color;
         transform: scale(0.75) translateY(-0.2rem) translateZ(0.00001rem);
         transition: transform 300ms @ease-out, color 100ms @ease-out,
           background-color 300ms @ease-out;
@@ -521,6 +522,7 @@
 
 .@{select-prefix-cls}-dropdown {
   .reset-component;
+  .checked(@checkbox-prefix-cls, @select-primary-color);
 
   &.slide-up-enter.slide-up-enter-active&-placement-bottomLeft,
   &.slide-up-appear.slide-up-appear-active&-placement-bottomLeft {
@@ -574,7 +576,7 @@
     font-size: @font-size-sm;
     border-bottom: @border-width-base @border-style-base @border-color-base;
     span {
-      color: @primary-color;
+      color: @select-primary-color;
       cursor: pointer;
     }
     span + span {
