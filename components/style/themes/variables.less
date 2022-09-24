@@ -208,6 +208,11 @@
   // Base Scaffolding Variables
   --body-background: @body-background-calculate;
   --component-background: @component-background-calculate; // 有效
+  --font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  --font-family: 'Monospaced Number', var(--font-family-no-number);
+  --code-family: Consolas, Menlo, Courier, monospace;
   --heading-color: @heading-color-calculate;
   --text-color: @text-color-calculate;
   --text-color-secondary: @text-color-secondary-calculate;
@@ -757,6 +762,27 @@
   --tag-font-weight: inherit;
   --tag-margin: 0 0.02rem;
   --tag-padding: 0 0.08rem;
+  --tag-height: 0.22rem;
+  --tag-line-height: 0.2rem;
+  --tag-default-border-color: var(--tag-default-bg);
+  --tag-has-color-color: #fff;
+  --tag-checkable-bg: transparent;
+  --tag-checkable-border-color: transparent;
+  --tag-checkable-not-checked-hover-color: var(--primary-color);
+  --tag-checkable-color: #000;
+  --tag-checkable-checked-color: #fff;
+  --tag-checkable-checked-bg: var(--primary-6);
+  --tag-checkable-active-bg: var(--primary-7);
+
+  // Carousel
+  // ---
+  --carousel-dot-width: 0.16rem;
+  --carousel-dot-height: 0.03rem;
+  --carousel-dot-active-width: 0.24rem;
+  --carousel-dot-active-bg: #fff;
+  --carousel-dot-padding: 0;
+  --carousel-dot-text-align: center;
+  --carousel-dot-border-radius: 0.01rem;
 
   // Badge
   // ---
@@ -902,6 +928,16 @@
   --result-icon-font-size: 0.72rem;
   --result-extra-margin: 0.32rem 0 0 0;
 
+  // Statistic
+  // ---
+  --statistic-title-font-size: var(--font-size-base);
+  --statistic-content-font-size: 0.24rem;
+  --statistic-unit-font-size: 0.16rem;
+  --statistic-font-family: var(--font-family);
+  --statistic-title-line-height: var(--line-height-base);
+  --statistic-content-line-height: var(--line-height-base);
+  --statistic-content-font-weight: var(--font-weight-base);
+
   // Dropdown Menu
   // ---
   --dropdown-menu-max-width: none;
@@ -978,6 +1014,8 @@
   --notification-icon-size: 0.24rem;
   --notification-icon-margin-left: 0.04rem;
 
+  // List
+  --c7n-list-header-font-size: var(--font-size-base);
 }
 
 
@@ -1031,11 +1069,9 @@
 @body-background: var(--body-background);
 // Base background color for most components
 @component-background: var(--component-background);
-@font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
-sans-serif;
-@font-family: 'Monospaced Number', @font-family-no-number;
-@code-family: Consolas, Menlo, Courier, monospace;
+@font-family-no-number: var(--font-family-no-number);
+@font-family: var(--font-family);
+@code-family: var(--code-family);
 @heading-color: var(--heading-color);
 @text-color: var(--text-color);
 @text-color-secondary: var(--text-color-secondary);
@@ -1762,6 +1798,17 @@ sans-serif;
 @tag-font-weight: var(--tag-font-weight);
 @tag-margin: var(--tag-margin);
 @tag-padding: var(--tag-padding);
+@tag-height: var(--tag-height);
+@tag-line-height: var(--tag-line-height);
+@tag-default-border-color: var(--tag-default-border-color);
+@tag-has-color-color: var(--tag-has-color-color);
+@tag-checkable-bg: var(--tag-checkable-bg);
+@tag-checkable-border-color: var(--tag-checkable-border-color);
+@tag-checkable-not-checked-hover-color: var(--tag-checkable-not-checked-hover-color);
+@tag-checkable-color: var(--tag-checkable-color);
+@tag-checkable-checked-color: var(--tag-checkable-checked-color);
+@tag-checkable-checked-bg: var(--tag-checkable-checked-bg);
+@tag-checkable-active-bg: var(--tag-checkable-active-bg);
 
 // TimePicker
 // ---
@@ -1771,9 +1818,13 @@ sans-serif;
 
 // Carousel
 // ---
-@carousel-dot-width: 0.16rem;
-@carousel-dot-height: 0.03rem;
-@carousel-dot-active-width: 0.24rem;
+@carousel-dot-width: var(--carousel-dot-width);
+@carousel-dot-height: var(--carousel-dot-height);
+@carousel-dot-active-width: var(--carousel-dot-active-width);
+@carousel-dot-active-bg: var(--carousel-dot-active-bg);
+@carousel-dot-padding: var(--carousel-dot-padding);
+@carousel-dot-text-align: var(--carousel-dot-text-align);
+@carousel-dot-border-radius: var(--carousel-dot-border-radius);
 
 // Badge
 // ---
@@ -1991,10 +2042,13 @@ sans-serif;
 
 // Statistic
 // ---
-@statistic-title-font-size: @font-size-base;
-@statistic-content-font-size: 24px;
-@statistic-unit-font-size: 16px;
-@statistic-font-family: @font-family;
+@statistic-title-font-size: var(--statistic-title-font-size);
+@statistic-content-font-size: var(--statistic-content-font-size);
+@statistic-unit-font-size: var(--statistic-unit-font-size);
+@statistic-font-family: var(--statistic-font-family);
+@statistic-title-line-height: var(--statistic-title-line-height);
+@statistic-content-line-height: var(--statistic-content-line-height);
+@statistic-content-font-weight: var(--statistic-content-font-weight);
 
 // Dropdown Menu
 // ---
@@ -2088,3 +2142,6 @@ sans-serif;
 @notification-with-icon-description-margin-left: var(--notification-with-icon-description-margin-left);
 @notification-icon-size: var(--notification-icon-size);
 @notification-icon-margin-left: var(--notification-icon-margin-left);
+
+// List
+@c7n-list-header-font-size: var(--c7n-list-header-font-size);
