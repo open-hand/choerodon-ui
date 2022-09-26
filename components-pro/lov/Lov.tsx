@@ -23,11 +23,16 @@ import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
 import { stopEvent } from '../_util/EventManager';
-import ObserverSelect, { isSearchTextEmpty, SearchMatcher, Select, SelectProps } from '../select/Select';
+import ObserverSelect, {
+  isSearchTextEmpty,
+  SearchMatcher,
+  Select,
+  SelectProps,
+} from '../select/Select';
 import Option from '../option/Option';
 import { TableQueryBarType } from '../table/enum';
 import { CheckedStrategy, DataSetStatus, RecordStatus } from '../data-set/enum';
-import { SearchAction, ViewMode } from './enum';
+import { PopupSearchMode, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { $l } from '../locale-context';
@@ -102,6 +107,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   nodeRenderer?: NodeRenderer;
   showSelectedInView?: boolean;
   selectionProps?: SelectionProps;
+  popupSearchMode?: PopupSearchMode;
 }
 
 @observer
@@ -116,6 +122,7 @@ export default class Lov extends Select<LovProps> {
     searchAction: SearchAction.input,
     fetchSingle: false,
     viewMode: TriggerViewMode.modal,
+    popupSearchMode: PopupSearchMode.multiple,
   };
 
   @observable modal: ModalProxy | undefined;
@@ -167,6 +174,11 @@ export default class Lov extends Select<LovProps> {
   }
 
   get popup(): boolean {
+    const { popupSearchMode } = this.props;
+    const { viewMode } = this.observableProps;
+    if (viewMode === TriggerViewMode.popup && popupSearchMode === PopupSearchMode.single) {
+      return this.modal || (this.isSearchFieldInPopup() && !this.searchText) ? false : this.statePopup;
+    }
     return this.modal || (!this.isSearchFieldInPopup() && !this.searchText) ? false : this.statePopup;
   }
 
@@ -234,14 +246,25 @@ export default class Lov extends Select<LovProps> {
     const searchFieldInPopup = super.isSearchFieldInPopup();
     if (searchFieldInPopup === undefined) {
       const { viewMode } = this.observableProps;
-      return viewMode === TriggerViewMode.popup;
+      if (viewMode === TriggerViewMode.popup) {
+        const { popupSearchMode } = this.props;
+        return popupSearchMode !== PopupSearchMode.single;
+      }
     }
     return searchFieldInPopup;
   }
 
+  popupEditable(): boolean {
+    return !super.disabled && !super.readOnly && this.searchable;
+  }
+
   isEditable(): boolean {
     const { viewMode } = this.observableProps;
-    return viewMode !== TriggerViewMode.popup && super.isEditable();
+    const { popupSearchMode } = this.props;
+    if (viewMode === TriggerViewMode.popup) {
+      return popupSearchMode === PopupSearchMode.single && this.popupEditable();
+    }
+    return super.isEditable()
   }
 
   @autobind
@@ -303,12 +326,13 @@ export default class Lov extends Select<LovProps> {
         });
       }
       const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
+      const { popupSearchMode } = this.props;
       const mergedTableProps: Partial<TableProps> | undefined = mergeProps<Partial<TableProps>>(tableProps, {
         style: {
           maxHeight: 250,
         },
         pagination: { showSizeChanger: false },
-        queryBar: this.renderSearchField,
+        queryBar: popupSearchMode === PopupSearchMode.single ? TableQueryBarType.none : this.renderSearchField,
         border: false,
         size: Size.small,
       });
@@ -802,6 +826,7 @@ export default class Lov extends Select<LovProps> {
       'nodeRenderer',
       'showSelectedInView',
       'selectionProps',
+      'popupSearchMode',
     ]);
   }
 

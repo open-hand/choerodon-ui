@@ -20,3 +20,8 @@ export enum SelectionsPosition {
   side = 'side',
   below = 'below',
 }
+
+export enum PopupSearchMode {
+  single = 'single',
+  multiple = 'multiple',
+}

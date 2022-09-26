@@ -110,9 +110,10 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
     if (wrapperRef.current && !removeable && enable) {
       const wrapperDom = getContainer && isElement(getContainer()) ? getContainer() : wrapperRef.current;
       const appendChild = (e) => {
+        const event = e || window.event;
         setTimeout(() => {
-          if (!wrapperDom.getElementsByClassName(prefixCls).length) {
-            wrapperDom.appendChild(e.target);
+          if (!wrapperDom.getElementsByClassName(prefixCls).length && event) {
+            wrapperDom.appendChild(event.target);
           }
         });
       }
@@ -163,18 +164,21 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
 
       if (ctx) {
         // 旋转字符 rotate
-        ctx.translate(canvasOffsetLeft * ratio, canvasOffsetTop * ratio);
-        ctx.rotate((Math.PI / 180) * Number(rotate));
         const markWidth = width! * ratio;
         const markHeight = height! * ratio;
 
+        // 确定旋转中心
+        const centerX = markWidth / 2 + canvasOffsetLeft * ratio;
+        const centerY = markHeight / 2 + canvasOffsetTop * ratio;
+        ctx.translate(centerX, centerY);
+        ctx.rotate((Math.PI / 180) * Number(rotate));
         if (image) {
           const img = new Image();
           img.crossOrigin = 'anonymous';
           img.referrerPolicy = 'no-referrer';
           img.src = image;
           img.onload = () => {
-            ctx.drawImage(img, 0, 0, markWidth, markHeight);
+            ctx.drawImage(img, -markWidth / 2, -markHeight / 2, markWidth, markHeight);
             setBase64Url(canvas.toDataURL());
             callback(canvas.toDataURL());
           };
@@ -182,14 +186,47 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
           const { fontSize = 16, fontWeight = 'normal', fontFamily = 'sans-serif', color = 'rgba(0,0,0,.15)', fontStyle = 'normal' } = markStyle!;
           const markSize = Number(fontSize) * ratio;
           ctx.font = `${fontStyle} normal ${fontWeight} ${markSize}px ${fontFamily}`;
-
           ctx.fillStyle = color!;
-          ctx.fillText(content, 0, 0);
+          // 计算文本的长度
+          const contentLength = ctx.measureText(content).width;
+          if (contentLength > markWidth) {
+            drawText({ content, ctx, canvasWidth: markWidth, markHeight, fontHeight: markSize });
+          } else {
+            ctx.fillText(content, 0, 0);
+          }
           setBase64Url(canvas.toDataURL());
           callback(canvas.toDataURL());
         }
       } else {
         console.error('当前环境不支持Canvas');
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param content 文本
+   * @param ctx 绘制上下文
+   * @param canvasWidth 绘制宽度
+   * @param markHeight 水印高度
+   * @param fontHeight 字体高度
+   */
+  const drawText = ({ content, ctx, canvasWidth, markHeight, fontHeight }) => {
+    let lastSubStrIndex = 0;
+    let lineWidth = 0;
+    let initHeight = fontHeight;
+
+    for (let i = 0; i < content.length; i++) {
+      const { width } = ctx.measureText(content[i]);
+      lineWidth += width;
+      if (lineWidth > canvasWidth - width) {
+        ctx.fillText(content.substring(lastSubStrIndex, i), 0 - canvasWidth / 2, initHeight - markHeight / 2);
+        initHeight += fontHeight;
+        lineWidth = 0;
+        lastSubStrIndex = i;
+      }
+      if (i === content.length - 1) {
+        ctx.fillText(content.substring(lastSubStrIndex, i + 1), 0 - canvasWidth / 2, initHeight - markHeight / 2);
       }
     }
   }
