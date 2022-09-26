@@ -134,6 +134,10 @@
 @radio-border-color-calculate: rgba(0, 0, 0, 0.24);
 @radio-shadow-color-calculate: fade(@outline-color-calculate, 20%);
 
+// Layout
+@layout-header-background-calculate: #001529;
+@layout-sider-background-tint-1-calculate: tint(@layout-header-background-calculate, 10%);
+
 // Input
 @input-info-color-calculate: fade(@text-color-calculate, 54%);
 @input-placeholder-color-calculate: hsv(0, 0, 75%);
@@ -147,6 +151,7 @@
 // ---
 @skeleton-color-calculate: #f2f2f2;
 @skeleton-to-color-calculate: shade(@skeleton-color-calculate, 5%);
+
 
 // css 变量
 :root {
@@ -514,6 +519,11 @@
   --radio-button-hover-color: var(--primary-5);
   --radio-button-active-color: var(--primary-7);
 
+  // Layout
+  --layout-header-background: @layout-header-background-calculate;
+  --layout-sider-background: var(--layout-header-background);
+  --layout-sider-background-tint-1: @layout-sider-background-tint-1-calculate;
+
   // Form
   --label-required-color: var(--highlight-color);
   --label-color: inherit;
@@ -677,6 +687,31 @@
   --modal-drawer-body-padding: var(--modal-body-padding);
   --modal-drawer-footer-padding: var(--modal-footer-padding);
   --modal-confirm-content-margin: 0.08rem;
+
+  // Menu
+  --menu-inline-toplevel-item-height: 0.4rem;
+  --menu-horizontal-line-height: 0.46rem;
+  --menu-horizontal-hover-bg: transparent;
+  --menu-vertical-submenu-arrow-right: 0.16rem;
+  --menu-item-height: 0.4rem;
+  --menu-collapsed-width: 0.8rem;
+  --menu-bg: var(--component-background);
+  --menu-item-color: var(--text-color);
+  --menu-highlight-color: var(--primary-color);
+  --menu-item-active-bg: var(--item-active-bg);
+  --menu-item-group-title-color: var(--text-color-secondary);
+  --menu-item-group-title-padding: 0.08rem 0.16rem;
+  --menu-item-group-title-line-height: var(--line-height-base);
+  --menu-item-padding: 0 0.16rem 0 0.28rem;
+  --menu-active-line-width: 0.02rem;
+  // dark theme
+  --menu-dark-color: var(--text-color-secondary-dark);
+  --menu-dark-bg: var(--layout-header-background);
+  --menu-dark-arrow-color: #fff;
+  --menu-dark-submenu-bg: #000c17;
+  --menu-dark-highlight-color: #fff;
+  --menu-dark-item-selected-bg: var(--primary-color);
+  --menu-dark-highlight-bg: transparent;
 
   // Table
   // --
@@ -1039,6 +1074,20 @@
   --typography-title-font-weight: 600;
   --typography-title-margin-top: 0.3rem;
   --typography-title-margin-bottom: 0.2rem;
+
+  // Segmented
+  --segmented-padding: 0.04rem;
+  --segmented-padding-sm: 0.02rem;
+  --segmented-bg: rgb(241, 243, 245);
+  --segmented-float-label-top: -0.08rem;
+  --segmented-float-label-left: 0.08rem;
+  --segmented-active-bg: #fff;
+  --segmented-interval-border-width: 0.01rem;
+  --segmented-interval-border-color: #dee2e6;
+  --segmented-interval-border-style: solid;
+  --segmented-item-line-height-sm: 0.24rem;
+  --segmented-item-line-height-lg: 0.36rem;
+  --segmented-item-padding-sm: 0 0.08rem;
 
   // Cascader
   --cascader-menu-padding-horizontal: 0;
@@ -1498,17 +1547,19 @@
 
 // Layout
 @layout-body-background: #f0f2f5;
-@layout-header-background: #001529;
+@layout-header-background: var(--layout-header-background);
 @layout-footer-background: @layout-body-background;
 @layout-header-height: 0.64rem;
 @layout-header-padding: 0 0.5rem;
 @layout-footer-padding: 0.24rem 0.5rem;
-@layout-sider-background: @layout-header-background;
+@layout-sider-background: var(--layout-sider-background);
 @layout-trigger-height: 0.48rem;
 @layout-trigger-background: #002140;
 @layout-trigger-color: #fff;
 @layout-zero-trigger-width: 0.36rem;
 @layout-zero-trigger-height: 0.42rem;
+
+@layout-sider-background-tint-1: var(--layout-sider-background-tint-1);
 
 // z-index list
 @zindex-modal-container: 1000;
@@ -1742,21 +1793,29 @@
 
 // Menu
 // ---
-@menu-inline-toplevel-item-height: 0.4rem;
-@menu-item-height: 0.4rem;
-@menu-collapsed-width: 0.8rem;
-@menu-bg: @component-background;
-@menu-item-color: @text-color;
-@menu-highlight-color: @primary-color;
-@menu-item-active-bg: @item-active-bg;
-@menu-item-group-title-color: @text-color-secondary;
+@menu-inline-toplevel-item-height: var(--menu-inline-toplevel-item-height);
+@menu-item-height: var(--menu-item-height);
+@menu-collapsed-width: var(--menu-collapsed-width);
+@menu-bg: var(--menu-bg);
+@menu-item-color: var(--menu-item-color);
+@menu-highlight-color: var(--menu-highlight-color);
+@menu-item-active-bg: var(--menu-item-active-bg);
+@menu-item-group-title-color: var(--menu-item-group-title-color);
+@menu-item-group-title-padding: var(--menu-item-group-title-padding);
+@menu-item-group-title-line-height: var(--menu-item-group-title-line-height);
+@menu-item-padding: var(--menu-item-padding);
+@menu-horizontal-line-height: var(--menu-horizontal-line-height);
+@menu-horizontal-hover-bg: var(--menu-horizontal-hover-bg);
+@menu-vertical-submenu-arrow-right: var(--menu-vertical-submenu-arrow-right);
+@menu-active-line-width: var(--menu-active-line-width);
 // dark theme
-@menu-dark-color: @text-color-secondary-dark;
-@menu-dark-bg: @layout-header-background;
-@menu-dark-arrow-color: #fff;
-@menu-dark-submenu-bg: #000c17;
-@menu-dark-highlight-color: #fff;
-@menu-dark-item-selected-bg: @primary-color;
+@menu-dark-color: var(--menu-dark-color);
+@menu-dark-bg: var(--menu-dark-bg);
+@menu-dark-arrow-color: var(--menu-dark-arrow-color);
+@menu-dark-submenu-bg: var(--menu-dark-submenu-bg);
+@menu-dark-highlight-color: var(--menu-dark-highlight-color);
+@menu-dark-item-selected-bg: var(--menu-dark-item-selected-bg);
+@menu-dark-highlight-bg: var(--menu-dark-highlight-bg);
 
 // Spin
 // ---
@@ -2184,18 +2243,18 @@
 @typography-title-margin-bottom: var(--typography-title-margin-bottom);
 
 // Segmented
-@segmented-padding: 0.04rem;
-@segmented-padding-sm: 0.02rem;
-@segmented-bg: rgb(241, 243, 245);
-@segmented-float-label-top: -0.08rem;
-@segmented-float-label-left: 0.08rem;
-@segmented-active-bg: #fff;
-@segmented-interval-border-width: 0.01rem;
-@segmented-interval-border-color: #dee2e6;
-@segmented-interval-border-style: solid;
-@segmented-item-line-height-sm: 0.24rem;
-@segmented-item-line-height-lg: 0.36rem;
-@segmented-item-padding-sm: 0 0.08rem;
+@segmented-padding: var(--segmented-padding);
+@segmented-padding-sm: var(--segmented-padding-sm);
+@segmented-bg: var(--segmented-bg);
+@segmented-float-label-top: var(--segmented-float-label-top);
+@segmented-float-label-left: var(--segmented-float-label-left);
+@segmented-active-bg: var(--segmented-active-bg);
+@segmented-interval-border-width: var(--segmented-interval-border-width);
+@segmented-interval-border-color: var(--segmented-interval-border-color);
+@segmented-interval-border-style: var(--segmented-interval-border-style);
+@segmented-item-line-height-sm: var(--segmented-item-line-height-sm);
+@segmented-item-line-height-lg: var(--segmented-item-line-height-lg);
+@segmented-item-padding-sm: var(--segmented-item-padding-sm);
 
 // Cascader
 @cascader-menu-padding-horizontal: var(--cascader-menu-padding-horizontal);
