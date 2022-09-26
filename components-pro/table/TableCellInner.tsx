@@ -658,7 +658,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   if (height !== undefined && rows === 0) {
     innerClassName.push(`${prefixCls}-inner-fixed-height`);
   }
-  if (isString(innerProps.children) && innerProps.children.includes('\n')) {
+  if (isString(innerProps.children) && innerProps.children.includes('\n') && (rowHeight === 'auto' || height !== undefined && rows === 0)) {
     innerClassName.push(`${prefixCls}-inner-pre`);
   }
 

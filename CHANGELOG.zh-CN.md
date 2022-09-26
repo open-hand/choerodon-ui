@@ -15,11 +15,18 @@ timeline: true
 
 ---
 
+- 🌟 `Collapse`: 新增 `hidden` 属性。
+- 🌟 `Tabs.TabPane`: 新增 `hidden` 属性。
+- 🌟 `Tabs.TabGroup`: 新增 `hidden` 属性。
+- 🌟  新增主题变量。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
+- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
+- 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
 
 ## 1.5.6
 
@@ -37,10 +44,6 @@ timeline: true
 - 🌟 `Notification`: 新增 icons 配置。
 - 🌟 `Upload`: 新增 beforeUploadFiles 属性。
 - 🌟 `<pro>Lov`: Lov 配置新增 transformSelectedData 钩子。
-- 🌟 `Collapse`: 新增 `hidden` 属性。
-- 🌟 `Tabs.TabPane`: 新增 `hidden` 属性。
-- 🌟 `Tabs.TabGroup`: 新增 `hidden` 属性。
-- 🌟  新增主题变量。
 - 💄 `Trigger`: 优化内容大小变更时自动对齐。
 - 💄 `Upload`: 优化重新上传按钮和功能。以及优化拖拽模式中 multiple 为 false 的场景。
 - 💄 `<pro>PerformanceTable`: 优化 autoHeight 的使用及新增 autoHeight 对象使用方法。
@@ -51,7 +54,6 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化可输入中文输入法小数点。
 - 💄 `<pro>Lov`: 优化 onBeforeSelect 回调函数，支持返回一个 Promise 对象。
 - 💄 `<pro>Table`: 优化使用 TextArea 时输入值换行展示。
-- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
 - 🐞 `Trigger`: 修复点击下拉列表，其他输入框没法失焦的问题。
 - 🐞 `Table`: 修复列头会没对齐的问题。
 - 🐞 `<pro>Attachment`: 修复批量查询数量接口返回空时报错的问题。
@@ -85,7 +87,6 @@ timeline: true
 - 🐞 `Upload`: 修复上传成功后 loading 状态没变的问题。
 - 🐞 `<pro>ColorPicker`: 修复输入 RGBA 时转换十六进制失败的问题。
 - 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
-- 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
 
 ## 1.5.5
 

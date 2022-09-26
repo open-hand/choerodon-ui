@@ -15,11 +15,18 @@ timeline: true
 
 ---
 
+- 🌟 `Collapse`: Added `hidden` property.
+- 🌟 `Tabs.TabPane`: Added `hidden` property.
+- 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 Added theme style.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
+- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
+- 💄 `<pro>Table`: Optimized the display timing of the `\n`.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 
 ## 1.5.6
 
@@ -37,10 +44,6 @@ timeline: true
 - 🌟 `Notification`: Added `icons` configuration.
 - 🌟 `Upload`: Added `beforeUploadFiles` property.
 - 🌟 `<pro>Lov`: Add `transformSelectedData` hook in Lov configuration.
-- 🌟 `Collapse`: Added `hidden` property.
-- 🌟 `Tabs.TabPane`: Added `hidden` property.
-- 🌟 `Tabs.TabGroup`: Added `hidden` property.
-- 🌟 Added theme style.
 - 💄 `Trigger`: Optimize auto-alignment when content size changes.
 - 💄 `Upload`: Optimized the re-upload button and function. And optimize scenarios where `multiple` is `false` in drag and drop mode.
 - 💄 `<pro>PerformanceTable`: Optimize the use of `autoHeight` and add new usage methods for `autoHeight` objects.
@@ -51,7 +54,6 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimized to input decimal point in Chinese input method.
 - 💄 `<pro>Lov`: Optimized `onBeforeSelect` callback, support for returning a Promise object.
 - 💄 `<pro>Table`: Optimized newline display of input values when used TextArea.
-- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 🐞 `Trigger`: Fixed the issue that other input boxes could not lose focus after clicking the drop-down list.
 - 🐞 `Table`: Fix the problem that the column headers will be misaligned.
 - 🐞 `<pro>Attachment`: Fixed the problem that an error occurred when the batch count query interface returned empty.
@@ -84,7 +86,6 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
-- 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 
 ## 1.5.5
 
