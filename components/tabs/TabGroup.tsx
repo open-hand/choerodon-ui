@@ -10,6 +10,7 @@ export interface TabGroupProps {
   dot?: boolean;
   children?: ReactNode;
   defaultActiveKey?: string;
+  hidden?: boolean;
 }
 
 const TabGroup: FunctionComponent<TabGroupProps> = function TabGroup() {

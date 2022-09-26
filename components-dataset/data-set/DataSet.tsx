@@ -593,11 +593,17 @@ export default class DataSet extends EventManager {
 
   @computed
   get cachedSelected(): Record[] {
-    return this.cachedRecords.filter(r => r.isSelected);
+    const { isAllPageSelection } = this;
+    return this.cachedRecords.filter(r => isAllPageSelection ? !r.isSelected : r.isSelected);
   }
 
   set cachedSelected(cachedSelected: Record[]) {
     this.setCachedSelected(cachedSelected);
+  }
+
+  @computed
+  get cachedUnSelected(): Record[] {
+    return this.cachedRecords.filter(r => !r.isSelected);
   }
 
   get cachedDirtyRecords(): [Record[], Record[], Record[]] {
@@ -2377,7 +2383,8 @@ export default class DataSet extends EventManager {
     if (this.cacheModifiedKeys) {
       const { cachedRecords } = this;
       this.cachedRecords = iteratorSliceToArray(cachedRecords.reduce<Set<Record>>((set, record) => {
-        if (!set.has(record) && record.dirty) {
+        if (!set.has(record) && isDirtyRecord(record)) {
+          record.isSelected = false;
           set.add(record);
         }
         return set;

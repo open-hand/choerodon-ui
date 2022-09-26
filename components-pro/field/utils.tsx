@@ -165,7 +165,7 @@ export function processFieldValue(
     lang?: string;
     /**
      * 显示类属性值获取（组件属性优先级高于 DataSet Field 属性优先级）
-     * @param name 
+     * @param name
      */
     getDisplayProp?(name: string): any;
   },
@@ -198,7 +198,7 @@ export type ProcessValueOptions = {
   isNumber?: boolean;
 }
 
-export function processValue(value: any, options:ProcessValueOptions = {}) {
+export function processValue(value: any, options: ProcessValueOptions = {}) {
   if (!isNil(value)) {
     if (isMoment(value)) {
       if (value.isValid()) {
@@ -312,7 +312,7 @@ export function getValueKey(v: any) {
   return v;
 }
 
-export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode; multipleValidateMessageLength: number } {
+export function renderMultipleValues(value, option: MultipleRenderOption): { tags: ReactNode; multipleValidateMessageLength: number, isOverflowMaxTagCount: boolean, } {
   const {
     range,
     maxTagPlaceholder,
@@ -331,7 +331,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   } = option;
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
-  const { maxTagCount = valueLength } = option;
+  const { maxTagCount = getConfigDefault('fieldMaxTagCount') } = option;
   const repeats: Map<any, number> = new Map<any, number>();
 
   let multipleValidateMessageLength = 0;
@@ -356,7 +356,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         multipleValidateMessageLength++;
       }
       const closeBtn = !blockDisabled && !readOnly && (
-        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat}/>
+        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
       );
       const inner = readOnly ? (
         <span key={String(index)} className={className}>{text}</span>
@@ -377,8 +377,8 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     }
     return undefined;
   });
-
-  if (valueLength > maxTagCount) {
+  const isOverflowMaxTagCount: boolean = !!maxTagCount && valueLength > maxTagCount;
+  if (maxTagCount && isOverflowMaxTagCount) {
     const blockClassName = classNames(
       {
         [`${prefixCls}-multiple-block-disabled`]: disabled,
@@ -401,7 +401,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     );
   }
 
-  return { tags, multipleValidateMessageLength };
+  return { tags, multipleValidateMessageLength, isOverflowMaxTagCount };
 }
 
 export function renderMultiLine(options: MultiLineRenderOption): { lines?: ReactNode; multipleValidateMessageLength: number } {
@@ -481,7 +481,7 @@ export function renderValidationMessage(validationMessage: ReactNode, showIcon?:
   if (validationMessage) {
     return (
       <div className={getProPrefixCls('validation-message')}>
-        {showIcon && <Icon type="error"/>}
+        {showIcon && <Icon type="error" />}
         <span>{validationMessage}</span>
       </div>
     );

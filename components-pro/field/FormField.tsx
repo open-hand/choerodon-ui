@@ -982,7 +982,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
       // Cascader 值集处理
       if (isArrayLike(value)) {
-        processedValue = value.map(v => field.getText(v, undefined, record)).join('/');
+        const isCascader = !field.get('multiple', record) || value.some(v => isArrayLike(v));
+        processedValue = value.map(v => field.getText(v, undefined, record)).join(isCascader ? '/' : '、');
       } else {
         processedValue = field.getText(value, undefined, record) as string;
       }
@@ -1271,7 +1272,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       getKey: this.getValueKey,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;
-    return values.tags;
+    return values;
   }
 
   @action

@@ -16,12 +16,18 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableColumnResizeTransition` properties.
-- 🌟 `Collapse`: Added property of `collapsible`.
+- 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
+- 🌟 `Tabs.TabPane`: Added `hidden` property.
+- 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 Added theme style.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.
 - 💄 `WaterMark`: Optimize text wrap display.
+- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
+- 💄 `<pro>Table`: Optimized the display timing of the `\n`.
+- 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -37,8 +43,13 @@ timeline: true
 - 🐞 `<pro>Upload`: Fixed the interaction style of upload type components Upload, &lt;pro&gt;Upload and &lt;pro&gt;Attachment in disabled mode.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
+- 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
+- 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
+- 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
+- 🐞 `Tabs`: Fix the problem of the arrow display.
+- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
 
 ## 1.5.6
 

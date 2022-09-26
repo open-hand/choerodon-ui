@@ -40,6 +40,7 @@ A content area which can be collapsed and expanded.
 | showArrow | If `false`, panel will not show arrow icon | boolean | `true` |
 | forceRender | Forced render of content on panel, instead of lazy rending after clicking on header | boolean | `false` |
 | showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
-| extra	| The extra element in the corner | ReactNode | - |	
+| extra	| The extra element in the corner | ReactNode | - |
 | dataSet	| DataSet， The panel will automatically expanded when dataset validation fails | DataSet \| DataSet[] | 无 |
 | collapsible(1.5.7) | Specify whether the panel be collapsible or the trigger area of collapsible, Priority is higher than disabled | `header` \| `disabled` | |
+| hidden | 是否隐藏 | boolean  | false |

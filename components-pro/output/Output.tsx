@@ -5,6 +5,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
+import Tooltip from '../tooltip/Tooltip';
 import { Tooltip as TextTooltip } from '../core/enum';
 import { processFieldValue, renderMultiLine, toRangeValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
@@ -119,7 +120,11 @@ export default class Output extends FormField<OutputProps> {
 
   getRenderedValue(): ReactNode {
     if (this.multiple) {
-      return this.renderMultipleValues(true);
+      const { tags, isOverflowMaxTagCount } = this.renderMultipleValues(true);
+      if (isOverflowMaxTagCount) {
+        return <Tooltip title={this.processRenderer(this.getValue())}>{tags}</Tooltip>
+      }
+      return tags;
     }
     if (this.range) {
       return this.renderRangeValue(toRangeValue(this.getValue(), this.range));
