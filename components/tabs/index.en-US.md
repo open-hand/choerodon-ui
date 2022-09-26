@@ -62,6 +62,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | overflowCount         | 展示封顶的数字值         | number | 99     |
 | showCount         | 显示数字        | boolean | true     |
 | dataSet	| 数据集对象，当数据集校验失败时会出现提示标记 | DataSet \| DataSet[] | 无 |	
+| hidden | 是否隐藏 | boolean  | false |
 
 ### Tabs.TabGroup
 
@@ -71,3 +72,4 @@ Choerodon UI has 3 types of Tabs for different situations.
 | disabled         | 是否禁用          | boolean | 无     |
 | dot         | 是否显示小红点          | boolean | 无     |
 | defaultActiveKey         | 初始化组时默认展示的 TabPane 对应的 key          | string | 无     |
+| hidden | 是否隐藏 | boolean  | false |

@@ -1,5 +1,6 @@
 @import '../../style/themes/default';
 @import '../../trigger/style/mixin';
+@import '../../checkbox/style/mixin';
 
 @checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox';
 .dropdown-menu-item-properties() {
@@ -142,6 +143,7 @@
   list-style: none;
   outline: none;
   .dropdown-menu-item;
+  .checked(@checkbox-prefix-cls, @select-primary-color);
 }
 
 .select-all() {
@@ -154,7 +156,7 @@
       display: inline-block;
       margin-right: 0.2rem;
       margin-bottom: 0.08rem;
-      color: @primary-color;
+      color: @select-primary-color;
       cursor: pointer;
     }
   }
@@ -167,7 +169,7 @@
     background-color: @component-background;
 
     &-selected {
-      color: @primary-color;
+      color: @select-primary-color;
     }
 
     &-label {

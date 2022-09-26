@@ -48,25 +48,25 @@
   }
 
   &:focus + &-inner {
-    border-color: @primary-color;
+    border-color: @checkbox-color;
     box-shadow: 0 0 @outline-blur-size @outline-width @checkbox-shadow-color;
   }
 
   &:checked + &-inner,
   &-indeterminate &-inner {
-    border-color: @primary-color;
+    border-color: @checkbox-color;
     .check;
   }
 
   &&:checked + &-inner {
-    background-color: @primary-color !important;
+    background-color: @checkbox-color !important;
   }
 
   &&:hover:checked + &-inner,
   &-indeterminate:hover & + &-inner,
   &&:focus:checked + &-inner {
-    background-color: @primary-color;
-    border-color: @primary-color;
+    background-color: @checkbox-color;
+    border-color: @checkbox-color;
   }
 
   &-indeterminate & + &-inner {
@@ -136,7 +136,7 @@
     }
 
     &:hover .@{pro-checkbox-prefix-cls}-inner + span {
-      color: @primary-color;
+      color: @checkbox-color;
     }
   }
 

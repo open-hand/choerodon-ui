@@ -40,6 +40,7 @@ cols: 1
 | key | 对应 activeKey | string | 无 |
 | forceRender | 被隐藏时是否渲染 DOM 结构 | boolean | false |
 | showArrow	| 是否展示当前面板上的箭头	| boolean	|  true |
-| extra	| 自定义渲染每个面板右上角的内容 | ReactNode | 无 |	
+| extra	| 自定义渲染每个面板右上角的内容 | ReactNode | 无 |
 | dataSet	| 数据集对象，当数据集校验失败时会自动展开 | DataSet \| DataSet[] | 无 |
 | collapsible(1.5.7) | 是否可折叠或指定可折叠触发区域，优先级高于 disabled | `header` \| `disabled` | |
+| hidden | 是否隐藏 | boolean  | false |

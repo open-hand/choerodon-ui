@@ -249,7 +249,7 @@ export function normalizePanes(children: ReactNode, customized?: TabsCustomized 
   const getCustomizedPane = (key: string) => {
     if (panes) {
       const pane = panes[key];
-      if (pane) {
+      if (pane && !pane.hidden) {
         if (length) {
           return omit(pane, omitKeys);
         }
@@ -260,24 +260,30 @@ export function normalizePanes(children: ReactNode, customized?: TabsCustomized 
   if (groups.length) {
     let index = 0;
     groups.forEach((group, i) => {
-      const groupPanelList: [string, TabPaneProps & { type: string | JSXElementConstructor<any> }][] = [];
-      toArray(group.props.children).forEach((child, j) => {
-        const panelKey = generateKey(child.key, index);
-        index += 1;
-        groupPanelList.push([panelKey, { type: child.type, sort: j, ...child.props, ...getCustomizedPane(panelKey) }]);
-      });
-      groupPanelList.sort(sorter);
-      panelList.push(...groupPanelList);
-      const groupKey = generateKey(group.key, i);
-      groupedPanels.set(groupKey, {
-        group: { ...group.props },
-        panelsMap: new Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>(groupPanelList),
-      });
+      if (!group.props.hidden) {
+        const groupPanelList: [string, TabPaneProps & { type: string | JSXElementConstructor<any> }][] = [];
+        toArray(group.props.children).forEach((child, j) => {
+          if (!child.props.hidden) {
+            const panelKey = generateKey(child.key, index);
+            index += 1;
+            groupPanelList.push([panelKey, { type: child.type, sort: j, ...child.props, ...getCustomizedPane(panelKey) }]);
+          }
+        });
+        groupPanelList.sort(sorter);
+        panelList.push(...groupPanelList);
+        const groupKey = generateKey(group.key, i);
+        groupedPanels.set(groupKey, {
+          group: { ...group.props },
+          panelsMap: new Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>(groupPanelList),
+        });
+      }
     });
   } else {
     toArray(children).forEach((child, index) => {
-      const key = generateKey(child.key, index);
-      panelList.push([key, { type: child.type, sort: index, ...child.props, ...getCustomizedPane(key) }]);
+      if (!child.props.hidden) {
+        const key = generateKey(child.key, index);
+        panelList.push([key, { type: child.type, sort: index, ...child.props, ...getCustomizedPane(key) }]);
+      }
     });
     panelList.sort(sorter);
   }

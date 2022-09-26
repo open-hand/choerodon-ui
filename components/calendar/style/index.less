@@ -107,7 +107,7 @@
 
     &:active {
       color: #fff;
-      background: @primary-color;
+      background: @date-primary-color;
     }
   }
 
@@ -117,13 +117,13 @@
 
   &-today &-value,
   &-month-panel-current-cell &-value {
-    box-shadow: 0 0 0 0.01rem @primary-color inset;
+    box-shadow: 0 0 0 0.01rem @date-primary-color inset;
   }
 
   &-selected-day &-value,
   &-month-panel-selected-cell &-value {
     color: #fff;
-    background: @primary-color;
+    background: @date-primary-color;
   }
 
   &-disabled-cell-first-of-row &-value {
@@ -213,7 +213,7 @@
   &-fullscreen &-month-panel-current-cell &-month,
   &-fullscreen &-today &-date {
     background: transparent;
-    border-top-color: @primary-color;
+    border-top-color: @date-primary-color;
   }
 
   &-fullscreen &-month-panel-current-cell &-value,
@@ -228,7 +228,7 @@
 
   &-fullscreen &-month-panel-selected-cell &-value,
   &-fullscreen &-selected-day &-value {
-    color: @primary-color;
+    color: @date-primary-color;
     background: transparent;
   }
 

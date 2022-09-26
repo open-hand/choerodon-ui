@@ -16,12 +16,18 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableColumnResizeTransition 属性。
-- 🌟 `Collapse`: 新增 collapsible 属性。
+- 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
+- 🌟 `Tabs.TabPane`: 新增 hidden 属性。
+- 🌟 `Tabs.TabGroup`: 新增 hidden 属性。
+- 🌟  新增主题变量。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
 - 💄 `WaterMark`: 优化文本水印自动换行显示。
+- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
+- 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
+- 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
@@ -37,8 +43,13 @@ timeline: true
 - 🐞 `<pro>Upload`: 修复上传类型组件 Upload、&lt;pro&gt;Upload 及 &lt;pro&gt;Attachment 在禁用模式下的交互样式问题。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
+- 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
+- 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
+- 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
+- 🐞 `Tabs`: 修复了箭头显示异常。
+- 🐞 `SecretField`: 修复 SecretField 空值编辑后再次编辑需要校验问题。
 
 ## 1.5.6
 
