@@ -15,6 +15,7 @@ export interface CollapsePanelProps {
   id?: string;
   extra?: ReactNode;
   dataSet?: DataSet | DataSet[];
+  hidden?: boolean;
 }
 
 const CollapsePanel: FunctionComponent<CollapsePanelProps> = function CollapsePanel(props: CollapsePanelProps) {

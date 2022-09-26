@@ -15,13 +15,21 @@ timeline: true
 
 ---
 
+- 🌟 `Collapse`: 新增 `hidden` 属性。
+- 🌟 `Tabs.TabPane`: 新增 `hidden` 属性。
+- 🌟 `Tabs.TabGroup`: 新增 `hidden` 属性。
+- 🌟  新增主题变量。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
+- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
+- 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
 - 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
 - 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
+- 🐞 `Tabs`: 修复了箭头显示异常。
 
 ## 1.5.6
 

@@ -7,18 +7,20 @@
 @tree-node-prefix-cls: ~'@{tree-prefix-cls}-treenode';
 @tree-motion: ~'@{c7n-prefix}-motion-collapse';
 @tree-node-padding: @padding-xs / 2;
+@tree-checkbox-prefix-cls: ~'@{c7n-prefix}-tree-checkbox';
 
-.antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-tree-checkbox');
+.antCheckboxFn(@tree-checkbox-prefix-cls);
 
 .antTreeFn(@tree-prefix-cls) {
   .@{tree-prefix-cls} {
     .reset-component;
+    .checked(@tree-checkbox-prefix-cls, @tree-primary-color);
     background: @tree-bg;
     border-radius: @border-radius-base;
     transition: background-color @animation-duration-slow;
 
     &-focused:not(:hover):not(&-active-focused) {
-      background: @primary-1;
+      background: @tree-focus-bg;
     }
 
     // =================== Virtual List ===================
@@ -117,7 +119,7 @@
       }
 
       &-loading-icon {
-        color: @primary-color;
+        color: @tree-primary-color;
       }
 
       &-leaf-line {
@@ -214,18 +216,18 @@
     .@{tree-node-prefix-cls}.drag-over {
       > [draggable] {
         color: white;
-        background-color: @primary-color;
+        background-color: @tree-primary-color;
         opacity: 0.8;
       }
     }
     .@{tree-node-prefix-cls}.drag-over-gap-top {
       > [draggable] {
-        border-top-color: @primary-color;
+        border-top-color: @tree-primary-color;
       }
     }
     .@{tree-node-prefix-cls}.drag-over-gap-bottom {
       > [draggable] {
-        border-bottom-color: @primary-color;
+        border-bottom-color: @tree-primary-color;
       }
     }
 

@@ -36,7 +36,7 @@
       width: 0.08rem;
       height: 0.08rem;
       background-color: @component-background;
-      border: 0.02rem solid @primary-color;
+      border: 0.02rem solid @anchor-primary-color;
       border-radius: 0.08rem;
       transform: translateX(-50%);
       transition: top @animation-duration-slow ease-in-out;
@@ -67,10 +67,14 @@
       &:only-child {
         margin-bottom: 0;
       }
+
+      &:hover {
+        color: @anchor-primary-hover-color;
+      }
     }
 
     &-active > &-title {
-      color: @primary-color;
+      color: @anchor-primary-color;
     }
   }
 

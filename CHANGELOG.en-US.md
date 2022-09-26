@@ -15,13 +15,21 @@ timeline: true
 
 ---
 
+- 🌟 `Collapse`: Added `hidden` property.
+- 🌟 `Tabs.TabPane`: Added `hidden` property.
+- 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 Added theme style.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
+- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
+- 💄 `<pro>Table`: Optimized the display timing of the `\n`.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
+- 🐞 `Tabs`: Fix the problem of the arrow display.
 
 ## 1.5.6
 
@@ -81,7 +89,6 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the issue that the value will be cleared when the popup is canceled.
 - 🐞 `<pro>Tooltip`: Fix the problem of error reporting in tooltip zoom mode.
 - 🐞 `<pro>ColorPicker`: Fix the problem that the converting to hex failed when entering RGBA.
-- 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
 
 ## 1.5.5
 

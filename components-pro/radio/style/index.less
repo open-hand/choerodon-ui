@@ -30,7 +30,7 @@
       left: @radio-size / 4 - @radio-border-width / 2;
       width: @radio-size / 2 - @radio-border-width;
       height: @radio-size / 2 - @radio-border-width;
-      background-color: @primary-color;
+      background-color: @radio-dot-color;
       border-radius: 50%;
       transform: scale(0);
       opacity: 0;
@@ -45,10 +45,10 @@
   }
 
   &&:checked + &-inner {
-    border-color: @primary-color;
+    border-color: @radio-dot-color;
 
     &::before {
-      background-color: @primary-color;
+      background-color: @radio-dot-color;
       transform: scale(1);
       opacity: 1;
     }
@@ -139,12 +139,12 @@
       z-index: 1;
 
       & + span {
-        color: @primary-color;
+        color: @radio-dot-color;
       }
     }
 
     &:hover .@{pro-radio-prefix-cls}-inner + span {
-      color: @primary-color;
+      color: @radio-dot-color;
     }
   }
 

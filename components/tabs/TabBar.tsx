@@ -444,7 +444,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       if (offset === 0 && containerWH < navNodeWH) {
         $prev = false;
         $next = true;
-      } else if (minOffset > 0 && offset === minOffset) {
+      } else if (minOffset > 0 && offset >= minOffset) {
         $prev = true;
         $next = false;
       } else if (offset > 0) {
@@ -461,13 +461,12 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       if (prev !== $prev) {
         setPrev($prev);
       }
-      setOffset(offset);
       return {
         next: $next,
         prev: $prev,
       };
     }
-  }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH, setOffset]);
+  }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH]);
 
   const toPrev = useCallback(() => {
     const navWrapNode = navWrapRef.current;

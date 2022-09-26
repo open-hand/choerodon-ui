@@ -36,7 +36,6 @@ import Icon from '../icon';
 import { preventDefault, stopPropagation } from '../_util/EventManager';
 import measureTextWidth from '../_util/measureTextWidth';
 import Animate from '../animate';
-import Tooltip from '../tooltip/Tooltip';
 import { GroupItemCategory, ValueChangeAction } from './enum';
 import { ShowHelp } from '../field/enum';
 import Record from '../data-set/Record';
@@ -486,10 +485,28 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleHelpMouseEnter(e) {
+  handleMultipleMouseEnter(e) {
+    const { onMouseEnter } = this.getOtherProps();
+    if (onMouseEnter) {
+      onMouseEnter();
+    }
+    this.handleHelpMouseEnter(e, true);
+  }
+
+  @autobind
+  handleMultipleMouseLeave() {
+    const { onMouseLeave } = this.getOtherProps();
+    if (onMouseLeave) {
+      onMouseLeave();
+    }
+    this.handleHelpMouseLeave();
+  }
+
+  @autobind
+  handleHelpMouseEnter(e, isOverflow?: boolean) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(e.currentTarget, {
-      title: this.getProp('help'),
+      title: isOverflow ? this.getMultipleText() : this.getProp('help'),
       popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
@@ -874,6 +891,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
     if (multiple) {
       const { record } = this;
+      const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
+      const isOverflow = isOverflowMaxTagCount || isFlat;
       const tags = (
         <Animate
           component="ul"
@@ -886,7 +905,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           onEnd={this.handleTagAnimateEnd}
           onEnter={this.handleTagAnimateEnter}
         >
-          {this.renderMultipleValues()}
+          {multipleTags}
           {
             range
               ? this.renderRangeEditor(otherProps)
@@ -906,16 +925,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           style={otherProps.style}
           onFocus={onFocus}
           onBlur={onBlur}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+          onMouseEnter={isOverflow ? this.handleMultipleMouseEnter : onMouseEnter}
+          onMouseLeave={isOverflow ? this.handleMultipleMouseLeave : onMouseLeave}
         >
-          {
-            isFlat ? (
-              <Tooltip title={this.getMultipleText()}>
-                {tags}
-              </Tooltip>
-            ) : tags
-          }
+          {tags}
         </div>,
       );
     }
