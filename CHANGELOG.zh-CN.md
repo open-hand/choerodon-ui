@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
+- 🐞 `Tabs`: 修复了箭头显示异常。
 
 ## 1.5.6
 

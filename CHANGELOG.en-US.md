@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
+- 🐞 `Tabs`: Fix the problem of the arrow display.
 
 ## 1.5.6
 
