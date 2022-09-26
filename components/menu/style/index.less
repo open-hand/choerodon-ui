@@ -29,10 +29,10 @@
   }
 
   &-item-group-title {
-    padding: 0.08rem 0.16rem;
+    padding: @menu-item-group-title-padding;
     color: @menu-item-group-title-color;
     font-size: @font-size-base;
-    line-height: @line-height-base;
+    line-height: @menu-item-group-title-line-height;
     transition: all @animation-duration-slow;
   }
 
@@ -94,7 +94,7 @@
   &-horizontal > &-item:hover,
   &-horizontal > &-item-active,
   &-horizontal > &-submenu &-submenu-title:hover {
-    background-color: transparent;
+    background-color: @menu-horizontal-hover-bg;
   }
 
   &-item-selected {
@@ -107,9 +107,6 @@
 
   &:not(&-horizontal) &-item-selected {
     background-color: @menu-item-active-bg;
-    &:hover {
-      background-color: @item-hover-bg;
-    }
   }
 
   &-inline,
@@ -203,7 +200,7 @@
       > .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
         position: absolute;
         top: 50%;
-        right: 0.16rem;
+        right: @menu-vertical-submenu-arrow-right;
         width: 0.1rem;
         transition: transform @animation-duration-slow @ease-in-out;
         &::before,
@@ -266,7 +263,7 @@
   }
 
   &-horizontal {
-    line-height: 0.46rem;
+    line-height: @menu-horizontal-line-height;
     border: 0;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     box-shadow: none;
@@ -276,14 +273,14 @@
       position: relative;
       top: 0.01rem;
       float: left;
-      border-bottom: 0.02rem solid transparent;
+      border-bottom: @menu-active-line-width solid transparent;
 
       &:hover,
       &-active,
       &-open,
       &-selected {
         color: @menu-highlight-color;
-        border-bottom: 0.02rem solid @menu-highlight-color;
+        border-bottom: @menu-active-line-width solid @menu-highlight-color;
       }
 
       > a {
@@ -360,7 +357,7 @@
       > .@{menu-prefix-cls}-item,
     > .@{menu-prefix-cls}-submenu > .@{menu-prefix-cls}-submenu-title {
       left: 0;
-      padding: 0 (@menu-collapsed-width - 0.16rem) / 2 !important;
+      padding: 0 calc((@menu-collapsed-width - 0.16rem) / 2) !important;
       text-overflow: clip;
       .@{menu-prefix-cls}-submenu-arrow {
         display: none;
@@ -400,7 +397,7 @@
     padding: 0;
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      padding: 0 0.16rem 0 0.28rem;
+      padding: @menu-item-padding;
     }
   }
 
