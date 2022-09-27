@@ -13,36 +13,20 @@
       cursor: not-allowed;
       .@{c7n-prefix}-progress-loading {
         position: absolute;
-        left: @switch-loading-inner-distance;
+        top: @switch-loading-distance-vertical;
+        left: @switch-loading-distance-horizontal;
         z-index: 1;
         .@{c7n-prefix}-progress-inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: @switch-loading-inner-size;
           height: @switch-loading-inner-size;
           vertical-align: top;
         }
       }
-
-      &.@{switch-prefix-cls}-lg {
-        .@{c7n-prefix}-progress-loading {
-          left: @switch-lg-loading-inner-distance;
-
-          .@{c7n-prefix}-progress-inner {
-            width: @switch-lg-loading-inner-size;
-            height: @switch-lg-loading-inner-size;
-          }
-        }
-      }
-
-      &.@{switch-prefix-cls}-sm {
-        .@{c7n-prefix}-progress-loading {
-          left: @switch-sm-loading-inner-distance;
-
-          .@{c7n-prefix}-progress-inner {
-            width: @switch-sm-loading-inner-size;
-            height: @switch-sm-loading-inner-size;
-          }
-        }
-      }
+      .size-loading(lg);
+      .size-loading(sm);
     }
 
     &.@{c7n-pro-prefix}-field {
@@ -116,7 +100,7 @@
   }
 
   &:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-loading-inner-distance;
+    right: @switch-loading-distance-horizontal;
     left: auto;
     .@{c7n-prefix}-progress-inner {
       svg circle {
@@ -125,15 +109,8 @@
     }
   }
 
-  &-lg .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-lg-loading-inner-distance;
-    left: auto;
-  }
-
-  &-sm .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-sm-loading-inner-distance;
-    left: auto;
-  }
+  .size-checked-loading(lg);
+  .size-checked-loading(sm);
 
   &:checked + &-label,
   &:checked + .@{c7n-prefix}-progress-loading + &-label {
@@ -166,7 +143,7 @@
     min-width: @switch-sm-min-width;
     height: @switch-sm-height;
     line-height: @switch-sm-line-height;
-    border-radius: calc(@switch-sm-button-size / 2);
+    border-radius: calc(@switch-sm-height / 2);
 
     .icon {
       font-size: @switch-sm-icon-font-size;
@@ -191,7 +168,7 @@
     min-width: @switch-lg-min-width;
     height: @switch-lg-height;
     line-height: @switch-lg-line-height;
-    border-radius: calc(@switch-lg-button-size / 2);
+    border-radius: calc(@switch-lg-height / 2);
 
     .icon {
       font-size: @switch-lg-icon-font-size;
@@ -211,5 +188,30 @@
   &-float-label .@{field-label-prefix-cls}-wrapper {
     left: 0;
     transform-origin: @float-label-transform-origin-high;
+  }
+}
+
+.size-loading(@size) {
+  @distance-vertical: 'switch-@{size}-loading-distance-vertical';
+  @distance-horizontal: 'switch-@{size}-loading-distance-horizontal';
+  @loading-inner-size: 'switch-@{size}-loading-inner-size';
+  &.@{switch-prefix-cls}-@{size} {
+    .@{c7n-prefix}-progress-loading {
+      top: @@distance-vertical;
+      left: @@distance-horizontal;
+
+      .@{c7n-prefix}-progress-inner {
+        width: @@loading-inner-size;
+        height: @@loading-inner-size;
+      }
+    }
+  }
+}
+
+.size-checked-loading(@size) {
+  @checked-distance-horizontal: 'switch-@{size}-loading-distance-horizontal';
+  &-@{size} .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
+    right: @@checked-distance-horizontal;
+    left: auto;
   }
 }
