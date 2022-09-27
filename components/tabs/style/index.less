@@ -153,7 +153,7 @@
     .clearfix;
 
     &-scrolling {
-      padding-right: calc(@tab-scrolling-size + 0.02rem);
+      padding-right: @tab-scrolling-size;
       padding-left: calc(@tab-scrolling-size + 0.02rem);
     }
   }
@@ -209,7 +209,7 @@
       height: 0.18rem;
       font-style: normal;
       font-variant: normal;
-      line-height: inherit;
+      line-height: 0.18rem;
       text-align: center;
       text-transform: none;
       vertical-align: baseline;
@@ -278,8 +278,7 @@
 
     .@{tab-prefix-cls}-tab {
       & .@{ripple-prefix-cls} {
-        // background-color: fade(#000, 20%); // TODO-ye
-        background-color: transparent;
+        background-color: fade(#000, 20%);
       }
 
       position: relative;
@@ -544,7 +543,6 @@
 
     > .@{tab-prefix-cls}-content {
       padding: @tabs-vertical-left-content-padding;
-      // border-left: @border-width-base @border-style-base @border-color-split;
     }
   }
 

@@ -152,7 +152,6 @@
 @skeleton-color-calculate: #f2f2f2;
 @skeleton-to-color-calculate: shade(@skeleton-color-calculate, 5%);
 
-
 // css 变量
 :root {
   // -------- Colors -----------
@@ -261,6 +260,9 @@
   --item-active-color: @item-active-color-calculate;
   --item-focus-color: @item-focus-color-calculate;
   --item-drag-over-bg: var(--primary-color);
+
+  //Icon
+  --icon-font-size-base: 0.18rem;
 
   // LINK
   --link-color: @link-color-calculate;
@@ -945,6 +947,8 @@
   --tabs-groups-group-item-selected-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
   --tabs-bar-divider-margin: auto .15rem;
   --tabs-vertical-left-content-padding: 0 0 0 0.24rem;
+  --tabs-card-bar-top-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-card-min-width: var(--tabs-card-height);
 
   // Avatar
   // --
@@ -1294,6 +1298,7 @@
 //@icon-font-size-base: .18rem;
 //@icon-font-size-sm: .16rem;
 //@icon-font-size-lg: .2rem;
+@icon-font-size-base: var(--icon-font-size-base);
 
 // LINK
 @link-color: var(--link-color);
@@ -2134,6 +2139,8 @@
 @tabs-groups-group-item-selected-box-shadow: var(--tabs-groups-group-item-selected-box-shadow);
 @tabs-bar-divider-margin: var(--tabs-bar-divider-margin);
 @tabs-vertical-left-content-padding: var(--tabs-vertical-left-content-padding);
+@tabs-card-bar-top-border-bottom: var(--tabs-card-bar-top-border-bottom);
+@tabs-card-min-width: var(--tabs-card-min-width);
 
 // BackTop
 // ---

@@ -2,10 +2,14 @@
 @import '../../style/mixins/index';
 
 @tab-prefix-cls: ~'@{c7n-prefix}-tabs';
-@tabs-card-min-width: 40px;
 
 // card style
 .@{tab-prefix-cls} {
+  &-card {
+    .@{tab-prefix-cls}-bar {
+      border-bottom: @tabs-card-bar-top-border-bottom;
+    }
+  }
   &&-card > &-bar &-nav-container {
     align-self: flex-end;
     height: @tabs-card-height;
