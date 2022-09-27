@@ -108,7 +108,7 @@
 
   &-button {
     padding: 0 0.15rem;
-    line-height: 0.3rem;
+    line-height: @checkbox-button-line-height;
 
     .@{pro-checkbox-prefix-cls}-inner {
       position: absolute;
@@ -135,7 +135,7 @@
       color: #fff;
     }
 
-    &:hover .@{pro-checkbox-prefix-cls}-inner + span {
+    &:not(.@{pro-checkbox-prefix-cls}-disabled):hover .@{pro-checkbox-prefix-cls}-inner + span {
       color: @primary-color;
     }
   }

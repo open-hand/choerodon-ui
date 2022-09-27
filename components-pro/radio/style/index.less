@@ -110,7 +110,7 @@
 
   &-button {
     padding: 0 0.15rem;
-    line-height: 0.3rem;
+    line-height: @radio-button-line-height;
     background-color: #fff;
 
     .@{pro-radio-prefix-cls}-inner {
@@ -143,7 +143,7 @@
       }
     }
 
-    &:hover .@{pro-radio-prefix-cls}-inner + span {
+    &:not(.@{pro-radio-prefix-cls}-disabled):hover .@{pro-radio-prefix-cls}-inner + span {
       color: @primary-color;
     }
   }

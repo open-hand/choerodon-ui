@@ -349,6 +349,7 @@ sans-serif;
 @checkbox-shadow-color: fade(@outline-color, 20%);
 @checkbox-indeterminate-bg: @primary-color;
 @checkbox-indeterminate-color: #fff;
+@checkbox-button-line-height: @radio-button-line-height;
 
 // DatePicker
 // 从组件内部迁移的变量
@@ -382,6 +383,7 @@ sans-serif;
 @radio-shadow-color: fade(@outline-color, 20%);
 
 // Radio buttons
+@radio-button-line-height: @btn-height-base;
 @radio-button-bg: @btn-default-bg;
 @radio-button-color: @btn-default-color;
 @radio-button-hover-color: @primary-5;
@@ -593,9 +595,49 @@ sans-serif;
 @output-float-label-font-size: 0.12rem;
 @output-float-label-line-height: 0.18rem;
 
-//step
+// Steps
+@process-icon-color: @icon-text-color;
+@process-icon-bg: @processing-color;
+@process-icon-dot-bg: @processing-color;
+@process-icon-border-color: @processing-color;
+@process-title-color: @heading-color;
+@process-description-color: @text-color;
+@process-tail-color: @step-border-color;
+@icon-text-color: #fff;
+@wait-icon-color: @icon-text-color;
+@wait-icon-dot-bg: @step-wait-color;
+@wait-icon-bg: @step-wait-color;
+@wait-icon-border-color: @step-wait-color;
+@wait-title-color: @text-color-secondary;
+@wait-description-color: @wait-title-color;
+@wait-tail-color: @process-tail-color;
+@finish-icon-color: @icon-text-color;
+@finish-icon-dot-bg: @process-icon-bg;
+@finish-icon-bg: @process-icon-bg;
+@finish-icon-border-color: @process-icon-bg;
+@finish-title-color: @text-color;
+@finish-description-color: @text-color-secondary;
+@finish-tail-color: @process-tail-color;
+@error-icon-color: @icon-text-color;
+@error-icon-dot-bg: @error-color;
+@error-icon-bg: @error-color;
+@error-icon-border-color: @error-color;
+@error-title-color: @error-color;
+@error-description-color: @error-color;
+@error-tail-color: @process-tail-color;
+@steps-background: @component-background;
+@steps-icon-size: 0.28rem;
+@steps-icon-border-width: 0;
+@steps-icon-border-style: @border-style-base;
+@steps-icon-border-color: @border-color-base;
+@steps-small-icon-size: 0.24rem;
+@steps-dot-size: 0.08rem;
+@steps-current-dot-size: 0.1rem;
+@steps-desciption-max-width: 1.4rem;
+@steps-title-min-width: 1.76rem;
 @step-border-color: rgba(0, 0, 0, 0.26);
 @step-wait-color: rgba(0, 0, 0, 0.36);
+
 // Tooltip
 // ---
 // Tooltip max width
@@ -968,9 +1010,12 @@ sans-serif;
 @switch-lg-loading-inner-size: 0.2rem;
 @switch-loading-inner-size: 0.16rem;
 @switch-sm-loading-inner-size: 0.12rem;
-@switch-lg-loading-inner-distance: 0.02rem;
-@switch-loading-inner-distance: 0.05rem;
-@switch-sm-loading-inner-distance: 0.02rem;
+@switch-lg-loading-distance-vertical: 0.03rem;
+@switch-lg-loading-distance-horizontal: 0.02rem;
+@switch-loading-distance-vertical: 0.04rem;
+@switch-loading-distance-horizontal: 0.05rem;
+@switch-sm-loading-distance-vertical: 0.03rem;
+@switch-sm-loading-distance-horizontal: 0.02rem;
 @switch-checked-loading-stroke: #FFF;
 @switch-icon-font-size: 0.16rem;
 @switch-sm-icon-font-size: 0.12rem;
@@ -1173,3 +1218,6 @@ sans-serif;
 
 // List
 @c7n-list-header-font-size: @font-size-base;
+
+// Anchor
+@anchor-border-width: 0.02rem;
