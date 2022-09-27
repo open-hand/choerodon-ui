@@ -713,6 +713,20 @@
   --tooltip-bg-light: var(--component-background);
   --tooltip-arrow-color-light: var(--tooltip-bg-light);
 
+  // Popover
+  --popover-bg: var(--component-background);
+  --popover-color: var(--text-color);
+  --popover-min-width: 1.77rem;
+  --popover-arrow-offset: 0.02rem;
+  --popover-arrow-width: 0.05rem;
+  --popover-arrow-color: var(--popover-bg);
+  --popover-arrow-outer-color: var(--popover-bg);
+  --popover-distance: calc(var(--popover-arrow-width) + 0.04rem);
+  --popover-message-padding: 0.04rem 0 0.12rem;
+  --popover-message-title-padding: 0 0 0 calc(var(--font-size-base) + 0.08rem);
+  --popover-title-padding: 0.05rem var(--padding-md) 0.04rem;
+  --popover-innert-content-padding: 0.12rem var(--padding-md);
+
   // Modal
   // --
   --modal-font-size-lg: 0.18rem; // deprecated
@@ -1851,23 +1865,26 @@
 // Popover
 // ---
 // Popover body background color
-@popover-bg: @component-background;
+@popover-bg: var(--popover-bg);
 // Popover text color
-@popover-color: @text-color;
+@popover-color: var(--popover-color);
 // Popover maximum width
-@popover-min-width: 1.77rem;
+@popover-min-width: var(--popover-min-width);
 // Popover arrow affset
-@popover-arrow-offset: 0.02rem;
+@popover-arrow-offset: var(--popover-arrow-offset);
 // Popover arrow width
-@popover-arrow-width: 0.05rem;
+@popover-arrow-width: var(--popover-arrow-width);
 // Popover arrow color
-@popover-arrow-color: @popover-bg;
+@popover-arrow-color: var(--popover-arrow-color);
 // Popover outer arrow width
 // Popover outer arrow color
-@popover-arrow-outer-color: @popover-bg;
+@popover-arrow-outer-color: var(--popover-arrow-outer-color);
 // Popover distance with trigger
-@popover-distance: @popover-arrow-width + 0.04rem;
-@popover-message-title-padding: 0 0 0 calc(@font-size-base + 0.08rem);
+@popover-distance: var(--popover-distance);
+@popover-message-padding: var(--popover-message-padding);
+@popover-message-title-padding: var(--popover-message-title-padding);
+@popover-title-padding: var(--popover-title-padding);
+@popover-inner-content-padding: var(--popover-innert-content-padding);
 
 // Modal
 // --
