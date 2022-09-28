@@ -336,7 +336,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * @param init 初始化
    */
   const locateData = (searchId?: number | null, init?: boolean) => {
-    const { current } = filterMenuDataSet;
+    const current = filterMenuDataSet ? filterMenuDataSet.current : undefined;
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
@@ -350,7 +350,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else if (searchId === null) {
       handleQueryReset();
     } else {
-      const defaultMenus = menuDataSet.filter((menu) => menu.get('defaultFlag'));
+      const defaultMenus = menuDataSet ? menuDataSet.filter((menu) => menu.get('defaultFlag')) : [];
       const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus.length && defaultMenus[0].index;
       if (defaultMenus.length && defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
@@ -574,7 +574,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * @param text
    */
   const optionRenderer = ({ record, text }) => {
-    const filterMenuRecord = filterMenuDataSet.current;
+    const filterMenuRecord = filterMenuDataSet ? filterMenuDataSet.current : undefined;
     const isSelected = String(filterMenuRecord && filterMenuRecord.get('filterName')) === String(record.get('searchId'));
     const isDefault = record.get('defaultFlag') === 1;
     const isTenant = record.get('isTenant') === $l('Table', 'preset');
