@@ -48,6 +48,7 @@ timeline: true
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
+- 🐞 `<pro>Attachment`: 修复拖拽模式 popup 渲染的问题。
 - 🐞 `Tabs`: 修复了箭头显示异常。
 - 🐞 `SecretField`: 修复 SecretField 空值编辑后再次编辑需要校验问题。
 
