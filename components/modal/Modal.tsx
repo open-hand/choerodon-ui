@@ -58,6 +58,7 @@ export interface ModalProps {
   center?: boolean;
   okButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
+  children?: ReactNode;
 }
 
 export interface ModalFuncProps {

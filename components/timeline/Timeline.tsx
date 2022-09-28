@@ -14,6 +14,7 @@ export interface TimelineProps {
   pendingDot?: ReactNode;
   style?: CSSProperties;
   reverse?: boolean;
+  children?: ReactNode;
 }
 
 export default class Timeline extends Component<TimelineProps, any> {

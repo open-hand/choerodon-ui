@@ -24,6 +24,7 @@ export interface PanelProps {
   disabled?: boolean;
   extra?: ReactNode;
   collapsible?: CollapsibleType;
+  children?: ReactNode;
 }
 
 export interface CollapseProps {
@@ -41,6 +42,7 @@ export interface CollapseProps {
   trigger?: TriggerMode;
   ghost?: boolean;
   collapsible?: CollapsibleType;
+  children?: ReactNode;
 }
 
 export default class Collapse extends Component<CollapseProps, any> {
