@@ -188,12 +188,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
           ctx.font = `${fontStyle} normal ${fontWeight} ${markSize}px ${fontFamily}`;
           ctx.fillStyle = color!;
           // 计算文本的长度
-          const contentLength = ctx.measureText(content).width;
-          if (contentLength > markWidth) {
-            drawText({ content, ctx, canvasWidth: markWidth, markHeight, fontHeight: markSize });
-          } else {
-            ctx.fillText(content, 0, 0);
-          }
+          drawText({ content, ctx, canvasWidth: markWidth, markHeight, fontHeight: markSize });
           setBase64Url(canvas.toDataURL());
           callback(canvas.toDataURL());
         }
