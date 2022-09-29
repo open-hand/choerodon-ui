@@ -48,7 +48,7 @@ timeline: true
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
-- 🐞 `<pro>Attachment`: fix popup rendering in drag mode.
+- 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
 - 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
 
