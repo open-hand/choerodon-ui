@@ -713,7 +713,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(fuzzyValue?: string): Promise<void> {
+  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string): Promise<void> {
     const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
     const { getConfig } = this.context;
     const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
@@ -736,7 +736,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       }
     } else {
-      this.forceUpdate();
+      runInAction(() => {
+        dataSet.setState(SEARCHTEXT, fuzzyOldValue || '');
+      });
+      dataSet.setQueryParameter(searchText, fuzzyOldValue);
     }
   }
 
@@ -824,12 +827,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         valueChangeAction={ValueChangeAction.input}
         waitType={WaitType.debounce}
         wait={500}
-        onChange={(value: string) => {
-          this.handleQuery(undefined, value);
-          if (!value) {
-            dataSet.setState(SEARCHTEXT, '');
-            dataSet.setQueryParameter(searchText, value);
-          }
+        onChange={(value: string, oldValue: string) => {
+          this.handleQuery(undefined, value, oldValue);
+          dataSet.setState(SEARCHTEXT, value);
+          dataSet.setQueryParameter(searchText, value);
         }}
         onClear={() => {
           runInAction(() => {
@@ -1176,10 +1177,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param value 模糊查询参数
    */
   @autobind
-  async handleQuery(collapse?: boolean, value?: string) {
+  async handleQuery(collapse?: boolean, value?: string, oldValue?: string) {
     const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      await this.modifiedCheckQuery(value);
+      await this.modifiedCheckQuery(value, oldValue);
     }
     if (!collapse) {
       onQuery();
