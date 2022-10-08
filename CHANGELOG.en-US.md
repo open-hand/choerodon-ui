@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 💄 `<pro>Table`: Optimized the display timing of the `\n`.
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
+- 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
