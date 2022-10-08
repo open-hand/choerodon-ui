@@ -30,6 +30,7 @@ subtitle: 按钮
 | waitType | 设置按钮点击间隔类型，可选值： `throttle` `debounce`                                                                                                                       | string | `throttle` |
 | onClick | 点击按钮时的回调, 当回调返回值为 Promise，则会出现 loading 状态直到 Promise 的状态不为 pending                                                                                           | (e) => void | Promise |
 | block | 块级按钮                                                                                                                                                        | boolean | false |
+| tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` 或 \[`always`\| `overflow` , 文字提示配置属性对象\] | string \| \[string, object\] | [globalConfig.tooltip](/components/configure#API) |
 
 更多属性请参考 [ViewComponent](/components-pro/core/#ViewComponent)。
 

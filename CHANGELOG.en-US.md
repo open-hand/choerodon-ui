@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.
 - 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 `<pro>Button`: Button text bubble supports `Tooltip` attribute expansion.
 - 🌟 Added theme style.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.

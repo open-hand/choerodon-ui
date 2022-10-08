@@ -5,7 +5,7 @@ import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isString from 'lodash/isString';
-import { computed, observable, runInAction, action } from 'mobx';
+import { computed, observable, runInAction, action, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import isPromise from 'is-promise';
 import { isFragment as isReactFragment } from 'react-is';
@@ -18,6 +18,7 @@ import { ButtonColor, ButtonTooltip, ButtonType, FuncType } from './enum';
 import { DataSetStatus } from '../data-set/enum';
 import { Size, WaitType } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
+import { TooltipProps } from '../tooltip/Tooltip';
 import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
@@ -62,9 +63,10 @@ export interface ButtonProps extends DataSetComponentProps {
   waitType?: WaitType;
   /**
    * 用tooltip显示按钮内容
-   * 可选值：`none` `always` `overflow`
+   * 可选值：`none` `always` `overflow` 或自定义 tooltip
+   * 配置自定义tooltip属性：tooltip={['always', { theme: 'light', ... }]}
    */
-  tooltip?: ButtonTooltip;
+  tooltip?: ButtonTooltip | [ButtonTooltip, TooltipProps];
   /**
    * 按钮类型
    * @default 'button'
@@ -288,6 +290,19 @@ export default class Button extends DataSetComponent<ButtonProps> {
         placement: getTooltipPlacement('button'),
       });
       this.isTooltipShown = true;
+    } else if (isArrayLike(tooltip)){
+      const tooltipType = tooltip[0];
+      const buttonTooltipProps = tooltip[1] || {};
+      const { mouseEnterDelay } = buttonTooltipProps;
+      if (tooltipType === ButtonTooltip.always || (tooltipType === ButtonTooltip.overflow && isOverflow(element))) {
+        show(element, {
+          theme: getTooltipTheme('button'),
+          placement: getTooltipPlacement('button'),
+          title: buttonTooltipProps.title ? buttonTooltipProps.title : children,
+          ...buttonTooltipProps,
+        }, mouseEnterDelay);
+        this.isTooltipShown = true;
+      }
     }
     const { onMouseEnter = noop } = this.props;
     onMouseEnter(e);
@@ -295,7 +310,15 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleMouseLeave(e) {
-    hide();
+    const { getTooltip } = this.context;
+    const { tooltip = getTooltip('button') } = this.props;
+    if(isArrayLike(tooltip)) {
+      const buttonTooltipProps = tooltip[1] || {};
+      const { mouseLeaveDelay } = buttonTooltipProps;
+      hide(mouseLeaveDelay);
+    } else {
+      hide();
+    }
     const { onMouseLeave = noop } = this.props;
     onMouseLeave(e);
   }
@@ -321,7 +344,10 @@ export default class Button extends DataSetComponent<ButtonProps> {
     if (!this.disabled && !this.loading) {
       otherProps.onClick = this.handleClickIfBubble;
     }
-    if (tooltip && [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) {
+    if ((
+      isString(tooltip) && [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip)) ||
+      isArrayLike(tooltip) && [ButtonTooltip.always, ButtonTooltip.overflow].includes(tooltip[0])
+    ) {
       otherProps.onMouseEnter = this.handleMouseEnter;
       otherProps.onMouseLeave = this.handleMouseLeave;
     }
