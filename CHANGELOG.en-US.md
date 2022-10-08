@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnResizeTransition` properties.
+- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.

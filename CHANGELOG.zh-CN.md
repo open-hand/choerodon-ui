@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnResizeTransition 属性。
+- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
 - 🌟 `Tabs.TabPane`: 新增 hidden 属性。
