@@ -16,9 +16,20 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableColumnResizeTransition 属性。
-- 🌟 `Collapse`: 新增 collapsible 属性。
+- 🌟 `Collapse`: 新增 collapsible, hidden 属性。
+- 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
+- 🌟 `Tabs.TabPane`: 新增 hidden 属性。
+- 🌟 `Tabs.TabGroup`: 新增 hidden 属性。
+- 🌟  新增主题变量。
+- 🌟 `<pro>Button`: 按钮文字气泡支持 Tooltip 属性拓展。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
+- 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
+- 💄 `WaterMark`: 优化文本水印自动换行显示。
+- 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
+- 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
+- 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
+- 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
@@ -27,14 +38,21 @@ timeline: true
 - 🐞 `<pro>RichText`: 修复选中内容失焦清空的问题。
 - 🐞 `<pro>RichText`: 修复内容溢出的高度问题和 placeholder 样式问题。
 - 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
-- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 && range 模式字段值比对的问题。
+- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 & range 模式字段值比对 & 默认状态已修改的问题。
 - 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
 - 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
 - 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
 - 🐞 `<pro>Upload`: 修复上传类型组件 Upload、&lt;pro&gt;Upload 及 &lt;pro&gt;Attachment 在禁用模式下的交互样式问题。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>DataSet`: cacheRecords 模式下 cacheSelection 为 true 时才强制缓存勾选。
+- 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
+- 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
+- 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
+- 🐞 `<pro>Attachment`: 修复拖拽模式 popup 渲染和 children 的问题。
+- 🐞 `Tabs`: 修复了箭头显示异常。
+- 🐞 `SecretField`: 修复 SecretField 空值编辑后再次编辑需要校验问题。
 
 ## 1.5.6
 

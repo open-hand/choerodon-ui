@@ -239,6 +239,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * @default true
    */
   defaultActiveFirstOption?: boolean;
+  children?: ReactNode;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -1362,9 +1363,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   @action
   clear() {
     const values = this.getValues();
-    const valueLength = values.length;
     const {
-      props: { maxTagCount = valueLength, onClear = noop, onOption = noop },
+      props: { maxTagCount = this.getContextConfig('fieldMaxTagCount'), onClear = noop, onOption = noop },
       options,
     } = this;
     this.setText(undefined);

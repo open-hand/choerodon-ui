@@ -6,7 +6,7 @@
   user-select: none;
 
   a:hover {
-    color: @link-hover-color;
+    color: @date-primary-hover-color;
   }
 
   .@{calendar-prefix-cls}-century-select,
@@ -200,9 +200,9 @@
   }
 
   &-today &-date {
-    color: @primary-color;
+    color: @date-primary-color;
     font-weight: bold;
-    border-color: @primary-color;
+    border-color: @date-primary-color;
   }
 
   &-last-month-cell &-date,
@@ -212,11 +212,11 @@
 
   &-selected-day &-date {
     color: #fff;
-    background: @primary-color;
+    background: @date-primary-color;
     border: @border-width-base @border-style-base transparent;
 
     &:hover {
-      background: @primary-color;
+      background: @date-primary-color;
     }
   }
 
@@ -274,6 +274,10 @@
       padding: 0 0.12rem;
       border-top: @border-width-base @border-style-base @border-color-split;
     }
+
+    a {
+      color: @date-primary-color;
+    }
   }
 
   .@{calendar-prefix-cls}-today-btn,
@@ -325,6 +329,7 @@
     .btn-primary;
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @border-radius-base);
     line-height: calc(@btn-height-sm - 0.02rem);
+    background: @date-primary-color;
 
     &-disabled {
       .button-color(@btn-disable-color; @btn-disable-bg; @btn-disable-border);

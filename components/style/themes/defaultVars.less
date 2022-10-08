@@ -229,7 +229,7 @@ sans-serif;
 @btn-primary-bg: @primary-color;
 @btn-primary-border: @btn-primary-bg;
 @btn-primary-focus-color: @btn-primary-color;
-@btn-primary-focus-bg: @primary-7;
+@btn-primary-focus-bg: color(~`colorPalette('@{btn-primary-bg}', 7) `);
 @btn-primary-hover-color: @btn-primary-focus-color;
 @btn-primary-hover-bg: @btn-primary-focus-bg;
 @btn-primary-disabled-color: @btn-primary-color;
@@ -345,13 +345,15 @@ sans-serif;
 @checkbox-disabled-check-bg: @checkbox-disabled-bg;
 @checkbox-disabled-check-border-color: @checkbox-disabled-border-color;
 @checkbox-disabled-check-color: @checkbox-disabled-color;
-@checkbox-uncheck-hover-border-color: @primary-color;
-@checkbox-shadow-color: fade(@outline-color, 20%);
-@checkbox-indeterminate-bg: @primary-color;
+@checkbox-uncheck-hover-border-color: @checkbox-color;
+@checkbox-shadow-color: fade(@checkbox-color, 20%);
+@checkbox-indeterminate-bg: @checkbox-color;
 @checkbox-indeterminate-color: #fff;
 @checkbox-button-line-height: @radio-button-line-height;
 
 // DatePicker
+@date-primary-color: @primary-color;
+@date-primary-hover-color: fade(@date-primary-color, 70%);
 // 从组件内部迁移的变量
 @date-picker-width: 2.8rem;
 @date-time-picker-width: 4.3rem;
@@ -367,6 +369,7 @@ sans-serif;
 @date-picker-active-color: #fff;
 
 // Radio
+@radio-color: @primary-color;
 @radio-border-color: rgba(0, 0, 0, 0.24);
 @radio-border-width: @border-width-base;
 @radio-disabled-color: @disabled-color;
@@ -375,19 +378,19 @@ sans-serif;
 @radio-disabled-check-bg: @radio-disabled-bg;
 @radio-disabled-check-border-color: @radio-disabled-border-color;
 @radio-disabled-check-color: @radio-disabled-color;
-@radio-uncheck-hover-border-color: @primary-color;
+@radio-uncheck-hover-border-color: @radio-color;
 @radio-size: 0.14rem;
-@radio-dot-color: @primary-color;
+@radio-dot-color: @radio-color;
 @radio-line-height: 1;
 @radio-label-white-space: @label-white-space;
-@radio-shadow-color: fade(@outline-color, 20%);
+@radio-shadow-color: fade(@radio-color, 20%);
 
 // Radio buttons
 @radio-button-line-height: @btn-height-base;
 @radio-button-bg: @btn-default-bg;
 @radio-button-color: @btn-default-color;
-@radio-button-hover-color: @primary-5;
-@radio-button-active-color: @primary-7;
+@radio-button-hover-color: fade(@radio-color, 50%);
+@radio-button-active-color: fade(@radio-color, 70%);
 
 // Media queries breakpoints
 // Extra small screen / phone
@@ -498,6 +501,7 @@ sans-serif;
 
 // Input
 // ---
+@input-primary-color: @primary-color;
 @input-height-base: 0.3rem;
 @input-height-lg: 0.4rem;
 @input-height-sm: 0.24rem;
@@ -529,8 +533,8 @@ sans-serif;
 @input-required-bg: @yellow-1;
 @input-error-bg: @error-bg-color;
 @input-addon-bg: @background-color-light;
-@input-focus-border-color: color(~`colorPalette('@{outline-color}', 5) `);
-@input-hover-border-color: color(~`colorPalette('@{primary-color}', 5) `);
+@input-focus-border-color: color(~`colorPalette('@{input-primary-color}', 3) `);
+@input-hover-border-color: color(~`colorPalette('@{input-primary-color}', 5) `);
 @input-required-hover-border-color: @input-hover-border-color;
 @input-required-active-box-shadow: @input-active-box-shadow;
 @input-float-border-color: @input-border-color;
@@ -821,13 +825,15 @@ sans-serif;
 
 // Tree
 // ---
+@tree-primary-color: @primary-color;
 @tree-bg: @component-background;
 @tree-title-height: 24px;
 @tree-child-padding: 18px;
 @tree-directory-selected-color: #fff;
-@tree-directory-selected-bg: @primary-color;
+@tree-directory-selected-bg: @tree-primary-color;
 @tree-node-hover-bg: @item-hover-bg;
-@tree-node-selected-bg: @primary-2;
+@tree-node-selected-bg: color(~`colorPalette('@{tree-primary-color}', 2) `);
+@tree-focus-bg: color(~`colorPalette('@{tree-primary-color}', 1) `);
 @tree-node-padding: @padding-xs / 2;
 @tree-checkbox-height: @tree-title-height;
 @tree-active-color: @text-color;
@@ -901,13 +907,14 @@ sans-serif;
 
 // Tabs
 // ---
+@tab-primary-color: @primary-color;
 @tabs-card-head-background: @background-color-light;
 @tabs-card-height: 0.4rem;
-@tabs-card-active-color: @primary-color;
+@tabs-card-active-color: @tab-primary-color;
 @tabs-title-font-size: @font-size-base;
 @tabs-title-font-size-lg: @font-size-lg;
 @tabs-title-font-size-sm: @font-size-base;
-@tabs-ink-bar-bg-color: @primary-color;
+@tabs-ink-bar-bg-color: @tab-primary-color;
 @tabs-ink-bar-display: block;
 @tab-bar-margin: 0 0 0.16rem 0;
 @tab-bar-padding: 0;
@@ -920,11 +927,11 @@ sans-serif;
 @tab-vertical-padding-horizontal: 0.24rem;
 @tab-vertical-padding: @tab-vertical-padding-vertical @tab-vertical-padding-horizontal;
 @tab-scrolling-size: 0.32rem;
-@tab-highlight-color: @primary-color;
+@tab-highlight-color: @tab-primary-color;
 @tab-highlight-font-weight: 500;
 @tab-normal-color: rgba(0, 0, 0, 0.87);
-@tab-hover-color: @primary-5;
-@tab-active-color: @primary-7;
+@tab-hover-color: color(~`colorPalette('@{tab-primary-color}', 5) `);
+@tab-active-color: color(~`colorPalette('@{tab-primary-color}', 7) `);
 @tabs-groups-ink-bar-display: @tabs-ink-bar-display;
 @tab-groups-padding: 0.02rem;
 @tab-groups-bar-padding: @tab-bar-padding;
@@ -1004,8 +1011,8 @@ sans-serif;
 @switch-sm-checked-margin-left: 0.03rem - @switch-sm-height;
 @switch-disabled-opacity: 0.4;
 @switch-label-color: @text-color-dark;
-@switch-checked-color: @primary-color; // deprecated
-@switch-color: @primary-3; // deprecated
+@switch-checked-color: @primary-color;
+@switch-color: color(~`colorPalette('@{switch-checked-color}', 3) `);
 @switch-checked-bg: @switch-color;
 @switch-checked-button-bg: @switch-checked-color;
 @switch-bg: rgba(0, 0, 0, 0.38);
@@ -1226,4 +1233,9 @@ sans-serif;
 @c7n-list-header-font-size: @font-size-base;
 
 // Anchor
+@anchor-primary-color: @primary-color;
+@anchor-primary-hover-color: fade(@anchor-primary-color, 70%);
 @anchor-border-width: 0.02rem;
+
+// Select
+@select-primary-color: @primary-color;

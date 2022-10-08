@@ -28,7 +28,13 @@ const CollapsePanel = function CollapsePanel(props) {
     onItemClick,
     eventKey,
     dataSet,
+    hidden,
   } = props;
+
+  if (hidden) {
+    return null;
+  }
+
   const headerCls = classNames(`${prefixCls}-header`, headerClass, {
     [`${prefixCls}-item-expand-renderer`]: showArrow && typeof expandIcon === 'function',
   });
@@ -134,6 +140,7 @@ CollapsePanel.defaultProps = {
   isActive: false,
   destroyInactivePanel: false,
   forceRender: false,
+  hidden: false,
 };
 
 export default CollapsePanel;

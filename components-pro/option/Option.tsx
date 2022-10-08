@@ -1,4 +1,4 @@
-import { Component, LegacyRef } from 'react';
+import { Component, LegacyRef, ReactNode } from 'react';
 import { ViewComponentProps } from '../core/ViewComponent';
 
 export interface OptionProps extends ViewComponentProps {
@@ -7,6 +7,7 @@ export interface OptionProps extends ViewComponentProps {
    */
   value?: any;
   ref?: LegacyRef<any>;
+  children?: ReactNode;
 }
 
 /* eslint-disable react/prefer-stateless-function,react/no-unused-prop-types */

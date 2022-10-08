@@ -115,18 +115,18 @@
   }
 
   &-today &-cell-inner {
-    color: @primary-color;
+    color: @date-primary-color;
     font-weight: bold;
-    border-color: @primary-color;
+    border-color: @date-primary-color;
   }
 
   &-cell&-selected &-cell-inner {
     color: #fff;
-    background: @primary-color;
+    background: @date-primary-color;
     border: @border-width-base @border-style-base transparent;
 
     &:hover {
-      background: @primary-color;
+      background: @date-primary-color;
     }
   }
 
@@ -188,7 +188,7 @@
     user-select: none;
 
     a:hover {
-      color: @link-hover-color;
+      color: @date-primary-hover-color;
     }
   }
 
@@ -219,7 +219,8 @@
     line-height: 0.34rem;
   }
 
-  &-footer-extra, &-footer {
+  &-footer-extra,
+  &-footer {
     position: relative;
     height: @date-picker-footer-height;
     line-height: @date-picker-footer-height;
@@ -228,6 +229,10 @@
 
     button {
       transition: all @animation-duration-slow ease-out, visibility 0s;
+    }
+
+    a {
+      color: @date-primary-color;
     }
   }
 
@@ -260,7 +265,7 @@
 
     &:hover {
       color: @btn-primary-hover-color;
-      background-color: @btn-primary-hover-bg;
+      background-color: @date-primary-hover-color;
     }
   }
 
@@ -281,7 +286,7 @@
 
       .@{date-picker-prefix}-selected .@{date-picker-prefix}-cell-inner {
         color: #fff;
-        background-color: @primary-color;
+        background-color: @date-primary-color;
       }
     }
 
@@ -362,7 +367,7 @@
 
     &-active {
       height: 100%;
-      .active();
+      .active(@date-primary-color);
       border-radius: @border-radius-base;
       transition: left @animation-duration-slow ease;
     }

@@ -534,6 +534,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       let status = RecordStatus.update;
       if (queryDataSet && queryDataSet.current) {
         status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
+      } else {
+        status = RecordStatus.sync;
       }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
@@ -711,7 +713,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(fuzzyValue?: string): Promise<void> {
+  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string): Promise<void> {
     const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
     const { getConfig } = this.context;
     const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
@@ -734,7 +736,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         }
       }
     } else {
-      this.forceUpdate();
+      runInAction(() => {
+        dataSet.setState(SEARCHTEXT, fuzzyOldValue || '');
+      });
+      dataSet.setQueryParameter(searchText, fuzzyOldValue);
     }
   }
 
@@ -806,9 +811,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { prefixCls } = this;
+    const { getConfig } = this.context;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
+    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
       <TextField
@@ -820,8 +827,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         valueChangeAction={ValueChangeAction.input}
         waitType={WaitType.debounce}
         wait={500}
-        onChange={(value: string) => {
-          this.handleQuery(undefined, value);
+        onChange={(value: string, oldValue: string) => {
+          this.handleQuery(undefined, value, oldValue);
+          dataSet.setState(SEARCHTEXT, value);
+          dataSet.setQueryParameter(searchText, value);
         }}
         onClear={() => {
           runInAction(() => {
@@ -1168,10 +1177,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param value 模糊查询参数
    */
   @autobind
-  async handleQuery(collapse?: boolean, value?: string) {
+  async handleQuery(collapse?: boolean, value?: string, oldValue?: string) {
     const { onQuery = noop, autoQuery } = this.props;
     if (autoQuery) {
-      await this.modifiedCheckQuery(value);
+      await this.modifiedCheckQuery(value, oldValue);
     }
     if (!collapse) {
       onQuery();

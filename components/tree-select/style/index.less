@@ -6,9 +6,9 @@
 @tree-select-prefix-cls: ~'@{c7n-prefix}-tree-select';
 @select-tree-prefix-cls: ~'@{c7n-prefix}-select-tree';
 @select-prefix-cls: ~'@{c7n-prefix}-select';
+@tree-checkbox-prefix-cls: ~'@{select-tree-prefix-cls}-checkbox';
 
-.antCheckboxFn(@checkbox-prefix-cls: ~'@{select-tree-prefix-cls}-checkbox');
-.antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-select-tree-checkbox');
+.antCheckboxFn(@tree-checkbox-prefix-cls);
 .antTreeFn(@select-tree-prefix-cls);
 
 
@@ -38,6 +38,7 @@
   }
 
   .reset-component;
+  .checked(@tree-checkbox-prefix-cls, @tree-primary-color);
   margin: 0;
   margin-top: -0.04rem;
   padding: 0 0.04rem;
@@ -70,7 +71,7 @@
         background-color: @item-hover-bg;
       }
       &.@{select-tree-prefix-cls}-node-selected {
-        background-color: @primary-2;
+        background-color: @tree-node-selected-bg;
       }
     }
     span {
@@ -96,7 +97,7 @@
       &.@{select-tree-prefix-cls}-icon_loading {
         &::after {
           display: inline-block;
-          color: @primary-color;
+          color: @tree-directory-selected-bg;
           animation: loadingCircle 1s infinite linear;
           .iconfont-font('\e6ae');
         }

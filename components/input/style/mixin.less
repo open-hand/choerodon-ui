@@ -245,7 +245,7 @@
   }
   &-focused &-has-border::before,
   &-focused&-has-border::before {
-    border-color: @primary-color;
+    border-color: @input-primary-color;
   }
   .has-error &-has-border::before {
     border-color: @error-color;
@@ -345,7 +345,7 @@
     left: 0;
     width: 100%;
     height: 0;
-    border-bottom: 0.02rem @border-style-base @primary-color;
+    border-bottom: 0.02rem @border-style-base @input-primary-color;
     transform: scaleX(0.5);
     transform-origin: 50%;
     opacity: 0;
@@ -445,7 +445,7 @@
       &-open,
       &-focused {
         .@{c7n-prefix}-select-selection {
-          color: @primary-color;
+          color: @input-primary-color;
         }
       }
 

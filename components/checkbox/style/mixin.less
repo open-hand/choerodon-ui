@@ -1,4 +1,15 @@
+@import '../../style/themes/default';
 @import '../../style/mixins/index';
+
+.checked(@checkbox-prefix-cls, @color) {
+  .@{checkbox-prefix-cls}-checked,
+  .@{checkbox-prefix-cls}-indeterminate {
+    .@{checkbox-prefix-cls}-inner {
+      background-color: @color;
+      border-color: @color;
+    }
+  }
+}
 
 .antCheckboxFn(@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox') {
   @checkbox-inner-prefix-cls: ~'@{checkbox-prefix-cls}-inner';
@@ -86,13 +97,7 @@
     content: ' ';
   }
 
-  .@{checkbox-prefix-cls}-checked,
-  .@{checkbox-prefix-cls}-indeterminate {
-    .@{checkbox-inner-prefix-cls} {
-      background-color: @checkbox-color;
-      border-color: @checkbox-color;
-    }
-  }
+  .checked(@checkbox-prefix-cls: ~'@{c7n-prefix}-checkbox', @checkbox-color);
 
   .@{checkbox-prefix-cls}-disabled {
     cursor: not-allowed;

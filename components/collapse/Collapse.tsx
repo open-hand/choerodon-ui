@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, ReactNode } from 'react';
+import React, { isValidElement, cloneElement, Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import toArray from 'lodash/toArray';
@@ -24,6 +24,7 @@ export interface PanelProps {
   disabled?: boolean;
   extra?: ReactNode;
   collapsible?: CollapsibleType;
+  children?: ReactNode;
 }
 
 export interface CollapseProps {
@@ -41,6 +42,7 @@ export interface CollapseProps {
   trigger?: TriggerMode;
   ghost?: boolean;
   collapsible?: CollapsibleType;
+  children?: ReactNode;
 }
 
 export default class Collapse extends Component<CollapseProps, any> {
@@ -99,19 +101,21 @@ export default class Collapse extends Component<CollapseProps, any> {
     if (!isArray(children)) {
       arrayChildren = [children];
     }
-
-    return toArray(arrayChildren).map((child: React.ReactElement, index: number) => {
-      const key = child.key || String(index);
-      const { disabled, collapsible } = child.props;
-      if (disabled) {
-        const childProps: PanelProps & { key: React.Key } = {
-          ...omit(child.props, 'disabled'),
-          key,
-          disabled: collapsible && collapsible === 'header' ? false : disabled,
-        };
-        return cloneElement(child, childProps);
+    return toArray(arrayChildren).map((child: React.ReactElement<PanelProps>, index: number) => {
+      if (isValidElement(child)) {
+        const key = child.key || String(index);
+        const { disabled, collapsible } =  child.props;
+        if (disabled) {
+          const childProps: PanelProps & { key: React.Key } = {
+            ...omit(child.props, 'disabled'),
+            key,
+            disabled: collapsible && collapsible === 'header' ? false : disabled,
+          };
+          return cloneElement(child, childProps);
+        }
+        return cloneElement(child, { ...child.props, key, disabled: collapsible ? collapsible === 'disabled' : parentCollapsible === 'disabled' });
       }
-      return cloneElement(child, { ...child.props, key, disabled: collapsible ? collapsible === 'disabled' : parentCollapsible === 'disabled' });
+      return child;
     });
   };
 

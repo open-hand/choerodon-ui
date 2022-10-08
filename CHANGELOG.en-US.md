@@ -16,9 +16,20 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `tableColumnResizeTransition` properties.
-- 🌟 `Collapse`: Added property of `collapsible`.
+- 🌟 `Collapse`: Added property of `collapsible` `hidden`.
+- 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
+- 🌟 `Tabs.TabPane`: Added `hidden` property.
+- 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 `<pro>Button`: Button text bubble supports `Tooltip` attribute expansion.
+- 🌟 Added theme style.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
+- 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.
+- 💄 `WaterMark`: Optimize text wrap display.
+- 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
+- 💄 `<pro>Table`: Optimized the display timing of the `\n`.
+- 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
+- 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -27,14 +38,21 @@ timeline: true
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
-- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode.
+- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status error.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 - 🐞 `<pro>Cascader`: Fixed the display problem of active item after selecting values in controlled mode without using `DataSet`.
 - 🐞 `<pro>Upload`: Fixed the interaction style of upload type components Upload, &lt;pro&gt;Upload and &lt;pro&gt;Attachment in disabled mode.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
+- 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
+- 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
+- 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
+- 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
+- 🐞 `Tabs`: Fix the problem of the arrow display.
+- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
 
 ## 1.5.6
 

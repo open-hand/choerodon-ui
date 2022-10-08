@@ -1,3 +1,7 @@
+@import '../../../components/style/themes/default';
+@import '../../../components/checkbox/style/mixin';
+
+@checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
 
 .dropdown-menu-item () {
   &-item-group {
@@ -91,4 +95,5 @@
   list-style: none;
   outline: none;
   .dropdown-menu-item;
+  .checked(@checkbox-prefix-cls, @select-primary-color);
 }

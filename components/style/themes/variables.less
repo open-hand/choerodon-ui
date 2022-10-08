@@ -117,40 +117,74 @@
 @btn-focus-box-shadow-calculate: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
 0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
 
+// button primary
+@btn-primary-bg-calculate: @primary-color-calculate;
+
 // button gray
 @btn-gray-bg-calculate: #f5f5f5;
 @btn-gray-focus-bg-calculate: #e6e6e6;
 @btn-gray-flat-color-calculate: #d0d0d0;
 
 // Checkbox
+@checkbox-color-calculate: @primary-color-calculate;
 @checkbox-border-color-calculate: fade(#000, 65%);
 @checkbox-border-width-calculate: 0.02rem;
-@checkbox-shadow-color-calculate: fade(@outline-color-calculate, 20%);
+@checkbox-shadow-color-calculate: fade(@checkbox-color-calculate, 20%);
 
 // DatePicker
+@date-primary-color-calculate: @primary-color-calculate;
+@date-primary-hover-color-calculate: fade(@date-primary-color-calculate, 70%);
 @date-picker-active-color-calculate: #fff;
 
 // Radio
+@radio-color-calculate: @primary-color-calculate;
 @radio-border-color-calculate: rgba(0, 0, 0, 0.24);
-@radio-shadow-color-calculate: fade(@outline-color-calculate, 20%);
+@radio-shadow-color-calculate: fade(@radio-color-calculate, 20%);
+
+// Radio buttons
+@radio-button-hover-color-calculate: fade(@radio-color-calculate, 50%);
+@radio-button-active-color-calculate: fade(@radio-color-calculate, 70%);
 
 // Layout
 @layout-header-background-calculate: #001529;
 @layout-sider-background-tint-1-calculate: tint(@layout-header-background-calculate, 10%);
 
 // Input
+@input-primary-color-calculate: @primary-color-calculate;
 @input-info-color-calculate: fade(@text-color-calculate, 54%);
 @input-placeholder-color-calculate: hsv(0, 0, 75%);
-@input-focus-border-color-calculate: color(~`colorPalette('@{outline-color-calculate}', 5) `);
-@input-hover-border-color-calculate: color(~`colorPalette('@{primary-color-calculate}', 5) `);
+@input-focus-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 3) `);
+@input-hover-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 5) `);
 
 // Tree
+@tree-primary-color-calculate: @primary-color-calculate;
 @tree-directory-selected-color-calculate: #fff; // 使用了，但是directory的渲染不会走
+@tree-node-selected-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 2) `);
+@tree-focus-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 1) `);
+
+// Tabs
+// ---
+@tab-primary-color-calculate: @primary-color-calculate;
+@tab-hover-color-calculate: color(~`colorPalette('@{tab-primary-color-calculate}', 5) `);
+@tab-active-color-calculate: color(~`colorPalette('@{tab-primary-color-calculate}', 7) `);
+
+// Switch
+// ---
+@switch-checked-color-calculate: @primary-color-calculate;
+@switch-color-calculate: color(~`colorPalette('@{switch-checked-color-calculate}', 3) `);
 
 // Skeleton
 // ---
 @skeleton-color-calculate: #f2f2f2;
 @skeleton-to-color-calculate: shade(@skeleton-color-calculate, 5%);
+
+// Anchor
+@anchor-primary-color-calculate: @primary-color-calculate;
+@anchor-primary-hover-color-calculate: fade(@anchor-primary-color-calculate, 70%);
+
+// Select
+@select-primary-color-calculate: @primary-color-calculate;
+
 
 // css 变量
 :root {
@@ -360,10 +394,10 @@
 
   // button primary
   --btn-primary-color: var(--text-color-dark);
-  --btn-primary-bg: var(--primary-color);
+  --btn-primary-bg: @btn-primary-bg-calculate;
   --btn-primary-border: var(--btn-primary-bg);
   --btn-primary-focus-color: var(--btn-primary-color);
-  --btn-primary-focus-bg: var(--primary-7);
+  --btn-primary-focus-bg: color(~`colorPalette('@{btn-primary-bg-calculate}', 7) `);
   --btn-primary-hover-color: var(--btn-primary-focus-color);
   --btn-primary-hover-bg: var(--btn-primary-focus-bg);
   --btn-primary-disabled-color: var(--btn-primary-color);
@@ -471,7 +505,7 @@
 
   // Checkbox
   --checkbox-size: 0.16rem;
-  --checkbox-color: var(--primary-color);
+  --checkbox-color: @checkbox-color-calculate;
   --checkbox-border-color: @checkbox-border-color-calculate;
   --checkbox-border-width: @checkbox-border-width-calculate;
   --checkbox-disabled-bg: var(--input-disabled-bg);
@@ -480,13 +514,15 @@
   --checkbox-disabled-check-bg: var(--checkbox-disabled-bg);
   --checkbox-disabled-check-border-color: var(--checkbox-disabled-border-color);
   --checkbox-disabled-check-color: var(--checkbox-disabled-color);
-  --checkbox-uncheck-hover-border-color: var(--primary-color);
+  --checkbox-uncheck-hover-border-color: var(--checkbox-color);
   --checkbox-shadow-color: @checkbox-shadow-color-calculate;
-  --checkbox-indeterminate-bg: var(--primary-color);
+  --checkbox-indeterminate-bg: var(--checkbox-color);
   --checkbox-indeterminate-color: #fff;
   --checkbox-button-line-height: var(--radio-button-line-height);
 
   // DatePicker
+  --date-primary-color: @date-primary-color-calculate;
+  --date-primary-hover-color: @date-primary-hover-color-calculate;
   // 从组件内部迁移的变量
   --date-picker-width: 2.8rem;
   --date-time-picker-width: 4.3rem;
@@ -501,6 +537,7 @@
   --date-picker-active-color: @date-picker-active-color-calculate;
 
   // Radio
+  --radio-color: @radio-color-calculate;
   --radio-border-color: @radio-border-color-calculate;
   --radio-border-width: var(--border-width-base);
   --radio-disabled-color: var(--disabled-color);
@@ -509,9 +546,9 @@
   --radio-disabled-check-bg: var(--radio-disabled-bg);
   --radio-disabled-check-border-color: var(--radio-disabled-border-color);
   --radio-disabled-check-color: var(--radio-disabled-color);
-  --radio-uncheck-hover-border-color: var(--primary-color);
+  --radio-uncheck-hover-border-color: var(--radio-color);
   --radio-size: 0.14rem;
-  --radio-dot-color: var(--primary-color);
+  --radio-dot-color: var(--radio-color);
   --radio-line-height: 1;
   --radio-label-white-space: var(--label-white-space);
   --radio-shadow-color: @radio-shadow-color-calculate;
@@ -520,8 +557,8 @@
   --radio-button-line-height: var(--btn-height-base);
   --radio-button-bg: var(--btn-default-bg);
   --radio-button-color: var(--btn-default-color);
-  --radio-button-hover-color: var(--primary-5);
-  --radio-button-active-color: var(--primary-7);
+  --radio-button-hover-color: @radio-button-hover-color-calculate;
+  --radio-button-active-color: @radio-button-active-color-calculate;
 
   // Layout
   --layout-header-background: @layout-header-background-calculate;
@@ -569,6 +606,7 @@
   --float-form-item-wrapper-padding-vertical: 0;
 
   // Input
+  --input-primary-color: @input-primary-color-calculate;
   --input-height-base: 0.3rem;
   --input-height-lg: 0.4rem;
   --input-height-sm: 0.24rem;
@@ -838,13 +876,15 @@
   --loader-duration-normal: 0.6s;
 
   // Tree
+  --tree-primary-color: @tree-primary-color-calculate;
 	--tree-bg: var(--component-background);
 	--tree-title-height: 24px;
 	--tree-child-padding: 18px;
 	--tree-directory-selected-color: @tree-directory-selected-color-calculate;
-	--tree-directory-selected-bg: var(--primary-color);
+	--tree-directory-selected-bg: var(--tree-primary-color);
 	--tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
-	--tree-node-selected-bg: var(--primary-2); // 有效 同上
+	--tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
+  --tree-focus-bg: @tree-focus-bg-calculate;
   --tree-node-padding: calc(var(--padding-xs) / 2);
   --tree-checkbox-height: var(--tree-title-height);
   --tree-active-color: var(--text-color);
@@ -906,13 +946,14 @@
 
   // Tabs
   // ---
+  --tab-primary-color: @tab-primary-color-calculate;
   --tabs-card-head-background: var(--background-color-light);
   --tabs-card-height: 0.4rem;
-  --tabs-card-active-color: var(--primary-color);
+  --tabs-card-active-color: var(--tab-primary-color);
   --tabs-title-font-size: var(--font-size-base);
   --tabs-title-font-size-lg: var(--font-size-lg);
   --tabs-title-font-size-sm: var(--font-size-base);
-  --tabs-ink-bar-bg-color: var(--primary-color);
+  --tabs-ink-bar-bg-color: var(--tab-primary-color);
   --tabs-ink-bar-display: block;
   --tab-bar-margin: 0 0 0.16rem 0;
   --tab-bar-padding: 0;
@@ -925,11 +966,11 @@
   --tab-vertical-padding-horizontal: 0.24rem;
   --tab-vertical-padding: var(--tab-vertical-padding-vertical) var(--tab-vertical-padding-horizontal);
   --tab-scrolling-size: 0.32rem;
-  --tab-highlight-color: var(--primary-color);
+  --tab-highlight-color: var(--tab-primary-color);
   --tab-highlight-font-weight: 500;
   --tab-normal-color: rgba(0, 0, 0, 0.87);
-  --tab-hover-color: var(--primary-5);
-  --tab-active-color: var(--primary-7);
+  --tab-hover-color: @tab-hover-color-calculate;
+  --tab-active-color: @tab-active-color-calculate;
   --tabs-groups-ink-bar-display: var(--tabs-ink-bar-display);
   --tab-groups-padding: 0.02rem;
   --tab-groups-bar-padding: var(--tab-bar-padding);
@@ -1003,13 +1044,13 @@
   --switch-sm-checked-margin-left: calc(0.03rem - var(--switch-sm-height));
   --switch-disabled-opacity: 0.4;
   --switch-label-color: var(--text-color-dark);
-  --switch-checked-color: var(--primary-color); // deprecated
-  --switch-color: var(--primary-3); // deprecated
+  --switch-checked-color: @switch-checked-color-calculate;
+  --switch-color: @switch-color-calculate;
   --switch-checked-bg: var(--switch-color);
   --switch-checked-button-bg: var(--switch-checked-color);
   --switch-bg: rgba(0, 0, 0, 0.38);
   --switch-button-bg: var(--component-background);
-  --switch-box-shadow: 0 0 0 0.02rem fade(@primary-3-calculate, 20%);
+  --switch-box-shadow: 0 0 0 0.02rem fade(@switch-color-calculate, 20%);
   --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
   0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
   --switch-lg-loading-inner-size: 0.2rem;
@@ -1204,7 +1245,12 @@
   --c7n-list-header-font-size: var(--font-size-base);
 
   // Anchor
+  --anchor-primary-color: @anchor-primary-color-calculate;
+  --anchor-primary-hover-color: @anchor-primary-hover-color-calculate;
   --anchor-border-width: 0.02rem;
+
+  // Select
+  --select-primary-color: @select-primary-color-calculate;
 }
 
 
@@ -1557,6 +1603,8 @@
 @checkbox-button-line-height: var(--checkbox-button-line-height);
 
 // DatePicker
+@date-primary-color: var(--date-primary-color);
+@date-primary-hover-color: var(--date-primary-hover-color);
 // 从组件内部迁移的变量
 @date-picker-width: var(--date-picker-width);
 @date-time-picker-width: var(--date-time-picker-width);
@@ -1571,6 +1619,7 @@
 @date-picker-active-color: var(--date-picker-active-color);
 
 // Radio
+@radio-color: var(--radio-color);
 @radio-border-color: var(--radio-border-color);
 @radio-border-width: var(--radio-border-width);
 @radio-disabled-color: var(--radio-disabled-color);
@@ -1584,7 +1633,7 @@
 @radio-dot-color: var(--radio-dot-color);
 @radio-line-height: var(--radio-line-height);
 @radio-label-white-space: var(--radio-label-white-space);
-@radio-shadow-color: var(--primary-fade-2);
+@radio-shadow-color: var(--radio-shadow-color);
 
 // Radio buttons
 @radio-button-line-height: var(--radio-button-line-height);
@@ -1702,6 +1751,7 @@
 
 // Input
 // ---
+@input-primary-color: var(--input-primary-color);
 @input-height-base: var(--input-height-base);
 @input-height-lg: var(--input-height-lg);
 @input-height-sm: var(--input-height-sm);
@@ -2022,6 +2072,7 @@
 
 // Tree
 // ---
+@tree-primary-color: var(--tree-primary-color);
 @tree-bg: var(--tree-bg); // 有效
 @tree-title-height: var(--tree-title-height); // 有效
 @tree-child-padding: var(--tree-child-padding); // 全局未使用
@@ -2029,6 +2080,7 @@
 @tree-directory-selected-bg: var(--tree-directory-selected-bg); //Pro Tree 不支持 directory 全局未使用
 @tree-node-hover-bg: var(--tree-node-hover-bg); // 有效
 @tree-node-selected-bg: var(--tree-node-selected-bg); // 有效
+@tree-focus-bg: var(--tree-focus-bg);
 @tree-node-padding: var(--tree-node-padding); // 有效
 @tree-checkbox-height: var(--tree-checkbox-height);
 @tree-active-color: var(--tree-active-color);
@@ -2102,6 +2154,7 @@
 
 // Tabs
 // ---
+@tab-primary-color: var(--tab-primary-color);
 @tabs-card-head-background: var(--tabs-card-head-background);
 @tabs-card-height: var(--tabs-card-height);
 @tabs-card-active-color: var(--tabs-card-active-color);
@@ -2205,8 +2258,8 @@
 @switch-sm-checked-margin-left: var(--switch-sm-checked-margin-left);
 @switch-disabled-opacity: var(--switch-disabled-opacity);
 @switch-label-color: var(--switch-label-color);
-@switch-checked-color: var(--switch-checked-color); // deprecated
-@switch-color: var(--switch-color); // deprecated
+@switch-checked-color: var(--switch-checked-color);
+@switch-color: var(--switch-color);
 @switch-checked-bg: var(--switch-checked-bg);
 @switch-checked-button-bg: var(--switch-checked-button-bg);
 @switch-bg: var(--switch-bg);
@@ -2426,4 +2479,9 @@
 @c7n-list-header-font-size: var(--c7n-list-header-font-size);
 
 // Anchor
+@anchor-primary-color: var(--anchor-primary-color);
+@anchor-primary-hover-color: var(--anchor-primary-hover-color);
 @anchor-border-width: var(--anchor-border-width);
+
+// Select
+@select-primary-color: var(--select-primary-color);

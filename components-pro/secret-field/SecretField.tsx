@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, runInAction } from 'mobx';
+import { action, runInAction, isArrayLike } from 'mobx';
 
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import Icon from '../icon';
@@ -8,10 +8,12 @@ import { open } from '../modal-container/ModalContainer';
 import { ModalProps } from '../modal/Modal';
 import SecretFieldView from './SecretFieldView';
 import autobind from '../_util/autobind';
+import isEmpty from '../_util/isEmpty';
 import CountDown from './CountDown';
 
 export interface SecretFieldProps extends TextFieldProps {
   modalProps?: ModalProps;
+  renderEmpty?: () => ReactNode;
 }
 
 @observer
@@ -46,8 +48,8 @@ export default class SecretField extends TextField<SecretFieldProps> {
 
   get isSecretEnable(): Boolean {
     const { record, name } = this;
-    if (!record || !record.get('_token') || !record.get(name)) {
-      // 新增数据，record没有token或者没有值，显示为textfield
+    if (!record || !record.get('_token') || !record.getPristineValue(name)) {
+      // 新增数据，record没有token或者查询没有返回值，显示为textfield
       return false;
     }
     return this.secretEnable;
@@ -189,5 +191,19 @@ export default class SecretField extends TextField<SecretFieldProps> {
     if (!isSecretEnable) {
       super.clear();
     }
+  }
+
+  renderWrapper(): ReactNode {
+    const { readOnly, prefixCls } = this;
+    const result = this.getRenderedValue();
+    const { renderEmpty } = this.props;
+    // 脱敏组件只读且值为空时，renderEmpty
+    return readOnly && (isEmpty(result) || (isArrayLike(result) && !result.length)) ? (
+      <span {...this.getMergedProps()}>
+        <span className={`${prefixCls}-secret-empty`}>
+          {renderEmpty ? renderEmpty() : this.getContextConfig('renderEmpty')('SecretField') || '-'}
+        </span>
+      </span>
+    ) : super.renderWrapper();
   }
 }
