@@ -26,13 +26,42 @@ const App = () => {
   }), []);
   return (
     <>
+      <div style={{ margin: '20px 0' }}>基础文字气泡</div>
       <Tooltip title="xxx" placement="bottom">
-        <Button tooltip="always" disabled>始终显示气泡的按钮</Button>
+        <Button tooltip="always" disabled>
+          始终显示气泡的按钮
+        </Button>
       </Tooltip>
       <Button tooltip="overflow" style={flag ? overflowStyle : undefined} onClick={handleClick}>
         内容超长时显示气泡&lt;点击改变样式&gt;
       </Button>
-      <Button href="https://choerodon.io" target="_blank" tooltip="always" disabled>跳转按钮</Button>
+      <Button href="https://choerodon.io" target="_blank" tooltip="always" disabled>
+        跳转按钮
+      </Button>
+      <div style={{ margin: '20px 0' }}>拓展Tooltip属性的文字气泡（支持自定义气泡内容）</div>
+      <Tooltip title="xxx" placement="bottom">
+        <Button
+          tooltip={['always', { title: '自定义内容', theme: 'light', placement: 'left', mouseLeaveDelay: 1000, mouseEnterDelay: 1000 }]}
+          disabled
+        >
+          始终显示气泡的按钮
+        </Button>
+      </Tooltip>
+      <Button
+        tooltip={['overflow', { title: '自定义内容', theme: 'light', placement: 'left' }]}
+        style={flag ? overflowStyle : undefined}
+        onClick={handleClick}
+      >
+        内容超长时显示气泡&lt;点击改变样式&gt;
+      </Button>
+      <Button
+        href="https://choerodon.io"
+        target="_blank"
+        tooltip={['always', { title: '自定义内容', theme: 'light', placement: 'left' }]}
+        disabled
+      >
+        跳转按钮
+      </Button>
     </>
   )
 }
