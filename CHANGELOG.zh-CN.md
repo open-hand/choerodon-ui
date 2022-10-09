@@ -28,6 +28,7 @@ timeline: true
 - 💄 `WaterMark`: 优化文本水印自动换行显示。
 - 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
 - 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
+- 💄 `<pro>Table`: 扩展 draggableProps.isDragDisabled 属性支持回调函数，用于判断单行是否可拖拽。
 - 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
 - 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。

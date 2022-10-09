@@ -28,6 +28,7 @@ timeline: true
 - 💄 `WaterMark`: Optimize text wrap display.
 - 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 💄 `<pro>Table`: Optimized the display timing of the `\n`.
+- 💄 `<pro>Table`: The extension `draggableProps.isDragDisabled` property supports callback functions for determining whether a single row is draggable.
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 - 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.

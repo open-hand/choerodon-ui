@@ -47,9 +47,10 @@ export interface TableCellProps extends TableVirtualCellProps {
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const {
-    columnGroup, record, isDragging, provided, colSpan, className, children, disabled,
+    columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
     inView = true, groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight,
   } = props;
+  const dragDisabled = isDragDisabled && (typeof isDragDisabled === 'boolean' ? isDragDisabled : isDragDisabled(record));
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -230,7 +231,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const cellStyle: CSSProperties = {
     ...baseStyle,
     ...cellExternalProps.style,
-    ...(provided && { cursor: 'move' }),
+    ...(provided && { cursor: dragDisabled ? 'not-allowed' : 'move' }),
   };
   const classString = classNames(
     baseClassName,

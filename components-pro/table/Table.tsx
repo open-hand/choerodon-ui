@@ -260,9 +260,13 @@ export interface ColumnRenderIcon {
   snapshot?: DraggableStateSnapshot;
 }
 
+export interface RowDraggableProps extends Omit<DraggableProps, 'isDragDisabled'> {
+  isDragDisabled?: boolean | ((record?: Record) => boolean);
+}
+
 export interface DragRender {
   droppableProps?: DroppableProps;
-  draggableProps?: DraggableProps;
+  draggableProps?: RowDraggableProps;
   renderClone?: ((dragRenderProps: DragTableRowProps | DragTableHeaderCellProps) => ReactElement<any>);
   renderIcon?: ((rowRenderIcon: RowRenderIcon | ColumnRenderIcon) => ReactElement<any>);
 }
@@ -1968,7 +1972,11 @@ export default class Table extends DataSetComponent<TableProps> {
     if (hasBody && tableStore.rowDraggable) {
       const { dragDropContextProps } = this.props;
       return (
-        <DragDropContext {...dragDropContextProps} onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
+        <DragDropContext
+          {...dragDropContextProps}
+          onDragStart={this.handleDragStart}
+          onDragEnd={this.handleDragEnd}
+        >
           {virtualWrapper}
         </DragDropContext>
       );

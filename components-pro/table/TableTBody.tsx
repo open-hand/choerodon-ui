@@ -13,6 +13,7 @@ import React, {
 import { observer } from 'mobx-react-lite';
 import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
@@ -198,6 +199,7 @@ function renderExpandedRows(
 
 function generateDraggableRow(props: GenerateRowProps): ReactElement {
   const { tableStore, record, lock, index, rowDragRender, statistics, isTree, virtual, rowDraggable } = props;
+  const { prefixCls } = tableStore;
   const children = isTree && !virtual && (
     <ExpandedRow {...props} renderExpandedRows={renderExpandedRows} />
   );
@@ -211,19 +213,35 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
       (dragColumnAlign === DragColumnAlign.left && lock !== ColumnLock.right)
     ) {
       const { key } = record;
+      let dragDisabled: boolean | undefined;
+      if (rowDragRender && rowDragRender.draggableProps && rowDragRender.draggableProps.isDragDisabled) {
+        const { draggableProps: { isDragDisabled } } = rowDragRender;
+        dragDisabled = typeof isDragDisabled === 'boolean' ? isDragDisabled : isDragDisabled(record);
+      }
       return (
         <Draggable
           draggableId={String(key)}
           index={draggableIndex}
+          isDragDisabled={dragDisabled}
           key={key}
         >
           {
             (
               provided: DraggableProvided,
               snapshot: DraggableStateSnapshot,
-            ) => (
-              cloneElement<any>(row, { provided, snapshot, ...(rowDragRender && rowDragRender.draggableProps) })
-            )
+            ) => {
+              return (
+                cloneElement<any>(
+                  row,
+                  {
+                    provided,
+                    snapshot,
+                    ...(rowDragRender && rowDragRender.draggableProps),
+                    className: classNames({ [`${prefixCls}-row-drag-disabled`]: dragDisabled }),
+                  },
+                )
+              )
+            }
           }
         </Draggable>
       );
