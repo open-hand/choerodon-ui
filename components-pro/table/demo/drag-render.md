@@ -7,7 +7,7 @@ title:
 
 ## zh-CN
 
-可以通过rowDragRender里面方法进行对于整体的拖拽空控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等，可以查看react-beautiful-dnd。这里是控制renderClone	拖拽起来的时候会在body下面新增加一个table 会在这个table注入元素	比如下面的示例可以实现在类名为c7n-pro-table-drag-container 的 table里面渲染对应的元素，这里你可以增加样式覆盖完成你想要的拖拽样式，由于拖拽使用的Fixed定位所以会导致table的长度变化，你可以根据业务修改合适的colums的宽度来让表现更加自然。renderIcon 来渲染 拖拽的自定义ICON。
+可以通过rowDragRender里面方法进行对于整体的拖拽空控制，比如droppableProps，droppableProps 控制是否可以拖动和放入等，可以查看react-beautiful-dnd。这里是控制 renderClone 拖拽起来的时候会在body下面新增加一个table 会在这个table注入元素	比如下面的示例可以实现在类名为c7n-pro-table-drag-container 的 table里面渲染对应的元素，这里你可以增加样式覆盖完成你想要的拖拽样式，由于拖拽使用的Fixed定位所以会导致table的长度变化，你可以根据业务修改合适的colums的宽度来让表现更加自然。renderIcon 来渲染 拖拽的自定义ICON。
 
 
 ## en-US
@@ -128,7 +128,32 @@ class App extends React.Component {
   render() {
     const buttons = ['save', 'delete', 'reset'];
     return (
-      <Table rowDragRender={{renderClone:this.renderDragRow}} dragColumnAlign="left" rowDraggable  key="user" buttons={buttons} dataSet={this.userDs} pristine>
+      <Table
+        rowDragRender={{
+          renderClone:this.renderDragRow,
+          draggableProps: {
+            isDragDisabled: (r) => {
+              console.log('r:', r);
+              if (r.get('userid') === '3' || r.get('userid') === '4') {
+              return true;
+            }
+            return false;
+          }
+        }}}
+        dragColumnAlign="left"
+        rowDraggable 
+        key="userid"
+        buttons={buttons}
+        dataSet={this.userDs}
+        pristine
+        onDragEndBefore={(ds, col, res) => {
+          const dropDisabled = (res.source.index < 3 && res.destination.index >= 3) || (res.source.index > 4 && res.destination.index <= 4)
+          if (dropDisabled) {
+            return false;
+          }
+          return true;
+        }}
+      >
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />

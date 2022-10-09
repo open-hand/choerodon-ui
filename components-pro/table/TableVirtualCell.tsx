@@ -17,6 +17,7 @@ export interface TableVirtualCellProps extends ElementProps {
   rowIndex: number;
   colSpan?: number | undefined;
   isDragging: boolean;
+  isDragDisabled?: boolean | ((record?: Record) => boolean);
   isFixedRowHeight?: boolean | undefined;
   provided?: DraggableProvided | undefined;
   disabled?: boolean | undefined;
