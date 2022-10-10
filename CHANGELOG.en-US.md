@@ -53,7 +53,9 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 - 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
-- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
+- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification.
+- 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
+- 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 
 ## 1.5.6
 
