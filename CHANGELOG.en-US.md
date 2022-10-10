@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `Tabs.TabGroup`: Added `hidden` property.
 - 🌟 `<pro>Button`: Button text bubble supports `Tooltip` attribute expansion.
 - 🌟 Added theme style.
+- 🌟 `<pro>Lov`: Added hyperlinks and image types to the list.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.

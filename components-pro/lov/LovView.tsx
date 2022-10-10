@@ -19,6 +19,7 @@ import SelectionList, { SelectionsPosition } from './SelectionList';
 import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
+import Picture from '../picture';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -95,10 +96,31 @@ export default class LovView extends Component<LovViewProps> {
       ? lovItems
         .filter(({ gridField }) => gridField === 'Y')
         .sort(({ gridFieldSequence: seq1 }, { gridFieldSequence: seq2 }) => seq1 - seq2)
-        .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign }) => {
+        .map<ColumnProps>(({ display, gridFieldName, gridFieldWidth, gridFieldAlign, gridFieldType }) => {
           let column: ColumnProps | undefined = {};
           if (tableProps && tableProps.columns) {
             column = tableProps.columns.find(c => c.name === gridFieldName);
+          }
+          // 渲染 lov 中的 超链接 和 图片类型字段
+          column = column || {};
+          if (gridFieldType && gridFieldType.toLowerCase() === 'href') {
+            column.renderer = ({ value }) => (
+              value ? (
+                <a
+                  href={value}
+                  title={value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {value}
+                </a>
+              ) : undefined
+            );
+          }
+          else if (gridFieldType && gridFieldType.toLowerCase() === 'picture') {
+            column.renderer = ({ value }) => (
+              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} /> : undefined
+            );
           }
           return {
             ...column,
