@@ -15,8 +15,16 @@ import { CurrencyProps } from '../currency/Currency';
 import Field from '../data-set/Field';
 import { defaultOutputRenderer } from './utils';
 
-export interface OutputProps extends FormFieldProps<any>, CurrencyProps<any> {
+export interface OutputProps extends FormFieldProps<any>, Omit<CurrencyProps<any>, 'tooltip'> {
+  /**
+   * 自定义渲染数据为空的状态
+   */
   renderEmpty?: () => ReactNode;
+  /**
+   * 用tooltip显示文本内容
+   * 可选值：`none` `always` `overflow`
+   */
+  tooltip?: TextTooltip;
 }
 
 @observer

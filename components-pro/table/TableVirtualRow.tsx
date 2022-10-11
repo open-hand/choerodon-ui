@@ -26,6 +26,7 @@ export interface TableVirtualRowProps extends ElementProps {
   expandIconColumnIndex?: number | undefined;
   snapshot?: DraggableStateSnapshot | undefined;
   provided?: DraggableProvided | undefined;
+  isDragDisabled?: boolean | ((record?: Record) => boolean);
   groupPath?: [Group, boolean][] | undefined;
   metaData?: VirtualRowMetaData;
   children?: ReactNode;

@@ -221,6 +221,10 @@ export interface Config extends DataSetConfig {
   currencyFormatter?: FormatNumberFunc;
   currencyFormatterOptions?: FormatNumberFuncOptions;
   /**
+   * 聚焦类型：checked 默认聚焦选中文本，focus 聚焦显示光标
+   */
+  fieldFocusMode?: 'checked' | 'focus';
+  /**
    * 是否显示长度信息
    */
   showLengthInfo?: boolean;
