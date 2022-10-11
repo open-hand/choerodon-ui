@@ -1,9 +1,13 @@
+// 引入此文件的地方的前面都需要声明 @root-entry-name: variables;
+
+// 增加变量，需要同时在 defaultVars.less 和 variables.less 中增加
+
 @iconfont: ~'~choerodon-ui-font';
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 @import '@{iconfont}/style/theme';
 @import '../color/colors';
 
-@root-entry-name: variables;
+// @root-entry-name: variables;
 // @root-entry-name: defaultVars;
 
 @import './@{root-entry-name}.less';
