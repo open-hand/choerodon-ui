@@ -3,7 +3,7 @@
 @import '@{iconfont}/style/theme';
 @import '../color/colors';
 
-// 此文件不引入到 variables.less 中, 需要引入到 style/index.less 中
+// 此文件不引入到 variables.less 中, 需要引入到 components/style/index.less 中
 // 解决每个组件样式文件中都有一份 css 变量的问题
 
 // 基础 less 变量，用于计算的中间 less 变量
@@ -188,7 +188,7 @@
 
 
 // css 变量
-.mix-css-vars() when (@root-entry-name = variables) {
+.mix-css-vars() when (@c7n-root-entry-name = variables) {
   // -------- Colors -----------
   --primary-color: @primary-color-calculate;
   --info-color: @info-color-calculate;
