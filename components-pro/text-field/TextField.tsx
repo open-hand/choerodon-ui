@@ -323,9 +323,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   measureTextWidth(text: string): number {
+    const element = this.element && this.element.element ?
+      this.element.element : this.element;
     const computedStyle: CSSStyleDeclaration | undefined =
-      this.element ?
-        getComputedStyle(this.element) :
+      element ?
+        getComputedStyle(element) :
         undefined;
     return measureTextWidth(text, computedStyle);
   }
