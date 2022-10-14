@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 import { ReactQuillProps } from 'react-quill/lib';
 import 'react-quill/dist/quill.snow.css';
 import isEqual from 'lodash/isEqual';
@@ -55,6 +55,8 @@ export default class RichText extends FormField<RichTextProps> {
   };
 
   editor: any;
+
+  @observable focused: boolean;
 
   toolbarId: string = randomWord(false, 32, 64);
 
@@ -133,10 +135,11 @@ export default class RichText extends FormField<RichTextProps> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, border } = this;
+    const { prefixCls, border, focused } = this;
     return super.getWrapperClassNames(
       {
         [`${prefixCls}-border`]: border,
+        [`${prefixCls}-focused`]: focused,
       },
       ...args,
     );
@@ -151,8 +154,10 @@ export default class RichText extends FormField<RichTextProps> {
   }
 
   @autobind
+  @action
   handleRichTextBlur(props) {
     const { onBlur = noop, defaultValue } = this.props;
+    this.focused = false;
     onBlur(props);
     const deltaOps = this.getValue() || defaultValue || [];
     if (props.length === 0 && props.index === 0 && deltaOps.length === 0) {
@@ -161,8 +166,10 @@ export default class RichText extends FormField<RichTextProps> {
   }
 
   @autobind
+  @action
   handleRichTextFocus(props) {
     const { onFocus = noop } = this.props;
+    if (!this.disabled) this.focused = true;
     onFocus(props);
   }
 
