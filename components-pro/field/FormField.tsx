@@ -102,7 +102,6 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 可选值：`none` `always` `overflow`
    */
   labelTooltip?: TextTooltip;
-  tooltip?: TextTooltip;
   /**
    * 是否使用冒号
    */

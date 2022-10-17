@@ -582,6 +582,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
+    const { min, max } = this;
+    if (!this.isUnderRange(cursorDate, mode)) {
+      if (min && cursorDate.isSameOrBefore(min) && selectedDate.isSameOrBefore(cursorDate)) {
+        // 往后翻页，跳转到 min
+        cursorDate = min;
+      } else if (max && cursorDate.isSameOrAfter(max) && selectedDate.isSameOrAfter(cursorDate)) {
+        // 往前翻页，跳转到 max
+        cursorDate = max;
+      }
+    }
     if (
       this.isUnderRange(cursorDate, mode) && ((mode && mode !== ViewMode.date) || this.isDateOutOfFilter(cursorDate, selectedDate, mode))
     ) {

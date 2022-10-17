@@ -77,7 +77,7 @@ export interface TableRowProps extends TableVirtualRowProps {
 
 const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
-    record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, className, lock, columnGroups,
+    record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, isDragDisabled, className, lock, columnGroups,
     children, groupPath, expandIconColumnIndex, metaData, style: propStyle,
     intersectionRef, inView = true, virtualHeight, isFixedRowHeight, virtualCell, columnsInView = true,
   } = props;
@@ -391,6 +391,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       groupPath,
       rowIndex: virtualIndex === undefined ? index : virtualIndex,
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
+      isDragDisabled,
     };
     if (!isFixedRowHeight && virtualCell && !hidden) {
       return [

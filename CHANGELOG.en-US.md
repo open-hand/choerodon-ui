@@ -15,19 +15,23 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnResizeTransition` properties.
+- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.
 - 🌟 `Tabs.TabGroup`: Added `hidden` property.
+- 🌟 `<pro>Button`: Button text bubble supports `Tooltip` attribute expansion.
 - 🌟 Added theme style.
+- 🌟 `<pro>Lov`: Added hyperlinks and image types to the list.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.
 - 💄 `WaterMark`: Optimize text wrap display.
 - 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 💄 `<pro>Table`: Optimized the display timing of the `\n`.
+- 💄 `<pro>Table`: The extension `draggableProps.isDragDisabled` property supports callback functions for determining whether a single row is draggable.
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
+- 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -36,6 +40,7 @@ timeline: true
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
+- 🐞 `<pro>RichText`: Fixed an issue with float layout style.
 - 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status error.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
@@ -48,8 +53,12 @@ timeline: true
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
+- 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
-- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification。
+- 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification.
+- 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
+- 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
+- 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
 
 ## 1.5.6
 

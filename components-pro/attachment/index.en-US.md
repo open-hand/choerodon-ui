@@ -69,3 +69,8 @@ title: Attachment
 | count | 自定义附件数量, 未设置时会自动获取组内的附件数量 | number |  |
 
 更多属性请参考 [Button](/components-pro/button/#Button)。
+
+### Attachment.Dragger
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| attachmentChildren | 上传组件 children | ReactNode | $l('Attachment', 'upload_attachment') |

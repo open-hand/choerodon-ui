@@ -587,6 +587,9 @@ export default class Lov extends Select<LovProps> {
     return classNames({
       [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === TriggerViewMode.modal && this.showSelectedInView,
       [`${this.prefixCls}-lov-custom-drawer`]: viewMode === TriggerViewMode.drawer && this.multiple && this.showSelectedInView,
+      [`${this.prefixCls}-lov-modal`]: viewMode === TriggerViewMode.modal,
+      [`${this.prefixCls}-lov-modal-drawer`]: viewMode === TriggerViewMode.drawer,
+      [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup,
     });
   }
 

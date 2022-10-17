@@ -239,6 +239,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * @default true
    */
   defaultActiveFirstOption?: boolean;
+  children?: ReactNode;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {

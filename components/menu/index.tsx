@@ -1,4 +1,4 @@
-import React, { CSSProperties, PureComponent, FocusEventHandler } from 'react';
+import React, { CSSProperties, PureComponent, FocusEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
@@ -57,6 +57,7 @@ export interface MenuProps {
   getPopupContainer?: (triggerNode: Element) => HTMLElement;
   focusable?: boolean;
   rippleDisabled?: boolean;
+  children?: ReactNode;
 }
 
 export interface MenuState {

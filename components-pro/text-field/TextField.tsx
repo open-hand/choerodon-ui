@@ -22,7 +22,7 @@ import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
-import { action, computed, observable, runInAction, toJS } from 'mobx';
+import { action, computed, observable, runInAction, toJS, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -49,6 +49,7 @@ import { findFirstFocusableElement } from '../_util/focusable';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { toRangeValue } from '../field/utils';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
@@ -144,6 +145,12 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * @default true
    */
   border?: boolean;
+  /**
+   * 用tooltip显示输入框内容（禁用模式下生效）
+   * 可选值：`none` `always` `overflow` 或自定义 tooltip
+   * 配置自定义tooltip属性：tooltip={['always', { theme: 'light', ... }]}
+   */
+  tooltip?: TextTooltip | [TextTooltip, TooltipProps];
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -316,9 +323,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   measureTextWidth(text: string): number {
+    const element = this.element && this.element.element ?
+      this.element.element : this.element;
     const computedStyle: CSSStyleDeclaration | undefined =
-      this.element ?
-        getComputedStyle(this.element) :
+      element ?
+        getComputedStyle(element) :
         undefined;
     return measureTextWidth(text, computedStyle);
   }
@@ -551,15 +560,29 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const { tooltip = getTooltip('text-field-disabled') } = this.props;
     const { element } = this;
-    if (element && this.disabled && !this.multiple && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
-      const title = this.getRenderedValue();
-      if (title) {
+    const title = this.getRenderedValue();
+    if (element && this.disabled && !this.multiple && title ) {
+      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) {
         show(element, {
           title,
           placement: getTooltipPlacement('text-field-disabled') || 'right',
           theme: getTooltipTheme('text-field-disabled'),
         });
         return true;
+      } 
+      if (isArrayLike(tooltip)){
+        const tooltipType = tooltip[0];
+        const TextTooltipProps = tooltip[1] || {};
+        const { mouseEnterDelay } = TextTooltipProps;
+        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(element))) {
+          show(element, {
+            title: TextTooltipProps.title ? TextTooltipProps.title : title,
+            placement: getTooltipPlacement('text-field-disabled') || 'right',
+            theme: getTooltipTheme('text-field-disabled'),
+            ...TextTooltipProps,
+          }, mouseEnterDelay);
+          return true;
+        }
       }
     }
     return false;
