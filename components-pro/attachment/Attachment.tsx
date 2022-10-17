@@ -566,10 +566,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     return undefined;
   }
 
-  handleDragUpload = (file: File) => {
-    this.getAttachmentUUID().then((uuid) => {
-      this.uploadAttachments(this.processFiles([file], uuid));
-    });
+  handleDragUpload = (file: File, files: File[]) => {
+    if (files.indexOf(file) === files.length - 1) {
+      this.getAttachmentUUID().then((uuid) => {
+        this.uploadAttachments(this.processFiles(files, uuid));
+      });
+    }
+
     return false;
   };
 

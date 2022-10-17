@@ -494,6 +494,9 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     const {
       props: { onBlur = noop },
     } = this;
+    if (e.target !== e.currentTarget) { 
+      e.preventDefault();
+    } 
     onBlur(e);
   }
 
