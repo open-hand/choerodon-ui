@@ -59,6 +59,7 @@ timeline: true
 - 🐞 `SecretField`: Fix SecretField after editing the null value, editing it again requires verification.
 - 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
+- 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
 
 ## 1.5.6
 

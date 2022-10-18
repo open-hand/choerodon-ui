@@ -59,6 +59,7 @@ timeline: true
 - 🐞 `SecretField`: 修复 SecretField 空值编辑后再次编辑需要校验问题。
 - 🐞 `Badge`: 修复点状 Badge 在 Table 中使用时样式层级高于固定列的问题。
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
+- 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
 
 ## 1.5.6
 
