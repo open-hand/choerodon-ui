@@ -23,6 +23,7 @@ timeline: true
 - 🌟  新增主题变量。
 - 🌟 `<pro>Button`: 按钮文字气泡支持 Tooltip 属性拓展。
 - 🌟 `<pro>Lov`: 列表新增超链接和图片类型展示。
+- 🌟 `Upload`: 重新上传全状态支持。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
