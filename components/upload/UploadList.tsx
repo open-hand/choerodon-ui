@@ -106,6 +106,20 @@ export default class UploadList extends Component<UploadListProps, any> {
     return onReUpload(file);
   };
 
+  handleReUploadConfirm = (fileTarget: UploadFile, e: React.SyntheticEvent<HTMLElement>)=>{
+    if (fileTarget.status === 'error') {
+      this.handleReUpload(fileTarget, e);
+    } else if (fileTarget.status && ['success','done','removed'].includes(fileTarget.status)) {
+      const { getUploadRef, setReplaceReuploadItem } = this.props;
+      const uploadRef = getUploadRef();
+      if (uploadRef) {
+        const { fileInput } = uploadRef.uploader;
+        setReplaceReuploadItem(fileTarget);
+        fileInput.click();
+      }
+    }
+  }
+
   componentDidUpdate() {
     const { listType } = this.props;
     if (listType !== 'picture' && listType !== 'picture-card') {
@@ -277,12 +291,12 @@ export default class UploadList extends Component<UploadListProps, any> {
       } else if (showReUploadIcon) {
         showReUploadIconType = showReUploadIcon === 'text' ? 'text' : 'icon';
       }
-      const reUploadIconOrText = showReUploadIconType && stat.isError ? (
+      const reUploadIconOrText = showReUploadIconType && !stat.isUploading ? (
         <PopConfirm
           {...popconfirmProps}
           title={reUploadPopConfirmTitle || locale.confirmReUpload}
           onConfirm={(e) => {
-            this.handleReUpload(file, e);
+            this.handleReUploadConfirm(file, e);
           }}
         >
           {showReUploadIconType === 'icon' ? (
@@ -291,9 +305,11 @@ export default class UploadList extends Component<UploadListProps, any> {
               title={reUploadText}
             />
           ) : (
-            <Tooltip prefixCls={tooltipPrefixCls} title={message}>
+            stat.isError ?
+              <Tooltip prefixCls={tooltipPrefixCls} title={message}>
+                <span className={`${prefixCls}-list-item-reupload-${listType}`} title={reUploadText}>{locale.reUpload}</span>
+              </Tooltip> :
               <span className={`${prefixCls}-list-item-reupload-${listType}`} title={reUploadText}>{locale.reUpload}</span>
-            </Tooltip>
           )}
         </PopConfirm>
       ) : null;
@@ -334,9 +350,10 @@ export default class UploadList extends Component<UploadListProps, any> {
       });
       const actions =
         stat.isPictureCard && !stat.isUploading ? (
-          <span className={actionsClass}>
-            {stat.isError || previewIcon}{downloadIcon}{reUploadIconOrText}{removeIcon}
-          </span>
+          <div className={actionsClass}>
+            <span className={`${prefixCls}-reupload-action`}>{reUploadIconOrText}</span>
+            <span className={`${prefixCls}-other-actions`}>{stat.isError || previewIcon}{downloadIcon}{removeIcon}</span>
+          </div>
         ) : (
           removeIcon
         );
@@ -374,12 +391,12 @@ export default class UploadList extends Component<UploadListProps, any> {
           iconAndPreview
         );
 
-      const reUpload = showReUploadIconType && (listType === 'text' || listType === 'picture') && file.status === 'error' ? (
+      const reUpload = showReUploadIconType && (listType === 'text' || listType === 'picture') && !stat.isUploading ? (
         <PopConfirm
           {...popconfirmProps}
           title={reUploadPopConfirmTitle || locale.confirmReUpload}
           onConfirm={(e) => {
-            this.handleReUpload(file, e);
+            this.handleReUploadConfirm(file, e);
           }}
         >
           <span className={`${prefixCls}-list-item-reupload-${listType}`} title={reUploadText}>{locale.reUpload}</span>
