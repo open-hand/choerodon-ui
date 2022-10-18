@@ -458,6 +458,10 @@ export type FieldProps = {
    */
   processValue?: (value: any, range?: 0 | 1) => any;
   dateMode?: DateMode;
+  /**
+   *  Attachment 可接受的上传文件类型
+   */
+  accept?: string[] | undefined;
 };
 
 const defaultProps: FieldProps = {
