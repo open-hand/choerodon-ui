@@ -7,7 +7,7 @@ import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
 import traverseFileTree from './traverseFileTree';
-import { fileToObject } from '../../upload/utils.tsx';
+import { fileToObject } from '../../upload/utils';
 
 class AjaxUploader extends Component {
   state = { uid: getUid() };
@@ -88,6 +88,7 @@ class AjaxUploader extends Component {
           if (originReuploadItem !== undefined && originReuploadItem !== null) {
             const reuploadItemIndex = fileList.findIndex(item => item.uid === originReuploadItem.uid);
             file.uid = originReuploadItem.uid;
+            file.originFileObj = originReuploadItem;
             fileList[reuploadItemIndex] = fileToObject(file);
             this.upload(file, postFiles);
             setReplaceReuploadItem(null);
