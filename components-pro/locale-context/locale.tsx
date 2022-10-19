@@ -132,6 +132,7 @@ export interface Locale extends DataSetLocale {
     clear: string,
     show: string,
     hide: string,
+    add_search: string,
   };
   Pagination: {
     page: string;

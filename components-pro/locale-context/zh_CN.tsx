@@ -130,6 +130,7 @@ const locale: Locale = {
     clear: '清除',
     show: '显示',
     hide: '隐藏',
+    add_search: '添加搜索',
   },
   Pagination: {
     page: '页',

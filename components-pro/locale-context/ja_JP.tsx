@@ -133,6 +133,7 @@ const locale: Locale = {
     clear: 'クリア',
     show: '見せる',
     hide: '隠れる',
+    add_search: '検索を追加',
   },
   Pagination: {
     page: 'ページ',
