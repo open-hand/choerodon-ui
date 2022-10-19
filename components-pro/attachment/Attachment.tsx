@@ -204,6 +204,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
+  get accept(): string[] | undefined {
+    return this.getProp('accept');
+  }
+
   private reaction?: IReactionDisposer;
 
   componentDidMount() {
@@ -392,13 +396,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   getUploaderProps(): UploaderProps {
-    const { bucketName, bucketDirectory, storageCode, isPublic, fileKey } = this;
+    const { bucketName, bucketDirectory, storageCode, isPublic, fileKey, accept } = this;
     const fileSize = this.getProp('fileSize');
     const chunkSize = this.getProp('chunkSize');
     const chunkThreads = this.getProp('chunkThreads');
     const useChunk = this.getProp('useChunk');
     const {
-      accept, action, data, headers, withCredentials,
+      action, data, headers, withCredentials,
       beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
     } = this.props;
     return {
@@ -657,8 +661,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       count = 0,
       multiple,
       prefixCls,
+      accept,
       props: {
-        children, viewMode, accept,
+        children, viewMode,
       },
     } = this;
     const buttonProps = this.getOtherProps();
@@ -1064,8 +1069,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderDragUploadArea() {
-    const { dragUpload, dragBoxRender, accept, disabled } = this.props;
-    const { prefixCls } = this;
+    const { dragUpload, dragBoxRender, disabled } = this.props;
+    const { prefixCls, accept } = this;
     if (dragUpload) {
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,

@@ -332,6 +332,7 @@ title: DataSet
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
 | help | 额外信息，常用于提示 | string |  |
 | dateMode | 显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  |
+| accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 
 ### Field Values
 
