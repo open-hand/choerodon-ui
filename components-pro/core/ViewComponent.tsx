@@ -494,9 +494,6 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     const {
       props: { onBlur = noop },
     } = this;
-    if (e.target !== e.currentTarget) { 
-      e.preventDefault();
-    } 
     onBlur(e);
   }
 
@@ -552,7 +549,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      this.blur();
+      defer(() => this.blur());
     }
     this.updateObservableProps(nextProps, nextContext);
   }
