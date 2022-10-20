@@ -1058,7 +1058,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           });
         }
       }
-    } else if (!this.multiple) {
+    } else {
       this.setValue(this.emptyValue);
     }
   }

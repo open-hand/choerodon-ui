@@ -36,6 +36,7 @@ timeline: true
 - 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
 - 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
 - 💄 `<pro>Transfer`: 优化禁用下的全选效果。
+- 💄 `<pro>Select`: 优化下拉多选失焦未校验的问题。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。

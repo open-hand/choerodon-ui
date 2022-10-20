@@ -36,6 +36,7 @@ timeline: true
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 - 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 💄 `<pro>Transfer`: Optimize the effect of selecting all when disabled.
+- 💄 `<pro>Select`: Optimize the problem that the drop-down multi-selection is out of focus and not verified.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
