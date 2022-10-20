@@ -549,7 +549,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      setTimeout(() => this.blur());
+      defer(() => this.blur());
     }
     this.updateObservableProps(nextProps, nextContext);
   }
