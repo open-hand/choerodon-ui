@@ -147,8 +147,8 @@ export function getNumberFormatOptions(
     ...formatterOptions.options,
   };
   const numberGrouping = getDisplayProp('numberGrouping');
-  if (numberGrouping === false) {
-    options.useGrouping = false;
+  if (!isNil(numberGrouping)) {
+    options.useGrouping = numberGrouping;
   }
   return {
     lang,

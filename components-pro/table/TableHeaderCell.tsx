@@ -429,22 +429,15 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(headerClassName);
   }
 
-  const headerNode = !isSearchCell ? (isValidElement(header) ? (
-    cloneElement(header, { key: 'text' })
-  ) : isString(header) ? (
-    <span key="text">{header}</span>
-  ) : (
-    header
-  )) : null;
-
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
   // 排序按钮
   const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? (
     <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />
   ) : undefined;
-  const childNodes = [
-    headerNode,
+  const headerNodePlaceholder = Symbol('headerNodePlaceholder');
+  const childNodes: any[] = [
+    headerNodePlaceholder,
   ];
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {
@@ -452,11 +445,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
   };
+  const labelClassNames: string[] = [];
   if (helpIcon) {
     if (cellStyle.textAlign === ColumnAlign.right) {
       childNodes.unshift(helpIcon);
     } else {
       childNodes.push(helpIcon);
+      labelClassNames.push(`${prefixCls}-cell-inner-has-help`);
     }
   }
   if (sortIcon) {
@@ -468,6 +463,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       childNodes.unshift(sortIcon);
     } else {
       childNodes.push(sortIcon);
+      labelClassNames.push(`${prefixCls}-cell-inner-has-sort`);
     }
   }
   if (expandIcon) {
@@ -477,6 +473,25 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       </span>,
     );
   }
+  // 兼容 label 超长
+  if (labelClassNames.length > 0) {
+    labelClassNames.push(`${prefixCls}-cell-inner-has-other`);
+  }
+  if (!isSearchCell && isValidElement(header) && header.props && header.props.className) {
+    labelClassNames.unshift(header.props.className);
+  }
+  const labelClassNamesStr = labelClassNames.length > 0 ? labelClassNames.join(' ') : undefined;
+  const headerNode = !isSearchCell ? (isValidElement(header) ? (
+    cloneElement<any>(header, {
+      key: 'text',
+      className: labelClassNamesStr,
+    })
+  ) : isString(header) ? (
+    <span key="text" className={labelClassNamesStr}>{header}</span>
+  ) : (
+    header
+  )) : null;
+  childNodes[childNodes.findIndex(item => item === headerNodePlaceholder)] = headerNode;
   if (!isSearchCell) {
     const $rowHeight = headerRowHeight === undefined ? rowHeight : headerRowHeight;
     if ($rowHeight !== 'auto') {

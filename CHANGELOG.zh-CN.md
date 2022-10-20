@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
 - 💄 `<pro>Transfer`: 优化禁用下的全选效果。
 - 💄 `<pro>Select`: 优化下拉多选失焦未校验的问题。
+- 💄 `<pro>Table`: 优化 header 中的 help 显示。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
@@ -65,6 +66,7 @@ timeline: true
 - 🐞 `Badge`: 修复点状 Badge 在 Table 中使用时样式层级高于固定列的问题。
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
+- 🐞 `<pro>NumberField`: 修复配置全局属性 numberFieldFormatterOptions 后, 组件属性 numberGrouping 失效的问题。
 
 ## 1.5.6
 
