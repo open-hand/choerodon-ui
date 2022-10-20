@@ -87,26 +87,16 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       heightDiff: diff(tableStore.totalHeight),
       ...toJS(customized),
     };
-  }), [tableStore]);
+  }), [tableStore, tableStore.customized]);
   const saveCustomized = useCallback(action(() => {
-    const { tempCustomized, customized } = tableStore;
-    const newCustomized = {
-      ...customized,
-      ...tempCustomized,
-      columns: {
-        ...customized.columns,
-        ...tempCustomized.columns,
-      },
-    };
+    const { tempCustomized } = tableStore;
     tableStore.tempCustomized = { columns: {} };
-    tableStore.saveCustomized(newCustomized);
+    tableStore.saveCustomized(tempCustomized);
     tableStore.initColumns();
     setVisible(!visible);
   }), [columnDataSet, tableStore, visible])
   const cancelCustomized = useCallback(action(() => {
-    const { customized } = tableStore;
     tableStore.tempCustomized = { columns: {} };
-    tableStore.saveCustomized(customized);
     tableStore.initColumns();
     setVisible(!visible);
   }), [columnDataSet, tableStore, visible])

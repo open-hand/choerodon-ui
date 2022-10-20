@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
+- 🐞 `<pro>Lov`: Fix the problem of tree table expand in `popup` mode.
 
 ## 1.5.6
 

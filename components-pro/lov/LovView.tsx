@@ -205,7 +205,17 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   @autobind
-  handleSingleRow() {
+  handleSingleRow(props) {
+    const { tableProps } = this.props;
+    if (tableProps) {
+      const { onRow } = tableProps;
+      if (onRow) {
+        return {
+          onClick: this.handleSelect,
+          ...onRow(props),
+        };
+      }
+    }
     return {
       onClick: this.handleSelect,
     };

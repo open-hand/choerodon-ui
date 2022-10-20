@@ -130,6 +130,7 @@ const locale: Locale = {
     clear: 'Clear',
     show: 'Show',
     hide: 'Hide',
+    add_search: 'Add search',
   },
   Pagination: {
     page: 'Page',

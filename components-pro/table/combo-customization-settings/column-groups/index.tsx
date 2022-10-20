@@ -21,16 +21,21 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
   const handleDragTree = useCallback(action((srcIndex: number, destIndex: number) => {
     const [removed] = treeRecords.splice(srcIndex, 1);
     const removedLock = removed.get('lock');
-    removed.set('lock', false);
     if (removedLock) {
+      removed.set('lock', false);
       treeRecords.splice(destIndex + treeRecords.reduce((sum, r) => sum + (r.get('draggable') === false ? 1 : 0), 0), 0, removed);
       treeRecords.forEach((r, index) => {
         r.init('sort', undefined);
         r.set('sort', index);
       });
     } else {
+      if (destIndex === 0) {
+        const destRecord = treeRecords[destIndex];
+        destRecord.set('lock', false);
+      }
       treeRecords.splice(destIndex, 0, removed);
       treeRecords.forEach((r, index) => {
+        r.init('sort', undefined);
         r.set('sort', index);
       });
     }
