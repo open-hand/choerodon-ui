@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
 - 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
 - 💄 `<pro>Table`: 扩展 draggableProps.isDragDisabled 属性支持回调函数，用于判断单行是否可拖拽。
+- 💄 `<pro>Table`: 优化动态筛选条下 queryDataSet 初始记录。
 - 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
 - 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
 - 💄 `<pro>Transfer`: 优化禁用下的全选效果。
@@ -55,6 +56,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
+- 🐞 `<pro>Lov`: 修复 popup 模式下 onRow 事件无效。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式 popup 渲染和 children 的问题。
 - 🐞 `Tabs`: 修复了箭头显示异常。
@@ -62,7 +64,6 @@ timeline: true
 - 🐞 `Badge`: 修复点状 Badge 在 Table 中使用时样式层级高于固定列的问题。
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
-- 🐞 `<pro>Lov`: 修复 popup 模式下树状展开显示错误。
 
 ## 1.5.6
 

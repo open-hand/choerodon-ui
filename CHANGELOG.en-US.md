@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 💄 `<pro>Table`: Optimized the display timing of the `\n`.
 - 💄 `<pro>Table`: The extension `draggableProps.isDragDisabled` property supports callback functions for determining whether a single row is draggable.
+- 💄 `<pro>Table`: Optimize the initial record of `queryDataSet` under the dynamic filter bar.
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 - 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 💄 `<pro>Transfer`: Optimize the effect of selecting all when disabled.
@@ -55,6 +56,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
+- 🐞 `<pro>Lov`: Fixed the onRow event not working in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 - 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
@@ -62,7 +64,6 @@ timeline: true
 - 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
-- 🐞 `<pro>Lov`: Fix the problem of tree table expand in `popup` mode.
 
 ## 1.5.6
 
