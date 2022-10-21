@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
+- 🐞 `<pro>DataSet`: Fix the issue that the bigNumber formatting configuration was invalid.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 - 🐞 `<pro>Lov`: Fixed the onRow event not working in `popup` mode.
