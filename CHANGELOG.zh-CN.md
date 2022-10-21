@@ -70,6 +70,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
 - 🐞 `<pro>NumberField`: 修复配置全局属性 numberFieldFormatterOptions 后, 组件属性 numberGrouping 失效的问题。
+- 🐞 `<pro>Modal`: 修复在 ModalProvider 设置了 getContainer 的情况，使用 useModal 无法居中的问题。
 
 ## 1.5.6
 

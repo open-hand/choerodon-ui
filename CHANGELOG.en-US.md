@@ -71,6 +71,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
 - 🐞 `<pro>NumberField`: Fixed after configuration global property `numberFieldFormatterOptions`, component property `numberGrouping` failure problem.
+- 🐞 `<pro>Modal`: Fix the problem that the getContainer is set in the ModalProvider and cannot be centered with useModal.
 
 ## 1.5.6
 
