@@ -189,7 +189,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
   @autobind
   defaultReUpload(file: UploadFile) {
     if (this.upload && this.upload.uploader) {
-      this.upload.uploader.post(file);
+      this.upload.uploader.upload(file, [file]);
     }
   }
 
@@ -367,6 +367,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       dragUploadList,
       overwriteDefaultEvent,
       beforeUploadFiles,
+      onReUpload = this.defaultReUpload,
     } = this.props;
     const { fileList, dragState, originReuploadItem } = this.state;
 
@@ -378,6 +379,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       onError: this.onError,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,
+      onReUpload,
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
       beforeUploadFiles,

@@ -97,7 +97,7 @@ export interface UploadProps {
   overwriteDefaultEvent?: boolean;
   downloadPropsIntercept?: Function;
   fileInputClick?: (el: Element) => void;
-  onReUpload?: (file: UploadFile) => void | boolean;
+  onReUpload?: (file: UploadFile) => void;
   renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
@@ -132,7 +132,7 @@ export interface UploadListProps {
   showReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   reUploadText?: string;
   reUploadPopConfirmTitle?: string;
-  onReUpload?: (file: UploadFile) => void | boolean;
+  onReUpload?: (file: UploadFile) => void;
   getCustomFilenameTitle?: (file: UploadFile) => string;
   locale: UploadLocale;
   previewFile?: PreviewFileHandler;
