@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
 - 💄 `<pro>Transfer`: Optimize the effect of selecting all when disabled.
 - 💄 `<pro>Select`: Optimize the problem that the drop-down multi-selection is out of focus and not verified.
+- 💄 `<pro>Table`: Optimized the `help` display in `header`.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -65,6 +66,7 @@ timeline: true
 - 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
+- 🐞 `<pro>NumberField`: Fixed after configuration global property `numberFieldFormatterOptions`, component property `numberGrouping` failure problem.
 
 ## 1.5.6
 
