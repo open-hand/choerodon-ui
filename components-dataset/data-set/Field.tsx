@@ -1546,8 +1546,9 @@ export default class Field {
         )
       )
     ) {
+      const noCache = this.get('noCache', record) || propsName === 'lovPara';
       this.set(LOOKUP_DATA, undefined);
-      this.fetchLookup(undefined, record);
+      this.fetchLookup(noCache, record);
     }
     if (
       LOV_SIDE_EFFECT_KEYS.includes(propsName) ||

@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the `help` display in `header`.
 - 💄 `<pro>Picture`: Optimize preview interface style and mouse wheel event interaction.
 - 💄 `<pro>Table`: Optimize the dynamic filter bar, select multiple required query conditions, and there is no required sign.
+- 💄 `<pro>Field`: Optimize lovPara query cache.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.

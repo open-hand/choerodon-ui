@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化 header 中的 help 显示。
 - 💄 `<pro>Picture`: 优化预览界面样式和鼠标滚轮事件交互。
 - 💄 `<pro>Table`: 优化动态筛选条多选下拉必输的查询条件没有星号的问题。
+- 💄 `<pro>Field`: 优化 lovPara 查询缓存。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
