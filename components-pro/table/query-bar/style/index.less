@@ -428,6 +428,12 @@
       text-overflow: ellipsis;
       border: none;
 
+      &-multiple {
+        & > label::before { // 谷歌
+          content: "";
+        }
+      }
+
       &-required {
         background-color: transparent;
 
@@ -455,12 +461,6 @@
             vertical-align: middle;
             content: "*";
           }
-        }
-      }
-
-      &-multiple {
-        & > label::before { // 谷歌
-          content: "";
         }
       }
 
