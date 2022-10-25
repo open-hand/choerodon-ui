@@ -12,7 +12,7 @@ import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provi
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
+import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
 import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
@@ -396,6 +396,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
+      const getAutoCenterConfig = props.autoCenter || getConfig('modalAutoCenter');
       const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
@@ -421,7 +422,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           }
         }
       } else if (isEmbeddedContainer && offsetContainer) {
-        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100), true)!;
+        style.top = pxToRem(offsetContainer.scrollTop + (getAutoCenterConfig ? 0 : toPx(style.top) || 100), true)!;
       }
       if (transitionAppear === false) {
         maskTransition = false;
