@@ -46,7 +46,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
 | showFileSize | Whether file sizes are displayed when `listType` is `text`   | boolean | false |
 | onStart | File upload starts   | (file: UploadFile) => void |  |
-| onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
+| onReUpload | File re-upload implementation   | (file: UploadFile) => void |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
 

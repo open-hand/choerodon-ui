@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `<pro>DataSet`: Fix the issue that the bigNumber formatting configuration was invalid.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `Upload`: Fix the problem that the `beforeUpload` event callback will not trigger when re uploading.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 - 🐞 `<pro>Lov`: Fixed the onRow event not working in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.

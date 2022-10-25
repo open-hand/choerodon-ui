@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
 - 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `Upload`: 修复重新上传时 beforeUpload 事件回调不会触发的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下 onRow 事件无效。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。

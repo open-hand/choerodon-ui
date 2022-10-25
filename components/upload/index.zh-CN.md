@@ -47,7 +47,7 @@ title: Upload
 | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
 | showFileSize | `listType`为`text`时是否显示文件大小   | boolean | false |
 | onStart | 文件上传开始时   | (file: UploadFile) => void |  |
-| onReUpload | 文件重新上传的实现   | (file: UploadFile) => void \| boolean |  |
+| onReUpload | 文件重新上传的实现   | (file: UploadFile) => void |  |
 | renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
 
