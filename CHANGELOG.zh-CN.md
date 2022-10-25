@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Picture`: 优化预览界面样式和鼠标滚轮事件交互。
 - 💄 `<pro>Table`: 优化动态筛选条多选下拉必输的查询条件没有星号的问题。
 - 💄 `<pro>Field`: 优化 lovPara 查询缓存。
+- 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
@@ -72,6 +73,8 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
 - 🐞 `<pro>NumberField`: 修复配置全局属性 numberFieldFormatterOptions 后, 组件属性 numberGrouping 失效的问题。
 - 🐞 `<pro>Modal`: 修复在 ModalProvider 设置了 getContainer 的情况，使用 useModal 无法居中的问题。
+- 🐞 `<pro>Tree`: 修复 onKeyDown 失效的问题。
+- 🐞 `<pro>Switch`: 修复在 Form 下只能点击左侧才有触发 onMouseDown 的问题。
 
 ## 1.5.6
 

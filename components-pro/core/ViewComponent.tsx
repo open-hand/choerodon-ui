@@ -487,6 +487,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
           element.setSelectionRange(element.selectionStart, element.selectionEnd);
         }
       });
+      e.stopPropagation();
     }
   }
 
