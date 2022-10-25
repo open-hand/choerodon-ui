@@ -47,6 +47,8 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
+- 🐞 `<pro>Modal`: Fix the issue of inaccurate positioning of the first drag of `autoCenter` on Modal and sticking to the mouse when dragging.
+- 🐞 `<pro>Modal`: Fix the issue that Modal enabled `autoCenter` to cause `maskClosable` to fail.
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
