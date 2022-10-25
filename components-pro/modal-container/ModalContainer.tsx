@@ -397,7 +397,15 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
       const getAutoCenterConfig = props.autoCenter || getConfig('modalAutoCenter');
-      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
+      const {
+        drawerTransitionName = context.getConfig('drawerTransitionName'),
+        drawer,
+        key,
+        transitionAppear = true,
+        mask,
+        autoCenter,
+        maskClosable,
+      } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -426,6 +434,29 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       }
       if (transitionAppear === false) {
         maskTransition = false;
+      }
+      if (autoCenter && maskClosable) {
+        const {
+          onClick: customizedClick = noop,
+          onDoubleClick: customizedDoubleClick = noop,
+        } = props;
+        if (maskClosable === 'dblclick') {
+          props.onDoubleClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedDoubleClick(e);
+            }
+          };
+        } else {
+          props.onClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedClick(e);
+            }
+          };
+        }
       }
       const wrapperClassName = classNames(props.drawer ? `${prefixCls}-drawer` : `${prefixCls}-pristine`, {
         [`${prefixCls}-embedded`]: isEmbeddedContainer,
