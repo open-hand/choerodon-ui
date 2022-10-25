@@ -1,9 +1,35 @@
 // This config is for building dist files
+const chalk = require('chalk');
+const RemovePlugin = require('remove-files-webpack-plugin');
 const { ReplaceSource } = require('webpack-sources');
 const getWebpackConfig = require('./tools/getWebpackConfig');
 const pkg = require('./package.json');
 
 const { webpack } = getWebpackConfig;
+
+function injectLessVariables(config, variables) {
+  (Array.isArray(config) ? config : [config]).forEach(conf => {
+    conf.module.rules.forEach(rule => {
+      // filter less rule
+      if (rule.test instanceof RegExp && rule.test.test('.less')) {
+        const lessRule = rule.use[rule.use.length - 1];
+        if (lessRule.options.lessOptions) {
+          lessRule.options.lessOptions.modifyVars = {
+            ...lessRule.options.lessOptions.modifyVars,
+            ...variables,
+          };
+        } else {
+          lessRule.options.modifyVars = {
+            ...lessRule.options.modifyVars,
+            ...variables,
+          };
+        }
+      }
+    });
+  });
+
+  return config;
+}
 
 // noParse still leave `require('./locale' + name)` in dist files
 // ignore is better
@@ -36,7 +62,66 @@ function externalMoment(config) {
   };
 }
 
-const webpackConfig = getWebpackConfig(false);
+function processWebpackThemeConfig(themeConfig, theme, vars) {
+  themeConfig.forEach(config => {
+    ignoreMomentLocale(config);
+    externalMoment(config);
+
+    // rename default entry to ${theme} entry
+    Object.keys(config.entry).forEach(entryName => {
+      const originPath = config.entry[entryName];
+      let replacedPath = [...originPath];
+
+      // We will replace `./index` to `./index-style-only`
+      // and `./index-pro` to `./index-pro-style-only` since theme dist only use style file
+      if (originPath.length === 1 && originPath[0] === './index') {
+        replacedPath = ['./index-style-only'];
+        config.entry[entryName.replace('choerodon-ui', `choerodon-ui.${theme}`)] = replacedPath;
+      } else if (originPath.length === 1 && originPath[0] === './index-pro') {
+        replacedPath = ['./index-pro-style-only'];
+        config.entry[entryName.replace('choerodon-ui-pro', `choerodon-ui-pro.${theme}`)] = replacedPath;
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(chalk.yellow('🆘 There are other entries here: '), originPath[0]);
+      }
+
+      delete config.entry[entryName];
+    });
+
+    // apply ${theme} less variables
+    injectLessVariables(config, vars);
+
+    // ignore emit ${theme} entry js & js.map file
+    config.plugins.push(
+      new RemovePlugin({
+        after: {
+          root: './dist',
+          include: [
+            `choerodon-ui-pro.${theme}.js`,
+            `choerodon-ui-pro.${theme}.js.map`,
+            `choerodon-ui-pro.${theme}.min.js`,
+            `choerodon-ui-pro.${theme}.min.js.LICENSE.txt`,
+            `choerodon-ui-pro.${theme}.min.js.map`,
+            `choerodon-ui.${theme}.js`,
+            `choerodon-ui.${theme}.js.map`,
+            `choerodon-ui.${theme}.min.js`,
+            `choerodon-ui.${theme}.min.js.LICENSE.txt`,
+            `choerodon-ui.${theme}.min.js.map`,
+          ],
+          log: false,
+          logWarning: false,
+        },
+      }),
+    );
+  });
+}
+
+const webpackConfig = injectLessVariables(getWebpackConfig(false), {
+  'c7n-root-entry-name': 'defaultVars',
+});
+const webpackVariableConfig = injectLessVariables(getWebpackConfig(false), {
+  'c7n-root-entry-name': 'variables',
+});
 if (process.env.RUN_ENV === 'PRODUCTION') {
   webpackConfig.forEach(config => {
     ignoreMomentLocale(config);
@@ -85,6 +170,11 @@ if (process.env.RUN_ENV === 'PRODUCTION') {
       },
     });
   });
+
+  processWebpackThemeConfig(webpackVariableConfig, 'variables', {});
 }
 
-module.exports = webpackConfig;
+module.exports = [
+  ...webpackConfig,
+  ...webpackVariableConfig,
+];
