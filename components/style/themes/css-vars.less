@@ -746,7 +746,7 @@
   --tooltip-color: var(--text-color-dark);
   --tooltip-bg: rgba(0, 0, 0, 0.75);
   --tooltip-arrow-width: 0.05rem;
-  --tooltip-distance: calc(var(--tooltip-arrow-width) - 0.03rem);
+  --tooltip-distance: calc(var(--tooltip-arrow-width) + 0.03rem);
   --tooltip-arrow-color: var(--tooltip-bg);
   --tooltip-color-light: var(--text-color);
   --tooltip-bg-light: var(--component-background);
@@ -866,11 +866,14 @@
 
   // PerformanceTable
   --performance-table-header-bg: #f5f5f5;
+  --performance-table-header-color: var(--table-header-color);
   --performance-table-active-row-bg: rgb(240, 243, 255);
   --performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
   --performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
   --performance-table-scrollbar-handle-border-radius: 4px;
-  --performance-table-cell-font-weight: bold;
+  --performance-table-header-cell-font-weight: bold;
+  --performance-table-cell-color: var(--text-color);
+  --performance-table-scrollbar-border: none;
 
   // Loader
   --loader-spin-ring-wide: 3px;
