@@ -12,7 +12,7 @@ import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provi
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import warning from 'choerodon-ui/lib/_util/warning';
-import { getConfig, getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
+import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import ModalManager, { DrawerOffsets, IModalContainer } from '../modal-manager';
 import Modal, { ModalProps } from '../modal/Modal';
 import Animate from '../animate';
@@ -396,14 +396,14 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const getAutoCenterConfig = props.autoCenter || getConfig('modalAutoCenter');
+      const getAutoCenterConfig = props.autoCenter || context.getConfig('modalAutoCenter');
       const {
         drawerTransitionName = context.getConfig('drawerTransitionName'),
         drawer,
         key,
         transitionAppear = true,
         mask,
-        maskClosable = getConfig('modalMaskClosable'),
+        maskClosable = context.getConfig('modalMaskClosable'),
       } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
