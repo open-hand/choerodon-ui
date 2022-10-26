@@ -403,8 +403,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
         key,
         transitionAppear = true,
         mask,
-        autoCenter,
-        maskClosable,
+        maskClosable = getConfig('modalMaskClosable'),
       } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
@@ -435,7 +434,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
       if (transitionAppear === false) {
         maskTransition = false;
       }
-      if (autoCenter && maskClosable) {
+      if (getAutoCenterConfig && maskClosable) {
         const {
           onClick: customizedClick = noop,
           onDoubleClick: customizedDoubleClick = noop,
