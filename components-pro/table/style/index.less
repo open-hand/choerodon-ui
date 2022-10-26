@@ -407,6 +407,24 @@
     color: @table-header-color;
     font-weight: @table-header-font-weight;
     background-color: @table-header-bg;
+
+    .@{table-prefix-cls}-cell-inner-row-height-fixed {
+      .@{table-prefix-cls}-cell-inner-has-other {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
+      .@{table-prefix-cls}-cell-inner-has-help {
+        max-width: calc(100% - 0.24rem);
+      }
+      .@{table-prefix-cls}-cell-inner-has-sort {
+        max-width: calc(100% - 0.24rem);
+      }
+      .@{table-prefix-cls}-cell-inner-has-help.@{table-prefix-cls}-cell-inner-has-sort {
+        max-width: calc(100% - 0.48rem);
+      }
+    }
   }
 
   .border;

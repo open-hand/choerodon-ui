@@ -8,7 +8,7 @@ import { $l } from '../locale-context';
 import Record from '../data-set/Record';
 import ObserverTextField from '../text-field/TextField';
 import Icon from '../icon';
-import { getItemKey, Select, SelectProps } from '../select/Select';
+import { DISABLED_FIELD, getItemKey, Select, SelectProps } from '../select/Select';
 import autobind from '../_util/autobind';
 import { stopPropagation } from '../_util/EventManager';
 import ViewComponent from '../core/ViewComponent';
@@ -120,7 +120,7 @@ export default class TransferList extends Select<TransferListProps> {
   handleSelectAllChange(value) {
     const { onSelectAll } = this.props;
     if (onSelectAll) {
-      onSelectAll(value ? this.filteredOptions : []);
+      onSelectAll(value ? this.filteredOptions.filter(record => !record.get(DISABLED_FIELD)) : []);
     }
   }
 
@@ -139,14 +139,15 @@ export default class TransferList extends Select<TransferListProps> {
       },
     } = this;
     const selectedText = selectedLength ? `${selectedLength}/` : '';
+    const disabledLength = this.filteredOptions.filter(record => record.get(DISABLED_FIELD)).length;
     if (multiple) {
       return (
         <ObserverCheckBox
           disabled={this.disabled}
           onChange={this.handleSelectAllChange}
           onFocus={stopPropagation}
-          checked={!!length && length === selectedLength}
-          indeterminate={!!selectedLength && length !== selectedLength}
+          checked={!!length && disabledLength !== length && (length === selectedLength || length - disabledLength === selectedLength)}
+          indeterminate={!!selectedLength && (length - disabledLength !== selectedLength)}
         >
           <span className={`${prefixCls}-header-selected`}>
             {`${selectedText}${length}${$l('Transfer', 'items')}`}

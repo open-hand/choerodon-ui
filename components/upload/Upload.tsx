@@ -43,7 +43,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
 
   progressTimer: any;
 
-  private upload: any;
+  upload: any;
 
   constructor(props: UploadProps) {
     super(props);
@@ -51,6 +51,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.state = {
       fileList: props.fileList || props.defaultFileList || [],
       dragState: 'drop',
+      originReuploadItem: null,
     };
   }
 
@@ -280,6 +281,16 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.upload = node;
   };
 
+  getUpload = (): RcUpload | null => {
+    return this.upload;
+  }
+
+  setReplaceReuploadItem = (file: UploadFile) => {
+    this.setState({
+      originReuploadItem: file,
+    })
+  }
+
   getPrefixCls() {
     const { prefixCls: customizePrefixCls } = this.props;
     const { getPrefixCls } = this.context;
@@ -339,6 +350,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
         renderIcon={renderIcon}
         tooltipPrefixCls={tooltipPrefixCls}
         popconfirmProps={popconfirmProps}
+        getUploadRef={this.getUpload}
+        setReplaceReuploadItem={this.setReplaceReuploadItem}
       />
     );
   };
@@ -355,7 +368,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       overwriteDefaultEvent,
       beforeUploadFiles,
     } = this.props;
-    const { fileList, dragState } = this.state;
+    const { fileList, dragState, originReuploadItem } = this.state;
 
     const prefixCls = this.getPrefixCls();
 
@@ -369,6 +382,9 @@ export default class Upload extends Component<UploadProps, UploadState> {
       beforeUpload: this.beforeUpload,
       beforeUploadFiles,
       prefixCls,
+      fileList,
+      originReuploadItem,
+      setReplaceReuploadItem: this.setReplaceReuploadItem,
     };
 
     delete rcUploadProps.className;

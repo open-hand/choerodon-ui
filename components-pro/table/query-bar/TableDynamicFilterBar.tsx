@@ -324,6 +324,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       handler.call(queryDataSet, DataSetEvents.validate, this.handleDataSetValidate);
       handler.call(queryDataSet, DataSetEvents.update, this.handleDataSetUpdate);
       handler.call(queryDataSet, DataSetEvents.create, this.handleDataSetCreate);
+      handler.call(queryDataSet, DataSetEvents.reset, this.handleDataSetReset);
+      handler.call(queryDataSet, DataSetEvents.load, this.handleDataSetLoad);
       dsHandler.call(dataSet, DataSetEvents.query, this.handleDataSetQuery);
     }
   }
@@ -456,6 +458,27 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { queryDataSet } = this.props;
     if (queryDataSet) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+    }
+  }
+
+  /**
+   * queryDS reset，初始记录
+   */
+  @autobind
+  handleDataSetReset() {
+    const { queryDataSet } = this.props;
+    if (queryDataSet && !this.tableFilterAdapter) {
+      queryDataSet.create();
+    }
+  }
+
+  /**
+   * queryDS load，兼容项目loadData([])的处理，初始化记录
+   */
+  @autobind
+  handleDataSetLoad({ dataSet }) {
+    if (!this.tableFilterAdapter && !dataSet.length) {
+      dataSet.create();
     }
   }
 

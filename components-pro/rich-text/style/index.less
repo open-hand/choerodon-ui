@@ -32,6 +32,29 @@
         opacity: 1;
       }
     }
+
+    &.@{c7n-pro-prefix}-rich-text-float-label .@{c7n-pro-prefix}-rich-text {
+      padding-right: 0;
+    }
+
+    &.@{c7n-pro-prefix}-rich-text-float-label:not(.@{c7n-pro-prefix}-rich-text-multiple) .@{c7n-pro-prefix}-rich-text {
+      height: 100%;
+    }
+  }
+
+  &-float-label {
+    &-toolbar, .ql-toolbar {
+      background-color: transparent;
+    }
+  }
+
+  &-float-label&-empty .@{c7n-pro-prefix}-field-label-wrapper {
+    font-size: @float-label-font-size;
+    background-color: @component-background;
+    transform: scaleX(0.8);
+  }
+  &-float-label&-empty .@{c7n-pro-prefix}-field-label {
+    transform: scaleY(0.8);
   }
 }
 

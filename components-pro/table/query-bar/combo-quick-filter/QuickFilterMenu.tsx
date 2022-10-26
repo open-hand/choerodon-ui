@@ -87,7 +87,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
       const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
       if (tableStore) {
         runInAction(() => {
-          const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+          const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+          tableStore.tempCustomized = { columns: {} };
           tableStore.saveCustomized(newCustomized);
           tableStore.initColumns();
         })
@@ -137,7 +138,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
         if (tableStore) {
           runInAction(() => {
-            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+            tableStore.tempCustomized = { columns: {} };
             tableStore.saveCustomized(newCustomized);
             tableStore.initColumns();
           })
@@ -161,7 +163,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
         if (tableStore) {
           runInAction(() => {
-            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+            tableStore.tempCustomized = { columns: {} };
             tableStore.saveCustomized(newCustomized);
             tableStore.initColumns();
           })

@@ -112,7 +112,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
       const appendChild = (e) => {
         const event = e || window.event;
         setTimeout(() => {
-          if (!wrapperDom.getElementsByClassName(prefixCls).length && event) {
+          if (!wrapperDom.getElementsByClassName(prefixCls).length && event && event.target) {
             wrapperDom.appendChild(event.target);
           }
         });

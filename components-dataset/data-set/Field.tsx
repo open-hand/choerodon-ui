@@ -458,6 +458,10 @@ export type FieldProps = {
    */
   processValue?: (value: any, range?: 0 | 1) => any;
   dateMode?: DateMode;
+  /**
+   *  Attachment 可接受的上传文件类型
+   */
+  accept?: string[] | undefined;
 };
 
 const defaultProps: FieldProps = {
@@ -1542,8 +1546,9 @@ export default class Field {
         )
       )
     ) {
+      const noCache = this.get('noCache', record) || propsName === 'lovPara';
       this.set(LOOKUP_DATA, undefined);
-      this.fetchLookup(undefined, record);
+      this.fetchLookup(noCache, record);
     }
     if (
       LOV_SIDE_EFFECT_KEYS.includes(propsName) ||

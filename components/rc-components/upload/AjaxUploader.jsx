@@ -7,6 +7,7 @@ import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
 import traverseFileTree from './traverseFileTree';
+import { fileToObject } from '../../upload/utils';
 
 class AjaxUploader extends Component {
   state = { uid: getUid() };
@@ -83,7 +84,17 @@ class AjaxUploader extends Component {
           return file;
         });
         postFiles.forEach((file) => {
-          this.upload(file, postFiles);
+          const { originReuploadItem, fileList, setReplaceReuploadItem } = this.props;
+          if (originReuploadItem !== undefined && originReuploadItem !== null) {
+            const reuploadItemIndex = fileList.findIndex(item => item.uid === originReuploadItem.uid);
+            file.uid = originReuploadItem.uid;
+            file.originFileObj = originReuploadItem;
+            fileList[reuploadItemIndex] = fileToObject(file);
+            this.upload(file, postFiles);
+            setReplaceReuploadItem(null);
+          } else {
+            this.upload(file, postFiles);
+          }
         });
       }
     });
@@ -218,7 +229,7 @@ class AjaxUploader extends Component {
           multiple={multiple}
           onChange={this.onChange}
         />
-        {disabled ? React.cloneElement(children,{disabled: disabled}): children}
+        {(disabled & children) ? React.cloneElement(children, { disabled: disabled }) : children}
       </Tag>
     );
   }

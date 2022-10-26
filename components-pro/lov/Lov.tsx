@@ -755,7 +755,7 @@ export default class Lov extends Select<LovProps> {
             this.openModal(fetchSingle);
           }
         });
-      } else {
+      } else if (!this.multiple) {
         super.syncValueOnBlur(value);
       }
     }

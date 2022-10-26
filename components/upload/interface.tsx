@@ -106,6 +106,7 @@ export interface UploadProps {
 export interface UploadState {
   fileList: UploadFile[];
   dragState: string;
+  originReuploadItem: UploadFile | null;
 }
 
 export type UploadListIconFunc = (file: UploadFile) => boolean;
@@ -139,4 +140,6 @@ export interface UploadListProps {
   renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
+  getUploadRef: () => any;
+  setReplaceReuploadItem: (file: UploadFile) => void;
 }
