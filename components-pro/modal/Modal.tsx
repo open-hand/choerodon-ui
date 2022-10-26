@@ -639,11 +639,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     };
   }
 
-  // 解决拖动 Modal 位置时，拖拽事件导致 mouseup 事件不生效问题
-  handleDragStart(e) {
-    e.preventDefault();
-  }
-
   render() {
     const {
       prefixCls,
@@ -657,10 +652,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const resizerCursorCls = `${resizerPrefixCls}-cursor`;
     return (
-      <div
-        {...this.getMergedProps()}
-        onDragStart={this.handleDragStart}
-      >
+      <div {...this.getMergedProps()}>
         <div
           ref={this.contentReference}
           className={classNames(`${prefixCls}-content`, {
