@@ -79,6 +79,7 @@ timeline: true
 - 🐞 `<pro>Switch`: 修复在 Form 下只能点击左侧才有触发 onMouseDown 的问题。
 - 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
 - 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
+- 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
 
 ## 1.5.6
 

@@ -221,7 +221,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     );
   }
 
-  wrapperInputNode(renderedValue): ReactNode {
+  wrapperInputNode(renderedValue?: ReactNode): ReactNode {
     const text = this.getTextNode();
     const elementProps = this.getOtherProps() || {};
     const otherProps: { style?: CSSProperties } = {};
