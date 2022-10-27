@@ -14,7 +14,7 @@ export default function measureTextWidth(text: string, style?: CSSProperties | C
     }
     document.body.appendChild(span);
     const { width } = getComputedStyle(span);
-    const contentWidth = width && width !== 'auto' ? parseFloat(width) : span.offsetWidth;
+    const contentWidth = style && style.width && style.width !== 'auto' ? parseFloat(width) : span.offsetWidth;
     document.body.removeChild(span);
     return contentWidth;
   }

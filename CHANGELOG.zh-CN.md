@@ -77,6 +77,8 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复在 ModalProvider 设置了 getContainer 的情况，使用 useModal 无法居中的问题。
 - 🐞 `<pro>Tree`: 修复 onKeyDown 失效的问题。
 - 🐞 `<pro>Switch`: 修复在 Form 下只能点击左侧才有触发 onMouseDown 的问题。
+- 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
+- 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
 
 ## 1.5.6
 
