@@ -739,6 +739,7 @@ export default class Modal extends ViewComponent<ModalProps> {
           isEmbedded ? (clientWidth - offsetWidth) / 2 + scrollLeft : (docClientWidth - offsetWidth) / 2,
           true,
         );
+        this.offset = [left, top];
         Object.assign(element.style, { top, left });
       }
       const  { offsetLeft } = element;
