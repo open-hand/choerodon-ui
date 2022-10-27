@@ -80,6 +80,7 @@ timeline: true
 - 🐞 `<pro>Switch`: Fix the problem that onMouseDown can only be triggered by clicking the left side under Form.
 - 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
 - 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
+- 🐞 `<pro>Mentions`: Fix support for renderer attribute.
 
 ## 1.5.6
 
