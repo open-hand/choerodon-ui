@@ -752,8 +752,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       if (cols.length) {
         rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
         if (rowSpan && rowSpan > 1) {
-          new Array(rowSpan - 1).fill(0).forEach(() => rows.push(<tr></tr>));
-        };
+          new Array(rowSpan - 1).fill(0).forEach(() => rows.push(<tr />));
+        }
         cols = [];
       }
       rowIndex++;
@@ -792,6 +792,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
       while (currentRow[colIndex]) {
         colIndex++;
+        colsNum += (noLabel ? 1 : 2);
       }
       if (colIndex >= columns) {
         completeLine();
@@ -886,7 +887,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         maxRowSpan = rowSpan;
       }
       if (index === len - 1 || colsNum >= totalColumn) {
-        completeLine(rowSpan >= maxRowSpan ? maxRowSpan : 1 );
+        completeLine(rowSpan >= maxRowSpan ? maxRowSpan : 1);
       } else {
         colIndex++;
       }

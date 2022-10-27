@@ -78,6 +78,8 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that the getContainer is set in the ModalProvider and cannot be centered with useModal.
 - 🐞 `<pro>Tree`: Fix the failure of onKeyDown.
 - 🐞 `<pro>Switch`: Fix the problem that onMouseDown can only be triggered by clicking the left side under Form.
+- 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
+- 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
 
 ## 1.5.6
 
