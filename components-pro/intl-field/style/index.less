@@ -82,6 +82,12 @@
         box-shadow: @input-active-box-shadow;
       }
     }
+    &.@{intl-prefix-textarea}-required .@{intl-prefix-textarea}-suffix {
+      box-shadow: @input-required-active-box-shadow;
+    }
+    &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}-suffix {
+      box-shadow: @input-error-active-box-shadow;
+    }
   }
 
   /* 校验失败 */
