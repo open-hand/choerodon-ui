@@ -396,7 +396,15 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
+      const getAutoCenterConfig = props.autoCenter || context.getConfig('modalAutoCenter');
+      const {
+        drawerTransitionName = context.getConfig('drawerTransitionName'),
+        drawer,
+        key,
+        transitionAppear = true,
+        mask,
+        maskClosable = context.getConfig('modalMaskClosable'),
+      } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -421,10 +429,33 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           }
         }
       } else if (isEmbeddedContainer && offsetContainer) {
-        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100), true)!;
+        style.top = pxToRem(offsetContainer.scrollTop + (getAutoCenterConfig ? 0 : toPx(style.top) || 100), true)!;
       }
       if (transitionAppear === false) {
         maskTransition = false;
+      }
+      if (getAutoCenterConfig && maskClosable) {
+        const {
+          onClick: customizedClick = noop,
+          onDoubleClick: customizedDoubleClick = noop,
+        } = props;
+        if (maskClosable === 'dblclick') {
+          props.onDoubleClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedDoubleClick(e);
+            }
+          };
+        } else {
+          props.onClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedClick(e);
+            }
+          };
+        }
       }
       const wrapperClassName = classNames(props.drawer ? `${prefixCls}-drawer` : `${prefixCls}-pristine`, {
         [`${prefixCls}-embedded`]: isEmbeddedContainer,

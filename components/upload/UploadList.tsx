@@ -103,7 +103,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       return;
     }
     e.preventDefault();
-    return onReUpload(file);
+    onReUpload(file);
   };
 
   handleReUploadConfirm = (fileTarget: UploadFile, e: React.SyntheticEvent<HTMLElement>)=>{

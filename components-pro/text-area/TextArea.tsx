@@ -193,7 +193,8 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
         marginBottom: '0.2rem',
       };
     }
-    const element = this.wrapperInputNode();
+    const renderedValue = this.renderRenderedValue(undefined, { className: `${this.prefixCls}-renderer-wrapper` });
+    const element = this.wrapperInputNode(renderedValue);
     const children = (
       <>
         {element}
@@ -205,6 +206,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return (
       <div key="wrapper" {...wrapperProps}>
         {this.renderPlaceHolder()}
+        {renderedValue}
         <label>
           {
             resizable ? (
@@ -219,12 +221,21 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     );
   }
 
-  wrapperInputNode(): ReactNode {
+  wrapperInputNode(renderedValue?: ReactNode): ReactNode {
     const text = this.getTextNode();
     const elementProps = this.getOtherProps() || {};
+    const otherProps: { style?: CSSProperties } = {};
+    if (renderedValue) {
+      otherProps.style = {
+        ...elementProps.style,
+        textIndent: -1000,
+        color: 'transparent',
+      };
+    }
     return (
       <textarea
         {...elementProps}
+        {...otherProps}
         placeholder={this.hasFloatLabel && !this.isFocused ? undefined : this.getPlaceholders()[0]}
         readOnly={!this.editable}
         value={isString(text) ? text : this.processValue(this.getValue()) as string}

@@ -1044,8 +1044,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   syncValueOnBlur(text) {
+    const value = this.getValue();
     if (text) {
-      const value = this.getValue();
       if (value !== text) {
         if (!isObject(value) || value[this.textField] !== text) {
           const { comboOptions } = this;
@@ -1058,7 +1058,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           });
         }
       }
-    } else {
+    } else if (!this.multiple || (value && value.length === 0) || !value) {
       this.setValue(this.emptyValue);
     }
   }

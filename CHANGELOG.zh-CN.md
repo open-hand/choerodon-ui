@@ -41,11 +41,14 @@ timeline: true
 - 💄 `<pro>Picture`: 优化预览界面样式和鼠标滚轮事件交互。
 - 💄 `<pro>Table`: 优化动态筛选条多选下拉必输的查询条件没有星号的问题。
 - 💄 `<pro>Field`: 优化 lovPara 查询缓存。
+- 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 配置 dblclick 后，双击会显示并马上关闭的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 开启 autoCenter 首次拖动定位不准的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 开启 autoCenter 导致 maskClosable 失效的问题。
 - 🐞 `<pro>RichText`: 修复选中内容失焦清空的问题。
 - 🐞 `<pro>RichText`: 修复内容溢出的高度问题和 placeholder 样式问题。
 - 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
@@ -60,6 +63,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
 - 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `Upload`: 修复重新上传时 beforeUpload 事件回调不会触发的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下 onRow 事件无效。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
@@ -70,6 +74,12 @@ timeline: true
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
 - 🐞 `<pro>NumberField`: 修复配置全局属性 numberFieldFormatterOptions 后, 组件属性 numberGrouping 失效的问题。
+- 🐞 `<pro>Modal`: 修复在 ModalProvider 设置了 getContainer 的情况，使用 useModal 无法居中的问题。
+- 🐞 `<pro>Tree`: 修复 onKeyDown 失效的问题。
+- 🐞 `<pro>Switch`: 修复在 Form 下只能点击左侧才有触发 onMouseDown 的问题。
+- 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
+- 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
+- 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
 
 ## 1.5.6
 

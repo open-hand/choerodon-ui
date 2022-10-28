@@ -367,9 +367,10 @@ class Mentions<T extends MentionsProps = MentionsProps> extends TextArea<T> {
     } = this.props;
 
     const options = measuring ? this.getOptions() : [];
+    const renderedValue = this.renderRenderedValue(undefined, {});
     return (
       <>
-        {super.wrapperInputNode()}
+        {super.wrapperInputNode(renderedValue)}
         {measuring && (
           <div ref={this.setMeasureRef} className={`${prefixCls}-measure`}>
             {value.slice(0, measureLocation)}
