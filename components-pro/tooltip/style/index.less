@@ -10,6 +10,7 @@
   z-index: 1;
   display: block;
   padding: @tooltip-distance;
+  line-height: @tooltip-line-height;
   background-color: transparent !important;
   box-shadow: none !important;
   visibility: visible;
@@ -27,19 +28,26 @@
     min-width: @tooltip-min-width;
     max-width: @tooltip-max-width;
     min-height: @tooltip-min-height;
-    padding: 0.06rem 0.08rem;
+    padding: @tooltip-padding;
     color: @tooltip-color;
     text-align: left;
     text-decoration: none;
     word-wrap: break-word;
     background-color: @tooltip-bg;
-    border-radius: calc(@border-radius-base * 2);
-    box-shadow: @box-shadow-base;
+    border-radius: @tooltip-border-radius;
+    box-shadow: @tooltip-box-shadow;
 
+    &-dark {
+      a,
+      a:hover {
+        color: @tooltip-link-color-dark;
+      }
+    }
 
     &-light {
       color: @tooltip-color-light;
       background-color: @tooltip-bg-light;
+      box-shadow: @tooltip-box-shadow-light;
     }
 
     .@{c7n-pro-prefix}-output {
