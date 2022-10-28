@@ -73,7 +73,7 @@
   &-item {
     .dropdown-menu-item-properties;
 
-    &:not(&-selected):hover {
+    &:not(&-selected):not(&-disabled):hover {
       color: @item-active-color;
       background-color: @item-active-bg;
     }
