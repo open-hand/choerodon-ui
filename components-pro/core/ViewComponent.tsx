@@ -478,7 +478,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     }
     onFocus(e);
     // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === 'focus') {
+    if (fieldFocusMode === 'focus' && element.value) {
       setTimeout(() => {
         const len = element.value.length;
         if (!element.selectionStart && !element.selectionEnd) {
