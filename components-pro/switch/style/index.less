@@ -18,7 +18,6 @@
         .@{c7n-prefix}-progress-inner {
           width: @switch-loading-inner-size;
           height: @switch-loading-inner-size;
-          vertical-align: top;
         }
       }
 
@@ -46,10 +45,20 @@
     }
 
     &.@{c7n-pro-prefix}-field {
-      width: auto;
+      display: inline-flex;
+      max-width: 100%;
+      .@{switch-prefix-cls}-label {
+        max-width: inherit;
+        &-content {
+          display: inline-block;
+          max-width: inherit;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
-    & > .icon-help {
+    .icon-help {
       margin-left: @label-wrapper-padding-horizontal;
       color: @field-icon-help-color;
       font-size: @icon-font-size-sm;
@@ -90,7 +99,7 @@
       content: ' ';
     }
 
-    & > .icon {
+    .icon {
       font-size: @switch-icon-font-size;
       vertical-align: baseline;
     }

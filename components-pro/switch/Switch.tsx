@@ -6,6 +6,8 @@ import { CheckBox, CheckBoxProps } from '../check-box/CheckBox';
 import Progress from '../progress';
 import { Size } from '../core/enum';
 import autobind from '../_util/autobind';
+import isOverflow from '../overflow-tip/util';
+import { show } from '../tooltip/singleton';
 
 interface SwitchProps extends CheckBoxProps {
   /**
@@ -41,6 +43,22 @@ export default class Switch extends CheckBox<SwitchProps> {
     super.handleKeyDown(e);
   }
 
+  showTooltip(e): boolean{
+    const { currentTarget } = e;
+    const {
+      props: { children, unCheckedChildren },
+    } = this;
+    const switchLabel = currentTarget.nextElementSibling;
+    const text = this.isChecked() ? children : unCheckedChildren || children;
+    if (text && isOverflow(switchLabel)){
+      show(currentTarget, {
+        title: text,
+      })
+      return true;
+    }
+    return false;
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'loading',
@@ -65,7 +83,11 @@ export default class Switch extends CheckBox<SwitchProps> {
       props: { children, unCheckedChildren },
     } = this;
     const text = this.isChecked() ? children : unCheckedChildren || children;
-    return <span className={`${prefixCls}-label`}>{text}</span>;
+    return (
+      <span className={`${prefixCls}-label`}>
+        {text ? <span className={`${prefixCls}-label-content`}>{text}</span> : null}
+      </span>
+    );
   }
 
   renderSwitchFloatLabel() {

@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>Field`: Optimize lovPara query cache.
 - 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
 - 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
+- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
@@ -82,6 +83,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
 - 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
 - 🐞 `<pro>Mentions`: Fix support for renderer attribute.
+- 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & misalignment of loading circle in the loading state.
 
 ## 1.5.6
 
