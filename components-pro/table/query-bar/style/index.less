@@ -73,23 +73,23 @@
     margin-bottom: 0.08rem;
 
     input::-webkit-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input::-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-ms-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
   }
 
@@ -107,7 +107,7 @@
     background: rgba(232, 232, 232, 0.20);
 
     i {
-      margin-top: 0.06rem;
+      margin-top: @table-dynamic-filter-single-action-icon-margin-top;
       font-size: 0.2rem;
     }
 
@@ -204,7 +204,7 @@
 
     &:focus-within,
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
+      background-color: @table-dynamic-filter-content-hover-bg;
       border-radius: 0.02rem;
 
       .@{table-prefix-cls}-filter-item-close {
@@ -235,7 +235,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
+      background-color: @table-dynamic-filter-content-hover-bg;
       border-radius: 0.02rem;
     }
   }
@@ -317,7 +317,7 @@
     align-items: center;
     margin-right: 0.02rem;
     padding-top: 0.005rem;
-    color: #6A6A6A;
+    color: @table-dynamic-filter-label-color;
     font-size: @font-size-sm;
 
     i {
@@ -422,7 +422,7 @@
       min-width: unset;
       max-width: 4rem;
       margin: 0;
-      padding: 0.02rem;
+      padding: @table-dynamic-filter-input-padding;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -528,7 +528,7 @@
       flex-shrink: 0;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 0.1rem 0 0.1rem 0.7rem;
+      padding: @table-professionalBar-query-button-padding;
 
       &-vertical {
         padding: 0.3rem 0 0.1rem 0.7rem;
