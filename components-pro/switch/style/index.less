@@ -103,8 +103,12 @@
     right: @switch-loading-distance-horizontal;
     left: auto;
     .@{c7n-prefix}-progress-inner {
-      svg circle {
-        stroke: @switch-checked-loading-stroke;
+      svg {
+        width: 100%;
+        height: 100%;
+        circle {
+          stroke: @switch-checked-loading-stroke;
+        }
       }
     }
   }
