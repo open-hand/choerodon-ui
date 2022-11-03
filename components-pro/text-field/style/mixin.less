@@ -169,14 +169,14 @@
     .hover;
   }
 
-  &-required-colors label:hover &,
+  &-required-colors:not(&-invalid) label:hover &,
   &-required-colors &:hover {
     .hover(@input-required-hover-border-color);
   }
 
   &-required-colors:not(&-invalid) &:focus,
   &-focused&-required-colors:not(&-invalid) & {
-    .active(@input-required-hover-border-color, @input-required-active-box-shadow);
+    .active(@input-required-focus-border-color, @input-required-active-box-shadow);
   }
   
   &:focus,
