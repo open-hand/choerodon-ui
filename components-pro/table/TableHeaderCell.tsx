@@ -512,7 +512,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(`${prefixCls}-cell-sticky-shadow`);
   }
 
-  if (tableStore.tableColumnResizeTransition) {
+  if (!tableStore.tableColumnResizeTransition) {
     classList.push(`${prefixCls}-cell-no-transition`);
   }
 

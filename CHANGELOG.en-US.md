@@ -44,6 +44,7 @@ timeline: true
 - 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
 - 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
 - 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form.
+- 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.

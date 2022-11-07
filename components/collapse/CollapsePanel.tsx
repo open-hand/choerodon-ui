@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import DataSet from 'choerodon-ui/dataset';
 import RcCollapse from '../rc-components/collapse';
 
-export type CollapsibleType = 'header' | 'disabled';
+export type CollapsibleType = 'header' | 'icon' | 'disabled';
 
 export interface CollapsePanelProps {
   key: string;
