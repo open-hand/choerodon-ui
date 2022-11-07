@@ -97,6 +97,7 @@ sans-serif;
 @item-active-color: @text-color;
 @item-focus-color: @text-color;
 @item-drag-over-bg: @primary-color;
+@item-selected-font-weight: 400;
 
 // use choerodon-ui-font
 // ICONFONT
@@ -1112,8 +1113,7 @@ sans-serif;
 @transfer-width: 1.8rem;
 @transfer-height: 2rem;
 @transfer-header-height: 0.32rem;
-@transfer-header-padding-vertical: .06rem;
-@transfer-header-padding-horizontal: @control-padding-horizontal;
+@transfer-header-padding: 0.06rem @control-padding-horizontal;
 @transfer-footer-height: 0.32rem;
 @transfer-disabled-bg: @disabled-bg;
 @transfer-selected-bg: @item-active-bg;
@@ -1169,8 +1169,7 @@ sans-serif;
 // ---
 @dropdown-menu-max-width: none;
 @dropdown-menu-max-height: 2.5rem;
-@dropdown-menu-padding-vertical-base: 0.08rem;
-@dropdown-menu-padding-horizontal-base: 0;
+@dropdown-menu-padding-base: 0.08rem 0;
 @dropdown-menu-item-line-height: .2rem;
 @dropdown-menu-item-padding-vertical: .04rem;
 @dropdown-menu-item-padding-horizontal: @control-padding-horizontal;
@@ -1217,12 +1216,10 @@ sans-serif;
 @segmented-item-padding-sm: 0 0.08rem;
 
 // Cascader
-@cascader-menu-padding-horizontal: 0;
-@cascader-menu-padding-vertical: 0;
-@cascader-menu-padding: @cascader-menu-padding-vertical @cascader-menu-padding-horizontal;
+@cascader-menu-padding: 0;
 @cascader-menu-item-line-height: .22rem;
-@cascader-menu-item-active-font-weight: 600;
-@cascader-menu-item-padding-vertical: .05rem;
+@cascader-menu-item-padding: 0.05rem @control-padding-horizontal;
+@cascader-menu-item-expand-padding: 0.3rem;
 
 // Upload
 @upload-picture-card-size: 0.98rem;

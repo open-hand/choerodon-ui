@@ -64,7 +64,8 @@
             }
 
             &-item {
-              padding: @cascader-menu-item-padding-vertical @control-padding-horizontal @cascader-menu-item-padding-vertical 0.3rem;
+              padding: @cascader-menu-item-padding;
+              padding-left: @cascader-menu-item-expand-padding;
 
               &-expand-icon {
                 right: unset;
@@ -214,7 +215,7 @@
   &-menu-item {
     display: flex;
     align-items: center;
-    padding: @cascader-menu-item-padding-vertical @control-padding-horizontal;
+    padding: @cascader-menu-item-padding;
     line-height: @cascader-menu-item-line-height;
     white-space: nowrap;
     cursor: pointer;
@@ -232,7 +233,7 @@
     &-selected:not(&-disabled) {
       &,
       &:hover {
-        font-weight: @cascader-menu-item-active-font-weight;
+        font-weight: @item-selected-font-weight;
         background: @background-color-base;
       }
     }
@@ -240,13 +241,12 @@
       &,
       &:hover {
         color: @select-primary-color;
-        font-weight: @cascader-menu-item-active-font-weight;
         background: @background-color-base;
       }
     }
     &-expand {
       position: relative;
-      padding-right: 0.3rem;
+      padding-right: @cascader-menu-item-expand-padding;
       &-icon {
         position: absolute;
         right: @control-padding-horizontal;

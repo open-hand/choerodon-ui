@@ -158,6 +158,7 @@
 @input-hover-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 5) `);
 
 // Tree
+// ---
 @tree-primary-color-calculate: @primary-color-calculate;
 @tree-directory-selected-color-calculate: #fff; // 使用了，但是directory的渲染不会走
 @tree-node-selected-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 2) `);
@@ -295,6 +296,7 @@
   --item-active-color: @item-active-color-calculate;
   --item-focus-color: @item-focus-color-calculate;
   --item-drag-over-bg: var(--primary-color);
+  --item-selected-font-weight: 400;
 
   //Icon
   --icon-font-size-base: 0.18rem;
@@ -1140,8 +1142,7 @@
   --transfer-width: 1.8rem;
   --transfer-height: 2rem;
   --transfer-header-height: 0.32rem;
-  --transfer-header-padding-vertical: .06rem;
-  --transfer-header-padding-horizontal: var(--control-padding-horizontal);
+  --transfer-header-padding: 0.06rem var(--control-padding-horizontal);
   --transfer-footer-height: 0.32rem;
   --transfer-disabled-bg: var(--disabled-bg);
   --transfer-selected-bg: var(--item-active-bg);
@@ -1194,8 +1195,7 @@
   // ---
   --dropdown-menu-max-width: none;
   --dropdown-menu-max-height: 2.5rem;
-  --dropdown-menu-padding-vertical-base: 0.08rem;
-  --dropdown-menu-padding-horizontal-base: 0;
+  --dropdown-menu-padding-base: 0.08rem 0;
   --dropdown-menu-item-line-height: .2rem;
   --dropdown-menu-item-padding-vertical: .04rem;
   --dropdown-menu-item-padding-horizontal: var(--control-padding-horizontal);
@@ -1239,12 +1239,10 @@
   --segmented-item-padding-sm: 0 0.08rem;
 
   // Cascader
-  --cascader-menu-padding-horizontal: 0;
-  --cascader-menu-padding-vertical: 0;
-  --cascader-menu-padding: var(--cascader-menu-padding-horizontal) var(--cascader-menu-padding-vertical);
+  --cascader-menu-padding: 0;
   --cascader-menu-item-line-height: .22rem;
-  --cascader-menu-item-active-font-weight: 600;
-  --cascader-menu-item-padding-vertical: .05rem;
+  --cascader-menu-item-padding: 0.05rem var(--control-padding-horizontal);
+  --cascader-menu-item-expand-padding: 0.3rem;
 
   // Upload
   --upload-picture-card-size: 0.98rem;
