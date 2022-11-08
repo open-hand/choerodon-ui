@@ -134,7 +134,7 @@
     }
 
     &-closable &-message {
-      padding-right: 0.24rem;
+      padding-right: @notification-closable-message-padding-right;
     }
 
     &-opacity {
@@ -155,7 +155,7 @@
       font-size: @font-size-base;
     }
 
-    &-icon {
+    &-icon.icon {
       position: absolute;
       margin-left: @notification-icon-margin-left;
       font-size: @notification-icon-size;
@@ -187,8 +187,8 @@
 
     &-close {
       position: absolute;
-      top: 0.16rem;
-      right: 0.22rem;
+      top: @notification-close-icon-top;
+      right: @notification-close-icon-right;
       color: @text-color-secondary;
       outline: none;
 
