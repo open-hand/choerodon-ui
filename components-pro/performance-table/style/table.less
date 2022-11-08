@@ -40,14 +40,6 @@
     background: @performance-table-header-bg;
   }
 
-  &-hover &-row:hover &-cell-group {
-    background: @performance-table-header-bg;
-  }
-
-  &-hover &-row:hover &-cell {
-    background: @performance-table-header-bg;
-  }
-
   &-row-highLight &-cell {
     background: @performance-table-active-row-bg;
   }
@@ -75,13 +67,9 @@
     z-index: 5;
   }
 
-
-  &-hover &-row:hover &-cell-group {
-    background: @performance-table-header-bg;
-  }
-
-  &-hover &-row:hover &-cell {
-    background: @performance-table-header-bg;
+  &-hover &-row:not(&-row-header):hover &-cell:first-child,
+  &-hover &-row:not(&-row-header):hover &-cell:first-child ~ &-cell {
+    background: @table-row-hover-bg;
   }
 
   &-header-row-wrapper {
