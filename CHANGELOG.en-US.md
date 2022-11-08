@@ -85,6 +85,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
 - 🐞 `<pro>Mentions`: Fix support for renderer attribute.
 - 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & misalignment of loading circle in the loading state.
+- 🐞 `<pro>Table`: Fix the problem of asynchronous loading tree table paging, click to expand and jump to the first page.
 
 ## 1.5.6
 
