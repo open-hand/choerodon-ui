@@ -797,7 +797,6 @@
   --modal-drawer-header-padding: var(--modal-header-padding);
   --modal-drawer-body-padding: var(--modal-body-padding);
   --modal-drawer-footer-padding: var(--modal-footer-padding);
-  --modal-confirm-content-margin: 0.08rem;
 
   // Progress
   --progress-default-color: var(--processing-color);
@@ -888,13 +887,10 @@
 
   // PerformanceTable
   --performance-table-header-bg: #f5f5f5;
-  --performance-table-header-color: var(--table-header-color);
   --performance-table-active-row-bg: rgb(240, 243, 255);
   --performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
   --performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
   --performance-table-scrollbar-handle-border-radius: 4px;
-  --performance-table-header-cell-font-weight: bold;
-  --performance-table-cell-color: var(--text-color);
   --performance-table-scrollbar-border: none;
 
   // Loader
@@ -927,7 +923,6 @@
   --tag-height: 0.22rem;
   --tag-line-height: 0.2rem;
   --tag-default-border-color: var(--tag-default-bg);
-  --tag-has-color-color: #fff;
   --tag-checkable-bg: transparent;
   --tag-checkable-border-color: transparent;
   --tag-checkable-not-checked-hover-color: var(--primary-color);
@@ -1008,14 +1003,13 @@
   --tab-groups-bar-padding: var(--tab-bar-padding);
   --tab-groups-horizontal-padding: var(--tab-horizontal-padding);
   --tab-groups-vertical-padding: var(--tab-vertical-padding);
-  --tab-horizontal-padding-sm: 0.08rem 0;
-  --tab-horizontal-padding-lg: 0.16rem;
-  --tabs-title-line-height: var(--line-height-base);
-  --tab-second-tab-color: rgba(0, 0, 0, 0.45);
-  --tab-bar-top-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
-  --tab-bar-bottom-border-top: var(--border-width-base) var(--border-style-base) var(--border-color-split);
-  --tab-bar-vertical-right-border-left: var(--border-width-base) var(--border-style-base) var(--border-color-split);
-  --tab-bar-vertical-left-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-tab-horizontal-padding-sm: 0.08rem 0;
+  --tabs-tab-horizontal-padding-lg: 0.16rem;
+  --tabs-second-tab-color: rgba(0, 0, 0, 0.45);
+  --tabs-bar-top-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-bottom-border-top: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-vertical-right-border-left: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-vertical-left-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
   --tabs-ink-bar-bottom: 0.01rem;
   --tabs-ink-bar-height: 0.02rem;
   --tabs-ink-bar-zindex: 1;
@@ -1023,7 +1017,6 @@
   --tabs-card-tab-border: var(--border-width-base) var(--border-style-base) var(--border-color-split);
   --tabs-groups-group-bg-color: rgba(0, 0, 0, 0.05);
   --tabs-groups-group-border-radius: 0;
-  --tabs-groups-group-item-height: auto;
   --tabs-groups-group-item-line-height: unset;
   --tabs-groups-group-item-font-size: .14rem;
   --tabs-groups-group-item-color: rgba(0, 0, 0, 0.45);
@@ -1031,11 +1024,10 @@
   --tabs-groups-group-item-border-radius: 0;
   --tabs-groups-group-item-active-color: var(--text-color);
   --tabs-groups-group-item-selected-color: rgba(0, 0, 0, 0.8);
-  --tabs-groups-group-item-selected-bg-color: #fff;
   --tabs-groups-group-item-selected-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
   --tabs-bar-divider-margin: auto .15rem;
   --tabs-vertical-left-content-padding: 0 0 0 0.24rem;
-  --tabs-card-bar-top-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-card-bar-border: var(--border-width-base) var(--border-style-base) var(--border-color-split);
   --tabs-card-min-width: var(--tabs-card-height);
 
   // Avatar
@@ -1282,11 +1274,9 @@
   --select-primary-color: @select-primary-color-calculate;
 
   // Picture
-  --picture-viewer-modal-mask-bg: rgba(0, 0, 0, 0.65);
-  --picture-viewer-modal-content-bg: transparent;
-  --picture-viewer-btn-default-size: 0.24rem;
-  --picture-viewer-btn-nav-size: 0.32rem;
-  --picture-viewer-btn-nav-lg-size: 0.52rem;
+  --picture-viewer-btn-size-base: 0.24rem;
+  --picture-viewer-nav-btn-size: 0.32rem;
+  --picture-viewer-nav-btn-size-lg: 0.52rem;
   --picture-icon-font-size: 0.26rem;
 }
 

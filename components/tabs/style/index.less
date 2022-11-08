@@ -24,7 +24,7 @@
     display: inline-flex;
     margin: 0;
     padding: 0.03rem 0.08rem;
-    color: @tab-second-tab-color;
+    color: @tabs-second-tab-color;
     font-weight: 400;
     font-size: 0.12rem;
     white-space: nowrap;
@@ -46,7 +46,7 @@
   &-bar {
     margin: @tab-bar-margin;
     padding: @tab-bar-padding;
-    border-bottom: @tab-bar-top-border-bottom;
+    border-bottom: @tabs-bar-top-border-bottom;
     outline: none;
     transition: padding @animation-duration-slow @ease-in-out;
 
@@ -92,7 +92,6 @@
     &-item {
       position: relative;
       display: inline-block;
-      height: @tabs-groups-group-item-height;
       padding: @tabs-groups-group-item-padding;
       color: @tabs-groups-group-item-color;
       font-weight: @font-weight-base;
@@ -109,7 +108,7 @@
       &-selected {
         color: @tabs-groups-group-item-selected-color;
         font-weight: @tab-highlight-font-weight;
-        background-color: @tabs-groups-group-item-selected-bg-color;
+        background-color: #fff;;
         border-radius: 2px;
         box-shadow: @tabs-groups-group-item-selected-box-shadow;
       }
@@ -147,7 +146,7 @@
     margin-bottom: -0.01rem;
     overflow: hidden;
     font-size: @tabs-title-font-size;
-    line-height: @tabs-title-line-height;
+    line-height: @line-height-base;
     white-space: nowrap;
     transition: padding @animation-duration-slow @ease-in-out;
     .clearfix;
@@ -159,7 +158,7 @@
   }
 
   &-bottom &-bar {
-    border-top: @tab-bar-bottom-border-top;
+    border-top: @tabs-bar-bottom-border-top;
     border-bottom: none;
   }
 
@@ -355,7 +354,7 @@
   }
 
   &-large > &-bar &-tab {
-    padding: @tab-horizontal-padding-lg;
+    padding: @tabs-tab-horizontal-padding-lg;
   }
 
   &-small > &-bar &-nav-container {
@@ -363,7 +362,7 @@
   }
 
   &-small > &-bar &-tab {
-    padding: @tab-horizontal-padding-sm;
+    padding: @tabs-tab-horizontal-padding-sm;
   }
 
   &:not(&-vertical) {
@@ -522,7 +521,7 @@
       float: left;
       margin-right: -0.01rem;
       margin-bottom: 0;
-      border-right: @tab-bar-vertical-left-border-right;
+      border-right: @tabs-bar-vertical-left-border-right;
 
       .@{tab-prefix-cls}-tab {
         text-align: right;
@@ -551,7 +550,7 @@
       float: right;
       margin-bottom: 0;
       margin-left: -0.01rem;
-      border-left: @tab-bar-vertical-right-border-left;
+      border-left: @tabs-bar-vertical-right-border-left;
 
       .@{tab-prefix-cls}-tab {
         text-align: left;
