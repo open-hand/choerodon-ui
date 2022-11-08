@@ -490,7 +490,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
           menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
         if (tableStore) {
           runInAction(() => {
-            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
             tableStore.tempCustomized = { columns: {} };
             tableStore.saveCustomized(newCustomized);
             tableStore.initColumns();
@@ -632,7 +632,6 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       clearButton: true,
       isFlat: !fieldWidth,
       maxTagTextLength: 3,
-      searchable: true,
     };
     if (fieldWidth) {
       props = {
