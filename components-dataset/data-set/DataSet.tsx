@@ -1361,7 +1361,7 @@ export default class DataSet extends EventManager {
     return data;
   }
 
-  async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
+  async doQueryMoreChild(parent: Record, page = this.currentPage, params?: object): Promise<any> {
     const data = await this.read(page, params, true);
     this.appendDataFromResponse(data, parent);
     if (data) {

@@ -84,6 +84,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
 - 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
 - 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题。
+- 🐞 `<pro>Table`: 修复异步加载的树形 Table 分页点击展开跳转到第一页的问题。
 
 ## 1.5.6
 
