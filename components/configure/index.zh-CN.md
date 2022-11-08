@@ -46,6 +46,8 @@ const prefixCls = getConfig('prefixCls');
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectReserveParam | 是否保留查询参数。 | boolean | true |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |

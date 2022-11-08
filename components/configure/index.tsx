@@ -207,6 +207,8 @@ export interface Config extends DataSetConfig {
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
+  selectBoxSearchable?: boolean;
+  selectReserveParam?: boolean;
   selectTrigger?: Action[];
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];

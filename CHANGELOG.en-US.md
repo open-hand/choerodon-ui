@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode` properties.
+- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode`, `selectBoxSearchable`, `selectReserveParam` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.
@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added hyperlinks and image types to the list.
 - 🌟 `Upload`: Support full status display of reupload in Upload.
 - 🌟 `<pro>DataSet.Field`: Added `accept` property.
+- 🌟 `<pro>Select`: Added `reserveParam` property。
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.

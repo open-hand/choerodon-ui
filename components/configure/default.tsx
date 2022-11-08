@@ -143,6 +143,8 @@ const defaults = {
   selectReverse: true,
   selectPagingOptionContent: '···',
   selectSearchable: false,
+  selectBoxSearchable: false,
+  selectReserveParam: true,
   selectTrigger: [Action.focus, Action.click],
   useColon: false,
   excludeUseColonTagList: defaultExcludeUseColonTag,
