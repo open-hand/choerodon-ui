@@ -1044,12 +1044,12 @@ sans-serif;
 @switch-lg-loading-inner-size: 0.2rem;
 @switch-loading-inner-size: 0.16rem;
 @switch-sm-loading-inner-size: 0.12rem;
-@switch-lg-loading-distance-vertical: 0.03rem;
-@switch-lg-loading-distance-horizontal: 0.02rem;
-@switch-loading-distance-vertical: 0.04rem;
-@switch-loading-distance-horizontal: 0.05rem;
-@switch-sm-loading-distance-vertical: 0.03rem;
-@switch-sm-loading-distance-horizontal: 0.02rem;
+@switch-lg-loading-inner-top: 0.03rem;
+@switch-lg-loading-inner-distance: 0.02rem;
+@switch-loading-inner-top: 0.04rem;
+@switch-loading-inner-distance: 0.05rem;
+@switch-sm-loading-inner-top: 0.03rem;
+@switch-sm-loading-inner-distance: 0.02rem;
 @switch-checked-loading-stroke: #FFF;
 @switch-icon-font-size: 0.16rem;
 @switch-sm-icon-font-size: 0.12rem;
@@ -1169,10 +1169,9 @@ sans-serif;
 // ---
 @dropdown-menu-max-width: none;
 @dropdown-menu-max-height: 2.5rem;
-@dropdown-menu-padding-base: 0.08rem 0;
+@dropdown-menu-padding: 0.08rem 0;
 @dropdown-menu-item-line-height: .2rem;
-@dropdown-menu-item-padding-vertical: .04rem;
-@dropdown-menu-item-padding-horizontal: @control-padding-horizontal;
+@dropdown-menu-item-padding: 0.04rem @control-padding-horizontal;
 
 // Alert
 @alert-icon-top: 0.05rem + @font-size-base * @line-height-base / 2 - @font-size-base / 2;
@@ -1219,7 +1218,7 @@ sans-serif;
 @cascader-menu-padding: 0;
 @cascader-menu-item-line-height: .22rem;
 @cascader-menu-item-padding: 0.05rem @control-padding-horizontal;
-@cascader-menu-item-expand-padding: 0.3rem;
+@cascader-menu-item-extra-padding: 0.3rem;
 
 // Upload
 @upload-picture-card-size: 0.98rem;

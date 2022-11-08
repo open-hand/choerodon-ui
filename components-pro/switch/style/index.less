@@ -13,8 +13,8 @@
       cursor: not-allowed;
       .@{c7n-prefix}-progress-loading {
         position: absolute;
-        top: @switch-loading-distance-vertical;
-        left: @switch-loading-distance-horizontal;
+        top: @switch-loading-inner-top;
+        left: @switch-loading-inner-distance;
         z-index: 1;
         .@{c7n-prefix}-progress-inner {
           display: flex;
@@ -100,7 +100,7 @@
   }
 
   &:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-loading-distance-horizontal;
+    right: @switch-loading-inner-distance;
     left: auto;
     .@{c7n-prefix}-progress-inner {
       svg {
@@ -196,8 +196,8 @@
 }
 
 .size-loading(@size) {
-  @distance-vertical: 'switch-@{size}-loading-distance-vertical';
-  @distance-horizontal: 'switch-@{size}-loading-distance-horizontal';
+  @distance-vertical: 'switch-@{size}-loading-inner-top';
+  @distance-horizontal: 'switch-@{size}-loading-inner-distance';
   @loading-inner-size: 'switch-@{size}-loading-inner-size';
   &.@{switch-prefix-cls}-@{size} {
     .@{c7n-prefix}-progress-loading {
@@ -213,7 +213,7 @@
 }
 
 .size-checked-loading(@size) {
-  @checked-distance-horizontal: 'switch-@{size}-loading-distance-horizontal';
+  @checked-distance-horizontal: 'switch-@{size}-loading-inner-distance';
   &-@{size} .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
     right: @@checked-distance-horizontal;
     left: auto;
