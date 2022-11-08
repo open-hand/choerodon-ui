@@ -27,7 +27,7 @@ const TableFooterCell: FunctionComponent<TableFooterCellProps> = function TableF
   const columnLock = isStickySupport() && tableStore.overflowX && getColumnLock(lock);
   const classString = classNames(`${prefixCls}-cell`, {
     [`${prefixCls}-cell-fix-${columnLock}`]: columnLock,
-    [`${prefixCls}-cell-no-transition`]: tableStore.tableColumnResizeTransition,
+    [`${prefixCls}-cell-no-transition`]: !tableStore.tableColumnResizeTransition,
   }, className, footerClassName);
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {};

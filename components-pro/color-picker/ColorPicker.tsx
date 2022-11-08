@@ -84,6 +84,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable gradientHidden?: boolean;
 
+  @observable gradienLeft?: number;
+
+  @observable gradienTop?: number;
+
+  popupView: HTMLElement | null;
+
   get multiple(): boolean {
     return false;
   }
@@ -144,6 +150,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     runInAction(() => {
       this.gradientHidden = true;
     });
+    this.popupView = null;
   }
 
   componentDidUpdate() {
@@ -166,6 +173,20 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         const top = height - v * height;
         this.setGradientPointer(left, top, selectPointer, gradient, false);
       }
+    }
+    if (!this.gradientHidden && this.popupView) {
+      const { offsetLeft, offsetTop } = this.popupView;
+      const { left, top, width, height } = this.popupView.getBoundingClientRect();
+      const { innerWidth, innerHeight } = window;
+
+      runInAction(() => {
+        if (left + width > innerWidth) {
+          this.gradienLeft = offsetLeft - (left + width - innerWidth);
+        }
+        if (top + height > innerHeight) {
+          this.gradienTop = offsetTop - (top + height - innerHeight);
+        }
+      });
     }
   }
 
@@ -293,7 +314,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.setColor(this.getValue());
     }
     return (
-      <div className={`${prefixCls}-popup-view`} style={{ display: preset && !gradientHidden || !preset ? 'block' : 'none' }}>
+      <div ref={dom => { this.popupView = dom }} className={`${prefixCls}-popup-view`} style={{ display: preset && !gradientHidden || !preset ? 'block' : 'none', top: this.gradienTop, left: this.gradienLeft }}>
         <div className={`${prefixCls}-popup-view-picker-name`}>{$l('ColorPicker', 'pick_color_view')}</div>
         <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: defaultTo(this.hueColor, '#ff0000') }}>
           <div {...gradientProps} />

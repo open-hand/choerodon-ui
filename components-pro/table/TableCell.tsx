@@ -117,7 +117,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   })();
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
-    [`${cellPrefix}-no-transition`]: tableStore.tableColumnResizeTransition,
+    [`${cellPrefix}-no-transition`]: !tableStore.tableColumnResizeTransition,
   });
   const intersectionProps: DetailedHTMLProps<HTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement> = {};
   if (intersectionRef) {

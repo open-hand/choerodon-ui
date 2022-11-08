@@ -82,7 +82,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
-| tableColumnResizeTransition | Excessive effect of column dragging | boolean | false |
+| tableColumnResizeTransition | Excessive effect of column dragging | boolean | true |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
@@ -170,6 +170,7 @@ const prefixCls = getConfig('prefixCls');
 | uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
+| fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
 
 ### Customizable
 
