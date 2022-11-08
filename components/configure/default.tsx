@@ -18,7 +18,7 @@ import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTempl
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
 import { Size } from '../_util/enum';
-import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook } from './index';
+import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, FieldFocusMode } from './index';
 import { Action } from '../trigger/enum';
 import Popover from '../popover';
 
@@ -163,6 +163,7 @@ const defaults = {
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),
   validationMessageFormatter: (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message,
   modalResizable: false,
+  fieldFocusMode: 'checked' as FieldFocusMode,
 };
 
 export default defaults;

@@ -3160,7 +3160,7 @@ Then the query method will be auto invoke.`,
             const result = await this.axios(fixAxiosConfig(newConfig));
             this.performance.timing.fetchEnd = Date.now();
             runInAction(() => {
-              if (page >= 0) {
+              if (page >= 0 && !more) {
                 this.currentPage = page;
               }
               const { countKey } = this;
