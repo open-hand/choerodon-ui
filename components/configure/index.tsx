@@ -85,6 +85,8 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
+
+export type FieldFocusMode = 'checked' | 'focus';
 /**
  * @deprecated
  */
@@ -223,7 +225,7 @@ export interface Config extends DataSetConfig {
   /**
    * 聚焦类型：checked 默认聚焦选中文本，focus 聚焦显示光标
    */
-  fieldFocusMode?: 'checked' | 'focus';
+  fieldFocusMode?: FieldFocusMode;
   /**
    * 是否显示长度信息
    */
