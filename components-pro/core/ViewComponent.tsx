@@ -463,7 +463,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   @action
   handleFocus(e) {
     const fieldFocusMode = this.getContextConfig('fieldFocusMode');
-    this.isFocused = fieldFocusMode !== 'focus';
+    this.isFocused = true;
     this.isFocus = true;
     const {
       props: { onFocus = noop },
@@ -478,15 +478,13 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     }
     onFocus(e);
     // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === 'focus' && element.value) {
+    if (fieldFocusMode === 'focus') {
       setTimeout(() => {
-        const len = element.value.length;
-        if (!element.selectionStart && !element.selectionEnd) {
+        if (element.value && element.setSelectionRange) {
+          const len = element.value.length;
           element.setSelectionRange(len, len);
-        } else {
-          element.setSelectionRange(element.selectionStart, element.selectionEnd);
         }
-      });
+      }, 5);
       e.stopPropagation();
     }
   }
