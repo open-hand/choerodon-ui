@@ -12,7 +12,7 @@
   &-item {
     position: relative;
     margin: 0;
-    padding: 0 0 @timeline-item-padding-bottom;
+    padding: @timeline-item-padding;
     font-size: @font-size-base;
     list-style: none;
 
@@ -72,7 +72,7 @@
     &-content {
       position: relative;
       top: calc(-1 * ((@font-size-base * @line-height-base - @font-size-base) - 0.01rem));
-      padding: 0 0 0 @timeline-item-content-padding-left;
+      padding: @timeline-item-content-padding;
     }
 
     &-last {

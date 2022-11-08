@@ -9,7 +9,7 @@
   display: flex;
   padding: @alert-padding;
   word-break: break-all;
-  border-radius: @border-radius-base;
+  border-radius: @alert-border-radius;
 
   &-content{
     flex: 1;
@@ -108,8 +108,8 @@
 
   &-with-description &-icon {
     position: absolute;
-    top: 0.16rem;
-    left: 0.24rem;
+    top: @alert-with-description-icon-top;
+    left: @alert-with-description-icon-left;
     font-size: @alert-with-description-icon-size;
   }
 
