@@ -17,6 +17,7 @@
 
   &-close-wrapper {
     margin: @alert-close-wrapper-margin;
+    padding: @alert-close-wrapper-padding;
     background-color: transparent;
     border: none;
   }
@@ -31,6 +32,11 @@
     left: @alert-icon-left;
   }
 
+  &-message {
+    font-size: @alert-message-font-size;
+    line-height: @alert-message-line-height;
+  }
+
   &-description {
     display: none;
     font-size: @font-size-base;
@@ -39,7 +45,7 @@
 
   &-success {
     background-color: @success-1;
-    border: @border-width-base @border-style-base @success-3;
+    border: @alert-border-width @border-style-base @success-3;
 
     .@{alert-prefix-cls}-icon {
       color: @success-color;
@@ -48,7 +54,7 @@
 
   &-info {
     background-color: @info-1;
-    border: @border-width-base @border-style-base @info-3;
+    border: @alert-border-width @border-style-base @info-3;
 
     .@{alert-prefix-cls}-icon {
       color: @info-color;
@@ -57,7 +63,7 @@
 
   &-warning {
     background-color: @warning-1;
-    border: @border-width-base @border-style-base @warning-3;
+    border: @alert-border-width @border-style-base @warning-3;
 
     .@{alert-prefix-cls}-icon {
       color: @warning-color;
@@ -66,7 +72,7 @@
 
   &-error {
     background-color: @error-1;
-    border: @border-width-base @border-style-base @error-3;
+    border: @alert-border-width @border-style-base @error-3;
 
     .@{alert-prefix-cls}-icon {
       color: @error-color;
@@ -122,7 +128,7 @@
     display: block;
     margin: @alert-with-description-message-margin;
     color: @alert-message-color;
-    font-size: @font-size-lg;
+    font-size: @alert-with-description-message-font-size;
   }
 
   &-with-description &-description {
