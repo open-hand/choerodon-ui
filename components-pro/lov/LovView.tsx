@@ -290,6 +290,7 @@ export default class LovView extends Component<LovViewProps> {
         lovTableProps.showSelectionCachedButton = false;
         lovTableProps.showCachedSelection = true;
       }
+      lovTableProps.autoFocus = false;
       const autoWidth = lovTableProps.autoWidth;
       lovTableProps.autoWidth = autoWidth || true;
       lovTableProps.onColumnResize = this.handleColumnResize;

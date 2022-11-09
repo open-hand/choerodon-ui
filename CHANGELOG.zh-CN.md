@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode 属性。
+- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode, selectBoxSearchable, selectReserveParam 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
 - 🌟 `Tabs.TabPane`: 新增 hidden 属性。
@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Lov`: 列表新增超链接和图片类型展示。
 - 🌟 `Upload`: 重新上传全状态支持。
 - 🌟 `<pro>DataSet.Field`: 新增 accept 属性。
+- 🌟 `<pro>Select`: 新增 reserveParam 属性。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
