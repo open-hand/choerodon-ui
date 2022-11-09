@@ -1120,12 +1120,21 @@ sans-serif;
 
 // Collapse
 // ---
+@collapse-border: @border-width-base @border-style-base @border-color-base;
 @collapse-header-padding: 0.12rem;
 @collapse-header-padding-extra: .4rem;
 @collapse-header-bg: @background-color-light;
 @collapse-content-padding: @padding-md;
+@collapse-content-padding-base: @collapse-content-padding;
 @collapse-content-bg: @component-background;
 @collapse-active-bg: @background-color-base;
+@collapse-header-line-height: 0.22rem;
+@collapse-borderless-header-padding: @collapse-header-padding;
+@collapse-borderless-header-font-weight: inherit;
+@collapse-borderless-header-font-size: @font-size-base;
+@collapse-borderless-header-line-height: @collapse-header-line-height;
+@collapse-icon-right-content-padding: 0 @collapse-content-padding-base;
+@collapse-expand-icon-size: @collapse-header-line-height;
 
 // CollapsePanel
 @collapse-panel-border-radius: @border-radius-base;

@@ -1147,11 +1147,20 @@
   --skeleton-item-height: 16px;
 
   // Collapse
+  --collapse-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
   --collapse-header-padding: 0.12rem;
   --collapse-header-padding-extra: .4rem;
   --collapse-header-bg: var(--background-color-light);
   --collapse-content-padding: var(--padding-md);
+  --collapse-content-padding-base: var(--collapse-content-padding);
   --collapse-content-bg: var(--component-background);
+  --collapse-header-line-height: 0.22rem;
+  --collapse-borderless-header-padding: var(--collapse-header-padding);
+  --collapse-borderless-header-font-weight: inherit;
+  --collapse-borderless-header-font-size: var(--font-size-base);
+  --collapse-borderless-header-line-height: var(--collapse-header-line-height);
+  --collapse-icon-right-content-padding: 0 var(--collapse-content-padding-base);
+  --collapse-expand-icon-size: var(--collapse-borderless-header-line-height);
 
   // CollapsePanel
   --collapse-panel-border-radius: var(--border-radius-base);
