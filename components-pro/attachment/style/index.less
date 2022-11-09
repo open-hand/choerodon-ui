@@ -10,6 +10,17 @@
     flex: 1;
     flex-direction: column;
     max-width: 100%;
+    .@{c7n-pro-prefix}-select-wrapper {
+      margin: @attachment-sort-select-margin;
+      border: @attachment-sort-selcet-border;
+    }
+  }
+  
+  .@{c7n-pro-prefix}-picture {
+    margin: @attachment-picture-margin;
+    .@{pro-attachment-prefix-cls}-list-item-icon {
+      margin: @attachment-text-picture-icon-margin;
+    }
   }
 
   &-header {
@@ -18,7 +29,7 @@
 
     &-divider {
       width: .01rem;
-      height: .09rem;
+      height: @attachment-header-divider-height;
       margin: 0 .07rem;
       background-color: @border-color-base;
     }
@@ -39,13 +50,13 @@
     overflow: auto;
 
     &-item {
-      margin: .04rem 0;
-      padding: 0 .1rem;
-      background-color: #f3f3f3;
+      margin: @attachment-list-item-margin;
+      padding: @attachment-list-item-padding;
+      background-color: @attachment-list-item-bg;
 
       &-container {
         position: relative;
-        padding: .07rem 0;
+        padding: @attachment-list-item-container-padding;
       }
 
       &-content,
@@ -251,13 +262,13 @@
   }
 
   &-list &-card-button {
-    background-color: #f8f8f8;
+    background-color: @attachment-card-button-bg;
     border: @border-width-base dashed @border-color-base;
     border-radius: @border-radius-base;
 
     .@{iconfont-css-prefix} {
-      margin-bottom: .04rem;
-      font-size: .28rem;
+      margin: @attachment-card-button-icon-margin;
+      font-size: @attachment-card-button-icon-size;
     }
 
     &.@{c7n-pro-prefix}-btn-disabled,
@@ -417,6 +428,7 @@
       }
 
       &-text {
+        margin: @attachment-drag-box-text-margin;
         color: @heading-color;
         font-weight: 400;
         font-size: @font-size-sm;
@@ -424,6 +436,7 @@
       }
 
       &-hint {
+        margin: @attachment-drag-box-hint-margin;
         color: @text-color-secondary;
         font-size: @font-size-sm;
       }
