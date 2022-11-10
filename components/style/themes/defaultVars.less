@@ -97,6 +97,7 @@ sans-serif;
 @item-active-color: @text-color;
 @item-focus-color: @text-color;
 @item-drag-over-bg: @primary-color;
+@item-selected-font-weight: 400;
 
 // use choerodon-ui-font
 // ICONFONT
@@ -535,6 +536,7 @@ sans-serif;
 @input-addon-bg: @background-color-light;
 @input-focus-border-color: color(~`colorPalette('@{input-primary-color}', 3) `);
 @input-hover-border-color: color(~`colorPalette('@{input-primary-color}', 5) `);
+@input-required-focus-border-color: @input-focus-border-color;
 @input-required-hover-border-color: @input-hover-border-color;
 @input-required-active-box-shadow: @input-active-box-shadow;
 @input-float-border-color: @input-border-color;
@@ -557,7 +559,9 @@ sans-serif;
 @input-icon-width-sm: 0.2rem;
 @input-icon-color: inherit;
 @input-prefix-width-base: @input-icon-width-base;
+@input-prefix-color: inherit;
 @input-suffix-width-base: @input-icon-width-base;
+@input-suffix-color: inherit;
 @input-button-width: @input-suffix-width-base;
 @input-addon-bg: #eee;
 @input-tag-default-color: @tag-default-color;
@@ -662,6 +666,12 @@ sans-serif;
 @tooltip-color-light: @text-color;
 @tooltip-bg-light: @component-background;
 @tooltip-arrow-color-light: @tooltip-bg-light;
+@tooltip-line-height: inherit;
+@tooltip-link-color-dark: @link-color;
+@tooltip-box-shadow-light: @box-shadow-base;
+@tooltip-box-shadow: @box-shadow-base;
+@tooltip-padding: 0.06rem 0.08rem;
+@tooltip-border-radius: calc(@border-radius-base * 2);
 
 // Popover
 // ---
@@ -707,7 +717,6 @@ sans-serif;
 @modal-drawer-header-padding: @modal-header-padding;
 @modal-drawer-body-padding: @modal-body-padding;
 @modal-drawer-footer-padding: @modal-footer-padding;
-@modal-confirm-content-margin: 0.08rem;
 
 // Sidebar
 @sidebar-font-size-lg: 0.18rem;
@@ -811,13 +820,10 @@ sans-serif;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
-@performance-table-header-color: @table-header-color;
 @performance-table-active-row-bg: rgb(240 243 255);
 @performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
 @performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
 @performance-table-scrollbar-handle-border-radius: 4px;
-@performance-table-header-cell-font-weight: bold;
-@performance-table-cell-color: @text-color;
 @performance-table-scrollbar-border: none;
 
 
@@ -961,14 +967,13 @@ sans-serif;
 @tab-groups-bar-padding: @tab-bar-padding;
 @tab-groups-horizontal-padding: @tab-horizontal-padding;
 @tab-groups-vertical-padding: @tab-vertical-padding;
-@tab-horizontal-padding-sm: 0.08rem 0;
-@tab-horizontal-padding-lg: 0.16rem;
-@tabs-title-line-height: @line-height-base;
-@tab-second-tab-color: rgba(0, 0, 0, 0.45);
-@tab-bar-top-border-bottom: @border-width-base @border-style-base @border-color-split;
-@tab-bar-bottom-border-top: @border-width-base @border-style-base @border-color-split;
-@tab-bar-vertical-right-border-left: @border-width-base @border-style-base @border-color-split;
-@tab-bar-vertical-left-border-right: @border-width-base @border-style-base @border-color-split;
+@tabs-tab-horizontal-padding-sm: 0.08rem 0;
+@tabs-tab-horizontal-padding-lg: 0.16rem;
+@tabs-second-tab-color: rgba(0, 0, 0, 0.45);
+@tabs-bar-top-border-bottom: @border-width-base @border-style-base @border-color-split;
+@tabs-bar-bottom-border-top: @border-width-base @border-style-base @border-color-split;
+@tabs-bar-vertical-right-border-left: @border-width-base @border-style-base @border-color-split;
+@tabs-bar-vertical-left-border-right: @border-width-base @border-style-base @border-color-split;
 @tabs-ink-bar-bottom: 0.01rem;
 @tabs-ink-bar-height: 0.02rem;
 @tabs-ink-bar-zindex: 1;
@@ -976,7 +981,6 @@ sans-serif;
 @tabs-card-tab-border: @border-width-base @border-style-base @border-color-split;
 @tabs-groups-group-bg-color: rgba(0, 0, 0, 0.05);
 @tabs-groups-group-border-radius: 0;
-@tabs-groups-group-item-height: auto;
 @tabs-groups-group-item-line-height: unset;
 @tabs-groups-group-item-font-size: .14rem;
 @tabs-groups-group-item-color: rgba(0, 0, 0, 0.45);
@@ -984,11 +988,10 @@ sans-serif;
 @tabs-groups-group-item-border-radius: 0;
 @tabs-groups-group-item-active-color: @text-color;
 @tabs-groups-group-item-selected-color: rgba(0, 0, 0, 0.8);
-@tabs-groups-group-item-selected-bg-color: #fff;
 @tabs-groups-group-item-selected-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
 @tabs-bar-divider-margin: auto .15rem;
 @tabs-vertical-left-content-padding: 0 0 0 0.24rem;
-@tabs-card-bar-top-border-bottom: @border-width-base @border-style-base @border-color-split;
+@tabs-card-bar-border: @border-width-base @border-style-base @border-color-split;
 @tabs-card-min-width: @tabs-card-height;
 
 // BackTop
@@ -1047,12 +1050,12 @@ sans-serif;
 @switch-lg-loading-inner-size: 0.2rem;
 @switch-loading-inner-size: 0.16rem;
 @switch-sm-loading-inner-size: 0.12rem;
-@switch-lg-loading-distance-vertical: 0.03rem;
-@switch-lg-loading-distance-horizontal: 0.02rem;
-@switch-loading-distance-vertical: 0.04rem;
-@switch-loading-distance-horizontal: 0.05rem;
-@switch-sm-loading-distance-vertical: 0.03rem;
-@switch-sm-loading-distance-horizontal: 0.02rem;
+@switch-lg-loading-inner-top: 0.03rem;
+@switch-lg-loading-inner-distance: 0.02rem;
+@switch-loading-inner-top: 0.04rem;
+@switch-loading-inner-distance: 0.05rem;
+@switch-sm-loading-inner-top: 0.03rem;
+@switch-sm-loading-inner-distance: 0.02rem;
 @switch-checked-loading-stroke: #FFF;
 @switch-icon-font-size: 0.16rem;
 @switch-sm-icon-font-size: 0.12rem;
@@ -1116,13 +1119,21 @@ sans-serif;
 @transfer-width: 1.8rem;
 @transfer-height: 2rem;
 @transfer-header-height: 0.32rem;
-@transfer-header-padding-vertical: .06rem;
-@transfer-header-padding-horizontal: @control-padding-horizontal;
+@transfer-header-padding: 0.06rem @control-padding-horizontal;
 @transfer-footer-height: 0.32rem;
 @transfer-disabled-bg: @disabled-bg;
 @transfer-selected-bg: @item-active-bg;
 @transfer-btn-height: .24rem;
 @transfer-btn-border-radius: @border-radius-base;
+@transfer-basic-list-padding-top: 0.34rem;
+@transfer-basic-list-padding-bottom: 0.34rem;
+@transfer-basic-header-font-size: inherit;
+@transfer-basic-header-line-height: @line-height-base;
+@transfer-basic-header-border-bottom: @border-width-base @border-style-base @border-color-split;
+@transfer-basic-header-title-font-weight: inherit;
+@transfer-basic-header-padding: 0.06rem @control-padding-horizontal;
+@transfer-basic-body-search-wrapper-padding: 0.04rem;
+@transfer-basic-list-item-margin: 0;
 
 // Skeleton
 // ---
@@ -1181,11 +1192,9 @@ sans-serif;
 // ---
 @dropdown-menu-max-width: none;
 @dropdown-menu-max-height: 2.5rem;
-@dropdown-menu-padding-vertical-base: 0.08rem;
-@dropdown-menu-padding-horizontal-base: 0;
+@dropdown-menu-padding: 0.08rem 0;
 @dropdown-menu-item-line-height: .2rem;
-@dropdown-menu-item-padding-vertical: .04rem;
-@dropdown-menu-item-padding-horizontal: @control-padding-horizontal;
+@dropdown-menu-item-padding: 0.04rem @control-padding-horizontal;
 
 // Alert
 @alert-border-radius: @border-radius-base;
@@ -1237,12 +1246,10 @@ sans-serif;
 @segmented-item-padding-sm: 0 0.08rem;
 
 // Cascader
-@cascader-menu-padding-horizontal: 0;
-@cascader-menu-padding-vertical: 0;
-@cascader-menu-padding: @cascader-menu-padding-vertical @cascader-menu-padding-horizontal;
+@cascader-menu-padding: 0;
 @cascader-menu-item-line-height: .22rem;
-@cascader-menu-item-active-font-weight: 600;
-@cascader-menu-item-padding-vertical: .05rem;
+@cascader-menu-item-padding: 0.05rem @control-padding-horizontal;
+@cascader-menu-item-extra-padding: 0.3rem;
 
 // Upload
 @upload-picture-card-size: 0.98rem;
@@ -1288,11 +1295,9 @@ sans-serif;
 @select-primary-color: @primary-color;
 
 // Picture
-@picture-viewer-modal-mask-bg: rgba(0, 0, 0, 0.65);
-@picture-viewer-modal-content-bg: transparent;
-@picture-viewer-btn-default-size: 0.24rem;
-@picture-viewer-btn-nav-size: 0.32rem;
-@picture-viewer-btn-nav-lg-size: 0.52rem;
+@picture-viewer-btn-size-base: 0.24rem;
+@picture-viewer-nav-btn-size: 0.32rem;
+@picture-viewer-nav-btn-size-lg: 0.52rem;
 @picture-icon-font-size: 0.26rem;
 
 // Attachment

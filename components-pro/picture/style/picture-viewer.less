@@ -12,12 +12,12 @@
 
   &-modal {
     &-mask.@{c7n-pro-prefix}-mask {
-      background-color: @picture-viewer-modal-mask-bg;
+      background-color: rgba(0, 0, 0, 0.65);
     }
 
     .@{c7n-pro-prefix}-modal {
       &-content {
-        background-color: @picture-viewer-modal-content-bg;
+        background-color: transparent;
       }
 
       &-body {
@@ -40,35 +40,35 @@
   }
 
   & &-btn.@{c7n-pro-prefix}-btn {
-    width: @picture-viewer-btn-default-size;
-    height: @picture-viewer-btn-default-size;
+    width: @picture-viewer-btn-size-base;
+    height: @picture-viewer-btn-size-base;
     color: @text-color-dark;
     text-shadow: 0 0.02rem 0.04rem rgba(0, 0, 0, .15);
   }
 
   & &-btn.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
     display: block;
-    font-size: @picture-viewer-btn-default-size;
+    font-size: @picture-viewer-btn-size-base;
     line-height: 1;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn {
-    width: @picture-viewer-btn-nav-size;
-    height: @picture-viewer-btn-nav-size;
+    width: @picture-viewer-nav-btn-size;
+    height: @picture-viewer-nav-btn-size;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
-    font-size: @picture-viewer-btn-nav-size;
+    font-size: @picture-viewer-nav-btn-size;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn-lg {
     z-index: 1;
-    width: @picture-viewer-btn-nav-lg-size;
-    height: @picture-viewer-btn-nav-lg-size;
+    width: @picture-viewer-nav-btn-size-lg;
+    height: @picture-viewer-nav-btn-size-lg;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn-lg .@{iconfont-css-prefix} {
-    font-size: @picture-viewer-btn-nav-lg-size;
+    font-size: @picture-viewer-nav-btn-size-lg;
   }
 
   & &-btn-close {

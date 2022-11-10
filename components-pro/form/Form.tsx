@@ -744,13 +744,22 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     });
 
-    function completeLine() {
+    let colsNum = 0;
+    let maxRowSpan = 0;
+    const totalColumn = columns * (noLabel ? 1 : 2);
+
+    function completeLine(rowSpan?: number) {
       if (cols.length) {
         rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
+        if (rowSpan && rowSpan > 1) {
+          new Array(rowSpan - 1).fill(0).forEach(() => rows.push(<tr />));
+        }
         cols = [];
       }
       rowIndex++;
       colIndex = 0;
+      colsNum = 0;
+      maxRowSpan = 0;
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
@@ -783,6 +792,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
       while (currentRow[colIndex]) {
         colIndex++;
+        colsNum += (noLabel ? 1 : 2);
       }
       if (colIndex >= columns) {
         completeLine();
@@ -845,15 +855,17 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             {toJS(label)}
           </FormItemLabel>,
         );
+        colsNum += 1;
       }
       if (!isString(type)) {
         fieldElementProps.rowIndex = rowIndex;
         fieldElementProps.colIndex = colIndex;
       }
+      const currentColSpan = noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1);
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
-          colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1)}
+          colSpan={currentColSpan}
           rowSpan={rowSpan}
           className={fieldClassName}
           style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
@@ -869,8 +881,13 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>
         </td>,
       );
-      if (index === len - 1) {
-        completeLine();
+      
+      colsNum += currentColSpan;
+      if (rowSpan > maxRowSpan) {
+        maxRowSpan = rowSpan;
+      }
+      if (index === len - 1 || colsNum >= totalColumn) {
+        completeLine(rowSpan >= maxRowSpan ? maxRowSpan : 1);
       } else {
         colIndex++;
       }

@@ -40,14 +40,6 @@
     background: @performance-table-header-bg;
   }
 
-  &-hover &-row:hover &-cell-group {
-    background: @performance-table-header-bg;
-  }
-
-  &-hover &-row:hover &-cell {
-    background: @performance-table-header-bg;
-  }
-
   &-row-highLight &-cell {
     background: @performance-table-active-row-bg;
   }
@@ -62,8 +54,8 @@
 
   &-row-header &-cell {
     background: @performance-table-header-bg;
-    color: @performance-table-header-color;
-    font-weight: @performance-table-header-cell-font-weight;
+    color: @table-header-color;
+    font-weight: @table-header-font-weight;
 
     &-last {
       border-right: none;
@@ -75,13 +67,9 @@
     z-index: 5;
   }
 
-
-  &-hover &-row:hover &-cell-group {
-    background: @performance-table-header-bg;
-  }
-
-  &-hover &-row:hover &-cell {
-    background: @performance-table-header-bg;
+  &-hover &-row:not(&-row-header):hover &-cell:first-child,
+  &-hover &-row:not(&-row-header):hover &-cell:first-child ~ &-cell {
+    background: @table-row-hover-bg;
   }
 
   &-header-row-wrapper {
@@ -122,7 +110,7 @@
   }
 
   &-cell {
-    color: @performance-table-cell-color;
+    color: @text-color;
     height: 30px;
     border-style: solid;
     border-width: 0;

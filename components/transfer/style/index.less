@@ -11,15 +11,15 @@
   &-list {
     position: relative;
     display: inline-block;
-    width: 1.8rem;
-    height: 2rem;
-    padding-top: 0.34rem;
+    width: @transfer-width;
+    height: @transfer-height;
+    padding-top: @transfer-basic-list-padding-top;
     vertical-align: middle;
     border: @border-width-base @border-style-base @border-color-base;
     border-radius: @border-radius-base;
 
     &-with-footer {
-      padding-bottom: 0.34rem;
+      padding-bottom: @transfer-basic-list-padding-bottom;
     }
 
     &-search {
@@ -51,16 +51,19 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 0.06rem @control-padding-horizontal;
+      padding: @transfer-basic-header-padding;
       overflow: hidden;
       color: @text-color;
+      font-size: @transfer-basic-header-font-size;
+      line-height: @transfer-basic-header-line-height;
       background: @component-background;
-      border-bottom: @border-width-base @border-style-base @border-color-split;
+      border-bottom: @transfer-basic-header-border-bottom;
       border-radius: @border-radius-base @border-radius-base 0 0;
 
       &-title {
         position: absolute;
         right: 0.12rem;
+        font-weight: @transfer-basic-header-title-font-weight;
       }
     }
 
@@ -74,7 +77,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        padding: 0.04rem;
+        padding: @transfer-basic-body-search-wrapper-padding;
       }
     }
 
@@ -94,6 +97,7 @@
 
       &-item {
         min-height: 0.32rem;
+        margin: @transfer-basic-list-item-margin;
         padding: 0.06rem @control-padding-horizontal;
         overflow: hidden;
         white-space: nowrap;

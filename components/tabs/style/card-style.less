@@ -7,7 +7,13 @@
 .@{tab-prefix-cls} {
   &-card {
     .@{tab-prefix-cls}-bar {
-      border-bottom: @tabs-card-bar-top-border-bottom;
+      border-bottom: @tabs-card-bar-border;
+    }
+    &.@{tab-prefix-cls}-bottom {
+      .@{tab-prefix-cls}-bar {
+        border-top: @tabs-card-bar-border;
+        border-bottom: none;
+      }
     }
   }
   &&-card > &-bar &-nav-container {
@@ -89,7 +95,6 @@
       width: 100%;
       min-width: @tabs-card-min-width;
       background: @component-background;
-      // border-left: @border-width-base @border-style-base @border-color-split;
       outline: none;
       cursor: pointer;
       transition: all @animation-duration-slow cubic-bezier(.645,.045,.355,1);

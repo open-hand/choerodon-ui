@@ -102,6 +102,7 @@
 @item-active-color: var(--item-active-color);
 @item-focus-color: var(--item-focus-color);
 @item-drag-over-bg: var(--item-drag-over-bg);
+@item-selected-font-weight: var(--item-selected-font-weight);
 
 // use choerodon-ui-font
 // ICONFONT
@@ -537,6 +538,7 @@
 @input-addon-bg: var(--input-addon-bg);
 @input-focus-border-color: var(--input-focus-border-color);
 @input-hover-border-color: var(--input-hover-border-color);
+@input-required-focus-border-color: var(--input-required-focus-border-color);
 @input-required-hover-border-color: var(--input-required-hover-border-color);
 @input-required-active-box-shadow: var(--input-required-active-box-shadow);
 @input-float-border-color: var(--input-float-border-color);
@@ -559,7 +561,9 @@
 @input-icon-width-sm: var(--input-icon-width-sm);
 @input-icon-color: var(--input-icon-color);
 @input-prefix-width-base: var(--input-prefix-width-base);
+@input-prefix-color: var(--input-prefix-color);
 @input-suffix-width-base: var(--input-suffix-width-base);
+@input-suffix-color: var(--input-suffix-color);
 @input-button-width: var(--input-button-width);
 @input-addon-bg: var(--input-addon-bg);
 @input-tag-default-color: var(--input-tag-default-color);
@@ -664,6 +668,12 @@
 @tooltip-color-light: var(--tooltip-color-light);
 @tooltip-bg-light: var(--tooltip-bg-light);
 @tooltip-arrow-color-light: var(--tooltip-arrow-color-light);
+@tooltip-line-height: var(--tooltip-line-height);
+@tooltip-link-color-dark: var(--tooltip-link-color-dark);
+@tooltip-box-shadow-light: var(--tooltip-box-shadow-light);
+@tooltip-box-shadow: var(--tooltip-box-shadow);
+@tooltip-padding: var(--tooltip-padding);
+@tooltip-border-radius: var(--tooltip-border-radius);
 
 // Popover
 // ---
@@ -709,7 +719,6 @@
 @modal-drawer-header-padding: var(--modal-drawer-header-padding);
 @modal-drawer-body-padding: var(--modal-drawer-body-padding);
 @modal-drawer-footer-padding: var(--modal-drawer-footer-padding);
-@modal-confirm-content-margin: var(--modal-confirm-content-margin);
 
 // Sidebar
 @sidebar-font-size-lg: 0.18rem;
@@ -811,13 +820,10 @@
 
 // PerformanceTable
 @performance-table-header-bg: var(--performance-table-header-bg);
-@performance-table-header-color: var(--performance-table-header-color);
 @performance-table-active-row-bg: var(--performance-table-active-row-bg);
 @performance-table-scrollbar-bg: var(--performance-table-scrollbar-bg);
 @performance-table-scrollbar-handle-bg: var(--performance-table-scrollbar-handle-bg);
 @performance-table-scrollbar-handle-border-radius: var(--performance-table-scrollbar-handle-border-radius);
-@performance-table-header-cell-font-weight: var(--performance-table-header-cell-font-weight);
-@performance-table-cell-color: var(--performance-table-cell-color);
 @performance-table-scrollbar-border: var(--performance-table-scrollbar-border);
 
 // Loader
@@ -959,14 +965,13 @@
 @tab-groups-bar-padding: var(--tab-groups-bar-padding);
 @tab-groups-horizontal-padding: var(--tab-groups-horizontal-padding);
 @tab-groups-vertical-padding: var(--tab-groups-vertical-padding);
-@tab-horizontal-padding-sm: var(--tab-horizontal-padding-sm);
-@tab-horizontal-padding-lg: var(--tab-horizontal-padding-lg);
-@tabs-title-line-height: var(--tabs-title-line-height);
-@tab-second-tab-color: var(--tab-second-tab-color);
-@tab-bar-top-border-bottom: var(--tab-bar-top-border-bottom);
-@tab-bar-bottom-border-top: var(--tab-bar-bottom-border-top);
-@tab-bar-vertical-right-border-left: var(--tab-bar-vertical-right-border-left);
-@tab-bar-vertical-left-border-right: var(--tab-bar-vertical-left-border-right);
+@tabs-tab-horizontal-padding-sm: var(--tabs-tab-horizontal-padding-sm);
+@tabs-tab-horizontal-padding-lg: var(--tabs-tab-horizontal-padding-lg);
+@tabs-second-tab-color: var(--tabs-second-tab-color);
+@tabs-bar-top-border-bottom: var(--tabs-bar-top-border-bottom);
+@tabs-bar-bottom-border-top: var(--tabs-bar-bottom-border-top);
+@tabs-bar-vertical-right-border-left: var(--tabs-bar-vertical-right-border-left);
+@tabs-bar-vertical-left-border-right: var(--tabs-bar-vertical-left-border-right);
 @tabs-ink-bar-bottom: var(--tabs-ink-bar-bottom);
 @tabs-ink-bar-height: var(--tabs-ink-bar-height);
 @tabs-ink-bar-zindex: var(--tabs-ink-bar-zindex);
@@ -974,7 +979,6 @@
 @tabs-card-tab-border: var(--tabs-card-tab-border);
 @tabs-groups-group-bg-color: var(--tabs-groups-group-bg-color);
 @tabs-groups-group-border-radius: var(--tabs-groups-group-border-radius);
-@tabs-groups-group-item-height: var(--tabs-groups-group-item-height);
 @tabs-groups-group-item-line-height: var(--tabs-groups-group-item-line-height);
 @tabs-groups-group-item-font-size: var(--tabs-groups-group-item-font-size);
 @tabs-groups-group-item-color: var(--tabs-groups-group-item-color);
@@ -982,11 +986,10 @@
 @tabs-groups-group-item-border-radius: var(--tabs-groups-group-item-border-radius);
 @tabs-groups-group-item-active-color: var(--tabs-groups-group-item-active-color);
 @tabs-groups-group-item-selected-color: var(--tabs-groups-group-item-selected-color);
-@tabs-groups-group-item-selected-bg-color: var(--tabs-groups-group-item-selected-bg-color);
 @tabs-groups-group-item-selected-box-shadow: var(--tabs-groups-group-item-selected-box-shadow);
 @tabs-bar-divider-margin: var(--tabs-bar-divider-margin);
 @tabs-vertical-left-content-padding: var(--tabs-vertical-left-content-padding);
-@tabs-card-bar-top-border-bottom: var(--tabs-card-bar-top-border-bottom);
+@tabs-card-bar-border: var(--tabs-card-bar-border);
 @tabs-card-min-width: var(--tabs-card-min-width);
 
 // BackTop
@@ -1044,12 +1047,12 @@
 @switch-lg-loading-inner-size: var(--switch-lg-loading-inner-size);
 @switch-loading-inner-size: var(--switch-loading-inner-size);
 @switch-sm-loading-inner-size: var(--switch-sm-loading-inner-size);
-@switch-lg-loading-distance-vertical: var(--switch-lg-loading-distance-vertical);
-@switch-lg-loading-distance-horizontal: var(--switch-lg-loading-distance-horizontal);
-@switch-loading-distance-vertical: var(--switch-loading-distance-vertical);
-@switch-loading-distance-horizontal: var(--switch-loading-distance-horizontal);
-@switch-sm-loading-distance-vertical: var(--switch-sm-loading-distance-vertical);
-@switch-sm-loading-distance-horizontal: var(--switch-sm-loading-distance-horizontal);
+@switch-lg-loading-inner-top: var(--switch-lg-loading-inner-top);
+@switch-lg-loading-inner-distance: var(--switch-lg-loading-inner-distance);
+@switch-loading-inner-top: var(--switch-loading-inner-top);
+@switch-loading-inner-distance: var(--switch-loading-inner-distance);
+@switch-sm-loading-inner-top: var(--switch-sm-loading-inner-top);
+@switch-sm-loading-inner-distance: var(--switch-sm-loading-inner-distance);
 @switch-checked-loading-stroke: var(--switch-checked-loading-stroke);
 @switch-icon-font-size: var(--switch-icon-font-size);
 @switch-sm-icon-font-size: var(--switch-sm-icon-font-size);
@@ -1113,13 +1116,21 @@
 @transfer-width: var(--transfer-width);
 @transfer-height: var(--transfer-height);
 @transfer-header-height: var(--transfer-header-height);
-@transfer-header-padding-vertical: var(--transfer-header-padding-vertical);
-@transfer-header-padding-horizontal: var(--transfer-header-padding-horizontal);
+@transfer-header-padding: var(--transfer-header-padding);
 @transfer-footer-height: var(--transfer-footer-height);
 @transfer-disabled-bg: var(--transfer-disabled-bg);
 @transfer-selected-bg: var(--transfer-selected-bg);
 @transfer-btn-height: var(--transfer-btn-height);
 @transfer-btn-border-radius: var(--transfer-btn-border-radius);
+@transfer-basic-list-padding-top: var(--transfer-basic-list-padding-top);
+@transfer-basic-list-padding-bottom: var(--transfer-basic-list-padding-bottom);
+@transfer-basic-header-font-size: var(--transfer-basic-header-font-size);
+@transfer-basic-header-line-height: var(--transfer-basic-header-line-height);
+@transfer-basic-header-border-bottom: var(--transfer-basic-header-border-bottom);
+@transfer-basic-header-title-font-weight: var(--transfer-basic-header-title-font-weight);
+@transfer-basic-header-padding: var(--transfer-basic-header-padding);
+@transfer-basic-body-search-wrapper-padding: var(--transfer-basic-body-search-wrapper-padding);
+@transfer-basic-list-item-margin: var(--transfer-basic-list-item-margin);
 
 // Skeleton
 // ---
@@ -1178,11 +1189,9 @@
 // ---
 @dropdown-menu-max-width: var(--dropdown-menu-max-width);
 @dropdown-menu-max-height: var(--dropdown-menu-max-height);
-@dropdown-menu-padding-vertical-base: var(--dropdown-menu-padding-vertical-base);
-@dropdown-menu-padding-horizontal-base: var(--dropdown-menu-padding-horizontal-base);
+@dropdown-menu-padding: var(--dropdown-menu-padding);
 @dropdown-menu-item-line-height: var(--dropdown-menu-item-line-height);
-@dropdown-menu-item-padding-vertical: var(--dropdown-menu-item-padding-vertical);
-@dropdown-menu-item-padding-horizontal: var(--dropdown-menu-item-padding-horizontal);
+@dropdown-menu-item-padding: var(--dropdown-menu-item-padding);
 
 // Alert
 @alert-border-radius: var(--alert-border-radius);
@@ -1234,12 +1243,10 @@
 @segmented-item-padding-sm: var(--segmented-item-padding-sm);
 
 // Cascader
-@cascader-menu-padding-horizontal: var(--cascader-menu-padding-horizontal);
-@cascader-menu-padding-vertical: var(--cascader-menu-padding-vertical);
 @cascader-menu-padding: var(--cascader-menu-padding);
 @cascader-menu-item-line-height: var(--cascader-menu-item-line-height);
-@cascader-menu-item-active-font-weight: var(--cascader-menu-item-active-font-weight);
-@cascader-menu-item-padding-vertical: var(--cascader-menu-item-padding-vertical);
+@cascader-menu-item-padding: var(--cascader-menu-item-padding);
+@cascader-menu-item-extra-padding: var(--cascader-menu-item-extra-padding);
 
 // Upload
 @upload-picture-card-size: var(--upload-picture-card-size);
@@ -1284,11 +1291,9 @@
 @select-primary-color: var(--select-primary-color);
 
 // Picture
-@picture-viewer-modal-mask-bg: var(--picture-viewer-modal-mask-bg);
-@picture-viewer-modal-content-bg: var(--picture-viewer-modal-content-bg);
-@picture-viewer-btn-default-size: var(--picture-viewer-btn-default-size);
-@picture-viewer-btn-nav-size: var(--picture-viewer-btn-nav-size);
-@picture-viewer-btn-nav-lg-size: var(--picture-viewer-btn-nav-lg-size);
+@picture-viewer-btn-size-base: var(--picture-viewer-btn-size-base);
+@picture-viewer-nav-btn-size: var(--picture-viewer-nav-btn-size);
+@picture-viewer-nav-btn-size-lg: var(--picture-viewer-nav-btn-size-lg);
 @picture-icon-font-size: var(--picture-icon-font-size);
 
 // Attachment

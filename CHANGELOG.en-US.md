@@ -41,11 +41,14 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize preview interface style and mouse wheel event interaction.
 - 💄 `<pro>Table`: Optimize the dynamic filter bar, select multiple required query conditions, and there is no required sign.
 - 💄 `<pro>Field`: Optimize lovPara query cache.
+- 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
+- 🐞 `<pro>Modal`: Fix the issue that the first drag of Modal enabled `autoCenter` was inaccurate.
+- 🐞 `<pro>Modal`: Fix the issue that Modal enabled `autoCenter` to cause `maskClosable` to fail.
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
@@ -61,6 +64,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
 - 🐞 `<pro>DataSet`: Fix the issue that the bigNumber formatting configuration was invalid.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `Upload`: Fix the problem that the `beforeUpload` event callback will not trigger when re uploading.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
 - 🐞 `<pro>Lov`: Fixed the onRow event not working in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
@@ -71,6 +75,12 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
 - 🐞 `<pro>NumberField`: Fixed after configuration global property `numberFieldFormatterOptions`, component property `numberGrouping` failure problem.
+- 🐞 `<pro>Modal`: Fix the problem that the getContainer is set in the ModalProvider and cannot be centered with useModal.
+- 🐞 `<pro>Tree`: Fix the failure of onKeyDown.
+- 🐞 `<pro>Switch`: Fix the problem that onMouseDown can only be triggered by clicking the left side under Form.
+- 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
+- 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
+- 🐞 `<pro>Mentions`: Fix support for renderer attribute.
 
 ## 1.5.6
 

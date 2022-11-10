@@ -710,20 +710,45 @@ export default class Modal extends ViewComponent<ModalProps> {
     const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
       const { prefixCls } = this;
-      const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
+      const {
+        clientWidth: docClientWidth,
+        clientHeight: docClientHeight,
+      } = this.doc.documentElement || this.doc.body;
       const { clientX, clientY, currentTarget } = downEvent;
       const clzz = classes(element);
-      const { offsetLeft, offsetParent } = element;
+      const { offsetParent } = element;
       const {
-        scrollTop = 0, scrollLeft = 0,
+        scrollTop = 0,
+        scrollLeft = 0,
+        clientWidth = 0,
+        clientHeight = 0,
       } = offsetParent || {};
-      const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
+      if (clzz.has(`${prefixCls}-auto-center`)) {
+        clzz.remove(`${prefixCls}-auto-center`).remove(`${prefixCls}-center`);
+        const {
+          offsetWidth,
+          offsetHeight,
+        } = element;
+        const isEmbedded = !!(element && element.offsetParent);
+        const top = pxToRem(
+          isEmbedded ? (clientHeight - offsetHeight) / 2 + scrollTop : (docClientHeight - offsetHeight) / 2,
+          true,
+        );
+        const left = pxToRem(
+          isEmbedded ? (clientWidth - offsetWidth) / 2 + scrollLeft : (docClientWidth - offsetWidth) / 2,
+          true,
+        );
+        this.offset = [left, top];
+        Object.assign(element.style, { top, left });
+      }
+      const  { offsetLeft } = element;
+      const  offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       this.moveEvent
         .setTarget(this.doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const { clientX: moveX, clientY: moveY } = moveEvent;
-          clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
+          clzz.remove(`${prefixCls}-center`);
           const left = pxToRem(
             Math.min(
               Math.max(

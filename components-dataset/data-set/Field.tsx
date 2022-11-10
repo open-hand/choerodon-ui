@@ -1546,7 +1546,7 @@ export default class Field {
         )
       )
     ) {
-      const noCache = this.get('noCache', record) || propsName === 'lovPara';
+      const noCache = this.get('noCache', record);
       this.set(LOOKUP_DATA, undefined);
       this.fetchLookup(noCache, record);
     }

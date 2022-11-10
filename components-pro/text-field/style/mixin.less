@@ -169,14 +169,14 @@
     .hover;
   }
 
-  &-required-colors label:hover &,
+  &-required-colors:not(&-invalid) label:hover &,
   &-required-colors &:hover {
     .hover(@input-required-hover-border-color);
   }
 
   &-required-colors:not(&-invalid) &:focus,
   &-focused&-required-colors:not(&-invalid) & {
-    .active(@input-required-hover-border-color, @input-required-active-box-shadow);
+    .active(@input-required-focus-border-color, @input-required-active-box-shadow);
   }
   
   &:focus,
@@ -278,10 +278,12 @@
   &-prefix {
     left: 0.01rem;
     width: @prefix-width;
+    color: @input-prefix-color;
   }
 
   &-suffix {
     width: @suffix-width;
+    color: @input-suffix-color;
   }
 
   &-suffix,
@@ -370,7 +372,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 
-    > li, span {
+    > li, > span {
       display: inline-block;
       max-width: 99%;
       height: @input-tag-height-base;
