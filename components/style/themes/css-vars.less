@@ -1173,6 +1173,8 @@
   --collapse-borderless-header-font-size: var(--font-size-base);
   --collapse-borderless-header-line-height: var(--collapse-header-line-height);
   --collapse-icon-right-content-padding: 0 var(--collapse-content-padding-base);
+  --collapse-icon-right-expand-text-padding: 0;
+  --collapse-icon-right-wrapper-color: unset;
   --collapse-expand-icon-size: var(--collapse-borderless-header-line-height);
 
   // CollapsePanel
@@ -1186,6 +1188,7 @@
   --result-icon-margin: 0 0 0.24rem 0;
   --result-title-color: var(--heading-color);
   --result-title-line-height: 1.8;
+  --result-title-margin: unset;
   --result-subtitle-color: var(--text-color-secondary);
   --result-title-subtitle-height: 1.6;
 
@@ -1280,12 +1283,16 @@
   --notification-padding-horizontal: 0.24rem;
   --notification-padding: var(--notification-padding-vertical) var(--notification-padding-horizontal);
   --notification-margin-bottom: 0.16rem;
+  --notification-description-line-height: unset;
+  --notification-description-color: unset;
   --notification-message-margin-bottom: 0.08rem;
   --notification-message-line-height: 0.24rem;
   --notification-with-icon-message-margin-left: 0.48rem;
   --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
   --notification-icon-size: 0.24rem;
   --notification-icon-margin-left: 0.04rem;
+  --notification-icon-top: unset;
+  --notification-icon-left: unset;
   --notification-close-icon-top: 0.16rem;
   --notification-close-icon-right: 0.22rem;
   --notification-closable-message-padding-right: 0.24rem;
@@ -1316,12 +1323,15 @@
   --attachment-list-item-margin: 0.04rem 0;
   --attachment-list-item-padding: 0 0.1rem;
   --attachment-list-item-bg: #f3f3f3;
+  --attachment-list-item-border: unset;
   --attachment-list-item-container-padding: 0.07rem 0;
   --attachment-picture-margin: inherit;
   --attachment-text-picture-icon-margin: inherit;
   --attachment-card-button-bg: #f8f8f8;
   --attachment-card-button-icon-margin: 0 0 0.04rem 0;
   --attachment-card-button-icon-size: 0.28rem;
+  --attachment-card-button-line-height: unset;
+  --attachment-card-button-border: var(--border-width-base) dashed var(--border-color-base);
   --attachment-drag-box-text-margin: 0;
   --attachment-drag-box-hint-margin: 0;
 }

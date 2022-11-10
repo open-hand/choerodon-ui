@@ -10,16 +10,21 @@
     flex: 1;
     flex-direction: column;
     max-width: 100%;
+
     .@{c7n-pro-prefix}-select-wrapper {
       margin: @attachment-sort-select-margin;
       border: @attachment-sort-selcet-border;
     }
-  }
-  
-  .@{c7n-pro-prefix}-picture {
-    margin: @attachment-picture-margin;
-    .@{pro-attachment-prefix-cls}-list-item-icon {
-      margin: @attachment-text-picture-icon-margin;
+
+    .c7n-pro-attachment-list-no-card {
+      .@{c7n-pro-prefix}-picture {
+        // Picture 模式
+        margin: @attachment-picture-margin;
+        // Text 模式
+        &.@{pro-attachment-prefix-cls}-list-item-icon {
+          margin: @attachment-text-picture-icon-margin;
+        }
+      }
     }
   }
 
@@ -53,6 +58,7 @@
       margin: @attachment-list-item-margin;
       padding: @attachment-list-item-padding;
       background-color: @attachment-list-item-bg;
+      border: @attachment-list-item-border;
 
       &-container {
         position: relative;
@@ -262,8 +268,9 @@
   }
 
   &-list &-card-button {
+    line-height: @attachment-card-button-line-height;
     background-color: @attachment-card-button-bg;
-    border: @border-width-base dashed @border-color-base;
+    border: @attachment-card-button-border;
     border-radius: @border-radius-base;
 
     .@{iconfont-css-prefix} {

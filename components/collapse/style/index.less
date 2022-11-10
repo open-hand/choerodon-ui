@@ -76,6 +76,7 @@
     .@{collapse-prefix-cls}-content {
       padding: @collapse-icon-right-content-padding;
     }
+
     & > .@{collapse-prefix-cls}-item {
       > .@{collapse-prefix-cls}-header {
 
@@ -88,10 +89,14 @@
         }
 
         .@{collapse-prefix-cls}-expand-text {
-          padding-right: 0;
+          padding: @collapse-icon-right-expand-text-padding;
           text-align: right;
           cursor: pointer;
         }
+      }
+
+      &:not(&-disabled) .@{collapse-prefix-cls}-expand-icon-wrapper {
+        color: @collapse-icon-right-wrapper-color;
       }
     }
   }
