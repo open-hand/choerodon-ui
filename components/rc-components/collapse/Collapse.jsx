@@ -93,7 +93,7 @@ export default class Collapse extends Component {
         isActive = activeKey.indexOf(key) > -1;
       }
 
-      const trigger = this.props.trigger || collapsible || getConfig('collapseTrigger');
+      const trigger = collapsible || this.props.trigger || getConfig('collapseTrigger');
 
       const props = {
         key,

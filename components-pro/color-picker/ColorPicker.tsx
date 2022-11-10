@@ -175,13 +175,13 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       }
     }
     if (!this.gradientHidden && this.popupView) {
-      const { offsetLeft, offsetTop } = this.popupView;
+      const { offsetTop } = this.popupView;
       const { left, top, width, height } = this.popupView.getBoundingClientRect();
       const { innerWidth, innerHeight } = window;
 
       runInAction(() => {
-        if (left + width > innerWidth) {
-          this.gradienLeft = offsetLeft - (left + width - innerWidth);
+        if (left + width > innerWidth && left > width) {
+          this.gradienLeft = - width;
         }
         if (top + height > innerHeight) {
           this.gradienTop = offsetTop - (top + height - innerHeight);
