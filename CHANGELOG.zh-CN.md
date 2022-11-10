@@ -86,6 +86,7 @@ timeline: true
 - 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
 - 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题。
 - 🐞 `<pro>Table`: 修复异步加载的树形 Table 分页点击展开跳转到第一页的问题。
+- 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。
 
 ## 1.5.6
 
