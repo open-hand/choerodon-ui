@@ -2491,7 +2491,7 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      promises.push(dataSet.queryMoreChild(record));
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));
