@@ -8,7 +8,7 @@ import {
   Formatter,
   Status,
 } from 'choerodon-ui/dataset/configure';
-import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
+import { Tooltip, FieldFocusMode } from 'choerodon-ui/pro/lib/core/enum';
 import {
   expandIconProps,
   Suffixes,
@@ -86,7 +86,6 @@ export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
 
-export type FieldFocusMode = 'checked' | 'focus';
 /**
  * @deprecated
  */

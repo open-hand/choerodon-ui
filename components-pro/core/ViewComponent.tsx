@@ -20,7 +20,7 @@ import classes from 'component-classes';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
-import { Size } from './enum';
+import { FieldFocusMode, Size } from './enum';
 import normalizeLanguage from '../_util/normalizeLanguage';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context';
@@ -478,7 +478,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     }
     onFocus(e);
     // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === 'focus') {
+    if (fieldFocusMode === FieldFocusMode.focus) {
       setTimeout(() => {
         if (element.value && element.setSelectionRange) {
           const len = element.value.length;
