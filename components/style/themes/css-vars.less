@@ -910,6 +910,17 @@
   --tree-node-padding: calc(var(--padding-xs) / 2);
   --tree-checkbox-height: var(--tree-title-height);
   --tree-active-color: var(--text-color);
+  --tree-line-margin-left: -0.04rem;
+  --tree-line-before-bottom: calc(-1 * var(--tree-node-padding));
+  --tree-switcher-icon-size: 0.18rem;
+  --tree-drag-over-color: white;
+  --tree-drag-over-bg: var(--tree-primary-color);
+
+  // TreeSelect
+  --tree-select-treenode-selected-bg: var(--item-focus-bg);
+  --tree-select-treenode-active-bg: var(--item-active-bg);
+  --tree-select-content-wrapper-hover: transparent;
+  --tree-select-content-wrapper-tree-node-selected: transparent;
 
   // Tag
   // --
@@ -923,6 +934,8 @@
   --tag-height: 0.22rem;
   --tag-line-height: 0.2rem;
   --tag-default-border-color: var(--tag-default-bg);
+  --tag-border: var(--border-width-base) var(--border-style-base) var(--tag-default-border-color);
+  --tag-has-color-color: #fff;
   --tag-checkable-bg: transparent;
   --tag-checkable-border-color: transparent;
   --tag-checkable-not-checked-hover-color: var(--primary-color);
@@ -930,6 +943,7 @@
   --tag-checkable-checked-color: #fff;
   --tag-checkable-checked-bg: var(--primary-6);
   --tag-checkable-active-bg: var(--primary-7);
+  --tag-close-icon-font-weight: bold;
 
   // Carousel
   // ---
@@ -1158,11 +1172,21 @@
   --skeleton-item-height: 16px;
 
   // Collapse
+  --collapse-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
   --collapse-header-padding: 0.12rem;
   --collapse-header-padding-extra: .4rem;
   --collapse-header-bg: var(--background-color-light);
   --collapse-content-padding: var(--padding-md);
   --collapse-content-bg: var(--component-background);
+  --collapse-header-line-height: 0.22rem;
+  --collapse-borderless-header-padding: var(--collapse-header-padding);
+  --collapse-borderless-header-font-weight: unset;
+  --collapse-borderless-header-font-size: var(--font-size-base);
+  --collapse-borderless-header-line-height: var(--collapse-header-line-height);
+  --collapse-icon-right-content-padding: 0 var(--collapse-content-padding);
+  --collapse-icon-right-expand-text-padding: 0;
+  --collapse-icon-right-wrapper-color: unset;
+  --collapse-expand-icon-size: var(--collapse-borderless-header-line-height);
 
   // CollapsePanel
   --collapse-panel-border-radius: var(--border-radius-base);
@@ -1172,6 +1196,12 @@
   --result-subtitle-font-size: var(--font-size-base);
   --result-icon-font-size: 0.72rem;
   --result-extra-margin: 0.32rem 0 0 0;
+  --result-icon-margin: 0 0 0.24rem 0;
+  --result-title-color: var(--heading-color);
+  --result-title-line-height: 1.8;
+  --result-title-margin: unset;
+  --result-subtitle-color: var(--text-color-secondary);
+  --result-title-subtitle-height: 1.6;
 
   // Statistic
   // ---
@@ -1193,20 +1223,25 @@
 
   // Alert
   --alert-border-radius: var(--border-radius-base);
+  --alert-border-width: var(--border-width-base);
   --alert-icon-top: calc(0.05rem + var(--font-size-base) * var(--line-height-base) / 2 - var(--font-size-base) / 2);
   --alert-icon-left: 0.16rem;
   --alert-with-description-icon-top: 0.16rem;
   --alert-with-description-icon-left: 0.24rem;
   --alert-message-color: var(--heading-color);
+  --alert-message-font-size: unset;
+  --alert-message-line-height: unset;
   --alert-text-color: var(--text-color); // 全局未使用
   --alert-padding: 0.08rem 0.15rem 0.08rem 0.37rem;
   --alert-close-wrapper-margin: 0 0 0 0.16rem;
+  --alert-close-wrapper-padding: unset;
   --alert-no-icon-padding: 0.08rem 0.15rem;
   --alert-description-line-height: 0.22rem;
   --alert-with-description-padding: 0.15rem 0.15rem 0.15rem 0.64rem;
   --alert-with-description-message-margin: 0 0 0.04rem 0;
   --alert-with-description-no-icon-padding: 0.15rem;
   --alert-with-description-icon-size: 0.24rem;
+  --alert-with-description-message-font-size: var(--font-size-lg);
 
   // Typography
   --heading-1-size: calc(var(--font-size-base) * 2.71);
@@ -1255,12 +1290,19 @@
   --notification-padding-horizontal: 0.24rem;
   --notification-padding: var(--notification-padding-vertical) var(--notification-padding-horizontal);
   --notification-margin-bottom: 0.16rem;
+  --notification-description-line-height: unset;
+  --notification-description-color: unset;
   --notification-message-margin-bottom: 0.08rem;
   --notification-message-line-height: 0.24rem;
   --notification-with-icon-message-margin-left: 0.48rem;
   --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
   --notification-icon-size: 0.24rem;
   --notification-icon-margin-left: 0.04rem;
+  --notification-icon-top: unset;
+  --notification-icon-left: unset;
+  --notification-close-icon-top: 0.16rem;
+  --notification-close-icon-right: 0.22rem;
+  --notification-closable-message-padding-right: 0.24rem;
 
   // List
   --c7n-list-header-font-size: var(--font-size-base);
@@ -1278,6 +1320,25 @@
   --picture-viewer-nav-btn-size: 0.32rem;
   --picture-viewer-nav-btn-size-lg: 0.52rem;
   --picture-icon-font-size: 0.26rem;
+
+  // Attachment
+  --attachment-sort-select-margin: unset;
+  --attachment-sort-selcet-border: unset;
+  --attachment-header-divider-height: 0.09rem;
+  --attachment-list-item-margin: 0.04rem 0;
+  --attachment-list-item-padding: 0 0.1rem;
+  --attachment-list-item-bg: #f3f3f3;
+  --attachment-list-item-border: unset;
+  --attachment-list-item-container-padding: 0.07rem 0;
+  --attachment-picture-margin: unset;
+  --attachment-text-picture-icon-margin: unset;
+  --attachment-card-button-bg: #f8f8f8;
+  --attachment-card-button-icon-margin: 0 0 0.04rem 0;
+  --attachment-card-button-icon-size: 0.28rem;
+  --attachment-card-button-line-height: unset;
+  --attachment-card-button-border: var(--border-width-base) dashed var(--border-color-base);
+  --attachment-drag-box-text-margin: unset;
+  --attachment-drag-box-hint-margin: unset;
 }
 
 // css 变量

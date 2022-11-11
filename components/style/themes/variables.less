@@ -852,7 +852,17 @@
 @tree-node-padding: var(--tree-node-padding); // 有效
 @tree-checkbox-height: var(--tree-checkbox-height);
 @tree-active-color: var(--tree-active-color);
+@tree-line-margin-left: var(--tree-line-margin-left);
+@tree-line-before-bottom: var(--tree-line-before-bottom);
+@tree-switcher-icon-size: var(--tree-switcher-icon-size);
+@tree-drag-over-color: var(--tree-drag-over-color);
+@tree-drag-over-bg: var(--tree-drag-over-bg);
 
+// TreeSelect
+@tree-select-treenode-selected-bg: var(--tree-select-treenode-selected-bg);
+@tree-select-treenode-active-bg: var(--tree-select-treenode-active-bg);
+@tree-select-content-wrapper-hover: var(--tree-select-content-wrapper-hover);
+@tree-select-content-wrapper-tree-node-selected: var(--tree-select-content-wrapper-tree-node-selected);
 
 // Tag
 // --
@@ -866,6 +876,8 @@
 @tag-height: var(--tag-height);
 @tag-line-height: var(--tag-line-height);
 @tag-default-border-color: var(--tag-default-border-color);
+@tag-border: var(--tag-border);
+@tag-has-color-color: var(--tag-has-color-color);
 @tag-checkable-bg: var(--tag-checkable-bg);
 @tag-checkable-border-color: var(--tag-checkable-border-color);
 @tag-checkable-not-checked-hover-color: var(--tag-checkable-not-checked-hover-color);
@@ -873,6 +885,7 @@
 @tag-checkable-checked-color: var(--tag-checkable-checked-color);
 @tag-checkable-checked-bg: var(--tag-checkable-checked-bg);
 @tag-checkable-active-bg: var(--tag-checkable-active-bg);
+@tag-close-icon-font-weight: var(--tag-close-icon-font-weight);
 
 // TimePicker
 // ---
@@ -1128,12 +1141,22 @@
 
 // Collapse
 // ---
+@collapse-border: var(--collapse-border);
 @collapse-header-padding: var(--collapse-header-padding);
 @collapse-header-padding-extra: var(--collapse-header-padding-extra);
 @collapse-header-bg: var(--collapse-header-bg);
 @collapse-content-padding: var(--collapse-content-padding);
 @collapse-content-bg: var(--collapse-content-bg);
 @collapse-active-bg: var(--background-color-base);
+@collapse-header-line-height: var(--collapse-header-line-height);
+@collapse-borderless-header-padding: var(--collapse-borderless-header-padding);
+@collapse-borderless-header-font-weight: var(--collapse-borderless-header-font-weight);
+@collapse-borderless-header-font-size: var(--collapse-borderless-header-font-size);
+@collapse-borderless-header-line-height: var(--collapse-borderless-header-line-height);
+@collapse-icon-right-content-padding: var(--collapse-icon-right-content-padding);
+@collapse-icon-right-expand-text-padding: var(--collapse-icon-right-expand-text-padding);
+@collapse-icon-right-wrapper-color: var(--collapse-icon-right-wrapper-color);
+@collapse-expand-icon-size: var(--collapse-expand-icon-size);
 
 // CollapsePanel
 @collapse-panel-border-radius: var(--collapse-panel-border-radius);
@@ -1144,6 +1167,12 @@
 @result-subtitle-font-size: var(--result-subtitle-font-size);
 @result-icon-font-size: var(--result-icon-font-size);
 @result-extra-margin: var(--result-extra-margin);
+@result-icon-margin: var(--result-icon-margin);
+@result-title-color: var(--result-title-color);
+@result-title-line-height: var(--result-title-line-height);
+@result-title-margin: var(--result-title-margin);
+@result-subtitle-color: var(--result-subtitle-color);
+@result-title-subtitle-height: var(--result-title-subtitle-height);
 
 // Statistic
 // ---
@@ -1165,20 +1194,25 @@
 
 // Alert
 @alert-border-radius: var(--alert-border-radius);
+@alert-border-width: var(--alert-border-width);
 @alert-icon-top: var(--alert-icon-top);
 @alert-icon-left: var(--alert-icon-left);
 @alert-with-description-icon-top: var(--alert-with-description-icon-top);
 @alert-with-description-icon-left: var(--alert-with-description-icon-left);
 @alert-message-color: var(--alert-message-color);
+@alert-message-font-size: var(--alert-message-font-size);
+@alert-message-line-height: var(--alert-message-line-height);
 @alert-text-color: var(--alert-text-color);
 @alert-padding: var(--alert-padding);
 @alert-close-wrapper-margin: var(--alert-close-wrapper-margin);
+@alert-close-wrapper-padding: var(--alert-close-wrapper-padding);
 @alert-no-icon-padding: var(--alert-no-icon-padding);
 @alert-description-line-height: var(--alert-description-line-height);
 @alert-with-description-padding: var(--alert-with-description-padding);
 @alert-with-description-message-margin: var(--alert-with-description-message-margin);
 @alert-with-description-no-icon-padding: var(--alert-with-description-no-icon-padding);
 @alert-with-description-icon-size: var(--alert-with-description-icon-size);
+@alert-with-description-message-font-size: var(--alert-with-description-message-font-size);
 
 // Lov
 @lov-selection-list-bg: transparent;
@@ -1230,12 +1264,19 @@
 @notification-padding-horizontal: var(--notification-padding-horizontal);
 @notification-padding: var(--notification-padding);
 @notification-margin-bottom: var(--notification-margin-bottom);
+@notification-description-line-height: var(--notification-description-line-height);
+@notification-description-color: var(--notification-description-color);
 @notification-message-margin-bottom: var(--notification-message-margin-bottom);
 @notification-message-line-height: var(--notification-message-line-height);
 @notification-with-icon-message-margin-left: var(--notification-with-icon-message-margin-left);
 @notification-with-icon-description-margin-left: var(--notification-with-icon-description-margin-left);
 @notification-icon-size: var(--notification-icon-size);
 @notification-icon-margin-left: var(--notification-icon-margin-left);
+@notification-icon-top: var(--notification-icon-top);
+@notification-icon-left: var(--notification-icon-left);
+@notification-close-icon-top: var(--notification-close-icon-top);
+@notification-close-icon-right: var(--notification-close-icon-right);
+@notification-closable-message-padding-right: var(--notification-closable-message-padding-right);
 
 // List
 @c7n-list-header-font-size: var(--c7n-list-header-font-size);
@@ -1253,3 +1294,22 @@
 @picture-viewer-nav-btn-size: var(--picture-viewer-nav-btn-size);
 @picture-viewer-nav-btn-size-lg: var(--picture-viewer-nav-btn-size-lg);
 @picture-icon-font-size: var(--picture-icon-font-size);
+
+// Attachment
+@attachment-sort-select-margin: var(--attachment-sort-select-margin);
+@attachment-sort-selcet-border: var(--attachment-sort-selcet-border);
+@attachment-header-divider-height: var(--attachment-header-divider-height);
+@attachment-list-item-margin: var(--attachment-list-item-margin);
+@attachment-list-item-padding: var(--attachment-list-item-padding);
+@attachment-list-item-bg: var(--attachment-list-item-bg);
+@attachment-list-item-border: var(--attachment-list-item-border);
+@attachment-list-item-container-padding: var(--attachment-list-item-container-padding);
+@attachment-picture-margin: var(--attachment-picture-margin);
+@attachment-text-picture-icon-margin: var(--attachment-text-picture-icon-margin);
+@attachment-card-button-bg: var(--attachment-card-button-bg);
+@attachment-card-button-icon-margin: var(--attachment-card-button-icon-margin);
+@attachment-card-button-icon-size: var(--attachment-card-button-icon-size);
+@attachment-card-button-line-height: var(--attachment-card-button-line-height);
+@attachment-card-button-border: var(--attachment-card-button-border);
+@attachment-drag-box-text-margin: var(--attachment-drag-box-text-margin);
+@attachment-drag-box-hint-margin: var(--attachment-drag-box-hint-margin);

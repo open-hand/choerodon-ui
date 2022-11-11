@@ -14,7 +14,7 @@
   line-height: @tag-line-height;
   white-space: nowrap;
   background-color: @tag-default-bg;
-  border: @border-width-base @border-style-base @tag-default-border-color;
+  border: @tag-border;
   border-radius: @border-radius-base;
   cursor: pointer;
   opacity: 1;
@@ -40,7 +40,7 @@
     .iconfont-size-under-12px(0.1rem);
     margin-top: -0.02rem;
     margin-left: 0.03rem;
-    font-weight: bold;
+    font-weight: @tag-close-icon-font-weight;
     cursor: pointer;
     transition: all @animation-duration-slow;
   }

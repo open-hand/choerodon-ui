@@ -42,7 +42,7 @@
     // ===================== TreeNode =====================
     .@{tree-node-prefix-cls} {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       padding: 0 0 @tree-node-padding 0;
       outline: none;
       // Disabled
@@ -118,6 +118,11 @@
         transform: rotate(-90deg);
       }
 
+      &-icon {
+        font-size: @tree-switcher-icon-size;
+        line-height: @tree-title-height;
+      }
+
       &-loading-icon {
         color: @tree-primary-color;
       }
@@ -130,8 +135,8 @@
         &::before {
           position: absolute;
           top: 0;
-          bottom: calc(-1 * @tree-node-padding);
-          margin-left: -1px;
+          bottom: @tree-line-before-bottom;
+          margin-left: @tree-line-margin-left;
           border-left: 1px solid @normal-color;
           content: ' ';
         }
@@ -139,7 +144,7 @@
           position: absolute;
           width: calc(@tree-title-height - 14px);
           height: calc(@tree-title-height - 10px);
-          margin-left: -1px;
+          margin-left: @tree-line-margin-left;
           border-bottom: 1px solid @normal-color;
           content: ' ';
         }
@@ -217,8 +222,8 @@
 
     .@{tree-node-prefix-cls}.drag-over {
       > [draggable] {
-        color: white;
-        background-color: @tree-primary-color;
+        color: @tree-drag-over-color;
+        background-color: @tree-drag-over-bg;
         opacity: 0.8;
       }
     }
@@ -245,7 +250,7 @@
             position: absolute;
             top: 0;
             right: calc(@tree-title-height / 2);
-            bottom: calc(-1 * @tree-node-padding);
+            bottom: @tree-line-before-bottom;
             border-right: 1px solid @border-color-base;
             content: '';
           }

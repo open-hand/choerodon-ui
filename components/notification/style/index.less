@@ -130,11 +130,13 @@
     }
 
     &-description {
+      color: @notification-description-color;
       font-size: @font-size-base;
+      line-height: @notification-description-line-height;
     }
 
     &-closable &-message {
-      padding-right: 0.24rem;
+      padding-right: @notification-closable-message-padding-right;
     }
 
     &-opacity {
@@ -156,9 +158,13 @@
     }
 
     &-icon {
+      &.icon {
+        font-size: @notification-icon-size;
+      }
       position: absolute;
+      top: @notification-icon-top;
+      left: @notification-icon-left;
       margin-left: @notification-icon-margin-left;
-      font-size: @notification-icon-size;
       line-height: 1;
 
       &-success {
@@ -187,8 +193,8 @@
 
     &-close {
       position: absolute;
-      top: 0.16rem;
-      right: 0.22rem;
+      top: @notification-close-icon-top;
+      right: @notification-close-icon-right;
       color: @text-color-secondary;
       outline: none;
 
