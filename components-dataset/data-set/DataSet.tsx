@@ -1362,7 +1362,7 @@ export default class DataSet extends EventManager {
   }
 
   async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
-    const data = await this.read(page, params, true);
+    const data = await this.read(page, params, true, undefined, true);
     this.appendDataFromResponse(data, parent);
     if (data) {
       const { counting, totalKey } = this;
@@ -3140,7 +3140,7 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page = 1, params?: object, more?: boolean, paging?: boolean): Promise<any> {
+  private async read(page = 1, params?: object, more?: boolean, paging?: boolean, asyncQueryChild?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
         if (!more) {
@@ -3160,7 +3160,7 @@ Then the query method will be auto invoke.`,
             const result = await this.axios(fixAxiosConfig(newConfig));
             this.performance.timing.fetchEnd = Date.now();
             runInAction(() => {
-              if (page >= 0 && !more) {
+              if (page >= 0 && !asyncQueryChild) {
                 this.currentPage = page;
               }
               const { countKey } = this;
