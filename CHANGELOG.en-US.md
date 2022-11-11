@@ -89,6 +89,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem of asynchronous loading tree table paging, click to expand and jump to the first page.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic conditions of the professional query bar are displayed and hidden.
 - 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
+- 🐞 `<pro>Table`: Fix an issue where the `editor` is not displayed when editing mode is partially `inline`.
 
 ## 1.5.6
 
