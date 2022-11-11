@@ -44,7 +44,7 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
       <div className={`${prefixCls}-list`}>
         {group.fields.map((field) => {
           const code = field.get('name');
-          const label = field.get('label');
+          const label = field.get('label') || code;
           const checked = isChecked(code);
           if (label && label.includes(searchText || '')) {
             return (

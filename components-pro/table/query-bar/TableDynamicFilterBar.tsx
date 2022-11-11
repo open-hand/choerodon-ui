@@ -1062,6 +1062,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const label = queryField && queryField.get('label') || name;
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
@@ -1087,7 +1088,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     }}
                   >
                     <span className={`${prefixCls}-filter-label`}>
-                      {queryField && queryField.get('label')}
+                      {label}
                       {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                     </span>
                     <span className={`${prefixCls}-filter-item`}>
@@ -1101,6 +1102,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const label = queryField && queryField.get('label') || name;
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
@@ -1134,7 +1136,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         }}
                       />
                       <span className={`${prefixCls}-filter-label`}>
-                        {queryField && queryField.get('label')}
+                        {label}
                         {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                       </span>
                       <span className={`${prefixCls}-filter-item`}>

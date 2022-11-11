@@ -364,6 +364,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         conditionAssign(init);
       } else if (current) {
         current.set('filterName', undefined);
+        handleQueryReset();
       }
     }
   };
