@@ -64,7 +64,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = this.props;
     if (queryDataSet && queryFields.length && defaultExpanded) {
       runInAction(() => {
-        this.moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
+        this.moreFields = this.createFields(queryFields.filter(f => !f.props.hidden).slice(queryFieldsLimit));
       });
     }
     this.processDataSetListener(true);
@@ -74,7 +74,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
     if (queryDataSet && queryFields.length && (defaultExpanded || (this.moreFields && this.moreFields.length))) {
       runInAction(() => {
-        this.moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
+        this.moreFields = this.createFields(queryFields.filter(f => !f.props.hidden).slice(queryFieldsLimit));
       });
     }
   }
