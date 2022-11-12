@@ -50,8 +50,8 @@
 // Base background color for most components
 @component-background: #fff;
 @font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
-sans-serif;
+  'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+  sans-serif;
 @font-family: 'Monospaced Number', @font-family-no-number;
 @code-family: Consolas, Menlo, Courier, monospace;
 @heading-color: fade(#000, 85%);
@@ -162,7 +162,7 @@ sans-serif;
 @shadow-2: 0 0.04rem 0.12rem @shadow-color;
 @shadow-3: 0 0 0 0.01rem @component-background;
 @shadow-4: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
-0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
+  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
 // Buttons
 @btn-font-weight: @font-weight-base;
@@ -171,7 +171,6 @@ sans-serif;
 
 @btn-hover-default-color: rgba(0, 0, 0, 0.08);
 @btn-hover-other-color: rgba(255, 255, 255, 0.08);
-
 
 @btn-danger-color: @error-color;
 @btn-danger-bg: rgba(0, 0, 0, 0);
@@ -206,9 +205,9 @@ sans-serif;
 @btn-group-spacing: 0.1rem;
 
 @btn-box-shadow: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
-0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
+  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
 @btn-focus-box-shadow: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
-0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
+  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
 @btn-active-box-shadow: @shadow-4;
 @btn-icon-size: 0.14rem;
 @btn-icon-size-lg: @font-size-lg;
@@ -829,7 +828,6 @@ sans-serif;
 @performance-table-scrollbar-handle-border-radius: 4px;
 @performance-table-scrollbar-border: none;
 
-
 // Loader
 
 @loader-spin-ring-wide: 3px;
@@ -856,7 +854,6 @@ sans-serif;
 @tree-node-padding: @padding-xs / 2;
 @tree-checkbox-height: @tree-title-height;
 @tree-active-color: @text-color;
-
 
 // Tag
 // --
@@ -912,10 +909,32 @@ sans-serif;
 
 // Card
 // ---
+@card-margin: 0;
+@card-padding: 0;
+@card-hover-shadow: none;
+@card-head-margin: 0 0 -0.01rem 0;
+@card-head-border-bottom: @border-width-base @border-style-base @border-color-split;
+@card-title-padding: @card-head-padding 0;
+@card-title-line-height: unset;
+@card-extra-padding: calc(@card-head-padding + 0.015rem) 0;
+@card-body-padding: @card-padding-base;
+@card-body-line-height: unset;
+@card-body-color: unset;
+@card-discription-color: @text-color-secondary;
+@card-cover-margin: unset;
+@card-actions-border-right: @border-width-base @border-style-base @border-color-split;
+@card-actions-margin: 0.12rem 0;
+@card-actions-padding: unset;
+@card-grid-body-padding: 0;
+@card-grid-body-margin: -0.01rem 0 0 -0.01rem;
+@card-load-body-padding: 0;
 @card-head-color: @heading-color;
 @card-head-background: @component-background;
 @card-head-padding: 0.16rem;
-@card-inner-head-padding: 0.12rem;
+@card-inner-head-padding: 0.12rem 0;
+@card-inner-head-extra-padding: 0.135rem 0;
+@card-inner-head-font-size: @font-size-base;
+@card-inner-body-padding: 0.16rem @card-padding-base;
 @card-padding-base: 0.24rem;
 @card-padding-wider: 0.32rem;
 @card-actions-background: @background-color-light;
@@ -1035,7 +1054,7 @@ sans-serif;
 @switch-button-bg: @component-background;
 @switch-box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
 @switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
 @switch-lg-loading-inner-size: 0.2rem;
 @switch-loading-inner-size: 0.16rem;
 @switch-sm-loading-inner-size: 0.12rem;
