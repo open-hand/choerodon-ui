@@ -80,12 +80,14 @@
     overflow: hidden;
     color: @text-color;
     background: @component-background;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-bottom: @transfer-header-border-bottom;
     border-radius: @border-radius-base @border-radius-base 0 0;
 
     &-title {
       position: absolute;
       right: 0.12rem;
+      font-weight: @transfer-header-title-font-weight;
+      font-size: @transfer-header-title-font-size;
     }
   }
 
@@ -99,7 +101,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 0.04rem;
+      padding: @transfer-search-wrapper-padding;
     }
   }
 

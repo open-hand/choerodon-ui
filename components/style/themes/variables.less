@@ -353,7 +353,24 @@
 @checkbox-shadow-color: var(--checkbox-shadow-color);
 @checkbox-indeterminate-bg: var(--checkbox-indeterminate-bg);
 @checkbox-indeterminate-color: var(--checkbox-indeterminate-color);
+@checkbox-indeterminate-width: var(--checkbox-indeterminate-width);
+@checkbox-indeterminate-height: var(--checkbox-indeterminate-height);
+@checkbox-indeterminate-top: var(--checkbox-indeterminate-top);
+@checkbox-indeterminate-left: var(--checkbox-indeterminate-left);
+// basic
+@checkbox-basic-disabled-color: var(--checkbox-basic-disabled-color);
+@checkbox-basic-disabled-border-color: var(--checkbox-basic-disabled-border-color);
+@checkbox-basic-indeterminate-width: var(--checkbox-basic-indeterminate-width);
+@checkbox-basic-indeterminate-height: var(--checkbox-basic-indeterminate-height);
+@checkbox-basic-indeterminate-top: var(--checkbox-basic-indeterminate-top);
+@checkbox-basic-indeterminate-left: var(--checkbox-basic-indeterminate-left);
 @checkbox-button-line-height: var(--checkbox-button-line-height);
+@checkbox-button-min-width: var(--checkbox-button-min-width);
+@checkbox-button-padding: var(--checkbox-button-padding);
+@checkbox-button-check-bg: var(--checkbox-button-check-bg);
+@checkbox-button-disabled-check-bg: var(--checkbox-button-disabled-check-bg);
+@checkbox-button-check-color: var(--checkbox-button-check-color);
+@checkbox-button-check-border-color: var(--checkbox-button-check-border-color);
 
 // DatePicker
 @date-primary-color: var(--date-primary-color);
@@ -384,9 +401,19 @@
 @radio-uncheck-hover-border-color: var(--radio-uncheck-hover-border-color);
 @radio-size: var(--radio-size);
 @radio-dot-color: var(--radio-dot-color);
+@radio-dot-distance: var(--radio-dot-distance);
+@radio-dot-size: var(--radio-dot-size);
+@radio-check-dot-color: var(--radio-check-dot-color);
 @radio-line-height: var(--radio-line-height);
 @radio-label-white-space: var(--radio-label-white-space);
 @radio-shadow-color: var(--radio-shadow-color);
+@radio-check-border-color: var(--radio-check-border-color);
+@radio-check-border-width: var(--radio-check-border-width);
+// basic
+@radio-basic-disabled-color: var(--radio-basic-disabled-color);
+@radio-basic-disabled-bg: var(--radio-basic-disabled-bg);
+@radio-basic-disabled-check-bg: var(--radio-basic-disabled-check-bg);
+@radio-basic-disabled-border-color: var(--radio-basic-disabled-border-color);
 
 // Radio buttons
 @radio-button-line-height: var(--radio-button-line-height);
@@ -394,6 +421,15 @@
 @radio-button-color: var(--radio-button-color);
 @radio-button-hover-color: var(--radio-button-hover-color);
 @radio-button-active-color: var(--radio-button-active-color);
+@radio-button-check-border-width: var(--radio-button-check-border-width);
+@radio-button-padding: var(--radio-button-padding);
+@radio-button-min-width: var(--radio-button-min-width);
+@radio-button-basic-uncheck-hover-color: var(--radio-button-basic-uncheck-hover-color);
+@radio-button-basic-padding: var(--radio-button-basic-padding);
+@radio-button-check-color: var(--radio-button-check-color);
+@radio-button-check-bg: var(--radio-button-check-bg);
+@radio-button-basic-group-spacing: var(--radio-button-basic-group-spacing);
+@radio-button-radius: var(--radio-button-radius);
 
 // Media queries breakpoints
 // Extra small screen / phone
@@ -563,9 +599,14 @@
 @input-prefix-width-base: var(--input-prefix-width-base);
 @input-prefix-color: var(--input-prefix-color);
 @input-suffix-width-base: var(--input-suffix-width-base);
+@input-suffix-height: var(--input-suffix-height);
 @input-suffix-color: var(--input-suffix-color);
+@input-suffix-hover-color: var(--input-suffix-hover-color);
+@input-suffix-error-color: var(--input-suffix-error-color);
 @input-button-width: var(--input-button-width);
 @input-addon-bg: var(--input-addon-bg);
+@input-addon-color: var(--input-addon-color);
+@input-addon-font-size: var(--input-addon-font-size);
 @input-tag-default-color: var(--input-tag-default-color);
 @input-tag-default-bg: var(--input-tag-default-bg);
 @input-tag-error-color: var(--input-tag-error-color);
@@ -593,6 +634,7 @@
 @input-multiple-height-sm: var(--input-multiple-height-sm);
 @input-multiple-margin: var(--input-multiple-margin);
 @input-multiple-padding: var(--input-multiple-padding);
+@input-multiple-input-margin-left: var(--input-multiple-input-margin-left);
 @input-float-multiple-margin: var(--input-float-multiple-margin);
 @input-float-multiple-padding: var(--input-float-multiple-padding);
 
@@ -637,6 +679,7 @@
 @error-tail-color: var(--error-tail-color);
 @steps-background: var(--steps-background);
 @steps-icon-size: var(--steps-icon-size);
+@steps-icon-font-size: var(--steps-icon-font-size);
 @steps-icon-border-width: var(--steps-icon-border-width);
 @steps-icon-border-style: var(--steps-icon-border-style);
 @steps-icon-border-color: var(--steps-icon-border-color);
@@ -645,6 +688,7 @@
 @steps-current-dot-size: var(--steps-current-dot-size);
 @steps-desciption-max-width: var(--steps-desciption-max-width);
 @steps-title-min-width: var(--steps-title-min-width);
+@steps-item-cursor: var(--steps-item-cursor);
 @step-border-color: var(--step-border-color);
 @step-wait-color: var(--step-wait-color);
 
@@ -1072,6 +1116,8 @@
 // ---
 @breadcrumb-base-color: var(--breadcrumb-base-color);
 @breadcrumb-last-item-color: var(--breadcrumb-last-item-color);
+@breadcrumb-last-item-font-size: var(--breadcrumb-last-item-font-size);
+@breadcrumb-last-item-font-weight: var(--breadcrumb-last-item-font-weight);
 @breadcrumb-font-size: var(--breadcrumb-font-size);
 @breadcrumb-icon-font-size: var(--breadcrumb-icon-font-size);
 @breadcrumb-link-color: var(--breadcrumb-link-color);
@@ -1117,7 +1163,11 @@
 @transfer-height: var(--transfer-height);
 @transfer-header-height: var(--transfer-header-height);
 @transfer-header-padding: var(--transfer-header-padding);
+@transfer-header-border-bottom: var(--transfer-header-border-bottom);
+@transfer-header-title-font-size: var(--transfer-header-title-font-size);
+@transfer-header-title-font-weight: var(--transfer-header-title-font-weight);
 @transfer-footer-height: var(--transfer-footer-height);
+@transfer-search-wrapper-padding: var(--transfer-search-wrapper-padding);
 @transfer-disabled-bg: var(--transfer-disabled-bg);
 @transfer-selected-bg: var(--transfer-selected-bg);
 @transfer-btn-height: var(--transfer-btn-height);
@@ -1285,6 +1335,11 @@
 @anchor-primary-color: var(--anchor-primary-color);
 @anchor-primary-hover-color: var(--anchor-primary-hover-color);
 @anchor-border-width: var(--anchor-border-width);
+@anchor-ball-border-width: var(--anchor-ball-border-width);
+@anchor-link-title-color: var(--anchor-link-title-color);
+@anchor-link-title-decoration: var(--anchor-link-title-decoration);
+@anchor-link-title-active-color: var(--anchor-link-title-active-color);
+@anchor-link-title-active-font-weight: var(--anchor-link-title-active-font-weight);
 
 // Select
 @select-primary-color: var(--select-primary-color);
@@ -1313,3 +1368,12 @@
 @attachment-card-button-border: var(--attachment-card-button-border);
 @attachment-drag-box-text-margin: var(--attachment-drag-box-text-margin);
 @attachment-drag-box-hint-margin: var(--attachment-drag-box-hint-margin);
+
+// Divider
+@divider-text-color: var(--divider-text-color);
+@divider-font-size-base: var(--divider-font-size-base);
+@divider-font-size-lg: var(--divider-font-size-lg);
+
+// ImageCrop
+@image-crop-avatar-preview-bg: var(--image-crop-avatar-preview-bg);
+@image-crop-avatar-preview-item-border: var(--image-crop-avatar-preview-item-border);
