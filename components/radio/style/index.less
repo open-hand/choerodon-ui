@@ -137,7 +137,7 @@ span.@{radio-prefix-cls} + * {
   min-width: @radio-button-min-width;
   height: @radio-button-line-height;
   margin: 0;
-  padding: @radio-button-basic-padding;
+  padding: @radio-basic-button-padding;
   color: @radio-button-color;
   line-height: calc(@radio-button-line-height - @border-width-base * 2);
   text-align: center;
@@ -151,7 +151,7 @@ span.@{radio-prefix-cls} + * {
   transition: all @animation-duration-slow ease;
 
   &:not(&-disabled):not(&-checked):hover {
-    color: @radio-button-basic-uncheck-hover-color;
+    color: @radio-basic-button-uncheck-hover-color;
   }
 
   a {
@@ -270,6 +270,6 @@ span.@{radio-prefix-cls} + * {
   }
 
   & + & {
-    margin-left: @radio-button-basic-group-spacing;
+    margin-left: @radio-basic-button-group-spacing;
   }
 }
