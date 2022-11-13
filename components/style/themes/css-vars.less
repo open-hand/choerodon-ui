@@ -811,6 +811,7 @@
   --popover-bg: var(--component-background);
   --popover-color: var(--text-color);
   --popover-min-width: 1.77rem;
+  --popover-min-height: 0.32rem;
   --popover-arrow-offset: 0.02rem;
   --popover-arrow-width: 0.05rem;
   --popover-arrow-color: var(--popover-bg);
@@ -819,7 +820,13 @@
   --popover-message-padding: 0.04rem 0 0.12rem;
   --popover-message-title-padding: 0 0 0 calc(var(--font-size-base) + 0.08rem);
   --popover-title-padding: 0.05rem var(--padding-md) 0.04rem;
-  --popover-innert-content-padding: 0.12rem var(--padding-md);
+  --popover-content-under-title-padding: var(--popover-title-padding);
+  --popover-title-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --popover-title-font-weight: 500;
+  --popover-title-font-size: unset;
+  --popover-inner-content-padding: 0.12rem var(--padding-md);
+  --popover-line-height: unset;
+  --popover-warning-icon-top: unset;
 
   // Modal
   // --
@@ -959,12 +966,15 @@
   --tree-switcher-icon-size: 0.18rem;
   --tree-drag-over-color: white;
   --tree-drag-over-bg: var(--tree-primary-color);
+  --tree-node-color: inherit;
+  --tree-node-hover-color: var(--tree-active-color);
+  --tree-node-selected-color: var(--tree-active-color);
 
   // TreeSelect
   --tree-select-treenode-selected-bg: var(--item-focus-bg);
   --tree-select-treenode-active-bg: var(--item-active-bg);
-  --tree-select-content-wrapper-hover: transparent;
-  --tree-select-content-wrapper-tree-node-selected: transparent;
+  --tree-select-content-wrapper-hover-color: transparent;
+  --tree-select-content-wrapper-tree-node-selected-color: transparent;
 
   // Tag
   // --
@@ -1233,9 +1243,16 @@
   --collapse-borderless-header-font-weight: unset;
   --collapse-borderless-header-font-size: var(--font-size-base);
   --collapse-borderless-header-line-height: var(--collapse-header-line-height);
+  --collapse-icon-right-border: var(--collapse-border);
+  --collapse-icon-right-item-font-size: unset;
+  --collapse-icon-right-item-border-bottom: var(--collapse-border);
+  --collapse-icon-right-content-border-top: var(--collapse-border);
   --collapse-icon-right-content-padding: 0 var(--collapse-content-padding);
   --collapse-icon-right-expand-text-padding: 0;
   --collapse-icon-right-wrapper-color: unset;
+  --collapse-icon-right-header-bg: unset;
+  --collapse-icon-right-header-color: unset;
+  --collapse-icon-right-header-border-bottom: unset;
   --collapse-expand-icon-size: var(--collapse-borderless-header-line-height);
 
   // CollapsePanel
@@ -1329,10 +1346,25 @@
   // Timeline
   --timeline-color: var(--border-color-split);
   --timeline-item-padding: 0 0 0.20rem;
+  --timeline-item-header-size: 0.1rem;
+  --timeline-item-content-top: calc(-1 * ((var(--font-size-base) * var(--line-height-base) - var(--font-size-base)) - 0.01rem));
   --timeline-item-content-padding: 0 0 0 0.18rem;
+  --timeline-item-content-line-height: unset;
+  --timeline-item-content-color: unset;
+  --timeline-item-last-content-min-height: 0.48rem;
+  --timeline-item-tail-top: 0.75em;
+  --timeline-item-tail-left: 0.04rem;
 
   // Message
   --message-notice-content-padding: 0.1rem 0.16rem;
+  --message-notice-content-color: unset;
+  --message-notice-content-line-height: var(--line-height-base);
+  --message-content-success-bg: var(--component-background);
+  --message-content-error-bg: var(--component-background);
+  --message-content-warning-bg: var(--component-background);
+  --message-content-info-bg: var(--component-background);
+  --message-content-loading-bg: var(--component-background);
+  --message-icon-top: 0.01rem;
 
   // Notification
   --notification-width: 3.84rem;

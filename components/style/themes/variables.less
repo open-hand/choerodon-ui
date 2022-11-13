@@ -727,6 +727,7 @@
 @popover-color: var(--popover-color);
 // Popover maximum width
 @popover-min-width: var(--popover-min-width);
+@popover-min-height: var(--popover-min-height);
 // Popover arrow affset
 @popover-arrow-offset: var(--popover-arrow-offset);
 // Popover arrow width
@@ -741,7 +742,13 @@
 @popover-message-padding: var(--popover-message-padding);
 @popover-message-title-padding: var(--popover-message-title-padding);
 @popover-title-padding: var(--popover-title-padding);
-@popover-inner-content-padding: var(--popover-innert-content-padding);
+@popover-content-under-title-padding: var(--popover-content-under-title-padding);
+@popover-title-border-bottom: var(--popover-title-border-bottom);
+@popover-title-font-weight: var(--popover-title-font-weight);
+@popover-title-font-size: var(--popover-title-font-size);
+@popover-inner-content-padding: var(--popover-inner-content-padding);
+@popover-line-height: var(--popover-line-height);
+@popover-warning-icon-top: var(--popover-warning-icon-top);
 
 // Modal
 // --
@@ -901,12 +908,15 @@
 @tree-switcher-icon-size: var(--tree-switcher-icon-size);
 @tree-drag-over-color: var(--tree-drag-over-color);
 @tree-drag-over-bg: var(--tree-drag-over-bg);
+@tree-node-color: var(--tree-node-color);
+@tree-node-hover-color: var(--tree-node-hover-color);
+@tree-node-selected-color: var(--tree-node-selected-color);
 
 // TreeSelect
 @tree-select-treenode-selected-bg: var(--tree-select-treenode-selected-bg);
 @tree-select-treenode-active-bg: var(--tree-select-treenode-active-bg);
-@tree-select-content-wrapper-hover: var(--tree-select-content-wrapper-hover);
-@tree-select-content-wrapper-tree-node-selected: var(--tree-select-content-wrapper-tree-node-selected);
+@tree-select-content-wrapper-hover-color: var(--tree-select-content-wrapper-hover-color);
+@tree-select-content-wrapper-tree-node-selected-color: var(--tree-select-content-wrapper-tree-node-selected-color);
 
 // Tag
 // --
@@ -1203,9 +1213,16 @@
 @collapse-borderless-header-font-weight: var(--collapse-borderless-header-font-weight);
 @collapse-borderless-header-font-size: var(--collapse-borderless-header-font-size);
 @collapse-borderless-header-line-height: var(--collapse-borderless-header-line-height);
+@collapse-icon-right-border: var(--collapse-icon-right-border);
+@collapse-icon-right-item-font-size: var(--collapse-icon-right-item-font-size);
+@collapse-icon-right-item-border-bottom: var(--collapse-icon-right-item-border-bottom);
+@collapse-icon-right-content-border-top: var(--collapse-icon-right-content-border-top);
 @collapse-icon-right-content-padding: var(--collapse-icon-right-content-padding);
 @collapse-icon-right-expand-text-padding: var(--collapse-icon-right-expand-text-padding);
 @collapse-icon-right-wrapper-color: var(--collapse-icon-right-wrapper-color);
+@collapse-icon-right-header-bg: var(--collapse-icon-right-header-bg);
+@collapse-icon-right-header-color: var(--collapse-icon-right-header-color);
+@collapse-icon-right-header-border-bottom: var(--collapse-icon-right-header-border-bottom);
 @collapse-expand-icon-size: var(--collapse-expand-icon-size);
 
 // CollapsePanel
@@ -1303,10 +1320,25 @@
 // Timeline
 @timeline-color: var(--timeline-color);
 @timeline-item-padding: var(--timeline-item-padding);
+@timeline-item-content-top: var(--timeline-item-content-top);
 @timeline-item-content-padding: var(--timeline-item-content-padding);
+@timeline-item-header-size: var(--timeline-item-header-size);
+@timeline-item-content-line-height: var(--timeline-item-content-line-height);
+@timeline-item-content-color: var(--timeline-item-content-color);
+@timeline-item-last-content-min-height: var(--timeline-item-last-content-min-height);
+@timeline-item-tail-top: var(--timeline-item-tail-top);
+@timeline-item-tail-left: var(--timeline-item-tail-left);
 
 // Message
 @message-notice-content-padding: var(--message-notice-content-padding);
+@message-notice-content-color: var(--message-notice-content-color);
+@message-notice-content-line-height: var(--message-notice-content-line-height);
+@message-content-success-bg: var(--message-content-success-bg);
+@message-content-error-bg: var(--message-content-error-bg);
+@message-content-warning-bg: var(--message-content-warning-bg);
+@message-content-info-bg: var(--message-content-info-bg);
+@message-content-loading-bg: var(--message-content-loading-bg);
+@message-icon-top: var(--message-icon-top);
 
 // Notification
 @notification-width: var(--notification-width);

@@ -174,7 +174,7 @@
       min-height: @tree-title-height;
       margin: 0;
       padding: 0 4px;
-      color: inherit;
+      color: @tree-node-color;
       line-height: @tree-title-height;
       background: transparent;
       border-radius: @border-radius-base;
@@ -182,11 +182,11 @@
       transition: all @animation-duration-slow, border 0s, line-height 0s;
 
       &:hover {
-        color: @tree-active-color;
+        color: @tree-node-hover-color;
         background-color: @tree-node-hover-bg;
       }
       &.@{tree-prefix-cls}-node-selected {
-        color: @tree-active-color;
+        color: @tree-node-selected-color;
         background-color: @tree-node-selected-bg;
       }
 

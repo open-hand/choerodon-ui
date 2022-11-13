@@ -18,8 +18,8 @@
 
     &-tail {
       position: absolute;
-      top: 0.75em;
-      left: 0.04rem;
+      top: @timeline-item-tail-top;
+      left: @timeline-item-tail-left;
       height: 100%;
       border-left: 0.02rem solid @timeline-color;
     }
@@ -34,8 +34,8 @@
 
     &-head {
       position: absolute;
-      width: 0.1rem;
-      height: 0.1rem;
+      width: @timeline-item-header-size;
+      height: @timeline-item-header-size;
       background-color: @component-background;
       border: 0.02rem solid transparent;
       border-radius: 1rem;
@@ -71,8 +71,10 @@
 
     &-content {
       position: relative;
-      top: calc(-1 * ((@font-size-base * @line-height-base - @font-size-base) - 0.01rem));
+      top: @timeline-item-content-top;
       padding: @timeline-item-content-padding;
+      color: @timeline-item-content-color;
+      line-height: @timeline-item-content-line-height;
     }
 
     &-last {
@@ -81,7 +83,7 @@
         border-left: 0.02rem dotted @timeline-color;
       }
       .@{timeline-prefix-cls}-item-content {
-        min-height: 0.48rem;
+        min-height: @timeline-item-last-content-min-height;
       }
     }
   }
