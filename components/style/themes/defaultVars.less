@@ -726,6 +726,7 @@ sans-serif;
 @popover-color: @text-color;
 // Popover maximum width
 @popover-min-width: 1.77rem;
+@popover-min-height: 0.32rem;
 // Popover arrow affset
 @popover-arrow-offset: 0.02rem;
 // Popover arrow width
@@ -740,7 +741,13 @@ sans-serif;
 @popover-message-padding: 0.04rem 0 0.12rem;
 @popover-message-title-padding: 0 0 0 @font-size-base + 0.08rem;
 @popover-title-padding: 0.05rem @padding-md 0.04rem;
+@popover-content-under-title-padding: @popover-title-padding;
+@popover-title-border-bottom: @border-width-base @border-style-base @border-color-split;
+@popover-title-font-weight: 500;
+@popover-title-font-size: unset;
 @popover-inner-content-padding: 0.12rem @padding-md;
+@popover-line-height: unset;
+@popover-warning-icon-top: unset;
 
 // Modal
 // --
@@ -903,13 +910,16 @@ sans-serif;
 @tree-switcher-icon-size: 0.18rem;
 @tree-drag-over-color: white;
 @tree-drag-over-bg: @tree-primary-color;
+@tree-node-color: inherit;
+@tree-node-hover-color: @tree-active-color;
+@tree-node-selected-color: @tree-active-color;
 
 // TreeSelect
 // ---
 @tree-select-treenode-selected-bg: @item-focus-bg;
 @tree-select-treenode-active-bg: @item-active-bg;
-@tree-select-content-wrapper-hover: transparent;
-@tree-select-content-wrapper-tree-node-selected: transparent;
+@tree-select-content-wrapper-hover-color: transparent;
+@tree-select-content-wrapper-tree-node-selected-color: transparent;
 
 // Tag
 // --
@@ -1207,9 +1217,16 @@ sans-serif;
 @collapse-borderless-header-font-weight: unset;
 @collapse-borderless-header-font-size: @font-size-base;
 @collapse-borderless-header-line-height: @collapse-header-line-height;
+@collapse-icon-right-border: @collapse-border;
+@collapse-icon-right-item-font-size: unset;
+@collapse-icon-right-item-border-bottom: @collapse-border;
+@collapse-icon-right-content-border-top: @collapse-border;
 @collapse-icon-right-content-padding: 0 @collapse-content-padding;
 @collapse-icon-right-expand-text-padding: 0; 
 @collapse-icon-right-wrapper-color: unset;
+@collapse-icon-right-header-bg: @collapse-header-bg;
+@collapse-icon-right-header-color: unset;
+@collapse-icon-right-header-border-bottom: unset;
 @collapse-expand-icon-size: @collapse-header-line-height;
 
 // CollapsePanel
@@ -1307,10 +1324,25 @@ sans-serif;
 // Timeline
 @timeline-color: @border-color-split;
 @timeline-item-padding: 0 0 0.20rem;
+@timeline-item-header-size: 0.1rem;
+@timeline-item-content-top: calc(-1 * ((@font-size-base * @line-height-base - @font-size-base) - 0.01rem));
 @timeline-item-content-padding: 0 0 0 0.18rem;
+@timeline-item-content-line-height: unset;
+@timeline-item-content-color: unset;
+@timeline-item-last-content-min-height: 0.48rem;
+@timeline-item-tail-top: 0.75em;
+@timeline-item-tail-left: 0.04rem;
 
 // Message
 @message-notice-content-padding: 0.1rem 0.16rem;
+@message-notice-content-color: unset;
+@message-notice-content-line-height: @line-height-base;
+@message-content-success-bg: @component-background;
+@message-content-error-bg: @component-background;
+@message-content-warning-bg: @component-background;
+@message-content-info-bg: @component-background;
+@message-content-loading-bg: @component-background;
+@message-icon-top: 0.01rem;
 
 // Notification
 @notification-width: 3.84rem;

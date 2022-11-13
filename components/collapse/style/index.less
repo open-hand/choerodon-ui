@@ -73,12 +73,21 @@
 
   // Expand Icon right
   &-icon-position-right {
+    border: @collapse-icon-right-border;
+
     .@{collapse-prefix-cls}-content {
       padding: @collapse-icon-right-content-padding;
+      border-top: @collapse-icon-right-content-border-top;
     }
 
     & > .@{collapse-prefix-cls}-item {
+      font-size: @collapse-icon-right-item-font-size;
+      border-bottom: @collapse-icon-right-item-border-bottom;
+
       > .@{collapse-prefix-cls}-header {
+        color: @collapse-icon-right-header-color;
+        background-color: @collapse-icon-right-header-bg;
+        border-bottom: @collapse-icon-right-header-border-bottom;
 
         .@{collapse-prefix-cls}-expand-icon-wrapper {
           float: right;
