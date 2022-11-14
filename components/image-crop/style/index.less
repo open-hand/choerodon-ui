@@ -66,7 +66,7 @@
     .icon {
       width: 0.8rem;
       height: 0.8rem;
-      color: #3f51b5;
+      color: @primary-color;
       font-size: 0.8rem;
     }
 
@@ -200,6 +200,7 @@
       flex-flow: column;
       align-items: center;
       justify-content: space-around;
+      background-color: @image-crop-avatar-preview-bg;
 
       &-title {
         margin-bottom: 0.24rem;
@@ -215,6 +216,7 @@
       i {
         display: inline-block;
         background-repeat: no-repeat;
+        border: @image-crop-avatar-preview-item-border;
         border-radius: 50%;
       }
 

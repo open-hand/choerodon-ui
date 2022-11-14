@@ -37,15 +37,20 @@
 
       &.@{c7n-prefix}-tree-treenode-selected {
         font-weight: @item-selected-font-weight;
-        background-color: @item-focus-bg;
+        background-color: @tree-select-treenode-selected-bg;
       }
 
       &.@{c7n-prefix}-tree-treenode-active {
-        background-color: @item-active-bg;
+        background-color: @tree-select-treenode-active-bg;
       }
 
       .@{c7n-prefix}-tree-node-content-wrapper {
-        background-color: transparent !important;
+        &:hover {
+          background-color: @tree-select-content-wrapper-hover-color;
+        }
+        &.c7n-tree-node-selected {
+          background-color: @tree-select-content-wrapper-tree-node-selected-color;
+        }
       }
 
       &-more {
