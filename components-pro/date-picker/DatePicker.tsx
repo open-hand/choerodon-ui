@@ -582,6 +582,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
+    const nowDate = moment();
+    if (this.getDefaultViewMode() === ViewMode.time && cursorDate.format('YYYY-MM-DD') !== nowDate.format('YYYY-MM-DD')) {
+      // 更改为当天的 时间
+      cursorDate = cursorDate.set({ 'year': nowDate.year(), 'month': nowDate.month(), 'date': nowDate.date() });
+    }
     const { min, max } = this;
     if (!this.isUnderRange(cursorDate, mode)) {
       if (min && cursorDate.isSameOrBefore(min) && selectedDate.isSameOrBefore(cursorDate)) {

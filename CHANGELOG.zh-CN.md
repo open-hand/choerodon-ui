@@ -46,6 +46,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: 优化 tooltip 显隐无规律的问题。
 - 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示。
 - 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
+- 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
