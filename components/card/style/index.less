@@ -16,10 +16,6 @@
     box-shadow: @card-hover-shadow;
   }
 
-  a {
-    color: @primary-color;
-  }
-
   &-hoverable {
     cursor: pointer;
     &:hover {
@@ -54,7 +50,6 @@
       color: @card-head-color;
       font-weight: 500;
       font-size: @font-size-lg;
-      line-height: @card-title-line-height;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -80,7 +75,6 @@
   &-body {
     padding: @card-body-padding;
     color: @card-body-color;
-    line-height: @card-body-line-height;
     .clearfix;
   }
 
@@ -146,8 +140,8 @@
 
     & > li {
       float: left;
-      margin: @card-actions-margin;
-      padding: @card-actions-padding;
+      margin: @card-actions-item-margin;
+      padding: @card-actions-item-padding;
       color: @text-color-secondary;
       text-align: center;
 
@@ -178,7 +172,7 @@
       }
 
       &:not(:last-child) {
-        border-right: @card-actions-border-right;
+        border-right: @card-actions-item-border-right;
       }
     }
   }
@@ -205,8 +199,8 @@
     background: @background-color-light;
 
     &-title {
-      padding: @card-inner-head-padding;
-      font-size: @card-inner-head-font-size;
+      padding: @card-inner-head-title-padding;
+      font-size: @card-inner-head-title-font-size;
     }
   }
 
@@ -215,7 +209,7 @@
   }
 
   &-type-inner &-extra {
-    padding: @card-inner-head-extra-padding;
+    padding: @card-inner-extra-padding;
   }
 
   &-meta {
@@ -249,7 +243,7 @@
   }
 
   &-loading &-body {
-    padding: @card-load-body-padding;
+    padding: @card-loading-body-padding;
     user-select: none;
   }
 

@@ -637,8 +637,9 @@
 @input-float-multiple-padding: 0.07rem 0;
 
 // Mentions
-@mentions-measure-line-height: @line-height-base;
+@mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
 @mentions-padding: .07rem @input-padding-horizontal;
+
 // Output
 // ---
 @output-line-height: 28 / 13; // <-- fieldHeight / fontSize
@@ -971,8 +972,8 @@
 @badge-font-weight: normal;
 @badge-status-size: 0.06rem;
 @badge-text-color: @text-color;
-@badge-background: @highlight-color;
-@badge-box-shadow: @shadow-3;
+@badge-corner-background: @highlight-color;
+@badge-corner-box-shadow: @shadow-3;
 
 // Rate
 // ---
@@ -984,29 +985,28 @@
 // ---
 @card-margin: 0;
 @card-padding: 0;
-@card-hover-shadow: none;
+@card-hover-shadow: unset;
 @card-head-margin: 0 0 -0.01rem 0;
 @card-head-border-bottom: @border-width-base @border-style-base @border-color-split;
 @card-title-padding: @card-head-padding 0;
-@card-title-line-height: unset;
 @card-extra-padding: calc(@card-head-padding + 0.015rem) 0;
 @card-body-padding: @card-padding-base;
-@card-body-line-height: unset;
 @card-body-color: unset;
 @card-discription-color: @text-color-secondary;
 @card-cover-margin: unset;
-@card-actions-border-right: @border-width-base @border-style-base @border-color-split;
-@card-actions-margin: 0.12rem 0;
-@card-actions-padding: unset;
+@card-actions-item-border-right: @border-width-base @border-style-base @border-color-split;
+@card-actions-item-margin: 0.12rem 0;
+@card-actions-item-padding: unset;
 @card-grid-body-padding: 0;
 @card-grid-body-margin: -0.01rem 0 0 -0.01rem;
-@card-load-body-padding: 0;
+@card-loading-body-padding: 0;
 @card-head-color: @heading-color;
 @card-head-background: @component-background;
 @card-head-padding: 0.16rem;
-@card-inner-head-padding: 0.12rem 0;
-@card-inner-head-extra-padding: 0.135rem 0;
-@card-inner-head-font-size: @font-size-base;
+@card-inner-head-padding: 0.12rem;
+@card-inner-head-title-padding: @card-inner-head-padding 0;
+@card-inner-head-title-font-size: @font-size-base;
+@card-inner-extra-padding: calc(@card-inner-head-padding + 0.015rem) 0;
 @card-inner-body-padding: 0.16rem @card-padding-base;
 @card-padding-base: 0.24rem;
 @card-padding-wider: 0.32rem;

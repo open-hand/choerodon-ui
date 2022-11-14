@@ -743,6 +743,10 @@
   --input-float-multiple-margin: 0 0 0 0.03rem;
   --input-float-multiple-padding: 0.07rem 0;
 
+    // Mentions
+  --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
+  --mentions-padding: .07rem var(--input-padding-horizontal);
+
   // Steps
   --process-icon-color: var(--icon-text-color);
   --process-icon-dot-bg: var(--processing-color);
@@ -1019,8 +1023,8 @@
   --badge-font-weight: normal;
   --badge-status-size: 0.06rem;
   --badge-text-color: var(--text-color);
-  --badge-background: var(--highlight-color);
-  --badge-box-shadow: var(--shadow-3);
+  --badge-corner-background: var(--highlight-color);
+  --badge-corner-box-shadow: var(--shadow-3);
 
   // Rate
   // ---
@@ -1032,30 +1036,28 @@
   // ---
   --card-margin:0;
   --card-padding: 0;
+  --card-hover-shadow: unset;
   --card-head-margin: 0 0 -0.01rem 0;
-  --card-hover-shadow: none;
-  --card-head-border-bottom: var(--border-width-base) var(--border-style-base)
-    var(--border-color-split);
+  --card-head-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
   --card-title-padding: var(--card-head-padding) 0;
-  --card-title-line-height: unset;
   --card-extra-padding: calc(var(--card-head-padding) + 0.015rem) 0;
   --card-body-padding: var(--card-padding-base);
-  --card-body-line-height: unset;
   --card-body-color: unset;
   --card-discription-color:var(--text-color-secondary);
   --card-cover-margin: unset;
-  --card-actions-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
-  --card-actions-margin: 0.12rem 0;
-  --card-actions-padding: unset;
+  --card-actions-item-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --card-actions-item-margin: 0.12rem 0;
+  --card-actions-item-padding: unset;
   --card-grid-body-padding: 0;
   --card-grid-body-margin: -0.01rem 0 0 -0.01rem;
-  --card-load-body-padding: 0;
+  --card-loading-body-padding: 0;
   --card-head-color: var(--heading-color);
   --card-head-background: var(--component-background);
   --card-head-padding: 0.16rem;
-  --card-inner-head-padding: 0.12rem 0;
-  --card-inner-head-extra-padding: + 0.135rem 0;
-  --card-inner-head-font-size: var(--font-size-base);
+  --card-inner-head-padding: 0.12rem;
+  --card-inner-head-title-padding:var(--card-inner-head-padding) 0;
+  --card-inner-head-title-font-size: var(--font-size-base);
+  --card-inner-extra-padding: calc(var(--card-inner-head-padding) + 0.015rem) 0;
   --card-inner-body-padding: 0.16rem var(--card-padding-base);
   --card-padding-base: 0.24rem;
   --card-padding-wider: 0.32rem;
@@ -1434,9 +1436,6 @@
   --picture-viewer-nav-btn-size-lg: 0.52rem;
   --picture-icon-font-size: 0.26rem;
 
-  // Mentions
-  --mentions-measure-line-height: --line-height-base;
-  --mentions-padding: .07rem --input-padding-horizontal;
   // Attachment
   --attachment-sort-select-margin: unset;
   --attachment-sort-selcet-border: unset;
