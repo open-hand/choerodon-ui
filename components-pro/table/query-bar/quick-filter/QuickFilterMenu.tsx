@@ -364,7 +364,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
         conditionAssign(init);
       } else if (current) {
         current.set('filterName', undefined);
-        handleQueryReset();
       }
     }
   };
@@ -411,7 +410,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
       const currentId = menuRecord.get('searchId').toString();
-      searchId = record.get('searchId').toString() === currentId ? undefined : currentId;
+      searchId = record.get('searchId').toString() === currentId ? null : currentId;
     }
     const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     await menuDataSet.delete(delRecord, `${$l('Table', 'whether_delete_filter')}：${record.get('searchName')}？`);
