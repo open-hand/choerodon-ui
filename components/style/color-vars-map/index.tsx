@@ -1,0 +1,1 @@
+export { defaultColorCssVarsMap } from './colorCssVarsMap';

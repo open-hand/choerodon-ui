@@ -8,18 +8,14 @@
 
 // 基础 less 变量，用于计算的中间 less 变量
 // 命名规则：@[原有 less 变量名]-calculate
+// 基础 less 变量 仅存放有 颜色 计算的 less 变量。如果基础 less 变量 有变更，需要更新变量关系：./color-vars-map/colorCssVarsMap
 
 // -------- Colors -----------
 @primary-color-calculate: @blue-6;
 @info-color-calculate: @blue-6;
 @success-color-calculate: @green-6;
-@processing-color-calculate: @primary-color-calculate;
 @error-color-calculate: @red-6;
-@error-bg-color-calculate: #fcebeb;
-@highlight-color-calculate: @red-6;
 @warning-color-calculate: @gold-6;
-@normal-color-calculate: #d9d9d9;
-@B500-calculate: #a6a6a6;
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
@@ -66,80 +62,27 @@
 @warning-3-calculate: color(~`colorPalette('@{warning-color-calculate}', 3) `);
 
 // Base Scaffolding Variables
-@body-background-calculate: #fff;
-@component-background-calculate: #fff;
-@heading-color-calculate: fade(#000, 85%);
 @text-color-calculate: fade(#000, 100%);
-@text-color-secondary-calculate: fade(#000, 45%);
-@heading-color-dark-calculate: fade(#fff, 100%);
-@text-color-dark-calculate: fade(#fff, 100%);
-@text-color-secondary-dark-calculate: fade(#fff, 65%);
-
-// The background colors for active and hover states for things like
-// list items or table cells.
-@item-active-bg-calculate: rgba(140, 158, 255, 0.12);
-@item-hover-bg-calculate: @background-color-light-calculate;
-@item-focus-bg-calculate: @background-color-light-calculate;
-@item-active-color-calculate: @text-color-calculate;
-@item-focus-color-calculate: @text-color-calculate;
 
 // LINK
 @link-color-calculate: @primary-color-calculate;
 @link-hover-color-calculate: color(~`colorPalette('@{link-color-calculate}', 5) `);
 @link-active-color-calculate: color(~`colorPalette('@{link-color-calculate}', 7) `);
 
-// Border color
-@border-color-base-calculate: #e0e0e0; // base border outline a component
-@border-color-split-calculate: hsv(0, 0, 91%); // split border inside a component
-
-// Outline
-@outline-color-calculate: @primary-color-calculate;
-
-@background-color-light-calculate: fade(#000, 4%);
-@background-color-base-calculate: hsv(0, 0, 96%);
-
-// Disabled states
-@disabled-color-calculate: fade(#000, 25%);
-@disabled-color-dark-calculate: fade(#fff, 35%);
-
-// Shadow
-@shadow-color-calculate: rgba(0, 0, 0, 0.12);
-@shadow-4-calculate: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
-  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
-
-// Buttons
-@btn-hover-default-color-calculate: rgba(0, 0, 0, 0.08);
-@btn-hover-other-color-calculate: rgba(255, 255, 255, 0.08);
-@btn-danger-bg-calculate: rgba(0, 0, 0, 0);
-@btn-disable-bg-calculate: transparent;
-
-@btn-box-shadow-calculate: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
-  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
-@btn-focus-box-shadow-calculate: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
-  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
-
 // button primary
 @btn-primary-bg-calculate: @primary-color-calculate;
-
-// button gray
-@btn-gray-bg-calculate: #f5f5f5;
-@btn-gray-focus-bg-calculate: #e6e6e6;
-@btn-gray-flat-color-calculate: #d0d0d0;
+@btn-primary-focus-bg-calculate: color(~`colorPalette('@{btn-primary-bg-calculate}', 7) `);
 
 // Checkbox
 @checkbox-color-calculate: @primary-color-calculate;
-@checkbox-border-color-calculate: fade(#000, 65%);
-@checkbox-border-width-calculate: 0.02rem;
 @checkbox-shadow-color-calculate: fade(@checkbox-color-calculate, 20%);
 
 // DatePicker
 @date-primary-color-calculate: @primary-color-calculate;
 @date-primary-hover-color-calculate: fade(@date-primary-color-calculate, 70%);
-@date-picker-active-color-calculate: #fff;
 
 // Radio
 @radio-color-calculate: @primary-color-calculate;
-@radio-border-color-calculate: rgba(0, 0, 0, 0.24);
 @radio-shadow-color-calculate: fade(@radio-color-calculate, 20%);
 
 // Radio buttons
@@ -153,14 +96,12 @@
 // Input
 @input-primary-color-calculate: @primary-color-calculate;
 @input-info-color-calculate: fade(@text-color-calculate, 54%);
-@input-placeholder-color-calculate: hsv(0, 0, 75%);
 @input-focus-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 3) `);
 @input-hover-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 5) `);
 
 // Tree
 // ---
 @tree-primary-color-calculate: @primary-color-calculate;
-@tree-directory-selected-color-calculate: #fff; // 使用了，但是directory的渲染不会走
 @tree-node-selected-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 2) `);
 @tree-focus-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 1) `);
 
@@ -174,6 +115,7 @@
 // ---
 @switch-checked-color-calculate: @primary-color-calculate;
 @switch-color-calculate: color(~`colorPalette('@{switch-checked-color-calculate}', 3) `);
+@switch-box-shadow-color-calculate: fade(@switch-color-calculate, 20%);
 
 // Skeleton
 // ---
@@ -184,9 +126,6 @@
 @anchor-primary-color-calculate: @primary-color-calculate;
 @anchor-primary-hover-color-calculate: fade(@anchor-primary-color-calculate, 70%);
 
-// Select
-@select-primary-color-calculate: @primary-color-calculate;
-
 
 // css 变量
 .mix-css-vars() when (@c7n-root-entry-name = variables) {
@@ -194,13 +133,13 @@
   --primary-color: @primary-color-calculate;
   --info-color: @info-color-calculate;
   --success-color: @success-color-calculate;
-  --processing-color: @processing-color-calculate;
+  --processing-color: var(--primary-color);
   --error-color: @error-color-calculate;
-  --error-bg-color: @error-bg-color-calculate;
-  --highlight-color: @highlight-color-calculate;
+  --error-bg-color: #fcebeb;
+  --highlight-color: @red-6;
   --warning-color: @warning-color-calculate;
-  --normal-color: @normal-color-calculate;
-  --B500: @B500-calculate;
+  --normal-color: #d9d9d9;
+  --B500: #a6a6a6;
 
   // Color used by default to control hover and active backgrounds and for
   // alert info backgrounds.
@@ -246,19 +185,19 @@
   --warning-3: @warning-3-calculate;
 
   // Base Scaffolding Variables
-  --body-background: @body-background-calculate;
-  --component-background: @component-background-calculate; // 有效
+  --body-background: #fff;
+  --component-background: #fff; // 有效
   --font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
   --font-family: 'Monospaced Number', var(--font-family-no-number);
   --code-family: Consolas, Menlo, Courier, monospace;
-  --heading-color: @heading-color-calculate;
+  --heading-color: fade(#000, 85%);
   --text-color: @text-color-calculate;
-  --text-color-secondary: @text-color-secondary-calculate;
-  --heading-color-dark: @heading-color-dark-calculate;
-  --text-color-dark: @text-color-dark-calculate;
-  --text-color-secondary-dark: @text-color-secondary-dark-calculate;
+  --text-color-secondary: fade(#000, 45%);
+  --heading-color-dark: fade(#fff, 100%);
+  --text-color-dark: fade(#fff, 100%);
+  --text-color-secondary-dark: fade(#fff, 65%);
   --font-size-base: 0.13rem;
   --font-size-lg: 0.16rem;
   --font-size-sm: 0.12rem;
@@ -290,11 +229,11 @@
 
   // The background colors for active and hover states for things like
   // list items or table cells.
-  --item-active-bg: @item-active-bg-calculate;
-  --item-hover-bg: @item-hover-bg-calculate; // 无效 存在于Tree组件的directory.less中，改样式文件没有引入使用
-  --item-focus-bg: @item-focus-bg-calculate;
-  --item-active-color: @item-active-color-calculate;
-  --item-focus-color: @item-focus-color-calculate;
+  --item-active-bg: rgba(140, 158, 255, 0.12);
+  --item-hover-bg: var(--background-color-light); // 无效 存在于Tree组件的directory.less中，改样式文件没有引入使用
+  --item-focus-bg: var(--background-color-light);
+  --item-active-color: var(--text-color);
+  --item-focus-color: var(--text-color);
   --item-drag-over-bg: var(--primary-color);
   --item-selected-font-weight: 400;
 
@@ -309,25 +248,25 @@
   --link-hover-decoration: none;
 
   // Border color
-  --border-color-base: @border-color-base-calculate;
-  --border-color-split: @border-color-split-calculate;
-  --border-width-base: 0.01rem;
-  --border-style-base: solid;
+  --border-color-base: #e0e0e0; // base border outline a component
+  --border-color-split: hsv(0, 0, 91%); // split border inside a component
+  --border-width-base: 0.01rem; // width of the border for a component
+  --border-style-base: solid; // style of a components border
 
   // Outline
   --outline-blur-size: 0;
   --outline-width: 0.02rem;
-  --outline-color: @outline-color-calculate;
-  --background-color-light: @background-color-light-calculate;
-  --background-color-base: @background-color-base-calculate;
+  --outline-color: var(--primary-color);
+  --background-color-light: fade(#000, 4%); // background of header and selected item
+  --background-color-base: hsv(0, 0, 96%); // Default grey background color
 
   // Disabled states
-  --disabled-color: @disabled-color-calculate;
+  --disabled-color: fade(#000, 25%);
   --disabled-bg: var(--background-color-base);
-  --disabled-color-dark: @disabled-color-dark-calculate;
+  --disabled-color-dark: fade(#fff, 35%);
 
   // Shadow
-  --shadow-color: @shadow-color-calculate;
+  --shadow-color: rgba(0, 0, 0, 0.12);
   --box-shadow-base: var(--shadow-1-down);
   --shadow-1-up: 0 -0.02rem 0.08rem var(--shadow-color);
   --shadow-1-down: 0 0.02rem 0.08rem var(--shadow-color);
@@ -335,22 +274,23 @@
   --shadow-1-right: 0.02rem 0 0.08rem var(--shadow-color);
   --shadow-2: 0 0.04rem 0.12rem var(--shadow-color);
   --shadow-3: 0 0 0 0.01rem var(--component-background);
-  --shadow-4: @shadow-4-calculate;
+  --shadow-4: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
+  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
   // Buttons
   --btn-font-weight: var(--font-weight-base);
   --btn-border-radius-base: var(--border-radius-base);
   --btn-border-radius-sm: var(--border-radius-base);
   //
-  --btn-hover-default-color: @btn-hover-default-color-calculate;
-  --btn-hover-other-color: @btn-hover-other-color-calculate;
+  --btn-hover-default-color: rgba(0, 0, 0, 0.08);
+  --btn-hover-other-color: rgba(255, 255, 255, 0.08);
   //
   --btn-danger-color: var(--error-color);
-  --btn-danger-bg: @btn-danger-bg-calculate;
+  --btn-danger-bg: rgba(0, 0, 0, 0);
   --btn-danger-border: var(--border-color-base);
   //
   --btn-disable-color: var(--disabled-color);
-  --btn-disable-bg: @btn-disable-bg-calculate;
+  --btn-disable-bg: transparent;
   --btn-disable-border: var(--border-color-base);
   //
   --btn-line-height: 1.5;
@@ -377,8 +317,10 @@
   --btn-group-border: var(--primary-5);
   --btn-group-spacing: 0.1rem;
   //
-  --btn-box-shadow: @btn-box-shadow-calculate;
-  --btn-focus-box-shadow: @btn-focus-box-shadow-calculate;
+  --btn-box-shadow: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
+  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
+  --btn-focus-box-shadow: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
+  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
   --btn-active-box-shadow: var(--shadow-4);
   --btn-icon-size: 0.14rem;
   --btn-icon-size-lg: var(--font-size-lg);
@@ -400,7 +342,7 @@
   --btn-primary-bg: @btn-primary-bg-calculate;
   --btn-primary-border: var(--btn-primary-bg);
   --btn-primary-focus-color: var(--btn-primary-color);
-  --btn-primary-focus-bg: color(~`colorPalette('@{btn-primary-bg-calculate}', 7) `);
+  --btn-primary-focus-bg: @btn-primary-focus-bg-calculate;
   --btn-primary-hover-color: var(--btn-primary-focus-color);
   --btn-primary-hover-bg: var(--btn-primary-focus-bg);
   --btn-primary-disabled-color: var(--btn-primary-color);
@@ -419,14 +361,14 @@
 
   // button gray
   --btn-gray-color: var(--text-color);
-  --btn-gray-bg: @btn-gray-bg-calculate;
+  --btn-gray-bg: #f5f5f5;
   --btn-gray-border: var(--btn-gray-bg);
   --btn-gray-focus-color: var(--btn-gray-color);
-  --btn-gray-focus-bg: @btn-gray-focus-bg-calculate;
+  --btn-gray-focus-bg: #e6e6e6;
   --btn-gray-hover-color: var(--btn-gray-focus-color);
   --btn-gray-hover-bg: var(--btn-gray-focus-bg);
   --btn-gray-disabled-color: var(--btn-gray-color);
-  --btn-gray-flat-color: @btn-gray-flat-color-calculate;
+  --btn-gray-flat-color: #d0d0d0;
 
   // button blue
   --btn-blue-color: var(--text-color-dark);
@@ -509,8 +451,8 @@
   // Checkbox
   --checkbox-size: 0.16rem;
   --checkbox-color: @checkbox-color-calculate;
-  --checkbox-border-color: @checkbox-border-color-calculate;
-  --checkbox-border-width: @checkbox-border-width-calculate;
+  --checkbox-border-color: fade(#000, 65%);
+  --checkbox-border-width: 0.02rem;
   --checkbox-disabled-bg: var(--input-disabled-bg);
   --checkbox-disabled-color: var(--disabled-color);
   --checkbox-disabled-border-color: var(--disabled-color);
@@ -556,11 +498,11 @@
   --date-picker-body-table-font-size: var(--font-size-lg);
   --date-picker-cell-inner-height: 0.24rem;
   --date-picker-footer-height: 0.39rem;
-  --date-picker-active-color: @date-picker-active-color-calculate;
+  --date-picker-active-color: #fff;
 
   // Radio
   --radio-color: @radio-color-calculate;
-  --radio-border-color: @radio-border-color-calculate;
+  --radio-border-color: rgba(0, 0, 0, 0.24);
   --radio-border-width: var(--border-width-base);
   --radio-disabled-color: var(--disabled-color);
   --radio-disabled-bg: var(--input-disabled-bg);
@@ -660,7 +602,7 @@
   --input-padding-vertical-base: var(--padding-vertical-base);
   --input-padding-vertical-sm: var(--padding-vertical-sm);
   --input-padding-vertical-lg: var(--padding-vertical-lg);
-  --input-placeholder-color: @input-placeholder-color-calculate;
+  --input-placeholder-color: hsv(0, 0, 75%);
   --input-info-color: @input-info-color-calculate;
   --input-active-color: var(--text-color);
   //@input-active-box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
@@ -964,13 +906,13 @@
 
   // Tree
   --tree-primary-color: @tree-primary-color-calculate;
-  --tree-bg: var(--component-background);
-  --tree-title-height: 24px;
-  --tree-child-padding: 18px;
-  --tree-directory-selected-color: @tree-directory-selected-color-calculate;
-  --tree-directory-selected-bg: var(--tree-primary-color);
-  --tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
-  --tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
+	--tree-bg: var(--component-background);
+	--tree-title-height: 24px;
+	--tree-child-padding: 18px;
+	--tree-directory-selected-color: #fff; // 使用了，但是directory的渲染不会走
+	--tree-directory-selected-bg: var(--tree-primary-color);
+	--tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
+	--tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
   --tree-focus-bg: @tree-focus-bg-calculate;
   --tree-node-padding: calc(var(--padding-xs) / 2);
   --tree-checkbox-height: var(--tree-title-height);
@@ -1192,7 +1134,7 @@
   --switch-button-bg: var(--component-background);
   --switch-disabled-button-bg: var(--switch-button-bg);
   --switch-disabled-button-check-bg: var(--switch-checked-button-bg);
-  --switch-box-shadow: 0 0 0 0.02rem fade(@switch-color-calculate, 20%);
+  --switch-box-shadow: 0 0 0 0.02rem @switch-box-shadow-color-calculate;
   --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
   0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
   --switch-button-uncheck-left: 0;
@@ -1477,7 +1419,7 @@
   --anchor-link-title-active-font-weight: normal;
 
   // Select
-  --select-primary-color: @select-primary-color-calculate;
+  --select-primary-color: var(--primary-color);
 
   // Picture
   --picture-viewer-btn-size-base: 0.24rem;
