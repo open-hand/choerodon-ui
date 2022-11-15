@@ -28,6 +28,10 @@
     display: none;
   }
 
+  &-root:not(&-horizontal) {
+    padding: @menu-not-horizontal-padding;
+  }
+
   &-item-group-title {
     padding: @menu-item-group-title-padding;
     color: @menu-item-group-title-color;
@@ -183,6 +187,12 @@
       position: absolute;
       z-index: @zindex-dropdown;
       border-radius: @border-radius-base;
+      .@{menu-prefix-cls}-item-group:not(:last-child) {
+        border-bottom: @menu-popup-item-group-border-bottom;
+      }
+      .c7n-menu-sub:not(:empty) {
+        padding: @menu-popup-sub-padding;
+      }
     }
 
     > .@{menu-prefix-cls} {
@@ -265,8 +275,17 @@
   &-horizontal {
     line-height: @menu-horizontal-line-height;
     border: 0;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-bottom: @menu-horizontal-border-bottom;
     box-shadow: none;
+
+    > .@{menu-prefix-cls}-item-selected,
+    > .@{menu-prefix-cls}-submenu-selected {
+      font-weight: @menu-horizontal-selected-font-weight;
+    }
+
+    &.@{menu-prefix-cls}-root > .@{menu-prefix-cls}-item-selected {
+      background-color: @menu-horizontal-root-selected-bg;
+    }
 
     > .@{menu-prefix-cls}-item,
     > .@{menu-prefix-cls}-submenu {
@@ -327,6 +346,10 @@
     // disable margin collapsed
     .@{menu-prefix-cls}-submenu {
       padding-bottom: 0.0001rem;
+    }
+
+    &.@{menu-prefix-cls}-root > .@{menu-prefix-cls}-submenu {
+      margin: @menu-submenu-margin;
     }
 
     > .@{menu-prefix-cls}-item,
@@ -408,6 +431,11 @@
     box-shadow: none;
   }
 
+  &-root > &-item,
+  &-submenu-title {
+    font-size: @menu-first-level-title-font-size;
+  }
+
   &-sub&-inline {
     padding: 0;
     border: 0;
@@ -430,7 +458,7 @@
   &-item-disabled,
   &-submenu-disabled {
     color: @disabled-color !important;
-    background: none;
+    background: none !important;
     border-color: transparent !important;
     cursor: not-allowed;
     > a {
