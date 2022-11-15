@@ -45,7 +45,7 @@ timeline: true
 - 💄 `<pro>Field`: Optimize lovPara query cache.
 - 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
 - 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
-- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form.
+- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state.
 - 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
 - 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
 - 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
@@ -87,7 +87,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
 - 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
 - 🐞 `<pro>Mentions`: Fix support for renderer attribute.
-- 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & misalignment of loading circle in the loading state.
+- 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & Misalignment of loading circle in the loading state & Error position display problem in the form loading status.
 - 🐞 `<pro>Table`: Fix the problem of asynchronous loading tree table paging, click to expand and jump to the first page.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic conditions of the professional query bar are displayed and hidden.
 - 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
