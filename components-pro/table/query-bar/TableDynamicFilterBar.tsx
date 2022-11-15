@@ -1062,7 +1062,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label') || name;
+                const label = queryField && queryField.get('label');
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
@@ -1102,7 +1102,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label') || name;
+                const label = queryField && queryField.get('label');
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
