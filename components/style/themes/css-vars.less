@@ -861,9 +861,14 @@
   --progress-loading-size-lg: 0.5rem;
 
   // Menu
+  --menu-first-level-title-font-size: var(--font-size-base);
   --menu-inline-toplevel-item-height: 0.4rem;
   --menu-horizontal-line-height: 0.46rem;
   --menu-horizontal-hover-bg: transparent;
+  --menu-horizontal-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --menu-horizontal-selected-font-weight: unset;
+  --menu-horizontal-root-selected-bg: unset;
+  --menu-not-horizontal-padding: unset;
   --menu-vertical-submenu-arrow-right: 0.16rem;
   --menu-item-height: 0.4rem;
   --menu-collapsed-width: 0.8rem;
@@ -876,6 +881,9 @@
   --menu-item-group-title-line-height: var(--line-height-base);
   --menu-item-padding: 0 0.16rem 0 0.28rem;
   --menu-active-line-width: 0.02rem;
+  --menu-submenu-margin: unset;
+  --menu-popup-item-group-border-bottom: unset;
+  --menu-popup-sub-padding: unset;
   // dark theme
   --menu-dark-color: var(--text-color-secondary-dark);
   --menu-dark-bg: var(--layout-header-background);
@@ -1370,6 +1378,21 @@
 
   // Upload
   --upload-picture-card-size: 0.98rem;
+  --upload-picture-card-select-border: var(--border-width-base) dashed var(--border-color-base);
+  --upload-picture-card-uploading-text-margin: 0.18rem 0 0;
+  --upload-list-picture-close-icon-top: 0.08rem;
+  --upload-list-picture-close-icon-right: 0.08rem;
+  --upload-list-item-close-icon-color: var(--text-color-secondary);
+  --upload-list-item-close-icon-hover-color: var(--text-color);
+  --upload-list-item-name-color: var(--link-color);
+  --upload-drag-icon-color: var(--primary-5);
+  --upload-drag-icon-size: 0.48rem;
+  --upload-drag-icon-margin: 0 0 0.2rem 0;
+  --upload-drag-text-color: var(--heading-color);
+  --upload-drag-text-line-height: unset;
+  --upload-drag-text-font-size: var(--font-size-lg);
+  --upload-drag-hint-color: var(--text-color-secondary);
+
 
   // Timeline
   --timeline-color: var(--border-color-split);

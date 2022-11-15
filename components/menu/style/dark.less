@@ -14,7 +14,10 @@
     }
   }
 
-  &-dark&-submenu-popup {
+  &-dark&-submenu-popup,
+  &-dark&-submenu-popup &-submenu-open,
+  &-dark&:not(&-inline) &-submenu-open,
+  &-dark&-horizontal > &-submenu &-submenu-title:hover {
     background: transparent;
   }
 

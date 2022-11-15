@@ -787,6 +787,7 @@
 
 // Menu
 // ---
+@menu-first-level-title-font-size: @font-size-base;
 @menu-inline-toplevel-item-height: 0.4rem;
 @menu-item-height: 0.4rem;
 @menu-collapsed-width: 0.8rem;
@@ -800,8 +801,16 @@
 @menu-item-padding: 0 0.16rem 0 0.28rem;
 @menu-horizontal-line-height: 0.46rem;
 @menu-horizontal-hover-bg: transparent;
+@menu-horizontal-border-bottom: @border-width-base @border-style-base @border-color-split;
+@menu-horizontal-selected-font-weight: unset;
+@menu-horizontal-root-selected-bg: unset;
+@menu-not-horizontal-padding: unset;
 @menu-vertical-submenu-arrow-right: 0.16rem;
 @menu-active-line-width: 0.02rem;
+@menu-submenu-margin: unset;
+@menu-popup-item-group-border-bottom: unset;
+@menu-popup-sub-padding: unset;
+
 // dark theme
 @menu-dark-color: @text-color-secondary-dark;
 @menu-dark-bg: @layout-header-background;
@@ -1346,6 +1355,21 @@
 
 // Upload
 @upload-picture-card-size: 0.98rem;
+@upload-picture-card-select-border: @border-width-base dashed @border-color-base;
+@upload-picture-card-uploading-text-margin: 0.18rem 0 0;
+@upload-list-picture-close-icon-top: 0.08rem;
+@upload-list-picture-close-icon-right: 0.08rem;
+@upload-list-item-close-icon-color: @text-color-secondary;
+@upload-list-item-close-icon-hover-color: @text-color;
+@upload-list-item-name-color: @link-color;
+@upload-drag-icon-color: @primary-5;
+@upload-drag-icon-size: 0.48rem;
+@upload-drag-icon-margin: 0 0 0.2rem 0;
+@upload-drag-text-color: @heading-color;
+@upload-drag-text-line-height: unset;
+@upload-drag-text-font-size: @font-size-lg;
+@upload-drag-hint-color: @text-color-secondary;
+
 
 // Timeline
 @timeline-color: @border-color-split;
