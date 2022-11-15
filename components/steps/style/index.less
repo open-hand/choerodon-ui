@@ -27,19 +27,6 @@
     padding: 0.3rem .2rem;
   }
 
-  &-dropdown-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 0.3rem;
-    height: 0.3rem;
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: @btn-box-shadow;
-    }
-  }
-
   &-dropdown {
     display: inline-block;
 
@@ -79,6 +66,7 @@
   flex: 1;
   overflow: hidden;
   vertical-align: top;
+  cursor: @steps-item-cursor;
 
   &:last-child {
     flex: none;
@@ -100,7 +88,7 @@
     height: @steps-icon-size;
     margin-right: 0.08rem;
     color: @icon-text-color;
-    font-size: @font-size-lg;
+    font-size: @steps-icon-font-size;
     font-family: @font-family-no-number;
     line-height: @steps-icon-size;
     text-align: center;
@@ -108,7 +96,7 @@
     border-radius: @steps-icon-size;
     transition: background-color @animation-duration-slow, border-color @animation-duration-slow;
 
-    >.@{steps-prefix-cls}-icon {
+    > .@{steps-prefix-cls}-icon {
       position: relative;
       top: -0.01rem;
       line-height: 1;
@@ -155,7 +143,7 @@
       left: 100%;
       display: block;
       width: 99.99rem;
-      height: 0.01rem;
+      height: @steps-tail-size;
       background: @wait-tail-color;
       content: '';
     }
@@ -170,7 +158,24 @@
   .step-item-status(process);
 
   &-process &-title {
-    font-weight: 500;
+    font-weight: @process-title-font-weight;
+  }
+
+  &-dropdown-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: @steps-item-dropdown-icon-size;
+    height: @steps-item-dropdown-icon-size;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: @btn-box-shadow;
+    }
+
+    .@{steps-prefix-cls}-icon {
+      font-size: @steps-item-dropdown-icon-font-size;
+    }
   }
 
   .step-item-status(finish);
@@ -240,11 +245,15 @@
 
 .step-item-status(@status) {
   @icon-color: '@{status}-icon-color';
+  @icon-hover-color: '@{status}-icon-hover-color';
   @icon-bg: '@{status}-icon-bg';
   @icon-dot-bg: '@{status}-icon-dot-bg';
   @icon-border-color: '@{status}-icon-border-color';
+  @icon-hover-border-color: '@{status}-icon-hover-border-color';
   @title-color: '@{status}-title-color';
+  @title-hover-color: '@{status}-title-hover-color';
   @description-color: '@{status}-description-color';
+  @description-hover-color: '@{status}-description-hover-color';
   @tail-color: '@{status}-tail-color';
 
   &-@{status} &-icon {
@@ -252,14 +261,19 @@
     background-color: @@icon-bg;
     border-color: @@icon-border-color;
 
-    >.@{steps-prefix-cls}-icon {
+    > .@{steps-prefix-cls}-icon {
       .@{steps-prefix-cls}-icon-dot {
         background-color: @@icon-dot-bg;
       }
     }
   }
 
-  &-@{status}>&-dropdown-title {
+  &-@{status}:hover &-icon {
+    color: @@icon-hover-color;
+    border-color: @@icon-hover-border-color;
+  }
+
+  &-@{status} > &-dropdown-title {
     color: @@title-color;
 
     &::after {
@@ -267,7 +281,7 @@
     }
   }
 
-  &-default>&-@{status}>&-content>&-title {
+  &-@{status} > &-content > &-title {
     color: @@title-color;
 
     &::after {
@@ -275,11 +289,19 @@
     }
   }
 
-  &-@{status}>&-content>&-description {
+  &-@{status} > &-content > &-description {
     color: @@description-color;
   }
 
-  &-@{status}>&-tail::after {
+  &-@{status}:hover > &-content > &-title {
+    color: @@title-hover-color;
+  }
+
+  &-@{status}:hover > &-content > &-description {
+    color: @@description-hover-color;
+  }
+
+  &-@{status} > &-tail::after {
     background-color: @@tail-color;
   }
 }
