@@ -45,7 +45,7 @@ timeline: true
 - 💄 `<pro>Field`: 优化 lovPara 查询缓存。
 - 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
 - 💄 `<pro>Tooltip`: 优化 tooltip 显隐无规律的问题。
-- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示。
+- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果。
 - 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
 - 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
 - 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
@@ -86,7 +86,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
 - 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
 - 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
-- 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题。
+- 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题 & Form 下 loading 态的错误位置显示问题。
 - 🐞 `<pro>Table`: 修复异步加载的树形 Table 分页点击展开跳转到第一页的问题。
 - 🐞 `<pro>Table`: 修复专业查询条动态条件显隐的问题。
 - 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。

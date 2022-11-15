@@ -46,6 +46,7 @@
 
     &.@{c7n-pro-prefix}-field {
       display: inline-flex;
+      width: auto;
       max-width: 100%;
       .@{switch-prefix-cls}-label {
         max-width: inherit;
@@ -105,8 +106,7 @@
     }
   }
 
-  &:active + &-label::after,
-  &:active + .@{c7n-prefix}-progress-loading + &-label::after {
+  &:active + &-label::after {
     width: @switch-button-active-width;
   }
 
@@ -187,8 +187,7 @@
     }
   }
 
-  &-sm &:active + &-label::after,
-  &-sm &:active + .@{c7n-prefix}-progress-loading + &-label {
+  &-sm &:active + &-label::after {
     width: @switch-sm-button-active-width;
   }
 
@@ -212,8 +211,7 @@
     }
   }
 
-  &-lg &:active + &-label::after,
-  &-lg &:active + .@{c7n-prefix}-progress-loading + &-label::after {
+  &-lg &:active + &-label::after {
     width: @switch-lg-button-active-width;
   }
 
