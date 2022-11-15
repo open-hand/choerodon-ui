@@ -105,7 +105,7 @@
 // Shadow
 @shadow-color-calculate: rgba(0, 0, 0, 0.12);
 @shadow-4-calculate: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
-0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
+  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
 
 // Buttons
 @btn-hover-default-color-calculate: rgba(0, 0, 0, 0.08);
@@ -114,9 +114,9 @@
 @btn-disable-bg-calculate: transparent;
 
 @btn-box-shadow-calculate: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
-0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
+  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
 @btn-focus-box-shadow-calculate: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
-0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
+  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
 
 // button primary
 @btn-primary-bg-calculate: @primary-color-calculate;
@@ -743,6 +743,10 @@
   --input-float-multiple-margin: 0 0 0 0.03rem;
   --input-float-multiple-padding: 0.07rem 0;
 
+    // Mentions
+  --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
+  --mentions-padding: .07rem var(--input-padding-horizontal);
+
   // Steps
   --process-icon-color: var(--icon-text-color);
   --process-icon-dot-bg: var(--processing-color);
@@ -950,13 +954,13 @@
 
   // Tree
   --tree-primary-color: @tree-primary-color-calculate;
-	--tree-bg: var(--component-background);
-	--tree-title-height: 24px;
-	--tree-child-padding: 18px;
-	--tree-directory-selected-color: @tree-directory-selected-color-calculate;
-	--tree-directory-selected-bg: var(--tree-primary-color);
-	--tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
-	--tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
+  --tree-bg: var(--component-background);
+  --tree-title-height: 24px;
+  --tree-child-padding: 18px;
+  --tree-directory-selected-color: @tree-directory-selected-color-calculate;
+  --tree-directory-selected-bg: var(--tree-primary-color);
+  --tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
+  --tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
   --tree-focus-bg: @tree-focus-bg-calculate;
   --tree-node-padding: calc(var(--padding-xs) / 2);
   --tree-checkbox-height: var(--tree-title-height);
@@ -1018,6 +1022,9 @@
   --badge-font-size-sm: var(--font-size-sm);
   --badge-font-weight: normal;
   --badge-status-size: 0.06rem;
+  --badge-text-color: var(--text-color);
+  --badge-corner-background: var(--highlight-color);
+  --badge-corner-box-shadow: var(--shadow-3);
 
   // Rate
   // ---
@@ -1027,10 +1034,31 @@
 
   // Card
   // ---
+  --card-margin:0;
+  --card-padding: 0;
+  --card-hover-shadow: unset;
+  --card-head-margin: 0 0 -0.01rem 0;
+  --card-head-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --card-title-padding: var(--card-head-padding) 0;
+  --card-extra-padding: calc(var(--card-head-padding) + 0.015rem) 0;
+  --card-body-padding: var(--card-padding-base);
+  --card-body-color: unset;
+  --card-discription-color:var(--text-color-secondary);
+  --card-cover-margin: unset;
+  --card-actions-item-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --card-actions-item-margin: 0.12rem 0;
+  --card-actions-item-padding: unset;
+  --card-grid-body-padding: 0;
+  --card-grid-body-margin: -0.01rem 0 0 -0.01rem;
+  --card-loading-body-padding: 0;
   --card-head-color: var(--heading-color);
   --card-head-background: var(--component-background);
   --card-head-padding: 0.16rem;
   --card-inner-head-padding: 0.12rem;
+  --card-inner-head-title-padding:var(--card-inner-head-padding) 0;
+  --card-inner-head-title-font-size: var(--font-size-base);
+  --card-inner-extra-padding: calc(var(--card-inner-head-padding) + 0.015rem) 0;
+  --card-inner-body-padding: 0.16rem var(--card-padding-base);
   --card-padding-base: 0.24rem;
   --card-padding-wider: 0.32rem;
   --card-actions-background:var(--background-color-light);
@@ -1144,7 +1172,7 @@
   --switch-button-bg: var(--component-background);
   --switch-box-shadow: 0 0 0 0.02rem fade(@switch-color-calculate, 20%);
   --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+    0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
   --switch-lg-loading-inner-size: 0.2rem;
   --switch-loading-inner-size: 0.16rem;
   --switch-sm-loading-inner-size: 0.12rem;

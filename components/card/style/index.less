@@ -6,9 +6,15 @@
 .@{card-prefix-cls} {
   .reset-component;
   position: relative;
+  margin: @card-margin;
+  padding: @card-padding;
   background: @component-background;
   border-radius: @border-radius-sm;
   transition: all @animation-duration-slow;
+
+  &:hover {
+    box-shadow: @card-hover-shadow;
+  }
 
   &-hoverable {
     cursor: pointer;
@@ -24,21 +30,22 @@
 
   &-head {
     min-height: @card-head-height;
-    margin-bottom: -0.01rem; // Fix card grid overflow bug: https://gw.alipayobjects.com/zos/rmsportal/XonYxBikwpgbqIQBeuhk.png
+    margin: @card-head-margin; // Fix card grid overflow bug: https://gw.alipayobjects.com/zos/rmsportal/XonYxBikwpgbqIQBeuhk.png
     padding: 0 @card-padding-base;
     background: @card-head-background;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-bottom: @card-head-border-bottom;
     border-radius: @border-radius-sm @border-radius-sm 0 0;
     .clearfix;
 
     &-wrapper {
       display: flex;
+      align-items: center;
     }
 
     &-title {
       display: inline-block;
       flex: 1;
-      padding: @card-head-padding 0;
+      padding: @card-title-padding;
       overflow: hidden;
       color: @card-head-color;
       font-weight: 500;
@@ -61,18 +68,19 @@
     float: right;
     // https://stackoverflow.com/a/22429853/3040605
     margin-left: auto;
-    padding: calc(@card-head-padding + 0.015rem) 0;
+    padding: @card-extra-padding;
     text-align: right;
   }
 
   &-body {
-    padding: @card-padding-base;
+    padding: @card-body-padding;
+    color: @card-body-color;
     .clearfix;
   }
 
   &-contain-grid &-body {
-    margin: -0.01rem 0 0 -0.01rem;
-    padding: 0;
+    margin: @card-grid-body-margin;
+    padding: @card-grid-body-padding;
   }
 
   &-grid {
@@ -114,9 +122,12 @@
     padding-bottom: 0;
   }
 
-  &-cover > * {
-    display: block;
-    width: 100%;
+  &-cover {
+    margin: @card-cover-margin;
+    > * {
+      display: block;
+      width: 100%;
+    }
   }
 
   &-actions {
@@ -129,7 +140,8 @@
 
     & > li {
       float: left;
-      margin: 0.12rem 0;
+      margin: @card-actions-item-margin;
+      padding: @card-actions-item-padding;
       color: @text-color-secondary;
       text-align: center;
 
@@ -160,7 +172,7 @@
       }
 
       &:not(:last-child) {
-        border-right: @border-width-base @border-style-base @border-color-split;
+        border-right: @card-actions-item-border-right;
       }
     }
   }
@@ -187,17 +199,17 @@
     background: @background-color-light;
 
     &-title {
-      padding: @card-inner-head-padding 0;
-      font-size: @font-size-base;
+      padding: @card-inner-head-title-padding;
+      font-size: @card-inner-head-title-font-size;
     }
   }
 
   &-type-inner &-body {
-    padding: 0.16rem @card-padding-base;
+    padding: @card-inner-body-padding;
   }
 
   &-type-inner &-extra {
-    padding: calc(@card-inner-head-padding + 0.015rem) 0;
+    padding: @card-inner-extra-padding;
   }
 
   &-meta {
@@ -226,12 +238,12 @@
     }
 
     &-description {
-      color: @text-color-secondary;
+      color: @card-discription-color;
     }
   }
 
   &-loading &-body {
-    padding: 0;
+    padding: @card-loading-body-padding;
     user-select: none;
   }
 
@@ -308,7 +320,7 @@
       border-top-color: transparent;
       border-top-style: solid;
       border-right-color: transparent;
-      border-right-style: solid;  
+      border-right-style: solid;
     }
 
     &-bottomRight::after {
