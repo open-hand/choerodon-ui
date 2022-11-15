@@ -209,6 +209,7 @@ subtitle: 表格
 | refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
+| onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
 
 #### DynamicFilterBarConfig
 

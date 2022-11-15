@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Upload`: 重新上传全状态支持。
 - 🌟 `<pro>DataSet.Field`: 新增 accept 属性。
 - 🌟 `<pro>Select`: 新增 reserveParam 属性。
+- 🌟 `<pro>Table`: 新增动态筛选条 onRefresh 回调。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。

@@ -162,6 +162,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   searchCode?: string;
   autoQuery?: boolean;
   refreshBtn?: boolean;
+  onRefresh?: () => Promise<boolean | undefined> | boolean | undefined | void;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -736,8 +737,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string): Promise<void> {
-    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
+  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string, refresh?: boolean): Promise<void> {
+    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar, onRefresh = noop } = this.props;
     const { getConfig } = this.context;
     const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
@@ -748,7 +749,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           });
           dataSet.setQueryParameter(searchText, fuzzyValue);
         }
-        dataSet.query();
+        if (refresh) {
+          if ((await onRefresh()) !== false) {
+            dataSet.query();
+          }
+        } else {
+          dataSet.query();
+        }
       } else {
         let hasFocus = false;
         for (const [key, value] of this.refEditors.entries()) {
@@ -773,7 +780,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         className={`${prefixCls}-filter-menu-query`}
         onClick={async (e) => {
           e.stopPropagation();
-          await this.modifiedCheckQuery();
+          await this.modifiedCheckQuery(undefined, undefined, true);
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
