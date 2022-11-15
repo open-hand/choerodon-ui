@@ -356,6 +356,7 @@
 // basic
 @checkbox-basic-disabled-color: @input-disabled-color;
 @checkbox-basic-disabled-border-color: @border-color-base;
+@checkbox-basic-disabled-check-border-color: @checkbox-basic-disabled-border-color;
 @checkbox-basic-indeterminate-width: calc((@checkbox-size / 14) * 8);
 @checkbox-basic-indeterminate-height: calc(@checkbox-size / 14);
 @checkbox-basic-indeterminate-top: calc((@checkbox-size - 0.04rem - @checkbox-basic-indeterminate-height) / 2);
@@ -368,6 +369,7 @@
 @checkbox-button-disabled-check-bg: @checkbox-disabled-bg;
 @checkbox-button-check-color: @text-color-dark;
 @checkbox-button-check-border-color: @checkbox-color;
+@checkbox-button-radius: @border-radius-base;
 
 // DatePicker
 @date-primary-color: @primary-color;
@@ -907,7 +909,7 @@
 @tree-primary-color: @primary-color;
 @tree-bg: @component-background;
 @tree-title-height: 0.24rem;
-@tree-child-padding: 0.18rem;;
+@tree-child-padding: 0.18rem;
 @tree-directory-selected-color: #fff;
 @tree-directory-selected-bg: @tree-primary-color;
 @tree-node-hover-bg: @item-hover-bg;
@@ -1108,6 +1110,8 @@
 // ---
 @switch-wrapper-padding: 0.03rem;
 @switch-padding-horizontal: 0;
+@switch-border: none;
+@switch-check-border-color: transparent;
 @switch-sm-wrapper-padding: 0;
 @switch-lg-wrapper-padding: @switch-wrapper-padding 0;
 @switch-min-width: 0.36rem;
@@ -1127,16 +1131,30 @@
 @switch-lg-button-active-width: 0.28rem;
 @switch-sm-checked-margin-left: 0.03rem - @switch-sm-height;
 @switch-disabled-opacity: 0.4;
+@switch-disabled-bg: @switch-bg;
+@switch-disabled-check-bg: @switch-checked-bg;
+@switch-disabled-label-color: @switch-label-color;
+@switch-disabled-label-check-color: @switch-disabled-label-color;
 @switch-label-color: @text-color-dark;
+@switch-label-check-color: @switch-label-color;
 @switch-checked-color: @primary-color;
 @switch-color: color(~`colorPalette('@{switch-checked-color}', 3) `);
 @switch-checked-bg: @switch-color;
 @switch-checked-button-bg: @switch-checked-color;
 @switch-bg: rgba(0, 0, 0, 0.38);
 @switch-button-bg: @component-background;
+@switch-disabled-button-bg: @switch-button-bg;
+@switch-disabled-button-check-bg: @switch-checked-button-bg;
 @switch-box-shadow: 0 0 0 0.02rem fade(@switch-color, 20%);
 @switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+@switch-button-uncheck-left: 0;
+@switch-button-check-left: 100%;
+@switch-button-radius: 50%;
+@switch-sm-button-uncheck-left: @switch-button-uncheck-left;
+@switch-sm-button-check-left: @switch-button-check-left;
+@switch-lg-button-uncheck-left: @switch-button-uncheck-left;
+@switch-lg-button-check-left: @switch-button-check-left;
 @switch-lg-loading-inner-size: 0.2rem;
 @switch-loading-inner-size: 0.16rem;
 @switch-sm-loading-inner-size: 0.12rem;
@@ -1146,10 +1164,14 @@
 @switch-loading-inner-distance: 0.05rem;
 @switch-sm-loading-inner-top: 0.03rem;
 @switch-sm-loading-inner-distance: 0.02rem;
+@switch-loading-stroke: @primary-color;
 @switch-checked-loading-stroke: #FFF;
 @switch-icon-font-size: 0.16rem;
 @switch-sm-icon-font-size: 0.12rem;
 @switch-lg-icon-font-size: 0.2rem;
+@switch-radius: calc(@switch-height / 2);
+@switch-sm-radius: calc(@switch-sm-height / 2);
+@switch-lg-radius: calc(@switch-lg-height / 2);
 // Pagination
 // ---
 @pagination-item-size: 0.32rem;

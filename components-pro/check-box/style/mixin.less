@@ -9,7 +9,7 @@
   border: 0.02rem solid #fff;
   border-top: 0;
   border-left: 0;
-  border-spacing: 0;
+  border-collapse: collapse;
   transform: rotate(45deg) scale(0);
   transition: all @animation-duration-fast @ease-in-back;
   content: ' ';
@@ -42,13 +42,11 @@
 
 .indeterminate() {
   &::after {
-    @indeterminate-width: calc((@checkbox-size / 16) * 8);
-    @indeterminate-height: calc((@checkbox-size / 16) * 1);
     position: absolute;
-    top: calc((@checkbox-size - @indeterminate-height - @checkbox-border-width * 2) / 2);
-    left: calc((@checkbox-size - @indeterminate-width - @checkbox-border-width * 2) / 2);
-    width: @indeterminate-width;
-    height: @indeterminate-height;
+    top: @checkbox-indeterminate-top;
+    left: @checkbox-indeterminate-left;
+    width: @checkbox-indeterminate-width;
+    height: @checkbox-indeterminate-height;
     border-color: @checkbox-indeterminate-color;
     transform: scale(1) !important;
     content: ' ';
