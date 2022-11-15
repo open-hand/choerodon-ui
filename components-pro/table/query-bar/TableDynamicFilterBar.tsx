@@ -64,7 +64,8 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
     return true;
   }
   if (isObject(newValue) && isObject(originalValue) && Object.keys(newValue).length) {
-    return Object.keys(newValue).every(key => {
+    const combineKeys = Object.keys(newValue).concat(Object.keys(originalValue));
+    return combineKeys.every(key => {
       const value = newValue[key];
       const oldValue = originalValue[key];
       if (oldValue === value) {
