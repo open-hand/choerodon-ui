@@ -528,6 +528,7 @@
   // basic
   --checkbox-basic-disabled-color: var(--input-disabled-color);
   --checkbox-basic-disabled-border-color: var(--border-color-base);
+  --checkbox-basic-disabled-check-border-color: var(--checkbox-basic-disabled-border-color);
   --checkbox-basic-indeterminate-width: calc((var(--checkbox-size) / 14) * 8);
   --checkbox-basic-indeterminate-height: calc(var(--checkbox-size) / 14);
   --checkbox-basic-indeterminate-top: calc((var(--checkbox-size) - 0.04rem - var(--checkbox-basic-indeterminate-height)) / 2);
@@ -539,6 +540,7 @@
   --checkbox-button-disabled-check-bg: var(--checkbox-disabled-bg);
   --checkbox-button-check-color: var(--text-color-dark);
   --checkbox-button-check-border-color: var(--checkbox-color);
+  --checkbox-button-radius: var(--border-radius-base);
 
   // DatePicker
   --date-primary-color: @date-primary-color-calculate;
@@ -1152,6 +1154,8 @@
   // ---
   --switch-wrapper-padding: 0.03rem;
   --switch-padding-horizontal: 0;
+  --switch-border: none;
+  --switch-check-border-color: transparent;
   --switch-sm-wrapper-padding: 0;
   --switch-lg-wrapper-padding: var(--switch-wrapper-padding) 0;
   --switch-min-width: 0.36rem;
@@ -1171,16 +1175,30 @@
   --switch-lg-button-active-width: 0.28rem;
   --switch-sm-checked-margin-left: calc(0.03rem - var(--switch-sm-height));
   --switch-disabled-opacity: 0.4;
+  --switch-disabled-bg: var(--switch-bg);
+  --switch-disabled-check-bg: var(--switch-checked-bg);
+  --switch-disabled-label-color: var(--switch-label-color);
+  --switch-disabled-label-check-color: var(--switch-disabled-label-color);
   --switch-label-color: var(--text-color-dark);
+  --switch-label-check-color: var(--switch-label-color);
   --switch-checked-color: @switch-checked-color-calculate;
   --switch-color: @switch-color-calculate;
   --switch-checked-bg: var(--switch-color);
   --switch-checked-button-bg: var(--switch-checked-color);
   --switch-bg: rgba(0, 0, 0, 0.38);
   --switch-button-bg: var(--component-background);
+  --switch-disabled-button-bg: var(--switch-button-bg);
+  --switch-disabled-button-check-bg: var(--switch-checked-button-bg);
   --switch-box-shadow: 0 0 0 0.02rem fade(@switch-color-calculate, 20%);
   --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
-    0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+  --switch-button-uncheck-left: 0;
+  --switch-button-check-left: 100%;
+  --switch-button-radius: 50%;
+  --switch-sm-button-uncheck-left: var(--switch-button-uncheck-left);
+  --switch-sm-button-check-left: var(--switch-button-check-left);
+  --switch-lg-button-uncheck-left: var(--switch-button-uncheck-left);
+  --switch-lg-button-check-left: var(--switch-button-check-left);
   --switch-lg-loading-inner-size: 0.2rem;
   --switch-loading-inner-size: 0.16rem;
   --switch-sm-loading-inner-size: 0.12rem;
@@ -1190,10 +1208,14 @@
   --switch-loading-inner-distance: 0.05rem;
   --switch-sm-loading-inner-top: 0.03rem;
   --switch-sm-loading-inner-distance: 0.02rem;
+  --switch-loading-stroke: var(--primary-color);
   --switch-checked-loading-stroke: #FFF;
   --switch-icon-font-size: 0.16rem;
   --switch-sm-icon-font-size: 0.12rem;
   --switch-lg-icon-font-size: 0.2rem;
+  --switch-radius: calc(var(--switch-height) / 2);
+  --switch-sm-radius: calc(var(--switch-sm-height) / 2);
+  --switch-lg-radius: calc(var(--switch-lg-height) / 2);
 
   // Pagination
   // ---

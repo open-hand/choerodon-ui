@@ -360,6 +360,7 @@
 // basic
 @checkbox-basic-disabled-color: var(--checkbox-basic-disabled-color);
 @checkbox-basic-disabled-border-color: var(--checkbox-basic-disabled-border-color);
+@checkbox-basic-disabled-check-border-color: var(--checkbox-basic-disabled-check-border-color);
 @checkbox-basic-indeterminate-width: var(--checkbox-basic-indeterminate-width);
 @checkbox-basic-indeterminate-height: var(--checkbox-basic-indeterminate-height);
 @checkbox-basic-indeterminate-top: var(--checkbox-basic-indeterminate-top);
@@ -371,6 +372,7 @@
 @checkbox-button-disabled-check-bg: var(--checkbox-button-disabled-check-bg);
 @checkbox-button-check-color: var(--checkbox-button-check-color);
 @checkbox-button-check-border-color: var(--checkbox-button-check-border-color);
+@checkbox-button-radius: var(--checkbox-button-radius);
 
 // DatePicker
 @date-primary-color: var(--date-primary-color);
@@ -1106,6 +1108,8 @@
 // ---
 @switch-wrapper-padding: var(--switch-wrapper-padding);
 @switch-padding-horizontal: var(--switch-padding-horizontal);
+@switch-border: var(--switch-border);
+@switch-check-border-color: var(--switch-check-border-color);
 @switch-sm-wrapper-padding: var(--switch-sm-wrapper-padding);
 @switch-lg-wrapper-padding: var(--switch-lg-wrapper-padding);
 @switch-min-width: var(--switch-min-width);
@@ -1125,15 +1129,28 @@
 @switch-lg-button-active-width: var(--switch-lg-button-active-width);
 @switch-sm-checked-margin-left: var(--switch-sm-checked-margin-left);
 @switch-disabled-opacity: var(--switch-disabled-opacity);
+@switch-disabled-bg: var(--switch-disabled-bg);
+@switch-disabled-check-bg: var(--switch-disabled-check-bg);
+@switch-disabled-label-color: var(--switch-disabled-label-color);
+@switch-disabled-label-check-color: var(--switch-disabled-label-check-color);
 @switch-label-color: var(--switch-label-color);
+@switch-label-check-color: var(--switch-label-check-color);
 @switch-checked-color: var(--switch-checked-color);
 @switch-color: var(--switch-color);
 @switch-checked-bg: var(--switch-checked-bg);
 @switch-checked-button-bg: var(--switch-checked-button-bg);
 @switch-bg: var(--switch-bg);
 @switch-button-bg: var(--switch-button-bg);
+@switch-disabled-button-bg: var(--switch-disabled-button-bg);
+@switch-disabled-button-check-bg: var(--switch-disabled-button-check-bg);
 @switch-box-shadow: var(--switch-box-shadow);
 @switch-button-box-shadow: var(--switch-button-box-shadow);
+@switch-button-uncheck-left: var(--switch-button-uncheck-left);
+@switch-button-check-left: var(--switch-button-check-left);
+@switch-button-radius: var(--switch-button-radius);
+@switch-sm-button-uncheck-left: var(--switch-sm-button-uncheck-left);
+@switch-sm-button-check-left: var(--switch-sm-button-check-left);@switch-lg-button-uncheck-left: var(--switch-lg-button-uncheck-left);
+@switch-lg-button-check-left: var(--switch-lg-button-check-left);
 @switch-lg-loading-inner-size: var(--switch-lg-loading-inner-size);
 @switch-loading-inner-size: var(--switch-loading-inner-size);
 @switch-sm-loading-inner-size: var(--switch-sm-loading-inner-size);
@@ -1143,10 +1160,14 @@
 @switch-loading-inner-distance: var(--switch-loading-inner-distance);
 @switch-sm-loading-inner-top: var(--switch-sm-loading-inner-top);
 @switch-sm-loading-inner-distance: var(--switch-sm-loading-inner-distance);
+@switch-loading-stroke: var(--switch-loading-stroke);
 @switch-checked-loading-stroke: var(--switch-checked-loading-stroke);
 @switch-icon-font-size: var(--switch-icon-font-size);
 @switch-sm-icon-font-size: var(--switch-sm-icon-font-size);
 @switch-lg-icon-font-size: var(--switch-lg-icon-font-size);
+@switch-radius: var(--switch-radius);
+@switch-sm-radius: var(--switch-sm-radius);
+@switch-lg-radius: var(--switch-lg-radius);
 // Pagination
 // ---
 @pagination-item-size: 0.32rem;

@@ -8,6 +8,14 @@
       background-color: @color;
       border-color: @color;
     }
+
+    &.@{checkbox-prefix-cls}.@{checkbox-prefix-cls}-disabled .@{checkbox-prefix-cls}-inner {
+      background-color: @checkbox-disabled-check-bg !important;
+      border-color: @checkbox-basic-disabled-border-color !important;
+      &::after {
+        border-color: @checkbox-disabled-check-color;
+      }
+    }
   }
 }
 
@@ -24,6 +32,10 @@
     vertical-align: middle;
     outline: none;
     cursor: pointer;
+
+    &-wrapper:hover &-input:not(:disabled):not(:checked) + &-inner {
+      border-color: @checkbox-uncheck-hover-border-color;
+    }
 
     &-checked::after {
       position: absolute;
@@ -65,6 +77,7 @@
         border: 0.02rem solid #fff;
         border-top: 0;
         border-left: 0;
+        border-collapse: collapse;
         transform: rotate(45deg) scale(0);
         transition: all @animation-duration-fast @ease-in-back;
         content: ' ';
@@ -114,8 +127,8 @@
     }
 
     .@{checkbox-inner-prefix-cls} {
-      background-color: @input-disabled-bg !important;
-      border-color: @border-color-base !important;
+      background-color: @checkbox-disabled-bg !important;
+      border-color: @checkbox-basic-disabled-border-color !important;
       &::after {
         border-color: @input-disabled-bg;
         animation-name: none;
@@ -123,7 +136,7 @@
     }
 
     & + span {
-      color: @input-disabled-color;
+      color: @checkbox-basic-disabled-color;
       cursor: not-allowed;
     }
   }
@@ -181,13 +194,11 @@
 
   // 半选状态
   .@{checkbox-prefix-cls}-indeterminate .@{checkbox-inner-prefix-cls}::after {
-    @indeterminate-width: calc((@checkbox-size / 14) * 8);
-    @indeterminate-height: calc(@checkbox-size / 14);
     position: absolute;
-    top: calc((@checkbox-size - 0.04rem - @indeterminate-height) / 2);
-    left: calc((@checkbox-size - 0.03rem - @indeterminate-width) / 2);
-    width: @indeterminate-width;
-    height: @indeterminate-height;
+    top: @checkbox-basic-indeterminate-top;
+    left: @checkbox-basic-indeterminate-left;
+    width: @checkbox-basic-indeterminate-width;
+    height: @checkbox-basic-indeterminate-height;
     transform: scale(1);
     content: ' ';
   }
