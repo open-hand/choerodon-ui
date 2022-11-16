@@ -293,14 +293,14 @@ export default class Button extends DataSetComponent<ButtonProps> {
     } else if (isArrayLike(tooltip)){
       const tooltipType = tooltip[0];
       const buttonTooltipProps = tooltip[1] || {};
-      const { mouseEnterDelay } = buttonTooltipProps;
+      const duration: number = (buttonTooltipProps.mouseEnterDelay || 0.1) * 1000;
       if (tooltipType === ButtonTooltip.always || (tooltipType === ButtonTooltip.overflow && isOverflow(element))) {
         show(element, {
           theme: getTooltipTheme('button'),
           placement: getTooltipPlacement('button'),
           title: buttonTooltipProps.title ? buttonTooltipProps.title : children,
           ...buttonTooltipProps,
-        }, mouseEnterDelay);
+        }, duration);
         this.isTooltipShown = true;
       }
     }
@@ -314,8 +314,8 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { tooltip = getTooltip('button') } = this.props;
     if(isArrayLike(tooltip)) {
       const buttonTooltipProps = tooltip[1] || {};
-      const { mouseLeaveDelay } = buttonTooltipProps;
-      hide(mouseLeaveDelay);
+      const duration: number = (buttonTooltipProps.mouseLeaveDelay || 0.1) * 1000;
+      hide(duration);
     } else {
       hide();
     }

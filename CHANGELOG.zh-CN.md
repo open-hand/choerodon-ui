@@ -90,6 +90,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复专业查询条动态条件显隐的问题。
 - 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。
 - 🐞 `<pro>Table`: 修改 inline 编辑模式部分情况下 editor 不显示的问题。
+- 🐞 `<pro>Table.Column`: 修复 tooltipProps 延时属性支持。
 
 ## 1.5.6
 

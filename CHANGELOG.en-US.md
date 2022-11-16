@@ -91,6 +91,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the dynamic conditions of the professional query bar are displayed and hidden.
 - 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
 - 🐞 `<pro>Table`: Fix an issue where the `editor` is not displayed when editing mode is partially `inline`.
+- 🐞 `<pro>Table.Column`: Fix `tooltipProps` delayed property support.
 
 ## 1.5.6
 
