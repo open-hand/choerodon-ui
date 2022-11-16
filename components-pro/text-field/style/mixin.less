@@ -95,6 +95,11 @@
   transition-duration: @animation-duration-slow;
   transition-property: opacity, color, background-color, border;
 
+  &:placeholder-shown {
+    color: @input-placeholder-color;
+    text-overflow: ellipsis;
+  }
+
   &-compact:not(:last-child) {
     margin-right: -@border-width-base;
     border-right-width: @border-width-base;

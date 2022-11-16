@@ -48,7 +48,6 @@ timeline: true
 - 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state.
 - 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
 - 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
-- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
