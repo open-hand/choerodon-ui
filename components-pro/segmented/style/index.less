@@ -11,6 +11,7 @@
   display: flex;
   width: fit-content;
   padding: @segmented-padding;
+  color: @segmented-color;
   background: @segmented-bg;
   border-radius: @border-radius-base;
 
@@ -20,27 +21,6 @@
 
     &&-fullwidth {
       display: flex;
-    }
-  }
-
-  &-sm {
-    font-size: @font-size-sm;
-
-    .@{segmented-prefix} {
-      padding: @segmented-padding-sm;
-    }
-
-    .@{pro-radio-prefix-cls}-button {
-      padding: @segmented-item-padding-sm;
-      line-height: @segmented-item-line-height-sm;
-    }
-  }
-
-  &-lg {
-    font-size: @font-size-lg;
-
-    .@{pro-radio-prefix-cls}-button {
-      line-height: @segmented-item-line-height-lg;
     }
   }
 
@@ -78,6 +58,7 @@
 
   .@{pro-radio-prefix-cls}-button {
     margin: 0;
+    line-height: @segmented-item-line-height-base;
     background: transparent;
 
     + .@{pro-radio-prefix-cls}-button {
@@ -116,7 +97,33 @@
     }
   }
 
+  &-sm {
+    font-size: @font-size-sm;
+
+    .@{segmented-prefix} {
+      padding: @segmented-padding-sm;
+    }
+
+    .@{pro-radio-prefix-cls}-button {
+      padding: @segmented-item-padding-sm;
+      line-height: @segmented-item-line-height-sm;
+    }
+  }
+
+  &-lg {
+    font-size: @font-size-lg;
+
+    .@{pro-radio-prefix-cls}-button {
+      line-height: @segmented-item-line-height-lg;
+    }
+  }
+
   .@{pro-radio-prefix-cls} {
+    // 选中项的字体颜色及大小，类名选择沿用了 Radio 层级选择
+    &-button .@{pro-radio-prefix-cls}:not(:disabled):checked + .@{pro-radio-prefix-cls}-inner + span {
+      color: @segmented-checked-color;
+      font-weight: @segmented-checked-font-weight;
+    }
     &:disabled + .@{pro-radio-prefix-cls}-inner {
       background-color: transparent;
       border-color: @segmented-interval-border-color !important;
