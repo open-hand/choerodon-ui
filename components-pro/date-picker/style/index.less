@@ -51,6 +51,29 @@
 
     .@{date-picker-prefix}-time {
       width: 40%;
+      border-left: @date-picker-datetime-time-border-left;
+    }
+  }
+  
+  &-time {
+    .@{date-picker-prefix}-body {
+      padding: @date-picker-datetime-time-padding;
+      .@{date-picker-prefix}-cell {
+        &:hover {
+          background: @date-picker-datetime-time-cell-hover-bg;
+        }
+        .@{date-picker-prefix}-cell-inner:hover {
+          background: @date-picker-datetime-time-cell-inner-hover-bg;
+        }
+  
+        &.@{date-picker-prefix}-selected {
+          background: @date-picker-datetime-time-selected-bg;
+          .@{date-picker-prefix}-cell-inner {
+            color: @date-picker-datetime-time-selected-cell-inner-color;
+            background: @date-picker-datetime-time-selected-cell-inner-bg;
+          }
+        }
+      }
     }
   }
 
@@ -66,6 +89,7 @@
     th {
       width: 0.33rem;
       padding: 0.06rem 0;
+      color: @date-picker-th-color;
       font-weight: normal;
       line-height: 0.18rem;
       text-align: center;
@@ -86,7 +110,7 @@
       text-align: center;
       background-color: transparent;
       border: @border-width-base @border-style-base transparent;
-      border-radius: @border-radius-sm;
+      border-radius: @date-picker-cell-inner-border-radius;
       cursor: pointer;
       transition: background @animation-duration-slow ease;
 
@@ -116,7 +140,7 @@
 
   &-today &-cell-inner {
     color: @date-primary-color;
-    font-weight: bold;
+    font-weight: @date-picker-today-font-weight;
     border-color: @date-primary-color;
   }
 
@@ -132,8 +156,8 @@
 
   &-disabled &-cell-inner {
     width: auto;
-    color: #bcbcbc;
-    background: @disabled-bg;
+    color: @date-picker-disabled-cell-inner-color;
+    background: @date-picker-disabled-cell-inner-bg;
     border: @border-width-base @border-style-base transparent;
     border-radius: 0;
     cursor: not-allowed;
@@ -169,7 +193,7 @@
 
   &-month-panel &-cell-inner,
   &-year-panel &-cell-inner {
-    display: inline-table;
+    display: @date-picker-month-year-cell-inner-display;
     padding: 0 0.06rem;
   }
 
@@ -215,7 +239,7 @@
   &-view-select {
     padding: 0 0.02rem;
     color: @text-color;
-    font-weight: bold;
+    font-weight: @date-picker-view-select-font-weight;
     line-height: 0.34rem;
   }
 
@@ -312,7 +336,7 @@
   }
 
   &-time-panel {
-    height: 2.10rem;
+    height: @date-picker-time-panel-height;
 
     &-inner {
       position: relative;
@@ -358,6 +382,7 @@
   &-time-focus-active {
     position: absolute;
     top: 350%;
+    display: @date-picker-time-focus-active-display;
     border: @border-width-base @border-style-base @input-border-color;
   }
 
