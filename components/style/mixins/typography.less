@@ -18,60 +18,72 @@
 // =============== Common ===============
 .typography-paragraph(){
   &:not(.@{c7n-pro-prefix}-field){
-    margin-bottom: 0.13rem;
+    margin-bottom: @typography-paragraph-margin-bottom;
   }
 }
 
-.typography-title(@fontSize; @fontWeight; @lineHeight; @headingColor; @headingMarginBottom;) {
+.typography-title(@fontSize; @fontWeight; @lineHeight; @headingColor; @headingMarginBottom; @headingMarginTop; @headingFontFamily;) {
+  margin-top: @headingMarginTop;
   margin-bottom: @headingMarginBottom;
   color: @headingColor;
   font-weight: @fontWeight;
   font-size: @fontSize;
+  font-family: @headingFontFamily;
   line-height: @lineHeight;
 }
 
 .typography-title-1() {
   .typography-title(
     @heading-1-size,
-    @typography-title-font-weight,
-    1.23,
-    @heading-color,
-    @typography-title-margin-bottom
+    @typography-title-1-font-weight,
+    @typography-title-1-line-height,
+    @typography-title-1-color,
+    @typography-title-1-margin-bottom,
+    @typography-title-1-margin-top,
+    @typography-title-1-font-family
   );
 }
 .typography-title-2() {
   .typography-title(
     @heading-2-size,
-    @typography-title-font-weight,
-    1.35,
-    @heading-color,
-    @typography-title-margin-bottom
+    @typography-title-2-font-weight,
+    @typography-title-2-line-height,
+    @typography-title-2-color,
+    @typography-title-2-margin-bottom,
+    @typography-title-2-margin-top,
+    @typography-title-2-font-family
   );
 }
 .typography-title-3() {
   .typography-title(
     @heading-3-size,
-    @typography-title-font-weight,
-    1.35,
-    @heading-color,
-    @typography-title-margin-bottom
+    @typography-title-3-font-weight,
+    @typography-title-3-line-height,
+    @typography-title-3-color,
+    @typography-title-3-margin-bottom,
+    @typography-title-3-margin-top,
+    @typography-title-3-font-family
   );
 }
 .typography-title-4() {
   .typography-title(
     @heading-4-size,
-    @typography-title-font-weight,
-    1.4,
-    @heading-color,
-    @typography-title-margin-bottom
+    @typography-title-4-font-weight,
+    @typography-title-4-line-height,
+    @typography-title-4-color,
+    @typography-title-4-margin-bottom,
+    @typography-title-4-margin-top,
+    @typography-title-4-font-family
   );
 }
 .typography-title-5() {
   .typography-title(
     @heading-5-size,
-    @typography-title-font-weight,
-    1.5,
-    @heading-color,
-    @typography-title-margin-bottom
+    @typography-title-5-font-weight,
+    @typography-title-5-line-height,
+    @typography-title-5-color,
+    @typography-title-5-margin-bottom,
+    @typography-title-5-margin-top,
+    @typography-title-5-font-family
   );
 }

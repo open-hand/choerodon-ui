@@ -39,7 +39,7 @@
   &&-text,
   &&-link,
   &&-paragraph {
-    line-height: 2.15384615;
+    line-height: @typography-line-height;
   }
 
   // Tag
@@ -149,7 +149,7 @@
     padding: 0.022rem 0.04rem 0.01rem;
     font-size: 85%;
     background: rgba(150, 150, 150, 0.1);
-    border: 0.01rem solid rgba(100, 100, 100, 0.2);
+    border: @typography-code-border;
     border-radius: 0.03rem;
   }
 
@@ -165,7 +165,7 @@
 
   mark {
     padding: 0;
-    background-color: @gold-3;
+    background-color: @typography-mark-bg;
   }
 
   u,
@@ -188,7 +188,7 @@
   &-copy {
     .operation-unit();
 
-    margin-left: 0.04rem;
+    margin-left: @typography-operation-margin-left;
   }
 
   &-copy-success {
@@ -251,7 +251,7 @@
   }
 
   blockquote {
-    padding: 0 0 0 0.1rem;
+    padding: @typography-blockquote-padding;
     border-left: 0.04rem solid rgba(100, 100, 100, 0.2);
     opacity: 0.85;
   }
