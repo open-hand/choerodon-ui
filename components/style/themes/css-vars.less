@@ -686,10 +686,21 @@
   --input-multiple-input-margin-left: 0.04rem;
   --input-float-multiple-margin: 0 0 0 0.03rem;
   --input-float-multiple-padding: 0.07rem 0;
+  // Input basic
+  --input-basic-height: 0.36rem;
 
     // Mentions
   --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
   --mentions-padding: .07rem var(--input-padding-horizontal);
+
+  // Output
+  // ---
+  --output-line-height: 28 / 13; // <-- fieldHeight / fontSize
+  --output-font-weight: var(--font-weight-base);
+  --output-word-break: normal;
+  --output-white-space: normal;
+  --output-float-label-font-size: 0.12rem;
+  --output-float-label-line-height: 0.18rem;
 
   // Steps
   --process-icon-color: var(--icon-text-color);
@@ -1234,6 +1245,7 @@
   --transfer-header-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
   --transfer-header-title-font-size: unset;
   --transfer-header-title-font-weight: unset;
+  --transfer-body-with-search-padding-top: calc(var(--input-height-base) + 0.08rem);
   --transfer-footer-height: 0.32rem;
   --transfer-search-wrapper-padding: 0.04rem;
   --transfer-disabled-bg: var(--disabled-bg);

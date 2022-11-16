@@ -327,7 +327,7 @@
     opacity: 1;
   }
 
-  &-wrapper:hover &-suffix .icon,
+  &-wrapper:not(&-disabled):hover &-suffix .icon,
   &-wrapper&-focused &-suffix .icon {
     color: @input-suffix-hover-color;
   }

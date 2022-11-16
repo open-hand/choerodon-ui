@@ -639,7 +639,8 @@
 @input-multiple-input-margin-left: var(--input-multiple-input-margin-left);
 @input-float-multiple-margin: var(--input-float-multiple-margin);
 @input-float-multiple-padding: var(--input-float-multiple-padding);
-
+// Input basic
+@input-basic-height: var(--input-basic-height);
 
 // Mentions
 @mentions-measure-padding: var(--mentions-measure-padding);
@@ -647,12 +648,12 @@
 
 // Output
 // ---
-@output-line-height: 28 / 13; // <-- fieldHeight / fontSize
-@output-font-weight: @font-weight-base;
-@output-word-break: normal;
-@output-white-space: normal;
-@output-float-label-font-size: 0.12rem;
-@output-float-label-line-height: 0.18rem;
+@output-line-height: var(--output-line-height); // <-- fieldHeight / fontSize
+@output-font-weight: var(--output-font-weight);
+@output-word-break: var(--output-word-break);
+@output-white-space: var(--output-white-space);
+@output-float-label-font-size: var(--output-float-label-font-size);
+@output-float-label-line-height: var(--output-float-label-line-height);
 
 // Steps
 @process-icon-color: var(--process-icon-color);
@@ -1259,6 +1260,7 @@
 @transfer-header-border-bottom: var(--transfer-header-border-bottom);
 @transfer-header-title-font-size: var(--transfer-header-title-font-size);
 @transfer-header-title-font-weight: var(--transfer-header-title-font-weight);
+@transfer-body-with-search-padding-top: var(--transfer-body-with-search-padding-top);
 @transfer-footer-height: var(--transfer-footer-height);
 @transfer-search-wrapper-padding: var(--transfer-search-wrapper-padding);
 @transfer-disabled-bg: var(--transfer-disabled-bg);
