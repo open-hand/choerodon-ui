@@ -396,7 +396,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const getAutoCenterConfig = props.autoCenter || context.getConfig('modalAutoCenter');
+      const getAutoCenterConfig = 'autoCenter' in props ? props.autoCenter : context.getConfig('modalAutoCenter');
       const {
         drawerTransitionName = context.getConfig('drawerTransitionName'),
         drawer,

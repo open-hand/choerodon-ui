@@ -91,6 +91,8 @@ timeline: true
 - 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。
 - 🐞 `<pro>Table`: 修改 inline 编辑模式部分情况下 editor 不显示的问题。
 - 🐞 `<pro>Table.Column`: 修复 tooltipProps 延时属性支持。
+- 🐞 `<pro>Table`: 修复树形表格开启 rowHeight 为 auto 导致的样式问题。
+- 🐞 `<pro>Modal`: 修复嵌入的 Modal 设置 autoCenter 为 false 时设置 top 样式不生效的问题。
 
 ## 1.5.6
 
