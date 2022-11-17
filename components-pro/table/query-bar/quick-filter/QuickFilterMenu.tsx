@@ -263,6 +263,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
+        queryDataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
@@ -276,6 +277,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
+        queryDataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
