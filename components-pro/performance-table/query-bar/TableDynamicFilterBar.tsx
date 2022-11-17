@@ -41,7 +41,6 @@ import ColumnFilter from '../tool-bar/ColumnFilter';
 import { DynamicFilterBarConfig } from '../Table';
 import { Suffixes } from '../../table/Table';
 import { ValueChangeAction } from '../../text-field/enum';
-import { iteratorFilterToArray } from '../../_util/iteratorUtils';
 import QuickFilterMenu from '../../table/query-bar/quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from '../../table/query-bar/quick-filter/QuickFilterMenuContext';
 import { ConditionDataSet, QuickFilterDataSet } from '../../table/query-bar/quick-filter/QuickFilterDataSet';
@@ -58,12 +57,13 @@ function isSelect(data) {
   return data[0] !== '__dirty' && !isEmpty(data[1]);
 }
 
-export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
+export function isEqualDynamicProps(originalValue, newValue, dataSet, record, name?: string) {
   if (isEqual(newValue, originalValue)) {
     return true;
   }
   if (isObject(newValue) && isObject(originalValue) && Object.keys(newValue).length) {
-    return Object.keys(newValue).every(key => {
+    const combineKeys = Object.keys(newValue).concat(Object.keys(originalValue));
+    return combineKeys.every(key => {
       const value = newValue[key];
       const oldValue = originalValue[key];
       if (oldValue === value) {
@@ -71,6 +71,9 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
       }
       if (isEmpty(oldValue) && isEmpty(value)) {
         return true;
+      }
+      if (name && name.includes('.')) {
+        return isEmpty(oldValue) && isEmpty(record!.get(name))
       }
       if (isNumber(oldValue) || isNumber(value)) {
         const oEp = isNumber(oldValue) ? isEmpty(oldValue) : isEnumEmpty(oldValue);
@@ -81,6 +84,11 @@ export function isEqualDynamicProps(originalValue, newValue, dataSet, record) {
         return String(oldValue) === String(value);
       }
       const field = dataSet.getField(key);
+      if (field && field.get('range', record)) {
+        const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+        const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+        return rangeValue === rangeOldValue;
+      }
       if (field && field.get('lovCode') && oldValue && value) {
         const valueField = dataSet.getField(key).get('valueField', record);
         const textField = dataSet.getField(key).get('textField', record);
@@ -293,16 +301,37 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 筛选条件更新 触发表格查询
    */
   @autobind
-  handleDataSetUpdate({ record }) {
+  async handleDataSetUpdate({ record, name, oldValue, value }) {
     const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
+    const field = queryDataSet && queryDataSet.getField(name);
+    let shouldQuery = true;
+    if (field && field.get('range', record)) {
+      const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
+      const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
+      shouldQuery = rangeValue !== rangeOldValue;
+    }
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
-    if (autoQuery) {
-      dataSet.query();
-      onQuery();
+    if (autoQuery && shouldQuery) {
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
+        if (queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
+          dataSet.query();
+          onQuery();
+        } else {
+          let hasFocus = false;
+          for (const [key, value] of this.refEditors.entries()) {
+            if (value && !value.valid && !hasFocus) {
+              this.refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
+      } else {
+        record.init(name, oldValue);
+      }
     }
   }
 
@@ -755,11 +784,39 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
+ * 查询字段初始顺序
+ * 排除动态属性影响
+ */
+  get originOrderQueryFields(): Field[] {
+    const { queryDataSet } = this.props;
+    const result: Field[] = [];
+    if (queryDataSet) {
+      const { fields, props: { fields: propFields = [] } } = queryDataSet;
+      const cloneFields: Map<string, Field> = fields.toJS();
+      propFields.forEach(({ name }) => {
+        if (name) {
+          const field = cloneFields.get(name);
+          if (field && !field.get('bind') && !field.get('name').includes('__tls')) {
+            result.push(field);
+          }
+        }
+      });
+    }
+    return result;
+  }
+
+  /**
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
     const { tableStore: { proPrefixCls } } = this.context;
-    const { queryFieldsLimit = 3, queryFields, queryDataSet, fuzzyQueryOnly } = this.props;
+    const { queryFieldsLimit = 3, queryFields, dataSet, queryDataSet, fuzzyQueryOnly } = this.props;
+    const menuDataSet = dataSet.getState(MENUDATASET);
+    const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
+    let fieldsLimit = queryFieldsLimit;
+    if (isTenant) {
+      fieldsLimit = 0;
+    }
     const selectFields = queryDataSet.getState(SELECTFIELDS) || [];
     if (fuzzyQueryOnly) {
       return (
@@ -841,7 +898,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: iteratorFilterToArray(queryDataSet.fields.values(), f => !f.get('bind') && !f.get('name').includes('__tls')).slice(queryFieldsLimit),
+                          fields: isTenant ? [...queryDataSet.fields.values()] : this.originOrderQueryFields.slice(fieldsLimit),
                         }]}
                         prefixCls={`${proPrefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}
