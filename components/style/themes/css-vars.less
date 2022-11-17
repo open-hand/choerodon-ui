@@ -578,6 +578,7 @@
   --label-wrapper-padding: var(--label-wrapper-padding-vertical) var(--label-wrapper-padding-horizontal);
   --label-vertical-wrapper-padding-vertical: 0;
   --label-output-wrapper-padding-vertical: 0.01rem;
+  --label-basic-line-height: 34 / 13;
   --field-help-color: var(--text-color-secondary);
   --field-icon-help-color: var(--text-color-secondary);
   --form-item-wrapper-padding-vertical: 0.1rem;
@@ -703,7 +704,14 @@
   --input-float-multiple-margin: 0 0 0 0.03rem;
   --input-float-multiple-padding: 0.07rem 0;
   // Input basic
+  --input-number-handler-inner-distance: -0.05rem;
   --input-basic-height: 0.36rem;
+  --input-basic-autofill-height: 0.32rem;
+  --input-basic-hover-border-color: var(--input-color);
+  --input-basic-focus-border-width: 0.02rem;
+  --input-basic-focus-border-color: var(--primary-color);
+  --input-basic-disabled-border-style: dashed;
+  --input-basic-disabled-bg: unset;
 
     // Mentions
   --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
@@ -1179,8 +1187,10 @@
   --switch-button-active-width: 0.24rem;
   --switch-sm-button-active-width: 0.2rem;
   --switch-lg-button-active-width: 0.28rem;
-  --switch-sm-checked-margin-left: calc(0.03rem - var(--switch-sm-height));
+  --switch-checked-margin-left: calc(-1 * var(--switch-height));
+  --switch-sm-checked-margin-left: calc(-1 * var(--switch-sm-height));
   --switch-disabled-opacity: 0.4;
+  --switch-basic-disabled-opacity: var(--switch-disabled-opacity);
   --switch-disabled-bg: var(--switch-bg);
   --switch-disabled-check-bg: var(--switch-checked-bg);
   --switch-disabled-label-color: var(--switch-label-color);
@@ -1228,6 +1238,10 @@
   --pagination-size-changer-not-editable-border-color: transparent;
   --pagination-size-changer-margin: 0;
   --pagination-quick-jumper-margin: 0 0 0 .2rem;
+  --pagination-quick-jumper-border-color: transparent;
+  --pagination-color: unset;
+  --pagination-pager-height: var(--btn-circle-size);
+  --pagination-pager-min-width: none;
 
   // Breadcrumb
   // ---
@@ -1288,6 +1302,8 @@
   --transfer-basic-header-padding: 0.06rem var(--control-padding-horizontal);
   --transfer-basic-body-search-wrapper-padding: 0.04rem;
   --transfer-basic-list-item-margin: 0;
+  --transfer-basic-list-item-padding: 0.06rem var(--control-padding-horizontal);
+  --transfer-search-action-right: 0.04rem;
 
   // Skeleton
   // ---

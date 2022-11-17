@@ -137,7 +137,7 @@
     &::before,
     &::after {
       left: 100%;
-      margin-left: -0.19rem;
+      margin-left: @switch-checked-margin-left;
       background-color: @switch-checked-color;
     }
 
@@ -149,7 +149,7 @@
 
   &-loading,
   &-disabled {
-    opacity: @switch-disabled-opacity;
+    opacity: @switch-basic-disabled-opacity;
     pointer-events: none;
   }
 }

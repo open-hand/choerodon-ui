@@ -2,6 +2,7 @@
 @import '../../../components/style/mixins/index';
 
 .@{c7n-pro-prefix}-pagination {
+  color: @pagination-color;
   line-height: 0.3rem;
 
   > * {
@@ -26,7 +27,8 @@
   }
 
   &-pager {
-    height: @btn-circle-size;
+    min-width: @pagination-pager-min-width;
+    height: @pagination-pager-height;
   }
 
   &-quick-jumper {
@@ -36,7 +38,7 @@
       display: inline-block;
       padding-right: .05rem;
       line-height: 1;
-      border: @border-width-base @border-style-base transparent;
+      border: @border-width-base @border-style-base @pagination-quick-jumper-border-color;
       border-radius: @input-border-radius;
       transition: border @animation-duration-slow;
 
