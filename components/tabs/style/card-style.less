@@ -19,24 +19,25 @@
   &&-card > &-bar &-nav-container {
     align-self: flex-end;
     height: @tabs-card-height;
+    font-size: @tabs-card-font-size;
   }
   &&-card > &-bar &-ink-bar {
     display: none;
   }
   &&-card > &-bar &-tab {
     margin: 0;
-    margin-right: 0.02rem;
+    margin-right: @tabs-card-tab-margin-right;
     padding: @tabs-card-tab-padding;
     line-height: calc(@tabs-card-height - 0.02rem);
     background: @tabs-card-head-background;
     border: @tabs-card-tab-border;
     border-bottom: 0;
-    border-radius: @border-radius-base @border-radius-base 0 0;
+    border-radius: @tabs-card-border-radius;
     transition: all @animation-duration-slow @ease-in-out;
   }
   &&-card > &-bar &-tab-active {
     color: @tabs-card-active-color;
-    background: @component-background;
+    background: @tabs-active-background;
     border-color: @border-color-split;
   }
   &&-card > &-bar &-tab-inactive {
