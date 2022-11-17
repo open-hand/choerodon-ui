@@ -34,8 +34,12 @@
   &-item {
     display: flex;
     align-items: center;
-    padding-top: 0.12rem;
-    padding-bottom: 0.12rem;
+    padding-top: @list-padding-top-base;
+    padding-bottom: @list-padding-bottom-base;
+
+    &:nth-of-type(2n) {
+      background: @list-item-even-background;
+    }
     &-meta {
       display: flex;
       flex: 1;
@@ -61,7 +65,7 @@
         }
       }
       &-description {
-        color: @text-color-secondary;
+        color: @list-description-color;
         font-size: @font-size-base;
         line-height: 1.67;
       }
@@ -131,12 +135,13 @@
 
   &-header,
   &-footer {
-    padding-top: 0.12rem;
-    padding-bottom: 0.12rem;
+    padding-top: @list-padding-top-base;
+    padding-bottom: @list-padding-bottom-base;
   }
 
   &-header {
-    font-size: @c7n-list-header-font-size;
+    color: @list-header-color;
+    font-size: @list-header-font-size;
   }
 
   &-empty {
@@ -147,14 +152,14 @@
   }
 
   &-split &-item {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
     &:last-child {
       border-bottom: none;
     }
   }
 
   &-split &-header {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
   }
 
   &-loading &-spin-nested-loading {
@@ -162,17 +167,17 @@
   }
 
   &-something-after-last-item &-item:last-child {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
   }
 
   &-lg &-item {
-    padding-top: 0.16rem;
-    padding-bottom: 0.16rem;
+    padding-top: @list-padding-top-lg;
+    padding-bottom: @list-padding-bottom-lg;
   }
 
   &-sm &-item {
-    padding-top: 0.08rem;
-    padding-bottom: 0.08rem;
+    padding-top: @list-padding-top-sm;
+    padding-bottom: @list-padding-bottom-sm;
   }
 
   &-vertical &-item {

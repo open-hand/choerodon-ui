@@ -4,10 +4,21 @@
   .@{list-prefix-cls}-header,
   .@{list-prefix-cls}-footer,
   .@{list-prefix-cls}-item {
-    padding-right: 0.24rem;
-    padding-left: 0.24rem;
+    padding-right: @list-padding-right-base;
+    padding-left:@list-padding-left-base;
+  }
+  .@{list-prefix-cls}-header {
+    border-bottom: @border-width-base @border-style-base @border-color-base;
   }
   .@{list-prefix-cls}-item {
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+
+    &:nth-of-type(2n) {
+      background: transparent;
+    }
+  }
+
+  &.@{list-prefix-cls}-something-after-last-item .@{list-prefix-cls}-item:last-child {
     border-bottom: @border-width-base @border-style-base @border-color-split;
   }
 
@@ -17,19 +28,19 @@
 
   &.@{list-prefix-cls}-sm {
     .@{list-prefix-cls}-item {
-      padding-right: 0.16rem;
-      padding-left: 0.16rem;
+      padding-right: @list-padding-right-sm;
+      padding-left: @list-padding-left-sm;
     }
     .@{list-prefix-cls}-header,
     .@{list-prefix-cls}-footer {
-      padding: 0.08rem 0.16rem;
+      padding: @list-padding-top-sm @list-padding-left-sm @list-padding-bottom-sm @list-padding-right-sm;
     }
   }
 
   &.@{list-prefix-cls}-lg {
     .@{list-prefix-cls}-header,
     .@{list-prefix-cls}-footer {
-      padding: 0.16rem 0.24rem;
+      padding: @list-padding-top-lg @list-padding-left-lg @list-padding-bottom-lg @list-padding-right-lg;
     }
   }
 }
