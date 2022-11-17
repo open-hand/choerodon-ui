@@ -27,7 +27,7 @@
       &-action {
         position: absolute;
         top: 0.04rem;
-        right: 0.04rem;
+        right: @transfer-search-action-right;
         bottom: 0.04rem;
         width: 0.28rem;
         color: @disabled-color;
@@ -98,7 +98,7 @@
       &-item {
         min-height: 0.32rem;
         margin: @transfer-basic-list-item-margin;
-        padding: 0.06rem @control-padding-horizontal;
+        padding: @transfer-basic-list-item-padding;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -163,6 +163,10 @@
 
       .@{iconfont-css-prefix} {
         font-size: 0.12rem;
+      }
+
+      + .@{c7n-prefix}-btn {
+        margin-left: 0;
       }
     }
   }

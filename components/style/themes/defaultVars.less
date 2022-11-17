@@ -527,6 +527,7 @@
 @label-wrapper-padding: @label-wrapper-padding-vertical @label-wrapper-padding-horizontal;
 @label-vertical-wrapper-padding-vertical: 0;
 @label-output-wrapper-padding-vertical: 0.01rem;
+@label-basic-line-height: 34 / 13;
 @field-help-color: @text-color-secondary;
 @field-icon-help-color: @text-color-secondary;
 @form-item-wrapper-padding-vertical: 0.1rem;
@@ -653,7 +654,14 @@
 @input-float-multiple-margin: 0 0 0 0.03rem;
 @input-float-multiple-padding: 0.07rem 0;
 // Input basic
+@input-number-handler-inner-distance: -0.05rem;
 @input-basic-height: 0.36rem;
+@input-basic-autofill-height: 0.32rem;
+@input-basic-hover-border-color: @input-color;
+@input-basic-focus-border-width: 0.02rem;
+@input-basic-focus-border-color: @primary-color;
+@input-basic-disabled-border-style: dashed;
+@input-basic-disabled-bg: unset;
 
 // Mentions
 @mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
@@ -1184,8 +1192,10 @@
 @switch-button-active-width: 0.24rem;
 @switch-sm-button-active-width: 0.2rem;
 @switch-lg-button-active-width: 0.28rem;
-@switch-sm-checked-margin-left: 0.03rem - @switch-sm-height;
+@switch-checked-margin-left: -@switch-height;
+@switch-sm-checked-margin-left: -@switch-sm-height;
 @switch-disabled-opacity: 0.4;
+@switch-basic-disabled-opacity: @switch-disabled-opacity;
 @switch-disabled-bg: @switch-bg;
 @switch-disabled-check-bg: @switch-checked-bg;
 @switch-disabled-label-color: @switch-label-color;
@@ -1237,6 +1247,10 @@
 @pagination-size-changer-not-editable-border-color: transparent;
 @pagination-size-changer-margin: 0;
 @pagination-quick-jumper-margin: 0 0 0 .2rem;
+@pagination-quick-jumper-border-color: transparent;
+@pagination-color: unset;
+@pagination-pager-height: @btn-circle-size;
+@pagination-pager-min-width: none;
 
 // Breadcrumb
 // ---
@@ -1308,6 +1322,8 @@
 @transfer-basic-header-padding: 0.06rem @control-padding-horizontal;
 @transfer-basic-body-search-wrapper-padding: 0.04rem;
 @transfer-basic-list-item-margin: 0;
+@transfer-basic-list-item-padding: 0.06rem @control-padding-horizontal;
+@transfer-search-action-right: 0.04rem;
 
 // Skeleton
 // ---

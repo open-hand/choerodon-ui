@@ -203,7 +203,7 @@
 
   &:-webkit-autofill {
     width: ~'calc(100% - .04rem)';
-    height: 0.32rem;
+    height: @input-basic-autofill-height;
     margin: 0.02rem;
     text-indent: -0.02rem;
     border-radius: 0.04rem;
@@ -235,25 +235,26 @@
   }
 
   &-has-border:hover::before {
-    border-color: @input-color;
+    border-color: @input-basic-hover-border-color;
   }
 
   &-focused &-has-border::before,
   &-focused&-has-border::before,
   .has-error &-wrapper::before {
-    border-width: 0.02rem;
+    border-width: @input-basic-focus-border-width;
   }
   &-focused &-has-border::before,
   &-focused&-has-border::before {
-    border-color: @input-primary-color;
+    border-color: @input-basic-focus-border-color;
   }
   .has-error &-has-border::before {
     border-color: @error-color;
   }
   &-disabled &-has-border::before,
   &-disabled&-has-border::before {
+    background-color: @input-basic-disabled-bg;
     border-color: @input-border-color !important;
-    border-style: dashed;
+    border-style: @input-basic-disabled-border-style;
   }
 }
 
@@ -261,7 +262,7 @@
   &-label {
     padding: 0;
     color: @label-color;
-    line-height: 34 / 13; // <-- fieldHeight / fontSize
+    line-height: @label-basic-line-height; // <-- fieldHeight / fontSize
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
