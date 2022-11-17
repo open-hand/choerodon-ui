@@ -92,6 +92,8 @@ timeline: true
 - 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
 - 🐞 `<pro>Table`: Fix an issue where the `editor` is not displayed when editing mode is partially `inline`.
 - 🐞 `<pro>Table.Column`: Fix `tooltipProps` delayed property support.
+- 🐞 `<pro>Table`: Fix the style problem caused by turning `rowHeight` of tree table to auto.
+- 🐞 `<pro>Modal`: Fix the problem that setting the top style does not work when the embedded Modal setting `autoCenter` is false.
 
 ## 1.5.6
 

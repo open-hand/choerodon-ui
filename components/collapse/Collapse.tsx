@@ -128,7 +128,6 @@ export default class Collapse extends Component<CollapseProps, any> {
       expandIconPosition,
       trigger,
       ghost,
-      collapsible,
     } = this.props;
     const { getPrefixCls, getConfig } = this.context;
     const prefixCls = getPrefixCls('collapse', customizePrefixCls);
@@ -166,7 +165,6 @@ export default class Collapse extends Component<CollapseProps, any> {
         expandIconPosition={expandIconPositionCof}
         prefixCls={prefixCls}
         className={collapseClassName}
-        trigger={collapsible}
       >
         {this.renderItems()}
       </RcCollapse>
