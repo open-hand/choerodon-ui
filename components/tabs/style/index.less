@@ -80,6 +80,7 @@
 
     .@{tab-prefix-cls}-nav .@{tab-prefix-cls}-tab {
       padding: @tab-groups-horizontal-padding;
+      font-size: @tabs-groups-tab-font-size;
     }
   }
 
@@ -100,7 +101,7 @@
       white-space: nowrap;
       border-radius: @tabs-groups-group-item-border-radius;
       cursor: pointer;
-      
+
       &-active {
         color: @tabs-groups-group-item-active-color;
       }
@@ -192,6 +193,8 @@
     &.@{tab-prefix-cls}-tab-arrow-show {
       width: @tab-scrolling-size;
       height: 100%;
+      border: @tabs-arrow-show-border;
+      border-bottom: none;
       opacity: 1;
       pointer-events: auto;
     }
@@ -645,10 +648,11 @@
     top: -0.1rem;
     right: -0.1rem;
     display: inline-block;
-    width: 0.12rem;
-    height: 0.12rem;
+    width: @tabs-badge-content-size;
+    height: @tabs-badge-content-size;
     padding-top: 0.01rem;
     color: @text-color-dark;
+    line-height: @tabs-badge-content-size;
     text-align: center;
     background-color: @error-color;
     border-radius: 0.014rem;

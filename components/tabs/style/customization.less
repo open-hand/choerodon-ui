@@ -70,6 +70,9 @@
         &-text {
           overflow: hidden;
           text-overflow: ellipsis;
+          .icon {
+            margin: @tabs-customization-text-icon-margin;
+          }
         }
 
         &-default {
@@ -108,7 +111,8 @@
       }
 
       &-drag-icon {
-        color: @text-color-secondary;
+        margin: @tabs-customization-drag-icon-margin;
+        color: @tabs-customization-drag-icon-color;
       }
 
       &-dragging {
