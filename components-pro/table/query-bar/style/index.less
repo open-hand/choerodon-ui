@@ -1,7 +1,6 @@
 @import '../../../../components/style/themes/default';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
-@table-border: @border-width-base @border-style-base @table-border-color;
 @table-row-search-bg: @table-row-group-title-bg;
 
 .@{table-prefix-cls} {
@@ -182,6 +181,9 @@
         font-size: 0.16rem;
         background-color: #fafafa;
         border-radius: 0.02rem;
+        &:hover {
+          color: @table-dynamic-filter-refresh-icon-hover-color;
+        }
       }
     }
   }
@@ -217,7 +219,7 @@
     flex-wrap: wrap;
     width: 100%;
     margin: 0.08rem 0 0;
-    padding: 0.01rem 0.06rem;
+    padding: @table-dynamic-filter-wrapper-padding;
     background: rgba(232, 232, 232, 0.20);
     border-radius: 0.01rem;
 
@@ -234,8 +236,13 @@
     cursor: pointer;
 
     &:hover {
-      background-color: @table-dynamic-filter-content-hover-bg;
+      color: @table-dynamic-filter-add-fields-hover-color;
+      background-color: @table-dynamic-filter-add-fields-hover-bg;
       border-radius: 0.02rem;
+    }
+
+    i {
+      margin: @table-dynamic-filter-add-fields-icon-margin;
     }
   }
 
@@ -255,7 +262,7 @@
     margin: 0 0.12rem;
     padding: 0;
     color: @success-color;
-    line-height: @line-height-base;
+    line-height: @table-dynamic-filter-status-line-height;
     text-align: center;
     background: rgba(32, 212, 137, 0.12);
     border: none;
@@ -527,14 +534,19 @@
       flex-shrink: 0;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: @table-professionalBar-query-button-padding;
+      padding: @table-professional-query-button-padding;
 
       &-vertical {
         padding: 0.3rem 0 0.1rem 0.7rem;
       }
 
       span {
+        line-height: @table-professional-query-button-inner-line-height;
         vertical-align: baseline;
+      }
+
+      .@{table-prefix-cls}-professional-query-more {
+        border: @table-professional-query-more-button-border;
       }
     }
   }
@@ -715,7 +727,7 @@
   &-combo-filter-menu-button-singleLine-divide {
     width: 0.01rem;
     height: 0.18rem;
-    margin: 0.08rem 0.08rem 0.06rem 0.08rem;
+    margin: @table-combo-filter-single-line-divide-margin;
     background-color: @border-color-split;
   }
 
@@ -727,8 +739,7 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    margin-top: 0.04rem;
-    margin-left: 0.08rem;
+    margin: @table-combo-filter-content-margin;
     cursor: pointer;
 
     &-disabled {
@@ -743,7 +754,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.04rem 0 0;
+    margin: @table-combo-filter-wrapper-margin;
     border-radius: 0.01rem;
 
     span, input {
@@ -788,6 +799,9 @@
     display: flex;
     flex-shrink: 0;
     margin-top: 0.08rem;
+    .@{c7n-pro-prefix}-btn-secondary {
+      background: @table-combo-filter-menu-reset-button-bg;
+    }
   }
 
   &-combo-filter-buttons {
