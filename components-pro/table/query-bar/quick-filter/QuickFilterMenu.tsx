@@ -309,7 +309,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 未选择或清除筛选项
        * 重置初始勾选项及初始赋值
        */
+      if (tempQueryFields) {
+        runInAction(() => {
+          queryDataSet.fields = tempQueryFields;
+        });
+      }
       queryDataSet.locate(0);
+      menuDataSet.current = undefined;
       const first = queryDataSet.get(0);
       if (first) {
         first.reset();
