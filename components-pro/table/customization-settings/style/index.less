@@ -17,7 +17,7 @@
       display: flex;
       align-items: flex-start;
       width: 100%;
-      padding: .03rem 0 .03rem;
+      padding: @table-customization-tree-treenode-padding;
       outline: none;
 
       &-hover-button {
@@ -52,7 +52,7 @@
         flex: 1;
         align-items: center;
         width: 100%;
-        height: .32rem;
+        height: @table-customization-tree-treenode-content-height;
         min-height: .24rem;
         margin: 0;
         padding: .04rem 0;
@@ -66,6 +66,7 @@
         display: flex;
         flex: 1;
         align-items: center;
+        margin: @table-customization-tree-treenode-title-margin;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -81,9 +82,9 @@
       &-switcher {
         flex: none;
         width: .22rem;
-        height: .32rem;
+        height: @table-customization-tree-treenode-switcher-height;
         margin: 0;
-        padding: .05rem 0;
+        padding: @table-customization-tree-treenode-switcher-padding;
         line-height: 1;
         text-align: center;
         vertical-align: top;
@@ -108,7 +109,7 @@
       }
 
       &-dragging {
-        background-color: @component-background;
+        background-color: @table-customization-tree-treenode-dragging-bg-color;
         box-shadow: @shadow-4;
       }
     }

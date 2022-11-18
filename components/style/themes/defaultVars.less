@@ -844,11 +844,24 @@
 
 // Table
 // --
+@table-border: @border-width-base @border-style-base @table-border-color;
+@table-outermost-border-top: @table-border;
+@table-outermost-border-bottom: @table-border;
+@table-cell-border-right: @border-width-base @border-style-base transparent;
+@table-cell-border-bottom: @table-border;
+@table-outermost-bordered-border-right: @table-border;
+@table-outermost-bordered-border-left: @table-border;
+@table-tfoot-cell-border-top: @table-border;
+@table-tfoot-cell-border-right: @table-border;
+@table-thead-cell-border-right: @table-border;
+@table-thead-cell-border-bottom: @table-border;
+@table-buttons-menu-item-btn-height: @menu-item-height;
 @table-header-bg: @background-color-light;
 @table-header-color: @heading-color;
 @table-header-font-weight: 700;
 @table-header-sort-bg: @background-color-base;
 @table-row-hover-bg: @item-hover-bg;
+@table-row-hover-editable-bg: unset;
 @table-current-row-bg: @item-active-bg;
 @table-even-row-bg: fade(#000, 2%);
 @table-cell-focus-bg: fade(#000, 8%);
@@ -882,6 +895,13 @@
 @table-editable-cell-disabled-border-color: @input-disabled-color;
 @table-customization-select-view-option-bg: fade(#000, 8%);
 @table-customization-form-padding-vertical: 0.05rem;
+@table-customization-button-color: unset;
+@table-customization-tree-treenode-padding: 0.03rem 0;
+@table-customization-tree-treenode-title-margin: unset;
+@table-customization-tree-treenode-content-height: 0.32rem;
+@table-customization-tree-treenode-switcher-height: @table-customization-tree-treenode-content-height;
+@table-customization-tree-treenode-switcher-padding: 0.05rem 0;
+@table-customization-tree-treenode-dragging-bg-color: @component-background;
 @table-border-color: @border-color-base;
 @table-row-group-title-bg: #f5f5f5;
 @table-row-group-title-color: inherit;
@@ -890,22 +910,34 @@
 @table-icon-help-content: '\e8fd';
 @table-icon-help-size: @icon-font-size-base;
 @table-icon-help-font-weight: inherit;
-@table-combo-add-fields-hover-bg: fade(@primary-color, 10%);
-@table-combo-filter-name-select-hover-bg: fade(@primary-color, 10%);
-@table-border: @border-width-base @border-style-base @table-border-color;
 @table-dynamic-filter-label-color: #6A6A6A;
 @table-dynamic-filter-placeholder-color: @table-dynamic-filter-label-color;
 @table-dynamic-filter-input-padding: 0.02rem;
 @table-dynamic-filter-content-hover-bg: rgba(0, 0, 0, .05);
-@table-professionalBar-query-button-padding: 0.1rem 0 0.1rem 0.7rem;
+@table-dynamic-filter-status-line-height: @line-height-base;
+@table-dynamic-filter-refresh-icon-hover-color: unset;
+@table-dynamic-filter-wrapper-padding: 0.01rem 0.06rem;
+@table-dynamic-filter-add-fields-hover-bg: @table-dynamic-filter-content-hover-bg;
+@table-dynamic-filter-add-fields-hover-color: unset;
+@table-dynamic-filter-add-fields-icon-margin: unset;
+@table-professional-query-button-padding: 0.1rem 0 0.1rem 0.7rem;
+@table-professional-query-button-inner-line-height: unset;
+@table-professional-query-more-button-border: unset;
+@table-combo-filter-wrapper-margin: 0.04rem 0 0;
+@table-combo-filter-content-margin: 0.04rem 0 0 0.08rem;
+@table-combo-filter-single-line-divide-margin: 0.08rem 0.08rem 0.06rem 0.08rem;
+@table-combo-filter-menu-reset-button-bg: @btn-secondary-bg;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
 @performance-table-active-row-bg: rgb(240 243 255);
 @performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
 @performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
-@performance-table-scrollbar-handle-border-radius: 4px;
+@performance-table-scrollbar-handle-active-bg: @performance-table-scrollbar-handle-bg;
+@performance-table-scrollbar-handle-border-radius: 0.04rem;
 @performance-table-scrollbar-border: none;
+@performance-table-scrollbar-handle-horizontal-height: 0.08rem;
+@performance-table-scrollbar-handle-vertical-width: 0.08rem;
 
 // Loader
 
