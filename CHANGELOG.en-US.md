@@ -94,6 +94,8 @@ timeline: true
 - 🐞 `<pro>Table.Column`: Fix `tooltipProps` delayed property support.
 - 🐞 `<pro>Table`: Fix the style problem caused by turning `rowHeight` of tree table to auto.
 - 🐞 `<pro>Modal`: Fix the problem that setting the top style does not work when the embedded Modal setting `autoCenter` is false.
+- 🐞 `<pro>IntlField`: Fixed an issue where the input field could not be resized more than once when the `resize` property was set to `both`.
+- 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
 
 ## 1.5.6
 
