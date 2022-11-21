@@ -20,7 +20,7 @@ class AjaxUploader extends Component {
     if (originReuploadItem && originReuploadItem !== null) {
       // Upload 文件重新上传的替换操作只考虑单个文件
       const targetFile = files[0];
-      onReUpload(targetFile);
+      targetFile ? onReUpload(targetFile) : null;
     } else {
       this.uploadFiles(files);
       this.reset();
