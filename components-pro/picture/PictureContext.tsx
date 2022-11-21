@@ -32,9 +32,16 @@ export const PictureProvider: FunctionComponent<PictureProviderProps> = (props) 
     }
   }, [pictureList]);
   const preview = useCallback((index: number) => {
+    const originalList = pictureList.current;
+    const list =  originalList.filter((picture) => picture && picture.src) as PictureRef[];
+    let defaultIndex = index;
+    if (list.length !== originalList.length) {
+      const currentImgSrc = originalList[index]?.src;
+      defaultIndex = list.findIndex(({src}) => src === currentImgSrc);
+    }
     modalPreview({
-      defaultIndex: index,
-      list: pictureList.current.filter((picture) => picture && picture.src) as PictureRef[],
+      defaultIndex,
+      list,
     });
   }, [pictureList]);
   const value = useMemo(() => ({

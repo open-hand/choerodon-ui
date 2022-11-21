@@ -95,6 +95,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复嵌入的 Modal 设置 autoCenter 为 false 时设置 top 样式不生效的问题。
 - 🐞 `<pro>IntlField`: 修复设置 resize 属性为 both 时, 无法多次调整输入框大小的问题。
 - 🐞 `<pro>Mentions`: 修复设置 split 属性大于一个字符时, split 会显示双份的问题。
+- 🐞 `<pro>Picture`: 修复 preview 属性导致的预览报错问题。
 
 ## 1.5.6
 

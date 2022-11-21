@@ -96,6 +96,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that setting the top style does not work when the embedded Modal setting `autoCenter` is false.
 - 🐞 `<pro>IntlField`: Fixed an issue where the input field could not be resized more than once when the `resize` property was set to `both`.
 - 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
+- 🐞 `<pro>Picture`: Fixed the preview error caused by the `preview` property.
 
 ## 1.5.6
 
