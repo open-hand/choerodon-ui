@@ -780,7 +780,9 @@ export default class TableComboBar extends Component<TableComboBarProps> {
    * 查询前修改提示及校验定位
    */
   async modifiedCheckQuery(): Promise<void> {
-    const { dataSet, queryDataSet, queryFields } = this.props;
+    const { tableStore: { getConfig } } = this.context;
+    const { dataSet, queryDataSet, queryFields, comboFilterBar } = this.props;
+    const searchText = comboFilterBar && comboFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const hasQueryFields = queryDataSet && queryFields.length > 0;
     if (
       ((await dataSet.modifiedCheck(undefined, dataSet, 'query')) &&
@@ -789,6 +791,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
         (await queryDataSet.current.validate())) ||
       !hasQueryFields
     ) {
+      dataSet.setQueryParameter(searchText, dataSet.getState(SEARCHTEXT));
       dataSet.query();
     } else {
       let hasFocus = false;
@@ -831,14 +834,9 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       queryDataSet,
       queryFields,
     } = this.props;
-    const {
-      tableStore: { getConfig },
-    } = this.context;
+    const { tableStore: { getConfig } } = this.context;
     const { prefixCls } = this;
-    const searchText =
-      (comboFilterBar && comboFilterBar.searchText) ||
-      getConfig('tableFilterSearchText') ||
-      'params';
+    const searchText = comboFilterBar && comboFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_filter');
     const hasQueryFields = queryDataSet && queryFields.length > 0;
     if (!fuzzyQuery && !hasQueryFields) {
