@@ -394,7 +394,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else {
       const { current } = filterMenuDataSet;
       if (current) current.set('filterName', undefined);
-      locateData();
+      locateData(searchId);
       if (dataSet.props.autoQuery) {
         dataSet.query();
       }
