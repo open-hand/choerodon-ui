@@ -9,8 +9,9 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
-import { action } from 'mobx';
+import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -22,6 +23,7 @@ import defaultTo from 'lodash/defaultTo';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
+import Popover from 'choerodon-ui/lib/popover';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
@@ -39,6 +41,11 @@ import ColumnGroup from './ColumnGroup';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import TableCellInner from './TableCellInner';
 import { TableVirtualHeaderCellProps } from './TableVirtualHeaderCell';
+import TextField from '../text-field';
+import Button from '../button/Button';
+import { FieldType, SortOrder } from '../data-set/interface';
+import { ButtonColor } from '../button/enum';
+import Radio from '../radio';
 
 export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
   intersectionRef?: (node?: Element | null) => void;
@@ -61,7 +68,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { tooltipProps } = column;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable, headerRowHeight } = tableStore;
+  const { columnResizable, headerRowHeight, headerSearchText, advancedColumnSort } = tableStore;
   const {
     headerClassName,
     headerStyle = {},
@@ -72,6 +79,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     lock,
   } = column;
   const field = dataSet.getField(name);
+  const [searchText, setSearchText] = useState<string>();
   const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
@@ -233,6 +241,28 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const handleClick = useCallback(() => {
     if (name) {
+      dataSet.sort(name);
+    }
+  }, [dataSet, name]);
+
+  const handleSortPopup = useCallback((order?: string) => {
+    if (name && dataSet) {
+      const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
+      if (field && fieldProps) {
+        const unOrder = order || fieldProps.order;
+        runInAction(() => {
+          switch (unOrder) {
+            case SortOrder.asc:
+              field.order = undefined;
+              break;
+            case SortOrder.desc:
+              field.order = SortOrder.asc;
+              break;
+            default:
+              field.order = SortOrder.desc;
+          }
+        })
+      }
       dataSet.sort(name);
     }
   }, [dataSet, name]);
@@ -429,12 +459,77 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(headerClassName);
   }
 
+  const getConstSortIcon = () => {
+    if (advancedColumnSort) {
+      const isBool = field ? field.get('type') === FieldType.boolean : false;
+      const content = (
+        <>
+          <div className={`${prefixCls}-sort-item`} onClick={() => handleSortPopup('asc')}>
+            <Icon key="sort_up" type="arrow_upward" /> 升序排序
+          </div>
+          <div className={`${prefixCls}-sort-item`} onClick={() => handleSortPopup('desc')}>
+            <Icon key="sort_down" type="arrow_downward" /> 降序排序
+          </div>
+          {isBool ? (
+            <div>
+              <Radio value={field && field.get('trueValue')} checked={field && field.get('trueValue') === searchText} onChange={(value) => setSearchText(value)}>
+                True
+              </Radio>
+              <Radio value={field && field.get('falseValue')} checked={field && field.get('falseValue') === searchText} onChange={(value) => setSearchText(value)} >
+                False
+              </Radio>
+            </div>
+          )
+            :
+            <TextField value={searchText} onChange={(value) => setSearchText(value)} />}
+          <div className={`${prefixCls}-sort-popup-footer`}>
+            <Button
+              onClick={() => {
+                handleSortPopup();
+                setSearchText('');
+                runInAction(() => {
+                  tableStore.headerSearchText = undefined;
+                })
+              }}>
+              重置
+            </Button>
+            <Button
+              color={ButtonColor.primary}
+              onClick={() => {
+                runInAction(() => {
+                  tableStore.headerSearchText = {
+                    fieldName: name,
+                    searchText,
+                  };
+                })
+              }}
+            >
+              搜索
+            </Button>
+          </div>
+        </>
+      );
+      return (
+        <Popover
+          content={content}
+          trigger="click"
+          onVisibleChange={(visible) => {
+            if (visible && headerSearchText) {
+              setSearchText(headerSearchText.fieldName === name ? String(headerSearchText.searchText) : '');
+            }
+          }}
+        >
+          <Icon key="sort" type="import_export" className={`${prefixCls}-sort-icon ${prefixCls}-sort-icon-temp`} />
+        </Popover>
+      );
+    }
+    return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
+  };
+
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
   // 排序按钮
-  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? (
-    <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />
-  ) : undefined;
+  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? getConstSortIcon() : undefined;
   const headerNodePlaceholder = Symbol('headerNodePlaceholder');
   const childNodes: any[] = [
     headerNodePlaceholder,
@@ -456,9 +551,9 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
   if (sortIcon) {
     if (field && field.order) {
-      classList.push(`${prefixCls}-sort-${field.order}`);
+      classList.push(`${prefixCls}-sort-${field.order} ${prefixCls}-sort-${field.order}-temp`);
     }
-    innerProps.onClick = handleClick;
+    innerProps.onClick = advancedColumnSort ? noop : handleClick;
     if (cellStyle.textAlign === ColumnAlign.right) {
       childNodes.unshift(sortIcon);
     } else {

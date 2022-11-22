@@ -1015,6 +1015,8 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
+  @observable headerSearchText?: { fieldName?: string; searchText?: string };
+  
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -1669,6 +1671,22 @@ export default class TableStore {
     return false;
   }
 
+  /**
+   * CATL临时属性 //TODO
+   * 高级列排序，包含前端过滤
+   */
+  get advancedColumnSort(): boolean {
+    const { advancedColumnSort } = this.props;
+    if (advancedColumnSort !== undefined) {
+      return advancedColumnSort;
+    }
+    const tableAdvancedColumnSort = this.getConfig('tableAdvancedColumnSort');
+    if (tableAdvancedColumnSort !== undefined) {
+      return tableAdvancedColumnSort;
+    }
+    return false;
+  }
+
   @computed
   get overflowX(): boolean {
     const { width } = this;
@@ -2013,7 +2031,7 @@ export default class TableStore {
   @computed
   get currentData(): Record[] {
     const { pristine, filter: recordFilter, treeFilter } = this.props;
-    const { dataSet, isTree } = this;
+    const { dataSet, isTree, headerSearchText } = this;
     const filter = (
       isTree
         ? typeof treeFilter === 'function' ? treeFilter : recordFilter
@@ -2025,6 +2043,9 @@ export default class TableStore {
     }
     if (pristine) {
       data = data.filter(record => !record.isNew);
+    }
+    if (headerSearchText) {
+      data = data.filter(record => String(record.get(headerSearchText.fieldName)).includes(String(headerSearchText.searchText)));
     }
     return data;
   }

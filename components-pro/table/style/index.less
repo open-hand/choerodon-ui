@@ -946,6 +946,25 @@
     transition: width @animation-duration-slow;
   }
 
+  &-sort-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.13rem;
+    line-height: 0.28rem;
+    cursor: pointer;
+
+    i {
+      margin-right: 0.04rem;
+      font-size: 0.13rem;
+    }
+  }
+
+  &-sort-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.08rem;
+  }
+
   &-sort-icon,
   &-help-icon {
     margin-right: 0.03rem;
@@ -956,6 +975,12 @@
     color: rgba(0, 0, 0, 0.45);
     font-weight: normal;
     opacity: 0;
+
+    // catl
+    &-temp {
+      color: inherit;
+      opacity: 1;
+    }
   }
 
   &-help-icon {
@@ -974,6 +999,14 @@
     &-desc &-icon {
       color: inherit;
       opacity: 1;
+    }
+
+    &-asc-temp &-icon::before {
+      content: "\e5d8";
+    }
+
+    &-desc-temp &-icon::before {
+      content: "\e5d8";
     }
 
     &-desc &-icon {
