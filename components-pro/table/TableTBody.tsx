@@ -14,6 +14,7 @@ import { observer } from 'mobx-react-lite';
 import { action } from 'mobx';
 import { Draggable, DraggableProvided, DraggableStateSnapshot, Droppable, DroppableProvided, DroppableStateSnapshot } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import isFunction from 'lodash/isFunction';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
@@ -216,7 +217,7 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
       let dragDisabled: boolean | undefined;
       if (rowDragRender && rowDragRender.draggableProps && rowDragRender.draggableProps.isDragDisabled) {
         const { draggableProps: { isDragDisabled } } = rowDragRender;
-        dragDisabled = typeof isDragDisabled === 'boolean' ? isDragDisabled : isDragDisabled(record);
+        dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
       }
       return (
         <Draggable

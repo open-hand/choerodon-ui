@@ -13,6 +13,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isFunction from 'lodash/isFunction';
 import { IteratorHelper } from 'choerodon-ui/dataset';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -50,7 +51,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
     inView = true, groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight,
   } = props;
-  const dragDisabled = isDragDisabled && (typeof isDragDisabled === 'boolean' ? isDragDisabled : isDragDisabled(record));
+  const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
