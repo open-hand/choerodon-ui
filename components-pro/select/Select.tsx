@@ -1158,6 +1158,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       [textField]: value,
       [valueField]: value,
     };
+    const findOption = comboOptions.find(record => record.get(valueField) === value.trim());
+    if (findOption) return;
     const record = comboOptions.create(initData, 0);
     if (menu) {
       updateActiveKey(menu, getItemKey(record, initData[valueField], initData[valueField]));

@@ -235,7 +235,7 @@ class AjaxUploader extends Component {
           multiple={multiple}
           onChange={this.onChange}
         />
-        {(disabled & children) ? React.cloneElement(children, { disabled: disabled }) : children}
+        {(disabled && children) ? React.cloneElement(children, { disabled: disabled }) : children}
       </Tag>
     );
   }

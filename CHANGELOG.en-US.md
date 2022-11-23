@@ -97,6 +97,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed an issue where the input field could not be resized more than once when the `resize` property was set to `both`.
 - 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
 - 🐞 `<pro>Picture`: Fixed the preview error caused by the `preview` property.
+- 🐞 `<pro>Select`: Fixed that the blank value in the compound input box is not clear.
 
 ## 1.5.6
 
