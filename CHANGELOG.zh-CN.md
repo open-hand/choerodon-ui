@@ -96,6 +96,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: 修复设置 resize 属性为 both 时, 无法多次调整输入框大小的问题。
 - 🐞 `<pro>Mentions`: 修复设置 split 属性大于一个字符时, split 会显示双份的问题。
 - 🐞 `<pro>Picture`: 修复 preview 属性导致的预览报错问题。
+- 🐞 `<pro>Select`: 修复了复合输入框中的输入空格值不清除的问题。
 
 ## 1.5.6
 

@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
 import ModalManager from '../modal-manager';
-import { ModalProps } from './Modal';
-import { getContainer, open } from '../modal-container/ModalContainer';
+import Modal, { ModalProps } from './Modal';
+import { getContainer } from '../modal-container/ModalContainer';
 import Icon from '../icon';
 import { confirmProps, normalizeProps } from './utils';
 
@@ -29,7 +29,7 @@ export default async function confirm(props: ModalProps & confirmProps | ReactNo
     </td>
   );
   return new Promise(resolve => {
-    open({
+    Modal.open({
       key: ModalManager.getKey(),
       className: `${prefixCls}-wrapper`,
       border,

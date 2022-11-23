@@ -1,13 +1,13 @@
 import React from 'react';
 import ModalManager from '../modal-manager';
-import { getContainer, open } from '../modal-container/ModalContainer';
+import { getContainer } from '../modal-container/ModalContainer';
 import PictureViewer, { PictureViewerProps } from '../picture/PictureViewer';
-import { ModalProps } from './Modal';
+import Modal, { ModalProps } from './Modal';
 
 export default async function preview(props: PictureViewerProps, modalProps?: ModalProps) {
   const container = await getContainer();
   const customizedPrefixCls = container.context.getProPrefixCls('picture-viewer', props.prefixCls);
-  open({
+  Modal.open({
     key: ModalManager.getKey(),
     className: `${customizedPrefixCls}-modal`,
     border: false,
