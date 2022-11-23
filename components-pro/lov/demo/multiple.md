@@ -39,7 +39,7 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, SYS.USER_STATUS11' , 'code_description': '性别,员工状态' }
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, SYS.USER_STATUS11' , 'code_description': '性别,员工状态,SYS.USER_STATUS11' }
     ],
     fields: [
       {

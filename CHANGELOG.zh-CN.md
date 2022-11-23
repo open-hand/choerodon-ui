@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果。
 - 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
 - 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
+- 💄 `<pro>Lov`: 优化弹框中有缓存的已选记录显示顺序。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
@@ -97,6 +98,7 @@ timeline: true
 - 🐞 `<pro>Mentions`: 修复设置 split 属性大于一个字符时, split 会显示双份的问题。
 - 🐞 `<pro>Picture`: 修复 preview 属性导致的预览报错问题。
 - 🐞 `<pro>Select`: 修复了复合输入框中的输入空格值不清除的问题。
+- 🐞 `<pro>Table`: 修复 expandRowByClick 属性失效。
 
 ## 1.5.6
 
