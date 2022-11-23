@@ -772,11 +772,6 @@ export interface TableProps extends DataSetComponentProps {
    * 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度
    */
   boxSizing?: TableBoxSizing;
-  /**
-   * CATL临时属性 //TODO
-   * 高级列排序，包含前端过滤
-   */
-  advancedColumnSort?: boolean;
 }
 
 @observer
@@ -1332,7 +1327,6 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowBoxPlacement',
       'alwaysShowRowBox',
       'showSelectionTips',
-      'advancedColumnSort',
       'showSelectionCachedButton',
       'showCachedSelection',
       'onShowCachedSelectionChange',

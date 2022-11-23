@@ -43,9 +43,10 @@ import TableCellInner from './TableCellInner';
 import { TableVirtualHeaderCellProps } from './TableVirtualHeaderCell';
 import TextField from '../text-field';
 import Button from '../button/Button';
-import { FieldType, SortOrder } from '../data-set/interface';
+import { SortOrder } from '../data-set/interface';
 import { ButtonColor } from '../button/enum';
-import Radio from '../radio';
+import { ValueChangeAction } from '../text-field/enum';
+import { $l } from '../locale-context';
 
 export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
   intersectionRef?: (node?: Element | null) => void;
@@ -68,7 +69,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const { tooltipProps } = column;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable, headerRowHeight, headerSearchText, advancedColumnSort } = tableStore;
+  const { columnResizable, headerRowHeight, headerFilter } = tableStore;
   const {
     headerClassName,
     headerStyle = {},
@@ -77,9 +78,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     children,
     command,
     lock,
+    filter,
   } = column;
   const field = dataSet.getField(name);
-  const [searchText, setSearchText] = useState<string>();
+  const [filterText, setFilterText] = useState<any>();
   const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
@@ -241,29 +243,30 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const handleClick = useCallback(() => {
     if (name) {
-      dataSet.sort(name);
-    }
-  }, [dataSet, name]);
-
-  const handleSortPopup = useCallback((order?: string) => {
-    if (name && dataSet) {
-      const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
-      if (field && fieldProps) {
-        const unOrder = order || fieldProps.order;
+      const { sortable } = column;
+      if (typeof sortable === 'function') {
+        const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
+        if (field && fieldProps) {
+          const unOrder = field.order || fieldProps.order;
+          runInAction(() => {
+            switch (unOrder) {
+              case SortOrder.asc:
+                field.order = undefined;
+                break;
+              case SortOrder.desc:
+                field.order = SortOrder.asc;
+                break;
+              default:
+                field.order = SortOrder.desc;
+            }
+          })
+        }
         runInAction(() => {
-          switch (unOrder) {
-            case SortOrder.asc:
-              field.order = undefined;
-              break;
-            case SortOrder.desc:
-              field.order = SortOrder.asc;
-              break;
-            default:
-              field.order = SortOrder.desc;
-          }
+          dataSet.records = dataSet.records.sort((record1, record2) => sortable(record1, record2, field!.order as SortOrder));
         })
+      } else {
+        dataSet.sort(name);
       }
-      dataSet.sort(name);
     }
   }, [dataSet, name]);
 
@@ -381,6 +384,23 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
+  const onReset = () => {
+    setFilterText('');
+    runInAction(() => {
+      tableStore.headerFilter = undefined;
+    })
+  };
+
+  const doFilter = () => {
+    runInAction(() => {
+      tableStore.headerFilter = {
+        fieldName: name,
+        filterText,
+        filter,
+      };
+    })
+  };
+
   const renderResizer = () => {
     const { rightColumnGroups: { columns }, overflowX } = tableStore;
     const { columnGroup } = props;
@@ -460,76 +480,77 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
 
   const getConstSortIcon = () => {
-    if (advancedColumnSort) {
-      const isBool = field ? field.get('type') === FieldType.boolean : false;
-      const content = (
-        <>
-          <div className={`${prefixCls}-sort-item`} onClick={() => handleSortPopup('asc')}>
-            <Icon key="sort_up" type="arrow_upward" /> 升序排序
-          </div>
-          <div className={`${prefixCls}-sort-item`} onClick={() => handleSortPopup('desc')}>
-            <Icon key="sort_down" type="arrow_downward" /> 降序排序
-          </div>
-          {isBool ? (
-            <div>
-              <Radio value={field && field.get('trueValue')} checked={field && field.get('trueValue') === searchText} onChange={(value) => setSearchText(value)}>
-                True
-              </Radio>
-              <Radio value={field && field.get('falseValue')} checked={field && field.get('falseValue') === searchText} onChange={(value) => setSearchText(value)} >
-                False
-              </Radio>
-            </div>
-          )
-            :
-            <TextField value={searchText} onChange={(value) => setSearchText(value)} />}
-          <div className={`${prefixCls}-sort-popup-footer`}>
-            <Button
-              onClick={() => {
-                handleSortPopup();
-                setSearchText('');
-                runInAction(() => {
-                  tableStore.headerSearchText = undefined;
-                })
-              }}>
-              重置
-            </Button>
-            <Button
-              color={ButtonColor.primary}
-              onClick={() => {
-                runInAction(() => {
-                  tableStore.headerSearchText = {
-                    fieldName: name,
-                    searchText,
-                  };
-                })
-              }}
-            >
-              搜索
-            </Button>
-          </div>
-        </>
-      );
-      return (
-        <Popover
-          content={content}
-          trigger="click"
-          onVisibleChange={(visible) => {
-            if (visible && headerSearchText) {
-              setSearchText(headerSearchText.fieldName === name ? String(headerSearchText.searchText) : '');
-            }
-          }}
-        >
-          <Icon key="sort" type="import_export" className={`${prefixCls}-sort-icon ${prefixCls}-sort-icon-temp`} />
-        </Popover>
-      );
+    if (tableStore.getConfig('tableShowSortIcon')) {
+      return <Icon key="sort_temp" type="unfold_more" className={`${prefixCls}-sort-icon ${prefixCls}-sort-icon-temp`} />;
     }
     return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
   };
 
+  const getFilterIcon = () => {
+    if (column.filter) {
+      let popoverContent: React.ReactNode;
+      const footer: React.ReactNode = (
+        <div className={`${prefixCls}-sort-popup-footer`}>
+          <Button onClick={onReset}>
+            {$l('Table', 'reset_button')}
+          </Button>
+          <Button
+            color={ButtonColor.primary}
+            onClick={doFilter}
+          >
+            {$l('Table', 'search')}
+          </Button>
+        </div>
+      );
+      if (typeof column.filterPopover === 'function') {
+        popoverContent = (
+          <div onClick={(e) => e.stopPropagation()}>
+            {column.filterPopover({
+              setFilterText: (filterText: any) => setFilterText(filterText),
+              dataSet,
+              field,
+              filterText,
+              clearFilters: onReset,
+              confirm: doFilter,
+              footer,
+            })}
+          </div>
+        )
+      } else {
+        popoverContent = (
+          <div onClick={(e) => e.stopPropagation()}>
+            <TextField autoFocus onEnterDown={doFilter} style={{ width: '100%' }} valueChangeAction={ValueChangeAction.input} value={filterText} onChange={(value) => setFilterText(value)} />
+            {footer}
+          </div>
+        );
+      }
+      return (
+        <Popover
+          content={popoverContent}
+          overlayClassName={`${prefixCls}-sort-popup-content`}
+          trigger="click"
+          onVisibleChange={() => {
+            if (headerFilter) {
+              setFilterText(headerFilter.fieldName === name ? String(headerFilter.filterText) : '');
+            }
+          }}
+        >
+          <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-search-icon ${prefixCls}-search-icon-active` : `${prefixCls}-search-icon`} type="search" onClick={(e) => e.stopPropagation()} />
+        </Popover>
+      );
+    }
+    return undefined;
+  };
+
+  // 过滤按钮
+  const filterIcon: ReactElement<IconProps> | undefined = getFilterIcon();
+
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
+
   // 排序按钮
   const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? getConstSortIcon() : undefined;
+  
   const headerNodePlaceholder = Symbol('headerNodePlaceholder');
   const childNodes: any[] = [
     headerNodePlaceholder,
@@ -553,7 +574,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     if (field && field.order) {
       classList.push(`${prefixCls}-sort-${field.order} ${prefixCls}-sort-${field.order}-temp`);
     }
-    innerProps.onClick = advancedColumnSort ? noop : handleClick;
+    innerProps.onClick = handleClick;
     if (cellStyle.textAlign === ColumnAlign.right) {
       childNodes.unshift(sortIcon);
     } else {
@@ -561,6 +582,16 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       labelClassNames.push(`${prefixCls}-cell-inner-has-sort`);
     }
   }
+
+  if (filterIcon) {
+    if (cellStyle.textAlign === ColumnAlign.right) {
+      childNodes.unshift(filterIcon);
+    } else {
+      childNodes.push(filterIcon);
+      labelClassNames.push(`${prefixCls}-cell-inner-has-filter`);
+    }
+  }
+
   if (expandIcon) {
     childNodes.unshift(
       <span key="prefix" className={!isSearchCell ? `${prefixCls}-header-expand-icon` : undefined}>

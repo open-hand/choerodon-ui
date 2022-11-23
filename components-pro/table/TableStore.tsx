@@ -23,7 +23,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
 import ObserverRadio from '../radio/Radio';
-import { DataSetSelection, RecordCachedType } from '../data-set/enum';
+import { DataSetSelection, FieldType, RecordCachedType } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
@@ -1015,7 +1015,7 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
-  @observable headerSearchText?: { fieldName?: string; searchText?: string };
+  @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) };
   
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
@@ -1671,22 +1671,6 @@ export default class TableStore {
     return false;
   }
 
-  /**
-   * CATL临时属性 //TODO
-   * 高级列排序，包含前端过滤
-   */
-  get advancedColumnSort(): boolean {
-    const { advancedColumnSort } = this.props;
-    if (advancedColumnSort !== undefined) {
-      return advancedColumnSort;
-    }
-    const tableAdvancedColumnSort = this.getConfig('tableAdvancedColumnSort');
-    if (tableAdvancedColumnSort !== undefined) {
-      return tableAdvancedColumnSort;
-    }
-    return false;
-  }
-
   @computed
   get overflowX(): boolean {
     const { width } = this;
@@ -2031,7 +2015,7 @@ export default class TableStore {
   @computed
   get currentData(): Record[] {
     const { pristine, filter: recordFilter, treeFilter } = this.props;
-    const { dataSet, isTree, headerSearchText } = this;
+    const { dataSet, isTree, headerFilter } = this;
     const filter = (
       isTree
         ? typeof treeFilter === 'function' ? treeFilter : recordFilter
@@ -2044,8 +2028,39 @@ export default class TableStore {
     if (pristine) {
       data = data.filter(record => !record.isNew);
     }
-    if (headerSearchText) {
-      data = data.filter(record => String(record.get(headerSearchText.fieldName)).includes(String(headerSearchText.searchText)));
+    if (headerFilter) {
+      const { filter, filterText } = headerFilter;
+      if (typeof filter === 'function') {
+        data = data.filter(record => filter({record, filterText}));
+      } else {
+        const field = dataSet.getField(headerFilter.fieldName);
+        const type = field && field.get('type');
+        const multiple = field && field.get('multiple');
+        let isLookUp = false;
+        if (field &&
+          (
+            field.get('lookupCode') ||
+            isString(field.get('lookupUrl')) ||
+            (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options'))) ||
+            field.get('lovCode')
+          )
+        ) {
+          isLookUp = true;
+        }
+        data = data.filter(record => {
+          let recordText: string;
+          if (multiple) {
+            if (isLookUp) {
+              recordText = record.get(headerFilter.fieldName).map(value => field!.getText(value)).join('');
+            } else {
+              recordText = record.get(headerFilter.fieldName).join('');
+            }
+          } else {
+            recordText = isLookUp ? String(field!.getText(record.get(headerFilter.fieldName))) : String(record.get(headerFilter.fieldName));
+          }
+          return recordText.toLocaleLowerCase().includes(String(headerFilter.filterText).toLocaleLowerCase())
+        });
+      }
     }
     return data;
   }

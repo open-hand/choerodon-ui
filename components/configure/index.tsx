@@ -171,7 +171,7 @@ export interface Config extends DataSetConfig {
   tableAggregationColumnDefaultMinWidth?: number;
   tableShowCachedTips?: boolean;
   tableShowSelectionTips?: boolean;
-  tableAdvancedColumnSort?: boolean;
+  tableShowSortIcon?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;

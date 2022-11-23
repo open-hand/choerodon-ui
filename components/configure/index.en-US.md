@@ -75,6 +75,7 @@ const prefixCls = getConfig('prefixCls');
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
 | tableShowCachedTips | Table默认显示缓存记录提示， 优先级高于 tableShowSelectionTips | boolean | false |
+| tableShowSortIcon | Table默认显示可排序icon | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false || pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
