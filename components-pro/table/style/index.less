@@ -973,7 +973,7 @@
     }
   }
 
-  &-search-icon {
+  &-filter-icon {
     font-weight: lighter;
 
     &-active {
@@ -982,6 +982,7 @@
   }
 
   &-sort-icon,
+  &-filter-icon,
   &-help-icon {
     margin-right: 0.03rem;
     margin-left: 0.03rem;
@@ -1018,11 +1019,13 @@
     }
 
     &-asc-temp &-icon::before {
-      content: "\e5d8";
+      font-family: inherit !important;
+      content: "\e5d8" !important;
     }
 
     &-desc-temp &-icon::before {
-      content: "\e5d8";
+      font-family: inherit !important;
+      content: "\e5d8" !important;
     }
 
     &-desc &-icon {

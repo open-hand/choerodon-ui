@@ -535,7 +535,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
             }
           }}
         >
-          <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-search-icon ${prefixCls}-search-icon-active` : `${prefixCls}-search-icon`} type="search" onClick={(e) => e.stopPropagation()} />
+          <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-filter-icon ${prefixCls}-filter-icon-active` : `${prefixCls}-filter-icon`} type="search" onClick={(e) => e.stopPropagation()} />
         </Popover>
       );
     }
@@ -570,6 +570,16 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       labelClassNames.push(`${prefixCls}-cell-inner-has-help`);
     }
   }
+
+  if (filterIcon) {
+    if (cellStyle.textAlign === ColumnAlign.right) {
+      childNodes.unshift(filterIcon);
+    } else {
+      childNodes.push(filterIcon);
+      labelClassNames.push(`${prefixCls}-cell-inner-has-filter`);
+    }
+  }
+
   if (sortIcon) {
     if (field && field.order) {
       classList.push(`${prefixCls}-sort-${field.order} ${prefixCls}-sort-${field.order}-temp`);
@@ -580,15 +590,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     } else {
       childNodes.push(sortIcon);
       labelClassNames.push(`${prefixCls}-cell-inner-has-sort`);
-    }
-  }
-
-  if (filterIcon) {
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(filterIcon);
-    } else {
-      childNodes.push(filterIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-has-filter`);
     }
   }
 
