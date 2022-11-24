@@ -520,10 +520,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
     });
+    this.tooltipShown = true;
   }
 
+  @autobind
   handleHelpMouseLeave() {
-    hide();
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getWrapperClassNames(...args): string {
@@ -1437,6 +1442,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   setValue(value: any, noVaidate?: boolean): void {
     super.setValue(value, noVaidate);
     this.setText(undefined);
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getTextNode(value?: any) {
