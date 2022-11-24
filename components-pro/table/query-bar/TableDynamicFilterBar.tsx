@@ -423,6 +423,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const field = queryDataSet && queryDataSet.getField(name);
     let shouldQuery = true;
     if (field && field.get('range', record)) {
+      // 处理 range 失焦对象 undefined，bind 字段无处理的情况
+      if (value) {
+        const rangeKeys = Object.keys(value);
+        if (rangeKeys.length) {
+          if (value[rangeKeys[0]] === undefined) {
+            record.set(name, null)
+          } else if (value[rangeKeys[1]] === undefined) {
+            record.set(name, {
+              [rangeKeys[0]]: value[rangeKeys[0]],
+              [rangeKeys[1]]: null,
+            });
+          }
+        }
+      }
       const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
       const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
       shouldQuery = rangeValue !== rangeOldValue;
