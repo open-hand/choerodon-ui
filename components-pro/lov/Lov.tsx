@@ -7,7 +7,6 @@ import isString from 'lodash/isString';
 import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
-import debounce from 'lodash/debounce';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { pxToRem, scaleSize } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -864,7 +863,7 @@ export default class Lov extends Select<LovProps> {
     }
     const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
-      onClick: (this.disabled || this.readOnly) ? undefined : debounce(this.handleOpenModal, 200),
+      onClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
     });
   }
 

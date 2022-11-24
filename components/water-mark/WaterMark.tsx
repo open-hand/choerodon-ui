@@ -130,12 +130,12 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
       const styleStr = `position: absolute !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;z-index:${zIndex} !important;pointer-events: none !important;background-repeat: repeat !important;background-size: ${gapX! + width!}px !important;background-image: url('${imgSrc}') !important;opacity:${markStyle!.opacity} !important`;
       const MutationObserver = window.MutationObserver;
       if (MutationObserver) {
-        let mo: MutationObserver | null = new MutationObserver(() => {
+        const mo: MutationObserver = new MutationObserver(() => {
           const wmInstance = wrapperDom.querySelector(`.${prefixCls}`);
           if ((wmInstance && wmInstance.getAttribute('style') !== styleStr)) {
             wmInstance.setAttribute('style', styleStr);
             // 避免一直触发
-            mo = null;
+            mo.disconnect();
           }
         });
         mo.observe(wrapperDom, {
