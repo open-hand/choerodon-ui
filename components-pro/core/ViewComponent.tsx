@@ -20,7 +20,7 @@ import classes from 'component-classes';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import autobind from '../_util/autobind';
-import { FieldFocusMode, Size } from './enum';
+import { Size } from './enum';
 import normalizeLanguage from '../_util/normalizeLanguage';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context';
@@ -462,13 +462,11 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   @autobind
   @action
   handleFocus(e) {
-    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
     this.isFocused = true;
     this.isFocus = true;
     const {
       props: { onFocus = noop },
       prefixCls,
-      element,
     } = this;
     if (this.useFocusedClassName()) {
       const element = this.wrapper || findDOMNode(this);
@@ -477,16 +475,6 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       }
     }
     onFocus(e);
-    // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === FieldFocusMode.focus) {
-      setTimeout(() => {
-        if (element.value && element.setSelectionRange) {
-          const len = element.value.length;
-          element.setSelectionRange(len, len);
-        }
-      }, 5);
-      e.stopPropagation();
-    }
   }
 
   protected forceBlur(e) {
@@ -548,7 +536,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      defer(() => this.blur());
+      this.blur();
     }
     this.updateObservableProps(nextProps, nextContext);
   }
