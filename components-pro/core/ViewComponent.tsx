@@ -536,7 +536,15 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      this.blur();
+      defer(() => {
+        this.blur();
+        if (this.useFocusedClassName()) { 
+          const element = this.wrapper || findDOMNode(this);
+          if (element) {
+            classes(element).remove(`${this.prefixCls}-focused`);
+          }
+        }
+      });
     }
     this.updateObservableProps(nextProps, nextContext);
   }
