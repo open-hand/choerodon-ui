@@ -11,6 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import classNames from 'classnames';
 import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
@@ -276,14 +277,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
       const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
       show(currentTarget, {
-        title: header,
+        title: isValidElement(header) ? cloneElement<any>(header) : header,
         placement: getTooltipPlacement('table-cell') || 'right',
         theme: getTooltipTheme('table-cell'),
         ...tooltipConfig,
       });
       globalRef.current.tooltipShown = true;
     }
-  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement]);
+  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement, header]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {
@@ -291,6 +292,20 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       delete globalRef.current.tooltipShown;
     }
   }, [globalRef]);
+
+  const mergeHandleMouseEnter = useCallback((e) => {
+    handleMouseEnter(e);
+    if (isValidElement(header) && header.props && typeof header.props.onMouseEnter === 'function') {
+      header.props.onMouseEnter(e);
+    }
+  }, [handleMouseEnter, header]);
+
+  const mergeHandleMouseLeave = useCallback((e) => {
+    handleMouseLeave();
+    if (isValidElement(header) && header.props && typeof header.props.onMouseLeave === 'function') {
+      header.props.onMouseLeave(e);
+    }
+  }, [handleMouseLeave, header]);
 
   const setResizeGroup = useCallback((group: ColumnGroup) => {
     globalRef.current.resizeColumnGroup = group;
@@ -558,8 +573,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {
     children: childNodes,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
   };
   const labelClassNames: string[] = [];
   if (helpIcon) {
@@ -604,17 +617,23 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   if (labelClassNames.length > 0) {
     labelClassNames.push(`${prefixCls}-cell-inner-has-other`);
   }
-  if (!isSearchCell && isValidElement(header) && header.props && header.props.className) {
-    labelClassNames.unshift(header.props.className);
-  }
   const labelClassNamesStr = labelClassNames.length > 0 ? labelClassNames.join(' ') : undefined;
   const headerNode = !isSearchCell ? (isValidElement(header) ? (
     cloneElement<any>(header, {
       key: 'text',
-      className: labelClassNamesStr,
+      className: classNames(header.props && header.props.className, labelClassNamesStr),
+      onMouseEnter: mergeHandleMouseEnter,
+      onMouseLeave: mergeHandleMouseLeave,
     })
   ) : isString(header) ? (
-    <span key="text" className={labelClassNamesStr}>{header}</span>
+    <span
+      key="text"
+      className={labelClassNamesStr}
+      onMouseEnter={mergeHandleMouseEnter}
+      onMouseLeave={mergeHandleMouseLeave}
+    >
+      {header}
+    </span>
   ) : (
     header
   )) : null;

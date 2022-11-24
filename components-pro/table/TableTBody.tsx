@@ -661,9 +661,9 @@ const ObserverRows = observer(Rows);
 
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
-  const { prefixCls, tableStore, rowDragRender, dataSet, expandRowByClick, expandedRowRenderer, isTree } = useContext(TableContext);
+  const { prefixCls, tableStore, rowDragRender, dataSet, expandedRowRenderer, isTree } = useContext(TableContext);
   const { rowDraggable, virtualCell, isFixedRowHeight } = tableStore;
-  const expandIconColumnIndex = !expandRowByClick && (expandedRowRenderer || isTree) ?
+  const expandIconColumnIndex = (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
     // why target is undefined ?

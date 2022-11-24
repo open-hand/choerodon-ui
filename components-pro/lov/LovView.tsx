@@ -119,7 +119,7 @@ export default class LovView extends Component<LovViewProps> {
           }
           else if (gridFieldType && gridFieldType.toLowerCase() === 'picture') {
             column.renderer = ({ value }) => (
-              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} /> : undefined
+              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} block={false} /> : undefined
             );
           }
           return {

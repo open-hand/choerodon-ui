@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state.
 - 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
 - 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
+- 💄 `<pro>Lov`: Optimized the display order of selected records with cache in the pop-up.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
@@ -98,6 +99,7 @@ timeline: true
 - 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
 - 🐞 `<pro>Picture`: Fixed the preview error caused by the `preview` property.
 - 🐞 `<pro>Select`: Fixed that the blank value in the compound input box is not clear.
+- 🐞 `<pro>Table`: Fixed `expandRowByClick` property invalidation.
 
 ## 1.5.6
 
