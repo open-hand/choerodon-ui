@@ -19,13 +19,17 @@
 /* 多行 */
 .@{intl-prefix-textarea-intl} {
   .@{intl-prefix-textarea} {
-    width: calc(100% - @input-suffix-width-base);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
     &-suffix {
+      position: relative;
+      top: 0;
       right: 0;
-      height: 100%;
+      bottom: 0;
+      min-width: @input-suffix-width-base;
+      height: auto;
+      margin: 0;
       border: @border-width-base none @input-border-color;
       border-left: 0;
       border-top-right-radius: @input-border-radius;

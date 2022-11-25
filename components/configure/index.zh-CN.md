@@ -46,6 +46,8 @@ const prefixCls = getConfig('prefixCls');
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectReserveParam | 是否保留查询参数。 | boolean | true |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | 替换内置的 axios 实例 | AxiosInstance |  |
@@ -76,6 +78,7 @@ const prefixCls = getConfig('prefixCls');
 | tableCommandProps | 默认 TableCommand 的属性 | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
 | tableShowCachedTips | Table默认显示缓存记录提示， 优先级高于 tableShowSelectionTips | boolean | false |
+| tableShowSortIcon | Table默认显示可排序icon | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
@@ -86,7 +89,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTitleEditable | 默认 Table 个性化是否开启列标题编辑 | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
 | tableColumnDraggable | 默认 Table 个性化是否开启列拖拽 | boolean | false |
-| tableColumnResizeTransition | 列拖拽的过度效果 | boolean | false |
+| tableColumnResizeTransition | 列拖拽的过度效果 | boolean | true |
 | tableHeightChangeable | 默认 Table 个性化是否开启高度设置 | boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
@@ -173,6 +176,7 @@ const prefixCls = getConfig('prefixCls');
 | uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
+| fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
 
 ### Customizable
 

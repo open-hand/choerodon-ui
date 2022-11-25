@@ -126,7 +126,7 @@ const locale: Locale = {
     lock_first_column: '首列冻结',
     cancel_lock_first_column: '首列打开',
     enter_search_filter: '请输入搜索内容',
-    search: '搜索:',
+    search: '搜索',
     clear: '清除',
     show: '显示',
     hide: '隐藏',

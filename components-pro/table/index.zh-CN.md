@@ -96,7 +96,7 @@ subtitle: 表格
 | showCachedTips | 是否显示缓存记录提示， 优先级高于 showSelectionTips  | boolean | [globalConfig.tableShowCachedTipsTips](/components/configure#API) |
 | showCachedSelection | 是否显示缓存选中记录  | boolean | |
 | onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |
-| showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
+| showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | true |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | [globalConfig.customizable](/components/configure#API) |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
@@ -209,6 +209,7 @@ subtitle: 表格
 | refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
+| onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
 
 #### DynamicFilterBarConfig
 

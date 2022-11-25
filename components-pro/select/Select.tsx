@@ -146,6 +146,11 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   searchable?: boolean;
   /**
+   * 开启搜索时，是否保留查询参数
+   * @default true
+   */
+  reserveParam?: boolean;
+  /**
    * 搜索框在 Popup 中显示
    * @default false
    */
@@ -352,6 +357,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return !!searchable;
   }
 
+  get reserveParam(): boolean {
+    const { reserveParam = this.getContextConfig('selectReserveParam') } = this.observableProps;
+    return reserveParam;
+  }
+
   get multiple(): boolean {
     return !!this.getProp('multiple');
   }
@@ -482,6 +492,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'searchable',
+      'reserveParam',
       'searchMatcher',
       'searchFieldInPopup',
       'searchFieldProps',
@@ -523,6 +534,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       searchMatcher: props.searchMatcher,
       paramMatcher: props.paramMatcher,
       searchable: props.searchable,
+      reserveParam: props.reserveParam,
       dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
       defaultActiveFirstOption: props.defaultActiveFirstOption,
       selectReverse: props.reverse,
@@ -1146,6 +1158,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       [textField]: value,
       [valueField]: value,
     };
+    const findOption = comboOptions.find(record => record.get(valueField) === value.trim());
+    if (findOption) return;
     const record = comboOptions.create(initData, 0);
     if (menu) {
       updateActiveKey(menu, getItemKey(record, initData[valueField], initData[valueField]));
@@ -1219,7 +1233,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   handleOptionSelect(record: Record | Record[]) {
     const searchText = this.searchText as string;
     this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
-    this.multipleSearch(searchText);
+    if (this.reserveParam) {
+      this.multipleSearch(searchText);
+    }
   }
 
   handleOptionUnSelect(record: Record | Record[]) {
@@ -1227,7 +1243,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const searchText = this.searchText as string;
     const newValues = isArrayLike(record) ? record.map(r => r.get(valueField)) : [record.get(valueField)];
     this.removeValues(newValues, -1);
-    this.multipleSearch(searchText);
+    if (this.reserveParam) {
+      this.multipleSearch(searchText);
+    }
   }
 
   multipleSearch(text: string) {

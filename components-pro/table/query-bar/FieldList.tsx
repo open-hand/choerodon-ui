@@ -44,7 +44,7 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
       <div className={`${prefixCls}-list`}>
         {group.fields.map((field) => {
           const code = field.get('name');
-          const label = field.get('label');
+          const label = field.get('label') || code;
           const checked = isChecked(code);
           if (label && label.includes(searchText || '')) {
             return (
@@ -105,8 +105,8 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           className={`${prefixCls}-search-action`}
           onClick={() => {
             const values = labelCodes.map(lc => {
-              if (lc[1] && lc[1].includes(searchText || '')) {
-                return lc[0]
+              if (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined) {
+                return lc[0];
               }
               return undefined;
             }).filter(v => !!v);
@@ -120,8 +120,8 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           className={`${prefixCls}-search-action`}
           onClick={() => {
             const values = labelCodes.map(lc => {
-              if (lc[1] && lc[1].includes(searchText || '')) {
-                return lc[0]
+              if (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined) {
+                return lc[0];
               }
               return undefined;
             }).filter(v => !!v);

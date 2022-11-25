@@ -17,6 +17,7 @@ import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
 import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTemplate';
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
+import { FieldFocusMode } from 'choerodon-ui/pro/lib/core/enum';
 import { Size } from '../_util/enum';
 import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook } from './index';
 import { Action } from '../trigger/enum';
@@ -143,6 +144,8 @@ const defaults = {
   selectReverse: true,
   selectPagingOptionContent: '···',
   selectSearchable: false,
+  selectBoxSearchable: false,
+  selectReserveParam: true,
   selectTrigger: [Action.focus, Action.click],
   useColon: false,
   excludeUseColonTagList: defaultExcludeUseColonTag,
@@ -161,6 +164,8 @@ const defaults = {
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),
   validationMessageFormatter: (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message,
   modalResizable: false,
+  tableColumnResizeTransition: true,
+  fieldFocusMode: FieldFocusMode.checked,
 };
 
 export default defaults;

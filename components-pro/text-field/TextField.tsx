@@ -27,7 +27,7 @@ import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { Tooltip as TextTooltip, WaitType } from '../core/enum';
+import { Tooltip as TextTooltip, WaitType, FieldFocusMode } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -520,10 +520,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
     });
+    this.tooltipShown = true;
   }
 
+  @autobind
   handleHelpMouseLeave() {
-    hide();
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getWrapperClassNames(...args): string {
@@ -561,7 +566,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { tooltip = getTooltip('text-field-disabled') } = this.props;
     const { element } = this;
     const title = this.getRenderedValue();
-    if (element && this.disabled && !this.multiple && title ) {
+    if (element && this.disabled && !this.multiple && title) {
       if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) {
         show(element, {
           title,
@@ -569,8 +574,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           theme: getTooltipTheme('text-field-disabled'),
         });
         return true;
-      } 
-      if (isArrayLike(tooltip)){
+      }
+      if (isArrayLike(tooltip)) {
         const tooltipType = tooltip[0];
         const TextTooltipProps = tooltip[1] || {};
         const { mouseEnterDelay } = TextTooltipProps;
@@ -1437,6 +1442,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   setValue(value: any, noVaidate?: boolean): void {
     super.setValue(value, noVaidate);
     this.setText(undefined);
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getTextNode(value?: any) {
@@ -1450,7 +1459,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   select() {
     const { element } = this;
-    if (element && this.editable) {
+    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
+    if (element && this.editable && fieldFocusMode === FieldFocusMode.checked) {
       element.select();
     }
   }

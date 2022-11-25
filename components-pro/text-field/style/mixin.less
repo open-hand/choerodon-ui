@@ -95,6 +95,11 @@
   transition-duration: @animation-duration-slow;
   transition-property: opacity, color, background-color, border;
 
+  &:placeholder-shown {
+    color: @input-placeholder-color;
+    text-overflow: ellipsis;
+  }
+
   &-compact:not(:last-child) {
     margin-right: calc(-1 * @border-width-base);
     border-right-width: @border-width-base;
@@ -216,10 +221,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-    height: @input-height-base;
+    width: 100%;
+    height: 100%;
     margin: auto 0;
     padding: 0 @input-padding-horizontal;
     line-height: @input-height-base;

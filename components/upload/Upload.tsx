@@ -242,7 +242,14 @@ export default class Upload extends Component<UploadProps, UploadState> {
     const { multiple, beforeUpload } = this.props;
     if (!multiple) {
       const { fileList: nowFileList } = this.state;
-      nowFileList.map(this.handleManualRemove);
+      if (nowFileList.length !== 1) {
+        nowFileList.forEach((eachFile: UploadFile)=> {
+          // 错误态的重新上传，不用执行删除操作，此时 uid 相同
+          if(eachFile.uid !== file.uid) {
+            this.handleManualRemove(eachFile);
+          }
+        });
+      }
       this.onChange({
         file,
         fileList: uploadFiles,

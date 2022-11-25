@@ -119,7 +119,7 @@ export default class LovView extends Component<LovViewProps> {
           }
           else if (gridFieldType && gridFieldType.toLowerCase() === 'picture') {
             column.renderer = ({ value }) => (
-              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} /> : undefined
+              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} block={false} /> : undefined
             );
           }
           return {
@@ -290,6 +290,7 @@ export default class LovView extends Component<LovViewProps> {
         lovTableProps.showSelectionCachedButton = false;
         lovTableProps.showCachedSelection = true;
       }
+      lovTableProps.autoFocus = false;
       const autoWidth = lovTableProps.autoWidth;
       lovTableProps.autoWidth = autoWidth || true;
       lovTableProps.onColumnResize = this.handleColumnResize;

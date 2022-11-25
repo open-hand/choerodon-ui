@@ -462,13 +462,11 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   @autobind
   @action
   handleFocus(e) {
-    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
-    this.isFocused = fieldFocusMode !== 'focus';
+    this.isFocused = true;
     this.isFocus = true;
     const {
       props: { onFocus = noop },
       prefixCls,
-      element,
     } = this;
     if (this.useFocusedClassName()) {
       const element = this.wrapper || findDOMNode(this);
@@ -477,18 +475,6 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       }
     }
     onFocus(e);
-    // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === 'focus') {
-      setTimeout(() => {
-        const len = element.value.length;
-        if (!element.selectionStart && !element.selectionEnd) {
-          element.setSelectionRange(len, len);
-        } else {
-          element.setSelectionRange(element.selectionStart, element.selectionEnd);
-        }
-      });
-      e.stopPropagation();
-    }
   }
 
   protected forceBlur(e) {
@@ -550,7 +536,15 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      defer(() => this.blur());
+      defer(() => {
+        this.blur();
+        if (this.useFocusedClassName()) { 
+          const element = this.wrapper || findDOMNode(this);
+          if (element) {
+            classes(element).remove(`${this.prefixCls}-focused`);
+          }
+        }
+      });
     }
     this.updateObservableProps(nextProps, nextContext);
   }

@@ -232,6 +232,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       onChange={handleChange}
       notFoundContent={$l('Table', 'no_save_filter')}
       clearButton={false}
+      searchable={false}
     />
   );
 };

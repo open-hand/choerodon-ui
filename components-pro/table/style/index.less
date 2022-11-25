@@ -172,6 +172,7 @@
       }
 
       &-auto-height {
+        overflow: hidden;
         word-break: break-all;
       }
 
@@ -421,8 +422,20 @@
       .@{table-prefix-cls}-cell-inner-has-sort {
         max-width: calc(100% - 0.24rem);
       }
+      .@{table-prefix-cls}-cell-inner-has-filter {
+        max-width: calc(100% - 0.24rem);
+      }
       .@{table-prefix-cls}-cell-inner-has-help.@{table-prefix-cls}-cell-inner-has-sort {
         max-width: calc(100% - 0.48rem);
+      }
+      .@{table-prefix-cls}-cell-inner-has-filter.@{table-prefix-cls}-cell-inner-has-sort {
+        max-width: calc(100% - 0.48rem);
+      }
+      .@{table-prefix-cls}-cell-inner-has-filter.@{table-prefix-cls}-cell-inner-has-help {
+        max-width: calc(100% - 0.48rem);
+      }
+      .@{table-prefix-cls}-cell-inner-has-help.@{table-prefix-cls}-cell-inner-has-filter.@{table-prefix-cls}-cell-inner-has-sort {
+        max-width: calc(100% - 0.72rem);
       }
     }
   }
@@ -585,6 +598,10 @@
     width: .1rem;
     transition: all @animation-duration-slow;
     pointer-events: none;
+  }
+
+  &-sticky-shadow-no-transition {
+    transition: none;
   }
 
   &-sticky-shadow {
@@ -951,7 +968,31 @@
     transition: width @animation-duration-slow;
   }
 
+  &-sort-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.08rem;
+  }
+
+  &-sort-popup-content {
+    min-width: 3.2rem;
+    min-height: 0.8rem;
+
+    .@{c7n-prefix}-popover-inner-content {
+      padding: 0.08rem;
+    }
+  }
+
+  &-filter-icon {
+    font-weight: lighter;
+
+    &-active {
+      color: @primary-color;
+    }
+  }
+
   &-sort-icon,
+  &-filter-icon,
   &-help-icon {
     margin-right: 0.03rem;
     margin-left: 0.03rem;
@@ -961,6 +1002,12 @@
     color: rgba(0, 0, 0, 0.45);
     font-weight: normal;
     opacity: 0;
+
+    // catl
+    &-temp {
+      color: inherit;
+      opacity: 1;
+    }
   }
 
   &-help-icon {
@@ -979,6 +1026,16 @@
     &-desc &-icon {
       color: inherit;
       opacity: 1;
+    }
+
+    &-asc-temp &-icon::before {
+      font-family: inherit !important;
+      content: "\e5d8" !important;
+    }
+
+    &-desc-temp &-icon::before {
+      font-family: inherit !important;
+      content: "\e5d8" !important;
     }
 
     &-desc &-icon {

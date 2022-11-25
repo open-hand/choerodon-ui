@@ -3242,6 +3242,9 @@ Then the query method will be auto invoke.`,
           const cached = cachedRecords.splice(index, 1)[0];
           if (cacheSelectionKeys) {
             record.isSelected = cached.isSelected;
+            if (!isNil(cached.selectedTimestamp) && cached.isSelected) {
+              record.selectedTimestamp = cached.selectedTimestamp;
+            }
           }
           if (((cache || cacheRecords) && cacheModifiedKeys) || (cache && !cacheRecords && cacheSelectionKeys)) {
             const { dirtyData } = cached;

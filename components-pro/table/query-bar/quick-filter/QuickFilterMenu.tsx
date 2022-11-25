@@ -263,6 +263,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
+        queryDataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
@@ -276,6 +277,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
+        queryDataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -307,7 +309,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 未选择或清除筛选项
        * 重置初始勾选项及初始赋值
        */
+      if (tempQueryFields) {
+        runInAction(() => {
+          queryDataSet.fields = tempQueryFields;
+        });
+      }
       queryDataSet.locate(0);
+      menuDataSet.current = undefined;
       const first = queryDataSet.get(0);
       if (first) {
         first.reset();
@@ -386,7 +394,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else {
       const { current } = filterMenuDataSet;
       if (current) current.set('filterName', undefined);
-      locateData();
+      locateData(searchId);
       if (dataSet.props.autoQuery) {
         dataSet.query();
       }
@@ -410,7 +418,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
       const currentId = menuRecord.get('searchId').toString();
-      searchId = record.get('searchId').toString() === currentId ? undefined : currentId;
+      searchId = record.get('searchId').toString() === currentId ? null : currentId;
     }
     const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     await menuDataSet.delete(delRecord, `${$l('Table', 'whether_delete_filter')}：${record.get('searchName')}？`);

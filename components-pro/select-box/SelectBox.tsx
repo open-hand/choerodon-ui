@@ -59,6 +59,11 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
     };
   }
 
+  get searchable(): boolean {
+    const { searchable = this.getContextConfig('selectBoxSearchable') } = this.observableProps;
+    return !!searchable;
+  }
+
   @computed
   get name(): string | undefined {
     return this.observableProps.name || GroupIdGen.next().value;

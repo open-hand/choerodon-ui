@@ -8,7 +8,7 @@ import {
   Formatter,
   Status,
 } from 'choerodon-ui/dataset/configure';
-import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
+import { Tooltip, FieldFocusMode } from 'choerodon-ui/pro/lib/core/enum';
 import {
   expandIconProps,
   Suffixes,
@@ -85,6 +85,7 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
+
 /**
  * @deprecated
  */
@@ -170,6 +171,7 @@ export interface Config extends DataSetConfig {
   tableAggregationColumnDefaultMinWidth?: number;
   tableShowCachedTips?: boolean;
   tableShowSelectionTips?: boolean;
+  tableShowSortIcon?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
@@ -207,6 +209,8 @@ export interface Config extends DataSetConfig {
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
+  selectBoxSearchable?: boolean;
+  selectReserveParam?: boolean;
   selectTrigger?: Action[];
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
@@ -223,7 +227,7 @@ export interface Config extends DataSetConfig {
   /**
    * 聚焦类型：checked 默认聚焦选中文本，focus 聚焦显示光标
    */
-  fieldFocusMode?: 'checked' | 'focus';
+  fieldFocusMode?: FieldFocusMode;
   /**
    * 是否显示长度信息
    */

@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode 属性。
+- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode, selectBoxSearchable, selectReserveParam 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
 - 🌟 `Tabs.TabPane`: 新增 hidden 属性。
@@ -25,6 +25,8 @@ timeline: true
 - 🌟 `<pro>Lov`: 列表新增超链接和图片类型展示。
 - 🌟 `Upload`: 重新上传全状态支持。
 - 🌟 `<pro>DataSet.Field`: 新增 accept 属性。
+- 🌟 `<pro>Select`: 新增 reserveParam 属性。
+- 🌟 `<pro>Table`: 新增动态筛选条 onRefresh 回调。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
@@ -42,7 +44,11 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条多选下拉必输的查询条件没有星号的问题。
 - 💄 `<pro>Field`: 优化 lovPara 查询缓存。
 - 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
-- 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
+- 💄 `<pro>Tooltip`: 优化 tooltip 显隐无规律的问题。
+- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果。
+- 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
+- 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
+- 💄 `<pro>Lov`: 优化弹框中有缓存的已选记录显示顺序。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
@@ -53,7 +59,7 @@ timeline: true
 - 🐞 `<pro>RichText`: 修复内容溢出的高度问题和 placeholder 样式问题。
 - 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
 - 🐞 `<pro>RichText`: 修复浮动布局样式问题。
-- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 & range 模式字段值比对 & 默认状态已修改的问题。
+- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 & range 模式字段值比对 & 默认状态已修改 & 删除筛选未重置的问题。
 - 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
 - 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
 - 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
@@ -80,6 +86,19 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
 - 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
 - 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
+- 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题 & Form 下 loading 态的错误位置显示问题。
+- 🐞 `<pro>Table`: 修复异步加载的树形 Table 分页点击展开跳转到第一页的问题。
+- 🐞 `<pro>Table`: 修复专业查询条动态条件显隐的问题。
+- 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。
+- 🐞 `<pro>Table`: 修改 inline 编辑模式部分情况下 editor 不显示的问题。
+- 🐞 `<pro>Table.Column`: 修复 tooltipProps 延时属性支持。
+- 🐞 `<pro>Table`: 修复树形表格开启 rowHeight 为 auto 导致的样式问题。
+- 🐞 `<pro>Modal`: 修复嵌入的 Modal 设置 autoCenter 为 false 时设置 top 样式不生效的问题。
+- 🐞 `<pro>IntlField`: 修复设置 resize 属性为 both 时, 无法多次调整输入框大小的问题。
+- 🐞 `<pro>Mentions`: 修复设置 split 属性大于一个字符时, split 会显示双份的问题。
+- 🐞 `<pro>Picture`: 修复 preview 属性导致的预览报错问题。
+- 🐞 `<pro>Select`: 修复了复合输入框中的输入空格值不清除的问题。
+- 🐞 `<pro>Table`: 修复 expandRowByClick 属性失效。
 
 ## 1.5.6
 

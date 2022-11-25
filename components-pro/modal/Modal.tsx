@@ -132,7 +132,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: false,
     drawer: false,
     drawerOffset: 150,
-    autoFocus: false,
+    autoFocus: true,
     closeOnLocationChange: true,
   };
 

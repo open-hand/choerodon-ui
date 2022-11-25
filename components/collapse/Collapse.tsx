@@ -109,7 +109,7 @@ export default class Collapse extends Component<CollapseProps, any> {
           const childProps: PanelProps & { key: React.Key } = {
             ...omit(child.props, 'disabled'),
             key,
-            disabled: collapsible && collapsible === 'header' ? false : disabled,
+            disabled: collapsible && (collapsible === 'header' || collapsible === 'icon') ? false : disabled,
           };
           return cloneElement(child, childProps);
         }

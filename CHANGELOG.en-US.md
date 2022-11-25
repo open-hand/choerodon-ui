@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode` properties.
+- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode`, `selectBoxSearchable`, `selectReserveParam` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.
@@ -25,6 +25,8 @@ timeline: true
 - 🌟 `<pro>Lov`: Added hyperlinks and image types to the list.
 - 🌟 `Upload`: Support full status display of reupload in Upload.
 - 🌟 `<pro>DataSet.Field`: Added `accept` property.
+- 🌟 `<pro>Select`: Added `reserveParam` property.
+- 🌟 `<pro>Table`: Added dynamic filter bar `onRefresh` callback.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.
@@ -42,7 +44,11 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the dynamic filter bar, select multiple required query conditions, and there is no required sign.
 - 💄 `<pro>Field`: Optimize lovPara query cache.
 - 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
-- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+- 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
+- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state.
+- 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
+- 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
+- 💄 `<pro>Lov`: Optimized the display order of selected records with cache in the pop-up.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
@@ -53,7 +59,7 @@ timeline: true
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
 - 🐞 `<pro>RichText`: Fixed an issue with float layout style.
-- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status error.
+- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status && delete filter not reset error.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 - 🐞 `<pro>Cascader`: Fixed the display problem of active item after selecting values in controlled mode without using `DataSet`.
@@ -81,6 +87,19 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
 - 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
 - 🐞 `<pro>Mentions`: Fix support for renderer attribute.
+- 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & Misalignment of loading circle in the loading state & Error position display problem in the form loading status.
+- 🐞 `<pro>Table`: Fix the problem of asynchronous loading tree table paging, click to expand and jump to the first page.
+- 🐞 `<pro>Table`: Fix the problem that the dynamic conditions of the professional query bar are displayed and hidden.
+- 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
+- 🐞 `<pro>Table`: Fix an issue where the `editor` is not displayed when editing mode is partially `inline`.
+- 🐞 `<pro>Table.Column`: Fix `tooltipProps` delayed property support.
+- 🐞 `<pro>Table`: Fix the style problem caused by turning `rowHeight` of tree table to auto.
+- 🐞 `<pro>Modal`: Fix the problem that setting the top style does not work when the embedded Modal setting `autoCenter` is false.
+- 🐞 `<pro>IntlField`: Fixed an issue where the input field could not be resized more than once when the `resize` property was set to `both`.
+- 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
+- 🐞 `<pro>Picture`: Fixed the preview error caused by the `preview` property.
+- 🐞 `<pro>Select`: Fixed that the blank value in the compound input box is not clear.
+- 🐞 `<pro>Table`: Fixed `expandRowByClick` property invalidation.
 
 ## 1.5.6
 

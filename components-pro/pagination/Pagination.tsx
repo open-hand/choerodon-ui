@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import isObject from 'lodash/isObject';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
+import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -28,6 +29,7 @@ export interface PaginationProps extends DataSetComponentProps {
   pageSize?: number;
   maxPageSize?: number;
   onChange?: (page: number, pageSize: number) => void;
+  beforeChange?:  (page: number, pageSize: number) => Promise<boolean | undefined> | boolean | undefined | void; // apaas event test
   itemRender?: (page: number, type: PagerType) => ReactNode;
   pageSizeOptions?: string[];
   pageSizeEditable?: boolean;
@@ -158,19 +160,22 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     this.handleChange(this.page, Number(value));
   }
 
-  @action
-  handleChange(page: number, pageSize: number) {
-    const { dataSet, onChange } = this.props;
-    if (this.pageSize !== pageSize) {
-      this.observableProps.pageSize = pageSize;
-      this.observableProps.page = 1;
-      if (dataSet) {
-        dataSet.pageSize = pageSize;
-        dataSet.currentPage = 1;
-        dataSet.query(1, undefined, true);
-      }
+  async handleChange(page: number, pageSize: number) {
+    const { dataSet, onChange, beforeChange = noop } = this.props;
+    if (this.pageSize !== pageSize && await beforeChange(page, pageSize) !== false) {
+      runInAction(() => {
+        this.observableProps.pageSize = pageSize;
+        this.observableProps.page = 1;
+        if (dataSet) {
+          dataSet.pageSize = pageSize;
+          dataSet.currentPage = 1;
+          dataSet.query(1, undefined, true);
+        }
+      });
     } else {
-      this.observableProps.page = page;
+      runInAction(() => {
+        this.observableProps.page = page;
+      });
     }
     if (onChange) {
       onChange(page, pageSize);
@@ -194,12 +199,14 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return value;
   }
 
-  jumpPage(page) {
-    const { dataSet } = this.props;
-    if (dataSet) {
-      dataSet.page(page);
+  async jumpPage(page) {
+    const { dataSet, beforeChange = noop } = this.props;
+    if (await beforeChange(page, this.pageSize) !== false) {
+      if (dataSet) {
+        dataSet.page(page);
+      }
+      this.handleChange(page, this.pageSize);
     }
-    this.handleChange(page, this.pageSize);
   }
 
   @autobind

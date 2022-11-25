@@ -85,6 +85,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
     expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData, fullColumnWidth,
+    expandRowByClick,
   } = context;
   const {
     highLightRow,
@@ -179,7 +180,16 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     dataSet[record.isSelected ? 'unSelect' : 'select'](record);
   }, [record, dataSet]);
 
+  const handleExpandChange = useCallback(() => {
+    if (expandable) {
+      tableStore.setRowExpanded(record, !isExpanded);
+    }
+  }, [tableStore, record, expandable, isExpanded]);
+
   const handleClick = useCallback(action<(e) => boolean | undefined>((e) => {
+    if (expandRowByClick) {
+      handleExpandChange();
+    }
     const { onClick } = rowExternalProps;
     if (highLightRow === HighLightRowType.click && !tableStore.rowClicked) {
       tableStore.rowClicked = true;
@@ -187,7 +197,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     if (typeof onClick === 'function') {
       return onClick(e);
     }
-  }), [tableStore, rowExternalProps]);
+  }), [tableStore, rowExternalProps, expandRowByClick, handleExpandChange]);
 
   const handleSelectionByClick = useCallback(async (e) => {
     if (await handleClick(e) !== false) {
@@ -210,12 +220,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       onDoubleClick(e);
     }
   }, [handleSelection, rowExternalProps]);
-
-  const handleExpandChange = useCallback(() => {
-    if (expandable) {
-      tableStore.setRowExpanded(record, !isExpanded);
-    }
-  }, [tableStore, record, expandable, isExpanded]);
 
   const focusRow = useCallback(() => {
     const { current } = rowRef;

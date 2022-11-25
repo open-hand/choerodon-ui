@@ -64,7 +64,8 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
     return true;
   }
   if (isObject(newValue) && isObject(originalValue) && Object.keys(newValue).length) {
-    return Object.keys(newValue).every(key => {
+    const combineKeys = Object.keys(newValue).concat(Object.keys(originalValue));
+    return combineKeys.every(key => {
       const value = newValue[key];
       const oldValue = originalValue[key];
       if (oldValue === value) {
@@ -162,6 +163,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   searchCode?: string;
   autoQuery?: boolean;
   refreshBtn?: boolean;
+  onRefresh?: () => Promise<boolean | undefined> | boolean | undefined | void;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -421,6 +423,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const field = queryDataSet && queryDataSet.getField(name);
     let shouldQuery = true;
     if (field && field.get('range', record)) {
+      // 处理 range 失焦对象 undefined，bind 字段无处理的情况
+      if (value) {
+        const rangeKeys = Object.keys(value);
+        if (rangeKeys.length) {
+          if (value[rangeKeys[0]] === undefined) {
+            record.set(name, null)
+          } else if (value[rangeKeys[1]] === undefined) {
+            record.set(name, {
+              [rangeKeys[0]]: value[rangeKeys[0]],
+              [rangeKeys[1]]: null,
+            });
+          }
+        }
+      }
       const rangeValue = value ? isArray(value) ? value.join('') : Object.values(value).join('') : '';
       const rangeOldValue = oldValue ? isArray(oldValue) ? oldValue.join('') : Object.values(oldValue).join('') : '';
       shouldQuery = rangeValue !== rangeOldValue;
@@ -736,8 +752,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   /**
    * 查询前修改提示及校验定位
    */
-  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string): Promise<void> {
-    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar } = this.props;
+  async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string, refresh?: boolean): Promise<void> {
+    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar, onRefresh = noop } = this.props;
     const { getConfig } = this.context;
     const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
     if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
@@ -748,7 +764,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           });
           dataSet.setQueryParameter(searchText, fuzzyValue);
         }
-        dataSet.query();
+        if (refresh) {
+          if ((await onRefresh()) !== false) {
+            dataSet.query();
+          }
+        } else {
+          dataSet.query();
+        }
       } else {
         let hasFocus = false;
         for (const [key, value] of this.refEditors.entries()) {
@@ -773,7 +795,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         className={`${prefixCls}-filter-menu-query`}
         onClick={async (e) => {
           e.stopPropagation();
-          await this.modifiedCheckQuery();
+          await this.modifiedCheckQuery(undefined, undefined, true);
         }}
       >
         <Tooltip title={$l('Table', 'refresh')}>
@@ -1062,6 +1084,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const label = queryField && queryField.get('label');
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
@@ -1087,7 +1110,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     }}
                   >
                     <span className={`${prefixCls}-filter-label`}>
-                      {queryField && queryField.get('label')}
+                      {label}
                       {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                     </span>
                     <span className={`${prefixCls}-filter-item`}>
@@ -1101,6 +1124,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                const label = queryField && queryField.get('label');
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
@@ -1134,7 +1158,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         }}
                       />
                       <span className={`${prefixCls}-filter-label`}>
-                        {queryField && queryField.get('label')}
+                        {label}
                         {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
                       </span>
                       <span className={`${prefixCls}-filter-item`}>

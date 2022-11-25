@@ -541,12 +541,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const { current } = innerRef;
       if (text && current && current.contains(element)) {
         const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+        const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
         show(element, {
           title: text,
           placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
           ...tooltipConfig,
-        });
+        }, duration);
         return true;
       }
     }
@@ -559,7 +560,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }, [tooltipShownRef, tableStore, showTooltip]);
   const handleMouseLeave = useCallback(() => {
     if (!tableStore.columnResizing && tooltipShownRef.current) {
-      hide();
+      const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+      const duration: number = (tooltipConfig.mouseLeaveDelay || 0.1) * 1000;
+      hide(duration);
       tooltipShownRef.current = false;
     }
   }, [tooltipShownRef, tableStore]);

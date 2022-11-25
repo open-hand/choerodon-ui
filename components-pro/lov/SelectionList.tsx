@@ -49,7 +49,12 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   getRecords(records: Record[]) {
-    return sortBy(records, (item: Record) => defaultTo(item.selectedTimestamp, -1));
+    const { textField } = this.props;
+    return sortBy(
+      records,
+      (item: Record) => defaultTo(item.selectedTimestamp, -1), 
+      (item: Record) => item.get(textField),
+    );
   }
 
   @action

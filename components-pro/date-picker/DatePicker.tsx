@@ -57,12 +57,12 @@ function createDefaultTime() {
   return moment('00:00:00', 'HH:mm:ss');
 }
 
-function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null): Moment {
+function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null, viewMode?: ViewMode): Moment {
   if (min && defaultTime.isBefore(min)) {
     defaultTime.year(min.year());
     defaultTime.month(min.month());
     defaultTime.date(min.date());
-    if (defaultTime.isBefore(min)) {
+    if (defaultTime.isBefore(min) && viewMode !== ViewMode.time) {
       defaultTime.add(1, 'd');
     }
   }
@@ -70,7 +70,7 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
     defaultTime.year(max.year());
     defaultTime.month(max.month());
     defaultTime.date(max.date());
-    if (defaultTime.isAfter(max)) {
+    if (defaultTime.isAfter(max) && viewMode !== ViewMode.time) {
       defaultTime.subtract(1, 'd');
     }
   }
@@ -272,11 +272,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getDefaultTime(): [Moment, Moment] {
     const { defaultTime = createDefaultTime() } = this.props;
+    const viewMode = this.getDefaultViewMode();
     const { min, max } = this;
     if (isArrayLike(defaultTime)) {
-      return [getInRangeDefaultTime(defaultTime[0], min, max), getInRangeDefaultTime(defaultTime[1], min, max)];
+      return [getInRangeDefaultTime(defaultTime[0], min, max, viewMode), getInRangeDefaultTime(defaultTime[1], min, max, viewMode)];
     }
-    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max);
+    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max, viewMode);
     return [inRangeDefaultTime, inRangeDefaultTime];
   }
 
@@ -582,6 +583,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
+    const nowDate = moment();
+    if (this.getDefaultViewMode() === ViewMode.time && cursorDate.format('YYYY-MM-DD') !== nowDate.format('YYYY-MM-DD')) {
+      // 更改为当天的 时间
+      cursorDate = cursorDate.set({ 'year': nowDate.year(), 'month': nowDate.month(), 'date': nowDate.date() });
+    }
     const { min, max } = this;
     if (!this.isUnderRange(cursorDate, mode)) {
       if (min && cursorDate.isSameOrBefore(min) && selectedDate.isSameOrBefore(cursorDate)) {

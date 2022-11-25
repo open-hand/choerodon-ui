@@ -5,7 +5,6 @@ import isPlainObject from 'lodash/isPlainObject';
 import isNil from 'lodash/isNil';
 import { FormField, FormFieldProps, RenderProps } from '../field/FormField';
 import autobind from '../_util/autobind';
-import Tooltip from '../tooltip/Tooltip';
 import { Tooltip as TextTooltip } from '../core/enum';
 import { processFieldValue, renderMultiLine, toRangeValue } from '../field/utils';
 import isEmpty from '../_util/isEmpty';
@@ -128,10 +127,7 @@ export default class Output extends FormField<OutputProps> {
 
   getRenderedValue(): ReactNode {
     if (this.multiple) {
-      const { tags, isOverflowMaxTagCount } = this.renderMultipleValues(true);
-      if (isOverflowMaxTagCount) {
-        return <Tooltip title={this.processRenderer(this.getValue())}>{tags}</Tooltip>
-      }
+      const { tags } = this.renderMultipleValues(true);
       return tags;
     }
     if (this.range) {
@@ -154,14 +150,17 @@ export default class Output extends FormField<OutputProps> {
     const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const { tooltip = getTooltip('output') } = this.props;
     const { element, field } = this;
+    const { isOverflowMaxTagCount } = this.renderMultipleValues(true);
+    const title = this.multiple ? this.processRenderer(this.getValue()) : this.getRenderedValue();
+    const placement = getTooltipPlacement('output') || 'right';
+    const theme = getTooltipTheme('output');
+    if (this.multiple && title && isOverflowMaxTagCount) {
+      show(element, { title, placement, theme });
+      return true;
+    }
     if (element && !(field && field.get('multiLine', this.record)) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
-      const title = this.getRenderedValue();
       if (title) {
-        show(element, {
-          title,
-          placement: getTooltipPlacement('output') || 'right',
-          theme: getTooltipTheme('output'),
-        });
+        show(element, { title, placement, theme });
         return true;
       }
     }

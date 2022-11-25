@@ -23,7 +23,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
 import ObserverRadio from '../radio/Radio';
-import { DataSetSelection, RecordCachedType } from '../data-set/enum';
+import { DataSetSelection, FieldType, RecordCachedType } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
@@ -1015,6 +1015,8 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
+  @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) };
+  
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -2013,7 +2015,7 @@ export default class TableStore {
   @computed
   get currentData(): Record[] {
     const { pristine, filter: recordFilter, treeFilter } = this.props;
-    const { dataSet, isTree } = this;
+    const { dataSet, isTree, headerFilter } = this;
     const filter = (
       isTree
         ? typeof treeFilter === 'function' ? treeFilter : recordFilter
@@ -2025,6 +2027,40 @@ export default class TableStore {
     }
     if (pristine) {
       data = data.filter(record => !record.isNew);
+    }
+    if (headerFilter) {
+      const { filter, filterText } = headerFilter;
+      if (typeof filter === 'function') {
+        data = data.filter(record => filter({record, filterText}));
+      } else {
+        const field = dataSet.getField(headerFilter.fieldName);
+        const type = field && field.get('type');
+        const multiple = field && field.get('multiple');
+        let isLookUp = false;
+        if (field &&
+          (
+            field.get('lookupCode') ||
+            isString(field.get('lookupUrl')) ||
+            (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options'))) ||
+            field.get('lovCode')
+          )
+        ) {
+          isLookUp = true;
+        }
+        data = data.filter(record => {
+          let recordText: string;
+          if (multiple) {
+            if (isLookUp) {
+              recordText = record.get(headerFilter.fieldName).map(value => field!.getText(value)).join('');
+            } else {
+              recordText = record.get(headerFilter.fieldName).join('');
+            }
+          } else {
+            recordText = isLookUp ? String(field!.getText(record.get(headerFilter.fieldName))) : String(record.get(headerFilter.fieldName));
+          }
+          return recordText.toLocaleLowerCase().includes(String(headerFilter.filterText).toLocaleLowerCase())
+        });
+      }
     }
     return data;
   }
@@ -2491,7 +2527,7 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      promises.push(dataSet.queryMoreChild(record));
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));

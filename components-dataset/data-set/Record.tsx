@@ -187,6 +187,10 @@ export default class Record {
     return this.getState(SELECT_TIMESTAMP);
   }
 
+  set selectedTimestamp(timestamp: number | undefined) {
+    this.setState(SELECT_TIMESTAMP, timestamp);
+  }
+
   get selectable(): boolean {
     const $selectable = this.getState(SELECTABLE_KEY);
     if ($selectable !== undefined) {
