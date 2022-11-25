@@ -40,6 +40,7 @@ title: Select
 | noCache    | 下拉时自动重新查询，不缓存下拉数据源                                   | boolean |   |
 | selectAllButton | 多选模式下，是否显示全选按钮， 支持自定义按钮  | boolean \| (ButtonProps[]) => ButtonProps[] | true  |
 | reverse | 多选模式下，是否显示反选按钮 | boolean | false  |
+| reserveParam | 多选模式下，搜索选中后是否保留参数显示 | boolean | [globalConfig.selectReserveParam](/components/configure#API)  |
 | popupContent | 下拉框的自定义内容, 注意函数参数 dataSet 为下拉列表的 options  | ReactNode \| ({ dataSet, field, record, textField, valueField, content, setValue(value), setPopup(popup) }) => ReactNode |  |
 | searchFieldInPopup | 搜索框显示在下拉框中  | boolean |  |
 | searchFieldProps | 搜索框显示在下拉框中时，可以设置输入框的属性  | TextFieldProps |  |
