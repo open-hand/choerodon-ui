@@ -13,11 +13,23 @@
       cursor: not-allowed;
       .@{c7n-prefix}-progress-loading {
         position: absolute;
+        top: 0;
+        bottom: 0;
         left: @switch-loading-inner-distance;
         z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        margin: auto 0;
         .@{c7n-prefix}-progress-inner {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           width: @switch-loading-inner-size;
           height: @switch-loading-inner-size;
+          svg {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
 
