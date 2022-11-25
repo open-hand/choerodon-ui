@@ -77,8 +77,8 @@ const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
       <Dropdown {...dropdownProps}>
         {
           icon ?
-            <Button funcType={FuncType.flat} size={size}>{icon}</Button> :
-            <Button funcType={FuncType.flat} size={size} icon="arrow_drop_down" />
+            <Button funcType={FuncType.flat} size={size} disabled={dropdownProps.disabled}>{icon}</Button> :
+            <Button funcType={FuncType.flat} size={size} disabled={dropdownProps.disabled} icon="arrow_drop_down" />
         }
       </Dropdown>
     </ButtonGroup>
