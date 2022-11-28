@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.7
+
+`2022-11-28`
+
 - 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode`, `selectBoxSearchable`, `selectReserveParam` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.

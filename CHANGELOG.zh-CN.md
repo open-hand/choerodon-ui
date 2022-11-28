@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.7
+
+`2022-11-28`
+
 - 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode, selectBoxSearchable, selectReserveParam 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
