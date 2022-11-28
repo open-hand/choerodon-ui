@@ -13,10 +13,10 @@ class App extends React.Component {
   render() {
     return (
       <form>
-        <Radio name="rd" disabled>
+        <Radio dataSet={this.ds} name="rd" disabled>
           A
         </Radio>
-        <Radio name="rd" readOnly>
+        <Radio dataSet={this.ds} name="rd" readOnly>
           B
         </Radio>
         <Radio dataSet={this.ds} name="rd" value="C">

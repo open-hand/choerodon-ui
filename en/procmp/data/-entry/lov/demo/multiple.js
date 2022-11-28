@@ -26,7 +26,7 @@ class App extends React.Component {
     data: [
       {
         code_code: 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, c7n',
-        code_description: '性别,员工状态,c7n',
+        code_description: '性别,员工状态,Choerodon UI',
       },
     ],
     fields: [

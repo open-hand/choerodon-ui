@@ -31,6 +31,7 @@ title: API
 | popupContent | 下拉框的自定义内容, 注意函数参数 dataSet 为下拉列表的 options | ReactNode \| ({ dataSet, field, record, textField, valueField, content, setValue(value), setPopup(popup) }) => ReactNode | | 1.4.1      |
 | searchFieldInPopup | 搜索框显示在下拉框中  | boolean |  | 1.4.4 |
 | searchFieldProps | 搜索框显示在下拉框中时，可以设置输入框的属性  | TextFieldProps |  | 1.4.4 |
+| reserveParam | 多选模式下，搜索选中后是否保留参数显示 | boolean | [globalConfig.selectReserveParam](/zh/procmp/configure/configure#api)  | 1.5.7 |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
 

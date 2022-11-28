@@ -115,6 +115,20 @@
       "order": 7,
       "height": 280,
       "screenshot": ""
+    },
+    {
+      "filename": "collapsible.js",
+      "title": {
+        "zh": "指定区域展开",
+        "en": "Collapsible"
+      },
+      "description": {
+        "zh": "可指定点击 icon、header 区域进行展开，设置 disabled 则禁用。\n",
+        "en": "You can specify to click icon and header to expand, and set disabled to disable. \n"
+      },
+      "order": 8,
+      "height": 480,
+      "screenshot": ""
     }
   ]
 }

@@ -44,7 +44,7 @@ title: API
 | showRemoveIcon | 是否显示删除按钮   | boolean | true |
 | showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | true |
 | showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | true |
-| showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/en/procmp/configure/configure) |
+| showReUploadIcon | 是否显示重新上传按钮（上传成功状态则重新选择文件上传，上传失败状态则重新上传该文件；当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/en/procmp/configure/configure) |
 | removePopConfirmTitle | 删除弹框确认信息   | string |  |
 | reUploadText | 重新上传按钮 title 信息   | string |  |
 | reUploadPopConfirmTitle | 重新上传弹框确认信息   | string |  |

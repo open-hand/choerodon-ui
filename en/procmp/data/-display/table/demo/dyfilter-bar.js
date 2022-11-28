@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DataSet, Table } from 'choerodon-ui/pro';
+import { DataSet, Table, Button } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 
 const optionData = [
@@ -43,8 +43,8 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'userid',
     name: 'user',
-    autoQuery: false,
     pageSize: 5,
+    autoQuery: false,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
@@ -161,15 +161,68 @@ class App extends React.Component {
   render() {
     return (
       <Table
+        // searchCode：后端保存筛选项时，需配置动态筛选条后端接口唯一编码，保证数据匹配
+        searchCode="xxx"
         buttons={['add', 'query']}
         dataSet={this.ds}
         queryBar="filterBar"
-        // queryBarProps={{
-        //   dynamicFilterBar: { suffixes: ['filter'], prefixes: ['filter'] },
-        // }}
+        queryBarProps={{
+          // fuzzyQuery: false,
+          // autoQuery: false,
+          // onRefresh: () => {
+          //   console.log('props onRefresh');
+          //   return false;
+          // },
+          //
+          dynamicFilterBar: {
+            // suffixes: [<Button icon="close" />],
+            // tableFilterAdapter: 后端保存筛选项时，过滤条请求适配器，支持全局配置;  使用该功能前通常在全局配置中配置相关通用 API 适配器，开发者无需单独配置。
+            tableFilterAdapter: (props) => {
+              const {
+                config,
+                config: { data },
+                type,
+                searchCode,
+                queryDataSet,
+                tableFilterTransport,
+              } = props;
+              console.log('defaultTableFilterAdapter config', config);
+              const userId = 1;
+              const tenantId = 0;
+              switch (type) {
+                case 'read':
+                  return {
+                    // url: `read api`,
+                    url:
+                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                    method: 'get',
+                  };
+                case 'create':
+                  return {
+                    // url: `create api`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'update':
+                  return {
+                    // url: `update api`,
+                    method: 'put',
+                    data: data[0],
+                  };
+                case 'destroy':
+                  return {
+                    // url: `destroy api`,
+                    url:
+                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                    data: data[0],
+                    method: 'delete',
+                  };
+              }
+            },
+          },
+        }}
         border={false}
         columns={this.columns}
-        queryFieldsLimit={2}
       />
     );
   }

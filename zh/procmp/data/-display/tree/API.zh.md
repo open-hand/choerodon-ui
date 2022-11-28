@@ -27,7 +27,7 @@ title: API
 | disabled | 将树禁用 | bool | false |
 | draggable | 设置节点可拖拽（IE>8） | boolean \| ((node?: DataNode) => boolean) \| {nodeDraggable: boolean \| ((node?: DataNode) => boolean), icon: boolean \| ReactNode} | false |
 | expandedKeys | （受控）展开指定的树节点 | string\[] | \[] |
-| filterTreeNode | 按需筛选树节点（高亮），返回 true | function(node) | - |
+| filterTreeNode | 按需筛选树节点,配置后返回 true 的会新增类名上去（高亮） | function(node) | - |
 | loadData | 异步加载数据 | function(node) | - |
 | loadedKeys | （受控）已经加载的节点，需要配合 `loadData` 使用 | string\[] | \[] |
 | multiple | 支持点选多个节点（节点本身） | boolean | false |
