@@ -139,15 +139,19 @@ class App extends React.Component {
           {heightChangeable ? 'true' : 'false'}
         </Button>
         <Table
+          // 开启个性化
           customizable
           border={false}
           heightChangeable={heightChangeable}
+          // 表格个性化编码，全局配置  customizedSave | customizedLoad 个性化处理钩子，结合后端 API 进行存储
           customizedCode={customizedCode}
           rowHeight={40}
           key="user"
           dataSet={this.userDs}
           rowDraggable
+          // 表格个性化内列拖拽
           columnDraggable
+          // 表格个性化内编辑列头
           columnTitleEditable
           dragColumnAlign="left"
           columnsDragRender={this.columnsDragRender}

@@ -229,6 +229,20 @@
       "order": 16,
       "height": 280,
       "screenshot": ""
+    },
+    {
+      "filename": "validate-locate.js",
+      "title": {
+        "zh": "校验定位页签",
+        "en": "validate-locate"
+      },
+      "description": {
+        "zh": "结合数据源，校验后设置页签跳转交互示例。\n",
+        "en": "Combined with the data source, set a tab jump interaction example after verification.\n"
+      },
+      "order": 17,
+      "height": 280,
+      "screenshot": ""
     }
   ]
 }

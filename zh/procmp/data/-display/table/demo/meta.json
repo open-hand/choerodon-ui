@@ -209,7 +209,7 @@
         "en": "Dynamic filter bar"
       },
       "description": {
-        "zh": "Table queryBar 设为 filterBar，查询条件为无边框可动态配置筛选条，结合后端标准接口可实现筛选列表保存。\n",
+        "zh": "Table queryBar 设为 filterBar，查询条件可动态配置筛选条，可单独纯前端使用，也可结合后端标准接口可实现筛选列表保存，参考 demo 代码注释。\n",
         "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
       },
       "order": 13,
@@ -246,7 +246,7 @@
       "screenshot": "",
       "height": 625,
       "category": "pro",
-      "ignores": ["theme1", "theme3", "theme5"]
+      "ignores": ["THEME_EMPTY", "theme1", "theme3", "theme5"]
     },
     {
       "filename": "query-dataset.js",
@@ -315,7 +315,7 @@
         "en": "AutoHeight"
       },
       "description": {
-        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动，并且保持表头固定。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数) } |\n",
+        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动，并且保持表头固定。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数;单位默认 px) } |\n",
         "en": "AutoHeight.\n"
       },
       "order": 19,
@@ -376,7 +376,7 @@
         "en": "Customized"
       },
       "description": {
-        "zh": "支持对列的各项属性进行配置并个性化存储。\n",
+        "zh": "支持对列的各项属性进行配置并个性化存储。全局配置 customizedSave | customizedLoad 个性化处理钩子，结合后端 API 进行存储或钩子内配置前端缓存。\n",
         "en": "Support the configuration and personalized storage of each attribute of the column.\n"
       },
       "order": 23,
@@ -391,8 +391,8 @@
         "en": "Drag Render"
       },
       "description": {
-        "zh": "可以通过 rowDragRender 里面方法进行对于整体的拖拽控制，如 droppableProps，draggableProps 控制是否可以放入和拖动等。\n 更多查看 react-beautiful-dnd。\n",
-        "en": "You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, draggableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd.\n"
+        "zh": "可以通过 rowDragRender 里面方法进行对于整体的拖拽控制，如 droppableProps，draggableProps 控制是否可以放入和拖动等。\n 更多查看 react-beautiful-dnd。\n在 1.5.7 版本扩展 draggableProps.isDragDisabled 属性支持回调函数：(record?: Record) => boolean，可以更灵活地对每一行进行拖拽控制。",
+        "en": "You can use the rowDragRender method to control the overall drag and drop, such as droppableProps, draggableProps control whether you can drag and drop, etc., you can check react-beautiful-dnd.\nIn version 1.5.7, the draggableProps.isDragDisabled property was extended to support callback functions: (record?: Record) = > boolean, which allows more flexible drag control of each row."
       },
       "order": 24,
       "screenshot": "",

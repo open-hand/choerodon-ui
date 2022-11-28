@@ -108,13 +108,33 @@ class App extends React.Component {
     const buttons = ['save', 'delete', 'reset'];
     return (
       <Table
-        rowDragRender={{ renderClone: this.renderDragRow }}
+        rowDragRender={{
+          renderClone: this.renderDragRow,
+          draggableProps: {
+            isDragDisabled: (r) => {
+              console.log('r:', r);
+              if (r.get('userid') === '3' || r.get('userid') === '4') {
+                return true;
+              }
+              return false;
+            },
+          },
+        }}
         dragColumnAlign="left"
         rowDraggable
         key="user"
         buttons={buttons}
         dataSet={this.userDs}
         pristine
+        onDragEndBefore={(ds, col, res) => {
+          const dropDisabled =
+            (res.source.index < 3 && res.destination.index >= 3) ||
+            (res.source.index > 4 && res.destination.index <= 4);
+          if (dropDisabled) {
+            return false;
+          }
+          return true;
+        }}
       >
         <Column name="userid" />
         <Column name="age" />

@@ -6,10 +6,11 @@ class PicturesWall extends React.Component {
   state = {
     previewVisible: false,
     previewImage: '',
+    previewTitle: '',
     fileList: [
       {
         uid: -1,
-        name: 'xxx.png',
+        name: 'image1.png',
         status: 'done',
         url:
           'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -23,13 +24,14 @@ class PicturesWall extends React.Component {
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
+      previewTitle: file.name,
     });
   };
 
   handleChange = ({ fileList }) => this.setState({ fileList });
 
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { previewVisible, previewImage, previewTitle, fileList } = this.state;
     const uploadButton = (
       <div>
         <Icon type="add" />
@@ -59,10 +61,15 @@ class PicturesWall extends React.Component {
         </Upload>
         <Modal
           visible={previewVisible}
+          title={previewTitle}
           footer={null}
           onCancel={this.handleCancel}
         >
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+          <img
+            alt="example"
+            style={{ width: '100%', marginTop: 8 }}
+            src={previewImage}
+          />
         </Modal>
       </div>
     );

@@ -164,7 +164,14 @@ const App = () => {
           showHelp="tooltip"
         />
         <Output label="文本展示" value="这里是Output文本展示" />
-        <Switch label="是否冻结" name="flozen" required />
+        <Switch
+          label="是否冻结"
+          name="flozen"
+          unCheckedChildren="未冻结"
+          required
+        >
+          冻结（内容溢出时，默认 tooltip 展示。内容溢出时，默认 tooltip 展示。）
+        </Switch>
         <CheckBox label="是否开启" name="enabled" />
         <Select label="语言" name="language" required multiple>
           <Option value="zh-cn">简体中文</Option>

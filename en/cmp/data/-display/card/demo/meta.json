@@ -63,11 +63,11 @@
     {
       "filename": "loading.js",
       "title": {
-        "zh": "预加载的卡片",
+        "zh": "加载中的卡片",
         "en": "Loading card"
       },
       "description": {
-        "zh": "数据读入前会有文本块样式。\n",
+        "zh": "数据读入前会有文本块样式。如需其他加载过渡，使用 Spin 包裹内容区即可，注意布局及样式，避免居中问题。\n",
         "en": "Shows a loading indicator while the contents of the card is being fetched.\n"
       },
       "order": 5,

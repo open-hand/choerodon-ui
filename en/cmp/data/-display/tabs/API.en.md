@@ -47,6 +47,7 @@ title: API
 | overflowCount         | 展示封顶的数字值         | number | 99     |
 | showCount         | 显示数字        | boolean | true     | 1.4.5 |
 | dataSet	| 数据集对象，当数据集校验失败时会出现提示标记 | DataSet \| DataSet[] |  | 1.5.3 |
+| hidden | 是否隐藏 | boolean  | false | 1.5.7 |
 
 ### Tabs.TabGroup
 
