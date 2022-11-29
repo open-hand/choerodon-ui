@@ -17,6 +17,8 @@ timeline: true
 
 ## 1.5.8
 
+`2022-11-29`
+
 - 🐞 `ViewComponent`: Fixed the pop-up window closing error.
 - 🐞 `<pro>Lov`: Fixed the problem that out of focus caused the query parameters to be cleared in the Lov popup mode.
 
