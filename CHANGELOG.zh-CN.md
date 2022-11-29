@@ -15,6 +15,11 @@ timeline: true
 
 ---
 
+## 1.5.8
+
+- 🐞 `ViewComponent`: 修复弹窗关闭报错的问题。
+- 🐞 `<pro>Lov`: 修复 Lov popup 模式下配置 selectTrigger 为 click 的时候失焦导致查询参数清空的问题。
+
 ## 1.5.7
 
 `2022-11-28`
