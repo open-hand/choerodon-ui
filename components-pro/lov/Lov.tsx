@@ -717,7 +717,7 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleBlur(e) {
-    if (this.modal) {
+    if (this.modal || this.popup) {
       e.preventDefault();
     }
     super.handleBlur(e);

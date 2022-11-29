@@ -538,10 +538,9 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
       defer(() => {
         this.blur();
-        if (this.useFocusedClassName()) { 
-          const element = this.wrapper || findDOMNode(this);
-          if (element) {
-            classes(element).remove(`${this.prefixCls}-focused`);
+        if (this.useFocusedClassName()) {
+          if (this.element) {
+            classes(this.element).remove(`${this.prefixCls}-focused`);
           }
         }
       });
