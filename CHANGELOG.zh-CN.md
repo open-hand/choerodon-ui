@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 attachment.downloadAllMode 属性。
+
 ## 1.5.8
 
 `2022-11-29`

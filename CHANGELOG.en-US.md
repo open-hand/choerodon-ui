@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `attachment.downloadAllMode` property.
+
 ## 1.5.8
 
 `2022-11-29`

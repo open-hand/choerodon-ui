@@ -4,7 +4,7 @@ import { Moment, MomentInput } from 'moment';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import { LovConfig } from '../interface';
-import { ExportMode, RecordStatus, FieldType } from '../data-set/enum';
+import { ExportMode, RecordStatus, FieldType, DownloadAllMode } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { TransportHookProps, TransportProps } from '../data-set/Transport';
 import DataSet from '../data-set/DataSet';
@@ -84,6 +84,7 @@ export interface AttachmentConfig {
   defaultFileSize: number;
   defaultChunkSize: number;
   defaultChunkThreads: number;
+  downloadAllMode?: DownloadAllMode;
   action?: AxiosRequestConfig | ((props: AttachmentActionProps) => AxiosRequestConfig);
   batchFetchCount?: AttachmentBatchFetchCount;
   fetchFileSize?: (props: AttachmentOption) => Promise<number>;
@@ -179,6 +180,7 @@ const defaultAttachment: AttachmentConfig = {
   defaultFileSize: 0,
   defaultChunkSize: 5 * 1024 * 1024,
   defaultChunkThreads: 3,
+  downloadAllMode: DownloadAllMode.readOnly,
   getDownloadUrl({ attachment }) {
     return attachment.url;
   },
