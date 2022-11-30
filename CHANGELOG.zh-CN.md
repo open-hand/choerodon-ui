@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 attachment.downloadAllMode 属性。
+- 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。 
 
 ## 1.5.8
 

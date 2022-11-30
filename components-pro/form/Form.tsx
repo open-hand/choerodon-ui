@@ -55,6 +55,7 @@ import ItemGroup from './ItemGroup';
 import { ShowHelp } from '../field/enum';
 import Icon from '../icon';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 /**
  * 表单name生成器
@@ -122,8 +123,9 @@ export interface FormProps extends DataSetComponentProps {
   /**
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
+   * 扩展 tooltip 属性：tooltip={['always', { theme: 'light', ... }]}
    */
-  labelTooltip?: LabelTooltip;
+  labelTooltip?: LabelTooltip | [LabelTooltip, TooltipProps];
   /**
    * 表单列数
    */
@@ -383,7 +385,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
-  get labelTooltip(): LabelTooltip | undefined {
+  get labelTooltip(): LabelTooltip | [LabelTooltip, TooltipProps] |undefined {
     const { labelTooltip } = this.observableProps;
     if (labelTooltip) {
       return labelTooltip;

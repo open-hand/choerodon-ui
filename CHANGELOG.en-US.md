@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `attachment.downloadAllMode` property.
+- 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 
 ## 1.5.8
 
