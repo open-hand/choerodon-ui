@@ -85,6 +85,7 @@ export interface TriggerProps extends ElementProps {
   popupContent?: ReactNode | RenderFunction;
   popupCls?: string;
   popupStyle?: CSSProperties;
+  popupInnerStyle?: CSSProperties;
   popupHidden?: boolean;
   popupPlacement?: string;
   popupAlign?: object;

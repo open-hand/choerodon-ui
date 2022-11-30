@@ -1,4 +1,4 @@
-import React, { Children, Component, isValidElement } from 'react';
+import React, { Children, Component, CSSProperties, isValidElement } from 'react';
 import isNil from 'lodash/isNil';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
@@ -82,8 +82,9 @@ const PopupContent: React.FC<{
   prefixCls: string;
   theme?: TooltipTheme;
   translate: { x: number; y: number };
+  popupInnerStyle?: CSSProperties;
 }> = (props) => {
-  const { content, prefixCls, theme, translate: { x, y } } = props;
+  const { content, prefixCls, theme, translate: { x, y }, popupInnerStyle } = props;
 
   const arrowCls = `${prefixCls}-popup-arrow`;
   const contentCls = `${prefixCls}-popup-inner`;
@@ -91,7 +92,7 @@ const PopupContent: React.FC<{
   return (
     <div>
       <div className={`${arrowCls} ${arrowCls}-${theme}`} style={arrowStyle} />
-      <div className={`${contentCls} ${contentCls}-${theme}`}>
+      <div className={`${contentCls} ${contentCls}-${theme}`} style={popupInnerStyle}>
         {content}
       </div>
     </div>
@@ -173,7 +174,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   renderPopupContent(...props) {
     const { translate } = this.state;
     const { getTooltipTheme } = this.context;
-    const { theme = getTooltipTheme() } = this.props;
+    const { theme = getTooltipTheme(), popupInnerStyle } = this.props;
     const content = this.getContent(...props);
     if (content) {
       return (
@@ -182,6 +183,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
           theme={theme}
           prefixCls={this.prefixCls}
           translate={translate}
+          popupInnerStyle={popupInnerStyle}
         />
       );
     }

@@ -16,7 +16,10 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 attachment.downloadAllMode 属性。
-- 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。 
+- 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
+- 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
+- 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
+- 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 
 ## 1.5.8
 

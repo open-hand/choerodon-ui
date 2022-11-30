@@ -16,7 +16,10 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `attachment.downloadAllMode` property.
+- 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
+- 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
+- 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 
 ## 1.5.8
 
