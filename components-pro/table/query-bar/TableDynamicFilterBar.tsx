@@ -1084,10 +1084,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label');
+                const label = queryField && queryField.get('label', queryDataSet.current);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
-                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
                   });
                 return (
                   <div
@@ -1111,7 +1111,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   >
                     <span className={`${prefixCls}-filter-label`}>
                       {label}
-                      {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
+                      {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                     </span>
                     <span className={`${prefixCls}-filter-item`}>
                       {this.createFields(element, name)}
@@ -1124,10 +1124,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label');
+                const label = queryField && queryField.get('label', queryDataSet.current);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
-                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled')),
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
                   });
                 if (selectFields.includes(name)) {
                   return (
@@ -1159,7 +1159,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       />
                       <span className={`${prefixCls}-filter-label`}>
                         {label}
-                        {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help')) : null}
+                        {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                       </span>
                       <span className={`${prefixCls}-filter-item`}>
                         {this.createFields(element, name)}

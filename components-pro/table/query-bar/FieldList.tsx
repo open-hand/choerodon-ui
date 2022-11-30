@@ -51,7 +51,6 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
               <div className={`${prefixCls}-item`} key={code}>
                 <CheckBox
                   value={code}
-                  disabled={field.get('disabled')}
                   checked={checked}
                   onChange={() => handleChange(code, !checked)}
                 >
