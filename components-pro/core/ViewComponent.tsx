@@ -16,6 +16,7 @@ import { action, computed, observable } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
+import isElement from 'lodash/isElement';
 import classes from 'component-classes';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
@@ -504,13 +505,13 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   }
 
   focus() {
-    if (this.element) {
+    if (this.element && this.element.focus) {
       this.element.focus();
     }
   }
 
   blur() {
-    if (this.element) {
+    if (this.element && this.element.blur) {
       this.element.blur();
     }
   }
@@ -539,7 +540,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       defer(() => {
         this.blur();
         if (this.useFocusedClassName()) {
-          if (this.element) {
+          if (this.element && isElement(this.element)) {
             classes(this.element).remove(`${this.prefixCls}-focused`);
           }
         }
