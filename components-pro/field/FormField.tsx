@@ -3,7 +3,6 @@ import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mo
 import classNames from 'classnames';
 import isPromise from 'is-promise';
 import isNumber from 'lodash/isNumber';
-import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isLdEmpty from 'lodash/isEmpty';
 import isObject from 'lodash/isObject';
@@ -52,6 +51,7 @@ import {
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 import isOverflow from '../overflow-tip/util';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
@@ -318,7 +318,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return this.props.labelLayout || this.context.labelLayout;
   }
 
-  get labelTooltip(): TextTooltip | undefined {
+  get labelTooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
     return this.props.labelTooltip || this.context.labelTooltip || this.context.getTooltip('label');
   }
 
@@ -660,7 +660,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
-        const { labelTooltip, floatLabelOffsetX } = this;
+        const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
@@ -674,7 +674,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
@@ -846,6 +845,20 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         placement: getTooltipPlacement('label'),
         theme: getTooltipTheme('label'),
       });
+      this.tooltipShown = true;
+    } else if (isArrayLike(labelTooltip)) {
+      const tooltipType = labelTooltip[0];
+      const labelTooltipProps = labelTooltip[1] || {};
+      const duration: number = (labelTooltipProps.mouseEnterDelay || 0.1) * 1000;
+      if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(currentTarget))) {
+        show(currentTarget, {
+          theme: getTooltipTheme('label'),
+          placement: getTooltipPlacement('label'),
+          title: labelTooltipProps.title ? labelTooltipProps.title : this.getLabel(),
+          ...labelTooltipProps,
+        }, duration);
+        this.tooltipShown = true;
+      }
     }
   }
 

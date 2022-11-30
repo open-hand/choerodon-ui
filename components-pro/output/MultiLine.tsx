@@ -2,6 +2,7 @@ import React, { FunctionComponent, memo, ReactNode, useCallback, useContext, use
 import classNames from 'classnames';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 import Row from '../row';
 import Col from '../col';
 import { Tooltip as TextTooltip } from '../core/enum';
@@ -14,7 +15,7 @@ export interface MultiLineProps {
   required?: boolean;
   validationHidden?: boolean;
   tooltip?: TextTooltip;
-  labelTooltip?: TextTooltip;
+  labelTooltip?: TextTooltip | [TextTooltip, TooltipProps];
   children?: ReactNode;
 }
 

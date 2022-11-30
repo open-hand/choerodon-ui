@@ -1,10 +1,8 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
-import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
-import { Tooltip as TextTooltip } from '../core/enum';
 import { FIELD_SUFFIX } from '../form/utils';
 import { FormField, FormFieldProps } from '../field/FormField';
 import { renderValidationMessage } from '../field/utils';
@@ -90,7 +88,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
     if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
-        const { labelTooltip, floatLabelOffsetX } = this;
+        const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
@@ -104,7 +102,6 @@ export default class Rate<T extends RateProps> extends FormField<T> {
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
