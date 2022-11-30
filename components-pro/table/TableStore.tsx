@@ -1028,8 +1028,8 @@ export default class TableStore {
   }
 
   get styleMinHeight(): string | number | undefined {
-    const { style } = this.props;
-    return style && toPx(style.minHeight, this.getRelationSize);
+    const { props: { style } } = this;
+    return this.styleHeight || style && toPx(style.minHeight, this.getRelationSize);
   }
 
   @computed
@@ -1090,7 +1090,7 @@ export default class TableStore {
         minHeight,
       ) : rowMinHeight;
       const height = defaultTo(computedHeight, this.bodyHeight + otherHeight);
-      const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : height);
+      const totalHeight = Math.max(minTotalHeight, maxHeight ? Math.min(maxHeight, height) : (minHeight ? minTotalHeight : height));
       return isComputedHeight || totalHeight !== height ? totalHeight - otherHeight : undefined;
     }
   }
