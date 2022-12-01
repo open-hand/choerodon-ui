@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
+- 🐞 `WaterMark`: 修复水印样式可以修改的问题。
 
 ## 1.5.8
 
