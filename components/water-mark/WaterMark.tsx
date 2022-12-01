@@ -84,12 +84,14 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
     getContainer,
   } = props;
 
+  const { fontSize = 16, fontWeight = 'normal', fontFamily = 'sans-serif', color = 'rgba(0,0,0,.15)', fontStyle = 'normal', opacity = 0.8 } = markStyle!;
   const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('watermark', customizePrefixCls);
   const wrapperCls = classNames(`${prefixCls}-wrapper`, className);
   const waterMakrCls = classNames(prefixCls, markClassName);
   const [base64Url, setBase64Url] = useState<string>('');
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const mutation: any = useRef<MutationObserver>(null);
 
   useEffect(() => {
     canvasWM(mutationObserver);
@@ -127,18 +129,20 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
     if (wrapperRef.current && !removeable) {
       const wrapperDom = getContainer && isElement(getContainer()) ? getContainer() : wrapperRef.current;
       // 监听浏览器控制台样式变化
-      const styleStr = `position: absolute !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;z-index:${zIndex} !important;pointer-events: none !important;background-repeat: repeat !important;background-size: ${gapX! + width!}px !important;background-image: url('${imgSrc}') !important;opacity:${markStyle!.opacity} !important`;
+      const styleStr = `position: absolute !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;z-index:${zIndex} !important;pointer-events: none !important;background-repeat: repeat !important;background-size: ${gapX! + width!}px !important;background-image: url('${imgSrc}') !important;opacity:${opacity} !important;`;
       const MutationObserver = window.MutationObserver;
-      if (MutationObserver) {
-        const mo: MutationObserver = new MutationObserver(() => {
+      if (mutation.current) {
+        mutation.current.disconnect();
+        mutation.current = null;
+      }
+      if (MutationObserver && !mutation.current) {
+        mutation.current = new MutationObserver(() => {
           const wmInstance = wrapperDom.querySelector(`.${prefixCls}`);
           if ((wmInstance && wmInstance.getAttribute('style') !== styleStr)) {
             wmInstance.setAttribute('style', styleStr);
-            // 避免一直触发
-            mo.disconnect();
           }
         });
-        mo.observe(wrapperDom, {
+        mutation.current.observe(wrapperDom, {
           attributes: true,
           subtree: true,
           childList: true,
@@ -183,7 +187,6 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
             callback(canvas.toDataURL());
           };
         } else if (content) {
-          const { fontSize = 16, fontWeight = 'normal', fontFamily = 'sans-serif', color = 'rgba(0,0,0,.15)', fontStyle = 'normal' } = markStyle!;
           const markSize = Number(fontSize) * ratio;
           ctx.font = `${fontStyle} normal ${fontWeight} ${markSize}px ${fontFamily}`;
           ctx.fillStyle = color!;
@@ -240,7 +243,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
         backgroundRepeat: 'repeat',
         backgroundSize: `${gapX! + width!}px`,
         backgroundImage: `url('${base64Url}')`,
-        opacity: markStyle!.opacity,
+        opacity,
       },
     }) : null
   }, [enable, waterMakrCls, gapX, width, base64Url, zIndex]);
