@@ -191,6 +191,13 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     );
   };
 
+  @autobind
+  elementReference(node) {
+    if (node && node.ref) {
+      this.element = node.ref;
+    }
+  }
+
   renderWrapper(): ReactNode {
     if (CodeMirror) {
       this.cmOptions.readOnly = this.disabled ? 'nocursor' : this.readOnly;

@@ -360,6 +360,11 @@
     align-items: center;
     font-size: @font-size-sm;
 
+    [class*="-after"] {
+      background-color: transparent;
+      border: none;
+    }
+
     span:not(.@{c7n-pro-prefix}-select-suffix-button) {
       &:focus-within {
         input {

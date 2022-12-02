@@ -19,6 +19,7 @@ import { FormatNumberFuncOptions } from '../number-field/NumberField';
 import isEmpty from '../_util/isEmpty';
 import CloseButton from './CloseButton';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 import ValidationResult from '../validator/ValidationResult';
 import Icon from '../icon';
 import { $l } from '../locale-context';
@@ -287,7 +288,7 @@ export type MultiLineRenderOption = {
   renderer?: Renderer;
   name?: string;
   tooltip?: Tooltip;
-  labelTooltip?: Tooltip;
+  labelTooltip?: Tooltip | [Tooltip, TooltipProps];
   renderValidationResult(result: ValidationResult): ReactNode;
   isValidationMessageHidden(message?: ReactNode): boolean | undefined;
   processValue(value): ReactNode;

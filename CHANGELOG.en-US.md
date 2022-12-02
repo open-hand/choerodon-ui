@@ -15,6 +15,24 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `attachment.downloadAllMode` property.
+- 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
+- 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
+- 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
+- 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
+- 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
+
+## 1.5.8
+
+`2022-11-29`
+
+- 🐞 `ViewComponent`: Fixed the pop-up window closing error.
+- 🐞 `<pro>Lov`: Fixed the problem that out of focus caused the query parameters to be cleared in the Lov popup mode.
+
+## 1.5.7
+
+`2022-11-28`
+
 - 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode`, `selectBoxSearchable`, `selectReserveParam` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
@@ -45,7 +63,7 @@ timeline: true
 - 💄 `<pro>Field`: Optimize lovPara query cache.
 - 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
 - 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
-- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state.
+- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state & Optimize Switch loading centering style.
 - 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
 - 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
 - 💄 `<pro>Lov`: Optimized the display order of selected records with cache in the pop-up.

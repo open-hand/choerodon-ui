@@ -10,6 +10,7 @@ import isFunction from 'lodash/isFunction';
 import { getConfig, Uploader } from 'choerodon-ui/dataset';
 import { AttachmentValue } from 'choerodon-ui/dataset/configure';
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
+import { DownloadAllMode } from 'choerodon-ui/dataset/data-set/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
@@ -866,7 +867,8 @@ export default class Attachment extends FormField<AttachmentProps> {
         this.renderTemplateDownloadButton(),
       );
     }
-    if (this.readOnly) {
+    const { downloadAllMode = DownloadAllMode.readOnly } = this.getContextConfig('attachment');
+    if ((downloadAllMode === DownloadAllMode.readOnly && this.readOnly) || (downloadAllMode === DownloadAllMode.always)) {
       if (this.count) {
         if (downloadAll) {
           const { getDownloadAllUrl } = this.getContextConfig('attachment');

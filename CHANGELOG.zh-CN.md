@@ -15,6 +15,24 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 attachment.downloadAllMode 属性。
+- 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
+- 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
+- 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
+- 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
+- 🐞 `WaterMark`: 修复水印样式可以修改的问题。
+
+## 1.5.8
+
+`2022-11-29`
+
+- 🐞 `ViewComponent`: 修复弹窗关闭报错的问题。
+- 🐞 `<pro>Lov`: 修复 Lov popup 模式下配置 selectTrigger 为 click 的时候失焦导致查询参数清空的问题。
+
+## 1.5.7
+
+`2022-11-28`
+
 - 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode, selectBoxSearchable, selectReserveParam 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
@@ -45,7 +63,7 @@ timeline: true
 - 💄 `<pro>Field`: 优化 lovPara 查询缓存。
 - 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
 - 💄 `<pro>Tooltip`: 优化 tooltip 显隐无规律的问题。
-- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果。
+- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果 & loading 状态样式。
 - 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
 - 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
 - 💄 `<pro>Lov`: 优化弹框中有缓存的已选记录显示顺序。

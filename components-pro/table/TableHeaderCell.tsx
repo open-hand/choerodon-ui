@@ -274,10 +274,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const handleMouseEnter = useCallback((e) => {
     const tooltip = tableStore.getColumnTooltip(column);
     const { currentTarget } = e;
-    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
+    const measureElement = currentTarget.getElementsByClassName(`${prefixCls}-cell-inner-right-has-other`)[0] || currentTarget;
+    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(measureElement)))) {
       const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
       show(currentTarget, {
-        title: isValidElement(header) ? cloneElement<any>(header) : header,
+        title: header,
         placement: getTooltipPlacement('table-cell') || 'right',
         theme: getTooltipTheme('table-cell'),
         ...tooltipConfig,
@@ -292,20 +293,6 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       delete globalRef.current.tooltipShown;
     }
   }, [globalRef]);
-
-  const mergeHandleMouseEnter = useCallback((e) => {
-    handleMouseEnter(e);
-    if (isValidElement(header) && header.props && typeof header.props.onMouseEnter === 'function') {
-      header.props.onMouseEnter(e);
-    }
-  }, [handleMouseEnter, header]);
-
-  const mergeHandleMouseLeave = useCallback((e) => {
-    handleMouseLeave();
-    if (isValidElement(header) && header.props && typeof header.props.onMouseLeave === 'function') {
-      header.props.onMouseLeave(e);
-    }
-  }, [handleMouseLeave, header]);
 
   const setResizeGroup = useCallback((group: ColumnGroup) => {
     globalRef.current.resizeColumnGroup = group;
@@ -573,6 +560,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {
     children: childNodes,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
   };
   const labelClassNames: string[] = [];
   if (helpIcon) {
@@ -580,7 +569,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       childNodes.unshift(helpIcon);
     } else {
       childNodes.push(helpIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-has-help`);
+      labelClassNames.push(`${prefixCls}-cell-inner-right-has-help`);
     }
   }
 
@@ -589,7 +578,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       childNodes.unshift(filterIcon);
     } else {
       childNodes.push(filterIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-has-filter`);
+      labelClassNames.push(`${prefixCls}-cell-inner-right-has-filter`);
     }
   }
 
@@ -602,7 +591,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       childNodes.unshift(sortIcon);
     } else {
       childNodes.push(sortIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-has-sort`);
+      labelClassNames.push(`${prefixCls}-cell-inner-right-has-sort`);
     }
   }
 
@@ -615,25 +604,16 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
   // 兼容 label 超长
   if (labelClassNames.length > 0) {
-    labelClassNames.push(`${prefixCls}-cell-inner-has-other`);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-other`);
   }
   const labelClassNamesStr = labelClassNames.length > 0 ? labelClassNames.join(' ') : undefined;
   const headerNode = !isSearchCell ? (isValidElement(header) ? (
     cloneElement<any>(header, {
       key: 'text',
       className: classNames(header.props && header.props.className, labelClassNamesStr),
-      onMouseEnter: mergeHandleMouseEnter,
-      onMouseLeave: mergeHandleMouseLeave,
     })
   ) : isString(header) ? (
-    <span
-      key="text"
-      className={labelClassNamesStr}
-      onMouseEnter={mergeHandleMouseEnter}
-      onMouseLeave={mergeHandleMouseLeave}
-    >
-      {header}
-    </span>
+    <span key="text" className={labelClassNamesStr} >{header}</span>
   ) : (
     header
   )) : null;
