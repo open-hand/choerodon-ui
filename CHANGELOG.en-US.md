@@ -21,6 +21,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
+- 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
 
 ## 1.5.8
 
