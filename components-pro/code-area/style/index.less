@@ -122,4 +122,11 @@
       margin-left: 30px;
     }
   }
+
+  &-disabled .CodeMirror,
+  &-disabled:hover .CodeMirror,
+  &-disabled .CodeMirror-focused {
+    border-color: @input-border-color;
+    box-shadow: none;
+  }
 }
