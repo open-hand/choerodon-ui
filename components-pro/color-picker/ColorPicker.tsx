@@ -19,6 +19,7 @@ import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { ViewMode, ColorUnit } from './enum';
 import { defaultColorMap, commonColorMap } from './presetColorMap';
+import { Action } from '../trigger/enum';
 
 const FILL_COLOR = '#FFFFFF';
 const COLOR_LINE_LENGTH = 9;
@@ -143,6 +144,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       'mode',
       'preset',
     ]);
+  }
+
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
   }
 
   constructor(props, context) {

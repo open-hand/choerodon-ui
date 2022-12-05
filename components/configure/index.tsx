@@ -229,6 +229,10 @@ export interface Config extends DataSetConfig {
    */
   fieldFocusMode?: FieldFocusMode;
   /**
+   * 是否聚焦到 Form 可编辑的第一个表单组件上
+   */
+  formAutoFocus?: boolean;
+  /**
    * 是否显示长度信息
    */
   showLengthInfo?: boolean;
