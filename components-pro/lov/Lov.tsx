@@ -717,10 +717,12 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleBlur(e) {
-    if (this.modal || this.popup) {
+    if (this.modal) {
       e.preventDefault();
     }
-    super.handleBlur(e);
+    if (this.props.popupSearchMode !== PopupSearchMode.single) {
+      super.handleBlur(e);
+    }
   }
 
   getWrapperProps() {

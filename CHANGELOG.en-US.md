@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
 - 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
+- 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
 
 ## 1.5.8
 
