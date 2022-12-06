@@ -32,6 +32,7 @@ import isEmptyUtil from '../_util/isEmpty';
 import isSameLike from '../_util/isSameLike';
 import { OptionProps } from '../option/Option';
 import { ExpandTrigger } from './enum';
+import { Action } from '../trigger/enum';
 
 export const MORE_KEY = '__more__';
 
@@ -272,6 +273,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @action
   setItemMenuWidth(width: number) {
     this.menuItemWith = width;
+  }
+
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
   }
 
   get defaultValidationMessages(): ValidationMessages {

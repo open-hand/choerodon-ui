@@ -166,6 +166,7 @@ const defaults = {
   modalResizable: false,
   tableColumnResizeTransition: true,
   fieldFocusMode: FieldFocusMode.checked,
+  formAutoFocus: false,
 };
 
 export default defaults;

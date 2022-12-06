@@ -16,6 +16,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
+import isElement from 'lodash/isElement';
 import raf from 'raf';
 import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
@@ -216,6 +217,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     layout: FormLayout.table,
   };
 
+  firstFocusRef: React.RefObject<FormField>;
+
   static get contextType(): typeof FormContext {
     return FormContext;
   }
@@ -239,6 +242,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     runInAction(() => {
       this.responsiveItems = [];
     });
+    this.firstFocusRef = React.createRef();
   }
 
   @computed
@@ -561,6 +565,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   componentDidMount() {
     this.componentDidMountOrUpdate();
     super.componentDidMount();
+    // 聚焦到第一个可编辑组件上
+    const formAutoFocus = this.getContextConfig('formAutoFocus');
+    const { firstFocusRef } = this;
+    if (firstFocusRef.current && isElement(firstFocusRef.current.element) && formAutoFocus){
+      firstFocusRef.current.element.focus();
+    }
   }
 
   componentDidUpdate() {
@@ -765,6 +775,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
+    let hasFocusFirst = false;
     for (let index = 0, len = childrenArray.length; index < len;) {
       const { props, key, type, ref } = childrenArray[index];
 
@@ -817,8 +828,13 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           matrix[i][j] = true;
         }
       }
+      let updateRef = ref;
+      if (!props.disabled && !props.readOnly && !hasFocusFirst) {
+        updateRef = this.firstFocusRef;
+        hasFocusFirst = true;
+      }
       const fieldElementProps: any = {
-        ref,
+        ref: updateRef,
         key,
         className: classNames(prefixCls, className),
         ...otherProps,

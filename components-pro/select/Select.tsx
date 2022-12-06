@@ -546,6 +546,20 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return `${this.prefixCls}-dropdown-menu`;
   }
 
+  renderInputElement() {
+    const action = this.getContextConfig('selectTrigger');
+    return (
+      <>
+        {super.renderInputElement()}
+        {action.indexOf(Action.focus) === -1 && (
+          <span hidden>
+            {this.getMenu()}
+          </span>
+        )}
+      </>
+    )
+  }
+
   renderMultipleHolder() {
     const { name, multiple } = this;
     if (multiple) {
