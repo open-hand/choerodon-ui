@@ -46,7 +46,7 @@
       height: 0;
       margin-left: -0.05rem;
       padding: 0 0.05rem;
-      border-top: 0.02rem @border-style-base @component-background;
+      border-top: 0.02rem @border-style-base @float-label-wrapper-border-top-color;
       transform-origin: 0.1rem -230%;
       transition: all @animation-duration-base @ease-out;
     }
@@ -102,6 +102,15 @@
     font-size: @float-label-font-size;
     transform: scaleY(0.8);
   }
+
+  &-float-label:not(&-empty) .@{field-label-prefix-cls},
+  &-float-label&-focused .@{field-label-prefix-cls} {
+    height: @float-label-up-height;
+    padding: @float-label-up-padding;
+    line-height: @float-label-up-height;
+    background-color: @float-label-up-bg;
+  }
+
   &-float-label:not(&-multiple) & {
     height: @float-label-height-base;
     border-radius: @input-float-border-radius;

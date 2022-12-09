@@ -13,7 +13,8 @@
       cursor: not-allowed;
       .@{c7n-prefix}-progress-loading {
         position: absolute;
-        top: @switch-loading-inner-top;
+        top: 0;
+        bottom: 0;
         left: @switch-loading-inner-distance;
         z-index: 1;
         display: inline-flex;
@@ -25,12 +26,9 @@
           justify-content: center;
           width: @switch-loading-inner-size;
           height: @switch-loading-inner-size;
-          vertical-align: top;
-          
           svg {
             width: 100%;
             height: 100%;
-
             circle {
               stroke: @switch-loading-stroke;
             }
@@ -59,7 +57,7 @@
     .icon-help {
       margin-left: @label-wrapper-padding-horizontal;
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
   }
 
@@ -234,12 +232,10 @@
 }
 
 .size-loading(@size) {
-  @distance-vertical: 'switch-@{size}-loading-inner-top';
   @distance-horizontal: 'switch-@{size}-loading-inner-distance';
   @loading-inner-size: 'switch-@{size}-loading-inner-size';
   &.@{switch-prefix-cls}-@{size} {
     .@{c7n-prefix}-progress-loading {
-      top: @@distance-vertical;
       left: @@distance-horizontal;
 
       .@{c7n-prefix}-progress-inner {

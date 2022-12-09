@@ -9,6 +9,11 @@
 
   &-popup {
     width: 7rem;
+
+    .@{c7n-prefix}-tabs-nav-wrap {
+      padding: 0 0.06rem;
+    }
+
     ul {
       position: relative;
       width: 100%;
@@ -20,8 +25,10 @@
     }
     li {
       float: left;
-      width: 20%;
-      padding: 0.05rem;
+      width: @icon-picker-item-width;
+      height: @icon-picker-item-height;
+      margin: @icon-picker-item-margin;
+      padding: @icon-picker-item-padding;
       text-align: center;
       div {
         padding: 0.05rem;

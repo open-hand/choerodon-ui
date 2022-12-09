@@ -564,7 +564,7 @@
 
     &-help .icon-help {
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
 
     &-input {
@@ -663,7 +663,8 @@
   }
 
   &-float-label&-disabled::before {
-    border-style: dashed;
+    border-color: @input-float-disabled-border-color;
+    border-style: @input-float-disabled-border-style;
   }
 
   &-float-label&-disabled &,
@@ -783,7 +784,7 @@
     vertical-align: top;
 
     &:not(:last-child) {
-      max-width: ~'calc(100% - .24rem)';
+      max-width: calc(100% - @input-tag-extra-space);
     }
   }
   &-invalid {
