@@ -34,6 +34,10 @@
     border-bottom: 0;
     border-radius: @tabs-card-border-radius;
     transition: all @animation-duration-slow @ease-in-out;
+
+    &:hover {
+      background: @tabs-card-hover-background;
+    }
   }
   &&-card > &-bar &-tab-active {
     color: @tabs-card-active-color;
@@ -143,6 +147,7 @@
     transition: all @animation-duration-slow @ease-in-out;
     &:hover {
       color: @tabs-card-active-color;
+      background: @tabs-card-hover-background;
     }
   }
   &-nav-add-fixed{
@@ -229,5 +234,16 @@
 
   &&-card&-bottom > &-bar &-tab-active {
     color: @primary-color;
+  }
+  &&-card &-tab-prev,
+  &&-card &-tab-next {
+    &.@{tab-prefix-cls}-tab-arrow-show {
+      background: @tabs-card-arrow-show-background-color;
+      border: @tabs-card-arrow-show-border;
+      border-radius: @tabs-card-arrow-show-border-radius;
+      &:not(.@{tab-prefix-cls}-tab-btn-disabled):hover {
+        background: @tabs-card-arrow-show-hover-background-color;
+      }
+    }
   }
 }

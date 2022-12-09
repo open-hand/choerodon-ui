@@ -186,7 +186,7 @@
     cursor: pointer;
     opacity: 0;
     transition: width @animation-duration-slow @ease-in-out,
-    opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+      opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
     user-select: none;
     pointer-events: none;
 
@@ -200,7 +200,7 @@
     }
 
     &:hover {
-      color: @text-color;
+      color: @tabs-arrow-show-hover-color;
     }
 
     &-icon {
@@ -297,6 +297,11 @@
       text-decoration: none;
       cursor: pointer;
       transition: color @animation-duration-slow @ease-in-out;
+      &:not(.@{tab-prefix-cls}-tab-disabled) {
+        .icon:not(.icon-close) {
+          color: @tabs-icon-color;
+        }
+      }
 
       &:last-child {
         margin-right: 0;
@@ -421,7 +426,7 @@
         width: @tab-scrolling-size;
         height: 0;
         transition: height @animation-duration-slow @ease-in-out,
-        opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
+          opacity @animation-duration-slow @ease-in-out, color @animation-duration-slow @ease-in-out;
       }
 
       &-tab-prev.@{tab-prefix-cls}-tab-arrow-show,
@@ -685,13 +690,13 @@
 .@{tab-prefix-cls}-top > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-bottom > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated {
   transition: transform @animation-duration-slow @ease-in-out,
-  width @animation-duration-slow @ease-in-out;
+    width @animation-duration-slow @ease-in-out;
 }
 
 .@{tab-prefix-cls}-left > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated,
 .@{tab-prefix-cls}-right > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-ink-bar-animated {
   transition: transform @animation-duration-slow @ease-in-out,
-  height @animation-duration-slow @ease-in-out;
+    height @animation-duration-slow @ease-in-out;
 }
 
 .@{tab-prefix-cls}-top > .@{tab-prefix-cls}-bar .@{tab-prefix-cls}-tab {
