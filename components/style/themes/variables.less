@@ -389,6 +389,7 @@
 @date-picker-header-padding: var(--date-picker-header-padding);
 @date-picker-body-table-font-size: var(--date-picker-body-table-font-size);
 @date-picker-cell-inner-border-radius: var(--date-picker-cell-inner-border-radius);
+@date-picker-cell-disabled-inner-border-radius: var(--date-picker-cell-disabled-inner-border-radius);
 @date-picker-cell-inner-height: var(--date-picker-cell-inner-height);
 @date-picker-footer-height: var(--date-picker-footer-height);
 @date-picker-active-color: var(--date-picker-active-color);
@@ -407,6 +408,8 @@
 @date-picker-datetime-time-selected-cell-inner-color: var(--date-picker-datetime-time-selected-cell-inner-color);
 @date-picker-datetime-time-selected-cell-inner-bg: var(--date-picker-datetime-time-selected-cell-inner-bg);
 @date-picker-time-panel-height: var(--date-picker-time-panel-height);
+@date-picker-time-cell-inner-active-color: var(--date-picker-time-cell-inner-active-color);
+@date-picker-time-cell-inner-active-bg: var(--date-picker-time-cell-inner-active-bg);
 
 // Radio
 @radio-color: var(--radio-color);
@@ -955,6 +958,8 @@
 @table-customization-tree-treenode-switcher-height: var(--table-customization-tree-treenode-switcher-height);
 @table-customization-tree-treenode-switcher-padding: var(--table-customization-tree-treenode-switcher-padding);
 @table-customization-tree-treenode-dragging-bg-color: var(--table-customization-tree-treenode-dragging-bg-color);
+@table-customization-tree-treenode-switcher-icon-size: var(--table-customization-tree-treenode-switcher-icon-size);
+@table-customization-tree-treenode-switcher-icon-line-height: var(--table-customization-tree-treenode-switcher-icon-line-height);
 @table-border-color: var(--table-border-color);
 @table-row-group-title-bg: var(--table-row-group-title-bg);
 @table-row-group-title-color: var(--table-row-group-title-color);
@@ -974,12 +979,15 @@
 @table-dynamic-filter-add-fields-hover-color: var(--table-dynamic-filter-add-fields-hover-color);
 @table-dynamic-filter-add-fields-icon-margin: var(--table-dynamic-filter-add-fields-icon-margin);
 @table-professional-query-button-padding: var(--table-professional-query-button-padding);
-@table-professional-query-button-inner-line-height: var(--table-professional-query-button-inner-line-height);
 @table-professional-query-more-button-border: var(--table-professional-query-more-button-border);
 @table-combo-filter-wrapper-margin: var(--table-combo-filter-wrapper-margin);
 @table-combo-filter-content-margin: var(--table-combo-filter-content-margin);
 @table-combo-filter-single-line-divide-margin: var(--table-combo-filter-single-line-divide-margin);
 @table-combo-filter-menu-reset-button-bg: var(--table-combo-filter-menu-reset-button-bg);
+@table-filter-item-icon-line-height: var(--table-filter-item-icon-line-height);
+@table-summary-group-wrapper-justify-content: var(--table-summary-group-wrapper-justify-content);
+@table-summary-group-wrapper-margin: var(--table-summary-group-wrapper-margin);
+@table-toolbar-button-icon-margin: var(--table-toolbar-button-icon-margin);
 
 // PerformanceTable
 @performance-table-header-bg: var(--performance-table-header-bg);
@@ -1030,8 +1038,8 @@
 // TreeSelect
 @tree-select-treenode-selected-bg: var(--tree-select-treenode-selected-bg);
 @tree-select-treenode-active-bg: var(--tree-select-treenode-active-bg);
-@tree-select-content-wrapper-hover-color: var(--tree-select-content-wrapper-hover-color);
-@tree-select-content-wrapper-tree-node-selected-color: var(--tree-select-content-wrapper-tree-node-selected-color);
+@tree-select-content-wrapper-hover-bg: var(--tree-select-content-wrapper-hover-bg);
+@tree-select-content-wrapper-tree-node-selected-bg: var(--tree-select-content-wrapper-tree-node-selected-bg);
 
 // Tag
 // --
@@ -1425,7 +1433,7 @@
 @result-title-line-height: var(--result-title-line-height);
 @result-title-margin: var(--result-title-margin);
 @result-subtitle-color: var(--result-subtitle-color);
-@result-title-subtitle-height: var(--result-title-subtitle-height);
+@result-subtitle-line-height: var(--result-subtitle-line-height);
 
 // Statistic
 // ---
@@ -1559,6 +1567,7 @@
 @upload-drag-text-line-height: var(--upload-drag-text-line-height);
 @upload-drag-text-font-size: var(--upload-drag-text-font-size);
 @upload-drag-hint-color: var(--upload-drag-hint-color);
+@upload-reupload-color: var(--upload-reupload-color);
 
 // Timeline
 @timeline-color: var(--timeline-color);

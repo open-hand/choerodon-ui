@@ -62,8 +62,15 @@
         &:hover {
           background: @date-picker-datetime-time-cell-hover-bg;
         }
-        .@{date-picker-prefix}-cell-inner:hover {
-          background: @date-picker-datetime-time-cell-inner-hover-bg;
+        &:not(.@{date-picker-prefix}-disabled) .@{date-picker-prefix}-cell-inner {
+          &:hover {
+            background: @date-picker-datetime-time-cell-inner-hover-bg;
+          }
+
+          &:active {
+            color: @date-picker-time-cell-inner-active-color;
+            background: @date-picker-time-cell-inner-active-bg;
+          }
         }
   
         &.@{date-picker-prefix}-selected {
@@ -159,7 +166,7 @@
     color: @date-picker-disabled-cell-inner-color;
     background: @date-picker-disabled-cell-inner-bg;
     border: @border-width-base @border-style-base transparent;
-    border-radius: 0;
+    border-radius: @date-picker-cell-disabled-inner-border-radius;
     cursor: not-allowed;
 
     &:hover {
@@ -265,31 +272,33 @@
     left: 0.12rem;
   }
 
-  &-footer-view-select {
-    position: absolute;
-    top: 0.04rem;
-    right: 0.12rem;
-    display: inline-block;
-    height: @btn-height-base;
-    padding: @btn-padding-base;
-    color: @btn-primary-color;
-    line-height: @btn-height-base;
-    text-align: center;
-    vertical-align: middle;
-    background-color: @btn-primary-bg;
-    background-image: none;
-    border: none;
-    border-radius: @border-radius-base;
-    outline: none;
-    box-shadow: @btn-box-shadow;
-    cursor: pointer;
-    transition: all @animation-duration-slow ease-out;
-    user-select: none;
-    touch-action: manipulation;
-
-    &:hover {
-      color: @btn-primary-hover-color;
-      background-color: @date-primary-hover-color;
+  &-footer {
+    & > &-view-select {
+      position: absolute;
+      top: 0.04rem;
+      right: 0.12rem;
+      display: inline-block;
+      height: @btn-height-base;
+      padding: @btn-padding-base;
+      color: @btn-primary-color;
+      line-height: @btn-height-base;
+      text-align: center;
+      vertical-align: middle;
+      background-color: @btn-primary-bg;
+      background-image: none;
+      border: none;
+      border-radius: @border-radius-base;
+      outline: none;
+      box-shadow: @btn-box-shadow;
+      cursor: pointer;
+      transition: all @animation-duration-slow ease-out;
+      user-select: none;
+      touch-action: manipulation;
+  
+      &:hover {
+        color: @btn-primary-hover-color;
+        background-color: @date-primary-hover-color;
+      }
     }
   }
 
@@ -303,7 +312,7 @@
 
       &:active {
         .@{date-picker-prefix}-cell-inner {
-          color: #fff;
+          color: @date-picker-active-color;
           background-color: @primary-5;
         }
       }
