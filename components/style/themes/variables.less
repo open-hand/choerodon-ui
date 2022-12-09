@@ -113,6 +113,7 @@
 //@icon-font-size-sm: .16rem;
 //@icon-font-size-lg: .2rem;
 @icon-font-size-base: var(--icon-font-size-base);
+@icon-font-size-sm: var(--icon-font-size-sm);
 
 // LINK
 @link-color: var(--link-color);
@@ -196,6 +197,7 @@
 @btn-padding-vertical-sm: var(--btn-padding-vertical-sm);
 @btn-padding-horizontal-sm: var(--btn-padding-horizontal-sm);
 @btn-padding-sm: var(--btn-padding-sm);
+@btn-font-size-base: var(--btn-font-size-base);
 @btn-font-size-lg: var(--btn-font-size-lg);
 @btn-font-size-sm: var(--btn-font-size-sm);
 
@@ -533,6 +535,7 @@
 @label-basic-line-height: var(--label-basic-line-height);
 @field-help-color: var(--field-help-color);
 @field-icon-help-color: var(--field-icon-help-color);
+@field-icon-help-font-size: var(--field-icon-help-font-size);
 @form-item-wrapper-padding-vertical: var(--form-item-wrapper-padding-vertical);
 @form-item-wrapper-padding-horizontal: var(--form-item-wrapper-padding-horizontal);
 @form-item-wrapper-padding: var(--form-item-wrapper-padding);
@@ -542,6 +545,7 @@
 @form-item-trailing-colon: var(--form-item-trailing-colon);
 @form-vertical-label-padding: var(--form-vertical-label-padding);
 @form-vertical-label-margin: var(--form-vertical-label-margin);
+@float-label-wrapper-border-top-color: var(--float-label-wrapper-border-top-color);
 @float-label-transform-origin-high: var(--float-label-transform-origin-high); // SelectBox, Range, CheckBox, Switch
 @float-label-height-base: var(--float-label-height-base);
 @float-label-height-lg: var(--float-label-height-lg);
@@ -553,6 +557,9 @@
 @float-label-color: var(--float-label-color);
 @float-label-font-size: var(--float-label-font-size);
 @float-label-font-weight: var(--float-label-font-weight);
+@float-label-up-height: var(--float-label-up-height);
+@float-label-up-bg: var(--float-label-up-bg);
+@float-label-up-padding: var(--float-label-up-padding);
 @float-form-item-margin-top: var(--float-form-item-margin-top);
 @float-form-item-margin-bottom: var(--float-form-item-margin-bottom);
 @float-form-item-wrapper-padding-vertical: var(--float-form-item-wrapper-padding-vertical);
@@ -608,6 +615,8 @@
 @input-float-required-focus-border-color: var(--input-float-required-focus-border-color);
 @input-float-hover-border-color: var(--input-float-hover-border-color);
 @input-float-required-hover-border-color: var(--input-float-required-hover-border-color);
+@input-float-disabled-border-style: var(--input-float-disabled-border-style);
+@input-float-disabled-border-color: var(--input-float-disabled-border-color);
 @input-disabled-bg: var(--input-disabled-bg);
 @input-disabled-color: var(--input-disabled-color);
 @input-disabled-icon-color: var(--input-disabled-icon-color);
@@ -623,7 +632,6 @@
 @input-suffix-hover-color: var(--input-suffix-hover-color);
 @input-suffix-error-color: var(--input-suffix-error-color);
 @input-button-width: var(--input-button-width);
-@input-addon-bg: var(--input-addon-bg);
 @input-addon-color: var(--input-addon-color);
 @input-addon-font-size: var(--input-addon-font-size);
 @input-tag-default-color: var(--input-tag-default-color);
@@ -638,6 +646,7 @@
 @input-tag-line-height-base: var(--input-tag-line-height-base);
 @input-tag-margin-vertical: var(--input-tag-margin-vertical);
 @input-tag-border-radius: var(--input-tag-border-radius);
+@input-tag-extra-space: var(--input-tag-extra-space);
 @input-float-tag-height-base: var(--input-float-tag-height-base);
 @input-float-tag-line-height-base: var(--input-float-tag-line-height-base);
 @input-float-tag-margin-vertical: var(--input-float-tag-margin-vertical);
@@ -676,6 +685,8 @@
 @output-font-weight: var(--output-font-weight);
 @output-word-break: var(--output-word-break);
 @output-white-space: var(--output-white-space);
+@output-color: var(--output-color);
+@output-tag-margin: var(--output-tag-margin);
 @output-float-label-font-size: var(--output-float-label-font-size);
 @output-float-label-line-height: var(--output-float-label-line-height);
 
@@ -743,6 +754,7 @@
 @step-border-color: var(--step-border-color);
 @step-wait-color: var(--step-wait-color);
 @steps-item-dropdown-icon-size: var(--steps-item-dropdown-icon-size);
+@steps-item-title-icon-margin: var(--steps-item-title-icon-margin);
 @steps-vertical-item-icon-margin-right: var(--steps-vertical-item-icon-margin-right);
 @steps-vertical-item-tail-left: var(--steps-vertical-item-tail-left);
 @steps-tail-size: var(--steps-tail-size);
@@ -1253,16 +1265,14 @@
 @switch-button-check-left: var(--switch-button-check-left);
 @switch-button-radius: var(--switch-button-radius);
 @switch-sm-button-uncheck-left: var(--switch-sm-button-uncheck-left);
-@switch-sm-button-check-left: var(--switch-sm-button-check-left);@switch-lg-button-uncheck-left: var(--switch-lg-button-uncheck-left);
+@switch-sm-button-check-left: var(--switch-sm-button-check-left);
+@switch-lg-button-uncheck-left: var(--switch-lg-button-uncheck-left);
 @switch-lg-button-check-left: var(--switch-lg-button-check-left);
 @switch-lg-loading-inner-size: var(--switch-lg-loading-inner-size);
 @switch-loading-inner-size: var(--switch-loading-inner-size);
 @switch-sm-loading-inner-size: var(--switch-sm-loading-inner-size);
-@switch-lg-loading-inner-top: var(--switch-lg-loading-inner-top);
 @switch-lg-loading-inner-distance: var(--switch-lg-loading-inner-distance);
-@switch-loading-inner-top: var(--switch-loading-inner-top);
 @switch-loading-inner-distance: var(--switch-loading-inner-distance);
-@switch-sm-loading-inner-top: var(--switch-sm-loading-inner-top);
 @switch-sm-loading-inner-distance: var(--switch-sm-loading-inner-distance);
 @switch-loading-stroke: var(--switch-loading-stroke);
 @switch-checked-loading-stroke: var(--switch-checked-loading-stroke);
@@ -1324,13 +1334,14 @@
 
 // CodeArea
 // ---
-@codearea-border: @border-width-base @border-style-base @border-color-base;
-@codearea-header-bg: rgba(0, 0, 0, 0.06);
-@codearea-header-title-color: @heading-color;
-@codearea-header-title-font-weight: 400;
-@codearea-header-title-font-size: 0.14rem;
-@codearea-header-dark-bg: #141414;
-@codearea-header-title-dark-color: #FFF;
+@codearea-border: var(--codearea-border);
+@codearea-header-bg: var(--codearea-header-bg);
+@codearea-header-title-color: var(--codearea-header-title-color);
+@codearea-header-title-font-weight: var(--codearea-header-title-font-weight);
+@codearea-header-title-font-size: var(--codearea-header-title-font-size);
+@codearea-header-dark-bg: var(--codearea-header-dark-bg);
+@codearea-header-title-dark-color: var(--codearea-header-title-dark-color);
+@codearea-header-switch-icon-color: var(--codearea-header-switch-icon-color);
 
 // Transfer
 // ---
@@ -1342,6 +1353,7 @@
 @transfer-header-title-font-size: var(--transfer-header-title-font-size);
 @transfer-header-title-font-weight: var(--transfer-header-title-font-weight);
 @transfer-body-with-search-padding-top: var(--transfer-body-with-search-padding-top);
+@transfer-content-padding: var(--transfer-content-padding);
 @transfer-footer-height: var(--transfer-footer-height);
 @transfer-search-wrapper-padding: var(--transfer-search-wrapper-padding);
 @transfer-disabled-bg: var(--transfer-disabled-bg);
@@ -1358,6 +1370,7 @@
 @transfer-basic-body-search-wrapper-padding: var(--transfer-basic-body-search-wrapper-padding);
 @transfer-basic-list-item-margin: var(--transfer-basic-list-item-margin);
 @transfer-basic-list-item-padding: var(--transfer-basic-list-item-padding);
+@transfer-search-action-top: var(--transfer-search-action-top);
 @transfer-search-action-right: var(--transfer-search-action-right);
 
 // Skeleton
@@ -1451,7 +1464,7 @@
 @alert-with-description-message-font-size: var(--alert-with-description-message-font-size);
 
 // Lov
-@lov-selection-list-bg: transparent;
+@lov-selection-list-bg: var(--lov-selection-list-bg);
 
 // Typography
 @heading-1-size: var(--heading-1-size);
@@ -1650,3 +1663,9 @@
 // ImageCrop
 @image-crop-avatar-preview-bg: var(--image-crop-avatar-preview-bg);
 @image-crop-avatar-preview-item-border: var(--image-crop-avatar-preview-item-border);
+
+// IconPicker
+@icon-picker-item-width: var(--icon-picker-item-width);
+@icon-picker-item-height: var(--icon-picker-item-height);
+@icon-picker-item-margin: var(--icon-picker-item-margin);
+@icon-picker-item-padding: var(--icon-picker-item-padding);

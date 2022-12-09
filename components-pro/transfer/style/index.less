@@ -38,10 +38,6 @@
     background: @transfer-disabled-bg;
   }
 
-  &-with-header {
-    padding-top: @transfer-header-height;
-  }
-
   &-with-footer {
     padding-bottom: @transfer-footer-height;
   }
@@ -103,16 +99,25 @@
       width: 100%;
       padding: @transfer-search-wrapper-padding;
     }
+
+    .@{c7n-pro-prefix}-input-wrapper {
+      width: 100%;
+    }
   }
 
   &-body-with-search {
     padding-top: @transfer-body-with-search-padding-top;
   }
 
+  &-with-header &-body {
+    height: calc(100% - @transfer-header-height);
+    margin-top: @transfer-header-height;
+  }
+
   &-content {
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding: @transfer-content-padding;
     overflow: auto;
     list-style: none;
     outline: none;

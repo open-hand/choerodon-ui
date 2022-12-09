@@ -239,7 +239,7 @@
 
   //Icon
   --icon-font-size-base: 0.18rem;
-
+  --icon-font-size-sm: 0.16rem;
   // LINK
   --link-color: @link-color-calculate;
   --link-hover-color: @link-hover-color-calculate;
@@ -321,6 +321,7 @@
   --btn-padding-vertical-sm: var(--padding-vertical-sm);
   --btn-padding-horizontal-sm: 0.06rem;
   --btn-padding-sm: var(--padding-vertical-sm) var(--btn-padding-horizontal-sm);
+  --btn-font-size-base: unset;
   --btn-font-size-lg: var(--font-size-lg);
   --btn-font-size-sm: var(--font-size-sm);
   //
@@ -599,6 +600,7 @@
   --label-basic-line-height: 34 / 13;
   --field-help-color: var(--text-color-secondary);
   --field-icon-help-color: var(--text-color-secondary);
+  --field-icon-help-font-size: var(--icon-font-size-sm);
   --form-item-wrapper-padding-vertical: 0.1rem;
   --form-item-wrapper-padding-horizontal: 0.05rem;
   --form-item-wrapper-padding: var(--form-item-wrapper-padding-vertical) var(--form-item-wrapper-padding-horizontal);
@@ -608,6 +610,7 @@
   --form-item-trailing-colon: true;
   --form-vertical-label-padding: 0 0 0.08rem;
   --form-vertical-label-margin: 0;
+  --float-label-wrapper-border-top-color: var(--component-background);
   --float-label-transform-origin-high: 0.1rem -330%; // SelectBox, Range, CheckBox, Switch
   --float-label-height-base: 0.36rem;
   --float-label-height-lg: 0.4rem;
@@ -619,6 +622,9 @@
   --float-label-color: var(--label-color);
   --float-label-font-size: .15rem;
   --float-label-font-weight: 500;
+  --float-label-up-height: var(--float-label-line-height);
+  --float-label-up-bg: unset;
+  --float-label-up-padding: 0;
   --float-form-item-margin-top: var(--form-item-margin-top);
   --float-form-item-margin-bottom: var(--form-item-margin-bottom);
   --float-form-item-wrapper-padding-vertical: 0;
@@ -673,6 +679,8 @@
   --input-float-required-focus-border-color: var(--input-float-focus-border-color);
   --input-float-hover-border-color: var(--input-color);
   --input-float-required-hover-border-color: var(--input-float-hover-border-color);
+  --input-float-disabled-border-style: dashed;
+  --input-float-disabled-border-color: var(--input-float-border-color);
   --input-disabled-bg: var(--disabled-bg);
   --input-disabled-color: rgba(0, 0, 0, 0.54);
   --input-disabled-icon-color: var(--input-disabled-color);
@@ -703,6 +711,7 @@
   --input-tag-line-height-base: 0.22rem;
   --input-tag-margin-vertical: 0.01rem;
   --input-tag-border-radius: var(--input-border-radius);
+  --input-tag-extra-space: 0.24rem;
   --input-float-tag-height-base: 0.2rem;
   --input-float-tag-line-height-base: 0.2rem;
   --input-float-tag-margin-vertical: var(--input-tag-margin-vertical);
@@ -741,6 +750,8 @@
   --output-font-weight: var(--font-weight-base);
   --output-word-break: normal;
   --output-white-space: normal;
+  --output-color: unset;
+  --output-tag-margin: var(--tag-margin);
   --output-float-label-font-size: 0.12rem;
   --output-float-label-line-height: 0.18rem;
 
@@ -808,6 +819,7 @@
   --step-border-color: rgba(0, 0, 0, 0.26);
   --step-wait-color: rgba(0, 0, 0, 0.36);
   --steps-item-dropdown-icon-size: 0.3rem;
+  --steps-item-title-icon-margin: 0 0 0 0.16rem;
   --steps-vertical-item-icon-margin-right: 0.16rem;
   --steps-vertical-item-tail-left: 0.16rem;
   --steps-tail-size: 0.01rem;
@@ -1274,11 +1286,8 @@
   --switch-lg-loading-inner-size: 0.2rem;
   --switch-loading-inner-size: 0.16rem;
   --switch-sm-loading-inner-size: 0.12rem;
-  --switch-lg-loading-inner-top: 0.03rem;
   --switch-lg-loading-inner-distance: 0.02rem;
-  --switch-loading-inner-top: 0.04rem;
   --switch-loading-inner-distance: 0.05rem;
-  --switch-sm-loading-inner-top: 0.03rem;
   --switch-sm-loading-inner-distance: 0.02rem;
   --switch-loading-stroke: var(--primary-color);
   --switch-checked-loading-stroke: #FFF;
@@ -1333,6 +1342,17 @@
   --ripple-dark-color: fade(#000, 10%);
   --ripple-light-color: fade(#fff, 10%);
 
+  // CodeArea
+  // ---
+  --codearea-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
+  --codearea-header-bg: rgba(0, 0, 0, 0.06);
+  --codearea-header-title-color: var(--heading-color);
+  --codearea-header-title-font-weight: 400;
+  --codearea-header-title-font-size: 0.14rem;
+  --codearea-header-dark-bg: #141414;
+  --codearea-header-title-dark-color: #FFF;
+  --codearea-header-switch-icon-color: var(--primary-color);
+
   // Transfer
   // ---
   --transfer-width: 1.8rem;
@@ -1343,6 +1363,7 @@
   --transfer-header-title-font-size: unset;
   --transfer-header-title-font-weight: unset;
   --transfer-body-with-search-padding-top: calc(var(--input-height-base) + 0.08rem);
+  --transfer-content-padding: 0;
   --transfer-footer-height: 0.32rem;
   --transfer-search-wrapper-padding: 0.04rem;
   --transfer-disabled-bg: var(--disabled-bg);
@@ -1359,6 +1380,7 @@
   --transfer-basic-body-search-wrapper-padding: 0.04rem;
   --transfer-basic-list-item-margin: 0;
   --transfer-basic-list-item-padding: 0.06rem var(--control-padding-horizontal);
+  --transfer-search-action-top: 0.04rem;
   --transfer-search-action-right: 0.04rem;
 
   // Skeleton
@@ -1447,6 +1469,9 @@
   --alert-with-description-no-icon-padding: 0.15rem;
   --alert-with-description-icon-size: 0.24rem;
   --alert-with-description-message-font-size: var(--font-size-lg);
+
+  // Lov
+  --lov-selection-list-bg: transparent;
 
   // Typography
   --heading-1-size: calc(var(--font-size-base) * 2.71);
@@ -1646,6 +1671,12 @@
   // ImageCrop
   --image-crop-avatar-preview-bg: unset;
   --image-crop-avatar-preview-item-border: unset;
+
+  // IconPicker
+  --icon-picker-item-width: 20%;
+  --icon-picker-item-height: 0.6rem;
+  --icon-picker-item-margin: 0;
+  --icon-picker-item-padding: 0.05rem;
 }
 
 // css 变量
