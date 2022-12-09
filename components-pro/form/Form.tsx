@@ -560,6 +560,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   componentDidMount() {
     this.componentDidMountOrUpdate();
+    this.handleFormFocus();
     super.componentDidMount();
   }
 
@@ -574,6 +575,17 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       delete this.isTooltipShown;
     }
     this.bubbleValidationReport(false);
+  }
+
+  handleFormFocus() {
+    // 聚焦到form内第一个可编辑组件上
+    const formAutoFocus = this.getContextConfig('formAutoFocus');
+    if (formAutoFocus && this.getFields) {
+      const field = this.getFields().find(x => !x.disabled && !x.readOnly);
+      if (field) {
+        field.focus();
+      }
+    }
   }
 
   @mobxAction

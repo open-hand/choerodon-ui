@@ -31,6 +31,7 @@ import measureTextWidth from '../_util/measureTextWidth';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
 import ObserverTextField from '../text-field/TextField';
+import { Action } from '../trigger/enum';
 
 export type RenderFunction = (
   props: object,
@@ -305,6 +306,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (text) {
       this.syncValueOnBlur(text);
     }
+  }
+
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
   }
 
   getPopupEditor() {
