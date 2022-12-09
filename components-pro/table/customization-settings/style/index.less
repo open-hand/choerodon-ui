@@ -91,8 +91,10 @@
         cursor: pointer;
 
         &-icon {
-          font-size: .18rem;
-          line-height: .22rem;
+          &.icon {
+            font-size: @table-customization-tree-treenode-switcher-icon-size;
+            line-height: @table-customization-tree-treenode-switcher-icon-line-height;
+          }
 
           &-close {
             transform: rotate(-90deg);
@@ -153,6 +155,9 @@
     &-input {
       width: 1rem;
       margin-left: .1rem;
+      .@{c7n-pro-prefix}-input-number:disabled {
+        border-color: @input-border-color;
+      }
     }
 
     .@{c7n-pro-prefix}-radio-label {
@@ -178,12 +183,13 @@
       background-repeat: no-repeat;
     }
 
-    .@{c7n-pro-prefix}-radio {
-      &-inner {
-        border-width: .02rem;
-        pointer-events: none;
-      }
+    &.@{c7n-pro-prefix}-radio-button .@{c7n-pro-prefix}-radio + .@{c7n-pro-prefix}-radio-inner {
+      // 由于 Radio 选中态类名优先级提高，此处也需要提高
+      border-width: .02rem;
+      pointer-events: none;
+    }
 
+    .@{c7n-pro-prefix}-radio {
       &:checked + .@{c7n-pro-prefix}-radio-inner {
         &::before {
           top: 0;
