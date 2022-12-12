@@ -580,7 +580,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   handleFormFocus() {
     // 聚焦到form内第一个可编辑组件上
     const formAutoFocus = this.getContextConfig('formAutoFocus');
-    if (formAutoFocus && this.getFields) {
+    if (formAutoFocus) {
       const field = this.getFields().find(x => !x.disabled && !x.readOnly);
       if (field) {
         field.focus();
