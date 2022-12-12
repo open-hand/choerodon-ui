@@ -21,6 +21,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
+- 🐞 `<pro>ColorPicker`: 修复在 DataSet 的字段上设置 multiple 属性为 true 报错的问题。
+- 🐞 `<pro>Lov`: 修复在下拉面板失焦无法关闭的问题。
 
 ## 1.5.8
 

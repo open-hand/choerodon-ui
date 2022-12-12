@@ -38,7 +38,7 @@ import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
-import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
+import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
 import { Action } from '../trigger/enum';
@@ -167,6 +167,7 @@ export interface Config extends DataSetConfig {
   tableColumnDefaultWidth?: number;
   tableColumnDefaultMinWidth?: number;
   tableColumnResizeTrigger?: TableColumnResizeTriggerType;
+  tableColumnFilterPopover?: (props: FilterPopoverProps) => ReactNode;
   tableAggregationColumnDefaultWidth?: number;
   tableAggregationColumnDefaultMinWidth?: number;
   tableShowCachedTips?: boolean;

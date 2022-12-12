@@ -190,6 +190,11 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
   }
 
+  getValue(): any {
+    const value = super.getValue();
+    return typeof value === 'string' ? value : undefined;
+  }
+
   getBorder(r = 255, g = 0, b = 0): boolean {
     return (0.2126 * r + 0.7152 * g + 0.0722 * b) > COLOR_MAX_LIGHT;
   }

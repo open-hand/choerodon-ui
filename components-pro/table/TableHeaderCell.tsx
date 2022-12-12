@@ -21,6 +21,7 @@ import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
+import isUndefined from 'lodash/isUndefined';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
@@ -394,13 +395,15 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   };
 
   const doFilter = () => {
-    runInAction(() => {
-      tableStore.headerFilter = {
-        fieldName: name,
-        filterText,
-        filter,
-      };
-    })
+    if (!isUndefined(filterText)) {
+      runInAction(() => {
+        tableStore.headerFilter = {
+          fieldName: name,
+          filterText: filterText === null ? '' : filterText,
+          filter,
+        };
+      })
+    }
   };
 
   const renderResizer = () => {
@@ -504,10 +507,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
           </Button>
         </div>
       );
-      if (typeof column.filterPopover === 'function') {
+      const columnFilterPopover = column.filterPopover || tableStore.getConfig('tableColumnFilterPopover');
+      if (typeof columnFilterPopover === 'function') {
         popoverContent = (
           <div onClick={(e) => e.stopPropagation()}>
-            {column.filterPopover({
+            {columnFilterPopover({
               setFilterText: (filterText: any) => setFilterText(filterText),
               dataSet,
               field,
