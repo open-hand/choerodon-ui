@@ -115,7 +115,7 @@ export interface TriggerProps extends ElementProps {
   popupClassName?: string;
   children?: ReactNode | ChildrenFunction;
   childrenProps?: any;
-  getContextConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
+  getContextConfig?<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
 
 @observer
@@ -708,7 +708,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   isBlurToHide() {
     const { action = [], hideAction = [], getContextConfig } = this.props;
-    const formAutoFocus = getContextConfig('formAutoFocus');
+    const formAutoFocus = getContextConfig ? getContextConfig('formAutoFocus') : true;
     return action.indexOf(Action.focus) !== -1 || hideAction.indexOf(HideAction.blur) !== -1 || formAutoFocus;
   }
 }

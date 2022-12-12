@@ -116,6 +116,7 @@ export interface Config {
     lookupCode?: string;
   }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  useLookupBatch?: (code: string, field?: Field) => boolean;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
   lovQueryUrl?:
@@ -204,6 +205,7 @@ const defaultConfig = {
   validationMessageFormatter: defaultValidationMessageFormatter,
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
   xlsx: noop,
+  useLookupBatch: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;
