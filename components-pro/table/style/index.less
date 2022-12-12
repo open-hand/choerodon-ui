@@ -830,15 +830,20 @@
       vertical-align: middle;
     }
 
-    button span {
-      font-weight: 500;
+    button {
+      .@{iconfont-css-prefix} {
+        margin: @table-toolbar-button-icon-margin;
+      }
+      span {
+        font-weight: 500;
+      }
     }
   }
 
   &-summary-group-wrapper {
     display: flex;
-    justify-content: flex-end;
-    margin: 0.08rem 0;
+    justify-content: @table-summary-group-wrapper-justify-content;
+    margin: @table-summary-group-wrapper-margin;
   }
 
   &-summary-group {
@@ -853,9 +858,11 @@
     padding: 0 !important;
 
     .@{c7n-pro-prefix}-btn {
+      // 更多中的按钮组图标对齐
+      display: flex;
+      align-items: center;
       height: @table-buttons-menu-item-btn-height;
       padding: 0 0.26rem;
-      background-color: transparent;
 
       .@{c7n-prefix}-ripple {
         background-color: transparent;
@@ -863,6 +870,10 @@
 
       &:hover, &:focus, &:active {
         background-color: transparent;
+      }
+      
+      .@{iconfont-css-prefix} {
+        margin: @table-toolbar-button-icon-margin;
       }
     }
   }

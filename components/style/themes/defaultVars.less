@@ -385,6 +385,7 @@
 @date-picker-header-padding: 0 0.07rem;
 @date-picker-body-table-font-size: 0.16rem;
 @date-picker-cell-inner-border-radius: @border-radius-sm;
+@date-picker-cell-disabled-inner-border-radius: 0;
 @date-picker-cell-inner-height: 0.24rem;
 @date-picker-footer-height: 0.39rem;
 @date-picker-active-color: #fff;
@@ -396,13 +397,15 @@
 @date-picker-month-year-cell-inner-display: inline-table;
 @date-picker-time-focus-active-display: block;
 @date-picker-datetime-time-border-left: unset;
-@date-picker-datetime-time-padding: 0 @date-picker-horizontal-padding;
+@date-picker-datetime-time-padding: 0.08rem @date-picker-horizontal-padding;
 @date-picker-datetime-time-selected-bg: unset;
 @date-picker-datetime-time-cell-hover-bg: unset;
 @date-picker-datetime-time-cell-inner-hover-bg: @item-hover-bg;
 @date-picker-datetime-time-selected-cell-inner-color: #fff;
 @date-picker-datetime-time-selected-cell-inner-bg: @date-primary-color;
 @date-picker-time-panel-height: 2.1rem;
+@date-picker-time-cell-inner-active-color: @date-picker-active-color;
+@date-picker-time-cell-inner-active-bg: @primary-5;
 
 // Radio
 @radio-color: @primary-color;
@@ -953,6 +956,8 @@
 @table-customization-tree-treenode-switcher-height: @table-customization-tree-treenode-content-height;
 @table-customization-tree-treenode-switcher-padding: 0.05rem 0;
 @table-customization-tree-treenode-dragging-bg-color: @component-background;
+@table-customization-tree-treenode-switcher-icon-size: 0.18rem;
+@table-customization-tree-treenode-switcher-icon-line-height: 0.22rem;
 @table-border-color: @border-color-base;
 @table-row-group-title-bg: #f5f5f5;
 @table-row-group-title-color: inherit;
@@ -972,12 +977,15 @@
 @table-dynamic-filter-add-fields-hover-color: unset;
 @table-dynamic-filter-add-fields-icon-margin: unset;
 @table-professional-query-button-padding: 0.1rem 0 0.1rem 0.7rem;
-@table-professional-query-button-inner-line-height: unset;
 @table-professional-query-more-button-border: unset;
 @table-combo-filter-wrapper-margin: 0.04rem 0 0;
 @table-combo-filter-content-margin: 0.04rem 0 0 0.08rem;
 @table-combo-filter-single-line-divide-margin: 0.08rem 0.08rem 0.06rem 0.08rem;
 @table-combo-filter-menu-reset-button-bg: @btn-secondary-bg;
+@table-filter-item-icon-line-height: @line-height-base;
+@table-summary-group-wrapper-justify-content: flex-end;
+@table-summary-group-wrapper-margin: 0.08rem 0;
+@table-toolbar-button-icon-margin: 0 0.05rem 0 0;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
@@ -1029,8 +1037,8 @@
 // ---
 @tree-select-treenode-selected-bg: @item-focus-bg;
 @tree-select-treenode-active-bg: @item-active-bg;
-@tree-select-content-wrapper-hover-color: transparent;
-@tree-select-content-wrapper-tree-node-selected-color: transparent;
+@tree-select-content-wrapper-hover-bg: transparent;
+@tree-select-content-wrapper-tree-node-selected-bg: transparent;
 
 // Tag
 // --
@@ -1427,7 +1435,7 @@
 @result-title-line-height: 1.8;
 @result-title-margin: unset;
 @result-subtitle-color: @text-color-secondary;
-@result-title-subtitle-height: 1.6;
+@result-subtitle-line-height: 1.6;
 
 // Statistic
 // ---
@@ -1562,6 +1570,7 @@
 @upload-drag-text-line-height: unset;
 @upload-drag-text-font-size: @font-size-lg;
 @upload-drag-hint-color: @text-color-secondary;
+@upload-reupload-color: #0840F8;
 
 
 // Timeline

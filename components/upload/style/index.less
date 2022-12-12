@@ -3,7 +3,6 @@
 
 @upload-prefix-cls: ~'@{c7n-prefix}-upload';
 @upload-item: ~'@{c7n-prefix}-upload-list-item';
-@upload-picture-card-size: 0.98rem;
 
 .@{upload-prefix-cls} {
   .reset-component;
@@ -255,7 +254,7 @@
 
     .@{upload-item}-reupload-text {
       padding-right: 0.08rem;
-      color: #0840F8;
+      color: @upload-reupload-color;
       cursor: pointer;
       opacity: 0;
       transition: all @animation-duration-slow;
@@ -408,7 +407,7 @@
       position: absolute;
       top: 50%;
       right: 0.3rem;
-      color: #0840F8;
+      color: @upload-reupload-color;
       transform: translateY(-50%);
       cursor: pointer;
       opacity: 0;
