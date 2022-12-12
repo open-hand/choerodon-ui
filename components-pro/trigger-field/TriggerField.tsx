@@ -245,6 +245,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         getPopupContainer={getPopupContainer}
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}
+        getContextConfig={this.getContextConfig}
       >
         {this.getEditor}
       </Trigger>

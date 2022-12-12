@@ -18,6 +18,7 @@ import Popup from './Popup';
 import EventManager from '../_util/EventManager';
 import { Action, HideAction, ShowAction } from './enum';
 import TriggerChild from './TriggerChild';
+import { Config, ConfigKeys, DefaultConfig } from '../configure';
 
 function isHTMLInputElement(target: HTMLElement): target is HTMLInputElement {
   return target.tagName.toLowerCase() === 'input';
@@ -114,6 +115,7 @@ export interface TriggerProps extends ElementProps {
   popupClassName?: string;
   children?: ReactNode | ChildrenFunction;
   childrenProps?: any;
+  getContextConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
 
 @observer
@@ -705,7 +707,8 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   isBlurToHide() {
-    const { action = [], hideAction = [] } = this.props;
-    return action.indexOf(Action.focus) !== -1 || hideAction.indexOf(HideAction.blur) !== -1;
+    const { action = [], hideAction = [], getContextConfig } = this.props;
+    const formAutoFocus = getContextConfig('formAutoFocus');
+    return action.indexOf(Action.focus) !== -1 || hideAction.indexOf(HideAction.blur) !== -1 || formAutoFocus;
   }
 }
