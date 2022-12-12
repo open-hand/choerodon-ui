@@ -708,7 +708,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   isBlurToHide() {
     const { action = [], hideAction = [], getContextConfig } = this.props;
-    const formAutoFocus = getContextConfig ? getContextConfig('formAutoFocus') : true;
+    const formAutoFocus = getContextConfig ? getContextConfig('formAutoFocus') : false;
     return action.indexOf(Action.focus) !== -1 || hideAction.indexOf(HideAction.blur) !== -1 || formAutoFocus;
   }
 }
