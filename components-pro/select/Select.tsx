@@ -1260,8 +1260,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @action
   setText(text?: string): void {
-    const isDifference = this.searchText !== text;
-    super.setText(text);
+    let isDifference = false;
+    if (typeof text === 'string') {
+      isDifference = this.searchText !== text;
+      super.setText(text);
+    }
     if (this.searchable && !this.isSearchFieldInPopup() && isDifference) {
       this.doSearch(text);
     }
@@ -1385,7 +1388,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { maxTagCount = this.getContextConfig('fieldMaxTagCount'), onClear = noop, onOption = noop },
       options,
     } = this;
-    this.setText(undefined);
+    this.setText('');
     if (this.multiple) {
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
         const recordItem = this.findByValue(v);
@@ -1410,14 +1413,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       if (!this.searchable || this.isSearchFieldInPopup()) {
         this.prepareSetValue(this.text);
       }
-      this.setText();
+      this.setText('');
     }
     super.setRangeTarget(target);
     defer(() => this.isFocused && this.select());
   }
 
   resetFilter() {
-    this.setText(undefined);
+    this.setText('');
     this.removeComboOption();
     this.forcePopupAlign();
   }

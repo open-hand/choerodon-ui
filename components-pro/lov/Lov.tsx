@@ -595,7 +595,7 @@ export default class Lov extends Select<LovProps> {
   @action
   setText(text?: string): void {
     this.searching = true;
-    super.setText(text || (this.searchText as string));
+    super.setText(text);
   }
 
   /**
