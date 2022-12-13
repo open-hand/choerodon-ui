@@ -20,8 +20,11 @@
     background-color: @input-error-bg;
   }
 
-  &-invalid&-wrapper &-suffix .icon {
-    color: @input-suffix-error-color;
+  &-invalid&-wrapper &-suffix,
+  &-invalid&-wrapper:hover &-suffix {
+    .icon {
+      color: @input-suffix-error-color;
+    }
   }
 
   &-invalid &-clear-button {
