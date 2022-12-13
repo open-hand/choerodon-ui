@@ -88,12 +88,14 @@
     }
   }
 
-  &.@{intl-prefix-textarea}-required .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix {
+  &.@{intl-prefix-textarea}-required .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-required.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
     border-color: @input-required-focus-border-color;
     box-shadow: @input-required-active-box-shadow;
   }
 
-  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix {
+  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-invalid.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
     border-color: @input-error-border-color;
     box-shadow: @input-error-active-box-shadow;
   }
