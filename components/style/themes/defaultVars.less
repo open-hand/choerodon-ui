@@ -668,6 +668,7 @@
 @input-multiple-input-margin-left: 0.04rem;
 @input-float-multiple-margin: 0 0 0 0.03rem;
 @input-float-multiple-padding: 0.07rem 0;
+@textarea-padding: 0.04rem @input-padding-horizontal;
 // Input basic
 @input-number-handler-inner-distance: -0.05rem;
 @input-basic-height: 0.36rem;
@@ -684,7 +685,7 @@
 
 // Output
 // ---
-@output-line-height: 28 / 13; // <-- fieldHeight / fontSize
+@output-line-height: calc(28 / 13); // <-- fieldHeight / fontSize
 @output-font-weight: @font-weight-base;
 @output-word-break: normal;
 @output-white-space: normal;
@@ -1686,6 +1687,8 @@
 // ImageCrop
 @image-crop-avatar-preview-bg: unset;
 @image-crop-avatar-preview-item-border: unset;
+@avatar-crop-edit-wraper-margin: 0.32rem 0 0.16rem 0;
+@image-crop-container-margin: 0 0 0.16rem 0;
 
 // IconPicker
 @icon-picker-item-width: 20%;
