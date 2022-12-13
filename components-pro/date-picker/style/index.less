@@ -55,34 +55,6 @@
     }
   }
   
-  &-time {
-    .@{date-picker-prefix}-body {
-      padding: @date-picker-datetime-time-padding;
-      .@{date-picker-prefix}-cell {
-        &:hover {
-          background: @date-picker-datetime-time-cell-hover-bg;
-        }
-        &:not(.@{date-picker-prefix}-disabled) .@{date-picker-prefix}-cell-inner {
-          &:hover {
-            background: @date-picker-datetime-time-cell-inner-hover-bg;
-          }
-
-          &:active {
-            color: @date-picker-time-cell-inner-active-color;
-            background: @date-picker-time-cell-inner-active-bg;
-          }
-        }
-  
-        &.@{date-picker-prefix}-selected {
-          background: @date-picker-datetime-time-selected-bg;
-          .@{date-picker-prefix}-cell-inner {
-            color: @date-picker-datetime-time-selected-cell-inner-color;
-            background: @date-picker-datetime-time-selected-cell-inner-bg;
-          }
-        }
-      }
-    }
-  }
 
   &-body {
     padding: 0.08rem @date-picker-horizontal-padding;
@@ -186,6 +158,48 @@
       border: @border-width-base @border-style-base #bcbcbc;
       border-radius: @border-radius-base;
       content: ' ';
+    }
+  }
+
+  &-time {
+    .@{date-picker-prefix}-body {
+      padding: @date-picker-datetime-time-padding;
+    }
+
+    .@{date-picker-prefix}-cell {
+      &:hover {
+        background: @date-picker-datetime-time-cell-hover-bg;
+      }
+
+      &:active {
+        background: @date-picker-time-cell-active-bg;
+      }
+
+      .@{date-picker-prefix}-cell-inner {
+        &:hover {
+          background: @date-picker-datetime-time-cell-inner-hover-bg;
+        }
+
+        &:active {
+          color: @date-picker-time-cell-inner-active-color;
+          background: @date-picker-time-cell-inner-active-bg;
+        }
+      }
+
+      &.@{date-picker-prefix}-disabled {
+        background: @date-picker-time-cell-disabled-bg;
+        .@{date-picker-prefix}-cell-inner {
+          background: @date-picker-datetime-time-disabled-cell-inner-bg;
+        }
+      }
+
+      &.@{date-picker-prefix}-selected {
+        background: @date-picker-datetime-time-selected-bg;
+        .@{date-picker-prefix}-cell-inner {
+          color: @date-picker-datetime-time-selected-cell-inner-color;
+          background: @date-picker-datetime-time-selected-cell-inner-bg;
+        }
+      }
     }
   }
 
