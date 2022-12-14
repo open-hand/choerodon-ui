@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
 - 🐞 `<pro>Lov`: Fixed the problem that multiple selection paging queries would return to the first page every time the selected value was clicked.
 - 🐞 `<pro>Lov`: Fixed the problem that the default value is repeated by selecting all values.
+- 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
 
 ## 1.5.8
 

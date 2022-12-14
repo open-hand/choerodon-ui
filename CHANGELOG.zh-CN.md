@@ -25,6 +25,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复在下拉面板失焦无法关闭的问题。
 - 🐞 `<pro>Lov`: 修复多选分页查询每次点击选中值都会返回第一页的问题。
 - 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
 
 ## 1.5.8
 
