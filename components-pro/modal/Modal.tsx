@@ -242,6 +242,14 @@ export default class Modal extends ViewComponent<ModalProps> {
     return getDocument(window);
   }
 
+  get autoWidth(): boolean {
+    const { contentStyle } = this.props;
+    if (contentStyle && contentStyle.width) {
+      return true;
+    }
+    return false;
+  }
+
   contentNode: HTMLElement;
 
   childrenProps: ModalChildrenProps;
@@ -461,6 +469,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   getClassName(): string | undefined {
     const {
       prefixCls,
+      autoWidth,
       props: {
         style = this.tempCustomized || {},
         fullScreen,
@@ -484,6 +493,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-auto-center`]: autoCenter && center && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,
+      [`${prefixCls}-auto-width`]: autoWidth,
     });
   }
 

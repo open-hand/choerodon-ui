@@ -628,6 +628,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     if (!inlineEdit && !cellEditorInCell) {
       inValid = !field.isValid(record);
+      field.get('required', record);
       if (inValid) {
         innerClassName.push(`${prefixCls}-inner-invalid`);
       }

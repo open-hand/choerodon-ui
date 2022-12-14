@@ -44,6 +44,7 @@ const prefixCls = getConfig('prefixCls');
 | lovQueryBarProps | 默认 Lov Table queryBar 的 queryBarProps | object | |
 | lovQueryCachedSelected | lov 查询缓存已勾选记录 | (code: string, cachedSelected: Map<string, Record>) => Promise<object[]> | |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |

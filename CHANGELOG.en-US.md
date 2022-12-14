@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `attachment.downloadAllMode` property.
+- 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
 - 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
@@ -23,6 +23,9 @@ timeline: true
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
 - 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
 - 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
+- 🐞 `<pro>Lov`: Fixed the problem that multiple selection paging queries would return to the first page every time the selected value was clicked.
+- 🐞 `<pro>Lov`: Fixed the problem that the default value is repeated by selecting all values.
+- 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
 
 ## 1.5.8
 
