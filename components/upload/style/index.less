@@ -161,9 +161,14 @@
       padding-right: 0.05rem;
       padding-left: 0.08rem;
       overflow: hidden;
-      color: @upload-list-item-name-color;
       white-space: nowrap;
       text-overflow: ellipsis;
+      a& {
+        color: @upload-list-item-name-link-color;
+        &:hover {
+          color: @upload-list-item-name-link-hover-color;
+        }
+      }
     }
 
     &-info {
@@ -212,7 +217,8 @@
 
     &-error,
     &-error &-info-filesize,
-    &-error &-name {
+    &-error &-name,
+    &-error &-name:hover {
       color: @error-color;
     }
 
