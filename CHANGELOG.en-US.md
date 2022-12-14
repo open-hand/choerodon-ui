@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
 - 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
 - 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
+- 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
 
 ## 1.5.8
 
