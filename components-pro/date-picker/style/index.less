@@ -168,7 +168,7 @@
 
     .@{date-picker-prefix}-cell {
       &:hover {
-        background: @date-picker-datetime-time-cell-hover-bg;
+        background: @date-picker-time-cell-hover-bg;
       }
 
       &:active {
@@ -177,7 +177,7 @@
 
       .@{date-picker-prefix}-cell-inner {
         &:hover {
-          background: @date-picker-datetime-time-cell-inner-hover-bg;
+          background: @date-picker-time-cell-inner-hover-bg;
         }
 
         &:active {
@@ -189,15 +189,16 @@
       &.@{date-picker-prefix}-disabled {
         background: @date-picker-time-cell-disabled-bg;
         .@{date-picker-prefix}-cell-inner {
-          background: @date-picker-datetime-time-disabled-cell-inner-bg;
+          color: @date-picker-time-disabled-cell-inner-color;
+          background: @date-picker-time-disabled-cell-inner-bg;
         }
       }
 
       &.@{date-picker-prefix}-selected {
-        background: @date-picker-datetime-time-selected-bg;
+        background: @date-picker-time-selected-bg;
         .@{date-picker-prefix}-cell-inner {
-          color: @date-picker-datetime-time-selected-cell-inner-color;
-          background: @date-picker-datetime-time-selected-cell-inner-bg;
+          color: @date-picker-time-selected-cell-inner-color;
+          background: @date-picker-time-selected-cell-inner-bg;
         }
       }
     }
