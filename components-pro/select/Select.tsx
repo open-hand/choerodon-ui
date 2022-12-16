@@ -1231,21 +1231,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   handleOptionSelect(record: Record | Record[]) {
-    const searchText = this.searchText as string;
     this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
-    if (this.reserveParam) {
-      this.multipleSearch(searchText);
-    }
   }
 
   handleOptionUnSelect(record: Record | Record[]) {
     const { valueField } = this;
-    const searchText = this.searchText as string;
     const newValues = isArrayLike(record) ? record.map(r => r.get(valueField)) : [record.get(valueField)];
     this.removeValues(newValues, -1);
-    if (this.reserveParam) {
-      this.multipleSearch(searchText);
-    }
   }
 
   multipleSearch(text: string) {
@@ -1259,12 +1251,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @action
-  setText(text?: string): void {
-    let isDifference = false;
-    if (typeof text === 'string') {
-      isDifference = this.searchText !== text;
-      super.setText(text);
+  setValue(value: any, noVaidate?: boolean): void {
+    if (this.reserveParam && this.multiple && this.searchable && !isSearchTextEmpty(this.searchText)) {
+      super.setValue(value, noVaidate, true);
+    } else {
+      super.setValue(value, noVaidate);
     }
+  }
+
+  @action
+  setText(text?: string): void {
+    const isDifference = this.searchText !== text;
+    super.setText(text);
     if (this.searchable && !this.isSearchFieldInPopup() && isDifference) {
       this.doSearch(text);
     }
@@ -1388,7 +1386,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { maxTagCount = this.getContextConfig('fieldMaxTagCount'), onClear = noop, onOption = noop },
       options,
     } = this;
-    this.setText('');
+    this.setText(undefined);
     if (this.multiple) {
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
         const recordItem = this.findByValue(v);
@@ -1413,14 +1411,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       if (!this.searchable || this.isSearchFieldInPopup()) {
         this.prepareSetValue(this.text);
       }
-      this.setText('');
+      this.setText();
     }
     super.setRangeTarget(target);
     defer(() => this.isFocused && this.select());
   }
 
   resetFilter() {
-    this.setText('');
+    this.setText(undefined);
     this.removeComboOption();
     this.forcePopupAlign();
   }
@@ -1482,7 +1480,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { onOption },
     } = this;
     const values = this.getValues();
-    const searchText = this.searchText as string;
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
       const optionDisabled = (optionProps && optionProps.disabled);
@@ -1490,15 +1487,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect);
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
-    this.multipleSearch(searchText);
-
   }
 
   @autobind
   unChooseAll() {
-    const searchText = this.searchText as string;
     this.clear();
-    this.multipleSearch(searchText);
   }
 
   @autobind

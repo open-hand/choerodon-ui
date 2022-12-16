@@ -23,7 +23,7 @@ timeline: true
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
 - 🐞 `<pro>ColorPicker`: 修复在 DataSet 的字段上设置 multiple 属性为 true 报错的问题。
 - 🐞 `<pro>Lov`: 修复在下拉面板失焦无法关闭的问题。
-- 🐞 `<pro>Lov`: 修复多选分页查询每次点击选中值都会返回第一页的问题。
+- 🐞 `<pro>Select`: 修复多选保留查询参数模式下，分页选值时重复查询的问题。
 - 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
 
