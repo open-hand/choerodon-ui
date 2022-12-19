@@ -523,23 +523,24 @@
   --date-picker-view-select-font-weight: bold;
   --date-picker-today-font-weight: bold;
   --date-picker-th-color: unset;
-  --date-picker-disabled-cell-inner-color: #bcbcbc;
+  --date-picker-disabled-cell-inner-color: var(--disabled-color);
   --date-picker-disabled-cell-inner-bg: var(--disabled-bg);
   --date-picker-month-year-cell-inner-display: inline-table;
   --date-picker-time-focus-active-display: block;
   --date-picker-datetime-time-border-left: unset;
   --date-picker-datetime-time-padding: 0.08rem var(--date-picker-horizontal-padding);
-  --date-picker-datetime-time-selected-bg: unset;
-  --date-picker-datetime-time-cell-hover-bg: unset;
-  --date-picker-datetime-time-cell-inner-hover-bg: var(--item-hover-bg);
-  --date-picker-datetime-time-selected-cell-inner-color: #fff;
-  --date-picker-datetime-time-selected-cell-inner-bg: var(--date-primary-color);
+  --date-picker-time-selected-bg: unset;
+  --date-picker-time-cell-hover-bg: unset;
+  --date-picker-time-cell-inner-hover-bg: var(--item-hover-bg);
+  --date-picker-time-selected-cell-inner-color: #fff;
+  --date-picker-time-selected-cell-inner-bg: var(--date-primary-color);
   --date-picker-time-panel-height: 2.1rem;
   --date-picker-time-cell-inner-active-color: var(--date-picker-active-color);
   --date-picker-time-cell-inner-active-bg: var(--primary-5);
   --date-picker-time-cell-active-bg: unset;
   --date-picker-time-cell-disabled-bg: unset;
-  --date-picker-datetime-time-disabled-cell-inner-bg: var(--disabled-bg);
+  --date-picker-time-disabled-cell-inner-color: var(--date-picker-disabled-cell-inner-color);
+  --date-picker-time-disabled-cell-inner-bg: var(--disabled-bg);
   --date-picker-week-edge-cell-inner-border-radius: var(--border-radius-base);
 
   // Radio
@@ -898,6 +899,8 @@
   --modal-confirm-icon-padding: 0 0.16rem 0 0;
   --modal-confirm-icon-font-size: 0.24rem;
   --modal-confirm-icon-line-height: 1.5;
+  // Modal Basic
+  --modal-basic-footer-padding: 0.12rem 0;
 
   // Progress
   --progress-default-color: var(--processing-color);
@@ -1355,6 +1358,7 @@
   --slider-handle-color-hover: var(--primary-7);
   --slider-handle-color-focus: var(--primary-tint-2);
   --slider-handle-color-focus-shadow: var(--primary-tint-5);
+  --slider-handle-color-focus-box-shadow: 0 0 0 0.05rem var(--slider-handle-color-focus-shadow);
   --slider-handle-color-tooltip-open: var(--primary-color);
   --slider-dot-border-color: var(--border-color-split);
   --slider-dot-border-color-active: var(--primary-tint-5);
@@ -1577,7 +1581,8 @@
   --upload-list-picture-close-icon-right: 0.08rem;
   --upload-list-item-close-icon-color: var(--text-color-secondary);
   --upload-list-item-close-icon-hover-color: var(--text-color);
-  --upload-list-item-name-color: var(--link-color);
+  --upload-list-item-name-link-color: var(--link-color);
+  --upload-list-item-name-link-hover-color: var(--link-hover-color);
   --upload-drag-icon-color: var(--primary-5);
   --upload-drag-icon-size: 0.48rem;
   --upload-drag-icon-margin: 0 0 0.2rem 0;
@@ -1698,6 +1703,8 @@
   --image-crop-avatar-preview-item-border: unset;
   --avatar-crop-edit-wraper-margin: 0.32rem 0 0.16rem 0;
   --image-crop-container-margin: 0 0 0.16rem 0;
+  --image-crop-avatar-dragger-margin: 0.92rem auto;
+  --image-crop-footer-border-top: 0.01rem solid rgba(0,0,0,0.09);
 
   // IconPicker
   --icon-picker-item-width: 20%;

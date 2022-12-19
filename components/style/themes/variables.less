@@ -402,17 +402,18 @@
 @date-picker-time-focus-active-display: var(--date-picker-time-focus-active-display);
 @date-picker-datetime-time-border-left: var(--date-picker-datetime-time-border-left);
 @date-picker-datetime-time-padding: var(--date-picker-datetime-time-padding);
-@date-picker-datetime-time-selected-bg: var(--date-picker-datetime-time-selected-bg);
-@date-picker-datetime-time-cell-hover-bg: var(--date-picker-datetime-time-cell-hover-bg);
-@date-picker-datetime-time-cell-inner-hover-bg: var(--date-picker-datetime-time-cell-inner-hover-bg);
-@date-picker-datetime-time-selected-cell-inner-color: var(--date-picker-datetime-time-selected-cell-inner-color);
-@date-picker-datetime-time-selected-cell-inner-bg: var(--date-picker-datetime-time-selected-cell-inner-bg);
+@date-picker-time-selected-bg: var(--date-picker-time-selected-bg);
+@date-picker-time-cell-hover-bg: var(--date-picker-time-cell-hover-bg);
+@date-picker-time-cell-inner-hover-bg: var(--date-picker-time-cell-inner-hover-bg);
+@date-picker-time-selected-cell-inner-color: var(--date-picker-time-selected-cell-inner-color);
+@date-picker-time-selected-cell-inner-bg: var(--date-picker-time-selected-cell-inner-bg);
 @date-picker-time-panel-height: var(--date-picker-time-panel-height);
 @date-picker-time-cell-inner-active-color: var(--date-picker-time-cell-inner-active-color);
 @date-picker-time-cell-inner-active-bg: var(--date-picker-time-cell-inner-active-bg);
 @date-picker-time-cell-active-bg: var(--date-picker-time-cell-active-bg);
 @date-picker-time-cell-disabled-bg: var(--date-picker-time-cell-disabled-bg);
-@date-picker-datetime-time-disabled-cell-inner-bg: var(--date-picker-datetime-time-disabled-cell-inner-bg);
+@date-picker-time-disabled-cell-inner-color: var(--date-picker-time-disabled-cell-inner-color);
+@date-picker-time-disabled-cell-inner-bg: var(--date-picker-time-disabled-cell-inner-bg);
 @date-picker-week-edge-cell-inner-border-radius: var(--date-picker-week-edge-cell-inner-border-radius);
 
 // Radio
@@ -851,6 +852,8 @@
 @modal-confirm-icon-padding: var(--modal-confirm-icon-padding);
 @modal-confirm-icon-font-size: var(--modal-confirm-icon-font-size);
 @modal-confirm-icon-line-height: var(--modal-confirm-icon-line-height);
+// Modal Basic
+@modal-basic-footer-padding: var(--modal-basic-footer-padding);
 
 // Sidebar
 @sidebar-font-size-lg: 0.18rem;
@@ -1344,6 +1347,7 @@
 @slider-handle-color-hover: var(--slider-handle-color-hover);
 @slider-handle-color-focus: var(--slider-handle-color-focus);
 @slider-handle-color-focus-shadow: var(--slider-handle-color-focus-shadow);
+@slider-handle-color-focus-box-shadow: var(--slider-handle-color-focus-box-shadow);
 @slider-handle-color-tooltip-open: var(--slider-handle-color-tooltip-open);
 @slider-dot-border-color: var(--slider-dot-border-color);
 @slider-dot-border-color-active: var(--slider-dot-border-color-active);
@@ -1569,7 +1573,8 @@
 @upload-list-picture-close-icon-right: var(--upload-list-picture-close-icon-right);
 @upload-list-item-close-icon-color: var(--upload-list-item-close-icon-color);
 @upload-list-item-close-icon-hover-color: var(--upload-list-item-close-icon-hover-color);
-@upload-list-item-name-color: var(--upload-list-item-name-color);
+@upload-list-item-name-link-color: var(--upload-list-item-name-link-color);
+@upload-list-item-name-link-hover-color: var(--upload-list-item-name-link-hover-color);
 @upload-drag-icon-color: var(--upload-drag-icon-color);
 @upload-drag-icon-size: var(--upload-drag-icon-size);
 @upload-drag-icon-margin: var(--upload-drag-icon-margin);
@@ -1689,6 +1694,8 @@
 @image-crop-avatar-preview-item-border: var(--image-crop-avatar-preview-item-border);
 @avatar-crop-edit-wraper-margin: var(--avatar-crop-edit-wraper-margin);
 @image-crop-container-margin: var(--image-crop-container-margin);
+@image-crop-avatar-dragger-margin: var(--image-crop-avatar-dragger-margin);
+@image-crop-footer-border-top: var(--image-crop-footer-border-top);
 
 // IconPicker
 @icon-picker-item-width: var(--icon-picker-item-width);

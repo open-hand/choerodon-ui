@@ -1439,9 +1439,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @action
-  setValue(value: any, noVaidate?: boolean): void {
+  setValue(value: any, noVaidate?: boolean, reserveParam?: boolean): void {
     super.setValue(value, noVaidate);
-    this.setText(undefined);
+    if (!reserveParam) {
+      this.setText(undefined);
+    }
     if (this.tooltipShown) {
       hide();
       this.tooltipShown = false;

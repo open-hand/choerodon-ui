@@ -41,6 +41,7 @@ const prefixCls = getConfig('prefixCls');
 | lovQueryBarProps | 默认 Lov Table queryBar 的 queryBarProps | object | |
 | lovQueryCachedSelected | lov 查询缓存已勾选记录 | (code: string, cachedSelected: Map<string, Record>) => Promise<object[]> | |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
