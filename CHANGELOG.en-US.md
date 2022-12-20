@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fix the problem of repeated query when selecting values in pagination in the multi-select reserved query parameter mode.
 - 🐞 `<pro>Lov`: Fixed the problem that the default value is repeated by selecting all values.
 - 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
+- 🐞 `<pro>Lov`: Fixed an error when the valueField is null and the white screen in the form of multiple tags was selected.
 
 ## 1.5.8
 

@@ -74,7 +74,7 @@ export default class SelectionList extends Component<SelectionListProps> {
   renderSide() {
     const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
     const { nodeRenderer, placeholder } = selectionProps;
-    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
     const isEmptyList = isEmpty(records);
     if (isEmptyList && !placeholder) {
       return null;
@@ -115,7 +115,7 @@ export default class SelectionList extends Component<SelectionListProps> {
 
   renderBelow = (): ReactNode => {
     const { dataSet, treeFlag, valueField = '', textField = '' } = this.props;
-    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
     if (isEmpty(records)) {
       return null;
     }
@@ -124,7 +124,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          <Tag closable onClose={() => {
+          <Tag closable={record.selectable} onClose={() => {
             this.unSelect(record);
           }}>
             <span>{record.get(textField)}</span>
