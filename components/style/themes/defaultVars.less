@@ -217,6 +217,7 @@
 @btn-icon-only-size-sm: 0.14rem;
 @btn-icon-only-size-lg: 0.24rem;
 @btn-icon-font-weight: inherit;
+@btn-icon-margin: 0 0.05rem 0 0;
 
 // raised button
 @btn-raised-border-width-base: 0;
@@ -392,8 +393,6 @@
 @date-picker-view-select-font-weight: bold;
 @date-picker-today-font-weight: bold;
 @date-picker-th-color: unset;
-@date-picker-disabled-cell-inner-color: @disabled-color;
-@date-picker-disabled-cell-inner-bg: @disabled-bg;
 @date-picker-month-year-cell-inner-display: inline-table;
 @date-picker-time-focus-active-display: block;
 @date-picker-datetime-time-border-left: unset;
@@ -408,7 +407,6 @@
 @date-picker-time-cell-inner-active-bg: @primary-5;
 @date-picker-time-cell-active-bg: unset;
 @date-picker-time-cell-disabled-bg: unset;
-@date-picker-time-disabled-cell-inner-color: @disabled-color;
 @date-picker-time-disabled-cell-inner-bg: @disabled-bg;
 @date-picker-week-edge-cell-inner-border-radius: @border-radius-base;
 
@@ -995,7 +993,6 @@
 @table-filter-item-icon-line-height: @line-height-base;
 @table-summary-group-wrapper-justify-content: flex-end;
 @table-summary-group-wrapper-margin: 0.08rem 0;
-@table-toolbar-button-icon-margin: 0 0.05rem 0 0;
 
 // PerformanceTable
 @performance-table-header-bg: #f5f5f5;
@@ -1430,7 +1427,7 @@
 @collapse-icon-right-content-padding: 0 @collapse-content-padding;
 @collapse-icon-right-expand-text-padding: 0;
 @collapse-icon-right-wrapper-color: unset;
-@collapse-icon-right-header-bg: @collapse-header-bg;
+@collapse-icon-right-header-bg: unset;
 @collapse-icon-right-header-color: unset;
 @collapse-icon-right-header-border-bottom: unset;
 @collapse-expand-icon-size: @collapse-header-line-height;
@@ -1624,6 +1621,8 @@
 @notification-with-icon-message-margin-left: 0.48rem;
 @notification-with-icon-description-margin-left: @notification-with-icon-message-margin-left;
 @notification-icon-size: 0.24rem;
+@notification-custom-icon-size: 0.18rem;
+@notification-custom-notice-icon-line-height: 0.2rem;
 @notification-icon-margin-left: 0.04rem;
 @notification-icon-size: unset;
 @notification-icon-top: unset;

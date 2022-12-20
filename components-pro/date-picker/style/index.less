@@ -135,8 +135,8 @@
 
   &-disabled &-cell-inner {
     width: auto;
-    color: @date-picker-disabled-cell-inner-color;
-    background: @date-picker-disabled-cell-inner-bg;
+    color: @disabled-color;
+    background: @disabled-bg;
     border: @border-width-base @border-style-base transparent;
     border-radius: @date-picker-cell-disabled-inner-border-radius;
     cursor: not-allowed;
@@ -161,6 +161,10 @@
     }
   }
 
+  /* Time 模式 cell 层级样式控制
+     用于 css vars 方案下 控制 time 部分的高亮区块 
+     其中，datetime 的 time 部分的变量添加了 -datetime 字符片段
+     其余直接用 -time 拼接的变量则是同时控制 datetime 的 time 部分及 TimePikcer 部分 */
   &-time {
     .@{date-picker-prefix}-body {
       padding: @date-picker-datetime-time-padding;
@@ -189,7 +193,7 @@
       &.@{date-picker-prefix}-disabled {
         background: @date-picker-time-cell-disabled-bg;
         .@{date-picker-prefix}-cell-inner {
-          color: @date-picker-time-disabled-cell-inner-color;
+          color: @disabled-color;
           background: @date-picker-time-disabled-cell-inner-bg;
         }
       }
