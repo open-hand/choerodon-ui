@@ -348,6 +348,7 @@
   --btn-icon-only-size-sm: 0.14rem;
   --btn-icon-only-size-lg: 0.24rem;
   --btn-icon-font-weight: inherit;
+  --btn-icon-margin: 0 0.05rem 0 0;
 
   // raised button
   --btn-raised-border-width-base: 0;
@@ -498,7 +499,6 @@
   --checkbox-button-min-width: none;
   --checkbox-button-padding: 0 0.15rem;
   --checkbox-button-check-bg: var(--checkbox-color);
-  --checkbox-button-disabled-check-bg: var(--checkbox-disabled-bg);
   --checkbox-button-check-color: var(--text-color-dark);
   --checkbox-button-check-border-color: var(--checkbox-color);
   --checkbox-button-radius: var(--border-radius-base);
@@ -523,8 +523,6 @@
   --date-picker-view-select-font-weight: bold;
   --date-picker-today-font-weight: bold;
   --date-picker-th-color: unset;
-  --date-picker-disabled-cell-inner-color: var(--disabled-color);
-  --date-picker-disabled-cell-inner-bg: var(--disabled-bg);
   --date-picker-month-year-cell-inner-display: inline-table;
   --date-picker-time-focus-active-display: block;
   --date-picker-datetime-time-border-left: unset;
@@ -539,7 +537,6 @@
   --date-picker-time-cell-inner-active-bg: var(--primary-5);
   --date-picker-time-cell-active-bg: unset;
   --date-picker-time-cell-disabled-bg: unset;
-  --date-picker-time-disabled-cell-inner-color: var(--date-picker-disabled-cell-inner-color);
   --date-picker-time-disabled-cell-inner-bg: var(--disabled-bg);
   --date-picker-week-edge-cell-inner-border-radius: var(--border-radius-base);
 
@@ -605,7 +602,7 @@
   --label-wrapper-padding: var(--label-wrapper-padding-vertical) var(--label-wrapper-padding-horizontal);
   --label-vertical-wrapper-padding-vertical: 0;
   --label-output-wrapper-padding-vertical: 0.01rem;
-  --label-basic-line-height: 34 / 13;
+  --label-basic-line-height: calc(34 / 13);
   --field-help-color: var(--text-color-secondary);
   --field-icon-help-color: var(--text-color-secondary);
   --field-icon-help-font-size: var(--icon-font-size-sm);
@@ -751,7 +748,6 @@
 
     // Mentions
   --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
-  --mentions-padding: .07rem var(--input-padding-horizontal);
 
   // Output
   // ---
@@ -1032,7 +1028,6 @@
   --table-filter-item-icon-line-height: var(--line-height-base);
   --table-summary-group-wrapper-justify-content: flex-end;
   --table-summary-group-wrapper-margin: 0.08rem 0;
-  --table-toolbar-button-icon-margin: 0 0.05rem 0 0;
 
   // PerformanceTable
   --performance-table-header-bg: #f5f5f5;
@@ -1629,6 +1624,8 @@
   --notification-with-icon-message-margin-left: 0.48rem;
   --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
   --notification-icon-size: 0.24rem;
+  --notification-custom-icon-size: 0.18rem;
+  --notification-custom-notice-icon-line-height: 0.2rem;
   --notification-icon-margin-left: 0.04rem;
   --notification-icon-top: unset;
   --notification-icon-left: unset;

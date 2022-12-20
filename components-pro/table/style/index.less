@@ -700,6 +700,7 @@
     }
   }
 
+  /* 当前行和 hover 状态下行的可编辑框的背景色变化 */
   &-row-current,
   &-row:hover {
     .@{table-prefix-cls}-cell-inner-editable:not(.@{table-prefix-cls}-cell-inner-disabled):not(.@{table-prefix-cls}-cell-inner-required) {
@@ -830,13 +831,8 @@
       vertical-align: middle;
     }
 
-    button {
-      .@{iconfont-css-prefix} {
-        margin: @table-toolbar-button-icon-margin;
-      }
-      span {
-        font-weight: 500;
-      }
+    button span {
+      font-weight: 500;
     }
   }
 
@@ -870,10 +866,6 @@
 
       &:hover, &:focus, &:active {
         background-color: transparent;
-      }
-      
-      .@{iconfont-css-prefix} {
-        margin: @table-toolbar-button-icon-margin;
       }
     }
   }
