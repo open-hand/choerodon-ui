@@ -158,14 +158,26 @@
     }
 
     &-icon {
-      &.icon {
-        font-size: @notification-icon-size;
-      }
       position: absolute;
       top: @notification-icon-top;
       left: @notification-icon-left;
       margin-left: @notification-icon-margin-left;
       line-height: 1;
+
+      // 功能提示框字体大小（提升 i 优先级以高于图标库默认样式）
+      i& {
+        font-size: @notification-icon-size;
+      }
+
+      // 自定义部分的字体行高
+      .@{iconfont-css-prefix} {
+        font-size: @notification-custom-icon-size;
+      }
+
+      // 自定义部分的字体行高
+      span& {
+        line-height: @notification-custom-notice-icon-line-height;
+      }
 
       &-success {
         color: @success-color;
