@@ -365,7 +365,7 @@
 @checkbox-basic-indeterminate-left: calc((@checkbox-size - 0.03rem - @checkbox-basic-indeterminate-width) / 2);
 
 @checkbox-button-line-height: @radio-button-line-height;
-@checkbox-button-min-width: none;
+@checkbox-button-min-width: unset;
 @checkbox-button-padding: 0 0.15rem;
 @checkbox-button-check-bg: @checkbox-color;
 @checkbox-button-check-color: @text-color-dark;
@@ -444,7 +444,7 @@
 @radio-button-active-color: fade(@radio-color, 70%);
 @radio-button-check-border-width: @radio-border-width;
 @radio-button-padding: 0 0.15rem;
-@radio-button-min-width: none;
+@radio-button-min-width: unset;
 @radio-basic-button-uncheck-hover-color: @radio-button-color;
 @radio-basic-button-padding: 0 calc(@padding-md - 0.01rem);
 @radio-button-check-color: @radio-dot-color;
@@ -558,9 +558,9 @@
 @float-label-color: @label-color;
 @float-label-font-size: .15rem;
 @float-label-font-weight: 500;
-@float-label-up-height: @float-label-line-height;
-@float-label-up-bg: unset;
-@float-label-up-padding: 0;
+@float-label-active-height: @float-label-line-height;
+@float-label-active-bg: unset;
+@float-label-active-padding: 0;
 @float-form-item-margin-top: @form-item-margin-top;
 @float-form-item-margin-bottom: @form-item-margin-bottom;
 @float-form-item-wrapper-padding-vertical: 0;
@@ -1318,7 +1318,7 @@
 @pagination-quick-jumper-border-color: transparent;
 @pagination-color: unset;
 @pagination-pager-height: @btn-circle-size;
-@pagination-pager-min-width: none;
+@pagination-pager-min-width: unset;
 
 // Breadcrumb
 // ---
