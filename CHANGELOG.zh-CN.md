@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复多选保留查询参数模式下，分页选值时重复查询的问题。
 - 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
+- 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
 
 ## 1.5.8
 
