@@ -10,7 +10,8 @@
     "function-name-case": ["lower", { "ignoreFunctions": ["/colorPalette/"] }],
     "no-invalid-double-slash-comments": null,
     "no-descending-specificity": null,
-    "declaration-empty-line-before": null
+    "declaration-empty-line-before": null,
+    "length-zero-no-unit": null
   },
   "ignoreFiles": ["components/style/color/{bezierEasing,colorPalette,tinyColor}.less", "components-pro/performance-table/style/*.less"]
 }
