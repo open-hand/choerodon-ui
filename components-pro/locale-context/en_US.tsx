@@ -131,6 +131,11 @@ const locale: Locale = {
     show: 'Show',
     hide: 'Hide',
     add_search: 'Add search',
+    custom_sort: 'Custom sorting',
+    add_sort: 'Adding a sort',
+    please_select_column: 'Please select column',
+    ascending: 'Ascending',
+    descending: 'Descending',
   },
   Pagination: {
     page: 'Page',

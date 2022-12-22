@@ -164,6 +164,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   autoQuery?: boolean;
   refreshBtn?: boolean;
   onRefresh?: () => Promise<boolean | undefined> | boolean | undefined | void;
+  sortableFieldNames?: string[];
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -928,7 +929,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
+    const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly, sortableFieldNames } = this.props;
     const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
@@ -965,6 +966,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
+            sortableFieldNames,
           }}
         >
           <QuickFilterMenu />
