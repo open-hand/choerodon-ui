@@ -52,3 +52,20 @@
     content: ' ';
   }
 }
+
+.checkbox-invalid() {
+  .@{pro-checkbox-prefix-cls}:hover:not(:checked) + .@{pro-checkbox-prefix-cls}-inner,
+  .@{pro-checkbox-prefix-cls}-wrapper:hover .@{pro-checkbox-prefix-cls}:not(:checked) + .@{pro-checkbox-prefix-cls}-inner {
+    border-color: @error-color;
+  }
+
+  .@{pro-checkbox-prefix-cls}.@{pro-checkbox-prefix-cls}:checked + .@{pro-checkbox-prefix-cls}-inner {
+    background-color: @error-color !important;
+    border-color: @error-color;
+  }
+
+  .@{pro-checkbox-prefix-cls}.@{pro-checkbox-prefix-cls}:focus + .@{pro-checkbox-prefix-cls}-inner {
+    border-color: @error-color;
+    box-shadow: none;
+  }
+}
