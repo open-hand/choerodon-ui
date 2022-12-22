@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
 - 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
+- 🌟 `<pro>Table`: Added combination sort editing function.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.

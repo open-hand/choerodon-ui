@@ -134,6 +134,11 @@ const locale: Locale = {
     show: '見せる',
     hide: '隠れる',
     add_search: '検索を追加',
+    custom_sort: 'カスタマイズソートです',
+    add_sort: 'ソートを追加します',
+    please_select_column: '列を選択します',
+    ascending: '昇順',
+    descending: '降順',
   },
   Pagination: {
     page: 'ページ',
