@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
 - 🐞 `Upload`: 修复 picture 模式下当文本过长时重新上传文字和文件名称重叠的问题。
+- 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
 
 ## 1.5.8
 
