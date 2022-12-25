@@ -421,6 +421,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         [`${prefixCls}-list-item`]: true,
         [`${prefixCls}-list-item-${file.status}`]: true,
         [`${prefixCls}-list-item-error-reupload`]: file.status === 'error' && showReUploadIconType,
+        [`${prefixCls}-list-item-done-reupload`]: file.status === 'done' && showReUploadIconType,
       });
 
       if (dragUploadList) {
