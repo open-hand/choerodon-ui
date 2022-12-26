@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
 - 🐞 `<pro>Modal`: Fix the problem that when the text is too long in picture mode, re upload the text and file name overlap.
 - 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
+- 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
 
 ## 1.5.8
 
