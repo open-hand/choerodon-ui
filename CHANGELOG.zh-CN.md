@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Upload`: 修复 picture 模式下当文本过长时重新上传文字和文件名称重叠的问题。
 - 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
 - 🐞 `<pro>Form`: 修复 table 布局下异常换行的问题。
+- 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
 
 ## 1.5.8
 

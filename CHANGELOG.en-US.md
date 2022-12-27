@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the problem that when the text is too long in picture mode, re upload the text and file name overlap.
 - 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
 - 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
+- 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
 
 ## 1.5.8
 
