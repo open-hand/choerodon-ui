@@ -581,7 +581,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     // 聚焦到form内第一个可编辑组件上
     const formAutoFocus = this.getContextConfig('formAutoFocus');
     if (formAutoFocus) {
-      const field = this.getFields().find(x => !x.disabled && !x.readOnly);
+      const field = this.getFields().find(x => x.editable);
       if (field) {
         field.focus();
       }
@@ -760,7 +760,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
     function completeLine() {
       if (cols.length) {
-        const maxRowSpan = cols.sort()[cols.length - 1].props.rowSpan;
+        const maxRowSpan = Math.max(...cols.map(x => x.props.rowSpan));
         if (rows[rowIndex]) {
           rows[rowIndex] = <tr key={`row-${rowIndex}`}>{cols}</tr>;
         } else {
