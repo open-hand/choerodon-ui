@@ -82,8 +82,8 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
       autoCreate: true,
       paging: false,
       fields: [
-        { name: 'sortName', type: FieldType.string, options: sortFieldOptions, required: true },
-        { name: 'order', type: FieldType.string, defaultValue: SortOrder.asc, required: true },
+        { name: 'sortName', type: FieldType.string, options: sortFieldOptions },
+        { name: 'order', type: FieldType.string, defaultValue: SortOrder.asc },
       ],
       data,
     });
@@ -108,7 +108,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   const handleConfirm = () => {
     sortDS.validate().then(result => {
       if (result) {
-        const records = sortDS.data.filter(r => r.get('sortName'));
+        const records = sortDS.data.filter(r => r.get('sortName') && r.get('order'));
         const sortInfo: Map<string, SortOrder> = new Map();
         records.forEach(record => {
           sortInfo.set(record.get('sortName'), record.get('order'));
