@@ -131,6 +131,11 @@ const locale: Locale = {
     show: '显示',
     hide: '隐藏',
     add_search: '添加搜索',
+    custom_sort: '自定义排序',
+    add_sort: '新增排序',
+    please_select_column: '请选择列',
+    ascending: '正序',
+    descending: '倒序',
   },
   Pagination: {
     page: '页',

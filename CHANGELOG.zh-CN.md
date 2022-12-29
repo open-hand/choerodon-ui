@@ -17,7 +17,9 @@ timeline: true
 
 - 🌟 `configure`: 新增 attachment.downloadAllMode, formAutoFocus, useLookupBatch 属性。
 - 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
+- 🌟 `<pro>Table`: 新增组合排序编辑功能。
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
+- 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
@@ -26,6 +28,10 @@ timeline: true
 - 🐞 `<pro>Select`: 修复多选保留查询参数模式下，分页选值时重复查询的问题。
 - 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
+- 🐞 `Upload`: 修复 picture 模式下当文本过长时重新上传文字和文件名称重叠的问题。
+- 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
+- 🐞 `<pro>Form`: 修复 table 布局下异常换行的问题。
+- 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
 
 ## 1.5.8
 

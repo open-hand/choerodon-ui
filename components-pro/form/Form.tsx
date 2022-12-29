@@ -581,7 +581,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     // 聚焦到form内第一个可编辑组件上
     const formAutoFocus = this.getContextConfig('formAutoFocus');
     if (formAutoFocus) {
-      const field = this.getFields().find(x => !x.disabled && !x.readOnly);
+      const field = this.getFields().find(x => x.editable);
       if (field) {
         field.focus();
       }
@@ -758,22 +758,21 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     });
 
-    let colsNum = 0;
-    let maxRowSpan = 0;
-    const totalColumn = columns * (noLabel ? 1 : 2);
-
-    function completeLine(rowSpan?: number) {
+    function completeLine() {
       if (cols.length) {
-        rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
-        if (rowSpan && rowSpan > 1) {
-          new Array(rowSpan - 1).fill(0).forEach(() => rows.push(<tr />));
+        const maxRowSpan = Math.max(...cols.map(x => x.props.rowSpan));
+        if (rows[rowIndex]) {
+          rows[rowIndex] = <tr key={`row-${rowIndex}`}>{cols}</tr>;
+        } else {
+          rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
+        }
+        if (maxRowSpan > 1) {
+          new Array(maxRowSpan - 1).fill(0).forEach(() => rows.push(<tr />));
         }
         cols = [];
       }
       rowIndex++;
       colIndex = 0;
-      colsNum = 0;
-      maxRowSpan = 0;
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
@@ -806,7 +805,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
       while (currentRow[colIndex]) {
         colIndex++;
-        colsNum += (noLabel ? 1 : 2);
       }
       if (colIndex >= columns) {
         completeLine();
@@ -869,7 +867,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             {toJS(label)}
           </FormItemLabel>,
         );
-        colsNum += 1;
       }
       if (!isString(type)) {
         fieldElementProps.rowIndex = rowIndex;
@@ -895,13 +892,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>
         </td>,
       );
-      
-      colsNum += currentColSpan;
-      if (rowSpan > maxRowSpan) {
-        maxRowSpan = rowSpan;
-      }
-      if (index === len - 1 || colsNum >= totalColumn) {
-        completeLine(rowSpan >= maxRowSpan ? maxRowSpan : 1);
+      if (index === len - 1) {
+        completeLine();
       } else {
         colIndex++;
       }

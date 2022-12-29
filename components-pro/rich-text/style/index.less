@@ -13,6 +13,8 @@
   padding: 0;
 
   &-quill {
+    display: flex;
+    flex-direction: column;
     .ql-container {
       border: none !important;
     }
@@ -23,7 +25,9 @@
     border-width: 0 0 1px 0 !important;
 
     + .ql-container {
-      height: calc(100% - 0.41rem);
+      flex: 1;
+      height: auto;
+      overflow: auto;
     }
   }
 

@@ -146,7 +146,7 @@ export type FormatNumberFuncOptions = {
 };
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
-export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
+export type DynamicProps = { [P in keyof FieldProps]?: (propsArg: DynamicPropsArguments) => FieldProps[P]; }
 export type HighlightProps = {
   title?: ReactNode;
   content?: ReactNode;

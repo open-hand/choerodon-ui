@@ -485,10 +485,17 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }
 
   const getConstSortIcon = () => {
-    if (tableStore.getConfig('tableShowSortIcon')) {
-      return <Icon key="sort_temp" type="unfold_more" className={`${prefixCls}-sort-icon ${prefixCls}-sort-icon-temp`} />;
-    }
-    return <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />;
+    const { combineSort } = dataSet;
+    const tableShowSortIcon = tableStore.getConfig('tableShowSortIcon');
+    const combineSortField = combineSort && field && field.order;
+    const type = combineSortField
+      ? (field && field.order === 'asc' ? 'paixu-shang' : 'paixu-xia')
+      : (tableShowSortIcon || combineSort ? 'sort-all' : 'arrow_upward');
+    const className = classNames(`${prefixCls}-sort-icon`, {
+      [`${prefixCls}-sort-icon-temp`]: tableShowSortIcon || (combineSort && !combineSortField),
+      [`${prefixCls}-sort-icon-combine`]: combineSortField,
+    });
+    return <Icon key="sort" type={type} className={className} />;
   };
 
   const getFilterIcon = () => {
@@ -569,34 +576,28 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   };
   const labelClassNames: string[] = [];
   if (helpIcon) {
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(helpIcon);
-    } else {
-      childNodes.push(helpIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-right-has-help`);
-    }
-  }
-
-  if (filterIcon) {
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(filterIcon);
-    } else {
-      childNodes.push(filterIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-right-has-filter`);
-    }
+    childNodes.push(helpIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-help`);
   }
 
   if (sortIcon) {
     if (field && field.order) {
-      classList.push(`${prefixCls}-sort-${field.order} ${prefixCls}-sort-${field.order}-temp`);
+      classList.push(`${prefixCls}-sort-${field.order}`);
+      const { combineSort } = dataSet;
+      if (combineSort) {
+        classList.push(`${prefixCls}-sort-${field.order}-combine`);
+      } else {
+        classList.push(`${prefixCls}-sort-${field.order}-temp`);
+      }
     }
     innerProps.onClick = handleClick;
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(sortIcon);
-    } else {
-      childNodes.push(sortIcon);
-      labelClassNames.push(`${prefixCls}-cell-inner-right-has-sort`);
-    }
+    childNodes.push(sortIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-sort`);
+  }
+
+  if (filterIcon) {
+    childNodes.push(filterIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-filter`);
   }
 
   if (expandIcon) {

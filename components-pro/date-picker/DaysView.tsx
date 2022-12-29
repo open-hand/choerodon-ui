@@ -47,6 +47,8 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   static type = FieldType.date;
 
+  today: Moment;
+
   getViewClassName(): string {
     return '';
   }
@@ -238,13 +240,14 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   renderFooter(): ReactNode {
     const {
       prefixCls,
+      today,
       props: { disabledNow },
     } = this;
     const footerProps = {
       className: classNames({
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
+      onClick: !disabledNow ? this.choose.bind(this, today, false) : noop,
     };
     return (
       <div className={`${prefixCls}-footer`}>
@@ -285,7 +288,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     const lastDay = prevMonth.clone().add(42, 'd');
     const rows: ReactNode[] = [];
     let cells: ReactNode[] = [];
-
+    const today = moment();
     while (prevMonth.isBefore(lastDay)) {
       const currentDate = prevMonth.clone();
       const isDisabled = !isValidDate(currentDate, selected);
@@ -297,7 +300,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
         prevMonth.year() > currentYear ||
         (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
         [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'd'),
-        [`${prefixCls}-today`]: prevMonth.isSame(moment(), 'd'),
+        [`${prefixCls}-today`]: prevMonth.isSame(today, 'd'),
         [`${prefixCls}-disabled`]: isDisabled,
       });
       const text = String(currentDate.date());
@@ -321,6 +324,9 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
       }
 
       prevMonth.add(1, 'd');
+      if (currentDate.isSame(today, 'd')) {
+        this.today = currentDate;
+      }
     }
 
     return rows;

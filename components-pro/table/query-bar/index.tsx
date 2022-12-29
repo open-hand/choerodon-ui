@@ -33,7 +33,9 @@ import DataSet from '../../data-set';
 import Modal from '../../modal';
 import Progress from '../../progress';
 import Column from '../Column';
-import { getEditorByField, getPlaceholderByField } from '../utils';
+import ColumnGroup from '../ColumnGroup';
+import { getEditorByField, getPlaceholderByField, getTableHeaderRows } from '../utils';
+import CombineSort from './CombineSort';
 import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
@@ -692,9 +694,19 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   getButtons(): ReactElement<ButtonProps>[] {
-    const { buttons, summaryBar, buttonsLimit } = this.props;
+    const { tableStore: { queryBar, prefixCls, dataSet } } = this.context;
+    const { buttons: originalButtons, summaryBar, buttonsLimit } = this.props;
     const { tableStore } = this.context;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
+    let buttons = originalButtons;
+    if (queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort) {
+      const sortableFieldNames = this.getSortableFieldNames();
+      if (sortableFieldNames.length > 0) {
+        buttons = [(
+          <CombineSort key="CombineSort" dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />
+        ), ...(buttons || [])];
+      }
+    }
     if (buttons) {
       // 汇总条存在下 buttons 大于 3 个放入下拉
       const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
@@ -802,6 +814,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return result;
   }
 
+  getSortableFieldNames(): string[] {
+    const { tableStore: { columnGroups } } =  this.context;
+    const { columns } = columnGroups;
+    const headerRows: ColumnGroup[][] = getTableHeaderRows(columns);
+    const sortableFieldNames: Set<string> = new Set();
+    headerRows.forEach(cols => {
+      cols.forEach(col => {
+        if (col.column && col.column.name && col.column.sortable) {
+          sortableFieldNames.add(col.column.name);
+        }
+      });
+    });
+    return [...sortableFieldNames];
+  }
+
   renderToolBar(props: TableQueryBarHookProps) {
     const { prefixCls } = this.context;
     return <TableToolBar key="toolbar" prefixCls={prefixCls} {...props} />;
@@ -836,7 +863,17 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { dynamicFilterBar, searchCode } = this.props;
     const { prefixCls } = this.context;
-    return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
+    const sortableFieldNames = this.getSortableFieldNames();
+    return (
+      <TableDynamicFilterBar
+        key="toolbar"
+        searchCode={searchCode}
+        dynamicFilterBar={dynamicFilterBar}
+        prefixCls={prefixCls}
+        sortableFieldNames={sortableFieldNames}
+        {...props}
+      />
+    );
   }
 
   renderComboBar(props: TableQueryBarHookProps) {

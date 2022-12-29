@@ -133,6 +133,11 @@ export interface Locale extends DataSetLocale {
     show: string,
     hide: string,
     add_search: string,
+    custom_sort: string,
+    add_sort: string,
+    please_select_column: string,
+    ascending: string,
+    descending: string,
   };
   Pagination: {
     page: string;

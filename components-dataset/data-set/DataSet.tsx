@@ -558,6 +558,13 @@ export default class DataSet extends EventManager {
 
   @observable pageSize: number;
 
+  @observable combineSort?: boolean;
+
+  /**
+   * 多列排序保存排序字段顺序(内部使用)
+   */
+  @observable combineSortFieldNames?: ObservableMap<string, SortOrder>;
+
   @computed
   get totalCount(): number {
     const total = this.getState(TOTAL_KEY);
@@ -1151,6 +1158,7 @@ export default class DataSet extends EventManager {
       this.queryParameter = queryParameter;
       this.pageSize = pageSize!;
       this.selection = selection!;
+      this.initCombineSort();
       this.processListener();
       if (id) {
         this.id = id;
@@ -2110,40 +2118,56 @@ export default class DataSet extends EventManager {
   /**
    * 服务端排序
    *
-   * @param fieldName
+   * @param sortInfo 字段名 或 有顺序的字段列表
    */
   @action
-  sort(fieldName: string): void {
+  sort(sortInfo: string | Map<string, SortOrder>): void {
     const { combineSort } = this.props;
-    const field = this.getField(fieldName);
-    if (field) {
-      if (!combineSort) {
+    const { combineSort: nowCombineSort } = this;
+    if (typeof sortInfo === 'string') {
+      const field = this.getField(sortInfo);
+      if (field) {
         this.fields.forEach(current => {
-          if (current.order && current !== field) {
+          if (current.order && (current !== field || nowCombineSort)) {
             current.order = undefined;
           }
         });
-      }
-      const { order } = field;
-      switch (order) {
-        case SortOrder.asc:
-          field.order = SortOrder.desc;
-          break;
-        case SortOrder.desc:
-          field.order = undefined;
-          break;
-        default:
-          field.order = SortOrder.asc;
-      }
-      if (this.paging) {
-        this.query();
-      } else {
-        const orderFields = getOrderFields(this);
-        if (orderFields.length) {
-          this.records = sortTree(this.records, orderFields, true);
-        } else {
-          this.query();
+        this.combineSort = false;
+        const { order } = field;
+        switch (order) {
+          case SortOrder.asc:
+            field.order = SortOrder.desc;
+            break;
+          case SortOrder.desc:
+            field.order = undefined;
+            break;
+          default:
+            field.order = SortOrder.asc;
         }
+      }
+    } else if (combineSort && sortInfo) {
+      this.fields.forEach(current => {
+        current.order = undefined;
+      });
+      this.combineSort = true;
+      this.combineSortFieldNames = observable.map(sortInfo);
+      sortInfo.forEach((sortOrder, fieldName) => {
+        const field = this.getField(fieldName);
+        if (field) {
+          field.order = sortOrder;
+        }
+      });
+    } else {
+      return;
+    }
+    if (this.paging) {
+      this.query();
+    } else {
+      const orderFields = getOrderFields(this);
+      if (orderFields.length) {
+        this.records = sortTree(this.records, orderFields, true);
+      } else {
+        this.query();
       }
     }
   }
@@ -3089,6 +3113,21 @@ Then the query method will be auto invoke.`,
       this.loadData(data, total, cache);
     }
     return this;
+  }
+
+  @action
+  private initCombineSort(): void {
+    const { combineSort } = this.props;
+    this.combineSort = combineSort;
+    const orderFieldNames: Map<string, SortOrder> = new Map();
+    this.fields.forEach(field => {
+      if (field.order && field.name) {
+        orderFieldNames.set(field.name, field.order as SortOrder);
+      }
+    });
+    if (orderFieldNames && orderFieldNames.size > 0) {
+      this.combineSortFieldNames = observable.map(orderFieldNames);
+    }
   }
 
   private appendDataFromResponse(resp: any, parent?: Record): DataSet {
