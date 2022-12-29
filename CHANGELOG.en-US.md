@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added combination sort editing function.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
+- 💄 `<pro>Table`: Optimize dynamic filter bar style.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
@@ -32,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
 - 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
 - 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
+- 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
 
 ## 1.5.8
 

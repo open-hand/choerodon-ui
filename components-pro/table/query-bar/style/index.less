@@ -70,7 +70,7 @@
   // dynamic-filter-bar
 
   &-dynamic-filter-bar {
-    margin-bottom: 0.08rem;
+    margin-bottom: 0.06rem;
 
     input::-webkit-input-placeholder {
       color: #6A6A6A;
@@ -183,6 +183,9 @@
         font-size: 0.16rem;
         background-color: #fafafa;
         border-radius: 0.02rem;
+        &:hover {
+          color: @primary-color;
+        }
       }
     }
   }
@@ -191,9 +194,16 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    margin-right: 0.16rem;
-    padding-left: 0.08rem;
+    align-items: center;
+    margin: 0 0.12rem 0.04rem 0;
+    padding: 0 0.08rem;
+    background-color: #F9F9F9;
+    border-radius: 0.02rem;
     cursor: pointer;
+
+    &-closable {
+      margin-right: 0.3rem;
+    }
 
     &-disabled {
       .@{table-prefix-cls}-filter-label {
@@ -202,25 +212,44 @@
       }
     }
 
-    &:focus-within,
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
-      border-radius: 0.02rem;
+      background-color: #F0F0F0;
+    }
 
-      .@{table-prefix-cls}-filter-item-close {
-        display: inline-block !important;
+    &:focus-within {
+      background-color: @primary-1;
+    }
+
+    &-has-value,
+    &:focus-within {
+      .@{table-prefix-cls}-filter-label,
+      input {
+        color: @primary-color;
+      }
+      .@{table-prefix-cls}-filter-label::after {
+        content: ':';
+      }
+    }
+
+    &:not(:focus-within) {
+      .@{c7n-pro-prefix} {
+        // 空值下的必输星号空值边距调整
+        &-select-wrapper, 
+        &-input-wrapper, 
+        &-input-number-wrapper, 
+        &-calendar-picker-wrapper {
+        &[class*='-empty'][class*='-required'] > label::before {
+          margin-left: 0;
+        }
+      }
       }
     }
   }
-
   &-filter-wrapper {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.08rem 0 0;
-    padding: 0.01rem 0.06rem;
-    background: rgba(232, 232, 232, 0.20);
-    border-radius: 0.01rem;
+    margin: 0.12rem 0 0;
 
     span, input {
       background-color: transparent;
@@ -315,10 +344,11 @@
   &-filter-label {
     display: flex;
     align-items: center;
-    margin-right: 0.02rem;
-    padding-top: 0.005rem;
+    box-sizing: content-box;
+    height: @input-height-base;
+    padding: 0.02rem;
     color: #6A6A6A;
-    font-size: @font-size-sm;
+    font-size: @font-size-base;
 
     i {
       margin-left: 0.02rem;
@@ -354,10 +384,61 @@
     align-items: center;
     font-size: @font-size-sm;
 
+    [class*='-empty'] {
+      width: 0;
+      .@{c7n-pro-prefix}-input-number-inner-button {
+        opacity: 0;
+      }
+      &[class*='-suffix-button'] {
+        width: 0.22rem;
+      }
+    }
+
+    [class*='-focused'] {
+      .@{c7n-pro-prefix}-input-number-inner-button {
+        opacity: 1;
+      }
+    }
+
+    [class*='-focused'],
+    [class*='-focused'][class*='-suffix-button'],
+    [class*="-clear-button"]{
+      width: auto;
+    }
+
     [class*="-after"] {
       background-color: transparent;
       border: none;
     }
+
+    input[class*='c7n-pro']:not([class*='-range']):not(textarea):not(:last-child) {
+      padding-right: @btn-icon-size;
+    }
+
+    .@{c7n-pro-prefix} {
+      &-calendar-picker-suffix {
+        padding: 0;
+      }
+
+      &-select-suffix,
+      &-input-number-inner-button {
+        width: auto;
+      }
+    }
+
+    // 多值 placeholder 和 input 输入光标对齐样式覆盖
+    [class*="-multiple-input"] {
+      margin-left: 0;
+    }
+    [class*="-multiple-value"] + [class*="-placeholder"]{ 
+      padding-left: 0;
+    }
+
+    // 多值必输情况下，星号位置预留（只有多值情况下会出现 -placeholder-inner 类名）
+    [class*="-required"] [class*="-placeholder-inner"]{
+      padding-left: 0.12rem;
+    }
+    
 
     span:not(.@{c7n-pro-prefix}-select-suffix-button) {
       &:focus-within {
@@ -400,11 +481,10 @@
 
     &-close {
       position: absolute;
-      top: -0.07rem;
-      right: -0.07rem;
+      right: -0.18rem;
       z-index: 2;
-      display: none !important;
       color: rgba(32, 45, 64, .3);
+      font-size: 0.14rem;
       cursor: pointer;
 
       &:hover {
@@ -440,7 +520,8 @@
         }
       }
 
-      &-required {
+      &-required,
+      &-invalid {
         background-color: transparent;
 
         & > label {

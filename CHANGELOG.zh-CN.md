@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增组合排序编辑功能。
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
+- 💄 `<pro>Table`: 优化动态筛选条样式。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
@@ -32,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
 - 🐞 `<pro>Form`: 修复 table 布局下异常换行的问题。
 - 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
+- 🐞 `<pro>TextField`: 修复多值模式下 placeholder 和聚焦光标位置偏移问题。
 
 ## 1.5.8
 
