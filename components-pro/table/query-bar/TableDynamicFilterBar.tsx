@@ -1087,11 +1087,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
-                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
-                    [`${prefixCls}-filter-content-has-value`]: hasValue,
                   });
                 return (
                   <div
@@ -1105,11 +1103,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         }
                         this.refEditors.get(name).focus();
                       }
-                    }, 200,
-                    {
-                      leading: true,
-                      trailing: false,
-                    })}
+                    }, 200)}
                     onBlur={() => {
                       const editor = this.refEditors.get(name);
                       if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
@@ -1133,12 +1127,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
-                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
-                    [`${prefixCls}-filter-content-has-value`]: hasValue,
-                    [`${prefixCls}-filter-content-closable`]: true,
                   });
                 if (selectFields.includes(name)) {
                   return (
@@ -1153,11 +1144,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           }
                           this.refEditors.get(name).focus();
                         }
-                      }, 200,
-                      {
-                        leading: true,
-                        trailing: false,
-                      })}
+                      }, 200)}
                       onBlur={() => {
                         const editor = this.refEditors.get(name);
                         if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
