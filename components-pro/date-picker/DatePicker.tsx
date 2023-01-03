@@ -650,10 +650,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleSelect(date: Moment, expand?: boolean) {
-    if (this.multiple && this.isSelected(date)) {
-      this.unChoose(date);
+    const mode = this.getDefaultViewMode();
+    let formatDate = date;
+    if (mode !== ViewMode.week) {
+      const format = this.getDateFormat();
+      formatDate = moment(date.format(format), format);
+    }
+    if (this.multiple && this.isSelected(formatDate)) {
+      this.unChoose(formatDate);
     } else {
-      this.choose(date, expand);
+      this.choose(formatDate, expand);
     }
   }
 

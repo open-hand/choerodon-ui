@@ -47,8 +47,6 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   static type = FieldType.date;
 
-  today: Moment;
-
   getViewClassName(): string {
     return '';
   }
@@ -240,14 +238,13 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   renderFooter(): ReactNode {
     const {
       prefixCls,
-      today,
       props: { disabledNow },
     } = this;
     const footerProps = {
       className: classNames({
         [`${prefixCls}-now-disabled`]: disabledNow,
       }),
-      onClick: !disabledNow ? this.choose.bind(this, today, false) : noop,
+      onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
     };
     return (
       <div className={`${prefixCls}-footer`}>
@@ -324,9 +321,6 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
       }
 
       prevMonth.add(1, 'd');
-      if (currentDate.isSame(today, 'd')) {
-        this.today = currentDate;
-      }
     }
 
     return rows;
