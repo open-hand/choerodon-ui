@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState, useCallback } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { observer } from 'mobx-react-lite';
 import { FieldType, SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
@@ -32,16 +32,13 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
       combineSort,
     },
   } = dataSet;
-  if (!combineSort || !sortableFieldNames || sortableFieldNames.length === 0) {
-    return null;
-  }
 
   const [visible, setVisible] = useState<boolean>(false);
   const sortPrefixCls = `${prefixCls}-combine-sort`;
 
   const sortFieldOptions = useMemo<DataSet>(() => {
     const sortFieldData: any[] = [];
-    if (fields) {
+    if (fields && sortableFieldNames && sortableFieldNames.length > 0) {
       fields.forEach(field => {
         if (sortableFieldNames.includes(field.name)) {
           sortFieldData.push({
@@ -119,11 +116,11 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
     });
   }
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = useCallback((result: DropResult) => {
     if (result.destination) {
       sortDS.move(result.source.index, result.destination.index);
     }
-  }
+  }, [sortDS, sortDS.data]);
 
   const SortDragItem: FunctionComponent<{record: Record, index: number}> = ({record, index}) => {
     const { key } = record;
@@ -219,6 +216,10 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
       </div>
     );
   }, [onDragEnd, sortFieldOptions, sortDS, sortDS.data]);
+
+  if (!combineSort || !sortableFieldNames || sortableFieldNames.length === 0) {
+    return null;
+  }
 
   return (
     <Popover
