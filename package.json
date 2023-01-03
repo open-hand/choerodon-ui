@@ -58,7 +58,7 @@
     "array-tree-filter": "^2.0.0",
     "async-validator": "1.x",
     "bignumber.js": "^9.0.2",
-    "choerodon-ui-font": "0.2.x",
+    "choerodon-ui-font": "~0.2.13",
     "classnames": "~2.3.1",
     "codemirror": "5.58.2",
     "component-classes": "1.x",
