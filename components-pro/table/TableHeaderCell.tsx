@@ -490,7 +490,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const combineSortField = combineSort && field && field.order;
     const type = combineSortField
       ? (field && field.order === 'asc' ? 'paixu-shang' : 'paixu-xia')
-      : (tableShowSortIcon || combineSort ? 'sort-all' : 'arrow_upward');
+      : ((tableShowSortIcon || combineSort) && !(field && field.order) ? 'sort-all' : 'arrow_upward');
     const className = classNames(`${prefixCls}-sort-icon`, {
       [`${prefixCls}-sort-icon-temp`]: tableShowSortIcon || (combineSort && !combineSortField),
       [`${prefixCls}-sort-icon-combine`]: combineSortField,
