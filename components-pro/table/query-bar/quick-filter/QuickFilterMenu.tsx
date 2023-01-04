@@ -645,7 +645,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
   // 租户预置筛选及仅保存条件时，无保存按钮
   return (
     <>
-      <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />
+      {dataSet.props.combineSort && sortableFieldNames && sortableFieldNames.length > 0 && (
+        <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />
+      )}
       <Select
         isFlat
         placeholder={$l('Table', 'fast_filter')}
