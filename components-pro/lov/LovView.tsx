@@ -4,6 +4,7 @@ import { action, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -20,6 +21,7 @@ import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import Picture from '../picture';
+import ObserverNumberField from '../number-field';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -120,6 +122,10 @@ export default class LovView extends Component<LovViewProps> {
           else if (gridFieldType && gridFieldType.toLowerCase() === 'picture') {
             column.renderer = ({ value }) => (
               value ? <Picture src={value} objectFit="contain" height={"inherit" as any} block={false} /> : undefined
+            );
+          } else if (gridFieldType && gridFieldType.toLowerCase() === 'percent') {
+            column.renderer = ({ value }) => (
+              value ? `${math.multipliedBy(value, 100)}%` : undefined
             );
           }
           return {
@@ -230,7 +236,7 @@ export default class LovView extends Component<LovViewProps> {
   renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {} },
+      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {}, lovItems },
       multiple,
       tableProps,
       viewMode,
@@ -242,12 +248,23 @@ export default class LovView extends Component<LovViewProps> {
     const popup = viewMode === TriggerViewMode.popup;
     const modal = viewMode === TriggerViewMode.modal;
     const drawer = viewMode === TriggerViewMode.drawer;
+
+    const percentItems = {};
+    if (lovItems) {
+      lovItems.filter(x => x.gridFieldType === 'percent' && x.conditionField === 'Y').forEach(x => {
+        percentItems[x.gridFieldName!] = <ObserverNumberField suffix="%" />;
+      });
+    }
+
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       onKeyDown: this.handleKeyDown,
       dataSet,
       columns,
+      queryFields: {
+        ...percentItems,
+      },
       queryFieldsLimit: queryColumns,
       queryBar: queryBar || getConfig('lovQueryBar') || getConfig('queryBar'),
       selectionMode: SelectionMode.none,
