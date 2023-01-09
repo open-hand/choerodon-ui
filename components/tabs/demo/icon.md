@@ -23,7 +23,7 @@ ReactDOM.render(
     <TabPane
       tab={
         <span>
-          <Icon type="apple" />
+          <Icon type="android" />
           Tab 1
         </span>
       }
