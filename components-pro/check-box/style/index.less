@@ -152,7 +152,11 @@
   }
 
   &-button &:checked:disabled + &-inner {
-    background-color: @checkbox-disabled-bg !important;
+    background-color: @checkbox-button-disabled-check-bg !important;
+    border-color: @checkbox-button-disabled-check-border-color !important;
+    + span {
+      color: @checkbox-button-disabled-check-color;
+    }
   }
 
   &-button + &-button {
