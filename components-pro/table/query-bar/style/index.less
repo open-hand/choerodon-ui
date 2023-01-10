@@ -225,13 +225,12 @@
       input {
         color: @primary-color;
       }
-      .@{table-prefix-cls}-filter-label::after {
+      .@{table-prefix-cls}-filter-label:not(:empty)::after {
         content: ':';
       }
     }
 
     &-required {
-      padding-left: 0.12rem;
       .@{table-prefix-cls}-filter-label::before {
         display: inline-block;
         color: @label-required-color;
@@ -275,6 +274,10 @@
 
     span, input {
       background-color: transparent;
+    }
+
+    & > .@{table-prefix-cls}-filter-item:last-child {
+      height: 0.34rem;
     }
   }
 
