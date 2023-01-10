@@ -497,7 +497,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleMultipleMouseEnter(e) {
     const { onMouseEnter } = this.getOtherProps();
     if (onMouseEnter) {
-      onMouseEnter();
+      onMouseEnter(e);
     }
     this.handleHelpMouseEnter(e, true);
   }
