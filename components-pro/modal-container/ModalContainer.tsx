@@ -467,7 +467,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           // UED 用类名判断
           className={wrapperClassName}
           transitionAppear={transitionAppear}
-          transitionName={drawer ? transitionName : 'zoom'}
+          transitionName={transitionAppear ? drawer ? transitionName : 'zoom' : undefined}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >
