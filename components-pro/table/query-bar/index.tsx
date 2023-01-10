@@ -631,7 +631,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const tableButtonProps = tableStore.getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length && buttonsLimits) {
-      buttons.slice(buttonsLimits).forEach(button => {
+      buttons.slice(buttonsLimits - 1).forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};
@@ -653,7 +653,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               };
             }
             children.push(
-              <Menu.Item key={button} className={`${prefixCls}-button-menu-item`}>
+              <Menu.Item hidden={tableButtonProps.hidden} key={button} className={`${prefixCls}-button-menu-item`}>
                 <Button
                   key={`${button}-btn`}
                   {...tableButtonProps}
@@ -665,13 +665,13 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-button-menu-item`}>
+            <Menu.Item hidden={button.props.hidden} className={`${prefixCls}-button-menu-item`}>
               {cloneElement(button, { ...tableButtonProps, ...button.props })}
             </Menu.Item>,
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-button-menu-item`}>
+            <Menu.Item hidden={props.hidden} className={`${prefixCls}-button-menu-item`}>
               <Button {...tableButtonProps} {...button} />
             </Menu.Item>,
           );

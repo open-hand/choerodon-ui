@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added `percent` field type display.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
+- 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
