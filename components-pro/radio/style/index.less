@@ -156,6 +156,14 @@
     border-width: @radio-button-check-border-width;
   }
 
+  &-wrapper&-button &:disabled:checked + &-inner {
+    background-color: @radio-button-disabled-check-bg;
+    border-color: @radio-button-disabled-check-border-color !important;
+    + span {
+      color: @radio-button-disabled-check-color;
+    }
+  }
+
   &-button + &-button {
     margin-left: @btn-group-spacing;
   }

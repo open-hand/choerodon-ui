@@ -368,6 +368,9 @@
 @checkbox-button-min-width: unset;
 @checkbox-button-padding: 0 0.15rem;
 @checkbox-button-check-bg: @checkbox-color;
+@checkbox-button-disabled-check-bg: fade(@primary-color, 60%);
+@checkbox-button-disabled-check-border-color: @checkbox-button-disabled-check-bg;
+@checkbox-button-disabled-check-color: @text-color-dark;
 @checkbox-button-check-color: @text-color-dark;
 @checkbox-button-check-border-color: @checkbox-color;
 @checkbox-button-radius: @border-radius-base;
@@ -451,6 +454,9 @@
 @radio-button-check-bg: transparent;
 @radio-basic-button-group-spacing: 0rem;
 @radio-button-radius: @border-radius-base;
+@radio-button-disabled-check-bg: @radio-disabled-check-bg;
+@radio-button-disabled-check-border-color: @radio-disabled-check-border-color;
+@radio-button-disabled-check-color: unset;
 
 // Media queries breakpoints
 // Extra small screen / phone
@@ -1069,6 +1075,7 @@
 @tag-checkable-checked-color: #fff;
 @tag-checkable-checked-bg: @primary-6;
 @tag-checkable-active-bg: @primary-7;
+@tag-checkable-not-checked-active-bg: transparent;
 @tag-close-icon-font-weight: bold;
 
 // TimePicker
@@ -1696,6 +1703,8 @@
 @divider-text-color: @heading-color;
 @divider-font-size-base: @font-size-base;
 @divider-font-size-lg: @font-size-lg;
+@divider-inner-text-padding: 0 0.24rem;
+@divider-vertical-height: 0.9rem;
 
 // ImageCrop
 @image-crop-avatar-preview-bg: unset;
