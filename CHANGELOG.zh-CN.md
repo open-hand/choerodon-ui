@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
 - 🐞 `<pro>TextField`: 修复多值模式下 placeholder 和聚焦光标位置偏移问题。
 - 🐞 `<pro>Table`: 修复动态筛选条多值校验失败后，鼠标移入输入框中控制台报错的问题。
+- 🐞 `<pro>Table`: 修复筛选条多语言组件渲染错误的问题。
 
 ## 1.5.8
 

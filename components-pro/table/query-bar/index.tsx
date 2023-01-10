@@ -760,7 +760,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       context: {
         dataSet,
-        tableStore: { queryBar },
+        tableStore: { queryBar, getConfig },
       },
       props: { queryFields },
     } = this;
@@ -769,8 +769,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (queryDataSet) {
       const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
       const cloneFields: Map<string, Field> = fields.toJS();
+      const tlsKey = getConfig('tlsKey');
       const processField = (field, name) => {
-        if (!field.get('bind', current) && !name.includes('__tls')) {
+        if (!field.get('bind', current) && !name.includes(tlsKey)) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {

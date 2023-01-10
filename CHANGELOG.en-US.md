@@ -38,7 +38,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
 - 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
 - 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
-
+- 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
 ## 1.5.8
 
 `2022-11-29`
