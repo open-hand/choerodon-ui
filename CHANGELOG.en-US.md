@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added combination sort editing function.
 - 🌟 `<pro>Lov`: Added `percent` field type display.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
+- 💄 `<pro>Table`: Optimize dynamic filter bar style.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
@@ -33,6 +34,8 @@ timeline: true
 - 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
 - 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
 - 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
+- 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
+- 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
 
 ## 1.5.8
 

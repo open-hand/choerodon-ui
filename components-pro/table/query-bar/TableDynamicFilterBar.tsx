@@ -47,6 +47,7 @@ import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilter
 import { TransportProps } from '../../data-set/Transport';
 import { hide, show } from '../../tooltip/singleton';
 import { ShowHelp } from '../../field/enum';
+import { renderValidationMessage as utilRenderValidationMessage } from '../../field/utils';
 
 /**
  * 当前数据是否有值并需要选中
@@ -242,6 +243,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   refSingleWrapper: HTMLDivElement | null = null;
 
   refEditors: Map<string, any> = new Map();
+
+  refFilterItems: Map<string, any> = new Map();
 
   originalValue: object;
 
@@ -683,6 +686,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       ref: (node) => this.refEditors.set(name, node),
       border: false,
       clearButton: true,
+      _inTable: true,
+      showValidation: 'tooltip',
     };
     return cloneElement(element, props);
   }
@@ -1087,9 +1092,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
+                const isRequired = queryField && queryField.get('required');
+                const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
+                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
+                    [`${prefixCls}-filter-content-required`]: isRequired,
+                    [`${prefixCls}-filter-content-has-value`]: hasValue,
+                    [`${prefixCls}-filter-content-invalid`]: validationMessage,
                   });
                 return (
                   <div
@@ -1097,25 +1108,48 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     key={name}
                     onClick={debounce(() => {
                       const editor = this.refEditors.get(name);
+                      const filterItem = this.refFilterItems.get(name);
                       if (editor) {
-                        if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
-                          editor.element.className += ' c7n-pro-suffix-click'
-                        }
                         this.refEditors.get(name).focus();
+                      }
+                      if (filterItem) {
+                        if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                          filterItem.className += ' c7n-pro-lov-click';
+                        }
                       }
                     }, 200)}
                     onBlur={() => {
-                      const editor = this.refEditors.get(name);
-                      if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
-                        editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
+                      const filterItem = this.refFilterItems.get(name);
+                      if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {
+                        filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                       }
+                    }}
+                    onMouseEnter={(e)=>{
+                      if (validationMessage) {
+                        const { currentTarget } = e;
+                        show(currentTarget as HTMLElement, {
+                          title: utilRenderValidationMessage(validationMessage, true),
+                          theme: 'light',
+                          placement: 'top',
+                        });
+                        this.isTooltipShown = true;
+                      }
+                    }}
+                    onMouseLeave={()=>{
+                      hide();
                     }}
                   >
                     <span className={`${prefixCls}-filter-label`}>
                       {label}
                       {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                     </span>
-                    <span className={`${prefixCls}-filter-item`}>
+                    <span 
+                      className={classNames(`${prefixCls}-filter-item`,
+                        {
+                          [`${prefixCls}-filter-item-has-value`]: hasValue,
+                        })}
+                      ref={(node)=>this.refFilterItems.set(name,node)}
+                    >
                       {this.createFields(element, name)}
                     </span>
                   </div>
@@ -1127,9 +1161,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
+                const isRequired = queryField && queryField.get('required');
+                const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
+                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
+                    [`${prefixCls}-filter-content-required`]: isRequired,
+                    [`${prefixCls}-filter-content-has-value`]: hasValue,
+                    [`${prefixCls}-filter-content-invalid`]: validationMessage,
                   });
                 if (selectFields.includes(name)) {
                   return (
@@ -1138,18 +1178,35 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       key={name}
                       onClick={debounce(() => {
                         const editor = this.refEditors.get(name);
+                        const filterItem = this.refFilterItems.get(name);
                         if (editor) {
-                          if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
-                            editor.element.className += ' c7n-pro-suffix-click'
-                          }
                           this.refEditors.get(name).focus();
+                        }
+                        if (filterItem) {
+                          if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                            filterItem.className += ' c7n-pro-lov-click';
+                          }
                         }
                       }, 200)}
                       onBlur={() => {
-                        const editor = this.refEditors.get(name);
-                        if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
-                          editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
+                        const filterItem = this.refFilterItems.get(name);
+                        if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {
+                          filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                         }
+                      }}
+                      onMouseEnter={(e)=>{
+                        if (validationMessage) {
+                          const { currentTarget } = e;
+                          show(currentTarget as HTMLElement, {
+                            title: utilRenderValidationMessage(validationMessage, true),
+                            theme: 'light',
+                            placement: 'top',
+                          });
+                          this.isTooltipShown = true;
+                        }
+                      }}
+                      onMouseLeave={()=>{
+                        hide();
                       }}
                     >
                       <Icon
@@ -1163,7 +1220,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         {label}
                         {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                       </span>
-                      <span className={`${prefixCls}-filter-item`}>
+                      <span 
+                        className={classNames(`${prefixCls}-filter-item`,
+                          {
+                            [`${prefixCls}-filter-item-has-value`]: hasValue,
+                          })}
+                        ref={(node)=>this.refFilterItems.set(name,node)}
+                      >
                         {this.createFields(element, name)}
                       </span>
                     </div>
