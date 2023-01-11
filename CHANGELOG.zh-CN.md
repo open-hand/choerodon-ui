@@ -22,6 +22,8 @@ timeline: true
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
 - 💄 `<pro>Table`: 优化动态筛选条样式。
+- 💄 `<pro>Table`: 优化 buttonsLimit 表现，hidden 按钮不再占更多下拉位置。
+- 💄 `<pro>Modal`: 扩展 transitionAppear 属性，支持控制模态框关闭过程中的动画。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
@@ -36,6 +38,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
 - 🐞 `<pro>TextField`: 修复多值模式下 placeholder 和聚焦光标位置偏移问题。
 - 🐞 `<pro>Table`: 修复动态筛选条多值校验失败后，鼠标移入输入框中控制台报错的问题。
+- 🐞 `<pro>Table`: 修复筛选条多语言组件渲染错误的问题。
 
 ## 1.5.8
 
