@@ -18,8 +18,12 @@ timeline: true
 - 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
 - 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
 - 🌟 `<pro>Table`: Added combination sort editing function.
+- 🌟 `<pro>Lov`: Added `percent` field type display.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
+- 💄 `<pro>Table`: Optimize dynamic filter bar style.
+- 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
+- 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
@@ -32,7 +36,9 @@ timeline: true
 - 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
 - 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
 - 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
-
+- 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
+- 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
+- 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
 ## 1.5.8
 
 `2022-11-29`

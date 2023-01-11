@@ -28,7 +28,7 @@ export interface LovConfigItem {
   conditionFieldSequence: number;
   conditionFieldRequired?: boolean;
   gridField?: string;
-  gridFieldType: FieldType | 'href' | 'picture';
+  gridFieldType: FieldType | 'href' | 'picture' | 'percent';
   gridFieldName?: string;
   gridFieldWidth?: number;
   gridFieldAlign?: ColumnAlign;
