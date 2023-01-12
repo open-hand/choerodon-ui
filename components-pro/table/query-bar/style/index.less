@@ -70,8 +70,6 @@
   // dynamic-filter-bar
 
   &-dynamic-filter-bar {
-    margin-bottom: 0.04rem;
-
     input::-webkit-input-placeholder {
       color: @table-dynamic-filter-placeholder-color;
     }
@@ -213,7 +211,7 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    margin: 0 0.12rem 0.08rem 0;
+    margin: 0.02rem 0.12rem 0.02rem 0;
     padding: 0 0.07rem;
     background-color: #F9F9F9;
     border: 1px solid #F9F9F9;
@@ -290,14 +288,10 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.12rem 0 0;
+    margin: 0.1rem 0;
 
     span, input {
       background-color: transparent;
-    }
-
-    & > .@{table-prefix-cls}-filter-item:last-child {
-      height: 0.34rem;
     }
   }
 
