@@ -1056,6 +1056,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
+   * 渲染查询项 label
+   * @param param
+   * @returns 
+   */
+  getLabel({ field, value, record, placeholder }) {
+    if (value) {
+      return field.get('label', record);
+    }
+    return field.get('label', record) || placeholder;
+  }
+
+  /**
    * 渲染查询条
    */
   getQueryBar(): ReactNode {
@@ -1088,14 +1100,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
               {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled, help } = element.props;
+                const { name, hidden, showHelp, disabled, help, placeholder } = element.props;
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label', queryDataSet.current);
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
+                const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
@@ -1157,14 +1169,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 );
               })}
               {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled, help } = element.props;
+                const { name, hidden, showHelp, disabled, help, placeholder } = element.props;
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
-                const label = queryField && queryField.get('label', queryDataSet.current);
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
+                const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
+
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
