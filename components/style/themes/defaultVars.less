@@ -53,7 +53,9 @@
   'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
   sans-serif;
 @font-family: 'Monospaced Number', @font-family-no-number;
+@font-family-required-symbol: SimSun, sans-serif;
 @code-family: Consolas, Menlo, Courier, monospace;
+@font-family-code: @code-family; // @code-family 变量命名标准化，其作用和直接修改 @code-family 一致
 @heading-color: fade(#000, 85%);
 @text-color: fade(#000, 100%);
 @text-color-secondary: fade(#000, 45%);
