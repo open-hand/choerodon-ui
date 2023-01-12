@@ -12,7 +12,6 @@ import isFunction from 'lodash/isFunction';
 import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
-import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 import difference from 'lodash/difference';
 import classNames from 'classnames';
@@ -457,9 +456,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           onQuery();
         } else {
           let hasFocus = false;
-          for (const [key, value] of this.refEditors.entries()) {
-            if (value && !value.valid && !hasFocus) {
-              this.refEditors.get(key).focus();
+          for(let i = 0; i < this.queryFields.length; i++) {
+            const queryField = this.queryFields[i];
+            const editor = this.refEditors.get(String(queryField.key));
+            if(editor && !editor.valid && !hasFocus && (field && !field.get('multiple', record))) {
+              editor.focus();
               hasFocus = true;
             }
           }
@@ -1106,7 +1107,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   <div
                     className={itemContentClassName}
                     key={name}
-                    onClick={debounce(() => {
+                    onClick={() => {
                       const editor = this.refEditors.get(name);
                       const filterItem = this.refFilterItems.get(name);
                       if (editor) {
@@ -1117,7 +1118,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           filterItem.className += ' c7n-pro-lov-click';
                         }
                       }
-                    }, 200)}
+                    }}
                     onBlur={() => {
                       const filterItem = this.refFilterItems.get(name);
                       if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {
@@ -1176,7 +1177,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     <div
                       className={itemContentClassName}
                       key={name}
-                      onClick={debounce(() => {
+                      onClick={() => {
                         const editor = this.refEditors.get(name);
                         const filterItem = this.refFilterItems.get(name);
                         if (editor) {
@@ -1187,7 +1188,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                             filterItem.className += ' c7n-pro-lov-click';
                           }
                         }
-                      }, 200)}
+                      }}
                       onBlur={() => {
                         const filterItem = this.refFilterItems.get(name);
                         if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {

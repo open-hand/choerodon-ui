@@ -100,8 +100,9 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
+   * 扩展 tooltip 属性：tooltip={['always', { theme: 'light', ... }]}
    */
-  labelTooltip?: TextTooltip;
+  labelTooltip?: TextTooltip | [TextTooltip, TooltipProps];
   /**
    * 是否使用冒号
    */
