@@ -30,6 +30,7 @@ import {
   isEqualDynamicProps,
   omitData,
   parseValue,
+  SEARCHTEXT,
   SELECTCHANGE,
   SELECTFIELDS,
   stringifyValue,
@@ -102,7 +103,7 @@ function isSelect(data) {
  * @param selectFields
  * @constructor
  */
-const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
+const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menuDataSet, record, queryDataSet, dataSet, onLoadData, type, selectFields }) {
   const { getConfig } = useContext(ConfigContext);
   modal.handleOk(async () => {
     const putData: any[] = [];
@@ -111,6 +112,14 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
     const shouldSaveValue = menuDataSet.current.get('saveFilterValue');
     const status = {};
     status[statusKey] = statusAdd;
+    const fuzzySrearchValue = dataSet.getState(SEARCHTEXT);
+    const fuzzySrearchData = [{
+      fieldName: SEARCHTEXT,
+      comparator: 'EQUAL',
+      value: fuzzySrearchValue,
+      ...status,
+    }];
+
     if (type !== 'edit') {
       const conditionData = Object.entries(omit(queryDataSet.current.toData(), ['__dirty']));
       map(conditionData, data => {
@@ -144,11 +153,13 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
     if (type === 'save') {
       const otherRecord = menuDataSet.current.clone();
       otherRecord.set('conditionList', putData);
+      otherRecord.set('queryList', fuzzySrearchData);
       menuDataSet.current.reset();
       menuDataSet.create({ ...omitData(otherRecord.toData()) });
       // 新建
     } else if (type === 'create') {
       menuDataSet.current.set('conditionList', putData);
+      if (fuzzySrearchValue) menuDataSet.current.set('queryList', fuzzySrearchData);
     }
     const res = await menuDataSet.submit();
     if (res && res.success) {
@@ -163,7 +174,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
   });
 
   return (
-    <Form dataSet={menuDataSet}>
+    <Form record={record || menuDataSet.current}>
       <TextField
         style={{ width: '100%' }}
         name="searchName"
@@ -208,6 +219,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     shouldLocateData,
     refEditors,
     sortableFieldNames,
+    searchText = 'params',
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -238,6 +250,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
+    let searchTextValue = null;
+    if (current && current.get('queryList') && current.get('queryList').length) {
+      const searchObj = current.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+    }
+    shouldQuery = dataSet.getState(SEARCHTEXT) !== searchTextValue;
+    dataSet.setState(SEARCHTEXT, searchTextValue);
+    dataSet.setQueryParameter(searchText, searchTextValue);
     if (current) {
       const conditionList = current.get('conditionList');
       const initData = {};
@@ -266,7 +286,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         queryDataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
+        shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -276,7 +296,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
+        shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
         queryDataSet.setState(SELECTFIELDS, []);
@@ -323,6 +343,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         first.reset();
       }
       onOriginalChange();
+      setFuzzyQuery();
       if (autoQuery) {
         if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet.current && await queryDataSet.current.validate()) {
           dataSet.query();
@@ -341,6 +362,33 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   /**
+   * 模糊搜索是否变更
+   * @returns 
+   */
+  const isFuzzyQueryChange = () => {
+    const menuRecord = menuDataSet && menuDataSet.current;
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      return searchObj.value !== dataSet.getState(SEARCHTEXT);
+    }
+    return dataSet.getState(SEARCHTEXT) === null;
+  }
+
+  /**
+   * 赋值模糊搜索
+   * @param menuRecord 
+   */
+  const setFuzzyQuery = (menuRecord?: Record) => {
+    let searchTextValue = null;
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+    }
+    dataSet.setState(SEARCHTEXT, searchTextValue);
+    dataSet.setQueryParameter(searchText, searchTextValue);
+  }
+
+  /**
    * 定位数据源
    * @param searchId
    * @param init 初始化
@@ -352,6 +400,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
         conditionDataSet.loadData(menuRecord.get('conditionList'));
+        setFuzzyQuery(menuRecord);
       }
       if (current) {
         current.set('filterName', searchId);
@@ -367,6 +416,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
           conditionDataSet.loadData(menuRecord.get('conditionList'));
+          setFuzzyQuery(menuRecord);
           if (current) {
             current.set('filterName', menuRecord.get('searchId'));
           }
@@ -374,6 +424,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         conditionAssign(init);
       } else if (current) {
         current.set('filterName', undefined);
+        setFuzzyQuery();
       }
     }
   };
@@ -438,7 +489,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
   }
 
-  function openModal(type, searchId?: string) {
+  function openModal(type, searchId?: string, record?: Record) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
@@ -457,6 +508,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
           conditionDataSet={conditionDataSet}
           onLoadData={loadData}
           queryDataSet={queryDataSet}
+          dataSet={dataSet}
+          record={record}
           selectFields={selectFields}
         />
       ),
@@ -468,8 +521,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
   const handleSave = async () => {
     const filterMenuRecord = filterMenuDataSet ? filterMenuDataSet.current : undefined;
     if ((!filterMenuRecord || !filterMenuRecord.get('filterName')) && menuDataSet) {
-      menuDataSet.create({});
-      openModal('create');
+      openModal('create', '', menuDataSet.create({}));
+      menuDataSet.setState('noLocate', true);
     } else {
       const { current } = queryDataSet;
       if (current && conditionDataSet) {
@@ -549,7 +602,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   useEffect(() => {
-    if (shouldLocateData) {
+    const status = menuDataSet ? !menuDataSet.getState('noLocate') : true;
+    if (shouldLocateData && status) {
       locateData(undefined, true);
     }
   }, [shouldLocateData, menuDataSet && menuDataSet.length]);
@@ -672,11 +726,17 @@ const QuickFilterMenu = function QuickFilterMenu() {
               {$l('Table', 'save_as')}
             </Button>
           )}
-          {(isChooseMenu ? isTenant || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length : false) ? null : (
-            <Button onClick={handleSave}>
-              {$l('Table', 'save_button')}
-            </Button>
-          )}
+          {!isFuzzyQueryChange() && (
+            isChooseMenu
+              ?
+              isTenant || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length
+              :
+              false
+          ) ? null : (
+              <Button onClick={handleSave}>
+                {$l('Table', 'save_button')}
+              </Button>
+            )}
           <Button onClick={handleQueryReset}>
             {$l('Table', 'reset_button')}
           </Button>

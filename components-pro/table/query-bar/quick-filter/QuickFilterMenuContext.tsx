@@ -7,6 +7,7 @@ import { Fields } from '../../../data-set/Field';
 export interface QuickFilterProps {
   prefixCls?: string;
   searchCode?: string;
+  searchText?: string;
   expand?: boolean;
   dynamicFilterBar?: DynamicFilterBarConfig;
   dataSet: DataSet;
@@ -40,6 +41,7 @@ const Store: Context<QuickFilterContextValue> = createContext<QuickFilterContext
   conditionDataSet: ds,
   optionDataSet: ds,
   shouldLocateData: false,
+  searchText: 'params',
 });
 
 export default Store;

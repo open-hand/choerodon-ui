@@ -587,7 +587,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       dataSet.setState(OPTIONDATASET, optionDataSet);
       dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
       dataSet.setState(CONDITIONSTATUS, status);
-      dataSet.setState(SEARCHTEXT, '');
+      dataSet.setState(SEARCHTEXT, null);
       const result = await menuDataSet.query();
       dataSet.setState(MENURESULT, result);
       if (optionDataSet) {
@@ -767,7 +767,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       if ((queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) || fuzzyQueryOnly) {
         if (fuzzyValue) {
           runInAction(() => {
-            dataSet.setState(SEARCHTEXT, fuzzyValue || '');
+            dataSet.setState(SEARCHTEXT, fuzzyValue || null);
           });
           dataSet.setQueryParameter(searchText, fuzzyValue);
         }
@@ -789,7 +789,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }
     } else {
       runInAction(() => {
-        dataSet.setState(SEARCHTEXT, fuzzyOldValue || '');
+        dataSet.setState(SEARCHTEXT, fuzzyOldValue || null);
       });
       dataSet.setQueryParameter(searchText, fuzzyOldValue);
     }
@@ -868,6 +868,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { getConfig } = this.context;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
+    const menuRecord = dataSet.getState(MENUDATASET) && dataSet.getState(MENUDATASET).current;
+    let searchTextValue = null;
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+    }
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
       <TextField
@@ -883,10 +889,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
           dataSet.setQueryParameter(searchText, value);
+          this.setConditionStatus(value === searchTextValue ? RecordStatus.sync : RecordStatus.update);
         }}
         onClear={() => {
           runInAction(() => {
-            dataSet.setState(SEARCHTEXT, '');
+            dataSet.setState(SEARCHTEXT, null);
           });
           onReset();
         }}
@@ -936,7 +943,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getFilterMenu(): ReactNode {
     const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly, sortableFieldNames } = this.props;
-    const { prefixCls } = this;
+    const { prefixCls, context: { getConfig } } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
     const fuzzyQuery = this.getFuzzyQuery();
@@ -951,6 +958,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     if (queryDataSet && queryFields.length) {
       const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+      const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
       const quickFilterMenu = this.tableFilterAdapter && searchCodes ? (
         <QuickFilterMenuContext.Provider
           value={{
@@ -973,6 +981,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
             sortableFieldNames,
+            searchText,
           }}
         >
           <QuickFilterMenu />
