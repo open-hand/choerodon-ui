@@ -134,8 +134,8 @@ const locale: Locale = {
     custom_sort: 'Custom sorting',
     add_sort: 'Adding a sort',
     please_select_column: 'Please select column',
-    ascending: 'Ascending',
-    descending: 'Descending',
+    ascending: 'Asc',
+    descending: 'Desc',
   },
   Pagination: {
     page: 'Page',
