@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
+- 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
