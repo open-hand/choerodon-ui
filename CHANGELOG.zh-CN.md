@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 attachment.downloadAllMode, formAutoFocus, useLookupBatch 属性。
 - 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
 - 🌟 `<pro>Table`: 新增组合排序编辑功能。
+- 🌟 `<pro>Table`: 新增动态筛选条支持保存模糊搜索功能。
 - 🌟 `<pro>Lov`: 新增 percent 字段类型显示。
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。

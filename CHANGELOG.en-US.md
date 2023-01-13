@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
 - 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
 - 🌟 `<pro>Table`: Added combination sort editing function.
+- 🌟 `<pro>Table`: Added dynamic filter bar to support saving fuzzy search function.
 - 🌟 `<pro>Lov`: Added `percent` field type display.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
