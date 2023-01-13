@@ -579,12 +579,18 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   handleFormFocus() {
     // 聚焦到form内第一个可编辑组件上
-    const formAutoFocus = this.getContextConfig('formAutoFocus');
-    const hasAutoFocus = this.getFields().find(x => x.props.autoFocus);
-    if (formAutoFocus && !hasAutoFocus) {
-      const field = this.getFields().find(x => x.editable);
-      if (field) {
-        field.focus();
+    const fields: FormField<FormFieldProps>[] = this.getFields();
+    let editableField: FormField<FormFieldProps> | undefined;
+    for (let i = 0; i < fields.length; i++) {
+      const field: FormField<FormFieldProps> = fields[i];
+      if (field.props.autoFocus) {
+        break;
+      }
+      if (field.editable && !editableField) {
+        editableField = field;
+      }
+      if (i === fields.length - 1 && editableField && this.getContextConfig('formAutoFocus')) {
+        editableField.focus();
       }
     }
   }
