@@ -850,23 +850,11 @@
     border-radius: 0.02rem;
   }
 
-  &-button-menu-item {
-    padding: 0 !important;
+  &-dropdown-menu-item {
+    padding: 0 0.26rem !important;
 
-    .@{c7n-pro-prefix}-btn {
-      // 更多中的按钮组图标对齐
-      display: flex;
-      align-items: center;
-      height: @table-buttons-menu-item-btn-height;
-      padding: 0 0.26rem;
-
-      .@{c7n-prefix}-ripple {
-        background-color: transparent;
-      }
-
-      &:hover, &:focus, &:active {
-        background-color: transparent;
-      }
+    .@{c7n-pro-prefix}-btn .@{c7n-prefix}-ripple {
+      background-color: transparent;
     }
   }
 

@@ -24,7 +24,7 @@ import Table, {
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import Radio from '../../radio';
-import { ButtonColor, ButtonType } from '../../button/enum';
+import { ButtonColor, ButtonType, FuncType } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext, { TableContextValue } from '../TableContext';
@@ -653,33 +653,34 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               };
             }
             children.push(
-              <Menu.Item hidden={tableButtonProps.hidden} key={button} className={`${prefixCls}-button-menu-item`}>
+              <Menu.Item hidden={tableButtonProps.hidden} key={button}>
                 <Button
                   key={`${button}-btn`}
                   {...tableButtonProps}
                   {...defaultButtonProps}
                   {...buttonProps}
+                  funcType={FuncType.link}
                 />
               </Menu.Item>,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(
-            <Menu.Item hidden={button.props.hidden} className={`${prefixCls}-button-menu-item`}>
-              {cloneElement(button, { ...tableButtonProps, ...button.props })}
+            <Menu.Item hidden={button.props.hidden}>
+              {cloneElement(button, { ...tableButtonProps, ...button.props, funcType: FuncType.link })}
             </Menu.Item>,
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item hidden={props.hidden} className={`${prefixCls}-button-menu-item`}>
-              <Button {...tableButtonProps} {...button} />
+            <Menu.Item hidden={props.hidden}>
+              <Button {...tableButtonProps} {...button} funcType={FuncType.link}/>
             </Menu.Item>,
           );
         }
       });
     }
     const menu = (
-      <Menu>
+      <Menu prefixCls={`${prefixCls}-dropdown-menu`}>
         {children}
       </Menu>
     );

@@ -22,7 +22,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added `percent` field type display.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
-- 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions.
+- 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions, the style of more button drop-down items in the query button.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
 - 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.

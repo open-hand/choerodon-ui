@@ -23,7 +23,7 @@ timeline: true
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
 - 💄 `<pro>Table`: 优化动态筛选条样式。
-- 💄 `<pro>Table`: 优化 buttonsLimit 表现，hidden 按钮不再占更多下拉位置。
+- 💄 `<pro>Table`: 优化 buttonsLimit 表现，hidden 按钮不再占更多下拉位置，查询按钮中更多按钮下拉项样式。
 - 💄 `<pro>Modal`: 扩展 transitionAppear 属性，支持控制模态框关闭过程中的动画。
 - 💄 `<pro>NumberField`: 支持非步距模式下的 clearButton 属性。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
