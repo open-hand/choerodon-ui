@@ -397,7 +397,11 @@
 
     i {
       font-size: @font-size-lg;
-      line-height: .2rem;
+      line-height: 0.2rem;
+
+      &.icon-close {
+        line-height: @table-filter-search-close-icon-line-height;
+      }
 
       &:hover {
         color: @primary-color;
