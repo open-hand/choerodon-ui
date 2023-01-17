@@ -71,6 +71,12 @@
   // dynamic-filter-bar
 
   &-dynamic-filter-bar {
+    margin-bottom: 0.10rem;
+
+    .@{table-prefix-cls}-filter-menu {
+      margin-bottom: 0.10rem;
+    }
+
     input::-webkit-input-placeholder {
       color: #6A6A6A;
     }
@@ -193,6 +199,7 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    height: @input-height-base;
     margin: 0.02rem 0.12rem 0.02rem 0;
     padding: 0 0.07rem;
     background-color: #F9F9F9;
@@ -268,7 +275,6 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.1rem 0;
 
     span, input {
       background-color: transparent;
