@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化 buttonsLimit 表现，hidden 按钮不再占更多下拉位置。
 - 💄 `<pro>Modal`: 扩展 transitionAppear 属性，支持控制模态框关闭过程中的动画。
 - 💄 `<pro>NumberField`: 支持非步距模式下的 clearButton 属性。
+- 💄 `<pro>DatePicker`: 优化日期多选情况下选中今天后文本变成取消今天。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。

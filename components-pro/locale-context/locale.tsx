@@ -191,6 +191,7 @@ export interface Locale extends DataSetLocale {
     now: string;
     this_week: string;
     invalid_date: string;
+    cancel: string;
   };
   EmailField: {
     value_missing: string;

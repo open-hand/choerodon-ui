@@ -188,6 +188,7 @@ const locale: Locale = {
     now: '此刻',
     this_week: '本周',
     invalid_date: '无效日期',
+    cancel: '取消',
   },
   EmailField: {
     value_missing_no_label: '请输入邮箱地址。',

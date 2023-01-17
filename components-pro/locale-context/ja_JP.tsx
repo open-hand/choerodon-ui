@@ -191,6 +191,7 @@ const locale: Locale = {
     now: 'この瞬間',
     this_week: '今週',
     invalid_date: '日付が無効です',
+    cancel: 'キャンセル',
   },
   EmailField: {
     value_missing_no_label: 'メールアドレスを入力してください。',
