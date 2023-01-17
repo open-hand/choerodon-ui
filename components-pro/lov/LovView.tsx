@@ -251,8 +251,8 @@ export default class LovView extends Component<LovViewProps> {
 
     const percentItems = {};
     if (lovItems) {
-      lovItems.filter(x => x.gridFieldType === 'percent' && x.conditionField === 'Y').forEach(x => {
-        percentItems[x.gridFieldName!] = <ObserverNumberField suffix="%" />;
+      lovItems.filter(x => x.gridFieldType && x.gridFieldType.toLowerCase() === 'percent' && x.conditionField === 'Y').forEach(x => {
+        percentItems[x.gridFieldName!] = <ObserverNumberField suffix={<span>%</span>} />;
       });
     }
 
