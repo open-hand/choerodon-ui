@@ -4,7 +4,6 @@ import toArray from 'rc-util/lib/Children/toArray';
 import Popover from '../popover';
 import { cloneElement } from '../_util/reactNode';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
-import Avatar from '.';
 import { Size } from '../_util/enum';
 import { AvatarContextProvider } from './AvatarContext';
 
@@ -63,7 +62,11 @@ export default class Group extends React.Component<GroupProps> {
           placement={maxPopoverPlacement}
           overlayClassName={`${prefixCls}-popover`}
         >
-          <Avatar style={maxStyle}>{`+${numOfChildren - maxCount}`}</Avatar>
+          <span className={`${prefixCls}-popover-mask`}>
+            {childrenHidden[0]}
+            <span style={maxStyle} className={`${prefixCls}-popover-number`}>{numOfChildren - maxCount}</span>
+          </span>
+
         </Popover>,
       );
       return (
