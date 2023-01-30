@@ -24,6 +24,7 @@ export interface DateViewProps extends ViewComponentProps {
   step: TimeStep;
   renderer?: RenderFunction;
   isValidDate?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
+  isExitValue?: boolean;
   onSelect?: (selectedDate: Moment, expand?: boolean) => void;
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
   onCursorDateChange?: (cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) => void;
@@ -238,11 +239,12 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   renderFooter(): ReactNode {
     const {
       prefixCls,
-      props: { disabledNow },
+      props: { disabledNow, isExitValue },
     } = this;
     const footerProps = {
       className: classNames({
         [`${prefixCls}-now-disabled`]: disabledNow,
+        [`${prefixCls}-now-selected`]: isExitValue,
       }),
       onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
     };
