@@ -54,6 +54,11 @@ export default class Group extends React.Component<GroupProps> {
     if (maxCount && maxCount < numOfChildren) {
       const childrenShow = childrenWithProps.slice(0, maxCount);
       const childrenHidden = childrenWithProps.slice(maxCount, numOfChildren);
+      const numberCls = `${prefixCls}-popover-number`;
+      const popverNumberCls = classNames(numberCls, {
+        [`${numberCls}-lg`]: size === Size.large,
+        [`${numberCls}-sm`]: size === Size.small,
+      });
       childrenShow.push(
         <Popover
           key="avatar-popover-key"
@@ -64,9 +69,8 @@ export default class Group extends React.Component<GroupProps> {
         >
           <span className={`${prefixCls}-popover-mask`}>
             {childrenHidden[0]}
-            <span style={maxStyle} className={`${prefixCls}-popover-number`}>{numOfChildren - maxCount}</span>
+            <span style={maxStyle} className={popverNumberCls}>{numOfChildren - maxCount}</span>
           </span>
-
         </Popover>,
       );
       return (

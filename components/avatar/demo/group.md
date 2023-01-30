@@ -40,7 +40,6 @@ ReactDOM.render(
     <Avatar.Group
       maxCount={2}
       size="large"
-      maxStyle={{ fontSize: 18 }}
     >
       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
       <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
