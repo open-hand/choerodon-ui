@@ -169,27 +169,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
   }, [column, name, columnKey, tableStore]);
-  const handleFocus = useCallback((e) => {
-    if (canFocus) {
-      handleMouseEnter(e);
-      if (key !== SELECTION_KEY) {
-        dataSet.current = record;
-      }
-      if (hasEditor) {
-        showEditor(e.currentTarget);
-      }
-      if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
-        const cell = findCell(tableStore, columnKey, lock);
-        if (cell && !cell.contains(document.activeElement)) {
-          const node = findFirstFocusableElement(cell);
-          if (node && !inTab) {
-            node.focus();
-          }
-        }
-      }
-    }
-    inTab = false;
-  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor]);
   const handleEditorKeyDown = useCallback((e) => {
     switch (e.keyCode) {
       case KeyCode.TAB: {
@@ -527,6 +506,28 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const result = getRenderedValue();
   const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : tableStore.getConfig('renderEmpty')('Output') : result;
 
+  const handleFocus = useCallback((e) => {
+    if (canFocus) {
+      handleMouseEnter(e);
+      if (key !== SELECTION_KEY) {
+        dataSet.current = record;
+      }
+      if (hasEditor) {
+        showEditor(e.currentTarget);
+      }
+      if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
+        const cell = findCell(tableStore, columnKey, lock);
+        if (cell && !cell.contains(document.activeElement)) {
+          const node = findFirstFocusableElement(cell);
+          if (node && !inTab) {
+            node.focus();
+          }
+        }
+      }
+    }
+    inTab = false;
+  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor, text]);
+
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
       const validationResults = field.getValidationErrorValues(record);
@@ -554,7 +555,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return false;
   }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef]);
   const handleMouseEnter = useCallback((e) => {
-    if (!tableStore.columnResizing && showTooltip(e)) {
+    if (!tableStore.columnResizing && !tooltipShownRef.current && showTooltip(e)) {
       tooltipShownRef.current = true;
     }
   }, [tooltipShownRef, tableStore, showTooltip]);

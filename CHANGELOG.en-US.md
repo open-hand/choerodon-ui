@@ -20,12 +20,14 @@ timeline: true
 - 🌟 `<pro>Table`: Added combination sort editing function.
 - 🌟 `<pro>Table`: Added dynamic filter bar to support saving fuzzy search function.
 - 🌟 `<pro>Lov`: Added `percent` field type display.
+- 🌟 `Calendar`: Added `headerRender` property of customize calendar header content.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
 - 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions, the style of more button drop-down items in the query button.
 - 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
 - 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
 - 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
+- 💄 `Avatar`: Optimize `Avatar.Group` overflow style.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
@@ -41,6 +43,9 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
 - 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
 - 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
+- 🐞 `<pro>Table`: Fix the problem that the content of the tooltip changes after clicking the cell when the tooltip of the multivalued Lov and Select fields is displayed.
+- 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
+
 ## 1.5.8
 
 `2022-11-29`
