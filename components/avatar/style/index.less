@@ -43,9 +43,17 @@
   
     .@{avatar-prefix-cls} {
       border: 0.01rem solid @avatar-color;
-  
+      font-size: @avatar-font-size-base;
       &:not(:first-child) {
         margin-left: @avatar-group-overlapping;
+      }
+
+      &-lg {
+        .avatar-size(@avatar-size-lg, @avatar-font-size-lg);
+      }
+    
+      &-sm {
+        .avatar-size(@avatar-size-sm, @avatar-font-size-sm);
       }
     }
   
@@ -55,12 +63,37 @@
       }
     }
 
-    &-lg {
-      .avatar-size(@avatar-size-lg, @avatar-font-size-lg);
+    &-popover-mask {
+      position: relative;
+      margin-left: -0.08rem;
+      cursor: pointer;
+      &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        background: rgba(56,56,56,0.60);
+        border-radius: 50%;
+        content: '';
+      }
     }
-  
-    &-sm {
-      .avatar-size(@avatar-size-sm, @avatar-font-size-sm);
+    &-popover-number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 2;
+      font-size: @avatar-font-size-base;
+      color: rgb(255, 255, 255);
+      transform: translate(-50%, -50%);
+      &-lg {
+        font-size: @avatar-font-size-lg;
+      }
+    
+      &-sm {
+        font-size: @avatar-font-size-sm;
+      }
     }
   }
   
@@ -71,6 +104,7 @@
   height: @size;
   line-height: @size;
   border-radius: 50%;
+  font-size: @font-size;
 
   & > * {
     line-height: @size;
