@@ -99,12 +99,13 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
   }
 
   renderFooter(): ReactNode {
-    const { prefixCls,props:{ disabledNow} } = this;
+    const { prefixCls, props: { disabledNow, isExistValue } } = this;
     const footerProps = {
       className: classNames(`${prefixCls}-footer-now-btn`, {
         [`${prefixCls}-now-disabled`]: disabledNow,
+        [`${prefixCls}-now-selected`]: isExistValue,
       }),
-      onClick: !disabledNow ? this.choose.bind(this, moment()):noop,
+      onClick: !disabledNow ? this.choose.bind(this, moment()) : noop,
     }
     return (
       <div className={`${prefixCls}-footer`}>
