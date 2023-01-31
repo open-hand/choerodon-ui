@@ -434,7 +434,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             date,
             mode: this.getDefaultViewMode(),
             disabledNow: !this.isValidNowDate(date),
-            isExitValue: this.isExitValue(),
+            isExistValue: this.isExistValue(),
             renderer: this.getCellRenderer(mode),
             onSelect: this.handleSelect,
             onSelectedDateChange: this.handleSelectedDateChange,
@@ -1080,25 +1080,25 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   @autobind
-  isExitValue(): boolean {
+  isExistValue(): boolean {
     const { value, multiple } = this;
-    let exit = false;
+    let exist = false;
     if (multiple && isArrayLike(value)) {
       const mode = this.getDefaultViewMode();
       const format = this.getDateFormat();
       const now = moment().format(format);
       switch (mode) {
         case ViewMode.date:
-          exit = value.some((x) => x && x.isSame(now));
+          exist = value.some((x) => x && x.isSame(now));
           break;
         case ViewMode.week:
-          exit = value.some((x) => x && x.format(format) === now);
+          exist = value.some((x) => x && x.format(format) === now);
           break;
         default:
           break;
       }
     }
-    return exit
+    return exist
   }
 
   getValidatorProp(key: string) {
