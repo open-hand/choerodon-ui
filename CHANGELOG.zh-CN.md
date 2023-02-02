@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条多值校验失败后，鼠标移入输入框中控制台报错的问题。
 - 🐞 `<pro>Table`: 修复筛选条多语言组件渲染错误的问题。
 - 🐞 `<pro>Table`: 修复多值 Lov 和 Select 字段的 tooltip 显示时，点击单元格后 tooltip 内容变化的问题。
+- 🐞 `<pro>Table`: 修复列头列脚为自动高度时的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 DateTime 模式下确认按钮颜色样式问题。
 
 ## 1.5.8

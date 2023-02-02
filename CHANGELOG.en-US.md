@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
 - 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
 - 🐞 `<pro>Table`: Fix the problem that the content of the tooltip changes after clicking the cell when the tooltip of the multivalued Lov and Select fields is displayed.
+- 🐞 `<pro>Table`: Fix a styling issue when column headers and feet were auto-height.
 - 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
 
 ## 1.5.8
