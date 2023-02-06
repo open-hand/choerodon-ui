@@ -69,7 +69,7 @@ export default class Group extends React.Component<GroupProps> {
         >
           <span className={`${prefixCls}-popover-mask`}>
             {childrenHidden[0]}
-            <span style={maxStyle} className={popverNumberCls}>{numOfChildren - maxCount}</span>
+            <span style={maxStyle} className={popverNumberCls}>+{numOfChildren - maxCount}</span>
           </span>
         </Popover>,
       );
