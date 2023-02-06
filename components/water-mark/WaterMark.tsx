@@ -91,6 +91,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
   const waterMakrCls = classNames(prefixCls, markClassName);
   const [base64Url, setBase64Url] = useState<string>('');
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const waterMarkRef =  useRef<HTMLDivElement>(null);
   const mutation: any = useRef<MutationObserver>(null);
 
   useEffect(() => {
@@ -129,7 +130,22 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
     if (wrapperRef.current && !removeable) {
       const wrapperDom = getContainer && isElement(getContainer()) ? getContainer() : wrapperRef.current;
       // 监听浏览器控制台样式变化
-      const styleStr = `position: absolute !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;z-index:${zIndex} !important;pointer-events: none !important;background-repeat: repeat !important;background-size: ${gapX! + width!}px !important;background-image: url('${imgSrc}') !important;opacity:${opacity} !important;`;
+      const styleStr = `
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index:${zIndex} !important;
+        pointer-events: none !important;
+        background-repeat: repeat !important;
+        background-size: ${gapX! + width!}px !important;
+        background-image: url('${imgSrc}') !important;
+        opacity:${opacity} !important; 
+        visibility: visible !important;
+        display: block !important;
+        transform: scale(1) !important;
+      `;
       const MutationObserver = window.MutationObserver;
       if (mutation.current) {
         mutation.current.disconnect();
@@ -137,7 +153,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
       }
       if (MutationObserver && !mutation.current) {
         mutation.current = new MutationObserver(() => {
-          const wmInstance = wrapperDom.querySelector(`.${prefixCls}`);
+          const wmInstance = waterMarkRef.current;
           if ((wmInstance && wmInstance.getAttribute('style') !== styleStr)) {
             wmInstance.setAttribute('style', styleStr);
           }
@@ -183,8 +199,8 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
           img.src = image;
           img.onload = () => {
             ctx.drawImage(img, -markWidth / 2, -markHeight / 2, markWidth, markHeight);
-            setBase64Url(canvas.toDataURL());
             callback(canvas.toDataURL());
+            setBase64Url(canvas.toDataURL());
           };
         } else if (content) {
           const markSize = Number(fontSize) * ratio;
@@ -232,6 +248,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
   const renderCanvas = useMemo(() => {
     return enable ? React.createElement('div', {
       className: waterMakrCls,
+      ref: waterMarkRef,
       style: {
         position: 'absolute',
         left: 0,
