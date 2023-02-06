@@ -175,6 +175,7 @@ const prefixCls = getConfig('prefixCls');
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
+| formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
 
 ### Customizable
 
