@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
 - 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
 - 💄 `Avatar`: Optimize `Avatar.Group` overflow style.
+- 💄 `<pro>DatePicker`: Optimize click today and this week to change the style in the case of multiple selections.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
@@ -44,7 +45,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
 - 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
 - 🐞 `<pro>Table`: Fix the problem that the content of the tooltip changes after clicking the cell when the tooltip of the multivalued Lov and Select fields is displayed.
+- 🐞 `<pro>Table`: Fix a styling issue when column headers and feet were auto-height.
 - 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
+- 🐞 `WaterMark`: Fixed the problem that selecting a hidden node in the browser console would hide the watermark.
 
 ## 1.5.8
 

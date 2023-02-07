@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Modal`: 扩展 transitionAppear 属性，支持控制模态框关闭过程中的动画。
 - 💄 `<pro>NumberField`: 支持非步距模式下的 clearButton 属性。
 - 💄 `Avatar`: 优化 Avatar.Group 溢出样式。
+- 💄 `<pro>DatePicker`: 优化多选情况下点击今天、本周会有样式变化。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。
@@ -44,7 +45,9 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条多值校验失败后，鼠标移入输入框中控制台报错的问题。
 - 🐞 `<pro>Table`: 修复筛选条多语言组件渲染错误的问题。
 - 🐞 `<pro>Table`: 修复多值 Lov 和 Select 字段的 tooltip 显示时，点击单元格后 tooltip 内容变化的问题。
+- 🐞 `<pro>Table`: 修复列头列脚为自动高度时的样式问题。
 - 🐞 `<pro>DatePicker`: 修复 DateTime 模式下确认按钮颜色样式问题。
+- 🐞 `WaterMark`: 修复在浏览器控制台中选择隐藏节点会隐藏水印的问题。
 
 ## 1.5.8
 
