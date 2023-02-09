@@ -63,7 +63,7 @@ export function getMousePosition(x: number, y: number, self: Window, client?: bo
  * 转换缩放比例后的数据
  * 场景：兼容全局带有 zoom 样式导致的数据偏差
  * @param data 需要转换的数据
- * @returns 装换后的数据
+ * @returns 转换后的数据
  */
 export const transformZoomData = (data: number): number => {
   if (!zoom) {
