@@ -253,10 +253,12 @@ function generateDraggableRow(props: GenerateRowProps): ReactElement {
 
 function generateRowAndChildRows(rows: ReactNode[], props: GenerateRowProps): ReactNode[] {
   const { tableStore, record, isTree, virtual } = props;
-  const { treeFilter } = tableStore;
-  rows.push(
-    generateDraggableRow(props),
-  );
+  const { treeFilter, showRemovedRow } = tableStore;
+  if (showRemovedRow || !record.isRemoved) {
+    rows.push(
+      generateDraggableRow(props),
+    );
+  }
   if (isTree && virtual && tableStore.isRowExpanded(record)) {
     (record.children || []).forEach(record => {
       if (typeof treeFilter === 'function' && !treeFilter(record)) {
