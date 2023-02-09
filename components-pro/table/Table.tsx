@@ -90,7 +90,7 @@ import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
-import { DataSetEvents, DataSetSelection } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, RecordStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
@@ -1755,7 +1755,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { dataSet, rowMetaData, isTree } = this.tableStore;
+    const { dataSet, rowMetaData, isTree, showRemovedRow } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
@@ -1844,10 +1844,42 @@ export default class Table extends DataSetComponent<TableProps> {
     } else if (resultBefore && resultBefore.destination) {
       if (resultBefore.source.index !== resultBefore.destination.index) {
         // 非树形拖拽排序
-        this.reorderDataSet(
-          resultBefore.source.index,
-          resultBefore.destination.index,
-        );
+        const { records, data } = dataSet;
+        // 若存在没有展示的 delete 数据，则需要对数据的起点落点做校正
+        if (!showRemovedRow && records.length !== data.length) {
+          const destinationIndex = resultBefore.destination.index;
+          // 操作的数据在 records 中的真实起落点索引
+          let recordsSourceIndex; let recordsToIndex;
+          let findSourceFlag = false; let findDestinationFlag = false;
+          let showedRecordsCount = 0;
+          for (let i = 0 ; i < records.length; i++) {
+            if (!findSourceFlag && records[i].key === resultBefore.draggableId) {
+              recordsSourceIndex = i;
+              findSourceFlag = true;
+            }
+            if (!findDestinationFlag) {
+              if (records[i].status !== RecordStatus.delete) {
+                if (showedRecordsCount === destinationIndex) {
+                  recordsToIndex = destinationIndex + (i - showedRecordsCount);
+                  findDestinationFlag = true; 
+                }
+                showedRecordsCount++;
+              }
+            }
+            if (findSourceFlag && findDestinationFlag) {
+              break;
+            }
+          }
+          this.reorderDataSet(
+            recordsSourceIndex,
+            recordsToIndex,
+          );
+        } else {
+          this.reorderDataSet(
+            resultBefore.source.index,
+            resultBefore.destination.index,
+          );
+        }
       }
     }
     /**
