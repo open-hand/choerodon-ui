@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import warning from '../../_util/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { DataEntity, DataNode, Direction, FlattenNode, Key, NodeElement, NodeInstance } from './interface';
@@ -96,7 +97,8 @@ export function calcDropPosition(
   dragOverNodeKey: Key;
   dropAllowed: boolean;
 } {
-  const { clientX, clientY } = event;
+  const clientX = transformZoomData(event.clientX);
+  const clientY = transformZoomData(event.clientY);
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
   const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition && startMousePosition.x || 0) - clientX);
