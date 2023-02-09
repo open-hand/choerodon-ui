@@ -18,6 +18,7 @@ import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import math from 'choerodon-ui/dataset/math';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -574,7 +575,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') },
     } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
-    const { clientX, clientY } = e;
+    const clientX = transformZoomData(e.clientX);
+    const clientY = transformZoomData(e.clientY);
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const clzz = classes(element);
@@ -596,8 +598,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       });
     }
     return (me) => {
-      const width = me.clientX - startX;
-      const height = me.clientY - startY;
+      const width = transformZoomData(me.clientX) - startX;
+      const height = transformZoomData(me.clientY) - startY;
       Object.assign(element.style, {
         width: pxToRem(getMath(width, minWidth, embeddedOffsetWidth || docClientWidth)),
         height: pxToRem(getMath(height, minHeight, embeddedOffsetHeight || docClientHeight)),
@@ -621,10 +623,11 @@ export default class Modal extends ViewComponent<ModalProps> {
     const maxHeight = (embeddedOffsetHeight || docClientHeight) - drawerOffset;
     let { offsetHeight: height, offsetWidth: width } = contentNode;
     return (me) => {
-      let { clientX, clientY } = me;
+      let clientX = transformZoomData(me.clientX);
+      let clientY = transformZoomData(me.clientY);
       if (offsetParent) {
-        clientX = elementOffsetTop + me.clientX - e.clientX;
-        clientY = elementOffsetLeft + me.clientY - e.clientY;
+        clientX = elementOffsetTop + clientX - transformZoomData(e.clientX);
+        clientY = elementOffsetLeft + clientY - transformZoomData(e.clientY);
       }
       switch (drawerTransitionName) {
         case 'slide-right':
@@ -724,7 +727,9 @@ export default class Modal extends ViewComponent<ModalProps> {
         clientWidth: docClientWidth,
         clientHeight: docClientHeight,
       } = this.doc.documentElement || this.doc.body;
-      const { clientX, clientY, currentTarget } = downEvent;
+      const { currentTarget } = downEvent;
+      const clientX = transformZoomData(downEvent.clientX);
+      const clientY = transformZoomData(downEvent.clientY);
       const clzz = classes(element);
       const { offsetParent } = element;
       const {
@@ -757,7 +762,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       this.moveEvent
         .setTarget(this.doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
-          const { clientX: moveX, clientY: moveY } = moveEvent;
+          const moveX = transformZoomData(moveEvent.clientX);
+          const moveY = transformZoomData(moveEvent.clientY);
           clzz.remove(`${prefixCls}-center`);
           const left = pxToRem(
             Math.min(

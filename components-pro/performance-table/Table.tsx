@@ -39,6 +39,7 @@ import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 
 import { stopPropagation } from '../_util/EventManager';
 import ModalProvider from '../modal-provider/ModalProvider';
@@ -1764,8 +1765,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   handleTouchStart = (event: React.TouchEvent) => {
     if (event.touches) {
       const { pageX, pageY } = event.touches[0];
-      this.touchX = pageX;
-      this.touchY = pageY;
+      this.touchX = transformZoomData(pageX);
+      this.touchY = transformZoomData(pageY);
     }
     const { onTouchStart } = this.props;
     if (onTouchStart) {
@@ -1778,7 +1779,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { autoHeight, onTouchMove } = this.props;
 
     if (e.touches) {
-      const { pageX, pageY } = e.touches[0];
+      const eTouch = e.touches[0];
+      const pageX = transformZoomData(eTouch.pageX);
+      const pageY = transformZoomData(eTouch.pageY);
       const deltaX = this.touchX - pageX;
       const deltaY = autoHeight ? 0 : this.touchY - pageY;
 

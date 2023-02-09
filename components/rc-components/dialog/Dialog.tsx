@@ -1,6 +1,7 @@
 import React, { Component, KeyboardEvent, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
 import { EventManager } from 'choerodon-ui/dataset';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import Animate from '../../animate';
 import LazyRenderBox from './LazyRenderBox';
 import IDialogPropTypes from './IDialogPropTypes';
@@ -353,7 +354,8 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     const { content } = this;
     const dialogNode = findDOMNode(this.dialog);
     if (wrap && content && dialogNode && movable) {
-      const { clientX, clientY } = downEvent;
+      const clientX = transformZoomData(downEvent.clientX);
+      const clientY = transformZoomData(downEvent.clientY);
       let { offsetLeft, offsetTop } = wrap;
       if ((dialogNode as HTMLElement).style.margin !== '0rem') {
         const { left, top } = getLeftTop(content);
@@ -367,7 +369,8 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
       }
       moveEvent
         .addEventListener('mousemove', (moveEvent: React.MouseEvent) => {
-          const { clientX: moveX, clientY: moveY } = moveEvent;
+          const moveX = transformZoomData(moveEvent.clientX);
+          const moveY = transformZoomData(moveEvent.clientY);
           const left = Math.max(offsetLeft + moveX - clientX, 0);
           const top = Math.max(offsetTop + moveY - clientY, 0);
           if ((dialogNode as HTMLElement).style.margin !== '0rem') {
