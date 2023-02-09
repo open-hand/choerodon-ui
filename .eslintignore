@@ -42,3 +42,4 @@ site/**/*
 scripts/**/*
 index-pro-with-locales.js
 index-with-locales.js
+outer-scripts/**/*

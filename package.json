@@ -37,7 +37,8 @@
     "es",
     "pro",
     "dataset",
-    "shared"
+    "shared",
+    "outer-scripts"
   ],
   "typings": "lib/index.d.ts",
   "license": "MIT",
