@@ -202,34 +202,30 @@
     height: @input-height-base;
     margin: 0.02rem 0.12rem 0.02rem 0;
     padding: 0 0.07rem;
-    background-color: #F9F9F9;
-    border: 1px solid #F9F9F9;
+    background-color: @component-background;
+    border: 1px solid @input-border-color;
     border-radius: 0.02rem;
     cursor: pointer;
 
-    &:hover {
-      background-color: #F0F0F0;
-      border-color: #F0F0F0;
-    }
-
     &:focus-within {
-      background-color: @component-background;
-      border-color: @primary-color;
+      .@{table-prefix-cls}-filter-label {
+        color: @text-color;
+      }
     }
 
     &:focus-within,
     &:hover {
+      border-color: @primary-color;
       .@{table-prefix-cls}-filter-item-close {
         display: inline-block !important;
+      }
+      div[class*='-suffix'] {
+        color: @primary-color;
       }
     }
 
     &-has-value,
     &:focus-within {
-      .@{table-prefix-cls}-filter-label,
-      input {
-        color: @primary-color;
-      }
       .@{table-prefix-cls}-filter-label:not(:empty)::after {
         content: ':';
       }
@@ -245,28 +241,32 @@
       }
     }
 
+    &-required,
+    &-required:hover,
+    &-required:focus-within {
+      border-color: @input-required-border-color;
+    }
+
     &-invalid,
     &-invalid:hover,
     &-invalid:focus-within {
       background-color: @error-bg-color;
-      .@{table-prefix-cls}-filter-label {
+      border-color: @error-color;
+      .@{table-prefix-cls}-filter-label,
+      div[class*='-suffix'] {
         color: @error-color;
       }
     }
-    
-    &-invalid,
-    &-invalid:hover {
-      border-color: @error-bg-color;
-    }
-
-    &-invalid:focus-within {
-      border-color: @error-color;
-    }
 
     &-disabled {
+      background-color: @disabled-bg;
       .@{table-prefix-cls}-filter-label {
         color: @disabled-color;
         cursor: not-allowed;
+      }
+      &:hover,
+      &:hover div[class*='-suffix'] {
+        border-color: @input-border-color;
       }
     }
   }
@@ -289,8 +289,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
-      border-radius: 0.02rem;
+      color: @primary-color;
     }
   }
 
@@ -407,18 +406,32 @@
   &-filter-item {
     display: flex;
     align-items: center;
-    font-size: @font-size-sm;
+    font-size: @font-size-base;
+
+    .@{c7n-pro-prefix}-input-number {
+      &-inner-button:not(&-clear-button) {
+        height: 0.24rem;
+      }
+    }
 
     [class*="-empty"] {
-      .@{c7n-pro-prefix}-input-number-inner-button {
-        opacity: 0;
+      .@{c7n-pro-prefix}-input-number {
+        &-inner-button:not(&-clear-button) {
+          display: none;
+        }
       }
     }
 
     [class*="-focused"] {
-      .@{c7n-pro-prefix}-input-number-inner-button {
-        opacity: 1;
+      .@{c7n-pro-prefix}-input-number {
+        &-inner-button:not(&-clear-button) {
+          display: block;
+        }
       }
+    }
+
+    [class*="-empty"]:not([class*="-focused"]) .@{c7n-pro-prefix}-input-number {
+      padding-right: 0;
     }
 
     // 多值 placeholder 和 input 光标对齐
@@ -557,13 +570,13 @@
 
     // 各类别输入框的宽度效果实现
     // 空值 Lov 右侧行内样式 padding 抵消
-    &:not(.c7n-pro-lov-click) {
-      .@{select-prefix-cls}-lov .@{select-prefix-cls} {
+    &:not(.@{c7n-pro-prefix}-lov-click) {
+      .@{select-prefix-cls}-lov:not(.@{select-prefix-cls}-disabled) .@{select-prefix-cls} {
         margin-left: -0.12rem;
       }
     }
     // lov 单选多选通用样式
-    &.c7n-pro-lov-click {
+    &.@{c7n-pro-prefix}-lov-click {
       .@{select-prefix-cls} {
         min-width: 1.34rem !important;
       }
@@ -643,8 +656,8 @@
           max-width: 4rem;
         }
       }
-      &:not(.c7n-pro-lov-click) {
-        .@{select-prefix-cls}-lov .@{select-prefix-cls} {
+      &:not(.@{c7n-pro-prefix}-lov-click) {
+        .@{select-prefix-cls}-lov:not(.@{c7n-pro-prefix}-select-disabled) .@{select-prefix-cls} {
           margin-left: 0;
         }
       }
