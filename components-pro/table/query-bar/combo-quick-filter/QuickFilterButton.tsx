@@ -39,6 +39,13 @@ function findFieldObj(queryDataSet, data) {
   if (field && field.get('lovCode')) {
     const textField = field.get('textField');
     const valueField = field.get('valueField');
+    if (typeof value !== 'object') {
+      return {
+        name,
+        value,
+        originalValue: field.getValue().slice(),
+      };
+    }
     return {
       name,
       value: {
@@ -209,10 +216,12 @@ const QuickFilterButton = function QuickFilterButton() {
             const currentRecord = conditionDataSet.find(record => record.get('fieldName') === name);
             if (currentRecord) {
               currentRecord.set('value', fieldObj.value);
+              currentRecord.set('originalValue', fieldObj.originalValue);
             } else if (isSelect(data)) {
               conditionDataSet.create({
                 fieldName: name,
                 value: fieldObj.value,
+                originalValue: fieldObj.originalValue,
               });
             }
           }
