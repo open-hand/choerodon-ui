@@ -129,7 +129,7 @@ const locale: Locale = {
     lock_first_column: '最初の列の凍結',
     cancel_lock_first_column: '最初の列が開いています',
     enter_search_filter: '検索内容を入力',
-    search: '探す:',
+    search: '探す',
     clear: 'クリア',
     show: '見せる',
     hide: '隠れる',

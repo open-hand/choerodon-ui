@@ -27,6 +27,7 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import Popover from 'choerodon-ui/lib/popover';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import Icon from '../icon';
@@ -159,7 +160,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { resizeColumnGroup } = current;
     if (resizeColumnGroup) {
       const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
-      let left = e.touches ? e.touches[0].clientX : e.clientX;
+      let left = e.touches ? transformZoomData(e.touches[0].clientX) : transformZoomData(e.clientX);
       if (left < limit) {
         left = limit;
       }
@@ -217,7 +218,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       const left = Math.round(element.getBoundingClientRect().left);
       globalRef.current.bodyLeft = border ? left + 1 : left;
     }
-    setSplitLinePosition(e.clientX);
+    setSplitLinePosition(transformZoomData(e.clientX));
     resizeEvent
       .setTarget(element.ownerDocument)
       .addEventListener('mousemove', resize)

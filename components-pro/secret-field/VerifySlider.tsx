@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import { $l } from '../locale-context';
 import Icon from '../icon';
 import Button from '../button';
@@ -73,7 +74,7 @@ export default class VerifySlider extends Component<VerifySliderProps> {
     if (this.isSuccess) {
       return;
     }
-    this.x1 = e.nativeEvent.x || e.touches[0].clientX;
+    this.x1 = e.nativeEvent.x ? transformZoomData(e.nativeEvent.x) : transformZoomData(e.touches[0].clientX);
     this.isMousedown = true;
 
     if (!this.moveEvent) {
@@ -92,7 +93,7 @@ export default class VerifySlider extends Component<VerifySliderProps> {
     }
     e.preventDefault();
     e.stopPropagation();
-    this.x2 = e.x || e.touches[0].clientX;
+    this.x2 = e.x ? transformZoomData(e.x) : transformZoomData(e.touches[0].clientX);
     let diff = this.x2 - this.x1;
     if (diff < 0) {
       diff = 0;
