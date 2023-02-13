@@ -1117,10 +1117,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
-                    [`${prefixCls}-filter-content-disabled`]: isDisabled,
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
                     [`${prefixCls}-filter-content-required`]: isRequired,
                     [`${prefixCls}-filter-content-has-value`]: hasValue,
                     [`${prefixCls}-filter-content-invalid`]: validationMessage,
@@ -1130,16 +1129,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     className={itemContentClassName}
                     key={name}
                     onClick={() => {
-                      if (!isDisabled) {
-                        const editor = this.refEditors.get(name);
-                        const filterItem = this.refFilterItems.get(name);
-                        if (editor) {
-                          this.refEditors.get(name).focus();
-                        }
-                        if (filterItem) {
-                          if (!filterItem.className.includes("c7n-pro-lov-click")) {
-                            filterItem.className += ' c7n-pro-lov-click';
-                          }
+                      const editor = this.refEditors.get(name);
+                      const filterItem = this.refFilterItems.get(name);
+                      if (editor) {
+                        this.refEditors.get(name).focus();
+                      }
+                      if (filterItem) {
+                        if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                          filterItem.className += ' c7n-pro-lov-click';
                         }
                       }
                     }}
@@ -1189,10 +1186,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
+
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
-                    [`${prefixCls}-filter-content-disabled`]: isDisabled,
+                    [`${prefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
                     [`${prefixCls}-filter-content-required`]: isRequired,
                     [`${prefixCls}-filter-content-has-value`]: hasValue,
                     [`${prefixCls}-filter-content-invalid`]: validationMessage,
@@ -1203,16 +1200,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       className={itemContentClassName}
                       key={name}
                       onClick={() => {
-                        if (!isDisabled) {
-                          const editor = this.refEditors.get(name);
-                          const filterItem = this.refFilterItems.get(name);
-                          if (editor) {
-                            this.refEditors.get(name).focus();
-                          }
-                          if (filterItem) {
-                            if (!filterItem.className.includes("c7n-pro-lov-click")) {
-                              filterItem.className += ' c7n-pro-lov-click';
-                            }
+                        const editor = this.refEditors.get(name);
+                        const filterItem = this.refFilterItems.get(name);
+                        if (editor) {
+                          this.refEditors.get(name).focus();
+                        }
+                        if (filterItem) {
+                          if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                            filterItem.className += ' c7n-pro-lov-click';
                           }
                         }
                       }}
