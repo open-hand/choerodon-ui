@@ -42,8 +42,8 @@
     display: inline-flex;
   
     .@{avatar-prefix-cls} {
-      border: 0.01rem solid @avatar-color;
       font-size: @avatar-font-size-base;
+      border: 0.01rem solid @avatar-color;
       &:not(:first-child) {
         margin-left: @avatar-group-overlapping;
       }
@@ -84,8 +84,8 @@
       top: 50%;
       left: 50%;
       z-index: 2;
-      font-size: @avatar-font-size-base;
       color: rgb(255, 255, 255);
+      font-size: @avatar-font-size-base;
       transform: translate(-50%, -50%);
       &-lg {
         font-size: @avatar-font-size-lg;
@@ -102,9 +102,9 @@
 .avatar-size(@size, @font-size) {
   width: @size;
   height: @size;
+  font-size: @font-size;
   line-height: @size;
   border-radius: 50%;
-  font-size: @font-size;
 
   & > * {
     line-height: @size;
