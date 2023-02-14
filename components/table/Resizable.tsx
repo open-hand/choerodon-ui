@@ -1,6 +1,7 @@
 import React, { Component, MouseEventHandler } from 'react';
 import classes from 'component-classes';
 import transform, { toTransformValue } from 'choerodon-ui/pro/lib/_util/transform';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import EventManager, { stopEvent } from '../_util/EventManager';
 
 function cloneElement(element: any, props: any) {
@@ -36,7 +37,8 @@ export default class Resizable extends Component<any> {
 
   handleMouseDown: MouseEventHandler<HTMLSpanElement> = (event) => {
     stopEvent(event);
-    const { currentTarget, clientX } = event;
+    const { currentTarget } = event;
+    const clientX = transformZoomData(event.clientX);
     const { resizeEvent = new EventManager() } = this;
     const clz = classes(currentTarget);
     this.resizeEvent = resizeEvent;
@@ -51,7 +53,7 @@ export default class Resizable extends Component<any> {
       .addEventListener('mouseup', (e) => {
         const { onResize } = this.props;
         if (onResize) {
-          const x = e.clientX - clientX;
+          const x = transformZoomData(e.clientX) - clientX;
           const dragCallbackData: DragCallbackData = {
             x,
             y: 0,

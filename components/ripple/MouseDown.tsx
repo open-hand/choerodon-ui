@@ -1,3 +1,4 @@
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import { cloneElement, FunctionComponent, memo, MouseEventHandler, ReactElement, useCallback, useState } from 'react';
 
 function wrapEvent(
@@ -29,8 +30,8 @@ const MouseDown: FunctionComponent<MouseDownProps> = function MouseDown(props) {
     const { ownerDocument } = currentTarget;
     const defaultView = ownerDocument && ownerDocument.defaultView;
     setSize({
-      x: e.clientX - pos.left,
-      y: e.clientY - pos.top,
+      x: transformZoomData(e.clientX) - pos.left,
+      y: transformZoomData(e.clientY) - pos.top,
       width: currentTarget.clientWidth,
       height: currentTarget.clientHeight,
       position:

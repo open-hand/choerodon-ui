@@ -844,7 +844,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     }
     if (!fuzzyQuery) {
       return (
-        <span className={`${prefixCls}-combo-filter-search-title`}>{$l('Table', 'search')}:</span>
+        <span className={`${prefixCls}-combo-filter-search-title`}>{$l('Table', 'search')}: </span>
       );
     }
     return (

@@ -4,6 +4,7 @@ import { addStyle, DOMMouseMoveTracker, getOffset } from 'dom-lib';
 import isNumber from 'lodash/isNumber';
 import Icon from 'choerodon-ui/lib/icon';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
@@ -213,7 +214,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
 
     const { vertical, length, scrollLength } = this.props;
     const { barOffset } = this.state;
-    const offset = vertical ? event.pageY - barOffset.top : event.pageX - barOffset.left;
+    const offset = vertical ? transformZoomData(event.pageY) - barOffset.top : transformZoomData(event.pageX) - barOffset.left;
 
     const handleWidth = (length / scrollLength) * length;
     const delta = offset - handleWidth;

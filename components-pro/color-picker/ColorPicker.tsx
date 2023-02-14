@@ -11,6 +11,7 @@ import round from 'lodash/round';
 import pull from 'lodash/pull';
 import concat from 'lodash/concat';
 import classNames from 'classnames';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
@@ -619,7 +620,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const { gradient, selectPointer, setGradientPointer } = this;
     if (gradient && selectPointer) {
       const { positionToHSV, rgbToHEX, hsvToRGB } = this;
-      const { left, top } = setGradientPointer(e.clientX, e.clientY, selectPointer, gradient, true);
+      const { left, top } = setGradientPointer(transformZoomData(e.clientX), transformZoomData(e.clientY), selectPointer, gradient, true);
       const { height, width } = getNodeRect(gradient);
       const { h, s, v, a: ha } = positionToHSV(left, top, width, height);
       this.setHSV(undefined, s, v, undefined);
@@ -648,7 +649,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   handleHueClick(e) {
     const { hue, huePointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
     if (hue && huePointer) {
-      const { left, wrapW } = setSliderPointer(e.clientX, huePointer, hue, true);
+      const { left, wrapW } = setSliderPointer(transformZoomData(e.clientX), huePointer, hue, true);
       const h = Math.floor((left / wrapW) * 360);
       const { s, v, a: ha } = this.HSV;
       this.setHSV(h, undefined, undefined, undefined);
@@ -666,7 +667,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   handleOpacityClick(e) {
     const { opacity, opacityPointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
     if (opacity && opacityPointer) {
-      const { left, wrapW } = setSliderPointer(e.clientX, opacityPointer, opacity, true);
+      const { left, wrapW } = setSliderPointer(transformZoomData(e.clientX), opacityPointer, opacity, true);
       const a = round(left / wrapW, 2);
       const { h, s, v } = this.HSV;
       const { r, g, b } = hsvToRGB(h, s, v, a);

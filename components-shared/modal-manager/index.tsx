@@ -3,7 +3,7 @@ import { action, observable } from 'mobx';
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { EventManager } from 'choerodon-ui/dataset';
-import { getMousePosition } from '../util';
+import { getMousePosition, transformZoomData } from '../util';
 
 export type MousePosition = { x: number; y: number; vw: number; vh: number };
 
@@ -94,7 +94,7 @@ function registerMousePosition() {
     new EventManager(doc).addEventListener(
       'click',
       (e: MouseEvent) => {
-        ModalManager.mousePosition = getMousePosition(e.clientX, e.clientY, window);
+        ModalManager.mousePosition = getMousePosition(transformZoomData(e.clientX), transformZoomData(e.clientY), window);
         // 100ms 内发生过点击事件，则从点击位置动画展示
         // 否则直接 zoom 展示
         // 这样可以兼容非点击方式展开
