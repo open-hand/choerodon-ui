@@ -1353,6 +1353,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'expandIconColumnIndex',
       'indentSize',
       'filter',
+      'treeFilter',
       'mode',
       'editMode',
       'filterBarFieldName',

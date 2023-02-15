@@ -1,6 +1,10 @@
 import { AxiosRequestConfig } from 'axios';
-import { DataSetProps, DataToJSON, FieldType } from '../../../data-set/interface';
+import omit from 'lodash/omit';
+import DataSet from '../../../data-set/DataSet';
+import { DataSetProps, DataSetSelection, DataToJSON, FieldType } from '../../../data-set/interface';
 import { $l } from '../../../locale-context';
+import { OPERATOR, OPERATOR_TYPE } from './Operator';
+
 
 function processAxiosConfig(
   axiosConfig: AxiosRequestConfig | ((...args: any[]) => AxiosRequestConfig) = {},
@@ -30,6 +34,11 @@ export const ConditionDataSet: () => DataSetProps = () => ({
       defaultValue: 'EQUAL',
     },
     {
+      name: 'conditionType',
+      type: FieldType.string,
+      defaultValue: 'regular',
+    },    
+    {
       name: 'value',
       transformRequest: value => {
         if (typeof value === 'object') {
@@ -53,6 +62,99 @@ export const ConditionDataSet: () => DataSetProps = () => ({
   },
 });
 
+export enum AdvancedFieldSet {
+  fieldName = '__fieldName__',
+  comparator = '__comparator__',
+  tableName = '__tableName__',
+  alias = '__alias__',
+  source = '__source__',
+  conditionType = '__conditionType__',
+}
+
+
+export const NewFilterDataSet = ({ propFields }) => {
+  const advancedFields = propFields.map(field => omit(field, ['defaultValue', 'ignore', 'cascadeMap']));
+  return {
+    paging: false,
+    selection: false,
+    autoCreate: false,
+    primaryKey: 'searchId',
+    autoQuery: false,
+    fields: [
+      {
+        name: AdvancedFieldSet.fieldName,
+        type: FieldType.string,
+        required: true,
+      },
+      {
+        name: AdvancedFieldSet.comparator,
+        type: FieldType.string,
+        required: true,
+        options: new DataSet({
+          selection: DataSetSelection.single,
+          paging: false,
+          data: OPERATOR_TYPE.ALL,
+        }),
+      },
+      {
+        name: AdvancedFieldSet.tableName,
+        type: FieldType.string,
+      },
+      {
+        name: AdvancedFieldSet.alias,
+        type: FieldType.string,
+      },
+      {
+        name: AdvancedFieldSet.source,
+        type: FieldType.string,
+      },
+      {
+        name: AdvancedFieldSet.conditionType,
+        type: FieldType.string,
+        defaultValue: 'comparator',
+      }, 
+      {
+        name: 'value',
+        computedProps: {
+          bind: ({ record }) => {
+            return record.get(AdvancedFieldSet.fieldName);
+          },
+        },
+        transformRequest: value => {
+          if (typeof value === 'object') {
+            return JSON.stringify(value);
+          }
+          return value;
+        },
+        transformResponse: value => {
+          try {
+            return JSON.parse(value);
+          } catch (e) {
+            return value;
+          }
+        },
+      },
+      ...advancedFields,
+    ],
+    dataToJSON: DataToJSON.dirty,
+    events: {
+      update: ({ record, name }) => {
+        const fieldName = record.get(AdvancedFieldSet.fieldName);
+        const comparator = record.get(AdvancedFieldSet.comparator);
+        if ([OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator)) {
+          record.set(fieldName, null);
+        }
+        if (name === AdvancedFieldSet.fieldName && record.get(AdvancedFieldSet.comparator)) {
+          record.init(AdvancedFieldSet.comparator, null);
+        }
+        if (name === AdvancedFieldSet.fieldName) {
+          record.set(fieldName, null);
+        }
+      },
+    },
+  }
+};
+
 export const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapter }) => ({
   paging: false,
   autoQuery: false,
@@ -70,6 +172,22 @@ export const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapte
   fields: [
     { name: 'searchName', label: $l('Table', 'filter_name'), type: 'string', maxLength: 20, required: true },
     { name: 'searchId', type: 'string' },
+    // 条件逻辑值
+    { 
+      name: 'conExpression', 
+      type: 'string', 
+      defaultValue: 'all',
+      // 兼容旧数据
+      transformResponse: value => {
+        if (!value) {
+          return 'all';
+        }
+        return value;
+      },
+      transformRequest: value => {
+        return value || 'all';
+      },
+    },
     { name: 'defaultFlag', type: 'boolean', falseValue: 0, trueValue: 1, label: $l('Table', 'set_default') },
     { name: 'searchCode', type: 'string', defaultValue: searchCode },
     { name: 'conditionList', type: 'object' },
