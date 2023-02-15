@@ -329,7 +329,7 @@
     }
 
     i {
-      margin: @table-dynamic-filter-add-fields-icon-margin;
+      margin: 0 0.04rem 0 0;
     }
   }
 
@@ -435,30 +435,20 @@
     align-items: center;
     font-size: @font-size-base;
 
-    .@{c7n-pro-prefix}-input-number {
-      &-inner-button:not(&-clear-button) {
-        height: 0.24rem;
-      }
+    .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+      height: 0.24rem;
     }
 
     [class*="-empty"] {
-      .@{c7n-pro-prefix}-input-number {
-        &-inner-button:not(&-clear-button) {
-          display: none;
-        }
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: none;
       }
     }
 
     [class*="-focused"] {
-      .@{c7n-pro-prefix}-input-number {
-        &-inner-button:not(&-clear-button) {
-          display: block;
-        }
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: block;
       }
-    }
-
-    [class*="-empty"]:not([class*="-focused"]) .@{c7n-pro-prefix}-input-number {
-      padding-right: 0;
     }
 
     // 多值 placeholder 和 input 光标对齐
@@ -691,11 +681,7 @@
       }
     }
 
-    .@{select-prefix-cls}-multiple-block > div:not(:last-child) {
-      max-width: calc(100% - 0.2rem);
-    }
-
-    .@{c7n-pro-prefix}-input-number-multiple-block > div:not(:last-child) {
+    [class*="multiple-block"] > div:not(:last-child) {
       max-width: calc(100% - 0.2rem);
     }
 
