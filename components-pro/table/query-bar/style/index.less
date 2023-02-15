@@ -294,6 +294,10 @@
     &:hover {
       color: @primary-color;
     }
+
+    i {
+      margin: 0 0.04rem 0 0;
+    }
   }
 
   &-filter-buttons {
@@ -411,30 +415,20 @@
     align-items: center;
     font-size: @font-size-base;
 
-    .@{c7n-pro-prefix}-input-number {
-      &-inner-button:not(&-clear-button) {
-        height: 0.24rem;
-      }
+    .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+      height: 0.24rem;
     }
 
     [class*="-empty"] {
-      .@{c7n-pro-prefix}-input-number {
-        &-inner-button:not(&-clear-button) {
-          display: none;
-        }
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: none;
       }
     }
 
     [class*="-focused"] {
-      .@{c7n-pro-prefix}-input-number {
-        &-inner-button:not(&-clear-button) {
-          display: block;
-        }
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: block;
       }
-    }
-
-    [class*="-empty"]:not([class*="-focused"]) .@{c7n-pro-prefix}-input-number {
-      padding-right: 0;
     }
 
     // 多值 placeholder 和 input 光标对齐
