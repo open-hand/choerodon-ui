@@ -253,6 +253,7 @@
     }
 
     &-required {
+      border-color: @table-dynamic-filter-required-border-color;
       .@{table-prefix-cls}-filter-label::before {
         display: inline-block;
         color: @label-required-color;
@@ -262,24 +263,25 @@
       }
     }
 
+    &-required:hover,
+    &-required:focus-within {
+      border-color: @table-dynamic-filter-required-active-border-color;
+      box-shadow: @table-dynamic-filter-required-active-box-shadow;
+    }
+
     &-invalid,
     &-invalid:hover,
     &-invalid:focus-within {
       background-color: @error-bg-color;
       border-color: @error-color;
+      box-shadow: @input-error-active-box-shadow;
       .@{table-prefix-cls}-filter-label,
       div[class*='-suffix'] i {
         color: @error-color;
       }
     }
-    
-    &-invalid,
-    &-invalid:hover {
-      border-color: @error-bg-color;
-    }
 
     &-invalid:focus-within {
-      border-color: @error-color;
       box-shadow: @input-error-active-box-shadow;
     }
 
@@ -323,9 +325,7 @@
     cursor: pointer;
 
     &:hover {
-      color: @table-dynamic-filter-add-fields-hover-color;
-      background-color: @table-dynamic-filter-add-fields-hover-bg;
-      border-radius: 0.02rem;
+      color: @primary-color;
     }
 
     i {
@@ -436,7 +436,7 @@
     font-size: @font-size-base;
 
     .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
-      height: 0.24rem;
+      height: @table-dynamic-filter-number-step-height;
     }
 
     [class*="-empty"] {
@@ -504,7 +504,7 @@
       line-height: @table-filter-item-icon-line-height;
     }
 
-    &-close {
+    i&-close {
       position: absolute;
       top: -0.07rem;
       right: -0.07rem;
