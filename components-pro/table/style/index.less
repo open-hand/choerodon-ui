@@ -984,8 +984,11 @@
 
   &-help-icon {
     .iconfont-font(@table-icon-help-content, @table-icon-help-size);
-    color: @table-icon-help-color;
     font-weight: @table-icon-help-font-weight;
+
+    &:hover {
+      color: @table-icon-help-color;
+    }
   }
 
   &-header-expand-icon {
