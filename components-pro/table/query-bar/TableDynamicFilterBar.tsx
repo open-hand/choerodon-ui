@@ -1167,7 +1167,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 required
                 value={dataSet.getState(SEARCHEXP) ?
                   dataSet.getState(SEARCHEXP) :
-                  (menuDataSet.current ? menuDataSet.current.get('conExpression') : undefined)}
+                  (menuDataSet.current && menuDataSet.current.get('conExpression') !== 'customize' ? menuDataSet.current.get('conExpression') : undefined)}
                 onChange={(value) => {
                   dataSet.setState(SEARCHEXP, value);
                   if (menuDataSet.current) {
