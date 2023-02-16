@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
 - 🌟 `<pro>Table`: 新增组合排序编辑功能。
 - 🌟 `<pro>Table`: 新增动态筛选条支持保存模糊搜索功能。
+- 🌟 `<pro>Table`: 新增动态筛选条支持高级筛选配置功能。
 - 🌟 `<pro>Lov`: 新增 percent 字段类型显示。
 - 🌟 `Calendar`: 新增 headerRender 属性自定义日历头部内容.
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。

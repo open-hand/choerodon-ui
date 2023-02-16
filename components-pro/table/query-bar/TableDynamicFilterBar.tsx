@@ -21,7 +21,9 @@ import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/conf
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
-import Field, { Fields } from '../../data-set/Field';
+import Popover from 'choerodon-ui/lib/popover';
+import Tag from 'choerodon-ui/lib/tag';
+import Field, { FieldProps, Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
@@ -31,7 +33,7 @@ import TextField from '../../text-field';
 import { ValueChangeAction } from '../../text-field/enum';
 import Tooltip from '../../tooltip';
 import { ElementProps } from '../../core/ViewComponent';
-import { WaitType } from '../../core/enum';
+import { WaitType, Tooltip as OptionTooltip } from '../../core/enum';
 import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
@@ -42,11 +44,16 @@ import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
 import QuickFilterMenu from './quick-filter/QuickFilterMenu';
 import QuickFilterMenuContext from './quick-filter/QuickFilterMenuContext';
-import { ConditionDataSet, QuickFilterDataSet } from './quick-filter/QuickFilterDataSet';
+import { ConditionDataSet, QuickFilterDataSet, NewFilterDataSet, AdvancedFieldSet } from './quick-filter/QuickFilterDataSet';
 import { TransportProps } from '../../data-set/Transport';
 import { hide, show } from '../../tooltip/singleton';
 import { ShowHelp } from '../../field/enum';
 import { renderValidationMessage as utilRenderValidationMessage } from '../../field/utils';
+import Select from '../../select';
+import Tree from '../../tree';
+import { ButtonColor, FuncType } from '../../button/enum';
+import { OPERATOR, OPERATOR_TYPE } from './quick-filter/Operator';
+import { getEditorByField } from '../utils';
 
 /**
  * 当前数据是否有值并需要选中
@@ -64,10 +71,10 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
     return true;
   }
   if (isObject(newValue) && isObject(originalValue) && Object.keys(newValue).length) {
-    const combineKeys = Object.keys(newValue).concat(Object.keys(originalValue));
+    const combineKeys = uniq(Object.keys(newValue).concat(Object.keys(originalValue)));
     return combineKeys.every(key => {
-      const value = newValue[key];
-      const oldValue = originalValue[key];
+      const value = toJS(newValue[key]);
+      const oldValue = toJS(originalValue[key]);
       if (oldValue === value) {
         return true;
       }
@@ -146,6 +153,83 @@ export function stringifyValue(value) {
   return value;
 }
 
+/**
+ * 处理查询过滤条件
+ * @params
+ */
+export function processFilterParam(dataSet) {
+  const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
+  // 处理公式参数
+  let searchExp = '';
+  const expType = dataSet.getState(EXPTYPE);
+  if (expType !== 'customize') {
+    const joinStr = (expType === 'all' || expType === undefined) ? 'AND' : 'OR';
+    for (let i = 1; i <= newFilterDataSet.length; i++) {
+      if (i === newFilterDataSet.length) {
+        searchExp += i;
+      } else {
+        searchExp += i + joinStr;
+      }
+    }
+  } else {
+    searchExp = dataSet.getState(SEARCHEXP).toLocaleUpperCase().replace(/\s+/g, '');
+  }
+  dataSet.setQueryParameter('search.exp', searchExp);
+  // 处理字段参数
+  const searchFld: string[] = [];
+  newFilterDataSet.map((record, index) => {
+    const dataObj = record.toData();
+    const name = dataObj[AdvancedFieldSet.fieldName];
+    const comparator = dataObj[AdvancedFieldSet.comparator];
+    const tableName = newFilterDataSet.getField(name)!.get('help', record);
+    let value = '';
+    if (isObject(dataObj[name])) {
+      if (!isArray(dataObj[name])) {
+        value = dataObj[name][name];
+      } else {
+        value = dataObj[name].map(arr => isObject(arr) ? arr[name] : arr);
+      }
+    } else {
+      value = dataObj[name];
+    }
+    const paramFieldName = tableName ? `${tableName}.${name}` : name;
+    let searchValue: any[] = [];
+    if ([OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator) || value) {
+      const enCodeValue = isNumber(value) ? value : encodeURIComponent(value);
+      searchValue = [index + 1, paramFieldName, dataObj[AdvancedFieldSet.comparator], enCodeValue].filter(Boolean);
+    }
+    if (searchValue && searchValue.length) {
+      searchFld.push(searchValue.join('@'))
+    }
+    return null;
+  })
+  const searchFilParam = searchFld.join(',');
+  dataSet.setQueryParameter('search.fld', searchFilParam);
+}
+
+/**
+ * 高级搜索字段配置类型声明
+ */
+export interface AdvancedSearchField {
+  name: string;
+  /**
+   * 字段关联表
+   */
+  tableName?: string;
+  /**
+   * 字段别名
+   */
+  alias?: string;
+  /**
+   * 字段配置来源
+   */
+  source?: 'fields' | 'queryFields' | 'other';
+  /**
+   * 其他字段 & 配置覆盖
+   */
+  fieldPorps?: FieldProps;
+}
+
 export interface TableDynamicFilterBarProps extends ElementProps {
   dataSet: DataSet;
   queryDataSet?: DataSet;
@@ -165,6 +249,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   refreshBtn?: boolean;
   onRefresh?: () => Promise<boolean | undefined> | boolean | undefined | void;
   sortableFieldNames?: string[];
+  advancedSearchFields?: AdvancedSearchField[];
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -176,6 +261,10 @@ export const FILTERMENUDATASET = '__FILTERMENUDATASET__';
 export const MENURESULT = '__MENURESULT__';
 export const SEARCHTEXT = '__SEARCHTEXT__';
 export const SELECTCHANGE = '__SELECTCHANGE__';
+export const EXPTYPE = '__EXPTYPE__';
+export const SEARCHEXP = '__SEARCHEXP__';
+export const NEWFILTERDATASET = '__NEWFILTERDATASET__';
+export const ORIGINALVALUEOBJ = '__ORIGINALVALUEOBJ__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -229,9 +318,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @observable expand: boolean;
 
   /**
-   * 搜索值
-   */
-  @observable searchText: string;
+ * 弹窗显隐
+ */
+  @observable visible: boolean;
 
   @observable shouldLocateData: boolean;
 
@@ -244,8 +333,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   refEditors: Map<string, any> = new Map();
 
   refFilterItems: Map<string, any> = new Map();
-
-  originalValue: object;
 
   originalConditionFields: string[] = [];
 
@@ -277,7 +364,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         this.handleDataSetQuery({ dataSet });
       }
     }
-    if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
+    const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
+    if (shouldInit && queryDataSet && queryDataSet.current) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
     }
   }
@@ -315,7 +403,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           });
         }
       }
-      if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
+      const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
+      if (shouldInit && queryDataSet && queryDataSet.current) {
         this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
       }
     }
@@ -396,11 +485,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @autobind
+  @action
   setConditionStatus(value, orglValue?: object) {
     const { dataSet } = this.props;
     dataSet.setState(CONDITIONSTATUS, value);
     if (value === RecordStatus.sync && orglValue) {
-      this.originalValue = orglValue;
+      const oriObj = dataSet.getState(ORIGINALVALUEOBJ);
+      dataSet.setState(ORIGINALVALUEOBJ, { ...oriObj, query: orglValue });
+      // this.ORIGINALVALUEOBJ.set('queryFields', orglValue);
     }
   }
 
@@ -446,20 +538,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     if (autoQuery && shouldQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
-        if (queryDataSet && queryDataSet.current &&  await queryDataSet.current.validate()) {
+        if (queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
           dataSet.query();
           onQuery();
         } else {
           let hasFocus = false;
-          for(let i = 0; i < this.queryFields.length; i++) {
+          for (let i = 0; i < this.queryFields.length; i++) {
             const queryField = this.queryFields[i];
             const editor = this.refEditors.get(String(queryField.key));
-            if(editor && !editor.valid && !hasFocus && (field && !field.get('multiple', record))) {
+            if (editor && !editor.valid && !hasFocus && (field && !field.get('multiple', record))) {
               editor.focus();
               hasFocus = true;
             }
@@ -511,9 +603,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @action
   initConditionFields(props) {
     const { dataSet, record } = props;
+    const { dataSet: tableDS } = this.props;
     const originalValue = omit(record.toData(), ['__dirty']);
     const conditionData = Object.entries(originalValue);
-    this.originalValue = originalValue;
+    const newObj = tableDS.getState(ORIGINALVALUEOBJ) || {};
+    tableDS.setState(ORIGINALVALUEOBJ, { ...newObj, query: originalValue });
     this.originalConditionFields = [];
     const { fields } = dataSet;
     map(conditionData, data => {
@@ -535,6 +629,88 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
+   * 高级搜索字段集
+   */
+  get advancedSearchFieldProps() {
+    const { queryDataSet, dataSet, advancedSearchFields } = this.props;
+    if (advancedSearchFields && advancedSearchFields.length) {
+      const omitPropsArr = ['dynamicProps', 'computedProps', 'order', 'pattern', 'maxLength', 'minLength', 'max', 'min', 'validator', 'required', 'readOnly', 'disabled', 'defaultValue', 'cascadeMap', 'ignore'];
+      return advancedSearchFields!.map(field => {
+        const { name, source, alias, tableName, fieldPorps } = field;
+        if (source === 'fields' && dataSet.props.fields) {
+          const dsFiedlsProps = dataSet.props.fields.find(f => f.name === name);
+          return {
+            ...omit(dsFiedlsProps, omitPropsArr),
+            ...fieldPorps,
+            help: tableName,
+            name: alias || name,
+          };
+        }
+        if (source === 'queryFields' && queryDataSet && queryDataSet.props.fields) {
+          const dsFiedlsProps = queryDataSet.props.fields.find(f => f.name === name);
+          return {
+            ...omit(dsFiedlsProps, omitPropsArr),
+            ...fieldPorps,
+            help: tableName,
+            name: alias || name,
+          };
+        }
+        return {
+          ...fieldPorps,
+          // multiple: fieldPorps && fieldPorps.multiple ? '|' : false,
+          help: tableName,
+          name: alias || name,
+        };
+      });
+    }
+    return [];
+  }
+
+  /**
+ * 加载动态筛选条相关初始数据 & 存储初始值
+ *  1.筛选条
+ *  2.高级搜索
+ *  3.模糊搜索
+ * @param param
+ */
+  loadConditionData({ conditionDataSet, newFilterDataSet, menuRecord, dataSet, searchText }) {
+    const comparatorData: object[] = [];
+    const regularData: object[] = [];
+    const newObj = dataSet.getState(ORIGINALVALUEOBJ) || {};
+    let searchTextValue = null;
+    menuRecord.get('conditionList').forEach(condition => {
+      if (condition.conditionType !== 'comparator') {
+        regularData.push(condition);
+      } else {
+        const { fieldName, value, conditionType, comparator, ...rest } = condition;
+        comparatorData.push({
+          [AdvancedFieldSet.fieldName]: fieldName,
+          [fieldName]: value,
+          [AdvancedFieldSet.conditionType]: conditionType,
+          [AdvancedFieldSet.comparator]: comparator,
+          ...rest,
+        })
+      }
+    });
+    // 加载筛选条数据
+    conditionDataSet.loadData(regularData);
+    // 加载高级搜索面板数据
+    newFilterDataSet.loadData(comparatorData);
+    // 初始高级搜索
+    dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData });
+    // 加载模糊搜索数据
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+      dataSet.setState(SEARCHTEXT, searchTextValue);
+      // 初始模糊搜索
+      dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData, fuzzy: searchTextValue });
+
+      dataSet.setQueryParameter(searchText, searchTextValue);
+    }
+  }
+
+  /**
    * 初始筛选条数据源状态
    */
   @autobind
@@ -549,6 +725,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         tableFilterAdapter: this.tableFilterAdapter,
       }) as DataSetProps, { getConfig: getConfig as any });
       const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
+      const newFilterDataSet = new DataSet(NewFilterDataSet({
+        propFields: this.advancedSearchFieldProps,
+      }) as DataSetProps, { getConfig: getConfig as any });
       const optionDataSet = new DataSet({
         paging: false,
         selection: DataSetSelection.single,
@@ -577,17 +756,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }, { getConfig: getConfig as any });
       let status = RecordStatus.update;
       if (queryDataSet && queryDataSet.current) {
-        status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
+        status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
       } else {
         status = RecordStatus.sync;
       }
       // 初始化状态
       dataSet.setState(MENUDATASET, menuDataSet);
       dataSet.setState(CONDITIONDATASET, conditionDataSet);
+      dataSet.setState(NEWFILTERDATASET, newFilterDataSet);
       dataSet.setState(OPTIONDATASET, optionDataSet);
       dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
       dataSet.setState(CONDITIONSTATUS, status);
-      dataSet.setState(SEARCHTEXT, null);
+      // dataSet.setState(SEARCHTEXT, null);
       const result = await menuDataSet.query();
       dataSet.setState(MENURESULT, result);
       if (optionDataSet) {
@@ -595,7 +775,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        this.loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText: this.searchText });
       }
       if (result && result.length) {
         runInAction(() => {
@@ -760,16 +940,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 查询前修改提示及校验定位
    */
   async modifiedCheckQuery(fuzzyValue?: string, fuzzyOldValue?: string, refresh?: boolean): Promise<void> {
-    const { dataSet, queryDataSet, fuzzyQueryOnly, dynamicFilterBar, onRefresh = noop } = this.props;
-    const { getConfig } = this.context;
-    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
+    const { dataSet, queryDataSet, fuzzyQueryOnly, onRefresh = noop } = this.props;
     if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
       if ((queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) || fuzzyQueryOnly) {
         if (fuzzyValue) {
           runInAction(() => {
             dataSet.setState(SEARCHTEXT, fuzzyValue || null);
           });
-          dataSet.setQueryParameter(searchText, fuzzyValue);
+          dataSet.setQueryParameter(this.searchText, fuzzyValue);
         }
         if (refresh) {
           if ((await onRefresh()) !== false) {
@@ -791,7 +969,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       runInAction(() => {
         dataSet.setState(SEARCHTEXT, fuzzyOldValue || null);
       });
-      dataSet.setQueryParameter(searchText, fuzzyOldValue);
+      dataSet.setQueryParameter(this.searchText, fuzzyOldValue);
     }
   }
 
@@ -860,20 +1038,284 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   /**
+   * 过滤比较符
+   * @param record 
+   * @param optionRecord 
+   * @returns 
+   */
+  optionsFilter(record, optionRecord): boolean {
+    if (!record.get(AdvancedFieldSet.fieldName)) return false;
+    const { dataSet } = this.props;
+    const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
+    const field = newFilterDataSet!.getField(record.get(AdvancedFieldSet.fieldName), record);
+    const type = field.get('type', record);
+    const value = OPERATOR[optionRecord.get('value').toUpperCase()];
+    if (!OPERATOR_TYPE[type.toUpperCase()]) {
+      return OPERATOR_TYPE.STRING.includes(value);
+    }
+    if (
+      field.get('lookupCode', record) ||
+      isString(field.get('lookupUrl', record)) ||
+      (type !== FieldType.object && (field.get('lovCode', record) || field.getLookup(record) || field.get('options', record)))
+    ) {
+      return OPERATOR_TYPE.LOOKUP.includes(value);
+    }
+    if (field.get('lovCode', record)) {
+      return OPERATOR_TYPE.LOV.includes(value);
+    }
+    return OPERATOR_TYPE[type.toUpperCase()].includes(value);
+  }
+
+  /**
+   * 高级筛选弹窗确认
+   */
+  @autobind
+  async handleFilterOk() {
+    const { dataSet, autoQuery } = this.props;
+    const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
+    const res = await newFilterDataSet.validate();
+    if (res) {
+      runInAction(async () => {
+        // 初始状态下移除空行
+        if (newFilterDataSet.length !== 1) {
+          newFilterDataSet.map(r => {
+            if (!r.get(AdvancedFieldSet.fieldName)) {
+              newFilterDataSet.remove(r, true);
+            }
+            return null;
+          });
+        }
+        const jsonData = newFilterDataSet.toJSONData();
+        processFilterParam(dataSet);
+        const status = isEqualDynamicProps(toJS(dataSet.getState(ORIGINALVALUEOBJ).advance), jsonData, newFilterDataSet) ? dataSet.getState(CONDITIONSTATUS) : RecordStatus.update;
+        // 更新筛选条状态
+        this.setConditionStatus(status);
+        if (autoQuery) dataSet.query();
+        this.visible = false;
+      })
+    }
+  }
+
+  /**
+   * 渲染高级筛选面板
+   */
+  getAdvancedFilter(): ReactNode {
+    const { prefixCls, context: { getConfig } } = this;
+    const { dataSet, advancedSearchFields } = this.props;
+    const tlsKey = getConfig('tlsKey');
+    const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
+    const menuDataSet = dataSet.getState(MENUDATASET);
+    if (advancedSearchFields && advancedSearchFields.length && newFilterDataSet) {
+      const selectOptions = this.advancedSearchFieldProps.map(fieldProps => {
+        const { name, label, bind } = fieldProps;
+        if (bind) return null;
+        const field = newFilterDataSet.getField(name);
+        const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
+        if (field.get('bind') ||
+          hasBindProps('computedProps') ||
+          hasBindProps('dynamicProps') ||
+          field.get('name').includes(tlsKey)
+        ) {
+          return null
+        }
+        return <Select.Option key={`${name}_select_option`} value={name}>{label || name}</Select.Option>
+      });
+      const PopoverContent = (
+        <>
+          <Tooltip
+            theme="light"
+            title={dataSet.getState(EXPTYPE) === 'customize' ? $l('Table', 'ad_search_help') : null}
+          >
+            <Select
+              isFlat
+              border
+              // dataSet={menuDataSet.current}
+              // name="conExpression"
+              value={dataSet.getState(EXPTYPE) ? dataSet.getState(EXPTYPE) : (
+                ['all', 'either'].includes(menuDataSet.current && menuDataSet.current.get('conExpression')) ? menuDataSet.current.get('conExpression') : "all"
+              )}
+              onChange={(value) => {
+                dataSet.setState(EXPTYPE, value);
+                if (value !== 'customize') {
+                  dataSet.setState(SEARCHEXP, undefined);
+                }
+                if (menuDataSet.current) {
+                  menuDataSet.current.set('conExpression', value)
+                }
+              }}
+              clearButton={false}
+              className={`${prefixCls}-new-filter-popover-select`}
+            >
+              <Select.Option value="all">{$l('Table', 'ad_search_all')}</Select.Option>
+              <Select.Option value="either">{$l('Table', 'ad_search_any')}</Select.Option>
+              <Select.Option value="customize">
+                {$l('Table', 'ad_search_custom')}
+                <Tooltip
+                  theme="light"
+                  title={$l('Table', 'ad_search_help')}
+                >
+                  <Icon className={`${prefixCls}-new-filter-popover-select-icon`} type="help_outline" />
+                </Tooltip>
+              </Select.Option>
+            </Select>
+          </Tooltip>
+          {
+            dataSet.getState(EXPTYPE) === 'customize' ?
+              <TextField
+                clearButton
+                required
+                value={dataSet.getState(SEARCHEXP) ?
+                  dataSet.getState(SEARCHEXP) :
+                  (menuDataSet.current ? menuDataSet.current.get('conExpression') : undefined)}
+                onChange={(value) => {
+                  dataSet.setState(SEARCHEXP, value);
+                  if (menuDataSet.current) {
+                    menuDataSet.current.set('conExpression', value)
+                  }
+                }}
+                className={`${prefixCls}-new-filter-popover-input`}
+                placeholder={$l('Table', 'ad_search_placeholder')}
+              />
+              : null
+          }
+          <div className={`${prefixCls}-new-filter-popover-line`} />
+          <Tree
+            key="__filter"
+            dataSet={newFilterDataSet}
+            showLine={{
+              showLeafIcon: false,
+            }}
+            className={`${prefixCls}-new-filter-popover-tree`}
+            onTreeNode={() => ({
+              className: `${prefixCls}-new-filter-popover-tree-node`,
+            })}
+            showIcon
+            icon={(props) => {
+              return <Tag className={`${prefixCls}-new-filter-popover-item-tag`}>{Number(props.pos.split('0-')[1]) + 1}</Tag>;
+            }}
+            renderer={({ record }) => {
+              if (!record) return null;
+              const comparator = record.get(AdvancedFieldSet.comparator);
+              const fieldName = record.get(AdvancedFieldSet.fieldName);
+              const field = record.getField(fieldName);
+              let valueFieldDom: ReactElement = <TextField style={{ width: 180 }} disabled />;
+              if (field && !field.get('bind', record) && !fieldName.includes(tlsKey)) {
+                valueFieldDom = cloneElement(getEditorByField(field, record, true), {
+                  help: '',
+                  key: fieldName,
+                  name: fieldName,
+                  record,
+                  style: { width: 180 },
+                  disabled: [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator),
+                });
+              }
+              return (
+                <div className={`${prefixCls}-new-filter-popover-item`} key={`${record.index}_option`}>
+                  <Select
+                    name={AdvancedFieldSet.fieldName}
+                    style={{ width: 120 }}
+                    record={record}
+                    placeholder={$l('Lov', 'choose')}
+                    optionTooltip={OptionTooltip.overflow}
+                  >
+                    {selectOptions}
+                  </Select>
+                  <Select
+                    name={AdvancedFieldSet.comparator}
+                    renderer={({ value, text }) => value ? $l('Operator', value.toLowerCase()) : text}
+                    optionRenderer={({ value, text }) => value ? $l('Operator', value.toLowerCase()) : text}
+                    style={{ width: 88 }}
+                    dropdownMatchSelectWidth={false}
+                    optionTooltip={OptionTooltip.overflow}
+                    record={record}
+                    disabled={!record.get(AdvancedFieldSet.fieldName)}
+                    optionsFilter={(optionRecord) => this.optionsFilter(record, optionRecord)}
+                  />
+                  {valueFieldDom}
+                  <Button
+                    funcType={FuncType.link}
+                    icon="delete_black-o"
+                    color={ButtonColor.primary}
+                    onClick={() => {
+                      if (newFilterDataSet.length === 1) {
+                        newFilterDataSet.removeAll()
+                      } else {
+                        newFilterDataSet.remove(record);
+                      }
+                    }}
+                  />
+                </div>
+              );
+            }}
+          />
+          <Button
+            funcType={FuncType.link}
+            icon="add"
+            color={ButtonColor.primary}
+            onClick={() => {
+              newFilterDataSet.create();
+            }}
+          >
+            {$l('Table', 'ad_search_add')}
+          </Button>
+          <div className={`${prefixCls}-new-filter-popover-footer`}>
+            <Button
+              onClick={() => {
+                const orgValue = dataSet.getState(ORIGINALVALUEOBJ).advance;
+                newFilterDataSet.loadData(orgValue);
+                this.setConditionStatus(dataSet.getState(CONDITIONSTATUS));
+                runInAction(() => {
+                  this.visible = false;
+                })
+              }}
+            >
+              {$l('Modal', 'cancel')}
+            </Button>
+            <Button
+              onClick={this.handleFilterOk}
+              color={ButtonColor.primary}
+            >
+              {$l('Modal', 'ok')}
+            </Button>
+          </div>
+        </>
+      );
+      return (
+        <Popover
+          title={$l('Table', 'ad_search_title')}
+          content={PopoverContent}
+          overlayClassName={`${prefixCls}-new-filter-popover`}
+          trigger="click"
+          visible={this.visible}
+        >
+          <Button
+            funcType={FuncType.link}
+            className={`${prefixCls}-new-filter-popover-icon`}
+            icon="filter2"
+            color={newFilterDataSet && newFilterDataSet.some(r => r.status === 'sync') ? ButtonColor.primary : ButtonColor.default}
+            onClick={() => {
+              if (!newFilterDataSet.length) {
+                newFilterDataSet.create();
+              }
+              runInAction(() => {
+                this.visible = true;
+              })
+            }}
+          />
+        </Popover>
+      );
+    }
+    return null;
+  }
+
+  /**
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, dynamicFilterBar, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
     const { prefixCls } = this;
-    const { getConfig } = this.context;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
-    const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
-    const menuRecord = dataSet.getState(MENUDATASET) && dataSet.getState(MENUDATASET).current;
-    let searchTextValue = null;
-    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
-      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
-      searchTextValue = searchObj ? searchObj.value : null;
-    }
+    const fuzzyValue = dataSet.getState(ORIGINALVALUEOBJ) && dataSet.getState(ORIGINALVALUEOBJ).fuzzy;
     if (!fuzzyQuery) return null;
     return (<div className={`${prefixCls}-filter-search`}>
       <TextField
@@ -888,8 +1330,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         onChange={(value: string, oldValue: string) => {
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
-          dataSet.setQueryParameter(searchText, value);
-          this.setConditionStatus(value === searchTextValue ? RecordStatus.sync : RecordStatus.update);
+          dataSet.setQueryParameter(this.searchText, value);
+          this.setConditionStatus(value === fuzzyValue ? RecordStatus.sync : RecordStatus.update);
         }}
         onClear={() => {
           runInAction(() => {
@@ -917,7 +1359,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (queryDataSet) {
                   const { current } = queryDataSet;
                   if (current) {
-                    shouldQuery = !isEqualDynamicProps(this.originalValue, omit(current.toData(), ['__dirty']), queryDataSet, current);
+                    const orgObj = dataSet.getState(ORIGINALVALUEOBJ);
+                    shouldQuery = (dataSet.getState(SEARCHTEXT) !== orgObj.fuzzy) || !isEqualDynamicProps(orgObj.query, omit(current.toData(), ['__dirty']), queryDataSet, current);
+                    dataSet.setState(SEARCHTEXT, orgObj.fuzzy)
+                    dataSet.setQueryParameter(this.searchText, orgObj.fuzzy)
                     current.reset();
                     dataSet.setState(SELECTFIELDS, [...this.originalConditionFields]);
                   }
@@ -943,14 +1388,16 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getFilterMenu(): ReactNode {
     const { queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly, sortableFieldNames } = this.props;
-    const { prefixCls, context: { getConfig } } = this;
+    const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
     const fuzzyQuery = this.getFuzzyQuery();
+    const advancedFilter = this.getAdvancedFilter();
     if (fuzzyQueryOnly) {
       return (
         <div className={`${prefixCls}-filter-menu`}>
           {prefix}
+          {advancedFilter}
           {fuzzyQuery}
           {suffix}
         </div>
@@ -958,7 +1405,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     if (queryDataSet && queryFields.length) {
       const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
-      const searchText = dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
       const quickFilterMenu = this.tableFilterAdapter && searchCodes ? (
         <QuickFilterMenuContext.Provider
           value={{
@@ -977,11 +1423,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             menuDataSet: dataSet.getState(MENUDATASET),
             filterMenuDataSet: dataSet.getState(FILTERMENUDATASET),
             conditionDataSet: dataSet.getState(CONDITIONDATASET),
+            newFilterDataSet: dataSet.getState(NEWFILTERDATASET),
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
             sortableFieldNames,
-            searchText,
+            searchText: this.searchText,
+            loadConditionData: this.loadConditionData,
           }}
         >
           <QuickFilterMenu />
@@ -993,6 +1441,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         <div className={`${prefixCls}-filter-menu`}>
           {prefix}
           {fuzzyQuery}
+          {advancedFilter}
           {quickFilterMenu}
           {resetButton}
           {this.isSingleLineOpt() ? null : (
@@ -1013,7 +1462,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   get originOrderQueryFields(): Field[] {
     const { queryDataSet } = this.props;
+    const { getConfig } = this.context;
     const result: Field[] = [];
+    const tlsKey = getConfig('tlsKey');
     if (queryDataSet) {
       const { fields, props: { fields: propFields = [] } } = queryDataSet;
       const cloneFields: Map<string, Field> = fields.toJS();
@@ -1025,7 +1476,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             !field.get('bind') &&
             !hasBindProps('computedProps') &&
             !hasBindProps('dynamicProps') &&
-            !field.get('name').includes('__tls')
+            !field.get('name').includes(tlsKey)
           ) {
             result.push(field);
           }
@@ -1033,6 +1484,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       });
     }
     return result;
+  }
+
+  /**
+   * 获取模糊搜索字段参数名
+   */
+  get searchText(): string {
+    const { dynamicFilterBar } = this.props;
+    const { getConfig } = this.context;
+    return dynamicFilterBar && dynamicFilterBar.searchText || getConfig('tableFilterSearchText') || 'params';
   }
 
   @autobind
@@ -1149,7 +1609,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                       }
                     }}
-                    onMouseEnter={(e)=>{
+                    onMouseEnter={(e) => {
                       if (validationMessage) {
                         const { currentTarget } = e;
                         show(currentTarget as HTMLElement, {
@@ -1160,7 +1620,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         this.isTooltipShown = true;
                       }
                     }}
-                    onMouseLeave={()=>{
+                    onMouseLeave={() => {
                       hide();
                     }}
                   >
@@ -1168,12 +1628,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       {label}
                       {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                     </span>
-                    <span 
+                    <span
                       className={classNames(`${prefixCls}-filter-item`,
                         {
                           [`${prefixCls}-filter-item-has-value`]: hasValue,
                         })}
-                      ref={(node)=>this.refFilterItems.set(name,node)}
+                      ref={(node) => this.refFilterItems.set(name, node)}
                     >
                       {this.createFields(element, name)}
                     </span>
@@ -1222,7 +1682,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                         }
                       }}
-                      onMouseEnter={(e)=>{
+                      onMouseEnter={(e) => {
                         if (validationMessage) {
                           const { currentTarget } = e;
                           show(currentTarget as HTMLElement, {
@@ -1233,7 +1693,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                           this.isTooltipShown = true;
                         }
                       }}
-                      onMouseLeave={()=>{
+                      onMouseLeave={() => {
                         hide();
                       }}
                     >
@@ -1248,12 +1708,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         {label}
                         {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                       </span>
-                      <span 
+                      <span
                         className={classNames(`${prefixCls}-filter-item`,
                           {
                             [`${prefixCls}-filter-item-has-value`]: hasValue,
                           })}
-                        ref={(node)=>this.refFilterItems.set(name,node)}
+                        ref={(node) => this.refFilterItems.set(name, node)}
                       >
                         {this.createFields(element, name)}
                       </span>

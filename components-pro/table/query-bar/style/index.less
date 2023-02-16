@@ -8,7 +8,7 @@
   &-query-bar {
     float: right;
 
-    > * + * {
+    >*+* {
       margin-left: 0.16rem;
     }
 
@@ -21,10 +21,10 @@
       background-color: @background-color-light;
       border-radius: @border-radius-base;
 
-      > * {
+      >* {
         vertical-align: middle;
 
-        & + * {
+        &+* {
           margin-left: 0.05rem;
         }
       }
@@ -92,7 +92,8 @@
       color: @table-dynamic-filter-placeholder-color;
     }
 
-    .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+    .@{c7n-pro-prefix}-input-number-placeholder,
+    .@{select-prefix-cls}-placeholder {
       color: @table-dynamic-filter-placeholder-color;
     }
 
@@ -197,7 +198,8 @@
       margin-right: 0.08rem;
     }
 
-    &-expand, &-query {
+    &-expand,
+    &-query {
       cursor: pointer;
 
       i {
@@ -205,6 +207,7 @@
         font-size: 0.16rem;
         background-color: #fafafa;
         border-radius: 0.02rem;
+
         &:hover {
           color: @table-dynamic-filter-refresh-icon-hover-color;
         }
@@ -237,9 +240,11 @@
     &:focus-within,
     &:hover {
       border-color: @primary-color;
+
       .@{table-prefix-cls}-filter-item-close {
         display: inline-block !important;
       }
+
       div[class*='-suffix'] i {
         color: @primary-color;
       }
@@ -281,26 +286,27 @@
       }
     }
 
-    &-invalid:focus-within {
-      box-shadow: @input-error-active-box-shadow;
-    }
-
     &-disabled {
       background-color: @disabled-bg;
+
       .@{table-prefix-cls}-filter-label {
         color: @disabled-color;
         cursor: not-allowed;
       }
+
       &:hover {
         border-color: @input-border-color;
       }
+
       &:hover div[class*='-suffix'] i {
         color: @input-disabled-color;
       }
+
       // 禁用部分 lov 多值 和 下拉多值控制态 特殊覆盖
       .@{select-prefix-cls}-multiple.@{select-prefix-cls}-lov .@{select-prefix-cls}:not(:last-child) {
         padding-right: @input-suffix-width-base;
       }
+
       .@{select-prefix-cls}-empty .@{select-prefix-cls}-multiple-value {
         max-width: 0;
       }
@@ -312,7 +318,8 @@
     flex-wrap: wrap;
     width: 100%;
 
-    span, input {
+    span,
+    input {
       background-color: transparent;
     }
   }
@@ -347,7 +354,7 @@
 
   &-filterName-select {
     max-width: 1.72rem;
-    margin-left: 0.12rem;
+    margin-left: 0.08rem;
     border: none;
   }
 
@@ -452,7 +459,7 @@
     }
 
     // 多值 placeholder 和 input 光标对齐
-    [class*="-placeholder-inner"]{
+    [class*="-placeholder-inner"] {
       padding-left: 0.02rem;
     }
 
@@ -465,7 +472,8 @@
     [class*="-multiple-input"] {
       margin-left: 0;
     }
-    [class*="-multiple-value"] + [class*="-placeholder"]{ 
+
+    [class*="-multiple-value"]+[class*="-placeholder"] {
       padding-left: 0;
     }
 
@@ -478,11 +486,13 @@
     }
 
     label {
-      input::-webkit-input-placeholder { // 谷歌
+      input::-webkit-input-placeholder {
+        // 谷歌
         color: @disabled-color;
       }
 
-      input:-moz-placeholder { //火狐
+      input:-moz-placeholder {
+        //火狐
         color: @disabled-color;
       }
 
@@ -490,11 +500,13 @@
         color: @disabled-color;
       }
 
-      input:-ms-input-placeholder { //微软
+      input:-ms-input-placeholder {
+        //微软
         color: @disabled-color;
       }
 
-      .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+      .@{c7n-pro-prefix}-input-number-placeholder,
+      .@{select-prefix-cls}-placeholder {
         color: @disabled-color;
       }
     }
@@ -532,7 +544,10 @@
       }
     }
 
-    .@{select-prefix-cls}, .@{c7n-pro-prefix}-input, .@{c7n-pro-prefix}-input-number, .@{c7n-pro-prefix}-calendar-picker {
+    .@{select-prefix-cls},
+    .@{c7n-pro-prefix}-input,
+    .@{c7n-pro-prefix}-input-number,
+    .@{c7n-pro-prefix}-calendar-picker {
       width: auto;
       min-width: unset;
       margin: 0;
@@ -548,7 +563,8 @@
       }
 
       &-multiple {
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           content: "";
         }
       }
@@ -557,18 +573,21 @@
       &-invalid {
         background-color: transparent;
 
-        & > label {
+        &>label {
           align-items: center;
         }
       }
 
       &-invalid {
         background-color: transparent;
-        input::-webkit-input-placeholder { // 谷歌
+
+        input::-webkit-input-placeholder {
+          // 谷歌
           color: @error-color;
         }
 
-        input:-moz-placeholder { //火狐
+        input:-moz-placeholder {
+          //火狐
           color: @error-color;
         }
 
@@ -576,11 +595,13 @@
           color: @error-color;
         }
 
-        input:-ms-input-placeholder { //微软
+        input:-ms-input-placeholder {
+          //微软
           color: @error-color;
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           color: @error-color;
         }
       }
@@ -593,16 +614,19 @@
         margin-left: -0.12rem;
       }
     }
+
     // lov 单选多选通用样式
     &.@{c7n-pro-prefix}-lov-click {
       .@{select-prefix-cls} {
         min-width: 1.34rem !important;
       }
     }
+
     .@{select-prefix-cls}-lov {
       .@{select-prefix-cls} {
         max-width: 0;
       }
+
       &.@{select-prefix-cls}-expand {
         .@{select-prefix-cls} {
           min-width: 1.34rem !important;
@@ -611,8 +635,10 @@
         }
       }
     }
+
     // lov 多选空值下占位元素隐藏
     .@{select-prefix-cls}-lov.@{select-prefix-cls}-multiple.@{select-prefix-cls}-empty {
+
       .@{select-prefix-cls}-multiple-value,
       &:not(:focus-within) .@{select-prefix-cls}-placeholder {
         display: none;
@@ -625,28 +651,34 @@
       max-width: 0;
       margin-left: -0.28rem;
     }
+
     [class*='-suffix-button'],
     [class*='-prefix-button'] {
+
       .@{c7n-pro-prefix}-input,
       .@{c7n-pro-prefix}-input-number {
         margin-left: 0;
       }
     }
+
     .@{c7n-pro-prefix}-input-multiple,
     .@{c7n-pro-prefix}-input-number-multiple,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-calendar-picker-multiple-value {
       max-width: 0;
     }
+
     &-has-value,
     &:focus-within {
-      .@{c7n-pro-prefix}-input, 
+
+      .@{c7n-pro-prefix}-input,
       .@{c7n-pro-prefix}-input-number,
       .@{c7n-pro-prefix}-input-multiple,
       .@{c7n-pro-prefix}-input-number-multiple {
         max-width: 4rem;
         margin-left: 0;
       }
+
       .@{c7n-pro-prefix}-calendar-picker,
       .@{c7n-pro-prefix}-calendar-picker-multiple-value {
         max-width: 4rem;
@@ -655,13 +687,16 @@
 
     // select
     .@{select-prefix-cls}-not-editable {
+
       .@{select-prefix-cls},
       .@{select-prefix-cls}-multiple-value {
         max-width: 0;
       }
     }
+
     &-has-value {
       .@{select-prefix-cls}-not-editable {
+
         .@{select-prefix-cls},
         .@{select-prefix-cls}-multiple-value {
           max-width: 4rem;
@@ -674,6 +709,7 @@
           max-width: 4rem;
         }
       }
+
       &:not(.@{c7n-pro-prefix}-lov-click) {
         .@{select-prefix-cls}-lov:not(.@{c7n-pro-prefix}-select-disabled) .@{select-prefix-cls} {
           margin-left: 0;
@@ -681,7 +717,7 @@
       }
     }
 
-    [class*="multiple-block"] > div:not(:last-child) {
+    [class*="multiple-block"]>div:not(:last-child) {
       max-width: calc(100% - 0.2rem);
     }
 
@@ -690,7 +726,7 @@
     .@{c7n-pro-prefix}-input-number,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-cascader {
-      & > ul {
+      &>ul {
         flex-wrap: nowrap;
       }
 
@@ -700,13 +736,93 @@
     }
   }
 
+  // 高级筛选面板
+
+  &-new-filter-popover {
+    z-index: 1;
+    width: 5.4rem;
+
+    &-line {
+      height: 0.08rem;
+
+      &::before {
+        margin-left: 0.03rem;
+        border-left: 1px solid @normal-color;
+        content: ' ';
+      }
+    }
+
+    .@{c7n-prefix}-popover-title {
+      padding-top: 0.16rem;
+      padding-bottom: 0.08rem;
+    }
+
+    .@{c7n-prefix}-popover-inner-content {
+      padding: 0.08rem 0.16rem 0.16rem 0.16rem;
+    }
+
+    &-select-icon {
+      margin-left: 0.04rem;
+      font-size: 0.12rem;
+      vertical-align: inherit;
+    }
+
+    &-input {
+      width: 4.46rem;
+      margin-top: 0.08rem;
+    }
+
+    &-tree {
+      max-height: 2.68rem;
+      margin-left: -0.08rem;
+      overflow: auto;
+
+      &-node {
+        overflow: hidden;
+
+        .@{c7n-prefix}-tree-node-content-wrapper {
+          display: flex;
+          min-height: 0.34rem;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+
+    &-item {
+      display: flex;
+      gap: 0.08rem;
+      align-items: center;
+
+      &-tag {
+        height: 0.16rem;
+        margin: 0;
+        padding: 0 0.04rem;
+        line-height: 0.15rem;
+        border: none;
+      }
+    }
+
+    &-footer {
+      text-align: right;
+    }
+
+    &-icon>.icon {
+      font-weight: lighter;
+      font-size: 0.16rem;
+    }
+  }
+
   // professional-query-bar
 
   &-professional-query-bar {
     display: flex;
     padding: 0.06rem 0;
 
-    .@{c7n-pro-prefix}-field-label, .@{c7n-pro-prefix}-field-wrapper {
+    .@{c7n-pro-prefix}-field-label,
+    .@{c7n-pro-prefix}-field-wrapper {
       .@{c7n-pro-prefix}-checkbox-wrapper {
         height: @input-height-base;
       }
@@ -777,7 +893,8 @@
       color: @input-placeholder-color;
     }
 
-    .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+    .@{c7n-pro-prefix}-input-number-placeholder,
+    .@{select-prefix-cls}-placeholder {
       color: @input-placeholder-color;
     }
   }
@@ -840,6 +957,7 @@
 
   &-combo-filter-action {
     margin-left: auto;
+
     &-button {
       border-radius: 0;
     }
@@ -859,10 +977,10 @@
     }
   }
 
-  &-combo-filter-toolbar + &-combo-filter-action,
-  &-combo-filter-toolbar + &-combo-filter-bar-suffix,
-  &-combo-filter-action + &-combo-filter-bar-suffix,
-  &-combo-filter-toolbar + &-combo-filter-action + &-combo-filter-bar-suffix {
+  &-combo-filter-toolbar+&-combo-filter-action,
+  &-combo-filter-toolbar+&-combo-filter-bar-suffix,
+  &-combo-filter-action+&-combo-filter-bar-suffix,
+  &-combo-filter-toolbar+&-combo-filter-action+&-combo-filter-bar-suffix {
     margin-left: 0.08rem;
   }
 
@@ -943,7 +1061,8 @@
     margin: @table-combo-filter-wrapper-margin;
     border-radius: 0.01rem;
 
-    span, input {
+    span,
+    input {
       background-color: transparent;
     }
   }
@@ -1001,7 +1120,7 @@
 
   &-combo-filterName-select {
     max-width: 1.72rem;
-    margin-left: 0.12rem;
+    margin-left: 0.08rem;
     border: none;
     border-radius: @border-radius-base;
 
@@ -1014,7 +1133,7 @@
     }
   }
 
-  &-combo-filter-title-divide + &-combo-filterName-select {
+  &-combo-filter-title-divide+&-combo-filterName-select {
     margin-left: 0.08rem;
   }
 
@@ -1033,13 +1152,13 @@
       &-item-group {
         padding: 0;
 
-        &-list > .@{select-prefix-cls}-dropdown-menu-item {
+        &-list>.@{select-prefix-cls}-dropdown-menu-item {
           margin: 0 0.08rem 0.04rem 0.08rem;
           padding-left: 0.14rem;
           border-radius: @border-radius-base;
         }
 
-        &-list > .@{select-prefix-cls}-dropdown-menu-item-selected {
+        &-list>.@{select-prefix-cls}-dropdown-menu-item-selected {
           color: @primary-color;
         }
       }
@@ -1105,7 +1224,8 @@
         color: @text-color-secondary;
       }
 
-      .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+      .@{c7n-pro-prefix}-input-number-placeholder,
+      .@{select-prefix-cls}-placeholder {
         color: @text-color-secondary;
       }
     }
@@ -1142,7 +1262,10 @@
       }
     }
 
-    input.@{select-prefix-cls}, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+    input.@{select-prefix-cls},
+    input.@{c7n-pro-prefix}-input,
+    input.@{c7n-pro-prefix}-input-number,
+    input.@{c7n-pro-prefix}-calendar-picker {
       box-sizing: content-box;
       min-width: unset;
       max-width: 4rem;
@@ -1155,11 +1278,12 @@
       &-required {
         background-color: transparent;
 
-        & > label {
+        &>label {
           align-items: center;
         }
 
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           display: inline-block;
           width: .08rem;
           margin-left: .04rem;
@@ -1169,7 +1293,8 @@
           content: "*";
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           &::before {
             display: inline-block;
             width: .08rem;
@@ -1183,17 +1308,20 @@
       }
 
       &-multiple {
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           content: "";
         }
       }
 
       &-invalid {
-        input::-webkit-input-placeholder { // 谷歌
+        input::-webkit-input-placeholder {
+          // 谷歌
           color: @error-color;
         }
 
-        input:-moz-placeholder { //火狐
+        input:-moz-placeholder {
+          //火狐
           color: @error-color;
         }
 
@@ -1201,18 +1329,24 @@
           color: @error-color;
         }
 
-        input:-ms-input-placeholder { //微软
+        input:-ms-input-placeholder {
+          //微软
           color: @error-color;
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{select-prefix-cls}-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           color: @error-color;
         }
       }
     }
 
     span:not(.@{table-prefix-cls}-combo-filter-item-overlay) {
-      input.@{select-prefix-cls}, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+
+      input.@{select-prefix-cls},
+      input.@{c7n-pro-prefix}-input,
+      input.@{c7n-pro-prefix}-input-number,
+      input.@{c7n-pro-prefix}-calendar-picker {
         width: auto;
       }
     }
@@ -1222,7 +1356,7 @@
     .@{c7n-pro-prefix}-input-number,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-cascader {
-      & > ul {
+      &>ul {
         flex-wrap: nowrap;
       }
 

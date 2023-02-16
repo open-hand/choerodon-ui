@@ -20,6 +20,7 @@ export interface QuickFilterProps {
   autoQuery?: boolean;
   selectFields?: string[];
   onOriginalChange?: (fieldName?: string | string[]) => void;
+  loadConditionData?: ({ conditionDataSet, newFilterDataSet, menuRecord, dataSet, searchText }: { conditionDataSet: any; newFilterDataSet: any; menuRecord: any; dataSet: any; searchText: any; }) => void;
 }
 
 export interface QuickFilterContextValue extends QuickFilterProps {
@@ -27,6 +28,7 @@ export interface QuickFilterContextValue extends QuickFilterProps {
   filterMenuDataSet: DataSet;
   conditionDataSet: DataSet;
   optionDataSet: DataSet;
+  newFilterDataSet: DataSet;
   shouldLocateData: boolean;
   refEditors?: Map<string, any>;
   sortableFieldNames?: string[];
@@ -40,6 +42,7 @@ const Store: Context<QuickFilterContextValue> = createContext<QuickFilterContext
   filterMenuDataSet: ds,
   conditionDataSet: ds,
   optionDataSet: ds,
+  newFilterDataSet: ds,
   shouldLocateData: false,
   searchText: 'params',
 });

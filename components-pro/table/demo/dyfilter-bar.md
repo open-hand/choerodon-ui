@@ -14,13 +14,13 @@ title:
 DynamicFilterBar.
 
 ```jsx
-import { DataSet, Table, Button } from 'choerodon-ui/pro';
+import { DataSet, Table, Button, NumberField } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 import { observable } from 'mobx-react-lite';
 import { action, toJS } from 'mobx';
+import moment from 'moment';
 
 const { DynamicFilterBar } = Table;
-
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
 const codeDynamicProps = {
@@ -65,32 +65,59 @@ class App extends React.Component {
 
   ds = new DataSet({
     primaryKey: 'userid',
+    combineSort: true,
     transport: {
       read({ params: { page, pagesize } }) {
         return {
-          url: `/dataset/user/page/${pagesize}/${page}`,
+          url: `https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/user`,
         };
       },
     },
-    autoQuery: false,
+    autoQuery: true,
     pageSize: 5,
     queryFields: [
-      { name: 'name', type: 'string', label: '姓名' },
-      { name: 'age', type: 'number', label: '年龄' },
-      { name: 'code', type: 'object', label: '代码描述', lovCode: 'LOV_CODE' },
+      {
+        name: 'START_TIME',
+        type: 'dateTime',
+        label: '开始执行时间',
+        range: true,
+      },
+      {
+      name: 'applicationDateRange',
+      type: 'dateTime',
+      ignore: 'always',
+      range: ['start', 'end'],
+      defaultValue: { start: moment().subtract(1, 'months'), end: moment() },
+      label: 'applicationDate',
+      labelWidth: '90'
+    },
+    {
+      name: 'requisitionDateFrom',
+      type: 'date',
+      bind: 'applicationDateRange.start'
+    },
+    {
+      name: 'requisitionDateTo',
+      type: 'date',
+      bind: 'applicationDateRange.end'
+    },
+      { name: 'name', multiple: true, type: 'string' },
+      { name: 'age', defaultValue: [], type: 'number', label: '年龄', range:true },
+      {  multiple: true, name: 'code', type: 'object', ignore:'always', label: '代码描述', lovCode: 'LOV_CODE' },
       {
         name: 'email',
         type: 'email',
-        label: '邮箱',
+        label: 'email',
+        computedProps: {
+          disabled: ({ record }) => record?.get('name') === '123',
+        },
       },
       {
         name: 'numberMultiple',
-        type: 'number',
-        label: '数值多值',
-        multiple: true,
-        min: 10,
-        max: 100,
-        step: 0.5,
+        type: 'curreny',
+        label: '金额range',
+        range: true,
+        currency: 'USD'
       },
       {
         name: 'code_code',
@@ -98,13 +125,8 @@ class App extends React.Component {
         label: '代码',
         maxLength: 20,
         // required: true,
-        computedProps: codeCodeDynamicProps,
-      },
-      {
-        name: 'code_description',
-        computedProps: codeDescriptionDynamicProps,
-        type: 'string',
-        label: '代码描述',
+        // computedProps: codeCodeDynamicProps,
+          bind: 'code.code',
       },
       {
         name: 'code_select',
@@ -132,26 +154,28 @@ class App extends React.Component {
         name: 'codeMultiple_description',
         bind: 'codeMultiple.description',
         type: 'string',
-        label: '代码描述',
+        label: '代码描述bind',
         multiple: ',',
       },
       {
         name: 'sex.text',
         type: 'string',
-        label: '添加筛选',
         textField: 'text',
         valueField: 'value',
         options: this.optionDs, // 下拉框组件的菜单数据集
         defaultValue: 'F',
       },
-      { name: 'date.startDate', type: 'date', label: '开始日期' },
-      { name: 'status', type: 'string', label: 'status' },
+      { name: 'startDate', type: 'date', label: '开始日期' },
+      { name: 'status', type: 'string', label: 'status', disabled: true },
       {
         name: 'sexMultiple',
         type: 'string',
         label: '性别（多值）',
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: true,
+        computedProps: {
+          disabled: ({ record }) => record?.get('name') === '123',
+        },
       },
     ],
     fields: [
@@ -174,20 +198,69 @@ class App extends React.Component {
   });
 
   get columns() {
-    return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
+    return [{ name: 'name', width: 450, sortable: true }, { name: 'age', sortable: true }];
   }
 
   render() {
+    window.ds = this.ds;
     return (
       <Table
         searchCode='xxx'
         buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
         dataSet={this.ds}
+        // queryFields={{
+        //   age: <NumberField addonAfter="%"/>
+        // }}
         queryBar="filterBar"
         queryBarProps={{
-          dynamicFilterBar: { 
-            // suffixes: ['filter'], 
-            // prefixes: ['filter'], 
+          // 高级搜索配置
+          advancedSearchFields: [
+            {
+              name: 'name',
+              alias: 'nameAlias',
+              source: 'queryFields'
+            },
+            {
+              name: 'code',
+              alias: 'codeId',
+              source: 'queryFields'
+            },
+            {
+              name: 'code_code',
+              alias: 'code_bind',
+              source: 'queryFields'
+            },
+            {
+              name: 'age',
+              source: 'fields',
+              // fieldPorps: {
+              //   label: '高级年龄',
+              // },
+            },
+            {
+              name: 'startDate',
+              tableName: 'TABLENAME',
+              source: 'queryFields',
+            },
+            {
+              name: 'newText',
+              fieldPorps: {
+                label: '新字段',
+                type: 'string',
+        label: '性别（多值）',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+              },
+              source: 'other',
+            },
+          ],
+          // fuzzyQuery: false,
+          // autoQuery: false,
+          // onRefresh: () => {
+          //   console.log('props onRefresh');
+          //   return false;
+          // },
+          dynamicFilterBar: {
+            prefixes: ['filter'],
             tableFilterAdapter: (props) => {
               const { config, config: { data }, type, searchCode, queryDataSet, tableFilterTransport } = props;
               console.log('defaultTableFilterAdapter config', config);

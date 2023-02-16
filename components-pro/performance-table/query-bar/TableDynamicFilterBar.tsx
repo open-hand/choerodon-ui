@@ -883,6 +883,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             optionDataSet: queryDataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
+            newFilterDataSet: {} as DataSet,
           }}
         >
           <QuickFilterMenu />
