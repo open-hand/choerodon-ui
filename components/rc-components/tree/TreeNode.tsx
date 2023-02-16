@@ -498,15 +498,13 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           !disabled && (selected || dragNodeHighlight) && `${prefixCls}-node-selected`,
           !disabled && mergedDraggable && 'draggable',
         )}
-        draggable={(!disabled && mergedDraggable) || undefined}
-        aria-grabbed={(!disabled && mergedDraggable) || undefined}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onContextMenu={this.onContextMenu}
-        onDragStart={mergedDraggable ? this.onDragStart : undefined}
       >
         {$icon}
         {$title}
+        {this.renderDropIndicator()}
       </span>
     );
   };
@@ -573,6 +571,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const { level } = keyEntities[eventKey!] || {};
     const isEndNode = isEnd[isEnd.length - 1];
     const mergedDraggable = this.getMergedDraggable(draggable, data);
+    const draggableWithoutDisabled = !disabled && mergedDraggable;
+
     return (
       <>
         <Ripple disabled={disabled || !ripple || !this.isSelectable()}>
@@ -596,6 +596,8 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
               'filter-node': filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props)),
             })}
             style={style}
+            draggable={draggableWithoutDisabled}
+            onDragStart={draggableWithoutDisabled ? this.onDragStart : undefined}
             onClick={this.onSelectorClick}
             onDoubleClick={this.onSelectorDoubleClick}
             onDragEnter={mergedDraggable ? this.onDragEnter : undefined}
@@ -613,7 +615,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
             {this.renderSelector()}
           </div>
         </Ripple>
-        {this.renderDropIndicator()}
       </>
     );
   }

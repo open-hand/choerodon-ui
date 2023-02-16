@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
 - 💄 `Avatar`: Optimize `Avatar.Group` overflow style.
 - 💄 `<pro>DatePicker`: Optimize click today and this week to change the style in the case of multiple selections.
+- 💄 `<pro>Tree`: Optimize the dragging and sorting of tree components and the problem that icon cannot be dragged.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.

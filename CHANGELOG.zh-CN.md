@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>NumberField`: 支持非步距模式下的 clearButton 属性。
 - 💄 `Avatar`: 优化 Avatar.Group 溢出样式。
 - 💄 `<pro>DatePicker`: 优化多选情况下点击今天、本周会有样式变化。
+- 💄 `<pro>Tree`: 优化树组件拖拽排序及 icon 无法拖拽的问题。
 - 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
 - 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
 - 🐞 `WaterMark`: 修复水印样式可以修改的问题。

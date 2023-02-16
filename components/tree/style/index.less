@@ -87,6 +87,7 @@
       width: 0.24rem;
       height: 0.24rem;
       color: @tree-node-selected-bg;
+      cursor: move;
 
       i.icon {
         display: flex;
@@ -166,6 +167,7 @@
 
     // >>> Title
     & &-node-content-wrapper {
+      position: relative;
       min-height: @tree-title-height;
       margin: 0;
       padding: 0 4px;
@@ -214,7 +216,7 @@
     }
 
     .@{tree-node-prefix-cls}.drag-over {
-      > [draggable] {
+      > .draggable {
         color: white;
         background-color: @tree-primary-color;
         opacity: 0.8;
@@ -229,6 +231,9 @@
       > [draggable] {
         border-bottom-color: @tree-primary-color;
       }
+    }
+    &-drop-indicator {
+      background-color: @tree-primary-color;
     }
 
     // ==================== Show Line =====================

@@ -457,6 +457,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       direction,
     );
 
@@ -557,6 +558,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragChildrenKeys,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       indent,
     } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
@@ -578,6 +580,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       direction,
     );
 
