@@ -15,7 +15,6 @@ export default function DropIndicator({
     pointerEvents: 'none',
     position: 'absolute',
     right: 0,
-    backgroundColor: 'red',
     height: 2,
   };
   switch (dropPosition) {
