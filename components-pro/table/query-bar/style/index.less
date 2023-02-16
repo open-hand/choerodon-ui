@@ -494,6 +494,24 @@
       .@{select-prefix-cls}-placeholder {
         color: @disabled-color;
       }
+
+      &:not(:focus-within) {
+        input::-webkit-input-placeholder {
+          color: transparent;
+        }
+
+        input:-moz-placeholder {
+          color: transparent;
+        }
+
+        input::-moz-placeholder {
+          color: transparent;
+        }
+        
+        input:-ms-input-placeholder {
+          color: transparent;
+        }
+      }
     }
 
     i {
@@ -600,23 +618,15 @@
     }
 
     // lov 单选多选通用样式
-    &.@{c7n-pro-prefix}-lov-click {
-      .@{select-prefix-cls} {
-        min-width: 1.34rem !important;
-      }
-    }
-
     .@{select-prefix-cls}-lov {
       .@{select-prefix-cls} {
         max-width: 0;
       }
-
-      &.@{select-prefix-cls}-expand {
-        .@{select-prefix-cls} {
-          min-width: 1.34rem !important;
-          max-width: 4rem;
-          margin-left: 0;
-        }
+    }
+    &.@{c7n-pro-prefix}-lov-click {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
       }
     }
 
@@ -675,6 +685,21 @@
       .@{select-prefix-cls},
       .@{select-prefix-cls}-multiple-value {
         max-width: 0;
+      }
+      &:focus-within {
+        .@{select-prefix-cls},
+        .@{select-prefix-cls}-multiple-value {
+          min-width: 1.34rem;
+          max-width: 4rem;
+        }
+      }
+    }
+    // select lov 存在下拉搜索时的样式兼容
+    .@{select-prefix-cls}-expand {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
+        margin-left: 0 !important;
       }
     }
 
