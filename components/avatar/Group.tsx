@@ -59,6 +59,7 @@ export default class Group extends React.Component<GroupProps> {
         [`${numberCls}-lg`]: size === Size.large,
         [`${numberCls}-sm`]: size === Size.small,
       });
+      const additionNumber = Math.min(numOfChildren - maxCount, 99);
       childrenShow.push(
         <Popover
           key="avatar-popover-key"
@@ -69,7 +70,7 @@ export default class Group extends React.Component<GroupProps> {
         >
           <span className={`${prefixCls}-popover-mask`}>
             {childrenHidden[0]}
-            <span style={maxStyle} className={popverNumberCls}>+{numOfChildren - maxCount}</span>
+            <span style={maxStyle} data-contentlength={`+${additionNumber}`.length} className={popverNumberCls}>+{additionNumber}</span>
           </span>
         </Popover>,
       );
