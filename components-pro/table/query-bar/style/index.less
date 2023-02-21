@@ -427,6 +427,29 @@
     align-items: center;
     font-size: @font-size-base;
 
+    // 非聚焦态时，placeholder 隐藏
+    &:not(:focus-within) {
+      input::-webkit-input-placeholder {
+        color: transparent !important;
+      }
+
+      input:-moz-placeholder {
+        color: transparent !important;
+      }
+
+      input::-moz-placeholder {
+        color: transparent !important;
+      }
+      
+      input:-ms-input-placeholder {
+        color: transparent !important;
+      }
+
+      [class*='-placeholder-inner'] {
+        color: transparent !important;
+      }
+    }
+
     .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
       height: 0.24rem;
     }
@@ -495,23 +518,6 @@
         color: @disabled-color;
       }
 
-      &:not(:focus-within) {
-        input::-webkit-input-placeholder {
-          color: transparent;
-        }
-
-        input:-moz-placeholder {
-          color: transparent;
-        }
-
-        input::-moz-placeholder {
-          color: transparent;
-        }
-        
-        input:-ms-input-placeholder {
-          color: transparent;
-        }
-      }
     }
 
     i {
@@ -686,7 +692,7 @@
       .@{select-prefix-cls}-multiple-value {
         max-width: 0;
       }
-      &:focus-within {
+      &:not(.c7n-pro-select-lov):focus-within {
         .@{select-prefix-cls},
         .@{select-prefix-cls}-multiple-value {
           min-width: 1.34rem;
