@@ -442,6 +442,29 @@
     align-items: center;
     font-size: @font-size-base;
 
+    // 非聚焦态时，placeholder 隐藏
+    &:not(:focus-within) {
+      input::-webkit-input-placeholder {
+        color: transparent !important;
+      }
+
+      input:-moz-placeholder {
+        color: transparent !important;
+      }
+
+      input::-moz-placeholder {
+        color: transparent !important;
+      }
+      
+      input:-ms-input-placeholder {
+        color: transparent !important;
+      }
+
+      [class*='-placeholder-inner'] {
+        color: transparent !important;
+      }
+    }
+
     .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
       height: @table-dynamic-filter-number-step-height;
     }
@@ -509,6 +532,7 @@
       .@{select-prefix-cls}-placeholder {
         color: @disabled-color;
       }
+
     }
 
     i {
@@ -616,23 +640,15 @@
     }
 
     // lov 单选多选通用样式
-    &.@{c7n-pro-prefix}-lov-click {
-      .@{select-prefix-cls} {
-        min-width: 1.34rem !important;
-      }
-    }
-
     .@{select-prefix-cls}-lov {
       .@{select-prefix-cls} {
         max-width: 0;
       }
-
-      &.@{select-prefix-cls}-expand {
-        .@{select-prefix-cls} {
-          min-width: 1.34rem !important;
-          max-width: 4rem;
-          margin-left: 0;
-        }
+    }
+    &.@{c7n-pro-prefix}-lov-click {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
       }
     }
 
@@ -691,6 +707,21 @@
       .@{select-prefix-cls},
       .@{select-prefix-cls}-multiple-value {
         max-width: 0;
+      }
+      &:not(.c7n-pro-select-lov):focus-within {
+        .@{select-prefix-cls},
+        .@{select-prefix-cls}-multiple-value {
+          min-width: 1.34rem;
+          max-width: 4rem;
+        }
+      }
+    }
+    // select lov 存在下拉搜索时的样式兼容
+    .@{select-prefix-cls}-expand {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
+        margin-left: 0 !important;
       }
     }
 

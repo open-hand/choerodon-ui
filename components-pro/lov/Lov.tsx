@@ -317,6 +317,7 @@ export default class Lov extends Select<LovProps> {
     const { options } = this;
     if (config && options) {
       let lovViewProps;
+      if (!this.popup) delete this.fetched;
       if (this.popup && !this.fetched) {
         runInAction(() => {
           lovViewProps = this.beforeOpen(options);
@@ -704,7 +705,7 @@ export default class Lov extends Select<LovProps> {
   handleKeyDown(e) {
     if (!this.popup && e.keyCode === KeyCode.DOWN) {
       stopEvent(e);
-      this.openModal();
+      this.handleOpenModal();
     }
     if (e.keyCode === KeyCode.ENTER && this.props.searchAction === SearchAction.blur) {
       stopEvent(e);

@@ -30,11 +30,13 @@ timeline: true
 - 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
 - 💄 `Avatar`: Optimize `Avatar.Group` overflow style.
 - 💄 `<pro>DatePicker`: Optimize click today and this week to change the style in the case of multiple selections.
+- 💄 `<pro>Tree`: Optimize the dragging and sorting of tree components and the problem that icon cannot be dragged.
 - 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
 - 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
 - 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
 - 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
 - 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
+- 🐞 `<pro>Lov`: Fix the problem that the popup mode cascading parameter change does not re-query.
 - 🐞 `<pro>Select`: Fix the problem of repeated query when selecting values in pagination in the multi-select reserved query parameter mode.
 - 🐞 `<pro>Lov`: Fixed the problem that the default value is repeated by selecting all values.
 - 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.

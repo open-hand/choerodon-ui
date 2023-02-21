@@ -13,6 +13,7 @@ import isEqual from 'lodash/isEqual';
 import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import omit from 'lodash/omit';
+import defer from 'lodash/defer';
 import difference from 'lodash/difference';
 import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -1166,7 +1167,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 required
                 value={dataSet.getState(SEARCHEXP) ?
                   dataSet.getState(SEARCHEXP) :
-                  (menuDataSet.current ? menuDataSet.current.get('conExpression') : undefined)}
+                  (menuDataSet.current && menuDataSet.current.get('conExpression') !== 'customize' ? menuDataSet.current.get('conExpression') : undefined)}
                 onChange={(value) => {
                   dataSet.setState(SEARCHEXP, value);
                   if (menuDataSet.current) {
@@ -1589,13 +1590,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   <div
                     className={itemContentClassName}
                     key={name}
-                    onClick={() => {
+                    onMouseDown={() => {
                       if (!isDisabled) {
                         const editor = this.refEditors.get(name);
-                        const filterItem = this.refFilterItems.get(name);
                         if (editor) {
-                          this.refEditors.get(name).focus();
+                          defer(() => {
+                            this.refEditors.get(name).focus();
+                          }, 50);
                         }
+                      }
+                    }}
+                    onClick={() => {
+                      if (!isDisabled) {
+                        const filterItem = this.refFilterItems.get(name);
                         if (filterItem) {
                           if (!filterItem.className.includes("c7n-pro-lov-click")) {
                             filterItem.className += ' c7n-pro-lov-click';
@@ -1662,13 +1669,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     <div
                       className={itemContentClassName}
                       key={name}
-                      onClick={() => {
+                      onMouseDown={() => {
                         if (!isDisabled) {
                           const editor = this.refEditors.get(name);
-                          const filterItem = this.refFilterItems.get(name);
                           if (editor) {
-                            this.refEditors.get(name).focus();
+                            defer(() => {
+                              this.refEditors.get(name).focus();
+                            }, 50);
                           }
+                        }
+                      }}
+                      onClick={() => {
+                        if (!isDisabled) {
+                          const filterItem = this.refFilterItems.get(name);
                           if (filterItem) {
                             if (!filterItem.className.includes("c7n-pro-lov-click")) {
                               filterItem.className += ' c7n-pro-lov-click';

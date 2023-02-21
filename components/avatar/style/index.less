@@ -102,11 +102,17 @@
       color: rgb(255, 255, 255);
       font-size: @avatar-font-size-base;
       transform: translate(-50%, -50%);
-      &-lg {
+      &-lg[data-contentlength="3"] {
+        font-size: @avatar-group-number-lg;
+      }
+      &-lg[data-contentlength="2"] {
         font-size: @avatar-font-size-lg;
       }
     
-      &-sm {
+      &-sm[data-contentlength="3"] {
+        font-size: @avatar-group-number-sm;
+      }
+      &-sm[data-contentlength="2"] {
         font-size: @avatar-font-size-sm;
       }
     }
