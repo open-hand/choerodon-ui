@@ -248,6 +248,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     sortableFieldNames,
     searchText = 'params',
     loadConditionData = noop,
+    defaultActiveKey,
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -448,7 +449,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else if (searchId === null) {
       handleQueryReset();
     } else {
-      const defaultMenus = menuDataSet ? menuDataSet.filter((menu) => menu.get('defaultFlag')) : [];
+      const defaultMenus = menuDataSet ? menuDataSet.filter((menu) => {
+        return defaultActiveKey ? menu.get('searchId') === defaultActiveKey : menu.get('defaultFlag');
+      }) : [];
       const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus.length && defaultMenus[0].index;
       if (defaultMenus.length && defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);

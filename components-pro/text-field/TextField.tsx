@@ -563,15 +563,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return true;
     }
     const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
-    const { tooltip = getTooltip('text-field-disabled') } = this.props;
+    const { tooltip: inputTooltip } = this.props;
+    const disabledTooltip =  getTooltip('text-field-disabled');
     const { element } = this;
     const title = this.getRenderedValue();
-    if (element && this.disabled && !this.multiple && title) {
+    const tooltip = this.disabled ? disabledTooltip : inputTooltip;
+    const tooltipPlacement = this.disabled ? getTooltipPlacement('text-field-disabled') : getTooltipPlacement('output');
+    const tooltipTheme = this.disabled ? getTooltipTheme('text-field-disabled') : getTooltipTheme('output');
+    if (element && !this.multiple && title) {
       if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) {
         show(element, {
           title,
-          placement: getTooltipPlacement('text-field-disabled') || 'right',
-          theme: getTooltipTheme('text-field-disabled'),
+          placement: tooltipPlacement || 'right',
+          theme: tooltipTheme,
         });
         return true;
       }
@@ -582,8 +586,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(element))) {
           show(element, {
             title: TextTooltipProps.title ? TextTooltipProps.title : title,
-            placement: getTooltipPlacement('text-field-disabled') || 'right',
-            theme: getTooltipTheme('text-field-disabled'),
+            placement: tooltipPlacement || 'right',
+            theme: tooltipTheme,
             ...TextTooltipProps,
           }, mouseEnterDelay);
           return true;

@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added dynamic filter bar to support saving fuzzy search function.
 - 🌟 `<pro>Table`: Added dynamic filter bar to support advanced filter configuration function.
 - 🌟 `<pro>Lov`: Added `percent` field type display.
+- 🌟 `<pro>TextField`: Add `tooltip` property to support overflow prompt in edit mode.
 - 🌟 `Calendar`: Added `headerRender` property of customize calendar header content.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
@@ -52,6 +53,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
 - 🐞 `WaterMark`: Fixed the problem that selecting a hidden node in the browser console would hide the watermark.
 - 🐞 `<pro>Table`: Fix odd and even row style error caused by deleting rows when showRemovedRow is false & When rows are deleted when showRemovedRow is false in virtual scroll mode, the page appears blank and the scroll bar does not shrink.
+- 🐞 `<pro>SelectBox`: Fix the problem that verification failed and could not focus automatically.
 
 ## 1.5.8
 

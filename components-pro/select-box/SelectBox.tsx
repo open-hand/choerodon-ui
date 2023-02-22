@@ -123,6 +123,7 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
     const { name, options, filteredOptions, textField, valueField, readOnly, disabled, mode } = this;
     const { autoFocus, onOption, optionRenderer, optionsFilter } = this.props;
     const highlight = this.getDisplayProp('highlight');
+    let hasRef = false;
     const items = filteredOptions.reduce<ReactElement<any>[]>((arr, record, index, data) => {
       if (!optionsFilter || optionsFilter(record, index, data)) {
         const optionProps = onOption({ dataSet: options, record });
@@ -151,6 +152,10 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
           highlight,
           ...this.getOptionOtherProps(checked),
         };
+        if (!hasRef && !disabled && !(itemProps.disabled || optionProps.disabled)) {
+          itemProps.ref = this.elementReference;
+          hasRef = true;
+        }
         arr.push(this.renderItem(optionProps ? {
           ...optionProps,
           ...itemProps,

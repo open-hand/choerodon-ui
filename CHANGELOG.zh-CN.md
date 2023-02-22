@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增动态筛选条支持保存模糊搜索功能。
 - 🌟 `<pro>Table`: 新增动态筛选条支持高级筛选配置功能。
 - 🌟 `<pro>Lov`: 新增 percent 字段类型显示。
+- 🌟 `<pro>TextField`: 新增 tooltip 属性支持编辑态下溢出提示。
 - 🌟 `Calendar`: 新增 headerRender 属性自定义日历头部内容.
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
@@ -52,6 +53,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 DateTime 模式下确认按钮颜色样式问题。
 - 🐞 `WaterMark`: 修复在浏览器控制台中选择隐藏节点会隐藏水印的问题。
 - 🐞 `<pro>Table`: 修复 showRemovedRow 为 false 时删除行引起的奇偶行样式错误的问题 & 虚拟滚动模式下 showRemovedRow 为 false 时删除行时，页面出现空白且滚动条不收缩的问题。
+- 🐞 `<pro>SelectBox`: 修复校验失败无法自动聚焦的问题。
 
 ## 1.5.8
 
