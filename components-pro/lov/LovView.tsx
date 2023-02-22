@@ -125,7 +125,7 @@ export default class LovView extends Component<LovViewProps> {
             );
           } else if (gridFieldType && gridFieldType.toLowerCase() === 'percent') {
             column.renderer = ({ value }) => (
-              value ? `${math.multipliedBy(value, 100)}%` : undefined
+              value ? `${math.multipliedBy(value, 100)}%` : value
             );
           }
           return {
