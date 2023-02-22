@@ -150,12 +150,12 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
           noValidate: true,
           labelLayout: LabelLayout.none,
           highlight,
-          ...this.getOptionOtherProps(checked),
         };
         if (!hasRef && !disabled && !(itemProps.disabled || optionProps.disabled)) {
           itemProps.ref = this.elementReference;
           hasRef = true;
         }
+        Object.assign(itemProps, this.getOptionOtherProps(checked));
         arr.push(this.renderItem(optionProps ? {
           ...optionProps,
           ...itemProps,
