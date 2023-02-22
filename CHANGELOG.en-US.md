@@ -52,6 +52,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
 - 🐞 `WaterMark`: Fixed the problem that selecting a hidden node in the browser console would hide the watermark.
 - 🐞 `<pro>Table`: Fix odd and even row style error caused by deleting rows when showRemovedRow is false & When rows are deleted when showRemovedRow is false in virtual scroll mode, the page appears blank and the scroll bar does not shrink.
+- 🐞 `<pro>SelectBox`: Fix the problem that verification failed and could not focus automatically.
 
 ## 1.5.8
 
