@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增动态筛选条支持保存模糊搜索功能。
 - 🌟 `<pro>Table`: 新增动态筛选条支持高级筛选配置功能。
 - 🌟 `<pro>Lov`: 新增 percent 字段类型显示。
+- 🌟 `<pro>TextField`: 新增 tooltip 属性支持编辑态下溢出提示。
 - 🌟 `Calendar`: 新增 headerRender 属性自定义日历头部内容.
 - 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
 - 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。

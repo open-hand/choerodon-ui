@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added dynamic filter bar to support saving fuzzy search function.
 - 🌟 `<pro>Table`: Added dynamic filter bar to support advanced filter configuration function.
 - 🌟 `<pro>Lov`: Added `percent` field type display.
+- 🌟 `<pro>TextField`: Add `tooltip` property to support overflow prompt in edit mode.
 - 🌟 `Calendar`: Added `headerRender` property of customize calendar header content.
 - 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
 - 💄 `<pro>Table`: Optimize dynamic filter bar style.
