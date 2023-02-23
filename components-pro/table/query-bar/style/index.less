@@ -617,8 +617,14 @@
     // 各类别输入框的宽度效果实现
     // 空值 Lov 右侧行内样式 padding 抵消
     &:not(.@{c7n-pro-prefix}-lov-click) {
-      .@{select-prefix-cls}-lov:not(.@{select-prefix-cls}-disabled) .@{select-prefix-cls} {
-        margin-left: -0.12rem;
+      .@{select-prefix-cls}-lov {
+        &:not(.@{select-prefix-cls}-disabled) .@{select-prefix-cls} {
+          margin-left: -0.12rem;
+        }
+        // 空值 lov placeholder，非聚焦态不展示
+        .@{select-prefix-cls}-placeholder-inner {
+          color: transparent;
+        }
       }
     }
 
