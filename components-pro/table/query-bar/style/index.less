@@ -288,6 +288,7 @@
 
     &-disabled {
       background-color: @disabled-bg;
+      border-color: @input-border-color;
 
       .@{table-prefix-cls}-filter-label {
         color: @disabled-color;
@@ -296,6 +297,7 @@
 
       &:hover {
         border-color: @input-border-color;
+        box-shadow: none;
       }
 
       &:hover div[class*='-suffix'] i {
