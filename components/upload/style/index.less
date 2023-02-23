@@ -3,7 +3,6 @@
 
 @upload-prefix-cls: ~'@{c7n-prefix}-upload';
 @upload-item: ~'@{c7n-prefix}-upload-list-item';
-@upload-pictrue-card-size: 0.98rem;
 
 .@{upload-prefix-cls} {
   .reset-component;
@@ -33,15 +32,15 @@
 
   &&-select-picture-card {
     display: table;
-    width: @upload-pictrue-card-size;
-    height: @upload-pictrue-card-size;
+    width: @upload-picture-card-size;
+    height: @upload-picture-card-size;
     //margin-right: 0.08rem;
     //margin-bottom: 0.08rem;
     margin: 0.04rem;
     text-align: center;
     vertical-align: top;
     background-color: @background-color-light;
-    border: @border-width-base dashed @border-color-base;
+    border: @upload-picture-card-select-border;
     border-radius: @border-radius-base;
     cursor: pointer;
     transition: border-color @animation-duration-slow ease;
@@ -106,21 +105,22 @@
 
     p.@{upload-prefix-cls}-drag-icon {
       .@{iconfont-css-prefix} {
-        color: @primary-5;
-        font-size: 0.48rem;
+        color: @upload-drag-icon-color;
+        font-size: @upload-drag-icon-size;
       }
 
-      margin-bottom: 0.2rem;
+      margin: @upload-drag-icon-margin;
     }
 
     p.@{upload-prefix-cls}-text {
       margin: 0 0 0.04rem;
-      color: @heading-color;
-      font-size: @font-size-lg;
+      color: @upload-drag-text-color;
+      font-size: @upload-drag-text-font-size;
+      line-height: @upload-drag-text-line-height;
     }
 
     p.@{upload-prefix-cls}-hint {
-      color: @text-color-secondary;
+      color: @upload-drag-hint-color;
       font-size: @font-size-base;
     }
 
@@ -150,7 +150,7 @@
   .reset-component;
   .clearfix;
 
-  &-item {
+  &-item {  
     margin-top: 0.08rem;
     font-size: @font-size-sm;
 
@@ -163,6 +163,12 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      a& {
+        color: @upload-list-item-name-link-color;
+        &:hover {
+          color: @upload-list-item-name-link-hover-color;
+        }
+      }
     }
 
     &-info {
@@ -186,14 +192,14 @@
     .@{iconfont-css-prefix}-close {
       right: 0.04rem;
       flex: none;
-      color: @text-color-secondary;
+      color: @upload-list-item-close-icon-color;
       font-size: 0.16rem;
       cursor: pointer;
       opacity: 0;
       transition: all @animation-duration-slow;
 
       &:hover {
-        color: @text-color;
+        color: @upload-list-item-close-icon-hover-color;
       }
     }
 
@@ -211,7 +217,8 @@
 
     &-error,
     &-error &-info-filesize,
-    &-error &-name {
+    &-error &-name,
+    &-error &-name:hover {
       color: @error-color;
     }
 
@@ -232,7 +239,7 @@
     &-progress {
       bottom: -0.12rem;
       width: 100%;
-      padding-left: @font-size-base + 0.12rem;
+      padding-left: calc(@font-size-base + 0.12rem);
       font-size: @font-size-base;
       line-height: 0;
     }
@@ -253,7 +260,7 @@
 
     .@{upload-item}-reupload-text {
       padding-right: 0.08rem;
-      color: #0840F8;
+      color: @upload-reupload-color;
       cursor: pointer;
       opacity: 0;
       transition: all @animation-duration-slow;
@@ -367,8 +374,8 @@
 
     .@{iconfont-css-prefix}-close {
       position: absolute;
-      top: 0.08rem;
-      right: 0.08rem;
+      top: @upload-list-picture-close-icon-top;
+      right: @upload-list-picture-close-icon-right;
       line-height: 1;
     }
   }
@@ -407,7 +414,7 @@
       position: absolute;
       top: 50%;
       right: 0.3rem;
-      color: #0840F8;
+      color: @upload-reupload-color;
       transform: translateY(-50%);
       cursor: pointer;
       opacity: 0;
@@ -424,8 +431,8 @@
 
     .@{upload-item} {
       float: left;
-      width: @upload-pictrue-card-size;
-      height: @upload-pictrue-card-size;
+      width: @upload-picture-card-size;
+      height: @upload-picture-card-size;
       //margin: 0 0.08rem 0.08rem 0;
       margin: 0.04rem;
     }
@@ -548,7 +555,7 @@
       }
 
       &-text {
-        margin-top: 0.18rem;
+        margin: @upload-picture-card-uploading-text-margin;
         color: @text-color-secondary;
       }
     }

@@ -3,7 +3,7 @@
 
 @checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
 
-.dropdown-menu-item () {
+.cascader-dropdown-menu-item () {
   &-item-group {
     padding-top: 0.04rem;
     padding-bottom: 0.04rem;
@@ -70,6 +70,7 @@
     }
 
     &-selected {
+      font-weight: @item-selected-font-weight;
       background-color: @item-focus-bg;
     }
 
@@ -87,13 +88,13 @@
   }
 }
 
-.dropdown-menu () {
+.cascader-dropdown-menu () {
   max-height: 2.5rem;
   margin-bottom: 0;
-  padding: 0.08rem 0;
+  padding: @dropdown-menu-padding;
   overflow: auto;
   list-style: none;
   outline: none;
-  .dropdown-menu-item;
+  .cascader-dropdown-menu-item;
   .checked(@checkbox-prefix-cls, @select-primary-color);
 }

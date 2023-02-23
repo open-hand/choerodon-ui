@@ -40,6 +40,10 @@
   margin-right: 0.08rem;
   white-space: nowrap;
   cursor: pointer;
+
+  &:hover .@{radio-prefix-cls}-input:not(:disabled):not(:checked) + .@{radio-prefix-cls}-inner {
+    border-color: @radio-uncheck-hover-border-color;
+  }
 }
 
 .@{radio-prefix-cls} {
@@ -94,25 +98,30 @@
 .@{radio-prefix-cls}-checked {
   .@{radio-inner-prefix-cls} {
     padding: 0.02rem;
-    background-color: @radio-dot-color;
+    background-color: @radio-check-dot-color;
     background-clip: content-box;
-    border-color: @radio-dot-color;
+    border-color: @radio-check-border-color;
+    border-width: @radio-check-border-width;
   }
 }
 .@{radio-prefix-cls}-disabled.@{radio-prefix-cls}-checked {
   .@{radio-inner-prefix-cls} {
     background-color: @radio-disabled-check-color;
-    border-color: @radio-border-color;
+    border-color: @radio-basic-disabled-border-color;
   }
 }
 .@{radio-prefix-cls}-wrapper-disabled {
   cursor: not-allowed;
+
+  .@{radio-prefix-cls}-inner {
+    background-color: @radio-basic-disabled-bg;
+  }
 }
 .@{radio-prefix-cls}-disabled {
   cursor: not-allowed;
 
   & + span {
-    color: @input-disabled-color;
+    color: @radio-basic-disabled-color;
     cursor: not-allowed;
   }
 }
@@ -125,19 +134,25 @@ span.@{radio-prefix-cls} + * {
 .@{radio-prefix-cls}-button-wrapper {
   position: relative;
   display: inline-block;
-  height: @btn-height-base;
+  min-width: @radio-button-min-width;
+  height: @radio-button-line-height;
   margin: 0;
-  padding: 0 @padding-md - 0.01rem;
+  padding: @radio-basic-button-padding;
   color: @radio-button-color;
-  line-height: @btn-height-base - 0.02rem;
+  line-height: calc(@radio-button-line-height - @border-width-base * 2);
+  text-align: center;
   background: @radio-button-bg;
   border: @border-width-base @border-style-base @border-color-base;
   // strange align fix for chrome but works
   // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
-  border-top-width: @border-width-base + 0.0002rem;
+  border-top-width: calc(@border-width-base + 0.0002rem);
   border-left: 0;
   cursor: pointer;
   transition: all @animation-duration-slow ease;
+
+  &:not(&-disabled):not(&-checked):hover {
+    color: @radio-basic-button-uncheck-hover-color;
+  }
 
   a {
     color: @radio-button-color;
@@ -153,13 +168,13 @@ span.@{radio-prefix-cls} + * {
   .@{radio-group-prefix-cls}-large & {
     height: @input-height-lg;
     font-size: @font-size-lg;
-    line-height: @input-height-lg - 0.02rem;
+    line-height: calc(@input-height-lg - 0.02rem);
   }
 
   .@{radio-group-prefix-cls}-small & {
     height: @input-height-sm;
-    padding: 0 @control-padding-horizontal-sm - 0.01rem;
-    line-height: @input-height-sm - 0.02rem;
+    padding: 0 calc(@control-padding-horizontal-sm - 0.01rem);
+    line-height: calc(@input-height-sm - 0.02rem);
   }
 
   &:not(:first-child) {
@@ -176,15 +191,15 @@ span.@{radio-prefix-cls} + * {
   }
   &:first-child {
     border-left: @border-width-base @border-style-base @border-color-base;
-    border-radius: @border-radius-base 0 0 @border-radius-base;
+    border-radius: @radio-button-radius 0 0 @radio-button-radius;
   }
 
   &:last-child {
-    border-radius: 0 @border-radius-base @border-radius-base 0;
+    border-radius: 0 @radio-button-radius @radio-button-radius 0;
   }
 
   &:first-child:last-child {
-    border-radius: @border-radius-base;
+    border-radius: @radio-button-radius;
   }
 
   .@{radio-prefix-cls}-inner,
@@ -197,8 +212,8 @@ span.@{radio-prefix-cls} + * {
 
   &-checked {
     z-index: 1;
-    color: @radio-dot-color;
-    background: @radio-button-bg;
+    color: @radio-button-check-color;
+    background: @radio-button-check-bg;
     border-color: @radio-dot-color;
     box-shadow: -0.01rem 0 0 0 @radio-dot-color;
     &::before {
@@ -250,7 +265,11 @@ span.@{radio-prefix-cls} + * {
   &-disabled&-checked {
     color: #fff;
     background-color: #e6e6e6;
-    border-color: @border-color-base;
+    border-color: @radio-basic-disabled-border-color;
     box-shadow: none;
+  }
+
+  & + & {
+    margin-left: @radio-basic-button-group-spacing;
   }
 }

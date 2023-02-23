@@ -44,7 +44,7 @@
     }
   }
 
-  label:hover .@{intl-prefix-textarea}-suffix,
+  label:hover .@{intl-prefix-textarea} ~ .@{intl-prefix-textarea}-suffix,
   .@{intl-prefix-textarea}:hover ~ .@{intl-prefix-textarea}-suffix {
     border-color: @input-hover-border-color;
   }
@@ -71,7 +71,7 @@
     }
   }
 
-  &.@{intl-prefix-textarea}-required-colors label:hover {
+  &.@{intl-prefix-textarea}-required-colors:not(&-invalid) label:hover {
     .@{intl-prefix-textarea}-suffix {
       border-color: @input-required-hover-border-color;
     }
@@ -86,6 +86,18 @@
         box-shadow: @input-active-box-shadow;
       }
     }
+  }
+
+  &.@{intl-prefix-textarea}-required-colors .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-required-colors.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
+    border-color: @input-required-focus-border-color;
+    box-shadow: @input-required-active-box-shadow;
+  }
+
+  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-invalid.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
+    border-color: @input-error-border-color;
+    box-shadow: @input-error-active-box-shadow;
   }
 
   /* 校验失败 */

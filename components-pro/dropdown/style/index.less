@@ -3,8 +3,17 @@
 
 @dropdown-prefix-cls: ~"@{c7n-pro-prefix}-dropdown";
 @dropdown-button-prefix-cls: ~"@{c7n-pro-prefix}-dropdown-button";
+@menu-prefix-cls: ~'@{c7n-prefix}-menu';
 
 .@{dropdown-prefix-cls}-popup {
+  // Dropdown 内部的 Menu 首级 Item 字体大小控制
+  .@{menu-prefix-cls} {
+    &-root > .@{menu-prefix-cls}-item,
+    &-submenu-title {
+      font-size: @dropdown-menu-first-level-title-font-size;
+    }
+  }
+
   &.slide-down-enter.slide-down-enter-active&-placement-bottomLeft,
   &.slide-down-appear.slide-down-appear-active&-placement-bottomLeft,
   &.slide-down-enter.slide-down-enter-active&-placement-bottomCenter,

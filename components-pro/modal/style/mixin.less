@@ -81,7 +81,7 @@
     &-footer {
       flex-shrink: 0;
       padding: @modal-drawer-footer-padding;
-      text-align: left;
+      text-align: @modal-drawer-footer-text-align;
     }
   }
 
@@ -108,13 +108,13 @@
 
 .border-header() {
   &-border &-header {
-    border-bottom: @border-width-base @border-style-base @border-color-base;
+    border-bottom: @modal-header-footer-border;
   }
 }
 
 .border-footer() {
   &-border &-footer {
-    border-top: @border-width-base @border-style-base @border-color-base;
+    border-top: @modal-header-footer-border;
   }
 }
 

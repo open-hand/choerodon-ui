@@ -5,7 +5,7 @@
     overflow: visible;
     &-icon {
       float: left;
-      margin-right: 0.16rem;
+      margin-right: @steps-vertical-item-icon-margin-right;
     }
     &-content {
       display: block;
@@ -23,12 +23,12 @@
   > .@{steps-prefix-cls}-item > .@{steps-prefix-cls}-item-tail {
     position: absolute;
     top: 0;
-    left: 0.16rem;
-    width: 0.01rem;
+    left: @steps-vertical-item-tail-left;
+    width: @steps-tail-size;
     height: 100%;
-    padding: @steps-icon-size + 0.06rem 0 0.06rem;
+    padding: calc(@steps-icon-size + 0.06rem) 0 0.06rem;
     &::after {
-      width: 0.01rem;
+      width: @steps-tail-size;
       height: 100%;
     }
   }
@@ -50,7 +50,7 @@
       position: absolute;
       top: 0;
       left: 0.12rem;
-      padding: @steps-small-icon-size + 0.06rem 0 0.06rem;
+      padding: calc(@steps-small-icon-size + 0.06rem) 0 0.06rem;
     }
     .@{steps-prefix-cls}-item-title {
       line-height: @steps-small-icon-size;

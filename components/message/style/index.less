@@ -21,11 +21,30 @@
 
   &-notice-content {
     display: inline-block;
-    padding: 0.1rem 0.16rem;
-    background: @component-background;
+    padding: @message-notice-content-padding;
+    color: @message-notice-content-color;
+    line-height: @message-notice-content-line-height;
     border-radius: @border-radius-base;
     box-shadow: @shadow-2;
     pointer-events: all;
+    
+    &.@{message-prefix-cls}-content {
+      &-success {
+        background-color: @message-content-success-bg;
+      }
+      &-error {
+        background-color: @message-content-error-bg;
+      }
+      &-warning {
+        background-color: @message-content-warning-bg;
+      }
+      &-info {
+        background-color: @message-content-info-bg;
+      }
+      &-loading {
+        background-color: @message-content-loading-bg;
+      }
+    }
   }
 
   &-success .@{iconfont-css-prefix} {
@@ -60,7 +79,7 @@
 
   .@{iconfont-css-prefix} {
     position: relative;
-    top: 0.01rem;
+    top: @message-icon-top;
     margin-right: 0.08rem;
     font-size: @font-size-lg;
     vertical-align: top;

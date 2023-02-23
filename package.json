@@ -37,7 +37,8 @@
     "es",
     "pro",
     "dataset",
-    "shared"
+    "shared",
+    "outer-scripts"
   ],
   "typings": "lib/index.d.ts",
   "license": "MIT",
@@ -243,6 +244,7 @@
     "remark-parse": "^7.0.1",
     "remark-stringify": "^7.0.3",
     "remark-yaml-config": "^4.1.0",
+    "remove-files-webpack-plugin": "1.5.0",
     "reqwest": "^2.0.5",
     "rimraf": "^3.0.0",
     "rucksack-css": "^1.0.2",

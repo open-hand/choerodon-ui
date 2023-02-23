@@ -19,11 +19,11 @@
 
 // input status
 // == when focus or actived
-.active(@color: @input-focus-border-color) {
+.active(@color: @input-focus-border-color, @active-shadow: @input-active-box-shadow) {
   color: @input-active-color;
   border-color: @color;
   outline: 0;
-  box-shadow: @input-active-box-shadow;
+  box-shadow: @active-shadow;
 }
 
 // == when hoverd
@@ -101,7 +101,7 @@
   }
 
   &-compact:not(:last-child) {
-    margin-right: -@border-width-base;
+    margin-right: calc(-1 * @border-width-base);
     border-right-width: @border-width-base;
   }
 
@@ -131,6 +131,10 @@
   &-border &,
   &-border&-float-label::before {
     border-style: @border-style-base;
+  }
+
+  &-wrapper:not(&-border) & {
+    box-shadow: none !important;
   }
 
   &-wrapper {
@@ -170,11 +174,16 @@
     .hover;
   }
 
-  &-required-colors label:hover &,
+  &-required-colors:not(&-invalid) label:hover &,
   &-required-colors &:hover {
     .hover(@input-required-hover-border-color);
   }
 
+  &-required-colors:not(&-invalid) &:focus,
+  &-focused&-required-colors:not(&-invalid) & {
+    .active(@input-required-focus-border-color, @input-required-active-box-shadow);
+  }
+  
   &:focus,
   &-focused & {
     .active;
@@ -225,6 +234,7 @@
       display: inline-block;
       width: 100%;
       overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -256,7 +266,7 @@
     top: 0.01rem;
     bottom: 0.01rem;
     z-index: 1;
-    height: 0.2rem;
+    height: @input-suffix-height;
     margin: auto 0;
     line-height: 1;
     text-align: center;
@@ -272,10 +282,12 @@
   &-prefix {
     left: 0.01rem;
     width: @prefix-width;
+    color: @input-prefix-color;
   }
 
   &-suffix {
     width: @suffix-width;
+    color: @input-suffix-color;
   }
 
   &-suffix,
@@ -319,13 +331,18 @@
     opacity: 1;
   }
 
+  &-wrapper:not(&-disabled):hover &-suffix .icon,
+  &-wrapper&-focused &-suffix .icon {
+    color: @input-suffix-hover-color;
+  }
+
   &-wrapper:not(&-empty):hover &-allow-clear,
   &-focused:not(&-empty) &-allow-clear {
     opacity: 0;
   }
 
   &-suffix-button &-suffix:not(&-allow-clear) + &-clear-button {
-    right: @suffix-width + 0.01rem;
+    right: calc(@suffix-width + 0.01rem);
   }
 
   &-clear-button {
@@ -364,7 +381,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 
-    > li, span {
+    > li, > span {
       display: inline-block;
       max-width: 99%;
       height: @input-tag-height-base;
@@ -389,7 +406,7 @@
       width: 0.05rem;
       max-width: 100%;
       height: 100%;
-      margin-left: 0.1rem;
+      margin: @input-multiple-input-margin;
       padding: 0;
       background-color: transparent !important;
       border: none;
@@ -417,7 +434,7 @@
   }
 
   &-multiple&-lov &:not(:last-child) {
-    padding-right: @suffix-width * 2;
+    padding-right: calc(@suffix-width * 2);
   }
 
   &-multiple:not(&-suffix-button) &:not(:last-child) {
@@ -455,8 +472,8 @@
     &-input {
       display: inline-block;
       height: 100%;
-      line-height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
-      vertical-align: middle;
+      line-height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
+      vertical-align: top;
 
       .rang-placeholder;
     }
@@ -521,9 +538,11 @@
     &-help {
       padding-right: 0.05rem;
       padding-left: 0.05rem;
+      color: @input-addon-color;
+      font-size: @input-addon-font-size;
       word-break: keep-all;
       background-color: @input-addon-bg;
-      border: 0.01rem solid @input-border-color;
+      border: @border-width-base solid @input-border-color;
       border-radius: @input-border-radius;
     }
 
@@ -546,7 +565,7 @@
 
     &-help .icon-help {
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
 
     &-input {
@@ -629,6 +648,9 @@
   &-float-label&-required-colors:hover:not(&-disabled):not(&-focused):not(&-invalid)::before {
     border-color: @input-float-required-hover-border-color;
   }
+  &-float-label&-required-colors&-focused:not(&-disabled):not(&-invalid)::before {
+    border-color: @input-float-required-focus-border-color;
+  }
 
   &-float-label&-focused::before {
     border-color: @input-float-focus-border-color;
@@ -642,7 +664,8 @@
   }
 
   &-float-label&-disabled::before {
-    border-style: dashed;
+    border-color: @input-float-disabled-border-color;
+    border-style: @input-float-disabled-border-style;
   }
 
   &-float-label&-disabled &,
@@ -666,16 +689,16 @@
     border-radius: @input-float-border-radius;
   }
   &-float-label &:-webkit-autofill {
-    height: @float-label-height-base - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-base - @float-label-autofill-margin * 2);
     margin: @float-label-autofill-margin;
-    padding-left: @input-padding-horizontal - @float-label-autofill-margin;
+    padding-left: calc(@input-padding-horizontal - @float-label-autofill-margin);
     border-radius: @input-float-border-radius;
   }
   &-float-label&-sm &:-webkit-autofill {
-    height: @float-label-height-sm - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-sm - @float-label-autofill-margin * 2);
   }
   &-float-label&-lg &:-webkit-autofill {
-    height: @float-label-height-lg - @float-label-autofill-margin * 2;
+    height: calc(@float-label-height-lg - @float-label-autofill-margin * 2);
   }
 
   &-float-label textarea&:-webkit-autofill {
@@ -683,7 +706,7 @@
   }
 
   &-prefix-button&-float-label &:-webkit-autofill {
-    padding-left: @prefix-width - 0.02rem;
+    padding-left: calc(@prefix-width - 0.02rem);
   }
 }
 
@@ -693,7 +716,7 @@
   /* stylelint-disable */
   &-underline {
     position: absolute;
-    bottom: -@border-width-base;
+    bottom: calc(-1 * @border-width-base);
     width: 100%;
     height: 0;
     border-bottom: @border-width-base @border-style-base @input-baseline-color;
@@ -762,7 +785,7 @@
     vertical-align: top;
 
     &:not(:last-child) {
-      max-width: ~'calc(100% - .24rem)';
+      max-width: calc(100% - @input-tag-extra-space);
     }
   }
   &-invalid {

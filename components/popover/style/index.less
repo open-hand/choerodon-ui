@@ -10,6 +10,7 @@
   left: 0;
   z-index: @zindex-popover;
   font-weight: normal;
+  line-height: @popover-line-height;
   white-space: normal;
   text-align: left;
   cursor: auto;
@@ -59,25 +60,31 @@
 
   &-title {
     min-width: @popover-min-width;
-    min-height: 0.32rem;
+    min-height: @popover-min-height;
     margin: 0; // reset heading margin
-    padding: 0.05rem @padding-md 0.04rem;
+    padding: @popover-title-padding;
     color: @heading-color;
-    font-weight: 500;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    font-weight: @popover-title-font-weight;
+    font-size: @popover-title-font-size;
+    border-bottom: @popover-title-border-bottom;
+    & + .@{popover-prefix-cls}-inner-content {
+      padding: @popover-content-under-title-padding;
+    }
   }
 
   &-inner-content {
-    padding: 0.12rem @padding-md;
+    padding: @popover-inner-content-padding;
     color: @popover-color;
   }
 
   &-message {
-    padding: 0.04rem 0 0.12rem;
+    position: relative;
+    padding: @popover-message-padding;
     color: @popover-color;
     font-size: @font-size-base;
     > .@{iconfont-css-prefix} {
       position: absolute;
+      top: @popover-warning-icon-top;
       color: @warning-color;
       line-height: 1;
     }
@@ -100,8 +107,8 @@
   &-arrow {
     position: absolute;
     display: block;
-    width: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
-    height: sqrt(@popover-arrow-width * @popover-arrow-width * 2);
+    width: calc(1.414 * @popover-arrow-width);
+    height: calc(1.414 * @popover-arrow-width);
     background: @popover-bg;
     border-color: transparent;
     border-style: solid;
@@ -111,7 +118,7 @@
   &-placement-top > &-content > &-arrow,
   &-placement-topLeft > &-content > &-arrow,
   &-placement-topRight > &-content > &-arrow {
-    bottom: @popover-distance - @popover-arrow-width + @popover-arrow-offset;
+    bottom: calc(@popover-distance - @popover-arrow-width + @popover-arrow-offset);
     box-shadow: 0.03rem 0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
   &-placement-top > &-content > &-arrow {
@@ -128,7 +135,7 @@
   &-placement-right > &-content > &-arrow,
   &-placement-rightTop > &-content > &-arrow,
   &-placement-rightBottom > &-content > &-arrow {
-    left: @popover-distance - @popover-arrow-width + @popover-arrow-offset;
+    left: calc(@popover-distance - @popover-arrow-width + @popover-arrow-offset);
     box-shadow: -0.03rem 0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
   &-placement-right > &-content > &-arrow {
@@ -145,7 +152,7 @@
   &-placement-bottom > &-content > &-arrow,
   &-placement-bottomLeft > &-content > &-arrow,
   &-placement-bottomRight > &-content > &-arrow {
-    top: @popover-distance - @popover-arrow-width + @popover-arrow-offset;
+    top: calc(@popover-distance - @popover-arrow-width + @popover-arrow-offset);
     box-shadow: -0.01rem -0.01rem 0.04rem rgba(0, 0, 0, 0.06);
   }
   &-placement-bottom > &-content > &-arrow {
@@ -162,7 +169,7 @@
   &-placement-left > &-content > &-arrow,
   &-placement-leftTop > &-content > &-arrow,
   &-placement-leftBottom > &-content > &-arrow {
-    right: @popover-distance - @popover-arrow-width + @popover-arrow-offset;
+    right: calc(@popover-distance - @popover-arrow-width + @popover-arrow-offset);
     box-shadow: 0.03rem -0.03rem 0.07rem rgba(0, 0, 0, 0.07);
   }
   &-placement-left > &-content > &-arrow {

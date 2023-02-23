@@ -41,3 +41,26 @@
   }
 
 }
+
+.radio-invalid() {
+  .@{pro-radio-prefix-cls}.@{pro-radio-prefix-cls}:hover:not(:checked) + .@{pro-radio-prefix-cls}-inner,
+  .@{pro-radio-prefix-cls}-wrapper:hover .@{pro-radio-prefix-cls}.@{pro-radio-prefix-cls}:not(:checked) + .@{pro-radio-prefix-cls}-inner,
+  .@{pro-radio-prefix-cls}.@{pro-radio-prefix-cls}:focus:not(:checked) + .@{pro-radio-prefix-cls}-inner {
+      border-color: @error-color;
+
+    &::before {
+      background-color: @error-color;
+    }
+  }
+
+  .@{pro-radio-prefix-cls}:checked + .@{pro-radio-prefix-cls}-inner {
+    border-color: @error-color;
+    &::before {
+      background-color: @error-color;
+    }
+  }
+
+  .@{pro-radio-prefix-cls}.@{pro-radio-prefix-cls}:focus + .@{pro-radio-prefix-cls}-inner {
+    box-shadow: none;
+  }
+}

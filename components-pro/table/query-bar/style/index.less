@@ -2,7 +2,6 @@
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
 @select-prefix-cls: ~'@{c7n-pro-prefix}-select';
-@table-border: @border-width-base @border-style-base @table-border-color;
 @table-row-search-bg: @table-row-group-title-bg;
 
 .@{table-prefix-cls} {
@@ -78,24 +77,43 @@
     }
 
     input::-webkit-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input::-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-ms-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     .@{c7n-pro-prefix}-input-number-placeholder,
     .@{select-prefix-cls}-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
+    }
+
+    .@{table-prefix-cls}-filter-status {
+      width: 0.38rem;
+      height: 0.16rem;
+      margin: 0 0.12rem;
+      padding: 0;
+      color: @success-color;
+      line-height: @table-dynamic-filter-status-line-height;
+      text-align: center;
+      background: rgba(32, 212, 137, 0.12);
+      border: none;
+      border-radius: 0.02rem;
+  
+      span {
+        display: block;
+        height: 100%;
+        transform: scale(0.8);
+      }
     }
   }
 
@@ -116,7 +134,7 @@
     }
 
     .@{table-prefix-cls}-filter-buttons {
-      margin-top: 0.02rem;
+      margin: @table-dynamic-filter-single-action-buttons-margin;
     }
   }
 
@@ -185,12 +203,13 @@
       cursor: pointer;
 
       i {
+        color: @table-dynamic-filter-expand-query-icon-color;
         font-size: 0.16rem;
         background-color: #fafafa;
         border-radius: 0.02rem;
 
         &:hover {
-          color: @primary-color;
+          color: @table-dynamic-filter-refresh-icon-hover-color;
         }
       }
     }
@@ -210,6 +229,9 @@
     cursor: pointer;
 
     &:focus-within {
+      background-color: @component-background;
+      border-color: @primary-color;
+      box-shadow: @input-active-box-shadow;
       .@{table-prefix-cls}-filter-label {
         color: @text-color;
       }
@@ -236,13 +258,20 @@
     }
 
     &-required {
+      border-color: @table-dynamic-filter-required-border-color;
       .@{table-prefix-cls}-filter-label::before {
         display: inline-block;
         color: @label-required-color;
-        font-family: SimSun, sans-serif;
+        font-family: @font-family-required-symbol;
         vertical-align: middle;
         content: "*";
       }
+    }
+
+    &-required:hover,
+    &-required:focus-within {
+      border-color: @table-dynamic-filter-required-active-border-color;
+      box-shadow: @table-dynamic-filter-required-active-box-shadow;
     }
 
     &-invalid,
@@ -250,7 +279,7 @@
     &-invalid:focus-within {
       background-color: @error-bg-color;
       border-color: @error-color;
-
+      box-shadow: @input-error-active-box-shadow;
       .@{table-prefix-cls}-filter-label,
       div[class*='-suffix'] i {
         color: @error-color;
@@ -259,6 +288,7 @@
 
     &-disabled {
       background-color: @disabled-bg;
+      border-color: @input-border-color;
 
       .@{table-prefix-cls}-filter-label {
         color: @disabled-color;
@@ -267,6 +297,7 @@
 
       &:hover {
         border-color: @input-border-color;
+        box-shadow: none;
       }
 
       &:hover div[class*='-suffix'] i {
@@ -321,24 +352,7 @@
     }
   }
 
-  &-filter-status {
-    width: 0.38rem;
-    height: 0.16rem;
-    margin: 0 0.12rem;
-    padding: 0;
-    color: @success-color;
-    line-height: @line-height-base;
-    text-align: center;
-    background: rgba(32, 212, 137, 0.12);
-    border: none;
-    border-radius: 0.02rem;
 
-    span {
-      display: block;
-      height: 100%;
-      transform: scale(0.8);
-    }
-  }
 
   &-filterName-select {
     max-width: 1.72rem;
@@ -389,7 +403,7 @@
     align-items: center;
     height: @input-height-base;
     padding: 0.02rem 0;
-    color: #6A6A6A;
+    color: @table-dynamic-filter-label-color;
     font-size: @font-size-base;
 
     i {
@@ -406,7 +420,11 @@
 
     i {
       font-size: @font-size-lg;
-      line-height: .2rem;
+      line-height: 0.2rem;
+
+      &.icon-close {
+        line-height: @table-filter-search-close-icon-line-height;
+      }
 
       &:hover {
         color: @primary-color;
@@ -450,7 +468,7 @@
     }
 
     .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
-      height: 0.24rem;
+      height: @table-dynamic-filter-number-step-height;
     }
 
     [class*="-empty"] {
@@ -521,10 +539,10 @@
 
     i {
       font-size: @btn-icon-size;
-      line-height: @line-height-base;
+      line-height: @table-filter-item-icon-line-height;
     }
 
-    &-close {
+    i&-close {
       position: absolute;
       top: -0.07rem;
       right: -0.07rem;
@@ -559,7 +577,7 @@
       width: auto;
       min-width: unset;
       margin: 0;
-      padding: 0.01rem 0.02rem;
+      padding: @table-dynamic-filter-input-padding;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -577,7 +595,8 @@
         }
       }
 
-      &-required {
+      &-required,
+      &-invalid {
         background-color: transparent;
 
         &>label {
@@ -854,14 +873,20 @@
       flex-shrink: 0;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 0.1rem 0 0.1rem 0.7rem;
+      padding: @table-professional-query-button-padding;
 
       &-vertical {
         padding: 0.3rem 0 0.1rem 0.7rem;
       }
 
       span {
+        display: inline-flex;
+        align-items: center;
         vertical-align: baseline;
+      }
+
+      .@{table-prefix-cls}-professional-query-more {
+        border: @table-professional-query-more-button-border;
       }
     }
   }
@@ -876,6 +901,7 @@
 
       &-button-group {
         display: inline-flex;
+        flex-wrap: wrap;
         align-items: center;
       }
 
@@ -1044,7 +1070,7 @@
   &-combo-filter-menu-button-singleLine-divide {
     width: 0.01rem;
     height: 0.18rem;
-    margin: 0.08rem 0.08rem 0.06rem 0.08rem;
+    margin: @table-combo-filter-single-line-divide-margin;
     background-color: @border-color-split;
   }
 
@@ -1056,8 +1082,7 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    margin-top: 0.04rem;
-    margin-left: 0.08rem;
+    margin: @table-combo-filter-content-margin;
     cursor: pointer;
 
     &-disabled {
@@ -1072,7 +1097,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.04rem 0 0;
+    margin: @table-combo-filter-wrapper-margin;
     border-radius: 0.01rem;
 
     span,
@@ -1093,7 +1118,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
 
     .@{iconfont-css-prefix} {
@@ -1118,6 +1143,9 @@
     display: flex;
     flex-shrink: 0;
     margin-top: 0.08rem;
+    .@{c7n-pro-prefix}-btn-secondary {
+      background: @table-combo-filter-menu-reset-button-bg;
+    }
   }
 
   &-combo-filter-buttons {
@@ -1136,11 +1164,11 @@
     border-radius: @border-radius-base;
 
     input.@{select-prefix-cls} {
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
     }
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
   }
 
@@ -1219,28 +1247,25 @@
     }
 
     label {
-      input::-webkit-input-placeholder {
-        // 谷歌
-        color: fade(@text-color, 45%);
+      input::-webkit-input-placeholder { // 谷歌
+        color: @text-color-secondary;
       }
 
-      input:-moz-placeholder {
-        //火狐
-        color: fade(@text-color, 45%);
+      input:-moz-placeholder { //火狐
+        color: @text-color-secondary;
       }
 
       input::-moz-placeholder {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
-      input:-ms-input-placeholder {
-        //微软
-        color: fade(@text-color, 45%);
+      input:-ms-input-placeholder { //微软
+        color: @text-color-secondary;
       }
 
       .@{c7n-pro-prefix}-input-number-placeholder,
       .@{select-prefix-cls}-placeholder {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
     }
 
@@ -1283,7 +1308,7 @@
       box-sizing: content-box;
       min-width: unset;
       max-width: 4rem;
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
       margin: 0;
       overflow: hidden;
       white-space: nowrap;
@@ -1302,7 +1327,7 @@
           width: .08rem;
           margin-left: .04rem;
           color: @label-required-color;
-          font-family: SimSun, sans-serif;
+          font-family: @font-family-required-symbol;
           vertical-align: middle;
           content: "*";
         }
@@ -1314,7 +1339,7 @@
             width: .08rem;
             margin-left: .04rem;
             color: @label-required-color;
-            font-family: SimSun, sans-serif;
+            font-family: @font-family-required-symbol;
             vertical-align: middle;
             content: "*";
           }
@@ -1387,7 +1412,7 @@
   }
 
   &-thead-inline-search-last {
-    box-shadow: -@border-width-base 0 0 @table-border-color;
+    box-shadow: calc(-1 * @border-width-base) 0 0 @table-border-color;
   }
 
   &-inline-query {

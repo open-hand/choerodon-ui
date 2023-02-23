@@ -4,7 +4,7 @@
 @textarea-prefix: ~'@{c7n-pro-prefix}-textarea';
 
 .@{textarea-prefix} {
-  min-height: .3rem;
+  min-height: @input-height-base;
   .input;
 
   &-wrapper {
@@ -31,7 +31,7 @@
 
   &,
   &-placeholder {
-    padding: .07rem @input-padding-horizontal;
+    padding: @textarea-padding;
   }
 
   &-length-info {

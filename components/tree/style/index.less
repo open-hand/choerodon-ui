@@ -6,7 +6,6 @@
 @tree-prefix-cls: ~'@{c7n-prefix}-tree';
 @tree-node-prefix-cls: ~'@{tree-prefix-cls}-treenode';
 @tree-motion: ~'@{c7n-prefix}-motion-collapse';
-@tree-node-padding: @padding-xs / 2;
 @tree-checkbox-prefix-cls: ~'@{c7n-prefix}-tree-checkbox';
 
 .antCheckboxFn(@tree-checkbox-prefix-cls);
@@ -19,6 +18,7 @@
     border-radius: @border-radius-base;
     transition: background-color @animation-duration-slow;
 
+    // Tree 组件中不存在 -focused 类名添加
     &-focused:not(:hover):not(&-active-focused) {
       background: @tree-focus-bg;
     }
@@ -42,13 +42,13 @@
     // ===================== TreeNode =====================
     .@{tree-node-prefix-cls} {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       padding: 0 0 @tree-node-padding 0;
       outline: none;
       // Disabled
       &-disabled {
         // >>> Title
-        .@{tree-prefix-cls}-node-content-wrapper {
+        span.@{tree-prefix-cls}-node-content-wrapper {
           color: @disabled-color;
           cursor: not-allowed;
 
@@ -119,6 +119,11 @@
         transform: rotate(-90deg);
       }
 
+      &-icon {
+        font-size: @tree-switcher-icon-size;
+        line-height: @tree-title-height;
+      }
+
       &-loading-icon {
         color: @tree-primary-color;
       }
@@ -131,16 +136,16 @@
         &::before {
           position: absolute;
           top: 0;
-          bottom: -@tree-node-padding;
-          margin-left: -1px;
+          bottom: @tree-line-before-bottom;
+          margin-left: @tree-line-margin-left;
           border-left: 1px solid @normal-color;
           content: ' ';
         }
         &::after {
           position: absolute;
-          width: @tree-title-height - 14px;
-          height: @tree-title-height - 10px;
-          margin-left: -1px;
+          width: calc(@tree-title-height - 14px);
+          height: calc(@tree-title-height - 10px);
+          margin-left: @tree-line-margin-left;
           border-bottom: 1px solid @normal-color;
           content: ' ';
         }
@@ -151,10 +156,10 @@
     & &-checkbox {
       top: 0;
       flex: none;
-      width: @tree-title-height;
-      height: @tree-title-height;
+      width: @tree-checkbox-height;
+      height: @tree-checkbox-height;
       margin: 0;
-      line-height: @tree-title-height;
+      line-height: @tree-checkbox-height;
       text-align: center;
       cursor: pointer;
     }
@@ -171,7 +176,7 @@
       min-height: @tree-title-height;
       margin: 0;
       padding: 0 4px;
-      color: inherit;
+      color: @tree-node-color;
       line-height: @tree-title-height;
       background: transparent;
       border-radius: @border-radius-base;
@@ -179,9 +184,11 @@
       transition: all @animation-duration-slow, border 0s, line-height 0s;
 
       &:hover {
+        color: @tree-node-hover-color;
         background-color: @tree-node-hover-bg;
       }
       &.@{tree-prefix-cls}-node-selected {
+        color: @tree-node-selected-color;
         background-color: @tree-node-selected-bg;
       }
 
@@ -209,7 +216,7 @@
 
     // ==================== Draggable =====================
     &-node-content-wrapper[draggable='true'] {
-      line-height: @tree-title-height - 4px;
+      line-height: calc(@tree-title-height - 4px);
       border-top: 2px transparent solid;
       border-bottom: 2px transparent solid;
       user-select: none;
@@ -217,8 +224,8 @@
 
     .@{tree-node-prefix-cls}.drag-over {
       > .draggable {
-        color: white;
-        background-color: @tree-primary-color;
+        color: @tree-drag-over-color;
+        background-color: @tree-drag-over-bg;
         opacity: 0.8;
       }
     }
@@ -247,8 +254,8 @@
           &::before {
             position: absolute;
             top: 0;
-            right: @tree-title-height / 2;
-            bottom: -@tree-node-padding;
+            right: calc(@tree-title-height / 2);
+            bottom: @tree-line-before-bottom;
             border-right: 1px solid @border-color-base;
             content: '';
           }

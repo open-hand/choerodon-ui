@@ -28,11 +28,15 @@
     display: none;
   }
 
+  &-root:not(&-horizontal) {
+    padding: @menu-not-horizontal-padding;
+  }
+
   &-item-group-title {
-    padding: 0.08rem 0.16rem;
+    padding: @menu-item-group-title-padding;
     color: @menu-item-group-title-color;
     font-size: @font-size-base;
-    line-height: @line-height-base;
+    line-height: @menu-item-group-title-line-height;
     transition: all @animation-duration-slow;
   }
 
@@ -94,7 +98,7 @@
   &-horizontal > &-item:hover,
   &-horizontal > &-item-active,
   &-horizontal > &-submenu &-submenu-title:hover {
-    background-color: transparent;
+    background-color: @menu-horizontal-hover-bg;
   }
 
   &-item-selected {
@@ -107,9 +111,6 @@
 
   &:not(&-horizontal) &-item-selected {
     background-color: @menu-item-active-bg;
-    &:hover {
-      background-color: @item-hover-bg;
-    }
   }
 
   &-inline,
@@ -186,6 +187,12 @@
       position: absolute;
       z-index: @zindex-dropdown;
       border-radius: @border-radius-base;
+      .@{menu-prefix-cls}-item-group:not(:last-child) {
+        border-bottom: @menu-popup-item-group-border-bottom;
+      }
+      .c7n-menu-sub:not(:empty) {
+        padding: @menu-popup-sub-padding;
+      }
     }
 
     > .@{menu-prefix-cls} {
@@ -203,7 +210,7 @@
       > .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
         position: absolute;
         top: 50%;
-        right: 0.16rem;
+        right: @menu-vertical-submenu-arrow-right;
         width: 0.1rem;
         transition: transform @animation-duration-slow @ease-in-out;
         &::before,
@@ -266,24 +273,33 @@
   }
 
   &-horizontal {
-    line-height: 0.46rem;
+    line-height: @menu-horizontal-line-height;
     border: 0;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-bottom: @menu-horizontal-border-bottom;
     box-shadow: none;
+
+    > .@{menu-prefix-cls}-item-selected,
+    > .@{menu-prefix-cls}-submenu-selected {
+      font-weight: @menu-horizontal-selected-font-weight;
+    }
+
+    &.@{menu-prefix-cls}-root > .@{menu-prefix-cls}-item-selected {
+      background-color: @menu-horizontal-root-selected-bg;
+    }
 
     > .@{menu-prefix-cls}-item,
     > .@{menu-prefix-cls}-submenu {
       position: relative;
       top: 0.01rem;
       float: left;
-      border-bottom: 0.02rem solid transparent;
+      border-bottom: @menu-active-line-width solid transparent;
 
       &:hover,
       &-active,
       &-open,
       &-selected {
         color: @menu-highlight-color;
-        border-bottom: 0.02rem solid @menu-highlight-color;
+        border-bottom: @menu-active-line-width solid @menu-highlight-color;
       }
 
       > a {
@@ -322,7 +338,6 @@
       height: @menu-item-height;
       padding: 0 0.16rem;
       overflow: hidden;
-      font-size: @font-size-base;
       line-height: @menu-item-height;
       text-overflow: ellipsis;
     }
@@ -330,6 +345,10 @@
     // disable margin collapsed
     .@{menu-prefix-cls}-submenu {
       padding-bottom: 0.0001rem;
+    }
+
+    &.@{menu-prefix-cls}-root > .@{menu-prefix-cls}-submenu:not(:last-child) {
+      margin: @menu-submenu-margin;
     }
 
     > .@{menu-prefix-cls}-item,
@@ -360,7 +379,7 @@
       > .@{menu-prefix-cls}-item,
     > .@{menu-prefix-cls}-submenu > .@{menu-prefix-cls}-submenu-title {
       left: 0;
-      padding: 0 (@menu-collapsed-width - 0.16rem) / 2 !important;
+      padding: 0 calc((@menu-collapsed-width - 0.16rem) / 2) !important;
       text-overflow: clip;
       .@{menu-prefix-cls}-submenu-arrow {
         display: none;
@@ -400,7 +419,7 @@
     padding: 0;
     .@{menu-prefix-cls}-item,
     .@{menu-prefix-cls}-submenu-title {
-      padding: 0 0.16rem 0 0.28rem;
+      padding: @menu-item-padding;
     }
   }
 
@@ -409,6 +428,11 @@
   &-root&-vertical-right,
   &-root&-inline {
     box-shadow: none;
+  }
+
+  &-root > &-item,
+  &-submenu-title {
+    font-size: @menu-first-level-title-font-size;
   }
 
   &-sub&-inline {
@@ -433,7 +457,7 @@
   &-item-disabled,
   &-submenu-disabled {
     color: @disabled-color !important;
-    background: none;
+    background: none !important;
     border-color: transparent !important;
     cursor: not-allowed;
     > a {

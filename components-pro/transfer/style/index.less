@@ -5,15 +5,12 @@
 
 @transfer-prefix-cls: ~'@{c7n-pro-prefix}-transfer';
 
-@transfer-header-height: 0.32rem;
-@transfer-footer-height: 0.32rem;
-
 .@{transfer-prefix-cls} {
   .reset-component;
   position: relative;
   display: inline-block;
-  width: 1.8rem;
-  height: 2rem;
+  width: @transfer-width;
+  height: @transfer-height;
   vertical-align: middle;
   border: @border-width-base @border-style-base @border-color-base;
   border-radius: @border-radius-base;
@@ -39,10 +36,6 @@
 
   &-disabled & {
     background: @transfer-disabled-bg;
-  }
-
-  &-with-header {
-    padding-top: @transfer-header-height;
   }
 
   &-with-footer {
@@ -79,16 +72,18 @@
     left: 0;
     width: 100%;
     height: @transfer-header-height;
-    padding: 0.06rem @control-padding-horizontal;
+    padding: @transfer-header-padding;
     overflow: hidden;
     color: @text-color;
     background: @component-background;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-bottom: @transfer-header-border-bottom;
     border-radius: @border-radius-base @border-radius-base 0 0;
 
     &-title {
       position: absolute;
       right: 0.12rem;
+      font-weight: @transfer-header-title-font-weight;
+      font-size: @transfer-header-title-font-size;
     }
   }
 
@@ -102,18 +97,27 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 0.04rem;
+      padding: @transfer-search-wrapper-padding;
+    }
+
+    .@{c7n-pro-prefix}-input-wrapper {
+      width: 100%;
     }
   }
 
   &-body-with-search {
-    padding-top: @input-height-base + 0.08rem;
+    padding-top: @transfer-body-with-search-padding-top;
+  }
+
+  &-with-header &-body {
+    height: calc(100% - @transfer-header-height);
+    margin-top: @transfer-header-height;
   }
 
   &-content {
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding: @transfer-content-padding;
     overflow: auto;
     list-style: none;
     outline: none;
@@ -147,10 +151,11 @@
 
     .@{c7n-pro-prefix}-btn {
       display: block;
-      min-width: 0.24rem;
-      height: 0.24rem;
+      min-width: @transfer-btn-height;
+      height: @transfer-btn-height;
       margin-bottom: 0.08rem;
       padding: 0;
+      border-radius: @transfer-btn-border-radius;
 
       + .@{c7n-pro-prefix}-btn {
         margin-left: 0;

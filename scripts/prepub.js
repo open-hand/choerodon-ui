@@ -7,6 +7,9 @@ const fs = require('fs');
 const path = require('path');
 const packageInfo = require('../package.json');
 
+process.manualCallModifyEntryVars = true;
+const { modifyEntryVars } = require('../outer-scripts/switch-default-less');
+
 if (fs.existsSync(path.join(__dirname, '../lib'))) {
   // Build package.json version to lib/version/index.js
   // prevent json-loader needing in user-side
@@ -103,3 +106,8 @@ module.exports = exports['default'];
   );
   console.log('Built a ts index file to pro/index.d.ts');
 }
+
+// 修改打包后的 default.less 文件，默认为 less 变量
+modifyEntryVars('defaultVars').then(() => {
+  console.log('Modified default.less');
+});

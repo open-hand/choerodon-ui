@@ -9,6 +9,8 @@
   position: absolute;
   z-index: @zindex-tooltip;
   display: block;
+  font-size: @tooltip-font-size;
+  line-height: @tooltip-line-height;
   visibility: visible;
 
   &-hidden {
@@ -44,14 +46,21 @@
     min-width: @tooltip-min-width;
     max-width: @tooltip-max-width;
     min-height: @tooltip-min-height;
-    padding: 0.06rem 0.08rem;
+    padding: @tooltip-padding;
     color: @tooltip-color;
     text-align: left;
     text-decoration: none;
     word-wrap: break-word;
     background-color: @tooltip-bg;
-    border-radius: @border-radius-base * 2;
-    box-shadow: @box-shadow-base;
+    border-radius: @tooltip-border-radius;
+    box-shadow: @tooltip-box-shadow;
+
+    &-dark {
+      a,
+      a:hover {
+        color: @tooltip-link-color-dark;
+      }
+    }
 
     .@{c7n-pro-prefix}-output {
       line-height: unset;
@@ -61,6 +70,7 @@
     &-light {
       color: @tooltip-color-light;
       background-color: @tooltip-bg-light;
+      box-shadow: @tooltip-box-shadow-light;
     }
   }
 
@@ -76,7 +86,7 @@
   &-placement-top &-arrow,
   &-placement-topLeft &-arrow,
   &-placement-topRight &-arrow {
-    bottom: @tooltip-distance - @tooltip-arrow-width;
+    bottom: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
     border-top-color: @tooltip-arrow-color;
 
@@ -87,7 +97,7 @@
 
   &-placement-top &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-topLeft &-arrow {
@@ -101,7 +111,7 @@
   &-placement-right &-arrow,
   &-placement-rightTop &-arrow,
   &-placement-rightBottom &-arrow {
-    left: @tooltip-distance - @tooltip-arrow-width;
+    left: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
     border-right-color: @tooltip-arrow-color;
 
@@ -112,7 +122,7 @@
 
   &-placement-right &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-rightTop &-arrow {
@@ -126,7 +136,7 @@
   &-placement-left &-arrow,
   &-placement-leftTop &-arrow,
   &-placement-leftBottom &-arrow {
-    right: @tooltip-distance - @tooltip-arrow-width;
+    right: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-left-color: @tooltip-arrow-color;
 
@@ -137,7 +147,7 @@
 
   &-placement-left &-arrow {
     top: 50%;
-    margin-top: -@tooltip-arrow-width;
+    margin-top: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-leftTop &-arrow {
@@ -151,7 +161,7 @@
   &-placement-bottom &-arrow,
   &-placement-bottomLeft &-arrow,
   &-placement-bottomRight &-arrow {
-    top: @tooltip-distance - @tooltip-arrow-width;
+    top: calc(@tooltip-distance - @tooltip-arrow-width);
     border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
     border-bottom-color: @tooltip-arrow-color;
 
@@ -162,7 +172,7 @@
 
   &-placement-bottom &-arrow {
     left: 50%;
-    margin-left: -@tooltip-arrow-width;
+    margin-left: calc(-1 * @tooltip-arrow-width);
   }
 
   &-placement-bottomLeft &-arrow {

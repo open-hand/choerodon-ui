@@ -34,8 +34,12 @@
   &-item {
     display: flex;
     align-items: center;
-    padding-top: 0.12rem;
-    padding-bottom: 0.12rem;
+    padding-top: @list-padding-top-base;
+    padding-bottom: @list-padding-bottom-base;
+
+    &:nth-of-type(2n) {
+      background: @list-item-even-background;
+    }
     &-meta {
       display: flex;
       flex: 1;
@@ -51,7 +55,7 @@
         margin-bottom: 0.04rem;
         color: @text-color;
         font-size: @font-size-base;
-        line-height: 0.22rem;
+        line-height: 1.67;
         > a {
           color: @text-color;
           transition: all @animation-duration-slow;
@@ -61,9 +65,9 @@
         }
       }
       &-description {
-        color: @text-color-secondary;
+        color: @list-description-color;
         font-size: @font-size-base;
-        line-height: 0.22rem;
+        line-height: 1.67;
       }
     }
     &-content {
@@ -86,7 +90,7 @@
         padding: 0 0.08rem;
         color: @text-color-secondary;
         font-size: @font-size-base;
-        line-height: 0.22rem;
+        line-height: 1.67;
         text-align: center;
         cursor: pointer;
       }
@@ -131,8 +135,13 @@
 
   &-header,
   &-footer {
-    padding-top: 0.12rem;
-    padding-bottom: 0.12rem;
+    padding-top: @list-padding-top-base;
+    padding-bottom: @list-padding-bottom-base;
+  }
+
+  &-header {
+    color: @list-header-color;
+    font-size: @list-header-font-size;
   }
 
   &-empty {
@@ -143,14 +152,14 @@
   }
 
   &-split &-item {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
     &:last-child {
       border-bottom: none;
     }
   }
 
   &-split &-header {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
   }
 
   &-loading &-spin-nested-loading {
@@ -158,17 +167,17 @@
   }
 
   &-something-after-last-item &-item:last-child {
-    border-bottom: 0.01rem solid @border-color-split;
+    border-bottom: @list-item-border-bottom;
   }
 
   &-lg &-item {
-    padding-top: 0.16rem;
-    padding-bottom: 0.16rem;
+    padding-top: @list-padding-top-lg;
+    padding-bottom: @list-padding-bottom-lg;
   }
 
   &-sm &-item {
-    padding-top: 0.08rem;
-    padding-bottom: 0.08rem;
+    padding-top: @list-padding-top-sm;
+    padding-bottom: @list-padding-bottom-sm;
   }
 
   &-vertical &-item {
@@ -192,7 +201,7 @@
         margin-bottom: 0.12rem;
         color: @heading-color;
         font-size: @font-size-lg;
-        line-height: 0.24rem;
+        line-height: 1.5;
       }
     }
     &-content {

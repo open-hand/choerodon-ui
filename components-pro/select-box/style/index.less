@@ -2,6 +2,8 @@
 @import '../../../components/style/mixins/index';
 @import '../../../components/select/style/mixin';
 @import '../../field/style/mixin';
+@import '../../radio/style/mixin';
+@import '../../check-box/style/mixin';
 
 @select-box-prefix: ~'@{c7n-pro-prefix}-select-box';
 @pro-checkbox-prefix-cls: ~'@{c7n-pro-prefix}-checkbox';
@@ -11,7 +13,12 @@
   .validation;
   .float-label;
   display: inline-block;
-  line-height: 28 / 13;
+  line-height: calc(28 / 13);
+
+  &-invalid {
+    .radio-invalid;
+    .checkbox-invalid;
+  }
 
   &-float-label > .@{field-label-prefix-cls}-wrapper {
     left: 0;

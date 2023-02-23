@@ -5,7 +5,6 @@
 @import '../../../components/select/style/mixin';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
-@table-border: @border-width-base @border-style-base @border-color-base;
 
 .@{table-prefix-cls} {
   &-filter-select {
@@ -21,7 +20,7 @@
     }
 
     .@{table-prefix-cls}-filter-select-inner-editor {
-      height: @input-height-base - 0.08rem;
+      height: calc(@input-height-base - 0.08rem);
       padding: @input-padding-vertical-base 0;
       background-color: transparent !important;
       border: none !important;

@@ -9,13 +9,14 @@
   display: inline-block;
   height: @btn-height-base;
   padding: @btn-padding-base;
+  font-size: @btn-font-size-base;
   line-height: @btn-line-height;
   text-align: center;
   vertical-align: middle;
   background-color: @btn-default-bg;
   background-image: none;
   border: none;
-  border-radius: @border-radius-base;
+  border-radius: @btn-border-radius-base;
   outline: none;
   box-shadow: @btn-box-shadow;
   cursor: pointer;
@@ -78,7 +79,7 @@
 
   > button > .@{iconfont-css-prefix},
   > .@{iconfont-css-prefix} {
-    margin-right: 0.05rem;
+    margin: @btn-icon-margin;
     font-weight: @btn-icon-font-weight;
     font-size: @btn-icon-size;
   }

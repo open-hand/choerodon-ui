@@ -15,7 +15,7 @@
     & > .icon-help {
       margin-left: @label-wrapper-padding-horizontal;
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
   }
 
@@ -85,7 +85,8 @@
     }
   }
 
-  &&:disabled:checked + &-inner {
+  &&:disabled:checked + &-inner,
+  &-indeterminate &:disabled + &-inner {
     color: @checkbox-disabled-check-color;
     background-color: @checkbox-disabled-check-bg !important;
     border-color: @checkbox-disabled-check-border-color !important;
@@ -107,8 +108,10 @@
   }
 
   &-button {
-    padding: 0 0.15rem;
-    line-height: 0.3rem;
+    min-width: @checkbox-button-min-width;
+    padding: @checkbox-button-padding;
+    line-height: @checkbox-button-line-height;
+    text-align: center;
 
     .@{pro-checkbox-prefix-cls}-inner {
       position: absolute;
@@ -118,7 +121,7 @@
       left: 0;
       width: auto;
       height: auto;
-      border-radius: @border-radius-base;
+      border-radius: @checkbox-button-radius;
 
       &::after {
         display: none;
@@ -131,12 +134,28 @@
       }
     }
 
-    .@{pro-checkbox-prefix-cls}:checked + .@{pro-checkbox-prefix-cls}-inner + span {
-      color: #fff;
+    .@{pro-checkbox-prefix-cls}:checked + .@{pro-checkbox-prefix-cls}-inner {
+      background-color: @checkbox-button-check-bg !important;
+      border-color: @checkbox-button-check-border-color;
+      + span {
+        color: @checkbox-button-check-color;
+      }
     }
 
-    &:hover .@{pro-checkbox-prefix-cls}-inner + span {
+    &:hover .@{pro-checkbox-prefix-cls}:not(:disabled):not(:checked) + .@{pro-checkbox-prefix-cls}-inner + span {
       color: @checkbox-color;
+    }
+
+    & .@{pro-checkbox-prefix-cls}:disabled + .@{pro-checkbox-prefix-cls}-inner + span {
+      color: @checkbox-disabled-color;
+    }
+  }
+
+  &-button &:checked:disabled + &-inner {
+    background-color: @checkbox-button-disabled-check-bg !important;
+    border-color: @checkbox-button-disabled-check-border-color !important;
+    + span {
+      color: @checkbox-button-disabled-check-color;
     }
   }
 

@@ -13,7 +13,7 @@
     top: -0.06em;
     display: inline-block;
     width: 0.01rem;
-    height: 0.9em;
+    height: @divider-vertical-height;
     margin: 0 0.08rem;
     vertical-align: middle;
   }
@@ -28,9 +28,9 @@
   &-horizontal&-with-text-center {
     display: table;
     margin: 0.16rem 0;
-    color: @heading-color;
+    color: @divider-text-color;
     font-weight: 500;
-    font-size: @font-size-lg;
+    font-size: @divider-font-size-lg;
     white-space: nowrap;
     text-align: center;
     background: transparent;
@@ -48,14 +48,14 @@
   }
   &-inner-text {
     display: inline-block;
-    padding: 0 0.24rem;
+    padding: @divider-inner-text-padding;
   }
   &-horizontal&-with-text-left {
     display: table;
     margin: 0.16rem 0;
-    color: @heading-color;
+    color: @divider-text-color;
     font-weight: 500;
-    font-size: @font-size-base;
+    font-size: @divider-font-size-base;
     white-space: nowrap;
     text-align: center;
     background: transparent;
@@ -87,9 +87,9 @@
   &-horizontal&-with-text-right {
     display: table;
     margin: 0.16rem 0;
-    color: @heading-color;
+    color: @divider-text-color;
     font-weight: 500;
-    font-size: @font-size-base;
+    font-size: @divider-font-size-base;
     white-space: nowrap;
     text-align: center;
     background: transparent;

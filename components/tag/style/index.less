@@ -6,15 +6,15 @@
 .@{tag-prefix-cls} {
   .reset-component;
   display: inline-block;
-  height: 0.22rem;
+  height: @tag-height;
   margin-right: 0.08rem;
-  padding: 0 0.07rem;
+  padding: @tag-padding;
   font-weight: @tag-font-weight;
   font-size: @tag-font-size;
-  line-height: 0.2rem;
+  line-height: @tag-line-height;
   white-space: nowrap;
   background-color: @tag-default-bg;
-  border: @border-width-base @border-style-base @tag-default-bg;
+  border: @tag-border;
   border-radius: @border-radius-base;
   cursor: pointer;
   opacity: 1;
@@ -38,8 +38,9 @@
 
   .@{iconfont-css-prefix}-close {
     .iconfont-size-under-12px(0.1rem);
+    margin-top: -0.02rem;
     margin-left: 0.03rem;
-    font-weight: bold;
+    font-weight: @tag-close-icon-font-weight;
     cursor: pointer;
     transition: all @animation-duration-slow;
   }
@@ -57,30 +58,34 @@
   }
 
   &-checkable {
-    background-color: transparent;
-    border-color: transparent;
+    background-color: @tag-checkable-bg;
+    border-color: @tag-checkable-border-color;
 
     &:not(&-checked):hover {
-      color: @primary-color;
+      color: @tag-checkable-not-checked-hover-color;
+    }
+
+    &:not(&-checked):active {
+      background-color: @tag-checkable-not-checked-active-bg;
     }
 
     &,
     a,
     a:hover {
-      color: #000;
+      color: @tag-checkable-color;
     }
 
     &:active,
     &-checked {
-      color: #fff;
+      color: @tag-checkable-checked-color;
     }
 
     &-checked {
-      background-color: @primary-6;
+      background-color: @tag-checkable-checked-bg;
     }
 
     &:active {
-      background-color: @primary-7;
+      background-color: @tag-checkable-active-bg;
     }
   }
 

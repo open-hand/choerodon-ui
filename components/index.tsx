@@ -49,6 +49,8 @@ export { default as Checkbox } from './checkbox';
 
 export { default as Col } from './col';
 
+export { default as configCssVars } from './config-css-vars';
+
 export { default as ConfigProvider } from './config-provider';
 
 export { default as configure } from './configure';

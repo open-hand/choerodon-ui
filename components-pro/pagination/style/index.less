@@ -2,6 +2,7 @@
 @import '../../../components/style/mixins/index';
 
 .@{c7n-pro-prefix}-pagination {
+  color: @pagination-color;
   line-height: 0.3rem;
 
   > * {
@@ -9,8 +10,16 @@
   }
 
   &-size-changer:not(&-size-editable) .@{c7n-pro-prefix}-select,
-  &-size-changer&-size-editable .@{c7n-pro-prefix}-select:not(:hover):not(:focus) {
-    border-color: transparent;
+  &-size-changer&-size-editable:not(:hover):not(:focus) .@{c7n-pro-prefix}-select:not(:hover):not(:focus) {
+    border-color: @pagination-size-changer-not-editable-border-color;
+  }
+
+  &-size-changer {
+    margin: @pagination-size-changer-margin;
+
+    + .@{c7n-pro-prefix}-btn-wrapper {
+      margin-left: 0.1rem;
+    }
   }
 
   &-page-info {
@@ -18,17 +27,18 @@
   }
 
   &-pager {
-    height: @btn-circle-size;
+    min-width: @pagination-pager-min-width;
+    height: @pagination-pager-height;
   }
 
   &-quick-jumper {
-    margin-left: .2rem;
+    margin: @pagination-quick-jumper-margin;
 
     &-input {
       display: inline-block;
       padding-right: .05rem;
       line-height: 1;
-      border: @border-width-base @border-style-base transparent;
+      border: @border-width-base @border-style-base @pagination-quick-jumper-border-color;
       border-radius: @input-border-radius;
       transition: border @animation-duration-slow;
 

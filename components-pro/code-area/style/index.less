@@ -39,7 +39,7 @@
       position: absolute;
       right: 0.12rem;
       .@{iconfont-css-prefix} {
-        color: @primary-color;
+        color: @codearea-header-switch-icon-color;
         font-size: 0.14rem;
       }
     }
@@ -75,8 +75,35 @@
     }
   }
 
-  &-invalid .CodeMirror {
-    border-color: @error-color;
+  &:hover .CodeMirror {
+    border-color: @input-hover-border-color;
+  }
+
+  & .CodeMirror-focused {
+    border-color: @input-focus-border-color;
+    box-shadow: @input-active-box-shadow;
+  }
+
+  &-required-colors,
+  &-required-colors:hover {
+    .CodeMirror {
+      border-color: @input-required-border-color;
+    }
+  }
+
+  &-required-colors {
+    .CodeMirror-focused {
+      border-color: @input-required-border-color;
+      outline: 0;
+      box-shadow: @input-required-active-box-shadow;
+    }
+  }
+
+  &-invalid .CodeMirror,
+  &-invalid:hover .CodeMirror,
+  &-invalid .CodeMirror-focused {
+    border-color: @input-error-border-color;
+    box-shadow: @input-error-active-box-shadow;
   }
 
   .float-label(@input-prefix-width-base);
@@ -94,9 +121,12 @@
       z-index: 7;
       margin-left: 30px;
     }
+  }
 
-    .CodeMirror {
-      border: none;
-    }
+  &-disabled .CodeMirror,
+  &-disabled:hover .CodeMirror,
+  &-disabled .CodeMirror-focused {
+    border-color: @input-border-color;
+    box-shadow: none;
   }
 }

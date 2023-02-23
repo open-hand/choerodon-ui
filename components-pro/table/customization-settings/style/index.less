@@ -17,7 +17,7 @@
       display: flex;
       align-items: flex-start;
       width: 100%;
-      padding: .03rem 0 .03rem;
+      padding: @table-customization-tree-treenode-padding;
       outline: none;
 
       &-hover-button {
@@ -52,7 +52,7 @@
         flex: 1;
         align-items: center;
         width: 100%;
-        height: .32rem;
+        height: @table-customization-tree-treenode-content-height;
         min-height: .24rem;
         margin: 0;
         padding: .04rem 0;
@@ -66,6 +66,7 @@
         display: flex;
         flex: 1;
         align-items: center;
+        margin: @table-customization-tree-treenode-title-margin;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -81,17 +82,19 @@
       &-switcher {
         flex: none;
         width: .22rem;
-        height: .32rem;
+        height: @table-customization-tree-treenode-switcher-height;
         margin: 0;
-        padding: .05rem 0;
+        padding: @table-customization-tree-treenode-switcher-padding;
         line-height: 1;
         text-align: center;
         vertical-align: top;
         cursor: pointer;
 
         &-icon {
-          font-size: .18rem;
-          line-height: .22rem;
+          &.icon {
+            font-size: @table-customization-tree-treenode-switcher-icon-size;
+            line-height: @table-customization-tree-treenode-switcher-icon-line-height;
+          }
 
           &-close {
             transform: rotate(-90deg);
@@ -108,7 +111,7 @@
       }
 
       &-dragging {
-        background-color: @component-background;
+        background-color: @table-customization-tree-treenode-dragging-bg-color;
         box-shadow: @shadow-4;
       }
     }
@@ -152,6 +155,9 @@
     &-input {
       width: 1rem;
       margin-left: .1rem;
+      .@{c7n-pro-prefix}-input-number:disabled {
+        border-color: @input-border-color;
+      }
     }
 
     .@{c7n-pro-prefix}-radio-label {
@@ -177,12 +183,13 @@
       background-repeat: no-repeat;
     }
 
-    .@{c7n-pro-prefix}-radio {
-      &-inner {
-        border-width: .02rem;
-        pointer-events: none;
-      }
+    &.@{c7n-pro-prefix}-radio-button .@{c7n-pro-prefix}-radio + .@{c7n-pro-prefix}-radio-inner {
+      // 由于 Radio 选中态类名优先级提高，此处也需要提高
+      border-width: .02rem;
+      pointer-events: none;
+    }
 
+    .@{c7n-pro-prefix}-radio {
       &:checked + .@{c7n-pro-prefix}-radio-inner {
         &::before {
           top: 0;
@@ -255,7 +262,7 @@
     }
 
     &-content {
-      padding: 0 .2rem;
+      padding: 0 .2rem !important;
     }
   }
 }

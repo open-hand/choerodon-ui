@@ -3,12 +3,6 @@
 @import '../../trigger-field/style/mixin';
 
 @date-picker-prefix: ~'@{c7n-pro-prefix}-calendar';
-@date-picker-width: 2.8rem;
-@datetime-picker-width: 4.3rem;
-@date-picker-horizontal-padding: 0.12rem;
-@date-picker-border-base: @border-width-base @border-style-base @input-border-color;
-@date-time-list-width: (@date-picker-width - @date-picker-horizontal-padding * 2 + 0.02rem) / 3;
-@date-time-list-item-height: 0.29rem;
 
 .@{date-picker-prefix} {
   &-picker {
@@ -30,7 +24,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: auto;
       height: 100%;
       padding: 0.05rem 0.03rem;
       cursor: pointer;
@@ -41,7 +34,7 @@
     }
 
     &-popup-datetime {
-      width: @datetime-picker-width;
+      width: @date-time-picker-width;
     }
 
     &-popup-hover-value .@{c7n-pro-prefix}-input,
@@ -57,8 +50,10 @@
 
     .@{date-picker-prefix}-time {
       width: 40%;
+      border-left: @date-picker-datetime-time-border-left;
     }
   }
+  
 
   &-body {
     padding: 0.08rem @date-picker-horizontal-padding;
@@ -66,12 +61,13 @@
 
     table {
       width: 100%;
-      font-size: @font-size-lg;
+      font-size: @date-picker-body-table-font-size;
     }
 
     th {
       width: 0.33rem;
       padding: 0.06rem 0;
+      color: @date-picker-th-color;
       font-weight: normal;
       line-height: 0.18rem;
       text-align: center;
@@ -85,14 +81,14 @@
 
     &-inner {
       display: block;
-      height: 0.24rem;
+      height: @date-picker-cell-inner-height;
       margin: 0 auto;
       padding: 0;
-      line-height: 0.22rem;
+      line-height: calc(@date-picker-cell-inner-height - 2 * @border-width-base);
       text-align: center;
       background-color: transparent;
       border: @border-width-base @border-style-base transparent;
-      border-radius: @border-radius-sm;
+      border-radius: @date-picker-cell-inner-border-radius;
       cursor: pointer;
       transition: background @animation-duration-slow ease;
 
@@ -101,7 +97,7 @@
       }
 
       &:active {
-        color: #fff;
+        color: @date-picker-active-color;
         background-color: @primary-5;
       }
     }
@@ -132,7 +128,7 @@
 
   &-today &-cell-inner {
     color: @date-primary-color;
-    font-weight: bold;
+    font-weight: @date-picker-today-font-weight;
     border-color: @date-primary-color;
   }
 
@@ -148,10 +144,10 @@
 
   &-disabled &-cell-inner {
     width: auto;
-    color: #bcbcbc;
+    color: @disabled-color;
     background: @disabled-bg;
     border: @border-width-base @border-style-base transparent;
-    border-radius: 0;
+    border-radius: @date-picker-cell-disabled-inner-border-radius;
     cursor: not-allowed;
 
     &:hover {
@@ -174,8 +170,55 @@
     }
   }
 
+  /* Time 模式 cell 层级样式控制
+     用于 css vars 方案下 控制 time 部分的高亮区块 
+     其中，datetime 的 time 部分的变量添加了 -datetime 字符片段
+     其余直接用 -time 拼接的变量则是同时控制 datetime 的 time 部分及 TimePikcer 部分 */
+  &-time {
+    .@{date-picker-prefix}-body {
+      padding: @date-picker-datetime-time-padding;
+    }
+
+    .@{date-picker-prefix}-cell {
+      &:hover {
+        background: @date-picker-time-cell-hover-bg;
+      }
+
+      &:active {
+        background: @date-picker-time-cell-active-bg;
+      }
+
+      .@{date-picker-prefix}-cell-inner {
+        &:hover {
+          background: @date-picker-time-cell-inner-hover-bg;
+        }
+
+        &:active {
+          color: @date-picker-time-cell-inner-active-color;
+          background: @date-picker-time-cell-inner-active-bg;
+        }
+      }
+
+      &.@{date-picker-prefix}-disabled {
+        background: @date-picker-time-cell-disabled-bg;
+        .@{date-picker-prefix}-cell-inner {
+          color: @disabled-color;
+          background: @date-picker-time-disabled-cell-inner-bg;
+        }
+      }
+
+      &.@{date-picker-prefix}-selected {
+        background: @date-picker-time-selected-bg;
+        .@{date-picker-prefix}-cell-inner {
+          color: @date-picker-time-selected-cell-inner-color;
+          background: @date-picker-time-selected-cell-inner-bg;
+        }
+      }
+    }
+  }
+
   &-day-panel &-cell-inner {
-    width: 0.24rem;
+    width: @date-picker-cell-inner-height;
   }
 
   &-month-panel &-cell,
@@ -185,20 +228,20 @@
 
   &-month-panel &-cell-inner,
   &-year-panel &-cell-inner {
-    display: inline-table;
+    display: @date-picker-month-year-cell-inner-display;
     padding: 0 0.06rem;
   }
 
   &-time-panel &-cell-inner {
     width: .4rem;
-    height: @date-time-list-item-height - 0.06rem;
-    line-height: @date-time-list-item-height - 0.07rem;
+    height: calc(@date-time-list-item-height - 0.06rem);
+    line-height: calc(@date-time-list-item-height - 0.07rem);
   }
 
   &-header {
-    height: 0.4rem;
-    padding: 0 0.07rem;
-    line-height: 0.4rem;
+    height: @date-picker-header-height;
+    padding: @date-picker-header-padding;
+    line-height: calc(@date-picker-header-height - 2 * @border-width-base);
     text-align: center;
     border-bottom: @border-width-base @border-style-base @border-color-split;
     user-select: none;
@@ -231,15 +274,15 @@
   &-view-select {
     padding: 0 0.02rem;
     color: @text-color;
-    font-weight: bold;
+    font-weight: @date-picker-view-select-font-weight;
     line-height: 0.34rem;
   }
 
   &-footer-extra,
   &-footer {
     position: relative;
-    height: 0.39rem;
-    line-height: 0.39rem;
+    height: @date-picker-footer-height;
+    line-height: @date-picker-footer-height;
     text-align: center;
     border-top: @border-width-base @border-style-base @border-color-split;
 
@@ -297,7 +340,7 @@
 
       &:active {
         .@{date-picker-prefix}-cell-inner {
-          color: #fff;
+          color: @date-picker-active-color;
           background-color: @primary-5;
         }
       }
@@ -314,13 +357,13 @@
       }
 
       &:first-child .@{date-picker-prefix}-cell-inner {
-        border-top-left-radius: @border-radius-base;
-        border-bottom-left-radius: @border-radius-base;
+        border-top-left-radius: @date-picker-week-edge-cell-inner-border-radius;
+        border-bottom-left-radius: @date-picker-week-edge-cell-inner-border-radius;
       }
 
       &:last-child .@{date-picker-prefix}-cell-inner {
-        border-top-right-radius: @border-radius-base;
-        border-bottom-right-radius: @border-radius-base;
+        border-top-right-radius: @date-picker-week-edge-cell-inner-border-radius;
+        border-bottom-right-radius: @date-picker-week-edge-cell-inner-border-radius;
       }
     }
   }
@@ -330,7 +373,7 @@
   }
 
   &-time-panel {
-    height: 2.10rem;
+    height: @date-picker-time-panel-height;
 
     &-inner {
       position: relative;
@@ -376,6 +419,7 @@
   &-time-focus-active {
     position: absolute;
     top: 350%;
+    display: @date-picker-time-focus-active-display;
     border: @border-width-base @border-style-base @input-border-color;
   }
 

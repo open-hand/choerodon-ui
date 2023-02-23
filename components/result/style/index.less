@@ -30,7 +30,7 @@
   }
 
   &-icon {
-    margin-bottom: 24px;
+    margin: @result-icon-margin;
     text-align: center;
 
     > .icon {
@@ -39,16 +39,17 @@
   }
 
   &-title {
-    color: @heading-color;
+    margin: @result-title-margin;
+    color: @result-title-color;
     font-size: @result-title-font-size;
-    line-height: 1.8;
+    line-height: @result-title-line-height;
     text-align: center;
   }
 
   &-subtitle {
-    color: @text-color-secondary;
+    color: @result-subtitle-color;
     font-size: @result-subtitle-font-size;
-    line-height: 1.6;
+    line-height: @result-subtitle-line-height;
     text-align: center;
   }
 

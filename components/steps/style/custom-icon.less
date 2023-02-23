@@ -1,4 +1,5 @@
 .@{steps-prefix-cls}-item-custom {
+  &:hover .@{steps-prefix-cls}-item-icon,
   .@{steps-prefix-cls}-item-icon {
     width: auto;
     height: auto;
@@ -7,8 +8,9 @@
     border: 0;
   }
   &.@{steps-prefix-cls}-item-process {
+    &:hover .@{steps-prefix-cls}-item-icon,
     .@{steps-prefix-cls}-item-icon {
-      color: @process-icon-color;
+      color: @processing-color;
     }
   }
 }

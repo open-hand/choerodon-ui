@@ -71,6 +71,7 @@
         background-color: @item-hover-bg;
       }
       &.@{select-tree-prefix-cls}-node-selected {
+        font-weight: @item-selected-font-weight;
         background-color: @tree-node-selected-bg;
       }
     }
@@ -174,7 +175,7 @@
       color: @disabled-color;
       cursor: not-allowed;
     }
-    padding: @padding-xs (@padding-xs / 2) 0;
+    padding: @padding-xs calc(@padding-xs / 2) 0;
     &-rtl {
       direction: rtl;
     }

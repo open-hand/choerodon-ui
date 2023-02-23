@@ -29,31 +29,14 @@
           svg {
             width: 100%;
             height: 100%;
+            circle {
+              stroke: @switch-loading-stroke;
+            }
           }
         }
       }
-
-      &.@{switch-prefix-cls}-lg {
-        .@{c7n-prefix}-progress-loading {
-          left: @switch-lg-loading-inner-distance;
-
-          .@{c7n-prefix}-progress-inner {
-            width: @switch-lg-loading-inner-size;
-            height: @switch-lg-loading-inner-size;
-          }
-        }
-      }
-
-      &.@{switch-prefix-cls}-sm {
-        .@{c7n-prefix}-progress-loading {
-          left: @switch-sm-loading-inner-distance;
-
-          .@{c7n-prefix}-progress-inner {
-            width: @switch-sm-loading-inner-size;
-            height: @switch-sm-loading-inner-size;
-          }
-        }
-      }
+      .size-loading(lg);
+      .size-loading(sm);
     }
 
     &.@{c7n-pro-prefix}-field {
@@ -75,7 +58,7 @@
       z-index: 2;
       margin-left: @label-wrapper-padding-horizontal;
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
   }
 
@@ -87,26 +70,28 @@
     min-width: @switch-min-width;
     height: @switch-height;
     padding-right: 0.05rem;
-    padding-left: @switch-button-size * 1.2;
+    padding-left: calc(@switch-button-size * 1.2);
     color: @switch-label-color;
     font-size: @font-size-sm;
     line-height: @switch-line-height;
+    text-align: center;
     vertical-align: middle;
     background-color: @switch-bg;
-    border-radius: @switch-height / 2;
+    border: @switch-border;
+    border-radius: @switch-radius;
 
     &::after {
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 0;
+      left: @switch-button-uncheck-left;
       width: @switch-button-size;
       height: @switch-button-size;
       margin-top: auto;
       margin-bottom: auto;
       margin-left: @switch-padding-horizontal;
       background-color: @switch-button-bg;
-      border-radius: 50%;
+      border-radius: @switch-button-radius;
       box-shadow: @switch-button-box-shadow;
       cursor: inherit;
       transition: all @switch-duration @ease-in-out-circ;
@@ -147,25 +132,20 @@
     }
   }
 
-  &-lg .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-lg-loading-inner-distance;
-    left: auto;
-  }
-
-  &-sm .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
-    right: @switch-sm-loading-inner-distance;
-    left: auto;
-  }
+  .size-checked-loading(lg);
+  .size-checked-loading(sm);
 
   &:checked + &-label,
   &:checked + .@{c7n-prefix}-progress-loading + &-label {
-    padding-right: @switch-button-size * 1.2;
+    padding-right: calc(@switch-button-size * 1.2);
     padding-left: 0.05rem;
+    color: @switch-label-check-color;
     background-color: @switch-checked-bg;
+    border-color: @switch-check-border-color;
 
     &::after {
-      left: 100%;
-      margin-left: -@switch-padding-horizontal;
+      left: @switch-button-check-left;
+      margin-left: calc(-1 * @switch-padding-horizontal);
       background-color: @switch-checked-button-bg;
       transform: translateX(-100%);
     }
@@ -177,18 +157,35 @@
 
   &:disabled + &-label,
   &:disabled + .@{c7n-prefix}-progress-loading + &-label {
+    color: @switch-disabled-label-color;
+    background-color: @switch-disabled-bg;
     opacity: @switch-disabled-opacity;
+
+    &::after {
+      background-color: @switch-disabled-button-bg;
+    }
+  }
+
+  &:checked:disabled + &-label,
+  &:checked:disabled + .@{c7n-prefix}-progress-loading + &-label {
+    color: @switch-disabled-label-check-color;
+    background-color: @switch-disabled-check-bg;
+
+    &::after {
+      background-color: @switch-disabled-button-check-bg;
+    }
   }
 
   &-sm {
     padding: @switch-sm-wrapper-padding;
+    .size-button-left(@switch-sm-button-uncheck-left, @switch-sm-button-check-left);
   }
 
   &-sm &-label {
     min-width: @switch-sm-min-width;
     height: @switch-sm-height;
     line-height: @switch-sm-line-height;
-    border-radius: @switch-sm-button-size / 2;
+    border-radius: @switch-sm-radius;
 
     .icon {
       font-size: @switch-sm-icon-font-size;
@@ -206,13 +203,14 @@
 
   &-lg {
     padding: @switch-lg-wrapper-padding;
+    .size-button-left(@switch-lg-button-uncheck-left, @switch-lg-button-check-left);
   }
 
   &-lg &-label {
     min-width: @switch-lg-min-width;
     height: @switch-lg-height;
     line-height: @switch-lg-line-height;
-    border-radius: @switch-lg-button-size / 2;
+    border-radius: @switch-lg-radius;
 
     .icon {
       font-size: @switch-lg-icon-font-size;
@@ -231,5 +229,43 @@
   &-float-label .@{field-label-prefix-cls}-wrapper {
     left: 0;
     transform-origin: @float-label-transform-origin-high;
+  }
+}
+
+.size-loading(@size) {
+  @distance-horizontal: 'switch-@{size}-loading-inner-distance';
+  @loading-inner-size: 'switch-@{size}-loading-inner-size';
+  &.@{switch-prefix-cls}-@{size} {
+    .@{c7n-prefix}-progress-loading {
+      left: @@distance-horizontal;
+
+      .@{c7n-prefix}-progress-inner {
+        width: @@loading-inner-size;
+        height: @@loading-inner-size;
+      }
+    }
+  }
+}
+
+.size-checked-loading(@size) {
+  @checked-distance-horizontal: 'switch-@{size}-loading-inner-distance';
+  &-@{size} .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading {
+    right: @@checked-distance-horizontal;
+    left: auto;
+  }
+}
+
+.size-button-left(@uncheck-left, @check-left) {
+  .@{switch-prefix-cls} + .@{switch-prefix-cls}-label,
+  .@{switch-prefix-cls} + .@{c7n-prefix}-progress-loading + .@{switch-prefix-cls}-label {
+    &::after {
+      left: @uncheck-left;
+    }
+  }
+  .@{switch-prefix-cls}:checked + .@{switch-prefix-cls}-label,
+  .@{switch-prefix-cls}:checked + .@{c7n-prefix}-progress-loading + .@{switch-prefix-cls}-label {
+    &::after {
+      left: @check-left;
+    }
   }
 }

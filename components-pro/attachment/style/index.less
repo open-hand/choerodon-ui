@@ -10,6 +10,22 @@
     flex: 1;
     flex-direction: column;
     max-width: 100%;
+
+    .@{c7n-pro-prefix}-select-wrapper {
+      margin: @attachment-sort-select-margin;
+      border: @attachment-sort-selcet-border;
+    }
+
+    .@{pro-attachment-prefix-cls}-list-no-card {
+      .@{c7n-pro-prefix}-picture {
+        // Picture 模式
+        margin: @attachment-picture-margin;
+        // Text 模式
+        &.@{pro-attachment-prefix-cls}-list-item-icon {
+          margin: @attachment-text-picture-icon-margin;
+        }
+      }
+    }
   }
 
   &-header {
@@ -18,7 +34,7 @@
 
     &-divider {
       width: .01rem;
-      height: .09rem;
+      height: @attachment-header-divider-height;
       margin: 0 .07rem;
       background-color: @border-color-base;
     }
@@ -39,13 +55,14 @@
     overflow: auto;
 
     &-item {
-      margin: .04rem 0;
-      padding: 0 .1rem;
-      background-color: #f3f3f3;
+      margin: @attachment-list-item-margin;
+      padding: @attachment-list-item-padding;
+      background-color: @attachment-list-item-bg;
+      border: @attachment-list-item-border;
 
       &-container {
         position: relative;
-        padding: .07rem 0;
+        padding: @attachment-list-item-container-padding;
       }
 
       &-content,
@@ -251,13 +268,14 @@
   }
 
   &-list &-card-button {
-    background-color: #f8f8f8;
-    border: @border-width-base dashed @border-color-base;
+    line-height: @attachment-card-button-line-height;
+    background-color: @attachment-card-button-bg;
+    border: @attachment-card-button-border;
     border-radius: @border-radius-base;
 
     .@{iconfont-css-prefix} {
-      margin-bottom: .04rem;
-      font-size: .28rem;
+      margin: @attachment-card-button-icon-margin;
+      font-size: @attachment-card-button-icon-size;
     }
 
     &.@{c7n-pro-prefix}-btn-disabled,
@@ -310,7 +328,7 @@
     width: 0.08rem;
     margin-left: 0.04rem;
     color: @label-required-color;
-    font-family: SimSun, sans-serif;
+    font-family: @font-family-required-symbol;
     line-height: 1;
     vertical-align: middle;
     content: '*';
@@ -417,6 +435,7 @@
       }
 
       &-text {
+        margin: @attachment-drag-box-text-margin;
         color: @heading-color;
         font-weight: 400;
         font-size: @font-size-sm;
@@ -424,6 +443,7 @@
       }
 
       &-hint {
+        margin: @attachment-drag-box-hint-margin;
         color: @text-color-secondary;
         font-size: @font-size-sm;
       }

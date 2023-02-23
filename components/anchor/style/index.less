@@ -1,8 +1,6 @@
 @import '../../style/themes/default';
 @import '../../style/mixins/index';
 
-@anchor-border-width: 0.02rem;
-
 .@{c7n-prefix}-anchor {
   .reset-component;
   position: relative;
@@ -36,7 +34,7 @@
       width: 0.08rem;
       height: 0.08rem;
       background-color: @component-background;
-      border: 0.02rem solid @anchor-primary-color;
+      border: @anchor-ball-border-width solid @anchor-primary-color;
       border-radius: 0.08rem;
       transform: translateX(-50%);
       transition: top @animation-duration-slow ease-in-out;
@@ -59,8 +57,9 @@
       display: block;
       margin-bottom: 0.06rem;
       overflow: hidden;
-      color: @text-color;
+      color: @anchor-link-title-color;
       white-space: nowrap;
+      text-decoration: @anchor-link-title-decoration;
       text-overflow: ellipsis;
       transition: all @animation-duration-slow;
 
@@ -74,7 +73,8 @@
     }
 
     &-active > &-title {
-      color: @anchor-primary-color;
+      color: @anchor-link-title-active-color;
+      font-weight: @anchor-link-title-active-font-weight;
     }
   }
 

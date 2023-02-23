@@ -3,9 +3,6 @@
 
 @collapse-prefix-cls: ~'@{c7n-prefix}-collapse';
 
-@collapse-header-bg: @background-color-light;
-@collapse-active-bg: @background-color-base;
-
 .collapse-close() {
   transform: rotate(0);
 }
@@ -17,7 +14,7 @@
 .@{collapse-prefix-cls} {
   .reset-component;
   background-color: @collapse-header-bg;
-  border: @border-width-base @border-style-base @border-color-base;
+  border: @collapse-border;
   border-bottom: 0;
   border-radius: @collapse-panel-border-radius;
 
@@ -28,7 +25,7 @@
   }
 
   & > &-item {
-    border-bottom: @border-width-base @border-style-base @border-color-base;
+    border-bottom: @collapse-border;
 
     &:last-child {
       &,
@@ -41,7 +38,7 @@
       position: relative;
       padding: @collapse-header-padding;
       color: @heading-color;
-      line-height: 0.22rem;
+      line-height: @collapse-header-line-height;
       transition: all @animation-duration-slow;
 
       .@{collapse-prefix-cls}-extra {
@@ -53,8 +50,8 @@
       }
 
       .@{collapse-prefix-cls}-expand-icon {
-        .iconfont-font('\e5c5', 0.22rem);
-        height: 0.22rem;
+        .iconfont-font('\e5c5', @collapse-expand-icon-size);
+        height: @collapse-expand-icon-size;
         line-height: 1;
         vertical-align: top;
         transform: rotate(-90deg);
@@ -76,8 +73,21 @@
 
   // Expand Icon right
   &-icon-position-right {
+    border: @collapse-icon-right-border;
+
+    .@{collapse-prefix-cls}-content {
+      padding: @collapse-icon-right-content-padding;
+      border-top: @collapse-icon-right-content-border-top;
+    }
+
     & > .@{collapse-prefix-cls}-item {
+      font-size: @collapse-icon-right-item-font-size;
+      border-bottom: @collapse-icon-right-item-border-bottom;
+
       > .@{collapse-prefix-cls}-header {
+        color: @collapse-icon-right-header-color;
+        background-color: @collapse-icon-right-header-bg;
+        border-bottom: @collapse-icon-right-header-border-bottom;
 
         .@{collapse-prefix-cls}-expand-icon-wrapper {
           float: right;
@@ -88,10 +98,14 @@
         }
 
         .@{collapse-prefix-cls}-expand-text {
-          padding-right: 0;
+          padding: @collapse-icon-right-expand-text-padding;
           text-align: right;
           cursor: pointer;
         }
+      }
+
+      &:not(&-disabled) .@{collapse-prefix-cls}-expand-icon-wrapper {
+        color: @collapse-icon-right-wrapper-color;
       }
     }
   }
@@ -113,7 +127,7 @@
     overflow: hidden;
     color: @text-color;
     background-color: @collapse-content-bg;
-    border-top: @border-width-base @border-style-base @border-color-base;
+    border-top: @collapse-border;
 
     & > &-box {
       padding-top: @collapse-content-padding;
@@ -143,7 +157,13 @@
   }
 
   &-borderless > &-item {
-    border-bottom: @border-width-base @border-style-base @border-color-base;
+    border-bottom: @collapse-border;
+    .@{collapse-prefix-cls}-header {
+      padding: @collapse-borderless-header-padding;
+      font-weight: @collapse-borderless-header-font-weight;
+      font-size: @collapse-borderless-header-font-size;
+      line-height: @collapse-borderless-header-line-height;
+    }
   }
 
   &-borderless > &-item:last-child,

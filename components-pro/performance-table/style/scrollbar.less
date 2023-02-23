@@ -1,7 +1,8 @@
 &-table {
   &-scrollbar {
-    background: rgba(45, 45, 45, 0.05);
+    background: @performance-table-scrollbar-bg;
     position: absolute;
+    border: @performance-table-scrollbar-border;
 
     &-active {
       background: rgba(45, 45, 45, 0.1);
@@ -13,8 +14,11 @@
 
     &-handle {
       position: absolute;
-      background: rgba(45, 45, 45, 0.5);
-      border-radius: 4px;
+      background: @performance-table-scrollbar-handle-bg;
+      border-radius: @performance-table-scrollbar-handle-border-radius;
+      &:active {
+        background: @performance-table-scrollbar-handle-active-bg;
+      }
     }
 
     &-handle-horizontal-fir {
@@ -151,7 +155,7 @@
     }
 
     &-horizontal &-handle {
-      height: 8px;
+      height: @performance-table-scrollbar-handle-horizontal-height;
       left: 0px;
       top: 1px;
     }
@@ -172,7 +176,7 @@
 
     &-vertical &-handle {
       min-height: 20px;
-      width: 8px;
+      width: @performance-table-scrollbar-handle-vertical-width;
       top: 0px;
       left: 1px;
     }

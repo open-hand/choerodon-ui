@@ -1,5 +1,16 @@
 @input-box-height: 0.34rem;
 
+.@{calendar-prefix-cls}-range-picker {
+  .@{input-prefix-cls} {
+    display: flex;
+    align-items: center;
+    .@{calendar-prefix-cls}-picker-icon {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
 .@{calendar-prefix-cls}-range-picker-input {
   width: 44%;
   height: 100%;
@@ -17,9 +28,8 @@
 .@{calendar-prefix-cls}-range-picker-separator {
   display: inline-block;
   width: 0.1rem;
-  height: 100%;
+  height: auto;
   color: @text-color-secondary;
-  line-height: 0.34rem;
 }
 
 .@{calendar-prefix-cls}-range {

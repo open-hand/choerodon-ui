@@ -98,7 +98,7 @@
 
   &-input-wrap {
     height: 0.34rem;
-    padding: 0.06rem @control-padding-horizontal - 0.02rem;
+    padding: 0.06rem calc(@control-padding-horizontal - 0.02rem);
     border-bottom: @border-width-base @border-style-base @border-color-split;
   }
 
@@ -328,7 +328,7 @@
     .btn;
     .btn-primary;
     .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @border-radius-base);
-    line-height: @btn-height-sm - 0.02rem;
+    line-height: calc(@btn-height-sm - 0.02rem);
     background: @date-primary-color;
 
     &-disabled {
