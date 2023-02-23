@@ -12,7 +12,7 @@ import {
 } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
@@ -545,6 +545,10 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
           }
         }
       });
+      runInAction(() => {
+        this.isFocus = false;
+        this.isFocused = false;
+      })
     }
     this.updateObservableProps(nextProps, nextContext);
   }

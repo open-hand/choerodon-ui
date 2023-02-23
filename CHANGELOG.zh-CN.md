@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `WaterMark`: 修复在浏览器控制台中选择隐藏节点会隐藏水印的问题。
 - 🐞 `<pro>Table`: 修复 showRemovedRow 为 false 时删除行引起的奇偶行样式错误的问题 & 虚拟滚动模式下 showRemovedRow 为 false 时删除行时，页面出现空白且滚动条不收缩的问题。
 - 🐞 `<pro>SelectBox`: 修复校验失败无法自动聚焦的问题。
+- 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 
 ## 1.5.8
 
