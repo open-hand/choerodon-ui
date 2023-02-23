@@ -20,6 +20,7 @@ title: API
 | mouseLeaveDelay | 鼠标移出后延时多少才隐藏 Tooltip，单位：秒 | number | 0.1 |
 | popupClassName | 卡片类名 | string |  |
 | popupStyle | 卡片样式 | object |  |
+| popupInnerStyle(1.5.9) | 卡片内容样式 | object | |
 | placement | 气泡框位置，可选 top \| left \| right \| bottom \| topLeft \| topRight \| bottomLeft \| bottomRight \| leftTop \| leftBottom \| rightTop \| rightBottom | string | top |
 | trigger | 触发行为，可选 hover/focus/click/contextMenu` | string | hover |
 | hidden | 用于手动控制浮层显隐 | boolean | true |
