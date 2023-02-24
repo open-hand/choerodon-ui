@@ -134,7 +134,9 @@ subtitle: 表格
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string | [globalConfig.tableColumnAlign](/components/configure#API) |
 | resizable | 是否可调整宽度 | boolean | [globalConfig.tableColumnResizable](/components/configure#API) |
-| sortable | 是否可排序（后端请求排序，前端排序请自定义 header 自行实现） | boolean | false |
+| sortable | 是否可排序，前端排序请定义 CompareFn | boolean \|CompareFn  | false |
+| filter | 是否可前端过滤 | boolean \| ((props: { record: Record, filterText?: string }) => boolean)  | false |
+| filterPopover | 前端过滤自定义筛选，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  |
 | hideable | 是否可隐藏 | boolean | [globalConfig.tableColumnHideable](/components/configure#API) |
 | titleEditable | 是否可编辑标题 | boolean | [globalConfig.tableColumnTitleEditable](/components/configure#API) |
 | style | 列单元格内链样式 | object |  |

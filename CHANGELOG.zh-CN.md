@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.9
+
+`2023-02-24`
+
 - 🌟 `configure`: 新增 attachment.downloadAllMode, formAutoFocus, useLookupBatch 属性。
 - 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
 - 🌟 `<pro>Table`: 新增组合排序编辑功能。

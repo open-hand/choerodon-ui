@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.5.9
+
+`2023-02-24`
+
 - 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
 - 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
 - 🌟 `<pro>Table`: Added combination sort editing function.
