@@ -6,11 +6,24 @@ function handleChange(value, oldValue) {
   console.log('[button]', value, '[oldValue]', oldValue);
 }
 
-ReactDOM.render(
+const App = () => (
   <div>
-    <CheckBox mode="button" name="base" value="A" onChange={handleChange} defaultChecked>A</CheckBox>
-    <CheckBox mode="button" name="base" value="B" onChange={handleChange}>B</CheckBox>
-    <CheckBox mode="button" name="base" value="C" onChange={handleChange}>C</CheckBox>
-  </div>,
-  document.getElementById('container')
+    <CheckBox
+      mode="button"
+      name="base"
+      value="A"
+      onChange={handleChange}
+      defaultChecked
+    >
+      A
+    </CheckBox>
+    <CheckBox mode="button" name="base" value="B" onChange={handleChange}>
+      B
+    </CheckBox>
+    <CheckBox mode="button" name="base" value="C" onChange={handleChange}>
+      C
+    </CheckBox>
+  </div>
 );
+
+ReactDOM.render(<App />, document.getElementById('container'));

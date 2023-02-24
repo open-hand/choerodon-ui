@@ -59,6 +59,20 @@
       "order": 3,
       "height": 923,
       "screenshot": ""
+    },
+    {
+      "filename": "custom-header.js",
+      "title": {
+        "zh": "自定义头部",
+        "en": "Custom header"
+      },
+      "description": {
+        "zh": "可自定义日历头部组件。\n",
+        "en": "Customizable calendar header components.\n"
+      },
+      "order": 4,
+      "height": 415,
+      "screenshot": ""
     }
   ]
 }

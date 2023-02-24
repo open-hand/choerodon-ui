@@ -33,6 +33,8 @@ import 'codemirror/theme/eclipse.css';
 
 所有可用主题请参考 [CodeMirror Themes](https://codemirror.net/demo/theme.html)。
 
+关于 CodeArea 引入主题资源教程请参考 [CodeArea 引入主题资源](/zh/tutorials/codearea-theme)。
+
 ### 更多编辑器配置项
 
 更多编辑器配置可以直接作为输入属性传递给组件，如下：

@@ -18,6 +18,7 @@ title: API
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined | | 1.5.0-beta.0 |
 | nodeRenderer | 树形展示节点渲染器 | (record: Record) => ReactNode |  | 1.5.0 |
 | viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet }) => ReactNode |  | 1.5.0 |
+| viewMode | 弹窗视图渲染模式，可选值：modal \| drawer \| popup | string | modal | |
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  | 1.5.0 |
 | selectionProps | 显示已选记录时的参数，详情见[selectionProps](#selectionprops) | object |  |  1.5.1  |
 
@@ -36,4 +37,8 @@ title: API
 ### Lov多选时输入框显示过长
 
 参考 [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long) 说明，Lov 相同。
+
+### 如何配置一个树形 Lov
+
+参考 [Lov 树形教程示例](/zh/tutorials/lov#树形-lov)。
 

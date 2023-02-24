@@ -288,11 +288,11 @@ abstract: true
 | [minLength](/en/datasetapi/other/validate) | 最小长度 | number |  |    |
 | [max](/en/datasetapi/other/validate) | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName | Infinity |  | |
 | [min](/en/datasetapi/other/validate) | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName | -Infinity |   | |
-| step | 步距。| BigNumber.Value \| number \| { hour: number, minute: number, second: number } \| string |  | |
+| [step](/en/datasetapi/field-props/precision) | 步距。| BigNumber.Value \| number \| { hour: number, minute: number, second: number } \| string |  | |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |    |
-| precision | 小数点精度, 提交时会截断 | number |  | 1.3.0 |
+| [precision](/en/datasetapi/field-props/precision) | 小数点精度, 提交时会截断 | number |  | 1.3.0 |
 | numberGrouping | 千分位分组显示 | boolean | true | 1.3.0   |
-| formatterOptions | 数字和货币格式化配置 | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } | | 1.5.1 |
+| [formatterOptions](/en/datasetapi/field-props/precision) | 数字和货币格式化配置 | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } | | 1.5.1 |
 | [validator](/en/datasetapi/other/validate) | 校验器，当返回值为 false 或 涵盖错误信息的字符串，则为校验失败 | (value, name, record) =&gt; boolean \| string \| undefined |  |  |
 | [required](/en/datasetapi/other/validate) | 是否必选 | boolean | false |   |
 | readOnly | 是否只读 | boolean | false |   |
@@ -306,7 +306,7 @@ abstract: true
 | group | 是否分组，如果是 number，则为分组的顺序 | boolean \|number |  | |
 | defaultValue | 默认值 | any |  |  |
 | multiple | 是否为值数组。 当为字符串时，作为数据分隔符，查询时会将字符串分割成数组，提交时会将数组拼接成字符串 | boolean \| string | false |  |
-| range | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean \| \[string, string\] | false |   |
+| [range](/en/datasetapi/field-props/range)  | 是否为范围值。 当为 true 时，则值为\[startValue, endValue\]；当为数组时，例如\['start', 'end'\]时，则值为{ start: startValue, end: endValue } | boolean \| \[string, string\] | false |   |
 | unique | 唯一索引或联合唯一索引组名。multiple 和 range 字段不适用。当 column 的 editor 设为 true 时，编辑器只会在新增的记录显示，如果要对已有数据进行编辑，请自定义 editor | boolean \| string | false |  |
 | lovCode | LOV 配置代码 | string |  |  |
 | lovPara | LOV 或 Lookup 查询参数对象 | object |  |    |

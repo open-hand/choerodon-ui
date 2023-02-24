@@ -28,7 +28,7 @@ title: API
 | bucketName | 附件上传的桶名 | string |  | |
 | bucketDirectory | 附件上传的桶目录 | string |  | |
 | storageCode | 附件存储编码 | string |  | |
-| templateUrl | 附件存储编码 | string |  | 1.5.5 |
+| template | 附件模板 | { bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean } |  | 1.5.5 |
 | showSize | 显示文件大小信息 | boolean | true | 1.5.3 |
 | previewTarget | 预览链接跳转对象， 如要在iframe内预览， 可给 iframe 指定 name={previewTarget} | string | 'attachment-preview'  | 1.5.1 |
 | isPublic | 是否是公共的， [attachment](/zh/procmp/configure/configure#attachmentconfig)配置中相关钩子会使用该属性 | boolean | | 1.5.0 |
