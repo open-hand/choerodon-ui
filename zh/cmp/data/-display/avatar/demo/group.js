@@ -22,11 +22,7 @@ ReactDOM.render(
       <Avatar style={{ backgroundColor: '#1890ff' }} icon="event_available-o" />
     </Avatar.Group>
     <Divider />
-    <Avatar.Group
-      maxCount={2}
-      size="large"
-      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-    >
+    <Avatar.Group maxCount={2} size="large">
       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
       <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
       <Tooltip title="User" placement="top">
@@ -35,18 +31,26 @@ ReactDOM.render(
       <Avatar style={{ backgroundColor: '#1890ff' }} icon="event_available-o" />
     </Avatar.Group>
     <Divider />
-    <Avatar.Group
-      maxCount={2}
-      size="large"
-      maxPopoverTrigger="click"
-      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-    >
+    <Avatar.Group maxCount={2} size="small" maxPopoverTrigger="click">
       <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
       <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
       <Tooltip title="User" placement="top">
         <Avatar style={{ backgroundColor: '#87d068' }} icon="person" />
       </Tooltip>
       <Avatar style={{ backgroundColor: '#1890ff' }} icon="event_available-o" />
+    </Avatar.Group>
+    <Divider />
+    <Avatar.Group maxCount={2} size="small" maxPopoverTrigger="click">
+      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+      <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+      <Tooltip title="User" placement="top">
+        <Avatar style={{ backgroundColor: '#87d068' }} icon="person" />
+      </Tooltip>
+      {new Array(100).fill(0).map((x, index) => (
+        <Avatar key={index} style={{ backgroundColor: '#f56a00' }}>
+          {index + 1}
+        </Avatar>
+      ))}
     </Avatar.Group>
   </>,
   document.getElementById('container'),

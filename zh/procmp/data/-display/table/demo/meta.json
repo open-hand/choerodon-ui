@@ -492,6 +492,21 @@
       "category": "pro"
     },
     {
+      "filename": "combine-sort.js",
+      "title": {
+        "zh": "组合排序",
+        "en": "CombineSort"
+      },
+      "description": {
+        "zh": "DataSet 的 combineSort 属性值设置为 true 开启组合排序模式。\n给 Table 的列设置属性 sortable 来开启具体要排序的列。\n开启组合排序后，传到后端的排序参数字段 sort 为数组形式，数组值顺序为排序的优先级，例如：sort: ['age,desc', 'name,asc']",
+        "en": "The combineSort property of DataSet was set to true to enable the combinatorial sorting mode.\nSet the sortable property to the column of the Table to enable the specific column to be sorted.\nAfter combination sort is enabled, the sorting parameter field sort sent to the back-end is in the form of an array, and the order of array values is the sorting priority, for example: sort: ['age,desc', 'name,asc']"
+      },
+      "order": 31,
+      "screenshot": "",
+      "height": 450,
+      "category": "pro"
+    },
+    {
       "filename": "multifunction.js",
       "title": {
         "zh": "功能总和",

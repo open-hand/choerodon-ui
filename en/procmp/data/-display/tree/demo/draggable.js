@@ -57,6 +57,13 @@ function nodeRenderer({ record }) {
   return record.get('text');
 }
 
+function arraymove(arr, fromIndex, toIndex) {
+  const element = arr[fromIndex];
+  arr.splice(fromIndex, 1);
+  arr.splice(toIndex, 0, element);
+  return arr;
+}
+
 class App extends React.Component {
   state = {
     title: 'true',
@@ -83,26 +90,37 @@ class App extends React.Component {
   });
 
   onDrop = (info) => {
-    let flag;
     const data = this.ds.toData();
-    data.map((item) => {
+    let dropIndex = 0;
+    let dragIndex = 0;
+    data.map((item, index) => {
+      if (item.id === info.node.record.get('id')) {
+        dropIndex = index;
+      }
       if (item.id === info.dragNode.record.get('id')) {
+        dragIndex = index;
         if (info.dropToGap) {
           const pId = info.node.record.parent
             ? info.node.record.parent.get('id')
             : undefined;
-          flag = item.parentId === pId;
           item.parentId = pId;
         } else {
           const pId = info.node.record.get('id');
-          flag = item.parentId === pId;
           item.parentId = pId;
         }
       }
       return item;
     });
-    if (flag) return;
-    this.ds.loadData(data);
+
+    const dt = arraymove(
+      data,
+      dragIndex,
+      info.dropPosition === -1 || dragIndex < dropIndex
+        ? dropIndex
+        : dropIndex + 1,
+    );
+
+    this.ds.loadData(dt);
   };
 
   handleChange = (val) => {
