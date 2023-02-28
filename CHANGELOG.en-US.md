@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
+
 ## 1.6.0
 
 `2023-02-24`

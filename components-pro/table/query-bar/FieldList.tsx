@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, memo } from 'react';
 import Icon from 'choerodon-ui/lib/icon';
-import difference from 'lodash/difference';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
 import Field from '../../data-set/Field';
@@ -45,8 +44,24 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
     }
     return undefined;
   })], []), [groups]);
-  const hasSelect = useMemo(() => value.length > 0, [value.length]);
-  const hasSelectAll = useMemo(() => difference(codes, value).length === 0, [codes.length, value.length]);
+  const hasSelect = useMemo(() => {
+    const isSelect = labelCodes.some(lc => {
+      if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+        return value.includes(lc[0]);
+      }
+      return false;
+    });
+    return isSelect;
+  }, [value.length, searchText]);
+  const hasSelectAll = useMemo(() => {
+    const isAll = labelCodes.some(lc => {
+      if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+        return !value.includes(lc[0]);
+      }
+      return false;
+    });
+    return !isAll;
+  }, [searchText, value.length]);
   const isChecked = useCallback((code: string) => value.includes(code), [value]);
   const handleChange = useCallback((code: string | string[], select: boolean) => {
     if (select) {
