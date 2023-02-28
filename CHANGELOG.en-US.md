@@ -15,7 +15,10 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Button`: Optimize and correct the difference of overflow determination..
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
+- 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
+- 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 
 ## 1.6.0
 
