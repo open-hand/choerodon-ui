@@ -924,17 +924,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   handleUnSelect = (code) => {
     const { queryDataSet, dataSet } = this.props;
     const codes = Array.isArray(code) ? code : [code];
+    let isDirty = false;
     if (queryDataSet) {
       const { current } = queryDataSet;
       if (current) {
         codes.forEach((name) => current.set(name, undefined));
+        isDirty = current.dirty;
       }
     }
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
     dataSet.setState(SELECTFIELDS, pull([...selectFields], ...codes));
     const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
-    this.setConditionStatus(shouldUpdate ? RecordStatus.update : RecordStatus.sync);
+    this.setConditionStatus(shouldUpdate || isDirty ? RecordStatus.update : RecordStatus.sync);
     dataSet.setState(SELECTCHANGE, shouldUpdate);
   };
 
