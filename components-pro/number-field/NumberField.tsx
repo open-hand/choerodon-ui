@@ -454,6 +454,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     delete otherProps.maxLength;
     otherProps.max = this.max;
     otherProps.min = this.min;
+    otherProps.onCompositionEnd = (e) => {
+      this.lock = false;
+      this.handleChange(e);
+    };
     return otherProps;
   }
 
@@ -547,6 +551,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   restrictInput(value: string): string {
+    if (this.lock) return value;
     if (value) {
       value = value.replace('。', '.');
       let restrict = '0-9';

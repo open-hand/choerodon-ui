@@ -17,11 +17,13 @@ timeline: true
 
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
+- 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
 - 🐞 `<pro>Table`: Fix the problem that the filter reset button disappears when the dynamic filter bar is cleared.
 - 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
 - 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
+- 🐞 `ViewComponent`: Fix the problem that the component is not out of focus when switching the disabled state.
 
 ## 1.6.0
 
