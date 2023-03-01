@@ -48,6 +48,7 @@ title: Attachment
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  |
 | showValidation | 校验信息展示方式 | `newLine` \| `tooltip` | `viewMode` == `popup` ? `tooltip` : `newLine` |
 | getUUID | 获取 uuid | () => Promise<string> \| string | [attachment.getAttachmentUUID](/component/configure/#Attachment) |
+| hiddenButtons | 文件列表上需要隐藏的按钮，如 upload、remove。 | string[] | [] |
 | onAttachmentsChange | 附件列表变更事件 | (AttachmentFile[]) => void |  |
 | beforeUpload | 上传文件之前的钩子，参数为上传的文件，可对文件在上传之前进行校验操作若返回 false 则停止上传并从列表充删除。支持返回一个 Promise 对象，Promise 对象 reject 或 resolve(false) 时则停止上传，resolve 时开始上传。 | (attachment: AttachmentFile, list: AttachmentFile[]) => (boolean \| Promise) | - |
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | 无 |

@@ -45,12 +45,13 @@ export interface ItemProps {
   hidden?: boolean;
   isPublic?: boolean;
   previewTarget?: string;
+  hiddenButtons?: string[];
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize, hiddenButtons,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -252,7 +253,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           </Tooltip>,
         );
       }
-      if (downloadUrl) {
+      if (downloadUrl && hiddenButtons && !hiddenButtons.includes('download')) {
         const downProps = {
           className: classnames(`${prefixCls}-icon`),
           icon: isCard ? 'arrow_downward' : 'get_app',
@@ -269,7 +270,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         );
       }
     }
-    if (attachmentUUID && !readOnly && status !== 'uploading') {
+    if (attachmentUUID && !readOnly && status !== 'uploading'  && hiddenButtons && !hiddenButtons.includes('remove')) {
       const rmProps = {
         className: classnames(`${prefixCls}-icon`),
         icon: isCard ? 'delete_forever-o' : 'close',

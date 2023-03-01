@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
+import { action as mobxAction, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -66,6 +66,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
   template?: AttachmentValue;
+  hiddenButtons?: string[],
   __inGroup?: boolean;
 }
 
@@ -97,6 +98,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     listType: 'text',
     viewMode: 'list',
     dragUpload: false,
+    hiddenButtons: [],
   };
 
   // eslint-disable-next-line camelcase
@@ -330,6 +332,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'isPublic',
       'downloadAll',
       'attachments',
+      'hiddenButtons',
       'onAttachmentsChange',
       'beforeUpload',
       'onUploadProgress',
@@ -820,7 +823,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, hiddenButtons,
     } = this.props;
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
@@ -852,6 +855,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onAttachmentsChange={this.handleAttachmentsChange}
           onPreview={this.handlePreview}
           record={this.record}
+          hiddenButtons={isArrayLike(hiddenButtons) ? hiddenButtons : []}
         />
       );
     }

@@ -15,14 +15,16 @@ timeline: true
 
 ---
 
-
+- 🌟 `<pro>Attachment`: 新增 hiddenButtons 属性。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
+- 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条添加筛选面板内清除和全选过滤后的选项逻辑问题。
 - 🐞 `<pro>Table`: 修复动态筛选条在筛选条件聚焦情况下点击添加筛选时，选择菜单无法直接弹出的问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
+- 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 
 
 ## 1.6.0

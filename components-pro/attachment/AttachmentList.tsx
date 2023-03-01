@@ -36,6 +36,7 @@ export interface AttachmentListProps {
   showSize?: boolean;
   isPublic?: boolean;
   record?: Record;
+  hiddenButtons?: string[];
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -63,6 +64,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     isPublic,
     record,
     showSize,
+    hiddenButtons,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -138,6 +140,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 onPreview={onPreview}
                 previewTarget={previewTarget}
                 isPublic={isPublic}
+                hiddenButtons={hiddenButtons}
               />
             )
           }
