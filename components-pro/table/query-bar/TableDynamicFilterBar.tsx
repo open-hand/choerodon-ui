@@ -354,7 +354,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
     if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
-      document.addEventListener('click', this.handleClickOut);
+      document.addEventListener('mousedown', this.handleMouseDownOut);
       if (this.isSingleLineOpt() && this.refSingleWrapper) {
         const { height } = this.refSingleWrapper.getBoundingClientRect();
         const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
@@ -376,7 +376,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   componentWillUnmount(): void {
     const { fuzzyQueryOnly } = this.props;
     if (!fuzzyQueryOnly) {
-      document.removeEventListener('click', this.handleClickOut);
+      document.removeEventListener('mousedown', this.handleMouseDownOut);
       this.processDataSetListener(false);
     }
     if (this.isTooltipShown) {
@@ -427,7 +427,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   @action
-  handleClickOut = (e) => {
+  handleMouseDownOut = (e) => {
     if (this.refDropdown && !this.refDropdown.contains(e.target)) {
       this.fieldSelectHidden = true;
     }
@@ -1770,7 +1770,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 >
                   <span
                     className={`${prefixCls}-add-fields`}
-                    onClick={(e: any) => {
+                    onMouseDown={(e: any) => {
                       e.nativeEvent.stopImmediatePropagation();
                       runInAction(() => {
                         this.fieldSelectHidden = false;
