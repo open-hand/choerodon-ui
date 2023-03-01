@@ -1504,7 +1504,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
     this.setText(restricted);
-    if (!this.isFocus || (valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
+    if (!this.isFocus || (!this.lock && valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
       this.handleChangeWait(restricted);
     }
   }
