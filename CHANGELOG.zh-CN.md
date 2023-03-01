@@ -24,6 +24,7 @@ timeline: true
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
+- 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 
 
 ## 1.6.0
