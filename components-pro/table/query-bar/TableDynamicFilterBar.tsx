@@ -783,7 +783,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         runInAction(() => {
           this.shouldLocateData = true;
         });
-        if (queryDataSet && queryDataSet.fields) {
+        if (queryDataSet && queryDataSet.fields && !this.tempFields) {
           this.tempFields = queryDataSet.snapshot().dataSet.fields;
         }
       } else {
