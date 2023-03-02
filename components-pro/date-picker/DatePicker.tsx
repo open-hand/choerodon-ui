@@ -975,6 +975,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       const { range, rangeTarget } = this;
       if (range ? rangeTarget === 1 : !this.multiple) {
         if (!expand) {
+          runInAction(() => {
+            this.hoverValue = undefined;
+          });
           this.collapse();
         }
       }
