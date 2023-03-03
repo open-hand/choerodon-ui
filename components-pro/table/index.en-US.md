@@ -177,6 +177,7 @@ subtitle: 表格
 | ----------- | ---------------------- | ------ | -------- |
 | paramName   | 输入的过滤条件的字段名 | string | 'params' |
 | placeholder | 输入框的占位符         | string | '过滤表' |
+| editable    | 查询条是否可编辑         | boolean | true |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

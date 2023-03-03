@@ -73,7 +73,7 @@ import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar, { TableProfessionalBarProps } from './query-bar/TableProfessionalBar';
 import ComboBar, { TableComboBarProps } from './query-bar/TableComboBar';
 import DynamicFilterBar, { TableDynamicFilterBarProps } from './query-bar/TableDynamicFilterBar';
-import FilterSelect from './query-bar/FilterSelect';
+import FilterSelect, { FilterSelectProps } from './query-bar/FilterSelect';
 import {
   findCell,
   findIndexedSibling,
@@ -151,6 +151,7 @@ export interface TableQueryBarCustomProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+  editable: boolean;
 }
 
 export interface ScrollInfo {
@@ -195,7 +196,8 @@ export type TableQueryBarHookCustomProps =
   & TableQueryBarCustomProps
   & TableComboBarProps
   & TableProfessionalBarProps
-  & TableDynamicFilterBarProps;
+  & TableDynamicFilterBarProps
+  & FilterSelectProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType

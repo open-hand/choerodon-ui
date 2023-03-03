@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
+- 💄 `<pro>Table`: Optimize when the querybar is bar, it can control whether it can be input.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic screening bar presets the tenant configuration that affects the initialization query field.
 - 🐞 `<pro>Table`: Fix the problem that the filter reset button disappears when the dynamic filter bar is cleared.

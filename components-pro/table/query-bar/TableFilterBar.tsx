@@ -18,6 +18,7 @@ export interface FilterBarProps {
   paramName: string;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  editable?: boolean;
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -59,7 +60,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
   }
 
   render() {
-    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop } = this.props;
+    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop, editable } = this.props;
     const { prefixCls } = this;
     const buttons = this.getButtons();
     return [
@@ -75,6 +76,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
         paramName={paramName}
         onQuery={onQuery}
         onReset={onReset}
+        editable={editable}
       />,
     ];
   }
