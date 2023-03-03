@@ -43,8 +43,20 @@ import { ShowValidation } from '../form/enum';
 import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
+import { TableButtonProps } from '../table/interface';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
+
+export enum AttachmentButtonType {
+  download = 'download',
+  remove = 'remove',
+  history = 'history',
+}
+
+export type AttachmentButtons =
+  | AttachmentButtonType
+  | [AttachmentButtonType, TableButtonProps]
+  | ReactElement<TableButtonProps>;
 
 export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderProps {
   listType?: AttachmentListType;
@@ -66,6 +78,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
   template?: AttachmentValue;
+  buttons?: AttachmentButtons[];
   __inGroup?: boolean;
 }
 
@@ -308,6 +321,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'action',
       'data',
       'headers',
+      'buttons',
       'withCredentials',
       'sortable',
       'listType',
@@ -820,8 +834,15 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons,
     } = this.props;
+    let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
+    if (buttons) {
+      mergeButtons = [...mergeButtons, ...buttons];
+    }
+    if (showHistory) {
+      mergeButtons.unshift(AttachmentButtonType.history);
+    }
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
     if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
@@ -852,6 +873,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onAttachmentsChange={this.handleAttachmentsChange}
           onPreview={this.handlePreview}
           record={this.record}
+          buttons={mergeButtons}
         />
       );
     }
@@ -995,7 +1017,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     return (
       <div className={classes.join(' ')}>
-        { viewMode !== 'popup' && this.renderDragUploadArea()}
+        {viewMode !== 'popup' && this.renderDragUploadArea()}
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp()}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}

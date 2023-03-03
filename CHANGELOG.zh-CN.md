@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment`: 新增 buttons 属性。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。

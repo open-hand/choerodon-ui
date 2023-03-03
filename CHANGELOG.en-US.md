@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Attachment`: Added `buttons` props。
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
