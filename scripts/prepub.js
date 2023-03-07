@@ -44,7 +44,7 @@ if (fs.existsSync(path.join(__dirname, '../dist'))) {
     const less = isPro ? 'choerodon-ui-pro.less' : 'choerodon-ui.less';
     const relativePath = isPro ? '../../pro/lib/' : '../';
     const componentsPath = path.join(process.cwd(), dir);
-    let componentsLessContent = '';
+    let componentsLessContent = isPro ? '@import "./themes/css-vars.less";\n' : '';
 
     // Build components in one file: lib/style/components.less
     fs.readdir(componentsPath, function (err, files) {
