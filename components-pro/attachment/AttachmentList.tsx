@@ -6,7 +6,7 @@ import isNumber from 'lodash/isNumber';
 import Item from './Item';
 import AttachmentFile from '../data-set/AttachmentFile';
 import Record from '../data-set/Record';
-import { AttachmentListType } from './Attachment';
+import { AttachmentButtons, AttachmentListType } from './Attachment';
 import Animate from '../animate';
 import { arrayMove } from '../data-set/utils';
 import { PictureProvider } from '../picture/PictureContext';
@@ -36,6 +36,7 @@ export interface AttachmentListProps {
   showSize?: boolean;
   isPublic?: boolean;
   record?: Record;
+  buttons?: AttachmentButtons[];
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -63,6 +64,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     isPublic,
     record,
     showSize,
+    buttons,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -138,6 +140,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 onPreview={onPreview}
                 previewTarget={previewTarget}
                 isPublic={isPublic}
+                buttons={buttons}
               />
             )
           }
