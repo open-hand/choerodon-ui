@@ -802,7 +802,11 @@ export default class Lov extends Select<LovProps> {
     this.resetOptions(options.length === 1);
     await options.query(1, undefined, true);
     if (options.length === 1) {
-      this.choose(options.get(0));
+      const values = this.getValues();
+      const record = options.get(0);
+      if (!this.optionIsSelected(record as Record, values)) {
+        this.choose(record);
+      }
     } else {
       this.openModal();
     }

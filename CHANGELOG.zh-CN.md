@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条在筛选条件聚焦情况下点击添加筛选时，选择菜单无法直接弹出的问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
+- 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 
