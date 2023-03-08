@@ -1511,6 +1511,7 @@ export default class Table extends DataSetComponent<TableProps> {
       raf.cancel(this.scrollId);
     }
     this.bubbleValidationReport(false);
+    this.tableStore.dispose();
   }
 
   bubbleValidationReport(showInvalid: boolean) {

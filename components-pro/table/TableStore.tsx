@@ -1,5 +1,5 @@
 import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
-import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
+import { action, computed, get, IReactionDisposer, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -2329,10 +2329,25 @@ export default class TableStore {
     this.initColumns();
   }
 
+  groupReaction?: IReactionDisposer;
+
+  disposeGroupReaction() {
+    const { groupReaction } = this;
+    if (groupReaction) {
+      groupReaction();
+    }
+  }
+
+  dispose() {
+    this.disposeGroupReaction();
+  }
+
   @action
   initGroups() {
+    this.disposeGroupReaction();
     const { groups = [] } = this.props;
     if (groups.length) {
+      this.groupReaction = reaction(() => dataSet.records, () => this.initGroups());
       const headerGroupNames: string[] = [];
       const rowGroupNames: string[] = [];
       const groupNames: string[] = [];
