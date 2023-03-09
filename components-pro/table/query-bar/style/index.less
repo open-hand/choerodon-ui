@@ -184,7 +184,7 @@
     display: flex;
     align-items: center;
 
-    .@{select-prefix-cls} {
+    .@{table-prefix-cls}-filterName-select .@{select-prefix-cls} {
       display: inline-block;
       max-width: 1.72rem;
       margin: 0;
@@ -224,7 +224,7 @@
     margin: 0.02rem 0.12rem 0.02rem 0;
     padding: 0 0.07rem;
     background-color: @component-background;
-    border: 1px solid @input-border-color;
+    border: 1px solid rgba(0, 0, 0, .06);
     border-radius: 0.02rem;
     cursor: pointer;
 
@@ -483,6 +483,18 @@
       }
     }
 
+    .@{c7n-pro-prefix}-input-number-step-suffix {
+      &:focus-within,
+      &:not(.@{c7n-pro-prefix}-input-number-empty):hover {
+        .icon-text_fields {
+          opacity: 0;
+        }
+      }
+      &.@{c7n-pro-prefix}-input-number-wrapper .@{c7n-pro-prefix}-input-number {
+        padding-right: @input-suffix-width-base; // 避免 NumberField 默认样式的影响
+      }
+    }
+
     // 多值 placeholder 和 input 光标对齐
     [class*="-placeholder-inner"] {
       padding-left: 0.02rem;
@@ -685,8 +697,8 @@
       }
     }
 
-    .@{c7n-pro-prefix}-input-multiple,
-    .@{c7n-pro-prefix}-input-number-multiple,
+    .@{c7n-pro-prefix}-input-multiple-value,
+    .@{c7n-pro-prefix}-input-number-multiple-value,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-calendar-picker-multiple-value {
       max-width: 0;
@@ -876,17 +888,13 @@
       padding: @table-professional-query-button-padding;
 
       &-vertical {
-        padding: 0.3rem 0 0.1rem 0.7rem;
+        padding: @table-professional-query-button-vertical-padding;
       }
 
       span {
         display: inline-flex;
         align-items: center;
         vertical-align: baseline;
-      }
-
-      .@{table-prefix-cls}-professional-query-more {
-        border: @table-professional-query-more-button-border;
       }
     }
   }
