@@ -83,27 +83,29 @@ class App extends React.Component {
         range: true,
       },
       {
-      name: 'applicationDateRange',
-      type: 'dateTime',
-      ignore: 'always',
-      range: ['start', 'end'],
-      defaultValue: { start: moment().subtract(1, 'months'), end: moment() },
-      label: 'applicationDate',
-      labelWidth: '90'
-    },
-    {
-      name: 'requisitionDateFrom',
-      type: 'date',
-      bind: 'applicationDateRange.start'
-    },
-    {
-      name: 'requisitionDateTo',
-      type: 'date',
-      bind: 'applicationDateRange.end'
-    },
-      { name: 'name', multiple: true, type: 'string' },
-      { name: 'age', defaultValue: [], type: 'number', label: '年龄', range:true },
-      {  multiple: true, name: 'code', type: 'object', ignore:'always', label: '代码描述', lovCode: 'LOV_CODE' },
+        name: 'applicationDateRange',
+        type: 'dateTime',
+        ignore: 'always',
+        range: ['start', 'end'],
+        defaultValue: { start: moment().subtract(1, 'months'), end: moment() },
+        label: 'applicationDate',
+        labelWidth: '90',
+      },
+      {
+        name: 'requisitionDateFrom',
+        type: 'date',
+        bind: 'applicationDateRange.start',
+      },
+      {
+        name: 'requisitionDateTo',
+        type: 'date',
+        bind: 'applicationDateRange.end',
+      },
+      { name: 'name', label: '姓名', type: 'string' },
+      { name: 'empty', type: 'string', multiple: true },
+      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'ageRange', defaultValue: [], type: 'number', label: '年龄范围', range: true },
+      { name: 'code', type: 'object', ignore:'always', label: '代码描述', lovCode: 'LOV_CODE', multiple: true },
       {
         name: 'email',
         type: 'email',
@@ -114,10 +116,10 @@ class App extends React.Component {
       },
       {
         name: 'numberMultiple',
-        type: 'curreny',
+        type: 'currency',
         label: '金额range',
         range: true,
-        currency: 'USD'
+        currency: 'USD',
       },
       {
         name: 'code_code',
@@ -126,7 +128,7 @@ class App extends React.Component {
         maxLength: 20,
         // required: true,
         // computedProps: codeCodeDynamicProps,
-          bind: 'code.code',
+        bind: 'code.code',
       },
       {
         name: 'code_select',
@@ -247,8 +249,8 @@ class App extends React.Component {
               fieldPorps: {
                 label: '新字段',
                 type: 'string',
-        label: '性别（多值）',
-        lookupCode: 'HR.EMPLOYEE_GENDER',
+                label: '性别（多值）',
+                lookupCode: 'HR.EMPLOYEE_GENDER',
               },
               source: 'other',
             },
