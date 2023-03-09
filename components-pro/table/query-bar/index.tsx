@@ -785,7 +785,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             };
 
             const elementType = inValidElement.type as JSXElementConstructor<any>;
-            if (((!isValidElement(element) || element.props.suffix === undefined)) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].indexOf(elementType.name) !== -1) {
+            if ((!isValidElement(element) || element.props.suffix === undefined) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].indexOf(elementType.name) !== -1) {
               Object.assign(filterBarProps, { suffix: <Icon type="search" /> });
             }
           }
