@@ -258,7 +258,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   @autobind
   async handleClick(e) {
     const onButtonClick = this.context.getConfig('onButtonClick');
-    if (onButtonClick) {
+    if (onButtonClick && e) {
       const { target } = e;
       const { children, icon } = this.props;
       const promise = Promise.resolve(target && (target as HTMLButtonElement | HTMLAnchorElement).textContent || getReactNodeText(children));

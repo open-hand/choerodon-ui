@@ -540,6 +540,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
+      this.handleSelect(name, record);
       status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
