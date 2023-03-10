@@ -46,6 +46,7 @@ import Count from './Count';
 import { TabPaneProps } from './TabPane';
 import TabsAddBtn from './TabsAddBtn';
 import InvalidBadge from './InvalidBadge';
+import ReactResizeObserver from '../_util/resizeObserver';
 
 export interface TabBarProps {
   inkBarAnimated?: boolean | undefined;
@@ -776,16 +777,23 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     tabBarProps.onKeyDown = handleKeyDown;
   }
   return (
-    <div
-      {...tabBarProps}
-      {...getDataAttr(restProps)}
-    >
-      <div className={`${prefixCls}-bar-inner`}>
-        {groupNode}
-        {groupNode && <div className={`${prefixCls}-bar-divider`} />}
-        {getContent(scrollbarNode)}
+    <ReactResizeObserver
+      resizeProp={isVertical(tabBarPosition) ? 'height' : 'width'}
+      onResize={debounce(() => {
+        setNextPrev();
+        scrollToActiveTab();
+      }, 200)}>
+      <div
+        {...tabBarProps}
+        {...getDataAttr(restProps)}
+      >
+        <div className={`${prefixCls}-bar-inner`}>
+          {groupNode}
+          {groupNode && <div className={`${prefixCls}-bar-divider`} />}
+          {getContent(scrollbarNode)}
+        </div>
       </div>
-    </div>
+    </ReactResizeObserver>
   );
 };
 
