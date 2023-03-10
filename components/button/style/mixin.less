@@ -234,11 +234,11 @@
 // circle button: the content only contains icon
 .btn-circle(@btnClassName: btn) {
   .square(@btn-circle-size);
-  .button-size(@btn-circle-size; 0; calc(@font-size-base + 0.02rem); 50%);
+  .button-size(@btn-circle-size; 0; calc(@font-size-base + 0.02rem); @btn-circle-border-radius);
 
   &.@{btnClassName}-lg {
     .square(@btn-circle-size-lg);
-    .button-size(@btn-circle-size-lg; 0; calc(@btn-font-size-lg + 0.02rem); 50%);
+    .button-size(@btn-circle-size-lg; 0; calc(@btn-font-size-lg + 0.02rem); @btn-circle-border-radius);
     > .@{iconfont-css-prefix} {
       margin-right: 0;
       font-size: @icon-font-size-lg;
@@ -247,7 +247,7 @@
 
   &.@{btnClassName}-sm {
     .square(@btn-circle-size-sm);
-    .button-size(@btn-circle-size-sm; 0; @font-size-base; 50%);
+    .button-size(@btn-circle-size-sm; 0; @font-size-base; @btn-circle-border-radius);
     > .@{iconfont-css-prefix} {
       margin-right: 0;
       font-size: @icon-font-size-sm;
