@@ -494,7 +494,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (value === RecordStatus.sync && orglValue) {
       const oriObj = dataSet.getState(ORIGINALVALUEOBJ);
       dataSet.setState(ORIGINALVALUEOBJ, { ...oriObj, query: orglValue });
-      // this.ORIGINALVALUEOBJ.set('queryFields', orglValue);
     }
   }
 
@@ -524,12 +523,17 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       if (value) {
         const rangeKeys = Object.keys(value);
         if (rangeKeys.length) {
-          if (value[rangeKeys[0]] === undefined) {
+          if (value[rangeKeys[0]] === undefined && value[rangeKeys[1]] === undefined) {
             record.set(name, null)
           } else if (value[rangeKeys[1]] === undefined) {
             record.set(name, {
               [rangeKeys[0]]: value[rangeKeys[0]],
               [rangeKeys[1]]: null,
+            });
+          } else if (value[rangeKeys[0]] === undefined) {
+            record.set(name, {
+              [rangeKeys[0]]: null,
+              [rangeKeys[1]]: value[rangeKeys[1]],
             });
           }
         }
