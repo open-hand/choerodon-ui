@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { DragStart, DragUpdate, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
@@ -204,6 +205,9 @@ export interface TableProps extends StandardProps {
   columnTitleEditable?: boolean;
   columnsDragRender?: object;
   rowDraggable?: boolean;
+  onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
+  onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;
+  onDragEndBefore?: (result: DropResult, provided: ResponderProvided) => boolean;
 }
 
 // Fix the type definition error of typescript

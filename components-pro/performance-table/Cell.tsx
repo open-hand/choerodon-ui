@@ -56,7 +56,7 @@ class Cell extends React.PureComponent<CellProps> {
   };
 
   // @ts-ignore
-  addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
+  addPrefix = (name: string): string => prefix(this.props.classPrefix)(name);
 
   isTreeCol() {
     const { treeCol, firstColumn } = this.props;
@@ -170,7 +170,7 @@ class Cell extends React.PureComponent<CellProps> {
 
     let nextHeight = isHeaderCell ? headerHeight : this.getHeight();
     if (cellExternalProps.rowSpan) {
-      nextHeight = cellExternalProps.rowSpan * nextHeight;
+      nextHeight = cellExternalProps.rowSpan * (nextHeight || 1);
     }
     const styles = {
       ...style,

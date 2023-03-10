@@ -3,12 +3,20 @@ import isString from 'lodash/isString';
 import cssUnitConverter from 'css-unit-converter';
 
 export function pxToRem(num?: number | string | null): string | undefined {
+  let rootFontSize = 100;
+  if (window && window.document && window.getComputedStyle) {
+    const rootFontSizePx = window.getComputedStyle(document.documentElement).fontSize;
+    if (typeof rootFontSizePx === 'string' && rootFontSizePx.endsWith('px')) {
+      rootFontSize = parseFloat(rootFontSizePx.replace('px', ''));
+      rootFontSize = isNaN(rootFontSize) ? 100 : rootFontSize;
+    }
+  }
   if (num !== undefined && num !== null) {
     if (num === 0) {
       return '0';
     }
     if (isNumber(num)) {
-      return `${num / 100}rem`;
+      return `${num / rootFontSize}rem`;
     }
     return num;
   }

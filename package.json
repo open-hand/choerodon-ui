@@ -1,6 +1,9 @@
 {
   "name": "choerodon-ui",
-  "version": "1.4.5",
+  "version": "1.4.5-hotfix.1",
+  "publishConfig": {
+    "registry": "http://nexus.saas.hand-china.com/content/repositories/hzero-ui/"
+  },
   "title": "Choerodon UI",
   "description": "An enterprise-class UI design language and React-based implementation",
   "homepage": "https://open-hand.github.io/choerodon-ui/",
@@ -126,8 +129,8 @@
     "@types/classnames": "~2.2.8",
     "@types/codemirror": "0.0.72",
     "@types/element-resize-event": "^3.0.0",
-    "@types/is-promise": "^2.2.0",
     "@types/insert-css": "^2.0.1",
+    "@types/is-promise": "^2.2.0",
     "@types/lodash": "^4.14.136",
     "@types/prettier": "1.16.1",
     "@types/prop-types": "^15.7.1",
