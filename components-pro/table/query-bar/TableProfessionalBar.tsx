@@ -5,7 +5,7 @@ import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import Icon from 'choerodon-ui/lib/icon';
-import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
+import { getProPrefixCls as getProPrefixClsDefault, getConfig } from 'choerodon-ui/lib/configure/utils';
 import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -198,13 +198,18 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
       const moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
       const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
+      let noVerticalFlag = false;
+      const labelLayout  = (formProps && formProps.labelLayout) || getConfig('labelLayout');
+      if(labelLayout !== LabelLayout.vertical){
+        noVerticalFlag = true;
+      }
 
       return (
         <div key="query_bar" className={`${prefixCls}-professional-query-bar`}>
           {currentFields}
           <span
             className={classNames(`${prefixCls}-professional-query-bar-button`, {
-              [`${prefixCls}-professional-query-bar-button-vertical`]: formProps && formProps.labelLayout ? formProps.labelLayout === LabelLayout.vertical : false})
+              [`${prefixCls}-professional-query-bar-button-vertical`]: !noVerticalFlag})
             }
           >
             {moreFieldsButton}

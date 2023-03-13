@@ -72,6 +72,10 @@
     border-radius: @border-radius-base @border-radius-base 0 0;
   }
 
+  &:not(.@{modal-prefix-cls}-border) .@{modal-prefix-cls}-header {
+    padding: @modal-no-border-header-padding;
+  }
+
   &-body {
     max-height: ~'calc(100vh - 1.2rem)';
     padding: @modal-body-padding;
