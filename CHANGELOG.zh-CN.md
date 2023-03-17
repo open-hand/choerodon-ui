@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
+- 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 
 
 ## 1.6.0
