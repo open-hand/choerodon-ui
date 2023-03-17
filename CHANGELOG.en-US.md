@@ -22,6 +22,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize when the querybar is bar, it can control whether it can be input.
 - 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
+- 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic screening bar presets the tenant configuration that affects the initialization query field.

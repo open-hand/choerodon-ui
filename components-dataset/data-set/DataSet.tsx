@@ -3501,8 +3501,7 @@ Then the query method will be auto invoke.`,
       if (isNumber(pageSizeInner)) {
         params.page = page;
         params.pagesize = pageSizeInner;
-      }
-      if (paging === true || paging === 'server') {
+      } else if (paging === true || paging === 'server') {
         params.page = page;
         params.pagesize = pageSize;
       }
