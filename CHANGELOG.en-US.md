@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
 - 💄 `<pro>Table`: Optimize when the querybar is bar, it can control whether it can be input.
 - 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
+- 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.

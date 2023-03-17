@@ -74,6 +74,17 @@ function findFieldObj(queryDataSet, data) {
   if (field && field.get('lovCode')) {
     const textField = field.get('textField');
     const valueField = field.get('valueField');
+    let multipleValue = [];
+    if (field.get('multiple')) {
+      multipleValue = value.map((obj) => ({
+        [valueField]: obj[valueField],
+        [textField]: obj[textField],
+      }))
+      return {
+        name,
+        value: multipleValue,
+      };
+    }
     return {
       name,
       value: {
