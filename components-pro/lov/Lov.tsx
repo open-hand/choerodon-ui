@@ -752,7 +752,10 @@ export default class Lov extends Select<LovProps> {
         options.query(1, undefined, true).then(() => {
           const { length } = options;
           if ((length > 1 && !fetchSingle) || length === 1) {
-            this.choose(options.get(0));
+            const record = options.get(0);
+            if (!this.optionIsSelected(record as Record, this.getValues())) {
+              this.choose(record);
+            }
           } else if (length && fetchSingle) {
             this.openModal(fetchSingle);
           }
