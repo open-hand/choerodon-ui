@@ -68,7 +68,7 @@ export function getMousePosition(x: number, y: number, self: Window, client?: bo
 export const transformZoomData = (data: number): number => {
   if (!zoom) {
     // eslint-disable-next-line dot-notation
-    zoom = Number(getComputedStyle(document.body)['zoom']);
+    zoom = Number(getComputedStyle(document.body)['zoom']) || 1;
   }
   return data / zoom;
 };

@@ -34,8 +34,8 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
+- 🐞 `<pro>Modal`: 修复 transformZoomData 方法兼容性导致的火狐浏览器中拖拽异常问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
-
 
 ## 1.6.0
 
