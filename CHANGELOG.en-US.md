@@ -34,6 +34,8 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 - 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.
 - 🐞 `ViewComponent`: Fix the problem that the component is not out of focus when switching the disabled state.
+- 🐞 `<pro>Modal`: Fix the drag-and-drop exception in Firefox caused by the compatibility of the transformZoomData method.
+- 🐞 `<pro>TextField`: Fix style precedence issues.
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 

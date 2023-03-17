@@ -16,6 +16,17 @@
   }
 }
 
+.@{intl-prefix-textarea} {
+  &-suffix-button {
+    .@{intl-prefix-textarea-intl} {
+      &.icon-language {
+        color: @input-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 /* 多行 */
 .@{intl-prefix-textarea-intl} {
   .@{intl-prefix-textarea} {
@@ -94,6 +105,9 @@
     box-shadow: @input-required-active-box-shadow;
   }
 
+  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:hover ~ .@{intl-prefix-textarea}-suffix {
+    border-color: @input-error-border-color;
+  }
   &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
   &.@{intl-prefix-textarea}-invalid.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
     border-color: @input-error-border-color;

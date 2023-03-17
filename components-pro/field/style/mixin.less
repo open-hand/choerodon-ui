@@ -3,6 +3,7 @@
 
 .validation() {
   &-invalid &,
+  &-invalid &:hover,
   &-invalid label:hover & {
     color: @error-color;
     border-color: @input-error-border-color;
@@ -16,12 +17,12 @@
     box-shadow: @input-error-active-box-shadow;
   }
 
-  &-invalid&-wrapper {
+  &-invalid:not(&-disabled) {
     background-color: @input-error-bg;
   }
 
-  &-invalid&-wrapper &-suffix,
-  &-invalid&-wrapper:hover &-suffix {
+  &-invalid:not(&-disabled) &-suffix,
+  &-invalid:not(&-disabled):hover &-suffix {
     .icon {
       color: @input-suffix-error-color;
     }
