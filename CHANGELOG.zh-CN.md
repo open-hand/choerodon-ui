@@ -23,6 +23,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
 - 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
 - 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
+- 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
