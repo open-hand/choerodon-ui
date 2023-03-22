@@ -39,7 +39,6 @@ import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 
 import { stopPropagation } from '../_util/EventManager';
 import ModalProvider from '../modal-provider/ModalProvider';
@@ -70,6 +69,7 @@ import {
 } from './utils';
 
 import isMobile from '../_util/isMobile';
+import { transformZoomData } from '../_util/DocumentUtils';
 import { RowDataType, SortType, StandardProps } from './common';
 import ColumnGroup from './ColumnGroup';
 import Column, { ColumnProps } from './Column';

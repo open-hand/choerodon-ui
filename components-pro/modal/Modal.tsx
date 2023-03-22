@@ -18,7 +18,6 @@ import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor
 import { observable, runInAction } from 'mobx';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import math from 'choerodon-ui/dataset/math';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import ViewComponent, { ViewComponentProps } from '../core/ViewComponent';
 import Icon from '../icon';
 import autobind from '../_util/autobind';
@@ -32,7 +31,7 @@ import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
 import { ModalChildrenProps, ModalCustomized } from './interface';
-import { getDocument, MousePosition } from '../_util/DocumentUtils';
+import { getDocument, MousePosition, transformZoomData } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
 
