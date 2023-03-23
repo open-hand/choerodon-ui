@@ -79,7 +79,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
     record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, isDragDisabled, className, lock, columnGroups,
     children, groupPath, expandIconColumnIndex, metaData, style: propStyle,
-    intersectionRef, inView = true, virtualHeight, isFixedRowHeight, virtualCell, columnsInView = true,
+    intersectionRef, inView = true, virtualHeight, isFixedRowHeight, columnsInView = true,
   } = props;
   const context = useContext(TableContext);
   const {
@@ -95,6 +95,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     rowDraggable,
     showRemovedRow,
     node,
+    propVirtual,
+    needRenderCell,
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -103,7 +105,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight ||tableStore.propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight || propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -396,8 +398,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       rowIndex: virtualIndex === undefined ? index : virtualIndex,
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
       isDragDisabled,
+      needRender: needRenderCell(columnIndex),
     };
-    if (!isFixedRowHeight && virtualCell && !hidden) {
+    if (!isFixedRowHeight && propVirtual && !hidden) {
       return [
         <TableVirtualCell {...cellProps} {...rest} key={rest.key} />,
         actualRecord,

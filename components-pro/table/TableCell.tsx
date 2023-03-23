@@ -44,12 +44,13 @@ export interface TableCellProps extends TableVirtualCellProps {
   intersectionRef?: (node?: Element | null) => void;
   inView?: boolean;
   virtualHeight?: string;
+  needRender?: boolean;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const {
     columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
-    inView = true, groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight,
+    groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, needRender,
   } = props;
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
@@ -206,7 +207,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
-  if (inView === false || columnGroup.inView === false) {
+  if (!needRender) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
     const emptyCellProps: HTMLProps<HTMLTableCellElement> & { 'data-index': Key } = {
       colSpan,
