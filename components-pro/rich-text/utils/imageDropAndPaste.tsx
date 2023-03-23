@@ -1,4 +1,4 @@
-import { transformZoomData } from "choerodon-ui/shared/util";
+import { transformZoomData } from '../../_util/DocumentUtils';
 
 class ImageData {
 

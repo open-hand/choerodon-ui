@@ -5,11 +5,11 @@ import clamp from 'lodash/clamp';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import { DOMMouseMoveTracker } from 'dom-lib';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import { defaultClassPrefix, getUnhandledProps } from './utils';
 import { addEvent, removeEvent } from './utils/domFns';
 import TableContext from './TableContext';
 import { RESIZE_MIN_WIDTH } from './constants';
+import { transformZoomData } from '../_util/DocumentUtils';
 
 export type FixedType = boolean | 'left' | 'right';
 

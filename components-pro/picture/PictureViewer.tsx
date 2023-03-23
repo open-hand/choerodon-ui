@@ -3,13 +3,13 @@ import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Size } from 'choerodon-ui/lib/_util/enum';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import Picture, { PictureForwardRef, PictureRef } from './Picture';
 import { ModalChildrenProps } from '../modal/interface';
 import transform, { toTransformValue } from '../_util/transform';
 import EventManager from '../_util/EventManager';
+import { transformZoomData } from '../_util/DocumentUtils';
 import Toolbar from './Toolbar';
 import Navbar from './Navbar';
 

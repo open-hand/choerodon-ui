@@ -27,7 +27,6 @@ import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import Popover from 'choerodon-ui/lib/popover';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
 import Icon from '../icon';
@@ -37,6 +36,7 @@ import { ColumnAlign, ColumnLock, TableColumnResizeTriggerType, TableColumnToolt
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import transform from '../_util/transform';
+import { transformZoomData } from '../_util/DocumentUtils';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { CUSTOMIZED_KEY } from './TableStore';
