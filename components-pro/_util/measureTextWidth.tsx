@@ -40,7 +40,7 @@ function getCanvasTextStyle(style: CSSProperties | CSSStyleDeclaration = getComp
 export default function measureTextWidth(text: string, style?: CSSProperties | CSSStyleDeclaration) {
   let width = 0;
   if (typeof window !== undefined) {
-    const { tabSize } = style || getComputedStyle(document.body);
+    const { tabSize = 8 } = style || getComputedStyle(document.body);
     const tabSpace = ' '.repeat(Number(tabSize));
     const ctx = getCanvasContext();
     Object.assign(ctx, getCanvasTextStyle(style));

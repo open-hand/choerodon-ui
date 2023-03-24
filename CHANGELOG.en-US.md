@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
+- 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.

@@ -417,15 +417,19 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           switch (transitionName) {
             case 'slide-up':
               style.marginTop = offset;
+              style.transition = 'margin-top 0.3s ease-in-out';
               break;
             case 'slide-down':
               style.marginBottom = offset;
+              style.transition = 'margin-bottom 0.3s ease-in-out';
               break;
             case 'slide-left':
               style.marginLeft = offset;
+              style.transition = 'margin-left 0.3s ease-in-out';
               break;
             default:
               style.marginRight = offset;
+              style.transition = 'margin-right 0.3s ease-in-out';
           }
         }
       } else if (isEmbeddedContainer && offsetContainer) {
