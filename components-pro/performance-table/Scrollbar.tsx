@@ -4,11 +4,11 @@ import { addStyle, DOMMouseMoveTracker, getOffset } from 'dom-lib';
 import isNumber from 'lodash/isNumber';
 import Icon from 'choerodon-ui/lib/icon';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
 import { TableScrollLength } from './Table';
+import { transformZoomData } from '../_util/DocumentUtils';
 
 export interface ScrollbarProps {
   vertical?: boolean;

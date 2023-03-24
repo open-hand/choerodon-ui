@@ -174,42 +174,19 @@
     .hover;
   }
 
-  &-required-colors:not(&-invalid) label:hover &,
+  &-required-colors label:hover &,
   &-required-colors &:hover {
     .hover(@input-required-hover-border-color);
   }
 
-  &-required-colors:not(&-invalid) &:focus,
-  &-focused&-required-colors:not(&-invalid) & {
+  &-required-colors &:focus,
+  &-focused&-required-colors & {
     .active(@input-required-focus-border-color, @input-required-active-box-shadow);
   }
   
   &:focus,
   &-focused & {
     .active;
-  }
-
-  &-disabled {
-    background-color: @input-disabled-bg;
-
-    i {
-      color: @input-disabled-icon-color;
-    }
-  }
-
-  &-disabled &,
-  &-disabled label:hover &,
-  &:disabled {
-    .disabled;
-  }
-
-  &-disabled &-prefix,
-  &-disabled &-suffix,
-  &-disabled&-prefix-button &-prefix,
-  &-disabled&-suffix-button &-suffix,
-  &-disabled &-inner-button,
-  &-disabled input {
-    cursor: not-allowed;
   }
 
   &-not-editable & {
@@ -595,6 +572,29 @@
   .input-underline;
   .float-label(@prefix-width);
   .float-label-input(@prefix-width);
+
+  &-disabled {
+    background-color: @input-disabled-bg;
+
+    i {
+      color: @input-disabled-icon-color;
+    }
+  }
+
+  &-disabled &,
+  &-disabled label:hover &,
+  &:disabled {
+    .disabled;
+  }
+
+  &-disabled &-prefix,
+  &-disabled &-suffix,
+  &-disabled&-prefix-button &-prefix,
+  &-disabled&-suffix-button &-suffix,
+  &-disabled &-inner-button,
+  &-disabled input {
+    cursor: not-allowed;
+  }
 
   // transform
   &-uppercase {

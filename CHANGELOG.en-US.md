@@ -24,6 +24,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
+- 💄 `measureTextWidth`: Optimize performance under large data volumes.
+- 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
@@ -35,7 +37,10 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 - 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.
 - 🐞 `ViewComponent`: Fix the problem that the component is not out of focus when switching the disabled state.
+- 🐞 `<pro>Modal`: Fix the drag-and-drop exception in Firefox caused by the compatibility of the transformZoomData method.
+- 🐞 `<pro>TextField`: Fix style precedence issues.
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
+- 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 
 ## 1.6.0
 

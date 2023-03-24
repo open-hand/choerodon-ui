@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
-import { transformZoomData } from 'choerodon-ui/shared/util';
 import { $l } from '../locale-context';
 import Icon from '../icon';
 import Button from '../button';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
+import { transformZoomData } from '../_util/DocumentUtils';
 
 interface VerifySliderProps {
   onSuccess?: () => void;
