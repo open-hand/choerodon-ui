@@ -7,9 +7,9 @@
 
 .@{dropdown-prefix-cls}-popup {
   // Dropdown 内部的 Menu 首级 Item 字体大小控制
-  .@{menu-prefix-cls} {
-    &-root > .@{menu-prefix-cls}-item,
-    &-submenu-title {
+  .@{menu-prefix-cls}-root {
+    > .@{menu-prefix-cls}-item,
+    > .@{menu-prefix-cls}-submenu > .@{menu-prefix-cls}-submenu-title {
       font-size: @dropdown-menu-first-level-title-font-size;
     }
   }
