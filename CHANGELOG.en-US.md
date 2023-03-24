@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableVirtualBuffer` props
 - 🌟 `<pro>Attachment`: Added `buttons` props.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.

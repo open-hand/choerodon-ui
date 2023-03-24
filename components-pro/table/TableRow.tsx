@@ -96,7 +96,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     showRemovedRow,
     node,
     propVirtual,
-    needRenderCell,
+    isRenderRange,
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -398,7 +398,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       rowIndex: virtualIndex === undefined ? index : virtualIndex,
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
       isDragDisabled,
-      needRender: needRenderCell(columnIndex),
+      isRenderCell: isRenderRange(columnIndex),
     };
     if (!isFixedRowHeight && propVirtual && !hidden) {
       return [

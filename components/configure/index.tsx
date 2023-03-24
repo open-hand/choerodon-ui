@@ -139,6 +139,7 @@ export interface Config extends DataSetConfig {
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   tableVirtual?: boolean;
   tableVirtualCell?: boolean;
+  tableVirtualBuffer?: { columnBuffer?: number; columnThreshold?: number; };
   tableBorder?: boolean;
   tableColumnEditorBorder?: boolean;
   tableHighLightRow?: boolean | HighLightRowType;

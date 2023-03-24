@@ -1242,16 +1242,24 @@ export default class TableStore {
 
   get columnBuffer(): number {
     const { columnBuffer } = this.props;
-    if ('columnBuffer' in this.props && typeof columnBuffer === 'number') {
+    if ('columnBuffer' in this.props && typeof columnBuffer === 'number' && columnBuffer >= 0) {
       return columnBuffer!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnBuffer' in bufferConfig && typeof bufferConfig.columnBuffer === 'number' && bufferConfig.columnBuffer >= 0) {
+      return bufferConfig.columnBuffer;
     }
     return 3;
   }
 
   get columnThreshold(): number {
     const { columnThreshold } = this.props;
-    if ('columnThreshold' in this.props && typeof columnThreshold === 'number') {
+    if ('columnThreshold' in this.props && typeof columnThreshold === 'number' && columnThreshold >= 0) {
       return columnThreshold!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnThreshold' in bufferConfig && typeof bufferConfig.columnThreshold === 'number' && bufferConfig.columnThreshold >= 0) {
+      return bufferConfig.columnThreshold;
     }
     return 3;
   }
@@ -1331,7 +1339,7 @@ export default class TableStore {
   }
 
   @autobind
-  needRenderCell(index): boolean {
+  isRenderRange(index): boolean {
     const { virtualColumnRange } = this;
     if (virtualColumnRange.left && (index >= virtualColumnRange.left[0] && index < virtualColumnRange.left[1])) {
       return true;

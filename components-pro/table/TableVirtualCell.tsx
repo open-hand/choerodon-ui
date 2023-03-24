@@ -23,7 +23,7 @@ export interface TableVirtualCellProps extends ElementProps {
   disabled?: boolean | undefined;
   groupPath?: [Group, boolean][] | undefined;
   children?: ReactNode | undefined;
-  needRender?: boolean;
+  isRenderCell?: boolean;
 }
 
 const TableVirtualCell: FunctionComponent<TableVirtualCellProps> = function TableVirtualCell(props) {

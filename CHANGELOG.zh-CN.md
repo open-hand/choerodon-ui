@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 tableVirtualBuffer 属性。
 - 🌟 `<pro>Attachment`: 新增 buttons 属性。
 - 🌟 `<pro>Table`: 新增 columnBuffer 和 columnThreshold 属性来优化横向虚拟滚动。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。

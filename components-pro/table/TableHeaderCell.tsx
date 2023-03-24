@@ -53,7 +53,7 @@ import { $l } from '../locale-context';
 
 export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
   intersectionRef?: (node?: Element | null) => void;
-  needRender?: boolean;
+  isRenderCell?: boolean;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
@@ -68,7 +68,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     children: expandIcon,
     isSearchCell,
     intersectionRef,
-    needRender,
+    isRenderCell,
   } = props;
   const { column, key, prev } = columnGroup;
   const { tooltipProps } = column;
@@ -661,7 +661,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   if (intersectionRef) {
     thProps.ref = intersectionRef;
   }
-  if (!needRender) {
+  if (!isRenderCell) {
     return <th {...thProps} />
   }
   return (
