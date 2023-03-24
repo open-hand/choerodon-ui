@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
+- 💄 `<pro>Table`: 隐藏动态筛选条租户另存为按钮。
 - 💄 `<pro>Table`: 优化动态筛选条多选值集选值保存限制。
 - 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
 - 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。

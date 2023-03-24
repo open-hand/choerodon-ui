@@ -228,7 +228,7 @@ export interface AdvancedSearchField {
   /**
    * 其他字段 & 配置覆盖
    */
-  fieldPorps?: FieldProps;
+  fieldProps?: FieldProps;
 }
 
 export interface TableDynamicFilterBarProps extends ElementProps {
@@ -643,12 +643,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (advancedSearchFields && advancedSearchFields.length) {
       const omitPropsArr = ['dynamicProps', 'computedProps', 'order', 'pattern', 'maxLength', 'minLength', 'max', 'min', 'validator', 'required', 'readOnly', 'disabled', 'defaultValue', 'cascadeMap', 'ignore'];
       return advancedSearchFields!.map(field => {
-        const { name, source, alias, tableName, fieldPorps } = field;
+        const { name, source, alias, tableName, fieldProps } = field;
         if (source === 'fields' && dataSet.props.fields) {
           const dsFiedlsProps = dataSet.props.fields.find(f => f.name === name);
           return {
             ...omit(dsFiedlsProps, omitPropsArr),
-            ...fieldPorps,
+            ...fieldProps,
             help: tableName,
             name: alias || name,
           };
@@ -657,14 +657,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           const dsFiedlsProps = queryDataSet.props.fields.find(f => f.name === name);
           return {
             ...omit(dsFiedlsProps, omitPropsArr),
-            ...fieldPorps,
+            ...fieldProps,
             help: tableName,
             name: alias || name,
           };
         }
         return {
-          ...fieldPorps,
-          // multiple: fieldPorps && fieldPorps.multiple ? '|' : false,
+          ...fieldProps,
+          // multiple: fieldProps && fieldProps.multiple ? '|' : false,
           help: tableName,
           name: alias || name,
         };

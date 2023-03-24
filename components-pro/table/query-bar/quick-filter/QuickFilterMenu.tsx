@@ -803,7 +803,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {isChooseMenu && (
+          {isChooseMenu && (isTenant ? null :
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>
