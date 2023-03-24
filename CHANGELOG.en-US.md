@@ -16,6 +16,10 @@ timeline: true
 ---
 
 - 🌟 `<pro>Attachment`: Added `buttons` props.
+- 🌟 `configure`: Added `labelAlign` property.
+- 🌟 `Card`: Added some classnames.
+- 🌟 `<pro>Form`: Added some classnames.
+- 🌟 `<pro>Table`: Added some classnames.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.

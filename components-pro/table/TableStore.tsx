@@ -1980,6 +1980,13 @@ export default class TableStore {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
+  @computed
+  get isCombinedColumn(): boolean {
+    const columns = this.columns;
+    const combinedColumn = columns.find(column => !column.aggregation && column.children && column.children.length > 0);
+    return !isNil(combinedColumn);
+  }
+
   @observable groups: TableGroup[];
 
   @observable groupedData: Group[];
