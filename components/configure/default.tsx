@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { categories } from 'choerodon-ui-font';
 import noop from 'lodash/noop';
-import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation, LabelAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { ColumnAlign, TableQueryBarType, TableColumnResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
@@ -91,6 +91,7 @@ const defaults = {
   lovAutoSelectSingle: false,
   lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,
+  labelAlign: LabelAlign.right,
   queryBar: TableQueryBarType.normal,
   tableBorder: true,
   tableHighLightRow: true,

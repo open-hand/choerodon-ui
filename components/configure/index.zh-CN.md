@@ -180,6 +180,7 @@ const prefixCls = getConfig('prefixCls');
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
 | formAutoFocus | Form 表单内自动聚焦第一个可编辑组件，若表单在 Modal 弹窗内需要手动将 Modal 的 autoFocus 设置为 false | boolean | false |
+| labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |
 
 ### Customizable
 

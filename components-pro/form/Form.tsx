@@ -16,6 +16,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
+import isNil from 'lodash/isNil';
 import raf from 'raf';
 import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
@@ -355,8 +356,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   @computed
   get labelAlign(): LabelAlign {
     const { labelAlign } = this.observableProps;
-    const defaultLabelAlign =
-      this.labelLayout === LabelLayout.vertical ? LabelAlign.left : LabelAlign.right;
     if (isString(labelAlign)) {
       return labelAlign as LabelAlign;
     }
@@ -366,7 +365,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         return responsiveAlign;
       }
     }
-    return defaultLabelAlign;
+    return (this.labelLayout === LabelLayout.vertical
+      ? LabelAlign.left
+      : this.getContextConfig('labelAlign') || LabelAlign.right);
   }
 
   @computed
@@ -547,10 +548,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls, labelLayout } = this;
+    const { prefixCls, labelLayout, columns } = this;
     return super.getClassName({
       ...props,
       [`${prefixCls}-float-label`]: labelLayout === LabelLayout.float,
+      [`${prefixCls}-${labelLayout}`]: !isNil(labelLayout),
+      [`${prefixCls}-${columns > 1 ? "multi" : "single"}`]: true,
     });
   }
 

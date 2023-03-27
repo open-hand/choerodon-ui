@@ -1452,7 +1452,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { border, parityRow, aggregation, size },
+      tableStore: { border, parityRow, aggregation, size, isCombinedColumn },
       prefixCls,
     } = this;
     return super.getClassName({
@@ -1460,6 +1460,7 @@ export default class Table extends DataSetComponent<TableProps> {
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-aggregation`]: aggregation,
+      [`${prefixCls}-combined-column`]: isCombinedColumn,
     });
   }
 

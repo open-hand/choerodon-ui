@@ -177,6 +177,7 @@ const prefixCls = getConfig('prefixCls');
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
 | formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
+| labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |
 
 ### Customizable
 

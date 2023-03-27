@@ -14,9 +14,11 @@ timeline: true
 - Major version release is not included in this schedule for breaking change and new features.
 
 ---
-
-- 🌟 `configure`: Added `tableVirtualBuffer` props
+- 🌟 `configure`: Added `labelAlign`, `tableVirtualBuffer` properties.
+- 🌟 `Card`: Added some classnames.
 - 🌟 `<pro>Attachment`: Added `buttons` props.
+- 🌟 `<pro>Form`: Added some classnames.
+- 🌟 `<pro>Table`: Added some classnames.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
