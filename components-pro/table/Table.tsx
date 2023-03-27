@@ -602,6 +602,14 @@ export interface TableProps extends DataSetComponentProps {
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
+   /**
+   * 开启虚拟滚动列缓冲区
+   */
+  columnBuffer?: number;
+   /**
+   * 开启虚拟滚动列阈值
+   */
+  columnThreshold?: number;
   /**
    * 是否开启自适应高度
    */
@@ -1371,6 +1379,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualCell',
       'virtualSpin',
+      'columnBuffer',
+      'columnThreshold',
       'autoWidth',
       'autoHeight',
       'autoFootHeight',
@@ -2376,6 +2386,7 @@ export default class Table extends DataSetComponent<TableProps> {
       }
       this.setScrollPositionClassName(target);
       this.lastScrollLeft = scrollLeft;
+      tableStore.setLastScrollLeft(scrollLeft);
       if (target) {
         const { onScrollLeft } = this.props;
         if (onScrollLeft) {

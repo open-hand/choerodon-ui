@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `tableVirtualBuffer` props
 - 🌟 `<pro>Attachment`: Added `buttons` props.
+- 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.

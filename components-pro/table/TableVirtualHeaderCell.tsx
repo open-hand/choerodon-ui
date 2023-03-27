@@ -15,6 +15,7 @@ export interface TableVirtualHeaderCellProps extends ElementProps {
   scope?: string;
   children?: ReactNode;
   isSearchCell?: boolean;
+  isRenderCell?: boolean;
 }
 
 const TableVirtualHeaderCell: FunctionComponent<TableVirtualHeaderCellProps> = function TableVirtualHeaderCell(props) {
