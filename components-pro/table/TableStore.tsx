@@ -958,6 +958,8 @@ export default class TableStore {
 
   @observable lastScrollTop: number;
 
+  @observable lastScrollLeft: number;
+
   @observable lockColumnsBodyRowsHeight: any;
 
   @observable lockColumnsFootRowsHeight: any;
@@ -1016,7 +1018,11 @@ export default class TableStore {
   @observable footerHeight: number;
 
   @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) };
-  
+
+  nextRenderColIndex?: [number, number];
+
+  prevRenderColIndex?: [number, number];
+
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -1231,6 +1237,120 @@ export default class TableStore {
     if (this.height !== undefined) {
       return this.propVirtual;
     }
+    return false;
+  }
+
+  get columnBuffer(): number {
+    const { columnBuffer } = this.props;
+    if ('columnBuffer' in this.props && typeof columnBuffer === 'number' && columnBuffer >= 0) {
+      return columnBuffer!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnBuffer' in bufferConfig && typeof bufferConfig.columnBuffer === 'number' && bufferConfig.columnBuffer >= 0) {
+      return bufferConfig.columnBuffer;
+    }
+    return 3;
+  }
+
+  get columnThreshold(): number {
+    const { columnThreshold } = this.props;
+    if ('columnThreshold' in this.props && typeof columnThreshold === 'number' && columnThreshold >= 0) {
+      return columnThreshold!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnThreshold' in bufferConfig && typeof bufferConfig.columnThreshold === 'number' && bufferConfig.columnThreshold >= 0) {
+      return bufferConfig.columnThreshold;
+    }
+    return 3;
+  }
+
+
+  updateRenderZonePosition(): [number, number] {
+    // 获取表格坐标显示范围
+    if (!this.width) {
+      return [0, 0];
+    }
+    const { leftColumnGroups, rightColumnGroups, columnGroups: { columns }, columnThreshold, nextRenderColIndex } = this;
+    const scrollLeft = this.lastScrollLeft || 0;
+
+    let visibleColumnWidth = 0;
+    let firstIndex = -1;
+    let lastIndex = -1;
+    for (let i = 0; i < columns.length; i++) {
+      const { width } = columns[i];
+      visibleColumnWidth += width;
+      if (firstIndex === -1 && visibleColumnWidth > scrollLeft + leftColumnGroups.width) {
+        firstIndex = i;
+      }
+      if (lastIndex === -1 && i === columns.length - 1 || this.width && visibleColumnWidth >= scrollLeft + this.width - (rightColumnGroups.width) - (this.overflowY ? measureScrollbar() : 0)) {
+        lastIndex = i;
+      }
+      if (lastIndex !== -1 && firstIndex !== -1) {
+        break;
+      }
+    }
+
+    if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
+      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, columns.length)]; 
+      this.prevRenderColIndex = [firstIndex, lastIndex]; 
+      return [firstIndex, lastIndex];
+    }
+
+    return this.prevRenderColIndex || [0, 0];
+
+  }
+
+
+  @computed
+  get virtualColumnRange(): {
+    left?: [number, number];
+    center: [number, number];
+    right?: [number, number];
+    } {
+    if (!this.propVirtual) {
+      return { center: [0, this.columns.length] };
+    }
+    const { leftColumnGroups, columnGroups: { columns }, rightColumnGroups, columnBuffer } = this;
+
+    const rangeThreshold: {
+      left?: [number, number];
+      center: [number, number];
+      right?: [number, number];
+    } = { center: [0, 0] }
+
+    // 左右固定列的坐标范围
+    const leftColLength = leftColumnGroups.columns.length;
+    const rightColLength = rightColumnGroups.columns.length;
+
+    if (leftColLength) {
+      rangeThreshold.left = [0, leftColLength];
+    }
+    if (rightColLength) {
+      rangeThreshold.right = [columns.length - rightColLength, columns.length];
+    }
+
+    const [start, end] = this.updateRenderZonePosition();
+
+    const first = Math.max(0, start - columnBuffer);
+    const last = Math.min(columns.length, end + columnBuffer + 1);
+
+    rangeThreshold.center = [first, last];
+    return rangeThreshold;
+  }
+
+  @autobind
+  isRenderRange(index): boolean {
+    const { virtualColumnRange } = this;
+    if (virtualColumnRange.left && (index >= virtualColumnRange.left[0] && index < virtualColumnRange.left[1])) {
+      return true;
+    }
+    if (index >= virtualColumnRange.center[0] && index < virtualColumnRange.center[1]) {
+      return true;
+    }
+    if (virtualColumnRange.right && index >= virtualColumnRange.right[0] && index <= virtualColumnRange.right[1]) {
+      return true;
+    }
+
     return false;
   }
 
@@ -2038,7 +2158,7 @@ export default class TableStore {
     if (headerFilter) {
       const { filter, filterText } = headerFilter;
       if (typeof filter === 'function') {
-        data = data.filter(record => filter({record, filterText}));
+        data = data.filter(record => filter({ record, filterText }));
       } else {
         const field = dataSet.getField(headerFilter.fieldName);
         const type = field && field.get('type');
@@ -2279,6 +2399,14 @@ export default class TableStore {
   setLastScrollTop(lastScrollTop: number) {
     if (this.virtual) {
       this.lastScrollTop = lastScrollTop;
+      this.startScroll();
+    }
+  }
+
+  @action
+  setLastScrollLeft(lastScrollLeft: number) {
+    if (this.propVirtual) {
+      this.lastScrollLeft = lastScrollLeft;
       this.startScroll();
     }
   }
