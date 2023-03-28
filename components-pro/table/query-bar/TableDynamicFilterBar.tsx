@@ -762,7 +762,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         ],
       }, { getConfig: getConfig as any });
       let status = RecordStatus.update;
-      if (queryDataSet && queryDataSet.current) {
+      if (queryDataSet && queryDataSet.current && dataSet.getState(ORIGINALVALUEOBJ)) {
         status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
       } else {
         status = RecordStatus.sync;
@@ -1583,6 +1583,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                if (!queryField) return null;
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
@@ -1661,6 +1662,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                if (!queryField) return null;
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
