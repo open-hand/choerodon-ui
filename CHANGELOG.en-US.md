@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
 - 🐞 `<pro>Table`: Fix the problem that the dynamic screening bar presets the tenant configuration that affects the initialization query field.
 - 🐞 `<pro>Table`: Fix the problem that the filter reset button disappears when the dynamic filter bar is cleared.
+- 🐞 `<pro>Table`: Fix the problem that the switch is not queried under the dynamic filter tab Tabs.
 - 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
 - 🐞 `<pro>Table`: Fix the problem that the button and input box of the professional search bar are not aligned when the global configuration labelLayout is vertical.
 - 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.

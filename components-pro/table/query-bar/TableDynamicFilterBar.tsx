@@ -27,7 +27,7 @@ import Tag from 'choerodon-ui/lib/tag';
 import Field, { FieldProps, Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
-import { DataSetEvents, DataSetSelection, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
 import Button from '../../button';
 import Dropdown from '../../dropdown';
 import TextField from '../../text-field';
@@ -362,7 +362,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           this.showExpandIcon = height > (childHeight + 18);
         });
       }
-      if (!dataSet.props.autoQuery) {
+      const { autoQuery } = dataSet.props;
+      if (!autoQuery || (autoQuery && dataSet.status === DataSetStatus.ready)) {
         this.handleDataSetQuery({ dataSet });
       }
     }
