@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added some classnames.
 - 🌟 `<pro>Table`: Added some classnames.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
+- 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
