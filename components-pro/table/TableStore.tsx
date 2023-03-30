@@ -2978,4 +2978,14 @@ export default class TableStore {
       }
     }
   }
+
+  blurEditor() {
+    const { currentEditorName } = this;
+    if (currentEditorName) {
+      const currentEditor = this.editors.get(currentEditorName);
+      if (currentEditor) {
+        currentEditor.blur();
+      }
+    }
+  }
 }

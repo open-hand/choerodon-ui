@@ -88,6 +88,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       : {};
 
   const handleClickCapture = useCallback(action<(e) => void>((e) => {
+    if (tableStore.currentEditorName) {
+      tableStore.blurEditor();
+    }
     if (record && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
       dataSet.current = record;
     }
