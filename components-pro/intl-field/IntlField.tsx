@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import debounce from 'lodash/debounce';
+import isNil from 'lodash/isNil';
 import Record from '../data-set/Record';
 import TextArea, { TextAreaProps } from '../text-area/TextArea';
 import { TextField } from '../text-field/TextField';
@@ -113,10 +114,13 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     if (!this.modal) {
       const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
       const { record, lang, name, element } = this;
+      const maxLength = this.getProp('maxLength');
       const { supports } = localeContext;
       const maxLengthList = {};
       Object.keys(supports).map(key => {
-        maxLengthList[key] = maxLengths && key !== lang ? maxLengths[key] || element.maxLength : element.maxLength;
+        maxLengthList[key] = maxLengths && (key !== lang || isNil(maxLength))
+          ? maxLengths[key] || maxLength
+          : maxLength;
         return null;
       });
       if (record && name) {
