@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条多选值集选值保存限制。
 - 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
 - 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>Table`: 优化边框相关样式变量。
 - 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
 - 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 💄 `<pro>Modal`: 优化多层抽屉动画。

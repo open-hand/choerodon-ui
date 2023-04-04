@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
+- 💄 `<pro>Table`: Optimized Table border related style variables.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
