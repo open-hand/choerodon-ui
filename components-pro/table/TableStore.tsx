@@ -1270,19 +1270,20 @@ export default class TableStore {
     if (!this.width) {
       return [0, 0];
     }
-    const { leftColumnGroups, rightColumnGroups, columnGroups: { columns }, columnThreshold, nextRenderColIndex } = this;
+    const { columnGroups: { allLeafs, leftLeafs, rightLeafs, leftLeafColumnsWidth, rightLeafColumnsWidth }, columnThreshold, nextRenderColIndex } = this;
     const scrollLeft = this.lastScrollLeft || 0;
 
     let visibleColumnWidth = 0;
     let firstIndex = -1;
     let lastIndex = -1;
-    for (let i = 0; i < columns.length; i++) {
-      const { width } = columns[i];
+    const centerLeafsLength = allLeafs.length - rightLeafs.length;
+    for (let i = leftLeafs.length; i < centerLeafsLength; i++) {
+      const { width } = allLeafs[i];
       visibleColumnWidth += width;
-      if (firstIndex === -1 && visibleColumnWidth > scrollLeft + leftColumnGroups.width) {
+      if (firstIndex === -1 && visibleColumnWidth > scrollLeft) {
         firstIndex = i;
       }
-      if (lastIndex === -1 && i === columns.length - 1 || this.width && visibleColumnWidth >= scrollLeft + this.width - (rightColumnGroups.width) - (this.overflowY ? measureScrollbar() : 0)) {
+      if (lastIndex === -1 && i === centerLeafsLength - 1 || this.width && visibleColumnWidth >= scrollLeft + this.width - leftLeafColumnsWidth - rightLeafColumnsWidth - (this.overflowY ? measureScrollbar() : 0)) {
         lastIndex = i;
       }
       if (lastIndex !== -1 && firstIndex !== -1) {
@@ -1291,7 +1292,7 @@ export default class TableStore {
     }
 
     if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
-      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, columns.length)]; 
+      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, allLeafs.length)]; 
       this.prevRenderColIndex = [firstIndex, lastIndex]; 
       return [firstIndex, lastIndex];
     }
@@ -1307,11 +1308,10 @@ export default class TableStore {
     center: [number, number];
     right?: [number, number];
     } {
-    if (!this.propVirtual) {
-      return { center: [0, this.columns.length] };
+    const { columnGroups: { allLeafs, leftLeafs, rightLeafs }, columnBuffer } = this;
+    if (!this.propVirtual || !this.overflowX) {
+      return { center: [0, allLeafs.length] };
     }
-    const { leftColumnGroups, columnGroups: { columns }, rightColumnGroups, columnBuffer } = this;
-
     const rangeThreshold: {
       left?: [number, number];
       center: [number, number];
@@ -1319,28 +1319,31 @@ export default class TableStore {
     } = { center: [0, 0] }
 
     // 左右固定列的坐标范围
-    const leftColLength = leftColumnGroups.columns.length;
-    const rightColLength = rightColumnGroups.columns.length;
+    const leftColLength = leftLeafs.length;
+    const rightColLength = rightLeafs.length;
 
     if (leftColLength) {
       rangeThreshold.left = [0, leftColLength];
     }
     if (rightColLength) {
-      rangeThreshold.right = [columns.length - rightColLength, columns.length];
+      rangeThreshold.right = [allLeafs.length - rightColLength, allLeafs.length];
     }
 
     const [start, end] = this.updateRenderZonePosition();
 
-    const first = Math.max(0, start - columnBuffer);
-    const last = Math.min(columns.length, end + columnBuffer + 1);
+    const first = Math.max(leftColLength, start - columnBuffer);
+    const last = Math.min(allLeafs.length, end + columnBuffer + 1);
 
     rangeThreshold.center = [first, last];
     return rangeThreshold;
   }
 
   @autobind
-  isRenderRange(index): boolean {
-    const { virtualColumnRange } = this;
+  isRenderRange(index: number, isGroup?: boolean): boolean {
+    const { virtualColumnRange, propVirtual } = this;
+    if (!propVirtual || isGroup) {
+      return true;
+    }
     if (virtualColumnRange.left && (index >= virtualColumnRange.left[0] && index < virtualColumnRange.left[1])) {
       return true;
     }
