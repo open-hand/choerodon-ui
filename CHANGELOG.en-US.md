@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added some classnames.
 - 🌟 `<pro>Table`: Added some classnames.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
+- 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
@@ -27,9 +28,11 @@ timeline: true
 - 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
+- 💄 `<pro>Table`: Optimized Table border related style variables.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
+- 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
@@ -38,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the switch is not queried under the dynamic filter tab Tabs.
 - 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
 - 🐞 `<pro>Table`: Fix the problem that the button and input box of the professional search bar are not aligned when the global configuration labelLayout is vertical.
+- 🐞 `<pro>Table`: Fix the problem where dragColumnAlign was configured to be left and the display of dragging and swapping positions in editing status was abnormal.
 - 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 - 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.
@@ -47,6 +51,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 - 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
+- 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
 
 ## 1.6.0
 

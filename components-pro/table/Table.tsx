@@ -1754,7 +1754,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   handleDragStart(initial: DragStart, provided: ResponderProvided): void {
     const { dragDropContextProps } = this.props;
-    const { rowMetaData, isTree } = this.tableStore;
+    const { rowMetaData, isTree, currentEditorName } = this.tableStore;
     if (isTree && rowMetaData) {
       const { source } = initial;
       const currentRecord = rowMetaData[source.index].record;
@@ -1764,6 +1764,9 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     if (dragDropContextProps && dragDropContextProps.onDragStart) {
       dragDropContextProps.onDragStart(initial, provided);
+    }
+    if (currentEditorName) {
+      this.tableStore.blurEditor();
     }
   }
 

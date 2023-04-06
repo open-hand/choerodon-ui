@@ -291,7 +291,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       } else if (showReUploadIcon) {
         showReUploadIconType = showReUploadIcon === 'text' ? 'text' : 'icon';
       }
-      const reUploadIconOrText = showReUploadIconType && !stat.isUploading ? (
+      const pictureCardReUploadIconOrText = showReUploadIconType && !stat.isUploading ? (
         <PopConfirm
           {...popconfirmProps}
           title={reUploadPopConfirmTitle || locale.confirmReUpload}
@@ -344,19 +344,10 @@ export default class UploadList extends Component<UploadListProps, any> {
       }
       const downloadIcon =
         !stat.isError && !stat.isUploading && (isFunction(showDownloadIcon) ? (showDownloadIcon as UploadListIconFunc)(file) : showDownloadIcon)
-        && <a {...downloadPropsIntercept!(downloadLinkProps)}><Icon type="get_app" /></a>;
+        && <a {...downloadPropsIntercept!(downloadLinkProps)} style={style}><Icon type="get_app" /></a>;
       const actionsClass = classNames(`${prefixCls}-list-item-actions`, {
         [`${prefixCls}-list-item-actions-reupload-text`]: showReUploadIconType === 'text' && stat.isError,
       });
-      const actions =
-        stat.isPictureCard && !stat.isUploading ? (
-          <div className={actionsClass}>
-            <span className={`${prefixCls}-reupload-action`}>{reUploadIconOrText}</span>
-            <span className={`${prefixCls}-other-actions`}>{stat.isError || previewIcon}{downloadIcon}{removeIcon}</span>
-          </div>
-        ) : (
-          removeIcon
-        );
 
       const fileName = (stat.isPictureCard && !stat.isUploading) ? (
         <Tooltip prefixCls={tooltipPrefixCls} title={getCustomFilenameTitle ? getCustomFilenameTitle(file) : file.name} placement="bottom">
@@ -403,14 +394,30 @@ export default class UploadList extends Component<UploadListProps, any> {
         </PopConfirm>
       ) : null;
 
+      const getActions = ()=>{
+        if(!stat.isUploading) {
+          if(stat.isPictureCard) {
+            return (
+              <div className={actionsClass}>
+                <span className={`${prefixCls}-reupload-action`}>{pictureCardReUploadIconOrText}</span>
+                <span className={`${prefixCls}-other-actions`}>{stat.isError || previewIcon}{downloadIcon}{removeIcon}</span>
+              </div>
+            )
+          }
+          return (
+            <div className={`${prefixCls}-actions`}>{reUpload}{stat.isError || previewIcon}{downloadIcon}{removeIcon}</div>
+          )
+        }
+        return  <div className={`${prefixCls}-actions`}>{removeIcon}</div>;
+      }
+
       const listItemInfo = (
         <div className={`${prefixCls}-list-item-info`}>
           <span className={`${prefixCls}-list-item-span`}>
             {iconAndPreviewTooltip}
             {fileName}
-            {reUpload}
             {fileSize}
-            {actions}
+            {getActions()}
           </span>
           <Animate transitionName="fade" component="">
             {progress}

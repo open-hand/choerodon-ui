@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增类名。
 - 🌟 `<pro>Table`: 新增类名。
 - 🌟 `<pro>Table`: 新增 columnBuffer 和 columnThreshold 属性来优化横向虚拟滚动。
+- 🌟 `Upload`: 支持 text 和 picture 模式下的预览和下载按钮显示。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
@@ -28,9 +29,11 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条多选值集选值保存限制。
 - 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
 - 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>Table`: 优化边框相关样式变量。
 - 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
 - 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 💄 `<pro>Modal`: 优化多层抽屉动画。
+- 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
@@ -39,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条 Tabs 下使用切换未查询的问题。
 - 🐞 `<pro>Table`: 修复数据分组模式下数据不同步的问题。
 - 🐞 `<pro>Table`: 修复全局配置 labelLayout 为 vertical 时，专业搜索条的按钮和输入框没有对齐的问题。
+- 🐞 `<pro>Table`: 修复配置了 dragColumnAlign 为 left 且在编辑状态下拖拽交换位置显示不正常问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
@@ -48,6 +52,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 - 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
+- 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题。
 
 ## 1.6.0
 

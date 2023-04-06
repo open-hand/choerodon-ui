@@ -1231,12 +1231,17 @@
 
   &-tfoot &-cell {
     border-top: @table-tfoot-cell-border-top;
-    border-right: @table-tfoot-cell-border-right;
   }
 
-  &-thead &-cell {
-    border-right: @table-thead-cell-border-right;
-    border-bottom: @table-thead-cell-border-bottom;
+
+  &:not(&-bordered) &-tbody &-cell {
+    border-bottom-color: @table-notbordered-body-border-bottom-color;
+  }
+  &:not(&-bordered) &-cell-inner-editable {
+    border: @table-notbordered-editable-cell-border;
+  }
+  &:not(&-bordered) &-cell-inner-editable.c7n-pro-table-cell-inner-required {
+    border: @table-notbordered-editable-required-cell-border;
   }
 
   &-tfoot &-cell,
@@ -1265,9 +1270,8 @@
   &:not(&-bordered) &-thead&-column-resizable {
     &:hover,
     &.@{table-prefix-cls}-thead-hover {
-      .@{table-prefix-cls}-cell {
-        border-right-color: @table-border-color;
-        border-bottom-color: @table-border-color;
+      .@{table-prefix-cls}-cell:not(.@{table-prefix-cls}-cell-last) {
+        border-right-color: @table-notbordered-thead-hover-border-right-color;
       }
     }
   }
