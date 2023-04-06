@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix style precedence issues.
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
+- 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
 - 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
 
 ## 1.6.0
