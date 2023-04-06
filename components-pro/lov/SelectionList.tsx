@@ -114,7 +114,8 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   renderBelow = (): ReactNode => {
-    const { dataSet, treeFlag, valueField = '', textField = '' } = this.props;
+    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
+    const { nodeRenderer } = selectionProps;
     const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
     if (isEmpty(records)) {
       return null;
@@ -127,7 +128,7 @@ export default class SelectionList extends Component<SelectionListProps> {
           <Tag closable={record.selectable} onClose={() => {
             this.unSelect(record);
           }}>
-            <span>{record.get(textField)}</span>
+            {nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span>}
           </Tag>
         </li>
       );

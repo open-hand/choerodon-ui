@@ -91,6 +91,9 @@ class App extends React.Component {
         tableProps={tableProps}
         onBeforeSelect={this.handleBeforeSelect}
         showSelectedInView={true}
+        selectionProps={{
+          nodeRenderer: (record) => (<span style={{ color: 'red' }}>{record.get('description')}</span>)
+        }}
         modalProps={
           {
             afterClose: () => console.log('afterClose'),
