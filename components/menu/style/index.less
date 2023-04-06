@@ -365,7 +365,10 @@
     .@{menu-prefix-cls}-submenu-title {
       width: ~'calc(100% + .01rem)';
     }
+  }
 
+  &-inline,
+  &-vertical {
     .@{menu-prefix-cls}-submenu-title {
       padding-right: 0.34rem;
     }
@@ -466,6 +469,7 @@
     }
     > .@{menu-prefix-cls}-submenu-title {
       color: @disabled-color !important;
+      background: none !important;
       cursor: not-allowed;
     }
   }

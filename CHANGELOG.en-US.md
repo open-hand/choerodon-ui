@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added some classnames.
 - 🌟 `<pro>Table`: Added some classnames.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
+- 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
@@ -27,6 +28,7 @@ timeline: true
 - 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
+- 💄 `<pro>Table`: Optimized Table border related style variables.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
@@ -48,6 +50,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix style precedence issues.
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
+- 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
 
 ## 1.6.0
 

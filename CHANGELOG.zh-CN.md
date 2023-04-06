@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增类名。
 - 🌟 `<pro>Table`: 新增类名。
 - 🌟 `<pro>Table`: 新增 columnBuffer 和 columnThreshold 属性来优化横向虚拟滚动。
+- 🌟 `Upload`: 支持 text 和 picture 模式下的预览和下载按钮显示。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
@@ -28,6 +29,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条多选值集选值保存限制。
 - 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
 - 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>Table`: 优化边框相关样式变量。
 - 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
 - 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 💄 `<pro>Modal`: 优化多层抽屉动画。
@@ -49,6 +51,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复样式优先级问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
+- 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题。
 
 ## 1.6.0
 
