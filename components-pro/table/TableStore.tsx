@@ -63,7 +63,7 @@ import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import Modal, { ModalProps } from '../modal/Modal';
 import { treeMap, treeSome } from '../_util/treeUtils';
-import { HighlightRenderer } from '../field/FormField';
+import { HighlightRenderer, TagRendererProps } from '../field/FormField';
 import { getIf, mergeGroupStates, normalizeGroups } from '../data-set/utils';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
@@ -2388,6 +2388,11 @@ export default class TableStore {
   getColumnHeaders(): Promise<HeaderText[]> {
     const { leafNamedColumns, dataSet } = this;
     return getHeaderTexts(dataSet, leafNamedColumns.slice(), this.aggregation);
+  }
+
+  getColumnTagRenderer(column: ColumnProps): ((props: TagRendererProps) => ReactNode) | undefined {
+    const { tagRenderer } = column;
+    return tagRenderer;
   }
 
   @action

@@ -4,7 +4,7 @@ import DataSet, { Group } from '../data-set/DataSet';
 import { SortOrder } from '../data-set/interface';
 import Record from '../data-set/Record';
 import Field from '../data-set/Field';
-import { FormFieldProps, HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
+import { FormFieldProps, HighlightRenderer, Renderer, RenderProps, TagRendererProps } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
@@ -92,6 +92,10 @@ export interface ColumnPropsBase extends ElementProps {
     | ReactElement<FormFieldProps>
     | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
     | boolean;
+  /**
+   * 多值 Tag 渲染器
+   */
+  tagRenderer?: (props: TagRendererProps) => ReactNode;
   /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'

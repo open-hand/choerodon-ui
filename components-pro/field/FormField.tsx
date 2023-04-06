@@ -69,6 +69,17 @@ export type RenderProps = {
   multiLineFields?: Field[];
 };
 
+export type TagRendererProps = {
+  value?: any;
+  text?: any;
+  key?: string;
+  invalid?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  className?: string;
+  onClose?: (e: any) => void;
+};
+
 export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
 
 export type HighlightRenderer = (highlightProps: HighlightProps, element: ReactNode) => ReactNode;
@@ -195,6 +206,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 校验信息渲染器
    */
   validationRenderer?: (result: ValidationResult, props: ValidatorProps) => ReactNode;
+  /**
+   * 多值 Tag 渲染器
+   */
+  tagRenderer?: (props: TagRendererProps) => ReactNode;
   /**
    * 多值标签超出最大数量时的占位描述
    */
@@ -593,6 +608,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'isFlat',
       'useColon',
       'showValidation',
+      'tagRenderer',
     ]);
   }
 
@@ -1266,6 +1282,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       props: {
         maxTagCount = this.getContextConfig('fieldMaxTagCount'),
         maxTagPlaceholder = this.getContextConfig('fieldMaxTagPlaceholder'),
+        tagRenderer,
       },
     } = this;
     const values = renderMultipleValues(this.getValue(), {
@@ -1274,6 +1291,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       maxTagPlaceholder,
       prefixCls,
       disabled,
+      tagRenderer,
       readOnly: this.readOnly || readOnly,
       validationResults: this.getValidationResults(),
       isMultipleBlockDisabled: this.isMultipleBlockDisabled,
