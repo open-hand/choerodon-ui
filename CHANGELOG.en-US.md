@@ -30,6 +30,7 @@ timeline: true
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
+- 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
@@ -38,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the switch is not queried under the dynamic filter tab Tabs.
 - 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
 - 🐞 `<pro>Table`: Fix the problem that the button and input box of the professional search bar are not aligned when the global configuration labelLayout is vertical.
+- 🐞 `<pro>Table`: Fix the problem where dragColumnAlign was configured to be left and the display of dragging and swapping positions in editing status was abnormal.
 - 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 - 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.

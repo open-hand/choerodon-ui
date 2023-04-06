@@ -31,6 +31,7 @@ timeline: true
 - 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
 - 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 💄 `<pro>Modal`: 优化多层抽屉动画。
+- 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
@@ -39,6 +40,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条 Tabs 下使用切换未查询的问题。
 - 🐞 `<pro>Table`: 修复数据分组模式下数据不同步的问题。
 - 🐞 `<pro>Table`: 修复全局配置 labelLayout 为 vertical 时，专业搜索条的按钮和输入框没有对齐的问题。
+- 🐞 `<pro>Table`: 修复配置了 dragColumnAlign 为 left 且在编辑状态下拖拽交换位置显示不正常问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。

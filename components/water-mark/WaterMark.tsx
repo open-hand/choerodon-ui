@@ -248,7 +248,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
   const renderCanvas = useMemo(() => {
     return enable ? React.createElement('div', {
       className: waterMakrCls,
-      ref: waterMarkRef,
+      ref: waterMarkRef.current ? waterMarkRef : undefined,
       style: {
         position: 'absolute',
         left: 0,
