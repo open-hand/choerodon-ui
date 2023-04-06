@@ -103,7 +103,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               rowIndex,
               isSearchCell: isSearchTr,
               scope: children ? 'colgroup' : 'col',
-              isRenderCell: isRenderRange(index),
+              isRenderCell: isRenderRange(index, headerRows.length > 1),
             };
             if (!useEmptyColumn && notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
               cellProps.className = lastColumnClassName;
