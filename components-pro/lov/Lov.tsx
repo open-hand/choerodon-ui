@@ -77,7 +77,7 @@ export interface LovConfig extends DataSetLovConfig {
 
 export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
-  tableProps?: Partial<TableProps>;
+  tableProps?: Partial<TableProps> | ((lovTablePropsConfig: Partial<TableProps>) => Partial<TableProps>);
   noCache?: boolean;
   mode?: ViewMode;
   viewMode?: TriggerViewMode;
@@ -795,7 +795,16 @@ export default class Lov extends Select<LovProps> {
   getTableProps(localTableProps?: Partial<TableProps>): Partial<TableProps> {
     const { tableProps } = this.props;
     const lovTablePropsConfig = this.getContextConfig('lovTableProps');
-    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) } : { ...lovTablePropsConfig, ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) };
+    const lovTablePropsConfigData = isFunction(lovTablePropsConfig)
+      ? lovTablePropsConfig(this.multiple)
+      : lovTablePropsConfig;
+    const tablePropsData = isFunction(tableProps)
+      ? tableProps({ ...lovTablePropsConfig, ...localTableProps })
+      : tableProps;
+    return {
+      ...lovTablePropsConfigData,
+      ...mergeProps<Partial<TableProps>>(localTableProps, tablePropsData),
+    };
   }
 
   @autobind

@@ -20,7 +20,7 @@ title: Lov
 | 参数       | 说明                                                 | 类型             | 默认值  |
 | ---------- | ---------------------------------------------------- | ---------------- | ------- |
 | modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object           |         |
-| tableProps | 表格属性，详见[TableProps](/components-pro/table/#Table) | object           |         |
+| tableProps | 表格属性，详见[TableProps](/components-pro/table/#Table) | object \| (lovTablePropsConfig) => object          |         |
 | noCache    | 弹窗时自动重新查询                                   | string\| boolean | false   |
 | mode       | 显示模式，可选值: `default` `button`                 | string           | default |
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |

@@ -33,6 +33,7 @@ timeline: true
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
+- 💄 `<pro>Lov`: Supported `tableProps` in the form of function callbacks.
 - 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
