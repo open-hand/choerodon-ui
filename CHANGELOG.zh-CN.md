@@ -45,13 +45,13 @@ timeline: true
 - 🐞 `<pro>Table`: 修复数据分组模式下数据不同步的问题。
 - 🐞 `<pro>Table`: 修复全局配置 labelLayout 为 vertical 时，专业搜索条的按钮和输入框没有对齐的问题。
 - 🐞 `<pro>Table`: 修复配置了 dragColumnAlign 为 left 且在编辑状态下拖拽交换位置显示不正常问题。
-- 🐞 `<pro>Table`: 修复在 safari 浏览器上表单禁用字体颜色过浅的问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 - 🐞 `<pro>Modal`: 修复 transformZoomData 方法兼容性导致的火狐浏览器中拖拽异常问题。
 - 🐞 `<pro>TextField`: 修复样式优先级问题。
+- 🐞 `<pro>TextField`: 修复在 safari 浏览器上表单禁用字体颜色过浅的问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 - 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
