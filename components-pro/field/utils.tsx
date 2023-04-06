@@ -5,6 +5,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
+import noop from 'lodash/noop';
 import { get, isArrayLike, isObservableObject } from 'mobx';
 import classNames from 'classnames';
 import { isMoment } from 'moment';
@@ -13,6 +14,7 @@ import { math, Utils } from 'choerodon-ui/dataset';
 import { getConfig as getConfigDefault, getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import { FieldType, RecordStatus } from '../data-set/enum';
+import { stopEvent } from '../_util/EventManager';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
 import { FormatNumberFuncOptions } from '../number-field/NumberField';
@@ -30,7 +32,7 @@ import MultiLine from '../output/MultiLine';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Field, { HighlightProps } from '../data-set/Field';
-import { Renderer, RenderProps } from './FormField';
+import { Renderer, RenderProps, TagRendererProps } from './FormField';
 import { Tooltip } from '../core/enum';
 
 const toRangeValue: typeof Utils.toRangeValue = Utils.toRangeValue;
@@ -266,6 +268,7 @@ export type MultipleRenderOption = {
   readOnly?: boolean | undefined;
   validationResults?: ValidationResult[] | undefined;
   tooltipTheme?: TooltipTheme;
+  tagRenderer?: (props: TagRendererProps) => ReactNode;
   isMultipleBlockDisabled?(v: any): boolean;
   processRenderer(v: any, repeat?: number): ReactNode;
   renderValidationResult(result: ValidationResult): ReactNode;
@@ -321,10 +324,11 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     validationResults,
     disabled,
     readOnly,
+    tagRenderer,
     isMultipleBlockDisabled,
     processRenderer,
     renderValidationResult,
-    handleMultipleValueRemove,
+    handleMultipleValueRemove = noop,
     getKey = getValueKey,
     isValidationMessageHidden,
     showValidationMessage: selfShowValidationMessage,
@@ -359,14 +363,32 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
       const closeBtn = !blockDisabled && !readOnly && (
         <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
       );
-      const inner = readOnly ? (
-        <span key={String(index)} className={className}>{text}</span>
-      ) : (
-        <li key={String(index)} className={className}>
-          <div>{text}</div>
-          {closeBtn}
-        </li>
-      );
+      let inner;
+      if (typeof tagRenderer === 'function') {
+        const onClose = e => {
+          stopEvent(e);
+          handleMultipleValueRemove(e, v, repeat);
+        }
+        inner = tagRenderer({
+          value: v,
+          text,
+          key: String(index), 
+          invalid: !!validationResult,
+          disabled: blockDisabled,
+          readOnly,
+          className,
+          onClose,
+        });
+      } else {
+        inner = readOnly ? (
+          <span key={String(index)} className={className}>{text}</span>
+        ) : (
+          <li key={String(index)} className={className}>
+            <div>{text}</div>
+            {closeBtn}
+          </li>
+        );
+      }
       if (!isValidationMessageHidden(validationMessage)) {
         return cloneElement(inner, {
           onMouseEnter: (e) => selfShowValidationMessage(e, validationMessage, tooltipTheme),
@@ -395,11 +417,24 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
           ? maxTagPlaceholder(omittedValues)
           : maxTagPlaceholder;
     }
-    tags.push(
-      <li key="maxTagPlaceholder" className={blockClassName}>
-        <div>{content}</div>
-      </li>,
-    );
+    let moreBlock;
+    if (typeof tagRenderer === 'function') {
+      moreBlock = tagRenderer({
+        value: "maxTagPlaceholder",
+        text: content,
+        key: "maxTagPlaceholder",
+        disabled,
+        readOnly,
+        className: blockClassName,
+      });
+    } else {
+      moreBlock = (
+        <li key="maxTagPlaceholder" className={blockClassName}>
+          <div>{content}</div>
+        </li>
+      );
+    }
+    tags.push(moreBlock);
   }
 
   return { tags, multipleValidateMessageLength, isOverflowMaxTagCount };

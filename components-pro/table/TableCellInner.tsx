@@ -460,12 +460,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (!cellEditorInCell) {
         const multiple = field.get('multiple', record);
         const range = field.get('range', record);
+        const tagRenderer = tableStore.getColumnTagRenderer(column);
         if (multiple) {
           const { tags, multipleValidateMessageLength, isOverflowMaxTagCount } = renderMultipleValues(value, {
             disabled,
             readOnly: true,
             range,
             prefixCls,
+            tagRenderer,
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,

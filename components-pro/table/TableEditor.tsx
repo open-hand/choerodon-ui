@@ -514,7 +514,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         dataSet,
         pristine,
         inlineEdit,
-        tableStore: { currentEditRecord, currentEditorName },
+        tableStore: { currentEditRecord, currentEditorName, getColumnTagRenderer },
       } = this.context;
       const record = currentEditRecord || dataSet.current;
       const field = dataSet.getField(name);
@@ -526,7 +526,8 @@ export default class TableEditor extends Component<TableEditorProps> {
       if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
         this.editorProps = cellEditor.props;
         const { height } = this;
-        const { style = {}, ...otherProps } = this.editorProps;
+        const { style = {}, tagRenderer: editorTagRenderer, ...otherProps } = this.editorProps;
+        const tagRenderer = editorTagRenderer || getColumnTagRenderer(column);
         if (height !== undefined) {
           style.height = pxToRem(height, true);
         }
@@ -536,6 +537,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           ref: this.saveRef,
           record,
           name,
+          tagRenderer,
           onKeyDown: this.handleEditorKeyDown,
           onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
           onBlur: this.handleEditorBlur,
