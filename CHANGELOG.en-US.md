@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `ViewComponent`: Fix the problem that the component is not out of focus when switching the disabled state.
 - 🐞 `<pro>Modal`: Fix the drag-and-drop exception in Firefox caused by the compatibility of the transformZoomData method.
 - 🐞 `<pro>TextField`: Fix style precedence issues.
+- 🐞 `<pro>TextField`: Fix the issue of Safari browser disabling font colors that are too light.
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 - 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.

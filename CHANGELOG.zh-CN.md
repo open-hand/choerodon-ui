@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
 - 🐞 `<pro>Modal`: 修复 transformZoomData 方法兼容性导致的火狐浏览器中拖拽异常问题。
 - 🐞 `<pro>TextField`: 修复样式优先级问题。
+- 🐞 `<pro>TextField`: 修复在 safari 浏览器上表单禁用字体颜色过浅的问题。
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 - 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
