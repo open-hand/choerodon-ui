@@ -18,17 +18,6 @@
   cursor: pointer;
   transition: background @animation-duration-slow ease;
 
-  &-disabled {
-    color: @input-disabled-color;
-    cursor: not-allowed;
-
-    &:hover {
-      color: @input-disabled-color;
-      background-color: @component-background;
-      cursor: not-allowed;
-    }
-  }
-
   &-active {
     color: @item-active-color;
     background-color: @item-active-bg;
@@ -40,6 +29,16 @@
     background-color: @item-focus-bg;
   }
 
+  &-disabled {
+    color: @input-disabled-color;
+    cursor: not-allowed;
+
+    &:hover {
+      color: @input-disabled-color;
+      background-color: @component-background;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .dropdown-menu-item () {
