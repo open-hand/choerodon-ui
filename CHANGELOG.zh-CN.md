@@ -36,6 +36,7 @@ timeline: true
 - 💄 `measureTextWidth`: 优化大数据量下的性能。
 - 💄 `<pro>Modal`: 优化多层抽屉动画。
 - 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
+- 💄 `<pro>Lov`: 支持函数回调形式的 tableProps 并在模态框模式下支持 modal 参数。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
