@@ -33,7 +33,6 @@ title: Dropdown
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| buttonProps | 按钮属性，和 [Button](/components-pro/button/) 一致 | string | |
 | type | 按钮类型，和 [Button](/components-pro/button/) 一致 | string | 'button' |
 | funcType | 按钮展现模式，和 [Button](/components-pro/button/) 一致 | string | 'raised' |
 | size | 整体大小，和 [Button](/components-pro/button/) 一致 | string | 'default' |
