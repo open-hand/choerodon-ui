@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>FormField & <pro>Table.Column`: 新增 tagRenderer 属性支持自定义多值渲染。
 - 🌟 `Upload`: 支持 text 和 picture 模式下的预览和下载按钮显示。
 - 🌟 `<pro>Lov`: 当 viewMode 为 modal 模式时，支持设置 selectionProps 属性在弹框底部自定义渲染已选记录。
+- 🌟 `<pro>Picture`: 新增 modalProps 属性，优化一张图片时不显示导航。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
@@ -37,6 +38,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化多层抽屉动画。
 - 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
 - 💄 `<pro>ColorPicker`: 修改预设颜色，优化备选色板中颜色值重复问题。
+- 💄 `<pro>Lov`: 支持函数回调形式的 tableProps 并在模态框模式下支持 modal 参数。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。

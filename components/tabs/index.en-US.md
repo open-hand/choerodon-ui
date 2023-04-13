@@ -32,7 +32,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | inkBarStyle | Ink bar style object | object | - |
 | tabPosition | Position of tabs | `top` \| `right` \| `bottom` \| `left` | `top` |
 | type | Basic style of tabs | `line` \| `card` \| `editable-card` \| `second-level` | `line` |
-| onChange | Callback executed when active tab is changed | (newActiveKey, oldActiveKey) => void | - |
+| onChange | Callback executed when active tab is changed | (activeKey) => void | - |
 | onEdit | Callback executed when tab is added or removed. Only works while `type="editable-card"` | (targetKey, action): void | - |
 | onNextClick | Callback executed when next button is clicked | (e) => void | - |
 | onPrevClick | Callback executed when prev button is clicked | (e) => void | - |

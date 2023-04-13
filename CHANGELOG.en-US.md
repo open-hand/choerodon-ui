@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>FormField & <pro>Table.Column`: Add `tagRenderer` property to support custom multivalue rendering.
 - 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 🌟 `<pro>Lov`: When the `viewMode` is `modal`, you can set the `selectionProps` property to customize the rendering of selected records at the bottom of the pop box.
+- 🌟 `<pro>Picture`: Add `modalProps` property and optimize for not displaying navigation when an image.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
@@ -34,6 +35,7 @@ timeline: true
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
+- 💄 `<pro>Lov`: Supported `tableProps` in the form of function callbacks and supported `modal` parameters in modal box mode.
 - 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
 - 💄 `<pro>ColorPicker`: Modify preset colors to optimize duplicate color values in alternative swatch.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
