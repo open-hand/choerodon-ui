@@ -39,6 +39,7 @@ timeline: true
 - 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
 - 💄 `<pro>ColorPicker`: 修改预设颜色，优化备选色板中颜色值重复问题。
 - 💄 `<pro>Lov`: 支持函数回调形式的 tableProps 并在模态框模式下支持 modal 参数。
+- 💄 `<pro>Dropdown.Button`: 支持按钮属性直接传入和样式优化。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
