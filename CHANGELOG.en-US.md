@@ -39,6 +39,7 @@ timeline: true
 - 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
 - 💄 `<pro>ColorPicker`: Modify preset colors to optimize duplicate color values in alternative swatch.
 - 💄 `<pro>Dropdown.Button`: Support direct passing in of Button properties and style optimization.
+- 💄 `Timeline`: Optimize the color property to set the display effect of custom color values.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
