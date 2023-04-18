@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import difference from 'lodash/difference';
+import isUndefined from 'lodash/isUndefined';
 import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
@@ -878,6 +879,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       _inTable: true,
       showValidation: 'tooltip',
     };
+    if (isUndefined(element.props.suffix) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].includes(element.type.name)) {
+      Object.assign(props, { suffix: <Icon type="search" /> });
+    }
     return cloneElement(element, props);
   }
 

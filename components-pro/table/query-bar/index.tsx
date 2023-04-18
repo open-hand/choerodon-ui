@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, isValidElement, JSXElementConstructor, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
+import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
 import isObject from 'lodash/isObject';
@@ -775,7 +775,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         if (!field.get('bind', current) && !name.includes(tlsKey)) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
-          const inValidElement = getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar || queryBar === TableQueryBarType.comboBar);
           if (queryBar === TableQueryBarType.filterBar) {
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             filterBarProps = {
@@ -784,10 +783,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               clearButton: true,
             };
 
-            const elementType = inValidElement.type as JSXElementConstructor<any>;
-            if ((!isValidElement(element) || element.props.suffix === undefined) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].indexOf(elementType.name) !== -1) {
-              Object.assign(filterBarProps, { suffix: <Icon type="search" /> });
-            }
           }
           const props: any = {
             key: name,
@@ -799,7 +794,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           result.push(
             isValidElement(element)
               ? cloneElement(element, props)
-              : cloneElement(inValidElement, {
+              : cloneElement(getEditorByField(field, current, queryBar !== TableQueryBarType.professionalBar, queryBar === TableQueryBarType.filterBar || queryBar === TableQueryBarType.comboBar), {
                 ...props,
                 ...(isObject(element) ? element : {}),
               }),
