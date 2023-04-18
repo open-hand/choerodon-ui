@@ -1627,6 +1627,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth });
 
     addStyle(this.mouseAreaRef.current, { display: 'none' });
+    this.scrollLeft(-this.scrollX);
   };
 
   handleColumnResizeStart = (width: number, left: number, fixed: boolean) => {
@@ -2480,7 +2481,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             </CellGroup>
           ) : null}
 
-          <CellGroup>{mergeCells(scrollCells)}</CellGroup>
+          <CellGroup>{mergeCells(scrollCells, fixedLeftCells.length)}</CellGroup>
 
           {fixedRightCellGroupWidth || fixedRightCells.length ? (
             <CellGroup
@@ -3060,7 +3061,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       columns,
       className,
       data,
-      width = 0,
       style,
       isTree = false,
       hover,
@@ -3073,8 +3073,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       queryBar,
       ...rest
     } = this.props;
-
-    const { isColumnResizing } = this.state;
+    const { isColumnResizing, width } = this.state;
     const { headerCells, bodyCells, allColumnsWidth, hasCustomTreeCol } = this.getCellDescriptor();
     const rowWidth = allColumnsWidth > width ? allColumnsWidth : width;
     const clesses = classNames(classPrefix, className, {
