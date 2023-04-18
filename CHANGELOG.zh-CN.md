@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 - 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
 - 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题。
+- 🐞 `<pro>PerformanceTable`: 修复组合列前存在固定列子项无法拖拽的问题。
 
 ## 1.6.0
 
