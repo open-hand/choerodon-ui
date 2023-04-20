@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
 - 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
 - 💄 `<pro>Table`: Optimized Table border related style variables.
+- 💄 `<pro>Table`: Optimized `Tabs` switching in virtual scrolling mode can cause the issue of TableVirtualRow re rendering.
 - 💄 `Tabs`: Optimized tab cannot adapt to the width.
 - 💄 `measureTextWidth`: Optimize performance under large data volumes.
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.

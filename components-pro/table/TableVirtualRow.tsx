@@ -42,6 +42,7 @@ const TableVirtualRow: FunctionComponent<TableVirtualRowProps> = function TableV
     root: tableStore.overflowY ? node.tableBodyWrap || node.element : null,
     rootMargin: `${VIRTUAL_ROOT_MARGIN}px`,
     initialInView: mounted.current || tableStore.isRowInView(index),
+    triggerOnce: true,
   });
   useEffect(() => {
     mounted.current = true;
