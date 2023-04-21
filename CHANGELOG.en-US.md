@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>FormField & <pro>Table.Column`: Add `tagRenderer` property to support custom multivalue rendering.
 - 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 🌟 `<pro>Lov`: When the `viewMode` is `modal`, you can set the `selectionProps` property to customize the rendering of selected records at the bottom of the pop box.
+- 🌟 `<pro>Picture`: Add `modalProps` property and optimize for not displaying navigation when an image.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
@@ -37,6 +38,9 @@ timeline: true
 - 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
 - 💄 `<pro>Lov`: Supported `tableProps` in the form of function callbacks and supported `modal` parameters in modal box mode.
 - 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
+- 💄 `<pro>ColorPicker`: Modify preset colors to optimize duplicate color values in alternative swatch.
+- 💄 `<pro>Dropdown.Button`: Support direct passing in of Button properties and style optimization.
+- 💄 `Timeline`: Optimize the color property to set the display effect of custom color values.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
@@ -57,6 +61,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 - 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
 - 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
+- 🐞 `<pro>PerformanceTable`: Fix the issue of fixed column subitems being unable to be dragged before combining columns.
 
 ## 1.6.0
 

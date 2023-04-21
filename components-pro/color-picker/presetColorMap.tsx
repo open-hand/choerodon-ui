@@ -1,13 +1,13 @@
 export const commonColorMap = [
   '#FFFFFF',
   '#000000',
-  '#DD3611',
+  '#DD3612',
   '#ED7D31',
   '#FFBF00',
   '#71AD47',
   '#5B9BD5',
   '#44536A',
-  '#3F5BB5',
+  '#3F5BB6',
 ];
 
 export const defaultColorMap = [

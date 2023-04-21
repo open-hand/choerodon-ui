@@ -1,22 +1,15 @@
-import React, { MouseEventHandler, ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import classNames from 'classnames';
 import ButtonGroup, { ButtonGroupProps } from 'choerodon-ui/lib/button/ButtonGroup';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Dropdown, { DropDownProps } from './Dropdown';
 import { ButtonProps } from '../button/Button';
-import { ButtonType, FuncType } from '../button/interface';
+import { FuncType } from '../button/interface';
 import Button from '../button';
 import { Placements } from './enum';
-import { Size } from '../core/enum';
 
-export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps {
-  type?: ButtonType;
-  disabled?: boolean;
+export interface DropdownButtonProps extends ButtonGroupProps, DropDownProps, Omit<ButtonProps, 'icon'> {
   icon?: ReactNode;
-  size?: Size;
-  funcType?: FuncType;
-  onClick?: MouseEventHandler<any>;
-  children?: any;
   buttonProps?: ButtonProps;
   buttonGroupPrefixCls?: string;
 }
@@ -27,58 +20,111 @@ interface DropdownButtonInterface extends React.FC<DropdownButtonProps> {
 
 const DropdownButton: DropdownButtonInterface = function DropdownButton(props) {
   const {
-    prefixCls: customizePrefixCls,
-    type,
+    trigger,
+    overlay,
+    onHiddenChange,
+    onHiddenBeforeChange,
+    onVisibleChange,
+    onOverlayClick,
+    hidden,
+    visible,
+    defaultHidden,
+    defaultVisible,
     disabled,
+    loading,
+    getPopupContainer,
+    suffixCls: customizeSuffixCls,
+    prefixCls: customizePrefixCls,
+    className,
+    placement,
+    popupClassName,
+    block,
+    style,
     icon,
     size,
+    color,
     funcType,
-    onClick,
     children,
-    className,
-    overlay,
-    trigger,
-    align,
-    hidden,
     buttonProps,
     buttonGroupPrefixCls,
-    placement,
-    onHiddenChange,
-    getPopupContainer,
-    onOverlayClick,
-    onHiddenBeforeChange,
     ...restProps
   } = props;
+  const {
+    color: btnPropsColor,
+    funcType: btnPropsFuncType,
+    size: btnPropsSize,
+    disabled: btnPropsDisabled,
+    loading: btnPropsLoading,
+    ...restButtonProps
+  } = buttonProps || {};
   const { getProPrefixCls } = useContext(ConfigContext);
-
   const prefixCls = getProPrefixCls('dropdown', customizePrefixCls);
   const dropdownProps: DropDownProps = {
-    prefixCls,
-    align,
-    overlay,
-    hidden,
-    disabled: disabled || (buttonProps && buttonProps.loading),
     trigger: disabled ? [] : trigger,
-    placement,
+    overlay,
     onHiddenChange,
     onHiddenBeforeChange,
-    getPopupContainer,
+    onVisibleChange,
     onOverlayClick,
+    hidden,
+    visible,
+    defaultHidden,
+    defaultVisible,
+    disabled: disabled || loading || btnPropsLoading,
+    getPopupContainer,
+    suffixCls: customizeSuffixCls,
+    prefixCls,
+    placement,
+    popupClassName,
   };
 
   return (
-    <ButtonGroup {...restProps} prefixCls={buttonGroupPrefixCls} className={classNames(`${prefixCls}-button`, className, {
-      [`${prefixCls}-button-raised`]: !funcType || funcType === FuncType.raised,
-      [`${prefixCls}-button-flat`]: funcType === FuncType.flat,
-    })}>
-      <Button {...buttonProps} funcType={FuncType.flat} size={size} type={type} disabled={disabled} onClick={onClick}>
+    <ButtonGroup
+      size={size}
+      style={style}
+      prefixCls={buttonGroupPrefixCls}
+      className={
+        classNames(
+          `${prefixCls}-button`,
+          className,
+          {
+            [`${prefixCls}-button-raised`]: !funcType || funcType === FuncType.raised,
+            [`${prefixCls}-button-flat`]: funcType === FuncType.flat,
+            [`${prefixCls}-button-link`]: funcType === FuncType.link,
+            [`${prefixCls}-button-block`]: block,
+          },
+        )
+      }
+    >
+      <Button
+        {...restProps}
+        {...restButtonProps}
+        disabled={disabled || btnPropsDisabled}
+        loading={loading || btnPropsLoading}
+        color={color || btnPropsColor}
+        funcType={funcType || btnPropsFuncType}
+        size={size || btnPropsSize}
+      >
         {children}
       </Button>
       <Dropdown {...dropdownProps}>
         {
-          icon ?
-            <Button funcType={FuncType.flat} size={size} disabled={dropdownProps.disabled}>{icon}</Button> :
-            <Button funcType={FuncType.flat} size={size} disabled={dropdownProps.disabled} icon="arrow_drop_down" />
+          icon ? (
+            <Button
+              color={color || btnPropsColor}
+              funcType={funcType || btnPropsFuncType}
+              size={size || btnPropsSize}
+              disabled={dropdownProps.disabled}
+            >{icon}</Button>
+          ) : (
+            <Button
+              color={color || btnPropsColor}
+              funcType={funcType || btnPropsFuncType}
+              size={size || btnPropsSize}
+              disabled={dropdownProps.disabled}
+              icon="arrow_drop_down"
+            />
+          )
         }
       </Dropdown>
     </ButtonGroup>

@@ -11,7 +11,7 @@ function cloneCell(Cell, props) {
   return React.cloneElement(Cell, props);
 }
 
-function mergeCells(cells) {
+function mergeCells(cells, leftFixedLength: number = 0) {
   const nextCells: React.ReactElement[] = [];
   let columnGroupLeft: number = 0
   const mergeMaxCells: any = []
@@ -92,7 +92,7 @@ function mergeCells(cells) {
         groupChildren.push(
           <HeaderCell
             key={j}
-            index={i + j}
+            index={leftFixedLength + i + j}
             left={left}
             fixed={fixed}
             dataKey={dataKey}

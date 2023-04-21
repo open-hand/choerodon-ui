@@ -1270,15 +1270,15 @@ export default class TableStore {
     if (!this.width) {
       return [0, 0];
     }
-    const { columnGroups: { allLeafs, leftLeafs, rightLeafs, leftLeafColumnsWidth, rightLeafColumnsWidth }, columnThreshold, nextRenderColIndex } = this;
+    const { columnGroups: { leafs, leftLeafs, rightLeafs, leftLeafColumnsWidth, rightLeafColumnsWidth }, columnThreshold, nextRenderColIndex } = this;
     const scrollLeft = this.lastScrollLeft || 0;
 
     let visibleColumnWidth = 0;
     let firstIndex = -1;
     let lastIndex = -1;
-    const centerLeafsLength = allLeafs.length - rightLeafs.length;
+    const centerLeafsLength = leafs.length - rightLeafs.length;
     for (let i = leftLeafs.length; i < centerLeafsLength; i++) {
-      const { width } = allLeafs[i];
+      const { width } = leafs[i];
       visibleColumnWidth += width;
       if (firstIndex === -1 && visibleColumnWidth > scrollLeft) {
         firstIndex = i;
@@ -1292,7 +1292,7 @@ export default class TableStore {
     }
 
     if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
-      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, allLeafs.length)]; 
+      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, leafs.length)]; 
       this.prevRenderColIndex = [firstIndex, lastIndex]; 
       return [firstIndex, lastIndex];
     }
@@ -1308,9 +1308,9 @@ export default class TableStore {
     center: [number, number];
     right?: [number, number];
     } {
-    const { columnGroups: { allLeafs, leftLeafs, rightLeafs }, columnBuffer } = this;
+    const { columnGroups: { leafs, leftLeafs, rightLeafs }, columnBuffer } = this;
     if (!this.propVirtual || !this.overflowX) {
-      return { center: [0, allLeafs.length] };
+      return { center: [0, leafs.length] };
     }
     const rangeThreshold: {
       left?: [number, number];
@@ -1326,13 +1326,13 @@ export default class TableStore {
       rangeThreshold.left = [0, leftColLength];
     }
     if (rightColLength) {
-      rangeThreshold.right = [allLeafs.length - rightColLength, allLeafs.length];
+      rangeThreshold.right = [leafs.length - rightColLength, leafs.length];
     }
 
     const [start, end] = this.updateRenderZonePosition();
 
     const first = Math.max(leftColLength, start - columnBuffer);
-    const last = Math.min(allLeafs.length, end + columnBuffer + 1);
+    const last = Math.min(leafs.length, end + columnBuffer + 1);
 
     rangeThreshold.center = [first, last];
     return rangeThreshold;

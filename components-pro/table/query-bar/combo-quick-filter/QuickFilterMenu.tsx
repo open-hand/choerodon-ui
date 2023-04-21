@@ -135,15 +135,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
       if (menuRecord) {
         const conditionList = menuRecord.get('personalFilter') && parseValue(menuRecord.get('personalFilter'));
         conditionDataSet.loadData(conditionList);
-        const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
-        if (tableStore) {
-          runInAction(() => {
-            const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
-            tableStore.tempCustomized = { columns: {} };
-            tableStore.saveCustomized(newCustomized);
-            tableStore.initColumns();
-          })
-        }
       }
       if (current) {
         current.set('filterName', searchId);

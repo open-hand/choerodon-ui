@@ -190,12 +190,16 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
             onRotateRight={handleRotateRight}
             downloadUrl={downloadUrl}
           />
-          <Navbar
-            prefixCls={customizedPrefixCls}
-            value={index}
-            onChange={handleIndexChange}
-            list={list}
-          />
+          {
+            length > 1 && (
+              <Navbar
+                prefixCls={customizedPrefixCls}
+                value={index}
+                onChange={handleIndexChange}
+                list={list}
+              />
+            )
+          }
         </div>
         {
           length > 1 && (

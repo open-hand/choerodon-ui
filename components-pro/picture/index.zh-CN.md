@@ -25,6 +25,7 @@ title: Picture
 | border | 边框 | boolean |  |
 | block | 块级图片 | boolean | true |
 | lazy | 懒加载 | boolean |  |
+| modalProps | 图片预览弹窗属性，详情见 [ModalProps](/components/modal/#Modal) | ModalProps |  |
 | preview | 可预览 | boolean | true |
 | previewUrl | 预览时的路径， 默认为src | string |  |
 | downloadUrl | 预览时的下载路径 | string \| Function |  |
@@ -39,6 +40,10 @@ title: Picture
 ### Picture.Provider
  
 图片组预览提供者
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| modalProps | 图片预览弹窗属性，详情见 [ModalProps](/components/modal/#Modal) | ModalProps |  |
 
 ### Picture.Context
  
