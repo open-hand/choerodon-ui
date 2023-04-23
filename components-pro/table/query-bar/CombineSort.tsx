@@ -64,7 +64,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
     const { combineSortFieldNames = new Map<string, SortOrder>() } = dataSet;
     const data: any[] = [];
     combineSortFieldNames.forEach((sortOrder, fieldName) => {
-      const record = sortFieldOptions.records.find(record => record.get('value') === fieldName);
+      const record = sortFieldOptions.find(record => record.get('value') === fieldName);
       if (record) {
         const field = dataSet.getField(fieldName);
         data.push({
@@ -87,7 +87,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   }, [sortFieldOptions, dataSet, dataSet.combineSortFieldNames, visible]);
 
   const optionsFilter = (record: Record) => {
-    return sortDS.data.every(sortRecord => sortRecord.get('sortName') !== record.get('value'));
+    return sortDS.every(sortRecord => sortRecord.get('sortName') !== record.get('value'));
   }
 
   const onVisibleChange = (visible: boolean) => {
@@ -105,7 +105,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   const handleConfirm = () => {
     sortDS.validate().then(result => {
       if (result) {
-        const records = sortDS.data.filter(r => r.get('sortName') && r.get('order'));
+        const records = sortDS.filter(r => r.get('sortName') && r.get('order'));
         const sortInfo: Map<string, SortOrder> = new Map();
         records.forEach(record => {
           sortInfo.set(record.get('sortName'), record.get('order'));
@@ -120,7 +120,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
     if (result.destination) {
       sortDS.move(result.source.index, result.destination.index);
     }
-  }, [sortDS, sortDS.data]);
+  }, [sortDS.data]);
 
   const SortDragItem: FunctionComponent<{record: Record, index: number}> = ({record, index}) => {
     const { key } = record;
@@ -187,7 +187,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
                     {...provided.droppableProps}
                     className={`${sortPrefixCls}-list`}
                   >
-                    {sortDS.data.map((record, index) => {
+                    {sortDS.map((record, index) => {
                       const { key } = record;
                       return <SortDragItem key={key} record={record} index={index} />;
                     })}
@@ -203,7 +203,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
               icon="add"
               onClick={() => sortDS.create()}
               color={ButtonColor.primary}
-              disabled={sortDS.data.length >= sortFieldOptions.records.length}
+              disabled={sortDS.length >= sortFieldOptions.length}
             >
               {$l('Table', 'add_sort')}
             </Button>
@@ -215,7 +215,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
         </div>
       </div>
     );
-  }, [onDragEnd, sortFieldOptions, sortDS, sortDS.data]);
+  }, [onDragEnd, sortFieldOptions.data, sortDS.data]);
 
   if (!combineSort || !sortableFieldNames || sortableFieldNames.length === 0) {
     return null;
