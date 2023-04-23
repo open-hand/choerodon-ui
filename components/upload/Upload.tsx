@@ -1,12 +1,13 @@
 import React, { Component, DragEvent } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
+import isUndefined from 'lodash/isUndefined';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import Dragger from './Dragger';
 import UploadList from './UploadList';
-import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
+import { UploadChangeParam, UploadFile, UploadListType, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -332,6 +333,12 @@ export default class Upload extends Component<UploadProps, UploadState> {
       reUploadPopConfirmTitle,
       getCustomFilenameTitle,
     } = showUploadList as any;
+    let defaultShowPreviewIcon;
+    let defaultShowDownloadIcon;
+    if (['text','picture'].includes(listType as UploadListType)) {
+      defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? false : showPreviewIcon;
+      defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? false : showDownloadIcon;
+    }
     return (
       <UploadList
         prefixCls={prefixCls}
@@ -343,8 +350,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
         previewFile={previewFile}
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
-        showPreviewIcon={showPreviewIcon}
-        showDownloadIcon={showDownloadIcon}
+        showPreviewIcon={defaultShowPreviewIcon}
+        showDownloadIcon={defaultShowDownloadIcon}
         removePopConfirmTitle={removePopConfirmTitle}
         showReUploadIcon={showReUploadIcon}
         reUploadText={reUploadText}
