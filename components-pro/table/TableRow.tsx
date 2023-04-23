@@ -97,6 +97,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     node,
     propVirtual,
     isRenderRange,
+    verticalScrolling,
+    horizontalScrolling,
+    overflowX,
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -398,7 +401,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       rowIndex: virtualIndex === undefined ? index : virtualIndex,
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
       isDragDisabled,
-      isRenderCell: isRenderRange(columnIndex),
+      isRenderCell: horizontalScrolling ? isRenderRange(columnIndex) : true,
     };
     if (!isFixedRowHeight && propVirtual && !hidden) {
       return [
@@ -413,10 +416,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   };
 
   const [columns, { isCurrent }] = (() => {
-    const { customizable } = tableStore;
+    const { customizable, virtualColumnRange } = tableStore;
+    const { left, center, right } = virtualColumnRange;
     const { leafs } = columnGroups;
-    const columnLength = leafs.length;
-    return leafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
+    const sliceLeafs = horizontalScrolling || !overflowX ? leafs : leafs.slice(left ? left[0] : 0, center[1]).concat(right ? leafs.slice(...right) : []);
+    const columnLength = sliceLeafs.length;
+    return sliceLeafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
@@ -428,7 +433,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
           rest.colSpan = colSpan;
         }
         const [cell, actualRecord] = getCell(columnGroup, columnIndex, rest);
-        result[0].push(cell);
+        if (verticalScrolling && (left && columnIndex >= left[1] && columnIndex < center[0]) || (!left && columnIndex < center[0])) {
+          result[0].push(<td />);
+        } else {
+          result[0].push(cell);
+        }
         if (highLightRow && actualRecord && actualRecord.isCurrent) {
           result[1].isCurrent = true;
         }

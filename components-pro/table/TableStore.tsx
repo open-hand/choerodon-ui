@@ -1332,7 +1332,7 @@ export default class TableStore {
     const [start, end] = this.updateRenderZonePosition();
 
     const first = Math.max(leftColLength, start - columnBuffer);
-    const last = Math.min(leafs.length, end + columnBuffer + 1);
+    const last = Math.min(leafs.length - rightColLength, end + columnBuffer + 1);
 
     rangeThreshold.center = [first, last];
     return rangeThreshold;
@@ -1368,6 +1368,10 @@ export default class TableStore {
   lastMeasuredIndex = 0;
 
   @observable scrolling: boolean | undefined;
+
+  @observable verticalScrolling: boolean | undefined;
+
+  @observable horizontalScrolling: boolean | undefined;
 
   @observable cellVerticalSize: number | undefined;
 
@@ -1429,10 +1433,12 @@ export default class TableStore {
     return getVisibleEndIndex(this);
   }
 
+  @computed
   get virtualStartIndex(): number {
     return getStartIndex(this);
   }
 
+  @computed
   get virtualEndIndex(): number {
     return getEndIndex(this);
   }
@@ -2407,7 +2413,7 @@ export default class TableStore {
   setLastScrollTop(lastScrollTop: number) {
     if (this.virtual) {
       this.lastScrollTop = lastScrollTop;
-      this.startScroll();
+      this.startScroll('vertical');
     }
   }
 
@@ -2415,7 +2421,7 @@ export default class TableStore {
   setLastScrollLeft(lastScrollLeft: number) {
     if (this.propVirtual) {
       this.lastScrollLeft = lastScrollLeft;
-      this.startScroll();
+      this.startScroll('horizontal');
     }
   }
 
@@ -2946,8 +2952,15 @@ export default class TableStore {
   }
 
   @action
-  startScroll() {
+  startScroll(direction: string) {
     this.scrolling = true;
+    if (direction === 'vertical') {
+      this.verticalScrolling = true;
+      this.horizontalScrolling = false;
+    } else {
+      this.horizontalScrolling = true;
+      this.verticalScrolling = false;
+    }
     this.stopScroll();
   }
 
