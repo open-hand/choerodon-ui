@@ -1369,10 +1369,6 @@ export default class TableStore {
 
   @observable scrolling: boolean | undefined;
 
-  @observable verticalScrolling: boolean | undefined;
-
-  @observable horizontalScrolling: boolean | undefined;
-
   @observable cellVerticalSize: number | undefined;
 
   @computed
@@ -2413,7 +2409,7 @@ export default class TableStore {
   setLastScrollTop(lastScrollTop: number) {
     if (this.virtual) {
       this.lastScrollTop = lastScrollTop;
-      this.startScroll('vertical');
+      this.startScroll();
     }
   }
 
@@ -2421,7 +2417,7 @@ export default class TableStore {
   setLastScrollLeft(lastScrollLeft: number) {
     if (this.propVirtual) {
       this.lastScrollLeft = lastScrollLeft;
-      this.startScroll('horizontal');
+      this.startScroll();
     }
   }
 
@@ -2952,15 +2948,8 @@ export default class TableStore {
   }
 
   @action
-  startScroll(direction: string) {
+  startScroll() {
     this.scrolling = true;
-    if (direction === 'vertical') {
-      this.verticalScrolling = true;
-      this.horizontalScrolling = false;
-    } else {
-      this.horizontalScrolling = true;
-      this.verticalScrolling = false;
-    }
     this.stopScroll();
   }
 
