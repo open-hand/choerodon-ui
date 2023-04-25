@@ -413,13 +413,13 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   };
 
   const [columns, { isCurrent }] = (() => {
-    const { customizable } = tableStore;
+    const { customizable, customizedBtn } = tableStore;
     const { leafs } = columnGroups;
     const columnLength = leafs.length;
     return leafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
       if (key !== CUSTOMIZED_KEY) {
-        const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
+        const colSpan = customizable && !customizedBtn  && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
         const rest: Partial<TableCellProps> = {
           key,
           disabled,

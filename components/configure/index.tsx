@@ -41,6 +41,7 @@ import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interfac
 import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
+import { BoardCustomized } from 'choerodon-ui/pro/lib/board/interface';
 import { Action } from '../trigger/enum';
 import { Size } from '../_util/enum';
 import { TooltipPlacement, TooltipTheme } from '../tooltip';
@@ -100,6 +101,7 @@ export type Customizable = {
   PerformanceTable?: boolean;
   Tabs?: boolean;
   Modal?: boolean;
+  Board?: boolean;
 }
 
 export interface Customized {
@@ -107,10 +109,11 @@ export interface Customized {
   PerformanceTable?: PerformanceTableCustomized;
   Tabs?: TabsCustomized;
   Modal?: ModalCustomized;
+  Board?: BoardCustomized | BoardCustomized[] | any;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component: T) => void;
-export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T) => Promise<Customized[T] | null>;
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T) => void;
+export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T, params?: any) => Promise<Customized[T] | null>;
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;

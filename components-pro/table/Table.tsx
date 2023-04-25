@@ -696,6 +696,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   customizable?: boolean | undefined;
   /**
+   * 个性化设置入口是否置于 buttons
+   */
+  customizedBtn?: boolean | undefined;
+  /**
    * @deprecated
    * 同 columnDraggable
    */
@@ -1401,6 +1405,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'treeAsync',
       'treeLoadData',
       'customizable',
+      'customizedBtn',
       'customizedCode',
       'dragColumn',
       'dragRow',

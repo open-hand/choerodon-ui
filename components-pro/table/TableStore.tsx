@@ -1150,6 +1150,17 @@ export default class TableStore {
     return false;
   }
 
+  /**
+   * board 组件个性化按钮 in buttons
+   */
+  get customizedBtn(): boolean | undefined {
+    const { customizedCode } = this.props;
+    if (customizedCode && 'customizedBtn' in this.props) {
+      return this.props.customizedBtn;
+    }
+    return false;
+  }
+
   get aggregation(): boolean | undefined {
     const { aggregation } = this.customized;
     if (aggregation !== undefined) {
@@ -1838,12 +1849,12 @@ export default class TableStore {
     if (this.queryBar === TableQueryBarType.comboBar) {
       return <ComboCustomizationSettings />;
     }
-    return <CustomizationColumnHeader onHeaderClick={this.openCustomizationModal} />;
+    return <CustomizationColumnHeader customizedBtn={this.customizedBtn} onHeaderClick={this.openCustomizationModal} />;
   }
 
   @computed
   get customizedColumn(): ColumnProps | undefined {
-    if (this.customizable && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
+    if (this.customizable && !this.customizedBtn && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
       return {
         key: CUSTOMIZED_KEY,
         resizable: false,

@@ -197,7 +197,7 @@ export function processFilterParam(dataSet) {
     const paramFieldName = tableName ? `${tableName}.${name}` : name;
     let searchValue: any[] = [];
     if ([OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator) || value) {
-      const enCodeValue = isNumber(value) ? value : encodeURIComponent(value);
+      const enCodeValue = isNumber(value) ? value : (value ? encodeURIComponent(value) : value);
       searchValue = [index + 1, paramFieldName, dataObj[AdvancedFieldSet.comparator], enCodeValue].filter(Boolean);
     }
     if (searchValue && searchValue.length) {
@@ -372,6 +372,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (shouldInit && queryDataSet && queryDataSet.current) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
     }
+    if (queryDataSet && queryDataSet.current && !this.tableFilterAdapter) {
+      dataSet.setState(CONDITIONSTATUS, queryDataSet.current.dirty ? RecordStatus.update : RecordStatus.sync);
+    }
   }
 
 
@@ -410,6 +413,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
       if (shouldInit && queryDataSet && queryDataSet.current) {
         this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+      }
+      if (queryDataSet && queryDataSet.current && !this.tableFilterAdapter) {
+        dataSet.setState(CONDITIONSTATUS, queryDataSet.current.dirty ? RecordStatus.update : RecordStatus.sync);
       }
     }
   }

@@ -695,11 +695,14 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   getButtons(): ReactElement<ButtonProps>[] {
-    const { tableStore: { queryBar, prefixCls, dataSet } } = this.context;
+    const { tableStore: { queryBar, prefixCls, dataSet, customizedBtn, customizable, customizedColumnHeader } } = this.context;
     const { buttons: originalButtons, summaryBar, buttonsLimit } = this.props;
     const { tableStore } = this.context;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     let buttons = originalButtons;
+    if (customizable && customizedBtn) {
+      buttons = [customizedColumnHeader(), ...(buttons || [])];
+    }
     if (queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort) {
       const sortableFieldNames = this.getSortableFieldNames();
       if (sortableFieldNames.length > 0) {
