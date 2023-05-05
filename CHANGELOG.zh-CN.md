@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复数据分组模式下数据不同步的问题。
 - 🐞 `<pro>Table`: 修复全局配置 labelLayout 为 vertical 时，专业搜索条的按钮和输入框没有对齐的问题。
 - 🐞 `<pro>Table`: 修复配置了 dragColumnAlign 为 left 且在编辑状态下拖拽交换位置显示不正常问题。
+- 🐞 `<pro>Table`: 修复和优化高级筛选交互和样式问题。
 - 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
 - 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
 - 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。

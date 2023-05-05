@@ -39,12 +39,13 @@ import measureTextWidth from '../_util/measureTextWidth';
 import ColumnGroup from './ColumnGroup';
 import { FuncType } from '../button/enum';
 import { AggregationTreeProps } from './AggregationTree';
+import { TriggerFieldProps } from '../trigger-field/TriggerField';
 
 export {
   isStickySupport,
 };
 
-export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps> {
+export function getEditorByField(field: Field, record?: Record, isQueryField?: boolean, isFlat?: boolean): ReactElement<FormFieldProps | TriggerFieldProps> {
   const type = field.get('type', record);
   const { name } = field;
   const flatProps = isFlat ? { isFlat, maxTagCount: 3 } : {};

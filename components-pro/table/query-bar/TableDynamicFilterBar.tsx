@@ -1,6 +1,6 @@
 import React, { cloneElement, Component, isValidElement, MouseEvent, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { action, isArrayLike, observable, runInAction, toJS } from 'mobx';
+import { action, autorun, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import uniq from 'lodash/uniq';
 import pull from 'lodash/pull';
 import noop from 'lodash/noop';
@@ -25,7 +25,7 @@ import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Popover from 'choerodon-ui/lib/popover';
 import Tag from 'choerodon-ui/lib/tag';
-import Field, { FieldProps, Fields } from '../../data-set/Field';
+import Field, { DynamicProps, FieldProps, Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import { DataSetEvents, DataSetSelection, DataSetStatus, FieldIgnore, FieldType, RecordStatus } from '../../data-set/enum';
@@ -56,6 +56,8 @@ import Tree from '../../tree';
 import { ButtonColor, FuncType } from '../../button/enum';
 import { OPERATOR, OPERATOR_TYPE } from './quick-filter/Operator';
 import { getEditorByField } from '../utils';
+import { ShowValidation } from '../../form/enum';
+import { TriggerViewMode } from '../../trigger-field/enum';
 
 /**
  * 当前数据是否有值并需要选中
@@ -329,6 +331,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @observable showExpandIcon: boolean;
 
+  refAdvancedFilterContainer: Popover | null = null;
+
   refDropdown: HTMLDivElement | null = null;
 
   refSingleWrapper: HTMLDivElement | null = null;
@@ -336,6 +340,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   refEditors: Map<string, any> = new Map();
 
   refFilterItems: Map<string, any> = new Map();
+
+  refCustomizeExpTypeEditor: TextField | null = null;
 
   originalConditionFields: string[] = [];
 
@@ -375,6 +381,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (queryDataSet && queryDataSet.current && !this.tableFilterAdapter) {
       dataSet.setState(CONDITIONSTATUS, queryDataSet.current.dirty ? RecordStatus.update : RecordStatus.sync);
     }
+    this.setFilterVisiable();
   }
 
 
@@ -651,14 +658,30 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (advancedSearchFields && advancedSearchFields.length) {
       const omitPropsArr = ['dynamicProps', 'computedProps', 'order', 'pattern', 'maxLength', 'minLength', 'max', 'min', 'validator', 'required', 'readOnly', 'disabled', 'defaultValue', 'cascadeMap', 'ignore'];
       return advancedSearchFields!.map(field => {
-        const { name, source, alias, tableName, fieldProps } = field;
+        const { name, source, alias, tableName, fieldProps = {} } = field;
+        const fieldName = alias || name;
+        const dynamicRequired = ({record}) => {
+          const isNullOperater = [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(record.get(AdvancedFieldSet.comparator));
+          if (fieldName === record.get(AdvancedFieldSet.fieldName) && !isNullOperater) {
+            return true;
+          }
+          return false;
+        };
+        const { required, computedProps} = fieldProps;
+        if (required) delete fieldProps.required;
+        if (computedProps && 'required' in computedProps) delete computedProps.required;
+        if (fieldProps.dynamicProps) {
+          (fieldProps.dynamicProps as DynamicProps).required = dynamicRequired;
+        } else {
+          fieldProps.dynamicProps = { required: dynamicRequired };
+        }
         if (source === 'fields' && dataSet.props.fields) {
           const dsFiedlsProps = dataSet.props.fields.find(f => f.name === name);
           return {
             ...omit(dsFiedlsProps, omitPropsArr),
             ...fieldProps,
             help: tableName,
-            name: alias || name,
+            name: fieldName,
           };
         }
         if (source === 'queryFields' && queryDataSet && queryDataSet.props.fields) {
@@ -667,14 +690,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             ...omit(dsFiedlsProps, omitPropsArr),
             ...fieldProps,
             help: tableName,
-            name: alias || name,
+            name: fieldName,
           };
         }
         return {
           ...fieldProps,
           // multiple: fieldProps && fieldProps.multiple ? '|' : false,
           help: tableName,
-          name: alias || name,
+          name: fieldName,
         };
       });
     }
@@ -1094,7 +1117,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { dataSet, autoQuery } = this.props;
     const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
     const res = await newFilterDataSet.validate();
-    if (res) {
+    const customizeExpTypeValidation = !this.refCustomizeExpTypeEditor || await this.refCustomizeExpTypeEditor.checkValidity();
+    if (res && customizeExpTypeValidation) {
       runInAction(async () => {
         // 初始状态下移除空行
         if (newFilterDataSet.length !== 1) {
@@ -1114,6 +1138,72 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         this.visible = false;
       })
     }
+  }
+
+  /**
+   * 高级筛选弹窗取消
+   */
+  @autobind
+  handleFilterCancel() {
+    const { dataSet } = this.props;
+    const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
+    const orgValue = dataSet.getState(ORIGINALVALUEOBJ).advance;
+    newFilterDataSet.loadData(orgValue);
+    this.setConditionStatus(dataSet.getState(CONDITIONSTATUS));
+    runInAction(() => {
+      this.visible = false;
+    })
+  }
+
+  @autobind
+  setFilterVisiable() {
+    autorun(() => {
+      if (this.visible) {
+        document.addEventListener('mousedown', this.handleEmitFilterCancel);
+      } else {
+        document.removeEventListener('mousedown', this.handleEmitFilterCancel);
+      }
+    });
+  }
+
+  @autobind
+  isPopupChildren(element: HTMLElement | null): boolean {
+    const { getConfig } = this.context;
+    const proPreCls = getConfig('proPrefixCls');
+    const popupClasses = [
+      `${proPreCls}-popup`,
+      `${proPreCls}-modal`,
+    ];
+    const hasPopupClass = popupClasses.some((cls: string) => {
+      return element && element.className.includes(cls);
+    });
+    if (hasPopupClass) {
+      return true;
+    }
+    if (!hasPopupClass && element && element.parentElement && element.parentElement !== document.body) {
+      return this.isPopupChildren(element.parentElement as HTMLElement);
+    }
+    return false;
+  }
+  
+  @autobind
+  handleEmitFilterCancel(e: Event) {
+    const { target } = e;
+    const container = this.refAdvancedFilterContainer?.getPopupDomNode();
+    const keepVisible = target === container
+      || container.contains(target as Node)
+      || this.isPopupChildren(target as HTMLElement);
+    if (!keepVisible) {
+      this.handleFilterCancel();
+    }
+  }
+
+  saveCustomizeExpTypeEditorRef(node: TextField | null) {
+    this.refCustomizeExpTypeEditor = node;
+  }
+
+  saveAdvancedFilterContainerRef(node: Popover | null) {
+    this.refAdvancedFilterContainer = node;
   }
 
   /**
@@ -1165,6 +1255,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               }}
               clearButton={false}
               className={`${prefixCls}-new-filter-popover-select`}
+              trigger={[Action.click]}
             >
               <Select.Option value="all">{$l('Table', 'ad_search_all')}</Select.Option>
               <Select.Option value="either">{$l('Table', 'ad_search_any')}</Select.Option>
@@ -1182,6 +1273,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {
             dataSet.getState(EXPTYPE) === 'customize' ?
               <TextField
+                ref={this.saveCustomizeExpTypeEditorRef}
                 clearButton
                 required
                 value={dataSet.getState(SEARCHEXP) ?
@@ -1195,10 +1287,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 }}
                 className={`${prefixCls}-new-filter-popover-input`}
                 placeholder={$l('Table', 'ad_search_placeholder')}
+                showValidation={ShowValidation.tooltip}
               />
               : null
           }
-          <div className={`${prefixCls}-new-filter-popover-line`} />
+          {newFilterDataSet.length > 0 && <div className={`${prefixCls}-new-filter-popover-line`} />}
           <Tree
             key="__filter"
             dataSet={newFilterDataSet}
@@ -1218,15 +1311,23 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               const comparator = record.get(AdvancedFieldSet.comparator);
               const fieldName = record.get(AdvancedFieldSet.fieldName);
               const field = record.getField(fieldName);
+              const disabled = [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator);
               let valueFieldDom: ReactElement = <TextField style={{ width: 180 }} disabled />;
               if (field && !field.get('bind', record) && !fieldName.includes(tlsKey)) {
-                valueFieldDom = cloneElement(getEditorByField(field, record, true), {
+                const editor = getEditorByField(field, record, true);
+                let shouldUseClick = false;
+                if ('viewMode' in editor.props && editor.props.viewMode === TriggerViewMode.popup) {
+                  shouldUseClick = true;
+                }
+                valueFieldDom = cloneElement(editor, {
                   help: '',
                   key: fieldName,
                   name: fieldName,
                   record,
                   style: { width: 180 },
-                  disabled: [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator),
+                  disabled,
+                  showValidation: ShowValidation.tooltip,
+                  trigger: shouldUseClick ? [Action.click] : undefined,
                 });
               }
               return (
@@ -1237,6 +1338,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     record={record}
                     placeholder={$l('Lov', 'choose')}
                     optionTooltip={OptionTooltip.overflow}
+                    trigger={[Action.click]}
+                    showValidation={ShowValidation.tooltip}
                   >
                     {selectOptions}
                   </Select>
@@ -1250,6 +1353,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     record={record}
                     disabled={!record.get(AdvancedFieldSet.fieldName)}
                     optionsFilter={(optionRecord) => this.optionsFilter(record, optionRecord)}
+                    trigger={[Action.click]}
+                    showValidation={ShowValidation.tooltip}
                   />
                   {valueFieldDom}
                   <Button
@@ -1280,14 +1385,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           </Button>
           <div className={`${prefixCls}-new-filter-popover-footer`}>
             <Button
-              onClick={() => {
-                const orgValue = dataSet.getState(ORIGINALVALUEOBJ).advance;
-                newFilterDataSet.loadData(orgValue);
-                this.setConditionStatus(dataSet.getState(CONDITIONSTATUS));
-                runInAction(() => {
-                  this.visible = false;
-                })
-              }}
+              onClick={this.handleFilterCancel}
             >
               {$l('Modal', 'cancel')}
             </Button>
@@ -1307,12 +1405,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           overlayClassName={`${prefixCls}-new-filter-popover`}
           trigger="click"
           visible={this.visible}
+          ref={this.saveAdvancedFilterContainerRef}
         >
           <Button
             funcType={FuncType.link}
             className={`${prefixCls}-new-filter-popover-icon`}
             icon="filter2"
-            color={newFilterDataSet && newFilterDataSet.some(r => r.status === 'sync') ? ButtonColor.primary : ButtonColor.default}
+            color={newFilterDataSet && newFilterDataSet.some(r => r.status !== 'sync') ? ButtonColor.primary : ButtonColor.dark}
             onClick={() => {
               if (!newFilterDataSet.length) {
                 newFilterDataSet.create();

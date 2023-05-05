@@ -138,17 +138,17 @@ export const NewFilterDataSet = ({ propFields }) => {
     ],
     dataToJSON: DataToJSON.dirty,
     events: {
-      update: ({ record, name }) => {
+      update: ({ record, name, oldValue }) => {
         const fieldName = record.get(AdvancedFieldSet.fieldName);
         const comparator = record.get(AdvancedFieldSet.comparator);
         if ([OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator)) {
           record.set(fieldName, null);
         }
-        if (name === AdvancedFieldSet.fieldName && record.get(AdvancedFieldSet.comparator)) {
-          record.init(AdvancedFieldSet.comparator, null);
-        }
         if (name === AdvancedFieldSet.fieldName) {
-          record.set(fieldName, null);
+          record.set(oldValue, null);
+          if (comparator) {
+            record.init(AdvancedFieldSet.comparator, null);
+          }
         }
       },
     },

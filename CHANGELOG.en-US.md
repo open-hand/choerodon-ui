@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
 - 🐞 `<pro>Table`: Fix the problem that the button and input box of the professional search bar are not aligned when the global configuration labelLayout is vertical.
 - 🐞 `<pro>Table`: Fix the problem where dragColumnAlign was configured to be left and the display of dragging and swapping positions in editing status was abnormal.
+- 🐞 `<pro>Table`: Fix and optimize advanced filtering interaction and styling issues.
 - 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
 - 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
 - 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.
