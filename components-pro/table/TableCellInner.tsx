@@ -411,9 +411,20 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
-      return utilRenderValidationMessage(validationResult.validationMessage, true, tableStore.getProPrefixCls);
+      let validationMessage = validationResult.validationMessage;
+      if (name) {
+        const editor = tableStore.editors.get(name);
+        if (editor && editor.editorProps && typeof editor.editorProps.validationRenderer === 'function') {
+          const validationRenderer = editor.editorProps.validationRenderer;
+          validationMessage = validationRenderer(validationResult, validationResult.validationProps);
+          if (isNil(validationMessage)) {
+            return;
+          }
+        }
+      }
+      return utilRenderValidationMessage(validationMessage, true, tableStore.getProPrefixCls);
     }
-  }, []);
+  }, [name, tableStore.editors]);
   const isValidationMessageHidden = useCallback((message?: ReactNode): boolean | undefined => {
     return !message || pristine;
   }, [pristine]);
