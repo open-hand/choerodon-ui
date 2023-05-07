@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>ColorPicker`: Modify preset colors to optimize duplicate color values in alternative swatch.
 - 💄 `<pro>Dropdown.Button`: Support direct passing in of Button properties and style optimization.
 - 💄 `Timeline`: Optimize the color property to set the display effect of custom color values.
+- 💄 `<pro>Table`: Optimizes invalid `validationRenderer` property for components set in the `editor` property.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
