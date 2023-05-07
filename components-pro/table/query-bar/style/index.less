@@ -790,7 +790,7 @@
   // 高级筛选面板
 
   &-new-filter-popover {
-    z-index: 1 !important;
+    z-index: 10 !important;
     width: 5.4rem;
 
     &-line {
@@ -819,15 +819,17 @@
     }
 
     &-input {
-      width: 4.46rem;
+      width: 4.5rem;
       margin-top: 0.08rem;
     }
 
-    &-tree {
+    &-tree.@{c7n-prefix}-tree {
       max-height: 2.68rem;
       margin-left: -0.05rem;
       overflow: auto;
+    }
 
+    &-tree {
       &-node {
         overflow: hidden;
 
