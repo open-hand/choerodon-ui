@@ -1198,10 +1198,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
   }
 
+  @autobind
   saveCustomizeExpTypeEditorRef(node: TextField | null) {
     this.refCustomizeExpTypeEditor = node;
   }
 
+  @autobind
   saveAdvancedFilterContainerRef(node: Popover | null) {
     this.refAdvancedFilterContainer = node;
   }
