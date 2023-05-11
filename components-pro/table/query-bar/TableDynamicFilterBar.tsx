@@ -1151,6 +1151,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     newFilterDataSet.loadData(orgValue);
     this.setConditionStatus(dataSet.getState(CONDITIONSTATUS));
     runInAction(() => {
+      if (this.refCustomizeExpTypeEditor && this.refCustomizeExpTypeEditor.validationResults && this.refCustomizeExpTypeEditor.validationResults.length > 0) {
+        this.refCustomizeExpTypeEditor.validationResults = undefined;
+      }
       this.visible = false;
     })
   }
@@ -1257,7 +1260,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               }}
               clearButton={false}
               className={`${prefixCls}-new-filter-popover-select`}
-              trigger={[Action.click]}
+              trigger={[Action.click, Action.focus]}
             >
               <Select.Option value="all">{$l('Table', 'ad_search_all')}</Select.Option>
               <Select.Option value="either">{$l('Table', 'ad_search_any')}</Select.Option>
@@ -1329,7 +1332,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   style: { width: 180 },
                   disabled,
                   showValidation: ShowValidation.tooltip,
-                  trigger: shouldUseClick ? [Action.click] : undefined,
+                  trigger: shouldUseClick ? [Action.click, Action.focus] : undefined,
                 });
               }
               return (
@@ -1340,7 +1343,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     record={record}
                     placeholder={$l('Lov', 'choose')}
                     optionTooltip={OptionTooltip.overflow}
-                    trigger={[Action.click]}
+                    trigger={[Action.click, Action.focus]}
                     showValidation={ShowValidation.tooltip}
                   >
                     {selectOptions}
@@ -1355,7 +1358,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     record={record}
                     disabled={!record.get(AdvancedFieldSet.fieldName)}
                     optionsFilter={(optionRecord) => this.optionsFilter(record, optionRecord)}
-                    trigger={[Action.click]}
+                    trigger={[Action.click, Action.focus]}
                     showValidation={ShowValidation.tooltip}
                   />
                   {valueFieldDom}
