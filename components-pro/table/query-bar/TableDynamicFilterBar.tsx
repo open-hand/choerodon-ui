@@ -255,6 +255,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   sortableFieldNames?: string[];
   advancedSearchFields?: AdvancedSearchField[];
   defaultActiveKey?: string;
+  defaultExpanded?: boolean;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -285,6 +286,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     autoQuery: true,
     refreshBtn: true,
     buttons: [],
+    defaultExpanded: true,
   };
 
   context: ConfigContextValue;
@@ -353,7 +355,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     super(props, context);
     runInAction(() => {
       this.fieldSelectHidden = true;
-      this.expand = true;
+      this.expand = props.defaultExpanded;
     });
   }
 
@@ -380,6 +382,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     if (queryDataSet && queryDataSet.current && !this.tableFilterAdapter) {
       dataSet.setState(CONDITIONSTATUS, queryDataSet.current.dirty ? RecordStatus.update : RecordStatus.sync);
+    }
+    const { refSingleWrapper } = this;
+    if (refSingleWrapper && !this.expand) {
+      // 收起全部
+      refSingleWrapper.style.display = 'none';
     }
     this.setFilterVisiable();
   }

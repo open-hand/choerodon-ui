@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added some classnames.
 - 🌟 `<pro>Table`: Added some classnames.
 - 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
+- 🌟 `<pro>Table`: The dynamic filter bar added `defaultExpanded` property.
 - 🌟 `<pro>FormField & <pro>Table.Column`: Add `tagRenderer` property to support custom multivalue rendering.
 - 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 🌟 `<pro>Lov`: When the `viewMode` is `modal`, you can set the `selectionProps` property to customize the rendering of selected records at the bottom of the pop box.

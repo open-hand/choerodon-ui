@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增类名。
 - 🌟 `<pro>Table`: 新增类名。
 - 🌟 `<pro>Table`: 新增 columnBuffer 和 columnThreshold 属性来优化横向虚拟滚动。
+- 🌟 `<pro>Table`: 动态筛选条增加 defaultExpanded 属性。
 - 🌟 `<pro>FormField & <pro>Table.Column`: 新增 tagRenderer 属性支持自定义多值渲染。
 - 🌟 `Upload`: 支持 text 和 picture 模式下的预览和下载按钮显示。
 - 🌟 `<pro>Lov`: 当 viewMode 为 modal 模式时，支持设置 selectionProps 属性在弹框底部自定义渲染已选记录。
