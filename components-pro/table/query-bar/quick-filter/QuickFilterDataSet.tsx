@@ -89,7 +89,9 @@ export const NewFilterDataSet = ({ propFields }) => {
       {
         name: AdvancedFieldSet.comparator,
         type: FieldType.string,
-        required: true,
+        computedProps: {
+          required: ({record}) => record.get(AdvancedFieldSet.fieldName),
+        },
         options: new DataSet({
           selection: DataSetSelection.single,
           paging: false,
