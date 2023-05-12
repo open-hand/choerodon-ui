@@ -65,6 +65,8 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
 - 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
 - 🐞 `<pro>PerformanceTable`: Fix the issue of fixed column subitems being unable to be dragged before combining columns.
+- 🐞 `<pro>Attachment`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none`.
+- 🐞 `<pro>Rate`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none` & Fix the issue of `help` icon style when `labelLayout` is `float` or `placeholder`.
 
 ## 1.6.0
 

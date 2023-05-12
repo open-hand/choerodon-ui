@@ -138,13 +138,16 @@ export default class Attachment extends FormField<AttachmentProps> {
   @computed
   get showAttachmentHelp() {
     const defaultShowHelp = this.getContextConfig('showHelp');
-    const { viewMode, showHelp } = this.props;
+    const { viewMode } = this.props;
+    const { showHelp } = this;
     const { formNode } = this.context;
-    if (viewMode === 'popup' && (showHelp || defaultShowHelp) === ShowHelp.label && formNode) {
+    if (showHelp === ShowHelp.none ||
+      (formNode && showHelp === ShowHelp.label) ||
+      (viewMode === 'popup' && (showHelp || defaultShowHelp) === ShowHelp.label && formNode)) {
       return ShowHelp.none;
     }
     if (viewMode === 'popup') {
-      return showHelp === ShowHelp.none ? showHelp : ShowHelp.tooltip;
+      return ShowHelp.tooltip;
     }
     return ShowHelp.newLine;
   }
@@ -1055,7 +1058,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderHelp(): ReactNode {
     const { help, showAttachmentHelp } = this;
-    if (help === undefined || showAttachmentHelp === ShowHelp.none) return;
+    if (!help || showAttachmentHelp === ShowHelp.none) return;
     switch (showAttachmentHelp) {
       case ShowHelp.tooltip:
         return (

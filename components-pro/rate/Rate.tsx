@@ -12,6 +12,7 @@ import { LabelLayout, ShowValidation } from '../form/enum';
 import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import ValidationResult from '../validator/ValidationResult';
+import { ShowHelp } from '../field/enum';
 
 export interface RateProps extends C7NRateProps, FormFieldProps {
   defaultValue?: number;
@@ -141,7 +142,9 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   }
 
   renderHelpMessage(): ReactNode {
+    const { showHelp } = this;
     const label = this.getLabel();
+    if ([ShowHelp.none, ShowHelp.label].includes(showHelp)) return;
     if (!this.hasFloatLabel || !label) {
       const help = this.getDisplayProp('help');
       if (help) {
