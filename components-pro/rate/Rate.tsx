@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
@@ -59,11 +60,17 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   @autobind
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
       title: this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
   }
 
@@ -140,7 +147,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
       if (help) {
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
+            {toJS(help)}
           </div>
         );
       }

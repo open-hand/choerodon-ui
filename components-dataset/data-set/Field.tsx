@@ -404,7 +404,7 @@ export type FieldProps = {
   /**
    * 额外信息，常用于提示
    */
-  help?: string;
+  help?: ReactNode;
   /**
    * 高亮
    */

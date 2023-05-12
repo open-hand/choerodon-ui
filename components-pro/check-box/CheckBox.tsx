@@ -95,11 +95,17 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   @autobind
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
       title: this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
   }
 

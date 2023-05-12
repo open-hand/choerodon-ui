@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
 - 🌟 `<pro>Lov`: When the `viewMode` is `modal`, you can set the `selectionProps` property to customize the rendering of selected records at the bottom of the pop box.
 - 🌟 `<pro>Picture`: Add `modalProps` property and optimize for not displaying navigation when an image.
+- 🌟 `<pro>FormField`: Added the `helpTooltipProps` attribute to support `tooltip` customization of `help` information.
 - 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
 - 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
 - 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.

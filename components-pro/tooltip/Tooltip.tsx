@@ -1,5 +1,6 @@
 import React, { Children, Component, CSSProperties, isValidElement } from 'react';
 import isNil from 'lodash/isNil';
+import { toJS } from 'mobx';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
@@ -93,7 +94,7 @@ const PopupContent: React.FC<{
     <div>
       <div className={`${arrowCls} ${arrowCls}-${theme}`} style={arrowStyle} />
       <div className={`${contentCls} ${contentCls}-${theme}`} style={popupInnerStyle}>
-        {content}
+        {toJS(content)}
       </div>
     </div>
   );

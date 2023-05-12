@@ -182,10 +182,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 额外信息，常用作提示
    *
-   * @type {string}
+   * @type {ReactNode}
    * @memberof FormFieldProps
    */
-  help?: string;
+  help?: ReactNode;
   /**
    * 另起新行
    */
@@ -197,6 +197,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * @memberof FormFieldProps
    */
   showHelp?: ShowHelp;
+  helpTooltipProps?: TooltipProps;
   showValidation?: ShowValidation;
   /**
    * 渲染器
@@ -474,6 +475,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return showHelp;
   }
 
+  get helpTooltipProps(): TooltipProps {
+    const { helpTooltipProps } = this.observableProps;
+    return helpTooltipProps;
+  }
+
   @computed
   get highlightRenderer(): HighlightRenderer {
     const { highlightRenderer = this.getContextConfig('highlightRenderer') } = this.observableProps;
@@ -567,6 +573,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
       showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
       showHelp: 'showHelp' in props ? props.showHelp : context.showHelp,
+      helpTooltipProps: props.helpTooltipProps,
     };
     if ('record' in props) {
       observableProps.record = props.record;
@@ -587,6 +594,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'validationRenderer',
       'help',
       'showHelp',
+      'helpTooltipProps',
       'renderer',
       'maxTagPlaceholder',
       'maxTagCount',

@@ -114,6 +114,7 @@ const App = () => {
         validator={passwordValidator}
         help="请输入与上方相同的密码"
         showHelp="tooltip"
+        helpTooltipProps={{ placement: 'bottom',popupClassName:'custom-cls'}}
       />
       <NumberField
         label="年龄"
@@ -156,4 +157,24 @@ ReactDOM.render(
   <App />,
   mountNode,
 );
+```
+
+```css
+.custom-cls .c7n-pro-tooltip-popup-inner {
+  background: #3f51b5;
+  color: white;
+  max-width: 999px;
+}
+.custom-cls.c7n-pro-tooltip-popup-placement-top .c7n-pro-tooltip-popup-arrow {
+  border-top-color: #3f51b5;
+}
+.custom-cls.c7n-pro-tooltip-popup-placement-right .c7n-pro-tooltip-popup-arrow {
+  border-right-color: #3f51b5;
+}
+.custom-cls.c7n-pro-tooltip-popup-placement-bottom .c7n-pro-tooltip-popup-arrow {
+  border-bottom-color: #3f51b5;
+}
+.custom-cls.c7n-pro-tooltip-popup-placement-left .c7n-pro-tooltip-popup-arrow {
+  border-left-color: #3f51b5;
+}
 ```

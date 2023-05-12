@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
+import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -34,7 +34,6 @@ import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
-import Tooltip from '../tooltip';
 import Dragger from './Dragger';
 import { ShowHelp } from '../field/enum';
 import { FIELD_SUFFIX } from '../form/utils';
@@ -44,6 +43,7 @@ import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
 import { TableButtonProps } from '../table/interface';
+import { hide, show } from '../tooltip/singleton';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -1032,20 +1032,44 @@ export default class Attachment extends FormField<AttachmentProps> {
     return pictureWidth || (listType === 'picture-card' ? 100 : 48);
   }
 
+  @autobind
+  handleHelpMouseEnter(e) {
+    const { getTooltipTheme } = this.context;
+    const { helpTooltipProps, help } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
+    show(e.currentTarget, {
+      title: help,
+      theme: getTooltipTheme('help'),
+      placement: 'bottom', // 保留 bottom 原效果
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
+    });
+  }
+
+  handleHelpMouseLeave() {
+    hide();
+  }
+
   renderHelp(): ReactNode {
     const { help, showAttachmentHelp } = this;
     if (help === undefined || showAttachmentHelp === ShowHelp.none) return;
     switch (showAttachmentHelp) {
       case ShowHelp.tooltip:
         return (
-          <Tooltip title={help} openClassName={`${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
-            <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
-          </Tooltip>
+          <Icon
+            type="help"
+            style={{ fontSize: '14px', color: '#8c8c8c' }}
+            onMouseEnter={this.handleHelpMouseEnter}
+            onMouseLeave={this.handleHelpMouseLeave}
+          />
         );
       default:
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
+            {toJS(help)}
           </div>
         );
     }
