@@ -26,10 +26,12 @@
 
     &::before {
       position: absolute;
-      top: @radio-dot-distance;
-      left: @radio-dot-distance;
+      // top: @radio-dot-distance;
+      // left: @radio-dot-distance;
       width: @radio-dot-size;
       height: @radio-dot-size;
+      inset: 0;
+      margin: auto;
       background-color: @radio-dot-color;
       border-radius: 50%;
       transform: scale(0);
@@ -102,7 +104,7 @@
   }
 
   &-label {
-    flex-basis: auto;
+    flex-basis: 0;
     flex-grow: 1;
     flex-shrink: 1;
     overflow: hidden;
