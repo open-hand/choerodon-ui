@@ -675,13 +675,14 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @autobind
-  handleHelpMouseEnter(e: MouseEvent, help: string) {
+  handleHelpMouseEnter(e: MouseEvent, help: ReactNode, helpTooltipProps: TooltipProps) {
     const { target } = e;
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(target as HTMLElement, {
       title: help,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
     });
     this.isTooltipShown = true;
   }
@@ -691,12 +692,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     hide();
   }
 
-  renderTooltipHelp(help) {
+  renderTooltipHelp(help, helpTooltipProps) {
     if (help) {
       return (
         <Icon
           type="help"
-          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help)}
+          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help, helpTooltipProps)}
           onMouseLeave={this.handleHelpMouseLeave}
         />
       );
@@ -872,7 +873,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             rowSpan={rowSpan}
             style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
             tooltip={tooltip}
-            help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
+            help={isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : undefined}
           >
             {toJS(label)}
           </FormItemLabel>,
@@ -896,7 +897,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
               <label className={labelClassName}>
                 {toJS(label)}
               </label>
-              {isLabelShowHelp ? this.renderTooltipHelp(help) : null}
+              {isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : null}
             </>
           )}
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>

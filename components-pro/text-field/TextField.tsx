@@ -499,7 +499,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (onMouseEnter) {
       onMouseEnter(e);
     }
-    this.handleHelpMouseEnter(e, true);
+    show(e.currentTarget, {
+      title: this.getMultipleText(),
+    });
+    this.tooltipShown = true;
   }
 
   @autobind
@@ -512,13 +515,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleHelpMouseEnter(e, isOverflow?: boolean) {
+  handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
-      title: isOverflow ? this.getMultipleText() : this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      title: this.getDisplayProp('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
     this.tooltipShown = true;
   }

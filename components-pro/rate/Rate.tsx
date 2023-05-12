@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
@@ -11,6 +12,7 @@ import { LabelLayout, ShowValidation } from '../form/enum';
 import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import ValidationResult from '../validator/ValidationResult';
+import { ShowHelp } from '../field/enum';
 
 export interface RateProps extends C7NRateProps, FormFieldProps {
   defaultValue?: number;
@@ -59,11 +61,17 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   @autobind
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
       title: this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
   }
 
@@ -134,13 +142,15 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   }
 
   renderHelpMessage(): ReactNode {
+    const { showHelp } = this;
     const label = this.getLabel();
+    if ([ShowHelp.none, ShowHelp.label].includes(showHelp)) return;
     if (!this.hasFloatLabel || !label) {
       const help = this.getDisplayProp('help');
       if (help) {
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
+            {toJS(help)}
           </div>
         );
       }
