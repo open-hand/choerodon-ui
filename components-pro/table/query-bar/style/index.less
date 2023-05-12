@@ -833,8 +833,16 @@
       &-node {
         overflow: hidden;
 
+        .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
+          &::before,
+          &::after {
+            height: 50% !important;
+          }
+        }
+
         .@{c7n-prefix}-tree-node-content-wrapper {
           display: flex;
+          align-items: center;
           min-height: 0.34rem;
 
           &:hover {
