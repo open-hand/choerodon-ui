@@ -834,9 +834,9 @@
         overflow: hidden;
 
         .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
-          &::before,
           &::after {
-            height: 50% !important;
+            height: calc(50% - 2px) !important;
+            min-height: calc(0.24rem - 10px);
           }
         }
 
