@@ -462,6 +462,10 @@ export type FieldProps = {
    *  Attachment 可接受的上传文件类型
    */
   accept?: string[] | undefined;
+  /**
+   * 占位词
+   */
+  placeholder?: string | string[];
 };
 
 const defaultProps: FieldProps = {

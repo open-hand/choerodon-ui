@@ -15,6 +15,7 @@ timeline: true
 
 ---
 - 🌟 `configure`: Added `labelAlign`, `tableVirtualBuffer` properties.
+- 🌟 `Field`: Added `placeholder` attribute definitions.
 - 🌟 `Card`: Added some classnames.
 - 🌟 `<pro>Attachment`: Added `buttons` props.
 - 🌟 `<pro>Form`: Added some classnames.

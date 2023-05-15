@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: 新增 tableVirtualBuffer，labelAlign 属性。
+- 🌟 `Field`: 补充 placeholder 属性定义。
 - 🌟 `Card`: 新增类名。
 - 🌟 `<pro>Attachment`: 新增 buttons 属性。
 - 🌟 `<pro>Form`: 新增类名。
