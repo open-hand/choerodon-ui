@@ -253,8 +253,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   handleCodeMirrorBlur = action((codeMirrorInstance: IInstance) => {
     const { formatter } = this.props;
     // 更新DataSet的值之前，先去拿到原始的raw格式
-    const codeMirrorText = codeMirrorInstance.getValue();
-    const value = formatter ? formatter.getRaw(codeMirrorText) : codeMirrorText;
+    let value = codeMirrorInstance.getValue();
+    if (formatter) {
+      const { getRaw, getFormatted } = formatter;
+      value = getRaw(getFormatted(value));
+    }
     this.midText = value;
     this.setValue(value);
     this.isFocused = false;
