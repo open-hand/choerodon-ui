@@ -46,6 +46,7 @@ timeline: true
 - 💄 `Timeline`: 优化 color 属性设置自定义色值显示效果。
 - 💄 `<pro>Table`: 优化 editor 属性设置的组件的 validationRenderer 属性无效的问题。
 - 💄 `<pro>Radio`: 优化 Radio 选中状态样式。
+- 💄 `<pro>Table`: 优化数据加载时的 spin 动画效果，以避免大数据量情况下的 spin 卡顿问题。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
