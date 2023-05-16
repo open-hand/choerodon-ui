@@ -143,6 +143,7 @@ const locale: Locale = {
     ad_search_placeholder: '请输入表达式，例“(1 AND 2) OR 4”',
     ad_search_add: '新增条件',
     ad_search_title: '高级筛选',
+    ad_search_validation: '请参考帮助信息正确填写逻辑表达式。',
   },
   Pagination: {
     page: '页',

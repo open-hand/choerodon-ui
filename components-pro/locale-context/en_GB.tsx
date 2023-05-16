@@ -143,6 +143,7 @@ const locale: Locale = {
     ad_search_placeholder: 'Please enter an expression, for example "(1 AND 2) OR 4"',
     ad_search_add: 'Add condition',
     ad_search_title: 'Advanced search',
+    ad_search_validation: 'Please refer to the help information to fill in the logical expression correctly.',
   },
   Pagination: {
     page: 'Page',

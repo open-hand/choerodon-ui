@@ -145,6 +145,7 @@ export interface Locale extends DataSetLocale {
     ad_search_placeholder: string,
     ad_search_add: string,
     ad_search_title: string,
+    ad_search_validation: string,
   };
   Pagination: {
     page: string;
