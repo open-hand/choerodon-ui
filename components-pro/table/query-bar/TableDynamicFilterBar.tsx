@@ -16,6 +16,7 @@ import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import difference from 'lodash/difference';
 import isUndefined from 'lodash/isUndefined';
+import isNil from 'lodash/isNil';
 import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
@@ -1236,6 +1237,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const newFilterDataSet = dataSet.getState(NEWFILTERDATASET);
     const menuDataSet = dataSet.getState(MENUDATASET);
     if (advancedSearchFields && advancedSearchFields.length && newFilterDataSet) {
+      const { getConfig } = this.context;
       const selectOptions = this.advancedSearchFieldProps.map(fieldProps => {
         const { name, label, bind } = fieldProps;
         if (bind) return null;
@@ -1295,7 +1297,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               <TextField
                 ref={this.saveCustomizeExpTypeEditorRef}
                 clearButton
-                required
+                validator={(value) => (isNil(value) ? $l('Table', 'ad_search_validation') : true)}
                 value={dataSet.getState(SEARCHEXP) ?
                   dataSet.getState(SEARCHEXP) :
                   (menuDataSet.current && menuDataSet.current.get('conExpression') !== 'customize' ? menuDataSet.current.get('conExpression') : undefined)}
@@ -1305,7 +1307,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     menuDataSet.current.set('conExpression', value)
                   }
                 }}
-                className={`${prefixCls}-new-filter-popover-input`}
+                className={classNames(
+                  `${prefixCls}-new-filter-popover-input`,
+                  `${getConfig('proPrefixCls')}-input-required`,
+                  `${getConfig('proPrefixCls')}-input-required-colors`,
+                )}
                 placeholder={$l('Table', 'ad_search_placeholder')}
                 showValidation={ShowValidation.tooltip}
               />

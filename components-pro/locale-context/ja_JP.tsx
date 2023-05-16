@@ -146,6 +146,7 @@ const locale: Locale = {
     ad_search_placeholder: '式を入力してください、例："(1 AND 2) OR 4"',
     ad_search_add: '条件を追加する',
     ad_search_title: '高度な検索',
+    ad_search_validation: 'ヘルプ情報を参照して、論理式を正しく入力してください',
   },
   Pagination: {
     page: 'ページ',
