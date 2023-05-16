@@ -1163,8 +1163,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     autorun(() => {
       if (this.visible) {
         document.addEventListener('mousedown', this.handleEmitFilterCancel);
+        document.addEventListener('keydown', this.handleEmitFilterCancel);
       } else {
         document.removeEventListener('mousedown', this.handleEmitFilterCancel);
+        document.removeEventListener('keydown', this.handleEmitFilterCancel);
       }
     });
   }
@@ -1190,14 +1192,27 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
   
   @autobind
-  handleEmitFilterCancel(e: Event) {
-    const { target } = e;
-    const container = this.refAdvancedFilterContainer?.getPopupDomNode();
-    const keepVisible = target === container
-      || container.contains(target as Node)
-      || this.isPopupChildren(target as HTMLElement);
-    if (!keepVisible) {
-      this.handleFilterCancel();
+  handleEmitFilterCancel(e: Event | KeyboardEvent) {
+    const { target, type } = e;
+    switch (type) {
+      case 'mousedown': {
+        const container = this.refAdvancedFilterContainer?.getPopupDomNode();
+        const keepVisible = target === container
+          || container.contains(target as Node)
+          || this.isPopupChildren(target as HTMLElement);
+        if (!keepVisible) {
+          this.handleFilterCancel();
+        }
+        break;
+      }
+      case 'keydown': {
+        if (e instanceof KeyboardEvent && (e.ctrlKey || e.metaKey) && e.key === '/') {
+          this.handleFilterCancel();
+        }
+        break;
+      }
+      default:
+        break;
     }
   }
 
