@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化 editor 属性设置的组件的 validationRenderer 属性无效的问题。
 - 💄 `<pro>Radio`: 优化 Radio 选中状态样式。
 - 💄 `<pro>Table`: 优化数据加载时的 spin 动画效果，以避免大数据量情况下的 spin 卡顿问题。
+- 💄 `<pro>Button`: 优化聚焦样式的触发行为。
 - 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
@@ -73,6 +74,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复组合列前存在固定列子项无法拖拽的问题。
 - 🐞 `<pro>Attachment`: 修复同时存在两部分 help 提示的问题 & showHelp 为 none 失效的问题。
 - 🐞 `<pro>Rate`: 修复同时存在两部分 help 提示 & showHelp 为 none 失效的问题 & 修复 labelLayout 为 float 或 placeholder 时的 help 图标样式问题。
+- 🐞 `<pro>Tree`: 修复 Tree 连接线错位问题。
 
 ## 1.6.0
 

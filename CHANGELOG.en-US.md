@@ -46,6 +46,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimizes invalid `validationRenderer` property for components set in the `editor` property.
 - 💄 `<pro>Radio`: Optimize the Radio check state style.
 - 💄 `<pro>Table`: Optimized the `spin` animation effect during data loading to avoid `spin` lag issue in large data volumes.
+- 💄 `<pro>Button`: Optimized the triggering behavior of focus styles.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
@@ -72,6 +73,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fix the issue of fixed column subitems being unable to be dragged before combining columns.
 - 🐞 `<pro>Attachment`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none`.
 - 🐞 `<pro>Rate`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none` & Fix the issue of `help` icon style when `labelLayout` is `float` or `placeholder`.
+- 🐞 `<pro>Tree`: Fixed the issue that the Tree cable was misaligned.
 
 ## 1.6.0
 
