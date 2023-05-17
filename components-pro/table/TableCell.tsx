@@ -24,7 +24,7 @@ import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
-import TableStore, { SELECTION_KEY } from './TableStore';
+import TableStore, { DRAG_KEY, SELECTION_KEY } from './TableStore';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import AggregationTreeGroups from './AggregationTreeGroups';
 import { TableVirtualCellProps } from './TableVirtualCell';
@@ -88,7 +88,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       : {};
 
   const handleClickCapture = useCallback(action<(e) => void>((e) => {
-    if (tableStore.currentEditorName) {
+    if (tableStore.currentEditorName && key === DRAG_KEY) {
       tableStore.blurEditor();
     }
     if (record && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
