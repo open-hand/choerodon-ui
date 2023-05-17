@@ -45,6 +45,7 @@ timeline: true
 - 💄 `Timeline`: Optimize the color property to set the display effect of custom color values.
 - 💄 `<pro>Table`: Optimizes invalid `validationRenderer` property for components set in the `editor` property.
 - 💄 `<pro>Radio`: Optimize the Radio check state style.
+- 💄 `<pro>Table`: Optimized the `spin` animation effect during data loading to avoid `spin` lag issue in large data volumes.
 - 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
 - 🐞 `<pro>Table`: Fix data not sync in group mode.
 - 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.

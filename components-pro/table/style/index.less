@@ -9,12 +9,23 @@
 @import 'combo-field-list';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
+@spin-prefix-cls: ~'@{c7n-prefix}-spin';
 
 .@{table-prefix-cls} {
   position: relative;
   color: @text-color;
   font-size: @font-size-base;
   outline: none;
+
+  &-wrapper {
+    .@{spin-prefix-cls}-nested-loading > .@{spin-prefix-cls} .@{spin-prefix-cls}-dot {
+      animation: ~'@{c7n-prefix}-progress-rotate' 1.2s linear infinite;
+      .@{c7n-prefix}-progress-inner circle {
+        stroke-dasharray: 95px;
+        animation: none;
+      }
+    }
+  }
 
   table {
     font-size: inherit;
