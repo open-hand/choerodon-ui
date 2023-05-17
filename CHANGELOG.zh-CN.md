@@ -74,6 +74,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复组合列前存在固定列子项无法拖拽的问题。
 - 🐞 `<pro>Attachment`: 修复同时存在两部分 help 提示的问题 & showHelp 为 none 失效的问题。
 - 🐞 `<pro>Rate`: 修复同时存在两部分 help 提示 & showHelp 为 none 失效的问题 & 修复 labelLayout 为 float 或 placeholder 时的 help 图标样式问题。
+- 🐞 `<pro>Tree`: 修复 Tree 连接线错位问题。
 
 ## 1.6.0
 
