@@ -58,7 +58,7 @@
     pointer-events: none;
   }
 
-  &:focus:not(&-loading) {
+  &:focus-visible:not(&-loading) {
     box-shadow: @btn-focus-box-shadow;
   }
 
@@ -123,7 +123,7 @@
     box-shadow: none;
 
     &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):hover,
-    &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):focus {
+    &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):focus-visible {
       background-color: @btn-hover-default-color;
       box-shadow: none;
     }
@@ -147,7 +147,7 @@
     box-shadow: none;
 
     &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):hover,
-    &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):focus {
+    &:not(.@{btn-prefix-cls}-disabled):not(.@{btn-prefix-cls}-loading):focus-visible {
       box-shadow: none;
     }
 
@@ -321,7 +321,7 @@
       @ripple-dark-color
     );
 
-    &:not(.@{btn-prefix-cls}-loading):focus {
+    &:not(.@{btn-prefix-cls}-loading):focus-visible {
       color: @btn-default-focus-color;
     }
   }
@@ -422,7 +422,7 @@
       background-color: @ripple-color;
     }
 
-    &:not(.@{btn-prefix-cls}-loading):focus {
+    &:not(.@{btn-prefix-cls}-loading):focus-visible {
       color: @focus-color;
       background-color: @focus-bg;
     }
