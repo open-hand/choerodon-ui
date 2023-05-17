@@ -68,7 +68,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
 - 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
 - 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
-- 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题。
+- 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题 & 文字超出时会全部变成省略号的问题。
 - 🐞 `<pro>CodeArea`: 修复存入 dataSet 中的值未同步格式化的问题。
 - 🐞 `<pro>PerformanceTable`: 修复组合列前存在固定列子项无法拖拽的问题。
 - 🐞 `<pro>Attachment`: 修复同时存在两部分 help 提示的问题 & showHelp 为 none 失效的问题。
