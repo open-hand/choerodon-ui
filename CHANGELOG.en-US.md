@@ -67,7 +67,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
 - 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
 - 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
-- 🐞 `Menu`: Fix the overlapping problem of text and icons when SubMenu content is long & Fix the disabled background color issue for SubMenu.
+- 🐞 `Menu`: Fixed the overlapping problem of text and icons when `SubMenu` content is long & Fixed the disabled background color issue for `SubMenu` & Fixed the issue of all text becoming ellipses when exceeding the limit.
 - 🐞 `<pro>CodeArea`: Fixed the issue that the values stored in the dataSet were not formatted synchronously.
 - 🐞 `<pro>PerformanceTable`: Fix the issue of fixed column subitems being unable to be dragged before combining columns.
 - 🐞 `<pro>Attachment`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none`.
