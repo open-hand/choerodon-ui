@@ -170,6 +170,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   type = 'text';
 
+  renderedValue: ReactNode;
+
   tagContainer: HTMLUListElement | null;
 
   handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
@@ -574,14 +576,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const { tooltip: inputTooltip } = this.props;
     const disabledTooltip =  getTooltip('text-field-disabled');
-    const { element } = this;
+    const { element, renderedValue } = this;
     const title = this.getRenderedValue();
+    const judgeOverflowElement = renderedValue ? element.parentNode.previousElementSibling : element;
     const tooltip = this.disabled ? disabledTooltip : inputTooltip;
     const tooltipPlacement = this.disabled ? getTooltipPlacement('text-field-disabled') : getTooltipPlacement('output');
     const tooltipTheme = this.disabled ? getTooltipTheme('text-field-disabled') : getTooltipTheme('output');
-    if (element && !this.multiple && title) {
-      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) {
-        show(element, {
+    if (judgeOverflowElement && !this.multiple && title) {
+      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+        show(judgeOverflowElement, {
           title,
           placement: tooltipPlacement || 'right',
           theme: tooltipTheme,
@@ -592,8 +595,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         const tooltipType = tooltip[0];
         const TextTooltipProps = tooltip[1] || {};
         const { mouseEnterDelay } = TextTooltipProps;
-        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(element))) {
-          show(element, {
+        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+          show(judgeOverflowElement, {
             title: TextTooltipProps.title ? TextTooltipProps.title : title,
             placement: tooltipPlacement || 'right',
             theme: tooltipTheme,
@@ -609,6 +612,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderInputElement(): ReactNode {
     const { addonBefore, addonAfter, isFlat } = this.props;
     const renderedValue = this.renderRenderedValue(undefined, { isFlat });
+    this.renderedValue = renderedValue;
     // 先计算lengthElement,然后计算suffix,再计算clearButton,设置right和输入框paddingRight,避免重叠
     this.renderLengthElement();
     const suffix = this.getSuffix();
