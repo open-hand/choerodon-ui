@@ -78,6 +78,7 @@ timeline: true
 - 🐞 `<pro>Tree`: 修复 Tree 连接线错位问题。
 - 🐞 `<pro>Password`: 修复表格中编辑器为 Password 时揭示图标无法正常使用的问题。
 - 🐞 `<pro>Select`: 修复 Select/TreeSelect 等存在自定义渲染 Option 在禁用或只读选中态时，tooltip 判定错误的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态筛选条样式问题。
 
 ## 1.6.0
 

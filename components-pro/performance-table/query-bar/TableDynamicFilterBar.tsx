@@ -15,6 +15,7 @@ import isString from 'lodash/isString';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import difference from 'lodash/difference';
+import defer from 'lodash/defer';
 import classNames from 'classnames';
 
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
@@ -50,6 +51,8 @@ import { hide, show } from '../../tooltip/singleton';
 import { ShowHelp } from '../../field/enum';
 import TableButtons from '../../table/query-bar/TableButtons';
 import { ButtonProps } from '../../button/Button';
+import { renderValidationMessage as utilRenderValidationMessage } from '../../field/utils';
+
 
 /**
  * 当前数据是否有值并需要选中
@@ -219,6 +222,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   refSingleWrapper: HTMLDivElement | null = null;
 
   refEditors: Map<string, any> = new Map();
+
+  refFilterItems: Map<string, any> = new Map();
 
   originalValue: object;
 
@@ -1001,35 +1006,73 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
+                const isRequired = queryField && queryField.get('required');
+                const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
+                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
+                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
                 const itemContentClassName = classNames(`${proPrefixCls}-filter-content`,
                   {
-                    [`${proPrefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
+                    [`${proPrefixCls}-filter-content-disabled`]: isDisabled,
+                    [`${proPrefixCls}-filter-content-required`]: isRequired,
+                    [`${proPrefixCls}-filter-content-has-value`]: hasValue,
+                    [`${proPrefixCls}-filter-content-invalid`]: validationMessage,
                   });
                 return (
                   <div
                     className={itemContentClassName}
                     key={name}
-                    onClick={debounce(() => {
-                      const editor = this.refEditors.get(name);
-                      if (editor) {
-                        if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
-                          editor.element.className += ' c7n-pro-suffix-click'
+                    onMouseDown={() => {
+                      if (!isDisabled) {
+                        const editor = this.refEditors.get(name);
+                        if (editor) {
+                          defer(() => {
+                            this.refEditors.get(name).focus();
+                          }, 50);
                         }
-                        this.refEditors.get(name).focus();
                       }
-                    }, 200)}
+                    }}
+                    onClick={() => {
+                      if (!isDisabled) {
+                        const filterItem = this.refFilterItems.get(name);
+                        if (filterItem) {
+                          if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                            filterItem.className += ' c7n-pro-lov-click';
+                          }
+                        }
+                      }
+                    }}
                     onBlur={() => {
-                      const editor = this.refEditors.get(name);
-                      if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
-                        editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
+                      const filterItem = this.refFilterItems.get(name);
+                      if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {
+                        filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                       }
+                    }}
+                    onMouseEnter={(e) => {
+                      if (validationMessage) {
+                        const { currentTarget } = e;
+                        show(currentTarget as HTMLElement, {
+                          title: utilRenderValidationMessage(validationMessage, true),
+                          theme: 'light',
+                          placement: 'top',
+                        });
+                        this.isTooltipShown = true;
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      hide();
                     }}
                   >
                     <span className={`${proPrefixCls}-filter-label`}>
                       {label}
                       {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                     </span>
-                    <span className={`${proPrefixCls}-filter-item`}>
+                    <span
+                      className={classNames(`${proPrefixCls}-filter-item`,
+                        {
+                          [`${proPrefixCls}-filter-item-has-value`]: hasValue,
+                        })}
+                      ref={(node) => this.refFilterItems.set(name, node)}
+                    >
                       {this.createFields(element, name)}
                     </span>
                   </div>
@@ -1041,34 +1084,69 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 const label = queryField && queryField.get('label', queryDataSet.current);
+                const isRequired = queryField && queryField.get('required');
+                const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
+                const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
+                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
                 const itemContentClassName = classNames(`${proPrefixCls}-filter-content`,
                   {
-                    [`${proPrefixCls}-filter-content-disabled`]: disabled || (queryField && queryField.get('disabled', queryDataSet.current)),
+                    [`${proPrefixCls}-filter-content-disabled`]: isDisabled,
+                    [`${proPrefixCls}-filter-content-required`]: isRequired,
+                    [`${proPrefixCls}-filter-content-has-value`]: hasValue,
+                    [`${proPrefixCls}-filter-content-invalid`]: validationMessage,
                   });
                 if (selectFields.includes(name)) {
                   return (
                     <div
                       className={itemContentClassName}
                       key={name}
-                      onClick={debounce(() => {
-                        const editor = this.refEditors.get(name);
-                        if (editor) {
-                          if (isFunction(editor.isSuffixClick) && !editor.element.className.includes("c7n-pro-suffix-click")) {
-                            editor.element.className += ' c7n-pro-suffix-click'
+                      onMouseDown={() => {
+                        if (!isDisabled) {
+                          const editor = this.refEditors.get(name);
+                          if (editor) {
+                            defer(() => {
+                              this.refEditors.get(name).focus();
+                            }, 50);
                           }
-                          this.refEditors.get(name).focus();
                         }
-                      }, 200)}
+                      }}
+                      onClick={() => {
+                        if (!isDisabled) {
+                          const filterItem = this.refFilterItems.get(name);
+                          if (filterItem) {
+                            if (!filterItem.className.includes("c7n-pro-lov-click")) {
+                              filterItem.className += ' c7n-pro-lov-click';
+                            }
+                          }
+                        }
+                      }}
                       onBlur={() => {
-                        const editor = this.refEditors.get(name);
-                        if (editor && editor.element.className.includes("c7n-pro-suffix-click")) {
-                          editor.element.className = editor.element.className.split(" c7n-pro-suffix-click")[0];
+                        const filterItem = this.refFilterItems.get(name);
+                        if (filterItem && filterItem.className.includes("c7n-pro-lov-click")) {
+                          filterItem.className = filterItem.className.split(" c7n-pro-lov-click")[0];
                         }
+                      }}
+                      onMouseEnter={(e) => {
+                        if (validationMessage) {
+                          const { currentTarget } = e;
+                          show(currentTarget as HTMLElement, {
+                            title: utilRenderValidationMessage(validationMessage, true),
+                            theme: 'light',
+                            placement: 'top',
+                          });
+                          this.isTooltipShown = true;
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        hide();
                       }}
                     >
                       <Icon
                         type="cancel"
                         className={`${proPrefixCls}-filter-item-close`}
+                        onMouseDown={(e)=>{
+                          e.stopPropagation();
+                        }}
                         onClick={() => {
                           this.handleUnSelect([name]);
                         }}
@@ -1077,7 +1155,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         {label}
                         {isLabelShowHelp ? this.renderTooltipHelp(help || queryField && queryField.get('help', queryDataSet.current)) : null}
                       </span>
-                      <span className={`${proPrefixCls}-filter-item`}>
+                      <span
+                        className={classNames(`${proPrefixCls}-filter-item`,
+                          {
+                            [`${proPrefixCls}-filter-item-has-value`]: hasValue,
+                          })}
+                        ref={(node) => this.refFilterItems.set(name, node)}
+                      >
                         {this.createFields(element, name)}
                       </span>
                     </div>
