@@ -645,7 +645,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 拖拽触发事件位置切换前回调
    */
-  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void;
+  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided, recordIndexFromTo: [number?, number?]) => DropResult | boolean | void;
   /**
    * DragDropContext
    */
@@ -1782,8 +1782,10 @@ export default class Table extends DataSetComponent<TableProps> {
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
+    const recordFromIndex = rowMetaData ? rowMetaData[resultBefore.source.index].record?.index : undefined;
+    const recordToIndex = rowMetaData && resultBefore.destination ? rowMetaData[resultBefore.destination.index].record?.index : undefined;
     if (onDragEndBefore) {
-      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
+      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided, [recordFromIndex, recordToIndex]);
       if (result === false) {
         return;
       }
