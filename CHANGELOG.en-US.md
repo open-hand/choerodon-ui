@@ -77,6 +77,7 @@ timeline: true
 - 🐞 `<pro>Tree`: Fixed the issue that the Tree cable was misaligned.
 - 🐞 `<pro>Password`: Fixed the issue that revealing icons could not be used properly when the editor in the table was Password.
 - 🐞 `<pro>Select`: Fixed the issue of incorrect `tooltip` judgment when `Select`/`TreeSelect` and other custom rendering `options` are `disabled` or `readOnly` in the selected state.
+- 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar style issue.
 
 ## 1.6.0
 
