@@ -833,6 +833,15 @@
       &-node {
         overflow: hidden;
 
+        &:first-child:last-child {
+          .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
+            &::before {
+              height: calc(50% - 2px) !important;
+              min-height: calc(@tree-title-height - 10px);
+            }
+          }
+        }
+
         .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
           &::after {
             height: calc(50% - 2px) !important;
