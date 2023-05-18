@@ -42,7 +42,6 @@ import { ShowValidation } from '../form/enum';
 import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
-import { TableButtonProps } from '../table/interface';
 import { hide, show } from '../tooltip/singleton';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
@@ -55,8 +54,8 @@ export enum AttachmentButtonType {
 
 export type AttachmentButtons =
   | AttachmentButtonType
-  | [AttachmentButtonType, TableButtonProps]
-  | ReactElement<TableButtonProps>;
+  | [AttachmentButtonType, ButtonProps]
+  | ReactElement<ButtonProps>;
 
 export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderProps {
   listType?: AttachmentListType;
