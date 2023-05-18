@@ -97,6 +97,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     node,
     propVirtual,
     isRenderRange,
+    blankVirtualCell,
+    virtualColumnRange: { left, center, right },
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -130,7 +132,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   })();
 
   const setRowHeight = useCallback(action((key: Key, height: number, target: HTMLTableRowElement) => {
-    if (inView && columnsInView && height && target.offsetParent) {
+    // TODO: TABLE 行内编辑并且拖拽操作兼容火狐浏览器的适配
+    if (inView && columnsInView && height && target.offsetParent && navigator.userAgent.indexOf("Firefox") < 0) {
       if (metaData) {
         if (metaData.actualHeight !== height) {
           tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
@@ -415,9 +418,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const [columns, { isCurrent }] = (() => {
     const { customizable, customizedBtn } = tableStore;
     const { leafs } = columnGroups;
-    const columnLength = leafs.length;
-    return leafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
+    const sliceLeafs = !propVirtual ? leafs : (left ? leafs.slice(...left) : []).concat(leafs.slice(...center)).concat(right ? leafs.slice(...right) : []);
+    const columnLength = sliceLeafs.length;
+    const hasBlankCell = leafs.length > sliceLeafs.length;
+    return sliceLeafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
+      const colIndex = propVirtual && hasBlankCell ? leafs.findIndex(x => x.key === key) : columnIndex;
       if (key !== CUSTOMIZED_KEY) {
         const colSpan = customizable && !customizedBtn  && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
         const rest: Partial<TableCellProps> = {
@@ -427,7 +433,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         if (colSpan > 1) {
           rest.colSpan = colSpan;
         }
-        const [cell, actualRecord] = getCell(columnGroup, columnIndex, rest);
+        const [cell, actualRecord] = getCell(columnGroup, colIndex, rest);
         result[0].push(cell);
         if (highLightRow && actualRecord && actualRecord.isCurrent) {
           result[1].isCurrent = true;
@@ -527,6 +533,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     columns.push(
       <td key="empty-column" />,
     );
+  }
+  if (propVirtual && left && blankVirtualCell.left.length) {
+    columns.splice(left[1], 0, ...blankVirtualCell.left);
+  }
+  if (propVirtual && right && blankVirtualCell.right.length) {
+    columns.splice(center[1], 0, ...blankVirtualCell.right);
   }
   const tr = (
     <Element

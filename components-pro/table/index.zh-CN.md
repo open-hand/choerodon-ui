@@ -77,8 +77,8 @@ subtitle: 表格
 | onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void |  |
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | [globalConfig.tableVirtual(/components/configure#API) |
 | virtualCell | 虚拟单元格 | boolean | [globalConfig.tableVirtualCell](/components/configure#API) |
-| columnBuffer | 列的缓冲区。开启虚拟滚动后，在可见区域之前/之后要呈现的额外列数。 | number | 3 |
-| columnThreshold | 列的阈值。开启虚拟滚动后，在呈现新列之前可见的列数。 | number | 3 |
+| columnBuffer | 列的缓冲区。开启虚拟滚动后，在可见区域之前/之后要呈现的额外列数。且 columnBuffer 的值大于或等于 columnThreshold 的值| number | 3 |
+| columnThreshold | 列的阈值。开启虚拟滚动后，在呈现新列之前可见的列数。且 columnThreshold 的值小于或等于 columnBuffer 的值 | number | 3 |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
 | autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |

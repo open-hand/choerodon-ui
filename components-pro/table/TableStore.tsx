@@ -1241,7 +1241,12 @@ export default class TableStore {
     if ('virtual' in this.props) {
       return this.props.virtual;
     }
-    return this.getConfig('tableVirtual');
+    const configTableVirtual: boolean | Function | undefined = this.getConfig('tableVirtual');
+    if (typeof configTableVirtual === 'function') {
+      return configTableVirtual(this.currentData.length, this.columnGroups.leafs.length);
+    }
+    
+    return configTableVirtual;
   }
 
   get virtual(): boolean | undefined {
@@ -1366,6 +1371,15 @@ export default class TableStore {
     }
 
     return false;
+  }
+
+  get blankVirtualCell() {
+    const { virtualColumnRange } = this; 
+    const { left, center, right } = virtualColumnRange;
+    return {
+      left: left ? [...Array(center[0] - left[1]).keys()].map((key) => <td key={`empty-left-${key}`} />) : [],
+      right: right ? [...Array(right[0] - center[1]).keys()].map((key) => <td key={`empty-right-${key}`}/>) : [],
+    }
   }
 
   get tableColumnResizeTransition(): boolean | undefined {
