@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Lov`: 当 viewMode 为 modal 模式时，支持设置 selectionProps 属性在弹框底部自定义渲染已选记录。
 - 🌟 `<pro>Picture`: 新增 modalProps 属性，优化一张图片时不显示导航。
 - 🌟 `<pro>FormField`: 新增 helpTooltipProps 属性，支持 help 信息的 tooltip 自定义。
+- 🌟 `<pro>Table`: onDragEndBefore 新增 recordIndexFromTo 参数用于树形拖拽时获取正确的记录索引。
 - 💄 `<pro>Button`: 优化校正溢出判定的差值。
 - 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
 - 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。

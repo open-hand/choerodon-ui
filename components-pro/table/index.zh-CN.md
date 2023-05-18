@@ -85,7 +85,7 @@ subtitle: 表格
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置。树形拖拽可通过 recordIndexFromTo 获取到正确的记录索引: [sourceRecordIndex, destinationRecordIndex] | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided, recordIndexFromTo: [number?, number?]) => false \| void \|resultDrag   | - |
 | dragDropContextProps | react-beautiful-dnd DragDropContextProps | [DragDropContextProps](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md) |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
