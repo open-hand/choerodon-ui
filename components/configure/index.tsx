@@ -146,7 +146,7 @@ export interface Config extends DataSetConfig {
   labelAlign?: LabelAlign;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
-  tableVirtual?: boolean;
+  tableVirtual?: boolean | ((rows: number, columns: number) => boolean);
   tableVirtualCell?: boolean;
   tableVirtualBuffer?: { columnBuffer?: number; columnThreshold?: number; };
   tableBorder?: boolean;

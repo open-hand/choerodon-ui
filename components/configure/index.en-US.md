@@ -59,7 +59,7 @@ const prefixCls = getConfig('prefixCls');
 | labelLayout | default labelLayout of Form | string | horizontal |
 | queryBar | default queryBar of table | string | normal |
 | queryBarProps | 默认 Table queryBar 的 queryBarProps | object | |
-| tableVirtual | default virtual of Table | boolean | |
+| tableVirtual | default virtual of Table and based on the granularity of rows and columns | boolean \| (rows: number, columns: number) => boolean | |
 | tableVirtualCell | default virtualCell of Table | boolean | |
 | tableBorder | default border of table | boolean | true |
 | tableColumnEditorBorder | default columnEditorBorder of Table | boolean | tableBorder |

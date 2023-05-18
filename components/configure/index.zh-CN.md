@@ -62,7 +62,7 @@ const prefixCls = getConfig('prefixCls');
 | labelLayout | 默认 Form 的 labelLayout | string | horizontal |
 | queryBar | 默认 Table 的 queryBar | string | normal |
 | queryBarProps | 默认 Table queryBar 的 queryBarProps | object | |
-| tableVirtual | 默认 Table 的 virtual | boolean | |
+| tableVirtual | 默认 Table 的 virtual, 可根据行列单元格粒度判断是否开始虚拟滚动 | boolean \| (rows: number, columns: number) => boolean | |
 | tableVirtualCell | 默认 Table 的 virtualCell | boolean | |
 | tableBorder | 默认 Table 的 border | boolean | true |
 | tableColumnEditorBorder | 默认 Table 的 columnEditorBorder | boolean | tableBorder |
