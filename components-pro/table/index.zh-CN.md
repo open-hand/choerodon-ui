@@ -132,7 +132,7 @@ subtitle: 表格
 | header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
 | footer | 列脚 | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
-| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }) => ReactNode |  |
+| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string | [globalConfig.tableColumnAlign](/components/configure#API) |
