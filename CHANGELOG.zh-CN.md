@@ -77,6 +77,7 @@ timeline: true
 - 🐞 `<pro>Rate`: 修复同时存在两部分 help 提示 & showHelp 为 none 失效的问题 & 修复 labelLayout 为 float 或 placeholder 时的 help 图标样式问题。
 - 🐞 `<pro>Tree`: 修复 Tree 连接线错位问题。
 - 🐞 `<pro>Password`: 修复表格中编辑器为 Password 时揭示图标无法正常使用的问题。
+- 🐞 `<pro>Select`: 修复 Select/TreeSelect 等存在自定义渲染 Option 在禁用或只读选中态时，tooltip 判定错误的问题。
 
 ## 1.6.0
 

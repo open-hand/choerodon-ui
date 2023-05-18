@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>Rate`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none` & Fix the issue of `help` icon style when `labelLayout` is `float` or `placeholder`.
 - 🐞 `<pro>Tree`: Fixed the issue that the Tree cable was misaligned.
 - 🐞 `<pro>Password`: Fixed the issue that revealing icons could not be used properly when the editor in the table was Password.
+- 🐞 `<pro>Select`: Fixed the issue of incorrect `tooltip` judgment when `Select`/`TreeSelect` and other custom rendering `options` are `disabled` or `readOnly` in the selected state.
 
 ## 1.6.0
 
