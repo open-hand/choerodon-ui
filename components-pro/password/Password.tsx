@@ -51,10 +51,6 @@ export default class Password extends TextField<PasswordProps> {
     return <input tabIndex={-1} className={`${this.prefixCls}-fix-autofill`} />;
   }
 
-  handleRevealIconMouseDown(e) {
-    e.stopPropagation();
-  }
-
   getInnerSpanButton(): ReactNode {
     const { reveal } = this.props;
     if (reveal && !this.disabled) {
@@ -62,7 +58,6 @@ export default class Password extends TextField<PasswordProps> {
         <Icon
           type={this.reveal ? 'visibility' : 'visibility_off'}
           onClick={this.handleToggleReveal}
-          onMouseDown={this.handleRevealIconMouseDown}
         />, {
           style: { right: this.lengthInfoWidth },
         },
@@ -101,6 +96,7 @@ export default class Password extends TextField<PasswordProps> {
       this.revealIconFocus = true;
       target.focus();
     }
+    defer(() => target.setSelectionRange(-1, -1));
   }
 
   @action
