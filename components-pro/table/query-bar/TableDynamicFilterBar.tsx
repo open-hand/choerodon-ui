@@ -1338,22 +1338,27 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               const fieldName = record.get(AdvancedFieldSet.fieldName);
               const field = record.getField(fieldName);
               const disabled = [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator);
-              let valueFieldDom: ReactElement = <TextField style={{ width: 180 }} disabled />;
+              let valueFieldDom: ReactElement = <TextField style={{ width: 190 }} disabled />;
               if (field && !field.get('bind', record) && !fieldName.includes(tlsKey)) {
                 const editor = getEditorByField(field, record, true);
                 let shouldUseClick = false;
                 if ('viewMode' in editor.props && editor.props.viewMode === TriggerViewMode.popup) {
                   shouldUseClick = true;
                 }
+                const fieldValue = record.get(fieldName);
+                const maxTagTextLength = field.get('multiple') && fieldValue && fieldValue.length > 1 ? 3 : 7;
                 valueFieldDom = cloneElement(editor, {
                   help: '',
                   key: fieldName,
                   name: fieldName,
                   record,
-                  style: { width: 180 },
+                  style: { width: 190 },
                   disabled,
                   showValidation: ShowValidation.tooltip,
                   trigger: shouldUseClick ? [Action.click, Action.focus] : undefined,
+                  maxTagCount: 1,
+                  maxTagTextLength,
+                  maxTagPlaceholder: restValues => `+${restValues.length}`,
                 });
               }
               return (
