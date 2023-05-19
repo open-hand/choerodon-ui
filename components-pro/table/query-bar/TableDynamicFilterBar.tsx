@@ -845,7 +845,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const children: ReactElement[] = [];
     let suffixesDom: ReactElement | null = null;
     const tableButtons = buttons.length ? (
-      <TableButtons key="toolbar" prefixCls={`${prefixCls}-dynamic-filter`} buttons={buttons} />
+      <TableButtons key={`${buttons.length}-toolbar`} prefixCls={`${prefixCls}-dynamic-filter`} buttons={buttons} />
     ) : null;
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {

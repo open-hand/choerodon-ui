@@ -631,7 +631,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const tableButtonProps = tableStore.getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length && buttonsLimits) {
-      buttons.slice(buttonsLimits - 1).forEach(button => {
+      buttons.slice(buttonsLimits).forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};

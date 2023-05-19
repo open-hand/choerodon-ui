@@ -282,6 +282,9 @@ export interface TableCustomized {
   size?: Size;
   parityRow?: boolean;
   aggregationExpandType?: 'cell' | 'row' | 'column';
+  id?: string; // Board 列表视图id
+  viewName?: string; // Board 列表视图名称
+  defaultFlag?: number; // Board 列表视图标识
 }
 
 let _instance;
@@ -696,9 +699,9 @@ export interface TableProps extends DataSetComponentProps {
    */
   customizable?: boolean | undefined;
   /**
-   * 个性化设置入口是否置于 buttons
+   * Board 列表视图个性化配置
    */
-  customizedBtn?: boolean | undefined;
+  boardCustomized?: any;
   /**
    * @deprecated
    * 同 columnDraggable

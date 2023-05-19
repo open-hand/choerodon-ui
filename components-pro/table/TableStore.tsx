@@ -9,12 +9,14 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
+import { warning } from 'choerodon-ui/dataset/utils';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
+import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
@@ -1154,9 +1156,9 @@ export default class TableStore {
    * board 组件个性化按钮 in buttons
    */
   get customizedBtn(): boolean | undefined {
-    const { customizedCode } = this.props;
-    if (customizedCode && 'customizedBtn' in this.props) {
-      return this.props.customizedBtn;
+    const { customizedCode, boardCustomized } = this.props;
+    if (customizedCode && boardCustomized) {
+      return boardCustomized.customizedBtn;
     }
     return false;
   }
@@ -2822,15 +2824,41 @@ export default class TableStore {
   }
 
   @action
-  saveCustomized(customized?: TableCustomized | null) {
+  async saveCustomized(customized?: TableCustomized | null) {
     if (this.customizable && this.customizedLoaded) {
-      const { customizedCode } = this.props;
+      const { customizedCode, boardCustomized } = this.props;
       if (customized) {
         this.customized = customized;
       }
       if (customizedCode) {
         const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
-        tableCustomizedSave(customizedCode, this.customized, 'Table');
+        const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
+        // board 组件列表视图配置保存
+        if (this.customizedBtn) {
+          // @ts-ignore
+          await tableCustomizedSave(customizedCode,
+            {
+              dataJson: JSON.stringify(omit(this.customized, ['dataJson', 'creationDate', 'createdBy', 'lastUpdateDate', 'lastUpdatedBy', '_token', 'userId', 'tenantId', 'id'])),
+              ...omit(this.customized, ['dataJson']), defaultFlag: 1, viewType: 'table',
+            },
+            this.customizedBtn ? 'Board' : 'Table');
+
+          if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
+            const res = await tableCustomizedLoad(customizedCode, 'Board', {
+              type: 'detail',
+              id: this.customized.id,
+            });
+            try {
+              // @ts-ignore
+              this.customized = { columns: {}, ...JSON.parse(res.dataJson), ...res };
+              boardCustomized.customizedDS.current.set('viewName', res.viewName);
+            } catch (error) {
+              warning(false, error.message);
+            }
+          }
+        } else {
+          tableCustomizedSave(customizedCode, this.customized, 'Table');
+        }
       }
     }
   }
@@ -2845,7 +2873,7 @@ export default class TableStore {
       key: 'TABLE_CUSTOMIZATION_MODAL',
       drawer: true,
       size: Size.small,
-      title: $l('Table', 'customization_settings'),
+      title: this.customizedBtn ? '表格视图配置' : $l('Table', 'customization_settings'),
       children: <CustomizationSettings context={context} />,
       bodyStyle: {
         overflow: 'hidden auto',
@@ -2859,7 +2887,7 @@ export default class TableStore {
   }
 
   async loadCustomized() {
-    const { customizedCode } = this.props;
+    const { customizedCode, boardCustomized } = this.props;
     const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
     if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
@@ -2870,8 +2898,20 @@ export default class TableStore {
       });
       try {
         let customized: TableCustomized | undefined | null;
-        if (customizedCode) {
+        if (customizedCode && !boardCustomized) {
           customized = await tableCustomizedLoad(customizedCode, 'Table');
+        }
+        if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
+          customized = await tableCustomizedLoad(customizedCode, 'Board', {
+            type: 'detail',
+            id: boardCustomized.customizedDS.current.get('id'),
+          });
+          try {
+            // @ts-ignore
+            customized = {...JSON.parse(customized.dataJson), ...customized};
+          } catch (error) {
+            warning(false, error.message);
+          }
         }
         runInAction(() => {
           const newCustomized: TableCustomized = { columns: {}, ...customized };

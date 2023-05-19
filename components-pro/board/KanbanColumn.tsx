@@ -93,6 +93,7 @@ const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listD
     left: Number(style.left) + 8,
     top: Number(style.top) + Number(style.height) - 28,
     width: `calc(${style.width} - ${8 * 2}px)`,
+    maxWidth: 'unset',
     height: 28,
   };
 
@@ -102,8 +103,6 @@ const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listD
     }
     return draggableProps;
   }
-
-  // console.log('_totalCount', kanbanDS.getState(`${columnId}_totalCount`), 'columnId', columnId, quotes.totalCount)
 
   return (
     <Draggable draggableId={String(quote.id)} index={index} key={quote.id} isDragDisabled={isDragDropDisabled && true} {...restDraggableProps()}>
@@ -174,14 +173,7 @@ const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn
     ...kanbanProps.columnDsProps,
   }), [quotes]);
 
-  const defaultRowHeight = useMemo(() => (viewProps[ViewField.displayFields] ? viewProps[ViewField.displayFields].length : 1) * 24 + 30 + 24, [viewProps[ViewField.displayFields].length]);
-  // const [rowHeight, setRowHeight] = useState(defaultRowHeight);
-  // let listRef = useRef(null);
-
-  // const onResize = useCallback((height) => {
-  //   console.log('onResize zzz', height);
-  //   setRowHeight(height);
-  // }, []);
+  const defaultRowHeight = useMemo(() => (viewProps[ViewField.displayFields] ? viewProps[ViewField.displayFields].length : 1) * 24 + 30 + 24, [viewProps[ViewField.displayFields] && viewProps[ViewField.displayFields].length]);
 
 
   useEffect(() => {
@@ -211,7 +203,7 @@ const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn
       >
         <span>{header}</span>
         <span className={`${prefixCls}-column-header-count`}>
-          ({columnDS ? columnDS.length : 0})
+          ({columnDS ? columnDS.totalCount : 0})
         </span>
       </div>
       <Droppable

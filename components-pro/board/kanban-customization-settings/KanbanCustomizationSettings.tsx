@@ -435,7 +435,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
         <CollapsePanel
           header={
             <span className={`${prefixCls}-customization-panel-title`}>
-              看板设置
+              显示设置
             </span>
           }
           key="kanban"
@@ -513,7 +513,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               key="showLabel"
               label="显示字段名称"
             >
-              <ObserverSelectBox.Option value={1}>
+              <ObserverSelectBox.Option style={{ paddingRight: 16 }} value={1}>
                 是
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value={0}>

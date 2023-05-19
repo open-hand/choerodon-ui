@@ -77,17 +77,17 @@ class App extends React.Component {
 
   userDs = new DataSet({
     primaryKey: 'userid',
-    // transport: {
-    //   read({ params: { page, pagesize } }) {
-    //     return {
-    //       url: `/dataset/user/page/${pagesize}/${page}`,
-    //     };
-    //   },
-    // },
+    transport: {
+      read({ params: { page, pagesize } }) {
+        return {
+          url: `/dataset/user/page/${pagesize}/${page}`,
+        };
+      },
+    },
     name: 'user',
-    selection: 'single',
     autoQuery: true,
     combineSort: true,
+    cacheSelection: true,
     pageSize: 5,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
@@ -322,14 +322,14 @@ class App extends React.Component {
           }
           // return command;
         }}
-        renderButtons={({ buttons, viewMode, dataSet }) => {
-          // console.log('viewMode', viewMode, command);
-          if (viewMode === 'card') {
-            // return ['delete', this.createButton];
-            return buttons;
-          }
-          return buttons;
-        }}
+        // renderButtons={({ buttons, viewMode, dataSet }) => {
+        //   console.log('viewMode renderButtons', viewMode, buttons);
+        //   if (viewMode === 'card') {
+        //     // return ['delete', this.createButton];
+        //     return buttons.slice(0, 2);
+        //   }
+        //   return buttons;
+        // }}
         cardProps={{
           onClick: (e, record) => {
             console.log('crad click', e, record.toData())
@@ -337,6 +337,7 @@ class App extends React.Component {
         }}
         tableProps={{
           searchCode: 'xxx',
+          showSelectionTips: true,
           buttons,
           buttonsLimit: 3,
           // columns: this.columns,

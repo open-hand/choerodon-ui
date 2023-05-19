@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState, useCallback } from 'react';
+import React, { FunctionComponent, useMemo, useState, useCallback, useContext, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { observer } from 'mobx-react-lite';
 import { FieldType, SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
@@ -12,6 +12,7 @@ import SelectBox from '../../select-box';
 import Button from '../../button';
 import { FuncType, ButtonColor } from '../../button/interface';
 import { $l } from '../../locale-context';
+import BoardContext from '../../board/BoardContext';
 
 const { Option } = SelectBox;
 
@@ -35,6 +36,8 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
 
   const [visible, setVisible] = useState<boolean>(false);
   const sortPrefixCls = `${prefixCls}-combine-sort`;
+  
+  const { customizedDS, saveCustomized } = useContext(BoardContext);
 
   const sortFieldOptions = useMemo<DataSet>(() => {
     const sortFieldData: any[] = [];
@@ -83,9 +86,30 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
         { name: 'order', type: FieldType.string, defaultValue: SortOrder.asc },
       ],
       data,
+      events: {
+        update: ({ dataSet }) => {
+          if (customizedDS && customizedDS.current) {
+            customizedDS.current.set('combineSort', dataSet.toData());
+          }
+        },
+        remove: ({ dataSet }) => {
+          if (customizedDS && customizedDS.current) {
+            customizedDS.current.set('combineSort', dataSet.toData());
+          }
+        },
+      },
     });
   }, [sortFieldOptions, dataSet, dataSet.combineSortFieldNames, visible]);
 
+  /**
+   * 加载 board 组件列表视图多列排序数据
+   */
+  useEffect(() => {
+    if (customizedDS && customizedDS.current) {
+      sortDS.loadData(customizedDS.current.get('combineSort'));
+    }
+  }, []);
+  
   const optionsFilter = (record: Record) => {
     return sortDS.every(sortRecord => sortRecord.get('sortName') !== record.get('value'));
   }
@@ -103,13 +127,17 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   }
 
   const handleConfirm = () => {
-    sortDS.validate().then(result => {
+    sortDS.validate().then(async result => {
       if (result) {
         const records = sortDS.filter(r => r.get('sortName') && r.get('order'));
         const sortInfo: Map<string, SortOrder> = new Map();
         records.forEach(record => {
           sortInfo.set(record.get('sortName'), record.get('order'));
         });
+        if (customizedDS && customizedDS.current) {
+          const res = await saveCustomized(customizedDS.current.toData());
+          customizedDS.current.set('objectVersionNumber', res.objectVersionNumber);
+        }
         dataSet.sort(sortInfo);
         setVisible(false);
       }
