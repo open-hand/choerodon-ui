@@ -1345,15 +1345,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if ('viewMode' in editor.props && editor.props.viewMode === TriggerViewMode.popup) {
                   shouldUseClick = true;
                 }
+                const fieldValue = record.get(fieldName);
+                const maxTagTextLength = field.get('multiple') && fieldValue && fieldValue.length > 1 ? 3 : 7;
                 valueFieldDom = cloneElement(editor, {
                   help: '',
                   key: fieldName,
                   name: fieldName,
                   record,
-                  style: { width: 180 },
+                  style: { width: 190 },
                   disabled,
                   showValidation: ShowValidation.tooltip,
                   trigger: shouldUseClick ? [Action.click, Action.focus] : undefined,
+                  maxTagCount: 1,
+                  maxTagTextLength,
+                  maxTagPlaceholder: restValues => `+${restValues.length}`,
                 });
               }
               return (
