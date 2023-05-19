@@ -1338,7 +1338,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               const fieldName = record.get(AdvancedFieldSet.fieldName);
               const field = record.getField(fieldName);
               const disabled = [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator);
-              let valueFieldDom: ReactElement = <TextField style={{ width: 180 }} disabled />;
+              let valueFieldDom: ReactElement = <TextField style={{ width: 190 }} disabled />;
               if (field && !field.get('bind', record) && !fieldName.includes(tlsKey)) {
                 const editor = getEditorByField(field, record, true);
                 let shouldUseClick = false;
