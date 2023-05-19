@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Key, MouseEvent, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, Key, MouseEvent, ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
@@ -21,6 +21,7 @@ import { normalizeGroupColumns } from '../TableStore';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
 import ObserverSelectBox from '../../select-box/SelectBox';
+import ObserverTextField from '../../text-field';
 import Option from '../../option/Option';
 import { TableHeightType } from '../enum';
 import { LabelLayout } from '../../form/enum';
@@ -29,6 +30,7 @@ import { ViewMode } from '../../radio/enum';
 import Icon from '../../icon';
 import Tooltip from '../../tooltip/Tooltip';
 import { ModalChildrenProps } from '../../modal/interface';
+import BoardContext from '../../board/BoardContext';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
   return [...treeReduce<Map<Key, object>, ColumnProps>(columns, (map, column, _sort, parentColumn) => {
@@ -69,9 +71,11 @@ export interface CustomizationSettingsProps {
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {
   const { modal, context } = props;
+  const { customizedDS } = useContext(BoardContext);
+  const boardCusCurrent = customizedDS && customizedDS.current;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = context;
-  const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized } = tableStore;
+  const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized, customizedBtn } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
@@ -83,6 +87,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         size: tableStore.size,
         parityRow: tableStore.parityRow,
         aggregationExpandType: tableStore.aggregationExpandType,
+        viewName: boardCusCurrent ? boardCusCurrent.get('viewName') : '列表视图',
       },
     ],
     events: {
@@ -115,7 +120,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         }
       },
     },
-  }).current!, [tableStore]);
+  }).current!, [tableStore, boardCusCurrent]);
   const columnDataSet = useMemo(() => new DataSet({
     data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
@@ -333,6 +338,13 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
               }
             >
               <Form className={`${prefixCls}-customization-form`} record={tableRecord} labelLayout={LabelLayout.float}>
+                {customizedBtn ? (
+                  <ObserverTextField
+                    name="viewName"
+                    required
+                    label="视图名称"
+                  />
+                ) : null}
                 {tableSettings}
               </Form>
             </CollapsePanel>

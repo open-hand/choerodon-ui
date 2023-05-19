@@ -20,6 +20,7 @@
 
     .@{c7n-prefix}-list-item:last-child {
       margin-bottom: 0 !important;
+      padding: 0 !important;
       border-bottom: none !important;
     }
 
@@ -123,7 +124,6 @@
   }
 
   &-card-container {
-
     &:hover,
     &:active {
       text-decoration: none;
@@ -136,6 +136,10 @@
           color: @primary-color;
         }
       }
+    }
+
+    .@{c7n-prefix}-card {
+      margin: 8px;
     }
 
     .@{c7n-prefix}-card-extra {
@@ -425,10 +429,14 @@
     align-items: center;
     margin: 0.1rem 0;
 
+    &-drag {
+      margin-right: 4px;
+      line-height: 1;
+    }
+
     &-index {
       display: inline-block;
       width: 0.23rem;
-      margin: 0 0 0 0.04rem;
       line-height: 1;
       text-align: center;
       vertical-align: middle;

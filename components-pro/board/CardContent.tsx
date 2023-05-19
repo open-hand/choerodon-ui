@@ -56,7 +56,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
     const modalProps: ModalProps = {
       drawer: true,
       okFirst: false,
-      title: '看板视图配置',
+      title: '卡片视图配置',
       children: <KanbanCustomizationSettings viewMode={ViewMode.card} />,
       bodyStyle: {
         overflow: 'hidden auto',
@@ -96,7 +96,6 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
       if (changed) {
         onChange({ dataSet, currentViewDS: cardDS, record: customizedDS!.current })
       }
-      // console.log('change', customizedDS?.length, dataSet?.getState('__CURRENTVIEWDS__').$mobx, "---", cardDS.$mobx)
     }
     if (autoQuery) {
       await cardDS.query();

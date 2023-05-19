@@ -119,7 +119,7 @@ class App extends React.Component {
       'reset',
     ];
     return (
-      <Table key="user" buttons={buttons} dataSet={this.userDs}>
+      <Table key="user" buttons={buttons} buttonsLimit={2} dataSet={this.userDs}>
         <Column name="userid" />
         <Column name="name" editor={(record) => record.getState('editing')} />
         <Column name="age" editor={(record) => record.getState('editing')} />

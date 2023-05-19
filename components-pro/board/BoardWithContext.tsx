@@ -226,7 +226,6 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
 
   const saveCustomized = useCallback(async (newCustomized: BoardCustomized) => {
     if (customizable && customizedCode) {
-      // console.log('newCustomized', newCustomized)
       const customizedSave = getConfig('customizedSave');
       const res = await customizedSave(customizedCode, newCustomized, 'Board');
       return res;
@@ -691,7 +690,10 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           {...tableProps}
           customizable={isDefault ? false : customizable}
           customizedCode={customizedCode}
-          customizedBtn
+          boardCustomized={{
+            customizedBtn: true,
+            customizedDS,
+          }}
           dataSet={isDefault? dataSet : tableDataSet}
           buttons={btns}
           buttonsLimit={displayedButtonsLimit}
@@ -715,7 +717,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       <KanbanContent
         key="kanbanContent"
         dataSet={dataSet}
-        queryBarProps={tableProps ? tableProps.queryBarProps : {}}
+        queryBarProps={tableQueryBarProps}
         tableBtns={tableBtns}
         buttonsLimit={buttonsLimit}
         buttons={noSwitcher ? [] : [renderSwitcherIcon()]}
