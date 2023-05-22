@@ -406,6 +406,10 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
       setCardHeight(height + 1);
     }
   }, [cardHeight]);
+  
+  useEffect(() => {
+    setCardHeight(0);
+  }, [customizedDS!.current]);
 
   return (
     <div style={{ height: '100%' }}>
@@ -427,6 +431,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
             <List.Item key={`${record.id}-card`} className={`${prefixCls}-card-container`}>
               <ReactResizeObserver resizeProp="height" onResize={handleResize} immediately>
                 <Card
+                  key={`${record.id}-card-content`}
                   {...cardProps}
                   selected={record.isSelected}
                   style={{
