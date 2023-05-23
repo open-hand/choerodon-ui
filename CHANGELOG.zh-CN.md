@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.3
+
+- 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
+
 ## 1.6.2
 
 `2023-05-23`

@@ -2376,8 +2376,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         if (rowSpan > 1 && !currnetRowIndex) {
           currnetRowIndex = `${rowIndex}`;
           rowStyles.zIndex = fixed ? 1 : 0;
-        } else if (rowSpan < 1 && !isHeaderRow) {
-          restRowProps.width = undefined;
         }
       }
     }
