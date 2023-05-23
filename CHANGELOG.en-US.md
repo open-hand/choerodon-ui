@@ -14,6 +14,11 @@ timeline: true
 - Major version release is not included in this schedule for breaking change and new features.
 
 ---
+
+## 1.6.1
+
+`2023-05-22`
+
 - 🌟 `configure`: Added `labelAlign`, `tableVirtualBuffer` properties.
 - 🌟 `Field`: Added `placeholder` attribute definitions.
 - 🌟 `Card`: Added some classnames.
