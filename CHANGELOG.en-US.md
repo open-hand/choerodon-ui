@@ -15,9 +15,9 @@ timeline: true
 
 ---
 
-## 1.6.1
+## 1.6.2
 
-`2023-05-22`
+`2023-05-23`
 
 - 🌟 `configure`: Added `labelAlign`, `tableVirtualBuffer` properties.
 - 🌟 `Field`: Added `placeholder` attribute definitions.

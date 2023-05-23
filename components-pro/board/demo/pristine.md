@@ -77,13 +77,13 @@ class App extends React.Component {
 
   userDs = new DataSet({
     primaryKey: 'userid',
-    transport: {
-      read({ params: { page, pagesize } }) {
-        return {
-          url: `/dataset/user/page/${pagesize}/${page}`,
-        };
-      },
-    },
+    // transport: {
+    //   read({ params: { page, pagesize } }) {
+    //     return {
+    //       url: `/dataset/user/page/${pagesize}/${page}`,
+    //     };
+    //   },
+    // },
     name: 'user',
     autoQuery: true,
     combineSort: true,
