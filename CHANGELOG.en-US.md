@@ -15,8 +15,8 @@ timeline: true
 
 ---
 
-## 1.6.3
-
+- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
+- 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 
 ## 1.6.2
