@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.1
+
+`2023-05-22`
+
 - 🌟 `configure`: 新增 tableVirtualBuffer，labelAlign 属性。
 - 🌟 `Field`: 补充 placeholder 属性定义。
 - 🌟 `Card`: 新增类名。
