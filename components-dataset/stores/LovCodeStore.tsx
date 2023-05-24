@@ -12,6 +12,10 @@ import { LovConfig, LovConfigItem } from '../interface';
 import { getGlobalConfig, processAxiosConfig } from './utils';
 import { TransportHookProps } from '../data-set/Transport';
 import { mergeDataSetProps } from '../data-set/utils';
+import PromiseMerger from '../promise-merger';
+import { getConfig as globalGetConfig } from '../configure';
+
+type callbackArgs = [(codes: string[]) => AxiosRequestConfig, Field | undefined];
 
 function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
   switch (conditionFieldType) {
@@ -95,6 +99,16 @@ export class LovCodeStore {
     this.init();
   }
 
+  batchCallback = (codes: string[], args: callbackArgs): Promise<{ [key: string]: LovConfig }> => {
+    const [lovDefineBatchAxiosConfig, field] = args;
+    if (lovDefineBatchAxiosConfig) {
+      return this.getAxios(field)(lovDefineBatchAxiosConfig(codes)) as any;
+    }
+    return Promise.resolve({});
+  }
+
+  merger: PromiseMerger<LovConfig, callbackArgs, undefined> = new PromiseMerger(this.batchCallback, { maxAge: 60000, max: 100 });
+
   getAxios(field?: Field): AxiosInstance {
     return getGlobalConfig('axios', field) || axios;
   }
@@ -119,23 +133,46 @@ export class LovCodeStore {
     return this.lovCodes.get(code);
   }
 
+  fetchDefineInBatch = (code: string, lovDefineBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig, field?: Field)
+    : Promise<LovConfig | undefined> => {
+    const getBatchKey = (defaultKey) => {
+      const { url } = lovDefineBatchAxiosConfig([code]);
+      return url ? url.split('?')[0] : defaultKey;
+    }
+    return this.merger.add(code, getBatchKey, [lovDefineBatchAxiosConfig, field]);
+  }
+
   async fetchConfig(code: string, field?: Field, record?: Record): Promise<LovConfig | undefined> {
     let config = this.getConfig(code);
     // SSR do not fetch the lookup
     if (!config && typeof window !== 'undefined') {
-      const axiosConfig = this.getDefineAxiosConfig(code, field, record);
-      if (axiosConfig) {
-        try {
-          const pending = this.pendings[code] || this.getAxios(field)(axiosConfig);
-          this.pendings[code] = pending;
-          config = await pending;
-          runInAction(() => {
-            if (config) {
-              this.lovCodes.set(code, config);
-            }
-          });
-        } finally {
-          delete this.pendings[code];
+      const defineBatch = field
+        ? field.get('lovDefineBatchAxiosConfig', record) || field.dataSet.getConfig('lovDefineBatchAxiosConfig')
+        : globalGetConfig('lovDefineBatchAxiosConfig');
+      const useLovDefineBatch = code &&
+        (field ? field.dataSet.getConfig('useLovDefineBatch') : globalGetConfig('useLovDefineBatch'))(code, field) !== false;
+      if (defineBatch && useLovDefineBatch) {
+        config = await this.fetchDefineInBatch(code, defineBatch, field);
+        runInAction(() => {
+          if (config) {
+            this.lovCodes.set(code, config);
+          }
+        });
+      } else {
+        const axiosConfig = this.getDefineAxiosConfig(code, field, record);
+        if (axiosConfig) {
+          try {
+            const pending = this.pendings[code] || this.getAxios(field)(axiosConfig);
+            this.pendings[code] = pending;
+            config = await pending;
+            runInAction(() => {
+              if (config) {
+                this.lovCodes.set(code, config);
+              }
+            });
+          } finally {
+            delete this.pendings[code];
+          }
         }
       }
     }
@@ -236,9 +273,11 @@ export class LovCodeStore {
     if (codes) {
       codes.forEach(code => {
         this.lovCodes.delete(code);
+        this.merger.cache.del(code);
       });
     } else {
       this.lovCodes.clear();
+      this.merger.cache.reset();
     }
   }
 }

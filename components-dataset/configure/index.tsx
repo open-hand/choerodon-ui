@@ -119,6 +119,8 @@ export interface Config {
   useLookupBatch?: (code: string, field?: Field) => boolean;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
+  lovDefineBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  useLovDefineBatch?: (code: string, field?: Field) => boolean;
   lovQueryUrl?:
     | string
     | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);
@@ -206,6 +208,7 @@ const defaultConfig = {
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
   xlsx: noop,
   useLookupBatch: noop,
+  useLovDefineBatch: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;
