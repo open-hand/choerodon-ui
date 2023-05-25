@@ -431,7 +431,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           [ViewField.viewProps]: {
             [ViewField.groupField]: groupField,
             [ViewField.cardWidth]: 6,
-            [ViewField.displayFields]: displayFields.map(field => field.name).slice(0, 3),
+            [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
             [ViewField.showLabel]: 1,
           },
           [ViewField.activeKey]: 1,
@@ -579,7 +579,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                   [ViewField.viewName]: '卡片视图',
                   [ViewField.viewProps]: {
                     [ViewField.cardWidth]: 6,
-                    [ViewField.displayFields]: displayFields.map(field => field.name).slice(0, 3),
+                    [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
                     [ViewField.showLabel]: 1,
                   },
                   [ViewField.activeKey]: 1,
