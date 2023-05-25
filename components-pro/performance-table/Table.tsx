@@ -1007,7 +1007,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       return (
         // @ts-ignore
-        <Column {...this.getColumnProps(column)} dataKey={dataKey}>
+        <Column {...this.getColumnProps(column)} dataKey={dataKey} key={dataKey}>
           {
             <HeaderCell>
               {typeof column.title === 'function' ? column.title() : column.title}

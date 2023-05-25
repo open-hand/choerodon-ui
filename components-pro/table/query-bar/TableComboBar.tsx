@@ -585,14 +585,14 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {
         if (suffix === 'filter') {
-          children.push(<ColumnFilter prefixCls={prefixCls} />);
+          children.push(<ColumnFilter prefixCls={prefixCls} key='suffix-column-filter'/>);
         } else if (isValidElement(suffix)) {
           children.push(suffix);
         } else if (isFunction(suffix)) {
           children.push(suffix({ queryDataSet, dataSet }));
         }
       });
-      suffixesDom = <div className={`${prefixCls}-combo-filter-bar-suffix`}>{children}</div>;
+      suffixesDom = <div className={`${prefixCls}-combo-filter-bar-suffix`} key='suffix-dom'>{children}</div>;
     }
 
     if (tableButtons || tableActionsDom || suffixesDom) {
@@ -605,7 +605,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     const { title, singleLineMode } = this.props;
     const { prefixCls } = this;
     if (title && !singleLineMode) {
-      return <div className={`${prefixCls}-combo-filter-title`}>{title}</div>;
+      return <div className={`${prefixCls}-combo-filter-title`} key='prefix-filter-title'>{title}</div>;
     }
     return null;
   }
@@ -1125,8 +1125,8 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       </>
     );
     return (
-      <ReactResizeObserver resizeProp="height" onResize={this.handleResize}>
-        <div key="query_bar" className={`${prefixCls}-combo-filter-bar`}>
+      <ReactResizeObserver key="query_bar" resizeProp="height" onResize={this.handleResize}>
+        <div className={`${prefixCls}-combo-filter-bar`}>
           {this.getFilterMenu() && !singleLineMode && (
             <>
               {this.getFilterMenu()}

@@ -666,13 +666,13 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(
-            <Menu.Item hidden={button.props.hidden}>
+            <Menu.Item hidden={button.props.hidden} key={button.key}> 
               {cloneElement(button, { ...tableButtonProps, ...button.props, funcType: FuncType.link })}
             </Menu.Item>,
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item hidden={props.hidden}>
+            <Menu.Item hidden={props.hidden} key={button.key}> 
               <Button {...tableButtonProps} {...button} funcType={FuncType.link}/>
             </Menu.Item>,
           );

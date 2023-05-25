@@ -850,7 +850,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (suffixes && suffixes.length) {
       suffixes.forEach(suffix => {
         if (suffix === 'filter') {
-          children.push(<ColumnFilter prefixCls={prefixCls} />);
+          children.push(<ColumnFilter prefixCls={prefixCls} key='prefix-column-filter' />);
         } else if (isValidElement(suffix)) {
           children.push(suffix);
         } else if (isFunction(suffix)) {
@@ -869,6 +869,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     ];
   }
 
+  @action
   getPrefix(): ReactNode {
     const { dynamicFilterBar, queryDataSet, dataSet } = this.props;
     const { prefixCls } = this;
@@ -877,7 +878,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     if (prefixes && prefixes.length) {
       prefixes.forEach((prefix: any) => {
         if (isString(prefix) && prefix === 'filter') {
-          children.push(<ColumnFilter prefixCls={prefixCls} />);
+          children.push(<ColumnFilter prefixCls={prefixCls} key='prefix-column-filter' />);
         } else if (isValidElement(prefix)) {
           children.push(prefix);
         } else if (isFunction(prefix)) {
@@ -1892,6 +1893,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               })}
               {(fieldsLimit < this.queryFields.length) && (<div className={`${prefixCls}-filter-item`}>
                 <Dropdown
+                  key='drop-down'
                   visible={!this.fieldSelectHidden}
                   overlay={(
                     <div
@@ -1917,6 +1919,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   trigger={[Action.click]}
                 >
                   <span
+                    key='add-fields'
                     className={`${prefixCls}-add-fields`}
                     onMouseDown={(e: any) => {
                       e.nativeEvent.stopImmediatePropagation();

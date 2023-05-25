@@ -119,6 +119,7 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
         {
           hasExpand && (
             <Tree.TreeNode
+              key='expand-treenode'
               title={
                 <AggregationButton
                   expanded={expanded}

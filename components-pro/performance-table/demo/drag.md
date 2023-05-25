@@ -146,7 +146,7 @@ function DraggableTable() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div>
-        <PerformanceTable height={400} data={data}>
+        <PerformanceTable height={400} data={data} rowKey='id'>
           {columns.map(column => (
             <Column width={column.width} key={column.id}>
               <DraggableHeaderCell onDrag={handleDragColumn} id={column.id}>

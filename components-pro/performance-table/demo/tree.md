@@ -56,6 +56,7 @@ class TreeTable extends React.Component {
     return (
       <div>
         <PerformanceTable
+          rowKey='key'
           isTree
           virtualized
           minHeight={260}

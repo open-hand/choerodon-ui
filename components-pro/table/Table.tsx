@@ -2036,6 +2036,7 @@ export default class Table extends DataSetComponent<TableProps> {
           {...dragDropContextProps}
           onDragStart={this.handleDragStart}
           onDragEnd={this.handleDragEnd}
+          key='drag-drop-context'
         >
           {virtualWrapper}
         </DragDropContext>
