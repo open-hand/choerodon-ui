@@ -135,6 +135,7 @@ class Table extends React.Component {
     return (
       <PerformanceTable
         bordered
+        rowKey="id"
         height={400}
         headerHeight={80}
         data={this.state.data}

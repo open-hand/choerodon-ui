@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch 属性。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
+- 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 
 ## 1.6.2

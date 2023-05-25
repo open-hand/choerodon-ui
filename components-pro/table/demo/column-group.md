@@ -68,7 +68,7 @@ class App extends React.Component {
     const { border, resizable, footer } = this.state;
     const buttons = [
       <CheckBox key="border" checked={border} onChange={() => this.setState({ border: !border })} label="边框" labelLayout="float" />,
-      <CheckBox ket="resizable" checked={resizable} onChange={() => this.setState({ resizable: !resizable })} label="可调整列宽" labelLayout="float" />,
+      <CheckBox key="resizable" checked={resizable} onChange={() => this.setState({ resizable: !resizable })} label="可调整列宽" labelLayout="float" />,
       <CheckBox key="footer" checked={footer} onChange={() => this.setState({ footer: !footer })} label="表脚" labelLayout="float" />,
     ];
     return (

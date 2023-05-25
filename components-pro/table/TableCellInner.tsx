@@ -285,6 +285,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
                   onClick: handleCommandEdit,
                   disabled,
                   children: $l('Table', 'edit_button'),
+                  key: 'edit',
                 };
               case TableCommandType.delete:
                 return {
@@ -292,6 +293,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
                   onClick: handleCommandDelete,
                   disabled,
                   children: $l('Table', 'delete_button'),
+                  key: 'delete',
                 };
               default:
             }

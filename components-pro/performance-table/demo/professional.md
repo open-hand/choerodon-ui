@@ -74,6 +74,7 @@ class EmptyDataTable extends React.Component {
     return (
     <div>
       <PerformanceTable
+        rowKey='id'
         virtualized
         height={400}
         toolbar={{

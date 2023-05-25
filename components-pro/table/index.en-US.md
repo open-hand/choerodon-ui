@@ -30,7 +30,7 @@ subtitle: 表格
 | selectionBoxRenderer | 勾选框渲染器  | ({ record, element }) => ReactNode | |
 | alwaysShowRowBox | 是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
-| buttons | 功能按钮，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object |  |
+| buttons | 功能按钮组，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象，其中的自定义按钮和自定义按钮配置属性对象需添加唯一 key | string \| \[string, object\] \| ReactNode \| object |  |
 | buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |

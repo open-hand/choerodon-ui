@@ -506,12 +506,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       let popoverContent: React.ReactNode;
       const footer: React.ReactNode = (
         <div className={`${prefixCls}-sort-popup-footer`}>
-          <Button onClick={onReset}>
+          <Button onClick={onReset} key='reset'>
             {$l('Table', 'reset_button')}
           </Button>
           <Button
             color={ButtonColor.primary}
             onClick={doFilter}
+            key='filter'
           >
             {$l('Table', 'search')}
           </Button>
@@ -550,6 +551,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
               setFilterText(headerFilter.fieldName === name ? String(headerFilter.filterText) : '');
             }
           }}
+          key='filter'
         >
           <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-filter-icon ${prefixCls}-filter-icon-active` : `${prefixCls}-filter-icon`} type="search" onClick={(e) => e.stopPropagation()} />
         </Popover>

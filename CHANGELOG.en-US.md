@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
+- 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 
 ## 1.6.2

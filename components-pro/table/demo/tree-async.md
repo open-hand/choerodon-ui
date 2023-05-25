@@ -106,7 +106,7 @@ class App extends React.Component {
             rowHeight={40}
             onRow={nodeCover}
             header="treeAsync"
-            buttons={['query', ['query', { children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
+            buttons={['query', ['query', { key: 'cached-query',children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
             showCachedSelection
           >
             <Column name="text" editor renderer={iconRenderer} width={250} />
@@ -123,7 +123,7 @@ class App extends React.Component {
             rowHeight={40}
             onRow={nodeCover}
             header="treeLoadData"
-            buttons={['query', ['query', { children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
+            buttons={['query', ['query', { key: 'cached-query', children: '查询（保留缓存）', onClick: () => this.ds.query(1, {}, true)}]]}
             showCachedSelection
           >
             <Column name="text" editor renderer={iconRenderer} width={250} />

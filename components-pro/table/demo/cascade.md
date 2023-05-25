@@ -311,7 +311,7 @@ class App extends React.Component {
         buttons={[
           'add',
           'delete',
-          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false}>
+          <Lov dataSet={this.enemyFriendsDs} name="code" mode="button" clearButton={false} key='lov_code'>
             Lov
           </Lov>,
         ]}

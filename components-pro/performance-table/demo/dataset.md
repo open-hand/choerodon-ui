@@ -185,6 +185,7 @@ class SortTable extends React.Component {
     return (
       <>
         <PerformanceTable
+          rowKey='id'
           customizable
           customizedCode="pre-customized-p"
           columnDraggable
