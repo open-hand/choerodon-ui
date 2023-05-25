@@ -672,7 +672,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item hidden={props.hidden} key={button.key}> 
+            <Menu.Item hidden={props.hidden} key={(button as ButtonProps).key}> 
               <Button {...tableButtonProps} {...button} funcType={FuncType.link}/>
             </Menu.Item>,
           );
