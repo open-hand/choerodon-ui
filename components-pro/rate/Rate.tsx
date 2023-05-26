@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
 import { FIELD_SUFFIX } from '../form/utils';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -104,7 +105,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
           [`${prefixCls}-readonly`]: this.readOnly,
         });
         const style = floatLabelOffsetX ? {
-          marginLeft: floatLabelOffsetX,
+          marginLeft: pxToRem(floatLabelOffsetX, true),
         } : undefined;
         return (
           <div className={`${prefixCls}-label-wrapper`} style={style}>

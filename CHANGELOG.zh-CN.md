@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
 - 💄 `<pro>TextField`: 优化后缀宽度计算。
+- 💄 `style`: 优化部分组件样式单位。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 
 ## 1.6.2

@@ -16,6 +16,7 @@ import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import RcUpload from 'choerodon-ui/lib/rc-components/upload';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import { ButtonColor, FuncType } from '../button/enum';
@@ -694,7 +695,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       ref,
       onChange,
     };
-    const width = isCardButton ? this.getPictureWidth() : undefined;
+    const width = isCardButton ? pxToRem(this.getPictureWidth()) : undefined;
     const countText = multiple && (max ? `${count}/${max}` : count) || undefined;
     return isCardButton ? (
       <Button
@@ -1063,7 +1064,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         return (
           <Icon
             type="help"
-            style={{ fontSize: '14px', color: '#8c8c8c' }}
+            style={{ fontSize: '0.14rem', color: '#8c8c8c' }}
             onMouseEnter={this.handleHelpMouseEnter}
             onMouseLeave={this.handleHelpMouseLeave}
           />

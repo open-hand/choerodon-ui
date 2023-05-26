@@ -41,7 +41,7 @@ export default class Item extends Component<any, any> {
     let children: JSX.Element | null = null;
     if (lazy) {
       const lazyProps = {
-        height: 32,
+        height: '0.32rem',
         offset: 500,
         throttle: 0,
         debounce: false,

@@ -8,6 +8,7 @@ import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
 import { Size } from 'choerodon-ui/lib/_util/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
@@ -209,7 +210,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       </a>
     ) : fileName;
     return (
-      <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>
+      <span className={`${prefixCls}-title`} style={isCardTitle ? { width: pxToRem(width) } : undefined}>
         {nameNode}
         {!isCardTitle && showSize && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>

@@ -1,5 +1,6 @@
 import React, { Component, KeyboardEvent, MouseEventHandler } from 'react';
 import { findDOMNode } from 'react-dom';
+import isNumber from 'lodash/isNumber';
 import { EventManager } from 'choerodon-ui/dataset';
 import { transformZoomData } from 'choerodon-ui/shared/util';
 import Animate from '../../animate';
@@ -9,6 +10,7 @@ import KeyCode from '../../_util/KeyCode';
 import contains from '../util/Dom/contains';
 import getScrollBarSize from '../util/getScrollBarSize';
 import Icon from '../../icon';
+import { pxToRem } from '../../_util/UnitConvertor';
 
 let uuid = 0;
 let openCount = 0;
@@ -262,10 +264,10 @@ export default class Dialog extends Component<IDialogPropTypes, any> {
     const prefixCls = props.prefixCls;
     const dest: any = {};
     if (props.width !== undefined) {
-      dest.width = props.width;
+      dest.width = isNumber(props.width) ? pxToRem(props.width) : props.width;
     }
     if (props.height !== undefined) {
-      dest.height = props.height;
+      dest.height = isNumber(props.height) ? pxToRem(props.height) : props.height;
     }
     let footer;
     if (props.footer) {
