@@ -160,12 +160,12 @@ export default class SelectionList extends Component<SelectionListProps> {
         this.modalNode = (parentNode as HTMLDivElement);
         const { width } = (parentNode as HTMLDivElement).getBoundingClientRect();
         Object.assign((parentNode as HTMLDivElement).style, {
-          width: pxToRem(width + 300),
+          width: pxToRem(width + 300, true),
         });
       }
     } else if (this.modalNode && !this.selectionNode) {
       Object.assign((this.modalNode as HTMLDivElement).style, {
-        width: pxToRem(this.modalNode.offsetWidth - 300),
+        width: pxToRem(this.modalNode.offsetWidth - 300, true),
       });
       this.modalNode = null;
     }

@@ -1064,22 +1064,22 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
     if (this.lengthInfoWidth || this.suffixWrapperWidth || this.clearButton) {
       let paddingRight = this.isSuffixClick
-        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWrapperWidth, 0) + (this.clearButton ? 18 : 0)
-        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.suffixWrapperWidth, 0), (this.clearButton ? 18 : 0));
+        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWrapperWidth, 0) + (this.clearButton ? toPx('0.18rem')! : 0)
+        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.suffixWrapperWidth, 0), (this.clearButton ? toPx('0.18rem')! : 0));
       if (this.lengthInfoWidth && !this.suffixWrapperWidth && !this.clearButton) {
-        paddingRight += 3;
+        paddingRight += toPx('0.03rem')!;
       }
-      if (paddingRight >= 25) {
+      if (paddingRight >= toPx('0.25rem')!) {
         otherProps.style = {
           ...otherProps.style,
-          paddingRight,
+          paddingRight: pxToRem(paddingRight, true),
         };
       }
     }
-    if (this.prefixWidth && this.prefixWidth > 24) {
+    if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
       otherProps.style = {
         ...otherProps.style,
-        paddingLeft: this.prefixWidth + 2,
+        paddingLeft: pxToRem(this.prefixWidth + toPx('0.02rem')!, true),
       };
     }
   }
@@ -1119,12 +1119,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, clearButton } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
-      this.suffixWrapperWidth = 21;
+      this.suffixWrapperWidth = toPx('0.21rem');
       if (children.props && children.props.style) {
         divStyle = {
           width: children.props.style.width,
         };
-        this.suffixWrapperWidth = defaultTo(toPx(children.props.style.width), 21);
+        this.suffixWrapperWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -1136,9 +1136,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     } else if (children && children !== true) {
-      this.suffixWrapperWidth = this.measureTextWidth(children.toString()) + 2;
+      this.suffixWrapperWidth = this.measureTextWidth(children.toString()) + toPx('0.02rem')!;
       divStyle = {
-        width: this.suffixWrapperWidth,
+        width: pxToRem(this.suffixWrapperWidth, true),
       };
     } else {
       this.suffixWrapperWidth = undefined;
@@ -1149,7 +1149,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
-    const right = this.lengthInfoWidth ? this.lengthInfoWidth + 2 : undefined;
+    const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.02rem')! : undefined, true);
     return (
       <div
         className={classString}
@@ -1172,9 +1172,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.prefixWidth = undefined;
     }
     runInAction(() => {
-      if (this.prefixWidth && this.prefixWidth > 24) {
-        if (this.floatLabelOffsetX !== this.prefixWidth - 24) {
-          this.floatLabelOffsetX = this.prefixWidth - 24;
+      if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
+        if (this.floatLabelOffsetX !== this.prefixWidth - toPx('0.24rem')!) {
+          this.floatLabelOffsetX = this.prefixWidth - toPx('0.24rem')!;
         }
       } else if (this.floatLabelOffsetX !== undefined) {
         this.floatLabelOffsetX = undefined;
@@ -1187,18 +1187,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
-      this.prefixWidth = 24;
+      this.prefixWidth = toPx('0.24rem')!;
       if (children.props && children.props.style) {
         divStyle = {
           width: children.props.style.width,
         };
         const calculateWidth = toPx(children.props.style.width);
-        this.prefixWidth = calculateWidth != null ? calculateWidth : 24;
+        this.prefixWidth = calculateWidth != null ? calculateWidth : toPx('0.24rem')!;
       }
     } else if (children && children !== true) {
-      this.prefixWidth = this.measureTextWidth(children.toString()) + 4;
+      this.prefixWidth = this.measureTextWidth(children.toString()) + toPx('0.04rem')!;
       divStyle = {
-        width: this.prefixWidth > 24 ? this.prefixWidth : undefined,
+        width: pxToRem(this.prefixWidth > toPx('0.24rem')! ? this.prefixWidth : undefined, true),
       };
     } else {
       this.prefixWidth = undefined;
@@ -1212,7 +1212,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (isFlat) {
       const hasValue = !this.isEmpty();
       const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-      width = hasValue ? 'auto' : this.measureTextWidth(placeholder || '') + 22 + (this.getSuffix() ? 20 : 0);
+      width = hasValue ? 'auto' : this.measureTextWidth(placeholder || '') + toPx('0.22rem')! + (this.getSuffix() ? toPx('0.20rem')! : 0);
     }
     if (multiple) {
       return (
@@ -1273,9 +1273,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const [placeholder] = this.getPlaceholders();
     if (placeholder) {
       let divStyle;
-      if (this.prefixWidth && this.prefixWidth > 24) {
+      if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
         divStyle = {
-          paddingLeft: this.prefixWidth + 5,
+          paddingLeft: pxToRem(this.prefixWidth + toPx('0.05rem')!, true),
         };
       }
       return (
@@ -1306,7 +1306,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         />,
         {
           className: `${prefixCls}-clear-button`,
-          style: { right },
+          style: { right: pxToRem(right, true) },
         },
       );
     }

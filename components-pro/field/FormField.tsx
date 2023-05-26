@@ -14,6 +14,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -693,7 +694,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           [`${prefixCls}-readonly`]: this.readOnly,
         });
         const style = floatLabelOffsetX ? {
-          marginLeft: floatLabelOffsetX,
+          marginLeft: pxToRem(floatLabelOffsetX, true),
         } : undefined;
         return (
           <div className={`${prefixCls}-label-wrapper`} style={style}>

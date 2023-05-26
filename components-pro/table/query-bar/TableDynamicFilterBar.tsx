@@ -1339,7 +1339,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               const fieldName = record.get(AdvancedFieldSet.fieldName);
               const field = record.getField(fieldName);
               const disabled = [OPERATOR.IS_NULL.value, OPERATOR.IS_NOT_NULL.value].includes(comparator);
-              let valueFieldDom: ReactElement = <TextField style={{ width: 192 }} disabled />;
+              let valueFieldDom: ReactElement = <TextField style={{ width: '1.92rem' }} disabled />;
               if (field && !field.get('bind', record) && !fieldName.includes(tlsKey)) {
                 const editor = getEditorByField(field, record, true);
                 let shouldUseClick = false;
@@ -1353,7 +1353,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   key: fieldName,
                   name: fieldName,
                   record,
-                  style: { width: 192 },
+                  style: { width: '1.92rem' },
                   disabled,
                   showValidation: ShowValidation.tooltip,
                   trigger: shouldUseClick ? [Action.click, Action.focus] : undefined,
@@ -1366,7 +1366,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 <div className={`${prefixCls}-new-filter-popover-item`} key={`${record.index}_option`}>
                   <Select
                     name={AdvancedFieldSet.fieldName}
-                    style={{ width: 120 }}
+                    style={{ width: '1.2rem' }}
                     record={record}
                     placeholder={$l('Lov', 'choose')}
                     optionTooltip={OptionTooltip.overflow}
@@ -1379,7 +1379,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     name={AdvancedFieldSet.comparator}
                     renderer={({ value, text }) => value ? $l('Operator', value.toLowerCase()) : text}
                     optionRenderer={({ value, text }) => value ? $l('Operator', value.toLowerCase()) : text}
-                    style={{ width: 88 }}
+                    style={{ width: '0.88rem' }}
                     dropdownMatchSelectWidth={false}
                     optionTooltip={OptionTooltip.overflow}
                     record={record}
