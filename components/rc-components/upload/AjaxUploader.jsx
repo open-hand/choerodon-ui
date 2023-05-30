@@ -84,12 +84,12 @@ class AjaxUploader extends Component {
 
   uploadFiles = (files) => {
     const { beforeUploadFiles = noop } = this.props;
+    const postFiles = Array.prototype.slice.call(files).map((file) => {
+      file.uid = getUid();
+      return file;
+    });
     Promise.resolve(beforeUploadFiles(files)).then((res) => {
       if (res !== false) {
-        const postFiles = Array.prototype.slice.call(files).map((file) => {
-          file.uid = getUid();
-          return file;
-        });
         postFiles.forEach((file) => {
           this.upload(file, postFiles);
         });
