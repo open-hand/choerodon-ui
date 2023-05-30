@@ -22,6 +22,7 @@ timeline: true
 - 💄 `style`: 优化部分组件样式单位。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
+- 🐞 `Upload`: 修复 picture-card 模式下配置 showPreviewIcon 或 showDownloadIcon 不生效的问题。
 
 ## 1.6.2
 

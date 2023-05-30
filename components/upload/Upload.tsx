@@ -338,6 +338,9 @@ export default class Upload extends Component<UploadProps, UploadState> {
     if (['text','picture'].includes(listType as UploadListType)) {
       defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? false : showPreviewIcon;
       defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? false : showDownloadIcon;
+    } else if (listType === 'picture-card') {
+      defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? true : showPreviewIcon;
+      defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? true : showDownloadIcon;
     }
     return (
       <UploadList
