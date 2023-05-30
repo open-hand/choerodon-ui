@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimize suffix width calculation.
 - 💄 `style`: Optimize some component style units.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
+- 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
 
 ## 1.6.2
 

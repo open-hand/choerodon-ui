@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化后缀宽度计算。
 - 💄 `style`: 优化部分组件样式单位。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
+- 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
 
 ## 1.6.2
 
