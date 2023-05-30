@@ -180,7 +180,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   addonBeforeRef?: HTMLDivElement | null;
 
-  suffixRef?: HTMLDivElement | null;
+  @observable suffixRef?: HTMLDivElement | null;
 
   @observable renderedText?: {
     text: string;
@@ -236,18 +236,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   get border(): boolean | undefined {
     return this.props.border;
-  }
-
-  get suffixWrapperWidth(): number | undefined {
-    let wrapperWidth = 0;
-    if (this.suffixRef) {
-      wrapperWidth = this.suffixRef.getBoundingClientRect().width;
-    }
-    return this.suffixWidth ? Math.max(this.suffixWidth, wrapperWidth) : this.suffixWidth;
-  }
-
-  set suffixWrapperWidth(width: number | undefined) {
-    this.suffixWidth = width;
   }
 
   constructor(props, context) {
@@ -339,6 +327,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  @action
   saveSuffixRef(node) {
     this.suffixRef = node;
   }
@@ -1060,19 +1049,28 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
+  getSuffixWidth() {
+    let wrapperWidth = 0;
+    if (this.suffixRef) {
+      wrapperWidth = this.suffixRef.getBoundingClientRect().width;
+    }
+    return this.suffixWidth ? Math.max(this.suffixWidth, wrapperWidth): this.suffixWidth;
+  }
+
   setInputStylePadding(otherProps: any): void {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
-    if (this.lengthInfoWidth || this.suffixWrapperWidth || this.clearButton) {
+    if (this.lengthInfoWidth || this.getSuffixWidth() || this.clearButton) {
       let paddingRight = this.isSuffixClick
-        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWrapperWidth, 0) + (this.clearButton ? toPx('0.18rem')! : 0)
-        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.suffixWrapperWidth, 0), (this.clearButton ? toPx('0.18rem')! : 0));
-      if (this.lengthInfoWidth && !this.suffixWrapperWidth && !this.clearButton) {
+        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + (this.clearButton ? toPx('0.18rem')! : 0)
+        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), (this.clearButton ? toPx('0.18rem')! : 0));
+      if (this.lengthInfoWidth && !this.getSuffixWidth() && !this.clearButton) {
         paddingRight += toPx('0.03rem')!;
       }
       if (paddingRight >= toPx('0.25rem')!) {
+        const pr = `${Number(pxToRem(paddingRight + 2, true)?.split('rem')[0]).toFixed(3)}rem`;
         otherProps.style = {
           ...otherProps.style,
-          paddingRight: pxToRem(paddingRight, true),
+          paddingRight: pr,
         };
       }
     }
@@ -1108,7 +1106,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (suffix) {
       return this.wrapperSuffix(suffix);
     }
-    this.suffixWrapperWidth = undefined;
+    this.suffixWidth = undefined;
   }
 
   getDefaultSuffix(): ReactNode {
@@ -1119,12 +1117,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, clearButton } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
-      this.suffixWrapperWidth = toPx('0.21rem');
+      this.suffixWidth = toPx('0.21rem');
       if (children.props && children.props.style) {
         divStyle = {
           width: children.props.style.width,
         };
-        this.suffixWrapperWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
+        this.suffixWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -1136,12 +1134,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     } else if (children && children !== true) {
-      this.suffixWrapperWidth = this.measureTextWidth(children.toString()) + toPx('0.02rem')!;
+      this.suffixWidth = this.measureTextWidth(children.toString()) + toPx('0.02rem')!;
       divStyle = {
-        width: pxToRem(this.suffixWrapperWidth, true),
+        width: pxToRem(this.getSuffixWidth(), true),
       };
     } else {
-      this.suffixWrapperWidth = undefined;
+      this.suffixWidth = undefined;
     }
 
     const isSuffixClick = props && props.onClick;
@@ -1149,7 +1147,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
-    const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.02rem')! : undefined, true);
+    const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
     return (
       <div
         className={classString}
@@ -1293,9 +1291,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton) {
       let right: number | undefined;
-      if (this.lengthInfoWidth || this.suffixWrapperWidth) {
+      if (this.lengthInfoWidth || this.getSuffixWidth()) {
         right = this.isSuffixClick
-          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWrapperWidth, 0)
+          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0)
           : this.lengthInfoWidth;
       }
       return this.wrapperInnerSpanButton(
