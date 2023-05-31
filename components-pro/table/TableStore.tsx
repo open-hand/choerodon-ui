@@ -17,6 +17,7 @@ import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigConte
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 import noop from 'lodash/noop';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
@@ -2902,13 +2903,15 @@ export default class TableStore {
           customized = await tableCustomizedLoad(customizedCode, 'Table');
         }
         if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
-          customized = await tableCustomizedLoad(customizedCode, 'Board', {
+          const res = await tableCustomizedLoad(customizedCode, 'Board', {
             type: 'detail',
             id: boardCustomized.customizedDS.current.get('id'),
           });
           try {
+            const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+            boardCustomized.customizedDS.set({objectVersionNumber: res.objectVersionNumber, dataJson});
             // @ts-ignore
-            customized = {...JSON.parse(customized.dataJson), ...customized};
+            customized = {...omit(res, 'dataJson'), ...dataJson};
           } catch (error) {
             warning(false, error.message);
           }

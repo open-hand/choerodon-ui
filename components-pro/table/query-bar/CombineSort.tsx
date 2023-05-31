@@ -1,10 +1,12 @@
-import React, { FunctionComponent, useMemo, useState, useCallback, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useMemo, useState, useCallback, useContext } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { observer } from 'mobx-react-lite';
 import { FieldType, SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
+import pick from 'lodash/pick';
 import Icon from 'choerodon-ui/lib/icon';
 import Popover from 'choerodon-ui/lib/popover';
 import Tag from 'choerodon-ui/lib/tag';
+import { warning } from 'choerodon-ui/dataset/utils';
 import DataSet from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
 import Select from '../../select';
@@ -37,7 +39,8 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   const [visible, setVisible] = useState<boolean>(false);
   const sortPrefixCls = `${prefixCls}-combine-sort`;
   
-  const { customizedDS, saveCustomized } = useContext(BoardContext);
+  const { customizedDS, saveCustomized, customizedCode, getConfig } = useContext(BoardContext);
+  const customizedLoad = getConfig('customizedLoad');
 
   const sortFieldOptions = useMemo<DataSet>(() => {
     const sortFieldData: any[] = [];
@@ -101,15 +104,23 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
     });
   }, [sortFieldOptions, dataSet, dataSet.combineSortFieldNames, visible]);
 
-  /**
-   * 加载 board 组件列表视图多列排序数据
-   */
-  useEffect(() => {
-    if (customizedDS && customizedDS.current) {
-      sortDS.loadData(customizedDS.current.get('combineSort'));
+  // 加载 board 组件非初始列表视图下的多列排序数据及objectVersionNumber
+  const loadDetail = useCallback(async () => {
+    if (customizedDS && customizedDS.current && customizedDS.current.get('id') !== '__DEFAULT__') {
+      const res = await customizedLoad(customizedCode!, 'Board', {
+        type: 'detail',
+        id: customizedDS!.current!.get('id'),
+      });
+      try {
+        const dataJson: any = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+        sortDS.loadData(dataJson.combineSort);
+        customizedDS.current.set({objectVersionNumber: res.objectVersionNumber, dataJson});
+      } catch (error) {
+        warning(false, error.message);
+      }
     }
   }, []);
-  
+
   const optionsFilter = (record: Record) => {
     return sortDS.every(sortRecord => sortRecord.get('sortName') !== record.get('value'));
   }
@@ -119,6 +130,9 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
       sortDS.reset();
     }
     setVisible(visible);
+    if (visible) {
+      loadDetail();
+    }
   }
 
   const handleCancel = () => {
@@ -134,7 +148,8 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
         records.forEach(record => {
           sortInfo.set(record.get('sortName'), record.get('order'));
         });
-        if (customizedDS && customizedDS.current) {
+        const isDefault = customizedDS && customizedDS.current ? customizedDS.current.get('id') === '__DEFAULT__' : true;
+        if (customizedDS && customizedDS.current && !isDefault) {
           const res = await saveCustomized(customizedDS.current.toData());
           customizedDS.current.set('objectVersionNumber', res.objectVersionNumber);
         }

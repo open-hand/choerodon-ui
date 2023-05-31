@@ -424,6 +424,12 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
       ) : getCustomizationIcon()}
       <div className={cls}>
         <List
+          // @ts-ignore
+          style={{
+            height: viewProps && viewProps.viewHeight || 366,
+            overflowX: 'hidden',
+            overflowY: 'scroll',
+          }}
           grid={{ gutter: 16, column: (24 / customizedDS!.current!.get(ViewField.cardWidth)) as ColumnCount || 4 as ColumnCount }}
           dataSet={cardDS}
           pagination
