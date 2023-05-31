@@ -16,6 +16,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import difference from 'lodash/difference';
 import defer from 'lodash/defer';
+import isUndefined from 'lodash/isUndefined';
 import classNames from 'classnames';
 
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
@@ -609,15 +610,18 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   createFields(element, name): ReactElement {
     const { onEnterDown } = element.props;
-    if (onEnterDown && isFunction(onEnterDown)) {
-      return element;
-    }
     const props: any = {
-      onEnterDown: () => {
+      onEnterDown: onEnterDown && isFunction(onEnterDown) ? onEnterDown : () => {
         this.handleQuery();
       },
       ref: (node) => this.refEditors.set(name, node),
+      _inTable: true,
+      showValidation: 'tooltip',
     };
+    const elementName = element && isFunction(element.type) && (element.type as any).displayName;
+    if (isUndefined(element.props.suffix) && ['Currency', 'NumberField', 'EmailField', 'UrlField', 'TextField'].includes(elementName)) {
+      Object.assign(props, { suffix: <Icon type="search" /> });
+    }
     return cloneElement(element, props);
   }
 
