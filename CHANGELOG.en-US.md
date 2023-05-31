@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
 - 💄 `<pro>TextField`: Optimize suffix width calculation.
 - 💄 `style`: Optimize some component style units.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar input field suffix display logic.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
 - 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
