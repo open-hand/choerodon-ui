@@ -910,7 +910,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       _inTable: true,
       showValidation: 'tooltip',
     };
-    if (isUndefined(element.props.suffix) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].includes(element.type.name)) {
+    const elementName = element && isFunction(element.type) && (element.type as any).displayName;
+    if (isUndefined(element.props.suffix) && ['Currency', 'NumberField', 'EmailField', 'UrlField', 'TextField'].includes(elementName)) {
       Object.assign(props, { suffix: <Icon type="search" /> });
     }
     return cloneElement(element, props);

@@ -20,6 +20,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
 - 💄 `<pro>TextField`: 优化后缀宽度计算。
 - 💄 `style`: 优化部分组件样式单位。
+- 💄 `<pro>Table`: 优化动态筛选条的输入框后缀显示逻辑。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
 - 🐞 `Upload`: 修复 picture-card 模式下配置 showPreviewIcon 或 showDownloadIcon 不生效的问题。
