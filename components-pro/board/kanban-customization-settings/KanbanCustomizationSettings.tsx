@@ -239,7 +239,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               icon='delete_black-o'
               funcType={FuncType.link}
               color={ButtonColor.primary}
-              onClick={() => sortDS.delete(record, false)}
+              onClick={() => sortDS.delete(record, !!record.get('sortName'))}
             />
           </span>
         )}
