@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
 - 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
 - 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
+- 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
 
 ## 1.6.2
 

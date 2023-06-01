@@ -26,6 +26,7 @@ timeline: true
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
 - 🐞 `Upload`: 修复 picture-card 模式下配置 showPreviewIcon 或 showDownloadIcon 不生效的问题。
 - 🐞 `PerformanceTable`: 修复动态筛选条筛选条件配置 onEnterDown 时聚焦交互状态异常的问题。
+- 🐞 `Avatar`: 修复 Avatar 组件在 Modal 弹窗中打开文字出现翻转的问题。
 
 ## 1.6.2
 
