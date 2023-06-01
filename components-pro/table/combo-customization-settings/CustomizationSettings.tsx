@@ -25,7 +25,7 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
         title: column.title,
         hidden: column.hidden,
         name: column.name,
-        sort: column.sort,
+        sort: _sort,
         titleEditable: column.titleEditable,
         hideable: column.hideable,
         draggable: column.draggable,
