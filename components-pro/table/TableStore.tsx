@@ -2835,24 +2835,26 @@ export default class TableStore {
         const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
         const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
         // board 组件列表视图配置保存
-        if (this.customizedBtn) {
+        if (this.customizedBtn && boardCustomized && boardCustomized.customizedDS) {
+          const currentRecord = boardCustomized.customizedDS.current;
           // @ts-ignore
           await tableCustomizedSave(customizedCode,
             {
               dataJson: JSON.stringify(omit(this.customized, ['dataJson', 'creationDate', 'createdBy', 'lastUpdateDate', 'lastUpdatedBy', '_token', 'userId', 'tenantId', 'id'])),
-              ...omit(this.customized, ['dataJson']), defaultFlag: 1, viewType: 'table',
+              ...omit(this.customized, ['dataJson']), defaultFlag: 1, viewType: 'table', id: currentRecord.get('id'), objectVersionNumber: currentRecord.get('objectVersionNumber'),
             },
             this.customizedBtn ? 'Board' : 'Table');
 
-          if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
+          if (customizedCode) {
             const res = await tableCustomizedLoad(customizedCode, 'Board', {
               type: 'detail',
-              id: this.customized.id,
+              id: currentRecord.get('id'),
             });
             try {
+              const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
               // @ts-ignore
-              this.customized = { columns: {}, ...JSON.parse(res.dataJson), ...res };
-              boardCustomized.customizedDS.current.set('viewName', res.viewName);
+              this.customized = {columns: {}, ...omit(res, 'dataJson'), ...dataJson};
+              currentRecord.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
             } catch (error) {
               warning(false, error.message);
             }
@@ -2909,7 +2911,7 @@ export default class TableStore {
           });
           try {
             const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
-            boardCustomized.customizedDS.set({objectVersionNumber: res.objectVersionNumber, dataJson});
+            boardCustomized.customizedDS.current.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
             // @ts-ignore
             customized = {...omit(res, 'dataJson'), ...dataJson};
           } catch (error) {
