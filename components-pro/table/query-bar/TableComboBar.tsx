@@ -378,7 +378,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   @action
   initConditionFields(props) {
     const { dataSet, record } = props;
-    const originalValue = omit(record.toData(), ['__dirty']);
+    const originalValue = record ? omit(record.toData(), ['__dirty']) : {};
     const conditionData = Object.entries(originalValue);
     this.originalValue = originalValue;
     this.originalConditionFields = [];
