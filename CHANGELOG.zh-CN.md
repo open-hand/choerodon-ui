@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch 属性。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
+- 💄 `DataSet`: 优化 childrenField 性能。
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
 - 💄 `<pro>TextField`: 优化后缀宽度计算。
 - 💄 `style`: 优化部分组件样式单位。

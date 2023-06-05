@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
+- 💄 `DataSet`: Optimize `childrenField` performance.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
 - 💄 `<pro>TextField`: Optimize suffix width calculation.
 - 💄 `style`: Optimize some component style units.

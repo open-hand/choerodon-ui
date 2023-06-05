@@ -31,6 +31,7 @@ import {
   findBindField,
   findBindFields,
   findBindTargetFields,
+  findMinOrMaxFields,
   generateData,
   generateJSONData,
   generateResponseData,
@@ -84,6 +85,11 @@ function initRecordField(record: Record, name: string, fieldProps?: FieldProps):
     fieldProps,
     dataSet,
   );
+}
+
+function initRecordData(initData: object, dataSet: DataSet) {
+  const { childrenField } = dataSet.props;
+  return observable.object(initData, childrenField && initData[childrenField] ? { [childrenField]: observable.ref } : undefined);
 }
 
 export interface RecordBaseProps {
@@ -159,7 +165,7 @@ export default class Record {
 
   set pristineData(data: object) {
     runInAction(() => {
-      const { dirtyData } = this;
+      const { dirtyData, dataSet } = this;
       if (dirtyData) {
         const newData = {};
         if (dirtyData.size) {
@@ -174,9 +180,9 @@ export default class Record {
             }
           });
         }
-        this.data = merge({}, data, newData);
+        this.data = initRecordData(merge({}, data, newData), dataSet);
       } else {
-        this.data = data;
+        this.data = initRecordData(data, dataSet);
       }
     });
   }
@@ -464,7 +470,7 @@ export default class Record {
       this.status = status;
       this.id = IDGen.next().value;
       const initData = isObservableObject(data) ? toJS(data) : data;
-      this.data = initData;
+      this.data = initRecordData(initData, dataSet);
       this.processData(initData);
       raf(() => {
         dataSet.fields.forEach(field => field.processForLookupAndLovConfig(this));
@@ -940,7 +946,7 @@ export default class Record {
       this.status = RecordStatus.sync;
     }
     if (hasError || isRemoved || dirty) {
-      this.data = toJS(this.pristineData);
+      this.data = initRecordData(toJS(this.pristineData), dataSet);
       this.dirtyData = undefined;
       this.memo = undefined;
       if (!dataSet.resetInBatch) {
@@ -1009,7 +1015,7 @@ export default class Record {
         }
       }
       if (data) {
-        this.data = data;
+        this.data = initRecordData(data, dataSet);
         this.processData(data, true);
         const { children } = dataSet;
         const keys = Object.keys(children);
