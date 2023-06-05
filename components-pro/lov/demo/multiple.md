@@ -72,6 +72,7 @@ class App extends React.Component {
   handleBeforeSelect = (records) => {
     if (!records.length) {
       message.warning('请选择至少一条记录');
+      // return new Promise(resolve => setTimeout(resolve, 1000));
       return false;
     }
   }

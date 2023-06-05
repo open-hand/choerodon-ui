@@ -170,12 +170,13 @@ export default class LovView extends Component<LovViewProps> {
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     const beforeSelect = onBeforeSelect(record);
     if (isPromise(beforeSelect)) {
-      beforeSelect.then(result => {
+      return beforeSelect.then(result => {
         if (result !== false) {
           this.closeModal(record);
         }
       });
-    } else if (beforeSelect !== false) {
+    }
+    if (beforeSelect !== false) {
       this.closeModal(record);
     }
     return false;
