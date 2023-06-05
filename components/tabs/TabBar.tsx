@@ -19,7 +19,6 @@ import React, {
   useState,
 } from 'react';
 import classnames from 'classnames';
-import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import Button from 'choerodon-ui/pro/lib/button';
 import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
@@ -97,8 +96,6 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     currentPanelMap,
     validationMap,
     onTabClick,
-    onPrevClick = noop,
-    onNextClick = noop,
     changeActiveKey,
     rippleDisabled,
   } = useContext(TabsContext);
@@ -476,7 +473,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const offset = offsetRef.current - navWrapNodeWH;
       setOffset(offset < 0 ? 0 : 0 - offset, setNextPrev);
     }
-  }, [getOffsetWH, setOffset, navWrapRef, onPrevClick, setNextPrev]);
+  }, [getOffsetWH, setOffset, navWrapRef, setNextPrev]);
 
   const toNext = useCallback(() => {
     const navWrapNode = navWrapRef.current;
@@ -487,7 +484,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const offset = offsetRef.current + navWrapNodeWH;
       setOffset(0 - (offset > navNodeWH ? navNodeWH - navWrapNodeWH : offset), setNextPrev);
     }
-  }, [getOffsetWH, setOffset, navWrapRef, onNextClick, setNextPrev]);
+  }, [getOffsetWH, setOffset, navWrapRef, setNextPrev]);
 
   const scrollToActiveTab = useCallback((e?: { target?: HTMLElement; currentTarget?: HTMLElement }) => {
     const vertical = isVertical(tabBarPosition);

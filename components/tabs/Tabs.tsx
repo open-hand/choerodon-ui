@@ -4,7 +4,6 @@ import React, {
   JSXElementConstructor,
   Key,
   MouseEvent,
-  MouseEventHandler,
   ReactNode,
   useCallback,
   useContext,
@@ -34,8 +33,6 @@ export interface TabsProps {
   showMore?: boolean;
   onChange?: (activeKey: string) => void;
   onTabClick?: (key: string) => void;
-  onPrevClick?: MouseEventHandler<any>;
-  onNextClick?: MouseEventHandler<any>;
   tabBarExtraContent?: ReactNode | null;
   tabBarStyle?: CSSProperties;
   inkBarStyle?: CSSProperties;
