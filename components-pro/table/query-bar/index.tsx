@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
+import { BigNumber } from 'bignumber.js';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -8,6 +9,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
+import { math } from 'choerodon-ui/dataset';
 import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
@@ -502,10 +504,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             if (isString(summaryCol)) {
               const field = dataSet.getField(summaryCol);
               if (field && fieldTypeArr.includes(field.get('type'))) {
-                const summaryValue = dataSet.reduce<number>((sum, record) => {
+                const summaryValue = dataSet.reduce<number | BigNumber>((sum, record) => {
                   const n = record.get(summaryCol);
-                  if (isNumber(n)) {
-                    return sum + n;
+                  if (isNumber(n) ||  math.isBigNumber(n)) {
+                    return math.plus(sum, n);
                   }
                   return sum;
                 }, 0);

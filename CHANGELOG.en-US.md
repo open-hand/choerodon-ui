@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
 - 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
 - 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
+- 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
 
 ## 1.6.2
 
