@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
 - 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
 - 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
+- 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
 
 ## 1.6.2
 

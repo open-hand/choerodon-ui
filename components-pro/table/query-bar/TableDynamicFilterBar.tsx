@@ -1619,9 +1619,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const result: Field[] = [];
     const tlsKey = getConfig('tlsKey');
     if (queryDataSet) {
-      const { fields, props: { fields: propFields = [] } } = queryDataSet;
+      const { fields } = queryDataSet;
+      const propFields = [...fields.values()].map(({props}) => props);
       const cloneFields: Map<string, Field> = fields.toJS();
-      propFields.forEach(({ name }) => {
+      propFields.forEach((fieldProps) => {
+        const name = fieldProps.get('name');
         if (name) {
           const field = cloneFields.get(name);
           const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
