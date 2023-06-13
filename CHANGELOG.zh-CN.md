@@ -23,12 +23,15 @@ timeline: true
 - 💄 `style`: 优化部分组件样式单位。
 - 💄 `<pro>Table`: 优化动态筛选条的输入框后缀显示逻辑。
 - 💄 `<pro>PerformanceTable`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>FormField`: 优化必输星号的样式。
+- 💄 `<pro>Output`: 优化多值场景下的 tooltip 控制。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
 - 🐞 `Upload`: 修复 picture-card 模式下配置 showPreviewIcon 或 showDownloadIcon 不生效的问题。
 - 🐞 `PerformanceTable`: 修复动态筛选条筛选条件配置 onEnterDown 时聚焦交互状态异常的问题。
 - 🐞 `Avatar`: 修复 Avatar 组件在 Modal 弹窗中打开文字出现翻转的问题。
 - 🐞 `<pro>Table`: 修复 summaryBar 浮点数计算精度问题。
+- 🐞 `<pro>Table`: 修复使用 addField 添加查询字段动态筛选条添加筛选下拉中的字段不会更新的问题。
 
 ## 1.6.2
 

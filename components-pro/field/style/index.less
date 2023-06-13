@@ -76,28 +76,6 @@
     }
   }
 
-  &-row &-label::after,
-  &-label label::after {
-    display: inline-block;
-    color: @label-required-color;
-    font-family: @font-family-required-symbol;
-    line-height: 1;
-    vertical-align: middle;
-    content: ' ';
-  }
-
-  &-row &-required&-label::after,
-  &-required&-label label::after {
-    width: 0.08rem;
-    margin-left: 0.04rem;
-    content: '*';
-  }
-
-  &-label-vertical&-required::after,
-  &-label&-label-useColon::after {
-    display: none;
-  }
-
   &-row &-label&-label-useColon::after,
   &-label&-label-useColon label::after {
     position: relative;
@@ -138,9 +116,9 @@
     width: auto;
   }
 
-  &-row &-required&-label-useColon::before,
+  &-row &-required&-label::before,
   &-label-vertical&-required&-label::before,
-  &-required&-label&-label-useColon label > span::before {
+  &-required&-label&-label label > span::before {
     display: inline-block;
     margin-right: 0.04rem;
     color: @label-required-color;

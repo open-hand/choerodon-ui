@@ -23,12 +23,15 @@ timeline: true
 - 💄 `style`: Optimize some component style units.
 - 💄 `<pro>Table`: Optimize the dynamic filter bar input field suffix display logic.
 - 💄 `<pro>PerformanceTable`: Added default suffixes for filtering criteria for character and numerical types in dynamic filter bars.
+- 💄 `<pro>FormField`: Optimize the style of the asterisk.
+- 💄 `<pro>Output`: Optimize `tooltip` control in multiple scenarios.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
 - 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
 - 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
 - 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
 - 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
+- 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
 
 ## 1.6.2
 
