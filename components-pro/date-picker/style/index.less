@@ -107,13 +107,6 @@
     }
   }
 
-  &-now-disabled {
-    color: #bcbcbc;
-
-    &:hover {
-      color: #bcbcbc;
-    }
-  }
   &-footer &-now-selected{
     color: @text-color;
     &:hover {
@@ -296,6 +289,15 @@
 
     a {
       color: @date-primary-color;
+    }
+  }
+
+  a&-now-disabled {
+    color: #bcbcbc;
+    cursor: not-allowed;
+
+    &:hover {
+      color: #bcbcbc;
     }
   }
 
