@@ -8,7 +8,7 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { TimeStep } from 'choerodon-ui/dataset/interface';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -87,7 +87,7 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 单元格渲染
    */
   cellRenderer?: (mode: ViewMode) => RenderFunction | undefined;
-  filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
+  filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode, rangeTarget?: 0 | 1, rangeValue?: [any, any]) => boolean;
   min?: MomentInput | null;
   max?: MomentInput | null;
   step?: TimeStep;
@@ -1062,7 +1062,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   isDateOutOfFilter(currentDate: Moment, selected: Moment, mode?: ViewMode): boolean {
     const { filter } = this.props;
     if (filter) {
-      return filter(currentDate, selected, mode || this.getViewMode());
+      return filter(currentDate, selected, mode || this.getViewMode(), this.rangeTarget, toJS(this.rangeValue));
     }
     return true;
   }
@@ -1077,7 +1077,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const { filter } = this.props;
     const isValid = this.isUnderRange(moment());
     if (isValid && filter) {
-      return filter(moment(), selected);
+      return filter(moment(), selected, this.getViewMode(), this.rangeTarget, toJS(this.rangeValue));
     }
     return isValid;
   }
