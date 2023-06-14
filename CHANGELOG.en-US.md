@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimized the `filter` property to support range mode filtering. Optimized display of disabled elements in the `decade` panel. Optimized today button disable style.
 - 💄 `<pro>Radio`: Optimized the issue of too wide click hot area in `Form`.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
 - 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
 - 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
