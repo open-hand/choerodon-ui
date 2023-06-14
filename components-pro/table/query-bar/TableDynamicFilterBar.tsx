@@ -59,6 +59,8 @@ import { OPERATOR, OPERATOR_TYPE } from './quick-filter/Operator';
 import { getEditorByField } from '../utils';
 import { ShowValidation } from '../../form/enum';
 import { TriggerViewMode } from '../../trigger-field/enum';
+import CombineSort from './CombineSort';
+import TableStore from '../TableStore';
 
 /**
  * 当前数据是否有值并需要选中
@@ -256,6 +258,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   sortableFieldNames?: string[];
   advancedSearchFields?: AdvancedSearchField[];
   defaultActiveKey?: string;
+  tableStore?: TableStore;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -1460,6 +1463,20 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return null;
   }
 
+  getCombineSort(): ReactNode {
+    const { dataSet, sortableFieldNames, tableStore } = this.props;
+    const { prefixCls } = this;
+    let combineSort: ReactNode = null;
+    if (dataSet.props.combineSort && sortableFieldNames && sortableFieldNames.length > 0) {
+      combineSort = <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />;
+    }
+    if (!tableStore) return combineSort;
+
+    const { props: { boardCustomized, customizedCode } } = tableStore;
+    if (boardCustomized && !customizedCode) return null;
+    return combineSort;
+  }
+
   /**
    * 渲染模糊搜索
    */
@@ -1539,17 +1556,19 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly, sortableFieldNames } = this.props;
+    const { defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
     const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
     const fuzzyQuery = this.getFuzzyQuery();
+    const combineSort = this.getCombineSort();
     const advancedFilter = this.getAdvancedFilter();
     if (fuzzyQueryOnly) {
       return (
         <div className={`${prefixCls}-filter-menu`}>
           {prefix}
           {advancedFilter}
+          {combineSort}
           {fuzzyQuery}
           {suffix}
         </div>
@@ -1579,7 +1598,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             optionDataSet: dataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
-            sortableFieldNames,
             searchText: this.searchText,
             loadConditionData: this.loadConditionData,
             defaultActiveKey,
@@ -1595,6 +1613,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {prefix}
           {fuzzyQuery}
           {advancedFilter}
+          {combineSort}
           {quickFilterMenu}
           {resetButton}
           {this.isSingleLineOpt() ? null : (
