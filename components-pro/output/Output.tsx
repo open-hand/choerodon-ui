@@ -143,6 +143,25 @@ export default class Output extends FormField<OutputProps> {
     return this.processRenderer(this.getValue());
   }
 
+  getTooltipTitle(): ReactNode {
+    if (this.multiple) {
+      const values = this.getValues();
+      const repeats: Map<any, number> = new Map<any, number>();
+      const texts = values.map((v) => {
+        const key = this.getValueKey(v);
+        const repeat = repeats.get(key) || 0;
+        const text = this.processText(this.processValue(v));
+        repeats.set(key, repeat + 1);
+        if (!isNil(text)) {
+          return text;
+        }
+        return undefined;
+      });
+      return texts.join(typeof this.multiple === 'string' ? this.multiple : '、');
+    }
+    return this.getRenderedValue();
+  }
+
   showTooltip(e): boolean {
     if (super.showTooltip(e)) {
       return true;
@@ -151,7 +170,7 @@ export default class Output extends FormField<OutputProps> {
     const { tooltip = getTooltip('output') } = this.props;
     const { element, field } = this;
     const { isOverflowMaxTagCount } = this.renderMultipleValues(true);
-    const title = this.multiple ? this.processRenderer(this.getValue()) : this.getRenderedValue();
+    const title = this.getTooltipTitle();
     const placement = getTooltipPlacement('output') || 'right';
     const theme = getTooltipTheme('output');
     if (element && !(field && field.get('multiLine', this.record)) && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && (!this.multiple && isOverflow(element) || this.multiple && isOverflowMaxTagCount)))) {
