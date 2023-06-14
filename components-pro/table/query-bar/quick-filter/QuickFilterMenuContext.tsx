@@ -31,7 +31,6 @@ export interface QuickFilterContextValue extends QuickFilterProps {
   newFilterDataSet: DataSet;
   shouldLocateData: boolean;
   refEditors?: Map<string, any>;
-  sortableFieldNames?: string[];
   defaultActiveKey?: string;
 }
 

@@ -42,7 +42,6 @@ import {
 
 import Store from './QuickFilterMenuContext';
 import Field from '../../../data-set/Field';
-import CombineSort from '../CombineSort';
 import { AdvancedFieldSet } from './QuickFilterDataSet';
 
 const modalKey = Modal.key();
@@ -256,7 +255,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
     optionDataSet,
     shouldLocateData,
     refEditors,
-    sortableFieldNames,
     searchText = 'params',
     loadConditionData = noop,
     defaultActiveKey,
@@ -781,9 +779,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
   // 租户预置筛选及仅保存条件时，无保存按钮
   return (
     <>
-      {dataSet.props.combineSort && sortableFieldNames && sortableFieldNames.length > 0 && (
-        <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />
-      )}
       <Select
         isFlat
         placeholder={$l('Table', 'fast_filter')}

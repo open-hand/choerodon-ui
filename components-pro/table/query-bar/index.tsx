@@ -870,7 +870,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { dynamicFilterBar, searchCode } = this.props;
-    const { prefixCls } = this.context;
+    const { prefixCls, tableStore } = this.context;
     const sortableFieldNames = this.getSortableFieldNames();
     return (
       <TableDynamicFilterBar
@@ -879,6 +879,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         dynamicFilterBar={dynamicFilterBar}
         prefixCls={prefixCls}
         sortableFieldNames={sortableFieldNames}
+        tableStore={tableStore}
         {...props}
       />
     );
