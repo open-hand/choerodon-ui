@@ -174,6 +174,46 @@ class App extends React.Component {
           //   return false;
           // },
           //
+          // 高级搜索配置
+          advancedSearchFields: [
+            {
+              name: 'name',
+              alias: 'nameAlias',
+              source: 'queryFields',
+            },
+            {
+              name: 'code',
+              alias: 'codeId',
+              source: 'queryFields',
+            },
+            {
+              name: 'code_code',
+              alias: 'code_bind',
+              source: 'queryFields',
+            },
+            {
+              name: 'age',
+              source: 'fields',
+              // fieldPorps: {
+              //   label: '高级年龄',
+              // },
+            },
+            {
+              name: 'startDate',
+              tableName: 'TABLENAME',
+              source: 'queryFields',
+            },
+            {
+              name: 'newText',
+              fieldPorps: {
+                label: '新字段',
+                type: 'string',
+                label: '性别（多值）',
+                lookupCode: 'HR.EMPLOYEE_GENDER',
+              },
+              source: 'other',
+            },
+          ],
           dynamicFilterBar: {
             // suffixes: [<Button icon="close" />],
             // tableFilterAdapter: 后端保存筛选项时，过滤条请求适配器，支持全局配置;  使用该功能前通常在全局配置中配置相关通用 API 适配器，开发者无需单独配置。

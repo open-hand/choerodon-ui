@@ -315,7 +315,7 @@
         "en": "AutoHeight"
       },
       "description": {
-        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动，并且保持表头固定。(需要父级元素非仅由 Table 撑开)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数;单位默认 px) } |\n",
+        "zh": "通过 autoHeight 使得表格可以自适应容器高度，内容超出表内滚动，并且保持表头固定。(需要父级元素非仅由 Table 撑开；若存在筛选条，需要将筛选条的高度预留在内)。\n\nautoHeight 属性:\n\n| 类型 | 默认值 / 自定义 |\n| --- |  --- |\n| boolean | false |\n| boolean | true = { type: 'minHeight', diff: 80 } |\n| object | { type: 'minHeight' \\| 'maxHeight', diff: number(Table 自适应底部预留调整参数;单位默认 px) } |\n",
         "en": "AutoHeight.\n"
       },
       "order": 19,
@@ -330,7 +330,7 @@
         "en": "Virtual Scroll"
       },
       "description": {
-        "zh": "虚拟滚动，virtual && virtualCell。\n\n 在大数据需求并同时对功能性需求很高的情况下建议开启。\n\n",
+        "zh": "虚拟滚动，virtual \n\n 在大数据需求并同时对功能性需求很高的情况下建议开启。\n\n",
         "en": "Virtual Scroll.\n"
       },
       "order": 20,
