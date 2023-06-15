@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
 - 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
 - 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
+- 🐞 `<pro>Table`: Fix an issue where deleting filter entries in the dynamic filter bar would abnormally backfill searchId.
 
 ## 1.6.2
 

@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `Avatar`: 修复 Avatar 组件在 Modal 弹窗中打开文字出现翻转的问题。
 - 🐞 `<pro>Table`: 修复 summaryBar 浮点数计算精度问题。
 - 🐞 `<pro>Table`: 修复使用 addField 添加查询字段动态筛选条添加筛选下拉中的字段不会更新的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条中删除筛选项会异常回填 searchId 的问题。
 
 ## 1.6.2
 
