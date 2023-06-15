@@ -2,28 +2,33 @@
 title: API
 ---
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| width | 宽度 | number |  |
-| height | 高度 | number |  |
-| src | 路径 | string |  |
-| border | 边框 | boolean |  |
-| block | 块级图片 | boolean | true |
-| lazy | 懒加载 | boolean |  |
-| preview | 可预览 | boolean | true |
-| previewUrl | 预览时的路径， 默认为src | string |  |
-| downloadUrl(1.5.1) | 预览时的下载路径 | string \| Function |  |
-| previewTarget | 预览方式，若设置则通过 a 标签来预览， 默认是弹窗预览 | string |  |
-| index | 序号, 配合[Picture.Provider](#pictureprovider)进行组预览 | number |  |
-| status | 状态 | 'empty' \| 'loaded' \| 'error' |  |
-| objectFit | 填充方式, [ObjectFit](#objectfit) | ObjectFit | 'fill' |
-| objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |
-| sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#source) | Source[] |   |
-| children | 代替图片渲染 | ReactNode |   |
+| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| width | 宽度 | number |  |  |
+| height | 高度 | number |  |  |
+| src | 路径 | string |  |  |
+| border | 边框 | boolean |  |  |
+| block | 块级图片 | boolean | true |  |
+| lazy | 懒加载 | boolean |  |  |
+| modalProps | 图片预览弹窗属性，详情见[ModalProps](/zh/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
+| preview | 可预览 | boolean | true |  |
+| previewUrl | 预览时的路径， 默认为src | string |  |  |
+| downloadUrl | 预览时的下载路径 | string \| Function |  | 1.5.1 |
+| previewTarget | 预览方式，若设置则通过 a 标签来预览， 默认是弹窗预览 | string |  |  |
+| index | 序号, 配合[Picture.Provider](#pictureprovider)进行组预览 | number |  |  |
+| status | 状态 | 'empty' \| 'loaded' \| 'error' |  |  |
+| objectFit | 填充方式, [ObjectFit](#objectfit) | ObjectFit | 'fill' |  |
+| objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |  |
+| sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#source) | Source[] |   |  |
+| children | 代替图片渲染 | ReactNode |   |  |
 
 ### Picture.Provider
 
 图片组预览提供者
+
+| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| modalProps | 图片预览弹窗属性，详情见[ModalProps](/zh/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
 
 ### Picture.Context
 

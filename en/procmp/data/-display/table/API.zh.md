@@ -55,6 +55,8 @@ title: API
 | onExpand              | 点击展开图标时触发                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |    |
 | virtual               | 是否开启虚拟滚动，当设置表格高度时有效                                                                                                                                                               | boolean                                                                                                | [globalConfig.tableVirtual](/zh/procmp/configure/configure)     |    |
 | virtualCell | 虚拟单元格 | boolean | [globalConfig.tableVirtualCell](/zh/procmp/configure/configure) | 1.3.0  |
+| columnBuffer | 列的缓冲区。开启虚拟滚动后，在可见区域之前/之后要呈现的额外列数。且 columnBuffer 的值大于或等于 columnThreshold 的值| number | [globalConfig.tableVirtualBuffer](/zh/procmp/configure/configure) | 1.6.2 |
+| columnThreshold | 列的阈值。开启虚拟滚动后，在呈现新列之前可见的列数。且 columnThreshold 的值小于或等于 columnBuffer 的值 | number | [globalConfig.tableVirtualBuffer](/zh/procmp/configure/configure) | 1.6.2 |
 | virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |    |
 | autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false | 1.4.5 |
 | autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |    |
@@ -64,7 +66,7 @@ title: API
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |    |
 | columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragrender)  |  |    |
 | rowDragRender | 控制行的拖拽渲染| 请查看DragRender[配置项](#dragrender) |  |    |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件 | (dataSet, columns, resultDrag, provided) => false \| void \|resultDrag   |  |    |
+| onDragEndBefore | 完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置。树形拖拽可通过 recordIndexFromTo 获取到正确的记录索引: \[sourceRecordIndex, destinationRecordIndex\] | (dataSet, columns, resultDrag, provided, recordIndexFromTo: \[number?, number?\]) => false \| void \|resultDrag   |  |    |
 | keyboard | 开启关闭新增的快捷按钮事件 | boolean | [globalConfig.tableKeyboard](/zh/procmp/configure/configure) |   |
 | treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | | 1.1.0   |
 | treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} | 1.1.0  |
@@ -116,6 +118,7 @@ title: API
 | header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
 | footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                          |           |  |
 | renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values),  aggregationTree: ReactElement[] }) => ReactNode                                                                             |           |  |
+| tagRenderer        | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  | 1.6.2 |
 | editor          | 编辑器, 设为 true 时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 false 值，而不是在控件上加 disabled。                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |  |
 | lock            | 是否锁定， 可选值 false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
 | align           | 文字对齐方式，可选值： left \| center \| right                                                                                                                                                    | string                                                                                                                             |  [globalConfig.tableColumnAlign](/zh/procmp/configure/configure)  |  |
@@ -131,7 +134,7 @@ title: API
 | headerClassName | 列头样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
 | footerStyle     | 列脚内链样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
 | footerClassName | 列脚样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
-| help            | 额外信息，常用于提示                                                                                                                                                                              | string                                                                                                                           |           |  |
+| help            | 额外信息，常用于提示                                                                                                                                                                              | ReactNode                                                                                                                           |           |  |
 | showHelp        | 展示提示信息的方式。可选值 tooltip \| newLine \| none                                                                                                                                             | string                                                                                                                             | tooltip |  |
 | onCell          | 设置单元格属性                                                                                                                                                                                    | ({ dataSet, record, column }) => object                                                                                            |      [globalConfig.tableColumnOnCell](/zh/procmp/configure/configure)     |  |
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，数组可选值：edit \| delete 或 \[edit\| delete , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
@@ -206,8 +209,8 @@ title: API
 | 参数        | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
 | searchText | 模糊查询参数名 | string | params |
-| suffixes | 过滤条后缀渲染区 | | filter \| ReactElement |  |
-| prefixes | 过滤条前缀渲染区 | React.ReactElement<any>[] |  |
+| suffixes | 过滤条后缀渲染区 | React.ReactElement<any>[]，数组元素支持 'filter' |  |
+| prefixes | 过滤条前缀渲染区 | React.ReactElement<any>[]，数组元素支持 'filter' |  |
 | tableFilterAdapter | 过滤条请求适配器 | TransportProps |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
