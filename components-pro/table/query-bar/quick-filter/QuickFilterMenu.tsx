@@ -522,6 +522,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
     if (menuRecord) {
       const currentId = menuRecord.get('searchId').toString();
       searchId = record.get('searchId').toString() === currentId ? null : currentId;
+    } else if (typeof menuRecord === 'undefined') {
+      searchId = undefined;
     }
     const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     await menuDataSet.delete(delRecord, `${$l('Table', 'whether_delete_filter')}：${record.get('searchName')}？`);
