@@ -37,7 +37,7 @@ export interface CollapseProps {
   className?: string;
   bordered?: boolean;
   prefixCls?: string;
-  expandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
+  expandIcon?: ((panelProps: PanelProps) => ReactNode) | 'text';
   expandIconPosition?: ExpandIconPosition;
   trigger?: TriggerMode;
   ghost?: boolean;
