@@ -390,14 +390,14 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
-  const onReset = () => {
+  const onReset = useCallback(() => {
     setFilterText('');
     runInAction(() => {
       tableStore.headerFilter = undefined;
     })
-  };
+  }, [setFilterText, tableStore]);
 
-  const doFilter = () => {
+  const doFilter = useCallback(() => {
     if (!isUndefined(filterText)) {
       runInAction(() => {
         tableStore.headerFilter = {
@@ -407,7 +407,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         };
       })
     }
-  };
+  }, [filterText, tableStore, name, filter]);
 
   const renderResizer = () => {
     const { rightColumnGroups: { columns }, overflowX } = tableStore;
