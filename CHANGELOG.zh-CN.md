@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化 filter 属性，支持 range 模式过滤。优化 decade 面板中禁用元素显示问题。优化今天按钮禁用样式。
 - 💄 `<pro>Radio`: 优化在 Form 下的点击热区过宽问题。
 - 💄 `<pro>Table`: 优化动态筛选条中支持前端多列排序。
+- 💄 优化部分代码实现。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
