@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
 - 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
 - 🐞 `<pro>Table`: Fix an issue where deleting filter entries in the dynamic filter bar would abnormally backfill searchId.
+- 🐞 `<pro>Table`: Fix the issue that customization could not change the height after the table was set to height.
 
 ## 1.6.2
 
