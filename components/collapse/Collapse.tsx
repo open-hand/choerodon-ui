@@ -64,11 +64,6 @@ export default class Collapse extends Component<CollapseProps, any> {
 
   context: ConfigContextValue;
 
-  renderExpandIcon = (panelProps: PanelProps = {}) => {
-    const { expandIcon } = this.props;
-    return expandIcon ? expandIcon(panelProps) : null;
-  };
-
   renderExpandTextContent = (panelProps: PanelProps = {}, locale, localeCode, expandIconPositionCof) => {
     const {
       prefixCls: customizePrefixCls,
@@ -148,7 +143,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     let expandIconContent;
 
     if (typeof expandIconCof === 'function') {
-      expandIconContent = (panelProps: PanelProps) => this.renderExpandIcon(panelProps);
+      expandIconContent = (panelProps: PanelProps) => expandIconCof(panelProps);
     } else if (expandIconCof === 'text') {
       expandIconContent = (panelProps: PanelProps) => {
         return (
