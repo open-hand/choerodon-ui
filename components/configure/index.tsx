@@ -126,7 +126,7 @@ export interface Config extends DataSetConfig {
   iconfontPrefix?: string;
   ripple?: boolean;
   collapseExpandIconPosition?: string;
-  collapseExpandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
+  collapseExpandIcon?: ((panelProps: PanelProps) => ReactNode) | 'text';
   collapseTrigger?: string;
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
   lovTableProps?: Partial<TableProps> | LovTablePropsHook;
