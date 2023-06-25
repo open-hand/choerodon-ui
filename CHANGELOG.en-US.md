@@ -17,7 +17,8 @@ timeline: true
 
 - 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
-- 💄 `DataSet`: Optimize `childrenField` performance.
+- 💄 `<pro>DataSet`: Optimize `childrenField` performance.
+- 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
 - 💄 `<pro>TextField`: Optimize suffix width calculation.
 - 💄 `style`: Optimize some component style units.
@@ -29,6 +30,7 @@ timeline: true
 - 💄 `<pro>Radio`: Optimized the issue of too wide click hot area in `Form`.
 - 💄 `<pro>Table`: Optimize the dynamic filter bar to support front-end multi-column sorting.
 - 💄 Optimize some code implementation.
+- 💄 `<pro>Table`: Optimize query bar performance.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.

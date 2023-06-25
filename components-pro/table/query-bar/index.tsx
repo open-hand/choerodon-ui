@@ -188,6 +188,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   exportData: any;
 
+  queryFieldsElement: ReactElement<any>[] = [];
+
   /**
    * 多行汇总
    */
@@ -774,6 +776,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
       const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
+      // 减少重复渲染
+      if (!current || (this.queryFieldsElement.length && dataSet.status !== DataSetStatus.ready)) return this.queryFieldsElement;
       const cloneFields: Map<string, Field> = fields.toJS();
       const tlsKey = getConfig('tlsKey');
       const processField = (field, name) => {
@@ -819,6 +823,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         processField(field, name);
       });
     }
+    this.queryFieldsElement = result;
     return result;
   }
 

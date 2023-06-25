@@ -17,7 +17,8 @@ timeline: true
 
 - 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch 属性。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
-- 💄 `DataSet`: 优化 childrenField 性能。
+- 💄 `<pro>DataSet`: 优化 childrenField 性能。
+- 💄 `<pro>DataSet`: 优化查询 dataSet 实例 current 记录赋值。
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
 - 💄 `<pro>TextField`: 优化后缀宽度计算。
 - 💄 `style`: 优化部分组件样式单位。
@@ -29,6 +30,7 @@ timeline: true
 - 💄 `<pro>Radio`: 优化在 Form 下的点击热区过宽问题。
 - 💄 `<pro>Table`: 优化动态筛选条中支持前端多列排序。
 - 💄 优化部分代码实现。
+- 💄 `<pro>Table`: 优化查询条性能。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
