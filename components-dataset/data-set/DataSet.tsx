@@ -721,7 +721,7 @@ export default class DataSet extends EventManager {
   set queryDataSet(ds: DataSet | undefined) {
     runInAction(() => {
       set(this.props, 'queryDataSet', ds);
-      if (ds) {
+      if (ds && !ds.current) {
         // 初始化时如果直接执行create，mobx会报错，所以使用了defer
         ds.pending.add(
           new Promise<void>(reslove => {
@@ -1043,7 +1043,7 @@ export default class DataSet extends EventManager {
         if (currentRecord) {
           currentRecord.isCurrent = false;
         }
-        if (record && record.dataSet === this) {
+        if (record && record.dataSet === this && !record.isCurrent) {
           record.isCurrent = true;
         }
         this.fireEvent(DataSetEvents.indexChange, {
@@ -1799,6 +1799,7 @@ export default class DataSet extends EventManager {
       this.push(record);
     }
     if (this.props.autoLocateAfterCreate) {
+      record.isCurrent = true;
       this.current = record;
     }
     if (validationRules && this.validationSelfErrors) {
@@ -3093,6 +3094,7 @@ Then the query method will be auto invoke.`,
   private initQueryDataSet(queryDataSet?: DataSet, queryFields?: FieldProps[]) {
     if (queryFields) {
       queryDataSet = new DataSet({
+        autoCreate: true,
         fields: queryFields,
       }, this.context);
     }
