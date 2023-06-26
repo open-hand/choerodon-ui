@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>FormField`: 优化必输星号的样式。
 - 💄 `<pro>Output`: 优化多值场景下的 tooltip 控制。
 - 💄 `<pro>DatePicker`: 优化 filter 属性，支持 range 模式过滤。优化 decade 面板中禁用元素显示问题。优化今天按钮禁用样式。
+- 💄 `<pro>DatePicker`: 优化 DatePicker 在 Mac 端选择年份区间时显示换行的问题。
 - 💄 `<pro>Radio`: 优化在 Form 下的点击热区过宽问题。
 - 💄 `<pro>Table`: 优化动态筛选条中支持前端多列排序。
 - 💄 优化部分代码实现。

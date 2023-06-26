@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>FormField`: Optimize the style of the asterisk.
 - 💄 `<pro>Output`: Optimize `tooltip` control in multiple scenarios.
 - 💄 `<pro>DatePicker`: Optimized the `filter` property to support range mode filtering. Optimized display of disabled elements in the `decade` panel. Optimized today button disable style.
+- 💄 `<pro>DatePicker`: Optimize DatePicker to show line break when selecting year interval on Mac side.
 - 💄 `<pro>Radio`: Optimized the issue of too wide click hot area in `Form`.
 - 💄 `<pro>Table`: Optimize the dynamic filter bar to support front-end multi-column sorting.
 - 💄 Optimize some code implementation.
