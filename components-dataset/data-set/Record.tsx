@@ -1123,7 +1123,8 @@ export default class Record {
   @action
   setValidationError(name: string, result: ValidationResult[]) {
     const validationErrors = getIf<Record, ObservableMap<string, ValidationResult[]>>(this, 'validationErrors', () => observable.map());
-    if (result && result.length) {
+    const originalResult = validationErrors.get(name);
+    if ((result && result.length) || (originalResult && originalResult.length)) {
       validationErrors.set(name, result);
     }
   }

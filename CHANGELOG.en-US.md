@@ -33,6 +33,7 @@ timeline: true
 - 💄 Optimize some code implementation.
 - 💄 `<pro>Table`: Optimize query bar performance.
 - 💄 `<pro>Modal`: Keep focus on the Modal.
+- 💄 `<pro>Table`: Optimized `rowBox` display in multiple selection `dblclick` mode.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
@@ -43,6 +44,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
 - 🐞 `<pro>Table`: Fix an issue where deleting filter entries in the dynamic filter bar would abnormally backfill searchId.
 - 🐞 `<pro>Table`: Fix the issue that customization could not change the height after the table was set to height.
+- 🐞 `<pro>Table`: Fixed the style of dynamic filter bar required field validation failure.
+- 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
 
 ## 1.6.2
 

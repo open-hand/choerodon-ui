@@ -1072,6 +1072,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         this.setValue(uniqWith([...(isArrayLike(range) ? oldValues.map(v => fromRangeValue(v, range)) : oldValues), ...values], this.compare));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
+      } else {
+        this.validate(oldValues, false);
       }
     } else {
       this.setValue(values.pop());
