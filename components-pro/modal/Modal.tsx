@@ -252,6 +252,10 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   contentNode: HTMLElement;
 
+  sentinelStartRef: HTMLDivElement;
+
+  sentinelEndRef: HTMLDivElement;
+
   childrenProps: ModalChildrenProps;
 
   constructor(props, context) {
@@ -313,6 +317,9 @@ export default class Modal extends ViewComponent<ModalProps> {
       } else {
         this.handleCancel();
       }
+    }
+    if (e.keyCode === KeyCode.TAB && !this.props.hidden) {
+      this.changeActive(!e.shiftKey);
     }
   }
 
@@ -464,6 +471,16 @@ export default class Modal extends ViewComponent<ModalProps> {
   @autobind
   contentReference(node) {
     this.contentNode = node;
+  }
+
+  @autobind
+  sentinelStartReference(node) {
+    this.sentinelStartRef = node;
+  }
+
+  @autobind
+  sentinelEndReference(node) {
+    this.sentinelEndRef = node;
   }
 
   getClassName(): string | undefined {
@@ -663,8 +680,10 @@ export default class Modal extends ViewComponent<ModalProps> {
     const footer = this.getFooter();
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const resizerCursorCls = `${resizerPrefixCls}-cursor`;
+    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     return (
       <div {...this.getMergedProps()}>
+        <div tabIndex={0} ref={this.sentinelStartReference} style={sentinelStyle} aria-hidden="true" />
         <div
           ref={this.contentReference}
           className={classNames(`${prefixCls}-content`, {
@@ -692,9 +711,24 @@ export default class Modal extends ViewComponent<ModalProps> {
             </div>
           }
         </div>
+        <div tabIndex={0} ref={this.sentinelEndReference} style={sentinelStyle} aria-hidden="true" />
       </div>
     );
   }
+
+  focus(): void {
+    this.sentinelStartRef.focus();
+  }
+
+  changeActive(next) {
+    const { activeElement } = this.doc;
+    if (next && activeElement === this.sentinelEndRef) {
+      this.sentinelStartRef.focus();
+    } else if (!next && activeElement === this.sentinelStartRef) {
+      this.sentinelEndRef.focus();
+    }
+  }
+  
 
   componentWillUpdate({ hidden }) {
     if (hidden === false && hidden !== this.props.hidden) {

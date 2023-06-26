@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the dynamic filter bar to support front-end multi-column sorting.
 - 💄 Optimize some code implementation.
 - 💄 `<pro>Table`: Optimize query bar performance.
+- 💄 `<pro>Modal`: Keep focus on the Modal.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
