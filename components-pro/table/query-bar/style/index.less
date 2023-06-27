@@ -582,6 +582,14 @@
       }
     }
 
+    // 相对于组件本身样式提升优先级
+    .@{select-prefix-cls}-invalid.@{select-prefix-cls}-invalid,
+    .@{c7n-pro-prefix}-input-invalid.@{c7n-pro-prefix}-input-invalid,
+    .@{c7n-pro-prefix}-input-number-invalid.@{c7n-pro-prefix}-input-number-invalid,
+    .@{c7n-pro-prefix}-calendar-picker-invalid.@{c7n-pro-prefix}-calendar-picker-invalid {
+      background-color: transparent;
+    }
+
     .@{select-prefix-cls},
     .@{c7n-pro-prefix}-input,
     .@{c7n-pro-prefix}-input-number,
@@ -617,8 +625,6 @@
       }
 
       &-invalid {
-        background-color: transparent;
-
         input::-webkit-input-placeholder {
           // 谷歌
           color: @error-color;

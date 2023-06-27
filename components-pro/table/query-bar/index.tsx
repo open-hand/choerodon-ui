@@ -777,7 +777,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (queryDataSet) {
       const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
       // 减少重复渲染
-      if (!current || (this.queryFieldsElement.length && dataSet.status !== DataSetStatus.ready)) return this.queryFieldsElement;
+      if (this.queryFieldsElement.length && (!current || dataSet.status !== DataSetStatus.ready)) return this.queryFieldsElement;
       const cloneFields: Map<string, Field> = fields.toJS();
       const tlsKey = getConfig('tlsKey');
       const processField = (field, name) => {

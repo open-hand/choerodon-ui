@@ -33,6 +33,7 @@ timeline: true
 - 💄 优化部分代码实现。
 - 💄 `<pro>Table`: 优化查询条性能。
 - 💄 `<pro>Modal`: 保持焦点在弹窗内。
+- 💄 `<pro>Table`: 优化多选 dblclick 模式下 rowBox 选择框常显。
 - 💄 `Tabs`: 优化焦点切换行为。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
@@ -44,6 +45,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复使用 addField 添加查询字段动态筛选条添加筛选下拉中的字段不会更新的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条中删除筛选项会异常回填 searchId 的问题。
 - 🐞 `<pro>Table`: 修复表格设置 height 样式后个性化无法改变高度的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条必填字段校验失败的样式。
+- 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
 
 ## 1.6.2
 

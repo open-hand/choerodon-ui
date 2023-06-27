@@ -1787,7 +1787,7 @@ export default class TableStore {
     const { alwaysShowRowBox } = this;
     if (dataSet) {
       const { selection } = dataSet;
-      return selection && (selectionMode === SelectionMode.rowbox || alwaysShowRowBox);
+      return selection && ((selectionMode && [SelectionMode.rowbox, SelectionMode.dblclick].includes(selectionMode)) || alwaysShowRowBox);
     }
     return false;
   }
