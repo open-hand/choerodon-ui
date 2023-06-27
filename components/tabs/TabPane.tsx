@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { CSSProperties, FunctionComponent, memo, ReactNode, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { action } from 'mobx';
 import classnames from 'classnames';
 import DataSet from 'choerodon-ui/dataset';
@@ -54,6 +54,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   const [rendered, setRendered] = useState(active);
   const prefixCls = `${rootPrefixCls}-tabpane`;
   const cls = classnames(prefixCls, active ? `${prefixCls}-active` : `${prefixCls}-inactive`, className);
+  const paneRef = useRef<HTMLDivElement>(null);
 
   const handleValidationReport = useCallback(action<(props: { showInvalid, component }) => void>((validationProps) => {
     // why validationProps is undefined?
@@ -133,12 +134,21 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
     </ConfigProvider>
   );
 
+  const handleFocus = () => {
+    if (!active && paneRef.current) {
+      paneRef.current.focus()
+    }
+  }
+
   return (
     <div
       style={style}
       role="tabpanel"
       aria-hidden={active ? 'false' : 'true'}
       className={cls}
+      tabIndex={-1} 
+      ref={paneRef}
+      onFocus={handleFocus}
       {...getDataAttr(restProps)}
     >
       {forceRender || (destroyInactiveTabPane ? active : rendered) ? childrenWithProvider : placeholder}
