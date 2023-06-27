@@ -534,8 +534,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       <td key="empty-column" />,
     );
   }
-  if (propVirtual && left && blankVirtualCell.left.length) {
-    columns.splice(left[1], 0, ...blankVirtualCell.left);
+  if (propVirtual && blankVirtualCell.left.length) {
+    columns.splice(left ? left[1] : 0, 0, ...blankVirtualCell.left);
   }
   if (propVirtual && right && blankVirtualCell.right.length) {
     columns.splice(center[1], 0, ...blankVirtualCell.right);

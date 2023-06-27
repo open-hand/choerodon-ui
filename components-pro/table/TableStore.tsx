@@ -1380,7 +1380,7 @@ export default class TableStore {
     const { virtualColumnRange } = this; 
     const { left, center, right } = virtualColumnRange;
     return {
-      left: left ? [...Array(center[0] - left[1]).keys()].map((key) => <td key={`empty-left-${key}`} />) : [],
+      left: [...Array(center[0] - (left ? left[1] : 0)).keys()].map((key) => <td key={`empty-left-${key}`} />),
       right: right ? [...Array(right[0] - center[1]).keys()].map((key) => <td key={`empty-right-${key}`}/>) : [],
     }
   }
