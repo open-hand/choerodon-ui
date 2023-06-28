@@ -136,7 +136,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
 
   const handleFocus = () => {
     if (!active && paneRef.current) {
-      paneRef.current.focus()
+      paneRef.current.focus();
     }
   }
 
@@ -146,7 +146,8 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
       role="tabpanel"
       aria-hidden={active ? 'false' : 'true'}
       className={cls}
-      tabIndex={-1} 
+      tabIndex={-1}
+      data-node-key={eventKey} 
       ref={paneRef}
       onFocus={handleFocus}
       {...getDataAttr(restProps)}

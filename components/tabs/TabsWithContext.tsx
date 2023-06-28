@@ -161,6 +161,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     currentPanelMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
   }>(refCurrent);
   ref.current = refCurrent;
+  const tabRef = useRef<HTMLDivElement>(null);
   const changeActiveKey = useCallback((key: string, byGroup?: boolean) => {
     if (activeKey !== key) {
       if (!byGroup && currentGroup) {
@@ -171,6 +172,15 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       }
       if (onChange) {
         onChange(key);
+      }
+      if (tabRef.current) {
+        const selector = '[tabindex^="-1"]';
+        const findFocusableElements = Array.from<HTMLElement>(tabRef.current.querySelectorAll(selector));
+        findFocusableElements.forEach(child => {
+          if (child.getAttribute('data-node-key') === key) {
+            child.focus();
+          }
+        })
       }
     }
   }, [hasPropActiveKey, activeKey, onChange, currentGroup]);
@@ -313,7 +323,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   }
 
   const tabs = (
-    <div className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
+    <div tabIndex={-1} ref={tabRef} className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
       {contents}
     </div>
   );
