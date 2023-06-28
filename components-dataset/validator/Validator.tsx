@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { action, isArrayLike, observable, toJS } from 'mobx';
+import { action, flow, isArrayLike, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -40,14 +40,43 @@ export interface ValidationMessages {
   unknown?: ReactNode;
 }
 
-export default class Validator {
-
-  @observable validationResults?: ValidationResult[] | undefined;
-
-  @action
-  private static addError(result: ValidationResult, validationResults: ValidationResult[]) {
-    validationResults.push(result);
+function* execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): any {
+  const method = rules.shift();
+  if (method) {
+    const results: methodReturn[] = [];
+    const promises: PromiseLike<methodReturn>[] = [];
+    value.forEach(item => {
+      const result = method(item, props, getProp);
+      if (isPromise(result)) {
+        promises.push(result.then((re) => {
+          results.push(re);
+          return re;
+        }));
+      } else {
+        results.push(result);
+      }
+    });
+    if (promises.length) {
+      yield Promise.all<methodReturn>(promises);
+    }
+    results.forEach(result => {
+      if (result instanceof ValidationResult) {
+        validationResults.push(result);
+        const index = value.indexOf(result.value);
+        if (index !== -1) {
+          value.splice(index, 1);
+        }
+      }
+    });
+    if (value.length) {
+      for (const result of execute(rules, value, props, getProp, validationResults)) {
+        yield result;
+      }
+    }
   }
+}
+
+export default class Validator {
 
   static reportAll(errors: ValidationErrors[]) {
     const { length } = errors;
@@ -118,49 +147,15 @@ export default class Validator {
     }
   }
 
-  private static async execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): Promise<any> {
-    const method = rules.shift();
-    if (method) {
-      const results: methodReturn[] = [];
-      const promises: PromiseLike<methodReturn>[] = [];
-      value.forEach(item => {
-        const result = method(item, props, getProp);
-        if (isPromise(result)) {
-          promises.push(result.then((re) => {
-            results.push(re);
-            return re;
-          }));
-        } else {
-          results.push(result);
-        }
-      });
-      if (promises.length) {
-        await Promise.all<methodReturn>(promises);
-      }
-      results.forEach(result => {
-        if (result instanceof ValidationResult) {
-          this.addError(result, validationResults);
-          const index = value.indexOf(result.value);
-          if (index !== -1) {
-            value.splice(index, 1);
-          }
-        }
-      });
-      if (value.length) {
-        await this.execute(rules, value, props, getProp, validationResults);
-      }
-    }
-  }
-
   @action
   static async checkValidity(value: unknown = null, props: ValidatorBaseProps = {}, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T] = noop): Promise<ValidationReport> {
     const validationResults: ValidationResult[] = [];
     const valueMiss: methodReturn = valueMissing(value, props, getProp);
     if (valueMiss !== true) {
-      this.addError(valueMiss, validationResults);
+      validationResults.push(valueMiss);
     } else {
       const multiple = getProp('multiple');
-      await this.execute(
+      await flow(execute)(
         validationRules.slice(),
         multiple && isArrayLike(value) ? value.slice() : [value],
         props,
