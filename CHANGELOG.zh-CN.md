@@ -35,6 +35,7 @@ timeline: true
 - 💄 `<pro>Modal`: 保持焦点在弹窗内。
 - 💄 `<pro>Table`: 优化多选 dblclick 模式下 rowBox 选择框常显。
 - 💄 `Tabs`: 优化焦点切换行为。
+- 💄 `<pro>Validator`: 优化校验性能。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
