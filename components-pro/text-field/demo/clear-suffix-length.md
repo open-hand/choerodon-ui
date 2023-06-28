@@ -43,7 +43,7 @@ class App extends React.Component {
         </Row>
         <Row gutter={10}>
           <Col span={8}>
-            <TextField className="custom-suffix-text" defaultValue="suffix-showLengthInfo-suffix-showLengthInfo" suffix={<span style={{ width: '56px' }}>文字后缀</span>} maxLength={50} showLengthInfo />
+            <TextField className="custom-suffix-text" defaultValue="suffix-showLengthInfo-suffix-showLengthInfo" suffix={<span style={{ width: '0.56rem' }}>文字后缀</span>} maxLength={50} showLengthInfo />
           </Col>
           <Col span={8}>
             <TextField defaultValue="clearButton-showLengthInfo" clearButton maxLength={50} showLengthInfo />
@@ -60,7 +60,7 @@ class App extends React.Component {
             <TextField defaultValue="suffix-set-onClick-suffix-set-onClick" clearButton suffix={<Icon type="dehaze" onClick={handleCustom} />} maxLength={50} showLengthInfo />
           </Col>
           <Col span={8}>
-            <TextField className="custom-suffix-button" defaultValue="suffix-set-style-suffix-set-onClick" clearButton suffix={<Button style={{ width: '32px', height: '28px', padding: '0px 2px' }} onClick={handleCustom}>Click</Button>} />
+            <TextField className="custom-suffix-button" defaultValue="suffix-set-style-suffix-set-onClick" clearButton suffix={<Button style={{ width: '0.32rem', height: '0.28rem', padding: '0 0.02rem' }} onClick={handleCustom}>Click</Button>} />
           </Col>
         </Row>
       </div>
@@ -76,9 +76,9 @@ ReactDOM.render(
 
 <style>
 .custom-suffix-button label .c7n-pro-input-suffix {
-  height: 28px;
+  height: 0.28rem;
 }
 .custom-suffix-text label .c7n-pro-input-suffix {
-  line-height: 20px;
+  line-height: 0.2rem;
 }
 </style>

@@ -27,7 +27,7 @@ import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { Tooltip as TextTooltip, WaitType } from '../core/enum';
+import { Tooltip as TextTooltip, WaitType, FieldFocusMode } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -170,6 +170,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   type = 'text';
 
+  renderedValue: ReactNode;
+
   tagContainer: HTMLUListElement | null;
 
   handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
@@ -177,6 +179,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   addonAfterRef?: HTMLDivElement | null;
 
   addonBeforeRef?: HTMLDivElement | null;
+
+  @observable suffixRef?: HTMLDivElement | null;
 
   @observable renderedText?: {
     text: string;
@@ -320,6 +324,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   saveAddonBeforeRef(node) {
     this.addonBeforeRef = node;
+  }
+
+  @autobind
+  @action
+  saveSuffixRef(node) {
+    this.suffixRef = node;
   }
 
   measureTextWidth(text: string): number {
@@ -497,9 +507,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleMultipleMouseEnter(e) {
     const { onMouseEnter } = this.getOtherProps();
     if (onMouseEnter) {
-      onMouseEnter();
+      onMouseEnter(e);
     }
-    this.handleHelpMouseEnter(e, true);
+    show(e.currentTarget, {
+      title: this.getMultipleText(),
+    });
+    this.tooltipShown = true;
   }
 
   @autobind
@@ -512,18 +525,29 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  handleHelpMouseEnter(e, isOverflow?: boolean) {
+  handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
-      title: isOverflow ? this.getMultipleText() : this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      title: this.getDisplayProp('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
+    this.tooltipShown = true;
   }
 
+  @autobind
   handleHelpMouseLeave() {
-    hide();
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getWrapperClassNames(...args): string {
@@ -558,27 +582,32 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return true;
     }
     const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
-    const { tooltip = getTooltip('text-field-disabled') } = this.props;
-    const { element } = this;
+    const { tooltip: inputTooltip } = this.props;
+    const disabledTooltip =  getTooltip('text-field-disabled');
+    const { element, renderedValue } = this;
     const title = this.getRenderedValue();
-    if (element && this.disabled && !this.multiple && title ) {
-      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) {
-        show(element, {
+    const judgeOverflowElement = renderedValue ? element.parentNode.previousElementSibling : element;
+    const tooltip = this.disabled ? disabledTooltip : inputTooltip;
+    const tooltipPlacement = this.disabled ? getTooltipPlacement('text-field-disabled') : getTooltipPlacement('output');
+    const tooltipTheme = this.disabled ? getTooltipTheme('text-field-disabled') : getTooltipTheme('output');
+    if (judgeOverflowElement && !this.multiple && title) {
+      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+        show(judgeOverflowElement, {
           title,
-          placement: getTooltipPlacement('text-field-disabled') || 'right',
-          theme: getTooltipTheme('text-field-disabled'),
+          placement: tooltipPlacement || 'right',
+          theme: tooltipTheme,
         });
         return true;
-      } 
-      if (isArrayLike(tooltip)){
+      }
+      if (isArrayLike(tooltip)) {
         const tooltipType = tooltip[0];
         const TextTooltipProps = tooltip[1] || {};
         const { mouseEnterDelay } = TextTooltipProps;
-        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(element))) {
-          show(element, {
+        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+          show(judgeOverflowElement, {
             title: TextTooltipProps.title ? TextTooltipProps.title : title,
-            placement: getTooltipPlacement('text-field-disabled') || 'right',
-            theme: getTooltipTheme('text-field-disabled'),
+            placement: tooltipPlacement || 'right',
+            theme: tooltipTheme,
             ...TextTooltipProps,
           }, mouseEnterDelay);
           return true;
@@ -591,6 +620,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderInputElement(): ReactNode {
     const { addonBefore, addonAfter, isFlat } = this.props;
     const renderedValue = this.renderRenderedValue(undefined, { isFlat });
+    this.renderedValue = renderedValue;
     // 先计算lengthElement,然后计算suffix,再计算clearButton,设置right和输入框paddingRight,避免重叠
     this.renderLengthElement();
     const suffix = this.getSuffix();
@@ -1019,26 +1049,35 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     );
   }
 
+  getSuffixWidth() {
+    let wrapperWidth = 0;
+    if (this.suffixRef) {
+      wrapperWidth = this.suffixRef.getBoundingClientRect().width;
+    }
+    return this.suffixWidth ? Math.max(this.suffixWidth, wrapperWidth): this.suffixWidth;
+  }
+
   setInputStylePadding(otherProps: any): void {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
-    if (this.lengthInfoWidth || this.suffixWidth || this.clearButton) {
+    if (this.lengthInfoWidth || this.getSuffixWidth() || this.clearButton) {
       let paddingRight = this.isSuffixClick
-        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWidth, 0) + (this.clearButton ? 18 : 0)
-        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.suffixWidth, 0), (this.clearButton ? 18 : 0));
-      if (this.lengthInfoWidth && !this.suffixWidth && !this.clearButton) {
-        paddingRight += 3;
+        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + (this.clearButton ? toPx('0.18rem')! : 0)
+        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), (this.clearButton ? toPx('0.18rem')! : 0));
+      if (this.lengthInfoWidth && !this.getSuffixWidth() && !this.clearButton) {
+        paddingRight += toPx('0.03rem')!;
       }
-      if (paddingRight >= 25) {
+      if (paddingRight >= toPx('0.25rem')!) {
+        const pr = `${Number(pxToRem(paddingRight + 2, true)?.split('rem')[0]).toFixed(3)}rem`;
         otherProps.style = {
           ...otherProps.style,
-          paddingRight,
+          paddingRight: pr,
         };
       }
     }
-    if (this.prefixWidth && this.prefixWidth > 24) {
+    if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
       otherProps.style = {
         ...otherProps.style,
-        paddingLeft: this.prefixWidth + 2,
+        paddingLeft: pxToRem(this.prefixWidth + toPx('0.02rem')!, true),
       };
     }
   }
@@ -1078,12 +1117,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls, clearButton } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
-      this.suffixWidth = 21;
+      this.suffixWidth = toPx('0.21rem');
       if (children.props && children.props.style) {
         divStyle = {
           width: children.props.style.width,
         };
-        this.suffixWidth = defaultTo(toPx(children.props.style.width), 21);
+        this.suffixWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
@@ -1095,12 +1134,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         };
       }
     } else if (children && children !== true) {
-      this.suffixWidth = this.measureTextWidth(children.toString()) + 2;
+      this.suffixWidth = this.measureTextWidth(children.toString()) + toPx('0.02rem')!;
       divStyle = {
-        width: this.suffixWidth,
+        width: pxToRem(this.getSuffixWidth(), true),
       };
     } else {
-      delete this.suffixWidth;
+      this.suffixWidth = undefined;
     }
 
     const isSuffixClick = props && props.onClick;
@@ -1108,9 +1147,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
-    const right = this.lengthInfoWidth ? this.lengthInfoWidth + 2 : undefined;
+    const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
     return (
-      <div className={classString} style={{ ...divStyle, right }} onMouseDown={preventDefault} {...props}>
+      <div
+        className={classString}
+        style={{ ...divStyle, right }}
+        onMouseDown={preventDefault}
+        {...props}
+        ref={this.saveSuffixRef}
+      >
         {children}
       </div>
     );
@@ -1125,9 +1170,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.prefixWidth = undefined;
     }
     runInAction(() => {
-      if (this.prefixWidth && this.prefixWidth > 24) {
-        if (this.floatLabelOffsetX !== this.prefixWidth - 24) {
-          this.floatLabelOffsetX = this.prefixWidth - 24;
+      if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
+        if (this.floatLabelOffsetX !== this.prefixWidth - toPx('0.24rem')!) {
+          this.floatLabelOffsetX = this.prefixWidth - toPx('0.24rem')!;
         }
       } else if (this.floatLabelOffsetX !== undefined) {
         this.floatLabelOffsetX = undefined;
@@ -1140,18 +1185,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { prefixCls } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
-      this.prefixWidth = 24;
+      this.prefixWidth = toPx('0.24rem')!;
       if (children.props && children.props.style) {
         divStyle = {
           width: children.props.style.width,
         };
         const calculateWidth = toPx(children.props.style.width);
-        this.prefixWidth = calculateWidth != null ? calculateWidth : 24;
+        this.prefixWidth = calculateWidth != null ? calculateWidth : toPx('0.24rem')!;
       }
     } else if (children && children !== true) {
-      this.prefixWidth = this.measureTextWidth(children.toString()) + 4;
+      this.prefixWidth = this.measureTextWidth(children.toString()) + toPx('0.04rem')!;
       divStyle = {
-        width: this.prefixWidth > 24 ? this.prefixWidth : undefined,
+        width: pxToRem(this.prefixWidth > toPx('0.24rem')! ? this.prefixWidth : undefined, true),
       };
     } else {
       this.prefixWidth = undefined;
@@ -1165,7 +1210,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (isFlat) {
       const hasValue = !this.isEmpty();
       const placeholder = this.hasFloatLabel ? undefined : this.getPlaceholders()[0];
-      width = hasValue ? 'auto' : this.measureTextWidth(placeholder || '') + 22 + (this.getSuffix() ? 20 : 0);
+      width = hasValue ? 'auto' : this.measureTextWidth(placeholder || '') + toPx('0.22rem')! + (this.getSuffix() ? toPx('0.20rem')! : 0);
     }
     if (multiple) {
       return (
@@ -1226,9 +1271,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const [placeholder] = this.getPlaceholders();
     if (placeholder) {
       let divStyle;
-      if (this.prefixWidth && this.prefixWidth > 24) {
+      if (this.prefixWidth && this.prefixWidth > toPx('0.24rem')!) {
         divStyle = {
-          paddingLeft: this.prefixWidth + 5,
+          paddingLeft: pxToRem(this.prefixWidth + toPx('0.05rem')!, true),
         };
       }
       return (
@@ -1246,9 +1291,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton) {
       let right: number | undefined;
-      if (this.lengthInfoWidth || this.suffixWidth) {
+      if (this.lengthInfoWidth || this.getSuffixWidth()) {
         right = this.isSuffixClick
-          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.suffixWidth, 0)
+          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0)
           : this.lengthInfoWidth;
       }
       return this.wrapperInnerSpanButton(
@@ -1259,7 +1304,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         />,
         {
           className: `${prefixCls}-clear-button`,
-          style: { right },
+          style: { right: pxToRem(right, true) },
         },
       );
     }
@@ -1434,9 +1479,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @action
-  setValue(value: any, noVaidate?: boolean): void {
+  setValue(value: any, noVaidate?: boolean, reserveParam?: boolean): void {
     super.setValue(value, noVaidate);
-    this.setText(undefined);
+    if (!reserveParam) {
+      this.setText(undefined);
+    }
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
   }
 
   getTextNode(value?: any) {
@@ -1450,7 +1501,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   select() {
     const { element } = this;
-    if (element && this.editable) {
+    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
+    if (element && this.editable && fieldFocusMode === FieldFocusMode.checked) {
       element.select();
     }
   }
@@ -1488,7 +1540,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
     this.setText(restricted);
-    if (!this.isFocus || (valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
+    if (!this.isFocus || (!this.lock && valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
       this.handleChangeWait(restricted);
     }
   }

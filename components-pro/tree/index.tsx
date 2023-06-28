@@ -442,7 +442,7 @@ export default class Tree extends Component<TreeProps> {
     const promises: Promise<any>[] = [];
     if (async && dataSet) {
       const { record } = event.props;
-      promises.push(dataSet.queryMoreChild(record));
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
     }
     if (loadData) {
       promises.push(loadData(event));

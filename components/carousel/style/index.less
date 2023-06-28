@@ -143,13 +143,13 @@
     width: 100%;
     height: @carousel-dot-height;
     margin: 0;
-    padding: 0;
-    text-align: center;
+    padding: @carousel-dot-padding;
+    text-align: @carousel-dot-text-align;
     list-style: none;
     li {
       position: relative;
       display: inline-block;
-      margin: 0 0.02rem;
+      margin: 0 2px;
       padding: 0;
       text-align: center;
       vertical-align: top;
@@ -162,7 +162,7 @@
         font-size: 0;
         background: #fff;
         border: 0;
-        border-radius: 0.01rem;
+        border-radius: @carousel-dot-border-radius;
         outline: none;
         cursor: pointer;
         opacity: 0.3;
@@ -174,7 +174,7 @@
       }
       &.slick-active button {
         width: @carousel-dot-active-width;
-        background: #fff;
+        background: @carousel-dot-active-bg;
         opacity: 1;
         &:hover,
         &:focus {
@@ -194,7 +194,7 @@
     height: auto;
     transform: translateY(-50%);
     li {
-      margin: 0 0.02rem;
+      margin: 0 2px;
       vertical-align: baseline;
       button {
         width: @carousel-dot-height;

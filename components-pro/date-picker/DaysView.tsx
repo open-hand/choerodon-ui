@@ -24,6 +24,7 @@ export interface DateViewProps extends ViewComponentProps {
   step: TimeStep;
   renderer?: RenderFunction;
   isValidDate?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
+  isExistValue?: boolean;
   onSelect?: (selectedDate: Moment, expand?: boolean) => void;
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
   onCursorDateChange?: (cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) => void;
@@ -238,11 +239,12 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   renderFooter(): ReactNode {
     const {
       prefixCls,
-      props: { disabledNow },
+      props: { disabledNow, isExistValue },
     } = this;
     const footerProps = {
       className: classNames({
         [`${prefixCls}-now-disabled`]: disabledNow,
+        [`${prefixCls}-now-selected`]: isExistValue,
       }),
       onClick: !disabledNow ? this.choose.bind(this, moment(), false) : noop,
     };
@@ -285,7 +287,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     const lastDay = prevMonth.clone().add(42, 'd');
     const rows: ReactNode[] = [];
     let cells: ReactNode[] = [];
-
+    const today = moment();
     while (prevMonth.isBefore(lastDay)) {
       const currentDate = prevMonth.clone();
       const isDisabled = !isValidDate(currentDate, selected);
@@ -297,7 +299,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
         prevMonth.year() > currentYear ||
         (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
         [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'd'),
-        [`${prefixCls}-today`]: prevMonth.isSame(moment(), 'd'),
+        [`${prefixCls}-today`]: prevMonth.isSame(today, 'd'),
         [`${prefixCls}-disabled`]: isDisabled,
       });
       const text = String(currentDate.date());

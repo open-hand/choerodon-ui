@@ -7,7 +7,7 @@ import isString from 'lodash/isString';
 import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
-import debounce from 'lodash/debounce';
+import isObject from 'lodash/isObject';
 import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { pxToRem, scaleSize } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -78,7 +78,7 @@ export interface LovConfig extends DataSetLovConfig {
 
 export interface LovProps extends SelectProps, ButtonProps {
   modalProps?: ModalProps;
-  tableProps?: Partial<TableProps>;
+  tableProps?: Partial<TableProps> | ((lovTablePropsConfig: Partial<TableProps>, modal?: ModalProxy) => Partial<TableProps>);
   noCache?: boolean;
   mode?: ViewMode;
   viewMode?: TriggerViewMode;
@@ -126,6 +126,8 @@ export default class Lov extends Select<LovProps> {
   };
 
   @observable modal: ModalProxy | undefined;
+
+  initedModalLovViewProps;
 
   fetched?: boolean;
 
@@ -318,6 +320,7 @@ export default class Lov extends Select<LovProps> {
     const { options } = this;
     if (config && options) {
       let lovViewProps;
+      if (!this.popup) delete this.fetched;
       if (this.popup && !this.fetched) {
         runInAction(() => {
           lovViewProps = this.beforeOpen(options);
@@ -488,6 +491,17 @@ export default class Lov extends Select<LovProps> {
 
   @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
+    const { tableProps } = this.props;
+    const { modal } = this;
+    const { viewMode } = this.observableProps;
+    // 模态框模式下， tableProps 支持获取 modal 实例
+    if (isFunction(tableProps) && [TriggerViewMode.modal, TriggerViewMode.drawer].includes(viewMode) && modal) {
+      const lovViewProps = this.beforeOpen(options);
+      const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
+      modal.update({
+        children: <LovView {...this.initedModalLovViewProps} tableProps={tableProps} />,
+      });
+    }
     if (this.autoSelectSingle) {
       if (this.multiple) options.releaseCachedSelected();
     } else {
@@ -540,25 +554,28 @@ export default class Lov extends Select<LovProps> {
           const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
           const valueField = this.getProp('valueField');
           const textField = this.getProp('textField');
+          this.initedModalLovViewProps = {
+            ...lovViewProps,
+            viewMode,
+            dataSet: options,
+            config,
+            context: this.context,
+            tableProps,
+            onSelect: this.handleLovViewSelect,
+            onBeforeSelect,
+            multiple: this.multiple,
+            values: this.getValues(),
+            valueField,
+            textField,
+            viewRenderer,
+            showSelectedInView: this.showSelectedInView,
+            getSelectionProps: this.getSelectionProps,
+          }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
             children: (
               <LovView
-                {...lovViewProps}
-                viewMode={viewMode}
-                dataSet={options}
-                config={config}
-                context={this.context}
-                tableProps={tableProps}
-                onSelect={this.handleLovViewSelect}
-                onBeforeSelect={onBeforeSelect}
-                multiple={this.multiple}
-                values={this.getValues()}
-                valueField={valueField}
-                textField={textField}
-                viewRenderer={viewRenderer}
-                showSelectedInView={this.showSelectedInView}
-                getSelectionProps={this.getSelectionProps}
+                {...this.initedModalLovViewProps}
               />
             ),
             onClose: this.handleLovViewClose,
@@ -705,7 +722,7 @@ export default class Lov extends Select<LovProps> {
   handleKeyDown(e) {
     if (!this.popup && e.keyCode === KeyCode.DOWN) {
       stopEvent(e);
-      this.openModal();
+      this.handleOpenModal();
     }
     if (e.keyCode === KeyCode.ENTER && this.props.searchAction === SearchAction.blur) {
       stopEvent(e);
@@ -721,7 +738,9 @@ export default class Lov extends Select<LovProps> {
     if (this.modal) {
       e.preventDefault();
     }
-    super.handleBlur(e);
+    if (this.props.popupSearchMode !== PopupSearchMode.single) {
+      super.handleBlur(e);
+    }
   }
 
   getWrapperProps() {
@@ -750,12 +769,15 @@ export default class Lov extends Select<LovProps> {
         options.query(1, undefined, true).then(() => {
           const { length } = options;
           if ((length > 1 && !fetchSingle) || length === 1) {
-            this.choose(options.get(0));
+            const record = options.get(0);
+            if (!this.optionIsSelected(record as Record, this.getValues())) {
+              this.choose(record);
+            }
           } else if (length && fetchSingle) {
             this.openModal(fetchSingle);
           }
         });
-      } else {
+      } else if (!this.multiple) {
         super.syncValueOnBlur(value);
       }
     }
@@ -790,7 +812,27 @@ export default class Lov extends Select<LovProps> {
   getTableProps(localTableProps?: Partial<TableProps>): Partial<TableProps> {
     const { tableProps } = this.props;
     const lovTablePropsConfig = this.getContextConfig('lovTableProps');
-    return typeof lovTablePropsConfig === 'function' ? { ...lovTablePropsConfig(this.multiple), ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) } : { ...lovTablePropsConfig, ...mergeProps<Partial<TableProps>>(localTableProps, tableProps) };
+    const lovTablePropsConfigData = isFunction(lovTablePropsConfig)
+      ? lovTablePropsConfig(this.multiple)
+      : lovTablePropsConfig;
+    let tablePropsData;
+    if (isObject(tableProps)) {
+      tablePropsData = tableProps;
+    }
+    if (isFunction(tableProps)) {
+      const { modal } = this;
+      const { viewMode } = this.observableProps;
+      const lovTableProps = {...lovTablePropsConfig, ...localTableProps};
+      if (viewMode === TriggerViewMode.popup) {
+        tablePropsData = tableProps(lovTableProps);
+      } else if ([TriggerViewMode.modal, TriggerViewMode.drawer].includes(viewMode) && modal) {
+        tablePropsData = tableProps(lovTableProps, modal);
+      }
+    }
+    return {
+      ...lovTablePropsConfigData,
+      ...mergeProps<Partial<TableProps>>(localTableProps, tablePropsData),
+    };
   }
 
   @autobind
@@ -800,7 +842,11 @@ export default class Lov extends Select<LovProps> {
     this.resetOptions(options.length === 1);
     await options.query(1, undefined, true);
     if (options.length === 1) {
-      this.choose(options.get(0));
+      const values = this.getValues();
+      const record = options.get(0);
+      if (!this.optionIsSelected(record as Record, values)) {
+        this.choose(record);
+      }
     } else {
       this.openModal();
     }
@@ -864,7 +910,7 @@ export default class Lov extends Select<LovProps> {
     }
     const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
-      onClick: (this.disabled || this.readOnly) ? undefined : debounce(this.handleOpenModal, 200),
+      onClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
     });
   }
 

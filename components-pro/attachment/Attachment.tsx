@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
+import { action as mobxAction, computed, IReactionDisposer, observable, reaction, runInAction, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -10,11 +10,13 @@ import isFunction from 'lodash/isFunction';
 import { getConfig, Uploader } from 'choerodon-ui/dataset';
 import { AttachmentValue } from 'choerodon-ui/dataset/configure';
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
+import { DownloadAllMode } from 'choerodon-ui/dataset/data-set/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import RcUpload from 'choerodon-ui/lib/rc-components/upload';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Button, { ButtonProps } from '../button/Button';
 import { $l } from '../locale-context';
 import { ButtonColor, FuncType } from '../button/enum';
@@ -33,7 +35,6 @@ import { ValidationMessages } from '../validator/Validator';
 import ValidationResult from '../validator/ValidationResult';
 import { open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
-import Tooltip from '../tooltip';
 import Dragger from './Dragger';
 import { ShowHelp } from '../field/enum';
 import { FIELD_SUFFIX } from '../form/utils';
@@ -42,8 +43,20 @@ import { ShowValidation } from '../form/enum';
 import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
+import { hide, show } from '../tooltip/singleton';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
+
+export enum AttachmentButtonType {
+  download = 'download',
+  remove = 'remove',
+  history = 'history',
+}
+
+export type AttachmentButtons =
+  | AttachmentButtonType
+  | [AttachmentButtonType, ButtonProps]
+  | ReactElement<ButtonProps>;
 
 export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderProps {
   listType?: AttachmentListType;
@@ -65,6 +78,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   dragUpload?: boolean;
   dragBoxRender?: ReactNode[];
   template?: AttachmentValue;
+  buttons?: AttachmentButtons[];
   __inGroup?: boolean;
 }
 
@@ -124,13 +138,16 @@ export default class Attachment extends FormField<AttachmentProps> {
   @computed
   get showAttachmentHelp() {
     const defaultShowHelp = this.getContextConfig('showHelp');
-    const { viewMode, showHelp } = this.props;
+    const { viewMode } = this.props;
+    const { showHelp } = this;
     const { formNode } = this.context;
-    if (viewMode === 'popup' && (showHelp || defaultShowHelp) === ShowHelp.label && formNode) {
+    if (showHelp === ShowHelp.none ||
+      (formNode && showHelp === ShowHelp.label) ||
+      (viewMode === 'popup' && (showHelp || defaultShowHelp) === ShowHelp.label && formNode)) {
       return ShowHelp.none;
     }
     if (viewMode === 'popup') {
-      return showHelp === ShowHelp.none ? showHelp : ShowHelp.tooltip;
+      return ShowHelp.tooltip;
     }
     return ShowHelp.newLine;
   }
@@ -202,6 +219,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     return {
       valueMissing: $l('Attachment', label ? 'value_missing' : 'value_missing_no_label', { label }),
     };
+  }
+
+  get accept(): string[] | undefined {
+    return this.getProp('accept');
   }
 
   private reaction?: IReactionDisposer;
@@ -303,6 +324,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'action',
       'data',
       'headers',
+      'buttons',
       'withCredentials',
       'sortable',
       'listType',
@@ -392,13 +414,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   getUploaderProps(): UploaderProps {
-    const { bucketName, bucketDirectory, storageCode, isPublic, fileKey } = this;
+    const { bucketName, bucketDirectory, storageCode, isPublic, fileKey, accept } = this;
     const fileSize = this.getProp('fileSize');
     const chunkSize = this.getProp('chunkSize');
     const chunkThreads = this.getProp('chunkThreads');
     const useChunk = this.getProp('useChunk');
     const {
-      accept, action, data, headers, withCredentials,
+      action, data, headers, withCredentials,
       beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
     } = this.props;
     return {
@@ -657,8 +679,9 @@ export default class Attachment extends FormField<AttachmentProps> {
       count = 0,
       multiple,
       prefixCls,
+      accept,
       props: {
-        children, viewMode, accept,
+        children, viewMode,
       },
     } = this;
     const buttonProps = this.getOtherProps();
@@ -672,7 +695,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       ref,
       onChange,
     };
-    const width = isCardButton ? this.getPictureWidth() : undefined;
+    const width = isCardButton ? pxToRem(this.getPictureWidth()) : undefined;
     const countText = multiple && (max ? `${count}/${max}` : count) || undefined;
     return isCardButton ? (
       <Button
@@ -685,7 +708,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       >
         <div>{children || $l('Attachment', 'upload_picture')}</div>
         {countText ? <div>{countText}</div> : undefined}
-        <input key="upload" {...uploadProps} style={{ width: 0 }} />
+        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block' }} />
       </Button>
     ) : (
       <Button
@@ -699,7 +722,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         onMouseLeave={this.handleMouseLeave}
       >
         {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {countText}
-        <input key="upload" {...uploadProps} style={{ width: 0 }}  />
+        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block' }} />
       </Button>
     );
   }
@@ -814,8 +837,15 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons,
     } = this.props;
+    let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
+    if (buttons) {
+      mergeButtons = [...mergeButtons, ...buttons];
+    }
+    if (showHistory) {
+      mergeButtons.unshift(AttachmentButtonType.history);
+    }
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
     if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
@@ -846,6 +876,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onAttachmentsChange={this.handleAttachmentsChange}
           onPreview={this.handlePreview}
           record={this.record}
+          buttons={mergeButtons}
         />
       );
     }
@@ -861,7 +892,8 @@ export default class Attachment extends FormField<AttachmentProps> {
         this.renderTemplateDownloadButton(),
       );
     }
-    if (this.readOnly) {
+    const { downloadAllMode = DownloadAllMode.readOnly } = this.getContextConfig('attachment');
+    if ((downloadAllMode === DownloadAllMode.readOnly && this.readOnly) || (downloadAllMode === DownloadAllMode.always)) {
       if (this.count) {
         if (downloadAll) {
           const { getDownloadAllUrl } = this.getContextConfig('attachment');
@@ -988,7 +1020,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     return (
       <div className={classes.join(' ')}>
-        { viewMode !== 'popup' && this.renderDragUploadArea()}
+        {viewMode !== 'popup' && this.renderDragUploadArea()}
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp()}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
@@ -1003,20 +1035,44 @@ export default class Attachment extends FormField<AttachmentProps> {
     return pictureWidth || (listType === 'picture-card' ? 100 : 48);
   }
 
+  @autobind
+  handleHelpMouseEnter(e) {
+    const { getTooltipTheme } = this.context;
+    const { helpTooltipProps, help } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
+    show(e.currentTarget, {
+      title: help,
+      theme: getTooltipTheme('help'),
+      placement: 'bottom', // 保留 bottom 原效果
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
+    });
+  }
+
+  handleHelpMouseLeave() {
+    hide();
+  }
+
   renderHelp(): ReactNode {
     const { help, showAttachmentHelp } = this;
-    if (help === undefined || showAttachmentHelp === ShowHelp.none) return;
+    if (!help || showAttachmentHelp === ShowHelp.none) return;
     switch (showAttachmentHelp) {
       case ShowHelp.tooltip:
         return (
-          <Tooltip title={help} openClassName={`${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`} placement="bottom">
-            <Icon type="help" style={{ fontSize: '14px', color: '#8c8c8c' }} />
-          </Tooltip>
+          <Icon
+            type="help"
+            style={{ fontSize: '0.14rem', color: '#8c8c8c' }}
+            onMouseEnter={this.handleHelpMouseEnter}
+            onMouseLeave={this.handleHelpMouseLeave}
+          />
         );
       default:
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
+            {toJS(help)}
           </div>
         );
     }
@@ -1064,8 +1120,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderDragUploadArea() {
-    const { dragUpload, dragBoxRender, accept, disabled } = this.props;
-    const { prefixCls } = this;
+    const { dragUpload, dragBoxRender, disabled } = this.props;
+    const { prefixCls, accept } = this;
     if (dragUpload) {
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,

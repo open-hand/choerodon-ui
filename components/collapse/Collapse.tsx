@@ -37,7 +37,7 @@ export interface CollapseProps {
   className?: string;
   bordered?: boolean;
   prefixCls?: string;
-  expandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
+  expandIcon?: ((panelProps: PanelProps) => ReactNode) | 'text';
   expandIconPosition?: ExpandIconPosition;
   trigger?: TriggerMode;
   ghost?: boolean;
@@ -63,11 +63,6 @@ export default class Collapse extends Component<CollapseProps, any> {
   };
 
   context: ConfigContextValue;
-
-  renderExpandIcon = (panelProps: PanelProps = {}) => {
-    const { expandIcon } = this.props;
-    return expandIcon ? expandIcon(panelProps) : null;
-  };
 
   renderExpandTextContent = (panelProps: PanelProps = {}, locale, localeCode, expandIconPositionCof) => {
     const {
@@ -109,7 +104,7 @@ export default class Collapse extends Component<CollapseProps, any> {
           const childProps: PanelProps & { key: React.Key } = {
             ...omit(child.props, 'disabled'),
             key,
-            disabled: collapsible && collapsible === 'header' ? false : disabled,
+            disabled: collapsible && (collapsible === 'header' || collapsible === 'icon') ? false : disabled,
           };
           return cloneElement(child, childProps);
         }
@@ -148,7 +143,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     let expandIconContent;
 
     if (typeof expandIconCof === 'function') {
-      expandIconContent = (panelProps: PanelProps) => this.renderExpandIcon(panelProps);
+      expandIconContent = (panelProps: PanelProps) => expandIconCof(panelProps);
     } else if (expandIconCof === 'text') {
       expandIconContent = (panelProps: PanelProps) => {
         return (

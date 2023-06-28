@@ -1,5 +1,5 @@
 import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
-import { action, computed, get, observable, ObservableMap, runInAction, set } from 'mobx';
+import { action, computed, get, IReactionDisposer, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -9,12 +9,15 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
+import { warning } from 'choerodon-ui/dataset/utils';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { isCalcSize, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
 import isFunction from 'lodash/isFunction';
+import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 import noop from 'lodash/noop';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
@@ -23,7 +26,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import ObserverCheckBox, { CheckBoxProps } from '../check-box/CheckBox';
 import ObserverRadio from '../radio/Radio';
-import { DataSetSelection, RecordCachedType } from '../data-set/enum';
+import { DataSetSelection, FieldType, RecordCachedType } from '../data-set/enum';
 import {
   ColumnAlign,
   ColumnLock,
@@ -63,7 +66,7 @@ import Dropdown from '../dropdown/Dropdown';
 import Menu from '../menu';
 import Modal, { ModalProps } from '../modal/Modal';
 import { treeMap, treeSome } from '../_util/treeUtils';
-import { HighlightRenderer } from '../field/FormField';
+import { HighlightRenderer, TagRendererProps } from '../field/FormField';
 import { getIf, mergeGroupStates, normalizeGroups } from '../data-set/utils';
 import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
@@ -958,6 +961,8 @@ export default class TableStore {
 
   @observable lastScrollTop: number;
 
+  @observable lastScrollLeft: number;
+
   @observable lockColumnsBodyRowsHeight: any;
 
   @observable lockColumnsFootRowsHeight: any;
@@ -1015,6 +1020,12 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
+  @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) };
+
+  nextRenderColIndex?: [number, number];
+
+  prevRenderColIndex?: [number, number];
+
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -1026,7 +1037,7 @@ export default class TableStore {
   }
 
   get styleMinHeight(): string | number | undefined {
-    const { style } = this.props;
+    const { props: { style } } = this;
     return style && toPx(style.minHeight, this.getRelationSize);
   }
 
@@ -1142,6 +1153,17 @@ export default class TableStore {
     return false;
   }
 
+  /**
+   * board 组件个性化按钮 in buttons
+   */
+  get customizedBtn(): boolean | undefined {
+    const { customizedCode, boardCustomized } = this.props;
+    if (customizedCode && boardCustomized) {
+      return boardCustomized.customizedBtn;
+    }
+    return false;
+  }
+
   get aggregation(): boolean | undefined {
     const { aggregation } = this.customized;
     if (aggregation !== undefined) {
@@ -1222,7 +1244,12 @@ export default class TableStore {
     if ('virtual' in this.props) {
       return this.props.virtual;
     }
-    return this.getConfig('tableVirtual');
+    const configTableVirtual: boolean | Function | undefined = this.getConfig('tableVirtual');
+    if (typeof configTableVirtual === 'function') {
+      return configTableVirtual(this.currentData.length, this.columnGroups.leafs.length);
+    }
+    
+    return configTableVirtual;
   }
 
   get virtual(): boolean | undefined {
@@ -1230,6 +1257,132 @@ export default class TableStore {
       return this.propVirtual;
     }
     return false;
+  }
+
+  get columnBuffer(): number {
+    const { columnBuffer } = this.props;
+    if ('columnBuffer' in this.props && typeof columnBuffer === 'number' && columnBuffer >= 0) {
+      return columnBuffer!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnBuffer' in bufferConfig && typeof bufferConfig.columnBuffer === 'number' && bufferConfig.columnBuffer >= 0) {
+      return bufferConfig.columnBuffer;
+    }
+    return 3;
+  }
+
+  get columnThreshold(): number {
+    const { columnThreshold } = this.props;
+    if ('columnThreshold' in this.props && typeof columnThreshold === 'number' && columnThreshold >= 0) {
+      return columnThreshold!;
+    }
+    const bufferConfig = this.getConfig('tableVirtualBuffer');
+    if (bufferConfig && 'columnThreshold' in bufferConfig && typeof bufferConfig.columnThreshold === 'number' && bufferConfig.columnThreshold >= 0) {
+      return bufferConfig.columnThreshold;
+    }
+    return 3;
+  }
+
+
+  updateRenderZonePosition(): [number, number] {
+    // 获取表格坐标显示范围
+    if (!this.width) {
+      return [0, 0];
+    }
+    const { columnGroups: { leafs, leftLeafs, rightLeafs, leftLeafColumnsWidth, rightLeafColumnsWidth }, columnThreshold, nextRenderColIndex } = this;
+    const scrollLeft = this.lastScrollLeft || 0;
+
+    let visibleColumnWidth = 0;
+    let firstIndex = -1;
+    let lastIndex = -1;
+    const centerLeafsLength = leafs.length - rightLeafs.length;
+    for (let i = leftLeafs.length; i < centerLeafsLength; i++) {
+      const { width } = leafs[i];
+      visibleColumnWidth += width;
+      if (firstIndex === -1 && visibleColumnWidth > scrollLeft) {
+        firstIndex = i;
+      }
+      if (lastIndex === -1 && i === centerLeafsLength - 1 || this.width && visibleColumnWidth >= scrollLeft + this.width - leftLeafColumnsWidth - rightLeafColumnsWidth - (this.overflowY ? measureScrollbar() : 0)) {
+        lastIndex = i;
+      }
+      if (lastIndex !== -1 && firstIndex !== -1) {
+        break;
+      }
+    }
+
+    if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
+      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, leafs.length)]; 
+      this.prevRenderColIndex = [firstIndex, lastIndex]; 
+      return [firstIndex, lastIndex];
+    }
+
+    return this.prevRenderColIndex || [0, 0];
+
+  }
+
+
+  @computed
+  get virtualColumnRange(): {
+    left?: [number, number];
+    center: [number, number];
+    right?: [number, number];
+    } {
+    const { columnGroups: { leafs, leftLeafs, rightLeafs }, columnBuffer } = this;
+    if (!this.propVirtual || !this.overflowX) {
+      return { center: [0, leafs.length] };
+    }
+    const rangeThreshold: {
+      left?: [number, number];
+      center: [number, number];
+      right?: [number, number];
+    } = { center: [0, 0] }
+
+    // 左右固定列的坐标范围
+    const leftColLength = leftLeafs.length;
+    const rightColLength = rightLeafs.length;
+
+    if (leftColLength) {
+      rangeThreshold.left = [0, leftColLength];
+    }
+    if (rightColLength) {
+      rangeThreshold.right = [leafs.length - rightColLength, leafs.length];
+    }
+
+    const [start, end] = this.updateRenderZonePosition();
+
+    const first = Math.max(leftColLength, start - columnBuffer);
+    const last = Math.min(leafs.length - rightColLength, end + columnBuffer + 1);
+
+    rangeThreshold.center = [first, last];
+    return rangeThreshold;
+  }
+
+  @autobind
+  isRenderRange(index: number, isGroup?: boolean): boolean {
+    const { virtualColumnRange, propVirtual } = this;
+    if (!propVirtual || isGroup) {
+      return true;
+    }
+    if (virtualColumnRange.left && (index >= virtualColumnRange.left[0] && index < virtualColumnRange.left[1])) {
+      return true;
+    }
+    if (index >= virtualColumnRange.center[0] && index < virtualColumnRange.center[1]) {
+      return true;
+    }
+    if (virtualColumnRange.right && index >= virtualColumnRange.right[0] && index <= virtualColumnRange.right[1]) {
+      return true;
+    }
+
+    return false;
+  }
+
+  get blankVirtualCell() {
+    const { virtualColumnRange } = this; 
+    const { left, center, right } = virtualColumnRange;
+    return {
+      left: [...Array(center[0] - (left ? left[1] : 0)).keys()].map((key) => <td key={`empty-left-${key}`} />),
+      right: right ? [...Array(right[0] - center[1]).keys()].map((key) => <td key={`empty-right-${key}`}/>) : [],
+    }
   }
 
   get tableColumnResizeTransition(): boolean | undefined {
@@ -1304,10 +1457,12 @@ export default class TableStore {
     return getVisibleEndIndex(this);
   }
 
+  @computed
   get virtualStartIndex(): number {
     return getStartIndex(this);
   }
 
+  @computed
   get virtualEndIndex(): number {
     return getEndIndex(this);
   }
@@ -1632,7 +1787,7 @@ export default class TableStore {
     const { alwaysShowRowBox } = this;
     if (dataSet) {
       const { selection } = dataSet;
-      return selection && (selectionMode === SelectionMode.rowbox || alwaysShowRowBox);
+      return selection && ((selectionMode && [SelectionMode.rowbox, SelectionMode.dblclick].includes(selectionMode)) || alwaysShowRowBox);
     }
     return false;
   }
@@ -1711,12 +1866,12 @@ export default class TableStore {
     if (this.queryBar === TableQueryBarType.comboBar) {
       return <ComboCustomizationSettings />;
     }
-    return <CustomizationColumnHeader onHeaderClick={this.openCustomizationModal} />;
+    return <CustomizationColumnHeader customizedBtn={this.customizedBtn} onHeaderClick={this.openCustomizationModal} />;
   }
 
   @computed
   get customizedColumn(): ColumnProps | undefined {
-    if (this.customizable && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
+    if (this.customizable && !this.customizedBtn && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
       return {
         key: CUSTOMIZED_KEY,
         resizable: false,
@@ -1978,6 +2133,13 @@ export default class TableStore {
     return this.isAnyColumnsLeftLock || this.isAnyColumnsRightLock;
   }
 
+  @computed
+  get isCombinedColumn(): boolean {
+    const columns = this.columns;
+    const combinedColumn = columns.find(column => !column.aggregation && column.children && column.children.length > 0);
+    return !isNil(combinedColumn);
+  }
+
   @observable groups: TableGroup[];
 
   @observable groupedData: Group[];
@@ -2013,7 +2175,7 @@ export default class TableStore {
   @computed
   get currentData(): Record[] {
     const { pristine, filter: recordFilter, treeFilter } = this.props;
-    const { dataSet, isTree } = this;
+    const { dataSet, isTree, headerFilter } = this;
     const filter = (
       isTree
         ? typeof treeFilter === 'function' ? treeFilter : recordFilter
@@ -2025,6 +2187,40 @@ export default class TableStore {
     }
     if (pristine) {
       data = data.filter(record => !record.isNew);
+    }
+    if (headerFilter) {
+      const { filter, filterText } = headerFilter;
+      if (typeof filter === 'function') {
+        data = data.filter(record => filter({ record, filterText }));
+      } else {
+        const field = dataSet.getField(headerFilter.fieldName);
+        const type = field && field.get('type');
+        const multiple = field && field.get('multiple');
+        let isLookUp = false;
+        if (field &&
+          (
+            field.get('lookupCode') ||
+            isString(field.get('lookupUrl')) ||
+            (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options'))) ||
+            field.get('lovCode')
+          )
+        ) {
+          isLookUp = true;
+        }
+        data = data.filter(record => {
+          let recordText: string;
+          if (multiple) {
+            if (isLookUp) {
+              recordText = record.get(headerFilter.fieldName).map(value => field!.getText(value)).join('');
+            } else {
+              recordText = record.get(headerFilter.fieldName).join('');
+            }
+          } else {
+            recordText = isLookUp ? String(field!.getText(record.get(headerFilter.fieldName))) : String(record.get(headerFilter.fieldName));
+          }
+          return recordText.toLocaleLowerCase().includes(String(headerFilter.filterText).toLocaleLowerCase())
+        });
+      }
     }
     return data;
   }
@@ -2227,6 +2423,11 @@ export default class TableStore {
     return getHeaderTexts(dataSet, leafNamedColumns.slice(), this.aggregation);
   }
 
+  getColumnTagRenderer(column: ColumnProps): ((props: TagRendererProps) => ReactNode) | undefined {
+    const { tagRenderer } = column;
+    return tagRenderer;
+  }
+
   @action
   showEditor(name: string) {
     this.currentEditorName = name;
@@ -2236,6 +2437,14 @@ export default class TableStore {
   setLastScrollTop(lastScrollTop: number) {
     if (this.virtual) {
       this.lastScrollTop = lastScrollTop;
+      this.startScroll();
+    }
+  }
+
+  @action
+  setLastScrollLeft(lastScrollLeft: number) {
+    if (this.propVirtual) {
+      this.lastScrollLeft = lastScrollLeft;
       this.startScroll();
     }
   }
@@ -2293,10 +2502,25 @@ export default class TableStore {
     this.initColumns();
   }
 
+  groupReaction?: IReactionDisposer;
+
+  disposeGroupReaction() {
+    const { groupReaction } = this;
+    if (groupReaction) {
+      groupReaction();
+    }
+  }
+
+  dispose() {
+    this.disposeGroupReaction();
+  }
+
   @action
   initGroups() {
+    this.disposeGroupReaction();
     const { groups = [] } = this.props;
     if (groups.length) {
+      this.groupReaction = reaction(() => dataSet.records, () => this.initGroups());
       const headerGroupNames: string[] = [];
       const rowGroupNames: string[] = [];
       const groupNames: string[] = [];
@@ -2491,7 +2715,7 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      promises.push(dataSet.queryMoreChild(record));
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));
@@ -2601,15 +2825,43 @@ export default class TableStore {
   }
 
   @action
-  saveCustomized(customized?: TableCustomized | null) {
+  async saveCustomized(customized?: TableCustomized | null) {
     if (this.customizable && this.customizedLoaded) {
-      const { customizedCode } = this.props;
+      const { customizedCode, boardCustomized } = this.props;
       if (customized) {
         this.customized = customized;
       }
       if (customizedCode) {
         const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
-        tableCustomizedSave(customizedCode, this.customized, 'Table');
+        const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
+        // board 组件列表视图配置保存
+        if (this.customizedBtn && boardCustomized && boardCustomized.customizedDS) {
+          const currentRecord = boardCustomized.customizedDS.current;
+          // @ts-ignore
+          await tableCustomizedSave(customizedCode,
+            {
+              dataJson: JSON.stringify(omit(this.customized, ['dataJson', 'creationDate', 'createdBy', 'lastUpdateDate', 'lastUpdatedBy', '_token', 'userId', 'tenantId', 'id'])),
+              ...omit(this.customized, ['dataJson']), defaultFlag: 1, viewType: 'table', id: currentRecord.get('id'), objectVersionNumber: currentRecord.get('objectVersionNumber'),
+            },
+            this.customizedBtn ? 'Board' : 'Table');
+
+          if (customizedCode) {
+            const res = await tableCustomizedLoad(customizedCode, 'Board', {
+              type: 'detail',
+              id: currentRecord.get('id'),
+            });
+            try {
+              const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+              // @ts-ignore
+              this.customized = {columns: {}, ...omit(res, 'dataJson'), ...dataJson};
+              currentRecord.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
+            } catch (error) {
+              warning(false, error.message);
+            }
+          }
+        } else {
+          tableCustomizedSave(customizedCode, this.customized, 'Table');
+        }
       }
     }
   }
@@ -2624,7 +2876,7 @@ export default class TableStore {
       key: 'TABLE_CUSTOMIZATION_MODAL',
       drawer: true,
       size: Size.small,
-      title: $l('Table', 'customization_settings'),
+      title: this.customizedBtn ? '表格视图配置' : $l('Table', 'customization_settings'),
       children: <CustomizationSettings context={context} />,
       bodyStyle: {
         overflow: 'hidden auto',
@@ -2638,7 +2890,7 @@ export default class TableStore {
   }
 
   async loadCustomized() {
-    const { customizedCode } = this.props;
+    const { customizedCode, boardCustomized } = this.props;
     const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
     if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
@@ -2649,8 +2901,22 @@ export default class TableStore {
       });
       try {
         let customized: TableCustomized | undefined | null;
-        if (customizedCode) {
+        if (customizedCode && !boardCustomized) {
           customized = await tableCustomizedLoad(customizedCode, 'Table');
+        }
+        if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
+          const res = await tableCustomizedLoad(customizedCode, 'Board', {
+            type: 'detail',
+            id: boardCustomized.customizedDS.current.get('id'),
+          });
+          try {
+            const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+            boardCustomized.customizedDS.current.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
+            // @ts-ignore
+            customized = {...omit(res, 'dataJson'), ...dataJson};
+          } catch (error) {
+            warning(false, error.message);
+          }
         }
         runInAction(() => {
           const newCustomized: TableCustomized = { columns: {}, ...customized };
@@ -2789,6 +3055,16 @@ export default class TableStore {
       const currentEditor = this.editors.get(currentEditorName);
       if (currentEditor) {
         currentEditor.alignEditor();
+      }
+    }
+  }
+
+  blurEditor() {
+    const { currentEditorName } = this;
+    if (currentEditorName) {
+      const currentEditor = this.editors.get(currentEditorName);
+      if (currentEditor) {
+        currentEditor.blur();
       }
     }
   }

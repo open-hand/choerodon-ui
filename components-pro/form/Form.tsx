@@ -16,6 +16,7 @@ import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
+import isNil from 'lodash/isNil';
 import raf from 'raf';
 import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
@@ -55,6 +56,7 @@ import ItemGroup from './ItemGroup';
 import { ShowHelp } from '../field/enum';
 import Icon from '../icon';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 /**
  * 表单name生成器
@@ -122,8 +124,9 @@ export interface FormProps extends DataSetComponentProps {
   /**
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
+   * 扩展 tooltip 属性：tooltip={['always', { theme: 'light', ... }]}
    */
-  labelTooltip?: LabelTooltip;
+  labelTooltip?: LabelTooltip | [LabelTooltip, TooltipProps];
   /**
    * 表单列数
    */
@@ -353,8 +356,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   @computed
   get labelAlign(): LabelAlign {
     const { labelAlign } = this.observableProps;
-    const defaultLabelAlign =
-      this.labelLayout === LabelLayout.vertical ? LabelAlign.left : LabelAlign.right;
     if (isString(labelAlign)) {
       return labelAlign as LabelAlign;
     }
@@ -364,7 +365,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         return responsiveAlign;
       }
     }
-    return defaultLabelAlign;
+    return (this.labelLayout === LabelLayout.vertical
+      ? LabelAlign.left
+      : this.getContextConfig('labelAlign') || LabelAlign.right);
   }
 
   @computed
@@ -383,7 +386,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
-  get labelTooltip(): LabelTooltip | undefined {
+  get labelTooltip(): LabelTooltip | [LabelTooltip, TooltipProps] |undefined {
     const { labelTooltip } = this.observableProps;
     if (labelTooltip) {
       return labelTooltip;
@@ -545,10 +548,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   getClassName(...props): string | undefined {
-    const { prefixCls, labelLayout } = this;
+    const { prefixCls, labelLayout, columns } = this;
     return super.getClassName({
       ...props,
       [`${prefixCls}-float-label`]: labelLayout === LabelLayout.float,
+      [`${prefixCls}-${labelLayout}`]: !isNil(labelLayout),
+      [`${prefixCls}-${columns > 1 ? "multi" : "single"}`]: true,
     });
   }
 
@@ -558,6 +563,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   componentDidMount() {
     this.componentDidMountOrUpdate();
+    this.handleFormFocus();
     super.componentDidMount();
   }
 
@@ -572,6 +578,24 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       delete this.isTooltipShown;
     }
     this.bubbleValidationReport(false);
+  }
+
+  handleFormFocus() {
+    // 聚焦到form内第一个可编辑组件上
+    const fields: FormField<FormFieldProps>[] = this.getFields();
+    let editableField: FormField<FormFieldProps> | undefined;
+    for (let i = 0; i < fields.length; i++) {
+      const field: FormField<FormFieldProps> = fields[i];
+      if (field.props.autoFocus) {
+        break;
+      }
+      if (field.editable && !editableField) {
+        editableField = field;
+      }
+      if (i === fields.length - 1 && editableField && this.getContextConfig('formAutoFocus')) {
+        editableField.focus();
+      }
+    }
   }
 
   @mobxAction
@@ -651,13 +675,14 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @autobind
-  handleHelpMouseEnter(e: MouseEvent, help: string) {
+  handleHelpMouseEnter(e: MouseEvent, help: ReactNode, helpTooltipProps: TooltipProps) {
     const { target } = e;
     const { getTooltipTheme, getTooltipPlacement } = this.context;
     show(target as HTMLElement, {
       title: help,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
     });
     this.isTooltipShown = true;
   }
@@ -667,12 +692,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     hide();
   }
 
-  renderTooltipHelp(help) {
+  renderTooltipHelp(help, helpTooltipProps) {
     if (help) {
       return (
         <Icon
           type="help"
-          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help)}
+          onMouseEnter={(e) => this.handleHelpMouseEnter(e, help, helpTooltipProps)}
           onMouseLeave={this.handleHelpMouseLeave}
         />
       );
@@ -712,7 +737,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           const { type, props: outChildProps } = outChild;
           if (outChildProps.hidden) return null;
           if (type) {
-            if (isFunction(type) && !(type as any).__PRO_OUTPUT &&
+            if (isAllOutputCom &&
+              isFunction(type) && !(type as any).__PRO_OUTPUT &&
               !((type as any).displayName === 'IntlField' && outChildProps && outChildProps.displayOutput)) {
               isAllOutputCom = false;
             }
@@ -733,10 +759,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
                 }
               });
             } else {
-              arr.push(cloneElement<any>(outChild, {
+              arr.push(Object.keys(groupProps).length ? cloneElement<any>(outChild, {
                 ...groupProps,
                 ...outChildProps,
-              }));
+              }) : outChild);
             }
           }
         };
@@ -746,7 +772,15 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
     function completeLine() {
       if (cols.length) {
-        rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
+        const maxRowSpan = Math.max(...cols.map(x => x.props.rowSpan));
+        if (rows[rowIndex]) {
+          rows[rowIndex] = <tr key={`row-${rowIndex}`}>{cols}</tr>;
+        } else {
+          rows.push((<tr key={`row-${rowIndex}`}>{cols}</tr>));
+        }
+        if (maxRowSpan > 1) {
+          new Array(maxRowSpan - 1).fill(0).forEach(() => rows.push(<tr />));
+        }
         cols = [];
       }
       rowIndex++;
@@ -840,7 +874,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             rowSpan={rowSpan}
             style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
             tooltip={tooltip}
-            help={isLabelShowHelp ? this.renderTooltipHelp(help) : undefined}
+            help={isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : undefined}
           >
             {toJS(label)}
           </FormItemLabel>,
@@ -850,10 +884,11 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         fieldElementProps.rowIndex = rowIndex;
         fieldElementProps.colIndex = colIndex;
       }
+      const currentColSpan = noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1);
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
-          colSpan={noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1)}
+          colSpan={currentColSpan}
           rowSpan={rowSpan}
           className={fieldClassName}
           style={spacingProperties ? getSpacingFieldStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
@@ -863,7 +898,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
               <label className={labelClassName}>
                 {toJS(label)}
               </label>
-              {isLabelShowHelp ? this.renderTooltipHelp(help) : null}
+              {isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : null}
             </>
           )}
           <div className={wrapperClassName}>{createElement(type, fieldElementProps)}</div>

@@ -14,11 +14,13 @@ import classNames from 'classnames';
 import TriggerField, { TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
 import EventManager from '../_util/EventManager';
+import { transformZoomData } from '../_util/DocumentUtils';
 import { FieldType } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { $l } from '../locale-context';
 import { ViewMode, ColorUnit } from './enum';
 import { defaultColorMap, commonColorMap } from './presetColorMap';
+import { Action } from '../trigger/enum';
 
 const FILL_COLOR = '#FFFFFF';
 const COLOR_LINE_LENGTH = 9;
@@ -84,6 +86,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable gradientHidden?: boolean;
 
+  @observable gradienLeft?: number;
+
+  @observable gradienTop?: number;
+
+  popupView: HTMLElement | null;
+
   get multiple(): boolean {
     return false;
   }
@@ -139,11 +147,16 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     ]);
   }
 
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
+  }
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
       this.gradientHidden = true;
     });
+    this.popupView = null;
   }
 
   componentDidUpdate() {
@@ -167,6 +180,25 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         this.setGradientPointer(left, top, selectPointer, gradient, false);
       }
     }
+    if (!this.gradientHidden && this.popupView) {
+      const { offsetTop } = this.popupView;
+      const { left, top, width, height } = this.popupView.getBoundingClientRect();
+      const { innerWidth, innerHeight } = window;
+
+      runInAction(() => {
+        if (left + width > innerWidth && left > width) {
+          this.gradienLeft = - width;
+        }
+        if (top + height > innerHeight) {
+          this.gradienTop = offsetTop - (top + height - innerHeight);
+        }
+      });
+    }
+  }
+
+  getValue(): any {
+    const value = super.getValue();
+    return typeof value === 'string' ? value : undefined;
   }
 
   getBorder(r = 255, g = 0, b = 0): boolean {
@@ -293,7 +325,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.setColor(this.getValue());
     }
     return (
-      <div className={`${prefixCls}-popup-view`} style={{ display: preset && !gradientHidden || !preset ? 'block' : 'none' }}>
+      <div ref={dom => { this.popupView = dom }} className={`${prefixCls}-popup-view`} style={{ display: preset && !gradientHidden || !preset ? 'block' : 'none', top: this.gradienTop, left: this.gradienLeft }}>
         <div className={`${prefixCls}-popup-view-picker-name`}>{$l('ColorPicker', 'pick_color_view')}</div>
         <div className={`${prefixCls}-popup-body`} style={{ backgroundColor: defaultTo(this.hueColor, '#ff0000') }}>
           <div {...gradientProps} />
@@ -588,7 +620,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const { gradient, selectPointer, setGradientPointer } = this;
     if (gradient && selectPointer) {
       const { positionToHSV, rgbToHEX, hsvToRGB } = this;
-      const { left, top } = setGradientPointer(e.clientX, e.clientY, selectPointer, gradient, true);
+      const { left, top } = setGradientPointer(transformZoomData(e.clientX), transformZoomData(e.clientY), selectPointer, gradient, true);
       const { height, width } = getNodeRect(gradient);
       const { h, s, v, a: ha } = positionToHSV(left, top, width, height);
       this.setHSV(undefined, s, v, undefined);
@@ -617,7 +649,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   handleHueClick(e) {
     const { hue, huePointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
     if (hue && huePointer) {
-      const { left, wrapW } = setSliderPointer(e.clientX, huePointer, hue, true);
+      const { left, wrapW } = setSliderPointer(transformZoomData(e.clientX), huePointer, hue, true);
       const h = Math.floor((left / wrapW) * 360);
       const { s, v, a: ha } = this.HSV;
       this.setHSV(h, undefined, undefined, undefined);
@@ -635,7 +667,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   handleOpacityClick(e) {
     const { opacity, opacityPointer, setSliderPointer, hsvToRGB, rgbToHEX } = this;
     if (opacity && opacityPointer) {
-      const { left, wrapW } = setSliderPointer(e.clientX, opacityPointer, opacity, true);
+      const { left, wrapW } = setSliderPointer(transformZoomData(e.clientX), opacityPointer, opacity, true);
       const a = round(left / wrapW, 2);
       const { h, s, v } = this.HSV;
       const { r, g, b } = hsvToRGB(h, s, v, a);

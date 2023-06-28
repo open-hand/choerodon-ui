@@ -80,7 +80,7 @@ title: Form
 | label | 标签 | string \| ReactNode |  |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number |  |
 | labelTooltip | 用 Tooltip 显示标签内容。可选值 none \| always \| overflow | string |  |
-| help | 帮助信息(显示在label旁) | string |  |
+| help | 帮助信息(显示在label旁) | ReactNode |  |
 | required | 是否显示必填样式 | boolean |  |
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
 | compact | 是否用紧凑模式 | boolean |  |

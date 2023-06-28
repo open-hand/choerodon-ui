@@ -4,7 +4,7 @@ import { Moment, MomentInput } from 'moment';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import { LovConfig } from '../interface';
-import { ExportMode, RecordStatus, FieldType } from '../data-set/enum';
+import { ExportMode, RecordStatus, FieldType, DownloadAllMode } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
 import { TransportHookProps, TransportProps } from '../data-set/Transport';
 import DataSet from '../data-set/DataSet';
@@ -84,6 +84,7 @@ export interface AttachmentConfig {
   defaultFileSize: number;
   defaultChunkSize: number;
   defaultChunkThreads: number;
+  downloadAllMode?: DownloadAllMode;
   action?: AxiosRequestConfig | ((props: AttachmentActionProps) => AxiosRequestConfig);
   batchFetchCount?: AttachmentBatchFetchCount;
   fetchFileSize?: (props: AttachmentOption) => Promise<number>;
@@ -115,8 +116,11 @@ export interface Config {
     lookupCode?: string;
   }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  useLookupBatch?: (code: string, field?: Field) => boolean;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
+  lovDefineBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  useLovDefineBatch?: (code: string, field?: Field) => boolean;
   lovQueryUrl?:
     | string
     | ((code: string, lovConfig: LovConfig | undefined, props: TransportHookProps) => string);
@@ -179,6 +183,7 @@ const defaultAttachment: AttachmentConfig = {
   defaultFileSize: 0,
   defaultChunkSize: 5 * 1024 * 1024,
   defaultChunkThreads: 3,
+  downloadAllMode: DownloadAllMode.readOnly,
   getDownloadUrl({ attachment }) {
     return attachment.url;
   },
@@ -202,6 +207,8 @@ const defaultConfig = {
   validationMessageFormatter: defaultValidationMessageFormatter,
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
   xlsx: noop,
+  useLookupBatch: noop,
+  useLovDefineBatch: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;

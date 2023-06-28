@@ -77,6 +77,9 @@ module.exports = {
   },
   lessConfig: {
     javascriptEnabled: true,
+    // modifyVars: {
+    //   // 'c7n-root-entry-name': 'variables',
+    // },
   },
   webpackConfig(config) {
     config.resolve.alias = {

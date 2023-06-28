@@ -31,9 +31,9 @@ export interface TableHeaderProps extends ElementProps {
 const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(props) {
   const { lock, queryFields } = props;
   const { prefixCls, border, tableStore, dataSet, fullColumnWidth } = useContext(TableContext);
-  const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight } = tableStore;
+  const { columnResizable, columnResizing, columnGroups, comboBarStatus, rowHeight, isRenderRange } = tableStore;
   const { columns } = columnGroups;
-  const needIntersection = tableStore.isFixedRowHeight && tableStore.virtualCell && tableStore.overflowX;
+  const needIntersection = tableStore.isFixedRowHeight && tableStore.virtual && tableStore.overflowX;
   const headerRows: ColumnGroup[][] = getTableHeaderRows(lock ? columns.filter((group) => group.lock === lock) : columns);
   const [isHeaderHover, setIsHeaderHover] = useState<boolean | undefined>();
   const nodeRef = useRef<HTMLTableSectionElement | null>(null);
@@ -103,6 +103,7 @@ const TableHeader: FunctionComponent<TableHeaderProps> = function TableHeader(pr
               rowIndex,
               isSearchCell: isSearchTr,
               scope: children ? 'colgroup' : 'col',
+              isRenderCell: isRenderRange(index, headerRows.length > 1),
             };
             if (!useEmptyColumn && notLockLeft && !hasPlaceholder && index === length - 1 && columnGroups.lastLeaf === col.lastLeaf) {
               cellProps.className = lastColumnClassName;

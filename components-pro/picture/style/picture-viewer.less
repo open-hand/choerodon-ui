@@ -21,40 +21,54 @@
       }
 
       &-body {
-        padding: .4rem;
+        padding: .4rem .4rem .16rem .4rem;
         overflow: hidden;
       }
+    }
+
+    &::after {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1.32rem;
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, #000 99%);
+      opacity: 0.5;
+      content: ' ';
+      pointer-events: none;
     }
   }
 
   & &-btn.@{c7n-pro-prefix}-btn {
-    width: .24rem;
-    height: .24rem;
+    width: @picture-viewer-btn-size-base;
+    height: @picture-viewer-btn-size-base;
     color: @text-color-dark;
+    text-shadow: 0 0.02rem 0.04rem rgba(0, 0, 0, .15);
   }
 
   & &-btn.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
     display: block;
-    font-size: .24rem;
+    font-size: @picture-viewer-btn-size-base;
     line-height: 1;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn {
-    width: .32rem;
-    height: .32rem;
+    width: @picture-viewer-nav-btn-size;
+    height: @picture-viewer-nav-btn-size;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
-    font-size: .32rem;
+    font-size: @picture-viewer-nav-btn-size;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn-lg {
-    width: .52rem;
-    height: .52rem;
+    z-index: 1;
+    width: @picture-viewer-nav-btn-size-lg;
+    height: @picture-viewer-nav-btn-size-lg;
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn-lg .@{iconfont-css-prefix} {
-    font-size: .52rem;
+    font-size: @picture-viewer-nav-btn-size-lg;
   }
 
   & &-btn-close {
@@ -83,16 +97,22 @@
   }
 
   &-toolbar {
+    z-index: 1;
     margin-top: .4rem;
     white-space: nowrap;
     text-align: center;
+
+    &:last-child {
+      margin-bottom: 0.38rem;
+    }
   }
 
   &-navbar {
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: .24rem;
+    margin-top: .16rem;
 
     &-scroll {
       display: flex;
@@ -107,7 +127,12 @@
 
 
     &-item {
+      border: .02rem @border-style-base transparent;
       cursor: pointer;
+    }
+
+    &-current {
+      border-color: @text-color-dark;
     }
 
     &-item::after {

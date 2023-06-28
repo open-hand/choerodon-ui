@@ -44,7 +44,7 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  height: 0.36rem;
+  height: @input-basic-height;
   padding: @input-padding-vertical-base @input-padding-horizontal;
   color: @input-color;
   font-size: @font-size-base;
@@ -88,7 +88,7 @@
   }
 
   &-has-copy {
-    padding-right: @icon-font-size-base + 0.02rem;
+    padding-right: calc(@icon-font-size-base + 0.02rem);
   }
 
   &-has-value &-icon {
@@ -192,18 +192,18 @@
     .input-lg();
   }
   &-lg &-has-copy {
-    padding-right: @icon-font-size-lg + 0.02rem;
+    padding-right: calc(@icon-font-size-lg + 0.02rem);
   }
   &-sm {
     .input-sm();
   }
   &-sm &-has-copy {
-    padding-right: @icon-font-size-sm + 0.02rem;
+    padding-right: calc(@icon-font-size-sm + 0.02rem);
   }
 
   &:-webkit-autofill {
     width: ~'calc(100% - .04rem)';
-    height: 0.32rem;
+    height: @input-basic-autofill-height;
     margin: 0.02rem;
     text-indent: -0.02rem;
     border-radius: 0.04rem;
@@ -235,25 +235,26 @@
   }
 
   &-has-border:hover::before {
-    border-color: @input-color;
+    border-color: @input-basic-hover-border-color;
   }
 
   &-focused &-has-border::before,
   &-focused&-has-border::before,
   .has-error &-wrapper::before {
-    border-width: 0.02rem;
+    border-width: @input-basic-focus-border-width;
   }
   &-focused &-has-border::before,
   &-focused&-has-border::before {
-    border-color: @input-primary-color;
+    border-color: @input-basic-focus-border-color;
   }
   .has-error &-has-border::before {
     border-color: @error-color;
   }
   &-disabled &-has-border::before,
   &-disabled&-has-border::before {
+    background-color: @input-basic-disabled-bg;
     border-color: @input-border-color !important;
-    border-style: dashed;
+    border-style: @input-basic-disabled-border-style;
   }
 }
 
@@ -261,7 +262,7 @@
   &-label {
     padding: 0;
     color: @label-color;
-    line-height: 34 / 13; // <-- fieldHeight / fontSize
+    line-height: @label-basic-line-height; // <-- fieldHeight / fontSize
     transform-origin: inherit;
     transition: inherit;
     pointer-events: none;
@@ -272,7 +273,7 @@
       margin-left: 0.04rem;
       color: @label-required-color;
       font-size: @font-size-base;
-      font-family: SimSun, sans-serif;
+      font-family: @font-family-required-symbol;
       line-height: 1;
       content: '*';
     }
@@ -433,7 +434,7 @@
 
     // Reset Select's style in addon
     .@{c7n-prefix}-select {
-      margin: -(@input-padding-vertical-base + 0.01rem) (-@input-padding-horizontal-base); // lesshint spaceAroundOperator: false
+      margin: calc(-1 * (@input-padding-vertical-base + 0.01rem)) calc(-1 * @input-padding-horizontal-base); // lesshint spaceAroundOperator: false
 
       .@{c7n-prefix}-select-selection {
         margin: -0.01rem;

@@ -30,6 +30,8 @@ const prefixCls = getConfig('prefixCls');
 | lookupAxiosConfig | Lookup fetch axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lookupUrl and method is post. | AxiosRequestConfig \| ({ dataSet: DataSet, record: Record, params?: any, lookupCode: string }) => AxiosRequestConfig | post |
 | lovDefineUrl | Lov configure url or hook which return url | string \| ((code: string) => string) | code => \`/sys/lov/lov_define?code=\${code}\` |
 | lovDefineAxiosConfig | hook for Lov configure axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovDefineUrl and method is post. | AxiosRequestConfig \| (code: string, field?: Field) => AxiosRequestConfig | - |
+| lovDefineBatchAxiosConfig | 返回 lov 配置批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field: Field) => boolean | noop |
 | lookupAxiosMethod | 值列表请求的类型 | Http method | 'post' |
 | lovQueryUrl | Lov query url or hook which return url | string \| ((code: string, lovConfig?: LovConfig, { dataSet, params, data }) => string) | code => \`/common/lov/dataset/\${code}\` |
 | lovQueryAxiosConfig | hook for Lov query axios config, more info: [AxiosRequestConfig](#AxiosRequestConfig). By default, url is lovQueryUrl and method is post. | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data }) => AxiosRequestConfig | - |
@@ -41,8 +43,11 @@ const prefixCls = getConfig('prefixCls');
 | lovQueryBarProps | 默认 Lov Table queryBar 的 queryBarProps | object | |
 | lovQueryCachedSelected | lov 查询缓存已勾选记录 | (code: string, cachedSelected: Map<string, Record>) => Promise<object[]> | |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
+| useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
+| selectReserveParam | 是否保留查询参数。 | boolean | true |
 | selectPagingOptionContent | 渲染分页 option | ReactNode | ··· |
 | selectTrigger | 下拉弹出触发方式 | Action[] | \['focus', 'click'] |
 | axios | Replace the built-in axios instance | AxiosInstance | |   |
@@ -56,7 +61,7 @@ const prefixCls = getConfig('prefixCls');
 | labelLayout | default labelLayout of Form | string | horizontal |
 | queryBar | default queryBar of table | string | normal |
 | queryBarProps | 默认 Table queryBar 的 queryBarProps | object | |
-| tableVirtual | default virtual of Table | boolean | |
+| tableVirtual | default virtual of Table and based on the granularity of rows and columns | boolean \| (rows: number, columns: number) => boolean | |
 | tableVirtualCell | default virtualCell of Table | boolean | |
 | tableBorder | default border of table | boolean | true |
 | tableColumnEditorBorder | default columnEditorBorder of Table | boolean | tableBorder |
@@ -73,6 +78,7 @@ const prefixCls = getConfig('prefixCls');
 | tableCommandProps | Default Table command props | ButtonProps | { color: 'primary', funcType: 'flat' } |
 | tableShowSelectionTips | Table默认显示选中记录提示 | boolean | false |
 | tableShowCachedTips | Table默认显示缓存记录提示， 优先级高于 tableShowSelectionTips | boolean | false |
+| tableShowSortIcon | Table默认显示可排序icon | boolean | false |
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false || pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
@@ -82,7 +88,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
-| tableColumnResizeTransition | Excessive effect of column dragging | boolean | false |
+| tableColumnResizeTransition | Excessive effect of column dragging | boolean | true |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
@@ -93,6 +99,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnAlign | 默认表格列对齐方式 | (column, field) => 'left' \| 'center' \| 'right' \| undefined | Function |
 | tableColumnDefaultWidth | 默认表格列宽度, 只在出横向滚动条时起作用 | number | 100 |
 | tableColumnDefaultMinWidth | 默认表格列最小宽度 | number | 50 |
+| tableColumnFilterPopover | 默认表格渲染不同前端筛选组件 | (props: FilterPopoverProps) => ReactNode |  |
 | tableColumnResizeTrigger | 表格列宽拖拽分割线触发方式 | 'mouseDown'\|'hover' | 'mouseDown' |
 | tableAggregationColumnDefaultWidth | 默认表格聚合列宽度, 只在出横向滚动条时起作用 | number | 250 |
 | tableAggregationColumnDefaultMinWidth | 默认表格聚合列最小宽度 | number | 50 |
@@ -170,6 +177,9 @@ const prefixCls = getConfig('prefixCls');
 | uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
+| fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
+| formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
+| labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |
 
 ### Customizable
 
@@ -246,6 +256,7 @@ const prefixCls = getConfig('prefixCls');
 | defaultFileSize               | 上传文件的大小限制, 单位 `B`                | number                              | 0 |
 | defaultChunkSize               | 上传分片文件的大小, 单位 `B`                | number                              | 5 * 1024 * 1024 |
 | defaultChunkThreads               | 上传分片文件的并发数                | number                              | 3 |
+| downloadAllMode(1.5.9)               | 显示全部下载按钮模式，支持 readOnly \|  always            | string                              | 'readOnly' |
 | action               | 上传的 axios 请求配置或返回 axios 请求配置的钩子               | AxiosConfig \| ({ attachment: [AttachmentFile](/component-pro/data-set/#AttachmentFile), chunk: [AttachmentFileChunk](/component-pro/data-set/#AttachmentFileChunk), bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => AxiosRequestConfig                             | |
 | batchFetchCount               | 批量获取附件数量                | (attachmentUUIDs: string[], { isPublic?: boolean }) => Promise<{\[key as string\]: number}>                             | |
 | fetchFileSize               | 查询附件大小限制                | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, isPublic?: boolean }) => Promise<number>                             | |

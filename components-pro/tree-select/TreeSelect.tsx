@@ -303,7 +303,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     const promises: Promise<any>[] = [];
     if (dataSet) {
       const { record } = event.props;
-      promises.push(dataSet.queryMoreChild(record));
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
     }
     if (loadData) {
       promises.push(loadData(event));

@@ -90,16 +90,17 @@ class App extends React.Component {
     const btns = [];
     if (record.getState('editing')) {
       btns.push(
-        <a onClick={this.handleSubmit}>
+        <a onClick={this.handleSubmit} key='confirm'>
           确认
         </a>,
-        <a onClick={() => this.handleCancel(record)}>
+        <a onClick={() => this.handleCancel(record)} key='cancel'>
           取消
         </a>,
       );
     } else {
       btns.push(
         <a
+          key='edit'
           onClick={() => this.handleEdit(record)}
           disabled={record.status === 'delete'}
         >
@@ -107,7 +108,7 @@ class App extends React.Component {
         </a>,
       );
     }
-    return [<span className="action-link">{btns}</span>];
+    return [<span className="action-link" key='actions'>{btns}</span>];
   };
   render() {
     const buttons = [
@@ -119,7 +120,7 @@ class App extends React.Component {
       'reset',
     ];
     return (
-      <Table key="user" buttons={buttons} dataSet={this.userDs}>
+      <Table key="user" buttons={buttons} buttonsLimit={2} dataSet={this.userDs}>
         <Column name="userid" />
         <Column name="name" editor={(record) => record.getState('editing')} />
         <Column name="age" editor={(record) => record.getState('editing')} />

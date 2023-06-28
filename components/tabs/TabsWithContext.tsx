@@ -73,7 +73,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabBarExtraContent,
     hideOnlyGroup,
     customizedCode, customizable, children, defaultActiveKey: propDefaultActiveKey, setCustomized, customized,
-    prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, onPrevClick, onNextClick, keyboard,
+    prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, keyboard,
     defaultChangeable,
     tabDraggable,
     tabTitleEditable,
@@ -161,6 +161,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     currentPanelMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>,
   }>(refCurrent);
   ref.current = refCurrent;
+  const tabRef = useRef<HTMLDivElement>(null);
   const changeActiveKey = useCallback((key: string, byGroup?: boolean) => {
     if (activeKey !== key) {
       if (!byGroup && currentGroup) {
@@ -171,6 +172,15 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       }
       if (onChange) {
         onChange(key);
+      }
+      if (tabRef.current) {
+        const selector = '[tabindex^="-1"]';
+        const findFocusableElements = Array.from<HTMLElement>(tabRef.current.querySelectorAll(selector));
+        findFocusableElements.forEach(child => {
+          if (child.getAttribute('data-node-key') === key) {
+            child.focus();
+          }
+        })
       }
     }
   }, [hasPropActiveKey, activeKey, onChange, currentGroup]);
@@ -194,8 +204,6 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     totalPanelsMap,
     validationMap,
     onTabClick,
-    onPrevClick,
-    onNextClick,
     children,
     tabDraggable,
     tabTitleEditable,
@@ -315,7 +323,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   }
 
   const tabs = (
-    <div className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
+    <div tabIndex={-1} ref={tabRef} className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
       {contents}
     </div>
   );

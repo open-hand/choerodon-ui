@@ -31,7 +31,7 @@ import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
 import { ModalChildrenProps, ModalCustomized } from './interface';
-import { getDocument, MousePosition } from '../_util/DocumentUtils';
+import { getDocument, MousePosition, transformZoomData } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
 
@@ -132,7 +132,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: false,
     drawer: false,
     drawerOffset: 150,
-    autoFocus: false,
+    autoFocus: true,
     closeOnLocationChange: true,
   };
 
@@ -242,7 +242,19 @@ export default class Modal extends ViewComponent<ModalProps> {
     return getDocument(window);
   }
 
+  get autoWidth(): boolean {
+    const { contentStyle } = this.props;
+    if (contentStyle && contentStyle.width) {
+      return true;
+    }
+    return false;
+  }
+
   contentNode: HTMLElement;
+
+  sentinelStartRef: HTMLDivElement;
+
+  sentinelEndRef: HTMLDivElement;
 
   childrenProps: ModalChildrenProps;
 
@@ -305,6 +317,9 @@ export default class Modal extends ViewComponent<ModalProps> {
       } else {
         this.handleCancel();
       }
+    }
+    if (e.keyCode === KeyCode.TAB && !this.props.hidden) {
+      this.changeActive(!e.shiftKey);
     }
   }
 
@@ -458,9 +473,20 @@ export default class Modal extends ViewComponent<ModalProps> {
     this.contentNode = node;
   }
 
+  @autobind
+  sentinelStartReference(node) {
+    this.sentinelStartRef = node;
+  }
+
+  @autobind
+  sentinelEndReference(node) {
+    this.sentinelEndRef = node;
+  }
+
   getClassName(): string | undefined {
     const {
       prefixCls,
+      autoWidth,
       props: {
         style = this.tempCustomized || {},
         fullScreen,
@@ -484,6 +510,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-auto-center`]: autoCenter && center && !fullScreen,
       [`${prefixCls}-${size}`]: size,
       [`${prefixCls}-active`]: active,
+      [`${prefixCls}-auto-width`]: autoWidth,
     });
   }
 
@@ -564,7 +591,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') },
     } = this;
     const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
-    const { clientX, clientY } = e;
+    const clientX = transformZoomData(e.clientX);
+    const clientY = transformZoomData(e.clientY);
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const clzz = classes(element);
@@ -586,8 +614,8 @@ export default class Modal extends ViewComponent<ModalProps> {
       });
     }
     return (me) => {
-      const width = me.clientX - startX;
-      const height = me.clientY - startY;
+      const width = transformZoomData(me.clientX) - startX;
+      const height = transformZoomData(me.clientY) - startY;
       Object.assign(element.style, {
         width: pxToRem(getMath(width, minWidth, embeddedOffsetWidth || docClientWidth)),
         height: pxToRem(getMath(height, minHeight, embeddedOffsetHeight || docClientHeight)),
@@ -611,10 +639,11 @@ export default class Modal extends ViewComponent<ModalProps> {
     const maxHeight = (embeddedOffsetHeight || docClientHeight) - drawerOffset;
     let { offsetHeight: height, offsetWidth: width } = contentNode;
     return (me) => {
-      let { clientX, clientY } = me;
+      let clientX = transformZoomData(me.clientX);
+      let clientY = transformZoomData(me.clientY);
       if (offsetParent) {
-        clientX = elementOffsetTop + me.clientX - e.clientX;
-        clientY = elementOffsetLeft + me.clientY - e.clientY;
+        clientX = elementOffsetTop + clientX - transformZoomData(e.clientX);
+        clientY = elementOffsetLeft + clientY - transformZoomData(e.clientY);
       }
       switch (drawerTransitionName) {
         case 'slide-right':
@@ -651,8 +680,10 @@ export default class Modal extends ViewComponent<ModalProps> {
     const footer = this.getFooter();
     const resizerPrefixCls = `${prefixCls}-resizer`;
     const resizerCursorCls = `${resizerPrefixCls}-cursor`;
+    const sentinelStyle = { width: 0, height: 0, overflow: 'hidden', outline: 'none' };
     return (
       <div {...this.getMergedProps()}>
+        <div tabIndex={0} ref={this.sentinelStartReference} style={sentinelStyle} aria-hidden="true" />
         <div
           ref={this.contentReference}
           className={classNames(`${prefixCls}-content`, {
@@ -680,9 +711,24 @@ export default class Modal extends ViewComponent<ModalProps> {
             </div>
           }
         </div>
+        <div tabIndex={0} ref={this.sentinelEndReference} style={sentinelStyle} aria-hidden="true" />
       </div>
     );
   }
+
+  focus(): void {
+    this.sentinelStartRef.focus();
+  }
+
+  changeActive(next) {
+    const { activeElement } = this.doc;
+    if (next && activeElement === this.sentinelEndRef) {
+      this.sentinelStartRef.focus();
+    } else if (!next && activeElement === this.sentinelStartRef) {
+      this.sentinelEndRef.focus();
+    }
+  }
+  
 
   componentWillUpdate({ hidden }) {
     if (hidden === false && hidden !== this.props.hidden) {
@@ -710,20 +756,48 @@ export default class Modal extends ViewComponent<ModalProps> {
     const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
     if (element && contentNode) {
       const { prefixCls } = this;
-      const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
-      const { clientX, clientY, currentTarget } = downEvent;
-      const clzz = classes(element);
-      const { offsetLeft, offsetParent } = element;
       const {
-        scrollTop = 0, scrollLeft = 0,
+        clientWidth: docClientWidth,
+        clientHeight: docClientHeight,
+      } = this.doc.documentElement || this.doc.body;
+      const { currentTarget } = downEvent;
+      const clientX = transformZoomData(downEvent.clientX);
+      const clientY = transformZoomData(downEvent.clientY);
+      const clzz = classes(element);
+      const { offsetParent } = element;
+      const {
+        scrollTop = 0,
+        scrollLeft = 0,
+        clientWidth = 0,
+        clientHeight = 0,
       } = offsetParent || {};
-      const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
+      if (clzz.has(`${prefixCls}-auto-center`)) {
+        clzz.remove(`${prefixCls}-auto-center`).remove(`${prefixCls}-center`);
+        const {
+          offsetWidth,
+          offsetHeight,
+        } = element;
+        const isEmbedded = !!(element && element.offsetParent);
+        const top = pxToRem(
+          isEmbedded ? (clientHeight - offsetHeight) / 2 + scrollTop : (docClientHeight - offsetHeight) / 2,
+          true,
+        );
+        const left = pxToRem(
+          isEmbedded ? (clientWidth - offsetWidth) / 2 + scrollLeft : (docClientWidth - offsetWidth) / 2,
+          true,
+        );
+        this.offset = [left, top];
+        Object.assign(element.style, { top, left });
+      }
+      const  { offsetLeft } = element;
+      const  offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       this.moveEvent
         .setTarget(this.doc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
-          const { clientX: moveX, clientY: moveY } = moveEvent;
-          clzz.remove(`${prefixCls}-center`).remove(`${prefixCls}-auto-center`);
+          const moveX = transformZoomData(moveEvent.clientX);
+          const moveY = transformZoomData(moveEvent.clientY);
+          clzz.remove(`${prefixCls}-center`);
           const left = pxToRem(
             Math.min(
               Math.max(

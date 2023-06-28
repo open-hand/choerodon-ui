@@ -30,7 +30,7 @@ subtitle: 表格
 | selectionBoxRenderer | 勾选框渲染器  | ({ record, element }) => ReactNode | |
 | alwaysShowRowBox | 是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | onRow | 设置行属性 | ({ dataSet, record, index, expandedRow }) => object |  |
-| buttons | 功能按钮，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object |  |
+| buttons | 功能按钮组，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，可选值：`add` `delete` `remove` `save` `query` `reset` `expandAll` `collapseAll` `export` 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象，其中的自定义按钮和自定义按钮配置属性对象需添加唯一 key | string \| \[string, object\] \| ReactNode \| object |  |
 | buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  |
 | queryFields | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件 | ReactNode[] \| object |  |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number |  |
@@ -78,12 +78,14 @@ subtitle: 表格
 | virtual | 是否开启虚拟滚动,当设置表格高度 `style={{ height: xxx }}` 时有效 | boolean | [globalConfig.tableVirtual(/components/configure#API) |
 | virtualCell | 虚拟单元格 | boolean | [globalConfig.tableVirtualCell](/components/configure#API) |
 | virtualSpin | 是否开启虚拟滚动Spin | boolean | false |
+| columnBuffer | 列的缓冲区。开启虚拟滚动后，在可见区域之前/之后要呈现的额外列数。且 columnBuffer 的值大于或等于 columnThreshold 的值| number | 3 |
+| columnThreshold | 列的阈值。开启虚拟滚动后，在呈现新列之前可见的列数。且 columnThreshold 的值小于或等于 columnBuffer 的值 | number | 3 |
 | autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false |
 | autoHeight | 是否开启高度自适应 | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) } | false |
 | autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |
 | editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |
 | onDragEnd | 完成拖拽后的触发事件 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => void |  |
-| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置 | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided) => false \| void \|resultDrag   | - |
+| onDragEndBefore |完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置。树形拖拽可通过 recordIndexFromTo 获取到正确的记录索引: \[sourceRecordIndex, destinationRecordIndex\] | (dataSet:DataSet,columns:ColumnProps[],resultDrag: DropResult, provided: ResponderProvided, recordIndexFromTo: \[number?, number?\]) => false \| void \|resultDrag   | - |
 | dragDropContextProps | react-beautiful-dnd DragDropContextProps | [DragDropContextProps](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md) |  |
 | columnsDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender)  |  |
 | rowDragRender | 控制列的拖拽渲染，从这里可以实现对默认的拖拽的一些自定义的设置，需要参阅react-beautiful-dnd | 请查看DragRender[配置项](#DragRender) |  |
@@ -96,7 +98,7 @@ subtitle: 表格
 | showCachedTips | 是否显示缓存记录提示， 优先级高于 showSelectionTips  | boolean | [globalConfig.tableShowCachedTipsTips](/components/configure#API) |
 | showCachedSelection | 是否显示缓存选中记录  | boolean | |
 | onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |
-| showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | |
+| showSelectionCachedButton | 是否显示缓存选中记录按钮  | boolean | true |
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮  | boolean | |
 | customizable | 是否显示个性化设置入口按钮  | boolean | [globalConfig.customizable](/components/configure#API) |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
@@ -130,11 +132,14 @@ subtitle: 表格
 | header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
 | footer | 列脚 | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
+| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  |
 | editor | 编辑器, 设为`true`时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 `false` 值，而不是在控件上加 disabled。 | FormField \| ((record, name) => FormField \| boolean) \| boolean |  |
 | lock | 是否锁定， 可选值 `false` `true` `left` `right` | boolean\| string | false |
 | align | 文字对齐方式，可选值： `left` `center` `right` | string | [globalConfig.tableColumnAlign](/components/configure#API) |
 | resizable | 是否可调整宽度 | boolean | [globalConfig.tableColumnResizable](/components/configure#API) |
-| sortable | 是否可排序（后端请求排序，前端排序请自定义 header 自行实现） | boolean | false |
+| sortable | 是否可排序，前端排序请定义 CompareFn | boolean \|CompareFn  | false |
+| filter | 是否可前端过滤 | boolean \| ((props: { record: Record, filterText?: string }) => boolean)  | false |
+| filterPopover | 前端过滤自定义筛选，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  |
 | hideable | 是否可隐藏 | boolean | [globalConfig.tableColumnHideable](/components/configure#API) |
 | titleEditable | 是否可编辑标题 | boolean | [globalConfig.tableColumnTitleEditable](/components/configure#API) |
 | style | 列单元格内链样式 | object |  |
@@ -175,6 +180,7 @@ subtitle: 表格
 | ----------- | ---------------------- | ------ | -------- |
 | paramName   | 输入的过滤条件的字段名 | string | 'params' |
 | placeholder | 输入框的占位符         | string | '过滤表' |
+| editable    | 查询条是否可编辑         | boolean | true |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
@@ -209,6 +215,7 @@ subtitle: 表格
 | refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
+| onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
 
 #### DynamicFilterBarConfig
 

@@ -26,9 +26,8 @@ A content area which can be collapsed and expanded.
 | expandIcon | Allow to customize collapse icon | (panelProps) => ReactNode \| `text`(Default icon + text) | - |
 | expandIconPosition | Set expand icon position | `left` \| `right` \| `text-right` | `left` |
 | destroyInactivePanel | Destroy Inactive Panel | boolean | false |
-| trigger | trigger position | `header` \| `icon` | `header` |
 | ghost | Make the collapse borderless and its background transparent | boolean | false |
-| collapsible(1.5.7) | Specify whether the panels of children be collapsible or the trigger area of collapsible | `header` \| `disabled` | |
+| collapsible(1.5.7) | Specify whether the panels of children be collapsible or the trigger area of collapsible | `header` \| `icon` \| `disabled` | |
 
 ### Collapse.Panel
 
@@ -42,5 +41,5 @@ A content area which can be collapsed and expanded.
 | showArrow	| If false, panel will not show arrow icon	| boolean	|  true |
 | extra	| The extra element in the corner | ReactNode | - |
 | dataSet	| DataSet， The panel will automatically expanded when dataset validation fails | DataSet \| DataSet[] | 无 |
-| collapsible(1.5.7) | Specify whether the panel be collapsible or the trigger area of collapsible, Priority is higher than disabled | `header` \| `disabled` | |
+| collapsible(1.5.7) | Specify whether the panel be collapsible or the trigger area of collapsible, Priority is higher than disabled | `header` \| `icon` \| `disabled` | |
 | hidden | 是否隐藏 | boolean  | false |

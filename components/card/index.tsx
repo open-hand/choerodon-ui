@@ -213,6 +213,8 @@ export default class Card extends Component<CardProps, CardState> {
       [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
       [`${prefixCls}-type-${type}`]: !!type,
       [`${selectedPrefixCls} ${selectedPrefixCls}-${cornerPlacement} ${selectedPrefixCls}-${size}`]: selected,
+      [`${prefixCls}-only-title`]: !children,
+      [`${prefixCls}-only-body`]: !title,
     });
 
     const loadingBlock = (

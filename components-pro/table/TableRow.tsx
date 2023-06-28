@@ -79,12 +79,13 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const {
     record, hidden, index, virtualIndex, headerGroupIndex, provided, snapshot, isDragDisabled, className, lock, columnGroups,
     children, groupPath, expandIconColumnIndex, metaData, style: propStyle,
-    intersectionRef, inView = true, virtualHeight, isFixedRowHeight, virtualCell, columnsInView = true,
+    intersectionRef, inView = true, virtualHeight, isFixedRowHeight, columnsInView = true,
   } = props;
   const context = useContext(TableContext);
   const {
     tableStore, prefixCls, dataSet, selectionMode, onRow, rowRenderer, parityRow,
     expandIconAsCell, expandedRowRenderer, isTree, canTreeLoadData, fullColumnWidth,
+    expandRowByClick,
   } = context;
   const {
     highLightRow,
@@ -94,6 +95,10 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     rowDraggable,
     showRemovedRow,
     node,
+    propVirtual,
+    isRenderRange,
+    blankVirtualCell,
+    virtualColumnRange: { left, center, right },
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -102,7 +107,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const disabled = isDisabledRow(record);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
-  const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight ||tableStore.propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
+  const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight || propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
   const rowExternalProps: any = useComputed(() => ({
     ...(typeof rowRenderer === 'function' ? rowRenderer(record, index) : {}), // deprecated
     ...(typeof onRow === 'function'
@@ -127,7 +132,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   })();
 
   const setRowHeight = useCallback(action((key: Key, height: number, target: HTMLTableRowElement) => {
-    if (inView && columnsInView && height && target.offsetParent) {
+    // TODO: TABLE 行内编辑并且拖拽操作兼容火狐浏览器的适配
+    if (inView && columnsInView && height && target.offsetParent && navigator.userAgent.indexOf("Firefox") < 0) {
       if (metaData) {
         if (metaData.actualHeight !== height) {
           tableStore.batchSetRowHeight(key, () => metaData.setHeight(height));
@@ -179,7 +185,16 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     dataSet[record.isSelected ? 'unSelect' : 'select'](record);
   }, [record, dataSet]);
 
+  const handleExpandChange = useCallback(() => {
+    if (expandable) {
+      tableStore.setRowExpanded(record, !isExpanded);
+    }
+  }, [tableStore, record, expandable, isExpanded]);
+
   const handleClick = useCallback(action<(e) => boolean | undefined>((e) => {
+    if (expandRowByClick) {
+      handleExpandChange();
+    }
     const { onClick } = rowExternalProps;
     if (highLightRow === HighLightRowType.click && !tableStore.rowClicked) {
       tableStore.rowClicked = true;
@@ -187,7 +202,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     if (typeof onClick === 'function') {
       return onClick(e);
     }
-  }), [tableStore, rowExternalProps]);
+  }), [tableStore, rowExternalProps, expandRowByClick, handleExpandChange]);
 
   const handleSelectionByClick = useCallback(async (e) => {
     if (await handleClick(e) !== false) {
@@ -210,12 +225,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       onDoubleClick(e);
     }
   }, [handleSelection, rowExternalProps]);
-
-  const handleExpandChange = useCallback(() => {
-    if (expandable) {
-      tableStore.setRowExpanded(record, !isExpanded);
-    }
-  }, [tableStore, record, expandable, isExpanded]);
 
   const focusRow = useCallback(() => {
     const { current } = rowRef;
@@ -392,8 +401,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       rowIndex: virtualIndex === undefined ? index : virtualIndex,
       children: hasExpandIcon(columnIndex) ? renderExpandIcon() : undefined,
       isDragDisabled,
+      isRenderCell: isRenderRange(columnIndex),
     };
-    if (!isFixedRowHeight && virtualCell && !hidden) {
+    if (!isFixedRowHeight && propVirtual && !hidden) {
       return [
         <TableVirtualCell {...cellProps} {...rest} key={rest.key} />,
         actualRecord,
@@ -406,13 +416,16 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   };
 
   const [columns, { isCurrent }] = (() => {
-    const { customizable } = tableStore;
+    const { customizable, customizedBtn } = tableStore;
     const { leafs } = columnGroups;
-    const columnLength = leafs.length;
-    return leafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
+    const sliceLeafs = !propVirtual ? leafs : (left ? leafs.slice(...left) : []).concat(leafs.slice(...center)).concat(right ? leafs.slice(...right) : []);
+    const columnLength = sliceLeafs.length;
+    const hasBlankCell = leafs.length > sliceLeafs.length;
+    return sliceLeafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
+      const colIndex = propVirtual && hasBlankCell ? leafs.findIndex(x => x.key === key) : columnIndex;
       if (key !== CUSTOMIZED_KEY) {
-        const colSpan = customizable && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
+        const colSpan = customizable && !customizedBtn  && lock !== ColumnLock.left && (!rowDraggable || dragColumnAlign !== DragColumnAlign.right) && columnIndex === columnLength - 2 ? 2 : 1;
         const rest: Partial<TableCellProps> = {
           key,
           disabled,
@@ -420,7 +433,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         if (colSpan > 1) {
           rest.colSpan = colSpan;
         }
-        const [cell, actualRecord] = getCell(columnGroup, columnIndex, rest);
+        const [cell, actualRecord] = getCell(columnGroup, colIndex, rest);
         result[0].push(cell);
         if (highLightRow && actualRecord && actualRecord.isCurrent) {
           result[1].isCurrent = true;
@@ -520,6 +533,12 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     columns.push(
       <td key="empty-column" />,
     );
+  }
+  if (propVirtual && blankVirtualCell.left.length) {
+    columns.splice(left ? left[1] : 0, 0, ...blankVirtualCell.left);
+  }
+  if (propVirtual && right && blankVirtualCell.right.length) {
+    columns.splice(center[1], 0, ...blankVirtualCell.right);
   }
   const tr = (
     <Element

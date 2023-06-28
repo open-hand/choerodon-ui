@@ -6,9 +6,9 @@
 @tree-select-prefix-cls: ~'@{c7n-prefix}-tree-select';
 @select-tree-prefix-cls: ~'@{c7n-prefix}-select-tree';
 @select-prefix-cls: ~'@{c7n-prefix}-select';
-@tree-checkbox-prefix-cls: ~'@{select-tree-prefix-cls}-checkbox';
+@tree-select-checkbox-prefix-cls: ~'@{select-tree-prefix-cls}-checkbox';
 
-.antCheckboxFn(@tree-checkbox-prefix-cls);
+.antCheckboxFn(@tree-select-checkbox-prefix-cls);
 .antTreeFn(@select-tree-prefix-cls);
 
 
@@ -38,7 +38,7 @@
   }
 
   .reset-component;
-  .checked(@tree-checkbox-prefix-cls, @tree-primary-color);
+  .checked(@tree-select-checkbox-prefix-cls, @tree-primary-color);
   margin: 0;
   margin-top: -0.04rem;
   padding: 0 0.04rem;
@@ -71,6 +71,7 @@
         background-color: @item-hover-bg;
       }
       &.@{select-tree-prefix-cls}-node-selected {
+        font-weight: @item-selected-font-weight;
         background-color: @tree-node-selected-bg;
       }
     }
@@ -174,7 +175,7 @@
       color: @disabled-color;
       cursor: not-allowed;
     }
-    padding: @padding-xs (@padding-xs / 2) 0;
+    padding: @padding-xs calc(@padding-xs / 2) 0;
     &-rtl {
       direction: rtl;
     }

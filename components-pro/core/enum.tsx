@@ -10,3 +10,8 @@ export enum Tooltip {
   always = 'always',
   overflow = 'overflow',
 }
+
+export enum FieldFocusMode {
+  checked = 'checked',
+  focus = 'focus',
+}

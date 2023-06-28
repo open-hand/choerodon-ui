@@ -3,22 +3,37 @@
 
 .validation() {
   &-invalid &,
+  &-invalid &:hover,
   &-invalid label:hover & {
     color: @error-color;
     border-color: @input-error-border-color;
     opacity: 1;
   }
 
-  &-invalid&-wrapper {
+  &-invalid &:focus,
+  &-invalid&-focused & {
+    color: @error-color;
+    border-color: @input-error-border-color;
+    box-shadow: @input-error-active-box-shadow;
+  }
+
+  &-invalid:not(&-disabled) {
     background-color: @input-error-bg;
   }
 
-  &-invalid &-clear-button {
-    background: linear-gradient(to right,
-    rgba(255, 255, 255, 0),
-    @input-error-bg 20%,
-    @input-error-bg) !important;
+  &-invalid:not(&-disabled) &-suffix,
+  &-invalid:not(&-disabled):hover &-suffix {
+    .icon {
+      color: @input-suffix-error-color;
+    }
   }
+
+  // &-invalid &-clear-button {
+  //   background: linear-gradient(to right,
+  //   rgba(255, 255, 255, 0),
+  //   @input-error-bg 20%,
+  //   @input-error-bg) !important;
+  // }
 
   // &-invalid &:focus {
   //   box-shadow: 0 0 @outline-blur-size @outline-width fade(@error-color, 20%);
@@ -35,7 +50,7 @@
       height: 0;
       margin-left: -0.05rem;
       padding: 0 0.05rem;
-      border-top: 0.02rem @border-style-base @component-background;
+      border-top: 0.02rem @border-style-base @float-label-wrapper-border-top-color;
       transform-origin: 0.1rem -230%;
       transition: all @animation-duration-base @ease-out;
     }
@@ -61,7 +76,7 @@
     width: 0.08rem;
     margin-left: 0.04rem;
     color: @label-required-color;
-    font-family: SimSun, sans-serif;
+    font-family: @font-family-required-symbol;
     line-height: 1;
     vertical-align: middle;
     content: '*';
@@ -91,6 +106,15 @@
     font-size: @float-label-font-size;
     transform: scaleY(0.8);
   }
+
+  &-float-label:not(&-empty) .@{field-label-prefix-cls},
+  &-float-label&-focused .@{field-label-prefix-cls} {
+    // height: @float-label-active-height;
+    padding: @float-label-active-padding;
+    line-height: @float-label-active-height;
+    background-color: @float-label-active-bg;
+  }
+
   &-float-label:not(&-multiple) & {
     height: @float-label-height-base;
     border-radius: @input-float-border-radius;

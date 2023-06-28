@@ -26,9 +26,11 @@ title: FormField
 | record | 对照 record, 优先级高于 dataSet 和 dataIndex | Record |  |
 | multiple | 是否是多值 | boolean | false |
 | validator | 校验器，回调返回值为`true` 或 `Promise.resolve(true)`为校验通过，否则为不通过 | (value, name, form) => string \| boolean \| Promise&lt;string \| boolean&gt; |  |
-| help | 额外信息，常用于提示 | `string` | `undefined` |
+| help | 额外信息，常用于提示 | ReactNode | `undefined` |
 | showHelp | 展示提示信息的方式，`tooltip`只有在`TextField`及其子类上生效， 可选值 `tooltip` `newLine` `none` | string | `newLine` |
+| helpTooltipProps | 用于配置 help 提示信息的 Tooltip 相关参数 | [TooltipProps](/components-pro/tooltip#API) |  |
 | renderer | 渲染器，覆盖默认渲染行为 | ({ value, text, name, record, dataSet }) => ReactNode | ({ text }) => text |
+| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  |
 | noValidate | 不校验，不影响 DataSet 校验 | boolean | false |
 | maxTagPlaceholder | 多值标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxTagCount | 多值标签最大数量 | number |  |

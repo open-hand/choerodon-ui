@@ -1,5 +1,6 @@
-import React, { Children, Component, isValidElement } from 'react';
+import React, { Children, Component, CSSProperties, isValidElement } from 'react';
 import isNil from 'lodash/isNil';
+import { toJS } from 'mobx';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
@@ -82,8 +83,9 @@ const PopupContent: React.FC<{
   prefixCls: string;
   theme?: TooltipTheme;
   translate: { x: number; y: number };
+  popupInnerStyle?: CSSProperties;
 }> = (props) => {
-  const { content, prefixCls, theme, translate: { x, y } } = props;
+  const { content, prefixCls, theme, translate: { x, y }, popupInnerStyle } = props;
 
   const arrowCls = `${prefixCls}-popup-arrow`;
   const contentCls = `${prefixCls}-popup-inner`;
@@ -91,8 +93,8 @@ const PopupContent: React.FC<{
   return (
     <div>
       <div className={`${arrowCls} ${arrowCls}-${theme}`} style={arrowStyle} />
-      <div className={`${contentCls} ${contentCls}-${theme}`}>
-        {content}
+      <div className={`${contentCls} ${contentCls}-${theme}`} style={popupInnerStyle}>
+        {toJS(content)}
       </div>
     </div>
   );
@@ -173,7 +175,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   renderPopupContent(...props) {
     const { translate } = this.state;
     const { getTooltipTheme } = this.context;
-    const { theme = getTooltipTheme() } = this.props;
+    const { theme = getTooltipTheme(), popupInnerStyle } = this.props;
     const content = this.getContent(...props);
     if (content) {
       return (
@@ -182,6 +184,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
           theme={theme}
           prefixCls={this.prefixCls}
           translate={translate}
+          popupInnerStyle={popupInnerStyle}
         />
       );
     }

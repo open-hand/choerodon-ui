@@ -1,3 +1,5 @@
+import { transformZoomData } from '../../_util/DocumentUtils';
+
 class ImageData {
 
   constructor(dataUrl, type) {
@@ -131,7 +133,7 @@ class ImageDropAndPaste {
     if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
       if (document.caretRangeFromPoint) {
         const selection = document.getSelection();
-        const range = document.caretRangeFromPoint(e.clientX, e.clientY);
+        const range = document.caretRangeFromPoint(transformZoomData(e.clientX), transformZoomData(e.clientY));
         if (selection && range) {
           selection.setBaseAndExtent(range.startContainer, range.startOffset, range.startContainer, range.startOffset);
         }

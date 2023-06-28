@@ -312,7 +312,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         }}
       />
     );
-  }, [treeNodeRequiredProps]);
+  }, [treeNodeRequiredProps, activeItem]);
 
   return (
     <>

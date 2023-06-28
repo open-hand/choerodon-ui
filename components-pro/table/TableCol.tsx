@@ -21,7 +21,7 @@ const TableCol: FunctionComponent<TableColProps> = function TableCol(props) {
   if (tableStore.isBuiltInColumn(column)) {
     innerClassName.push(get(column, 'headerClassName'));
   }
-  if (!tableStore.tableColumnResizeTransition) {
+  if (tableStore.tableColumnResizeTransition) {
     innerClassName.push(`${prefixCls}-col`);
   }
   const minWidth = minColumnWidth(column, tableStore);

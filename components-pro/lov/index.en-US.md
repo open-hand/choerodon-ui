@@ -20,7 +20,7 @@ title: Lov
 | 参数       | 说明                                                 | 类型             | 默认值  |
 | ---------- | ---------------------------------------------------- | ---------------- | ------- |
 | modalProps | 弹窗属性，详见[ModalProps](/components/modal/#Modal) | object           |         |
-| tableProps | 表格属性，详见[TableProps](/components-pro/table/#Table) | object           |         |
+| tableProps | 表格属性，详见[TableProps](/components-pro/table/#Table)，优先级高于视图配置（modal 参数仅在模态框模式下存在） | object \| (lovTablePropsConfig, modal) => object          |         |
 | noCache    | 弹窗时自动重新查询                                   | string\| boolean | false   |
 | mode       | 显示模式，可选值: `default` `button`                 | string           | default |
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |
@@ -32,6 +32,7 @@ title: Lov
 | onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时弹窗不关闭。 | (records: Record \| Record[]) => boolean \| undefined |  |
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined |  |
 | viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet, lovConfig, textField, valueField, multiple, modal }}) => ReactNode |  |
+| viewMode | 弹窗视图渲染模式，可选值: `modal` `drawer` `popup` | string | modal |
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  |
 | selectionProps | 显示已选记录时的参数 | SelectionProps |  |
 | popupSearchMode | viewMode 为 popup 时，查询条件显示位置 | PopupSearchMode: 'single', 'multiple' | multiple |

@@ -146,6 +146,11 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   searchable?: boolean;
   /**
+   * 开启搜索时，是否保留查询参数
+   * @default true
+   */
+  reserveParam?: boolean;
+  /**
    * 搜索框在 Popup 中显示
    * @default false
    */
@@ -352,6 +357,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return !!searchable;
   }
 
+  get reserveParam(): boolean {
+    const { reserveParam = this.getContextConfig('selectReserveParam') } = this.observableProps;
+    return reserveParam;
+  }
+
   get multiple(): boolean {
     return !!this.getProp('multiple');
   }
@@ -482,6 +492,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'searchable',
+      'reserveParam',
       'searchMatcher',
       'searchFieldInPopup',
       'searchFieldProps',
@@ -523,6 +534,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       searchMatcher: props.searchMatcher,
       paramMatcher: props.paramMatcher,
       searchable: props.searchable,
+      reserveParam: props.reserveParam,
       dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
       defaultActiveFirstOption: props.defaultActiveFirstOption,
       selectReverse: props.reverse,
@@ -1044,8 +1056,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   syncValueOnBlur(text) {
+    const value = this.getValue();
     if (text) {
-      const value = this.getValue();
       if (value !== text) {
         if (!isObject(value) || value[this.textField] !== text) {
           const { comboOptions } = this;
@@ -1058,7 +1070,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           });
         }
       }
-    } else if (!this.multiple) {
+    } else if (!this.multiple || (value && value.length === 0) || !value) {
       this.setValue(this.emptyValue);
     }
   }
@@ -1146,6 +1158,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       [textField]: value,
       [valueField]: value,
     };
+    const findOption = comboOptions.find(record => record.get(valueField) === value.trim());
+    if (findOption) return;
     const record = comboOptions.create(initData, 0);
     if (menu) {
       updateActiveKey(menu, getItemKey(record, initData[valueField], initData[valueField]));
@@ -1217,17 +1231,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   handleOptionSelect(record: Record | Record[]) {
-    const searchText = this.searchText as string;
     this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
-    this.multipleSearch(searchText);
   }
 
   handleOptionUnSelect(record: Record | Record[]) {
     const { valueField } = this;
-    const searchText = this.searchText as string;
     const newValues = isArrayLike(record) ? record.map(r => r.get(valueField)) : [record.get(valueField)];
     this.removeValues(newValues, -1);
-    this.multipleSearch(searchText);
   }
 
   multipleSearch(text: string) {
@@ -1238,6 +1248,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   handleSearch(_text?: string | string[] | undefined) {
     // noop
+  }
+
+  @action
+  setValue(value: any, noVaidate?: boolean): void {
+    if (this.reserveParam && this.multiple && this.searchable && !isSearchTextEmpty(this.searchText)) {
+      super.setValue(value, noVaidate, true);
+    } else {
+      super.setValue(value, noVaidate);
+    }
   }
 
   @action
@@ -1425,16 +1444,28 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
+  optionIsSelected(record: Record, values: any[]): boolean {
+    const { valueField } = this;
+    const value = record.get(valueField);
+    return values.some((v) => {
+      if (typeof v === 'object') {
+        return v[valueField] === value;
+      }
+      return v === value;
+    });
+  }
+
   @autobind
   chooseAll() {
     const {
       options,
       props: { onOption },
     } = this;
+    const values = this.getValues();
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
       const optionDisabled = (optionProps && optionProps.disabled);
-      return !optionDisabled;
+      return !optionDisabled && !this.optionIsSelected(record, values);
     });
     this.choose(selectedOptions);
   }
@@ -1446,33 +1477,21 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   chooseRe() {
     const {
       options,
-      valueField,
       props: { onOption },
     } = this;
     const values = this.getValues();
-    const searchText = this.searchText as string;
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
-      const value = record.get(valueField);
       const optionDisabled = (optionProps && optionProps.disabled);
-      const optionIsSelect = values.some((v) => {
-        if (typeof v === 'object') {
-          return v[valueField] === value;
-        }
-        return v === value;
-      });
+      const optionIsSelect = this.optionIsSelected(record, values);
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect);
     });
     this.setValue(selectedOptions.map(this.processRecordToObject, this));
-    this.multipleSearch(searchText);
-
   }
 
   @autobind
   unChooseAll() {
-    const searchText = this.searchText as string;
     this.clear();
-    this.multipleSearch(searchText);
   }
 
   @autobind

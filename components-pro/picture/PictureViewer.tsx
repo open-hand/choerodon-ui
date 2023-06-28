@@ -9,6 +9,7 @@ import Picture, { PictureForwardRef, PictureRef } from './Picture';
 import { ModalChildrenProps } from '../modal/interface';
 import transform, { toTransformValue } from '../_util/transform';
 import EventManager from '../_util/EventManager';
+import { transformZoomData } from '../_util/DocumentUtils';
 import Toolbar from './Toolbar';
 import Navbar from './Navbar';
 
@@ -41,12 +42,17 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const [rotate, setRotate] = useState<number>(0);
   const [translate, setTranslate] = useState<[number, number]>([0, 0]);
   const [scale, setScale] = useState<number | undefined>();
+  const [isZoomMode, setIsZoomMode] = useState(false);
   const handleIndexChange = useCallback((newIndex) => {
+    if (isZoomMode) setIsZoomMode(false);
+    if (newIndex < 0 || newIndex >= list.length) {
+      return;
+    }
     setIndex(newIndex);
     setTranslate([0, 0]);
     setRotate(0);
     setScale(undefined);
-  }, []);
+  }, [isZoomMode]);
   const getImageNaturalScale = useCallback((): number => {
     const { current } = pictureRef;
     if (current) {
@@ -72,18 +78,20 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     return getImageNaturalScale();
   }, [getImageNaturalScale, scale]);
   const customizedPrefixCls = getProPrefixCls('picture-viewer', prefixCls);
-  const handlePrev = useCallback(() => handleIndexChange(index - 1), [index]);
-  const handleNext = useCallback(() => handleIndexChange(index + 1), [index]);
+  const handlePrev = useCallback(() => handleIndexChange(index - 1), [index, isZoomMode]);
+  const handleNext = useCallback(() => handleIndexChange(index + 1), [index, isZoomMode]);
   const handleClose = useCallback(() => modal && modal.close(), []);
   const handleRotateLeft = useCallback(() => setRotate((rotate - 90) % 360), [rotate]);
   const handleRotateRight = useCallback(() => setRotate((rotate + 90) % 360), [rotate]);
   const handleZoomIn = useCallback(() => {
+    if(!isZoomMode) setIsZoomMode(true);
     const currentScale = getCurrentScale();
     if (currentScale < scaleSteps.length - 1) {
       setScale(getCurrentScale() + 1);
     }
   }, [getCurrentScale]);
   const handleZoomOut = useCallback(() => {
+    if(!isZoomMode) setIsZoomMode(true);
     const currentScale = getCurrentScale();
     if (currentScale > 0) {
       setScale(currentScale - 1);
@@ -92,11 +100,11 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const throttleWheel = useMemo(() => throttle((callback: Function) => callback(), 60), []);
   const handleWheel = useCallback((e: WheelEvent) => {
     if (e.deltaX > 0 || e.deltaY > 0) {
-      throttleWheel(handleZoomOut);
+      throttleWheel(isZoomMode ? handleZoomOut : handleNext);
     } else {
-      throttleWheel(handleZoomIn);
+      throttleWheel(isZoomMode ? handleZoomIn : handlePrev);
     }
-  }, [handleZoomOut, handleZoomIn]);
+  }, [handlePrev, handleNext, handleIndexChange, handleZoomOut, handleZoomIn, isZoomMode]);
   const translateEvent: EventManager = useMemo(() => new EventManager(), []);
   const executeTransform = useCallback((target: HTMLDivElement, r: number, s: number | undefined, t: [number, number]) => {
     const transformValue = toTransformValue({
@@ -109,14 +117,16 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const handleMouseDown = useCallback((e) => {
     const { current } = transformTargetRef;
     if (current) {
-      const { pageX, pageY, currentTarget } = e;
+      const { currentTarget } = e;
+      const pageX = transformZoomData(e.pageX);
+      const pageY = transformZoomData(e.pageY);
       currentTarget.style.cursor = 'grabbing';
       let [currentX, currentY] = translate;
       const startX = currentX - pageX;
       const startY = currentY - pageY;
       const handleMouseMove = (me) => {
-        currentX = startX + me.pageX;
-        currentY = startY + me.pageY;
+        currentX = startX + transformZoomData(me.pageX);
+        currentY = startY + transformZoomData(me.pageY);
         executeTransform(current, rotate, scale, [currentX, currentY]);
       };
       const handleMouseUp = () => {
@@ -180,12 +190,16 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
             onRotateRight={handleRotateRight}
             downloadUrl={downloadUrl}
           />
-          <Navbar
-            prefixCls={customizedPrefixCls}
-            value={index}
-            onChange={handleIndexChange}
-            list={list}
-          />
+          {
+            length > 1 && (
+              <Navbar
+                prefixCls={customizedPrefixCls}
+                value={index}
+                onChange={handleIndexChange}
+                list={list}
+              />
+            )
+          }
         </div>
         {
           length > 1 && (

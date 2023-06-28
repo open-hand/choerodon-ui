@@ -305,6 +305,7 @@ title: DataSet
 | lovQueryUrl | lov 查询请求地址 | string \| (code, config, { dataSet, params, data }) => string |  |
 | lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |
 | lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code: string, field?: Field) => AxiosRequestConfig |  |
+| lovDefineBatchAxiosConfig | 返回 lov 配置批量查询配置的钩子，优先级高于全局配置的 lovDefineBatchAxiosConfig ，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | bind | 内部字段别名绑定 | string |  |
@@ -330,8 +331,9 @@ title: DataSet
 | chunkSize | 附件分片大小 | number | [AttachmentConfig.defaultChunkSize](/components/configure/#AttachmentConfig)  |
 | chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](/components/configure/#AttachmentConfig) |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
-| help | 额外信息，常用于提示 | string |  |
+| help | 额外信息，常用于提示 | ReactNode |  |
 | dateMode | 显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  |
+| accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 
 ### Field Values
 

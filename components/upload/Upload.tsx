@@ -1,12 +1,13 @@
 import React, { Component, DragEvent } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
+import isUndefined from 'lodash/isUndefined';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import Dragger from './Dragger';
 import UploadList from './UploadList';
-import { UploadChangeParam, UploadFile, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
+import { UploadChangeParam, UploadFile, UploadListType, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -43,7 +44,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
 
   progressTimer: any;
 
-  private upload: any;
+  upload: any;
 
   constructor(props: UploadProps) {
     super(props);
@@ -51,6 +52,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.state = {
       fileList: props.fileList || props.defaultFileList || [],
       dragState: 'drop',
+      originReuploadItem: null,
     };
   }
 
@@ -188,7 +190,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
   @autobind
   defaultReUpload(file: UploadFile) {
     if (this.upload && this.upload.uploader) {
-      this.upload.uploader.post(file);
+      this.upload.uploader.upload(file, [file]);
     }
   }
 
@@ -241,7 +243,14 @@ export default class Upload extends Component<UploadProps, UploadState> {
     const { multiple, beforeUpload } = this.props;
     if (!multiple) {
       const { fileList: nowFileList } = this.state;
-      nowFileList.map(this.handleManualRemove);
+      if (nowFileList.length !== 1) {
+        nowFileList.forEach((eachFile: UploadFile)=> {
+          // 错误态的重新上传，不用执行删除操作，此时 uid 相同
+          if(eachFile.uid !== file.uid) {
+            this.handleManualRemove(eachFile);
+          }
+        });
+      }
       this.onChange({
         file,
         fileList: uploadFiles,
@@ -280,6 +289,16 @@ export default class Upload extends Component<UploadProps, UploadState> {
     this.upload = node;
   };
 
+  getUpload = (): RcUpload | null => {
+    return this.upload;
+  }
+
+  setReplaceReuploadItem = (file: UploadFile) => {
+    this.setState({
+      originReuploadItem: file,
+    })
+  }
+
   getPrefixCls() {
     const { prefixCls: customizePrefixCls } = this.props;
     const { getPrefixCls } = this.context;
@@ -314,6 +333,15 @@ export default class Upload extends Component<UploadProps, UploadState> {
       reUploadPopConfirmTitle,
       getCustomFilenameTitle,
     } = showUploadList as any;
+    let defaultShowPreviewIcon;
+    let defaultShowDownloadIcon;
+    if (['text','picture'].includes(listType as UploadListType)) {
+      defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? false : showPreviewIcon;
+      defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? false : showDownloadIcon;
+    } else if (listType === 'picture-card') {
+      defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? true : showPreviewIcon;
+      defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? true : showDownloadIcon;
+    }
     return (
       <UploadList
         prefixCls={prefixCls}
@@ -325,8 +353,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
         previewFile={previewFile}
         onRemove={this.handleManualRemove}
         showRemoveIcon={showRemoveIcon}
-        showPreviewIcon={showPreviewIcon}
-        showDownloadIcon={showDownloadIcon}
+        showPreviewIcon={defaultShowPreviewIcon}
+        showDownloadIcon={defaultShowDownloadIcon}
         removePopConfirmTitle={removePopConfirmTitle}
         showReUploadIcon={showReUploadIcon}
         reUploadText={reUploadText}
@@ -339,6 +367,8 @@ export default class Upload extends Component<UploadProps, UploadState> {
         renderIcon={renderIcon}
         tooltipPrefixCls={tooltipPrefixCls}
         popconfirmProps={popconfirmProps}
+        getUploadRef={this.getUpload}
+        setReplaceReuploadItem={this.setReplaceReuploadItem}
       />
     );
   };
@@ -354,8 +384,9 @@ export default class Upload extends Component<UploadProps, UploadState> {
       dragUploadList,
       overwriteDefaultEvent,
       beforeUploadFiles,
+      onReUpload = this.defaultReUpload,
     } = this.props;
-    const { fileList, dragState } = this.state;
+    const { fileList, dragState, originReuploadItem } = this.state;
 
     const prefixCls = this.getPrefixCls();
 
@@ -365,10 +396,14 @@ export default class Upload extends Component<UploadProps, UploadState> {
       onError: this.onError,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,
+      onReUpload,
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
       beforeUploadFiles,
       prefixCls,
+      fileList,
+      originReuploadItem,
+      setReplaceReuploadItem: this.setReplaceReuploadItem,
     };
 
     delete rcUploadProps.className;

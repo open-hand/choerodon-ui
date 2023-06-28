@@ -49,7 +49,12 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   getRecords(records: Record[]) {
-    return sortBy(records, (item: Record) => defaultTo(item.selectedTimestamp, -1));
+    const { textField } = this.props;
+    return sortBy(
+      records,
+      (item: Record) => defaultTo(item.selectedTimestamp, -1), 
+      (item: Record) => item.get(textField),
+    );
   }
 
   @action
@@ -69,7 +74,7 @@ export default class SelectionList extends Component<SelectionListProps> {
   renderSide() {
     const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
     const { nodeRenderer, placeholder } = selectionProps;
-    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
     const isEmptyList = isEmpty(records);
     if (isEmptyList && !placeholder) {
       return null;
@@ -109,8 +114,9 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   renderBelow = (): ReactNode => {
-    const { dataSet, treeFlag, valueField = '', textField = '' } = this.props;
-    const records: Record[] = treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected;
+    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
+    const { nodeRenderer } = selectionProps;
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
     if (isEmpty(records)) {
       return null;
     }
@@ -119,10 +125,10 @@ export default class SelectionList extends Component<SelectionListProps> {
     const animateChildren = this.getRecords(records).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
-          <Tag closable onClose={() => {
+          <Tag closable={record.selectable} onClose={() => {
             this.unSelect(record);
           }}>
-            <span>{record.get(textField)}</span>
+            {nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span>}
           </Tag>
         </li>
       );
@@ -154,12 +160,12 @@ export default class SelectionList extends Component<SelectionListProps> {
         this.modalNode = (parentNode as HTMLDivElement);
         const { width } = (parentNode as HTMLDivElement).getBoundingClientRect();
         Object.assign((parentNode as HTMLDivElement).style, {
-          width: pxToRem(width + 300),
+          width: pxToRem(width + 300, true),
         });
       }
     } else if (this.modalNode && !this.selectionNode) {
       Object.assign((this.modalNode as HTMLDivElement).style, {
-        width: pxToRem(this.modalNode.offsetWidth - 300),
+        width: pxToRem(this.modalNode.offsetWidth - 300, true),
       });
       this.modalNode = null;
     }

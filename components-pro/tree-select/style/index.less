@@ -36,15 +36,21 @@
       width: 100%;
 
       &.@{c7n-prefix}-tree-treenode-selected {
-        background-color: @item-focus-bg;
+        font-weight: @item-selected-font-weight;
+        background-color: @tree-select-treenode-selected-bg;
       }
 
       &.@{c7n-prefix}-tree-treenode-active {
-        background-color: @item-active-bg;
+        background-color: @tree-select-treenode-active-bg;
       }
 
       .@{c7n-prefix}-tree-node-content-wrapper {
-        background-color: transparent !important;
+        &:hover {
+          background-color: @tree-select-content-wrapper-hover-bg;
+        }
+        &.c7n-tree-node-selected {
+          background-color: @tree-select-content-wrapper-tree-node-selected-bg;
+        }
       }
 
       &-more {

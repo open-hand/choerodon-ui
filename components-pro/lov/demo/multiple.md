@@ -39,7 +39,7 @@ class App extends React.Component {
   ds = new DataSet({
     primaryKey: 'code',
     data: [
-      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, SYS.USER_STATUS11' , 'code_description': '性别,员工状态' }
+      { 'code_code': 'HR.EMPLOYEE_GENDER, HR.EMPLOYEE_STATUS, SYS.USER_STATUS11' , 'code_description': '性别,员工状态,SYS.USER_STATUS11' }
     ],
     fields: [
       {
@@ -72,6 +72,7 @@ class App extends React.Component {
   handleBeforeSelect = (records) => {
     if (!records.length) {
       message.warning('请选择至少一条记录');
+      // return new Promise(resolve => setTimeout(resolve, 1000));
       return false;
     }
   }
@@ -91,6 +92,9 @@ class App extends React.Component {
         tableProps={tableProps}
         onBeforeSelect={this.handleBeforeSelect}
         showSelectedInView={true}
+        selectionProps={{
+          nodeRenderer: (record) => (<span style={{ color: 'red' }}>{record.get('description')}</span>)
+        }}
         modalProps={
           {
             afterClose: () => console.log('afterClose'),

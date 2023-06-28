@@ -9,6 +9,7 @@ import { defaultClassPrefix, getUnhandledProps } from './utils';
 import { addEvent, removeEvent } from './utils/domFns';
 import TableContext from './TableContext';
 import { RESIZE_MIN_WIDTH } from './constants';
+import { transformZoomData } from '../_util/DocumentUtils';
 
 export type FixedType = boolean | 'left' | 'right';
 
@@ -113,7 +114,9 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     if (e.touches) {
       this.dragging = true;
       this.cursorDelta = 0;
-      const { clientX, clientY } = e.touches[0];
+      const eTouch = e.touches[0];
+      const clientX = transformZoomData(eTouch.clientX);
+      const clientY = transformZoomData(eTouch.clientY);
       const client = {
         clientX,
         clientY,
@@ -137,7 +140,7 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
 
   handleDrag = (event) => {
     if (event.touches) {
-      const x = event.touches[0].clientX;
+      const x = transformZoomData(event.touches[0].clientX);
       this.deltaX = x - this.touchX;
       this.touchX = x;
       this.onMove(this.deltaX);
@@ -196,8 +199,8 @@ class ColumnResizeHandler extends React.Component<ColumnResizeHandlerProps> {
     this.cursorDelta = 0;
 
     const client = {
-      clientX: event.clientX,
-      clientY: event.clientY,
+      clientX: transformZoomData(event.clientX),
+      clientY: transformZoomData(event.clientY),
       preventDefault: Function(),
     };
     const { onColumnResizeStart } = this.props;

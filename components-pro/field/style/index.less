@@ -76,28 +76,6 @@
     }
   }
 
-  &-row &-label::after,
-  &-label label::after {
-    display: inline-block;
-    color: @label-required-color;
-    font-family: SimSun, sans-serif;
-    line-height: 1;
-    vertical-align: middle;
-    content: ' ';
-  }
-
-  &-row &-required&-label::after,
-  &-required&-label label::after {
-    width: 0.08rem;
-    margin-left: 0.04rem;
-    content: '*';
-  }
-
-  &-label-vertical&-required::after,
-  &-label&-label-useColon::after {
-    display: none;
-  }
-
   &-row &-label&-label-useColon::after,
   &-label&-label-useColon label::after {
     position: relative;
@@ -120,13 +98,13 @@
       top: 0.02rem;
       margin-left: 0.02rem;
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
     }
 
     & + .icon-help {
       margin-left: 0.02rem;
       color: @field-icon-help-color;
-      font-size: @icon-font-size-sm;
+      font-size: @field-icon-help-font-size;
 
       & + .@{field-prefix-cls}-wrapper {
         padding-top: 0;
@@ -138,9 +116,9 @@
     width: auto;
   }
 
-  &-row &-required&-label-useColon::before,
+  &-row &-required&-label::before,
   &-label-vertical&-required&-label::before,
-  &-required&-label&-label-useColon label > span::before {
+  &-required&-label&-label label > span::before {
     display: inline-block;
     margin-right: 0.04rem;
     color: @label-required-color;
@@ -169,6 +147,11 @@
 
   &-output-mix, &-label-output-mix label {
     padding: @label-wrapper-padding;
+  }
+
+  &-label-output-mix label {
+    padding-right: 0;
+    padding-left: 0;
   }
 
   &-row&-row {

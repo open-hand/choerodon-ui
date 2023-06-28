@@ -1,8 +1,10 @@
 import { CSSProperties, FunctionComponent, Key, ReactElement, ReactNode } from 'react';
 import { get } from 'mobx';
 import DataSet, { Group } from '../data-set/DataSet';
+import { SortOrder } from '../data-set/interface';
 import Record from '../data-set/Record';
-import { FormFieldProps, HighlightRenderer, Renderer, RenderProps } from '../field/FormField';
+import Field from '../data-set/Field';
+import { FormFieldProps, HighlightRenderer, Renderer, RenderProps, TagRendererProps } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
 import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
 import { ShowHelp } from '../field/enum';
@@ -17,6 +19,16 @@ export function defaultAggregationRenderer({ text }) {
 
 export type onCellProps = { dataSet: DataSet; record: Record; column: ColumnProps };
 export type commandProps = { dataSet: DataSet; record: Record; aggregation?: boolean };
+export type CompareFn = (a: Record, b: Record, sortOrder?: SortOrder) => number;
+export type FilterPopoverProps = {
+  dataSet: DataSet;
+  field?: Field;
+  filterText: any;
+  setFilterText: Function;
+  clearFilters: Function;
+  confirm: Function;
+  footer: ReactNode;
+};
 
 export interface ColumnRenderProps extends RenderProps {
   aggregation?: boolean;
@@ -81,6 +93,10 @@ export interface ColumnPropsBase extends ElementProps {
     | ((record: Record, name?: string) => ReactElement<FormFieldProps> | boolean)
     | boolean;
   /**
+   * 多值 Tag 渲染器
+   */
+  tagRenderer?: (props: TagRendererProps) => ReactNode;
+  /**
    * 是否锁定
    * 可选值： false | true | 'left' | 'right'
    * @default false
@@ -104,7 +120,16 @@ export interface ColumnPropsBase extends ElementProps {
    * 是否可排序
    * @default false
    */
-  sortable?: boolean;
+  sortable?: boolean | CompareFn;
+  /**
+   * 是否可前端过滤
+   * @default false
+   */
+  filter?: boolean | ((props: { record: Record, filterText?: string }) => boolean);
+  /**
+   * 可以自定义筛选，此函数只负责渲染图层，需要自行编写各种交互
+   */
+  filterPopover?: ReactNode | ((props: FilterPopoverProps) => ReactNode);
   /**
    * 是否可隐藏，设为false时不会出现在列过滤选项中
    * @default true

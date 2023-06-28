@@ -38,7 +38,7 @@
     height: @pagination-item-size;
     margin-right: 0.08rem;
     font-family: @pagination-font-family;
-    line-height: @pagination-item-size - 0.02rem;
+    line-height: @pagination-item-size;
     text-align: center;
     vertical-align: middle;
     list-style: none;
@@ -243,14 +243,13 @@
 
     &-quick-jumper {
       display: inline-block;
-      height: @input-height-base;
-      line-height: @input-height-base;
-      vertical-align: middle;
+      height: @pagination-item-size;
+      line-height: @pagination-item-size;
 
       input {
         .input;
         width: 0.5rem;
-        height: @input-height-base;
+        height: @pagination-item-size;
         margin: 0 0.08rem;
       }
     }
@@ -317,7 +316,11 @@
     min-width: @pagination-item-size-sm;
     height: @pagination-item-size-sm;
     margin: 0;
-    line-height: @pagination-item-size-sm - 0.02rem;
+    line-height: @pagination-item-size-sm;
+    .@{c7n-prefix}-btn {
+      height: @pagination-item-size-sm;
+      line-height: @pagination-item-size-sm + 0.02rem;
+    }
   }
 
   &-small &-item:not(&-item-active) {
@@ -356,6 +359,10 @@
 
   &-small &-options {
     height: @pagination-item-size-sm;
+    line-height: @pagination-item-size-sm;
+    &-size-changer {
+      top: -0.05rem;
+    }
     &-quick-jumper {
       height: @pagination-item-size-sm;
       line-height: @pagination-item-size-sm;
@@ -385,7 +392,7 @@
     min-width: @pagination-item-size-lg;
     height: @pagination-item-size-lg;
     margin: 0;
-    line-height: @pagination-item-size-lg - 0.02rem;
+    line-height: @pagination-item-size-lg;
   }
 
   &-large &-item:not(&-item-active) {
@@ -424,6 +431,9 @@
 
   &-large &-options {
     height: @pagination-item-size-lg;
+    &-size-changer {
+      top: 0.05rem;
+    }
     &-quick-jumper {
       height: @pagination-item-size-lg;
       line-height: @pagination-item-size-lg;

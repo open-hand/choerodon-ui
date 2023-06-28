@@ -105,7 +105,7 @@ class Row extends React.PureComponent<RowProps> {
               left: 'auto !important',
               cursor: 'move',
               transform,
-              // zIndex: snapshot.isDragging ? 999 : 1,
+              zIndex: snapshot.isDragging ? 999 : styles.zIndex,
             };
           }
           return <div {...providedProps} role="row" {...unhandledProps} ref={rowRef} className={classes} style={styles}>

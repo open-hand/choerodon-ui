@@ -14,7 +14,7 @@ title:
 The most basic usage.
 
 ```jsx
-import { configure } from 'choerodon-ui';
+import { configure, Icon } from 'choerodon-ui';
 import {
   DataSet,
   Table,
@@ -44,6 +44,32 @@ function sexIdRenderer({ dataSet, record }) {
   const value = record.get('sex') || [];
   const field = dataSet.getField('sex');
   return value.map(v => field.getLookupData(v, record).codeValueId).join(',');
+}
+
+const sexColumnTagRenderer = ({value, text, key, disabled, className}) => {
+  const style = {};
+  if (!disabled) {
+    if (value === 'F') {
+      style.backgroundColor = 'hotpink';
+    } else {
+      style.backgroundColor = 'skyblue';
+    }
+  }
+  return <li className={className} key={key} style={style}>{text}</li>;
+}
+
+const sexEditorTagRenderer = ({value, text, key, disabled, readOnly, onClose, className}) => {
+  const style = {};
+  const closeBtn = <Icon type="close" onClick={onClose} />;
+  const showClose = !(readOnly || disabled || key === "maxTagPlaceholder");
+  if (!disabled) {
+    if (value === 'F') {
+      style.backgroundColor = 'green';
+    } else {
+      style.backgroundColor = 'blue';
+    }
+  }
+  return <li className={className} key={key} style={style}>{text}{showClose ? closeBtn : null}</li>;
 }
 
 function renderPhoneEditor(record) {
@@ -545,7 +571,14 @@ class App extends React.Component {
         <>
           <Column name="sex" editor={<SelectBox />} width={150} />
           <Column header="性别id" renderer={sexIdRenderer} />
-          <Column name="sexMultiple" editor width={150} />
+          <Column
+            name="sexMultiple"
+            editor={(record, name) => {
+              return <Select record={record} name={name} tagRenderer={sexEditorTagRenderer} />
+            }}
+            width={150}
+            tagRenderer={sexColumnTagRenderer}
+          />
           <Column name="accountMultiple" editor width={150} />
           <Column name="date.startDate" editor width={150} />
         </>

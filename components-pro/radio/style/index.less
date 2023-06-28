@@ -13,6 +13,10 @@
     display: inline-flex;
   }
 
+  &-wrapper.@{field-prefix-cls} {
+    width: auto;
+  }
+
   &-inner {
     position: relative;
     display: inline-block;
@@ -26,10 +30,12 @@
 
     &::before {
       position: absolute;
-      top: @radio-size  / 4 - @radio-border-width / 2;
-      left: @radio-size / 4 - @radio-border-width / 2;
-      width: @radio-size / 2 - @radio-border-width;
-      height: @radio-size / 2 - @radio-border-width;
+      // top: @radio-dot-distance;
+      // left: @radio-dot-distance;
+      width: @radio-dot-size;
+      height: @radio-dot-size;
+      inset: 0;
+      margin: auto;
       background-color: @radio-dot-color;
       border-radius: 50%;
       transform: scale(0);
@@ -45,10 +51,11 @@
   }
 
   &&:checked + &-inner {
-    border-color: @radio-dot-color;
+    border-color: @radio-check-border-color;
+    border-width: @radio-check-border-width;
 
     &::before {
-      background-color: @radio-dot-color;
+      background-color: @radio-check-dot-color;
       transform: scale(1);
       opacity: 1;
     }
@@ -101,7 +108,7 @@
   }
 
   &-label {
-    flex-basis: auto;
+    flex-basis: 0;
     flex-grow: 1;
     flex-shrink: 1;
     overflow: hidden;
@@ -109,8 +116,10 @@
   }
 
   &-button {
-    padding: 0 0.15rem;
-    line-height: 0.3rem;
+    min-width: @radio-button-min-width;
+    padding: @radio-button-padding;
+    line-height: @radio-button-line-height;
+    text-align: center;
     background-color: #fff;
 
     .@{pro-radio-prefix-cls}-inner {
@@ -122,7 +131,7 @@
       width: auto;
       height: auto;
       background-color: transparent;
-      border-radius: @border-radius-base;
+      border-radius: @radio-button-radius;
 
       &::before {
         display: none;
@@ -135,16 +144,29 @@
       }
     }
 
-    .@{pro-radio-prefix-cls}:checked + .@{pro-radio-prefix-cls}-inner {
+    .@{pro-radio-prefix-cls}:not(:disabled):checked + .@{pro-radio-prefix-cls}-inner {
       z-index: 1;
+      background-color: @radio-button-check-bg;
 
       & + span {
-        color: @radio-dot-color;
+        color: @radio-button-check-color;
       }
     }
 
-    &:hover .@{pro-radio-prefix-cls}-inner + span {
+    &:not(.@{pro-radio-prefix-cls}-disabled):hover .@{pro-radio-prefix-cls}-inner + span {
       color: @radio-dot-color;
+    }
+  }
+
+  &-wrapper&-button &:checked + &-inner {
+    border-width: @radio-button-check-border-width;
+  }
+
+  &-wrapper&-button &:disabled:checked + &-inner {
+    background-color: @radio-button-disabled-check-bg;
+    border-color: @radio-button-disabled-check-border-color !important;
+    + span {
+      color: @radio-button-disabled-check-color;
     }
   }
 

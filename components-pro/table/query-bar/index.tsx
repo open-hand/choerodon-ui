@@ -1,6 +1,7 @@
 import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
+import { BigNumber } from 'bignumber.js';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
@@ -8,6 +9,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
+import { math } from 'choerodon-ui/dataset';
 import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
@@ -24,7 +26,7 @@ import Table, {
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import Radio from '../../radio';
-import { ButtonColor, ButtonType } from '../../button/enum';
+import { ButtonColor, ButtonType, FuncType } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext, { TableContextValue } from '../TableContext';
@@ -33,7 +35,9 @@ import DataSet from '../../data-set';
 import Modal from '../../modal';
 import Progress from '../../progress';
 import Column from '../Column';
-import { getEditorByField, getPlaceholderByField } from '../utils';
+import ColumnGroup from '../ColumnGroup';
+import { getEditorByField, getPlaceholderByField, getTableHeaderRows } from '../utils';
+import CombineSort from './CombineSort';
 import TableToolBar from './TableToolBar';
 import TableFilterBar from './TableFilterBar';
 import TableAdvancedQueryBar from './TableAdvancedQueryBar';
@@ -183,6 +187,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   exportDataSet: DataSet;
 
   exportData: any;
+
+  queryFieldsElement: ReactElement<any>[] = [];
 
   /**
    * 多行汇总
@@ -500,10 +506,10 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             if (isString(summaryCol)) {
               const field = dataSet.getField(summaryCol);
               if (field && fieldTypeArr.includes(field.get('type'))) {
-                const summaryValue = dataSet.reduce<number>((sum, record) => {
+                const summaryValue = dataSet.reduce<number | BigNumber>((sum, record) => {
                   const n = record.get(summaryCol);
-                  if (isNumber(n)) {
-                    return sum + n;
+                  if (isNumber(n) ||  math.isBigNumber(n)) {
+                    return math.plus(sum, n);
                   }
                   return sum;
                 }, 0);
@@ -651,33 +657,34 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               };
             }
             children.push(
-              <Menu.Item key={button} className={`${prefixCls}-button-menu-item`}>
+              <Menu.Item hidden={tableButtonProps.hidden} key={button}>
                 <Button
                   key={`${button}-btn`}
                   {...tableButtonProps}
                   {...defaultButtonProps}
                   {...buttonProps}
+                  funcType={FuncType.link}
                 />
               </Menu.Item>,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-button-menu-item`}>
-              {cloneElement(button, { ...tableButtonProps, ...button.props })}
+            <Menu.Item hidden={button.props.hidden} key={button.key}> 
+              {cloneElement(button, { ...tableButtonProps, ...button.props, funcType: FuncType.link })}
             </Menu.Item>,
           );
         } else if (isObject(button)) {
           children.push(
-            <Menu.Item className={`${prefixCls}-button-menu-item`}>
-              <Button {...tableButtonProps} {...button} />
+            <Menu.Item hidden={props.hidden} key={(button as ButtonProps).key}> 
+              <Button {...tableButtonProps} {...button} funcType={FuncType.link}/>
             </Menu.Item>,
           );
         }
       });
     }
     const menu = (
-      <Menu>
+      <Menu prefixCls={`${prefixCls}-dropdown-menu`}>
         {children}
       </Menu>
     );
@@ -692,9 +699,22 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   getButtons(): ReactElement<ButtonProps>[] {
-    const { buttons, summaryBar, buttonsLimit } = this.props;
+    const { tableStore: { queryBar, prefixCls, dataSet, customizedBtn, customizable, customizedColumnHeader } } = this.context;
+    const { buttons: originalButtons, summaryBar, buttonsLimit } = this.props;
     const { tableStore } = this.context;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
+    let buttons = originalButtons;
+    if (customizable && customizedBtn) {
+      buttons = [customizedColumnHeader(), ...(buttons || [])];
+    }
+    if (queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort) {
+      const sortableFieldNames = this.getSortableFieldNames();
+      if (sortableFieldNames.length > 0) {
+        buttons = [(
+          <CombineSort key="CombineSort" dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />
+        ), ...(buttons || [])];
+      }
+    }
     if (buttons) {
       // 汇总条存在下 buttons 大于 3 个放入下拉
       const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
@@ -748,7 +768,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const {
       context: {
         dataSet,
-        tableStore: { queryBar },
+        tableStore: { queryBar, getConfig },
       },
       props: { queryFields },
     } = this;
@@ -756,9 +776,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
       const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
+      // 减少重复渲染
+      if (this.queryFieldsElement.length && (!current || dataSet.status !== DataSetStatus.ready)) return this.queryFieldsElement;
       const cloneFields: Map<string, Field> = fields.toJS();
+      const tlsKey = getConfig('tlsKey');
       const processField = (field, name) => {
-        if (!field.get('bind', current) && !name.includes('__tls')) {
+        if (!field.get('bind', current) && !name.includes(tlsKey)) {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
@@ -768,6 +791,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
               border: false,
               clearButton: true,
             };
+
           }
           const props: any = {
             key: name,
@@ -799,7 +823,23 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         processField(field, name);
       });
     }
+    this.queryFieldsElement = result;
     return result;
+  }
+
+  getSortableFieldNames(): string[] {
+    const { tableStore: { columnGroups } } =  this.context;
+    const { columns } = columnGroups;
+    const headerRows: ColumnGroup[][] = getTableHeaderRows(columns);
+    const sortableFieldNames: Set<string> = new Set();
+    headerRows.forEach(cols => {
+      cols.forEach(col => {
+        if (col.column && col.column.name && col.column.sortable) {
+          sortableFieldNames.add(col.column.name);
+        }
+      });
+    });
+    return [...sortableFieldNames];
   }
 
   renderToolBar(props: TableQueryBarHookProps) {
@@ -835,8 +875,19 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { dynamicFilterBar, searchCode } = this.props;
-    const { prefixCls } = this.context;
-    return <TableDynamicFilterBar key="toolbar" searchCode={searchCode} dynamicFilterBar={dynamicFilterBar} prefixCls={prefixCls} {...props} />;
+    const { prefixCls, tableStore } = this.context;
+    const sortableFieldNames = this.getSortableFieldNames();
+    return (
+      <TableDynamicFilterBar
+        key="toolbar"
+        searchCode={searchCode}
+        dynamicFilterBar={dynamicFilterBar}
+        prefixCls={prefixCls}
+        sortableFieldNames={sortableFieldNames}
+        tableStore={tableStore}
+        {...props}
+      />
+    );
   }
 
   renderComboBar(props: TableQueryBarHookProps) {

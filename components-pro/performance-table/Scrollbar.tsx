@@ -8,6 +8,7 @@ import { SCROLLBAR_MIN_WIDTH } from './constants';
 import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import TableContext from './TableContext';
 import { TableScrollLength } from './Table';
+import { transformZoomData } from '../_util/DocumentUtils';
 
 export interface ScrollbarProps {
   vertical?: boolean;
@@ -213,7 +214,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
 
     const { vertical, length, scrollLength } = this.props;
     const { barOffset } = this.state;
-    const offset = vertical ? event.pageY - barOffset.top : event.pageX - barOffset.left;
+    const offset = vertical ? transformZoomData(event.pageY) - barOffset.top : transformZoomData(event.pageX) - barOffset.left;
 
     const handleWidth = (length / scrollLength) * length;
     const delta = offset - handleWidth;

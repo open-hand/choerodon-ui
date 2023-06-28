@@ -396,7 +396,15 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const isEmbeddedContainer = offsetContainer && offsetContainer.tagName.toLowerCase() !== 'body';
     const prefixCls = context.getProPrefixCls(`${suffixCls}-container`);
     const items = modals.map((props, index) => {
-      const { drawerTransitionName = context.getConfig('drawerTransitionName'), drawer, key, transitionAppear = true, mask } = props;
+      const getAutoCenterConfig = 'autoCenter' in props ? props.autoCenter : context.getConfig('modalAutoCenter');
+      const {
+        drawerTransitionName = context.getConfig('drawerTransitionName'),
+        drawer,
+        key,
+        transitionAppear = true,
+        mask,
+        maskClosable = context.getConfig('modalMaskClosable'),
+      } = props;
       const transitionName = toUsefulDrawerTransitionName(drawerTransitionName);
       const style: CSSProperties = {
         ...props.style,
@@ -409,22 +417,49 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           switch (transitionName) {
             case 'slide-up':
               style.marginTop = offset;
+              style.transition = 'margin-top 0.3s ease-in-out';
               break;
             case 'slide-down':
               style.marginBottom = offset;
+              style.transition = 'margin-bottom 0.3s ease-in-out';
               break;
             case 'slide-left':
               style.marginLeft = offset;
+              style.transition = 'margin-left 0.3s ease-in-out';
               break;
             default:
               style.marginRight = offset;
+              style.transition = 'margin-right 0.3s ease-in-out';
           }
         }
       } else if (isEmbeddedContainer && offsetContainer) {
-        style.top = pxToRem(offsetContainer.scrollTop + (props.autoCenter ? 0 : toPx(style.top) || 100), true)!;
+        style.top = pxToRem(offsetContainer.scrollTop + (getAutoCenterConfig ? 0 : toPx(style.top) || 100), true)!;
       }
       if (transitionAppear === false) {
         maskTransition = false;
+      }
+      if (getAutoCenterConfig && maskClosable) {
+        const {
+          onClick: customizedClick = noop,
+          onDoubleClick: customizedDoubleClick = noop,
+        } = props;
+        if (maskClosable === 'dblclick') {
+          props.onDoubleClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedDoubleClick(e);
+            }
+          };
+        } else {
+          props.onClick = (e) => {
+            if (e.target === e.currentTarget) {
+              this.handleMaskClick();
+            } else {
+              customizedClick(e);
+            }
+          };
+        }
       }
       const wrapperClassName = classNames(props.drawer ? `${prefixCls}-drawer` : `${prefixCls}-pristine`, {
         [`${prefixCls}-embedded`]: isEmbeddedContainer,
@@ -436,7 +471,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           // UED 用类名判断
           className={wrapperClassName}
           transitionAppear={transitionAppear}
-          transitionName={drawer ? transitionName : 'zoom'}
+          transitionName={transitionAppear ? drawer ? transitionName : 'zoom' : undefined}
           hiddenProp="hidden"
           onEnd={this.handleAnimationEnd}
         >

@@ -69,6 +69,7 @@ import {
 } from './utils';
 
 import isMobile from '../_util/isMobile';
+import { transformZoomData } from '../_util/DocumentUtils';
 import { RowDataType, SortType, StandardProps } from './common';
 import ColumnGroup from './ColumnGroup';
 import Column, { ColumnProps } from './Column';
@@ -430,6 +431,11 @@ function getRowSelection(props: TableProps): TableRowSelection {
   return props.rowSelection || {};
 }
 
+//计算两根手指之间的距离
+function getDistance(start, stop) {
+  return Math.sqrt(Math.pow(Math.abs(start.x - stop.x), 2) + Math.pow(Math.abs(start.y - stop.y), 2));
+};
+
 export default class PerformanceTable extends React.Component<TableProps, TableState> {
   static displayName = 'performance';
 
@@ -530,6 +536,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   _lastRowIndex: string | number;
 
   tableStore: TableStore = new TableStore(this);
+
+  scaleStore = {
+    firstDistance: 0, // 手指距离
+    centerPoint: [0, 0], // 中心点坐标
+    scale: 1, // 缩放比例
+    originScale: 1 // 原始缩放比例
+  }
 
   constructor(props: TableProps, context: ConfigContextValue) {
     super(props, context);
@@ -676,9 +689,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const options = { passive: false };
     const tableBody = this.tableBodyRef.current;
+    const wheelWrapper = this.wheelWrapperRef.current;
     if (tableBody) {
       if (isMobile()) {
         this.initBScroll(tableBody);
+        // 移动端适配缩放功能
+        if (wheelWrapper) {
+          this.touchStartListener = on(wheelWrapper, 'touchstart', this.handleWheelTouchStart);
+          this.touchMoveListener = on(wheelWrapper, 'touchmove', this.handleWheelTouchMove);
+        }
       }
       this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
       // this.touchStartListener = on(tableBody, 'touchstart', this.handleTouchStart, options);
@@ -1006,7 +1025,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       return (
         // @ts-ignore
-        <Column {...this.getColumnProps(column)} dataKey={dataKey}>
+        <Column {...this.getColumnProps(column)} dataKey={dataKey} key={dataKey}>
           {
             <HeaderCell>
               {typeof column.title === 'function' ? column.title() : column.title}
@@ -1626,6 +1645,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth });
 
     addStyle(this.mouseAreaRef.current, { display: 'none' });
+    this.scrollLeft(-this.scrollX);
   };
 
   handleColumnResizeStart = (width: number, left: number, fixed: boolean) => {
@@ -1764,8 +1784,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   handleTouchStart = (event: React.TouchEvent) => {
     if (event.touches) {
       const { pageX, pageY } = event.touches[0];
-      this.touchX = pageX;
-      this.touchY = pageY;
+      this.touchX = transformZoomData(pageX);
+      this.touchY = transformZoomData(pageY);
     }
     const { onTouchStart } = this.props;
     if (onTouchStart) {
@@ -1778,7 +1798,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { autoHeight, onTouchMove } = this.props;
 
     if (e.touches) {
-      const { pageX, pageY } = e.touches[0];
+      const eTouch = e.touches[0];
+      const pageX = transformZoomData(eTouch.pageX);
+      const pageY = transformZoomData(eTouch.pageY);
       const deltaX = this.touchX - pageX;
       const deltaY = autoHeight ? 0 : this.touchY - pageY;
 
@@ -1806,6 +1828,64 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       onTouchMove(e);
     }
   };
+
+  handleWheelTouchStart = (e) => {
+    const { touches } = e;
+    //判断是否是两指
+    if (touches.length === 2) {
+      const events1 = touches[0];
+      const events2 = touches[1];
+      // 第一根手指的坐标
+      const one = {
+        x: events1.pageX,
+        y: events1.pageY, 
+      }; 
+      // 第二根手指的坐标
+      const two = {
+        x: events2.pageX, 
+        y: events2.pageY,
+      };
+      // 取手指中间坐标
+      const centerX = (one.x + two.x) / 2;
+      const centerY = (one.y + two.y) / 2;
+      this.scaleStore.centerPoint = [centerX, centerY];
+      this.scaleStore.firstDistance = getDistance(one, two);
+      this.scaleStore.originScale = this.scaleStore.scale || 1;
+    }
+  }
+
+  handleWheelTouchMove = (e) => {
+    const { touches } = e;
+    if (touches.length === 2) {
+      e.stopPropagation();
+      const events1 = touches[0];
+      const events2 = touches[1];
+      // 第一根手指的横坐标
+      const one = {
+        x: events1.pageX,
+        y: events1.pageY,
+      }; 
+      // 第二根手指的横坐标
+      const two = {
+        x: events2.pageX, 
+        y: events2.pageY,
+      };
+      const distance = getDistance(one, two);
+      let zoom = distance / this.scaleStore.firstDistance;
+
+      let newScale = this.scaleStore.originScale * zoom;
+      // 最大缩放比例限制
+      if (newScale > 3) {
+        newScale = 3;
+      } else if (newScale < 1) {
+        newScale = 1;
+      }
+      // 记住使用的缩放值
+      this.scaleStore.scale = newScale;
+      document.documentElement.style.transformOrigin = `${this.scaleStore.centerPoint[0]}px ${this.scaleStore.centerPoint[1]}px`;
+      document.documentElement.style.transform = 'scale(' + newScale + ')';
+    }
+  }
 
   /**
    * 当用户在 Table 内使用 tab 键，触发了 onScroll 事件，这个时候应该更新滚动条位置
@@ -2372,8 +2452,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         if (rowSpan > 1 && !currnetRowIndex) {
           currnetRowIndex = `${rowIndex}`;
           rowStyles.zIndex = fixed ? 1 : 0;
-        } else if (rowSpan < 1 && !isHeaderRow) {
-          restRowProps.width = undefined;
         }
       }
     }
@@ -2477,7 +2555,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             </CellGroup>
           ) : null}
 
-          <CellGroup>{mergeCells(scrollCells)}</CellGroup>
+          <CellGroup>{mergeCells(scrollCells, fixedLeftCells.length)}</CellGroup>
 
           {fixedRightCellGroupWidth || fixedRightCells.length ? (
             <CellGroup
@@ -3057,7 +3135,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       columns,
       className,
       data,
-      width = 0,
       style,
       isTree = false,
       hover,
@@ -3070,8 +3147,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       queryBar,
       ...rest
     } = this.props;
-
-    const { isColumnResizing } = this.state;
+    const { isColumnResizing, width } = this.state;
     const { headerCells, bodyCells, allColumnsWidth, hasCustomTreeCol } = this.getCellDescriptor();
     const rowWidth = allColumnsWidth > width ? allColumnsWidth : width;
     const clesses = classNames(classPrefix, className, {

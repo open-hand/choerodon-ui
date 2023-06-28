@@ -189,8 +189,11 @@ export default class TableEditor extends Component<TableEditorProps> {
   @autobind
   saveWrap(node) {
     this.wrap = node;
-    const { tableStore } = this.context;
-    if (node && !tableStore.inlineEdit) {
+    const { tableStore: {
+      inlineEdit,
+      currentEditRecord,
+    } } = this.context;
+    if (node && (!inlineEdit || currentEditRecord)) {
       this.alignEditor(this.cellNode);
     }
   }
@@ -511,7 +514,8 @@ export default class TableEditor extends Component<TableEditorProps> {
         dataSet,
         pristine,
         inlineEdit,
-        tableStore: { currentEditRecord, currentEditorName },
+        tableStore: { currentEditRecord, currentEditorName, getColumnTagRenderer },
+        rowHeight,
       } = this.context;
       const record = currentEditRecord || dataSet.current;
       const field = dataSet.getField(name);
@@ -523,7 +527,8 @@ export default class TableEditor extends Component<TableEditorProps> {
       if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
         this.editorProps = cellEditor.props;
         const { height } = this;
-        const { style = {}, ...otherProps } = this.editorProps;
+        const { style = {}, tagRenderer: editorTagRenderer, ...otherProps } = this.editorProps;
+        const tagRenderer = editorTagRenderer || getColumnTagRenderer(column);
         if (height !== undefined) {
           style.height = pxToRem(height, true);
         }
@@ -533,6 +538,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           ref: this.saveRef,
           record,
           name,
+          tagRenderer,
           onKeyDown: this.handleEditorKeyDown,
           onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
           onBlur: this.handleEditorBlur,
@@ -544,6 +550,16 @@ export default class TableEditor extends Component<TableEditorProps> {
           _inTable: !inlineEdit,
           preventRenderer: true,
         };
+        if (isTextArea(cellEditor)) {
+          const resize = newEditorProps.resize || cellEditor.props.resize || ResizeType.vertical;
+          newEditorProps.resize = resize;
+          if (resize !== ResizeType.none) {
+            newEditorProps.onResize = this.handleEditorResize;
+            if (rowHeight === 'auto') {
+              newEditorProps.autoSize = true;
+            }
+          }
+        }
         return cloneElement<FormFieldProps>(cellEditor, newEditorProps);
       }
     }
@@ -557,22 +573,11 @@ export default class TableEditor extends Component<TableEditorProps> {
         const {
           column: { lock },
         } = this.props;
-        const { prefixCls, rowHeight } = this.context;
+        const { prefixCls } = this.context;
         const props: any = {
           className: classNames(`${prefixCls}-editor`, { [`${prefixCls}-editor-lock`]: isStickySupport() && lock }),
         };
-        const editorProps: any = {};
-        if (isTextArea(editor)) {
-          const { resize = ResizeType.vertical } = editor.props;
-          editorProps.resize = resize;
-          if (resize !== ResizeType.none) {
-            editorProps.onResize = this.handleEditorResize;
-            if (rowHeight === 'auto') {
-              editorProps.autoSize = true;
-            }
-          }
-        }
-        return <div {...props} ref={this.saveWrap}>{cloneElement(editor, editorProps)}</div>;
+        return <div {...props} ref={this.saveWrap}>{editor}</div>;
       }
       const { tableStore } = this.context;
       if (!tableStore.inlineEdit) {

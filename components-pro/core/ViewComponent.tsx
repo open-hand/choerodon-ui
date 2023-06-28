@@ -12,10 +12,11 @@ import {
 } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import noop from 'lodash/noop';
+import isElement from 'lodash/isElement';
 import classes from 'component-classes';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
@@ -462,13 +463,11 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   @autobind
   @action
   handleFocus(e) {
-    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
-    this.isFocused = fieldFocusMode !== 'focus';
+    this.isFocused = true;
     this.isFocus = true;
     const {
       props: { onFocus = noop },
       prefixCls,
-      element,
     } = this;
     if (this.useFocusedClassName()) {
       const element = this.wrapper || findDOMNode(this);
@@ -477,26 +476,12 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       }
     }
     onFocus(e);
-    // 优化聚焦出现光标时，光标位置在最左侧的问题。
-    if (fieldFocusMode === 'focus') {
-      setTimeout(() => {
-        const len = element.value.length;
-        if (!element.selectionStart && !element.selectionEnd) {
-          element.setSelectionRange(len, len);
-        } else {
-          element.setSelectionRange(element.selectionStart, element.selectionEnd);
-        }
-      });
-    }
   }
 
   protected forceBlur(e) {
     const {
       props: { onBlur = noop },
     } = this;
-    if (e.target !== e.currentTarget) { 
-      e.preventDefault();
-    } 
     onBlur(e);
   }
 
@@ -520,13 +505,13 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
   }
 
   focus() {
-    if (this.element) {
+    if (this.element && this.element.focus) {
       this.element.focus();
     }
   }
 
   blur() {
-    if (this.element) {
+    if (this.element && this.element.blur) {
       this.element.blur();
     }
   }
@@ -552,7 +537,18 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
       this.setCode(nextProps);
     }
     if (disabled !== nextProps.disabled || hidden !== nextProps.hidden) {
-      this.blur();
+      defer(() => {
+        this.blur();
+        if (this.useFocusedClassName()) {
+          if (this.element && isElement(this.element)) {
+            classes(this.element).remove(`${this.prefixCls}-focused`);
+          }
+        }
+      });
+      runInAction(() => {
+        this.isFocus = false;
+        this.isFocused = false;
+      })
     }
     this.updateObservableProps(nextProps, nextContext);
   }

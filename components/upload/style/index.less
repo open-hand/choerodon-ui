@@ -3,7 +3,6 @@
 
 @upload-prefix-cls: ~'@{c7n-prefix}-upload';
 @upload-item: ~'@{c7n-prefix}-upload-list-item';
-@upload-pictrue-card-size: 0.98rem;
 
 .@{upload-prefix-cls} {
   .reset-component;
@@ -33,15 +32,15 @@
 
   &&-select-picture-card {
     display: table;
-    width: @upload-pictrue-card-size;
-    height: @upload-pictrue-card-size;
+    width: @upload-picture-card-size;
+    height: @upload-picture-card-size;
     //margin-right: 0.08rem;
     //margin-bottom: 0.08rem;
     margin: 0.04rem;
     text-align: center;
     vertical-align: top;
     background-color: @background-color-light;
-    border: @border-width-base dashed @border-color-base;
+    border: @upload-picture-card-select-border;
     border-radius: @border-radius-base;
     cursor: pointer;
     transition: border-color @animation-duration-slow ease;
@@ -106,21 +105,22 @@
 
     p.@{upload-prefix-cls}-drag-icon {
       .@{iconfont-css-prefix} {
-        color: @primary-5;
-        font-size: 0.48rem;
+        color: @upload-drag-icon-color;
+        font-size: @upload-drag-icon-size;
       }
 
-      margin-bottom: 0.2rem;
+      margin: @upload-drag-icon-margin;
     }
 
     p.@{upload-prefix-cls}-text {
       margin: 0 0 0.04rem;
-      color: @heading-color;
-      font-size: @font-size-lg;
+      color: @upload-drag-text-color;
+      font-size: @upload-drag-text-font-size;
+      line-height: @upload-drag-text-line-height;
     }
 
     p.@{upload-prefix-cls}-hint {
-      color: @text-color-secondary;
+      color: @upload-drag-hint-color;
       font-size: @font-size-base;
     }
 
@@ -150,7 +150,7 @@
   .reset-component;
   .clearfix;
 
-  &-item {
+  &-item {  
     margin-top: 0.08rem;
     font-size: @font-size-sm;
 
@@ -163,6 +163,12 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      a& {
+        color: @upload-list-item-name-link-color;
+        &:hover {
+          color: @upload-list-item-name-link-hover-color;
+        }
+      }
     }
 
     &-info {
@@ -184,48 +190,66 @@
     }
 
     .@{iconfont-css-prefix}-close {
-      right: 0.04rem;
-      flex: none;
-      color: @text-color-secondary;
       font-size: 0.16rem;
       cursor: pointer;
-      opacity: 0;
-      transition: all @animation-duration-slow;
-
-      &:hover {
-        color: @text-color;
-      }
     }
 
     &:hover &-info {
       background-color: @item-hover-bg;
     }
 
-    &:hover .@{iconfont-css-prefix}-close {
+    .@{upload-prefix-cls}-actions {
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition: all @animation-duration-slow;
+      .@{iconfont-css-prefix} {
+        padding-left: 0.04rem;
+        color: @upload-list-item-icon-color;
+        &:hover {
+          color: @upload-list-item-icon-hover-color;
+        }
+      }
+    }
+
+    &:hover .@{upload-prefix-cls}-actions {
       opacity: 1;
     }
 
     &-error,
     &-error &-info-filesize,
-    &-error &-name {
+    &-error &-name,
+    &-error &-name:hover {
       color: @error-color;
     }
 
-    &-error .@{iconfont-css-prefix}-close {
-      color: @error-color !important;
-      opacity: 1;
+    &-error {
+      .@{iconfont-css-prefix}-close {
+        color: @error-color !important;
+        opacity: 1;
+      }
+
+      &.@{upload-item}-error-reupload {
+        .@{upload-item}-reupload-text,
+        .@{upload-item}-reupload-picture {
+          opacity: 1;
+        }
+      }
     }
 
     &-progress {
       bottom: -0.12rem;
       width: 100%;
-      padding-left: @font-size-base + 0.12rem;
+      padding-left: calc(@font-size-base + 0.12rem);
       font-size: @font-size-base;
       line-height: 0;
     }
   }
 
   &-text {
+    .@{upload-prefix-cls}-actions {
+      position: relative;
+    }
     .@{upload-item}-span {
       display: flex;
       align-items: center;
@@ -240,7 +264,7 @@
 
     .@{upload-item}-reupload-text {
       padding-right: 0.08rem;
-      color: #0840F8;
+      color: @upload-reupload-color;
       cursor: pointer;
     }
   }
@@ -271,15 +295,6 @@
           flex-direction: column;
           align-items: flex-end;
           text-align: center;
-
-          .@{upload-prefix-cls}-list-item-reupload-picture-card {
-            display: inline-block;
-            width: 0.8rem;
-            padding-top: 0.1rem;
-            color: #0840F8;
-            line-height: 0.4rem;
-            cursor: pointer;
-          }
         }
       }
     }
@@ -331,7 +346,6 @@
       display: inline-block;
       box-sizing: border-box;
       max-width: 100%;
-      margin: 0 0 0 0.08rem;
       padding-right: 0.2rem;
       padding-left: 0.48rem;
       overflow: hidden;
@@ -341,7 +355,8 @@
       transition: all @animation-duration-slow;
     }
 
-    .@{upload-item}-error-reupload {
+    .@{upload-item}-error-reupload,
+    .@{upload-item}-done-reupload {
       .@{upload-item}-name {
         padding-right: 0.8rem;
       }
@@ -358,12 +373,6 @@
       padding-left: 0.56rem;
     }
 
-    .@{iconfont-css-prefix}-close {
-      position: absolute;
-      top: 0.08rem;
-      right: 0.08rem;
-      line-height: 1;
-    }
   }
 
   &-picture {
@@ -390,18 +399,26 @@
 
         .@{upload-item}-text {
           display: flex;
+          flex: 1;
           padding-right: 0.1rem;
           overflow: hidden;
         }
       }
     }
+    .@{upload-item}-name {
+      margin-left: 0.08rem;
+    }
 
-    .@{upload-item}-reupload-picture {
+    .@{upload-prefix-cls}-actions {
       position: absolute;
       top: 50%;
-      right: 0.3rem;
-      color: #0840F8;
+      right: 0.08rem;
       transform: translateY(-50%);
+    }
+
+    .@{upload-item}-reupload-picture {
+      padding-right: 0.04rem;
+      color: @upload-reupload-color;
       cursor: pointer;
     }
   }
@@ -415,9 +432,8 @@
 
     .@{upload-item} {
       float: left;
-      width: @upload-pictrue-card-size;
-      height: @upload-pictrue-card-size;
-      //margin: 0 0.08rem 0.08rem 0;
+      width: @upload-picture-card-size;
+      height: @upload-picture-card-size;
       margin: 0.04rem;
     }
 
@@ -448,6 +464,14 @@
       }
     }
 
+    .@{upload-item}-reupload-picture-card {
+      display: inline-block;
+      width: 0.8rem;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+
     .@{upload-item}:hover .@{upload-item}-info .@{upload-item}-picture-card::before {
       opacity: 1;
     }
@@ -457,23 +481,38 @@
       top: 50%;
       left: 50%;
       z-index: 10;
+      width: 100%;
+      height: 100%;
       white-space: nowrap;
       transform: translate(-50%, -50%);
       opacity: 0;
       transition: all @animation-duration-slow;
 
+      > span {
+        text-align: center;
+      }
+
+      .@{upload-prefix-cls}-reupload-action {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .@{upload-prefix-cls}-other-actions {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+
       .@{iconfont-css-prefix} {
         z-index: 10;
         width: 0.16rem;
-        margin: 0 0.04rem;
+        margin: 0 0.04rem 0.04rem;
         color: @text-color-dark;
         font-size: 0.16rem;
         cursor: pointer;
         transition: all @animation-duration-slow;
-
-        &:hover {
-          color: #fff;
-        }
       }
     }
 
@@ -516,7 +555,7 @@
       }
 
       &-text {
-        margin-top: 0.18rem;
+        margin: @upload-picture-card-uploading-text-margin;
         color: @text-color-secondary;
       }
     }

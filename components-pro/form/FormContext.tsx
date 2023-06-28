@@ -9,6 +9,7 @@ import { LabelAlign, LabelLayout, ShowValidation } from './enum';
 import Form, { LabelWidth } from './Form';
 import { Tooltip } from '../core/enum';
 import { ShowHelp } from '../field/enum';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 export interface FormContextValue extends ConfigContextValue {
   dataSet?: DataSet | undefined;
@@ -21,7 +22,7 @@ export interface FormContextValue extends ConfigContextValue {
   labelLayout?: LabelLayout | undefined;
   labelAlign?: LabelAlign | undefined;
   labelWidth?: LabelWidth | undefined;
-  labelTooltip?: Tooltip | undefined;
+  labelTooltip?: Tooltip | [Tooltip, TooltipProps] | undefined;
   showValidation?: ShowValidation | undefined;
   showHelp?: ShowHelp | undefined;
   useColon?: boolean | undefined;

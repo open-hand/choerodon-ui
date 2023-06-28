@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { categories } from 'choerodon-ui-font';
 import noop from 'lodash/noop';
-import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation, LabelAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { ColumnAlign, TableQueryBarType, TableColumnResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
@@ -17,10 +17,20 @@ import getReactNodeText from 'choerodon-ui/pro/lib/_util/getReactNodeText';
 import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTemplate';
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
+import { FieldFocusMode, Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { Size } from '../_util/enum';
-import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook } from './index';
+import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook } from './index';
 import { Action } from '../trigger/enum';
 import Popover from '../popover';
+
+const defaultTooltip: TooltipHook = target => {
+  switch(target) {
+    case 'output':
+      return Tooltip.overflow;
+    default:
+      break;
+  }
+};
 
 const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' ? 'light' : 'dark';
 
@@ -90,6 +100,7 @@ const defaults = {
   lovAutoSelectSingle: false,
   lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,
+  labelAlign: LabelAlign.right,
   queryBar: TableQueryBarType.normal,
   tableBorder: true,
   tableHighLightRow: true,
@@ -143,6 +154,8 @@ const defaults = {
   selectReverse: true,
   selectPagingOptionContent: '···',
   selectSearchable: false,
+  selectBoxSearchable: false,
+  selectReserveParam: true,
   selectTrigger: [Action.focus, Action.click],
   useColon: false,
   excludeUseColonTagList: defaultExcludeUseColonTag,
@@ -151,6 +164,7 @@ const defaults = {
   highlightRenderer: defaultFormFieldHighlightRenderer,
   onPerformance: noop,
   performanceEnabled: { Table: false },
+  tooltip: defaultTooltip,
   tooltipTheme: defaultTooltipTheme,
   showValidation: ShowValidation.tooltip,
   showHelp: ShowHelp.newLine,
@@ -161,6 +175,9 @@ const defaults = {
   validationMessageReportFormatter: (message) => getReactNodeText(<span>{message}</span>),
   validationMessageFormatter: (message, injectOptions) => message && injectOptions ? formatReactTemplate(message, injectOptions) : message,
   modalResizable: false,
+  tableColumnResizeTransition: true,
+  fieldFocusMode: FieldFocusMode.checked,
+  formAutoFocus: false,
 };
 
 export default defaults;

@@ -117,11 +117,12 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
 
   @action
   setPopup(statePopup: boolean) {
+    const { trigger = this.getContextConfig('selectTrigger') } = this.props;
     if (statePopup !== this.statePopup) {
       this.statePopup = statePopup;
       const { onPopupHiddenChange = noop } = this.props;
       onPopupHiddenChange(!statePopup);
-      if (statePopup) {
+      if (statePopup && !(trigger.includes(Action.hover))) {
         hide();
       }
     }
@@ -245,6 +246,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         getPopupContainer={getPopupContainer}
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}
+        getContextConfig={this.getContextConfig}
       >
         {this.getEditor}
       </Trigger>

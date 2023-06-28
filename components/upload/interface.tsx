@@ -97,7 +97,7 @@ export interface UploadProps {
   overwriteDefaultEvent?: boolean;
   downloadPropsIntercept?: Function;
   fileInputClick?: (el: Element) => void;
-  onReUpload?: (file: UploadFile) => void | boolean;
+  onReUpload?: (file: UploadFile) => void;
   renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
@@ -106,6 +106,7 @@ export interface UploadProps {
 export interface UploadState {
   fileList: UploadFile[];
   dragState: string;
+  originReuploadItem: UploadFile | null;
 }
 
 export type UploadListIconFunc = (file: UploadFile) => boolean;
@@ -131,7 +132,7 @@ export interface UploadListProps {
   showReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   reUploadText?: string;
   reUploadPopConfirmTitle?: string;
-  onReUpload?: (file: UploadFile) => void | boolean;
+  onReUpload?: (file: UploadFile) => void;
   getCustomFilenameTitle?: (file: UploadFile) => string;
   locale: UploadLocale;
   previewFile?: PreviewFileHandler;
@@ -139,4 +140,6 @@ export interface UploadListProps {
   renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
+  getUploadRef: () => any;
+  setReplaceReuploadItem: (file: UploadFile) => void;
 }

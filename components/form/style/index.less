@@ -22,7 +22,7 @@
   margin-right: 0.04rem;
   color: @label-required-color;
   font-size: @font-size-base;
-  font-family: SimSun, sans-serif;
+  font-family: @font-family-required-symbol;
   line-height: 1;
   content: '*';
   .@{form-prefix-cls}-hide-required-mark & {
@@ -79,7 +79,7 @@ input[type='checkbox'] {
   // nested FormItem
   &-control > &:last-child,
   & [class^='@{c7n-prefix}-col-'] > &:only-child {
-    margin-bottom: -@form-item-margin-bottom;
+    margin-bottom: calc(-1 * @form-item-margin-bottom);
   }
 
   &-control {
@@ -94,7 +94,7 @@ input[type='checkbox'] {
   &-label {
     display: inline-block;
     overflow: hidden;
-    line-height: @form-component-max-height - 0.000001rem;
+    line-height: calc(@form-component-max-height - 0.000001rem);
     white-space: nowrap;
     text-align: right;
     vertical-align: middle;
@@ -207,7 +207,7 @@ form {
   }
 
   input[type='radio'],
-  input[type='checkbox'] {
+  input[type='checkbox']:not(.@{c7n-pro-prefix}-switch) {
     width: 0.16rem;
     height: 0.16rem;
   }

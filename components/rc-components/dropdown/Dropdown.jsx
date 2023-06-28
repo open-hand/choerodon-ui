@@ -2,6 +2,7 @@ import React, { cloneElement, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Trigger from '../trigger';
 import placements from './placements';
+import { pxToRem } from '../../_util/UnitConvertor';
 
 export default class Dropdown extends Component {
   static defaultProps = {
@@ -109,7 +110,7 @@ export default class Dropdown extends Component {
       const overlayNode = this.getPopupDomNode();
       const rootNode = ReactDOM.findDOMNode(this);
       if (rootNode && overlayNode && rootNode.offsetWidth > overlayNode.offsetWidth) {
-        overlayNode.style.minWidth = `${rootNode.offsetWidth}px`;
+        overlayNode.style.minWidth = pxToRem(rootNode.offsetWidth, true);
         if (this.trigger && this.trigger._component && this.trigger._component.alignInstance) {
           this.trigger._component.alignInstance.forceAlign();
         }

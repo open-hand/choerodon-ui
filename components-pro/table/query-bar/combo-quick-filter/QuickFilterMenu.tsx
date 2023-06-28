@@ -87,7 +87,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
       const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
       if (tableStore) {
         runInAction(() => {
-          const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+          const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+          tableStore.tempCustomized = { columns: {} };
           tableStore.saveCustomized(newCustomized);
           tableStore.initColumns();
         })
@@ -134,14 +135,6 @@ const QuickFilterMenu = function QuickFilterMenu() {
       if (menuRecord) {
         const conditionList = menuRecord.get('personalFilter') && parseValue(menuRecord.get('personalFilter'));
         conditionDataSet.loadData(conditionList);
-        const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
-        if (tableStore) {
-          runInAction(() => {
-            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
-            tableStore.saveCustomized(newCustomized);
-            tableStore.initColumns();
-          })
-        }
       }
       if (current) {
         current.set('filterName', searchId);
@@ -161,7 +154,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         const customizedColumn = menuRecord.get('personalColumn') && parseValue(menuRecord.get('personalColumn'));
         if (tableStore) {
           runInAction(() => {
-            const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
+            const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+            tableStore.tempCustomized = { columns: {} };
             tableStore.saveCustomized(newCustomized);
             tableStore.initColumns();
           })
@@ -229,6 +223,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       onChange={handleChange}
       notFoundContent={$l('Table', 'no_save_filter')}
       clearButton={false}
+      searchable={false}
     />
   );
 };

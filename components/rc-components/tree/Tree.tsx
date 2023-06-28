@@ -4,6 +4,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import isPromise from 'is-promise';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import KeyCode from '../../_util/KeyCode';
 import warning from '../../_util/warning';
 
@@ -398,8 +399,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     this.dragNode = node;
     this.dragStartMousePosition = {
-      x: event.clientX,
-      y: event.clientY,
+      x: transformZoomData(event.clientX),
+      y: transformZoomData(event.clientY),
     };
 
     const newExpandedKeys = arrDel(expandedKeys, eventKey);
@@ -456,6 +457,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       direction,
     );
 
@@ -556,6 +558,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragChildrenKeys,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       indent,
     } = this.state;
     const { onDragOver, allowDrop, direction } = this.props;
@@ -577,6 +580,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       allowDrop!,
       flattenNodes,
       keyEntities,
+      expandedKeys,
       direction,
     );
 

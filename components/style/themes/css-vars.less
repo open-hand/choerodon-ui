@@ -1,0 +1,1747 @@
+@iconfont: ~'~choerodon-ui-font';
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+@import '@{iconfont}/style/theme';
+@import '../color/colors';
+
+// 此文件不引入到 variables.less 中, 需要引入到 components/style/index.less 中
+// 解决每个组件样式文件中都有一份 css 变量的问题
+
+// 基础 less 变量，用于计算的中间 less 变量
+// 命名规则：@[原有 less 变量名]-calculate
+// 基础 less 变量 仅存放有 颜色 计算的 less 变量。如果基础 less 变量 有变更，需要更新变量关系：./color-vars-map/colorCssVarsMap
+
+// -------- Colors -----------
+@primary-color-calculate: @blue-6;
+@info-color-calculate: @blue-6;
+@success-color-calculate: @green-6;
+@error-color-calculate: @red-6;
+@warning-color-calculate: @gold-6;
+
+// Color used by default to control hover and active backgrounds and for
+// alert info backgrounds.
+@primary-1-calculate: color(~`colorPalette('@{primary-color-calculate}', 1) `); // replace tint(@primary-color, 90%)
+@primary-2-calculate: color(~`colorPalette('@{primary-color-calculate}', 2) `); // replace tint(@primary-color, 80%)
+@primary-3-calculate: color(~`colorPalette('@{primary-color-calculate}', 3) `); // unused
+@primary-4-calculate: color(~`colorPalette('@{primary-color-calculate}', 4) `); // unused
+@primary-5-calculate: color(~`colorPalette('@{primary-color-calculate}', 5) `); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-6-calculate: @primary-color-calculate; // color used to control the text color of active buttons, don't use, use @primary-color
+@primary-7-calculate: color(~`colorPalette('@{primary-color-calculate}', 7) `); // replace shade(@primary-color, 5%)
+@primary-8-calculate: color(~`colorPalette('@{primary-color-calculate}', 8) `); // unused
+@primary-9-calculate: color(~`colorPalette('@{primary-color-calculate}', 9) `); // unused
+@primary-10-calculate: color(~`colorPalette('@{primary-color-calculate}', 10) `); // unused
+
+@primary-fade-1-calculate: fade(@primary-color-calculate, 10%);
+@primary-fade-2-calculate: fade(@primary-color-calculate, 20%);
+@primary-fade-3-calculate: fade(@primary-color-calculate, 30%);
+@primary-fade-4-calculate: fade(@primary-color-calculate, 40%);
+@primary-fade-5-calculate: fade(@primary-color-calculate, 50%);
+@primary-fade-6-calculate: fade(@primary-color-calculate, 60%);
+@primary-fade-7-calculate: fade(@primary-color-calculate, 70%);
+@primary-fade-8-calculate: fade(@primary-color-calculate, 80%);
+@primary-fade-9-calculate: fade(@primary-color-calculate, 90%);
+@primary-fade-10-calculate: fade(@primary-color-calculate, 100%);
+
+@primary-tint-1-calculate: tint(@primary-color-calculate, 10%);
+@primary-tint-2-calculate: tint(@primary-color-calculate, 20%);
+@primary-tint-3-calculate: tint(@primary-color-calculate, 30%);
+@primary-tint-4-calculate: tint(@primary-color-calculate, 40%);
+@primary-tint-5-calculate: tint(@primary-color-calculate, 50%);
+@primary-tint-6-calculate: tint(@primary-color-calculate, 60%);
+@primary-tint-7-calculate: tint(@primary-color-calculate, 70%);
+@primary-tint-8-calculate: tint(@primary-color-calculate, 80%);
+@primary-tint-9-calculate: tint(@primary-color-calculate, 90%);
+@primary-tint-10-calculate: tint(@primary-color-calculate, 100%);
+
+@info-1-calculate: color(~`colorPalette('@{info-color-calculate}', 1) `);
+@info-3-calculate: color(~`colorPalette('@{info-color-calculate}', 3) `);
+@success-1-calculate: color(~`colorPalette('@{success-color-calculate}', 1) `);
+@success-3-calculate: color(~`colorPalette('@{success-color-calculate}', 3) `);
+@error-1-calculate: color(~`colorPalette('@{error-color-calculate}', 1) `);
+@error-3-calculate: color(~`colorPalette('@{error-color-calculate}', 3) `);
+@warning-1-calculate: color(~`colorPalette('@{warning-color-calculate}', 1) `);
+@warning-3-calculate: color(~`colorPalette('@{warning-color-calculate}', 3) `);
+
+// Base Scaffolding Variables
+@text-color-calculate: fade(#000, 100%);
+
+// LINK
+@link-color-calculate: @primary-color-calculate;
+@link-hover-color-calculate: color(~`colorPalette('@{link-color-calculate}', 5) `);
+@link-active-color-calculate: color(~`colorPalette('@{link-color-calculate}', 7) `);
+
+// button primary
+@btn-primary-bg-calculate: @primary-color-calculate;
+@btn-primary-focus-bg-calculate: color(~`colorPalette('@{btn-primary-bg-calculate}', 7) `);
+
+// Checkbox
+@checkbox-color-calculate: @primary-color-calculate;
+@checkbox-shadow-color-calculate: fade(@checkbox-color-calculate, 20%);
+
+// DatePicker
+@date-primary-color-calculate: @primary-color-calculate;
+@date-primary-hover-color-calculate: fade(@date-primary-color-calculate, 70%);
+
+// Radio
+@radio-color-calculate: @primary-color-calculate;
+@radio-shadow-color-calculate: fade(@radio-color-calculate, 20%);
+
+// Radio buttons
+@radio-button-hover-color-calculate: fade(@radio-color-calculate, 50%);
+@radio-button-active-color-calculate: fade(@radio-color-calculate, 70%);
+
+// Layout
+@layout-header-background-calculate: #001529;
+@layout-sider-background-tint-1-calculate: tint(@layout-header-background-calculate, 10%);
+
+// Input
+@input-primary-color-calculate: @primary-color-calculate;
+@input-info-color-calculate: fade(@text-color-calculate, 54%);
+@input-focus-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 3) `);
+@input-hover-border-color-calculate: color(~`colorPalette('@{input-primary-color-calculate}', 5) `);
+
+// Tree
+// ---
+@tree-primary-color-calculate: @primary-color-calculate;
+@tree-node-selected-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 2) `);
+@tree-focus-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 1) `);
+
+// Tabs
+// ---
+@tab-primary-color-calculate: @primary-color-calculate;
+@tab-hover-color-calculate: color(~`colorPalette('@{tab-primary-color-calculate}', 5) `);
+@tab-active-color-calculate: color(~`colorPalette('@{tab-primary-color-calculate}', 7) `);
+
+// Switch
+// ---
+@switch-checked-color-calculate: @primary-color-calculate;
+@switch-color-calculate: color(~`colorPalette('@{switch-checked-color-calculate}', 3) `);
+@switch-box-shadow-color-calculate: fade(@switch-color-calculate, 20%);
+
+// Skeleton
+// ---
+@skeleton-color-calculate: #f2f2f2;
+@skeleton-to-color-calculate: shade(@skeleton-color-calculate, 5%);
+
+// Anchor
+@anchor-primary-color-calculate: @primary-color-calculate;
+@anchor-primary-hover-color-calculate: fade(@anchor-primary-color-calculate, 70%);
+
+
+// css 变量
+.mix-css-vars() when (@c7n-root-entry-name = variables) {
+  // -------- Colors -----------
+  --primary-color: @primary-color-calculate;
+  --info-color: @info-color-calculate;
+  --success-color: @success-color-calculate;
+  --processing-color: var(--primary-color);
+  --error-color: @error-color-calculate;
+  --error-bg-color: #fcebeb;
+  --highlight-color: @red-6;
+  --warning-color: @warning-color-calculate;
+  --normal-color: #d9d9d9;
+  --B500: #a6a6a6;
+
+  // Color used by default to control hover and active backgrounds and for
+  // alert info backgrounds.
+  --primary-1: @primary-1-calculate; // replace tint(@primary-color, 90%)
+  --primary-2: @primary-2-calculate; // replace tint(@primary-color, 80%)
+  --primary-3: @primary-3-calculate; // unused
+  --primary-4: @primary-4-calculate; // unused
+  --primary-5: @primary-5-calculate; // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+  --primary-6: @primary-6-calculate; // color used to control the text color of active buttons, don't use, use @primary-color
+  --primary-7: @primary-7-calculate; // replace shade(@primary-color, 5%)
+  --primary-8: @primary-8-calculate; // unused
+  --primary-9: @primary-9-calculate; // unused
+  --primary-10: @primary-10-calculate; // unused
+  --primary-fade-1: @primary-fade-1-calculate;
+  --primary-fade-2: @primary-fade-2-calculate;
+  --primary-fade-3: @primary-fade-3-calculate;
+  --primary-fade-4: @primary-fade-4-calculate;
+  --primary-fade-5: @primary-fade-5-calculate;
+  --primary-fade-6: @primary-fade-6-calculate;
+  --primary-fade-7: @primary-fade-7-calculate;
+  --primary-fade-8: @primary-fade-8-calculate;
+  --primary-fade-9: @primary-fade-9-calculate;
+  --primary-fade-10: @primary-fade-10-calculate;
+  --primary-tint-1: @primary-tint-1-calculate;
+  --primary-tint-2: @primary-tint-2-calculate;
+  --primary-tint-3: @primary-tint-3-calculate;
+  --primary-tint-4: @primary-tint-4-calculate;
+  --primary-tint-5: @primary-tint-5-calculate;
+  --primary-tint-6: @primary-tint-6-calculate;
+  --primary-tint-7: @primary-tint-7-calculate;
+  --primary-tint-8: @primary-tint-8-calculate;
+  --primary-tint-9: @primary-tint-9-calculate;
+  --primary-tint-10: @primary-tint-10-calculate;
+
+  // Variables derived from functional colors
+  --info-1: @info-1-calculate;
+  --info-3: @info-3-calculate;
+  --success-1: @success-1-calculate;
+  --success-3: @success-3-calculate;
+  --error-1: @error-1-calculate;
+  --error-3: @error-3-calculate;
+  --warning-1: @warning-1-calculate;
+  --warning-3: @warning-3-calculate;
+
+  // Base Scaffolding Variables
+  --body-background: #fff;
+  --component-background: #fff; // 有效
+  --font-family-no-number: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  --font-family: 'Monospaced Number', var(--font-family-no-number);
+  --font-family-required-symbol: SimSun, sans-serif;
+  --code-family: Consolas, Menlo, Courier, monospace;
+  --font-family-code: var(--code-family); // @code-family 变量命名标准化，其作用和直接修改 code-family 一致
+  --heading-color: fade(#000, 85%);
+  --text-color: @text-color-calculate;
+  --text-color-secondary: fade(#000, 45%);
+  --heading-color-dark: fade(#fff, 100%);
+  --text-color-dark: fade(#fff, 100%);
+  --text-color-secondary-dark: fade(#fff, 65%);
+  --font-size-base: 0.13rem;
+  --font-size-lg: 0.16rem;
+  --font-size-sm: 0.12rem;
+  --font-weight-base: 400;
+  --line-height-base: 1.5;
+  --border-radius-lg: 0.1rem;
+  --border-radius-base: 0.02rem;
+  --border-radius-sm: 0.02rem;
+
+  // paddings
+  --padding-lg: 0.24rem; // containers
+  --padding-md: 0.16rem; // small containers and buttons
+  --padding-sm: 0.12rem; // Form controls and items
+  --padding-xs: 0.08rem; // small items
+  --padding-vertical-base: 0.01rem;
+  --padding-vertical-sm: 0.01rem;
+  --padding-vertical-lg: 0.06rem;
+
+  // vertical padding for all form controls
+  --control-padding-horizontal: var(--padding-sm);
+  --control-padding-horizontal-sm: var(--padding-xs);
+
+  // vertical margins
+  --margin-lg: 24px; // containers
+  --margin-md: 16px; // small containers and buttons
+  --margin-sm: 12px; // Form controls and items
+  --margin-xs: 8px; // small items
+  --margin-xss: 4px; // more small
+
+  // The background colors for active and hover states for things like
+  // list items or table cells.
+  --item-active-bg: rgba(140, 158, 255, 0.12);
+  --item-hover-bg: var(--background-color-light); // 无效 存在于Tree组件的directory.less中，改样式文件没有引入使用
+  --item-focus-bg: var(--background-color-light);
+  --item-active-color: var(--text-color);
+  --item-focus-color: var(--text-color);
+  --item-drag-over-bg: var(--primary-color);
+  --item-selected-font-weight: 400;
+
+  //Icon
+  --icon-font-size-base: 0.18rem;
+  --icon-font-size-sm: 0.16rem;
+  // LINK
+  --link-color: @link-color-calculate;
+  --link-hover-color: @link-hover-color-calculate;
+  --link-active-color: @link-active-color-calculate;
+  --link-decoration: none;
+  --link-hover-decoration: none;
+
+  // Animation
+  --animation-duration-slower: 0.45s;
+  --animation-duration-slow: 0.3s;
+  --animation-duration-base: 0.2s;
+  --animation-duration-fast: 0.1s;
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-out-back: cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  --ease-in-back: cubic-bezier(0.71, -0.46, 0.88, 0.6);
+  --ease-in-out-back: cubic-bezier(0.71, -0.46, 0.29, 1.46);
+  --ease-out-circ: cubic-bezier(0, 0, 0.2, 1); // cubic-bezier(0.08, 0.82, 0.17, 1);
+  --ease-in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+  --ease-in-out-circ: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+
+  // Border color
+  --border-color-base: #e0e0e0; // base border outline a component
+  --border-color-split: hsv(0, 0, 91%); // split border inside a component
+  --border-width-base: 0.01rem; // width of the border for a component
+  --border-style-base: solid; // style of a components border
+
+  // Outline
+  --outline-blur-size: 0rem;
+  --outline-width: 0.02rem;
+  --outline-color: var(--primary-color);
+  --background-color-light: fade(#000, 4%); // background of header and selected item
+  --background-color-base: hsv(0, 0, 96%); // Default grey background color
+
+  // Disabled states
+  --disabled-color: fade(#000, 25%);
+  --disabled-bg: var(--background-color-base);
+  --disabled-color-dark: fade(#fff, 35%);
+
+  // Shadow
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  --box-shadow-base: var(--shadow-1-down);
+  --shadow-1-up: 0 -0.02rem 0.08rem var(--shadow-color);
+  --shadow-1-down: 0 0.02rem 0.08rem var(--shadow-color);
+  --shadow-1-left: -0.02rem 0 0.08rem var(--shadow-color);
+  --shadow-1-right: 0.02rem 0 0.08rem var(--shadow-color);
+  --shadow-2: 0 0.04rem 0.12rem var(--shadow-color);
+  --shadow-3: 0 0 0 0.01rem var(--component-background);
+  --shadow-4: 0 0.05rem 0.05rem -0.03rem rgba(0, 0, 0, 0.2),
+  0 0.08rem 0.1rem 0.01rem rgba(0, 0, 0, 0.14), 0 0.03rem 0.14rem 0.02rem rgba(0, 0, 0, 0.12);
+
+  // Buttons
+  --btn-font-weight: var(--font-weight-base);
+  --btn-border-radius-base: var(--border-radius-base);
+  --btn-border-radius-sm: var(--border-radius-base);
+  //
+  --btn-hover-default-color: rgba(0, 0, 0, 0.08);
+  --btn-hover-other-color: rgba(255, 255, 255, 0.08);
+  //
+  --btn-danger-color: var(--error-color);
+  --btn-danger-bg: rgba(0, 0, 0, 0);
+  --btn-danger-border: var(--border-color-base);
+  //
+  --btn-disable-color: var(--disabled-color);
+  --btn-disable-bg: transparent;
+  --btn-disable-border: var(--border-color-base);
+  //
+  --btn-line-height: 1.5;
+  --btn-padding-vertical-base: 0rem;
+  --btn-padding-horizontal-base: 0.12rem;
+  --btn-padding-base: var(--btn-padding-vertical-base) var(--btn-padding-horizontal-base);
+  --btn-padding-vertical-lg: var(--btn-padding-vertical-base);
+  --btn-padding-horizontal-lg: var(--btn-padding-horizontal-base);
+  --btn-padding-lg: var(--btn-padding-vertical-lg) var(--btn-padding-horizontal-lg);
+  --btn-padding-vertical-sm: var(--padding-vertical-sm);
+  --btn-padding-horizontal-sm: 0.06rem;
+  --btn-padding-sm: var(--padding-vertical-sm) var(--btn-padding-horizontal-sm);
+  --btn-font-size-base: unset;
+  --btn-font-size-lg: var(--font-size-lg);
+  --btn-font-size-sm: var(--font-size-sm);
+  //
+  --btn-height-base: 0.3rem;
+  --btn-height-lg: 0.4rem;
+  --btn-height-sm: 0.24rem;
+  //
+  --btn-circle-size: var(--btn-height-base);
+  --btn-circle-size-lg: var(--btn-height-lg);
+  --btn-circle-size-sm: var(--btn-height-sm);
+  --btn-circle-border-radius: 50%;
+  //
+  --btn-group-border: var(--primary-5);
+  --btn-group-spacing: 0.1rem;
+  //
+  --btn-box-shadow: 0 0.03rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2),
+  0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.05rem 0 rgba(0, 0, 0, 0.12);
+  --btn-focus-box-shadow: 0 0.04rem 0.03rem -0.02rem rgba(0, 0, 0, 0.2),
+  0 0.03rem 0.03rem 0 rgba(0, 0, 0, 0.14), 0 0.03rem 0.08rem 0 rgba(0, 0, 0, 0.12);
+  --btn-active-box-shadow: var(--shadow-4);
+  --btn-icon-size: 0.14rem;
+  --btn-icon-size-lg: var(--font-size-lg);
+  --btn-icon-size-sm: var(--font-size-sm);
+  --btn-icon-only-size: 0.2rem;
+  --btn-icon-only-size-sm: 0.14rem;
+  --btn-icon-only-size-lg: 0.24rem;
+  --btn-icon-font-weight: inherit;
+  --btn-icon-margin: 0 0.05rem 0 0;
+
+  // raised button
+  --btn-raised-border-width-base: 0rem;
+  --btn-raised-border-style-base: solid;
+
+  // link button
+  --btn-link-font-weight: var(--btn-font-weight);
+
+  // button primary
+  --btn-primary-color: var(--text-color-dark);
+  --btn-primary-bg: @btn-primary-bg-calculate;
+  --btn-primary-border: var(--btn-primary-bg);
+  --btn-primary-focus-color: var(--btn-primary-color);
+  --btn-primary-focus-bg: @btn-primary-focus-bg-calculate;
+  --btn-primary-hover-color: var(--btn-primary-focus-color);
+  --btn-primary-hover-bg: var(--btn-primary-focus-bg);
+  --btn-primary-disabled-color: var(--btn-primary-color);
+  --btn-primary-flat-color: var(--btn-primary-bg);
+
+  // button secondary
+  --btn-secondary-color: var(--text-color-dark);
+  --btn-secondary-bg: var(--primary-4);
+  --btn-secondary-border: var(--primary-color);
+  --btn-secondary-focus-color: var(--btn-secondary-color);
+  --btn-secondary-focus-bg: var(--primary-7);
+  --btn-secondary-hover-color: var(--btn-secondary-color);
+  --btn-secondary-hover-bg: var(--btn-secondary-focus-bg);
+  --btn-secondary-disabled-color: var(--btn-secondary-color);
+  --btn-secondary-flat-color: var(--btn-secondary-bg);
+
+  // button gray
+  --btn-gray-color: var(--text-color);
+  --btn-gray-bg: #f5f5f5;
+  --btn-gray-border: var(--btn-gray-bg);
+  --btn-gray-focus-color: var(--btn-gray-color);
+  --btn-gray-focus-bg: #e6e6e6;
+  --btn-gray-hover-color: var(--btn-gray-focus-color);
+  --btn-gray-hover-bg: var(--btn-gray-focus-bg);
+  --btn-gray-disabled-color: var(--btn-gray-color);
+  --btn-gray-flat-color: #d0d0d0;
+
+  // button blue
+  --btn-blue-color: var(--text-color-dark);
+  --btn-blue-bg: @blue-6;
+  --btn-blue-border: var(--btn-blue-bg);
+  --btn-blue-focus-color: var(--btn-blue-color);
+  --btn-blue-focus-bg: @blue-7;
+  --btn-blue-hover-color: var(--btn-blue-focus-color);
+  --btn-blue-hover-bg: var(--btn-blue-focus-bg);
+  --btn-blue-disabled-color: var(--btn-blue-color);
+  --btn-blue-flat-color: var(--btn-blue-bg);
+
+  // --
+  // button green
+  --btn-green-color: var(--text-color-dark);
+  --btn-green-bg: @green-6;
+  --btn-green-border: var(--btn-green-bg);
+  --btn-green-focus-color: var(--btn-green-color);
+  --btn-green-focus-bg: @green-7;
+  --btn-green-hover-color: var(--btn-green-focus-color);
+  --btn-green-hover-bg: var(--btn-green-focus-bg);
+  --btn-green-disabled-color: var(--btn-green-color);
+  --btn-green-flat-color: var(--btn-green-bg);
+
+  // button red
+  --btn-red-color: var(--text-color-dark);
+  --btn-red-bg: @red-6;
+  --btn-red-border: var(--btn-red-bg);
+  --btn-red-focus-color: var(--btn-red-color);
+  --btn-red-focus-bg: @red-7;
+  --btn-red-hover-color: var(--btn-red-focus-color);
+  --btn-red-hover-bg: var(--btn-red-focus-bg);
+  --btn-red-disabled-color: var(--btn-red-color);
+  --btn-red-flat-color: var(--btn-red-bg);
+
+  // button yellow
+  --btn-yellow-color: var(--text-color-dark);
+  --btn-yellow-bg: @yellow-6;
+  --btn-yellow-border: var(--btn-yellow-bg);
+  --btn-yellow-focus-color: var(--btn-yellow-color);
+  --btn-yellow-focus-bg: @yellow-7;
+  --btn-yellow-hover-color: var(--btn-yellow-focus-color);
+  --btn-yellow-hover-bg: var(--btn-yellow-focus-bg);
+  --btn-yellow-disabled-color: var(--btn-yellow-color);
+  --btn-yellow-flat-color: var(--btn-yellow-bg);
+
+  // button purple
+  --btn-purple-color: var(--text-color-dark);
+  --btn-purple-bg: @purple-6;
+  --btn-purple-border: var(--btn-purple-bg);
+  --btn-purple-focus-color: var(--btn-purple-color);
+  --btn-purple-focus-bg: @purple-7;
+  --btn-purple-hover-color: var(--btn-purple-focus-color);
+  --btn-purple-hover-bg: var(--btn-purple-focus-bg);
+  --btn-purple-disabled-color: var(--btn-purple-color);
+  --btn-purple-flat-color: var(--btn-purple-bg);
+
+  // button dark
+  --btn-dark-color: var(--text-color-dark);
+  --btn-dark-bg: @dark-4;
+  --btn-dark-border: var(--btn-dark-bg);
+  --btn-dark-focus-color: var(--btn-dark-color);
+  --btn-dark-focus-bg: @dark-5;
+  --btn-dark-hover-color: var(--btn-dark-focus-color);
+  --btn-dark-hover-bg: var(--btn-dark-focus-bg);
+  --btn-dark-disabled-color: var(--btn-dark-color);
+  --btn-dark-flat-color: @dark-6;
+
+  // button default
+  --btn-default-color: var(--text-color);
+  --btn-default-bg: transparent;
+  --btn-default-border: var(--border-color-base);
+  --btn-default-focus-color: var(--btn-primary-bg);
+  --btn-default-focus-bg: var(--btn-default-bg);
+  --btn-default-hover-color: var(--btn-default-color);
+  --btn-default-hover-bg: var(--btn-default-focus-bg);
+  --btn-default-disabled-color: var(--btn-default-color);
+  --btn-default-flat-color: var(--btn-default-color);
+
+  // Checkbox
+  --checkbox-size: 0.16rem;
+  --checkbox-color: @checkbox-color-calculate;
+  --checkbox-border-color: fade(#000, 65%);
+  --checkbox-border-width: 0.02rem;
+  --checkbox-disabled-bg: var(--input-disabled-bg);
+  --checkbox-disabled-color: var(--disabled-color);
+  --checkbox-disabled-border-color: var(--disabled-color);
+  --checkbox-disabled-check-bg: var(--checkbox-disabled-bg);
+  --checkbox-disabled-check-border-color: var(--checkbox-disabled-border-color);
+  --checkbox-disabled-check-color: var(--checkbox-disabled-color);
+  --checkbox-uncheck-hover-border-color: var(--checkbox-color);
+  --checkbox-shadow-color: @checkbox-shadow-color-calculate;
+  --checkbox-indeterminate-bg: var(--checkbox-color);
+  --checkbox-indeterminate-color: #fff;
+  --checkbox-indeterminate-width: calc((var(--checkbox-size) / 16) * 8);
+  --checkbox-indeterminate-height: calc((var(--checkbox-size) / 16) * 1);
+  --checkbox-indeterminate-top: calc((var(--checkbox-size) - var(--checkbox-indeterminate-height) - var(--checkbox-border-width) * 2) / 2);
+  --checkbox-indeterminate-left: calc((var(--checkbox-size) - var(--checkbox-indeterminate-width) - var(--checkbox-border-width) * 2) / 2);
+  // basic
+  --checkbox-basic-disabled-color: var(--input-disabled-color);
+  --checkbox-basic-disabled-border-color: var(--border-color-base);
+  --checkbox-basic-disabled-check-border-color: var(--checkbox-basic-disabled-border-color);
+  --checkbox-basic-indeterminate-width: calc((var(--checkbox-size) / 14) * 8);
+  --checkbox-basic-indeterminate-height: calc(var(--checkbox-size) / 14);
+  --checkbox-basic-indeterminate-top: calc((var(--checkbox-size) - 0.04rem - var(--checkbox-basic-indeterminate-height)) / 2);
+  --checkbox-basic-indeterminate-left: calc((var(--checkbox-size) - 0.03rem - var(--checkbox-basic-indeterminate-width)) / 2);
+  --checkbox-button-line-height: var(--radio-button-line-height);
+  --checkbox-button-min-width: unset;
+  --checkbox-button-padding: 0 0.15rem;
+  --checkbox-button-check-bg: var(--checkbox-color);
+  --checkbox-button-disabled-check-bg: var(--primary-fade-6);
+  --checkbox-button-disabled-check-border-color: var(--checkbox-button-disabled-check-bg);
+  --checkbox-button-disabled-check-color: var(--text-color-dark);
+  --checkbox-button-check-color: var(--text-color-dark);
+  --checkbox-button-check-border-color: var(--checkbox-color);
+  --checkbox-button-radius: var(--border-radius-base);
+
+  // DatePicker
+  --date-primary-color: @date-primary-color-calculate;
+  --date-primary-hover-color: @date-primary-hover-color-calculate;
+  --date-link-hover-color: var(--link-hover-color);
+  --date-link-active-color: var(--link-active-color);
+  // 从组件内部迁移的变量
+  --date-picker-width: 2.8rem;
+  --date-time-picker-width: 4.3rem;
+  --date-picker-horizontal-padding: 0.12rem;
+  --date-time-list-item-height: 0.29rem;
+  // 新增
+  --date-picker-header-height: 0.4rem;
+  --date-picker-header-padding: 0 0.07rem;
+  --date-picker-body-table-font-size: var(--font-size-lg);
+  --date-picker-cell-inner-border-radius: var(--border-radius-sm);
+  --date-picker-cell-disabled-inner-border-radius: 0rem;
+  --date-picker-cell-inner-height: 0.24rem;
+  --date-picker-footer-height: 0.39rem;
+  --date-picker-active-color: #fff;
+  --date-picker-view-select-font-weight: bold;
+  --date-picker-today-font-weight: bold;
+  --date-picker-th-color: unset;
+  --date-picker-month-year-cell-inner-display: inline-table;
+  --date-picker-time-focus-active-display: block;
+  --date-picker-datetime-time-border-left: unset;
+  --date-picker-datetime-time-padding: 0.08rem var(--date-picker-horizontal-padding);
+  --date-picker-time-selected-bg: unset;
+  --date-picker-time-cell-hover-bg: unset;
+  --date-picker-time-cell-inner-hover-bg: var(--item-hover-bg);
+  --date-picker-time-selected-cell-inner-color: #fff;
+  --date-picker-time-selected-cell-inner-bg: var(--date-primary-color);
+  --date-picker-time-panel-height: 2.1rem;
+  --date-picker-time-cell-inner-active-color: var(--date-picker-active-color);
+  --date-picker-time-cell-inner-active-bg: var(--primary-5);
+  --date-picker-time-cell-active-bg: unset;
+  --date-picker-time-cell-disabled-bg: unset;
+  --date-picker-time-disabled-cell-inner-bg: var(--disabled-bg);
+  --date-picker-week-edge-cell-inner-border-radius: var(--border-radius-base);
+
+  // Radio
+  --radio-color: @radio-color-calculate;
+  --radio-border-color: rgba(0, 0, 0, 0.24);
+  --radio-border-width: var(--border-width-base);
+  --radio-disabled-color: var(--disabled-color);
+  --radio-disabled-bg: var(--input-disabled-bg);
+  --radio-disabled-border-color: var(--disabled-color);
+  --radio-disabled-check-bg: var(--radio-disabled-bg);
+  --radio-disabled-check-border-color: var(--radio-disabled-border-color);
+  --radio-disabled-check-color: var(--radio-disabled-color);
+  --radio-uncheck-hover-border-color: var(--radio-color);
+  --radio-size: 0.14rem;
+  --radio-dot-color: var(--radio-color);
+  // --radio-dot-distance: calc(var(--radio-size) / 4 - var(--radio-border-width) / 2);
+  --radio-dot-size: calc(var(--radio-size) / 2 - var(--radio-border-width));
+  --radio-check-dot-color: var(--radio-dot-color);
+  --radio-line-height: 1.5;
+  --radio-label-white-space: var(--label-white-space);
+  --radio-shadow-color: @radio-shadow-color-calculate;
+  --radio-check-border-color: var(--radio-dot-color);
+  --radio-check-border-width: var(--radio-border-width);
+  // basic
+  --radio-basic-disabled-color: var(--input-disabled-color);
+  --radio-basic-disabled-bg: var(--radio-button-bg);
+  --radio-basic-disabled-check-bg: var(--radio-disabled-check-color);
+  --radio-basic-disabled-border-color: var(--radio-border-color);
+
+  // Radio buttons
+  --radio-button-line-height: var(--btn-height-base);
+  --radio-button-bg: var(--btn-default-bg);
+  --radio-button-color: var(--btn-default-color);
+  --radio-button-hover-color: @radio-button-hover-color-calculate;
+  --radio-button-active-color: @radio-button-active-color-calculate;
+  --radio-button-check-border-width: var(--radio-border-width);
+  --radio-button-padding: 0 0.15rem;
+  --radio-button-min-width: unset;
+  --radio-basic-button-uncheck-hover-color: var(--radio-button-color);
+  --radio-basic-button-padding: 0 calc(var(--padding-md) - 0.01rem);
+  --radio-button-check-color: var(--radio-dot-color);
+  --radio-button-check-bg: transparent;
+  --radio-basic-button-group-spacing: 0rem;
+  --radio-button-radius: var(--border-radius-base);
+  --radio-button-disabled-check-bg: var(--radio-disabled-check-bg);
+  --radio-button-disabled-check-border-color: var(--radio-disabled-check-border-color);
+  --radio-button-disabled-check-color: unset;
+
+  // Layout
+  --layout-header-background: @layout-header-background-calculate;
+  --layout-sider-background: var(--layout-header-background);
+  --layout-sider-background-tint-1: @layout-sider-background-tint-1-calculate;
+
+  // Form
+  --label-required-color: var(--highlight-color);
+  --label-color: inherit;
+  --label-color-horizontal: var(--label-color);
+  --label-color-vertical: var(--label-color);
+  --label-font-weight: var(--font-weight-base);
+  --label-colon-color: inherit;
+  --label-line-height: var(--input-height-base);
+  --label-white-space: nowrap;
+  --label-wrapper-padding-vertical: 0.1rem;
+  --label-wrapper-padding-horizontal: 0.04rem;
+  --label-wrapper-padding: var(--label-wrapper-padding-vertical) var(--label-wrapper-padding-horizontal);
+  --label-vertical-wrapper-padding-vertical: 0rem;
+  --label-output-wrapper-padding-vertical: 0.01rem;
+  --label-basic-line-height: calc(34 / 13);
+  --field-help-color: var(--text-color-secondary);
+  --field-icon-help-color: var(--text-color-secondary);
+  --field-icon-help-font-size: var(--icon-font-size-sm);
+  --form-item-wrapper-padding-vertical: 0.1rem;
+  --form-item-wrapper-padding-horizontal: 0.05rem;
+  --form-item-wrapper-padding: var(--form-item-wrapper-padding-vertical) var(--form-item-wrapper-padding-horizontal);
+  --form-item-wrapper-output-padding-vertical: 0.01rem;
+  --form-item-margin-top: 0.07rem;
+  --form-item-margin-bottom: 0.2rem;
+  --form-item-trailing-colon: true;
+  --form-vertical-label-padding: 0 0 0.08rem;
+  --form-vertical-label-margin: 0rem;
+  --float-label-wrapper-border-top-color: var(--component-background);
+  --float-label-transform-origin-high: 0.1rem -330%; // SelectBox, Range, CheckBox, Switch
+  --float-label-height-base: 0.36rem;
+  --float-label-height-lg: 0.4rem;
+  --float-label-height-sm: 0.3rem;
+  --float-label-autofill-margin: 0.02rem;
+  --float-label-line-height: 0.34rem;
+  --float-label-line-height-lg: 0.38rem;
+  --float-label-line-height-sm: 0.28rem;
+  --float-label-color: var(--label-color);
+  --float-label-font-size: .15rem;
+  --float-label-font-weight: 500;
+  --float-label-active-height: var(--float-label-line-height);
+  --float-label-active-bg: unset;
+  --float-label-active-padding: 0rem;
+  --float-form-item-margin-top: var(--form-item-margin-top);
+  --float-form-item-margin-bottom: var(--form-item-margin-bottom);
+  --float-form-item-wrapper-padding-vertical: 0rem;
+
+  // Input
+  --input-primary-color: @input-primary-color-calculate;
+  --input-height-base: 0.3rem;
+  --input-height-lg: 0.4rem;
+  --input-height-sm: 0.24rem;
+  --input-font-size-base: var(--font-size-base);
+  --input-line-height-base: var(--line-height-base);
+  --input-padding-horizontal: calc(var(--control-padding-horizontal) - 0.02rem);
+  --input-padding-horizontal-base: var(--input-padding-horizontal);
+  --input-padding-horizontal-sm: calc(var(--control-padding-horizontal-sm) - 0.02rem);
+  --input-padding-horizontal-lg: var(--input-padding-horizontal);
+  --input-padding-vertical-base: var(--padding-vertical-base);
+  --input-padding-vertical-sm: var(--padding-vertical-sm);
+  --input-padding-vertical-lg: var(--padding-vertical-lg);
+  --input-placeholder-color: hsv(0, 0, 75%);
+  --input-info-color: @input-info-color-calculate;
+  --input-active-color: var(--text-color);
+  //@input-active-box-shadow: 0 0 @outline-blur-size @outline-width fade(@color, 20%);
+  --input-active-box-shadow: none;
+  --input-color: rgb(0, 0, 0);
+  // @input-border-color: @border-color-base;
+  --input-baseline-color: rgba(0, 0, 0, 0.54);
+  --input-border-color: #d9d9d9;
+  --input-border-radius: var(--border-radius-base);
+  --input-error-border-color: var(--error-color);
+  --input-error-active-box-shadow: var(--input-active-box-shadow);
+  --input-required-border-color: var(--input-border-color);
+  --input-highlight-border-color: #47B881;
+  --input-wrapper-bg: var(--component-background);
+  --input-bg: transparent;
+  --input-required-bg: @yellow-1;
+  --input-error-bg: var(--error-bg-color);
+  --input-addon-bg: var(--background-color-light);
+  --input-focus-border-color: @input-focus-border-color-calculate;
+  --input-hover-border-color: @input-hover-border-color-calculate;
+  --input-required-focus-border-color: @input-focus-border-color-calculate;
+  --input-required-hover-border-color: var(--input-hover-border-color);
+  --input-required-active-box-shadow: var(--input-active-box-shadow);
+  --input-float-border-color: var(--input-border-color);
+  --input-float-border-radius: 0.05rem;
+  --input-float-border-active-width: 0.02rem;
+  --input-float-required-border-color: var(--input-required-border-color);
+  --input-float-highlight-border-color: var(--input-highlight-border-color);
+  --input-float-required-bg: var(--component-background);
+  --input-float-error-bg: var(--component-background);
+  --input-float-disabled-bg: var(--component-background);
+  --input-float-focus-border-color: var(--input-focus-border-color);
+  --input-float-required-focus-border-color: var(--input-float-focus-border-color);
+  --input-float-hover-border-color: var(--input-color);
+  --input-float-required-hover-border-color: var(--input-float-hover-border-color);
+  --input-float-disabled-border-style: dashed;
+  --input-float-disabled-border-color: var(--input-float-border-color);
+  --input-disabled-bg: var(--disabled-bg);
+  --input-disabled-color: rgba(0, 0, 0, 0.54);
+  --input-disabled-icon-color: var(--input-disabled-color);
+  --input-icon-width-base: 0.24rem;
+  --input-icon-width-lg: 0.3rem;
+  --input-icon-width-sm: 0.2rem;
+  --input-icon-color: inherit;
+  --input-prefix-width-base: var(--input-icon-width-base);
+  --input-prefix-color: inherit;
+  --input-suffix-width-base: var(--input-icon-width-base);
+  --input-suffix-height: 0.2rem;
+  --input-suffix-color: inherit;
+  --input-suffix-hover-color: var(--input-suffix-color);
+  --input-suffix-error-color: var(--input-suffix-color);
+  --input-button-width: var(--input-suffix-width-base);
+  --input-addon-bg: #eee;
+  --input-addon-color: unset;
+  --input-addon-font-size: unset;
+  --input-tag-default-color: var(--tag-default-color);
+  --input-tag-default-bg: var(--tag-default-bg);
+  --input-tag-error-color: var(--tag-default-color);
+  --input-tag-error-bg: var(--error-color);
+  --input-tag-disabled-color: var(--tag-default-color);
+  --input-tag-disabled-bg: var(--disabled-color);
+  --input-tag-close-color: inherit;
+  --input-tag-close-hover-color: inherit;
+  --input-tag-height-base: 0.24rem;
+  --input-tag-line-height-base: 0.22rem;
+  --input-tag-margin-vertical: 0.01rem;
+  --input-tag-border-radius: var(--input-border-radius);
+  --input-tag-extra-space: 0.24rem;
+  --input-float-tag-height-base: 0.2rem;
+  --input-float-tag-line-height-base: 0.2rem;
+  --input-float-tag-margin-vertical: var(--input-tag-margin-vertical);
+  --input-float-tag-padding: 0 0.02rem 0 0.08rem;
+  --input-float-tag-border-radius: 0.12rem;
+  --input-float-tag-error-bg: var(--error-color);
+  --input-float-tag-close-color: var(--tag-multiple-color);
+  --input-float-tag-close-line-height: 0.2rem;
+  --input-float-tag-close-font-size: 0.16rem;
+  --input-float-tag-close-vertical-align: top;
+  --input-multiple-height-base: auto;
+  --input-multiple-height-lg: var(--input-multiple-height-base);
+  --input-multiple-height-sm: var(--input-multiple-height-base);
+  --input-multiple-margin: 0rem;
+  --input-multiple-padding: 0.01rem 0;
+  --input-multiple-input-margin: 0 0 0 var(--input-padding-horizontal);
+  --input-float-multiple-margin: 0 0 0 0.03rem;
+  --input-float-multiple-padding: 0.07rem 0;
+  --textarea-padding: 0.04rem var(--input-padding-horizontal);
+  // Input basic
+  --input-number-handler-inner-distance: -0.05rem;
+  --input-basic-height: 0.36rem;
+  --input-basic-autofill-height: 0.32rem;
+  --input-basic-hover-border-color: var(--input-color);
+  --input-basic-focus-border-width: 0.02rem;
+  --input-basic-focus-border-color: var(--primary-color);
+  --input-basic-disabled-border-style: dashed;
+  --input-basic-disabled-bg: unset;
+
+    // Mentions
+  --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
+
+  // Output
+  // ---
+  --output-line-height: 0.28rem; // <-- fieldHeight / fontSize
+  --output-font-weight: var(--font-weight-base);
+  --output-word-break: normal;
+  --output-white-space: normal;
+  --output-color: unset;
+  --output-tag-margin: var(--tag-margin);
+  --output-float-label-font-size: 0.12rem;
+  --output-float-label-line-height: 0.18rem;
+
+  // Steps
+  --process-icon-color: var(--icon-text-color);
+  --process-icon-hover-color: var(--process-icon-color);
+  --process-icon-dot-bg: var(--processing-color);
+  --process-icon-bg: var(--processing-color);
+  --process-icon-border-color: var(--processing-color);
+  --process-icon-hover-border-color: var(--process-icon-border-color);
+  --process-title-color: var(--heading-color);
+  --process-title-hover-color: var(--process-title-color);
+  --process-title-font-weight: 500;
+  --process-description-color: var(--text-color);
+  --process-description-hover-color: var(--process-description-color);
+  --process-tail-color: var(--step-border-color);
+  --icon-text-color: #fff;
+  --wait-icon-color: var(--icon-text-color);
+  --wait-icon-hover-color: var(--wait-icon-color);
+  --wait-icon-dot-bg: var(--step-wait-color);
+  --wait-icon-bg: var(--step-wait-color);
+  --wait-icon-border-color: var(--step-wait-color);
+  --wait-icon-hover-border-color: var(--wait-icon-border-color);
+  --wait-title-color: var(--text-color-secondary);
+  --wait-title-hover-color: var(--wait-title-color);
+  --wait-description-color: var(--wait-title-color);
+  --wait-description-hover-color: var(--wait-description-color);
+  --wait-tail-color: var(--process-tail-color);
+  --finish-icon-color: var(--icon-text-color);
+  --finish-icon-hover-color: var(--finish-icon-color);
+  --finish-icon-dot-bg: var(--process-icon-bg);
+  --finish-icon-bg: var(--process-icon-bg);
+  --finish-icon-border-color: var(--process-icon-bg);
+  --finish-icon-hover-border-color: var(--finish-icon-border-color);
+  --finish-title-color: var(--text-color);
+  --finish-title-hover-color: var(--finish-title-color);
+  --finish-description-color: var(--text-color-secondary);
+  --finish-description-hover-color: var(--finish-description-color);
+  --finish-tail-color: var(--process-tail-color);
+  --error-icon-color: var(--icon-text-color);
+  --error-icon-hover-color: var(--error-icon-color);
+  --error-icon-dot-bg: var(--error-color);
+  --error-icon-bg: var(--error-color);
+  --error-icon-border-color: var(--error-color);
+  --error-icon-hover-border-color: var(--error-icon-border-color);
+  --error-title-color: var(--error-color);
+  --error-title-hover-color: var(--error-title-color);
+  --error-description-color: var(--error-color);
+  --error-description-hover-color: var(--error-description-color);
+  --error-tail-color: var(--process-tail-color);
+  --steps-background: var(--component-background);
+  --steps-icon-size: 0.28rem;
+  --steps-icon-font-size: var(--font-size-lg);
+  --steps-item-dropdown-icon-font-size: var(--steps-icon-font-size);
+  --steps-icon-border-width: 0rem;
+  --steps-icon-border-style: var(--border-style-base);
+  --steps-icon-border-color: var(--border-color-base);
+  --steps-small-item-title-font-size: var(--font-size-base);
+  --steps-small-icon-size: 0.24rem;
+  --steps-dot-size: 0.08rem;
+  --steps-current-dot-size: 0.1rem;
+  --steps-desciption-max-width: 1.4rem;
+  --steps-title-min-width: 1.76rem;
+  --steps-item-cursor: unset;
+  --step-border-color: rgba(0, 0, 0, 0.26);
+  --step-wait-color: rgba(0, 0, 0, 0.36);
+  --steps-item-dropdown-icon-size: 0.3rem;
+  --steps-item-title-icon-margin: 0 0 0 0.16rem;
+  --steps-vertical-item-icon-margin-right: 0.16rem;
+  --steps-vertical-item-tail-left: 0.16rem;
+  --steps-tail-size: 0.01rem;
+
+  // Tooltip
+  --tooltip-font-size: unset;
+  --tooltip-max-width: 4rem;
+  --tooltip-min-width: 0.3rem;
+  --tooltip-min-height: 0.32rem;
+  --tooltip-color: var(--text-color-dark);
+  --tooltip-bg: rgba(0, 0, 0, 0.75);
+  --tooltip-arrow-width: 0.05rem;
+  --tooltip-distance: calc(var(--tooltip-arrow-width) + 0.03rem);
+  --tooltip-arrow-color: var(--tooltip-bg);
+  --tooltip-color-light: var(--text-color);
+  --tooltip-bg-light: var(--component-background);
+  --tooltip-arrow-color-light: var(--tooltip-bg-light);
+  --tooltip-line-height: inherit;
+  --tooltip-link-color-dark: var(--link-color);
+  --tooltip-box-shadow-light: var(--box-shadow-base);
+  --tooltip-box-shadow: var(--box-shadow-base);
+  --tooltip-padding: 0.06rem 0.08rem;
+  --tooltip-border-radius: calc(var(--border-radius-base) * 2);
+
+  // Popover
+  --popover-bg: var(--component-background);
+  --popover-color: var(--text-color);
+  --popover-min-width: 1.77rem;
+  --popover-min-height: 0.32rem;
+  --popover-arrow-offset: 0.02rem;
+  --popover-arrow-width: 0.05rem;
+  --popover-arrow-color: var(--popover-bg);
+  --popover-arrow-outer-color: var(--popover-bg);
+  --popover-distance: calc(var(--popover-arrow-width) + 0.04rem);
+  --popover-message-padding: 0.04rem 0 0.12rem;
+  --popover-message-title-padding: 0 0 0 calc(var(--font-size-base) + 0.08rem);
+  --popover-title-padding: 0.05rem var(--padding-md) 0.04rem;
+  --popover-content-under-title-padding: var(--popover-title-padding);
+  --popover-title-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --popover-title-font-weight: 500;
+  --popover-title-font-size: unset;
+  --popover-inner-content-padding: 0.12rem var(--padding-md);
+  --popover-line-height: unset;
+  --popover-warning-icon-top: unset;
+
+  // Modal
+  // --
+  --modal-font-size-lg: 0.18rem; // deprecated
+  --modal-font-size-base: var(--modal-font-size-lg); // deprecated
+  --modal-title-color: var(--heading-color);
+  --modal-title-font-size-base: var(--modal-font-size-base);
+  --modal-title-font-weight: 500;
+  --modal-title-line-height: 0.24rem;
+  --modal-confirm-title-color: var(--modal-title-color);
+  --modal-confirm-title-font-size-base: 0.2rem;
+  --modal-confirm-title-font-weight: var(--modal-title-font-weight);
+  --modal-confirm-title-line-height: 0.32rem;
+  --modal-mask-bg: rgba(0, 0, 0, 0.288);
+  --modal-content-shadow: var(--shadow-2);
+  --modal-header-padding: 0.15rem 0.24rem;
+  --modal-body-padding: 0.24rem;
+  --modal-footer-padding: 0.12rem 0.24rem;
+  --modal-drawer-header-padding: var(--modal-header-padding);
+  --modal-drawer-body-padding: var(--modal-body-padding);
+  --modal-drawer-footer-padding: var(--modal-footer-padding);
+  --modal-header-footer-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
+  --modal-drawer-footer-text-align: left;
+  --modal-confirm-icon-padding: 0 0.16rem 0 0;
+  --modal-confirm-icon-font-size: 0.24rem;
+  --modal-confirm-icon-line-height: 1.5;
+  --modal-no-border-header-padding: var(--modal-header-padding);
+  // Modal Basic
+  --modal-basic-footer-padding: 0.12rem 0;
+
+  // Progress
+  --progress-default-color: var(--processing-color);
+  --progress-remaining-color: var(--background-color-base);
+  --progress-loading-size-sm: 0.2rem;
+  --progress-loading-size-base: 0.3rem;
+  --progress-loading-size-lg: 0.5rem;
+
+  // Menu
+  --menu-first-level-title-font-size: var(--font-size-base);
+  --menu-inline-toplevel-item-height: 0.4rem;
+  --menu-horizontal-line-height: 0.46rem;
+  --menu-horizontal-hover-bg: transparent;
+  --menu-horizontal-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --menu-horizontal-selected-font-weight: unset;
+  --menu-horizontal-root-selected-bg: unset;
+  --menu-not-horizontal-padding: unset;
+  --menu-vertical-submenu-arrow-right: 0.16rem;
+  --menu-item-height: 0.4rem;
+  --menu-collapsed-width: 0.8rem;
+  --menu-bg: var(--component-background);
+  --menu-item-color: var(--text-color);
+  --menu-highlight-color: var(--primary-color);
+  --menu-item-active-bg: var(--item-active-bg);
+  --menu-item-group-title-color: var(--text-color-secondary);
+  --menu-item-group-title-padding: 0.08rem 0.16rem;
+  --menu-item-group-title-line-height: var(--line-height-base);
+  --menu-item-padding: 0 0.16rem 0 0.28rem;
+  --menu-active-line-width: 0.02rem;
+  --menu-submenu-margin: unset;
+  --menu-popup-item-group-border-bottom: unset;
+  --menu-popup-sub-padding: unset;
+  // dark theme
+  --menu-dark-color: var(--text-color-secondary-dark);
+  --menu-dark-bg: var(--layout-header-background);
+  --menu-dark-arrow-color: #fff;
+  --menu-dark-submenu-bg: #000c17;
+  --menu-dark-highlight-color: #fff;
+  --menu-dark-item-selected-bg: var(--primary-color);
+
+  // Spin
+  // ---
+  --spin-dot-size-sm: 0.2rem;
+  --spin-dot-size: 0.3rem;
+  --spin-dot-size-lg: 0.5rem;
+
+  // Table
+  // --
+  --table-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
+  --table-outermost-border-top: var(--table-border);
+  --table-outermost-border-bottom: var(--table-border);
+  --table-cell-border-right: var(--border-width-base) var(--border-style-base) transparent;
+  --table-cell-border-bottom: var(--table-border);
+  --table-outermost-bordered-border-right: var(--table-border);
+  --table-outermost-bordered-border-left: var(--table-border);
+  --table-tfoot-cell-border-top: var(--table-border);
+  --table-last-row-cell-border-bottom: var(--border-width-base) var(--border-style-base) transparent;
+  --table-notbordered-thead-hover-border-right-color: var(--table-border-color);
+  --table-notbordered-body-border-bottom-color: var(--table-border-color);
+  --table-header-bg: var(--background-color-light);
+  --table-header-color: var(--heading-color);
+  --table-header-font-weight: 700;
+  --table-header-sort-bg: var(--background-color-base);
+  --table-row-hover-bg: var(--item-hover-bg);
+  --table-row-hover-editable-bg: unset;
+  --table-current-row-bg: var(--item-active-bg);
+  --table-even-row-bg: fade(#000, 2%);
+  --table-cell-focus-bg: fade(#000, 8%);
+  --table-selected-row-bg: fade(#a1c2fa, 16%);
+  --table-expanded-row-bg: #fbfbfb;
+  --table-mouse-batch-choose-bg: var(--table-selected-row-bg);
+  --table-padding-vertical: 0.05rem;
+  --table-padding-horizontal: var(--input-padding-horizontal);
+  --table-cell-font-weight: 400;
+  --table-cell-padding-vertical-base: 0.01rem;
+  --table-cell-padding-horizontal-base: 0.01rem;
+  --table-cell-padding-vertical-sm: var(--table-cell-padding-horizontal-base);
+  --table-cell-padding-horizontal-sm: var(--table-cell-padding-horizontal-base);
+  --table-header-cell-padding-vertical-base: var(--table-cell-padding-vertical-base);
+  --table-header-cell-padding-horizontal-base: var(--table-cell-padding-horizontal-base);
+  --table-header-cell-padding-vertical-sm: var(--table-cell-padding-vertical-sm);
+  --table-header-cell-padding-horizontal-sm: var(--table-cell-padding-horizontal-sm);
+  --table-footer-cell-padding-vertical-base: var(--table-cell-padding-vertical-base);
+  --table-footer-cell-padding-horizontal-base: var(--table-cell-padding-horizontal-base);
+  --table-footer-cell-padding-vertical-sm: var(--table-cell-padding-vertical-sm);
+  --table-footer-cell-padding-horizontal-sm: var(--table-cell-padding-horizontal-sm);
+  --table-split-color: var(--primary-color);
+  --table-editable-cell-border-radius-base: 0rem;
+  --table-editable-cell-border-color: var(--input-border-color);
+  --table-editable-cell-required-bg: var(--input-required-bg);
+  --table-editable-cell-required-border-color: var(--input-required-border-color);
+  --table-editable-cell-highlight-border-color: var(--input-highlight-border-color);
+  --table-editable-cell-error-bg: var(--error-bg-color);
+  --table-editable-cell-error-border-color: var(--input-error-border-color);
+  --table-editable-cell-disabled-bg: var(--input-disabled-bg);
+  --table-editable-cell-disabled-border-color: var(--input-disabled-color);
+  --table-customization-select-view-option-bg: fade(#000, 8%);
+  --table-customization-form-padding-vertical: 0.05rem;
+  --table-customization-button-color: unset;
+  --table-customization-tree-treenode-padding: 0.03rem 0;
+  --table-customization-tree-treenode-title-margin: unset;
+  --table-customization-tree-treenode-content-height: 0.32rem;
+  --table-customization-tree-treenode-switcher-height: var(--table-customization-tree-treenode-content-height);
+  --table-customization-tree-treenode-switcher-padding: 0.05rem 0;
+  --table-customization-tree-treenode-dragging-bg-color: var(--component-background);
+  --table-customization-tree-treenode-switcher-icon-size: 0.18rem;
+  --table-customization-tree-treenode-switcher-icon-line-height: 0.22rem;
+  --table-border-color: var(--border-color-base);
+  --table-row-group-title-bg: #f5f5f5;
+  --table-row-group-title-color: inherit;
+  --table-cell-group-font-weight: var(--table-header-font-weight);
+  --table-icon-help-color: var(--primary-color);
+  --table-icon-help-content: '\e8fd';
+  --table-icon-help-size: var(--icon-font-size-base);
+  --table-icon-help-font-weight: inherit;
+  --table-icon-sort-hover-color: var(--primary-color);
+  --table-icon-sort-active-color: var(--table-icon-sort-hover-color);
+  --table-dynamic-filter-label-color: #6A6A6A;
+  --table-dynamic-filter-placeholder-color: var(--table-dynamic-filter-label-color);
+  --table-dynamic-filter-input-padding: 0.01rem 0.02rem;
+  --table-dynamic-filter-status-line-height: var(--line-height-base);
+  --table-dynamic-filter-expand-query-icon-color: unset;
+  --table-dynamic-filter-refresh-icon-hover-color: unset;
+  --table-dynamic-filter-single-action-buttons-margin: 0.02rem 0 0;
+  --table-dynamic-filter-required-border-color: var(--input-border-color);
+  --table-dynamic-filter-required-active-border-color: var(--primary-color);
+  --table-dynamic-filter-required-active-box-shadow: var(--input-required-active-box-shadow);
+  --table-dynamic-filter-number-step-height: 0.24rem;
+  --table-professional-query-button-padding: 0.1rem 0 0.1rem 0.7rem;
+  --table-professional-query-button-vertical-padding: 0.3rem 0 0.1rem 0.7rem;
+  --table-combo-filter-wrapper-margin: 0.04rem 0 0;
+  --table-combo-filter-content-margin: 0.04rem 0 0 0.08rem;
+  --table-combo-filter-single-line-divide-margin: 0.08rem 0.08rem 0.06rem 0.08rem;
+  --table-combo-filter-menu-reset-button-bg: var(--btn-secondary-bg);
+  --table-filter-item-icon-line-height: var(--line-height-base);
+  --table-summary-group-wrapper-justify-content: flex-end;
+  --table-summary-group-wrapper-margin: 0.08rem 0;
+  --table-buttons-more-dropdown-item-padding: 0 0.26rem;
+  --table-filter-search-close-icon-line-height: 0.2rem;
+
+  // PerformanceTable
+  --performance-table-header-bg: #f5f5f5;
+  --performance-table-active-row-bg: rgb(240, 243, 255);
+  --performance-table-scrollbar-bg: rgba(45, 45, 45, 0.05);
+  --performance-table-scrollbar-handle-bg: rgba(45, 45, 45, 0.5);
+  --performance-table-scrollbar-handle-active-bg: var(--performance-table-scrollbar-handle-bg);
+  --performance-table-scrollbar-handle-border-radius: 0.04rem;
+  --performance-table-scrollbar-border: none;
+  --performance-table-scrollbar-handle-horizontal-height: 0.08rem;
+  --performance-table-scrollbar-handle-vertical-width: 0.08rem;
+
+  // Loader
+  --loader-spin-ring-wide: 3px;
+  --loader-duration-normal: 0.6s;
+
+  // Tree
+  --tree-primary-color: @tree-primary-color-calculate;
+	--tree-bg: var(--component-background);
+	--tree-title-height: 24px;
+	--tree-child-padding: 18px;
+	--tree-directory-selected-color: #fff; // 使用了，但是directory的渲染不会走
+	--tree-directory-selected-bg: var(--tree-primary-color);
+	--tree-node-hover-bg: var(--item-hover-bg); // 有效 TODO: 后续该变量需要删除，将样式模板中的状态颜色改为通用变量即可。
+	--tree-node-selected-bg: @tree-node-selected-bg-calculate; // 有效 同上
+  --tree-focus-bg: @tree-focus-bg-calculate;
+  --tree-node-padding: calc(var(--padding-xs) / 2);
+  --tree-checkbox-height: var(--tree-title-height);
+  --tree-active-color: var(--text-color);
+  --tree-line-margin-left: -0.01rem;
+  --tree-line-before-bottom: calc(-1 * var(--tree-node-padding));
+  --tree-switcher-icon-size: 0.18rem;
+  --tree-drag-over-color: white;
+  --tree-drag-over-bg: var(--tree-primary-color);
+  --tree-node-color: inherit;
+  --tree-node-hover-color: var(--tree-active-color);
+  --tree-node-selected-color: var(--tree-active-color);
+
+  // TreeSelect
+  --tree-select-treenode-selected-bg: var(--item-focus-bg);
+  --tree-select-treenode-active-bg: var(--item-active-bg);
+  --tree-select-content-wrapper-hover-bg: transparent;
+  --tree-select-content-wrapper-tree-node-selected-bg: transparent;
+
+  // Tag
+  // --
+  --tag-default-bg: var(--primary-color);
+  --tag-default-color: var(--text-color-dark);
+  --tag-multiple-color: rgba(255, 255, 255, 0.72);
+  --tag-font-size: var(--font-size-sm);
+  --tag-font-weight: inherit;
+  --tag-margin: 0 0.02rem;
+  --tag-padding: 0 0.08rem;
+  --tag-height: 0.22rem;
+  --tag-line-height: 0.2rem;
+  --tag-default-border-color: var(--tag-default-bg);
+  --tag-border: var(--border-width-base) var(--border-style-base) var(--tag-default-border-color);
+  --tag-has-color-color: #fff;
+  --tag-checkable-bg: transparent;
+  --tag-checkable-border-color: transparent;
+  --tag-checkable-not-checked-hover-color: var(--primary-color);
+  --tag-checkable-color: #000;
+  --tag-checkable-checked-color: #fff;
+  --tag-checkable-checked-bg: var(--primary-6);
+  --tag-checkable-active-bg: var(--primary-7);
+  --tag-checkable-not-checked-active-bg: transparent;
+  --tag-close-icon-font-weight: bold;
+
+  // Carousel
+  // ---
+  --carousel-dot-width: 16px;
+  --carousel-dot-height: 3px;
+  --carousel-dot-active-width: 24px;
+  --carousel-dot-active-bg: #fff;
+  --carousel-dot-padding: 0rem;
+  --carousel-dot-text-align: center;
+  --carousel-dot-border-radius: 0.01rem;
+
+  // Badge
+  // ---
+  --badge-height: 0.2rem;
+  --badge-height-sm: 0.14rem;
+  --badge-dot-size: 0.06rem;
+  --badge-font-size: var(--font-size-sm);
+  --badge-font-size-sm: var(--font-size-sm);
+  --badge-font-weight: normal;
+  --badge-status-size: 0.06rem;
+  --badge-text-color: var(--text-color);
+  --badge-corner-background: var(--highlight-color);
+  --badge-corner-box-shadow: var(--shadow-3);
+  --badge-processing-color: var(--processing-color);
+
+  // Rate
+  // ---
+  --rate-star-color: @yellow-6;
+  --rate-star-bg: #d8d8d8;
+  --rate-line-height: 1;
+
+  // Card
+  // ---
+  --card-margin:0;
+  --card-padding: 0rem;
+  --card-head-margin: 0 0 -0.01rem 0;
+  --card-head-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --card-title-padding: var(--card-head-padding) 0;
+  --card-extra-padding: calc(var(--card-head-padding) + 0.015rem) 0;
+  --card-body-padding: var(--card-padding-base);
+  --card-body-color: unset;
+  --card-discription-color:var(--text-color-secondary);
+  --card-cover-margin: unset;
+  --card-actions-item-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --card-actions-item-margin: 0.12rem 0;
+  --card-actions-item-padding: unset;
+  --card-grid-body-padding: 0rem;
+  --card-grid-body-margin: -0.01rem 0 0 -0.01rem;
+  --card-loading-body-padding: 0rem;
+  --card-head-color: var(--heading-color);
+  --card-head-background: var(--component-background);
+  --card-head-padding: 0.16rem;
+  --card-inner-head-padding: 0.12rem;
+  --card-inner-head-title-padding:var(--card-inner-head-padding) 0;
+  --card-inner-head-title-font-size: var(--font-size-base);
+  --card-inner-extra-padding: calc(var(--card-inner-head-padding) + 0.015rem) 0;
+  --card-inner-body-padding: 0.16rem var(--card-padding-base);
+  --card-padding-base: 0.24rem;
+  --card-padding-wider: 0.32rem;
+  --card-actions-background:var(--background-color-light);
+  --card-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.09);
+  --card-head-height: 0.48rem;
+  --card-hover-border: rgba(0, 0, 0, 0.09);
+  --card-gird-padding: var(--card-padding-base);
+  --card-wider-padding-body:  var(--card-padding-base) var(--card-padding-wider);
+  --card-wider-padding-head:  0 var(--card-padding-wider);
+
+  // Tabs
+  // ---
+  --tab-primary-color: @tab-primary-color-calculate;
+  --tabs-card-head-background: var(--background-color-light);
+  --tabs-card-height: 0.4rem;
+  --tabs-card-active-color: var(--tab-primary-color);
+  --tabs-title-font-size: var(--font-size-base);
+  --tabs-title-font-size-lg: var(--font-size-lg);
+  --tabs-title-font-size-sm: var(--font-size-base);
+  --tabs-ink-bar-bg-color: var(--tab-primary-color);
+  --tabs-ink-bar-display: block;
+  --tab-bar-margin: 0 0 0.16rem 0;
+  --tab-bar-padding: 0rem;
+  --tab-horizontal-margin: 0 0.32rem 0 0;
+  --tab-vertical-margin: 0 0 0.16rem 0;
+  --tab-horizontal-padding-vertical: 0.08rem;
+  --tab-horizontal-padding-horizontal: 0rem;
+  --tab-horizontal-padding: var(--tab-horizontal-padding-vertical) var(--tab-horizontal-padding-horizontal);
+  --tab-vertical-padding-vertical: var(--tab-horizontal-padding-vertical);
+  --tab-vertical-padding-horizontal: 0.24rem;
+  --tab-vertical-padding: var(--tab-vertical-padding-vertical) var(--tab-vertical-padding-horizontal);
+  --tab-scrolling-size: 0.32rem;
+  --tab-highlight-color: var(--tab-primary-color);
+  --tab-highlight-font-weight: 500;
+  --tab-normal-color: rgba(0, 0, 0, 0.87);
+  --tab-hover-color: @tab-hover-color-calculate;
+  --tab-active-color: @tab-active-color-calculate;
+  --tabs-groups-ink-bar-display: var(--tabs-ink-bar-display);
+  --tab-groups-padding: 0.02rem;
+  --tab-groups-bar-padding: var(--tab-bar-padding);
+  --tab-groups-horizontal-padding: var(--tab-horizontal-padding);
+  --tab-groups-vertical-padding: var(--tab-vertical-padding);
+  --tabs-tab-horizontal-padding-sm: 0.08rem 0;
+  --tabs-tab-horizontal-padding-lg: 0.16rem;
+  --tabs-second-tab-color: rgba(0, 0, 0, 0.45);
+  --tabs-bar-top-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-bottom-border-top: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-vertical-right-border-left: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-bar-vertical-left-border-right: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-ink-bar-bottom: 0.01rem;
+  --tabs-ink-bar-height: 0.02rem;
+  --tabs-ink-bar-zindex: 1;
+  --tabs-card-tab-padding: 0 0.16rem;
+  --tabs-card-tab-border: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-groups-group-bg-color: rgba(0, 0, 0, 0.05);
+  --tabs-groups-group-border-radius: 0rem;
+  --tabs-groups-group-item-line-height: unset;
+  --tabs-groups-group-item-font-size: .14rem;
+  --tabs-groups-group-item-color: rgba(0, 0, 0, 0.45);
+  --tabs-groups-group-item-padding: 0.03rem .08rem;
+  --tabs-groups-group-item-border-radius: 0rem;
+  --tabs-groups-group-item-active-color: var(--text-color);
+  --tabs-groups-group-item-selected-color: rgba(0, 0, 0, 0.8);
+  --tabs-groups-group-item-selected-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
+  --tabs-bar-divider-margin: auto .15rem;
+  --tabs-vertical-left-content-padding: 0 0 0 0.24rem;
+  --tabs-card-bar-border: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --tabs-card-min-width: var(--tabs-card-height);
+  --tabs-card-active-background: var(--component-background);
+  --tabs-card-border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+  --tabs-card-tab-margin-right: 0.02rem;
+  --tabs-card-font-size: var(--tabs-title-font-size);
+  --tabs-arrow-show-border: unset;
+  --tabs-groups-tab-font-size: unset;
+  --tabs-badge-content-size: 0.12rem;
+  --tabs-customization-text-icon-margin: unset;
+  --tabs-customization-drag-icon-margin: unset;
+  --tabs-customization-drag-icon-color: var(--text-color-secondary);
+  --tabs-card-arrow-show-border: var(--tabs-arrow-show-border);
+  --tabs-arrow-show-hover-color: var(--text-color);
+  --tabs-card-arrow-show-border-radius: unset;
+  --tabs-card-arrow-show-background-color: unset;
+  --tabs-card-arrow-show-hover-background-color: unset;
+  --tabs-card-hover-background: var(--tabs-card-head-background);
+  --tabs-icon-color: inherit;
+  --tabs-card-tab-border-bottom: 0rem;
+  --tabs-card-tab-transition: all var(--animation-duration-slow) var(--ease-in-out);
+  --tabs-card-tab-active-border-bottom: var(--tabs-card-tab-border-bottom);
+
+  // Avatar
+  // --
+  --avatar-size-base: 0.32rem;
+  --avatar-size-lg: 0.4rem;
+  --avatar-size-sm: 0.24rem;
+  --avatar-font-size-base: 0.18rem;
+  --avatar-font-size-lg: 0.24rem;
+  --avatar-font-size-sm: 0.14rem;
+  --avatar-bg: #ccc;
+  --avatar-color: #fff;
+  --avatar-border-radius: var(--border-radius-base);
+  --avatar-group-overlapping: -0.08rem;
+  --avatar-group-space: 0.03rem;
+  --avatar-string-font-size-base: unset;
+  --avatar-string-font-size-lg: unset;
+  --avatar-string-font-size-sm: unset;
+  --avatar-group-number-lg: 0.18rem;
+  --avatar-group-number-sm: 0.12rem;
+
+  // Switch
+  // ---
+  --switch-wrapper-padding: 0.03rem;
+  --switch-padding-horizontal: 0rem;
+  --switch-border: none;
+  --switch-check-border-color: transparent;
+  --switch-sm-wrapper-padding: 0rem;
+  --switch-lg-wrapper-padding: var(--switch-wrapper-padding) 0;
+  --switch-min-width: 0.36rem;
+  --switch-sm-min-width: 0.3rem;
+  --switch-lg-min-width: 0.4rem;
+  --switch-height: 0.16rem;
+  --switch-sm-height: 0.12rem;
+  --switch-lg-height: 0.2rem;
+  --switch-line-height: 0.16rem;
+  --switch-sm-line-height: 0.12rem;
+  --switch-lg-line-height: 0.2rem;
+  --switch-button-size: 0.20rem;
+  --switch-sm-button-size: 0.16rem;
+  --switch-lg-button-size: 0.24rem;
+  --switch-button-active-width: 0.24rem;
+  --switch-sm-button-active-width: 0.2rem;
+  --switch-lg-button-active-width: 0.28rem;
+  --switch-checked-margin-left: calc(-1 * var(--switch-height));
+  --switch-sm-checked-margin-left: calc(-1 * var(--switch-sm-height));
+  --switch-disabled-opacity: 0.4;
+  --switch-basic-disabled-opacity: var(--switch-disabled-opacity);
+  --switch-disabled-bg: var(--switch-bg);
+  --switch-disabled-check-bg: var(--switch-checked-bg);
+  --switch-disabled-label-color: var(--switch-label-color);
+  --switch-disabled-label-check-color: var(--switch-disabled-label-color);
+  --switch-label-color: var(--text-color-dark);
+  --switch-label-check-color: var(--switch-label-color);
+  --switch-checked-color: @switch-checked-color-calculate;
+  --switch-color: @switch-color-calculate;
+  --switch-checked-bg: var(--switch-color);
+  --switch-checked-button-bg: var(--switch-checked-color);
+  --switch-bg: rgba(0, 0, 0, 0.38);
+  --switch-button-bg: var(--component-background);
+  --switch-disabled-button-bg: var(--switch-button-bg);
+  --switch-disabled-button-check-bg: var(--switch-checked-button-bg);
+  --switch-box-shadow: 0 0 0 0.02rem @switch-box-shadow-color-calculate;
+  --switch-button-box-shadow: 0 0.02rem 0.01rem -0.01rem rgba(0, 0, 0, 0.2),
+  0 0.01rem 0.01rem 0 rgba(0, 0, 0, 0.14), 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.12);
+  --switch-button-uncheck-left: 0rem;
+  --switch-button-check-left: 100%;
+  --switch-button-radius: 50%;
+  --switch-sm-button-uncheck-left: var(--switch-button-uncheck-left);
+  --switch-sm-button-check-left: var(--switch-button-check-left);
+  --switch-lg-button-uncheck-left: var(--switch-button-uncheck-left);
+  --switch-lg-button-check-left: var(--switch-button-check-left);
+  --switch-lg-loading-inner-size: 0.2rem;
+  --switch-loading-inner-size: 0.16rem;
+  --switch-sm-loading-inner-size: 0.12rem;
+  --switch-lg-loading-inner-distance: 0.02rem;
+  --switch-loading-inner-distance: 0.05rem;
+  --switch-sm-loading-inner-distance: 0.02rem;
+  --switch-loading-stroke: var(--primary-color);
+  --switch-checked-loading-stroke: #FFF;
+  --switch-icon-font-size: 0.16rem;
+  --switch-sm-icon-font-size: 0.12rem;
+  --switch-lg-icon-font-size: 0.2rem;
+  --switch-radius: calc(var(--switch-height) / 2);
+  --switch-sm-radius: calc(var(--switch-sm-height) / 2);
+  --switch-lg-radius: calc(var(--switch-lg-height) / 2);
+
+  // Pagination
+  // ---
+  --pagination-size-changer-not-editable-border-color: transparent;
+  --pagination-size-changer-margin: 0rem;
+  --pagination-quick-jumper-margin: 0 0 0 .2rem;
+  --pagination-quick-jumper-border-color: transparent;
+  --pagination-color: unset;
+  --pagination-pager-height: var(--btn-circle-size);
+  --pagination-pager-min-width: unset;
+
+  // Breadcrumb
+  // ---
+  --breadcrumb-base-color: var(--text-color-secondary);
+  --breadcrumb-last-item-color: var(--text-color);
+  --breadcrumb-last-item-font-size: unset;
+  --breadcrumb-last-item-font-weight: unset;
+  --breadcrumb-font-size: var(--font-size-base);
+  --breadcrumb-icon-font-size: var(--font-size-sm);
+  --breadcrumb-link-color: var(--text-color-secondary);
+  --breadcrumb-link-color-hover: var(--primary-5);
+  --breadcrumb-separator-color: var(--text-color-secondary);
+  --breadcrumb-separator-margin: 0 var(--padding-xs);
+
+  // Slider
+  --slider-margin: 0.14rem 0.06rem 0.1rem;
+  --slider-rail-background-color: var(--background-color-base);
+  --slider-rail-background-color-hover: #e1e1e1;
+  --slider-track-background-color: var(--primary-color);
+  --slider-track-background-color-hover: var(--primary-7);
+  --slider-handle-color: var(--primary-color);
+  --slider-handle-color-hover: var(--primary-7);
+  --slider-handle-color-focus: var(--primary-tint-2);
+  --slider-handle-color-focus-shadow: var(--primary-tint-5);
+  --slider-handle-color-focus-box-shadow: 0 0 0 0.05rem var(--slider-handle-color-focus-shadow);
+  --slider-handle-color-tooltip-open: var(--primary-color);
+  --slider-dot-border-color: var(--border-color-split);
+  --slider-dot-border-color-active: var(--primary-tint-5);
+  --slider-disabled-color: var(--disabled-color);
+  --slider-disabled-background-color: var(--component-background);
+
+  //Ripple
+  // ---
+  --ripple-dark-color: fade(#000, 10%);
+  --ripple-light-color: fade(#fff, 10%);
+
+  // CodeArea
+  // ---
+  --codearea-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
+  --codearea-header-bg: rgba(0, 0, 0, 0.06);
+  --codearea-header-title-color: var(--heading-color);
+  --codearea-header-title-font-weight: 400;
+  --codearea-header-title-font-size: 0.14rem;
+  --codearea-header-dark-bg: #141414;
+  --codearea-header-title-dark-color: #FFF;
+  --codearea-header-switch-icon-color: var(--primary-color);
+
+  // Transfer
+  // ---
+  --transfer-width: 1.8rem;
+  --transfer-height: 2rem;
+  --transfer-header-height: 0.32rem;
+  --transfer-header-padding: 0.06rem var(--control-padding-horizontal);
+  --transfer-header-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --transfer-header-title-font-size: unset;
+  --transfer-header-title-font-weight: unset;
+  --transfer-body-with-search-padding-top: calc(var(--input-height-base) + 0.08rem);
+  --transfer-content-padding: 0rem;
+  --transfer-footer-height: 0.32rem;
+  --transfer-search-wrapper-padding: 0.04rem;
+  --transfer-disabled-bg: var(--disabled-bg);
+  --transfer-selected-bg: var(--item-active-bg);
+  --transfer-btn-height: .24rem;
+  --transfer-btn-border-radius: var(--border-radius-base);
+  --transfer-basic-list-padding-top: 0.34rem;
+  --transfer-basic-list-padding-bottom: 0.34rem;
+  --transfer-basic-header-font-size: inherit;
+  --transfer-basic-header-line-height: var(--line-height-base);
+  --transfer-basic-header-border-bottom: var(--border-width-base) var(--border-style-base) var(--border-color-split);
+  --transfer-basic-header-title-font-weight: inherit;
+  --transfer-basic-header-padding: 0.06rem var(--control-padding-horizontal);
+  --transfer-basic-body-search-wrapper-padding: 0.04rem;
+  --transfer-basic-list-item-margin: 0rem;
+  --transfer-basic-list-item-padding: 0.06rem var(--control-padding-horizontal);
+  --transfer-search-action-top: 0.04rem;
+  --transfer-search-action-right: 0.04rem;
+
+  // Skeleton
+  // ---
+  --skeleton-color: @skeleton-color-calculate;
+  --skeleton-to-color: @skeleton-to-color-calculate;
+  --skeleton-title-height: 16px;
+  --skeleton-item-height: 16px;
+
+  // Collapse
+  --collapse-border: var(--border-width-base) var(--border-style-base) var(--border-color-base);
+  --collapse-header-padding: 0.12rem;
+  --collapse-header-padding-extra: .4rem;
+  --collapse-header-bg: var(--background-color-light);
+  --collapse-content-padding: var(--padding-md);
+  --collapse-content-bg: var(--component-background);
+  --collapse-header-line-height: 0.22rem;
+  --collapse-borderless-header-padding: var(--collapse-header-padding);
+  --collapse-borderless-header-font-weight: unset;
+  --collapse-borderless-header-font-size: var(--font-size-base);
+  --collapse-borderless-header-line-height: var(--collapse-header-line-height);
+  --collapse-icon-right-border: var(--collapse-border);
+  --collapse-icon-right-item-font-size: unset;
+  --collapse-icon-right-item-border-bottom: var(--collapse-border);
+  --collapse-icon-right-content-border-top: var(--collapse-border);
+  --collapse-icon-right-content-padding: 0 var(--collapse-content-padding);
+  --collapse-icon-right-expand-text-padding: 0rem;
+  --collapse-icon-right-wrapper-color: unset;
+  --collapse-icon-right-header-bg: unset;
+  --collapse-icon-right-header-color: unset;
+  --collapse-icon-right-header-border-bottom: unset;
+  --collapse-expand-icon-size: var(--collapse-borderless-header-line-height);
+
+  // CollapsePanel
+  --collapse-panel-border-radius: var(--border-radius-base);
+
+  // Result
+  --result-title-font-size: 0.24rem;
+  --result-subtitle-font-size: var(--font-size-base);
+  --result-icon-font-size: 0.72rem;
+  --result-extra-margin: 0.32rem 0 0 0;
+  --result-icon-margin-bottom: 0.24rem;
+  --result-title-color: var(--heading-color);
+  --result-title-line-height: 1.8;
+  --result-title-margin: unset;
+  --result-subtitle-color: var(--text-color-secondary);
+  --result-subtitle-line-height: 1.6;
+
+  // Statistic
+  // ---
+  --statistic-title-color: var(--text-color-secondary);
+  --statistic-title-font-size: var(--font-size-base);
+  --statistic-content-font-size: 0.24rem;
+  --statistic-unit-font-size: 0.16rem;
+  --statistic-font-family: var(--font-family);
+  --statistic-title-line-height: var(--line-height-base);
+  --statistic-content-line-height: var(--line-height-base);
+  --statistic-content-font-weight: var(--font-weight-base);
+
+  // Dropdown Menu
+  // ---
+  --dropdown-menu-max-width: none;
+  --dropdown-menu-max-height: 2.5rem;
+  --dropdown-menu-padding: 0.08rem 0;
+  --dropdown-menu-item-color: var(--text-color);
+  --dropdown-menu-item-line-height: .2rem;
+  --dropdown-menu-item-padding: 0.04rem var(--control-padding-horizontal);
+  --dropdown-menu-first-level-title-font-size: unset;
+  --dropdown-button-group-spacing: 0;
+
+  // Alert
+  --alert-border-radius: var(--border-radius-base);
+  --alert-border-width: var(--border-width-base);
+  --alert-icon-top: calc(0.05rem + var(--font-size-base) * var(--line-height-base) / 2 - var(--font-size-base) / 2);
+  --alert-icon-left: 0.16rem;
+  --alert-with-description-icon-top: 0.16rem;
+  --alert-with-description-icon-left: 0.24rem;
+  --alert-message-color: var(--heading-color);
+  --alert-message-font-size: unset;
+  --alert-message-line-height: unset;
+  --alert-text-color: var(--text-color); // 全局未使用
+  --alert-padding: 0.08rem 0.15rem 0.08rem 0.37rem;
+  --alert-close-wrapper-margin: 0 0 0 0.16rem;
+  --alert-close-wrapper-padding: unset;
+  --alert-no-icon-padding: 0.08rem 0.15rem;
+  --alert-description-line-height: 0.22rem;
+  --alert-with-description-padding: 0.15rem 0.15rem 0.15rem 0.64rem;
+  --alert-with-description-message-margin: 0 0 0.04rem 0;
+  --alert-with-description-no-icon-padding: 0.15rem;
+  --alert-with-description-icon-size: 0.24rem;
+  --alert-with-description-message-font-size: var(--font-size-lg);
+
+  // Lov
+  --lov-selection-list-bg: transparent;
+  --lov-table-professional-query-button-padding: 0.1rem 0 0.1rem 0.4rem;
+  --lov-table-professional-query-button-vertical-padding: 0.3rem 0 0.1rem 0.4rem;
+
+  // Typography
+  --heading-1-size: calc(var(--font-size-base) * 2.71);
+  --heading-2-size: calc(var(--font-size-base) * 2.14);
+  --heading-3-size: calc(var(--font-size-base) * 1.71);
+  --heading-4-size: calc(var(--font-size-base) * 1.42);
+  --heading-5-size: calc(var(--font-size-base) * 1.14);
+  --typography-title-font-weight: 600;
+  --typography-title-1-font-weight: var(--typography-title-font-weight);
+  --typography-title-2-font-weight: var(--typography-title-font-weight);
+  --typography-title-3-font-weight: var(--typography-title-font-weight);
+  --typography-title-4-font-weight: var(--typography-title-font-weight);
+  --typography-title-5-font-weight: var(--typography-title-font-weight);
+  --typography-title-1-line-height: 1.23;
+  --typography-title-2-line-height: 1.35;
+  --typography-title-3-line-height: 1.35;
+  --typography-title-4-line-height: 1.4;
+  --typography-title-5-line-height: 1.5;
+  --typography-title-1-font-family: unset;
+  --typography-title-2-font-family: unset;
+  --typography-title-3-font-family: unset;
+  --typography-title-4-font-family: unset;
+  --typography-title-5-font-family: unset;
+  --typography-title-1-color: var(--heading-color);
+  --typography-title-2-color: var(--heading-color);
+  --typography-title-3-color: var(--heading-color);
+  --typography-title-4-color: var(--heading-color);
+  --typography-title-5-color: var(--heading-color);
+  --typography-title-margin-top: 0.3rem;
+  --typography-title-1-margin-top: var(--typography-title-margin-top);
+  --typography-title-2-margin-top: var(--typography-title-margin-top);
+  --typography-title-3-margin-top: var(--typography-title-margin-top);
+  --typography-title-4-margin-top: var(--typography-title-margin-top);
+  --typography-title-5-margin-top: var(--typography-title-margin-top);
+  --typography-title-margin-bottom: 0.2rem;
+  --typography-title-1-margin-bottom: var(--typography-title-margin-bottom);
+  --typography-title-2-margin-bottom: var(--typography-title-margin-bottom);
+  --typography-title-3-margin-bottom: var(--typography-title-margin-bottom);
+  --typography-title-4-margin-bottom: var(--typography-title-margin-bottom);
+  --typography-title-5-margin-bottom: var(--typography-title-margin-bottom);
+  --typography-mark-bg: @gold-3;
+  --typography-code-border: 0.01rem solid rgba(100, 100, 100, 0.2);
+  --typography-paragraph-margin-bottom: 0.13rem;
+  --typography-operation-margin-left: 0.04rem;
+  --typography-line-height: 2.15384615;
+  --typography-color: unset;
+  --typography-font-size: unset;
+  --typography-blockquote-padding: 0 0 0 0.1rem;
+
+  // Segmented
+  --segmented-color: unset;
+  --segmented-checked-color: var(--radio-button-check-color);
+  --segmented-checked-font-weight: unset;
+  --segmented-padding: 0.04rem;
+  --segmented-padding-sm: 0.02rem;
+  --segmented-bg: rgb(241, 243, 245);
+  --segmented-float-label-top: -0.08rem;
+  --segmented-float-label-left: 0.08rem;
+  --segmented-active-bg: #fff;
+  --segmented-interval-border-width: 0.01rem;
+  --segmented-interval-border-color: #dee2e6;
+  --segmented-interval-border-style: solid;
+  --segmented-item-line-height-sm: 0.24rem;
+  --segmented-item-line-height-base: 0.3rem;
+  --segmented-item-line-height-lg: 0.36rem;
+  --segmented-item-padding-sm: 0 0.08rem;
+
+  // Cascader
+  --cascader-menu-padding: 0rem;
+  --cascader-menu-item-line-height: .22rem;
+  --cascader-menu-item-padding: 0.05rem var(--control-padding-horizontal);
+  --cascader-menu-item-extra-padding: 0.3rem;
+
+  // Upload
+  --upload-picture-card-size: 0.98rem;
+  --upload-picture-card-select-border: var(--border-width-base) dashed var(--border-color-base);
+  --upload-picture-card-uploading-text-margin: 0.18rem 0 0;
+  --upload-list-item-icon-color: var(--text-color-secondary);
+  --upload-list-item-icon-hover-color: var(--text-color);
+  --upload-list-item-name-link-color: var(--link-color);
+  --upload-list-item-name-link-hover-color: var(--link-hover-color);
+  --upload-drag-icon-color: var(--primary-5);
+  --upload-drag-icon-size: 0.48rem;
+  --upload-drag-icon-margin: 0 0 0.2rem 0;
+  --upload-drag-text-color: var(--heading-color);
+  --upload-drag-text-line-height: unset;
+  --upload-drag-text-font-size: var(--font-size-lg);
+  --upload-drag-hint-color: var(--text-color-secondary);
+  --upload-reupload-color: var(--primary-color);
+
+
+  // Timeline
+  --timeline-color: var(--border-color-split);
+  --timeline-item-padding: 0 0 0.20rem;
+  --timeline-item-header-size: 0.1rem;
+  --timeline-item-content-top: calc(-1 * ((var(--font-size-base) * var(--line-height-base) - var(--font-size-base)) - 0.01rem));
+  --timeline-item-content-padding: 0 0 0 0.18rem;
+  --timeline-item-content-line-height: unset;
+  --timeline-item-content-color: unset;
+  --timeline-item-last-content-min-height: 0.48rem;
+  --timeline-item-tail-top: 0.75em;
+  --timeline-item-tail-left: 0.04rem;
+
+  // Message
+  --message-notice-content-padding: 0.1rem 0.16rem;
+  --message-notice-content-color: unset;
+  --message-notice-content-line-height: var(--line-height-base);
+  --message-content-success-bg: var(--component-background);
+  --message-content-error-bg: var(--component-background);
+  --message-content-warning-bg: var(--component-background);
+  --message-content-info-bg: var(--component-background);
+  --message-content-loading-bg: var(--component-background);
+  --message-icon-top: 0.01rem;
+
+  // Notification
+  --notification-width: 3.84rem;
+  --notification-padding-vertical: 0.16rem;
+  --notification-padding-horizontal: 0.24rem;
+  --notification-padding: var(--notification-padding-vertical) var(--notification-padding-horizontal);
+  --notification-margin-bottom: 0.16rem;
+  --notification-description-line-height: unset;
+  --notification-description-color: unset;
+  --notification-message-margin-bottom: 0.08rem;
+  --notification-message-line-height: 0.24rem;
+  --notification-with-icon-message-margin-left: 0.48rem;
+  --notification-with-icon-description-margin-left: var(--notification-with-icon-message-margin-left);
+  --notification-icon-size: 0.24rem;
+  --notification-custom-icon-size: 0.18rem;
+  --notification-custom-notice-icon-line-height: 0.2rem;
+  --notification-icon-margin-left: 0.04rem;
+  --notification-icon-top: unset;
+  --notification-icon-left: unset;
+  --notification-close-icon-top: 0.16rem;
+  --notification-close-icon-right: 0.22rem;
+  --notification-closable-message-padding-right: 0.24rem;
+
+  // List
+  --list-padding-top-base: 0.12rem;
+  --list-padding-bottom-base: 0.12rem;
+  --list-padding-left-base: 0.24rem;
+  --list-padding-right-base: 0.24rem;
+  --list-padding-top-lg: 0.16rem;
+  --list-padding-bottom-lg: 0.16rem;
+  --list-padding-left-lg: 0.24rem;
+  --list-padding-right-lg: 0.24rem;
+  --list-padding-top-sm: 0.08rem;
+  --list-padding-bottom-sm: 0.08rem;
+  --list-padding-left-sm: 0.16rem;
+  --list-padding-right-sm: 0.16rem;
+  --list-header-color: unset;
+  --list-header-font-size: var(--font-size-base);
+  --list-description-color: var(--text-color-secondary);
+  --list-item-even-background: unset;
+  --list-item-border-bottom: 0.01rem solid var(--border-color-split);
+
+  // Anchor
+  --anchor-primary-color: @anchor-primary-color-calculate;
+  --anchor-primary-hover-color: @anchor-primary-hover-color-calculate;
+  --anchor-border-width: 0.02rem;
+  --anchor-ball-border-width: 0.02rem;
+  --anchor-link-title-color: var(--text-color);
+  --anchor-link-title-decoration: unset;
+  --anchor-link-title-active-color: var(--anchor-primary-color);
+  --anchor-link-title-active-font-weight: normal;
+
+  // Select
+  --select-primary-color: var(--primary-color);
+
+  // Picture
+  --picture-viewer-btn-size-base: 0.24rem;
+  --picture-viewer-nav-btn-size: 0.32rem;
+  --picture-viewer-nav-btn-size-lg: 0.52rem;
+  --picture-icon-font-size: 0.26rem;
+
+  // Attachment
+  --attachment-sort-select-margin: unset;
+  --attachment-sort-selcet-border: unset;
+  --attachment-header-divider-height: 0.09rem;
+  --attachment-list-item-margin: 0.04rem 0;
+  --attachment-list-item-padding: 0 0.1rem;
+  --attachment-list-item-bg: #f3f3f3;
+  --attachment-list-item-border: unset;
+  --attachment-list-item-container-padding: 0.07rem 0;
+  --attachment-picture-margin: unset;
+  --attachment-text-picture-icon-margin: unset;
+  --attachment-card-button-bg: #f8f8f8;
+  --attachment-card-button-icon-margin: 0 0 0.04rem 0;
+  --attachment-card-button-icon-size: 0.28rem;
+  --attachment-card-button-line-height: unset;
+  --attachment-card-button-border: var(--border-width-base) dashed var(--border-color-base);
+  --attachment-drag-box-text-margin: unset;
+  --attachment-drag-box-hint-margin: unset;
+
+  // Divider
+  --divider-text-color: var(--heading-color);
+  --divider-font-size-base: var(--font-size-base);
+  --divider-font-size-lg: var(--font-size-lg);
+  --divider-inner-text-padding: 0 0.24rem;
+  --divider-vertical-height: 0.9em;
+
+  // ImageCrop
+  --image-crop-avatar-preview-bg: unset;
+  --image-crop-avatar-preview-item-border: unset;
+  --avatar-crop-edit-wraper-margin: 0.32rem 0 0.16rem 0;
+  --image-crop-container-margin: 0 0 0.16rem 0;
+  --image-crop-avatar-dragger-margin: 92px auto;
+  --image-crop-footer-border-top: 0.01rem solid rgba(0,0,0,0.09);
+
+  // IconPicker
+  --icon-picker-item-width: 20%;
+  --icon-picker-item-height: 0.6rem;
+  --icon-picker-item-margin: 0rem;
+  --icon-picker-item-padding: 0.05rem;
+}
+
+// css 变量
+:root {
+  .mix-css-vars();
+}

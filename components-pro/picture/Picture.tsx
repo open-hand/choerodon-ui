@@ -26,6 +26,7 @@ import Icon from '../icon';
 import objectFitPolyfill, { isObjectFitSupport } from '../_util/objectFitPolyfill';
 import PictureContext, { PictureContextValue, PictureProvider } from './PictureContext';
 import modalPreview from '../modal/preview';
+import { ModalProps } from '../modal/interface';
 
 export type ImageStatus = 'loaded' | 'error' | 'empty';
 
@@ -48,6 +49,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   onClick?: MouseEventHandler<HTMLPictureElement>;
   onPreview?: () => void;
   children?: ReactNode;
+  modalProps?: ModalProps;
 }
 
 export interface PictureRef {
@@ -63,7 +65,7 @@ export interface PictureForwardRef {
 
 function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const {
-    src, downloadUrl, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true,
+    src, downloadUrl, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true, modalProps,
     objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, ...rest
   } = props;
   const url = previewUrl || src;
@@ -77,9 +79,9 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const handlePreview = useCallback(() => {
     if (preview && !previewTarget && status === 'loaded' && url) {
       if (context && isNumber(index)) {
-        context.preview(index);
+        context.preview(index, modalProps);
       } else {
-        modalPreview({ list: [{ src: url, downloadUrl }] });
+        modalPreview({ list: [{ src: url, downloadUrl }] }, modalProps);
       }
       if (onPreview) {
         onPreview();

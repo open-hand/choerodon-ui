@@ -133,10 +133,10 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
       const decadeProps: any = {
         key: text,
         className,
+        children: this.renderInner(text),
       };
       if (!isDisabled) {
         decadeProps.onClick = this.handleCellClick.bind(this, currentYear);
-        decadeProps.children = this.renderInner(text);
         decadeProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentYear);
         decadeProps.onMouseLeave = onDateMouseLeave;
       }

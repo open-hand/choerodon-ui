@@ -15,7 +15,166 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode 属性。
+- 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch 属性。
+- 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
+- 💄 `<pro>DataSet`: 优化 childrenField 性能。
+- 💄 `<pro>DataSet`: 优化查询 dataSet 实例 current 记录赋值。
+- 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。
+- 💄 `<pro>TextField`: 优化后缀宽度计算。
+- 💄 `style`: 优化部分组件样式单位。
+- 💄 `<pro>Table`: 优化动态筛选条的输入框后缀显示逻辑。
+- 💄 `<pro>PerformanceTable`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>FormField`: 优化必输星号的样式。
+- 💄 `<pro>Output`: 优化多值场景下的 tooltip 控制。
+- 💄 `<pro>DatePicker`: 优化 filter 属性，支持 range 模式过滤。优化 decade 面板中禁用元素显示问题。优化今天按钮禁用样式。
+- 💄 `<pro>DatePicker`: 优化 DatePicker 在 Mac 端选择年份区间时显示换行的问题。
+- 💄 `<pro>Radio`: 优化在 Form 下的点击热区过宽问题。
+- 💄 `<pro>Table`: 优化动态筛选条中支持前端多列排序。
+- 💄 优化部分代码实现。
+- 💄 `<pro>Table`: 优化查询条性能。
+- 💄 `<pro>Modal`: 保持焦点在弹窗内。
+- 💄 `<pro>Table`: 优化多选 dblclick 模式下 rowBox 选择框常显。
+- 💄 `Tabs`: 优化焦点切换行为。
+- 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
+- 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
+- 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
+- 🐞 `Upload`: 修复 picture-card 模式下配置 showPreviewIcon 或 showDownloadIcon 不生效的问题。
+- 🐞 `PerformanceTable`: 修复动态筛选条筛选条件配置 onEnterDown 时聚焦交互状态异常的问题。
+- 🐞 `Avatar`: 修复 Avatar 组件在 Modal 弹窗中打开文字出现翻转的问题。
+- 🐞 `<pro>Table`: 修复 summaryBar 浮点数计算精度问题。
+- 🐞 `<pro>Table`: 修复使用 addField 添加查询字段动态筛选条添加筛选下拉中的字段不会更新的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条中删除筛选项会异常回填 searchId 的问题。
+- 🐞 `<pro>Table`: 修复表格设置 height 样式后个性化无法改变高度的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条必填字段校验失败的样式。
+- 🐞 `<pro>Table`: 修复虚拟滚动没有左固定列的情况下列错位的问题。
+- 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
+
+## 1.6.2
+
+`2023-05-23`
+
+- 🌟 `configure`: 新增 tableVirtualBuffer，labelAlign 属性。
+- 🌟 `Field`: 补充 placeholder 属性定义。
+- 🌟 `Card`: 新增类名。
+- 🌟 `<pro>Attachment`: 新增 buttons 属性。
+- 🌟 `<pro>Form`: 新增类名。
+- 🌟 `<pro>Table`: 新增类名。
+- 🌟 `<pro>Table`: 新增 columnBuffer 和 columnThreshold 属性来优化横向虚拟滚动。
+- 🌟 `<pro>FormField & <pro>Table.Column`: 新增 tagRenderer 属性支持自定义多值渲染。
+- 🌟 `Upload`: 支持 text 和 picture 模式下的预览和下载按钮显示。
+- 🌟 `<pro>Lov`: 当 viewMode 为 modal 模式时，支持设置 selectionProps 属性在弹框底部自定义渲染已选记录。
+- 🌟 `<pro>Picture`: 新增 modalProps 属性，优化一张图片时不显示导航。
+- 🌟 `<pro>FormField`: 新增 helpTooltipProps 属性，支持 help 信息的 tooltip 自定义。
+- 🌟 `<pro>Table`: onDragEndBefore 新增 recordIndexFromTo 参数用于树形拖拽时获取正确的记录索引。
+- 💄 `<pro>Button`: 优化校正溢出判定的差值。
+- 💄 `<pro>CheckBox`: 优化 Form 中使用时的触发热区范围。
+- 💄 `<pro>NumberField`: 优化在中文输入法输入时会删除值的问题。
+- 💄 `<pro>Table`: 隐藏动态筛选条租户另存为按钮。
+- 💄 `<pro>Table`: 优化动态筛选条多选值集选值保存限制。
+- 💄 `<pro>Table`: 优化 querybar 为 bar 情况下可控制是否能输入。
+- 💄 `<pro>Table`: 添加动态筛选条中字符和数值类型的筛选条件默认后缀。
+- 💄 `<pro>Table`: 优化边框相关样式变量。
+- 💄 `<pro>Table`: 优化虚拟滚动模式下 Tabs 切换会导致 TableVirtualRow 重新渲染的问题。
+- 💄 `Tabs`: 优化 tab 页签超出无法自适应宽度的问题。
+- 💄 `measureTextWidth`: 优化大数据量下的性能。
+- 💄 `<pro>Modal`: 优化多层抽屉动画。
+- 💄 `WaterMark`: 优化水印对 ref 的判断，导致在 ie 直接报错的问题。
+- 💄 `<pro>ColorPicker`: 修改预设颜色，优化备选色板中颜色值重复问题。
+- 💄 `<pro>Lov`: 支持函数回调形式的 tableProps 并在模态框模式下支持 modal 参数。
+- 💄 `<pro>Dropdown.Button`: 支持按钮属性直接传入和样式优化。
+- 💄 `Timeline`: 优化 color 属性设置自定义色值显示效果。
+- 💄 `<pro>Table`: 优化 editor 属性设置的组件的 validationRenderer 属性无效的问题。
+- 💄 `<pro>Radio`: 优化 Radio 选中状态样式。
+- 💄 `<pro>Table`: 优化数据加载时的 spin 动画效果，以避免大数据量情况下的 spin 卡顿问题。
+- 💄 `<pro>Button`: 优化聚焦样式的触发行为。
+- 🐞 `<pro>DataSet`: 修复表格客户端导出查询参数错误的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条清除勾选筛选重置按钮消失的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条预置租户配置影响初始化查询字段的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条添加筛选面板内清除和全选过滤后的选项逻辑问题。
+- 🐞 `<pro>Table`: 修复动态筛选条在筛选条件聚焦情况下点击添加筛选时，选择菜单无法直接弹出的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条 Tabs 下使用切换未查询的问题。
+- 🐞 `<pro>Table`: 修复数据分组模式下数据不同步的问题。
+- 🐞 `<pro>Table`: 修复全局配置 labelLayout 为 vertical 时，专业搜索条的按钮和输入框没有对齐的问题。
+- 🐞 `<pro>Table`: 修复配置了 dragColumnAlign 为 left 且在编辑状态下拖拽交换位置显示不正常问题。
+- 🐞 `<pro>Table`: 修复和优化高级筛选交互和样式问题。
+- 🐞 `<pro>Table`: 修复高级筛选面板弹窗穿透问题。
+- 🐞 `<pro>TriggerField`: 修复下拉弹出框出现时 tooltip 闪烁消失的问题。
+- 🐞 `<pro>Lov`: 修复专业搜索条模式中查询条件为垂直布局时的对齐问题。
+- 🐞 `<pro>Lov`: 修复设置 autoSelectSingle 后存在默认值的情况点开弹窗会出现重复值的问题。
+- 🐞 `ViewComponent`: 修复组件禁用状态切换时未失焦的问题。
+- 🐞 `<pro>Modal`: 修复 transformZoomData 方法兼容性导致的火狐浏览器中拖拽异常问题。
+- 🐞 `<pro>TextField`: 修复样式优先级问题。
+- 🐞 `<pro>TextField`: 修复在 safari 浏览器上表单禁用字体颜色过浅的问题。
+- 🐞 `<pro>DatePicker`: 修复 Table 中第一次选择的时间会展示到其他行选择面板的当前日期问题。
+- 🐞 `<pro>Tooltip`: 修复包裹 svg 图片的情况下显示了但无法定位的问题。
+- 🐞 `<pro>IntlField`: 修复当前环境语言对应的输入框字符长度无法限制问题。
+- 🐞 `Menu`: 修复 SubMenu 内容较长时文字和图标的重叠问题 & SubMenu 禁用背景色问题 & 文字超出时会全部变成省略号的问题。
+- 🐞 `<pro>CodeArea`: 修复存入 dataSet 中的值未同步格式化的问题。
+- 🐞 `<pro>PerformanceTable`: 修复组合列前存在固定列子项无法拖拽的问题。
+- 🐞 `<pro>Attachment`: 修复同时存在两部分 help 提示的问题 & showHelp 为 none 失效的问题。
+- 🐞 `<pro>Rate`: 修复同时存在两部分 help 提示 & showHelp 为 none 失效的问题 & 修复 labelLayout 为 float 或 placeholder 时的 help 图标样式问题。
+- 🐞 `<pro>Tree`: 修复 Tree 连接线错位问题。
+- 🐞 `<pro>Password`: 修复表格中编辑器为 Password 时揭示图标无法正常使用的问题。
+- 🐞 `<pro>Select`: 修复 Select/TreeSelect 等存在自定义渲染 Option 在禁用或只读选中态时，tooltip 判定错误的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态筛选条样式问题。
+
+## 1.6.0
+
+`2023-02-24`
+
+- 🌟 `configure`: 新增 attachment.downloadAllMode, formAutoFocus, useLookupBatch 属性。
+- 🌟 `<pro>Tooltip`: 新增 popupInnerStyle 属性。
+- 🌟 `<pro>Table`: 新增组合排序编辑功能。
+- 🌟 `<pro>Table`: 新增动态筛选条支持保存模糊搜索功能。
+- 🌟 `<pro>Table`: 新增动态筛选条支持高级筛选配置功能。
+- 🌟 `<pro>Lov`: 新增 percent 字段类型显示。
+- 🌟 `<pro>TextField`: 新增 tooltip 属性支持编辑态下溢出提示。
+- 🌟 `Calendar`: 新增 headerRender 属性自定义日历头部内容.
+- 💄 `<pro>Form`: 扩展 labelTooltip 属性，支持控制提示属性。
+- 💄 `<pro>RichText`: 优化自定义工具栏情况下编辑区高度自适应。
+- 💄 `<pro>Table`: 优化动态筛选条样式。
+- 💄 `<pro>Table`: 优化 buttonsLimit 表现，hidden 按钮不再占更多下拉位置，查询按钮中更多按钮下拉项样式。
+- 💄 `<pro>Modal`: 扩展 transitionAppear 属性，支持控制模态框关闭过程中的动画。
+- 💄 `<pro>NumberField`: 支持非步距模式下的 clearButton 属性。
+- 💄 `Avatar`: 优化 Avatar.Group 溢出样式。
+- 💄 `<pro>DatePicker`: 优化多选情况下点击今天、本周会有样式变化。
+- 💄 `<pro>Tree`: 优化树组件拖拽排序及 icon 无法拖拽的问题。
+- 🐞 `<pro>Table`: 修复同时配置 autoHeight 为 minHeight 和个性化配置导致高度溢出的问题。
+- 🐞 `<pro>CodeArea`: 修复 disabled 状态切换导致报错的问题。
+- 🐞 `WaterMark`: 修复水印样式可以修改的问题。
+- 🐞 `<pro>ColorPicker`: 修复在 DataSet 的字段上设置 multiple 属性为 true 报错的问题。
+- 🐞 `<pro>Lov`: 修复在下拉面板失焦无法关闭的问题。
+- 🐞 `<pro>Select`: 修复多选保留查询参数模式下，分页选值时重复查询的问题。
+- 🐞 `<pro>Lov`: 修复给默认值再全选值重复的问题。
+- 🐞 `<pro>Lov`: 修复 popup 模式级联参数变更没有重新查询的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 不能自适应 contentStyle 中自定义宽度的问题。
+- 🐞 `Upload`: 修复 picture 模式下当文本过长时重新上传文字和文件名称重叠的问题。
+- 🐞 `<pro>Password`: 修复点击揭示图标触发聚焦时光标定位到首位的问题。
+- 🐞 `<pro>Form`: 修复 table 布局下异常换行的问题。
+- 🐞 `<pro>DatePicker`: 修复点击今天日期多选重复的问题。
+- 🐞 `<pro>TextField`: 修复多值模式下 placeholder 和聚焦光标位置偏移问题。
+- 🐞 `<pro>Table`: 修复动态筛选条多值校验失败后，鼠标移入输入框中控制台报错的问题。
+- 🐞 `<pro>Table`: 修复筛选条多语言组件渲染错误的问题。
+- 🐞 `<pro>Table`: 修复多值 Lov 和 Select 字段的 tooltip 显示时，点击单元格后 tooltip 内容变化的问题。
+- 🐞 `<pro>Table`: 修复列头列脚为自动高度时的样式问题。
+- 🐞 `<pro>DatePicker`: 修复 DateTime 模式下确认按钮颜色样式问题。
+- 🐞 `WaterMark`: 修复在浏览器控制台中选择隐藏节点会隐藏水印的问题。
+- 🐞 `<pro>Table`: 修复 showRemovedRow 为 false 时删除行引起的奇偶行样式错误的问题 & 虚拟滚动模式下 showRemovedRow 为 false 时删除行时，页面出现空白且滚动条不收缩的问题。
+- 🐞 `<pro>SelectBox`: 修复校验失败无法自动聚焦的问题。
+- 🐞 `<pro>Switch`: 修复设置 showHelp 为 tooltip 时，鼠标移入 help 图标，tooltip 无法显示的问题。
+
+## 1.5.8
+
+`2022-11-29`
+
+- 🐞 `ViewComponent`: 修复弹窗关闭报错的问题。
+- 🐞 `<pro>Lov`: 修复 Lov popup 模式下配置 selectTrigger 为 click 的时候失焦导致查询参数清空的问题。
+
+## 1.5.7
+
+`2022-11-28`
+
+- 🌟 `configure`: 新增 tableColumnResizeTransition, fieldFocusMode, selectBoxSearchable, selectReserveParam 属性。
 - 🌟 `Collapse`: 新增 collapsible, hidden 属性。
 - 🌟 `<pro>Lov`: 新增 popupSearchMode 属性。
 - 🌟 `Tabs.TabPane`: 新增 hidden 属性。
@@ -23,6 +182,10 @@ timeline: true
 - 🌟  新增主题变量。
 - 🌟 `<pro>Button`: 按钮文字气泡支持 Tooltip 属性拓展。
 - 🌟 `<pro>Lov`: 列表新增超链接和图片类型展示。
+- 🌟 `Upload`: 重新上传全状态支持。
+- 🌟 `<pro>DataSet.Field`: 新增 accept 属性。
+- 🌟 `<pro>Select`: 新增 reserveParam 属性。
+- 🌟 `<pro>Table`: 新增动态筛选条 onRefresh 回调。
 - 💄 `<pro>DataSet`: 当全局配置默认开启 cacheRecords 时可以通过将 cacheSelection 和 cacheModified 设为 false 来关闭缓存。
 - 💄 `Table`: 优化固定列。
 - 💄 `<pro>Form`: 优化 ItemGroup 组合输入框的样式。
@@ -30,18 +193,32 @@ timeline: true
 - 💄 `<pro>TextField`: 优化了 multiple 模式下所选的长度大于 maxTagCount 时出现 tooltip。
 - 💄 `<pro>Table`: 优化了 `\n` 的的表现时机。
 - 💄 `<pro>Table`: 扩展 draggableProps.isDragDisabled 属性支持回调函数，用于判断单行是否可拖拽。
+- 💄 `<pro>Table`: 优化动态筛选条下 queryDataSet 初始记录。
 - 💄 `SecretField`: 优化 SecretField 只读情况下空值的显示。
 - 💄 `<pro>DatePicker`: 优化设置 min max 属性时日期跳转交互。
-- 🐞 `<pro>TextField`: 修复在 isFlat 模式下当 text-transform 为 uppercase 时会出现省略号的问题。
+- 💄 `<pro>Transfer`: 优化禁用下的全选效果。
+- 💄 `<pro>Select`: 优化下拉多选失焦未校验的问题。
+- 💄 `<pro>Table`: 优化 header 中的 help 显示。
+- 💄 `<pro>Picture`: 优化预览界面样式和鼠标滚轮事件交互。
+- 💄 `<pro>Table`: 优化动态筛选条多选下拉必输的查询条件没有星号的问题。
+- 💄 `<pro>Field`: 优化 lovPara 查询缓存。
+- 💄 `<pro>Form`: 优化 Form 在 table 布局下不会自动换行的问题。
+- 💄 `<pro>Tooltip`: 优化 tooltip 显隐无规律的问题。
+- 💄 `<pro>Switch`: 优化 Form 下内容溢出样式及 tooltip 的展示 & 剔除禁用状态下的多余 active 态的交互效果 & loading 状态样式。
+- 💄 `<pro>ColorPicker`: 优化设置了 preset 属性选择器位置不能自适应的问题。
+- 💄 `<pro>DatePicker`: 优化了 mode 为 time 模式且设置了 min 或 max 属性的交互效果。
+- 💄 `<pro>Lov`: 优化弹框中有缓存的已选记录显示顺序。
 - 🐞 `<pro>Lov`: 修复 Lov icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>IntlField`: 修复 icon 多次点击弹窗多次弹出的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 内 Form 下的组件 autoFocus 无效的问题。
 - 🐞 `<pro>Modal`: 修复 Modal 配置 dblclick 后，双击会显示并马上关闭的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 开启 autoCenter 首次拖动定位不准的问题。
+- 🐞 `<pro>Modal`: 修复 Modal 开启 autoCenter 导致 maskClosable 失效的问题。
 - 🐞 `<pro>RichText`: 修复选中内容失焦清空的问题。
 - 🐞 `<pro>RichText`: 修复内容溢出的高度问题和 placeholder 样式问题。
 - 🐞 `<pro>RichText`: 修复键盘 esc 关闭会报错的问题。
 - 🐞 `<pro>RichText`: 修复浮动布局样式问题。
-- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 & range 模式字段值比对 & 默认状态已修改的问题。
+- 🐞 `<pro>Table`: 修复动态筛选重置按钮模糊查询参数清空 & range 模式字段值比对 & 默认状态已修改 & 删除筛选未重置的问题。
 - 🐞 `Affix`: 修复未产生滚动距离情况下会添加固定定位样式的问题。
 - 🐞 `ViewComponent`: 修复按钮在 hidden 或 disabled 属性切换下仍然聚焦的问题。
 - 🐞 `<pro>Cascader`: 修复不使用 DataSet 的受控模式下, 选择值后组件内部数据源变化导致高亮项显示问题。
@@ -51,7 +228,9 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复跨页全选时未勾选的缓存记录获取问题。
 - 🐞 `<pro>DataSet`: 修复 clearCachedSelected 方法无法清除变更状态的勾选记录。
 - 🐞 `Upload`: 修复 beforeUpload 异步问题。
+- 🐞 `Upload`: 修复重新上传时 beforeUpload 事件回调不会触发的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下表格宽度问题。
+- 🐞 `<pro>Lov`: 修复 popup 模式下 onRow 事件无效。
 - 🐞 `<pro>Attachment`: 修复校验失败时无法自动定位的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式 popup 渲染和 children 的问题。
 - 🐞 `Tabs`: 修复了箭头显示异常。
@@ -59,6 +238,26 @@ timeline: true
 - 🐞 `Badge`: 修复点状 Badge 在 Table 中使用时样式层级高于固定列的问题。
 - 🐞 `<pro>Table`: 修复个性化设置中显示设置勾选图标未对齐及内容遮挡的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下首次上传多个文件只显示一个文件的问题。
+- 🐞 `<pro>NumberField`: 修复配置全局属性 numberFieldFormatterOptions 后, 组件属性 numberGrouping 失效的问题。
+- 🐞 `<pro>Modal`: 修复在 ModalProvider 设置了 getContainer 的情况，使用 useModal 无法居中的问题。
+- 🐞 `<pro>Tree`: 修复 onKeyDown 失效的问题。
+- 🐞 `<pro>Switch`: 修复在 Form 下只能点击左侧才有触发 onMouseDown 的问题。
+- 🐞 `<pro>TextArea`: 修复 renderer 无效的问题。
+- 🐞 `<pro>Table`: 修复 tooltip 设置 overflow 效果不对的问题。
+- 🐞 `<pro>Mentions`: 修复对 renderer 属性的支持。
+- 🐞 `<pro>Switch`: 修复在 Form 下与 label 区域不对齐 & loading 态的加载圆圈不对齐的问题 & Form 下 loading 态的错误位置显示问题。
+- 🐞 `<pro>Table`: 修复异步加载的树形 Table 分页点击展开跳转到第一页的问题。
+- 🐞 `<pro>Table`: 修复专业查询条动态条件显隐的问题。
+- 🐞 `<pro>Output`: 修复多值溢出时出现两个 Tooltip 的问题。
+- 🐞 `<pro>Table`: 修改 inline 编辑模式部分情况下 editor 不显示的问题。
+- 🐞 `<pro>Table.Column`: 修复 tooltipProps 延时属性支持。
+- 🐞 `<pro>Table`: 修复树形表格开启 rowHeight 为 auto 导致的样式问题。
+- 🐞 `<pro>Modal`: 修复嵌入的 Modal 设置 autoCenter 为 false 时设置 top 样式不生效的问题。
+- 🐞 `<pro>IntlField`: 修复设置 resize 属性为 both 时, 无法多次调整输入框大小的问题。
+- 🐞 `<pro>Mentions`: 修复设置 split 属性大于一个字符时, split 会显示双份的问题。
+- 🐞 `<pro>Picture`: 修复 preview 属性导致的预览报错问题。
+- 🐞 `<pro>Select`: 修复了复合输入框中的输入空格值不清除的问题。
+- 🐞 `<pro>Table`: 修复 expandRowByClick 属性失效。
 
 ## 1.5.6
 
@@ -124,6 +323,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 number 类型字段无法将 boolean 值转换成 1 和 0 的问题。
 - 🐞 `<pro>DataSet`: 修复异步计数模式下 query 方法获得的计数值有误。
 - 🐞 `<pro>DataSet`: 修复缓存的新增数据无法删除。
+- 🐞 `<pro>DataSet`: 修复大数字格式化配置失效问题。
 - 🐞 `<pro>ColorPicker`: 修复透明度无法输入 '.' 的错误和默认颜色为浅色时 prefix 的边框样式问题。
 - 🐞 `<pro>DatePicker`: 修复 range 和 editorInPopup 模式下有 min 值时，输入值后可能会报错的问题。
 - 🐞 `<pro>DatePicker`: 修复 defaultTime 超出 min 和 max 时值错误的问题。

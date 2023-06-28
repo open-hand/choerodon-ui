@@ -7,16 +7,27 @@
   position: relative;
   display: block;
   height: auto;
-  padding: 0.04rem @control-padding-horizontal;
+  padding: @dropdown-menu-item-padding;
   overflow: hidden;
-  color: @text-color;
+  color: @dropdown-menu-item-color;
   font-weight: normal;
-  line-height: 0.2rem;
+  line-height: @dropdown-menu-item-line-height;
   letter-spacing: 0.01em;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
   transition: background @animation-duration-slow ease;
+
+  &-active {
+    color: @item-active-color;
+    background-color: @item-active-bg;
+  }
+
+  &-selected {
+    color: @item-focus-color;
+    font-weight: @item-selected-font-weight;
+    background-color: @item-focus-bg;
+  }
 
   &-disabled {
     color: @input-disabled-color;
@@ -28,17 +39,6 @@
       cursor: not-allowed;
     }
   }
-
-  &-active {
-    color: @item-active-color;
-    background-color: @item-active-bg;
-  }
-
-  &-selected {
-    color: @item-focus-color;
-    background-color: @item-focus-bg;
-  }
-
 }
 
 .dropdown-menu-item () {
@@ -73,7 +73,7 @@
   &-item {
     .dropdown-menu-item-properties;
 
-    &:not(&-selected):hover {
+    &:not(&-selected):not(&-disabled):hover {
       color: @item-active-color;
       background-color: @item-active-bg;
     }
@@ -138,7 +138,7 @@
   max-width: @dropdown-menu-max-width;
   max-height: @dropdown-menu-max-height;
   margin-bottom: 0;
-  padding: @dropdown-menu-padding-vertical-base @dropdown-menu-padding-horizontal-base;
+  padding: @dropdown-menu-padding;
   overflow: auto;
   list-style: none;
   outline: none;

@@ -25,9 +25,11 @@ export default function isOverflow(element: HTMLElement | HTMLInputElement) {
     const { defaultView } = ownerDocument;
     if (defaultView) {
       const computedStyle = defaultView.getComputedStyle(element);
-      const contentWidth = getContentWidth(element, computedStyle);
-      const textWidth = measureTextWidth(textContent || value, computedStyle);
-      return textWidth > contentWidth;
+      const contentWidth = Math.round(getContentWidth(element, computedStyle));
+      const textWidth = Math.round(measureTextWidth(textContent || value, computedStyle));
+      const { whiteSpace } = computedStyle;
+      const isNoWrap = whiteSpace === 'nowrap';
+      return (textWidth > contentWidth) && isNoWrap;
     }
   }
   return false;

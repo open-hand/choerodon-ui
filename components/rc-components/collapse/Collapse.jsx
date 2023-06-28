@@ -85,7 +85,7 @@ export default class Collapse extends Component {
       if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
-      const { header, headerClass, disabled } = child.props;
+      const { header, headerClass, disabled, collapsible } = child.props;
       let isActive = false;
       if (accordion) {
         isActive = activeKey[0] === key;
@@ -93,7 +93,7 @@ export default class Collapse extends Component {
         isActive = activeKey.indexOf(key) > -1;
       }
 
-      const trigger = this.props.trigger || getConfig('collapseTrigger');
+      const trigger = collapsible || this.props.collapsible || this.props.trigger || getConfig('collapseTrigger');
 
       const props = {
         key,

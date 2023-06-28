@@ -36,6 +36,10 @@
     transition: none;
   }
 
+  &-auto-width {
+    width: fit-content;
+  }
+
   &-center {
     right: 0;
     left: 0;
@@ -66,6 +70,10 @@
     color: @text-color;
     background: @component-background;
     border-radius: @border-radius-base @border-radius-base 0 0;
+  }
+
+  &:not(.@{modal-prefix-cls}-border) .@{modal-prefix-cls}-header {
+    padding: @modal-no-border-header-padding;
   }
 
   &-body {
@@ -198,6 +206,10 @@
     width: 100%;
     min-width: 5.2rem;
     height: min-content;
+  }
+
+  &-auto-width &-content {
+    min-width: auto;
   }
 
   &-resizer-mask {
@@ -351,12 +363,12 @@
 
 .@{c7n-pro-prefix}-confirm {
   &-icon {
-    padding-right: 0.16rem;
+    padding: @modal-confirm-icon-padding;
     vertical-align: top;
 
     .@{iconfont-css-prefix} {
-      font-size: 0.24rem;
-      line-height: 1.5;
+      font-size: @modal-confirm-icon-font-size;
+      line-height: @modal-confirm-icon-line-height;
     }
   }
 

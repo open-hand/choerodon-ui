@@ -169,27 +169,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
   }, [column, name, columnKey, tableStore]);
-  const handleFocus = useCallback((e) => {
-    if (canFocus) {
-      handleMouseEnter(e);
-      if (key !== SELECTION_KEY) {
-        dataSet.current = record;
-      }
-      if (hasEditor) {
-        showEditor(e.currentTarget);
-      }
-      if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
-        const cell = findCell(tableStore, columnKey, lock);
-        if (cell && !cell.contains(document.activeElement)) {
-          const node = findFirstFocusableElement(cell);
-          if (node && !inTab) {
-            node.focus();
-          }
-        }
-      }
-    }
-    inTab = false;
-  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor]);
   const handleEditorKeyDown = useCallback((e) => {
     switch (e.keyCode) {
       case KeyCode.TAB: {
@@ -306,6 +285,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
                   onClick: handleCommandEdit,
                   disabled,
                   children: $l('Table', 'edit_button'),
+                  key: 'edit',
                 };
               case TableCommandType.delete:
                 return {
@@ -313,6 +293,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
                   onClick: handleCommandDelete,
                   disabled,
                   children: $l('Table', 'delete_button'),
+                  key: 'delete',
                 };
               default:
             }
@@ -432,9 +413,20 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const value = name ? pristine ? record.getPristineValue(name) : record.get(name) : undefined;
   const renderValidationResult = useCallback((validationResult?: ValidationResult) => {
     if (validationResult && validationResult.validationMessage) {
-      return utilRenderValidationMessage(validationResult.validationMessage, true, tableStore.getProPrefixCls);
+      let validationMessage = validationResult.validationMessage;
+      if (name) {
+        const editor = tableStore.editors.get(name);
+        if (editor && editor.editorProps && typeof editor.editorProps.validationRenderer === 'function') {
+          const validationRenderer = editor.editorProps.validationRenderer;
+          validationMessage = validationRenderer(validationResult, validationResult.validationProps);
+          if (isNil(validationMessage)) {
+            return;
+          }
+        }
+      }
+      return utilRenderValidationMessage(validationMessage, true, tableStore.getProPrefixCls);
     }
-  }, []);
+  }, [name, tableStore.editors]);
   const isValidationMessageHidden = useCallback((message?: ReactNode): boolean | undefined => {
     return !message || pristine;
   }, [pristine]);
@@ -481,12 +473,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (!cellEditorInCell) {
         const multiple = field.get('multiple', record);
         const range = field.get('range', record);
+        const tagRenderer = tableStore.getColumnTagRenderer(column);
         if (multiple) {
           const { tags, multipleValidateMessageLength, isOverflowMaxTagCount } = renderMultipleValues(value, {
             disabled,
             readOnly: true,
             range,
             prefixCls,
+            tagRenderer,
             processRenderer,
             renderValidationResult,
             isValidationMessageHidden,
@@ -527,6 +521,28 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const result = getRenderedValue();
   const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : tableStore.getConfig('renderEmpty')('Output') : result;
 
+  const handleFocus = useCallback((e) => {
+    if (canFocus) {
+      handleMouseEnter(e);
+      if (key !== SELECTION_KEY) {
+        dataSet.current = record;
+      }
+      if (hasEditor) {
+        showEditor(e.currentTarget);
+      }
+      if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {
+        const cell = findCell(tableStore, columnKey, lock);
+        if (cell && !cell.contains(document.activeElement)) {
+          const node = findFirstFocusableElement(cell);
+          if (node && !inTab) {
+            node.focus();
+          }
+        }
+      }
+    }
+    inTab = false;
+  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor, text]);
+
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
       const validationResults = field.getValidationErrorValues(record);
@@ -541,25 +557,28 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const { current } = innerRef;
       if (text && current && current.contains(element)) {
         const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+        const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
         show(element, {
           title: text,
           placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
           ...tooltipConfig,
-        });
+        }, duration);
         return true;
       }
     }
     return false;
   }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef]);
   const handleMouseEnter = useCallback((e) => {
-    if (!tableStore.columnResizing && showTooltip(e)) {
+    if (!tableStore.columnResizing && !tooltipShownRef.current && showTooltip(e)) {
       tooltipShownRef.current = true;
     }
   }, [tooltipShownRef, tableStore, showTooltip]);
   const handleMouseLeave = useCallback(() => {
     if (!tableStore.columnResizing && tooltipShownRef.current) {
-      hide();
+      const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+      const duration: number = (tooltipConfig.mouseLeaveDelay || 0.1) * 1000;
+      hide(duration);
       tooltipShownRef.current = false;
     }
   }, [tooltipShownRef, tableStore]);
@@ -625,6 +644,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     if (!inlineEdit && !cellEditorInCell) {
       inValid = !field.isValid(record);
+      field.get('required', record);
       if (inValid) {
         innerClassName.push(`${prefixCls}-inner-invalid`);
       }

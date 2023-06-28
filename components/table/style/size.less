@@ -1,7 +1,7 @@
-@table-padding-vertical-md: @table-padding-vertical * 3 / 4;
-@table-padding-horizontal-md: @table-padding-horizontal / 2;
-@table-padding-vertical-sm: @table-padding-vertical / 2;
-@table-padding-horizontal-sm: @table-padding-horizontal / 2;
+@table-padding-vertical-md: calc(@table-padding-vertical * 3 / 4);
+@table-padding-horizontal-md: calc(@table-padding-horizontal / 2);
+@table-padding-vertical-sm: calc(@table-padding-vertical / 2);
+@table-padding-horizontal-sm: calc(@table-padding-horizontal / 2);
 
 .@{table-prefix-cls}-middle {
   > .@{table-prefix-cls}-title,
@@ -32,8 +32,7 @@
   }
 
   tr.@{table-prefix-cls}-expanded-row td > .@{table-prefix-cls}-wrapper {
-    margin: -@table-padding-vertical-md -@table-padding-horizontal / 2 -@table-padding-vertical-md -
-      1px;
+    margin: calc(-1 * @table-padding-vertical-md) calc(-1 * @table-padding-horizontal / 2) calc(-1 * @table-padding-vertical-md - 1px);
   }
 }
 
@@ -165,8 +164,7 @@
   }
 
   tr.@{table-prefix-cls}-expanded-row td > .@{table-prefix-cls}-wrapper {
-    margin: -@table-padding-vertical-sm -@table-padding-horizontal / 2 -@table-padding-vertical-sm -
-      1px;
+    margin: calc(-1 * @table-padding-vertical-sm) calc(-1 * @table-padding-horizontal / 2) calc(-1 * @table-padding-vertical-sm - 1px);
   }
 
   // https://github.com/ant-design/ant-design/issues/19287#issuecomment-544368967

@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { transformZoomData } from 'choerodon-ui/shared/util';
 import warning from '../../_util/warning';
 import TreeNode, { TreeNodeProps } from './TreeNode';
 import { DataEntity, DataNode, Direction, FlattenNode, Key, NodeElement, NodeInstance } from './interface';
@@ -86,6 +87,7 @@ export function calcDropPosition(
   allowDrop: AllowDrop,
   flattenedNodes: FlattenNode[],
   keyEntities: Record<Key, DataEntity>,
+  expandKeys: Key[],
   direction: Direction,
 ): {
   dropPosition: -1 | 0 | 1;
@@ -96,7 +98,8 @@ export function calcDropPosition(
   dragOverNodeKey: Key;
   dropAllowed: boolean;
 } {
-  const { clientX, clientY } = event;
+  const clientX = transformZoomData(event.clientX);
+  const clientY = transformZoomData(event.clientY);
   const { top, height } = (event.target as HTMLElement).getBoundingClientRect();
   // optional chain for testing
   const horizontalMouseOffset = (direction === 'rtl' ? -1 : 1) * ((startMousePosition && startMousePosition.x || 0) - clientX);
@@ -115,22 +118,25 @@ export function calcDropPosition(
     abstractDropNodeEntity = keyEntities[prevNodeKey!];
   }
 
+  const initialAbstractDropNodeKey = abstractDropNodeEntity.key;
+
   const abstractDragOverEntity = abstractDropNodeEntity;
   const dragOverNodeKey = abstractDropNodeEntity.key;
 
   let dropPosition: -1 | 0 | 1 = 0;
   let dropLevelOffset = 0;
-  for (let i = 0; i < rawDropLevelOffset; i += 1) {
-    if (
-      isLastChild(abstractDropNodeEntity)
-    ) {
-      abstractDropNodeEntity = abstractDropNodeEntity.parent!;
-      dropLevelOffset += 1;
-    } else {
-      break;
+  if (!expandKeys.includes(initialAbstractDropNodeKey)) { 
+    for (let i = 0; i < rawDropLevelOffset; i += 1) {
+      if (
+        isLastChild(abstractDropNodeEntity)
+      ) {
+        abstractDropNodeEntity = abstractDropNodeEntity.parent!;
+        dropLevelOffset += 1;
+      } else {
+        break;
+      }
     }
   }
-
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
   if (
@@ -146,7 +152,8 @@ export function calcDropPosition(
     // first half of first node in first level
     dropPosition = -1;
   } else if (
-    (abstractDragOverEntity.children || []).length
+    (abstractDragOverEntity.children || []).length &&
+    expandKeys.includes(dragOverNodeKey)
   ) {
     // drop on expanded node
     // only allow drop inside
@@ -162,7 +169,7 @@ export function calcDropPosition(
     dropLevelOffset === 0
   ) {
     const dropOffsetY = Math.abs((startMousePosition && startMousePosition.y || 0) - clientY);
-    if ((dropOffsetY < height) || (clientY < top + height / 2)) {
+    if ((dropOffsetY < height) || (clientY < top + height / 2) || (targetNode.props.isEnd![0] && rawDropLevelOffset > -1.5)) {
       // | Node     | <- abstractDropNode
       // | -^-===== | <- mousePosition
       // 1. try drop after

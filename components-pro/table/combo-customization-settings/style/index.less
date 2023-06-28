@@ -9,6 +9,7 @@
   .@{c7n-prefix}-popover-title {
     height: 0.46rem;
     padding: 0.12rem 0.16rem;
+    color: @text-color;
   }
 
   .@{c7n-prefix}-popover-inner-content {
@@ -138,10 +139,10 @@
       }
 
       &-content-hidden {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
 
         .@{table--combo-customization-prefix-cls}-tree-treenode-drag-icon {
-          color: fade(@text-color, 45%);
+          color: @text-color-secondary;
         }
       }
     }

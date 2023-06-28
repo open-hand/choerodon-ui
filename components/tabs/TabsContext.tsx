@@ -1,4 +1,4 @@
-import { JSXElementConstructor, MouseEventHandler, ReactNode } from 'react';
+import { JSXElementConstructor, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import { observable, ObservableMap } from 'mobx';
@@ -25,8 +25,6 @@ export interface TabsContextValue {
   totalPanelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>;
   validationMap: ObservableMap<string, boolean>;
   onTabClick?: ((key: string) => void) | undefined;
-  onPrevClick?: MouseEventHandler<HTMLSpanElement> | undefined;
-  onNextClick?: MouseEventHandler<HTMLSpanElement> | undefined;
   children?: ReactNode;
   tabDraggable?: boolean | undefined;
   tabTitleEditable?: boolean | undefined;

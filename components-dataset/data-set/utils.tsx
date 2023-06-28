@@ -62,9 +62,20 @@ export function append(url: string, suffix?: object) {
 }
 
 export function getOrderFields(dataSet: DataSet): Field[] {
-  const { fields, props: { combineSort } } = dataSet;
+  const { fields, combineSort, combineSortFieldNames } = dataSet;
   if (combineSort) {
-    return iteratorFilterToArray(fields.values(), (field) => field.order);
+    let sortFields: Map<string, Field> = new Map();
+    if (combineSortFieldNames && combineSortFieldNames.size > 0) {
+      combineSortFieldNames.forEach((_, fieldName) => {
+        const field = dataSet.getField(fieldName);
+        if (field && field.order) {
+          sortFields.set(fieldName, field);
+        }
+      });
+    } else {
+      sortFields = fields;
+    }
+    return iteratorFilterToArray(sortFields.values(), (field) => field.order);
   }
   const found = iteratorFind(fields.values(), (field) => field.order);
   if (found) {

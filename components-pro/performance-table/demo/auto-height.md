@@ -64,6 +64,7 @@ class AutoHeightTable extends React.Component {
     return (
       <div style={{height: 400}}>
         <PerformanceTable
+          rowKey="id"
           columns={this.columns()}
           autoHeight={{ type: 'minHeight', diff: 80}}
           data={fakeLargeData.slice(0, 50)}

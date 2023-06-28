@@ -73,7 +73,7 @@ import AdvancedQueryBar from './query-bar/TableAdvancedQueryBar';
 import ProfessionalBar, { TableProfessionalBarProps } from './query-bar/TableProfessionalBar';
 import ComboBar, { TableComboBarProps } from './query-bar/TableComboBar';
 import DynamicFilterBar, { TableDynamicFilterBarProps } from './query-bar/TableDynamicFilterBar';
-import FilterSelect from './query-bar/FilterSelect';
+import FilterSelect, { FilterSelectProps } from './query-bar/FilterSelect';
 import {
   findCell,
   findIndexedSibling,
@@ -90,7 +90,7 @@ import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
-import { DataSetEvents, DataSetSelection } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, RecordStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
@@ -151,6 +151,7 @@ export interface TableQueryBarCustomProps {
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
+  editable: boolean;
 }
 
 export interface ScrollInfo {
@@ -195,7 +196,8 @@ export type TableQueryBarHookCustomProps =
   & TableQueryBarCustomProps
   & TableComboBarProps
   & TableProfessionalBarProps
-  & TableDynamicFilterBarProps;
+  & TableDynamicFilterBarProps
+  & FilterSelectProps;
 export type TableQueryBarHook = (props: TableQueryBarHookProps & TableQueryBarHookCustomProps) => ReactNode;
 export type Commands =
   | TableCommandType
@@ -280,6 +282,9 @@ export interface TableCustomized {
   size?: Size;
   parityRow?: boolean;
   aggregationExpandType?: 'cell' | 'row' | 'column';
+  id?: string; // Board 列表视图id
+  viewName?: string; // Board 列表视图名称
+  defaultFlag?: number; // Board 列表视图标识
 }
 
 let _instance;
@@ -600,6 +605,14 @@ export interface TableProps extends DataSetComponentProps {
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
+   /**
+   * 开启虚拟滚动列缓冲区
+   */
+  columnBuffer?: number;
+   /**
+   * 开启虚拟滚动列阈值
+   */
+  columnThreshold?: number;
   /**
    * 是否开启自适应高度
    */
@@ -635,7 +648,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 拖拽触发事件位置切换前回调
    */
-  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => DropResult | boolean | void;
+  onDragEndBefore?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided, recordIndexFromTo: [number?, number?]) => DropResult | boolean | void;
   /**
    * DragDropContext
    */
@@ -685,6 +698,10 @@ export interface TableProps extends DataSetComponentProps {
    * 是否显示个性化设置入口按钮
    */
   customizable?: boolean | undefined;
+  /**
+   * Board 列表视图个性化配置
+   */
+  boardCustomized?: any;
   /**
    * @deprecated
    * 同 columnDraggable
@@ -1353,6 +1370,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'expandIconColumnIndex',
       'indentSize',
       'filter',
+      'treeFilter',
       'mode',
       'editMode',
       'filterBarFieldName',
@@ -1368,6 +1386,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtual',
       'virtualCell',
       'virtualSpin',
+      'columnBuffer',
+      'columnThreshold',
       'autoWidth',
       'autoHeight',
       'autoFootHeight',
@@ -1388,6 +1408,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'treeAsync',
       'treeLoadData',
       'customizable',
+      'customizedBtn',
       'customizedCode',
       'dragColumn',
       'dragRow',
@@ -1439,7 +1460,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { border, parityRow, aggregation, size },
+      tableStore: { border, parityRow, aggregation, size, isCombinedColumn },
       prefixCls,
     } = this;
     return super.getClassName({
@@ -1447,6 +1468,7 @@ export default class Table extends DataSetComponent<TableProps> {
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-aggregation`]: aggregation,
+      [`${prefixCls}-combined-column`]: isCombinedColumn,
     });
   }
 
@@ -1508,6 +1530,7 @@ export default class Table extends DataSetComponent<TableProps> {
       raf.cancel(this.scrollId);
     }
     this.bubbleValidationReport(false);
+    this.tableStore.dispose();
   }
 
   bubbleValidationReport(showInvalid: boolean) {
@@ -1739,7 +1762,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   handleDragStart(initial: DragStart, provided: ResponderProvided): void {
     const { dragDropContextProps } = this.props;
-    const { rowMetaData, isTree } = this.tableStore;
+    const { rowMetaData, isTree, currentEditorName } = this.tableStore;
     if (isTree && rowMetaData) {
       const { source } = initial;
       const currentRecord = rowMetaData[source.index].record;
@@ -1750,17 +1773,22 @@ export default class Table extends DataSetComponent<TableProps> {
     if (dragDropContextProps && dragDropContextProps.onDragStart) {
       dragDropContextProps.onDragStart(initial, provided);
     }
+    if (currentEditorName) {
+      this.tableStore.blurEditor();
+    }
   }
 
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { dataSet, rowMetaData, isTree } = this.tableStore;
+    const { dataSet, rowMetaData, isTree, showRemovedRow } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
+    const recordFromIndex = rowMetaData ? rowMetaData[resultBefore.source.index].record?.index : undefined;
+    const recordToIndex = rowMetaData && resultBefore.destination ? rowMetaData[resultBefore.destination.index].record?.index : undefined;
     if (onDragEndBefore) {
-      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided);
+      const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided, [recordFromIndex, recordToIndex]);
       if (result === false) {
         return;
       }
@@ -1844,10 +1872,42 @@ export default class Table extends DataSetComponent<TableProps> {
     } else if (resultBefore && resultBefore.destination) {
       if (resultBefore.source.index !== resultBefore.destination.index) {
         // 非树形拖拽排序
-        this.reorderDataSet(
-          resultBefore.source.index,
-          resultBefore.destination.index,
-        );
+        const { records, data } = dataSet;
+        // 若存在没有展示的 delete 数据，则需要对数据的起点落点做校正
+        if (!showRemovedRow && records.length !== data.length) {
+          const destinationIndex = resultBefore.destination.index;
+          // 操作的数据在 records 中的真实起落点索引
+          let recordsSourceIndex; let recordsToIndex;
+          let findSourceFlag = false; let findDestinationFlag = false;
+          let showedRecordsCount = 0;
+          for (let i = 0 ; i < records.length; i++) {
+            if (!findSourceFlag && records[i].key === resultBefore.draggableId) {
+              recordsSourceIndex = i;
+              findSourceFlag = true;
+            }
+            if (!findDestinationFlag) {
+              if (records[i].status !== RecordStatus.delete) {
+                if (showedRecordsCount === destinationIndex) {
+                  recordsToIndex = destinationIndex + (i - showedRecordsCount);
+                  findDestinationFlag = true; 
+                }
+                showedRecordsCount++;
+              }
+            }
+            if (findSourceFlag && findDestinationFlag) {
+              break;
+            }
+          }
+          this.reorderDataSet(
+            recordsSourceIndex,
+            recordsToIndex,
+          );
+        } else {
+          this.reorderDataSet(
+            resultBefore.source.index,
+            resultBefore.destination.index,
+          );
+        }
       }
     }
     /**
@@ -1976,6 +2036,7 @@ export default class Table extends DataSetComponent<TableProps> {
           {...dragDropContextProps}
           onDragStart={this.handleDragStart}
           onDragEnd={this.handleDragEnd}
+          key='drag-drop-context'
         >
           {virtualWrapper}
         </DragDropContext>
@@ -2340,6 +2401,7 @@ export default class Table extends DataSetComponent<TableProps> {
       }
       this.setScrollPositionClassName(target);
       this.lastScrollLeft = scrollLeft;
+      tableStore.setLastScrollLeft(scrollLeft);
       if (target) {
         const { onScrollLeft } = this.props;
         if (onScrollLeft) {

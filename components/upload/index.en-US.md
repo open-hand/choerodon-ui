@@ -46,7 +46,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
 | showFileSize | Whether file sizes are displayed when `listType` is `text`   | boolean | false |
 | onStart | File upload starts   | (file: UploadFile) => void |  |
-| onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
+| onReUpload | File re-upload implementation   | (file: UploadFile) => void |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
 
@@ -54,8 +54,8 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | showRemoveIcon | 是否显示删除按钮   | boolean | true |
-| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | true |
-| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
+| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/components/configure) |
 | removePopConfirmTitle | 删除弹框确认信息   | string |  |
 | reUploadText | 重新上传按钮 title 信息   | string |  |

@@ -61,7 +61,7 @@ type BigNumberFormatOptions = {
 
 const bigNumberGroupMap: Map<string, BigNumberFormatOptions> = new Map();
 const bigNumberCurrencyMap: Map<string | undefined, Map<string, BigNumberFormatOptions>> = new Map();
-const separatorReg = /\D+/g;
+const separatorReg = /\D+/;
 
 function getCurrencyOptions(lang: string | undefined, options: Intl.NumberFormatOptions): BigNumberFormatOptions | undefined {
   const { style, currency } = options;
@@ -93,12 +93,13 @@ function getCurrencyOptions(lang: string | undefined, options: Intl.NumberFormat
 }
 
 function getBigNumberFormatOptionsByGroupSize(lang: string, groupSize: number): BigNumberFormatOptions | undefined {
-  const formatted = $formatNumber(10 ** groupSize + 0.1, lang);
+  const formatted = $formatNumber(10 ** groupSize, lang);
   const matches = formatted.match(separatorReg);
-  if (matches && matches.length === 2 && matches.index === 1) {
+  if (matches && matches.index === 1) {
+    const decimalMatches = $formatNumber(0.1, lang).match(separatorReg);
     const matchedGroup: BigNumberFormatOptions = {
       groupSeparator: matches[0],
-      decimalSeparator: matches[1],
+      decimalSeparator: decimalMatches ? decimalMatches[0] : '.',
       groupSize,
     };
     bigNumberGroupMap.set(lang, matchedGroup);

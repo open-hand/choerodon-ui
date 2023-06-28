@@ -95,7 +95,7 @@ export function replaceWithMeasure(text: string, measureConfig: MeasureConfig) {
 
   // Before text will append one space if have other text
   let beforeMeasureText = text.slice(0, measureLocation);
-  if (beforeMeasureText[beforeMeasureText.length - split.length] === split) {
+  if (beforeMeasureText.substring(beforeMeasureText.length - split.length) === split) {
     beforeMeasureText = beforeMeasureText.slice(0, beforeMeasureText.length - split.length);
   }
   if (beforeMeasureText) {

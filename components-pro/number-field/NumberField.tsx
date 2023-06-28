@@ -255,6 +255,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     });
   }
 
+  get clearButton(): boolean {
+    const step = this.getProp('step');
+    if (step) {
+      return false;
+    }
+    return super.clearButton;
+  }
+
   get keyboard(): boolean {
     if ('keyboard' in this.props) {
       return this.props.keyboard!;
@@ -309,7 +317,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   getInnerSpanButton(): ReactNode {
-    const { prefixCls, range } = this;
+    const { prefixCls, range, clearButton } = this;
     const { longPressPlus } = this.props;
     const step = this.getProp('step');
     if (step && !range && !this.readOnly && !this.disabled) {
@@ -338,14 +346,32 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         </div>,
       );
     }
+    if (clearButton) {
+      let right: number | undefined;
+      if (this.suffixWidth && this.isSuffixClick) {
+        right = defaultTo(this.suffixWidth, 0);
+      }
+      return this.wrapperInnerSpanButton(
+        <Icon
+          type="close"
+          onClick={this.handleClearButtonClick}
+          onMouseDown={this.handleInnerButtonMouseDown}
+        />,
+        {
+          className: `${prefixCls}-clear-button`,
+          style: { right },
+        },
+      )
+    }
   }
 
   getWrapperClassNames(...args): string {
     const { prefixCls } = this;
+    const step = this.getProp('step');
     const suffix = this.getSuffix();
     const button = this.getInnerSpanButton();
     return super.getWrapperClassNames({
-      [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick }>(suffix),
+      [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick }>(suffix) && step,
       ...args,
     });
   }
@@ -428,6 +454,10 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     delete otherProps.maxLength;
     otherProps.max = this.max;
     otherProps.min = this.min;
+    otherProps.onCompositionEnd = (e) => {
+      this.lock = false;
+      this.handleChange(e);
+    };
     return otherProps;
   }
 
@@ -521,6 +551,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   restrictInput(value: string): string {
+    if (this.lock) return value;
     if (value) {
       value = value.replace('。', '.');
       let restrict = '0-9';

@@ -3,7 +3,6 @@ import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mo
 import classNames from 'classnames';
 import isPromise from 'is-promise';
 import isNumber from 'lodash/isNumber';
-import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isLdEmpty from 'lodash/isEmpty';
 import isObject from 'lodash/isObject';
@@ -15,6 +14,7 @@ import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Tooltip as TextTooltip } from '../core/enum';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
@@ -52,6 +52,7 @@ import {
 import isSame from '../_util/isSame';
 import formatString from '../formatter/formatString';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 import isOverflow from '../overflow-tip/util';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
@@ -67,6 +68,17 @@ export type RenderProps = {
   repeat?: number;
   maxTagTextLength?: number;
   multiLineFields?: Field[];
+};
+
+export type TagRendererProps = {
+  value?: any;
+  text?: any;
+  key?: string;
+  invalid?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  className?: string;
+  onClose?: (e: any) => void;
 };
 
 export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
@@ -100,8 +112,9 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
+   * 扩展 tooltip 属性：tooltip={['always', { theme: 'light', ... }]}
    */
-  labelTooltip?: TextTooltip;
+  labelTooltip?: TextTooltip | [TextTooltip, TooltipProps];
   /**
    * 是否使用冒号
    */
@@ -170,10 +183,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 额外信息，常用作提示
    *
-   * @type {string}
+   * @type {ReactNode}
    * @memberof FormFieldProps
    */
-  help?: string;
+  help?: ReactNode;
   /**
    * 另起新行
    */
@@ -185,6 +198,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * @memberof FormFieldProps
    */
   showHelp?: ShowHelp;
+  helpTooltipProps?: TooltipProps;
   showValidation?: ShowValidation;
   /**
    * 渲染器
@@ -194,6 +208,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 校验信息渲染器
    */
   validationRenderer?: (result: ValidationResult, props: ValidatorProps) => ReactNode;
+  /**
+   * 多值 Tag 渲染器
+   */
+  tagRenderer?: (props: TagRendererProps) => ReactNode;
   /**
    * 多值标签超出最大数量时的占位描述
    */
@@ -318,7 +336,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return this.props.labelLayout || this.context.labelLayout;
   }
 
-  get labelTooltip(): TextTooltip | undefined {
+  get labelTooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
     return this.props.labelTooltip || this.context.labelTooltip || this.context.getTooltip('label');
   }
 
@@ -458,6 +476,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return showHelp;
   }
 
+  get helpTooltipProps(): TooltipProps {
+    const { helpTooltipProps } = this.observableProps;
+    return helpTooltipProps;
+  }
+
   @computed
   get highlightRenderer(): HighlightRenderer {
     const { highlightRenderer = this.getContextConfig('highlightRenderer') } = this.observableProps;
@@ -551,6 +574,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       highlightRenderer: 'highlightRenderer' in props ? props.highlightRenderer : context.fieldHighlightRenderer,
       showValidation: 'showValidation' in props ? props.showValidation : context.showValidation,
       showHelp: 'showHelp' in props ? props.showHelp : context.showHelp,
+      helpTooltipProps: props.helpTooltipProps,
     };
     if ('record' in props) {
       observableProps.record = props.record;
@@ -571,6 +595,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'validationRenderer',
       'help',
       'showHelp',
+      'helpTooltipProps',
       'renderer',
       'maxTagPlaceholder',
       'maxTagCount',
@@ -592,6 +617,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'isFlat',
       'useColon',
       'showValidation',
+      'tagRenderer',
     ]);
   }
 
@@ -660,7 +686,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
-        const { labelTooltip, floatLabelOffsetX } = this;
+        const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
@@ -668,13 +694,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           [`${prefixCls}-readonly`]: this.readOnly,
         });
         const style = floatLabelOffsetX ? {
-          marginLeft: floatLabelOffsetX,
+          marginLeft: pxToRem(floatLabelOffsetX, true),
         } : undefined;
         return (
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
@@ -846,6 +871,20 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         placement: getTooltipPlacement('label'),
         theme: getTooltipTheme('label'),
       });
+      this.tooltipShown = true;
+    } else if (isArrayLike(labelTooltip)) {
+      const tooltipType = labelTooltip[0];
+      const labelTooltipProps = labelTooltip[1] || {};
+      const duration: number = (labelTooltipProps.mouseEnterDelay || 0.1) * 1000;
+      if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(currentTarget))) {
+        show(currentTarget, {
+          theme: getTooltipTheme('label'),
+          placement: getTooltipPlacement('label'),
+          title: labelTooltipProps.title ? labelTooltipProps.title : this.getLabel(),
+          ...labelTooltipProps,
+        }, duration);
+        this.tooltipShown = true;
+      }
     }
   }
 
@@ -1033,6 +1072,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         this.setValue(uniqWith([...(isArrayLike(range) ? oldValues.map(v => fromRangeValue(v, range)) : oldValues), ...values], this.compare));
       } else if (!oldValues.length) {
         this.setValue(this.emptyValue);
+      } else {
+        this.validate(oldValues, false);
       }
     } else {
       this.setValue(values.pop());
@@ -1252,6 +1293,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       props: {
         maxTagCount = this.getContextConfig('fieldMaxTagCount'),
         maxTagPlaceholder = this.getContextConfig('fieldMaxTagPlaceholder'),
+        tagRenderer,
       },
     } = this;
     const values = renderMultipleValues(this.getValue(), {
@@ -1260,6 +1302,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       maxTagPlaceholder,
       prefixCls,
       disabled,
+      tagRenderer,
       readOnly: this.readOnly || readOnly,
       validationResults: this.getValidationResults(),
       isMultipleBlockDisabled: this.isMultipleBlockDisabled,

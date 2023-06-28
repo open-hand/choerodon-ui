@@ -7,6 +7,7 @@ import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
 import traverseFileTree from './traverseFileTree';
+import { fileToObject } from '../../upload/utils';
 
 class AjaxUploader extends Component {
   state = { uid: getUid() };
@@ -15,8 +16,15 @@ class AjaxUploader extends Component {
 
   onChange = e => {
     const files = e.target.files;
-    this.uploadFiles(files);
-    this.reset();
+    const { onReUpload, originReuploadItem } = this.props;
+    if (originReuploadItem && originReuploadItem !== null) {
+      // Upload 文件重新上传的替换操作只考虑单个文件
+      const targetFile = files[0];
+      targetFile ? onReUpload(targetFile) : null;
+    } else {
+      this.uploadFiles(files);
+      this.reset();
+    }
   };
 
   onClick = (e) => {
@@ -76,12 +84,12 @@ class AjaxUploader extends Component {
 
   uploadFiles = (files) => {
     const { beforeUploadFiles = noop } = this.props;
+    const postFiles = Array.prototype.slice.call(files).map((file) => {
+      file.uid = getUid();
+      return file;
+    });
     Promise.resolve(beforeUploadFiles(files)).then((res) => {
       if (res !== false) {
-        const postFiles = Array.prototype.slice.call(files).map((file) => {
-          file.uid = getUid();
-          return file;
-        });
         postFiles.forEach((file) => {
           this.upload(file, postFiles);
         });
@@ -90,6 +98,15 @@ class AjaxUploader extends Component {
   };
 
   upload(file, fileList) {
+    const { originReuploadItem, fileList: originFileList, setReplaceReuploadItem } = this.props;
+    // Upload 重新上传的替换处理
+    if (originReuploadItem) {
+      const reuploadItemIndex = originFileList.findIndex(item => item.uid === originReuploadItem.uid);
+      file.uid = originReuploadItem.uid;
+      file.originFileObj = originReuploadItem;
+      originFileList[reuploadItemIndex] = fileToObject(file);
+      setReplaceReuploadItem(null);
+    }
     const { props } = this;
     if (!props.beforeUpload) {
       // always async in case use react state to keep fileList
@@ -218,7 +235,7 @@ class AjaxUploader extends Component {
           multiple={multiple}
           onChange={this.onChange}
         />
-        {disabled ? React.cloneElement(children,{disabled: disabled}): children}
+        {(disabled && children) ? React.cloneElement(children, { disabled: disabled }) : children}
       </Tag>
     );
   }

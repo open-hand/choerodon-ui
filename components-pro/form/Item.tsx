@@ -11,6 +11,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -22,6 +23,7 @@ import Row from '../row';
 import Col from '../col';
 import { Tooltip as LabelTooltip } from '../core/enum';
 import { hide, show } from '../tooltip/singleton';
+import { TooltipProps } from '../tooltip/Tooltip';
 import isOverflow from '../overflow-tip/util';
 
 export interface ItemProps extends FormFieldProps {
@@ -31,7 +33,7 @@ export interface ItemProps extends FormFieldProps {
 export interface LabelProps {
   className?: string;
   children?: ReactNode;
-  tooltip?: LabelTooltip;
+  tooltip?: LabelTooltip | [LabelTooltip, TooltipProps];
   width?: number;
 }
 
@@ -53,6 +55,19 @@ const Label: FunctionComponent<LabelProps> = (props) => {
         placement: getTooltipPlacement('label'),
       });
       tooltipRef.current = true;
+    } else if (isArrayLike(tooltip)) {
+      const tooltipType = tooltip[0];
+      const labelTooltipProps = tooltip[1] || {};
+      const duration: number = (labelTooltipProps.mouseEnterDelay || 0.1) * 1000;
+      if (tooltipType === LabelTooltip.always || (tooltipType === LabelTooltip.overflow && isOverflow(currentTarget))) {
+        show(currentTarget, {
+          theme: getTooltipTheme('label'),
+          placement: getTooltipPlacement('label'),
+          title: labelTooltipProps.title ? labelTooltipProps.title : children,
+          ...labelTooltipProps,
+        }, duration);
+        tooltipRef.current = true;
+      }
     }
   }, [children, tooltip, tooltipRef]);
   const handleMouseLeave = useCallback(() => {

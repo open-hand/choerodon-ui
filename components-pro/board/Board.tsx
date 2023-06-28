@@ -1,0 +1,211 @@
+import React, {
+  FunctionComponent,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import noop from 'lodash/noop';
+import { DraggableProps, DroppableProps, DragDropContextProps } from 'react-beautiful-dnd';
+import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { CardProps } from 'choerodon-ui/lib/card';
+import BoardWithContext from './BoardWithContext';
+import { ViewMode, ViewField } from './enum';
+import DataSet from '../data-set';
+import { TableProps } from '../table/Table';
+import { FieldType } from '../data-set/enum';
+import Record from '../data-set/Record';
+import { DataSetComponentProps, DataSetProps } from '../data-set/interface';
+
+export const VIEWLISTDS = '__VIEWLISTDS__';
+
+export interface BoardCardProps extends Omit<CardProps, 'onHeadClick' | 'onClick'> {
+  onHeadClick?: (e: MouseEvent, record: Record) => void;
+  onClick?: (e: MouseEvent, record: Record) => void;
+}
+
+export interface KanbanProps {
+  isDragDropDisabled: boolean;
+  allDsProps: DataSetProps;
+  columnDsProps: DataSetProps;
+  droppableProps: DroppableProps;
+  draggableProps: DraggableProps;
+  dragDropContext: DragDropContextProps;
+}
+
+export interface BoardProps extends DataSetComponentProps {
+  customized?: BoardCustomized | null;
+  customizable?: boolean;
+  customizedCode: string;
+  className?: string;
+  dataSet: DataSet;
+  // groupField?: string;
+  tableProps: TableProps;
+  cardProps?: BoardCardProps;
+  kanbanProps?: KanbanProps;
+  viewMode?: ViewMode;
+  queryFields?: { [key: string]: ReactElement<any> };
+  onChange?: Function;
+  onConfigChange?: (props: { config: any, currentViewDS: DataSet }) => void;
+  renderCommand?: Function;
+  renderButtons?: Function;
+  autoQuery?: boolean;
+  viewVisible?: {
+    card?: boolean,
+    kanban?: boolean,
+    table?: boolean,
+  } | boolean;
+}
+
+export interface BoardCustomized {
+  defaultFlag?: boolean;
+  dataJson?: object;
+  viewType: ViewMode;
+  viewName: string;
+  id: string;
+}
+
+const Board: FunctionComponent<BoardProps> = function Board(props) {
+  const { getConfig, getCustomizable } = useContext(ConfigContext);
+  const { viewVisible, dataSet, customizedCode, customizable = customizedCode ? getCustomizable('Board') : undefined } = props;
+  const $customizable = customizedCode ? customizable : false;
+  const [loaded, setLoaded] = useState<boolean>(!$customizable);
+  const [customized, setCustomized] = useState<BoardCustomized | undefined | null>();
+  const customizedDS = useMemo(() => new DataSet({
+    autoLocateFirst: false,
+    paging: false,
+    fields: [
+      {
+        name: ViewField.viewProps,
+        type: FieldType.json,
+      },
+      {
+        name: ViewField.viewName,
+        type: FieldType.string,
+      },
+      {
+        name: ViewField.viewMode,
+        type: FieldType.string,
+        transformResponse(value) {
+          return value.split('_VIEW')[0].toLocaleLowerCase();
+        },
+        transformRequest(value) {
+          return value.concat('_VIEW').toLocaleUpperCase();
+        },
+      },
+      {
+        name: ViewField.id,
+      },
+      {
+        name: ViewField.activeKey,
+      },
+      {
+        name: ViewField.groupField,
+        bind: `${ViewField.viewProps}.${ViewField.groupField}`,
+      },
+      {
+        name: ViewField.viewHeight,
+        bind: `${ViewField.viewProps}.${ViewField.viewHeight}`,
+      },
+      {
+        name: ViewField.cardWidth,
+        bind: `${ViewField.viewProps}.${ViewField.cardWidth}`,
+      },
+      {
+        name: ViewField.showLabel,
+        bind: `${ViewField.viewProps}.${ViewField.showLabel}`,
+      },
+      {
+        name: ViewField.displayFields,
+        bind: `${ViewField.viewProps}.${ViewField.displayFields}`,
+      },
+      {
+        name: ViewField.combineSort,
+        bind: `${ViewField.viewProps}.${ViewField.combineSort}`,
+      },
+      {
+        name: ViewField.sort,
+        bind: `${ViewField.viewProps}.${ViewField.sort}`,
+      },
+    ],
+    events: {
+      load: ({ dataSet }) => {
+        const activeRecord = dataSet.find(record => record.get(ViewField.activeKey));
+        if (activeRecord && viewVisible) {
+          const viewType = activeRecord.get(ViewField.viewMode);
+          if (viewVisible[viewType] !== false) {
+            dataSet.current = dataSet.find(record => record.get(ViewField.activeKey));
+          } else {
+            dataSet.current = dataSet.find(record => record.get(ViewField.id) === '__DEFAULT__');
+          }
+        } else {
+          dataSet.current = dataSet.find(record => record.get(ViewField.id) === '__DEFAULT__');
+        }
+      },
+    },
+  }), [customizedCode]);
+
+  /**
+   * 加载当前默认个性化视图数据(单个)
+   */
+  const loadCustomized = useCallback(async () => {
+    if (customizedCode) {
+      setLoaded(false);
+      const customizedLoad = getConfig('customizedLoad');
+      try {
+        const res = await customizedLoad(customizedCode, 'Board', {
+          type: 'default',
+        });
+        const remoteCustomized: BoardCustomized[] | undefined | null = res ? [res] : [];
+        // console.log('remoteCustomized', customizedCode, remoteCustomized, res)
+        const defaultView = {
+          code: customizedCode,
+          [ViewField.viewName]: '初始列表视图',
+          [ViewField.viewMode]: ViewMode.table,
+          [ViewField.id]: '__DEFAULT__',
+        }
+        if (remoteCustomized && remoteCustomized.length) {
+          remoteCustomized.push(defaultView);
+          customizedDS.loadData(remoteCustomized);
+        } else {
+          customizedDS.loadData([defaultView]);
+        }
+        dataSet.setState(VIEWLISTDS, customizedDS);
+      } finally {
+        setLoaded(true);
+      }
+    }
+  }, [customizedCode]);
+
+  useEffect(() => {
+    if ($customizable) {
+      loadCustomized();
+    }
+  }, [$customizable, loadCustomized]);
+
+  return loaded ? (
+    <BoardWithContext
+      {...props}
+      customizedDS={customizedDS}
+      customized={customized}
+      customizedCode={customizedCode}
+      setCustomized={setCustomized}
+      customizable={$customizable}
+    />
+  ) : null;
+};
+
+Board.displayName = 'Board';
+
+Board.defaultProps = {
+  onChange: noop,
+  viewMode: ViewMode.table,
+  queryFields: {},
+  autoQuery: false,
+  viewVisible: true,
+};
+export type ForwardBoardType = typeof Board
+
+export default Board as ForwardBoardType;

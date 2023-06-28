@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import classNames from 'classnames';
-import isString from 'lodash/isString';
 import noop from 'lodash/noop';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import C7NRate, { RateProps as C7NRateProps } from 'choerodon-ui/lib/rate';
-import { Tooltip as TextTooltip } from '../core/enum';
 import { FIELD_SUFFIX } from '../form/utils';
 import { FormField, FormFieldProps } from '../field/FormField';
 import { renderValidationMessage } from '../field/utils';
@@ -13,6 +13,7 @@ import { LabelLayout, ShowValidation } from '../form/enum';
 import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import ValidationResult from '../validator/ValidationResult';
+import { ShowHelp } from '../field/enum';
 
 export interface RateProps extends C7NRateProps, FormFieldProps {
   defaultValue?: number;
@@ -61,11 +62,17 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   @autobind
   handleHelpMouseEnter(e) {
     const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
     show(e.currentTarget, {
       title: this.getDisplayProp('help'),
-      popupClassName: `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`,
       theme: getTooltipTheme('help'),
       placement: getTooltipPlacement('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
     });
   }
 
@@ -90,7 +97,7 @@ export default class Rate<T extends RateProps> extends FormField<T> {
     if (this.hasFloatLabel) {
       const label = this.getLabel();
       if (label) {
-        const { labelTooltip, floatLabelOffsetX } = this;
+        const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
         const required = this.getProp('required');
         const classString = classNames(`${prefixCls}-label`, {
@@ -98,13 +105,12 @@ export default class Rate<T extends RateProps> extends FormField<T> {
           [`${prefixCls}-readonly`]: this.readOnly,
         });
         const style = floatLabelOffsetX ? {
-          marginLeft: floatLabelOffsetX,
+          marginLeft: pxToRem(floatLabelOffsetX, true),
         } : undefined;
         return (
           <div className={`${prefixCls}-label-wrapper`} style={style}>
             <div
               className={classString}
-              title={isString(label) && !(labelTooltip && [TextTooltip.always, TextTooltip.overflow].includes(labelTooltip)) ? label : undefined}
               onMouseEnter={this.handleFloatLabelMouseEnter}
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
@@ -137,13 +143,15 @@ export default class Rate<T extends RateProps> extends FormField<T> {
   }
 
   renderHelpMessage(): ReactNode {
+    const { showHelp } = this;
     const label = this.getLabel();
+    if ([ShowHelp.none, ShowHelp.label].includes(showHelp)) return;
     if (!this.hasFloatLabel || !label) {
       const help = this.getDisplayProp('help');
       if (help) {
         return (
           <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
+            {toJS(help)}
           </div>
         );
       }

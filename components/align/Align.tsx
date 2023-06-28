@@ -162,7 +162,7 @@ export default class Align extends Component<AlignProps, any> {
         const element: HTMLElement | null = getElement(target) as HTMLElement | null;
         const point = getPoint(target);
         if (element) {
-          if (!element.offsetParent) {
+          if (!element.offsetParent && !(element instanceof SVGElement)) {
             return;
           }
           result = alignElement(source, element, align);

@@ -126,12 +126,28 @@ export interface Locale extends DataSetLocale {
     filter_header_title: string,
     field_settings: string,
     lock_first_column: string,
+    lock_column: string,
     cancel_lock_first_column: string,
+    cancel_lock_column: string,
     enter_search_filter: string,
     search: string,
     clear: string,
     show: string,
     hide: string,
+    add_search: string,
+    custom_sort: string,
+    add_sort: string,
+    please_select_column: string,
+    ascending: string,
+    descending: string,
+    ad_search_help: string,
+    ad_search_all: string,
+    ad_search_any: string,
+    ad_search_custom: string,
+    ad_search_placeholder: string,
+    ad_search_add: string,
+    ad_search_title: string,
+    ad_search_validation: string,
   };
   Pagination: {
     page: string;
@@ -278,6 +294,22 @@ export interface Locale extends DataSetLocale {
     expand: string;
     copy: string;
     copied: string;
+  };
+  Operator: {
+    equal: string;
+    not_equal: string;
+    greater_than: string;
+    greater_than_or_equal_to: string;
+    less_than: string;
+    less_than_or_equal_to: string;
+    in: string;
+    not_in: string;
+    is_null: string;
+    is_not_null: string;
+    fully_fuzzy: string;
+    after_fuzzy: string;
+    before_fuzzy: string;
+    range: string;
   };
 }
 

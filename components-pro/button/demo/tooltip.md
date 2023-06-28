@@ -41,7 +41,7 @@ const App = () => {
       <div style={{ margin: '20px 0' }}>拓展Tooltip属性的文字气泡（支持自定义气泡内容）</div>
       <Tooltip title="xxx" placement="bottom">
         <Button
-          tooltip={['always', { title: '自定义内容', theme: 'light', placement: 'left', mouseLeaveDelay: 1000, mouseEnterDelay: 1000 }]}
+          tooltip={['always', { title: '自定义内容', theme: 'light', placement: 'left', mouseLeaveDelay: 1, mouseEnterDelay: 1 }]}
           disabled
         >
           始终显示气泡的按钮

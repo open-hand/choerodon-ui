@@ -3,8 +3,17 @@
 
 @dropdown-prefix-cls: ~"@{c7n-pro-prefix}-dropdown";
 @dropdown-button-prefix-cls: ~"@{c7n-pro-prefix}-dropdown-button";
+@menu-prefix-cls: ~'@{c7n-prefix}-menu';
 
 .@{dropdown-prefix-cls}-popup {
+  // Dropdown 内部的 Menu 首级 Item 字体大小控制
+  .@{menu-prefix-cls}-root {
+    > .@{menu-prefix-cls}-item,
+    > .@{menu-prefix-cls}-submenu > .@{menu-prefix-cls}-submenu-title {
+      font-size: @dropdown-menu-first-level-title-font-size;
+    }
+  }
+
   &.slide-down-enter.slide-down-enter-active&-placement-bottomLeft,
   &.slide-down-appear.slide-down-appear-active&-placement-bottomLeft,
   &.slide-down-enter.slide-down-enter-active&-placement-bottomCenter,
@@ -37,37 +46,40 @@
 }
 
 .@{dropdown-button-prefix-cls} {
+  border-radius: @btn-border-radius-base;
+
+  &-block {
+    display: flex;
+    > .@{c7n-pro-prefix}-btn:first-child {
+      flex: 1;
+    }
+  }
+
   &-raised {
     box-shadow: @btn-box-shadow;
   }
-  >.@{c7n-pro-prefix}-btn {
-    &:first-child:not(.@{c7n-pro-prefix}-btn-icon-only) {
-      z-index: 1;
-      border: @border-width-base @border-style-base @border-color-base;
-      border-radius: 0;
 
-      &:hover:not(.@{c7n-pro-prefix}-btn-disabled) {
-        color: @input-hover-border-color;
-        background: none;
-        border: @border-width-base @border-style-base @input-hover-border-color;
-      }
+  > .@{c7n-pro-prefix}-btn {
+    border-radius: @btn-border-radius-base;
+    box-shadow: none;
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     &:last-child {
-      border: @border-width-base @border-style-base @border-color-base;
-      border-radius: 0;
-
-      &:hover:not(.@{c7n-pro-prefix}-btn-disabled) {
-        z-index: 2;
-        color: @input-hover-border-color;
-        background: none;
-        border: @border-width-base @border-style-base @input-hover-border-color;
-      }
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
 
+    &:not(.@{c7n-pro-prefix}-btn-disabled):not(.@{c7n-pro-prefix}-btn-loading):hover,
+    &:not(.@{c7n-pro-prefix}-btn-loading).@{c7n-pro-prefix}-btn-focused,
+    &:not(.@{c7n-pro-prefix}-btn-loading):focus {
+      z-index: 2;
+    }
   }
 
   .@{c7n-pro-prefix}-btn+.@{c7n-pro-prefix}-btn {
-    margin: 0 0 0 -0.01rem;
+    margin-left: @dropdown-button-group-spacing;
   }
 }

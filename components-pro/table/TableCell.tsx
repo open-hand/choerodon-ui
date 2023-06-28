@@ -13,6 +13,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isFunction from 'lodash/isFunction';
 import { IteratorHelper } from 'choerodon-ui/dataset';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -23,7 +24,7 @@ import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
-import TableStore, { SELECTION_KEY } from './TableStore';
+import TableStore, { DRAG_KEY, SELECTION_KEY } from './TableStore';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import AggregationTreeGroups from './AggregationTreeGroups';
 import { TableVirtualCellProps } from './TableVirtualCell';
@@ -43,14 +44,15 @@ export interface TableCellProps extends TableVirtualCellProps {
   intersectionRef?: (node?: Element | null) => void;
   inView?: boolean;
   virtualHeight?: string;
+  isRenderCell?: boolean;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const {
     columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
-    inView = true, groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight,
+    groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, isRenderCell,
   } = props;
-  const dragDisabled = isDragDisabled && (typeof isDragDisabled === 'boolean' ? isDragDisabled : isDragDisabled(record));
+  const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const cellPrefix = `${prefixCls}-cell`;
@@ -86,6 +88,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       : {};
 
   const handleClickCapture = useCallback(action<(e) => void>((e) => {
+    if (tableStore.currentEditorName && key === DRAG_KEY) {
+      tableStore.blurEditor();
+    }
     if (record && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
       dataSet.current = record;
     }
@@ -117,7 +122,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   })();
   const baseClassName = classNames(cellPrefix, {
     [`${cellPrefix}-fix-${columnLock}`]: columnLock,
-    [`${cellPrefix}-no-transition`]: tableStore.tableColumnResizeTransition,
+    [`${cellPrefix}-no-transition`]: !tableStore.tableColumnResizeTransition,
   });
   const intersectionProps: DetailedHTMLProps<HTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement> = {};
   if (intersectionRef) {
@@ -205,7 +210,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
-  if (inView === false || columnGroup.inView === false) {
+  if (!isRenderCell) {
     const hasEditor: boolean = aggregation ? treeSome(column.children || [], (node) => !!getEditorByColumnAndRecord(node, record)) : !!getEditorByColumnAndRecord(column, record);
     const emptyCellProps: HTMLProps<HTMLTableCellElement> & { 'data-index': Key } = {
       colSpan,

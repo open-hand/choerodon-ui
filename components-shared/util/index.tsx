@@ -1,5 +1,7 @@
 import { MousePosition } from '../modal-manager';
 
+let zoom = 0;
+
 export function getDocument(self: Window): Document {
   try {
     const { parent, top } = self;
@@ -57,9 +59,24 @@ export function getMousePosition(x: number, y: number, self: Window, client?: bo
   }
 }
 
+/**
+ * 转换缩放比例后的数据
+ * 场景：兼容全局带有 zoom 样式导致的数据偏差
+ * @param data 需要转换的数据
+ * @returns 转换后的数据
+ */
+export const transformZoomData = (data: number): number => {
+  if (!zoom) {
+    // eslint-disable-next-line dot-notation
+    zoom = Number(getComputedStyle(document.body)['zoom']) || 1;
+  }
+  return data / zoom;
+};
+
 export default {
   getDocument,
   getDocuments,
   findIFrame,
   getMousePosition,
+  transformZoomData,
 };

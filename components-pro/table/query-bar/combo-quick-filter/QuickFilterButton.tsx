@@ -39,6 +39,13 @@ function findFieldObj(queryDataSet, data) {
   if (field && field.get('lovCode')) {
     const textField = field.get('textField');
     const valueField = field.get('valueField');
+    if (typeof value !== 'object') {
+      return {
+        name,
+        value,
+        originalValue: field.getValue().slice(),
+      };
+    }
     return {
       name,
       value: {
@@ -94,7 +101,7 @@ const QuickFilterButton = function QuickFilterButton() {
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
    */
-  const conditionAssign = (init?: boolean) => {
+  const conditionAssign = async (init?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
@@ -135,14 +142,24 @@ const QuickFilterButton = function QuickFilterButton() {
       const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
       if (tableStore) {
         runInAction(() => {
-          const newCustomized: TableCustomized = { columns: {}, ...customizedColumn };
-          tableStore.tempCustomized = newCustomized;
+          const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
+          tableStore.tempCustomized = { columns: {} };
           tableStore.saveCustomized(newCustomized);
           tableStore.initColumns();
         })
       }
       if (!init && shouldQuery && autoQuery) {
-        dataSet.query();
+        if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
+          dataSet.query();
+        } else if (refEditors) {
+          let hasFocus = false;
+          for (const [key, value] of refEditors.entries()) {
+            if (value && !value.valid && !hasFocus) {
+              refEditors.get(key).focus();
+              hasFocus = true;
+            }
+          }
+        }
       }
     }
   };
@@ -199,10 +216,12 @@ const QuickFilterButton = function QuickFilterButton() {
             const currentRecord = conditionDataSet.find(record => record.get('fieldName') === name);
             if (currentRecord) {
               currentRecord.set('value', fieldObj.value);
+              currentRecord.set('originalValue', fieldObj.originalValue);
             } else if (isSelect(data)) {
               conditionDataSet.create({
                 fieldName: name,
                 value: fieldObj.value,
+                originalValue: fieldObj.originalValue,
               });
             }
           }
@@ -227,7 +246,7 @@ const QuickFilterButton = function QuickFilterButton() {
       });
       const data = [...conditionDataSet.toJSONData(), ...putData];
       const customizedColumns = tableStore && tableStore.customized && tableStore.customized.columns;
-      filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) });
+      filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns)});
     } else {
       dataSet.query();
     }

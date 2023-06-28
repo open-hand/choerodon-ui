@@ -28,7 +28,7 @@
     cursor: inherit;
     pointer-events: none;
 
-    &:focus > span,
+    &:focus-visible > span,
     &:active > span {
       position: relative;
     }
@@ -176,7 +176,7 @@
 
   &-dashed {
     .btn-dashed;
-    line-height: @btn-height-base - 0.04rem;
+    line-height: calc(@btn-height-base - 0.04rem);
   }
 
   &-danger {
@@ -225,7 +225,7 @@
     padding-left: 0.08rem;
   }
 
-  &:focus > span,
+  &:focus-visible > span,
   &:active > span {
     position: relative;
   }
@@ -308,14 +308,14 @@
 }
 
 a.@{btn-prefix-cls} {
-  line-height: @btn-height-base - 0.02rem;
+  line-height: calc(@btn-height-base - 0.02rem);
 
   &-lg {
-    line-height: @btn-height-lg - 0.02rem;
+    line-height: calc(@btn-height-lg - 0.02rem);
   }
 
   &-sm {
-    line-height: @btn-height-sm - 0.02rem;
+    line-height: calc(@btn-height-sm - 0.02rem);
   }
 }
 

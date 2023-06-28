@@ -146,7 +146,7 @@ export type FormatNumberFuncOptions = {
 };
 export type Fields = ObservableMap<string, Field>;
 export type DynamicPropsArguments = { dataSet: DataSet; record: Record; name: string };
-export type DynamicProps = { [P in keyof FieldProps]?: (DynamicPropsArguments) => FieldProps[P]; }
+export type DynamicProps = { [P in keyof FieldProps]?: (propsArg: DynamicPropsArguments) => FieldProps[P]; }
 export type HighlightProps = {
   title?: ReactNode;
   content?: ReactNode;
@@ -349,6 +349,10 @@ export type FieldProps = {
    */
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);
   /**
+   * 批量请求LOV配置的钩子
+   */
+  lovDefineBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  /**
    * LOV查询请求的钩子
    */
   lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
@@ -404,7 +408,7 @@ export type FieldProps = {
   /**
    * 额外信息，常用于提示
    */
-  help?: string;
+  help?: ReactNode;
   /**
    * 高亮
    */
@@ -458,6 +462,14 @@ export type FieldProps = {
    */
   processValue?: (value: any, range?: 0 | 1) => any;
   dateMode?: DateMode;
+  /**
+   *  Attachment 可接受的上传文件类型
+   */
+  accept?: string[] | undefined;
+  /**
+   * 占位词
+   */
+  placeholder?: string | string[];
 };
 
 const defaultProps: FieldProps = {
@@ -1250,8 +1262,9 @@ export default class Field {
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || this.dataSet.getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
+    const useLookupBatch = lookupCode && this.dataSet.getConfig('useLookupBatch')(lookupCode, this) !== false;
     let promise;
-    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0) {
+    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);
@@ -1542,8 +1555,9 @@ export default class Field {
         )
       )
     ) {
+      const noCache = this.get('noCache', record);
       this.set(LOOKUP_DATA, undefined);
-      this.fetchLookup(undefined, record);
+      this.fetchLookup(noCache, record);
     }
     if (
       LOV_SIDE_EFFECT_KEYS.includes(propsName) ||

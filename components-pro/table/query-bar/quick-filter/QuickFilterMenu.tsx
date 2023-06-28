@@ -27,9 +27,14 @@ import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
 import {
+  EXPTYPE,
   isEqualDynamicProps,
   omitData,
+  ORIGINALVALUEOBJ,
   parseValue,
+  processFilterParam,
+  SEARCHEXP,
+  SEARCHTEXT,
   SELECTCHANGE,
   SELECTFIELDS,
   stringifyValue,
@@ -37,6 +42,7 @@ import {
 
 import Store from './QuickFilterMenuContext';
 import Field from '../../../data-set/Field';
+import { AdvancedFieldSet } from './QuickFilterDataSet';
 
 const modalKey = Modal.key();
 
@@ -67,6 +73,17 @@ function findFieldObj(queryDataSet, data) {
   if (field && field.get('lovCode')) {
     const textField = field.get('textField');
     const valueField = field.get('valueField');
+    let multipleValue = [];
+    if (field.get('multiple')) {
+      multipleValue = value.map((obj) => ({
+        [valueField]: obj[valueField],
+        [textField]: obj[textField],
+      }))
+      return {
+        name,
+        value: multipleValue,
+      };
+    }
     return {
       name,
       value: {
@@ -101,15 +118,24 @@ function isSelect(data) {
  * @param selectFields
  * @constructor
  */
-const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menuDataSet, queryDataSet, onLoadData, type, selectFields }) {
+const ModalContent: FunctionComponent<any> = function ModalContent({ modal, newFilterDataSet, menuDataSet, record, queryDataSet, dataSet, onLoadData, type, selectFields }) {
   const { getConfig } = useContext(ConfigContext);
   modal.handleOk(async () => {
     const putData: any[] = [];
     const statusKey = getConfig('statusKey');
     const statusAdd = getConfig('status').add;
+    const statusUpdate = getConfig('status').update;
     const shouldSaveValue = menuDataSet.current.get('saveFilterValue');
     const status = {};
     status[statusKey] = statusAdd;
+    const fuzzySrearchValue = dataSet.getState(SEARCHTEXT);
+    const fuzzySrearchData = [{
+      fieldName: SEARCHTEXT,
+      comparator: 'EQUAL',
+      value: fuzzySrearchValue,
+      ...status,
+    }];
+
     if (type !== 'edit') {
       const conditionData = Object.entries(omit(queryDataSet.current.toData(), ['__dirty']));
       map(conditionData, data => {
@@ -139,15 +165,37 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
         }
       });
     }
+
+    // 处理过滤条件
+    let filterData: any = [];
+    if (newFilterDataSet) {
+      filterData = newFilterDataSet.map(filterRecord => {
+        if (filterRecord.status !== RecordStatus.sync) {
+          const status = {};
+          status[statusKey] = filterRecord.status === RecordStatus.add ? statusAdd : statusUpdate;
+          return {
+            fieldName: filterRecord.get(AdvancedFieldSet.fieldName),
+            comparator: filterRecord.get(AdvancedFieldSet.comparator),
+            conditionType: filterRecord.get(AdvancedFieldSet.conditionType),
+            value: filterRecord.get('value'),
+            ...status,
+          };
+        }
+        return null;
+      })
+    }
+
     // 另存为
     if (type === 'save') {
       const otherRecord = menuDataSet.current.clone();
-      otherRecord.set('conditionList', putData);
+      otherRecord.set('conditionList', [...putData, ...filterData]);
+      otherRecord.set('queryList', fuzzySrearchData);
       menuDataSet.current.reset();
       menuDataSet.create({ ...omitData(otherRecord.toData()) });
       // 新建
     } else if (type === 'create') {
-      menuDataSet.current.set('conditionList', putData);
+      menuDataSet.current.set('conditionList', [...putData, ...filterData]);
+      if (fuzzySrearchValue) menuDataSet.current.set('queryList', fuzzySrearchData);
     }
     const res = await menuDataSet.submit();
     if (res && res.success) {
@@ -162,7 +210,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
   });
 
   return (
-    <Form dataSet={menuDataSet}>
+    <Form record={record || menuDataSet.current}>
       <TextField
         style={{ width: '100%' }}
         name="searchName"
@@ -181,7 +229,7 @@ const ModalContent: FunctionComponent<any> = function ModalContent({ modal, menu
 
 ModalContent.displayName = 'ModalContent';
 
-const MemoModalContent = memo(ModalContent);
+export const MemoModalContent = memo(ModalContent);
 
 /**
  * 快速筛选下拉
@@ -197,6 +245,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     queryDataSet,
     filterMenuDataSet,
     conditionDataSet,
+    newFilterDataSet,
     onChange = noop,
     conditionStatus,
     onStatusChange = noop,
@@ -206,6 +255,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     optionDataSet,
     shouldLocateData,
     refEditors,
+    searchText = 'params',
+    loadConditionData = noop,
+    defaultActiveKey,
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -236,6 +288,19 @@ const QuickFilterMenu = function QuickFilterMenu() {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
+
+    // 重置模糊搜素并判断是否查询
+    const orgObj = dataSet.getState(ORIGINALVALUEOBJ);
+    shouldQuery = dataSet.getState(SEARCHTEXT) !== orgObj.fuzzy;
+    dataSet.setState(SEARCHTEXT, orgObj.fuzzy);
+    dataSet.setQueryParameter(searchText, orgObj.fuzzy);
+
+    // 重置高级搜索并判断是否查询
+    shouldQuery = shouldQuery || newFilterDataSet.dirty;
+    if (newFilterDataSet.dirty) {
+      newFilterDataSet.reset();
+      processFilterParam(dataSet);
+    }
     if (current) {
       const conditionList = current.get('conditionList');
       const initData = {};
@@ -263,7 +328,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
         onOriginalChange(Object.keys(initData));
         const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
+        queryDataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
+        shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -273,9 +339,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
         }
         onStatusChange(RecordStatus.sync, emptyRecord.toData());
       } else {
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
+        shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
+        queryDataSet.setState(SELECTFIELDS, []);
         runInAction(() => {
           queryDataSet.records.push(emptyRecord);
           queryDataSet.current = emptyRecord;
@@ -307,12 +374,23 @@ const QuickFilterMenu = function QuickFilterMenu() {
        * 未选择或清除筛选项
        * 重置初始勾选项及初始赋值
        */
+      if (tempQueryFields) {
+        runInAction(() => {
+          queryDataSet.fields = tempQueryFields;
+        });
+      }
       queryDataSet.locate(0);
+      menuDataSet.current = undefined;
       const first = queryDataSet.get(0);
       if (first) {
         first.reset();
       }
       onOriginalChange();
+      setFuzzyQuery();  
+      if (newFilterDataSet) {
+        newFilterDataSet.reset();
+        processFilterParam(dataSet);
+      }
       if (autoQuery) {
         if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet.current && await queryDataSet.current.validate()) {
           dataSet.query();
@@ -331,6 +409,36 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   /**
+   * 模糊搜索是否变更
+   * @returns 
+   */
+  const isFuzzyQueryChange = () => {
+    const menuRecord = menuDataSet && menuDataSet.current;
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      return searchObj ? searchObj.value !== dataSet.getState(SEARCHTEXT) : false;
+    }
+    return dataSet.getState(SEARCHTEXT) === null;
+  }
+
+  /**
+   * 赋值模糊搜索
+   * @param menuRecord 
+   */
+  const setFuzzyQuery = (menuRecord?: Record) => {
+    let searchTextValue: string | null = null;
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+    }
+    // 切换数据更新初始化模糊搜索
+    const newObj = dataSet.getState(ORIGINALVALUEOBJ);
+    dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, fuzzy: searchTextValue });
+    dataSet.setState(SEARCHTEXT, searchTextValue);
+    dataSet.setQueryParameter(searchText, searchTextValue);
+  }
+
+  /**
    * 定位数据源
    * @param searchId
    * @param init 初始化
@@ -341,7 +449,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText });
       }
       if (current) {
         current.set('filterName', searchId);
@@ -350,13 +458,15 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else if (searchId === null) {
       handleQueryReset();
     } else {
-      const defaultMenus = menuDataSet ? menuDataSet.filter((menu) => menu.get('defaultFlag')) : [];
+      const defaultMenus = menuDataSet ? menuDataSet.filter((menu) => {
+        return defaultActiveKey ? menu.get('searchId') === defaultActiveKey : menu.get('defaultFlag');
+      }) : [];
       const defaultMenu = defaultMenus.length > 1 ? defaultMenus.find((menu) => menu.get('isTenant') !== 1)!.index : defaultMenus.length && defaultMenus[0].index;
       if (defaultMenus.length && defaultMenu !== -1) {
         menuDataSet.locate(defaultMenu);
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
-          conditionDataSet.loadData(menuRecord.get('conditionList'));
+          loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText });
           if (current) {
             current.set('filterName', menuRecord.get('searchId'));
           }
@@ -364,6 +474,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         conditionAssign(init);
       } else if (current) {
         current.set('filterName', undefined);
+        setFuzzyQuery();
       }
     }
   };
@@ -379,14 +490,14 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
-      conditionDataSet.loadData(menuRecord.get('conditionList'));
+      loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText });
     }
     if (result && result.length) {
       locateData(searchId);
     } else {
       const { current } = filterMenuDataSet;
       if (current) current.set('filterName', undefined);
-      locateData();
+      locateData(searchId);
       if (dataSet.props.autoQuery) {
         dataSet.query();
       }
@@ -410,7 +521,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
       const currentId = menuRecord.get('searchId').toString();
-      searchId = record.get('searchId').toString() === currentId ? undefined : currentId;
+      searchId = record.get('searchId').toString() === currentId ? null : currentId;
+    } else if (typeof menuRecord === 'undefined') {
+      searchId = undefined;
     }
     const delRecord = menuDataSet.find((menu) => menu.get('searchId').toString() === record.get('searchId').toString());
     await menuDataSet.delete(delRecord, `${$l('Table', 'whether_delete_filter')}：${record.get('searchName')}？`);
@@ -428,12 +541,12 @@ const QuickFilterMenu = function QuickFilterMenu() {
     }
   }
 
-  function openModal(type, searchId?: string) {
+  function openModal(type, searchId?: string, record?: Record) {
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
       if (menuRecord) {
-        conditionDataSet.loadData(menuRecord.get('conditionList'));
+        loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText });
       }
     }
     Modal.open({
@@ -445,8 +558,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
           type={type}
           menuDataSet={menuDataSet}
           conditionDataSet={conditionDataSet}
+          newFilterDataSet={newFilterDataSet}
           onLoadData={loadData}
           queryDataSet={queryDataSet}
+          dataSet={dataSet}
+          record={record}
           selectFields={selectFields}
         />
       ),
@@ -458,8 +574,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
   const handleSave = async () => {
     const filterMenuRecord = filterMenuDataSet ? filterMenuDataSet.current : undefined;
     if ((!filterMenuRecord || !filterMenuRecord.get('filterName')) && menuDataSet) {
-      menuDataSet.create({});
-      openModal('create');
+      openModal('create', '', menuDataSet.create({
+        conExpression: dataSet.getState(SEARCHEXP) ? dataSet.getState(SEARCHEXP) : (dataSet.getState(EXPTYPE) || 'all'),
+      }));
+      menuDataSet.setState('noLocate', true);
     } else {
       const { current } = queryDataSet;
       if (current && conditionDataSet) {
@@ -489,10 +607,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
           }
         });
         const putData: any = [];
+        const statusKey = getConfig('statusKey');
+        const statusAdd = getConfig('status').add;
+        const statusUpdate = getConfig('status').update;
         map(selectFields, fieldName => {
           const value = current.get(fieldName);
-          const statusKey = getConfig('statusKey');
-          const statusAdd = getConfig('status').add;
           const status = {};
           const toJSONFields = conditionDataSet.toJSONData().map((condition) => (condition as { fieldName }).fieldName);
           status[statusKey] = statusAdd;
@@ -508,7 +627,33 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         const menuRecord = menuDataSet.current;
         if (menuRecord) {
-          menuRecord.set('conditionList', [...conditionDataSet.toJSONData(), ...putData]);
+          let filterData: any = [];
+          if (newFilterDataSet) {
+            filterData = newFilterDataSet.map(filterRecord => {
+              if (filterRecord.status !== RecordStatus.sync) {
+                const status = {};
+                status[statusKey] = filterRecord.status === RecordStatus.add ? statusAdd : statusUpdate;
+                return {
+                  fieldName: filterRecord.get(AdvancedFieldSet.fieldName),
+                  comparator: filterRecord.get(AdvancedFieldSet.comparator),
+                  conditionType: filterRecord.get(AdvancedFieldSet.conditionType),
+                  value: filterRecord.get('value'),
+                  ...status,
+                };
+              }
+              return null;
+            })
+          }
+          menuRecord.set('conditionList', [...conditionDataSet.toJSONData(), ...putData, ...filterData]);
+          // 保存模糊搜素值
+          const fuzzySrearchValue = dataSet.getState(SEARCHTEXT);
+          const fuzzySrearchData = [{
+            fieldName: SEARCHTEXT,
+            comparator: 'EQUAL',
+            value: fuzzySrearchValue,
+            status: statusUpdate,
+          }];
+          menuRecord.set('queryList', fuzzySrearchData);
         }
         const res = await menuDataSet.submit();
         if (res && res.success) {
@@ -539,7 +684,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
   };
 
   useEffect(() => {
-    if (shouldLocateData) {
+    const status = menuDataSet ? !menuDataSet.getState('noLocate') : true;
+    if (shouldLocateData && status) {
       locateData(undefined, true);
     }
   }, [shouldLocateData, menuDataSet && menuDataSet.length]);
@@ -654,16 +800,22 @@ const QuickFilterMenu = function QuickFilterMenu() {
       ) : null}
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
-          {isChooseMenu && (
+          {isChooseMenu && (isTenant ? null :
             <Button onClick={handleSaveOther}>
               {$l('Table', 'save_as')}
             </Button>
           )}
-          {(isChooseMenu ? isTenant || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length : false) ? null : (
-            <Button onClick={handleSave}>
-              {$l('Table', 'save_button')}
-            </Button>
-          )}
+          {!isFuzzyQueryChange() && (
+            isChooseMenu
+              ?
+              isTenant || (conditionStatus === RecordStatus.update && dataSet.getState(SELECTCHANGE) && !shouldSaveValue) && menuDataSet && menuDataSet.length
+              :
+              false
+          ) ? null : (
+              <Button onClick={handleSave}>
+                {$l('Table', 'save_button')}
+              </Button>
+            )}
           <Button onClick={handleQueryReset}>
             {$l('Table', 'reset_button')}
           </Button>

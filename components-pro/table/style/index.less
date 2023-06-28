@@ -9,13 +9,23 @@
 @import 'combo-field-list';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
-@table-border: @border-width-base @border-style-base @table-border-color;
+@spin-prefix-cls: ~'@{c7n-prefix}-spin';
 
 .@{table-prefix-cls} {
   position: relative;
   color: @text-color;
   font-size: @font-size-base;
   outline: none;
+
+  &-wrapper {
+    .@{spin-prefix-cls}-nested-loading > .@{spin-prefix-cls} .@{spin-prefix-cls}-dot {
+      animation: ~'@{c7n-prefix}-progress-rotate' 1.2s linear infinite;
+      .@{c7n-prefix}-progress-inner circle {
+        stroke-dasharray: 95px;
+        animation: none;
+      }
+    }
+  }
 
   table {
     font-size: inherit;
@@ -173,6 +183,7 @@
       }
 
       &-auto-height {
+        overflow: hidden;
         word-break: break-all;
       }
 
@@ -279,7 +290,7 @@
       &-treenode {
         display: flex;
         align-items: flex-start;
-        padding: 0 0 (@padding-xs / 2) 0;
+        padding: 0 0 calc(@padding-xs / 2) 0;
         outline: none;
 
         .@{table-prefix-cls}-cell-inner:not(.@{table-prefix-cls}-cell-inner-editable) {
@@ -408,6 +419,40 @@
     color: @table-header-color;
     font-weight: @table-header-font-weight;
     background-color: @table-header-bg;
+
+    .@{table-prefix-cls}-cell-inner-row-height-fixed {
+      .@{table-prefix-cls}-cell-inner-right-has-other {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-help {
+        max-width: calc(100% - 0.22rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-sort {
+        max-width: calc(100% - 0.22rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-filter {
+        max-width: calc(100% - 0.22rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-help.@{table-prefix-cls}-cell-inner-right-has-sort {
+        max-width: calc(100% - 0.44rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-filter.@{table-prefix-cls}-cell-inner-right-has-sort {
+        max-width: calc(100% - 0.44rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-filter.@{table-prefix-cls}-cell-inner-right-has-help {
+        max-width: calc(100% - 0.44rem);
+      }
+      .@{table-prefix-cls}-cell-inner-right-has-help.@{table-prefix-cls}-cell-inner-right-has-filter.@{table-prefix-cls}-cell-inner-right-has-sort {
+        max-width: calc(100% - 0.66rem);
+      }
+    }
+
+    &-inner {
+      word-break: break-all;
+    }
   }
 
   .border;
@@ -450,6 +495,10 @@
       padding-right: 0 !important;
       padding-left: 0 !important;
     }
+  }
+  
+  .@{table-prefix-cls}-customized-column .@{c7n-pro-prefix}-btn:not(:hover) {
+    color: @table-customization-button-color;
   }
 
   &-editor {
@@ -566,6 +615,10 @@
     pointer-events: none;
   }
 
+  &-sticky-shadow-no-transition {
+    transition: none;
+  }
+
   &-sticky-shadow {
     z-index: 2;
     border-color: transparent;
@@ -600,11 +653,11 @@
     user-select: none;
 
     &-left {
-      left: @border-width-base / -2;
+      left: calc(@border-width-base / -2);
     }
 
     &-right {
-      right: @border-width-base / -2;
+      right: calc(@border-width-base / -2);
     }
   }
 
@@ -659,6 +712,14 @@
       & > .@{table-prefix-cls}-cell {
         background-color: @table-current-row-bg;
       }
+    }
+  }
+
+  /* 当前行和 hover 状态下行的可编辑框的背景色变化 */
+  &-row-current,
+  &-row:hover {
+    .@{table-prefix-cls}-cell-inner-editable:not(.@{table-prefix-cls}-cell-inner-disabled):not(.@{table-prefix-cls}-cell-inner-required) {
+      background: @table-row-hover-editable-bg;
     }
   }
 
@@ -792,8 +853,8 @@
 
   &-summary-group-wrapper {
     display: flex;
-    justify-content: flex-end;
-    margin: 0.08rem 0;
+    justify-content: @table-summary-group-wrapper-justify-content;
+    margin: @table-summary-group-wrapper-margin;
   }
 
   &-summary-group {
@@ -804,21 +865,11 @@
     border-radius: 0.02rem;
   }
 
-  &-button-menu-item {
-    padding: 0 !important;
+  &-dropdown-menu-item {
+    padding: @table-buttons-more-dropdown-item-padding !important;
 
-    .@{c7n-pro-prefix}-btn {
-      height: 0.4rem;
-      padding: 0 0.26rem;
+    .@{c7n-pro-prefix}-btn .@{c7n-prefix}-ripple {
       background-color: transparent;
-
-      .@{c7n-prefix}-ripple {
-        background-color: transparent;
-      }
-
-      &:hover, &:focus, &:active {
-        background-color: transparent;
-      }
     }
   }
 
@@ -923,22 +974,43 @@
     transition: width @animation-duration-slow;
   }
 
-  &-sort-icon,
-  &-help-icon {
-    margin-right: 0.03rem;
-    margin-left: 0.03rem;
+  &-sort-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.08rem;
   }
 
-  &-sort-icon {
-    color: rgba(0, 0, 0, 0.45);
-    font-weight: normal;
-    opacity: 0;
+  &-sort-popup-content {
+    min-width: 3.2rem;
+    min-height: 0.8rem;
+
+    .@{c7n-prefix}-popover-inner-content {
+      padding: 0.08rem;
+    }
+  }
+
+  &-filter-icon {
+    font-weight: lighter;
+
+    &-active {
+      color: @primary-color;
+    }
+  }
+
+  &-sort-icon,
+  &-filter-icon,
+  &-help-icon {
+    margin-right: 0.02rem;
+    margin-left: 0.02rem;
   }
 
   &-help-icon {
     .iconfont-font(@table-icon-help-content, @table-icon-help-size);
-    color: @table-icon-help-color;
     font-weight: @table-icon-help-font-weight;
+
+    &:hover {
+      color: @table-icon-help-color;
+    }
   }
 
   &-header-expand-icon {
@@ -947,13 +1019,39 @@
   }
 
   &-sort {
+    &-icon {
+      color: rgba(0, 0, 0, 0.45);
+      font-weight: normal;
+      opacity: 0;
+
+      &:hover {
+        color: @table-icon-sort-hover-color;
+      }
+
+      // catl
+      &-temp {
+        color: inherit;
+        opacity: 1;
+      }
+    }
+
     &-asc &-icon,
     &-desc &-icon {
-      color: inherit;
+      color: @table-icon-sort-active-color;
       opacity: 1;
     }
 
-    &-desc &-icon {
+    &-asc-temp &-icon::before {
+      font-family: inherit !important;
+      content: "\e5d8" !important;
+    }
+
+    &-desc-temp &-icon::before {
+      font-family: inherit !important;
+      content: "\e5d8" !important;
+    }
+
+    &-desc &-icon.icon-arrow_upward {
       transform: rotate(180deg);
     }
   }
@@ -1025,19 +1123,135 @@
   }
 
   .sm;
+
+  &-combine-sort {
+    &-trigger-button.@{c7n-pro-prefix}-btn {
+      &:not(:first-child) {
+        margin-right: -0.08rem;
+        margin-left: 0;
+      }
+
+      .@{table-prefix-cls}-filter-search-divide ~ & {
+        margin-right: 0.08rem;
+        margin-left: 0;
+      }
+
+      .icon {
+        font-size: 0.16rem;
+      }
+    }
+
+    &-popover {
+      &.@{c7n-prefix}-popover {
+        padding: 0;
+      }
+
+      .@{c7n-prefix}-popover {
+        &-arrow {
+          display: none;
+        }
+      }
+
+      .@{c7n-prefix}-popover-title {
+        padding: 0.16rem 0.16rem 0.04rem !important;
+        font-weight: 500 !important;
+        font-size: 0.14rem !important;
+        border: none;
+      }
+
+      .@{c7n-prefix}-popover-inner-content {
+        padding: 0.06rem 0.16rem 0.16rem !important;
+      }
+    }
+
+    &-content {
+      width: 4.1rem;
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+
+      &-container {
+        max-height: 2.8rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      &-item {
+        padding: 0.06rem 0;
+
+        &-dragging {
+          background: #fff;
+          box-shadow: 0 0.02rem 0.08rem rgba(0, 0, 0, 0.12);
+        }
+
+        &-drag:hover {
+          cursor: move;
+        }
+
+        & &-index {
+          display: inline-block;
+          width: 0.23rem;
+          margin: 0 0 0 0.04rem;
+          line-height: 1;
+          text-align: center;
+          vertical-align: middle;
+
+          .@{c7n-prefix}-tag {
+            height: 0.16rem;
+            margin: 0;
+            padding: 0 0.04rem;
+            line-height: 0.15rem;
+            border: none;
+          }
+        }
+
+        &-sortName {
+          width: 1.22rem;
+          margin: 0 0 0 0.08rem;
+        }
+
+        &-sortOrder {
+          margin: 0 0 0 0.24rem;
+
+          .@{c7n-pro-prefix}-radio-wrapper:not(:first-child) {
+            margin: 0 0 0 0.24rem;
+          }
+        }
+
+        &-delete {
+          float: right;
+        }
+      }
+    }
+
+    &-add-button {
+      margin: 0.05rem 0;
+    }
+
+    &-footer {
+      text-align: right;
+    }
+  }
 }
 
 .border() {
-  border-top: @table-border;
-  border-bottom: @table-border;
+  border-top: @table-outermost-border-top;
+  border-bottom: @table-outermost-border-bottom;
 
   &-cell {
-    border-right: @border-width-base @border-style-base transparent;
-    border-bottom: @table-border;
+    border-right: @table-cell-border-right;
+    border-bottom: @table-cell-border-bottom;
   }
 
   &-tfoot &-cell {
-    border-top: @table-border;
+    border-top: @table-tfoot-cell-border-top;
+  }
+
+
+  &:not(&-bordered) &-tbody &-cell {
+    border-bottom-color: @table-notbordered-body-border-bottom-color;
   }
 
   &-tfoot &-cell,
@@ -1048,7 +1262,7 @@
   &-row:last-of-type:not(&-row-has-next) &-cell,
   &-row:not(&-row-has-next) + &-expanded-row:last-child &-cell,
   &-cell-last-group {
-    border-bottom-color: transparent;
+    border-bottom: @table-last-row-cell-border-bottom;
   }
   &-last-row-bordered &-cell-last-group {
     border-bottom-color: @border-color-base;
@@ -1066,16 +1280,15 @@
   &:not(&-bordered) &-thead&-column-resizable {
     &:hover,
     &.@{table-prefix-cls}-thead-hover {
-      .@{table-prefix-cls}-cell {
-        border-right-color: @table-border-color;
-        border-bottom-color: @table-border-color;
+      .@{table-prefix-cls}-cell:not(.@{table-prefix-cls}-cell-last) {
+        border-right-color: @table-notbordered-thead-hover-border-right-color;
       }
     }
   }
 
   &-bordered {
-    border-right: @table-border;
-    border-left: @table-border;
+    border-right: @table-outermost-bordered-border-right;
+    border-left: @table-outermost-bordered-border-left;
 
     .@{table-prefix-cls}-footer {
       padding-right: @table-padding-horizontal;

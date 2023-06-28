@@ -1,14 +1,14 @@
 @import '../../../../components/style/themes/default';
 
 @table-prefix-cls: ~'@{c7n-pro-prefix}-table';
-@table-border: @border-width-base @border-style-base @table-border-color;
+@select-prefix-cls: ~'@{c7n-pro-prefix}-select';
 @table-row-search-bg: @table-row-group-title-bg;
 
 .@{table-prefix-cls} {
   &-query-bar {
     float: right;
 
-    > * + * {
+    >*+* {
       margin-left: 0.16rem;
     }
 
@@ -21,10 +21,10 @@
       background-color: @background-color-light;
       border-radius: @border-radius-base;
 
-      > * {
+      >* {
         vertical-align: middle;
 
-        & + * {
+        &+* {
           margin-left: 0.05rem;
         }
       }
@@ -70,26 +70,50 @@
   // dynamic-filter-bar
 
   &-dynamic-filter-bar {
-    margin-bottom: 0.08rem;
+    margin-bottom: 0.10rem;
+
+    .@{table-prefix-cls}-filter-menu {
+      margin-bottom: 0.10rem;
+    }
 
     input::-webkit-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input::-moz-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
     input:-ms-input-placeholder {
-      color: #6A6A6A;
+      color: @table-dynamic-filter-placeholder-color;
     }
 
-    .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-      color: #6A6A6A;
+    .@{c7n-pro-prefix}-input-number-placeholder,
+    .@{select-prefix-cls}-placeholder {
+      color: @table-dynamic-filter-placeholder-color;
+    }
+
+    .@{table-prefix-cls}-filter-status {
+      width: 0.38rem;
+      height: 0.16rem;
+      margin: 0 0.12rem;
+      padding: 0;
+      color: @success-color;
+      line-height: @table-dynamic-filter-status-line-height;
+      text-align: center;
+      background: rgba(32, 212, 137, 0.12);
+      border: none;
+      border-radius: 0.02rem;
+  
+      span {
+        display: block;
+        height: 100%;
+        transform: scale(0.8);
+      }
     }
   }
 
@@ -102,17 +126,15 @@
     flex-shrink: 0;
     gap: 0.08rem;
     justify-content: flex-end;
-    margin: 0.08rem 0 0;
     padding-right: 0.06rem;
-    background: rgba(232, 232, 232, 0.20);
 
     i {
-      margin-top: 0.06rem;
+      margin-top: 0.09rem;
       font-size: 0.2rem;
     }
 
     .@{table-prefix-cls}-filter-buttons {
-      margin-top: 0.02rem;
+      margin: @table-dynamic-filter-single-action-buttons-margin;
     }
   }
 
@@ -162,7 +184,7 @@
     display: flex;
     align-items: center;
 
-    .@{c7n-pro-prefix}-select {
+    .@{table-prefix-cls}-filterName-select .@{select-prefix-cls} {
       display: inline-block;
       max-width: 1.72rem;
       margin: 0;
@@ -176,13 +198,19 @@
       margin-right: 0.08rem;
     }
 
-    &-expand, &-query {
+    &-expand,
+    &-query {
       cursor: pointer;
 
       i {
+        color: @table-dynamic-filter-expand-query-icon-color;
         font-size: 0.16rem;
         background-color: #fafafa;
         border-radius: 0.02rem;
+
+        &:hover {
+          color: @table-dynamic-filter-refresh-icon-hover-color;
+        }
       }
     }
   }
@@ -191,24 +219,98 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    margin-right: 0.16rem;
-    padding-left: 0.08rem;
+    align-items: center;
+    height: @input-height-base;
+    margin: 0.02rem 0.12rem 0.02rem 0;
+    padding: 0 0.07rem;
+    background-color: @component-background;
+    border: 1px solid rgba(0, 0, 0, .06);
+    border-radius: 0.02rem;
     cursor: pointer;
 
-    &-disabled {
+    &:focus-within {
+      background-color: @component-background;
+      border-color: @primary-color;
+      box-shadow: @input-active-box-shadow;
       .@{table-prefix-cls}-filter-label {
-        color: @disabled-color;
-        cursor: not-allowed;
+        color: @text-color;
       }
     }
 
     &:focus-within,
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
-      border-radius: 0.02rem;
+      border-color: @primary-color;
 
       .@{table-prefix-cls}-filter-item-close {
         display: inline-block !important;
+      }
+
+      div[class*='-suffix'] i {
+        color: @primary-color;
+      }
+    }
+
+    &-has-value,
+    &:focus-within {
+      .@{table-prefix-cls}-filter-label:not(:empty)::after {
+        content: ':';
+      }
+    }
+
+    &-required {
+      border-color: @table-dynamic-filter-required-border-color;
+      .@{table-prefix-cls}-filter-label::before {
+        display: inline-block;
+        color: @label-required-color;
+        font-family: @font-family-required-symbol;
+        vertical-align: middle;
+        content: "*";
+      }
+    }
+
+    &-required:hover,
+    &-required:focus-within {
+      border-color: @table-dynamic-filter-required-active-border-color;
+      box-shadow: @table-dynamic-filter-required-active-box-shadow;
+    }
+
+    &-invalid,
+    &-invalid:hover,
+    &-invalid:focus-within {
+      background-color: @error-bg-color;
+      border-color: @error-color;
+      box-shadow: @input-error-active-box-shadow;
+      .@{table-prefix-cls}-filter-label,
+      div[class*='-suffix'] i {
+        color: @error-color;
+      }
+    }
+
+    &-disabled {
+      background-color: @disabled-bg;
+      border-color: @input-border-color;
+
+      .@{table-prefix-cls}-filter-label {
+        color: @disabled-color;
+        cursor: not-allowed;
+      }
+
+      &:hover {
+        border-color: @input-border-color;
+        box-shadow: none;
+      }
+
+      &:hover div[class*='-suffix'] i {
+        color: @input-disabled-color;
+      }
+
+      // 禁用部分 lov 多值 和 下拉多值控制态 特殊覆盖
+      .@{select-prefix-cls}-multiple.@{select-prefix-cls}-lov .@{select-prefix-cls}:not(:last-child) {
+        padding-right: @input-suffix-width-base;
+      }
+
+      .@{select-prefix-cls}-empty .@{select-prefix-cls}-multiple-value {
+        max-width: 0;
       }
     }
   }
@@ -217,12 +319,9 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.08rem 0 0;
-    padding: 0.01rem 0.06rem;
-    background: rgba(232, 232, 232, 0.20);
-    border-radius: 0.01rem;
 
-    span, input {
+    span,
+    input {
       background-color: transparent;
     }
   }
@@ -235,8 +334,11 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(0, 0, 0, .05);
-      border-radius: 0.02rem;
+      color: @primary-color;
+    }
+
+    i {
+      margin: 0 0.04rem 0 0;
     }
   }
 
@@ -250,28 +352,11 @@
     }
   }
 
-  &-filter-status {
-    width: 0.38rem;
-    height: 0.16rem;
-    margin: 0 0.12rem;
-    padding: 0;
-    color: @success-color;
-    line-height: @line-height-base;
-    text-align: center;
-    background: rgba(32, 212, 137, 0.12);
-    border: none;
-    border-radius: 0.02rem;
 
-    span {
-      display: block;
-      height: 100%;
-      transform: scale(0.8);
-    }
-  }
 
   &-filterName-select {
     max-width: 1.72rem;
-    margin-left: 0.12rem;
+    margin-left: 0.08rem;
     border: none;
   }
 
@@ -307,6 +392,7 @@
 
     &-selected {
       display: inline-flex;
+      align-items: center;
       margin-left: auto;
       font-size: 0.16rem;
     }
@@ -315,10 +401,10 @@
   &-filter-label {
     display: flex;
     align-items: center;
-    margin-right: 0.02rem;
-    padding-top: 0.005rem;
-    color: #6A6A6A;
-    font-size: @font-size-sm;
+    height: @input-height-base;
+    padding: 0.02rem 0;
+    color: @table-dynamic-filter-label-color;
+    font-size: @font-size-base;
 
     i {
       margin-left: 0.02rem;
@@ -334,6 +420,11 @@
 
     i {
       font-size: @font-size-lg;
+      line-height: 0.2rem;
+
+      &.icon-close {
+        line-height: @table-filter-search-close-icon-line-height;
+      }
 
       &:hover {
         color: @primary-color;
@@ -351,9 +442,79 @@
   &-filter-item {
     display: flex;
     align-items: center;
-    font-size: @font-size-sm;
+    font-size: @font-size-base;
 
-    span:not(.@{c7n-pro-prefix}-select-suffix-button) {
+    // 非聚焦态时，placeholder 隐藏
+    &:not(:focus-within) {
+      input::-webkit-input-placeholder {
+        color: transparent !important;
+      }
+
+      input:-moz-placeholder {
+        color: transparent !important;
+      }
+
+      input::-moz-placeholder {
+        color: transparent !important;
+      }
+      
+      input:-ms-input-placeholder {
+        color: transparent !important;
+      }
+
+      [class*='-placeholder-inner'] {
+        color: transparent !important;
+      }
+    }
+
+    .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+      height: @table-dynamic-filter-number-step-height;
+    }
+
+    [class*="-empty"] {
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: none;
+      }
+    }
+
+    [class*="-focused"] {
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        display: block;
+      }
+    }
+
+    .@{c7n-pro-prefix}-input-number-step-suffix {
+      &:focus-within,
+      &:not(.@{c7n-pro-prefix}-input-number-empty):hover {
+        .icon-search {
+          opacity: 0;
+        }
+      }
+      &.@{c7n-pro-prefix}-input-number-wrapper .@{c7n-pro-prefix}-input-number {
+        padding-right: @input-suffix-width-base; // 避免 NumberField 默认样式的影响
+      }
+    }
+
+    // 多值 placeholder 和 input 光标对齐
+    [class*="-placeholder-inner"] {
+      padding-left: 0.02rem;
+    }
+
+    [class*="-after"] {
+      background-color: transparent;
+      border: none;
+    }
+
+    // 输入框类多值 placeholder 和 input 输入光标对齐默认样式覆盖
+    [class*="-multiple-input"] {
+      margin-left: 0;
+    }
+
+    [class*="-multiple-value"]+[class*="-placeholder"] {
+      padding-left: 0;
+    }
+
+    span:not(.@{select-prefix-cls}-suffix-button) {
       &:focus-within {
         input {
           min-width: 1.34rem !important;
@@ -361,16 +522,14 @@
       }
     }
 
-    .@{c7n-pro-prefix}-suffix-click {
-      min-width: 1.34rem !important;
-    }
-
     label {
-      input::-webkit-input-placeholder { // 谷歌
+      input::-webkit-input-placeholder {
+        // 谷歌
         color: @disabled-color;
       }
 
-      input:-moz-placeholder { //火狐
+      input:-moz-placeholder {
+        //火狐
         color: @disabled-color;
       }
 
@@ -378,27 +537,33 @@
         color: @disabled-color;
       }
 
-      input:-ms-input-placeholder { //微软
+      input:-ms-input-placeholder {
+        //微软
         color: @disabled-color;
       }
 
-      .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+      .@{c7n-pro-prefix}-input-number-placeholder,
+      .@{select-prefix-cls}-placeholder {
         color: @disabled-color;
       }
+
     }
 
     i {
       font-size: @btn-icon-size;
-      line-height: @line-height-base;
+      line-height: @table-filter-item-icon-line-height;
     }
 
-    &-close {
+    i&-close {
       position: absolute;
       top: -0.07rem;
       right: -0.07rem;
       z-index: 2;
       display: none !important;
       color: rgba(32, 45, 64, .3);
+      font-size: 0.14rem;
+      background-color: #fff;
+      border-radius: 50%;
       cursor: pointer;
 
       &:hover {
@@ -417,59 +582,56 @@
       }
     }
 
-    .@{c7n-pro-prefix}-select, .@{c7n-pro-prefix}-input, .@{c7n-pro-prefix}-input-number, .@{c7n-pro-prefix}-calendar-picker {
+    // 相对于组件本身样式提升优先级
+    .@{select-prefix-cls}-invalid.@{select-prefix-cls}-invalid,
+    .@{c7n-pro-prefix}-input-invalid.@{c7n-pro-prefix}-input-invalid,
+    .@{c7n-pro-prefix}-input-number-invalid.@{c7n-pro-prefix}-input-number-invalid,
+    .@{c7n-pro-prefix}-calendar-picker-invalid.@{c7n-pro-prefix}-calendar-picker-invalid {
+      background-color: transparent;
+    }
+
+    .@{select-prefix-cls},
+    .@{c7n-pro-prefix}-input,
+    .@{c7n-pro-prefix}-input-number,
+    .@{c7n-pro-prefix}-calendar-picker {
       width: auto;
       min-width: unset;
-      max-width: 4rem;
       margin: 0;
-      padding: 0.02rem;
+      padding: @table-dynamic-filter-input-padding;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       border: none;
 
-      &-required {
-        background-color: transparent;
-
-        & > label {
-          align-items: center;
-        }
-
-        & > label::before { // 谷歌
-          display: inline-block;
-          width: .08rem;
-          margin-left: .04rem;
-          color: @label-required-color;
-          font-family: SimSun, sans-serif;
-          vertical-align: middle;
-          content: "*";
-        }
-
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-          &::before {
-            display: inline-block;
-            width: .08rem;
-            margin-left: .04rem;
-            color: @label-required-color;
-            font-family: SimSun, sans-serif;
-            vertical-align: middle;
-            content: "*";
-          }
-        }
+      &-suffix,
+      &-inner-button {
+        right: -0.01rem;
       }
 
       &-multiple {
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           content: "";
         }
       }
 
+      &-required,
       &-invalid {
-        input::-webkit-input-placeholder { // 谷歌
+        background-color: transparent;
+
+        &>label {
+          align-items: center;
+        }
+      }
+
+      &-invalid {
+        input::-webkit-input-placeholder {
+          // 谷歌
           color: @error-color;
         }
 
-        input:-moz-placeholder { //火狐
+        input:-moz-placeholder {
+          //火狐
           color: @error-color;
         }
 
@@ -477,30 +639,151 @@
           color: @error-color;
         }
 
-        input:-ms-input-placeholder { //微软
+        input:-ms-input-placeholder {
+          //微软
           color: @error-color;
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           color: @error-color;
         }
       }
     }
 
-    .@{c7n-pro-prefix}-select-multiple-block > div:not(:last-child) {
+    // 各类别输入框的宽度效果实现
+    // 空值 Lov 右侧行内样式 padding 抵消
+    &:not(.@{c7n-pro-prefix}-lov-click) {
+      .@{select-prefix-cls}-lov {
+        &:not(.@{select-prefix-cls}-disabled) .@{select-prefix-cls} {
+          margin-left: -0.12rem;
+        }
+        // 空值 lov placeholder，非聚焦态不展示
+        .@{select-prefix-cls}-placeholder-inner {
+          color: transparent;
+        }
+      }
+    }
+
+    // lov 单选多选通用样式
+    .@{select-prefix-cls}-lov {
+      .@{select-prefix-cls} {
+        max-width: 0;
+      }
+    }
+    &.@{c7n-pro-prefix}-lov-click {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
+      }
+    }
+
+    // lov 多选空值下占位元素隐藏
+    .@{select-prefix-cls}-lov.@{select-prefix-cls}-multiple.@{select-prefix-cls}-empty {
+
+      .@{select-prefix-cls}-multiple-value,
+      &:not(:focus-within) .@{select-prefix-cls}-placeholder {
+        display: none;
+      }
+    }
+
+    // input, number, calendar
+    .@{c7n-pro-prefix}-input,
+    .@{c7n-pro-prefix}-input-number {
+      max-width: 0;
+      margin-left: -0.28rem;
+    }
+
+    [class*='-suffix-button'],
+    [class*='-prefix-button'] {
+
+      .@{c7n-pro-prefix}-input,
+      .@{c7n-pro-prefix}-input-number {
+        margin-left: 0;
+      }
+    }
+
+    .@{c7n-pro-prefix}-input-multiple-value,
+    .@{c7n-pro-prefix}-input-number-multiple-value,
+    .@{c7n-pro-prefix}-calendar-picker,
+    .@{c7n-pro-prefix}-calendar-picker-multiple-value {
+      max-width: 0;
+    }
+
+    &-has-value,
+    &:focus-within {
+
+      .@{c7n-pro-prefix}-input,
+      .@{c7n-pro-prefix}-input-number,
+      .@{c7n-pro-prefix}-input-multiple,
+      .@{c7n-pro-prefix}-input-number-multiple {
+        max-width: 4rem;
+        margin-left: 0;
+      }
+
+      .@{c7n-pro-prefix}-calendar-picker,
+      .@{c7n-pro-prefix}-calendar-picker-multiple-value {
+        max-width: 4rem;
+      }
+    }
+
+    // select
+    .@{select-prefix-cls}-not-editable {
+
+      .@{select-prefix-cls},
+      .@{select-prefix-cls}-multiple-value {
+        max-width: 0;
+      }
+      &:not(.c7n-pro-select-lov):focus-within {
+        .@{select-prefix-cls},
+        .@{select-prefix-cls}-multiple-value {
+          min-width: 1.34rem;
+          max-width: 4rem;
+        }
+      }
+    }
+    // select lov 存在下拉搜索时的样式兼容
+    .@{select-prefix-cls}-expand {
+      .@{select-prefix-cls} {
+        min-width: 1.34rem !important;
+        max-width: 4rem !important;
+        margin-left: 0 !important;
+      }
+    }
+
+    &-has-value {
+      .@{select-prefix-cls}-not-editable {
+
+        .@{select-prefix-cls},
+        .@{select-prefix-cls}-multiple-value {
+          max-width: 4rem;
+        }
+      }
+
+      // lov
+      .@{select-prefix-cls}-lov {
+        .@{select-prefix-cls} {
+          max-width: 4rem;
+        }
+      }
+
+      &:not(.@{c7n-pro-prefix}-lov-click) {
+        .@{select-prefix-cls}-lov:not(.@{c7n-pro-prefix}-select-disabled) .@{select-prefix-cls} {
+          margin-left: 0;
+        }
+      }
+    }
+
+    [class*="multiple-block"]>div:not(:last-child) {
       max-width: calc(100% - 0.2rem);
     }
 
-    .@{c7n-pro-prefix}-input-number-multiple-block > div:not(:last-child) {
-      max-width: calc(100% - 0.2rem);
-    }
-
-    .@{c7n-pro-prefix}-select,
+    .@{select-prefix-cls},
     .@{c7n-pro-prefix}-input,
     .@{c7n-pro-prefix}-input-number,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-cascader {
-      & > ul {
+      &>ul {
         flex-wrap: nowrap;
       }
 
@@ -510,13 +793,112 @@
     }
   }
 
+  // 高级筛选面板
+
+  &-new-filter-popover {
+    z-index: 10 !important;
+    width: 5.4rem;
+
+    &-line {
+      height: 0.08rem;
+
+      &::before {
+        margin-left: 0.06rem;
+        border-left: 1px solid @normal-color;
+        content: ' ';
+      }
+    }
+
+    .@{c7n-prefix}-popover-title {
+      padding-top: 0.16rem;
+      padding-bottom: 0.08rem;
+    }
+
+    .@{c7n-prefix}-popover-inner-content {
+      padding: 0.08rem 0.16rem 0.16rem 0.16rem;
+    }
+
+    &-select-icon {
+      margin-left: 0.04rem;
+      font-size: 0.12rem;
+      vertical-align: inherit;
+    }
+
+    &-input {
+      width: 4.62rem;
+      margin-top: 0.08rem;
+    }
+
+    &-tree.@{c7n-prefix}-tree {
+      max-height: 2.68rem;
+      margin-left: -0.05rem;
+      overflow: auto;
+    }
+
+    &-tree {
+      &-node {
+        overflow: hidden;
+
+        &:first-child:last-child {
+          .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
+            &::before {
+              height: calc(50% - 2px) !important;
+              min-height: calc(@tree-title-height - 10px);
+            }
+          }
+        }
+
+        .@{c7n-prefix}-tree-switcher .@{c7n-prefix}-tree-switcher-leaf-line {
+          &::after {
+            height: calc(50% - 2px) !important;
+            min-height: calc(@tree-title-height - 10px);
+          }
+        }
+
+        .@{c7n-prefix}-tree-node-content-wrapper {
+          display: flex;
+          align-items: center;
+          min-height: 0.34rem;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+
+    &-item {
+      display: flex;
+      gap: 0.08rem;
+      align-items: center;
+
+      &-tag {
+        height: 0.16rem;
+        margin: 0;
+        padding: 0 0.04rem;
+        line-height: 0.15rem;
+        border: none;
+      }
+    }
+
+    &-footer {
+      text-align: right;
+    }
+
+    &-icon>.icon {
+      font-weight: lighter;
+      font-size: 0.16rem;
+    }
+  }
+
   // professional-query-bar
 
   &-professional-query-bar {
     display: flex;
     padding: 0.06rem 0;
 
-    .@{c7n-pro-prefix}-field-label, .@{c7n-pro-prefix}-field-wrapper {
+    .@{c7n-pro-prefix}-field-label,
+    .@{c7n-pro-prefix}-field-wrapper {
       .@{c7n-pro-prefix}-checkbox-wrapper {
         height: @input-height-base;
       }
@@ -528,13 +910,15 @@
       flex-shrink: 0;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 0.1rem 0 0.1rem 0.7rem;
+      padding: @table-professional-query-button-padding;
 
       &-vertical {
-        padding: 0.3rem 0 0.1rem 0.7rem;
+        padding: @table-professional-query-button-vertical-padding;
       }
 
       span {
+        display: inline-flex;
+        align-items: center;
         vertical-align: baseline;
       }
     }
@@ -550,6 +934,7 @@
 
       &-button-group {
         display: inline-flex;
+        flex-wrap: wrap;
         align-items: center;
       }
 
@@ -580,7 +965,8 @@
       color: @input-placeholder-color;
     }
 
-    .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+    .@{c7n-pro-prefix}-input-number-placeholder,
+    .@{select-prefix-cls}-placeholder {
       color: @input-placeholder-color;
     }
   }
@@ -643,6 +1029,7 @@
 
   &-combo-filter-action {
     margin-left: auto;
+
     &-button {
       border-radius: 0;
     }
@@ -662,10 +1049,10 @@
     }
   }
 
-  &-combo-filter-toolbar + &-combo-filter-action,
-  &-combo-filter-toolbar + &-combo-filter-bar-suffix,
-  &-combo-filter-action + &-combo-filter-bar-suffix,
-  &-combo-filter-toolbar + &-combo-filter-action + &-combo-filter-bar-suffix {
+  &-combo-filter-toolbar+&-combo-filter-action,
+  &-combo-filter-toolbar+&-combo-filter-bar-suffix,
+  &-combo-filter-action+&-combo-filter-bar-suffix,
+  &-combo-filter-toolbar+&-combo-filter-action+&-combo-filter-bar-suffix {
     margin-left: 0.08rem;
   }
 
@@ -686,7 +1073,7 @@
     height: @input-height-base;
     margin: 0.08rem 0.12rem 0 0.05rem;
 
-    .@{c7n-pro-prefix}-select {
+    .@{select-prefix-cls} {
       display: inline-block;
       max-width: 1.72rem;
       margin: 0;
@@ -716,8 +1103,8 @@
   &-combo-filter-menu-button-singleLine-divide {
     width: 0.01rem;
     height: 0.18rem;
-    margin: 0.08rem 0.08rem 0.06rem 0.08rem;
-    background-color: @border-color-split !important;
+    margin: @table-combo-filter-single-line-divide-margin;
+    background-color: @border-color-split;
   }
 
   &-combo-filter-menu-action {
@@ -728,8 +1115,7 @@
     position: relative;
     display: flex;
     flex-shrink: 0;
-    margin-top: 0.04rem;
-    margin-left: 0.08rem;
+    margin: @table-combo-filter-content-margin;
     cursor: pointer;
 
     &-disabled {
@@ -744,10 +1130,11 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    margin: 0.04rem 0 0;
+    margin: @table-combo-filter-wrapper-margin;
     border-radius: 0.01rem;
 
-    span, input {
+    span,
+    input {
       background-color: transparent;
     }
   }
@@ -764,7 +1151,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
 
     .@{iconfont-css-prefix} {
@@ -789,6 +1176,9 @@
     display: flex;
     flex-shrink: 0;
     margin-top: 0.08rem;
+    .@{c7n-pro-prefix}-btn-secondary {
+      background: @table-combo-filter-menu-reset-button-bg;
+    }
   }
 
   &-combo-filter-buttons {
@@ -802,45 +1192,45 @@
 
   &-combo-filterName-select {
     max-width: 1.72rem;
-    margin-left: 0.12rem;
+    margin-left: 0.08rem;
     border: none;
     border-radius: @border-radius-base;
 
-    input.@{c7n-pro-prefix}-select {
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+    input.@{select-prefix-cls} {
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
     }
 
     &:hover {
-      background-color: fade(@primary-color, 10%);
+      background-color: @item-hover-bg;
     }
   }
 
-  &-combo-filter-title-divide + &-combo-filterName-select {
+  &-combo-filter-title-divide+&-combo-filterName-select {
     margin-left: 0.08rem;
   }
 
-  &-combo-filterName-select.@{c7n-pro-prefix}-select-focused {
+  &-combo-filterName-select.@{select-prefix-cls}-focused {
     color: @primary-color;
 
-    input.@{c7n-pro-prefix}-select {
+    input.@{select-prefix-cls} {
       color: @primary-color;
     }
   }
 
   &-combo-filterName-select-content {
-    .@{c7n-pro-prefix}-select-dropdown-menu {
+    .@{select-prefix-cls}-dropdown-menu {
       padding: 0;
 
       &-item-group {
         padding: 0;
 
-        &-list > .@{c7n-pro-prefix}-select-dropdown-menu-item {
+        &-list>.@{select-prefix-cls}-dropdown-menu-item {
           margin: 0 0.08rem 0.04rem 0.08rem;
           padding-left: 0.14rem;
           border-radius: @border-radius-base;
         }
 
-        &-list > .@{c7n-pro-prefix}-select-dropdown-menu-item-selected {
+        &-list>.@{select-prefix-cls}-dropdown-menu-item-selected {
           color: @primary-color;
         }
       }
@@ -891,23 +1281,24 @@
 
     label {
       input::-webkit-input-placeholder { // 谷歌
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input:-moz-placeholder { //火狐
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input::-moz-placeholder {
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
       input:-ms-input-placeholder { //微软
-        color: fade(@text-color, 45%);
+        color: @text-color-secondary;
       }
 
-      .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
-        color: fade(@text-color, 45%);
+      .@{c7n-pro-prefix}-input-number-placeholder,
+      .@{select-prefix-cls}-placeholder {
+        color: @text-color-secondary;
       }
     }
 
@@ -943,11 +1334,14 @@
       }
     }
 
-    input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+    input.@{select-prefix-cls},
+    input.@{c7n-pro-prefix}-input,
+    input.@{c7n-pro-prefix}-input-number,
+    input.@{c7n-pro-prefix}-calendar-picker {
       box-sizing: content-box;
       min-width: unset;
       max-width: 4rem;
-      height: @input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2;
+      height: calc(@input-height-base - @input-padding-vertical-base * 2 - @border-width-base * 2);
       margin: 0;
       overflow: hidden;
       white-space: nowrap;
@@ -956,27 +1350,29 @@
       &-required {
         background-color: transparent;
 
-        & > label {
+        &>label {
           align-items: center;
         }
 
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           display: inline-block;
           width: .08rem;
           margin-left: .04rem;
           color: @label-required-color;
-          font-family: SimSun, sans-serif;
+          font-family: @font-family-required-symbol;
           vertical-align: middle;
           content: "*";
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           &::before {
             display: inline-block;
             width: .08rem;
             margin-left: .04rem;
             color: @label-required-color;
-            font-family: SimSun, sans-serif;
+            font-family: @font-family-required-symbol;
             vertical-align: middle;
             content: "*";
           }
@@ -984,17 +1380,20 @@
       }
 
       &-multiple {
-        & > label::before { // 谷歌
+        &>label::before {
+          // 谷歌
           content: "";
         }
       }
 
       &-invalid {
-        input::-webkit-input-placeholder { // 谷歌
+        input::-webkit-input-placeholder {
+          // 谷歌
           color: @error-color;
         }
 
-        input:-moz-placeholder { //火狐
+        input:-moz-placeholder {
+          //火狐
           color: @error-color;
         }
 
@@ -1002,28 +1401,34 @@
           color: @error-color;
         }
 
-        input:-ms-input-placeholder { //微软
+        input:-ms-input-placeholder {
+          //微软
           color: @error-color;
         }
 
-        .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+        .@{c7n-pro-prefix}-input-number-placeholder,
+        .@{select-prefix-cls}-placeholder {
           color: @error-color;
         }
       }
     }
 
     span:not(.@{table-prefix-cls}-combo-filter-item-overlay) {
-      input.@{c7n-pro-prefix}-select, input.@{c7n-pro-prefix}-input, input.@{c7n-pro-prefix}-input-number, input.@{c7n-pro-prefix}-calendar-picker {
+
+      input.@{select-prefix-cls},
+      input.@{c7n-pro-prefix}-input,
+      input.@{c7n-pro-prefix}-input-number,
+      input.@{c7n-pro-prefix}-calendar-picker {
         width: auto;
       }
     }
 
-    .@{c7n-pro-prefix}-select,
+    .@{select-prefix-cls},
     .@{c7n-pro-prefix}-input,
     .@{c7n-pro-prefix}-input-number,
     .@{c7n-pro-prefix}-calendar-picker,
     .@{c7n-pro-prefix}-cascader {
-      & > ul {
+      &>ul {
         flex-wrap: nowrap;
       }
 
@@ -1040,7 +1445,7 @@
   }
 
   &-thead-inline-search-last {
-    box-shadow: -@border-width-base 0 0 @table-border-color;
+    box-shadow: calc(-1 * @border-width-base) 0 0 @table-border-color;
   }
 
   &-inline-query {

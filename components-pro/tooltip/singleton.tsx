@@ -10,6 +10,7 @@ import React, {
   useState,
 } from 'react';
 import { render } from 'react-dom';
+import defer from 'lodash/defer';
 import { TooltipManager } from 'choerodon-ui/shared';
 import { TooltipContainerRef, TooltipManagerType } from 'choerodon-ui/shared/tooltip-manager';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -61,7 +62,7 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
   }), [open, close]);
 
   return (
-    <Tooltip {...tooltipProps} onPopupMouseEnter={handlePopupMouseEnter} onPopupMouseLeave={handlePopupMouseLeave} />
+    <Tooltip {...tooltipProps} onPopupMouseEnter={()=>defer(handlePopupMouseEnter)} onPopupMouseLeave={handlePopupMouseLeave} />
   );
 });
 

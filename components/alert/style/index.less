@@ -3,29 +3,27 @@
 
 @alert-prefix-cls: ~'@{c7n-prefix}-alert';
 
-@alert-message-color: @heading-color;
-@alert-text-color: @text-color;
-
 .@{alert-prefix-cls} {
   .reset-component;
   position: relative;
   display: flex;
-  padding: 0.08rem 0.15rem 0.08rem 0.37rem;
+  padding: @alert-padding;
   word-break: break-all;
-  border-radius: @border-radius-base;
+  border-radius: @alert-border-radius;
 
   &-content{
     flex: 1;
   }
 
   &-close-wrapper {
-    margin-left: 0.16rem;
+    margin: @alert-close-wrapper-margin;
+    padding: @alert-close-wrapper-padding;
     background-color: transparent;
     border: none;
   }
 
   &&-no-icon {
-    padding: 0.08rem 0.15rem;
+    padding: @alert-no-icon-padding;
   }
 
   &-icon {
@@ -34,15 +32,21 @@
     left: @alert-icon-left;
   }
 
+  &-message {
+    color: @alert-message-color;
+    font-size: @alert-message-font-size;
+    line-height: @alert-message-line-height;
+  }
+
   &-description {
     display: none;
     font-size: @font-size-base;
-    line-height: 0.22rem;
+    line-height: @alert-description-line-height;
   }
 
   &-success {
-    background-color: ~`colorPalette('@{success-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{success-color}', 3) `;
+    background-color: @success-1;
+    border: @alert-border-width @border-style-base @success-3;
 
     .@{alert-prefix-cls}-icon {
       color: @success-color;
@@ -50,8 +54,8 @@
   }
 
   &-info {
-    background-color: ~`colorPalette('@{info-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{info-color}', 3) `;
+    background-color: @info-1;
+    border: @alert-border-width @border-style-base @info-3;
 
     .@{alert-prefix-cls}-icon {
       color: @info-color;
@@ -59,8 +63,8 @@
   }
 
   &-warning {
-    background-color: ~`colorPalette('@{warning-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{warning-color}', 3) `;
+    background-color: @warning-1;
+    border: @alert-border-width @border-style-base @warning-3;
 
     .@{alert-prefix-cls}-icon {
       color: @warning-color;
@@ -68,8 +72,8 @@
   }
 
   &-error {
-    background-color: ~`colorPalette('@{error-color}', 1) `;
-    border: @border-width-base @border-style-base ~`colorPalette('@{error-color}', 3) `;
+    background-color: @error-1;
+    border: @alert-border-width @border-style-base @error-3;
 
     .@{alert-prefix-cls}-icon {
       color: @error-color;
@@ -99,21 +103,21 @@
 
   &-with-description {
     align-items: flex-start;
-    padding: 0.15rem 0.15rem 0.15rem 0.64rem;
+    padding: @alert-with-description-padding;
     color: @text-color;
     line-height: @line-height-base;
     border-radius: @border-radius-base;
   }
 
   &-with-description&-no-icon {
-    padding: 0.15rem;
+    padding: @alert-with-description-no-icon-padding;
   }
 
   &-with-description &-icon {
     position: absolute;
-    top: 0.16rem;
-    left: 0.24rem;
-    font-size: 0.24rem;
+    top: @alert-with-description-icon-top;
+    left: @alert-with-description-icon-left;
+    font-size: @alert-with-description-icon-size;
   }
 
   &-with-description &-close-icon {
@@ -123,9 +127,9 @@
 
   &-with-description &-message {
     display: block;
-    margin-bottom: 0.04rem;
+    margin: @alert-with-description-message-margin;
     color: @alert-message-color;
-    font-size: @font-size-lg;
+    font-size: @alert-with-description-message-font-size;
   }
 
   &-with-description &-description {

@@ -22,6 +22,7 @@ const StickyShadow: FunctionComponent<StickyShadowProps> = function StickyShadow
   }
   const classString = classNames({
     [`${prefixCls}-sticky-shadow`]: !children,
+    [`${prefixCls}-sticky-shadow-no-transition`]: !tableStore.tableColumnResizeTransition,
     [`${prefixCls}-fixed-left`]: children && position === 'left',
     [`${prefixCls}-fixed-right`]: children && position === 'right',
     [`${prefixCls}-sticky-left`]: position === 'left' && tableStore.stickyLeft,

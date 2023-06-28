@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, memo } from 'react';
 import Icon from 'choerodon-ui/lib/icon';
-import difference from 'lodash/difference';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
 import Field from '../../data-set/Field';
@@ -27,10 +26,42 @@ type FieldListProps = {
 
 const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
   const [searchText, setSearchText] = useState('');
-  const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => o.get('name'))], []), [groups]);
-  const labelCodes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => [o.get('name'), o.get('label')])], []), [groups]);
-  const hasSelect = useMemo(() => value.length > 0, [value.length]);
-  const hasSelectAll = useMemo(() => difference(codes, value).length === 0, [codes.length, value.length]);
+  const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => {
+    const hasBindProps = (propsName) => o && o.get(propsName) && o.get(propsName).bind;
+    if (!o.get('bind') &&
+      !hasBindProps('computedProps') &&
+      !hasBindProps('dynamicProps')) {
+      return o.get('name');
+    }
+    return undefined;
+  })], []), [groups]);
+  const labelCodes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => {
+    const hasBindProps = (propsName) => o && o.get(propsName) && o.get(propsName).bind;
+    if (!o.get('bind') &&
+      !hasBindProps('computedProps') &&
+      !hasBindProps('dynamicProps')) {
+      return [o.get('name'), o.get('label')]
+    }
+    return undefined;
+  })], []), [groups]);
+  const hasSelect = useMemo(() => {
+    const isSelect = labelCodes.some(lc => {
+      if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+        return value.includes(lc[0]);
+      }
+      return false;
+    });
+    return isSelect;
+  }, [value.length, searchText]);
+  const hasSelectAll = useMemo(() => {
+    const isAll = labelCodes.some(lc => {
+      if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+        return !value.includes(lc[0]);
+      }
+      return false;
+    });
+    return !isAll;
+  }, [searchText, value.length]);
   const isChecked = useCallback((code: string) => value.includes(code), [value]);
   const handleChange = useCallback((code: string | string[], select: boolean) => {
     if (select) {
@@ -44,14 +75,18 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
       <div className={`${prefixCls}-list`}>
         {group.fields.map((field) => {
           const code = field.get('name');
-          const label = field.get('label');
+          const label = field.get('label') || code;
           const checked = isChecked(code);
-          if (label && label.includes(searchText || '')) {
+          const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
+          if (
+            label && label.includes(searchText || '') &&
+            !field.get('bind') &&
+            !hasBindProps('computedProps') &&
+            !hasBindProps('dynamicProps')) {
             return (
               <div className={`${prefixCls}-item`} key={code}>
                 <CheckBox
                   value={code}
-                  disabled={field.get('disabled')}
                   checked={checked}
                   onChange={() => handleChange(code, !checked)}
                 >
@@ -105,8 +140,8 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           className={`${prefixCls}-search-action`}
           onClick={() => {
             const values = labelCodes.map(lc => {
-              if (lc[1] && lc[1].includes(searchText || '')) {
-                return lc[0]
+              if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+                return lc[0];
               }
               return undefined;
             }).filter(v => !!v);
@@ -120,8 +155,8 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           className={`${prefixCls}-search-action`}
           onClick={() => {
             const values = labelCodes.map(lc => {
-              if (lc[1] && lc[1].includes(searchText || '')) {
-                return lc[0]
+              if (lc && (lc[1] && lc[1].includes(searchText || '') || lc[1] === undefined)) {
+                return lc[0];
               }
               return undefined;
             }).filter(v => !!v);

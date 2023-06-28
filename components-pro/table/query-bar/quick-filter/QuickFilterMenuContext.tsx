@@ -7,6 +7,7 @@ import { Fields } from '../../../data-set/Field';
 export interface QuickFilterProps {
   prefixCls?: string;
   searchCode?: string;
+  searchText?: string;
   expand?: boolean;
   dynamicFilterBar?: DynamicFilterBarConfig;
   dataSet: DataSet;
@@ -19,6 +20,7 @@ export interface QuickFilterProps {
   autoQuery?: boolean;
   selectFields?: string[];
   onOriginalChange?: (fieldName?: string | string[]) => void;
+  loadConditionData?: ({ conditionDataSet, newFilterDataSet, menuRecord, dataSet, searchText }: { conditionDataSet: any; newFilterDataSet: any; menuRecord: any; dataSet: any; searchText: any; }) => void;
 }
 
 export interface QuickFilterContextValue extends QuickFilterProps {
@@ -26,8 +28,10 @@ export interface QuickFilterContextValue extends QuickFilterProps {
   filterMenuDataSet: DataSet;
   conditionDataSet: DataSet;
   optionDataSet: DataSet;
+  newFilterDataSet: DataSet;
   shouldLocateData: boolean;
   refEditors?: Map<string, any>;
+  defaultActiveKey?: string;
 }
 
 const ds = {} as DataSet;
@@ -38,7 +42,9 @@ const Store: Context<QuickFilterContextValue> = createContext<QuickFilterContext
   filterMenuDataSet: ds,
   conditionDataSet: ds,
   optionDataSet: ds,
+  newFilterDataSet: ds,
   shouldLocateData: false,
+  searchText: 'params',
 });
 
 export default Store;

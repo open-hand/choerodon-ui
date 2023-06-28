@@ -2,32 +2,48 @@
 @import '../../style/mixins/index';
 
 @tab-prefix-cls: ~'@{c7n-prefix}-tabs';
-@tabs-card-min-width: 40px;
 
 // card style
 .@{tab-prefix-cls} {
+  &-card {
+    & > .@{tab-prefix-cls}-bar {
+      border-bottom: @tabs-card-bar-border;
+    }
+    &.@{tab-prefix-cls}-bottom {
+      .@{tab-prefix-cls}-bar {
+        border-top: @tabs-card-bar-border;
+        border-bottom: none;
+      }
+    }
+  }
   &&-card > &-bar &-nav-container {
     align-self: flex-end;
     height: @tabs-card-height;
+    font-size: @tabs-card-font-size;
   }
   &&-card > &-bar &-ink-bar {
     display: none;
   }
   &&-card > &-bar &-tab {
     margin: 0;
-    margin-right: 0.02rem;
-    padding: 0 0.16rem;
-    line-height: @tabs-card-height - 0.02rem;
+    margin-right: @tabs-card-tab-margin-right;
+    padding: @tabs-card-tab-padding;
+    line-height: calc(@tabs-card-height - 0.02rem);
     background: @tabs-card-head-background;
-    border: @border-width-base @border-style-base @border-color-split;
-    border-bottom: 0;
-    border-radius: @border-radius-base @border-radius-base 0 0;
-    transition: all @animation-duration-slow @ease-in-out;
+    border: @tabs-card-tab-border;
+    border-bottom: @tabs-card-tab-border-bottom;
+    border-radius: @tabs-card-border-radius;
+    transition: @tabs-card-tab-transition;
+
+    &:hover {
+      background: @tabs-card-hover-background;
+    }
   }
-  &&-card > &-bar &-tab-active {
+  &&-card > &-bar &-tab&-tab-active {
     color: @tabs-card-active-color;
-    background: @component-background;
+    background: @tabs-card-active-background;
     border-color: @border-color-split;
+    border-bottom: @tabs-card-tab-active-border-bottom;
   }
   &&-card > &-bar &-tab-inactive {
     padding: 0;
@@ -74,6 +90,7 @@
     display: flex;
     align-items: center;
     height: @tabs-card-height;
+    margin-left: 0.02rem;
     .@{tab-prefix-cls}-extra-bar {
       display: flex;
     }
@@ -84,7 +101,6 @@
       width: 100%;
       min-width: @tabs-card-min-width;
       background: @component-background;
-      border-left: @border-width-base @border-style-base @border-color-split;
       outline: none;
       cursor: pointer;
       transition: all @animation-duration-slow cubic-bezier(.645,.045,.355,1);
@@ -123,7 +139,7 @@
     min-width: @tabs-card-min-width;
     height: inherit;
     margin-right: 0.02rem;
-    line-height: @tabs-card-height - 0.02rem;
+    line-height: calc(@tabs-card-height - 0.02rem);
     background: @tabs-card-head-background;
     border: @border-width-base @border-style-base @border-color-split;
     border-radius: @border-radius-base @border-radius-base 0 0;
@@ -132,6 +148,7 @@
     transition: all @animation-duration-slow @ease-in-out;
     &:hover {
       color: @tabs-card-active-color;
+      background: @tabs-card-hover-background;
     }
   }
   &-nav-add-fixed{
@@ -218,5 +235,16 @@
 
   &&-card&-bottom > &-bar &-tab-active {
     color: @primary-color;
+  }
+  &&-card &-tab-prev,
+  &&-card &-tab-next {
+    &.@{tab-prefix-cls}-tab-arrow-show {
+      background: @tabs-card-arrow-show-background-color;
+      border: @tabs-card-arrow-show-border;
+      border-radius: @tabs-card-arrow-show-border-radius;
+      &:not(.@{tab-prefix-cls}-tab-btn-disabled):hover {
+        background: @tabs-card-arrow-show-hover-background-color;
+      }
+    }
   }
 }

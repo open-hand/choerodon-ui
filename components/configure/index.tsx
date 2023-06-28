@@ -8,7 +8,7 @@ import {
   Formatter,
   Status,
 } from 'choerodon-ui/dataset/configure';
-import { Tooltip } from 'choerodon-ui/pro/lib/core/enum';
+import { Tooltip, FieldFocusMode } from 'choerodon-ui/pro/lib/core/enum';
 import {
   expandIconProps,
   Suffixes,
@@ -31,16 +31,17 @@ import {
 } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
-import { LabelLayout, ShowValidation } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation, LabelAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
 import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
-import { ColumnProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
+import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
+import { BoardCustomized } from 'choerodon-ui/pro/lib/board/interface';
 import { Action } from '../trigger/enum';
 import { Size } from '../_util/enum';
 import { TooltipPlacement, TooltipTheme } from '../tooltip';
@@ -85,6 +86,7 @@ export type TooltipPlacementHook = (target?: TooltipTarget) => TooltipPlacement;
 export type LovTablePropsHook = (multiple?: boolean) => Partial<TableProps>;
 
 export type LovViewTarget = 'modal' | 'drawer';
+
 /**
  * @deprecated
  */
@@ -99,6 +101,7 @@ export type Customizable = {
   PerformanceTable?: boolean;
   Tabs?: boolean;
   Modal?: boolean;
+  Board?: boolean;
 }
 
 export interface Customized {
@@ -106,10 +109,11 @@ export interface Customized {
   PerformanceTable?: PerformanceTableCustomized;
   Tabs?: TabsCustomized;
   Modal?: ModalCustomized;
+  Board?: BoardCustomized | BoardCustomized[] | any;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component: T) => void;
-export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T) => Promise<Customized[T] | null>;
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T) => void;
+export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T, params?: any) => Promise<Customized[T] | null>;
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
@@ -122,7 +126,7 @@ export interface Config extends DataSetConfig {
   iconfontPrefix?: string;
   ripple?: boolean;
   collapseExpandIconPosition?: string;
-  collapseExpandIcon?: (panelProps: PanelProps) => ReactNode | 'text';
+  collapseExpandIcon?: ((panelProps: PanelProps) => ReactNode) | 'text';
   collapseTrigger?: string;
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
   lovTableProps?: Partial<TableProps> | LovTablePropsHook;
@@ -134,10 +138,17 @@ export interface Config extends DataSetConfig {
   lovSelectionProps?: SelectionProps;
   lovNoCache?: boolean;
   labelLayout?: LabelLayout;
+  /**
+   * form 标签文字对齐方式
+   * 可选值： 'left' | 'center' | 'right'
+   * @default right;
+   */
+  labelAlign?: LabelAlign;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
-  tableVirtual?: boolean;
+  tableVirtual?: boolean | ((rows: number, columns: number) => boolean);
   tableVirtualCell?: boolean;
+  tableVirtualBuffer?: { columnBuffer?: number; columnThreshold?: number; };
   tableBorder?: boolean;
   tableColumnEditorBorder?: boolean;
   tableHighLightRow?: boolean | HighLightRowType;
@@ -166,10 +177,12 @@ export interface Config extends DataSetConfig {
   tableColumnDefaultWidth?: number;
   tableColumnDefaultMinWidth?: number;
   tableColumnResizeTrigger?: TableColumnResizeTriggerType;
+  tableColumnFilterPopover?: (props: FilterPopoverProps) => ReactNode;
   tableAggregationColumnDefaultWidth?: number;
   tableAggregationColumnDefaultMinWidth?: number;
   tableShowCachedTips?: boolean;
   tableShowSelectionTips?: boolean;
+  tableShowSortIcon?: boolean;
   tableAlwaysShowRowBox?: boolean;
   tableUseMouseBatchChoose?: boolean;
   tableEditorNextKeyEnterDown?: boolean;
@@ -207,6 +220,8 @@ export interface Config extends DataSetConfig {
   selectReverse?: boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
+  selectBoxSearchable?: boolean;
+  selectReserveParam?: boolean;
   selectTrigger?: Action[];
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
@@ -223,7 +238,11 @@ export interface Config extends DataSetConfig {
   /**
    * 聚焦类型：checked 默认聚焦选中文本，focus 聚焦显示光标
    */
-  fieldFocusMode?: 'checked' | 'focus';
+  fieldFocusMode?: FieldFocusMode;
+  /**
+   * 是否聚焦到 Form 可编辑的第一个表单组件上
+   */
+  formAutoFocus?: boolean;
   /**
    * 是否显示长度信息
    */

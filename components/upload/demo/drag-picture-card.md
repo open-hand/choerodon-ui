@@ -20,6 +20,7 @@ class PicturesWall extends React.Component {
   state = {
     previewVisible: false,
     previewImage: '',
+    previewTitle: '',
     fileList: [{
       uid: -1,
       name: 'xxx.png',
@@ -49,13 +50,14 @@ class PicturesWall extends React.Component {
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
+      previewTitle: file.name,
     });
   }
 
   handleChange = ({ fileList }) => this.setState({ fileList })
   
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { previewVisible, previewImage, previewTitle, fileList } = this.state;
     const uploadButton = (
       <div>
         <Icon type="add" />
@@ -74,8 +76,8 @@ class PicturesWall extends React.Component {
         >
           {fileList.length >= 8 ? null : uploadButton}
         </Upload>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={this.handleCancel}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} className="modal-preview-image"/>
         </Modal>
       </div>
     );
@@ -95,5 +97,9 @@ ReactDOM.render(<PicturesWall />, mountNode);
 .c7n-upload-select-picture-card .c7n-upload-text {
   margin-top: 8px;
   color: #666;
+}
+
+.modal-preview-image {
+  margin-top: 8px;
 }
 ````

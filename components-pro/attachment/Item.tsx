@@ -1,17 +1,21 @@
-import React, { FunctionComponent, isValidElement, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
+import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
+import { isArrayLike } from 'mobx';
 import classnames from 'classnames';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
+import noop from 'lodash/noop';
 import { Size } from 'choerodon-ui/lib/_util/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
 import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
-import { AttachmentListType } from './Attachment';
+import { AttachmentButtons, AttachmentButtonType, AttachmentListType } from './Attachment';
 import Picture, { PictureForwardRef, PictureProps } from '../picture/Picture';
 import Button, { ButtonProps } from '../button/Button';
 import { FuncType } from '../button/enum';
@@ -19,6 +23,7 @@ import { hide, show } from '../tooltip/singleton';
 import { formatFileSize } from './utils';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
+import { TableButtonProps } from '../table/interface';
 
 export const ATTACHMENT_TARGET = 'attachment-preview';
 
@@ -45,12 +50,13 @@ export interface ItemProps {
   hidden?: boolean;
   isPublic?: boolean;
   previewTarget?: string;
+  buttons?: AttachmentButtons[];
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -204,7 +210,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       </a>
     ) : fileName;
     return (
-      <span className={`${prefixCls}-title`} style={isCardTitle ? { width } : undefined}>
+      <span className={`${prefixCls}-title`} style={isCardTitle ? { width: pxToRem(width) } : undefined}>
         {nameNode}
         {!isCardTitle && showSize && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>
@@ -224,6 +230,44 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       );
     }
   };
+
+
+  const getButtonProps = (type: AttachmentButtonType)
+    : ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined => {
+    const commonProps = {
+      className: classnames(`${prefixCls}-icon`),
+      funcType: FuncType.link,
+      block: isCard,
+    }
+    switch (type) {
+      case AttachmentButtonType.download:
+        return {
+          ...commonProps,
+          icon: isCard ? 'arrow_downward' : 'get_app',
+          href: isString(downloadUrl) ? downloadUrl : undefined,
+          onClick: isFunction(downloadUrl) ? downloadUrl : noop,
+          target: previewTarget,
+        }
+      case AttachmentButtonType.remove:
+        return {
+          ...commonProps,
+          icon: isCard ? 'delete_forever-o' : 'close',
+          onClick: () => onRemove(attachment),
+        }
+      case AttachmentButtonType.history:
+        if (onHistory && attachmentUUID) {
+          return {
+            ...commonProps,
+            icon: 'library_books',
+            onClick: () => onHistory(attachment, attachmentUUID),
+          }
+        }
+        return { onClick: noop };
+      default:
+        break;
+    }
+  }
+
   const renderButtons = (): ReactNode => {
     const buttons: ReactNode[] = [];
     if (!readOnly && status === 'error' && !attachment.invalid) {
@@ -237,52 +281,71 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       };
       buttons.push(<Button {...upProps} />);
     }
-    if (!status || status === 'success' || status === 'done') {
-      if (attachmentUUID && onHistory) {
-        const historyProps = {
-          className: classnames(`${prefixCls}-icon`),
-          icon: 'library_books',
-          onClick: () => onHistory(attachment, attachmentUUID),
-          funcType: FuncType.link,
-          block: isCard,
-        };
-        buttons.push(
-          <Tooltip key="history" title={$l('Attachment', 'view_operation_records')}>
-            <Button {...historyProps} />
-          </Tooltip>,
-        );
+    
+    fileButtons!.forEach(btn => {
+      let btnProps: TableButtonProps = {};
+      if (isArrayLike(btn)) {
+        btnProps = (btn[1] as TableButtonProps) || {};
+        btn = btn[0] as AttachmentButtonType;
       }
-      if (downloadUrl) {
-        const downProps = {
-          className: classnames(`${prefixCls}-icon`),
-          icon: isCard ? 'arrow_downward' : 'get_app',
-          funcType: FuncType.link,
-          href: isString(downloadUrl) ? downloadUrl : undefined,
-          onClick: isFunction(downloadUrl) ? downloadUrl : undefined,
-          target: previewTarget,
-          block: isCard,
-        };
-        buttons.push(
-          <Tooltip key="download" title={$l('Attachment', 'download')}>
-            <Button {...downProps} />
-          </Tooltip>,
-        );
+      if (isString(btn) && btn in AttachmentButtonType) {
+        const defaultButtonProps = getButtonProps(btn);
+        if (defaultButtonProps) {
+          const index = fileButtons!.indexOf(btn);
+          switch (btn) {
+            case AttachmentButtonType.history:
+              if (attachmentUUID && onHistory && (!status || status === 'success' || status === 'done')) {
+                buttons.splice(
+                  index,
+                  1,
+                  <Tooltip key={btn} title={$l('Attachment', 'view_operation_records')}>
+                    <Button
+                      {...defaultButtonProps}
+                      {...btnProps}
+                    />
+                  </Tooltip>,
+                );
+              }
+              break;
+            case AttachmentButtonType.download:
+              if (downloadUrl && (!status || status === 'success' || status === 'done')) {
+                buttons.splice(
+                  index,
+                  1,
+                  <Tooltip key={btn} title={$l('Attachment', 'download')}>
+                    <Button
+                      {...defaultButtonProps}
+                      {...btnProps}
+                    />
+                  </Tooltip>,
+                );
+              }
+              break;
+            case AttachmentButtonType.remove:
+              if (attachmentUUID && !readOnly && status !== 'uploading') {
+                buttons.splice(
+                  index,
+                  1,
+                  <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
+                    <Button
+                      {...defaultButtonProps}
+                      {...btnProps}
+                    />
+                  </Tooltip>,
+                );
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      } else if (isValidElement<ButtonProps>(btn)) {
+        buttons.push(cloneElement(btn, { ...btn.props }));
+      } else if (isObject(btn)) {
+        buttons.push(<Button {...(btn as TableButtonProps)} />);
       }
-    }
-    if (attachmentUUID && !readOnly && status !== 'uploading') {
-      const rmProps = {
-        className: classnames(`${prefixCls}-icon`),
-        icon: isCard ? 'delete_forever-o' : 'close',
-        onClick: () => onRemove(attachment),
-        funcType: FuncType.link,
-        block: isCard,
-      };
-      buttons.push(
-        <Tooltip key="remove" title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
-          <Button {...rmProps} />
-        </Tooltip>,
-      );
-    }
+    });
+
     if (buttons.length) {
       return (
         <div className={classnames(`${prefixCls}-buttons`, { [`${prefixCls}-buttons-visible`]: status === 'deleting' })}>

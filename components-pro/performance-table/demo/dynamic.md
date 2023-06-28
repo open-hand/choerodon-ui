@@ -113,6 +113,7 @@ class DynamicTable extends React.Component {
         <hr />
         <br />
         <PerformanceTable
+          rowKey='id'
           showScrollArrow
           height={400}
           data={this.state.data}

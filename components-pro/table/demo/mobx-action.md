@@ -76,7 +76,7 @@ const App = observer(() => {
     },
   });
 
-  const buttons = [<HeaderButtons dataSet={userDs} />];
+  const buttons = [<HeaderButtons dataSet={userDs} key='header-buttons'/>];
   const columns = [
     {
       name: 'userid',

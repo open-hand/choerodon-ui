@@ -38,12 +38,14 @@ const TimelineItem: FunctionComponent<TimeLineItemProps> = function TimelineItem
     [`${prefixCls}-item-head-${color}`]: true,
   });
 
+  const customColor = /blue|red|green/.test(color) ? undefined : color;
+
   return (
     <li {...restProps} className={itemClassName}>
       <div className={`${prefixCls}-item-tail`} />
       <div
         className={dotClassName}
-        style={{ borderColor: /blue|red|green/.test(color) ? undefined : color }}
+        style={{ borderColor: customColor, color: customColor }}
       >
         {dot}
       </div>

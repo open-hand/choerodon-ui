@@ -154,3 +154,8 @@ export enum DateMode {
   year = 'year',
   decade = 'decade',
 }
+
+export enum DownloadAllMode {
+  readOnly = 'readOnly',
+  always = 'always',
+}

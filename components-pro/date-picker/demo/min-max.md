@@ -91,6 +91,34 @@ const minMaxFilter = (disabledDate) => {
   }
 }
 
+function filterRangeDate(currentDate, selected, mode, rangeTarget, rangeValue) {
+  // range模式过滤
+  // 限制：开始日期小于等于结束日期，结束日期大于等于开始日期
+  if (!currentDate) return true;
+  const [startValue, endValue] = Array.isArray(rangeValue) ? rangeValue : [];
+  if (rangeTarget === 0 && endValue) {
+    if (mode === 'decade' || mode === 'year') {
+      return currentDate.year() <= endValue.year();
+    } else if (mode === 'month') {
+      return currentDate.year() < endValue.year() ||
+        (currentDate.year() === endValue.year() && currentDate.month() <= endValue.month());
+    }
+    return currentDate.isBefore(endValue) || currentDate.isSame(endValue);
+  }
+  if (rangeTarget === 1 && startValue) {
+    if (mode === 'decade') {
+      return currentDate.year() + 9 >= startValue.year();
+    } else if (mode === 'year') {
+      return currentDate.year() >= startValue.year();
+    } else if (mode === 'month') {
+      return currentDate.year() > startValue.year() ||
+        (currentDate.year() === startValue.year() && currentDate.month() >= startValue.month());
+    }
+    return currentDate.isAfter(startValue) || currentDate.isSame(startValue);
+  }
+  return true;
+}
+
 @observer
 class App extends React.Component {
   ds = new DataSet({
@@ -108,6 +136,11 @@ class App extends React.Component {
       },
       { name: 'startFilter', type: 'date' },
       { name: 'endFilter', type: 'date' },
+      {
+        name: 'date2',
+        type: 'date',
+        range: true,
+      },
     ],
   });
 
@@ -137,6 +170,9 @@ class App extends React.Component {
         </Col>
         <Col span={12}>
           <DatePicker dataSet={this.ds} name="endFilter" filter={minMaxFilter(maxDisabledDate(this.ds))} placeholder="max by filter" />
+        </Col>
+        <Col span={24}>
+          <DatePicker dataSet={this.ds} name="date2" placeholder={['Start Date', 'End Date']}  filter={filterRangeDate} />
         </Col>
       </Row>
     );

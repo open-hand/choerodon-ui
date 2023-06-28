@@ -16,16 +16,31 @@
   }
 }
 
+.@{intl-prefix-textarea} {
+  &-suffix-button {
+    .@{intl-prefix-textarea-intl} {
+      &.icon-language {
+        color: @input-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 /* 多行 */
 .@{intl-prefix-textarea-intl} {
   .@{intl-prefix-textarea} {
-    width: calc(100% - @input-suffix-width-base);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
     &-suffix {
+      position: relative;
+      top: 0;
       right: 0;
-      height: 100%;
+      bottom: 0;
+      min-width: @input-suffix-width-base;
+      height: auto;
+      margin: 0;
       border: @border-width-base none @input-border-color;
       border-left: 0;
       border-top-right-radius: @input-border-radius;
@@ -40,7 +55,7 @@
     }
   }
 
-  label:hover .@{intl-prefix-textarea}-suffix,
+  label:hover .@{intl-prefix-textarea} ~ .@{intl-prefix-textarea}-suffix,
   .@{intl-prefix-textarea}:hover ~ .@{intl-prefix-textarea}-suffix {
     border-color: @input-hover-border-color;
   }
@@ -67,7 +82,7 @@
     }
   }
 
-  &.@{intl-prefix-textarea}-required-colors label:hover {
+  &.@{intl-prefix-textarea}-required-colors:not(&-invalid) label:hover {
     .@{intl-prefix-textarea}-suffix {
       border-color: @input-required-hover-border-color;
     }
@@ -82,6 +97,21 @@
         box-shadow: @input-active-box-shadow;
       }
     }
+  }
+
+  &.@{intl-prefix-textarea}-required-colors .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-required-colors.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
+    border-color: @input-required-focus-border-color;
+    box-shadow: @input-required-active-box-shadow;
+  }
+
+  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:hover ~ .@{intl-prefix-textarea}-suffix {
+    border-color: @input-error-border-color;
+  }
+  &.@{intl-prefix-textarea}-invalid .@{intl-prefix-textarea}:focus ~ .@{intl-prefix-textarea}-suffix,
+  &.@{intl-prefix-textarea}-invalid.@{intl-prefix-textarea}-focused .@{intl-prefix-textarea}-suffix {
+    border-color: @input-error-border-color;
+    box-shadow: @input-error-active-box-shadow;
   }
 
   /* 校验失败 */

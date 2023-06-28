@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { Children, cloneElement, Component, ReactElement, ReactNode, ReactText } from 'react';
 import classNames from 'classnames';
 import { action, observable, runInAction } from 'mobx';
@@ -64,7 +65,7 @@ export interface ListProps {
     size?: string,
     onShowSizeChange?: Function;
   };
-  pagination?: TablePaginationConfig | false;
+  pagination?: TablePaginationConfig | boolean;
   prefixCls?: string;
   rowPrefixCls?: string;
   spinPrefixCls?: string;

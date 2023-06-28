@@ -48,6 +48,7 @@ title: Attachment
 | attachments | 附件列表 | (AttachmentFile \| FileLike)[] |  |
 | showValidation | 校验信息展示方式 | `newLine` \| `tooltip` | `viewMode` == `popup` ? `tooltip` : `newLine` |
 | getUUID | 获取 uuid | () => Promise<string> \| string | [attachment.getAttachmentUUID](/component/configure/#Attachment) |
+| buttons | 功能按钮，默认存在`download` 和 `remove`值，可传递数组、自定义按钮或按钮配置属性对象，数组为可选值字符串+按钮配置属性对象（非默认按钮需添加唯一 key） | string[] \| \[string, object\] \| ReactNode[] \| object | [['download', 'remove']] |
 | onAttachmentsChange | 附件列表变更事件 | (AttachmentFile[]) => void |  |
 | beforeUpload | 上传文件之前的钩子，参数为上传的文件，可对文件在上传之前进行校验操作若返回 false 则停止上传并从列表充删除。支持返回一个 Promise 对象，Promise 对象 reject 或 resolve(false) 时则停止上传，resolve 时开始上传。 | (attachment: AttachmentFile, list: AttachmentFile[]) => (boolean \| Promise) | - |
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | 无 |

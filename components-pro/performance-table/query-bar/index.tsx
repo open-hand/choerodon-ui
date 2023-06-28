@@ -41,11 +41,18 @@ export default class PerformanceTableQueryBar extends Component<TableQueryBarPro
   }
 
   @autobind
-  handleQuery() {
+  async handleQuery() {
     const {
-      tableStore: { dataSet },
+      tableStore,
+      tableStore: { dataSet, dataSet: { queryDataSet } },
     } = this.context;
-    return dataSet.query();
+    if (tableStore.queryBar === TableQueryBarType.filterBar) {
+      if (await dataSet.modifiedCheck(undefined, dataSet, 'query') && queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
+        return dataSet.query();
+      }
+    } else {
+      return dataSet.query();
+    }
   }
 
   getQueryFields(): ReactElement<any>[] {

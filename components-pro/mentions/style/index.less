@@ -4,7 +4,7 @@
 @mentions-prefix: ~'@{c7n-pro-prefix}-mentions';
 
 .@{mentions-prefix} {
-  min-height: .3rem;
+  min-height: @input-height-base;
   .input;
 
   &-wrapper {
@@ -31,7 +31,7 @@
 
   &,
   &-placeholder {
-    padding: .07rem @input-padding-horizontal;
+    padding: @textarea-padding;
   }
 
   &-length-info {
@@ -48,7 +48,7 @@
     bottom: 0;
     left: 0;
     z-index: -1;
-    padding: 0.07rem 0.13rem 0.07rem 0.1rem;
+    padding: @mentions-measure-padding;
     overflow: auto;
     color: transparent;
     font-size: inherit;

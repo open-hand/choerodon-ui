@@ -4,6 +4,7 @@ import { action, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -20,6 +21,7 @@ import { LovConfig, ViewRenderer, SelectionProps } from './Lov';
 import { FormContextValue } from '../form/FormContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import Picture from '../picture';
+import ObserverNumberField from '../number-field';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -119,7 +121,11 @@ export default class LovView extends Component<LovViewProps> {
           }
           else if (gridFieldType && gridFieldType.toLowerCase() === 'picture') {
             column.renderer = ({ value }) => (
-              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} /> : undefined
+              value ? <Picture src={value} objectFit="contain" height={"inherit" as any} block={false} /> : undefined
+            );
+          } else if (gridFieldType && gridFieldType.toLowerCase() === 'percent') {
+            column.renderer = ({ value }) => (
+              value ? `${math.multipliedBy(value, 100)}%` : value
             );
           }
           return {
@@ -164,12 +170,13 @@ export default class LovView extends Component<LovViewProps> {
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     const beforeSelect = onBeforeSelect(record);
     if (isPromise(beforeSelect)) {
-      beforeSelect.then(result => {
+      return beforeSelect.then(result => {
         if (result !== false) {
           this.closeModal(record);
         }
       });
-    } else if (beforeSelect !== false) {
+    }
+    if (beforeSelect !== false) {
       this.closeModal(record);
     }
     return false;
@@ -205,7 +212,17 @@ export default class LovView extends Component<LovViewProps> {
   }
 
   @autobind
-  handleSingleRow() {
+  handleSingleRow(props) {
+    const { tableProps } = this.props;
+    if (tableProps) {
+      const { onRow } = tableProps;
+      if (onRow) {
+        return {
+          onClick: this.handleSelect,
+          ...onRow(props),
+        };
+      }
+    }
     return {
       onClick: this.handleSelect,
     };
@@ -220,7 +237,7 @@ export default class LovView extends Component<LovViewProps> {
   renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {} },
+      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {}, lovItems },
       multiple,
       tableProps,
       viewMode,
@@ -232,6 +249,14 @@ export default class LovView extends Component<LovViewProps> {
     const popup = viewMode === TriggerViewMode.popup;
     const modal = viewMode === TriggerViewMode.modal;
     const drawer = viewMode === TriggerViewMode.drawer;
+
+    const percentItems = {};
+    if (lovItems) {
+      lovItems.filter(x => x.gridFieldType && x.gridFieldType.toLowerCase() === 'percent' && x.conditionField === 'Y').forEach(x => {
+        percentItems[x.gridFieldName!] = <ObserverNumberField suffix={<span>%</span>} />;
+      });
+    }
+
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
@@ -243,6 +268,10 @@ export default class LovView extends Component<LovViewProps> {
       selectionMode: SelectionMode.none,
       ...configTableProps,
       ...tableProps,
+      queryFields: {
+        ...(tableProps && tableProps.queryFields),
+        ...percentItems,
+      },
       className: classNames(configTableProps && configTableProps.className, tableProps && tableProps.className),
       style: {
         ...(configTableProps && configTableProps.style),
@@ -280,8 +309,8 @@ export default class LovView extends Component<LovViewProps> {
         lovTableProps.showSelectionCachedButton = false;
         lovTableProps.showCachedSelection = true;
       }
-      const autoWidth = lovTableProps.autoWidth;
-      lovTableProps.autoWidth = autoWidth || true;
+      lovTableProps.autoFocus = false;
+      lovTableProps.autoWidth = 'autoWidth' in lovTableProps ? lovTableProps.autoWidth : true;
       lovTableProps.onColumnResize = this.handleColumnResize;
     }
 

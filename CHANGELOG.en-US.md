@@ -15,7 +15,166 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode` properties.
+- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
+- 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
+- 💄 `<pro>DataSet`: Optimize `childrenField` performance.
+- 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
+- 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
+- 💄 `<pro>TextField`: Optimize suffix width calculation.
+- 💄 `style`: Optimize some component style units.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar input field suffix display logic.
+- 💄 `<pro>PerformanceTable`: Added default suffixes for filtering criteria for character and numerical types in dynamic filter bars.
+- 💄 `<pro>FormField`: Optimize the style of the asterisk.
+- 💄 `<pro>Output`: Optimize `tooltip` control in multiple scenarios.
+- 💄 `<pro>DatePicker`: Optimized the `filter` property to support range mode filtering. Optimized display of disabled elements in the `decade` panel. Optimized today button disable style.
+- 💄 `<pro>DatePicker`: Optimize DatePicker to show line break when selecting year interval on Mac side.
+- 💄 `<pro>Radio`: Optimized the issue of too wide click hot area in `Form`.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar to support front-end multi-column sorting.
+- 💄 Optimize some code implementation.
+- 💄 `<pro>Table`: Optimize query bar performance.
+- 💄 `<pro>Modal`: Keep focus on the Modal.
+- 💄 `<pro>Table`: Optimized `rowBox` display in multiple selection `dblclick` mode.
+- 💄 `Tabs`: Optimize focus switching behavior.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
+- 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
+- 🐞 `Upload`: Fixed issue with ineffective configuration of `showPreviewIcon` or `showDownloadIcon` in `picture-card` mode.
+- 🐞 `PerformanceTable`: Fixed the issue of focusing on abnormal interaction status when setting `onEnterDown` for dynamic filtering criteria.
+- 🐞 `Avatar`: Fix the problem that the Avatar component flips when the text is opened in the Modal pop-up window.
+- 🐞 `<pro>Table`: Fix the floating-point calculation accuracy problem of `summaryBar`.
+- 🐞 `<pro>Table`: Fix an issue where using `addField` to add a query field and the dynamic filter bar to add a field in the filter drop-down would not be updated.
+- 🐞 `<pro>Table`: Fix an issue where deleting filter entries in the dynamic filter bar would abnormally backfill searchId.
+- 🐞 `<pro>Table`: Fix the issue that customization could not change the height after the table was set to height.
+- 🐞 `<pro>Table`: Fixed the style of dynamic filter bar required field validation failure.
+- 🐞 `<pro>Table`: Fixed the problem of misalignment under the case of virtual scrolling without left fixed column.
+- 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
+
+## 1.6.2
+
+`2023-05-23`
+
+- 🌟 `configure`: Added `labelAlign`, `tableVirtualBuffer` properties.
+- 🌟 `Field`: Added `placeholder` attribute definitions.
+- 🌟 `Card`: Added some classnames.
+- 🌟 `<pro>Attachment`: Added `buttons` props.
+- 🌟 `<pro>Form`: Added some classnames.
+- 🌟 `<pro>Table`: Added some classnames.
+- 🌟 `<pro>Table`: Added `columnBuffer` and `columnThreshold` attributes to optimize horizontal virtual scrolling.
+- 🌟 `<pro>FormField & <pro>Table.Column`: Add `tagRenderer` property to support custom multivalue rendering.
+- 🌟 `Upload`: Support preview and download button display in `text` and `picture` modes.
+- 🌟 `<pro>Lov`: When the `viewMode` is `modal`, you can set the `selectionProps` property to customize the rendering of selected records at the bottom of the pop box.
+- 🌟 `<pro>Picture`: Add `modalProps` property and optimize for not displaying navigation when an image.
+- 🌟 `<pro>FormField`: Added the `helpTooltipProps` attribute to support `tooltip` customization of `help` information.
+- 🌟 `<pro>Table`: `onDragEndBefore` adds the `recordIndexFromTo` parameter to get the correct record index when dragging and dropping the tree.
+- 💄 `<pro>Button`: Optimize and correct the difference of overflow determination.
+- 💄 `<pro>CheckBox`: Optimize the trigger hot zone range when used in the form.
+- 💄 `<pro>NumberField`: Optimizing the Chinese input method will delete the value.
+- 💄 `<pro>Table`: Optimize when the querybar is bar, it can control whether it can be input.
+- 💄 `<pro>Table`: Add the default suffix of the filter criteria for character and numeric types in the dynamic filter bar.
+- 💄 `<pro>Table`: Optimize the value saving limit of the dynamic filter bar multi-selection value set.
+- 💄 `<pro>Table`: Hide dynamic filter bar tenant Save as button.
+- 💄 `<pro>Table`: Optimized Table border related style variables.
+- 💄 `<pro>Table`: Optimized `Tabs` switching in virtual scrolling mode can cause the issue of TableVirtualRow re rendering.
+- 💄 `Tabs`: Optimized tab cannot adapt to the width.
+- 💄 `measureTextWidth`: Optimize performance under large data volumes.
+- 💄 `<pro>Modal`: Optimized multi-layer drawer animation.
+- 💄 `<pro>Lov`: Supported `tableProps` in the form of function callbacks and supported `modal` parameters in modal box mode.
+- 💄 `WaterMark`: Optimizing the watermark's judgment of ref leads to a direct error reporting problem in ie.
+- 💄 `<pro>ColorPicker`: Modify preset colors to optimize duplicate color values in alternative swatch.
+- 💄 `<pro>Dropdown.Button`: Support direct passing in of Button properties and style optimization.
+- 💄 `Timeline`: Optimize the color property to set the display effect of custom color values.
+- 💄 `<pro>Table`: Optimizes invalid `validationRenderer` property for components set in the `editor` property.
+- 💄 `<pro>Radio`: Optimize the Radio check state style.
+- 💄 `<pro>Table`: Optimized the `spin` animation effect during data loading to avoid `spin` lag issue in large data volumes.
+- 💄 `<pro>Button`: Optimized the triggering behavior of focus styles.
+- 🐞 `<pro>DataSet`: Fix the problem that the table client export query parameters are wrong.
+- 🐞 `<pro>Table`: Fix data not sync in group mode.
+- 🐞 `<pro>Table`: Fix the filtering logic problem of the dynamic filter bar panel.
+- 🐞 `<pro>Table`: Fix the problem that the dynamic screening bar presets the tenant configuration that affects the initialization query field.
+- 🐞 `<pro>Table`: Fix the problem that the filter reset button disappears when the dynamic filter bar is cleared.
+- 🐞 `<pro>Table`: Fix the problem that the switch is not queried under the dynamic filter tab Tabs.
+- 🐞 `<pro>Table`: Fix the problem that the selection menu cannot pop up directly when the dynamic filter bar clicks Add Filter when the filter condition is focused.
+- 🐞 `<pro>Table`: Fix the problem that the button and input box of the professional search bar are not aligned when the global configuration labelLayout is vertical.
+- 🐞 `<pro>Table`: Fix the problem where dragColumnAlign was configured to be left and the display of dragging and swapping positions in editing status was abnormal.
+- 🐞 `<pro>Table`: Fix and optimize advanced filtering interaction and styling issues.
+- 🐞 `<pro>Table`: Fix the advanced filter panel popup window penetration issue.
+- 🐞 `<pro>TriggerField`: Fix the problem that the tooltip flashes and disappears when the drop-down pop-up box appears.
+- 🐞 `<pro>Lov`: Fix the alignment problem when the query condition in the professional search bar mode is vertical layout.
+- 🐞 `<pro>Lov`: Fixed the problem of duplicate values when the default value exists after setting `autoSelectSingle`.
+- 🐞 `ViewComponent`: Fix the problem that the component is not out of focus when switching the disabled state.
+- 🐞 `<pro>Modal`: Fix the drag-and-drop exception in Firefox caused by the compatibility of the transformZoomData method.
+- 🐞 `<pro>TextField`: Fix style precedence issues.
+- 🐞 `<pro>TextField`: Fix the issue of Safari browser disabling font colors that are too light.
+- 🐞 `<pro>DatePicker`: Fixed an issue where the first time selected in the `Table` would display the current date in other row selection panels.
+- 🐞 `<pro>Tooltip`: Fixed a problem where the package SVG image was displayed but could not be located.
+- 🐞 `<pro>IntlField`: Fixed the problem that the character length of the input box corresponding to the current environment language cannot be limited.
+- 🐞 `Menu`: Fixed the overlapping problem of text and icons when `SubMenu` content is long & Fixed the disabled background color issue for `SubMenu` & Fixed the issue of all text becoming ellipses when exceeding the limit.
+- 🐞 `<pro>CodeArea`: Fixed the issue that the values stored in the dataSet were not formatted synchronously.
+- 🐞 `<pro>PerformanceTable`: Fix the issue of fixed column subitems being unable to be dragged before combining columns.
+- 🐞 `<pro>Attachment`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none`.
+- 🐞 `<pro>Rate`: Fix the issue of two part `help` prompts at the same time & Fix the issue of `showHelp` being invalid when it is `none` & Fix the issue of `help` icon style when `labelLayout` is `float` or `placeholder`.
+- 🐞 `<pro>Tree`: Fixed the issue that the Tree cable was misaligned.
+- 🐞 `<pro>Password`: Fixed the issue that revealing icons could not be used properly when the editor in the table was Password.
+- 🐞 `<pro>Select`: Fixed the issue of incorrect `tooltip` judgment when `Select`/`TreeSelect` and other custom rendering `options` are `disabled` or `readOnly` in the selected state.
+- 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar style issue.
+
+## 1.6.0
+
+`2023-02-24`
+
+- 🌟 `configure`: Added `attachment.downloadAllMode`, `formAutoFocus`, `useLookupBatch` property.
+- 🌟 `<pro>Tooltip`: Added `popupInnerStyle` property.
+- 🌟 `<pro>Table`: Added combination sort editing function.
+- 🌟 `<pro>Table`: Added dynamic filter bar to support saving fuzzy search function.
+- 🌟 `<pro>Table`: Added dynamic filter bar to support advanced filter configuration function.
+- 🌟 `<pro>Lov`: Added `percent` field type display.
+- 🌟 `<pro>TextField`: Add `tooltip` property to support overflow prompt in edit mode.
+- 🌟 `Calendar`: Added `headerRender` property of customize calendar header content.
+- 💄 `<pro>Form`: Extend `labelTooltip` property to support control tooltip properties.
+- 💄 `<pro>Table`: Optimize dynamic filter bar style.
+- 💄 `<pro>Table`: Optimize `buttonsLimit` rendering, hidden buttons no longer occupy more drop-down positions, the style of more button drop-down items in the query button.
+- 💄 `<pro>RichText`: The editing area is highly adaptive in the case of custom toolbars.
+- 💄 `<pro>Modal`: Extends the `transitionAppear` property to support controlling animations during `Modal` closure.
+- 💄 `<pro>NumberField`: Supported `clearButton` attribute in non-step mode.
+- 💄 `Avatar`: Optimize `Avatar.Group` overflow style.
+- 💄 `<pro>DatePicker`: Optimize click today and this week to change the style in the case of multiple selections.
+- 💄 `<pro>Tree`: Optimize the dragging and sorting of tree components and the problem that icon cannot be dragged.
+- 🐞 `<pro>Table`: Fixed the problem of high overflow caused by configuring `autoHeight` as minHeight and personalization at the same time.
+- 🐞 `<pro>CodeArea`: Fixed the problem of change `disabled` status.
+- 🐞 `WaterMark`: Fixed the problem that the watermark style can be modified.
+- 🐞 `<pro>ColorPicker`: Fixed an error when setting `multiple` property to true on a field of `DataSet`.
+- 🐞 `<pro>Lov`: Fix the problem that the pull-down panel cannot be closed due to out of focus.
+- 🐞 `<pro>Lov`: Fix the problem that the popup mode cascading parameter change does not re-query.
+- 🐞 `<pro>Select`: Fix the problem of repeated query when selecting values in pagination in the multi-select reserved query parameter mode.
+- 🐞 `<pro>Lov`: Fixed the problem that the default value is repeated by selecting all values.
+- 🐞 `<pro>Modal`: Fix an issue where Modal could not adapt to custom width in contentStyle.
+- 🐞 `<pro>Modal`: Fix the problem that when the text is too long in picture mode, re upload the text and file name overlap.
+- 🐞 `<pro>Password`: Fix an issue where the cursor was positioned in the first place when clicking the reveal icon triggered focus.
+- 🐞 `<pro>Form`: Fix the problem of abnormal line breaking under table layout.
+- 🐞 `<pro>DatePicker`: Fix the problem that multiple selections of today's date are repeated.
+- 🐞 `<pro>TextField`: Fix the problem of displacement of placeholder and focus cursor in multi value mode.
+- 🐞 `<pro>Table`: Fix the problem that the console reports an error when the mouse moves into the input box after the dynamic filter bar multi value verification fails.
+- 🐞 `<pro>Table`: Fix render errors with filter bar multilingual components.
+- 🐞 `<pro>Table`: Fix the problem that the content of the tooltip changes after clicking the cell when the tooltip of the multivalued Lov and Select fields is displayed.
+- 🐞 `<pro>Table`: Fix a styling issue when column headers and feet were auto-height.
+- 🐞 `<pro>DatePicker`: Fix the color style of confirmation button in DateTime mode.
+- 🐞 `WaterMark`: Fixed the problem that selecting a hidden node in the browser console would hide the watermark.
+- 🐞 `<pro>Table`: Fix odd and even row style error caused by deleting rows when showRemovedRow is false & When rows are deleted when showRemovedRow is false in virtual scroll mode, the page appears blank and the scroll bar does not shrink.
+- 🐞 `<pro>SelectBox`: Fix the problem that verification failed and could not focus automatically.
+- 🐞 `<pro>Switch`: Fix the problem that tooltip cannot be displayed when the mouse moves into the help icon when showHelp is set to tooltip.
+
+## 1.5.8
+
+`2022-11-29`
+
+- 🐞 `ViewComponent`: Fixed the pop-up window closing error.
+- 🐞 `<pro>Lov`: Fixed the problem that out of focus caused the query parameters to be cleared in the Lov popup mode.
+
+## 1.5.7
+
+`2022-11-28`
+
+- 🌟 `configure`: Added `tableColumnResizeTransition`, `fieldFocusMode`, `selectBoxSearchable`, `selectReserveParam` properties.
 - 🌟 `Collapse`: Added property of `collapsible` `hidden`.
 - 🌟 `<pro>Lov`: Added property of `popupSearchMode`.
 - 🌟 `Tabs.TabPane`: Added `hidden` property.
@@ -23,6 +182,10 @@ timeline: true
 - 🌟 `<pro>Button`: Button text bubble supports `Tooltip` attribute expansion.
 - 🌟 Added theme style.
 - 🌟 `<pro>Lov`: Added hyperlinks and image types to the list.
+- 🌟 `Upload`: Support full status display of reupload in Upload.
+- 🌟 `<pro>DataSet.Field`: Added `accept` property.
+- 🌟 `<pro>Select`: Added `reserveParam` property.
+- 🌟 `<pro>Table`: Added dynamic filter bar `onRefresh` callback.
 - 💄 `<pro>DataSet`: When `cacheRecords` is enabled by default in global configuration, you can disable caching by setting `cacheSelection` and `cacheModified` to false.
 - 💄 `Table`: Optimize fixed columns.
 - 💄 `<pro>Form`: Optimized the style of the `ItemGroup` composite input box.
@@ -30,18 +193,32 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized tooltip for multiple mode when the selected length is greater than the configured `maxTagCount`.
 - 💄 `<pro>Table`: Optimized the display timing of the `\n`.
 - 💄 `<pro>Table`: The extension `draggableProps.isDragDisabled` property supports callback functions for determining whether a single row is draggable.
+- 💄 `<pro>Table`: Optimize the initial record of `queryDataSet` under the dynamic filter bar.
 - 💄 `SecretField`: Optimize SecretField display of null value in read-only case。
 - 💄 `<pro>DatePicker`: Optimized date jump interaction when setting the `min` or `max` property.
-- 🐞 `<pro>TextField`: Fix the problem of ellipsis when `text-transform` is `uppercase` in `isFlat` mode.
+- 💄 `<pro>Transfer`: Optimize the effect of selecting all when disabled.
+- 💄 `<pro>Select`: Optimize the problem that the drop-down multi-selection is out of focus and not verified.
+- 💄 `<pro>Table`: Optimized the `help` display in `header`.
+- 💄 `<pro>Picture`: Optimize preview interface style and mouse wheel event interaction.
+- 💄 `<pro>Table`: Optimize the dynamic filter bar, select multiple required query conditions, and there is no required sign.
+- 💄 `<pro>Field`: Optimize lovPara query cache.
+- 💄 `<pro>Form`: Optimize that the form will not automatically wrap lines in the table layout.
+- 💄 `<pro>Tooltip`: The problem of optimizing tooltip.
+- 💄 `<pro>Switch`: Optimize the display of content overflow style and tooltip under Form & Eliminate the interaction effect of redundant active states in the disabled state & Optimize Switch loading centering style.
+- 💄 `<pro>ColorPicker`: Optimize an issue where the preset attribute selector position could not be adaptive.
+- 💄 `<pro>DatePicker`: Optimized the interaction effect when the `mode` is `time` and the `min` or `max` property is set.
+- 💄 `<pro>Lov`: Optimized the display order of selected records with cache in the pop-up.
 - 🐞 `<pro>Lov`: Fix the problem that Lov icon clicks the pop-up window many times and pops up many times.
 - 🐞 `<pro>IntlField`: Fix the problem that the pop-up window pops up multiple times when the icon is clicked multiple times.
 - 🐞 `<pro>Modal`: Fix the problem that the autofocus of the form component in the internal modal is invalid.
 - 🐞 `<pro>Modal`: Fix the problem that double clicking on the internal modal configuration `dblclick` will display and close it immediately.
+- 🐞 `<pro>Modal`: Fix the issue that the first drag of Modal enabled `autoCenter` was inaccurate.
+- 🐞 `<pro>Modal`: Fix the issue that Modal enabled `autoCenter` to cause `maskClosable` to fail.
 - 🐞 `<pro>RichText`: Fixed the problem that the selected content was out of focus and cleared.
 - 🐞 `<pro>RichText`: Fix content overflow height issue and placeholder style issue.
 - 🐞 `<pro>RichText`: Fixed an issue where keyboard ESC closed with an error.
 - 🐞 `<pro>RichText`: Fixed an issue with float layout style.
-- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status error.
+- 🐞 `<pro>Table`: Fix the problem of field value comparison in the dynamic filter reset button ambiguous query parameter clear && range mode && status && delete filter not reset error.
 - 🐞 `Affix`: Fix an issue where a fixed positioning style was added when scroll distance was not generated.
 - 🐞 `ViewComponent`: Fixed the problem that the input is still focused when the `hidden` or `disabled` attribute is switched.
 - 🐞 `<pro>Cascader`: Fixed the display problem of active item after selecting values in controlled mode without using `DataSet`.
@@ -50,8 +227,11 @@ timeline: true
 - 🐞 `<pro>DataSet`: Only when `cacheSelection` is true in `cacheRecords` mode, cache is forced to be checked.
 - 🐞 `<pro>DataSet`: Fix the problem of getting unchecked cache records when selecting all across pages.
 - 🐞 `<pro>DataSet`: Fix `clearCachedSelected` method can't clear checked records of changed state.
+- 🐞 `<pro>DataSet`: Fix the issue that the bigNumber formatting configuration was invalid.
 - 🐞 `Upload`: Fix `beforeUpload` async issue.
+- 🐞 `Upload`: Fix the problem that the `beforeUpload` event callback will not trigger when re uploading.
 - 🐞 `<pro>Lov`: Fix the problem of table width in `popup` mode.
+- 🐞 `<pro>Lov`: Fixed the onRow event not working in `popup` mode.
 - 🐞 `<pro>Attachment`: Fix the problem that cannot be automatically located when validation failed.
 - 🐞 `<pro>Attachment`: fix popup rendering & children props in drag mode.
 - 🐞 `Tabs`: Fix the problem of the arrow display.
@@ -59,6 +239,26 @@ timeline: true
 - 🐞 `Badge`: Fix the problem that the style level of point Badge is higher than fixed column when it is used in Table.
 - 🐞 `<pro>Table`: Fix the problem that the check icon in the display setting is not aligned and the content is blocked in the customization settings.
 - 🐞 `<pro>Attachment`: Fixed the problem that only one file was displayed when multiple files were uploaded for the first time in drag and drop mode.
+- 🐞 `<pro>NumberField`: Fixed after configuration global property `numberFieldFormatterOptions`, component property `numberGrouping` failure problem.
+- 🐞 `<pro>Modal`: Fix the problem that the getContainer is set in the ModalProvider and cannot be centered with useModal.
+- 🐞 `<pro>Tree`: Fix the failure of onKeyDown.
+- 🐞 `<pro>Switch`: Fix the problem that onMouseDown can only be triggered by clicking the left side under Form.
+- 🐞 `<pro>TextArea`: Fix invalid of `renderer`.
+- 🐞 `<pro>Table`: Fix the problem that the overflow effect of `tooltip` setting is incorrect.
+- 🐞 `<pro>Mentions`: Fix support for renderer attribute.
+- 🐞 `<pro>Switch`: Fix the problem that the label area is not aligned when used under Form & Misalignment of loading circle in the loading state & Error position display problem in the form loading status.
+- 🐞 `<pro>Table`: Fix the problem of asynchronous loading tree table paging, click to expand and jump to the first page.
+- 🐞 `<pro>Table`: Fix the problem that the dynamic conditions of the professional query bar are displayed and hidden.
+- 🐞 `<pro>Output`: Fix an issue where two tooltips were displayed when Output multi-value overflow.
+- 🐞 `<pro>Table`: Fix an issue where the `editor` is not displayed when editing mode is partially `inline`.
+- 🐞 `<pro>Table.Column`: Fix `tooltipProps` delayed property support.
+- 🐞 `<pro>Table`: Fix the style problem caused by turning `rowHeight` of tree table to auto.
+- 🐞 `<pro>Modal`: Fix the problem that setting the top style does not work when the embedded Modal setting `autoCenter` is false.
+- 🐞 `<pro>IntlField`: Fixed an issue where the input field could not be resized more than once when the `resize` property was set to `both`.
+- 🐞 `<pro>Mentions`: Fixed an issue where `split` would display double copies when the `split` property was set to be more than one char.
+- 🐞 `<pro>Picture`: Fixed the preview error caused by the `preview` property.
+- 🐞 `<pro>Select`: Fixed that the blank value in the compound input box is not clear.
+- 🐞 `<pro>Table`: Fixed `expandRowByClick` property invalidation.
 
 ## 1.5.6
 

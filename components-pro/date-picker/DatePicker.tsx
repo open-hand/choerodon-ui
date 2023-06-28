@@ -8,7 +8,7 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import { TimeStep } from 'choerodon-ui/dataset/interface';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -31,6 +31,7 @@ import measureTextWidth from '../_util/measureTextWidth';
 import Field from '../data-set/Field';
 import { RenderProps } from '../field/FormField';
 import ObserverTextField from '../text-field/TextField';
+import { Action } from '../trigger/enum';
 
 export type RenderFunction = (
   props: object,
@@ -57,12 +58,12 @@ function createDefaultTime() {
   return moment('00:00:00', 'HH:mm:ss');
 }
 
-function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null): Moment {
+function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null, viewMode?: ViewMode): Moment {
   if (min && defaultTime.isBefore(min)) {
     defaultTime.year(min.year());
     defaultTime.month(min.month());
     defaultTime.date(min.date());
-    if (defaultTime.isBefore(min)) {
+    if (defaultTime.isBefore(min) && viewMode !== ViewMode.time) {
       defaultTime.add(1, 'd');
     }
   }
@@ -70,7 +71,7 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
     defaultTime.year(max.year());
     defaultTime.month(max.month());
     defaultTime.date(max.date());
-    if (defaultTime.isAfter(max)) {
+    if (defaultTime.isAfter(max) && viewMode !== ViewMode.time) {
       defaultTime.subtract(1, 'd');
     }
   }
@@ -86,7 +87,7 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 单元格渲染
    */
   cellRenderer?: (mode: ViewMode) => RenderFunction | undefined;
-  filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode) => boolean;
+  filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode, rangeTarget?: 0 | 1, rangeValue?: [any, any]) => boolean;
   min?: MomentInput | null;
   max?: MomentInput | null;
   step?: TimeStep;
@@ -272,11 +273,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   getDefaultTime(): [Moment, Moment] {
     const { defaultTime = createDefaultTime() } = this.props;
+    const viewMode = this.getDefaultViewMode();
     const { min, max } = this;
     if (isArrayLike(defaultTime)) {
-      return [getInRangeDefaultTime(defaultTime[0], min, max), getInRangeDefaultTime(defaultTime[1], min, max)];
+      return [getInRangeDefaultTime(defaultTime[0], min, max, viewMode), getInRangeDefaultTime(defaultTime[1], min, max, viewMode)];
     }
-    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max);
+    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max, viewMode);
     return [inRangeDefaultTime, inRangeDefaultTime];
   }
 
@@ -304,6 +306,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     if (text) {
       this.syncValueOnBlur(text);
     }
+  }
+
+  getDefaultAction(): Action[] {
+    return this.getContextConfig('selectTrigger') || super.getDefaultAction();
   }
 
   getPopupEditor() {
@@ -428,6 +434,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             date,
             mode: this.getDefaultViewMode(),
             disabledNow: !this.isValidNowDate(date),
+            isExistValue: this.isExistValue(),
             renderer: this.getCellRenderer(mode),
             onSelect: this.handleSelect,
             onSelectedDateChange: this.handleSelectedDateChange,
@@ -582,6 +589,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleCursorDateChange(cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) {
+    const nowDate = moment();
+    if (this.getDefaultViewMode() === ViewMode.time && cursorDate.format('YYYY-MM-DD') !== nowDate.format('YYYY-MM-DD')) {
+      // 更改为当天的 时间
+      cursorDate = cursorDate.set({ 'year': nowDate.year(), 'month': nowDate.month(), 'date': nowDate.date() });
+    }
     const { min, max } = this;
     if (!this.isUnderRange(cursorDate, mode)) {
       if (min && cursorDate.isSameOrBefore(min) && selectedDate.isSameOrBefore(cursorDate)) {
@@ -639,10 +651,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleSelect(date: Moment, expand?: boolean) {
-    if (this.multiple && this.isSelected(date)) {
-      this.unChoose(date);
+    const mode = this.getDefaultViewMode();
+    let formatDate = date;
+    if (mode !== ViewMode.week) {
+      const format = this.getDateFormat();
+      formatDate = moment(date.format(format), format);
+    }
+    if (this.multiple && this.isSelected(formatDate)) {
+      this.unChoose(formatDate);
     } else {
-      this.choose(date, expand);
+      this.choose(formatDate, expand);
     }
   }
 
@@ -957,6 +975,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       const { range, rangeTarget } = this;
       if (range ? rangeTarget === 1 : !this.multiple) {
         if (!expand) {
+          runInAction(() => {
+            this.hoverValue = undefined;
+          });
           this.collapse();
         }
       }
@@ -1041,7 +1062,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   isDateOutOfFilter(currentDate: Moment, selected: Moment, mode?: ViewMode): boolean {
     const { filter } = this.props;
     if (filter) {
-      return filter(currentDate, selected, mode || this.getViewMode());
+      return filter(currentDate, selected, mode || this.getViewMode(), this.rangeTarget, toJS(this.rangeValue));
     }
     return true;
   }
@@ -1056,9 +1077,31 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     const { filter } = this.props;
     const isValid = this.isUnderRange(moment());
     if (isValid && filter) {
-      return filter(moment(), selected);
+      return filter(moment(), selected, this.getViewMode(), this.rangeTarget, toJS(this.rangeValue));
     }
     return isValid;
+  }
+
+  @autobind
+  isExistValue(): boolean {
+    const { value, multiple } = this;
+    let exist = false;
+    if (multiple && isArrayLike(value)) {
+      const mode = this.getDefaultViewMode();
+      const format = this.getDateFormat();
+      const now = moment().format(format);
+      switch (mode) {
+        case ViewMode.date:
+          exist = value.some((x) => x && x.isSame(now));
+          break;
+        case ViewMode.week:
+          exist = value.some((x) => x && x.format(format) === now);
+          break;
+        default:
+          break;
+      }
+    }
+    return exist
   }
 
   getValidatorProp(key: string) {

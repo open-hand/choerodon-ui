@@ -47,7 +47,7 @@ title: Upload
 | requestFileKeys   | 可以传输文件上面的一些props信息给后台   | string,string[] | 无   |
 | showFileSize | `listType`为`text`时是否显示文件大小   | boolean | false |
 | onStart | 文件上传开始时   | (file: UploadFile) => void |  |
-| onReUpload | 文件重新上传的实现   | (file: UploadFile) => void \| boolean |  |
+| onReUpload | 文件重新上传的实现   | (file: UploadFile) => void |  |
 | renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
 
@@ -56,8 +56,8 @@ title: Upload
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | showRemoveIcon | 是否显示删除按钮   | boolean | true |
-| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | true |
-| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | true |
+| showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
+| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/components/configure) |
 | removePopConfirmTitle | 删除弹框确认信息   | string |  |
 | reUploadText | 重新上传按钮 title 信息   | string |  |

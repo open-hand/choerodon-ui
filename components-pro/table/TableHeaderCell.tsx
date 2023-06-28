@@ -9,8 +9,10 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
-import { action } from 'mobx';
+import classNames from 'classnames';
+import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import raf from 'raf';
 import omit from 'lodash/omit';
@@ -19,9 +21,11 @@ import noop from 'lodash/noop';
 import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
+import isUndefined from 'lodash/isUndefined';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
+import Popover from 'choerodon-ui/lib/popover';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { minColumnWidth } from './Column';
 import TableContext from './TableContext';
@@ -32,6 +36,7 @@ import { ColumnAlign, ColumnLock, TableColumnResizeTriggerType, TableColumnToolt
 import { ShowHelp } from '../field/enum';
 import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 import transform from '../_util/transform';
+import { transformZoomData } from '../_util/DocumentUtils';
 import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { CUSTOMIZED_KEY } from './TableStore';
@@ -39,9 +44,16 @@ import ColumnGroup from './ColumnGroup';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import TableCellInner from './TableCellInner';
 import { TableVirtualHeaderCellProps } from './TableVirtualHeaderCell';
+import TextField from '../text-field';
+import Button from '../button/Button';
+import { SortOrder } from '../data-set/interface';
+import { ButtonColor } from '../button/enum';
+import { ValueChangeAction } from '../text-field/enum';
+import { $l } from '../locale-context';
 
 export interface TableHeaderCellProps extends TableVirtualHeaderCellProps {
   intersectionRef?: (node?: Element | null) => void;
+  isRenderCell?: boolean;
 }
 
 const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableHeaderCell(props) {
@@ -56,12 +68,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     children: expandIcon,
     isSearchCell,
     intersectionRef,
+    isRenderCell,
   } = props;
   const { column, key, prev } = columnGroup;
   const { tooltipProps } = column;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable, headerRowHeight } = tableStore;
+  const { columnResizable, headerRowHeight, headerFilter } = tableStore;
   const {
     headerClassName,
     headerStyle = {},
@@ -70,8 +83,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     children,
     command,
     lock,
+    filter,
   } = column;
   const field = dataSet.getField(name);
+  const [filterText, setFilterText] = useState<any>();
   const aggregationTree = useMemo((): ReactElement<AggregationTreeProps>[] | undefined => {
     if (aggregation) {
       const { column: $column, headerGroup } = columnGroup;
@@ -147,7 +162,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { resizeColumnGroup } = current;
     if (resizeColumnGroup) {
       const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
-      let left = e.touches ? e.touches[0].clientX : e.clientX;
+      let left = e.touches ? transformZoomData(e.touches[0].clientX) : transformZoomData(e.clientX);
       if (left < limit) {
         left = limit;
       }
@@ -205,7 +220,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       const left = Math.round(element.getBoundingClientRect().left);
       globalRef.current.bodyLeft = border ? left + 1 : left;
     }
-    setSplitLinePosition(e.clientX);
+    setSplitLinePosition(transformZoomData(e.clientX));
     resizeEvent
       .setTarget(element.ownerDocument)
       .addEventListener('mousemove', resize)
@@ -233,14 +248,38 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const handleClick = useCallback(() => {
     if (name) {
-      dataSet.sort(name);
+      const { sortable } = column;
+      if (typeof sortable === 'function') {
+        const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
+        if (field && fieldProps) {
+          const unOrder = field.order || fieldProps.order;
+          runInAction(() => {
+            switch (unOrder) {
+              case SortOrder.asc:
+                field.order = undefined;
+                break;
+              case SortOrder.desc:
+                field.order = SortOrder.asc;
+                break;
+              default:
+                field.order = SortOrder.desc;
+            }
+          })
+        }
+        runInAction(() => {
+          dataSet.records = dataSet.records.sort((record1, record2) => sortable(record1, record2, field!.order as SortOrder));
+        })
+      } else {
+        dataSet.sort(name);
+      }
     }
   }, [dataSet, name]);
 
   const handleMouseEnter = useCallback((e) => {
     const tooltip = tableStore.getColumnTooltip(column);
     const { currentTarget } = e;
-    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(currentTarget)))) {
+    const measureElement = currentTarget.getElementsByClassName(`${prefixCls}-cell-inner-right-has-other`)[0] || currentTarget;
+    if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(measureElement)))) {
       const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
       show(currentTarget, {
         title: header,
@@ -250,7 +289,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       });
       globalRef.current.tooltipShown = true;
     }
-  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement]);
+  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement, header]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {
@@ -351,6 +390,25 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
+  const onReset = useCallback(() => {
+    setFilterText('');
+    runInAction(() => {
+      tableStore.headerFilter = undefined;
+    })
+  }, [setFilterText, tableStore]);
+
+  const doFilter = useCallback(() => {
+    if (!isUndefined(filterText)) {
+      runInAction(() => {
+        tableStore.headerFilter = {
+          fieldName: name,
+          filterText: filterText === null ? '' : filterText,
+          filter,
+        };
+      })
+    }
+  }, [filterText, tableStore, name, filter]);
+
   const renderResizer = () => {
     const { rightColumnGroups: { columns }, overflowX } = tableStore;
     const { columnGroup } = props;
@@ -429,22 +487,91 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(headerClassName);
   }
 
-  const headerNode = !isSearchCell ? (isValidElement(header) ? (
-    cloneElement(header, { key: 'text' })
-  ) : isString(header) ? (
-    <span key="text">{header}</span>
-  ) : (
-    header
-  )) : null;
+  const getConstSortIcon = () => {
+    const { combineSort } = dataSet;
+    const tableShowSortIcon = tableStore.getConfig('tableShowSortIcon');
+    const combineSortField = combineSort && field && field.order;
+    const type = combineSortField
+      ? (field && field.order === 'asc' ? 'paixu-shang' : 'paixu-xia')
+      : ((tableShowSortIcon || combineSort) && !(field && field.order) ? 'sort-all' : 'arrow_upward');
+    const className = classNames(`${prefixCls}-sort-icon`, {
+      [`${prefixCls}-sort-icon-temp`]: tableShowSortIcon || (combineSort && !combineSortField),
+      [`${prefixCls}-sort-icon-combine`]: combineSortField,
+    });
+    return <Icon key="sort" type={type} className={className} />;
+  };
+
+  const getFilterIcon = () => {
+    if (column.filter) {
+      let popoverContent: React.ReactNode;
+      const footer: React.ReactNode = (
+        <div className={`${prefixCls}-sort-popup-footer`}>
+          <Button onClick={onReset} key='reset'>
+            {$l('Table', 'reset_button')}
+          </Button>
+          <Button
+            color={ButtonColor.primary}
+            onClick={doFilter}
+            key='filter'
+          >
+            {$l('Table', 'search')}
+          </Button>
+        </div>
+      );
+      const columnFilterPopover = column.filterPopover || tableStore.getConfig('tableColumnFilterPopover');
+      if (typeof columnFilterPopover === 'function') {
+        popoverContent = (
+          <div onClick={(e) => e.stopPropagation()}>
+            {columnFilterPopover({
+              setFilterText: (filterText: any) => setFilterText(filterText),
+              dataSet,
+              field,
+              filterText,
+              clearFilters: onReset,
+              confirm: doFilter,
+              footer,
+            })}
+          </div>
+        )
+      } else {
+        popoverContent = (
+          <div onClick={(e) => e.stopPropagation()}>
+            <TextField autoFocus onEnterDown={doFilter} style={{ width: '100%' }} valueChangeAction={ValueChangeAction.input} value={filterText} onChange={(value) => setFilterText(value)} />
+            {footer}
+          </div>
+        );
+      }
+      return (
+        <Popover
+          content={popoverContent}
+          overlayClassName={`${prefixCls}-sort-popup-content`}
+          trigger="click"
+          onVisibleChange={() => {
+            if (headerFilter) {
+              setFilterText(headerFilter.fieldName === name ? String(headerFilter.filterText) : '');
+            }
+          }}
+          key='filter'
+        >
+          <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-filter-icon ${prefixCls}-filter-icon-active` : `${prefixCls}-filter-icon`} type="search" onClick={(e) => e.stopPropagation()} />
+        </Popover>
+      );
+    }
+    return undefined;
+  };
+
+  // 过滤按钮
+  const filterIcon: ReactElement<IconProps> | undefined = getFilterIcon();
 
   // 帮助按钮
   const helpIcon: ReactElement<TooltipProps> | undefined = getHelpIcon();
+
   // 排序按钮
-  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? (
-    <Icon key="sort" type="arrow_upward" className={`${prefixCls}-sort-icon`} />
-  ) : undefined;
-  const childNodes = [
-    headerNode,
+  const sortIcon: ReactElement<IconProps> | undefined = !column.aggregation && column.sortable && name && !isSearchCell ? getConstSortIcon() : undefined;
+  
+  const headerNodePlaceholder = Symbol('headerNodePlaceholder');
+  const childNodes: any[] = [
+    headerNodePlaceholder,
   ];
   const innerClassNames = [`${prefixCls}-cell-inner`];
   const innerProps: any = {
@@ -452,24 +579,32 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
   };
+  const labelClassNames: string[] = [];
   if (helpIcon) {
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(helpIcon);
-    } else {
-      childNodes.push(helpIcon);
-    }
+    childNodes.push(helpIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-help`);
   }
+
   if (sortIcon) {
     if (field && field.order) {
       classList.push(`${prefixCls}-sort-${field.order}`);
+      const { combineSort } = dataSet;
+      if (combineSort) {
+        classList.push(`${prefixCls}-sort-${field.order}-combine`);
+      } else {
+        classList.push(`${prefixCls}-sort-${field.order}-temp`);
+      }
     }
     innerProps.onClick = handleClick;
-    if (cellStyle.textAlign === ColumnAlign.right) {
-      childNodes.unshift(sortIcon);
-    } else {
-      childNodes.push(sortIcon);
-    }
+    childNodes.push(sortIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-sort`);
   }
+
+  if (filterIcon) {
+    childNodes.push(filterIcon);
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-filter`);
+  }
+
   if (expandIcon) {
     childNodes.unshift(
       <span key="prefix" className={!isSearchCell ? `${prefixCls}-header-expand-icon` : undefined}>
@@ -477,6 +612,22 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       </span>,
     );
   }
+  // 兼容 label 超长
+  if (labelClassNames.length > 0) {
+    labelClassNames.push(`${prefixCls}-cell-inner-right-has-other`);
+  }
+  const labelClassNamesStr = labelClassNames.length > 0 ? labelClassNames.join(' ') : undefined;
+  const headerNode = !isSearchCell ? (isValidElement(header) ? (
+    cloneElement<any>(header, {
+      key: 'text',
+      className: classNames(header.props && header.props.className, labelClassNamesStr),
+    })
+  ) : isString(header) ? (
+    <span key="text" className={labelClassNamesStr} >{header}</span>
+  ) : (
+    header
+  )) : null;
+  childNodes[childNodes.findIndex(item => item === headerNodePlaceholder)] = headerNode;
   if (!isSearchCell) {
     const $rowHeight = headerRowHeight === undefined ? rowHeight : headerRowHeight;
     if ($rowHeight !== 'auto') {
@@ -497,7 +648,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     classList.push(`${prefixCls}-cell-sticky-shadow`);
   }
 
-  if (tableStore.tableColumnResizeTransition) {
+  if (!tableStore.tableColumnResizeTransition) {
     classList.push(`${prefixCls}-cell-no-transition`);
   }
 
@@ -511,6 +662,9 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   };
   if (intersectionRef) {
     thProps.ref = intersectionRef;
+  }
+  if (!isRenderCell) {
+    return <th {...thProps} />
   }
   return (
     <th {...thProps}>

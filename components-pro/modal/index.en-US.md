@@ -51,6 +51,7 @@ title: Modal
 | resizable | 是否可调整大小 | boolean | false |
 | customizable | 是否开启个性化 | boolean | false |
 | customizedCode | 个性化编码，设置后默认将会存储调整大小后的宽高等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
+| transitionAppear | 是否开启 Modal 打开和关闭时的动画 | boolean | true |
 
 <style>
 .code-box-demo .c7n-pro-btn {

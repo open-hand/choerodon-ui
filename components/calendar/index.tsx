@@ -33,6 +33,7 @@ export interface CalendarProps {
   monthCellRender?: (date: Moment) => ReactNode;
   dateFullCellRender?: (date: Moment) => ReactNode;
   monthFullCellRender?: (date: Moment) => ReactNode;
+  headerRender?: HeaderRender;
   locale?: any;
   style?: CSSProperties;
   onPanelChange?: (date?: Moment, mode?: CalendarMode) => void;
@@ -45,6 +46,13 @@ export interface CalendarState {
   value: Moment;
   mode?: CalendarMode;
 }
+
+export type HeaderRender = (config: {
+  value: Moment;
+  type: string;
+  onChange: (date: Moment) => void;
+  onTypeChange: (type: string) => void;
+}) => React.ReactNode;
 
 export default class Calendar extends Component<CalendarProps, CalendarState> {
   static displayName = 'Calendar';
@@ -181,7 +189,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     if (value && localeCode) {
       value.locale(localeCode);
     }
-    const { style, className, fullscreen, dateFullCellRender, monthFullCellRender } = props;
+    const { style, className, fullscreen, dateFullCellRender, monthFullCellRender, headerRender } = props;
     const prefixCls = this.getPrefixCls();
     const type = mode === 'year' ? 'month' : 'date';
 
@@ -201,18 +209,28 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     return (
       <div className={cls} style={style}>
-        <Header
-          fullscreen={fullscreen}
-          type={type}
-          value={value}
-          locale={locale.lang}
-          prefixCls={prefixCls}
-          onTypeChange={this.onHeaderTypeChange}
-          onValueChange={this.onHeaderValueChange}
-          validRange={props.validRange}
-          selectProps={props.selectProps}
-          radioProps={props.radioProps}
-        />
+        {headerRender ? (
+          headerRender({
+            value: value || moment(),
+            type,
+            onChange: this.onHeaderValueChange,
+            onTypeChange: this.onHeaderTypeChange,
+          })
+        ) : (
+          <Header
+            fullscreen={fullscreen}
+            type={type}
+            value={value}
+            locale={locale.lang}
+            prefixCls={prefixCls}
+            onTypeChange={this.onHeaderTypeChange}
+            onValueChange={this.onHeaderValueChange}
+            validRange={props.validRange}
+            selectProps={props.selectProps}
+            radioProps={props.radioProps}
+          />
+        )}
+
         <FullCalendar
           {...props}
           disabledDate={disabledDate}
