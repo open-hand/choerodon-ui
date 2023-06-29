@@ -56,8 +56,14 @@
     transition: background @animation-duration-slow @ease-in-out, padding @animation-duration-slow @ease-in-out;
   }
 
-  &-item > a {
+  &-item > a,
+  &-item > a:hover,
+  &-submenu-title > a,
+  &-submenu-title > a:hover {
     color: @menu-item-color;
+  }
+
+  &-item > a {
     &:focus {
       text-decoration: none;
     }
@@ -346,7 +352,7 @@
       padding-bottom: 0.0001rem;
     }
 
-    &.@{menu-prefix-cls}-root > .@{menu-prefix-cls}-submenu:not(:last-child) {
+    &.@{menu-prefix-cls}-root > li:not(:last-child) {
       margin: @menu-submenu-margin;
     }
 
