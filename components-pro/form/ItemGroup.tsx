@@ -7,6 +7,7 @@ import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import isFragment from '../_util/isFragment';
 import { ShowHelp } from '../field/enum';
 import { Tooltip as TextTooltip } from '../core/enum';
+import { RequiredMarkAlign } from './enum';
 
 export interface ItemGroupProps {
   className?: string;
@@ -19,6 +20,7 @@ export interface ItemGroupProps {
   showHelp?: ShowHelp.label;
   required?: boolean;
   useColon?: boolean;
+  requiredMarkAlign?: RequiredMarkAlign;
   compact?: boolean;
   hidden?: boolean;
   colSpan?: number;
@@ -93,6 +95,7 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     'showHelp',
     'required',
     'useColon',
+    'requiredMarkAlign',
     'colSpan',
     'rowSpan',
     'newLine',

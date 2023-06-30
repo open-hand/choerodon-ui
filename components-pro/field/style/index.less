@@ -76,6 +76,33 @@
     }
   }
 
+  &-row &-label-required-mark-right,
+  &-label-required-mark-right label {
+    > span {
+      position: relative;
+      padding-right: 0.12rem;
+    }
+  }
+
+  &-row &-label-required-mark-right > span::after,
+  &-label-required-mark-right label > span::after {
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    color: @label-required-color;
+    font-family: @font-family-required-symbol;
+    line-height: 1;
+    transform: translateY(-50%);
+    content: ' ';
+  }
+
+  &-row &-required&-label-required-mark-right > span::after,
+  &-required&-label-required-mark-right label > span::after {
+    right: 0.02rem;
+    width: 0.08rem;
+    content: '*';
+  }
+
   &-row &-label&-label-useColon::after,
   &-label&-label-useColon label::after {
     position: relative;
@@ -116,9 +143,9 @@
     width: auto;
   }
 
-  &-row &-required&-label::before,
+  &-row &-required&-label-required-mark-left::before,
   &-label-vertical&-required&-label::before,
-  &-required&-label&-label label > span::before {
+  &-required&-label&-label-required-mark-left label > span::before {
     display: inline-block;
     margin-right: 0.04rem;
     color: @label-required-color;

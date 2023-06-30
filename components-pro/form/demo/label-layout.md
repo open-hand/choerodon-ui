@@ -32,6 +32,7 @@ const App = () => {
   const [labelWidth, setLabelWidth] = React.useState(fixedLabelWidth);
   const [labelAlign, setLabelAlign] = React.useState('right');
   const [useColon, setUseColon] = React.useState(true);
+  const [requiredMarkAlign, setRequiredMarkAlign] = React.useState('left');
   const [showHelp, setShowHelp] = React.useState('label');
   const [separateSpacingHorizontal, setSeparateSpacingHorizontal] = React.useState(0);
   const [separateSpacingVertical, setSeparateSpacingVertical] = React.useState(0);
@@ -58,6 +59,10 @@ const App = () => {
         <SelectBox label="useColon" value={useColon} onChange={setUseColon}>
           <Option value={true}>true</Option>
           <Option value={false}>false</Option>
+        </SelectBox>
+        <SelectBox label="requiredMarkAlign" value={requiredMarkAlign} onChange={setRequiredMarkAlign}>
+          <Option value="left">left</Option>
+          <Option value="right">right</Option>
         </SelectBox>
         <SelectBox label="showHelp" value={showHelp} onChange={setShowHelp}>
           <Option value="label">label</Option>
@@ -97,6 +102,7 @@ const App = () => {
         labelTooltip="overflow"
         labelAlign={labelAlign}
         useColon={useColon}
+        requiredMarkAlign={requiredMarkAlign}
         showHelp={showHelp}
         columns={3}
         separateSpacing={{ width: separateSpacingHorizontal, height: separateSpacingVertical }}

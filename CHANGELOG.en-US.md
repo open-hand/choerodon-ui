@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
+- 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
 - 💄 `<pro>DataSet`: Optimize `childrenField` performance.
 - 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
