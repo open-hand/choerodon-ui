@@ -31,7 +31,7 @@ import FormContext, { FormContextValue, FormProvider } from './FormContext';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
 import DataSet, { ValidationErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { FormLayout, LabelAlign, LabelLayout, ResponsiveKeys, ShowValidation, SpacingType } from './enum';
+import { FormLayout, LabelAlign, LabelLayout, RequiredMarkAlign, ResponsiveKeys, ShowValidation, SpacingType } from './enum';
 import {
   defaultColumns,
   defaultExcludeUseColonTag,
@@ -101,6 +101,10 @@ export interface FormProps extends DataSetComponentProps {
    * 是否使用冒号
    */
   useColon?: boolean;
+  /**
+   * 必输星号位置
+   */
+  requiredMarkAlign?: RequiredMarkAlign;
   /**
    * @deprecated
    * 不使用冒号的列表
@@ -305,6 +309,22 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
+  get requiredMarkAlign(): RequiredMarkAlign | undefined {
+    const { requiredMarkAlign } = this.observableProps;
+
+    if (requiredMarkAlign !== undefined) {
+      return requiredMarkAlign;
+    }
+
+    const configRequiredMarkAlign = this.getContextConfig('requiredMarkAlign');
+    if (configRequiredMarkAlign !== undefined) {
+      return configRequiredMarkAlign;
+    }
+
+    return RequiredMarkAlign.left;
+  }
+
+  @computed
   get excludeUseColonTagList(): string[] {
     const { excludeUseColonTagList } = this.observableProps;
 
@@ -488,6 +508,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
       useColon: props.useColon,
+      requiredMarkAlign: props.requiredMarkAlign,
       excludeUseColonTagList: props.excludeUseColonTagList,
       separateSpacing: props.separateSpacing,
       fieldHighlightRenderer: 'fieldHighlightRenderer' in props ? props.fieldHighlightRenderer : context.fieldHighlightRenderer,
@@ -513,6 +534,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       'pristine',
       'axios',
       'useColon',
+      'requiredMarkAlign',
       'excludeUseColonTagList',
       'separateSpacing',
       'spacingType',
@@ -713,6 +735,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       labelAlign,
       labelTooltip,
       useColon,
+      requiredMarkAlign,
       excludeUseColonTagList,
       readOnly: formReadOnly,
       showHelp,
@@ -805,6 +828,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         className,
         fieldClassName,
         useColon: fieldUseColon = useColon,
+        requiredMarkAlign: fieldRequiredMarkAlign = requiredMarkAlign,
         ...otherProps
       } = props as any;
       let newColSpan = colSpan;
@@ -855,6 +879,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
+        [`${prefixCls}-label-required-mark-${fieldRequiredMarkAlign}`]: isLabelLayoutHorizontal && required && !isOutput && fieldRequiredMarkAlign,
         [`${prefixCls}-label-help`]: isLabelShowHelp,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
@@ -975,6 +1000,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       fieldHighlightRenderer,
       props,
       useColon,
+      requiredMarkAlign,
       showValidation,
       showHelp,
     } = this;
@@ -993,6 +1019,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       readOnly,
       fieldHighlightRenderer,
       useColon,
+      requiredMarkAlign,
       showValidation,
       showHelp,
       getConfig,

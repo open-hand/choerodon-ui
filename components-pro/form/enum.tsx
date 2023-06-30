@@ -36,3 +36,8 @@ export enum SpacingType {
   between = 'between',
   evenly = 'evenly',
 }
+
+export enum RequiredMarkAlign {
+  left = 'left',
+  right = 'right',
+}

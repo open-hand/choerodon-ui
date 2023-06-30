@@ -97,8 +97,8 @@ const Label: FunctionComponent<LabelProps> = (props) => {
 Label.displayName = 'Label';
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
-  const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, getProPrefixCls } = useContext(FormContext);
-  const { children, useColon: fieldUseColon = useColon, ...rest } = props;
+  const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, requiredMarkAlign, getProPrefixCls } = useContext(FormContext);
+  const { children, useColon: fieldUseColon = useColon, requiredMarkAlign: fieldRequiredMarkAlign = requiredMarkAlign, ...rest } = props;
   const child = Children.only<ReactElement<FormFieldProps>>(children);
   if (isValidElement<FormFieldProps>(child)) {
     const prefixCls = getProPrefixCls(FIELD_SUFFIX);
@@ -127,6 +127,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
       [`${prefixCls}-label-output`]: isOutput,
       [`${prefixCls}-label-useColon`]: label && fieldUseColon,
+      [`${prefixCls}-label-required-mark-${fieldRequiredMarkAlign}`]: labelLayout === LabelLayout.horizontal && required && !((child.type as any).displayName === 'Output' || intlFieldOutput) && fieldRequiredMarkAlign,
     });
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-output`]: isOutput,
@@ -146,7 +147,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>
-          <Label className={labelClassName} width={labelWidth} tooltip={tooltip}>{label}</Label>
+          <Label className={labelClassName} width={labelWidth} tooltip={tooltip}><span>{label}</span></Label>
         </Col>
         <Col className={`${prefixCls}-col ${prefixCls}-col-control`}>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>

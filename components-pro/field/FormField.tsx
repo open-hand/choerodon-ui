@@ -31,7 +31,7 @@ import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from './enum';
 import { ValidatorBaseProps, ValidatorProps } from '../validator/rules';
 import { FIELD_SUFFIX } from '../form/utils';
-import { LabelLayout, ShowValidation } from '../form/enum';
+import { LabelLayout, RequiredMarkAlign, ShowValidation } from '../form/enum';
 import Animate from '../animate';
 import {
   defaultRenderer,
@@ -119,6 +119,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    * 是否使用冒号
    */
   useColon?: boolean;
+   /**
+   * 必输星号位置
+   */
+   requiredMarkAlign?: RequiredMarkAlign;
   /**
    * 字段名
    */
@@ -616,6 +620,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'labelTooltip',
       'isFlat',
       'useColon',
+      'requiredMarkAlign',
       'showValidation',
       'tagRenderer',
     ]);

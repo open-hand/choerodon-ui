@@ -142,7 +142,8 @@ const prefixCls = getConfig('prefixCls');
 | feedback | DataSet 查询和提交数据的反馈配置, 详见[Feedback](/components-pro/data-set/#Feedback) | Feedback |  |
 | transport | DataSet 默认 transport, 详见[Transport](/components-pro/data-set/#Transport) | Transport |  |
 | formatter | 日期格式化。其中 jsonDate 是数据请求和响应时的格式，为空时日期会转化为 timestamp。详见[Formatter](#Formatter) | Formatter |  |
-| useColon | Form中是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方 | boolean | false |
+| useColon | Form中是否使用冒号,当开启时会在所有的label后面加上冒号 | boolean | false |
+| requiredMarkAlign | 控制必输星号位置 | `left` \| `right` | `left` |
 | collapseExpandIconPosition | 全局配置 collapse 图标位置 |  `left` \| `right` | `left` |
 | collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
 | collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |

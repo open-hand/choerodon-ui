@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { categories } from 'choerodon-ui-font';
 import noop from 'lodash/noop';
-import { LabelLayout, ShowValidation, LabelAlign } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { ColumnAlign, TableQueryBarType, TableColumnResizeTriggerType } from 'choerodon-ui/pro/lib/table/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
@@ -158,6 +158,7 @@ const defaults = {
   selectReserveParam: true,
   selectTrigger: [Action.focus, Action.click],
   useColon: false,
+  requiredMarkAlign: RequiredMarkAlign.left,
   excludeUseColonTagList: defaultExcludeUseColonTag,
   numberFieldNonStrictStep: false,
   showInvalidDate: true,

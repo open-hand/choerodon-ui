@@ -5,7 +5,7 @@ import { getConfig, getCustomizable, getPrefixCls, getProPrefixCls } from 'choer
 import { getTooltip, getTooltipTheme, getTooltipPlacement } from 'choerodon-ui/lib/_util/TooltipUtils';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { LabelAlign, LabelLayout, ShowValidation } from './enum';
+import { LabelAlign, LabelLayout, RequiredMarkAlign, ShowValidation } from './enum';
 import Form, { LabelWidth } from './Form';
 import { Tooltip } from '../core/enum';
 import { ShowHelp } from '../field/enum';
@@ -26,6 +26,7 @@ export interface FormContextValue extends ConfigContextValue {
   showValidation?: ShowValidation | undefined;
   showHelp?: ShowHelp | undefined;
   useColon?: boolean | undefined;
+  requiredMarkAlign?: RequiredMarkAlign;
   formNode?: Form | undefined;
 }
 

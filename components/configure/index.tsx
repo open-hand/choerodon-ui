@@ -31,7 +31,7 @@ import {
 } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
-import { LabelLayout, ShowValidation, LabelAlign } from 'choerodon-ui/pro/lib/form/enum';
+import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
@@ -229,6 +229,7 @@ export interface Config extends DataSetConfig {
   secretFieldQueryData?: (params: object) => Promise<object | string>;
   secretFieldSaveData?: (params: object) => Promise<object | string>;
   useColon?: boolean;
+  requiredMarkAlign?: RequiredMarkAlign;
   textFieldAutoComplete?: string;
   resultStatusRenderer?: object;
   numberFieldFormatter?: FormatNumberFunc;
