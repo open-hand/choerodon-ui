@@ -24,7 +24,7 @@ import ObserverSelect, { SelectProps } from '../../select/Select';
 import Option, { OptionProps } from '../../option/Option';
 import isSameLike from '../../_util/isSameLike';
 import { DataSetEvents, FieldType } from '../../data-set/enum';
-import { processFieldValue, toRangeValue, processValue } from '../../field/utils';
+import { processFieldValue, toRangeValue, processValue, ProcessValueOptions } from '../../field/utils';
 
 export interface FilterSelectProps extends TextFieldProps {
   paramName?: string;
@@ -209,14 +209,17 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             fieldValue = (fieldValue || [])[repeat];
           }
           const showInvalidDate = this.getContextConfig('showInvalidDate');
+          const processValueOptions: ProcessValueOptions = {
+            dateFormat: this.getDateFormat(field),
+            showInvalidDate,
+            isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
+            precision: field && field.get('precision', current),
+            numberFieldDecimalsAddZero: this.getContextConfig('numberFieldDecimalsAddZero'),
+          };
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
               return processFieldValue(
-                isPlainObject(v) ? v : processValue(v, {
-                  dateFormat: this.getDateFormat(field),
-                  showInvalidDate,
-                  isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
-                }),
+                isPlainObject(v) ? v : processValue(v, processValueOptions),
                 field,
                 {
                   getProp: (name) => this.getProp(name),
@@ -227,13 +230,9 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             }).join('~')}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
-          const text = this.processText(isNil(fieldValue) ? processValue(value, {
-            dateFormat: this.getDateFormat(field),
-            showInvalidDate,
-          }) : isMoment(fieldValue) ? processValue(fieldValue, {
-            dateFormat: this.getDateFormat(field),
-            showInvalidDate,
-          }) : fieldValue);
+          const text = this.processText(isNil(fieldValue)
+            ? processValue(value, processValueOptions)
+            : isMoment(fieldValue) ? processValue(fieldValue, processValueOptions) : fieldValue);
           return `${this.getFieldLabel(field, current)}: ${processFieldValue(
             isPlainObject(fieldValue) ? fieldValue : text,
             field,

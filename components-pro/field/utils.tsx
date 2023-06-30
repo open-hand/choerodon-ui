@@ -139,6 +139,7 @@ export function getNumberFormatOptions(
   getConfig = getConfigDefault,
 ): FormatNumberFuncOptions {
   const precision = getProp('precision');
+  const numberFieldDecimalsAddZero = precision > 0 && getConfig('numberFieldDecimalsAddZero');
   const v: number | BigNumber | undefined = isNil(value) ? getValue && getValue() : value;
   const precisionInValue = isNumber(precision) ? precision : math.dp(v || 0);
   const formatterOptions: FormatNumberFuncOptions = getDisplayProp('formatterOptions') || {};
@@ -146,6 +147,7 @@ export function getNumberFormatOptions(
   const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || controlLang;
   const options: Intl.NumberFormatOptions = {
     maximumFractionDigits: precisionInValue,
+    minimumFractionDigits: numberFieldDecimalsAddZero ? precisionInValue : undefined,
     ...numberFieldFormatterOptions.options,
     ...formatterOptions.options,
   };
@@ -199,6 +201,8 @@ export type ProcessValueOptions = {
   dateFormat?: string;
   showInvalidDate?: boolean;
   isNumber?: boolean;
+  precision?: number;
+  numberFieldDecimalsAddZero?: boolean;
 }
 
 export function processValue(value: any, options: ProcessValueOptions = {}) {
@@ -217,7 +221,9 @@ export function processValue(value: any, options: ProcessValueOptions = {}) {
       return value;
     }
     if (options.isNumber && math.isValidNumber(value)) {
-      return math.toString(value);
+      return options.precision && options.numberFieldDecimalsAddZero
+        ? math.toFixed(value, options.precision)
+        : math.toString(value);
     }
     return value.toString();
   }
