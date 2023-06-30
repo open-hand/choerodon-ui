@@ -547,6 +547,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   getProcessValueOptions(): ProcessValueOptions {
     const options = super.getProcessValueOptions();
     options.isNumber = true;
+    options.precision = this.getProp('precision');
+    options.numberFieldDecimalsAddZero = this.getContextConfig('numberFieldDecimalsAddZero');
     return options;
   }
 

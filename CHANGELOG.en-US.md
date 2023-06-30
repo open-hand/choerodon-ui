@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch` properties.
+- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `numberFieldDecimalsAddZero` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
 - 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
 - 💄 `<pro>DataSet`: Optimize `childrenField` performance.
