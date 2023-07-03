@@ -6,7 +6,7 @@ import isObject from 'lodash/isObject';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import { LabelLayout, SpacingType } from './enum';
+import { LabelLayout, RequiredMarkAlign, SpacingType } from './enum';
 import { LabelWidth, SeparateSpacing, SpacingTypeMap } from './Form';
 
 export const defaultLabelWidth = 100;
@@ -239,4 +239,11 @@ export function getSpacingFieldStyle(
     }
     return style;
   }
+}
+
+export function getRequiredMarkAlign(align) {
+  if ([RequiredMarkAlign.left, RequiredMarkAlign.right].includes(align)) {
+    return align;
+  }
+  return RequiredMarkAlign.left;
 }

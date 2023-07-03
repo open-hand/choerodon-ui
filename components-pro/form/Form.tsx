@@ -39,6 +39,7 @@ import {
   FIELD_SUFFIX,
   getProperty,
   getPropertyDSFirst,
+  getRequiredMarkAlign,
   getSpacingFieldStyle,
   getSpacingLabelStyle,
   getSpacingProperties,
@@ -309,15 +310,15 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
-  get requiredMarkAlign(): RequiredMarkAlign | undefined {
+  get requiredMarkAlign(): RequiredMarkAlign {
     const { requiredMarkAlign } = this.observableProps;
 
-    if (requiredMarkAlign !== undefined) {
+    if ([RequiredMarkAlign.left, RequiredMarkAlign.right].includes(requiredMarkAlign)) {
       return requiredMarkAlign;
     }
 
     const configRequiredMarkAlign = this.getContextConfig('requiredMarkAlign');
-    if (configRequiredMarkAlign !== undefined) {
+    if ([RequiredMarkAlign.left, RequiredMarkAlign.right].includes(configRequiredMarkAlign)) {
       return configRequiredMarkAlign;
     }
 
@@ -879,7 +880,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         [`${prefixCls}-label-output`]: isLabelLayoutHorizontal && isOutput,
         [`${prefixCls}-label-output-${outputMix}`]: isLabelLayoutHorizontal && isOutput && outputMix,
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
-        [`${prefixCls}-label-required-mark-${fieldRequiredMarkAlign}`]: isLabelLayoutHorizontal && required && !isOutput && fieldRequiredMarkAlign,
+        [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: isLabelLayoutHorizontal && required && !isOutput && getRequiredMarkAlign(fieldRequiredMarkAlign),
         [`${prefixCls}-label-help`]: isLabelShowHelp,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
