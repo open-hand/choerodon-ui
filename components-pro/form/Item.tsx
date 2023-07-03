@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import FormContext from './FormContext';
-import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth, getPropertyDSFirst } from './utils';
+import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth, getPropertyDSFirst, getRequiredMarkAlign } from './utils';
 import { LabelLayout } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import Row from '../row';
@@ -127,7 +127,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
       [`${prefixCls}-label-output`]: isOutput,
       [`${prefixCls}-label-useColon`]: label && fieldUseColon,
-      [`${prefixCls}-label-required-mark-${fieldRequiredMarkAlign}`]: labelLayout === LabelLayout.horizontal && required && !((child.type as any).displayName === 'Output' || intlFieldOutput) && fieldRequiredMarkAlign,
+      [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: labelLayout === LabelLayout.horizontal && required && !((child.type as any).displayName === 'Output' || intlFieldOutput) && getRequiredMarkAlign(fieldRequiredMarkAlign),
     });
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-output`]: isOutput,
