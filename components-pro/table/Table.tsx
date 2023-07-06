@@ -277,6 +277,7 @@ export interface TableCustomized {
   columns: { [key: string]: ColumnProps };
   heightType?: TableHeightType;
   height?: number;
+  pageSize?: number | string;
   heightDiff?: number;
   aggregation?: boolean;
   size?: Size;
@@ -578,6 +579,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   heightChangeable?: boolean;
   /**
+   * 可设置分页
+   */
+  pageSizeChangeable?: boolean;
+  /**
    * 显示原始值
    */
   pristine?: boolean;
@@ -698,6 +703,10 @@ export interface TableProps extends DataSetComponentProps {
    * 是否显示个性化设置入口按钮
    */
   customizable?: boolean | undefined;
+  /**
+   * 个性化加载回调函数
+   */
+  onCustomizedLoad?: (TableCustomized) => Promise<any>;
   /**
    * Board 列表视图个性化配置
    */
@@ -1396,6 +1405,8 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragColumnAlign',
       'columnDraggable',
       'rowDraggable',
+      'pageSizeChangeable',
+      'onCustomizedLoad',
       'onDragEnd',
       'rowDragRender',
       'columnsDragRender',

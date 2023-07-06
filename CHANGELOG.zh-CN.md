@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch, numberFieldDecimalsAddZero 属性。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
 - 🌟 `<pro>Form`: 新增 requiredMarkAlign 属性控制必输星号位置。
+- 🌟 `<pro>Table`: 新增表格个性化分页大小控制。
 - 💄 `<pro>DataSet`: 优化 childrenField 性能。
 - 💄 `<pro>DataSet`: 优化查询 dataSet 实例 current 记录赋值。
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。

@@ -47,7 +47,7 @@ class App extends React.Component {
         };
       },
     },
-    autoQuery: true,
+    autoQuery: false,
     pageSize: 5,
     fields: [
       {
@@ -79,6 +79,10 @@ class App extends React.Component {
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
+      // query: ({dataSet, params, data}) => {
+      //   console.log('query------------', params, data, !!dataSet.getState('ready'));
+      //            return !!dataSet.getState('ready');
+      //   },
     },
   });
 
@@ -140,10 +144,21 @@ class App extends React.Component {
         dataSet={this.userDs}
         rowDraggable
         columnDraggable
+        pageSizeChangeable
         columnTitleEditable
         dragColumnAlign="left"
         columnsDragRender={this.columnsDragRender}
+        onCustomizedLoad={(props) => {
+          // console.log('onCustomizedLoad', props);
+          this.userDs.setState('ready', true);
+          if (props.pageSize) {
+            this.userDs.pageSize = Number(props.pageSize);
+            this.userDs.currentPage = 1;
+          }
+          this.userDs.query(1, undefined, true);
+        }}
         style={this.style}
+        buttons={['query']}
       >
         <Column header="组合">
           <Column header="子组合">

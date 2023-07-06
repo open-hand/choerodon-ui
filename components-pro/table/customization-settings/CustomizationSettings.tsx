@@ -21,6 +21,7 @@ import { normalizeGroupColumns } from '../TableStore';
 import Form from '../../form/Form';
 import ObserverNumberField from '../../number-field/NumberField';
 import ObserverSelectBox from '../../select-box/SelectBox';
+import ObserverSelect from '../../select/Select';
 import ObserverTextField from '../../text-field';
 import Option from '../../option/Option';
 import { TableHeightType } from '../enum';
@@ -75,7 +76,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const boardCusCurrent = customizedDS && customizedDS.current;
   const { handleOk, handleCancel } = modal || { update: noop, handleOk: noop };
   const { prefixCls, tableStore } = context;
-  const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized, customizedBtn } = tableStore;
+  const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized, customizedBtn, dataSet } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
@@ -87,6 +88,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         size: tableStore.size,
         parityRow: tableStore.parityRow,
         aggregationExpandType: tableStore.aggregationExpandType,
+        pageSize: customized.pageSize || dataSet.pageSize,
         viewName: boardCusCurrent ? boardCusCurrent.get('viewName') : '列表视图',
       },
     ],
@@ -154,10 +156,11 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     const { originalHeightType, props: { style } } = tableStore;
     const defaultHeight = defaultTo(toPx(style && style.height), tableStore.totalHeight);
     tableStore.node.handleHeightTypeChange(true);
-    tableRecord.init({
+    tableRecord.set({
       heightType: originalHeightType,
       height: defaultHeight,
       heightDiff: diff(defaultHeight),
+      pageSize: dataSet.props.pageSize,
     });
   }), [tableRecord, tableStore]);
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
@@ -189,9 +192,14 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         tableStore.saveCustomized(tempCustomized);
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
-        const { aggregation: customAggregation } = tempCustomized;
+        const { aggregation: customAggregation, pageSize } = tempCustomized;
         if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
           onAggregationChange(customAggregation);
+        }
+        if (dataSet.pageSize !== Number(pageSize)) {
+          dataSet.pageSize = Number(pageSize);
+          dataSet.currentPage = 1;
+          dataSet.query(1, undefined, true);
         }
       }));
     }
@@ -204,6 +212,30 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   }, [handleOk, handleCancel, columnDataSet, tableStore]);
   const renderIcon = useCallback(({ isActive }) => <Icon type={isActive ? 'expand_more' : 'navigate_next'} />, []);
   const tableSettings: ReactElement[] = [];
+  const globalPagination = tableStore.getConfig('pagination');
+  const pageSizeOptions = (tableStore.pagination && tableStore.pagination.pageSizeOptions) || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
+
+  if (tableStore.pageSizeChangeable) {
+    tableSettings.push(
+      <ObserverSelect
+        searchable={false}
+        key="page-size-select"
+        // onChange={this.handlePageSizeChange}
+        label="分页设置"
+        labelLayout={LabelLayout.float}
+        name='pageSize'
+        clearButton={false}
+        combo
+        restrict="0-9"
+        size={Size.small}
+      >
+        {pageSizeOptions.map(option => (
+          <ObserverSelect.Option key={option} value={option}>
+            {option}
+          </ObserverSelect.Option>))}
+      </ObserverSelect>,
+    );
+  }
   if (tableStore.heightChangeable) {
     const tableHeightType = tableRecord.get('heightType');
     tableSettings.push(

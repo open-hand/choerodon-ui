@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `numberFieldDecimalsAddZero` properties.
+- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `numberFieldDecimalsAddZero`, `tablePageSizeChangeable` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
 - 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
+- 🌟 `<pro>Table`: Added table personalized `pageSize` control.
 - 💄 `<pro>DataSet`: Optimize `childrenField` performance.
 - 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.

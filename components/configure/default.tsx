@@ -113,6 +113,7 @@ const defaults = {
   tableRowDraggable: false,
   tableColumnDraggable: false,
   tableHeightChangeable: true,
+  tablePageSizeChangeable: false,
   performanceTableColumnDraggable: false,
   tableColumnAlign: defaultTableColumnAlign,
   tableSpinProps: defaultSpinProps,

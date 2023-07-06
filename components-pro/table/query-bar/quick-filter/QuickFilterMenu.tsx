@@ -778,7 +778,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     );
   };
 
-  // 租户预置筛选及仅保存条件时，无保存按钮
+  // 租户预置筛选，无保存按钮和另存为
   return (
     <>
       <Select
@@ -812,7 +812,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
               :
               false
           ) ? null : (
-              <Button onClick={handleSave}>
+              <Button onClick={handleSave} hidden={isTenant}>
                 {$l('Table', 'save_button')}
               </Button>
             )}

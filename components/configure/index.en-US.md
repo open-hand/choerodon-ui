@@ -90,6 +90,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
 | tableColumnResizeTransition | Excessive effect of column dragging | boolean | true |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |
+| tablePageSizeChangeable | Default Table pageSizeChangeable | boolean | false |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
 | tableRowDraggable | Default Table rowDraggable | boolean | false |

@@ -94,6 +94,7 @@ const prefixCls = getConfig('prefixCls');
 | tableColumnDraggable | 默认 Table 个性化是否开启列拖拽 | boolean | false |
 | tableColumnResizeTransition | 列拖拽的过度效果 | boolean | true |
 | tableHeightChangeable | 默认 Table 个性化是否开启高度设置 | boolean | true |
+| tablePageSizeChangeable | 默认 Table 个性化是否开启分页大小设置 | boolean | false |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
 | tableRowDraggable | Table是否开启行拖拽 | boolean | false |

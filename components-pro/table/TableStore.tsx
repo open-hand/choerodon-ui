@@ -1543,6 +1543,13 @@ export default class TableStore {
     return this.getConfig('pagination');
   }
 
+  get pageSizeChangeable(): boolean {
+    if ('pageSizeChangeable' in this.props) {
+      return this.props.pageSizeChangeable!;
+    }
+    return this.getConfig('tablePageSizeChangeable') === true;
+  }
+
   get dragColumnAlign(): DragColumnAlign | undefined {
     if ('dragColumnAlign' in this.props) {
       return this.props.dragColumnAlign;
@@ -2890,7 +2897,7 @@ export default class TableStore {
   }
 
   async loadCustomized() {
-    const { customizedCode, boardCustomized } = this.props;
+    const { customizedCode, boardCustomized, onCustomizedLoad = noop, dataSet } = this.props;
     const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
     if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
@@ -2918,10 +2925,15 @@ export default class TableStore {
             warning(false, error.message);
           }
         }
-        runInAction(() => {
+        runInAction(async () => {
           const newCustomized: TableCustomized = { columns: {}, ...customized };
           this.customized = newCustomized;
           this.initColumns();
+          // autoQuery：fasle 且分页参数与个性化不一致时进行修改
+          if (newCustomized.pageSize && dataSet.pageSize !== Number(newCustomized.pageSize) && !dataSet.props.autoQuery) {
+            dataSet.pageSize = Number(newCustomized.pageSize);
+          }
+          await onCustomizedLoad(newCustomized);
           const { aggregation: customAggregation } = newCustomized;
           if (customAggregation !== undefined) {
             const { onAggregationChange, aggregation } = this.props;
