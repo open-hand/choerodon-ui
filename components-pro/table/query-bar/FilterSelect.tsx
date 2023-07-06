@@ -214,7 +214,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             showInvalidDate,
             isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
             precision: field && field.get('precision', current),
-            numberFieldDecimalsAddZero: this.getContextConfig('numberFieldDecimalsAddZero'),
+            useZeroFilledDecimal: this.getContextConfig('useZeroFilledDecimal'),
           };
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {

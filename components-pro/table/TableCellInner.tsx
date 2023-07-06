@@ -439,7 +439,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           showInvalidDate: tableStore.getConfig('showInvalidDate'),
           isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
           precision: field && field.get('precision', record),
-          numberFieldDecimalsAddZero: tableStore.getConfig('numberFieldDecimalsAddZero'),
+          useZeroFilledDecimal: tableStore.getConfig('useZeroFilledDecimal'),
         });
         return processFieldValue(text, field, {
           getProp: (propName) => field && field.get(propName, record),

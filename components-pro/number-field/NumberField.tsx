@@ -548,7 +548,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const options = super.getProcessValueOptions();
     options.isNumber = true;
     options.precision = this.getProp('precision');
-    options.numberFieldDecimalsAddZero = this.getContextConfig('numberFieldDecimalsAddZero');
+    options.useZeroFilledDecimal = this.getContextConfig('useZeroFilledDecimal');
     return options;
   }
 

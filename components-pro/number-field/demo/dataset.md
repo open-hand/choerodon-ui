@@ -18,7 +18,7 @@ import { DataSet, NumberField, Row, Col } from 'choerodon-ui/pro';
 import { configure } from 'choerodon-ui';
 
 configure({
-  numberFieldDecimalsAddZero: true,
+  useZeroFilledDecimal: true,
 });
 
 function handleDataSetChange({ record, name, value, oldValue }) {

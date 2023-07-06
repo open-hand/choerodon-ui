@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch, numberFieldDecimalsAddZero 属性。
+- 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch, useZeroFilledDecimal, tablePageSizeChangeable 属性。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。
 - 🌟 `<pro>Form`: 新增 requiredMarkAlign 属性控制必输星号位置。
 - 🌟 `<pro>Table`: 新增表格个性化分页大小控制。
