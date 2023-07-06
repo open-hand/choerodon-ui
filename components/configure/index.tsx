@@ -309,7 +309,7 @@ export interface Config extends DataSetConfig {
   /**
    * NumberField 和 Currency 组件的值是否在输入和显示时开启根据 precision 补零，真实值不受影响
    */
-  numberFieldDecimalsAddZero?: boolean;
+  useZeroFilledDecimal?: boolean;
   /**
    * 日期时间控件是否显示确定按钮
    */

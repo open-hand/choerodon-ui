@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `numberFieldDecimalsAddZero`, `tablePageSizeChangeable` properties.
+- 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `useZeroFilledDecimal`, `tablePageSizeChangeable` properties.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
 - 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
 - 🌟 `<pro>Table`: Added table personalized `pageSize` control.

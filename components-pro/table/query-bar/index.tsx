@@ -770,14 +770,17 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         dataSet,
         tableStore: { queryBar, getConfig },
       },
-      props: { queryFields },
+      props: { queryFields, buttons },
     } = this;
     const { queryDataSet } = dataSet;
     const result: ReactElement<any>[] = [];
     if (queryDataSet) {
       const { fields, current, props: { fields: propFields = [] } } = queryDataSet;
       // 减少重复渲染
-      if (this.queryFieldsElement.length && (!current || dataSet.status !== DataSetStatus.ready)) return this.queryFieldsElement;
+      // 使用了 buttons 判断，是因为 getButtons 中有用 DataSet.status 可观察对象判断，确保 buttons 用到 status 时，此处才用 status 判断，减少渲染
+      if (this.queryFieldsElement.length && (
+        (!current || (buttons && buttons.some(button => isString(button) && button in TableButtonType) && dataSet.status !== DataSetStatus.ready))
+      )) return this.queryFieldsElement;
       const cloneFields: Map<string, Field> = fields.toJS();
       const tlsKey = getConfig('tlsKey');
       const processField = (field, name) => {
