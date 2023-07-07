@@ -249,7 +249,7 @@
     "rimraf": "^3.0.0",
     "rucksack-css": "^1.0.2",
     "scrollama": "^2.1.0",
-    "stylelint": "^10.0.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^18.3.0",
