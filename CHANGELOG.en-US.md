@@ -39,6 +39,7 @@ timeline: true
 - 💄 `Tabs`: Optimize focus switching behavior.
 - 💄 `<pro>Validator`: Optimize verification performance.
 - 💄 `Menu`: Optimized `a` tag style.
+- 💄 `<pro>Attachment`: Optimized the `help` style when the `picture-card` mode is in `Form` and `label` is displayed horizontally.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
