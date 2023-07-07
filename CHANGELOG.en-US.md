@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the issue that customization could not change the height after the table was set to height.
 - 🐞 `<pro>Table`: Fixed the style of dynamic filter bar required field validation failure.
 - 🐞 `<pro>Table`: Fixed the problem of misalignment under the case of virtual scrolling without left fixed column.
+- 🐞 `<pro>Table`: Fixed `buttonsLimit` limit button error problem.
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
 
 ## 1.6.2

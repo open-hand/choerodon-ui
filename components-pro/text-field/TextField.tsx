@@ -1113,6 +1113,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return undefined;
   }
 
+  @action
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
     const { prefixCls, clearButton } = this;
     let divStyle = {};

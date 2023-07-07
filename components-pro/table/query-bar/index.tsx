@@ -707,7 +707,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (customizable && customizedBtn) {
       buttons = [customizedColumnHeader(), ...(buttons || [])];
     }
-    if (queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort) {
+    const hasCombineSort = queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort;
+    if (hasCombineSort) {
       const sortableFieldNames = this.getSortableFieldNames();
       if (sortableFieldNames.length > 0) {
         buttons = [(
@@ -757,7 +758,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         }
       });
       if (buttonsLimits && buttons.length > buttonsLimits) {
-        const moreButton: ReactElement = this.getMoreButton(buttonsLimits);
+        const moreButton: ReactElement = this.getMoreButton(hasCombineSort ? buttonsLimits - 1 : buttonsLimits);
         children.push(moreButton);
       }
     }
