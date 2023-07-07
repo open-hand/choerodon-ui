@@ -39,6 +39,7 @@ timeline: true
 - 💄 `Tabs`: 优化焦点切换行为。
 - 💄 `<pro>Validator`: 优化校验性能。
 - 💄 `Menu`: 优化 a 标签样式。
+- 💄 `<pro>Attachment`: 优化 picture-card 模式在 Form 下，且 label 为水平显示时的 help 样式。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
