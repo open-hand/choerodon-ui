@@ -167,6 +167,7 @@ const prefixCls = getConfig('prefixCls');
 | tooltipPlacement | Tooltip 位置 或 返回位置的钩子, 参数 placement 详见 [TooltipPlacement](#TooltipPlacement) | [placement](/components-pro/tooltip/#API) \| function(target) |  [TooltipPlacement](#TooltipPlacement) |
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
+| tabsDefaultChangeable | 默认 Tabs 个性化是否可配置默认页签 | boolean | true |
 | numberFieldKeyboard | NumberField 组件是否启用 UP DOWN 键盘事件 | boolean | true |
 | dateTimePickerOkButton | 日期时间控件是否显示确定按钮 | boolean | false |
 | lovShowSelectedInView | Lov 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录 | boolean \| (viewMode) => boolean | (viewMode) => viewMode === 'drawer' |

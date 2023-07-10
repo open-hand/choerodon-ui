@@ -46,6 +46,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true |
 | tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true |
 | defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true |
+| restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true |
 | showMore | 页签超过容器宽度是否显示更多 | boolean | false |
 | flex | 是否柔性布局 | boolean | 无 |
 

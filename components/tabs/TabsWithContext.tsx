@@ -74,12 +74,13 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     hideOnlyGroup,
     customizedCode, customizable, children, defaultActiveKey: propDefaultActiveKey, setCustomized, customized,
     prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, keyboard,
-    defaultChangeable,
+    defaultChangeable: propDefaultChangeable,
     tabDraggable,
     tabTitleEditable,
     tabCountHideable,
     rippleDisabled,
     flex,
+    restoreDefault,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -101,6 +102,14 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabTitleEditable,
     tabCountHideable,
   }), [children, customized, tabDraggable, tabTitleEditable, tabCountHideable]);
+
+  const defaultChangeable = useMemo((): boolean | undefined => {
+    if (propDefaultChangeable !== undefined) {
+      return propDefaultChangeable;
+    }
+    const tabsDefaultChangeable = getConfig('tabsDefaultChangeable');
+    return tabsDefaultChangeable;
+  }, []);
 
   const defaultActiveKey = useMemo((): string | undefined => {
     const option: { activeKey?: string | undefined; defaultActiveKey?: string | undefined } = {
@@ -210,6 +219,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabCountHideable,
     defaultChangeable,
     rippleDisabled,
+    restoreDefault,
   };
   const inkBarAnimated = isAnimated(animated) ? animated.inkBar : animated;
   let tabPaneAnimated = isAnimated(animated) ? animated.tabPane : animated;

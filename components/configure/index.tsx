@@ -297,6 +297,10 @@ export interface Config extends DataSetConfig {
    */
   tabsInkBarStyle?: CSSProperties;
   /**
+   * Tabs 个性化是否开启默认可配置
+   */
+  tabsDefaultChangeable?: boolean;
+  /**
    * 个性化开关
    */
   customizable?: boolean | Customizable;

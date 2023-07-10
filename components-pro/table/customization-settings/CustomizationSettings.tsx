@@ -214,15 +214,23 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const tableSettings: ReactElement[] = [];
   const globalPagination = tableStore.getConfig('pagination');
   const pageSizeOptions = (tableStore.pagination && tableStore.pagination.pageSizeOptions) || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
+  const maxPageSize = useMemo(() => Math.max(defaultTo((tableStore.pagination && 'maxPageSize' in tableStore.pagination) ? tableStore.pagination.maxPageSize : (globalPagination ? globalPagination.maxPageSize : undefined), 100), ...pageSizeOptions.map(size => Number(size)))
+    , [globalPagination, tableStore.pagination, pageSizeOptions]);
+  const handlePageSizeBeforeChange = useCallback((value): boolean | Promise<boolean> => {
+    if (value < 1 || value > maxPageSize) {
+      return false;
+    }
+    return true;
+  }, []);
 
   if (tableStore.pageSizeChangeable) {
     tableSettings.push(
       <ObserverSelect
         searchable={false}
         key="page-size-select"
-        // onChange={this.handlePageSizeChange}
         label="分页设置"
         labelLayout={LabelLayout.float}
+        onBeforeChange={handlePageSizeBeforeChange}
         name='pageSize'
         clearButton={false}
         combo

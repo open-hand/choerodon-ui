@@ -43,6 +43,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true |
 | tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true |
 | defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true |
+| restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true |
 | showMore | Display more tabs than the width of the container | boolean | false |
 | flex | Whether flexible layout | boolean | - |
 

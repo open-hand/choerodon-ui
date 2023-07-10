@@ -45,7 +45,7 @@ export interface CustomizationSettingsProps {
 
 const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = function CustomizationSettings(props) {
   const { modal } = props;
-  const { customized, saveCustomized, totalPanelsMap, groupedPanelsMap, defaultActiveKey, actuallyDefaultActiveKey, propActiveKey, children } = useContext(TabsContext);
+  const { customized, saveCustomized, totalPanelsMap, groupedPanelsMap, defaultActiveKey, actuallyDefaultActiveKey, propActiveKey, children, restoreDefault } = useContext(TabsContext);
   const oldCustomized: TabsCustomized = useMemo(() => customized ? merge<Partial<TabsCustomized>, TabsCustomized>({}, customized) : { panes: {} }, [customized]);
   const tempCustomized = useRef<TabsCustomized>(oldCustomized);
   const [customizedPanes, setCustomizedPanes] = useState<[Map<string, TabPaneProps>, Map<string, GroupPanelMap>]>(() => [totalPanelsMap, groupedPanelsMap]);
@@ -86,7 +86,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     }
   }, [saveCustomized, tempCustomized, modal]);
   useEffect(() => {
-    if (modal) {
+    if (modal && restoreDefault) {
       modal.update({
         footer: (okBtn, cancelBtn) => (
           <>

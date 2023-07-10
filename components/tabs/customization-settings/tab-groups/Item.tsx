@@ -19,7 +19,7 @@ export interface ItemProps {
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
-  const { prefixCls, tabDraggable } = useContext(TabsContext);
+  const { prefixCls, tabDraggable, defaultChangeable } = useContext(TabsContext);
   const selfPrefixCls = `${prefixCls}-customization-group-item`;
   const { suffix, record, index, records, provided, snapshot, defaultKey } = props;
   const sort = record.get('sort');
@@ -63,7 +63,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
                 provided={tabDraggable ? provided : undefined}
               />
               {
-                defaultKey === record.get('key') && (
+                defaultChangeable && defaultKey === record.get('key') && (
                   <span className={`${selfPrefixCls}-title-default`}>{$l('Tabs', 'default')}</span>
                 )
               }

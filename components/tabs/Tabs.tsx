@@ -57,6 +57,7 @@ export interface TabsProps {
   defaultChangeable?: boolean;
   rippleDisabled?: boolean;
   flex?: boolean;
+  restoreDefault?: boolean;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
@@ -101,7 +102,7 @@ const Tabs: FunctionComponent<TabsProps> = function Tabs(props) {
 Tabs.displayName = 'Tabs';
 
 Tabs.defaultProps = {
-  defaultChangeable: true,
+  restoreDefault: true,
   tabCountHideable: true,
   tabTitleEditable: true,
   tabDraggable: true,

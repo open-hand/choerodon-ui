@@ -180,6 +180,7 @@ const defaults = {
   tableColumnResizeTransition: true,
   fieldFocusMode: FieldFocusMode.checked,
   formAutoFocus: false,
+  tabsDefaultChangeable: true,
 };
 
 export default defaults;
