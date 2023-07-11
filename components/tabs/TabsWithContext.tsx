@@ -23,6 +23,7 @@ import warning from '../_util/warning';
 import TabBar, { TabBarProps } from './TabBar';
 import TabContent, { TabContentProps } from './TabContent';
 import isFlexSupported from '../_util/isFlexSupported';
+import KeyCode from '../_util/KeyCode';
 import { Animated, GroupPanelMap, TabsCustomized, TabsProps } from './Tabs';
 import { TabPaneProps } from './TabPane';
 import TabsContext, { TabsContextValue } from './TabsContext';
@@ -182,15 +183,6 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
       if (onChange) {
         onChange(key);
       }
-      if (tabRef.current) {
-        const selector = '[tabindex^="-1"]';
-        const findFocusableElements = Array.from<HTMLElement>(tabRef.current.querySelectorAll(selector));
-        findFocusableElements.forEach(child => {
-          if (child.getAttribute('data-node-key') === key) {
-            child.focus();
-          }
-        })
-      }
     }
   }, [hasPropActiveKey, activeKey, onChange, currentGroup]);
   const validationMap = useMemo(() => observable.map(), []);
@@ -332,8 +324,23 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     contents.reverse();
   }
 
+  const handleKeyDown = useCallback(e => {
+    const { keyCode } = e;
+    if (keyCode === KeyCode.TAB) {
+      if (tabRef.current) {
+        const selector = '[tabindex^="-1"]';
+        const findFocusableElements = Array.from<HTMLElement>(tabRef.current.querySelectorAll(selector));
+        findFocusableElements.forEach(child => {
+          if (child.getAttribute('data-node-key') === activeKey && document.activeElement === tabRef.current) {
+            child.focus();
+          }
+        })
+      }
+    }
+  }, [activeKey]);
+
   const tabs = (
-    <div tabIndex={-1} ref={tabRef} className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} {...getDataAttr(restProps)}>
+    <div tabIndex={-1} ref={tabRef} className={cls} style={style} onScrollCapture={tabPaneAnimated ? handleScroll : undefined} onKeyDown={handleKeyDown} {...getDataAttr(restProps)}>
       {contents}
     </div>
   );
