@@ -306,6 +306,16 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }, [isLoading, expandable, isExpanded, isLoaded, tableStore, record]);
 
+  // 行内编辑模式，某一行在编辑状态，在它上方的行展开或者折叠行时，重新渲染编辑器位置
+  useEffect(() => {
+    const { inlineEdit, currentEditRecord, editors } = tableStore;
+    if (inlineEdit && currentEditRecord && currentEditRecord.index > record.index && editors.size) {
+      tableStore.editors.forEach((editor) => {
+        editor.alignEditor();
+      });
+    }
+  }, [tableStore, record, record.isExpanded]);
+
   const renderExpandRow = (): ReactElement<ExpandedRowProps>[] => {
     if (expandable && (isExpanded || childrenRenderedRef.current)) {
       const expandRows: ReactElement<ExpandedRowProps>[] = [];

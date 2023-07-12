@@ -1037,7 +1037,8 @@ export default class DataSet extends EventManager {
    * @param record 记录
    */
   set current(record: Record | undefined) {
-    const currentRecord = this.current;
+    // set 属性中如果直接使用 get 属性，某些情况 mobx 会报错，直接使用 get 属性相同逻辑
+    const currentRecord = this.all.find(record => record.isCurrent);
     if (currentRecord !== record && (!record || record.dataSet === this)) {
       runInAction(() => {
         if (currentRecord) {
@@ -1799,7 +1800,6 @@ export default class DataSet extends EventManager {
       this.push(record);
     }
     if (this.props.autoLocateAfterCreate) {
-      record.isCurrent = true;
       this.current = record;
     }
     if (validationRules && this.validationSelfErrors) {
