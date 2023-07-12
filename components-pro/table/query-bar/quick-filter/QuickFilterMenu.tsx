@@ -84,11 +84,20 @@ function findFieldObj(queryDataSet, data) {
         value: multipleValue,
       };
     }
+    if (isObject(value)) {
+      return {
+        name,
+        value: {
+          [valueField]: value[valueField],
+          [textField]: value[textField],
+        },
+      };
+    }
     return {
       name,
       value: {
-        [valueField]: value[valueField],
-        [textField]: value[textField],
+        [valueField]: value,
+        [textField]: value,
       },
     };
   }
