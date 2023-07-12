@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the style of dynamic filter bar required field validation failure.
 - 🐞 `<pro>Table`: Fixed the problem of misalignment under the case of virtual scrolling without left fixed column.
 - 🐞 `<pro>Table`: Fixed `buttonsLimit` limit button error problem.
+- 🐞 `<pro>Table`: Fixed the issue that dynamic filter bar saved query conditions to report errors.
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
 
 ## 1.6.2

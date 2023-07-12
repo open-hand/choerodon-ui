@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条必填字段校验失败的样式。
 - 🐞 `<pro>Table`: 修复虚拟滚动没有左固定列的情况下列错位的问题。
 - 🐞 `<pro>Table`: 修复 buttonsLimit 限制按钮错误问题。
+- 🐞 `<pro>Table`: 修复动态筛选条保存查询条件报错问题。
 - 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
 
 ## 1.6.2
