@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
 - 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
 - 🌟 `<pro>Table`: Added table personalized `pageSize` control.
+- 🌟 `Tabs`: New support for mouse scrolling when `TabPane` is displayed horizontally.
 - 💄 `<pro>DataSet`: Optimize `childrenField` performance.
 - 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.
@@ -56,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed `buttonsLimit` limit button error problem.
 - 🐞 `<pro>Table`: Fixed the issue that dynamic filter bar saved query conditions to report errors.
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
+- 🐞 `<pro>Table`: Fixed an issue in in-line editing mode where the editor was misaligned when a row was in the editing state and the line above it was expanded or collapsed.
 
 ## 1.6.2
 

@@ -712,11 +712,33 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const debouncedScroll = debounce(e => {
       handleScrollEvent(e);
     }, 200);
+
+    const debouncedWheel = debounce(e => {
+      const originalScrollLeft = navScrollRef && navScrollRef.current ? navScrollRef.current.scrollLeft : 0;
+      const scrollLeft = originalScrollLeft + e.deltaY;
+      handleScrollEvent({ target: { scrollLeft: scrollLeft > 0 ? scrollLeft : 0 , scrollTop: 0 } });
+    }, 50);
+    const debouncedWheelWrap = (e) => {
+      // 仅处理横向显示且为鼠标滚动
+      if (isVertical(tabBarPosition) || Math.abs(e.deltaX) > 0) {
+        return;
+      }
+      if (navScrollRef && navScrollRef.current && navRef && navRef.current
+        && navRef.current.offsetWidth > navScrollRef.current.offsetWidth) {
+        e.preventDefault();
+        e.stopPropagation();
+        debouncedWheel(e);
+      }
+    };
+
     const scrollEvent = new EventManager(navScrollRef.current);
     scrollEvent.addEventListener('scroll', debouncedScroll);
+    scrollEvent.addEventListener('wheel', debouncedWheelWrap);
     return () => {
       scrollEvent.removeEventListener('scroll', debouncedScroll);
+      scrollEvent.removeEventListener('wheel', debouncedWheelWrap);
       debouncedScroll.cancel();
+      debouncedWheel.cancel();
     };
   }, [tabBarPosition]);
 
