@@ -91,6 +91,12 @@ export default class IntlField extends TextArea<IntlFieldProps> {
     return super.border;
   }
 
+  @autobind
+  @action
+  saveSuffixRef(node) {
+    this.suffixRef = node;
+  }
+
   getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
     const superText = super.getEditorTextInfo(rangeTarget);
     return this.props.displayOutput ? { ...superText, placeholder: undefined } : superText;
