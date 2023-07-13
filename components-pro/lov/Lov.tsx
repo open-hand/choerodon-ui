@@ -902,6 +902,12 @@ export default class Lov extends Select<LovProps> {
     return options.status === DataSetStatus.loading;
   }
 
+  @autobind
+  @action
+  saveSuffixRef(node) {
+    this.suffixRef = node;
+  }
+
   getSuffix(): ReactNode {
     const { viewMode } = this.observableProps;
     const { suffix } = this.props;

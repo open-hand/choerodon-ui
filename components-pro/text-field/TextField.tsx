@@ -326,10 +326,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
-  @autobind
-  @action
   saveSuffixRef(node) {
-    this.suffixRef = node;
+    return node;
   }
 
   measureTextWidth(text: string): number {
