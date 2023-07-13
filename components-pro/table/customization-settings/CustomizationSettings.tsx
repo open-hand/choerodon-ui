@@ -196,7 +196,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
           onAggregationChange(customAggregation);
         }
-        if (dataSet.pageSize !== Number(pageSize)) {
+        if (pageSize && (dataSet.pageSize !== Number(pageSize))) {
           dataSet.pageSize = Number(pageSize);
           dataSet.currentPage = 1;
           dataSet.query(1, undefined, true);
