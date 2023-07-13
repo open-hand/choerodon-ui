@@ -160,7 +160,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       heightType: originalHeightType,
       height: defaultHeight,
       heightDiff: diff(defaultHeight),
-      pageSize: dataSet.props.pageSize,
+      pageSize: String(dataSet.props.pageSize),
     });
   }), [tableRecord, tableStore]);
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
