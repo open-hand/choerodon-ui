@@ -117,6 +117,11 @@ const App = () => {
     chunkSize: 1024,
     help: '支持文件类型： .deb .txt .pdf image/*',
   };
+  
+  const getPreviewUrl = (props) => {
+    console.log('getPreviewUrl', props);
+    return undefined;
+  };
 
   return (
     <Row gutter={10}>
@@ -126,7 +131,7 @@ const App = () => {
         <Button onClick={() => setValue()}>置空</Button>
       </Col>
       <Col span={12}>
-        <Attachment readOnly {...props} />
+        <Attachment readOnly getPreviewUrl={getPreviewUrl} {...props} />
       </Col>
     </Row>
   );

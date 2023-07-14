@@ -12,6 +12,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
+import { AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -51,19 +52,22 @@ export interface ItemProps {
   isPublic?: boolean;
   previewTarget?: string;
   buttons?: AttachmentButtons[];
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
+    getPreviewUrl: getPreviewUrlProp,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
-  const { getPreviewUrl, getDownloadUrl } = attachmentConfig;
+  const { getPreviewUrl: getPreviewUrlConfig, getDownloadUrl } = attachmentConfig;
+  const getPreviewUrl = getPreviewUrlProp || getPreviewUrlConfig;
   const previewUrl = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,

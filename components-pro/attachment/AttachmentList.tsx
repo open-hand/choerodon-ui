@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import isNumber from 'lodash/isNumber';
+import { AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import Item from './Item';
 import AttachmentFile from '../data-set/AttachmentFile';
 import Record from '../data-set/Record';
@@ -37,6 +38,7 @@ export interface AttachmentListProps {
   isPublic?: boolean;
   record?: Record;
   buttons?: AttachmentButtons[];
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -65,6 +67,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     record,
     showSize,
     buttons,
+    getPreviewUrl,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -141,6 +144,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 previewTarget={previewTarget}
                 isPublic={isPublic}
                 buttons={buttons}
+                getPreviewUrl={getPreviewUrl}
               />
             )
           }
