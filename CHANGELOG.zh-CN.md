@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: 新增 requiredMarkAlign 属性控制必输星号位置。
 - 🌟 `<pro>Table`: 新增表格个性化分页大小控制。
 - 🌟 `Tabs`: 新增 TabPane 横向显示时支持鼠标滚动。
+- 🌟 `<pro>Attachment`: 新增 onPreviewAvailable 回调，判断文件是否可预览。
 - 💄 `<pro>DataSet`: 优化 childrenField 性能。
 - 💄 `<pro>DataSet`: 优化查询 dataSet 实例 current 记录赋值。
 - 💄 `<pro>Table`: 优化 Table\PerformanceTable 中的 keys warning。

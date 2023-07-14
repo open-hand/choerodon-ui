@@ -54,6 +54,7 @@ title: Attachment
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | 无 |
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void | 无 |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
+| onPreviewAvailable | 文件是否可预览的回调，返回false不可预览，返回其他可预览 | (attachment: AttachmentFile) => (boolean \| void) |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

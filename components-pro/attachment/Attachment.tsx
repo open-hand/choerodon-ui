@@ -80,6 +80,12 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   template?: AttachmentValue;
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
+  /**
+   * 文件是否可预览
+   * @param attachment 
+   * @returns 返回false不可预览，返回其他可预览
+   */
+  onPreviewAvailable?: (attachment: AttachmentFile) => (boolean | void);
 }
 
 export type Sort = {
@@ -837,7 +843,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, onPreviewAvailable,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -877,6 +883,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onPreview={this.handlePreview}
           record={this.record}
           buttons={mergeButtons}
+          onPreviewAvailable={onPreviewAvailable}
         />
       );
     }

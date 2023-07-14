@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Form`: Added the `requiredMarkAlign` property to control the position of the required mark.
 - 🌟 `<pro>Table`: Added table personalized `pageSize` control.
 - 🌟 `Tabs`: New support for mouse scrolling when `TabPane` is displayed horizontally.
+- 🌟 `<pro>Attachment`: Added the `onPreviewAvailable` callback to check whether a file can be previewed.
 - 💄 `<pro>DataSet`: Optimize `childrenField` performance.
 - 💄 `<pro>DataSet`: Optimize the query `dataSet` instance `current` record assignment.
 - 💄 `<pro>Table`: Optimized keys warning in Table and PerformanceTable.

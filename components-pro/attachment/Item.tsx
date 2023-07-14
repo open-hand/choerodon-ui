@@ -51,12 +51,14 @@ export interface ItemProps {
   isPublic?: boolean;
   previewTarget?: string;
   buttons?: AttachmentButtons[];
+  onPreviewAvailable?: (attachment: AttachmentFile) => (boolean | void);
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
+    onPreviewAvailable,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -76,6 +78,10 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = !!previewUrl && (status === 'success' || status === 'done');
+  let previewAvailable = true;
+  if (onPreviewAvailable && typeof onPreviewAvailable === 'function') {
+    previewAvailable = onPreviewAvailable(attachment) !== false;
+  }
   const handlePreview = useCallback(() => {
     const { current } = pictureRef;
     if (current) {
@@ -129,7 +135,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             index={index}
             className={`${prefixCls}-icon`}
             previewTarget={isSrcIcon && !isPicture ? previewTarget : undefined}
-            preview={preview}
+            preview={preview && previewAvailable}
             onPreview={onPreview}
             ref={pictureRef}
             {...pictureProps}
@@ -138,7 +144,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           </Picture>
         );
       }
-      if (preview) {
+      if (preview && previewAvailable) {
         const previewButtonProps: ButtonProps = {
           funcType: FuncType.link,
           className: `${prefixCls}-icon`,
@@ -173,7 +179,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             lazy
             objectFit="contain"
             index={index}
-            preview={preview}
+            preview={preview && previewAvailable}
           />
         );
       }
@@ -196,7 +202,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
       </>
     );
-    const nameNode = preview && listType === 'text' ? (
+    const nameNode = preview && previewAvailable && listType === 'text' ? (
       <a
         {
           ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {

@@ -37,6 +37,7 @@ export interface AttachmentListProps {
   isPublic?: boolean;
   record?: Record;
   buttons?: AttachmentButtons[];
+  onPreviewAvailable?: (attachment: AttachmentFile) => (boolean | void);
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -65,6 +66,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     record,
     showSize,
     buttons,
+    onPreviewAvailable,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -141,6 +143,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 previewTarget={previewTarget}
                 isPublic={isPublic}
                 buttons={buttons}
+                onPreviewAvailable={onPreviewAvailable}
               />
             )
           }
