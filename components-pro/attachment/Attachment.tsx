@@ -8,7 +8,7 @@ import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import { getConfig, Uploader } from 'choerodon-ui/dataset';
-import { AttachmentValue } from 'choerodon-ui/dataset/configure';
+import { AttachmentValue, AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
 import { DownloadAllMode } from 'choerodon-ui/dataset/data-set/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
@@ -80,6 +80,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   template?: AttachmentValue;
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
 }
 
 export type Sort = {
@@ -837,7 +838,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -877,6 +878,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           onPreview={this.handlePreview}
           record={this.record}
           buttons={mergeButtons}
+          getPreviewUrl={getPreviewUrl}
         />
       );
     }
