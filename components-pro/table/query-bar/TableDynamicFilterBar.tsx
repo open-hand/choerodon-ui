@@ -1638,11 +1638,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const result: Field[] = [];
     const tlsKey = getConfig('tlsKey');
     if (queryDataSet) {
-      const { fields } = queryDataSet;
-      const propFields = [...fields.values()].map(({props}) => props);
+      const { fields, props: { fields: propFields = [] } } = queryDataSet;
       const cloneFields: Map<string, Field> = fields.toJS();
-      propFields.forEach((fieldProps) => {
-        const name = fieldProps.get('name');
+      propFields.forEach(({ name }) => {
         if (name) {
           const field = cloneFields.get(name);
           const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
@@ -1653,9 +1651,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             !field.get('name').includes(tlsKey)
           ) {
             result.push(field);
+            cloneFields.delete(name);
           }
         }
       });
+      if (cloneFields.size) {
+        result.push(...cloneFields.values());
+      }
     }
     return result;
   }
