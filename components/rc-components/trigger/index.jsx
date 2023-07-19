@@ -153,10 +153,13 @@ class Trigger extends Component {
   onPopupMouseLeave = (e) => {
     // https://github.com/react-component/trigger/pull/13
     // react bug?
+    const focusedElement = document.activeElement;
     if (e.relatedTarget && !e.relatedTarget.setTimeout &&
       this._component &&
       this._component.getPopupDomNode &&
-      contains(this._component.getPopupDomNode(), e.relatedTarget)) {
+      contains(this._component.getPopupDomNode(), e.relatedTarget) ||
+      (e.relatedTarget.setTimeout && contains(this._component.getPopupDomNode(), focusedElement))
+    ) {
       return;
     }
     this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);

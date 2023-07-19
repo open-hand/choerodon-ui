@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
 - 🐞 `<pro>Table`: Fixed an issue in in-line editing mode where the editor was misaligned when a row was in the editing state and the line above it was expanded or collapsed.
 - 🐞 `Message`: Fixed the issue of incoming incorrect types causing inability to continue using.
+- 🐞 `Trigger`: Fixed the input method panel blocking the mouse and triggering the mouse departure event.
 
 ## 1.6.2
 

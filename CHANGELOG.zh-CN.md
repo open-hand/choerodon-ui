@@ -60,6 +60,7 @@ timeline: true
 - 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
 - 🐞 `<pro>Table`: 修复行内编辑模式时，某一行在编辑状态，在它上方的行展开或者折叠行时编辑器错位问题。
 - 🐞 `Message`: 修复内容传入错误类型导致无法继续使用的问题。
+- 🐞 `Trigger`: 修复输入法面板挡住了鼠标导致触发鼠标离开事件。
 
 ## 1.6.2
 
