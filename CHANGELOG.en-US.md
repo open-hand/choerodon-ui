@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue in in-line editing mode where the editor was misaligned when a row was in the editing state and the line above it was expanded or collapsed.
 - 🐞 `Message`: Fixed the issue of incoming incorrect types causing inability to continue using.
 - 🐞 `Trigger`: Fixed the input method panel blocking the mouse and triggering the mouse departure event.
+- 🐞 `<pro>DatePicker`: Fixed the range value caused an error in determining whether it is a duplicate value.
 
 ## 1.6.2
 
