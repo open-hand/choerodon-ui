@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
+import omit from 'lodash/omit';
 import Slider, { SliderProps } from 'choerodon-ui/lib/slider';
 import { NumberField } from '../number-field/NumberField';
 
@@ -38,7 +39,7 @@ export default class Range extends NumberField<RangeProps> {
 
   renderWrapper(): ReactNode {
     return (
-      <label key="wrapper" {...this.getWrapperProps()}>
+      <label key="wrapper" {...omit(this.getWrapperProps(), ['style'])}>
         {this.renderTrack()}
       </label>
     );
@@ -58,6 +59,10 @@ export default class Range extends NumberField<RangeProps> {
         const field = dataSet.getField(otherProps.name);
         if (field) {
           props = { ...field.getProps() } as RangeProps;
+        }
+        const { current } = dataSet;
+        if (current) {
+          props.value = current.get(otherProps.name);
         }
       }
 

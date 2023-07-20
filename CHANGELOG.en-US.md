@@ -62,6 +62,7 @@ timeline: true
 - 🐞 `Message`: Fixed the issue of incoming incorrect types causing inability to continue using.
 - 🐞 `Trigger`: Fixed the input method panel blocking the mouse and triggering the mouse departure event.
 - 🐞 `<pro>DatePicker`: Fixed the range value caused an error in determining whether it is a duplicate value.
+- 🐞 `<pro>Range`: Fixed issues with DataSet configuration not echoing in Range and centering of Form forms.
 
 ## 1.6.2
 

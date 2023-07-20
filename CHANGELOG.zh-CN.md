@@ -62,6 +62,7 @@ timeline: true
 - 🐞 `Message`: 修复内容传入错误类型导致无法继续使用的问题。
 - 🐞 `Trigger`: 修复输入法面板挡住了鼠标导致触发鼠标离开事件。
 - 🐞 `<pro>DatePicker`: 修复范围值导致是否是重复值的判断报错。
+- 🐞 `<pro>Range`: 修复配置 DataSet 无法回显的问题及 Form 表单居中问题。
 
 ## 1.6.2
 
