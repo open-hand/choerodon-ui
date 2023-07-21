@@ -2,6 +2,7 @@ import React, { Component, ReactNode } from 'react';
 import defaultTo from 'lodash/defaultTo';
 import isEmpty from 'lodash/isEmpty';
 import isUndefined from 'lodash/isUndefined';
+import isNil from 'lodash/isNil';
 import sortBy from 'lodash/sortBy';
 import { action, toJS } from 'mobx';
 import { observer } from 'mobx-react';
@@ -74,7 +75,7 @@ export default class SelectionList extends Component<SelectionListProps> {
   renderSide() {
     const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
     const { nodeRenderer, placeholder } = selectionProps;
-    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
     const isEmptyList = isEmpty(records);
     if (isEmptyList && !placeholder) {
       return null;
@@ -116,7 +117,7 @@ export default class SelectionList extends Component<SelectionListProps> {
   renderBelow = (): ReactNode => {
     const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
     const { nodeRenderer } = selectionProps;
-    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => record.get(valueField));
+    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
     if (isEmpty(records)) {
       return null;
     }

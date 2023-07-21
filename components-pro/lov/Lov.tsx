@@ -779,6 +779,9 @@ export default class Lov extends Select<LovProps> {
         });
       } else if (!this.multiple) {
         super.syncValueOnBlur(value);
+      } else if (this.getProp('required')) {
+        const oldValues = this.getValues();
+        this.validate(oldValues, false);
       }
     }
   }

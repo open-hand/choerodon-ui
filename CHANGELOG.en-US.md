@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>Validator`: Optimize verification performance.
 - 💄 `Menu`: Optimized `a` tag style.
 - 💄 `<pro>Attachment`: Optimized the `help` style when the `picture-card` mode is in `Form` and `label` is displayed horizontally.
+- 💄 `<pro>Table`: Optimized filter bar style file import.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.
@@ -58,6 +59,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed `buttonsLimit` limit button error problem.
 - 🐞 `<pro>Table`: Fixed the issue that dynamic filter bar saved query conditions to report errors.
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
+- 🐞 `<pro>FormField`: Fixed an issue where `DatePicker` `Lov` `IconPicker` components were out of focus and not checked in required and multi-value modes.
+- 🐞 `<pro>Lov`: Fixed When the value of the `valueField` field corresponding to the selected record is 0, it is not displayed in the selected tag in the pop-up window.
 - 🐞 `<pro>Table`: Fixed an issue in in-line editing mode where the editor was misaligned when a row was in the editing state and the line above it was expanded or collapsed.
 
 ## 1.6.2
