@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>Validator`: 优化校验性能。
 - 💄 `Menu`: 优化 a 标签样式。
 - 💄 `<pro>Attachment`: 优化 picture-card 模式在 Form 下，且 label 为水平显示时的 help 样式。
+- 💄 `<pro>Table`: 优化筛选条样式文件引入。
 - 🐞 `<pro>PerformanceTable`: 修复在拖拽 onBeforeDragEnd 事件中无法拿到 destination.index 的问题。
 - 🐞 `<pro>PerformanceTable`: 修复移动端无法缩放的问题。
 - 🐞 `Upload`: 修复配置 beforeUploadFiles 事件后文件唯一标识为 undefined 导致的白屏问题。
@@ -58,6 +59,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 buttonsLimit 限制按钮错误问题。
 - 🐞 `<pro>Table`: 修复动态筛选条保存查询条件报错问题。
 - 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
+- 🐞 `<pro>FormField`: 修复 DatePicker Lov IconPicker 组件在必填和多值模式中，失焦未校验的问题。
+- 🐞 `<pro>Lov`: 修复当选中的记录对应的 valueField 字段的值为 0 时，未展示在弹窗的已选 tag 中。
 - 🐞 `<pro>Table`: 修复行内编辑模式时，某一行在编辑状态，在它上方的行展开或者折叠行时编辑器错位问题。
 - 🐞 `Message`: 修复内容传入错误类型导致无法继续使用的问题。
 - 🐞 `Trigger`: 修复输入法面板挡住了鼠标导致触发鼠标离开事件。

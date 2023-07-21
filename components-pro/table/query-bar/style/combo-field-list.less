@@ -1,13 +1,13 @@
-@import '../../../components/style/themes/default';
+@import '../../../../components/style/themes/default';
 
-@filter-list-prefix-cls: ~'@{c7n-pro-prefix}-table-filter-list';
+@combo-filter-list-prefix-cls: ~'@{c7n-pro-prefix}-table-combo-filter-list';
 
-.@{filter-list-prefix-cls} {
+.@{combo-filter-list-prefix-cls} {
   display: flex;
   flex-direction: column;
-  width: 2.8rem;
+  width: 3.2rem;
   max-height: 4.1rem;
-  font-size: 0.12rem;
+  font-size: @font-size-base;
   background: white;
   box-shadow: 0 0.01rem 0.08rem 0 rgba(0, 0, 0, 0.12), 0 0.02rem 0.02rem 0 rgba(0, 0, 0, 0.14), 0 0.02rem 0.01rem -0.02rem rgba(0, 0, 0, 0.2);
 
@@ -15,25 +15,14 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    height: 0.36rem;
-    padding: 0 0.06rem;
-    color: #A4A4A4;
+    height: 0.3rem;
+    margin: 0.08rem;
+    padding: 0;
+    color: @text-color;
     font-size: 0.12rem;
-    border-bottom: 0.01rem solid rgba(0, 0, 0, 0.12);
-
-    input {
-      border: none !important;
-    }
-
-    &-divide {
-      width: 0.01rem;
-      height: 0.12rem;
-      margin: 0 0.08rem;
-      background-color: #DBE1F1;
-    }
 
     &-action {
-      margin-right: 0.08rem;
+      margin-right: 0.26rem;
       color: @primary-color;
       cursor: pointer;
     }
@@ -53,14 +42,14 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    height: 0.4rem;
-    padding: 0 0.14rem;
-    border-bottom: 0.01rem solid rgba(0, 0, 0, 0.12);
+    height: 0.28rem;
+    padding: 0 0.12rem 0.08rem 0.12rem;
+    border-bottom: 0.01rem solid @border-color-split;
   }
 
   &-content {
     flex: 1;
-    padding: 0.08rem 0.14rem;
+    padding: 0.08rem;
     overflow: auto;
   }
 
@@ -71,13 +60,19 @@
   }
 
   &-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1.52rem 1.52rem;
   }
 
   &-item {
     width: 100%;
-    margin: 0.06rem 0;
+    margin: 0.04rem 0;
+
+    .@{c7n-pro-prefix}-checkbox-label {
+      max-width: 1.4rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .@{c7n-pro-prefix}-checkbox:disabled + .@{c7n-pro-prefix}-checkbox-inner {

@@ -51,6 +51,13 @@ class EmptyDataTable extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: true,
       },
+      {
+        name: 'dateMultiple',
+        type: 'date',
+        label: 'date多值',
+        multiple: ',',
+        required: true,
+      }
     ],
   });
 
