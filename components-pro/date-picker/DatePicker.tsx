@@ -1084,9 +1084,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   isExistValue(): boolean {
-    const { value, multiple } = this;
+    const { value, multiple, range } = this;
     let exist = false;
-    if (multiple && isArrayLike(value)) {
+    if (multiple && isArrayLike(value) && !range) {
       const mode = this.getDefaultViewMode();
       const format = this.getDateFormat();
       const now = moment().format(format);

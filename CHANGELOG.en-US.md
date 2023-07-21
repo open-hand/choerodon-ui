@@ -59,6 +59,11 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that dynamic filter bar saved query conditions to report errors.
 - 🐞 `<pro>FormField`: Fixed an issue where out-of-focus checks were not triggered in new record when `multiple` `defaultValue` and `validator` attributes were set in fields in `DS`.
 - 🐞 `<pro>Table`: Fixed an issue in in-line editing mode where the editor was misaligned when a row was in the editing state and the line above it was expanded or collapsed.
+- 🐞 `Message`: Fixed the issue of incoming incorrect types causing inability to continue using.
+- 🐞 `Trigger`: Fixed the input method panel blocking the mouse and triggering the mouse departure event.
+- 🐞 `<pro>DatePicker`: Fixed the range value caused an error in determining whether it is a duplicate value.
+- 🐞 `<pro>Range`: Fixed issues with DataSet configuration not echoing in Range and centering of Form forms.
+- 🐞 `<pro>Table`: Fixed the issue of virtual scrolling enabled for inline editing, where the edit box will move with the scrollbar.
 
 ## 1.6.2
 

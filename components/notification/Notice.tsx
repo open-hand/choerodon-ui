@@ -20,6 +20,22 @@ export interface NoticeProps {
   scrollHeight?: string | number;
   totalHeight?: number;
 }
+class ErrorBoundary extends React.Component<{ children: ReactNode; }, { hasError: boolean; }> {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    const { children } = this.props;
+    const { hasError } = this.state;
+    return !hasError ? children : null;
+  }
+}
 
 
 const Notice: FunctionComponent<NoticeProps> = function Notice(props) {
@@ -82,22 +98,26 @@ const Notice: FunctionComponent<NoticeProps> = function Notice(props) {
     [`${componentClass}-hide-shadow`]: hideShadow,
   });
   return (
-    <div
-      className={classString}
-      style={style}
-      onMouseEnter={clearCloseTimer}
-      onMouseLeave={startCloseTimer}
-      ref={noticeRef}
-    >
-      <div className={classNames(`${componentClass}-content`, contentClassName)}>{children}</div>
-      {
-        closable && (
-          <a tabIndex={0} onClick={!hideShadow ? close : undefined} className={`${componentClass}-close`}>
-            {closeIcon || <span className={`${componentClass}-close-x`} />}
-          </a>
-        )
-      }
-    </div>
+    <ErrorBoundary>
+      <div
+        className={classString}
+        style={style}
+        onMouseEnter={clearCloseTimer}
+        onMouseLeave={startCloseTimer}
+        ref={noticeRef}
+      >
+        <div className={classNames(`${componentClass}-content`, contentClassName)}>
+          {children}
+        </div>
+        {
+          closable && (
+            <a tabIndex={0} onClick={!hideShadow ? close : undefined} className={`${componentClass}-close`}>
+              {closeIcon || <span className={`${componentClass}-close-x`} />}
+            </a>
+          )
+        }
+      </div>
+    </ErrorBoundary>
   );
 };
 

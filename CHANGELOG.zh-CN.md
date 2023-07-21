@@ -59,6 +59,11 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条保存查询条件报错问题。
 - 🐞 `<pro>FormField`: 修复 DS 中字段设置 multiple defaultValue 以及 validator 属性时，新增记录中失焦未触发校验的问题。
 - 🐞 `<pro>Table`: 修复行内编辑模式时，某一行在编辑状态，在它上方的行展开或者折叠行时编辑器错位问题。
+- 🐞 `Message`: 修复内容传入错误类型导致无法继续使用的问题。
+- 🐞 `Trigger`: 修复输入法面板挡住了鼠标导致触发鼠标离开事件。
+- 🐞 `<pro>DatePicker`: 修复范围值导致是否是重复值的判断报错。
+- 🐞 `<pro>Range`: 修复配置 DataSet 无法回显的问题及 Form 表单居中问题。
+- 🐞 `<pro>Table`: 修复行内编辑开启虚拟滚动，编辑框会跟着滚动条移动的问题。
 
 ## 1.6.2
 

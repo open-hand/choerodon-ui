@@ -90,6 +90,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
   const wrapperCls = classNames(`${prefixCls}-wrapper`, className);
   const waterMakrCls = classNames(prefixCls, markClassName);
   const [base64Url, setBase64Url] = useState<string>('');
+  const [compoentKey, setCompoentKey] = useState<number>(1);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const waterMarkRef =  useRef<HTMLDivElement>(null);
   const mutation: any = useRef<MutationObserver>(null);
@@ -97,6 +98,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
   useEffect(() => {
     canvasWM(mutationObserver);
   }, [
+    compoentKey,
     enable,
     gapX,
     gapY,
@@ -156,6 +158,8 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
           const wmInstance = waterMarkRef.current;
           if ((wmInstance && wmInstance.getAttribute('style') !== styleStr)) {
             wmInstance.setAttribute('style', styleStr);
+          } else {
+            setCompoentKey(compoentKey + 1);
           }
         });
         mutation.current.observe(wrapperDom, {
@@ -276,6 +280,7 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
 
   return (
     <div
+      key={compoentKey}
       className={wrapperCls}
       ref={wrapperRef}
     >

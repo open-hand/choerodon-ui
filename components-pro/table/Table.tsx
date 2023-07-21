@@ -9,6 +9,7 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
+import defer from 'lodash/defer';
 import { action, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
@@ -2330,6 +2331,14 @@ export default class Table extends DataSetComponent<TableProps> {
       }
       if (tableContentWrap && target !== tableContentWrap) {
         tableContentWrap.scrollTop = scrollTop;
+      }
+      // 修复行内编辑开启虚拟滚动，编辑框会跟着滚动条移动的问题。
+      if (isStickySupport() && tableStore.virtual && tableStore.inlineEdit) {
+        tableStore.editors.forEach((editor) => {
+          if (editor.cellNode) {
+            defer(() => editor.alignEditor(editor.cellNode));
+          }
+        });
       }
       this.lastScrollTop = scrollTop;
       tableStore.setLastScrollTop(scrollTop);
