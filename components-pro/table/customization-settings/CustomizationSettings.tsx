@@ -88,7 +88,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         size: tableStore.size,
         parityRow: tableStore.parityRow,
         aggregationExpandType: tableStore.aggregationExpandType,
-        pageSize: customized.pageSize || dataSet.pageSize,
+        pageSize: String(customized.pageSize || dataSet.pageSize),
         viewName: boardCusCurrent ? boardCusCurrent.get('viewName') : '列表视图',
       },
     ],
