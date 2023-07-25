@@ -9,7 +9,6 @@ import defaultTo from 'lodash/defaultTo';
 import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import uniq from 'lodash/uniq';
 import isNil from 'lodash/isNil';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
@@ -2451,7 +2450,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         const { rowSpan = 1 } = cellExternalProps;
         if (rowSpan > 1 && !currnetRowIndex) {
           currnetRowIndex = `${rowIndex}`;
-          rowStyles.zIndex = fixed ? 1 : 0;
+          rowStyles.zIndex = fixed ? cells.length - i : 0;
         }
       }
     }
@@ -2461,9 +2460,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
-      if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
-        rowStyles.zIndex = 0;
-      }
+      // if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
+      //   rowStyles.zIndex = 1;
+      // }
       const {
         fixedLeftCells = [],
         fixedRightCells = [],
@@ -2927,7 +2926,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 width: rowWidth,
                 height: nextRowHeight,
               };
-              if (calcHeight > this.calcStartRowSpan.height && (cellRowSpan + i) < endIndex && rowSpanStartIndex >= i) {
+              if (calcHeight > this.calcStartRowSpan.height && rowSpanStartIndex >= i) {
                 const tempCalc = { rowIndex: i, rowSpan: cellRowSpan, height: calcHeight };
                 this.calcStartRowSpan = tempCalc;
                 this._cacheCalcStartRowSpan.push(tempCalc);
