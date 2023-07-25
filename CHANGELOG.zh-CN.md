@@ -67,6 +67,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复范围值导致是否是重复值的判断报错。
 - 🐞 `<pro>Range`: 修复配置 DataSet 无法回显的问题及 Form 表单居中问题。
 - 🐞 `<pro>Table`: 修复行内编辑开启虚拟滚动，编辑框会跟着滚动条移动的问题。
+- 🐞 `<pro>PerformanceTable`: 修复虚拟滚动导致的行合并的单元格消失的问题。
 
 ## 1.6.2
 

@@ -67,6 +67,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed the range value caused an error in determining whether it is a duplicate value.
 - 🐞 `<pro>Range`: Fixed issues with DataSet configuration not echoing in Range and centering of Form forms.
 - 🐞 `<pro>Table`: Fixed the issue of virtual scrolling enabled for inline editing, where the edit box will move with the scrollbar.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue of merged cells disappearing due to virtual scrolling.
 
 ## 1.6.2
 
