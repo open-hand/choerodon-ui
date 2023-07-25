@@ -248,6 +248,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { fuzzyQueryOnly, queryDataSet } = this.props;
     if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
+      if (queryDataSet && queryDataSet.records.length > 0 && !queryDataSet.getState(MENUDATASET)) {
+        this.handleDataSetCreate();
+      }
       document.addEventListener('click', this.handleClickOut);
       if (this.isSingleLineOpt() && this.refSingleWrapper) {
         const { height } = this.refSingleWrapper.getBoundingClientRect();

@@ -396,7 +396,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       }
       onOriginalChange();
       setFuzzyQuery();  
-      if (newFilterDataSet) {
+      if (newFilterDataSet.dirty) {
         newFilterDataSet.reset();
         processFilterParam(dataSet);
       }
