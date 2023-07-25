@@ -15,57 +15,70 @@ The watermark component is implemented as a pre watermark by default, that is, i
 
 ````jsx
 import React from 'react';
-import { WaterMark, Table, Icon, Divider } from 'choerodon-ui';
+import { WaterMark } from 'choerodon-ui';
+import { Table, DataSet } from 'choerodon-ui/pro';
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  key: 'name',
-  render: text => <a href="#">{text}</a>,
-}, {
-  title: 'Age',
-  dataIndex: 'age',
-  key: 'age',
-}, {
-  title: 'Address',
-  dataIndex: 'address',
-  key: 'address',
-}, {
-  title: '',
-  key: 'action',
-  render: (text, record) => (
-    <span>
-      <a href="#">Action 一 {record.name}</a>
-      <Divider type="vertical" />
-      <a href="#">Delete</a>
-      <Divider type="vertical" />
-      <a href="#" className="c7n-dropdown-link">
-        More actions <Icon type="down" />
-      </a>
-    </span>
-  ),
-}];
+class App extends React.Component {
+  userDs = new DataSet({
+    primaryKey: 'userid',
+    name: 'user',
+    autoQuery: true,
+    pageSize: 5,
+    fields: [
+      {
+        name: 'userid',
+        type: 'string',
+        label: '编号',
+        required: true,
+      },
+      {
+        name: 'name',
+        type: 'intl',
+        label: '姓名',
+      },
+      {
+        name: 'age',
+        type: 'number',
+        label: '年龄',
+        max: 100,
+        step: 1,
+      },
+      {
+        name: 'sex',
+        type: 'string',
+        label: '性别',
+        lookupCode: 'HR.EMPLOYEE_GENDER',
+        required: true,
+      },
+      { name: 'enable', type: 'boolean', label: '是否开启' },
+    ],
+  });
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}];
+  get columns() {
+    return [
+      { name: 'userid' },
+      { name: 'name', editor: true },
+      { name: 'age', editor: true },
+      { name: 'sex', editor: true },
+      { name: 'enable', editor: true },
+    ];
+  }
+
+  render() {
+    return (
+      <WaterMark content="Choerodon-ui">
+        <Table
+          key="basic"
+          rowNumber={({ text }) => `#${text}`}
+          dataSet={this.userDs}
+          columns={this.columns}
+        />
+      </WaterMark>
+    );
+  }
+}
 
 ReactDOM.render(
-  <WaterMark content="Choerodon-ui">
-    <Table columns={columns} dataSource={data} filterBarPlaceholder="过滤表" />
-  </WaterMark>, 
+  <App />, 
   mountNode);
 ````
