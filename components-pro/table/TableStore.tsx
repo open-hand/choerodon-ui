@@ -2858,7 +2858,7 @@ export default class TableStore {
               id: currentRecord.get('id'),
             });
             try {
-              const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+              const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['size', 'parityRow', 'pageSize', 'columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
               // @ts-ignore
               this.customized = {columns: {}, ...omit(res, 'dataJson'), ...dataJson};
               currentRecord.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
@@ -2917,7 +2917,7 @@ export default class TableStore {
             id: boardCustomized.customizedDS.current.get('id'),
           });
           try {
-            const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
+            const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['size', 'parityRow', 'pageSize', 'columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
             boardCustomized.customizedDS.current.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
             // @ts-ignore
             customized = {...omit(res, 'dataJson'), ...dataJson};

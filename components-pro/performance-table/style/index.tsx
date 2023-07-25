@@ -1,6 +1,7 @@
 import 'choerodon-ui/lib/style/index.less';
 import 'choerodon-ui/lib/collapse/style'
 import 'choerodon-ui/lib/tag/style';
+import 'choerodon-ui/lib/popover/style';
 import './index.less';
 
 // style dependencies
@@ -18,5 +19,6 @@ import '../../tooltip/style';
 import '../../menu/style';
 import '../../dropdown/style';
 import '../../number-field/style';
+import '../../date-picker/style';
 import '../../table/customization-settings/style';
 import '../../table/query-bar/style';

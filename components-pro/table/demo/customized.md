@@ -136,6 +136,14 @@ class App extends React.Component {
       <>
       <Button onClick={this.handleChangeCustomized}>当前customizedCode： {customizedCode}</Button>
       <Table
+        // onCustomizedLoad={(props) => {
+        //   this.userDs.setState('ready', true);
+        //   if (props.pageSize) {
+        //     this.userDs.pageSize = Number(props.pageSize);
+        //     this.userDs.currentPage = 1;
+        //   }
+        //   this.userDs.query(1, undefined, true);
+        // }}
         customizable
         border={false}
         customizedCode={customizedCode}
@@ -148,15 +156,6 @@ class App extends React.Component {
         columnTitleEditable
         dragColumnAlign="left"
         columnsDragRender={this.columnsDragRender}
-        onCustomizedLoad={(props) => {
-          // console.log('onCustomizedLoad', props);
-          this.userDs.setState('ready', true);
-          if (props.pageSize) {
-            this.userDs.pageSize = Number(props.pageSize);
-            this.userDs.currentPage = 1;
-          }
-          this.userDs.query(1, undefined, true);
-        }}
         style={this.style}
         buttons={['query']}
       >

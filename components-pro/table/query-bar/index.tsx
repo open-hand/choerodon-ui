@@ -515,11 +515,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
                 }, 0);
                 const name = field.get('name');
                 const label = field.get('label');
+                const sumNode = math.isBigNumber(summaryValue) ? math.toString(summaryValue) : summaryValue;
                 list.push(
                   <div key={name}>
                     <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
                       <div className={`${prefixCls}-summary-col-label`} title={String(label)}>{label}:</div>
-                      <div className={`${prefixCls}-summary-col-value`} title={String(summaryValue)}>{summaryValue}</div>
+                      <div className={`${prefixCls}-summary-col-value`} title={String(sumNode)}>{sumNode}</div>
                     </div>
                     {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
                       <div />
@@ -628,14 +629,15 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   /**
    * buttons 大于 buttonsLimits 放入下拉
    * @param buttonsLimits
+   * @param hasCombineSort
    */
-  getMoreButton(buttonsLimits: number): ReactElement {
+  getMoreButton(buttonsLimits: number, hasCombineSort?: boolean): ReactElement {
     const { buttons } = this.props;
     const { prefixCls, tableStore } = this.context;
     const tableButtonProps = tableStore.getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     if (buttons && buttons.length && buttonsLimits) {
-      buttons.slice(buttonsLimits).forEach(button => {
+      buttons.slice(hasCombineSort ? buttonsLimits - 1 : buttonsLimits).forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};
@@ -758,7 +760,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         }
       });
       if (buttonsLimits && buttons.length > buttonsLimits) {
-        const moreButton: ReactElement = this.getMoreButton(hasCombineSort ? buttonsLimits - 1 : buttonsLimits);
+        const moreButton: ReactElement = this.getMoreButton(buttonsLimits, hasCombineSort);
         children.push(moreButton);
       }
     }

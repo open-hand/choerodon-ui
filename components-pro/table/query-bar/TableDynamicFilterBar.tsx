@@ -423,7 +423,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       }
       const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
       if (shouldInit && queryDataSet && queryDataSet.current) {
-        this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
+        this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current, tableDs: dataSet });
       }
       if (queryDataSet && queryDataSet.current && !this.tableFilterAdapter) {
         dataSet.setState(CONDITIONSTATUS, queryDataSet.current.dirty ? RecordStatus.update : RecordStatus.sync);
@@ -628,12 +628,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   @action
   initConditionFields(props) {
-    const { dataSet, record } = props;
-    const { dataSet: tableDS } = this.props;
+    const { dataSet: tableDS } = this.props;   
+    const { dataSet, record, tableDs = tableDS } = props;
     const originalValue = omit(record.toData(), ['__dirty']);
     const conditionData = Object.entries(originalValue);
-    const newObj = tableDS.getState(ORIGINALVALUEOBJ) || {};
-    tableDS.setState(ORIGINALVALUEOBJ, { ...newObj, query: originalValue });
+    const newObj = tableDs.getState(ORIGINALVALUEOBJ) || {};
+    tableDs.setState(ORIGINALVALUEOBJ, { ...newObj, query: originalValue });
     this.originalConditionFields = [];
     const { fields } = dataSet;
     map(conditionData, data => {

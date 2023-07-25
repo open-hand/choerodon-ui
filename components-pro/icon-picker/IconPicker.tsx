@@ -350,6 +350,9 @@ export default class IconPicker extends TriggerField<IconPickerProps> {
       }
     } else if (!this.multiple) {
       this.setValue(this.emptyValue);
+    } else if (this.getProp('required')) {
+      const oldValues = this.getValues();
+      this.validate(oldValues, false);
     }
   }
 

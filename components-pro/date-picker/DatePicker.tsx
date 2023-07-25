@@ -896,6 +896,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.prepareSetValue(value);
     } else if (!this.multiple) {
       this.prepareSetValue(this.emptyValue);
+    } else if (this.getProp('required')) {
+      const oldValues = this.getValues();
+      this.validate(oldValues, false);
     }
   }
 
