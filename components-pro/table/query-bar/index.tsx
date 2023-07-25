@@ -515,11 +515,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
                 }, 0);
                 const name = field.get('name');
                 const label = field.get('label');
+                const sumNode = math.isBigNumber(summaryValue) ? math.toString(summaryValue) : summaryValue;
                 list.push(
                   <div key={name}>
                     <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
                       <div className={`${prefixCls}-summary-col-label`} title={String(label)}>{label}:</div>
-                      <div className={`${prefixCls}-summary-col-value`} title={String(summaryValue)}>{summaryValue}</div>
+                      <div className={`${prefixCls}-summary-col-value`} title={String(sumNode)}>{sumNode}</div>
                     </div>
                     {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
                       <div />

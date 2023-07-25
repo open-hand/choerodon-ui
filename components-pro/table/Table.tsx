@@ -128,6 +128,7 @@ export type Suffixes =
 
 export type SummaryBar =
   | Field
+  | string
   | SummaryBarHook;
 
 export interface SummaryBarProps {
