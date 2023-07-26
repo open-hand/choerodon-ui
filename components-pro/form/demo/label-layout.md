@@ -14,7 +14,7 @@ title:
 Label Layout.
 
 ````jsx
-import { Form, TextField, Password, NumberField, EmailField, UrlField, DatePicker, Switch, CheckBox, Select, SelectBox, TextArea, CodeArea, Range, Icon, Button, Output, RichText } from 'choerodon-ui/pro';
+import { Form, TextField, Password, NumberField, EmailField, UrlField, DatePicker, Switch, CheckBox, Select, SelectBox, TextArea, CodeArea, Range, Icon, Button, Output, RichText, Radio } from 'choerodon-ui/pro';
 
 const { Option } = Select;
 
@@ -114,6 +114,8 @@ const App = () => {
         <Password label="密码" name="password" required />
         <NumberField rowSpan={2} label="年龄—请填写大于18的数字" name="age" min={18} step={1} required addonAfter="周岁" />
         <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与左侧相同的密码" showHelp="tooltip" />
+        <Radio label="是否勾选" name="base" value="B"  required mode="button">B</Radio>
+        <Radio label="是否勾选" name="base" value="C"  required >C</Radio>
         <Output label="文本展示" value="这里是Output文本展示" />
         <Switch label="是否冻结" name="flozen" unCheckedChildren="未冻结" required>冻结（内容溢出时，默认 tooltip 展示。内容溢出时，默认 tooltip 展示。）</Switch>
         <CheckBox label="是否开启" name="enabled" help="是否开启" />
