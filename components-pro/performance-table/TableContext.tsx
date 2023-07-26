@@ -10,6 +10,8 @@ export interface Props {
   isTree: boolean;
   translateDOMPositionXY: null | ((style: CSSProperties, x: number, y: number) => void);
   tableStore: TableStore;
+  scrollX: number;
+  tableWidth?: number;
 }
 
 const TableContext = getContext<Props>(Symbols.ProPerformanceTableContext, {
@@ -18,6 +20,7 @@ const TableContext = getContext<Props>(Symbols.ProPerformanceTableContext, {
   isTree: false,
   translateDOMPositionXY,
   tableStore: {} as TableStore,
+  scrollX: 0,
 });
 
 export default TableContext;

@@ -3183,6 +3183,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           rtl: this.isRTL(),
           isTree,
           hasCustomTreeCol,
+          scrollX: this.scrollX,
+          tableWidth: width,
           tableStore,
         }}
       >

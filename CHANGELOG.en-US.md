@@ -44,6 +44,7 @@ timeline: true
 - 💄 `Menu`: Optimized `a` tag style.
 - 💄 `<pro>Attachment`: Optimized the `help` style when the `picture-card` mode is in `Form` and `label` is displayed horizontally.
 - 💄 `<pro>Table`: Optimized filter bar style file import.
+- 💄 `<pro>PerformanceTable`: Optimize the display of big data table combination column headings centered with the scroll bar.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of not being able to retrieve the destination.index during the onBeforeDragEnd event.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of not being able to zoom on the mobile terminal.
 - 🐞 `Upload`: Fixed the white screen issue caused by the file's unique identifier being undefined after setting the `beforeUploadFiles` even.

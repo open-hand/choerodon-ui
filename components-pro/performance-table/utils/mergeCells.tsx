@@ -161,6 +161,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
                 headerHeight={headerHeight}
                 header={groupHeader}
                 verticalAlign={verticalAlign}
+                left={cellLeft}
               >
                 {groupChildren}
               </ColumnGroup>
