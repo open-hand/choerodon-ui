@@ -35,7 +35,6 @@ import TableRow, { TableRowProps } from './TableRow';
 import TableHeaderCell from './TableHeaderCell';
 import DataSet, { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
-import Field from '../data-set/Field';
 import { TransportProps } from '../data-set/Transport';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import TableHeader from './TableHeader';
@@ -127,7 +126,6 @@ export type Suffixes =
   | ((props: { queryDataSet?: DataSet; dataSet: DataSet }) => ReactElement);
 
 export type SummaryBar =
-  | Field
   | string
   | SummaryBarHook;
 
@@ -442,7 +440,7 @@ export interface TableProps extends DataSetComponentProps {
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   /**
    * 显示汇总条
-   * @default 'normal'
+   * @default undefined
    */
   summaryBar?: SummaryBar[];
   /**

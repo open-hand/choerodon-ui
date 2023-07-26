@@ -577,7 +577,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           for (let i = 0; i < this.queryFields.length; i++) {
             const queryField = this.queryFields[i];
             const editor = this.refEditors.get(String(queryField.key));
-            if (editor && !editor.valid && !hasFocus && (field && !field.get('multiple', record))) {
+            if (editor && !editor.valid && !hasFocus && (field && !field.get('multiple', record)) && isFunction(editor.focus)) {
               editor.focus();
               hasFocus = true;
             }
@@ -1009,7 +1009,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         let hasFocus = false;
         for (const [key, value] of this.refEditors.entries()) {
           if (value && !value.valid && !hasFocus) {
-            this.refEditors.get(key).focus();
+            if (isFunction(this.refEditors.get(key).focus)) {
+              this.refEditors.get(key).focus();
+            }
             hasFocus = true;
           }
         }
@@ -1769,7 +1771,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     onMouseDown={() => {
                       if (!isDisabled) {
                         const editor = this.refEditors.get(name);
-                        if (editor) {
+                        if (editor && isFunction(editor.focus)) {
                           defer(() => {
                             this.refEditors.get(name).focus();
                           }, 50);
