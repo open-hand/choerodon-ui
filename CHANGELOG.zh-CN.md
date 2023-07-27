@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.3
+
+`2023-07-27`
+
 - 🌟 `configure`: 新增 lovDefineBatchAxiosConfig, useLovDefineBatch, useZeroFilledDecimal, tablePageSizeChangeable, tabsDefaultChangeable 属性。
 - 🌟 `Tabs`: 新增 restoreDefault 属性，支持开启个性化弹窗内是否恢复默认功能。
 - 🌟 `Field`: 新增 lovDefineBatchAxiosConfig 属性。

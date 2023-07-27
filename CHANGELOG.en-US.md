@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.3
+
+`2023-07-27`
+
 - 🌟 `configure`: Added `lovDefineBatchAxiosConfig`, `useLovDefineBatch`, `useZeroFilledDecimal`, `tablePageSizeChangeable`, `tabsDefaultChangeable` properties.
 - 🌟 `Tabs`: Added `restoreDefault` property.
 - 🌟 `Field`: Added `lovDefineBatchAxiosConfig` property.
