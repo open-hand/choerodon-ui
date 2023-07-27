@@ -6,7 +6,14 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'user', type: 'string', label: '用户', defaultValue: [1, 10], required: true, range: true },
+      {
+        name: 'user',
+        type: 'string',
+        label: '用户',
+        defaultValue: [1, 10],
+        required: true,
+        range: true,
+      },
     ],
   });
 
@@ -14,23 +21,32 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
+          <span>绑定数据源：</span>
           <Output dataSet={this.ds} name="user" />
         </Col>
         <Col span={12}>
+          <span>直接使用：</span>
           <Output range value={[20, 30]} />
         </Col>
         <Col span={24}>
+          <span>range 配置 ['start', 'end']：</span>
           <Output range={['start', 'end']} value={{ start: 30, end: 50 }} />
         </Col>
         <Col span={24}>
-          <Output multiple range value={[[1, 10], [20, 30], [30, 50]]} />
+          <span>multiple & range：</span>
+          <Output
+            multiple
+            range
+            value={[
+              [1, 10],
+              [20, 30],
+              [30, 50],
+            ]}
+          />
         </Col>
       </Row>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

@@ -142,7 +142,7 @@
     {
       "filename": "optionRenderer.js",
       "title": {
-        "zh": "optionRenderer 输入属性",
+        "zh": "自定义渲染选项",
         "en": "optionRenderer Input Property"
       },
       "description": {

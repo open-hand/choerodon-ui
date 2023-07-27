@@ -42,7 +42,12 @@ class App extends React.Component {
     return (
       <Row>
         <Col span={8}>
-          <TreeSelect dataSet={this.ds} name="last-name" searchable>
+          <TreeSelect
+            dataSet={this.ds}
+            name="last-name"
+            searchable
+            placeholder="配置 searchable"
+          >
             <TreeNode value="parent 1" title="parent 1">
               <TreeNode value="parent 1-0" title="parent 1-0">
                 <TreeNode value="leaf1" title="my leaf" />
@@ -59,6 +64,7 @@ class App extends React.Component {
             dataSet={this.ds}
             name="first-name"
             searchable
+            placeholder="配置 searchMatcher 函数"
             searchMatcher={searchMatcher}
           >
             <TreeNode value="parent 1" title="parent 1">
@@ -77,6 +83,7 @@ class App extends React.Component {
             dataSet={this.ds}
             name="sex"
             searchable
+            placeholder="searchMatcher = key"
             searchMatcher="key"
           />
         </Col>

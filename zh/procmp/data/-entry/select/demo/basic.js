@@ -39,7 +39,7 @@ class App extends React.Component {
           <Button onClick={this.handleClick}>修改选项</Button>
         </Col>
         <Col span={12}>
-          <Select placeholder="请选择" disabled optionTooltip="overflow">
+          <Select placeholder="禁用选择" disabled optionTooltip="overflow">
             <Option value="jack">Jack</Option>
             <Option value="lucy">
               Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy Lucy

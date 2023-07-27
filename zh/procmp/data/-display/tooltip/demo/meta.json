@@ -87,7 +87,7 @@
         "en": "Singleton"
       },
       "description": {
-        "zh": "单例模式。\n",
+        "zh": "单例模式，使用方法调用 Tooltip 开启/隐藏，优化性能。\n",
         "en": "Singleton.\n"
       },
       "order": 6,

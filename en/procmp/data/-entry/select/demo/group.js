@@ -31,7 +31,7 @@ const App = () => {
   return (
     <Row gutter={10}>
       <Col span={12}>
-        <Select>
+        <Select placeholder="子组件 OptGroup 分组">
           <OptGroup label="Manager">
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
@@ -42,7 +42,7 @@ const App = () => {
         </Select>
       </Col>
       <Col span={12}>
-        <Select dataSet={ds} name="code" />
+        <Select dataSet={ds} name="code" placeholder="字段 group 属性分组" />
       </Col>
     </Row>
   );

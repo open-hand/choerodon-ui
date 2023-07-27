@@ -8,6 +8,7 @@ import {
   Row,
   Col,
 } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 import moment from 'moment';
 
 function handleDataSetChange({ value, oldValue }) {
@@ -63,6 +64,9 @@ class App extends React.Component {
   render() {
     return (
       <Row gutter={10}>
+        <Divider orientation="left">
+          绑定数据源，editorInPopup & isFlat：
+        </Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <DateTimePicker
             dataSet={this.ds}
@@ -75,6 +79,7 @@ class App extends React.Component {
             ]}
           />
         </Col>
+        <Divider orientation="left">绑定数据源，日期范围选择：</Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <DatePicker
             dataSet={this.ds}
@@ -82,6 +87,7 @@ class App extends React.Component {
             placeholder={['Start Date', 'End Date']}
           />
         </Col>
+        <Divider orientation="left">组件使用，disabled 状态：</Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <DatePicker
             range
@@ -91,6 +97,9 @@ class App extends React.Component {
             onChange={handleChange}
           />
         </Col>
+        <Divider orientation="left">
+          组件使用，range 配置 ['start', 'end']：
+        </Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <DatePicker
             range={['start', 'end']}
@@ -99,9 +108,11 @@ class App extends React.Component {
             onChange={handleChange}
           />
         </Col>
+        <Divider orientation="left">绑定数据源，时间范围选择：</Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <TimePicker dataSet={this.ds} name="time" placeholder="Choose Time" />
         </Col>
+        <Divider orientation="left">绑定数据源，多选日期范围选择：</Divider>
         <Col style={{ marginBottom: 10 }} span={24}>
           <DatePicker
             dataSet={this.ds}

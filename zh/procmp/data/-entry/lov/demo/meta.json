@@ -15,6 +15,7 @@
         "en": "DataSet binding.\n"
       },
       "order": 0,
+      "height": 140,
       "screenshot": "",
       "category": "pro"
     },
@@ -49,11 +50,11 @@
     {
       "filename": "button.js",
       "title": {
-        "zh": "按钮",
+        "zh": "按钮模式",
         "en": "Button"
       },
       "description": {
-        "zh": "按钮。\n",
+        "zh": "按钮模式，可单独展示数据或按钮内展示。\n",
         "en": "Button.\n"
       },
       "order": 3,
@@ -64,11 +65,11 @@
     {
       "filename": "search-action.js",
       "title": {
-        "zh": "搜索触发变更的动作",
+        "zh": "失焦触发搜索",
         "en": "search action"
       },
       "description": {
-        "zh": "搜索触发变更的动作\n",
+        "zh": "搜索触发变更的动作，默认 input 触发，支持 blur。\n",
         "en": "search action.\n"
       },
       "order": 4,

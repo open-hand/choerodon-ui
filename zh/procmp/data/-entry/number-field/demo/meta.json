@@ -104,6 +104,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "zero-filled-decimal.js",
+      "title": {
+        "zh": "数值补零显示",
+        "en": "useZeroFilledDecimal"
+      },
+      "description": {
+        "zh": "开启全局配置，数值在输入和显示时根据 `precision` 补零显示，真实值不受影响。（当前页面设置了 precision 属性的组件都会受全局配置影响，数值都会补零显示）\n",
+        "en": "The global configuration is enabled. The value is zeroed according to the precision when input and display. The real value is not affected.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 305,
+      "category": "pro"
     }
   ]
 }

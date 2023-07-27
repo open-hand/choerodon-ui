@@ -9,7 +9,8 @@ title: API
 | target                 | 表单提交的目标，当表单设置了设置 target 且没有 dataSet 时作浏览器默认提交，否则作 Ajax 提交                                           | string                      |                           |    |
 | layout | 布局, 可选值： table \| none | string | table | 1.4.0 |
 | processParams          | Ajax 提交时的参数回调                                                                                                                 | (event) => object           |                           |    |
-| useColon | 是否使用冒号当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。 | boolean | false | |
+| useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
+| requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
 | labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#响应式), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 | |
 | labelAlign             | 标签文字对齐方式，只在 labelLayout 为 horizontal 时起作用，可选值：left \| center \| right，响应式参考[Responsive](#响应式) | string \| object            | right                     | |
 | labelLayout            | 标签位置，可选值 horizontal \| vertical \| placeholder \| float \| none，响应式参考[Responsive](#响应式)                       | string \| object            | horizontal                |  |
@@ -42,7 +43,8 @@ title: API
 | label      | 标签                                                                                            | string \| ReactNode |        |     |
 | name       | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string              |        |     |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。                      | number              |        | 1.1.0    |
-| useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |        |
+| useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
+| requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
 | hidden | 是否隐藏字段（依然会校验字段）| boolean | | 1.4.4 |
 
 #### Form.Item
@@ -52,7 +54,8 @@ title: API
 | label | 标签 | string \| ReactNode  | 1.4.2  |
 | name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string  | 1.4.2 |
 | labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number  | 1.4.2 |
-| useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号,并且必填的*号会被移到最前方, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | 1.4.2 |
+| useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
+| requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
 | hidden | 是否隐藏字段（依然会校验字段）| boolean | | 1.4.4 |
 
 #### Form.ItemGroup

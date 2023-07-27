@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -45,6 +46,9 @@ class App extends React.Component {
   render() {
     return (
       <Row>
+        <Divider orientation="left">
+          开启 searchable，配置 searchMatcher 函数：
+        </Divider>
         <Col span={12} style={{ marginBottom: 10 }}>
           <Select
             dataSet={this.ds}
@@ -82,6 +86,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col span={12} style={{ marginBottom: 10 }}>
+          <Divider orientation="left">下拉内搜索：</Divider>
           <Select
             dataSet={this.ds}
             name="last-name"
@@ -106,6 +111,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col span={12} style={{ marginBottom: 10 }}>
+          <Divider orientation="left">下拉内多值搜索：</Divider>
           <Select
             dataSet={this.ds}
             name="first-name"
@@ -121,6 +127,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col span={12} style={{ marginBottom: 10 }}>
+          <Divider orientation="left">配置 searchMatcher 为 key：</Divider>
           <Select dataSet={this.ds} name="sex" searchable searchMatcher="key" />
         </Col>
       </Row>

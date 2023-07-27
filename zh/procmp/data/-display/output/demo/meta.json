@@ -11,7 +11,7 @@
         "en": "Basic usage"
       },
       "description": {
-        "zh": "基本使用。\n",
+        "zh": "基本使用，单纯用于展示文本。\n",
         "en": "Basic usage example.\n"
       },
       "order": 0,
@@ -21,7 +21,7 @@
     {
       "filename": "renderer.js",
       "title": {
-        "zh": "使用renderer",
+        "zh": "覆盖渲染",
         "en": "Use renderer"
       },
       "description": {
@@ -35,11 +35,11 @@
     {
       "filename": "dataset.js",
       "title": {
-        "zh": "数据源",
+        "zh": "绑定数据源。",
         "en": "DataSet"
       },
       "description": {
-        "zh": "绑定数据源。\n",
+        "zh": "绑定数据源 DS，关联数据展示。\n",
         "en": "DataSet binding.\n"
       },
       "order": 2,

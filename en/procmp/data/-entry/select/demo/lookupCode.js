@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Select, Output, Button, Row, Col } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -75,20 +76,25 @@ class App extends React.Component {
     }
     return (
       <Row gutter={10}>
+        <p style={{ marginTop: 10 }}>绑定数据源，字段配置 lookupCode：</p>
         <Col span={6}>
           <Select
             dataSet={this.ds}
             name="sex"
             placeholder="请选择"
             onOption={handleOption}
-            trigger={['hover']}
+            // trigger={['hover']} 修改触发方式
           />
         </Col>
         <Col span={6}>
           <Button onClick={this.changeLookupCode}>修改lookupCode</Button>
         </Col>
         <Col span={12}>
+          {/* 下拉选择值关联展示 */}
           <Output dataSet={this.ds} name="status" placeholder="请选择" />
+        </Col>
+        <Col span={24}>
+          <p style={{ marginTop: 10 }}>多选 tag 相关配置，支持更多展示:</p>
         </Col>
         <Col span={24}>
           <Select
@@ -98,7 +104,7 @@ class App extends React.Component {
             maxTagCount={2}
             maxTagTextLength={2}
             maxTagPlaceholder={(restValues) => `+${restValues.length}...`}
-            trigger={['hover']}
+            // trigger={['hover']}
           />
         </Col>
       </Row>

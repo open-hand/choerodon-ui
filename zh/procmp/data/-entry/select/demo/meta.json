@@ -46,7 +46,7 @@
       },
       "order": 2,
       "screenshot": "",
-      "height": 173,
+      "height": 200,
       "category": "pro"
     },
     {
@@ -116,12 +116,12 @@
         "en": "Searchable"
       },
       "description": {
-        "zh": "可搜索。\n",
+        "zh": "配置可搜索，searchMatcher 当为字符串时，作为 lookup 的参数名来重新请求值列表。\n",
         "en": "Searchable.\n"
       },
       "order": 7,
       "screenshot": "",
-      "height": 173,
+      "height": 320,
       "category": "pro"
     },
     {
@@ -146,7 +146,7 @@
         "en": "ComboBox"
       },
       "description": {
-        "zh": "复合下拉框。\n",
+        "zh": "复合下拉框，支持输入新增选项。\n",
         "en": "ComboBox.\n"
       },
       "order": 9,
@@ -166,7 +166,7 @@
       },
       "order": 10,
       "screenshot": "",
-      "height": 257,
+      "height": 410,
       "category": "pro"
     },
     {
@@ -191,7 +191,7 @@
         "en": "Non Primitive Value"
       },
       "description": {
-        "zh": "非原始值。\n",
+        "zh": "是否为原始值，建议以绑定的数据源 Field 的 type 来决定值类型。\n",
         "en": "Non Primitive Value.\n"
       },
       "order": 12,
@@ -202,11 +202,11 @@
     {
       "filename": "option-renderer.js",
       "title": {
-        "zh": "optionRenderer 输入属性",
+        "zh": "自定义渲染选项",
         "en": "optionRenderer Input Property"
       },
       "description": {
-        "zh": "使用`optionRenderer`属性。\n",
+        "zh": "使用`optionRenderer`属性，自定义渲染 Option。\n",
         "en": "Use `optionRenderer` input property.\n"
       },
       "order": 13,

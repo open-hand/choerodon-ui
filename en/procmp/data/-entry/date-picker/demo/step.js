@@ -26,7 +26,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <TimePicker dataSet={this.ds} name="time" />
+      <TimePicker
+        dataSet={this.ds}
+        name="time"
+        placeholder="minute: 15, second: 10"
+      />
     );
   }
 }
