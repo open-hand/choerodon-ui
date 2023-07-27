@@ -28,6 +28,7 @@ title: API
 | tabTitleEditable | &lt;个性化&gt;是否可编辑标题  | boolean | true | 1.5.0 |
 | tabCountHideable | &lt;个性化&gt;是否可隐藏计数  | boolean | true | 1.5.0 |
 | defaultChangeable | &lt;个性化&gt;是否可改变默认显示  | boolean | true | 1.5.0 |
+| restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true | 1.6.3 |
 | showMore | 页签超过容器宽度是否显示更多 | boolean | false | 1.5.0-beta.0 |
 | flex | 是否柔性布局 | boolean |  | 1.5.4 |
 

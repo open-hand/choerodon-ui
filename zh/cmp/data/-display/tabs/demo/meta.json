@@ -209,7 +209,7 @@
         "en": "Flex"
       },
       "description": {
-        "zh": "当为整个Tabs设置固定高度或者使用flex=1撑满整个外部容器时，内部标签头部能固定而内容柔性并出现滚动条。\n\n。\n",
+        "zh": "当为整个Tabs设置固定高度或者使用flex=1撑满整个外部容器时，内部标签头部能固定而内容柔性并出现滚动条。\n",
         "en": "When setting a fixed height for the entire Tabs or using flex=1 to fill the entire outer container, the inner tab header can be fixed while the content is flexible and scrollbars appear.\n"
       },
       "order": 15,

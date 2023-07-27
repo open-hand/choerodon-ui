@@ -209,7 +209,7 @@
         "en": "Dynamic filter bar"
       },
       "description": {
-        "zh": "Table queryBar 设为 filterBar，查询条件可动态配置筛选条，可单独纯前端使用，也可结合后端标准接口可实现筛选列表保存，参考 demo 代码注释。\n",
+        "zh": "Table queryBar 设为 filterBar，查询条件可动态配置筛选条，可单独纯前端使用，也可结合后端标准接口可实现筛选列表保存，参考 demo 代码注释。\n\n 更多详细功能教程：https://open.hand-china.com/choerodon-ui/zh/tutorials/dynamic-filter-bar-doc",
         "en": "There is no border to dynamically filter the bar, combined with the back-end standard interface to realize the preservation of the filter list.\n"
       },
       "order": 13,
@@ -330,7 +330,7 @@
         "en": "Virtual Scroll"
       },
       "description": {
-        "zh": "虚拟滚动，virtual \n\n 在大数据需求并同时对功能性需求很高的情况下建议开启。\n\n",
+        "zh": "虚拟滚动，virtual \n\n 在大数据量并同时对性能需求很高的情况下建议开启。\n\n详细使用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/table-virtual",
         "en": "Virtual Scroll.\n"
       },
       "order": 20,

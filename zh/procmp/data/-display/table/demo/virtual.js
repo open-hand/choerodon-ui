@@ -194,7 +194,6 @@ class App extends React.Component {
       <Table
         key="user"
         virtual
-        virtualCell
         dataSet={this.userDs}
         style={{ height: 300 }}
         columns={columns}

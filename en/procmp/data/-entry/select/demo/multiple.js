@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 
 function handleChange(value, oldValue) {
   console.log('[multiple]', value, '[oldValue]', oldValue);
@@ -55,6 +56,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col style={{ marginBottom: 10 }} span={24}>
+          <Divider orientation="left">数据源多选：</Divider>
           <Select
             dataSet={this.ds}
             name="user"
@@ -73,6 +75,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">组件受控多选：</Divider>
           <Select
             multiple
             placeholder="多选"
@@ -85,6 +88,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">组件属性多选 & 可搜索：</Divider>
           <Select
             multiple
             searchable
@@ -100,6 +104,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">组件属性多选 & 输入复合：</Divider>
           <Select
             multiple
             combo
@@ -115,6 +120,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">组件多选 & 复合 & 过滤：</Divider>
           <Select
             multiple
             combo
@@ -131,6 +137,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">多选禁用：</Divider>
           <Select
             multiple
             placeholder="多选+禁用"
@@ -146,6 +153,7 @@ class App extends React.Component {
           </Select>
         </Col>
         <Col style={{ marginBottom: 10 }} span={12}>
+          <Divider orientation="left">多选只读：</Divider>
           <Select
             multiple
             placeholder="多选+只读"

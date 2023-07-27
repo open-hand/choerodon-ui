@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Lov, Row, Col } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(
@@ -47,15 +48,17 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
+          <Divider orientation="left">默认单选模式：</Divider>
+          <Lov dataSet={this.ds} name="code_string" />
+        </Col>
+        <Col span={12}>
+          <Divider orientation="left">rowbox 单选模式：</Divider>
           <Lov
             dataSet={this.ds}
             name="code"
-            noCache
-            tableProps={{ selectionMode: 'rowbox' }}
+            // noCache 无数据缓存，每次弹窗时自动重新查询
+            tableProps={{ selectionMode: 'rowbox' }} // 勾选模式为 rowbox
           />
-        </Col>
-        <Col span={12}>
-          <Lov dataSet={this.ds} name="code_string" />
         </Col>
       </Row>
     );

@@ -61,7 +61,7 @@
       },
       "order": 3,
       "screenshot": "",
-      "height": 213,
+      "height": 400,
       "category": "pro"
     },
     {
@@ -71,7 +71,7 @@
         "en": "Cell renderer"
       },
       "description": {
-        "zh": "单元格渲染器。\n",
+        "zh": "单元格渲染器，可以自定义单元格的内容和样式。\n",
         "en": "Cell renderer.\n"
       },
       "order": 4,
@@ -106,7 +106,7 @@
       },
       "order": 6,
       "screenshot": "",
-      "height": 272,
+      "height": 500,
       "category": "pro"
     },
     {
@@ -116,7 +116,7 @@
         "en": "Time format"
       },
       "description": {
-        "zh": "时间格式。\n",
+        "zh": "时间格式，使用 format 配置显示格式。\n",
         "en": "Time format.\n"
       },
       "order": 7,

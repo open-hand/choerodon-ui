@@ -14,3 +14,4 @@ order: 0
 需要上传文件时。
 
 > 1.4.4 版本新增组件。
+> 附件上传组件选用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/attachment-upload

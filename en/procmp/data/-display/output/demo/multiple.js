@@ -6,7 +6,14 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'user', type: 'string', label: '用户', defaultValue: 'Jack,Rose,Hugh', required: true, multiple: ',' },
+      {
+        name: 'user',
+        type: 'string',
+        label: '用户',
+        defaultValue: 'Jack,Rose,Hugh',
+        required: true,
+        multiple: ',',
+      },
     ],
   });
 
@@ -14,9 +21,11 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={12}>
+          <span>绑定数据源：</span>
           <Output dataSet={this.ds} name="user" />
         </Col>
         <Col span={12}>
+          <span>直接使用：</span>
           <Output multiple value={['wu', 'zoe', 'jasson']} />
         </Col>
       </Row>
@@ -24,7 +33,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('container')
-);
+ReactDOM.render(<App />, document.getElementById('container'));

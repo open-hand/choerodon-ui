@@ -4,7 +4,7 @@ subtitle: 上传
 order: 0
 ---
 
-文件选择上传和拖拽上传控件。
+文件选择上传控件。
 
 上传回调及渲染交互与基础 Upload 组件有差别，注意根据需求选择使用，建议直接使用功能集成完善的 Attchment 组件。
 
@@ -17,3 +17,5 @@ order: 0
 - 当需要展现上传的进度时。
 
 - 当需要使用拖拽交互时。
+
+> 附件上传组件选用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/attachment-upload

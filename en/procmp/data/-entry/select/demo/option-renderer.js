@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { DataSet, Select, Row, Col, Tooltip, Icon } from 'choerodon-ui/pro';
+import { Divider } from 'choerodon-ui';
 
 const App = () => {
   const optionDs = new DataSet({
@@ -38,6 +39,7 @@ const App = () => {
   return (
     <Row gutter={10}>
       <Col span={8}>
+        <Divider orientation="left">选项渲染添加 icon & 独立 tooltip：</Divider>
         <Select
           dataSet={ds}
           name="user"
