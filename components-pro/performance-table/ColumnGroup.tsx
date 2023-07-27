@@ -1,6 +1,8 @@
-import React, { ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
+import React, { ForwardRefExoticComponent, isValidElement, PropsWithoutRef, RefAttributes, useContext } from 'react';
 import classNames from 'classnames';
+import isString from 'lodash/isString';
 import { defaultClassPrefix, prefix } from './utils';
+import TableContext from './TableContext';
 
 export interface ColumnGroupProps {
   align?: 'left' | 'center' | 'right';
@@ -28,24 +30,64 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     headerHeight = 80,
     verticalAlign,
     width,
-    left,
+    left = 0,
     ...rest
   } = props;
+  const { scrollX, tableWidth = 0, tableStore } = useContext(TableContext);
+  const { originalColumns } = tableStore;
+
   const height = headerHeight / 2;
   const styles: React.CSSProperties = {
     height,
     width,
-    left
   };
   const contentStyles = { ...styles, verticalAlign };
 
   const addPrefix = (name: string) => prefix(classPrefix!)(name);
+  // 组合列 header 随滚动条滚动居中。
+  let headerMiddleStyle: React.CSSProperties | undefined = undefined;
+  if (scrollX) {
+    const fixedWidth: { leftWidth: number; rightWidth: number } = originalColumns.reduce((prev, current) => {
+      if (current.fixed === true || current.fixed === 'left') {
+        prev.leftWidth = prev.leftWidth + (current.width || 0);
+      } else if (current.fixed === 'right') {
+        prev.rightWidth = prev.rightWidth + (current.width || 0);
+      }
+      return prev;
+    }, { leftWidth: 0, rightWidth: 0 });
+    const mathScrollX = Math.abs(scrollX);
+    const calcTableWidth = tableWidth - fixedWidth.rightWidth;
+    const mathPostionLeft = left - calcTableWidth;
+    const leftDistanceFixed = left - fixedWidth.leftWidth;
+    let positionLeft = 0;
+    let beyondWidth = 0;
+    if (mathScrollX > leftDistanceFixed) {
+      beyondWidth = mathScrollX - leftDistanceFixed;
+    }
+    if (mathScrollX > mathPostionLeft && width) {
+      let percent = calcTableWidth + mathScrollX - left + (beyondWidth > 0 ? beyondWidth : 0);
+      if (mathScrollX + calcTableWidth > left + width) {
+        percent -= ((mathScrollX + calcTableWidth) - (left + width));
+      }
+      positionLeft = percent > 0 && (percent / 2 < width) ? percent / 2 : 0;
+    }
+    headerMiddleStyle = {
+      position: 'absolute',
+      top: '50%',
+      left: positionLeft ? positionLeft : '50%',
+      transform: 'translate(-50%, -50%)'
+    };
+  }
 
   return (
     <div ref={ref} className={classNames(classPrefix, className)} {...rest}>
       <div className={addPrefix('header')} style={styles}>
         <div className={addPrefix('header-content')} style={contentStyles}>
-          {header}
+          {
+            isString(header) ?
+              <span style={headerMiddleStyle}>{header}</span> :
+              isValidElement(header) ? React.cloneElement(header) : header
+          }
         </div>
       </div>
 
