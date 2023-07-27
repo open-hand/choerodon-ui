@@ -10,6 +10,7 @@ export interface ColumnGroupProps {
   fixed?: boolean | 'left' | 'right';
   width?: number;
   left?: number;
+  headerLeft?: number;
   header?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
@@ -30,7 +31,8 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     headerHeight = 80,
     verticalAlign,
     width,
-    left = 0,
+    left,
+    headerLeft = 0,
     ...rest
   } = props;
   const { scrollX, tableWidth = 0, tableStore } = useContext(TableContext);
@@ -40,6 +42,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
   const styles: React.CSSProperties = {
     height,
     width,
+    left,
   };
   const contentStyles = { ...styles, verticalAlign };
 
@@ -57,17 +60,17 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     }, { leftWidth: 0, rightWidth: 0 });
     const mathScrollX = Math.abs(scrollX);
     const calcTableWidth = tableWidth - fixedWidth.rightWidth;
-    const mathPostionLeft = left - calcTableWidth;
-    const leftDistanceFixed = left - fixedWidth.leftWidth;
+    const mathPostionLeft = headerLeft - calcTableWidth;
+    const leftDistanceFixed = headerLeft - fixedWidth.leftWidth;
     let positionLeft = 0;
     let beyondWidth = 0;
     if (mathScrollX > leftDistanceFixed) {
       beyondWidth = mathScrollX - leftDistanceFixed;
     }
     if (mathScrollX > mathPostionLeft && width) {
-      let percent = calcTableWidth + mathScrollX - left + (beyondWidth > 0 ? beyondWidth : 0);
-      if (mathScrollX + calcTableWidth > left + width) {
-        percent -= ((mathScrollX + calcTableWidth) - (left + width));
+      let percent = calcTableWidth + mathScrollX - headerLeft + (beyondWidth > 0 ? beyondWidth : 0);
+      if (mathScrollX + calcTableWidth > headerLeft + width) {
+        percent -= ((mathScrollX + calcTableWidth) - (headerLeft + width));
       }
       positionLeft = percent > 0 && (percent / 2 < width) ? percent / 2 : 0;
     }
