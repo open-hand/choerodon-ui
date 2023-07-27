@@ -1,4 +1,4 @@
-import React, { ForwardRefExoticComponent, isValidElement, PropsWithoutRef, RefAttributes, useContext } from 'react';
+import React, { ForwardRefExoticComponent, isValidElement, PropsWithoutRef, RefAttributes, useContext, useRef } from 'react';
 import classNames from 'classnames';
 import isString from 'lodash/isString';
 import { defaultClassPrefix, prefix } from './utils';
@@ -36,6 +36,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     ...rest
   } = props;
   const { scrollX, tableWidth = 0, tableStore } = useContext(TableContext);
+  const groupHeaderRef = useRef<HTMLElement | null>(null);
   const { originalColumns } = tableStore;
 
   const height = headerHeight / 2;
@@ -49,44 +50,54 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
   const addPrefix = (name: string) => prefix(classPrefix!)(name);
   // 组合列 header 随滚动条滚动居中。
   let headerMiddleStyle: React.CSSProperties | undefined = undefined;
-  const fixedWidth: { leftWidth: number; rightWidth: number } = originalColumns.reduce((prev, current) => {
-    if (current.fixed === true || current.fixed === 'left') {
-      prev.leftWidth = prev.leftWidth + (current.width || 0);
-    } else if (current.fixed === 'right') {
-      prev.rightWidth = prev.rightWidth + (current.width || 0);
+  if (groupHeaderRef && groupHeaderRef.current) {
+    const fixedWidth: { leftWidth: number; rightWidth: number } = originalColumns.reduce((prev, current) => {
+      if (current.fixed === true || current.fixed === 'left') {
+        prev.leftWidth = prev.leftWidth + (current.width || 0);
+      } else if (current.fixed === 'right') {
+        prev.rightWidth = prev.rightWidth + (current.width || 0);
+      }
+      return prev;
+    }, { leftWidth: 0, rightWidth: 0 });
+    const mathScrollX = Math.abs(scrollX);
+    const calcTableWidth = tableWidth - fixedWidth.rightWidth;
+    const mathPostionLeft = headerLeft - calcTableWidth;
+    const leftDistanceFixed = headerLeft - fixedWidth.leftWidth;
+    let positionLeft = 0;
+    let beyondWidth = 0;
+    if (mathScrollX > leftDistanceFixed) {
+      beyondWidth = mathScrollX - leftDistanceFixed;
     }
-    return prev;
-  }, { leftWidth: 0, rightWidth: 0 });
-  const mathScrollX = Math.abs(scrollX);
-  const calcTableWidth = tableWidth - fixedWidth.rightWidth;
-  const mathPostionLeft = headerLeft - calcTableWidth;
-  const leftDistanceFixed = headerLeft - fixedWidth.leftWidth;
-  let positionLeft = 0;
-  let beyondWidth = 0;
-  if (mathScrollX > leftDistanceFixed) {
-    beyondWidth = mathScrollX - leftDistanceFixed;
-  }
-  if (mathScrollX > mathPostionLeft && width) {
-    let percent = calcTableWidth + mathScrollX - headerLeft + (beyondWidth > 0 ? beyondWidth : 0);
-    if (mathScrollX + calcTableWidth > headerLeft + width) {
-      percent -= ((mathScrollX + calcTableWidth) - (headerLeft + width));
+    if (mathScrollX > mathPostionLeft && width) {
+      let percent = calcTableWidth + mathScrollX - headerLeft + (beyondWidth > 0 ? beyondWidth : 0);
+      if (mathScrollX + calcTableWidth > headerLeft + width) {
+        percent -= ((mathScrollX + calcTableWidth) - (headerLeft + width));
+      }
+      const getHeaderWidth = groupHeaderRef.current.offsetWidth;
+      const minLeft = getHeaderWidth / 2;
+      const maxLeft = width - getHeaderWidth / 2;
+      positionLeft = percent > 0 && (percent / 2 < width) ? percent / 2 : 0;
+      if (positionLeft < minLeft) {
+        positionLeft = minLeft;
+      } else if (positionLeft > maxLeft) {
+        positionLeft = maxLeft;
+      }
     }
-    positionLeft = percent > 0 && (percent / 2 < width) ? percent / 2 : 0;
+    headerMiddleStyle = {
+      position: 'absolute',
+      top: '50%',
+      left: positionLeft ? positionLeft : '50%',
+      transform: 'translate(-50%, -50%)'
+    };
   }
-  headerMiddleStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: positionLeft ? positionLeft : '50%',
-    transform: 'translate(-50%, -50%)'
-  };
-
+ 
   return (
     <div ref={ref} className={classNames(classPrefix, className)} {...rest}>
       <div className={addPrefix('header')} style={styles}>
         <div className={addPrefix('header-content')} style={contentStyles}>
           {
             isString(header) ?
-              <span style={headerMiddleStyle}>{header}</span> :
+              <span style={headerMiddleStyle} ref={groupHeaderRef}>{header}</span> :
               isValidElement(header) ? React.cloneElement(header) : header
           }
         </div>
