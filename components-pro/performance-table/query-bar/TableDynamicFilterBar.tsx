@@ -396,7 +396,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           let hasFocus = false;
           for (const [key, value] of this.refEditors.entries()) {
             if (value && !value.valid && !hasFocus) {
-              this.refEditors.get(key).focus();
+              if (isFunction(this.refEditors.get(key).focus)) {
+                this.refEditors.get(key).focus();
+              }
               hasFocus = true;
             }
           }
@@ -1031,7 +1033,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                     onMouseDown={() => {
                       if (!isDisabled) {
                         const editor = this.refEditors.get(name);
-                        if (editor) {
+                        if (editor && isFunction(editor.focus)) {
                           defer(() => {
                             this.refEditors.get(name).focus();
                           }, 50);
@@ -1110,7 +1112,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       onMouseDown={() => {
                         if (!isDisabled) {
                           const editor = this.refEditors.get(name);
-                          if (editor) {
+                          if (editor && isFunction(editor.focus)) {
                             defer(() => {
                               this.refEditors.get(name).focus();
                             }, 50);

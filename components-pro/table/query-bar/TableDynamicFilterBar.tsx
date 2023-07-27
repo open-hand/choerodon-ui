@@ -1851,7 +1851,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       onMouseDown={() => {
                         if (!isDisabled) {
                           const editor = this.refEditors.get(name);
-                          if (editor) {
+                          if (editor && isFunction(editor.focus)) {
                             defer(() => {
                               this.refEditors.get(name).focus();
                             }, 50);
