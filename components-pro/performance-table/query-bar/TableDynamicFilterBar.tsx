@@ -53,6 +53,7 @@ import { ShowHelp } from '../../field/enum';
 import TableButtons from '../../table/query-bar/TableButtons';
 import { ButtonProps } from '../../button/Button';
 import { renderValidationMessage as utilRenderValidationMessage } from '../../field/utils';
+import { fieldIsDisabled } from '../../table/query-bar/TableDynamicFilterBar';
 
 
 /**
@@ -1014,11 +1015,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || tableStore.getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                if (!queryField) return null;
                 const label = queryField && queryField.get('label', queryDataSet.current);
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
+                const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${proPrefixCls}-filter-content`,
                   {
                     [`${proPrefixCls}-filter-content-disabled`]: isDisabled,
@@ -1092,11 +1094,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isLabelShowHelp = (showHelp || tableStore.getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
+                if (!queryField) return null;
                 const label = queryField && queryField.get('label', queryDataSet.current);
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
+                const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${proPrefixCls}-filter-content`,
                   {
                     [`${proPrefixCls}-filter-content-disabled`]: isDisabled,
@@ -1199,6 +1202,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         value={selectFields}
                         onSelect={this.handleSelect}
                         onUnSelect={this.handleUnSelect}
+                        queryDataSet={queryDataSet}
                       />
                     </div>
                   )}
