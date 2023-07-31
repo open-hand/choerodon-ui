@@ -1,9 +1,12 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, memo } from 'react';
+import classNames from 'classnames';
 import Icon from 'choerodon-ui/lib/icon';
 import TextField from '../../text-field';
 import CheckBox from '../../check-box';
 import Field from '../../data-set/Field';
 import { $l } from '../../locale-context';
+import DataSet from '../../data-set/DataSet';
+import { fieldIsDisabled } from './TableDynamicFilterBar';
 
 interface Group {
   title: string;
@@ -22,9 +25,10 @@ type FieldListProps = {
   onSelect: (code: string | string[]) => void;
   onUnSelect: (code: string | string[]) => void;
   groups: Group[];
+  queryDataSet?: DataSet;
 }
 
-const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value, onSelect, onUnSelect, groups, prefixCls }) {
+const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value, onSelect, onUnSelect, groups, prefixCls, queryDataSet }) {
   const [searchText, setSearchText] = useState('');
   const codes = useMemo(() => groups.reduce((res, current) => [...res, ...current.fields.map((o) => {
     const hasBindProps = (propsName) => o && o.get(propsName) && o.get(propsName).bind;
@@ -77,14 +81,18 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
           const code = field.get('name');
           const label = field.get('label') || code;
           const checked = isChecked(code);
+          const disabled = queryDataSet && fieldIsDisabled(field, queryDataSet);
           const hasBindProps = (propsName) => field && field.get(propsName) && field.get(propsName).bind;
           if (
             label && label.includes(searchText || '') &&
             !field.get('bind') &&
             !hasBindProps('computedProps') &&
             !hasBindProps('dynamicProps')) {
+            const itemClassNames = classNames(`${prefixCls}-item`, {
+              [`${prefixCls}-item-disabled`]: disabled,
+            });
             return (
-              <div className={`${prefixCls}-item`} key={code}>
+              <div className={itemClassNames} key={code}>
                 <CheckBox
                   value={code}
                   checked={checked}
@@ -99,7 +107,7 @@ const FieldList: FunctionComponent<FieldListProps> = function FieldList({ value,
         })}
       </div>
     </div>
-  ), [handleChange, isChecked, searchText]);
+  ), [handleChange, isChecked, searchText, queryDataSet]);
 
   const selectItems = value.filter(v => codes.includes(v));
 

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
+
 ## 1.6.3
 
 `2023-07-27`

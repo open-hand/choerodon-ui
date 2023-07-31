@@ -215,6 +215,35 @@ export function processFilterParam(dataSet) {
 }
 
 /**
+ * 查询字段是否禁用
+ * @param field 查询字段
+ * @param queryDataSet 查询dataSet
+ * @returns 
+ */
+export function fieldIsDisabled(field: Field, queryDataSet: DataSet) {
+  const record = queryDataSet.current;
+  if (field) {
+    const disabled = field.get('disabled', record);
+    if (disabled) {
+      return true;
+    }
+    const cascadeMap = field.get('cascadeMap', record);
+    if (
+      cascadeMap &&
+      (!record || Object.keys(cascadeMap).some(cascade => {
+        if (isObject(record.get(cascadeMap[cascade]))) {
+          return isEnumEmpty(record.get(cascadeMap[cascade]));
+        }
+        return isNil(record.get(cascadeMap[cascade]));
+      }))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * 高级搜索字段配置类型声明
  */
 export interface AdvancedSearchField {
@@ -1756,7 +1785,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
+                const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: isDisabled,
@@ -1835,7 +1864,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
-                const isDisabled = disabled || (queryField && queryField.get('disabled', queryDataSet.current));
+                const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
                     [`${prefixCls}-filter-content-disabled`]: isDisabled,
@@ -1939,6 +1968,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         value={selectFields}
                         onSelect={this.handleSelect}
                         onUnSelect={this.handleUnSelect}
+                        queryDataSet={queryDataSet}
                       />
                     </div>
                   )}

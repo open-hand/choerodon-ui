@@ -78,6 +78,12 @@
   &-item {
     width: 100%;
     margin: 0.06rem 0;
+
+    &-disabled {
+      .@{c7n-pro-prefix}-checkbox-label {
+        color: @disabled-color;
+      }
+    }
   }
 
   .@{c7n-pro-prefix}-checkbox:disabled + .@{c7n-pro-prefix}-checkbox-inner {
