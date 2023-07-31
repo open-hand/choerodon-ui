@@ -86,13 +86,13 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
     }
   }, [saveCustomized, tempCustomized, modal]);
   useEffect(() => {
-    if (modal && restoreDefault) {
+    if (modal) {
       modal.update({
         footer: (okBtn, cancelBtn) => (
           <>
             {cloneElement<ButtonProps>(okBtn, { onClick: handleOk })}
             {cancelBtn}
-            <Button funcType={FuncType.link} color={ButtonColor.primary} onClick={handleRestorePanes} style={{ float: 'right' }}>
+            <Button hidden={!restoreDefault} funcType={FuncType.link} color={ButtonColor.primary} onClick={handleRestorePanes} style={{ float: 'right' }}>
               {$l('Tabs', 'restore_default')}
             </Button>
           </>
