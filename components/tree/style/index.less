@@ -24,6 +24,12 @@
     }
 
     // =================== Virtual List ===================
+    &-list-holder {
+      > div:not(.@{tree-prefix-cls}-list-holder-inner) {
+        overflow: unset !important;
+      }
+    }
+
     &-list-holder-inner {
       align-items: flex-start;
     }
