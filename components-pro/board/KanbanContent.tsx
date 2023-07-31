@@ -380,6 +380,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           funcType={FuncType.flat}
           color={ButtonColor.primary}
           icon="settings-o"
+          hidden={customizedDS!.current?.get(ViewField.id) === '__DEFAULT__'}
           onClick={openCustomizationModal}
         />,
       );
@@ -393,6 +394,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
         funcType={FuncType.flat}
         color={ButtonColor.primary}
         icon="settings-o"
+        hidden={customizedDS!.current?.get(ViewField.id) === '__DEFAULT__'}
         onClick={openCustomizationModal}
       />,
     ];

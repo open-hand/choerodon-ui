@@ -47,7 +47,7 @@ export interface CardContentProps {
 
 const CardContent: FunctionComponent<CardContentProps> = function CardContent(props) {
   const { tableBtns, buttonsLimit, buttons, cardProps = {}, queryBarProps } = props;
-  const { onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand } = useContext(BoardContext);
+  const { onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand, commandsLimit } = useContext(BoardContext);
   const viewProps = customizedDS!.current!.get(ViewField.viewProps);
   const [cardHeight, setCardHeight] = useState(0);
 
@@ -376,6 +376,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           className={`${prefixCls}-hover-button`}
           funcType={FuncType.flat}
           color={ButtonColor.primary}
+          hidden={customizedDS!.current?.get(ViewField.id) === '__DEFAULT__'}
           icon="settings-o"
           onClick={openCustomizationModal}
         />,
@@ -390,6 +391,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
         funcType={FuncType.flat}
         color={ButtonColor.primary}
         icon="settings-o"
+        hidden={customizedDS!.current?.get(ViewField.id) === '__DEFAULT__'}
         onClick={openCustomizationModal}
       />,
     ];
@@ -445,8 +447,8 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     minHeight: cardHeight,
                   }}
                   title={viewProps && viewProps.displayFields ?
-                    <Typography.Text
-                      ellipsis={{ tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]).renderer} /> }}
+                    <Typography.Paragraph
+                      ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]).renderer} /> }}
                       name={viewProps.displayFields[0]}
                       record={record}
                       renderer={displayFields.find(df => df.name === viewProps.displayFields[0]).renderer}
@@ -481,6 +483,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                       renderCommand={renderCommand}
                       prefixCls={prefixCls}
                       viewMode={ViewMode.card}
+                      commandsLimit={commandsLimit}
                     />
                   }
                 >

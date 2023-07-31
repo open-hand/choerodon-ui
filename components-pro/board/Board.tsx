@@ -11,7 +11,7 @@ import noop from 'lodash/noop';
 import { DraggableProps, DroppableProps, DragDropContextProps } from 'react-beautiful-dnd';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { CardProps } from 'choerodon-ui/lib/card';
-import BoardWithContext from './BoardWithContext';
+import BoardWithContext, { normalizeColumns } from './BoardWithContext';
 import { ViewMode, ViewField } from './enum';
 import DataSet from '../data-set';
 import { TableProps } from '../table/Table';
@@ -46,10 +46,17 @@ export interface BoardProps extends DataSetComponentProps {
   cardProps?: BoardCardProps;
   kanbanProps?: KanbanProps;
   viewMode?: ViewMode;
+  defaultViewMode: ViewMode;
+  defaultViewProps?: {
+    card?: any,
+    kanban?: any,
+    table?: any,
+  } | any;
   queryFields?: { [key: string]: ReactElement<any> };
   onChange?: Function;
   onConfigChange?: (props: { config: any, currentViewDS: DataSet }) => void;
   renderCommand?: Function;
+  commandsLimit?: number;
   renderButtons?: Function;
   autoQuery?: boolean;
   viewVisible?: {
@@ -67,9 +74,27 @@ export interface BoardCustomized {
   id: string;
 }
 
+export const DEFAULTVIEW = {
+  card: {
+    [ViewField.viewName]: '初始卡片视图',
+    [ViewField.viewMode]: ViewMode.card,
+    [ViewField.id]: '__DEFAULT__',
+  },
+  kanban: {
+    [ViewField.viewName]: '初始看板视图',
+    [ViewField.viewMode]: ViewMode.kanban,
+    [ViewField.id]: '__DEFAULT__',
+  },
+  table: {
+    [ViewField.viewName]: '初始列表视图',
+    [ViewField.viewMode]: ViewMode.table,
+    [ViewField.id]: '__DEFAULT__',
+  },
+}
+
 const Board: FunctionComponent<BoardProps> = function Board(props) {
   const { getConfig, getCustomizable } = useContext(ConfigContext);
-  const { viewVisible, dataSet, customizedCode, customizable = customizedCode ? getCustomizable('Board') : undefined } = props;
+  const { defaultViewMode, defaultViewProps, tableProps, viewVisible, dataSet, customizedCode, customizable = customizedCode ? getCustomizable('Board') : undefined } = props;
   const $customizable = customizedCode ? customizable : false;
   const [loaded, setLoaded] = useState<boolean>(!$customizable);
   const [customized, setCustomized] = useState<BoardCustomized | undefined | null>();
@@ -147,6 +172,18 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
     },
   }), [customizedCode]);
 
+  const displayFields = useMemo(() => {
+    if (tableProps && tableProps.columns) {
+      return tableProps.columns;
+    }
+    if (tableProps && tableProps.children) {
+      const { children, aggregation } = tableProps;
+      const generatedColumns = normalizeColumns(children, aggregation);
+      return generatedColumns[0].concat(generatedColumns[1], generatedColumns[2]);
+    }
+    return [];
+  }, [tableProps]);
+
   /**
    * 加载当前默认个性化视图数据(单个)
    */
@@ -159,13 +196,27 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
           type: 'default',
         });
         const remoteCustomized: BoardCustomized[] | undefined | null = res ? [res] : [];
-        // console.log('remoteCustomized', customizedCode, remoteCustomized, res)
+        const viewProps = {
+          card: {
+            [ViewField.cardWidth]: 6,
+            [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
+            [ViewField.showLabel]: 1,
+          },
+          table: {},
+          kanban: {
+            [ViewField.cardWidth]: 6,
+            [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
+            [ViewField.showLabel]: 1,
+          },
+        };
         const defaultView = {
           code: customizedCode,
-          [ViewField.viewName]: '初始列表视图',
-          [ViewField.viewMode]: ViewMode.table,
-          [ViewField.id]: '__DEFAULT__',
-        }
+          ...DEFAULTVIEW[defaultViewMode],
+          [ViewField.viewProps]: {
+            ...viewProps[defaultViewMode],
+            ...defaultViewProps[defaultViewMode],
+          },
+        };
         if (remoteCustomized && remoteCustomized.length) {
           remoteCustomized.push(defaultView);
           customizedDS.loadData(remoteCustomized);
@@ -205,6 +256,9 @@ Board.defaultProps = {
   queryFields: {},
   autoQuery: false,
   viewVisible: true,
+  commandsLimit: 1,
+  defaultViewMode: ViewMode.table,
+  defaultViewProps: {},
 };
 export type ForwardBoardType = typeof Board
 

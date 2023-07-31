@@ -39,7 +39,7 @@ import TextField from '../text-field';
 import ModalProvider from '../modal-provider';
 import { ModalProps } from '../modal/Modal';
 import { useModal } from '../modal-provider/ModalProvider';
-import { BoardProps, BoardCustomized } from './Board';
+import { BoardProps, BoardCustomized, DEFAULTVIEW } from './Board';
 import KanbanContent from './KanbanContent';
 import BoardContext, { BoardContextValue } from './BoardContext';
 import { getColumnKey, getEditorByField, getPlaceholderByField } from '../table/utils';
@@ -60,7 +60,7 @@ type ChildrenInfo = {
   isHideDisabled: boolean;
 }
 
-function normalizeColumns(
+export function normalizeColumns(
   elements: ReactNode,
   tableAggregation?: boolean,
   customizedColumns?: { [key: string]: ColumnProps },
@@ -221,7 +221,7 @@ export interface viewProps {
 const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Board(props) {
   const { getConfig, getProPrefixCls } = useContext(ConfigContext);
   const [hidden, setHidden] = useState<boolean>(true);
-  const { onChange, onConfigChange, renderButtons, viewVisible, autoQuery, kanbanProps, cardProps, renderCommand, customizedDS, queryFields, dataSet, tableProps, customizable, customizedCode } = props;
+  const { defaultViewProps, defaultViewMode, onChange, onConfigChange, renderButtons, viewVisible, autoQuery, kanbanProps, cardProps, renderCommand, commandsLimit, customizedDS, queryFields, dataSet, tableProps, customizable, customizedCode } = props;
   const prefixCls = getProPrefixCls('board');
 
   const saveCustomized = useCallback(async (newCustomized: BoardCustomized) => {
@@ -338,13 +338,28 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           return detailRes;
         }
         return r;
-      })
+      });
+      const viewProps = {
+        card: {
+          [ViewField.cardWidth]: 6,
+          [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
+          [ViewField.showLabel]: 1,
+        },
+        table: {},
+        kanban: {
+          [ViewField.cardWidth]: 6,
+          [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
+          [ViewField.showLabel]: 1,
+        },
+      };
       const defaultView = {
         code: customizedCode,
-        [ViewField.viewName]: '初始列表视图',
-        [ViewField.viewMode]: ViewMode.table,
-        [ViewField.id]: '__DEFAULT__',
-      }
+        ...DEFAULTVIEW[defaultViewMode],
+        [ViewField.viewProps]: {
+          ...viewProps[defaultViewMode],
+          ...defaultViewProps[defaultViewMode],
+        },
+      };
       customizedDS.loadData([...mergeRes, defaultView]);
     } catch (error) {
       warning(false, error.message);
@@ -743,6 +758,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
     autoQuery,
     command,
     renderCommand,
+    commandsLimit,
     renderButtons,
     customizedDS,
     displayFields,

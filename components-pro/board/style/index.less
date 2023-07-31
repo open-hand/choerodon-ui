@@ -129,9 +129,6 @@
       text-decoration: none;
 
       .@{board-prefix-cls}-quote-container-extra {
-        display: block;
-        margin-top: 10px;
-
         .icon:hover {
           color: @primary-color;
         }
@@ -142,19 +139,25 @@
       margin: 8px;
     }
 
-    .@{c7n-prefix}-card-extra {
-      padding: 0 !important;
+    .@{c7n-prefix}-card-head {
+      margin-right: 0.08rem !important;
+      padding: 0 0 0 0.16rem !important;
     }
 
-    .@{c7n-prefix}-card-head {
-      margin-right: 8px !important;
+    .@{c7n-prefix}-card-extra {
+      flex: 1;
+      min-width: 30%;
+      max-width: 70%;
     }
 
     .@{c7n-prefix}-card-head-title {
-      margin-right: 24px !important;
+      min-width: 30%;
+      max-width: 70%;
+      white-space: break-spaces !important;
 
       .@{c7n-pro-prefix}-output,
-      .@{c7n-pro-prefix}-typography-text {
+      .@{c7n-pro-prefix}-typography-paragraph {
+        margin: 0;
         line-height: 22px !important;
       }
     }
@@ -194,10 +197,6 @@
       &:active {
         // color: ${colors.N900};
         text-decoration: none;
-
-        .@{board-prefix-cls}-quote-container-extra {
-          display: block;
-        }
       }
 
       &:focus {
@@ -208,11 +207,10 @@
 
 
 
-      &-extra {
-        position: absolute;
-        right: 4px;
-        display: none;
-      }
+      // &-extra {
+      //   min-width: 30%;
+      //   max-width: 70%;
+      // }
     }
 
     &-content {

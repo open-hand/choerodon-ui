@@ -69,7 +69,7 @@ type RowProps = {
 
 // Using a higher order function so that we can look up the quotes data to retrieve
 // our quote from within the rowRender function
-const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listDragging, command, renderCommand, dataSet, kanbanDS, displayFields, draggableProps?: DraggableProps, isDragDropDisabled?: boolean) => ({ index, style }: RowProps) => {
+const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listDragging, command, renderCommand, commandsLimit, dataSet, kanbanDS, displayFields, isDragDropDisabled, draggableProps?: DraggableProps) => ({ index, style }: RowProps) => {
   const quote: any = quotes.get(index);
   const isLast = quotes && quotes.length === (index + 1);
 
@@ -111,6 +111,7 @@ const getRowRender = (quotes: any, columnId, prefixCls: string, viewProps, listD
           <QuoteItem
             command={command}
             renderCommand={renderCommand}
+            commandsLimit={commandsLimit}
             provided={provided}
             quote={quote}
             isDragging={snapshot.isDragging}
@@ -161,7 +162,7 @@ export interface KanbanColumnProps {
 const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn(props) {
   const { columnId, quotes = [], prefixCls, className, header, style, kanbanProps, kanbanDS, groupingBy } = props;
   const { droppableProps, draggableProps, isDragDropDisabled } = kanbanProps;
-  const { displayFields, customizedDS, command, renderCommand, dataSet } = useContext(BoardContext);
+  const { displayFields, customizedDS, command, renderCommand, dataSet, commandsLimit } = useContext(BoardContext);
   const viewProps = useMemo(() => customizedDS!.current!.get(ViewField.viewProps) || {}, [customizedDS!.current]);
   const columnDS = useMemo(() => new DataSet({
     ...dataSet!.props,
@@ -225,6 +226,7 @@ const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn
             displayFields={displayFields}
             command={command}
             renderCommand={renderCommand}
+            commandsLimit={commandsLimit}
             dataSet={columnDS}
           // onResize={onResize}
           />
@@ -272,7 +274,7 @@ const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn
                   //   ),
                   //   transition: 'background-color 0.2s ease',
                   // }}
-                  rowRenderer={columnDS ? getRowRender(columnDS, columnId, prefixCls, viewProps, snapshot.isDraggingOver || Boolean(snapshot.draggingFromThisWith), command, renderCommand, dataSet, kanbanDS, displayFields, draggableProps, isDragDropDisabled) : null}
+                  rowRenderer={columnDS ? getRowRender(columnDS, columnId, prefixCls, viewProps, snapshot.isDraggingOver || Boolean(snapshot.draggingFromThisWith), command, renderCommand, commandsLimit, dataSet, kanbanDS, displayFields, isDragDropDisabled, draggableProps) : null}
                 />
               )}
             </AutoSizer>

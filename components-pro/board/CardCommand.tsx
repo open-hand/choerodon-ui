@@ -26,6 +26,7 @@ type CardCommandProps = {
   command?: Commands[] | ((props: cardCommandsProps) => Commands[]);
   renderCommand?: Function | ((props: any) => PromiseLike<any>);
   viewMode?: string;
+  commandsLimit?: number;
 };
 
 const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(props) {
@@ -36,6 +37,7 @@ const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(pr
     renderCommand = ({ command }) => command,
     dataSet,
     viewMode,
+    commandsLimit = 1,
   } = props;
   const [item, setItem] = useState<any>(null);
 
@@ -134,26 +136,34 @@ const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(pr
     renderMenuItem();
   }, []);
 
+  const renderMoreBtns = useCallback(() => {
+    if (commandsLimit >= item.length) {
+      return null;
+    }
+    return (<Dropdown
+      popupClassName={`${prefixCls}-quote-container-extra-popup`}
+      overlay={() => (
+        <Menu>
+          {item.slice(commandsLimit).map(cmd => (
+            <Menu.Item key={cmd.key || `${record.id}_cmd`}>
+              {cmd}
+            </Menu.Item>
+          ))}
+        </Menu>
+      )}>
+      <Button
+        icon="more_horiz"
+        funcType={FuncType.flat}
+        onClick={(e) => e.stopPropagation()}
+      />
+    </Dropdown>);
+  }, [item, commandsLimit]);
+
   return (
     item ? (
       <div className={`${prefixCls}-quote-container-extra`}>
-        <Dropdown
-          popupClassName={`${prefixCls}-quote-container-extra-popup`}
-          overlay={() => (
-            <Menu>
-              {item.map(cmd => (
-                <Menu.Item key={cmd.key || `${record.id}_cmd`}>
-                  {cmd}
-                </Menu.Item>
-              ))}
-            </Menu>
-          )}>
-          <Button
-            icon="more_vert"
-            funcType={FuncType.flat}
-            onClick={(e) => e.stopPropagation()}
-          />
-        </Dropdown>
+        {item.slice(0, commandsLimit)}
+        {renderMoreBtns()}
       </div>
     ) : null
   );

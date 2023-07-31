@@ -16,6 +16,7 @@ type QuoteItemProps = {
   isGroupedOver?: boolean,
   style?: Object,
   index?: number,
+  commandsLimit?: number,
   prefixCls: string,
   viewProps?: any,
   dataSet?: DataSet,
@@ -55,6 +56,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
     renderCommand = ({ command }) => command,
     dataSet,
     displayFields: columns,
+    commandsLimit,
   } = props;
 
   const displayFields = useMemo(() => viewProps.displayFields, [viewProps.displayFields]);
@@ -82,6 +84,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
           record={quote}
           renderCommand={renderCommand}
           prefixCls={prefixCls}
+          commandsLimit={commandsLimit}
         />
         {/* {isClone ? <div className="clone-badge">Clone</div> : null} */}
         <div className={`${prefixCls}-quote-content`}>

@@ -31,6 +31,7 @@ export interface BoardContextValue {
   queryFields: ReactElement<any>[];
   command?: Commands[] | ((props: cardCommandsProps) => Commands[]);
   renderCommand?: Function;
+  commandsLimit?: number;
   renderButtons?: Function;
   onConfigChange?: (props: { config: any, currentViewDS: DataSet }) => void;
   onChange?: Function;
