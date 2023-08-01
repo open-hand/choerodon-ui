@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { action, set, toJS } from 'mobx';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
+import isObject from 'lodash/isObject';
 import Collapse from 'choerodon-ui/lib/collapse';
 import CollapsePanel from 'choerodon-ui/lib/collapse/CollapsePanel';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -213,8 +214,9 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const renderIcon = useCallback(({ isActive }) => <Icon type={isActive ? 'expand_more' : 'navigate_next'} />, []);
   const tableSettings: ReactElement[] = [];
   const globalPagination = tableStore.getConfig('pagination');
-  const pageSizeOptions = (tableStore.pagination && tableStore.pagination.pageSizeOptions) || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
-  const maxPageSize = useMemo(() => Math.max(defaultTo((tableStore.pagination && 'maxPageSize' in tableStore.pagination) ? tableStore.pagination.maxPageSize : (globalPagination ? globalPagination.maxPageSize : undefined), 100), ...pageSizeOptions.map(size => Number(size)))
+  const tablePagination = (isObject(tableStore.pagination) || tableStore.pagination === false) ? tableStore.pagination : {};
+  const pageSizeOptions = (tablePagination && tablePagination.pageSizeOptions) || (globalPagination && globalPagination.pageSizeOptions) || ['10', '20', '50', '100'];
+  const maxPageSize = useMemo(() => Math.max(defaultTo((tablePagination && 'maxPageSize' in tablePagination) ? tablePagination.maxPageSize : (globalPagination ? globalPagination.maxPageSize : undefined), 100), ...pageSizeOptions.map(size => Number(size)))
     , [globalPagination, tableStore.pagination, pageSizeOptions]);
   const handlePageSizeBeforeChange = useCallback((value): boolean | Promise<boolean> => {
     if (value < 1 || value > maxPageSize) {
