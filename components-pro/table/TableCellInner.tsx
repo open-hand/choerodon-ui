@@ -488,6 +488,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             isValidationMessageHidden,
             showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'), tableStore.getConfig),
             validationResults: field.getValidationErrorValues(record),
+            rangeSeparator: tableStore.getConfig('rangeSeparator'),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
           if (isOverflowMaxTagCount) {
@@ -496,7 +497,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           return tags;
         }
         if (range) {
-          return renderRangeValue(toRangeValue(value, range), { processRenderer });
+          return renderRangeValue(toRangeValue(value, range), { processRenderer, rangeSeparator: tableStore.getConfig('rangeSeparator') });
         }
       }
       if (field.get('multiLine', record)) {

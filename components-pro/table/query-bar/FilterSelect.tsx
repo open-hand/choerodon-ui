@@ -227,7 +227,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
                   lang: this.lang,
                   getDisplayProp: (name) => this.getDisplayProp(name),
                 }, undefined, current, this.getContextConfig);
-            }).join('~')}`;
+            }).join(this.rangeSeparator)}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
           const text = this.processText(isNil(fieldValue)

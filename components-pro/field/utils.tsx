@@ -282,11 +282,13 @@ export type MultipleRenderOption = {
   isValidationMessageHidden(message?: ReactNode): boolean | undefined;
   showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void;
   getKey?(v: any): string;
+  rangeSeparator?: string;
 }
 
 export type RangeRenderOption = {
   repeat?: number | undefined;
   processRenderer(v: any, repeat?: number): ReactNode;
+  rangeSeparator?: string;
 }
 
 export type MultiLineRenderOption = {
@@ -304,12 +306,12 @@ export type MultiLineRenderOption = {
 }
 
 export function renderRangeValue(value, option: RangeRenderOption) {
-  const { repeat, processRenderer } = option;
+  const { repeat, processRenderer, rangeSeparator = getConfigDefault('rangeSeparator') } = option;
   const rangeValue = (value || []).map((item) => processRenderer(item, repeat), []) as [any, any];
   if (rangeValue.some(v => !isEmpty(v))) {
     return (
       <>
-        {rangeValue[0]}~{rangeValue[1]}
+        {rangeValue[0]}{rangeSeparator}{rangeValue[1]}
       </>
     );
   }
@@ -339,6 +341,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     isValidationMessageHidden,
     showValidationMessage: selfShowValidationMessage,
     tooltipTheme,
+    rangeSeparator = getConfigDefault('rangeSeparator'),
   } = option;
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
@@ -349,7 +352,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   const tags = values.slice(0, maxTagCount).map((v, index) => {
     const key = getKey(v);
     const repeat = repeats.get(key) || 0;
-    const text = range ? renderRangeValue(v, { repeat, processRenderer }) : processRenderer(v, repeat);
+    const text = range ? renderRangeValue(v, { repeat, processRenderer, rangeSeparator }) : processRenderer(v, repeat);
     repeats.set(key, repeat + 1);
     if (!isEmpty(text)) {
       const validationResult: ValidationResult | undefined = validationResults && validationResults.find(error => error.value === v);
