@@ -16,6 +16,9 @@ timeline: true
 ---
 
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
+- 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
+- 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
+- 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
 
 ## 1.6.3
 

@@ -254,15 +254,22 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         if (field && fieldProps) {
           const unOrder = field.order || fieldProps.order;
           runInAction(() => {
+            const { combineSort: nowCombineSort } = dataSet;
+            dataSet.fields.forEach(current => {
+              if (current.order && (current !== field || nowCombineSort)) {
+                current.order = undefined;
+              }
+            });
+            dataSet.combineSort = false;
             switch (unOrder) {
               case SortOrder.asc:
-                field.order = undefined;
+                field.order = SortOrder.desc;
                 break;
               case SortOrder.desc:
-                field.order = SortOrder.asc;
+                field.order = undefined;
                 break;
               default:
-                field.order = SortOrder.desc;
+                field.order = SortOrder.asc;
             }
           })
         }
