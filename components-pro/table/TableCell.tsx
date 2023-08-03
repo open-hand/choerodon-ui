@@ -8,6 +8,7 @@ import React, {
   ReactElement,
   useCallback,
   useContext,
+  useMemo,
 } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -55,6 +56,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, node: { rangeBorder } } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -99,6 +101,110 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       onClickCapture(e);
     }
   }), [record, dataSet, cellExternalProps]);
+
+  const handleMouseDown = useCallback(action<(e) => void>((event) => {
+    const { target } = event;
+    const startTarget = (target as HTMLElement).parentElement;
+    const colIndex = tableStore.columns.findIndex(x => x.name === key);
+    if (colIndex < 0 || startTarget && startTarget.tagName.toLowerCase() !== 'td') return;
+    if (startTarget) {
+      const initPosition = { rowIndex, colIndex, target: startTarget };
+      if (tableStore.startChooseCell && event.shiftKey) {
+        tableStore.endChooseCell = initPosition;
+        if (rangeBorder) {
+          drawCopyBorder({ startTarget: tableStore.startChooseCell.target, endTarget: startTarget })
+        }
+      } else {
+        tableStore.startChooseCell = initPosition;
+        tableStore.endChooseCell = initPosition;
+        if (rangeBorder) {
+          drawCopyBorder({ startTarget, endTarget: startTarget })
+        }
+      }
+      tableStore.isFinishChooseCell = false;
+
+    }
+  }), [endChooseCell]);
+
+  const handleMouseMove = useCallback(action<(e) => void>(({ target }) => {
+    if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
+      const colIndex = tableStore.columns.findIndex(x => x.name === key);
+      if (colIndex > 0) {
+        const startTarget = startChooseCell.target;
+        const endTarget = target && (target as HTMLElement).parentElement;
+        tableStore.endChooseCell = { colIndex, rowIndex, target: endTarget! };
+        if (endTarget && endTarget !== startTarget && endTarget.tagName.toLowerCase() === 'td' && rangeBorder) {
+          drawCopyBorder({ startTarget, endTarget })
+        }
+      }
+
+    }
+  }), [startChooseCell, isFinishChooseCell, currentEditorName])
+
+  const drawCopyBorder = ({ startTarget, endTarget }) => {
+    if (rangeBorder) {
+      const rectStart = startTarget.getBoundingClientRect();
+      const rectEnd = endTarget.getBoundingClientRect();
+      const minX = Math.min(rectStart.left, rectEnd.left);
+      const maxX = Math.max(rectStart.right, rectEnd.right);
+      const minY = Math.min(rectStart.top, rectEnd.top);
+      const maxY = Math.max(rectStart.bottom, rectEnd.bottom);
+      const left = Math.min(startTarget.offsetLeft, endTarget.offsetLeft);
+      const top = Math.min(startTarget.offsetTop, endTarget.offsetTop);
+      const width = maxX - minX;
+      const height = maxY - minY;
+      rangeBorder.style.left = pxToRem(left)!;
+      rangeBorder.style.top = pxToRem(top)!;
+      rangeBorder.style.width = pxToRem(width)!;
+      rangeBorder.style.height = pxToRem(height)!;
+      rangeBorder.style.display = 'block';
+    }
+  }
+
+  const handleMouseUp = useCallback(action<(e) => void>((e) => {
+    e.preventDefault();
+    tableStore.isFinishChooseCell = true;
+  }), [])
+
+  const isChoose = useMemo(() => {
+    const colIndex = tableStore.columns.findIndex(x => x.name === key);
+    if (startChooseCell && startChooseCell.colIndex === colIndex && startChooseCell.rowIndex === rowIndex) {
+      return true;
+    }
+    if (endChooseCell && endChooseCell.colIndex === colIndex && endChooseCell.rowIndex === rowIndex) {
+      return true;
+    }
+    if (endChooseCell && startChooseCell) {
+      let finalStartRowIndex = startChooseCell.rowIndex;
+      let finalStartColumnIndex = startChooseCell.colIndex;
+      let finalEndRowIndex = endChooseCell.rowIndex;
+      let finalEndColumnIndex = endChooseCell.colIndex;
+      if (finalStartRowIndex > finalEndRowIndex) {
+        finalStartRowIndex = endChooseCell.rowIndex;
+        finalEndRowIndex = startChooseCell.rowIndex;
+      }
+      if (finalStartColumnIndex > finalEndColumnIndex) {
+        finalStartColumnIndex = endChooseCell.colIndex;
+        finalEndColumnIndex = startChooseCell.colIndex;
+      }
+      if (
+        colIndex >= finalStartColumnIndex &&
+        colIndex <= finalEndColumnIndex &&
+        rowIndex >= finalStartRowIndex &&
+        rowIndex <= finalEndRowIndex
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }, [startChooseCell, endChooseCell])
+
+  const isFirstChoosed = useMemo(() => {
+    const colIndex = tableStore.columns.findIndex(x => x.name === key);
+    return startChooseCell && startChooseCell.rowIndex === rowIndex && startChooseCell.colIndex === colIndex;
+  }, [startChooseCell]);
+
   const aggregationTreeRenderer = useCallback(({ colGroup, style }) => {
     return getInnerNode(colGroup.column, style, true, colGroup.headerGroup);
   }, [getInnerNode]);
@@ -243,6 +349,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     {
       [`${cellPrefix}-aggregation`]: aggregation,
       [`${cellPrefix}-last-group`]: groupCell && isLast,
+      [`${cellPrefix}-choosed`]: clipboard && clipboard.copy && isChoose,
+      [`${cellPrefix}-first-choosed`]: clipboard && clipboard.copy && isFirstChoosed,
     },
     column.className,
     className,
@@ -261,6 +369,14 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
   const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
+  let clipboardCopyEvents = {};
+  if (clipboard && clipboard.copy) {
+    clipboardCopyEvents = {
+      onMouseDown: handleMouseDown,
+      onMouseMove: handleMouseMove,
+      onMouseUp: handleMouseUp,
+    }
+  }
   return (
     <TCell
       colSpan={colSpan}
@@ -273,6 +389,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style }}
       scope={scope}
       onClickCapture={handleClickCapture}
+      {...clipboardCopyEvents}
     >
       {renderInnerNode(aggregation, onCellStyle)}
     </TCell>

@@ -60,6 +60,7 @@ export {
   Suffixes,
   TableCustomized,
   TableGroup,
+  Clipboard,
 } from './Table';
 
 export {
