@@ -491,6 +491,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return highlightRenderer;
   }
 
+  get rangeSeparator(): string {
+    const rangeSeparator = this.getContextConfig('rangeSeparator');
+    return rangeSeparator || '~';
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -1278,7 +1283,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   renderRangeValue(value: any, repeat?: number): ReactNode {
-    return renderRangeValue(value, { repeat, processRenderer: this.processRenderer });
+    return renderRangeValue(value, { repeat, processRenderer: this.processRenderer, rangeSeparator: this.rangeSeparator });
   }
 
   getValueKey(v: any) {
@@ -1317,6 +1322,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       isValidationMessageHidden: this.isValidationMessageHidden,
       showValidationMessage: this.showValidationMessage,
       getKey: this.getValueKey,
+      rangeSeparator: this.rangeSeparator,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;
     return values;

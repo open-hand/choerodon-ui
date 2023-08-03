@@ -181,6 +181,7 @@ const defaults = {
   fieldFocusMode: FieldFocusMode.checked,
   formAutoFocus: false,
   tabsDefaultChangeable: true,
+  rangeSeparator: '~',
 };
 
 export default defaults;

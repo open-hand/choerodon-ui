@@ -15,7 +15,9 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `rangeSeparator` property.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
+- 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
 - 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.

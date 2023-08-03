@@ -330,6 +330,10 @@ export interface Config extends DataSetConfig {
    */
   uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   /**
+   * 输入框 range 分隔符
+   */
+  rangeSeparator?: string;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;

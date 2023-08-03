@@ -336,7 +336,7 @@
 
     // 相对于组件本身样式提升优先级
     .@{table-prefix-cls}-filter-item {
-      [class*="-invalid"] {
+      > [class*="-invalid"] {
         background-color: transparent;
       }
     }
@@ -464,22 +464,27 @@
     &:not(:focus-within) {
       input::-webkit-input-placeholder {
         color: transparent !important;
+        -webkit-text-fill-color: transparent;
       }
 
       input:-moz-placeholder {
         color: transparent !important;
+        -webkit-text-fill-color: transparent;
       }
 
       input::-moz-placeholder {
         color: transparent !important;
+        -webkit-text-fill-color: transparent;
       }
       
       input:-ms-input-placeholder {
         color: transparent !important;
+        -webkit-text-fill-color: transparent;
       }
 
       [class*='-placeholder-inner'] {
         color: transparent !important;
+        -webkit-text-fill-color: transparent;
       }
     }
 
