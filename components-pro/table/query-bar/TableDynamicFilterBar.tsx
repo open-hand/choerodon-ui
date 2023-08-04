@@ -276,6 +276,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   dynamicFilterBar?: DynamicFilterBarConfig;
   onQuery?: () => void;
   onReset?: () => void;
+  onFieldEnterDown?: ({ e, name }) => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
   fuzzyQueryOnly?: boolean,
@@ -935,12 +936,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param name
    */
   createFields(element, name): ReactElement {
+    const { onFieldEnterDown = noop } = this.props;
+    const { onEnterDown } = element.props;
     const props: any = {
       ref: (node) => this.refEditors.set(name, node),
       border: false,
       clearButton: true,
       _inTable: true,
       showValidation: 'tooltip',
+      onEnterDown: onEnterDown && isFunction(onEnterDown) ? onEnterDown : (e) => onFieldEnterDown({e, name}),
     };
     const elementName = element && isFunction(element.type) && (element.type as any).displayName;
     if (isUndefined(element.props.suffix) && ['Currency', 'NumberField', 'EmailField', 'UrlField', 'TextField'].includes(elementName)) {

@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: 新增动态筛选条字段 onFieldEnterDown 回车回调。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 
 ## 1.6.3

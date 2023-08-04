@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: Added dynamic filter bar field `onFieldEnterDown` return callback.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 
 ## 1.6.3
