@@ -612,7 +612,11 @@ export default class Lov extends Select<LovProps> {
 
   @action
   setText(text?: string): void {
-    this.searching = true;
+    if (text === undefined || text === '') {
+      delete this.searching;
+    } else {
+      this.searching = true;
+    }
     super.setText(text);
   }
 
@@ -728,7 +732,7 @@ export default class Lov extends Select<LovProps> {
       stopEvent(e);
       this.blur();
     }
-    if (!(e.keyCode === KeyCode.ENTER && this.searching)) {
+    if (!(e.keyCode === KeyCode.ENTER && this.searching && this.popup)) {
       super.handleKeyDown(e);
     }
   }

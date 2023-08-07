@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
 import { observer } from 'mobx-react';
+import moment from 'moment';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
@@ -10,7 +11,8 @@ import isNil from 'lodash/isNil';
 import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
 import defer from 'lodash/defer';
-import { action, runInAction, toJS } from 'mobx';
+import attempt from 'lodash/attempt';
+import { action, isArrayLike, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
   DragDropContextProps,
@@ -79,18 +81,20 @@ import {
   findIndexedSibling,
   findRow,
   getCellVerticalSize,
+  getDateByISOWeek,
   getHeight,
   getPaginationPosition,
   isCanEdictingRow,
   isDropresult,
   isStickySupport,
   onlyCustomizedColumn,
+  isJsonString,
 } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
-import { DataSetEvents, DataSetSelection, RecordStatus } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus, RecordStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
@@ -99,6 +103,9 @@ import { getUniqueFieldNames } from '../data-set/utils';
 import mergeProps from '../_util/mergeProps';
 import ErrorBar from './ErrorBar';
 import TableSibling from './TableSibling';
+import message from '../message';
+import ClipboardBar from './ClipboardBar';
+import { $l } from '../locale-context';
 
 export type TableGroup = {
   name: string;
@@ -286,6 +293,12 @@ export interface TableCustomized {
   id?: string; // Board 列表视图id
   viewName?: string; // Board 列表视图名称
   defaultFlag?: number; // Board 列表视图标识
+}
+
+export interface Clipboard {
+  paste?: boolean;
+  copy?: boolean;
+  description?: string | ReactNode;
 }
 
 let _instance;
@@ -610,14 +623,18 @@ export interface TableProps extends DataSetComponentProps {
    * 虚拟滚动是否显示加载
    */
   virtualSpin?: boolean;
-   /**
-   * 开启虚拟滚动列缓冲区
-   */
+  /**
+  * 开启虚拟滚动列缓冲区
+  */
   columnBuffer?: number;
-   /**
-   * 开启虚拟滚动列阈值
-   */
+  /**
+  * 开启虚拟滚动列阈值
+  */
   columnThreshold?: number;
+  /**
+  * 表格剪贴板属性
+  */
+  clipboard?: Clipboard;
   /**
    * 是否开启自适应高度
    */
@@ -854,6 +871,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeLine: HTMLDivElement | null;
 
+  rangeBorder: HTMLDivElement | null;
+
   tableHeadWrap: HTMLDivElement | null;
 
   tableBodyWrap: HTMLDivElement | null;
@@ -907,6 +926,11 @@ export default class Table extends DataSetComponent<TableProps> {
     this.tableContentWrap = node;
   }
 
+  @autobind
+  saveRangeBorderRef(node: HTMLDivElement | null) {
+    this.rangeBorder = node;
+  }
+
   useFocusedClassName() {
     return false;
   }
@@ -952,6 +976,17 @@ export default class Table extends DataSetComponent<TableProps> {
     this.handleResize();
   }
 
+  clearClipboard() {
+    const { tableStore } = this;
+    if (tableStore.startChooseCell && tableStore.endChooseCell && this.rangeBorder) {
+      this.rangeBorder.style.display = 'none';
+      runInAction(() => {
+        tableStore.startChooseCell = null;
+        tableStore.endChooseCell = null;
+      })
+    }
+  }
+
   @autobind
   @action
   handleDataSetLoad() {
@@ -960,6 +995,7 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore.performanceOn = true;
     }
     this.initDefaultExpandedRows();
+    this.clearClipboard();
   }
 
   @autobind
@@ -973,6 +1009,7 @@ export default class Table extends DataSetComponent<TableProps> {
         tableStore.currentEditRecord = record;
       }
     }
+    this.clearClipboard();
   }
 
   @autobind
@@ -983,6 +1020,7 @@ export default class Table extends DataSetComponent<TableProps> {
     } else {
       this.bubbleValidationReport(false);
     }
+    this.clearClipboard();
   }
 
   @autobind
@@ -991,6 +1029,7 @@ export default class Table extends DataSetComponent<TableProps> {
       const errors = dataSet.getAllValidationErrors();
       this.bubbleValidationReport(errors.dataSet.length > 0 || errors.records.length > 0);
     }
+    this.clearClipboard();
   }
 
   @autobind
@@ -1047,12 +1086,12 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   handleKeyDown(e) {
-    const { tableStore } = this;
+    const { tableStore, props: { clipboard } } = this;
     const { keyboard } = tableStore;
+    const ctrlKey = e.ctrlKey || e.metaKey;
     if (!tableStore.editing) {
       try {
         const { dataSet } = this.props;
-        const ctrlKey = e.ctrlKey || e.metaKey;
         const altKey = e.altKey;
         const shiftKey = e.shiftKey;
         switch (e.keyCode) {
@@ -1107,6 +1146,12 @@ export default class Table extends DataSetComponent<TableProps> {
       } catch (error) {
         warning(false, error.message);
       }
+    }
+    if (clipboard && clipboard.copy && ctrlKey && e.keyCode === KeyCode.C) {
+      this.handleCopyChoose();
+    }
+    if (clipboard && clipboard.paste && ctrlKey && e.keyCode === KeyCode.V) {
+      this.handlePasteChoose();
     }
     const { onKeyDown = noop } = this.props;
     onKeyDown(e);
@@ -1341,6 +1386,207 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
+  handleCopyChoose() {
+    const { columns, startChooseCell, endChooseCell, clipboard, isCopyPristine } = this.tableStore;
+    if (startChooseCell && endChooseCell) {
+      if (this.dataSet) {
+        const minRowIndex = Math.min(startChooseCell.rowIndex, endChooseCell.rowIndex);
+        const maxRowIndex = Math.max(startChooseCell.rowIndex, endChooseCell.rowIndex);
+        const minColIndex = Math.min(startChooseCell.colIndex, endChooseCell.colIndex);
+        const maxColIndex = Math.max(startChooseCell.colIndex, endChooseCell.colIndex);
+
+        const records = this.dataSet.slice(minRowIndex, maxRowIndex + 1);
+        const copyData: string[] = [];
+        for (let i = 0; i < records.length; i++) {
+          const record = records[i];
+          for (let j = minColIndex; j <= maxColIndex; j++) {
+            const fieldName = columns[j].name;
+            const field = this.dataSet.getField(fieldName);
+            const fieldType = field && field.type;
+            let recordData = record.get(columns[j].name);
+
+            if (clipboard && !isCopyPristine) {
+              const field = this.dataSet.getField(fieldName);
+              if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+                // 处理 lookup、lov
+                recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData);
+              }
+              if (field && fieldType === 'boolean') {
+                const text = field.getText(recordData);
+                recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
+              }
+            } else if (fieldType === 'object') {
+              recordData = JSON.stringify(recordData);
+            }
+
+            if (columns[j] && columns[j].renderer) {
+              recordData = columns[j].renderer!({ record });
+            }
+            copyData.push(j === maxColIndex ? `${recordData || ''} \t\r` : `${recordData || ''} \t`);
+          }
+        }
+        navigator.clipboard.writeText(copyData.join('')).then(() => {
+          message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
+        });
+      }
+    }
+  }
+
+  @action
+  async handlePasteChoose() {
+    const { columns, currentEditorName } = this.tableStore;
+    if (!currentEditorName) return;
+    const colIndex = columns.findIndex(x => x.name === currentEditorName);
+    // 先失焦
+    this.tableStore.blurEditor();
+    if (this.dataSet) {
+      this.dataSet.status = DataSetStatus.loading;
+    }
+    const clipText = await navigator.clipboard.readText();
+    if (this.dataSet) {
+      const { currentIndex, length } = this.dataSet;
+      const batchRecord: any = [];
+      const rows = clipText.split('\r').filter(line => line.trim() !== '');
+
+      try {
+        for (let i = 0; i < rows.length; i++) {
+          // 判断超出时自动新增行
+          const editorRowIndex = i + currentIndex;
+          if (editorRowIndex >= length) {
+            this.dataSet.create({}, editorRowIndex + 1);
+          }
+          const cols = rows[i].split('\t').filter(x => !!x);
+
+          for (let j = 0; j < cols.length; j++) {
+            let text: boolean | string | object | number = cols[j];
+            const record = this.dataSet.get(editorRowIndex);
+            const column = columns[colIndex + j];
+            const fieldName = column.name;
+            const field = this.dataSet.getField(fieldName);
+            // 非编辑项则跳过赋值
+            if (!column.editor || !field || !this.dataSet) {
+              continue;
+            }
+            const fieldType = field.type;
+            const optionDs = field.getOptions();
+
+            const jsonText = isJsonString(text);
+            if (fieldType !== 'object' || !jsonText) {
+              text = String(text).trim();
+              if (text.includes(',')) { // 默认以英文逗号分割
+                text = text.split(',');
+              } else if (text.includes('，')) { // 兼容中文逗号
+                text = text.split('，');
+              }
+            }
+            switch (fieldType) {
+              case 'boolean':
+                text = String(text).toLowerCase() === 'true' || String(text) === "1" || String(text) === "是";
+                break;
+              case 'number':
+                if (isArrayLike(text)) {
+                  text = text.map(item => Number(item));
+                } else {
+                  text = Number(text);
+                }
+                break;
+              case 'date':
+              case 'dateTime':
+              case 'month':
+              case 'year':
+                if (isArrayLike(text)) {
+                  text = text.map(item => moment(item));
+                } else {
+                  text = moment(text);
+                }
+                break;
+              case 'week':
+                if (isArrayLike(text)) {
+                  text = text.map(item => moment(getDateByISOWeek(item)));
+                } else {
+                  text = moment(getDateByISOWeek(text));
+                }
+                break;
+              case 'time':
+                if (isArrayLike(text)) {
+                  text = text.map(item => moment(`${moment().format('YYYY-MM-DD')} ${item}`));
+                } else {
+                  text = moment(`${moment().format('YYYY-MM-DD')} ${text}`);
+                }
+                break;
+              case 'object':
+                if (jsonText) {
+                  text = attempt(JSON.parse, text);
+                } else if (optionDs) {
+                  const textField = field.get('textField');
+                  if (isArrayLike(text)) {
+                    const promises = text.map(async t => {
+                      const obj = {
+                        [textField]: t.trim(),
+                      }
+                      const data = await optionDs.query(1, obj);
+                      if (this.dataSet && data) {
+                        const current = data[this.dataSet.dataKey][0];
+                        text = current || null;
+                      }
+                      return text;
+                    })
+                    // eslint-disable-next-line no-await-in-loop
+                    const results = await Promise.all(promises);
+                    text = results;
+
+                  } else if (isString(text)) {
+                    const obj = {
+                      [textField]: text.trim(),
+                    }
+                    // eslint-disable-next-line no-await-in-loop
+                    const data = await optionDs.query(1, obj);
+                    if (this.dataSet && data) {
+                      const current = data[this.dataSet.dataKey][0];
+                      text = current || null;
+                    }
+                  }
+                }
+                break;
+              default:
+                if (optionDs) {
+                  const optionData = optionDs.toData();
+                  const textField = field.get('textField');
+                  const valueField = field.get('valueField');
+                  if (isArrayLike(text)) {
+                    text = text.map(v => {
+                      const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
+                      return option ? option[valueField] : null;
+                    })
+                  } else {
+                    const option = optionData.find(x => x[textField] === text || x[valueField] === text);
+                    text = option ? option[valueField] : null;
+                  }
+                }
+                break;
+            }
+            if (columns[colIndex + j].renderer) {
+              columns[colIndex + j].renderer = () => text;
+            }
+            batchRecord.push({ record, name: fieldName, value: text });
+          }
+        }
+        // 再批量赋值
+        batchRecord.forEach(item => {
+          const { record, name, value } = item;
+          record.set(name, value);
+        });
+      } catch (error) {
+        message.warning(error.message);
+      }
+      runInAction(() => {
+        if (this.dataSet) {
+          this.dataSet.status = DataSetStatus.ready;
+        }
+      })
+    }
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'columns',
@@ -1397,6 +1643,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'virtualSpin',
       'columnBuffer',
       'columnThreshold',
+      'clipboard',
       'autoWidth',
       'autoHeight',
       'autoFootHeight',
@@ -1604,15 +1851,16 @@ export default class Table extends DataSetComponent<TableProps> {
       delete this.resizeObserver;
     }
     this.processDataSetListener(false);
+    this.clearClipboard();
     window.removeEventListener('resize', this.handleWindowResize, false);
   }
 
   processDataSetListener(flag: boolean) {
-    const { dataSet, inlineEdit } = this.tableStore;
+    const { dataSet, inlineEdit, clipboard } = this.tableStore;
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
-      if (inlineEdit) {
+      if (inlineEdit || (clipboard && clipboard.copy)) {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
@@ -1658,6 +1906,7 @@ export default class Table extends DataSetComponent<TableProps> {
         searchCode,
         boxSizing,
         fullColumnWidth,
+        clipboard,
       },
       tableStore,
       prefixCls,
@@ -1697,6 +1946,7 @@ export default class Table extends DataSetComponent<TableProps> {
           >
             <TableSibling position="before" boxSizing={boxSizing}>
               {this.getHeader()}
+              {clipboard && (clipboard.copy || clipboard.paste) && <ClipboardBar clipboard={clipboard} />}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}
@@ -1718,7 +1968,10 @@ export default class Table extends DataSetComponent<TableProps> {
             <Spin {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
-                  className={classNames(`${prefixCls}-content`, { [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined })}
+                  className={classNames(`${prefixCls}-content`, {
+                    [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined,
+                    [`${prefixCls}-content-copy`]: clipboard && clipboard.copy,
+                  })}
                   ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}
                 >
@@ -1729,6 +1982,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 {isStickySupport() && overflowX && <StickyShadow position="left" />}
                 {isStickySupport() && overflowX && <StickyShadow position="right" />}
                 <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
+                <div ref={this.saveRangeBorderRef} className={`${prefixCls}-range-border`} hidden={tableStore.editing} />
               </div>
             </Spin>
             <TableSibling position="after" boxSizing={boxSizing}>
@@ -1891,7 +2145,7 @@ export default class Table extends DataSetComponent<TableProps> {
           let recordsSourceIndex; let recordsToIndex;
           let findSourceFlag = false; let findDestinationFlag = false;
           let showedRecordsCount = 0;
-          for (let i = 0 ; i < records.length; i++) {
+          for (let i = 0; i < records.length; i++) {
             if (!findSourceFlag && records[i].key === resultBefore.draggableId) {
               recordsSourceIndex = i;
               findSourceFlag = true;
@@ -1900,7 +2154,7 @@ export default class Table extends DataSetComponent<TableProps> {
               if (records[i].status !== RecordStatus.delete) {
                 if (showedRecordsCount === destinationIndex) {
                   recordsToIndex = destinationIndex + (i - showedRecordsCount);
-                  findDestinationFlag = true; 
+                  findDestinationFlag = true;
                 }
                 showedRecordsCount++;
               }

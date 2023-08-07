@@ -816,6 +816,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       endStyle.textIndent = -1000;
       endStyle.color = 'transparent';
     }
+    const splitClassNames = classNames(`${prefixCls}-range-split`, {
+      [`${prefixCls}-range-split-custom`]: this.rangeSeparator !== '~',
+    });
     return (
       <span key="text" className={`${prefixCls}-range-text`}>
         {startRenderedValue}
@@ -847,7 +850,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           style={startStyle}
           readOnly
         />
-        <span className={`${prefixCls}-range-split`}>{(!isFlat || startPlaceholder || endPlaceholder || !this.isEmpty()) && '~'}</span>
+        <span className={splitClassNames}>{(!isFlat || startPlaceholder || endPlaceholder || !this.isEmpty()) && this.rangeSeparator}</span>
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-end`}

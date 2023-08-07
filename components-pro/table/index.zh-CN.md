@@ -116,6 +116,7 @@ subtitle: 表格
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度  | 'content' \| 'wrapper' | 'content' |
 | fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true |
+| clipboard | 配置 Table 是否可复制粘贴。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -289,6 +290,16 @@ spin的配置项。
 | spinning | 是否旋转 | boolean | -      |
 
 更多案列和属性请参考 [Spin](/components-pro/spin/)。
+
+### clipboard
+
+剪贴板配置项
+
+| 参数      | 说明       | 类型         | 默认值 |
+| --------- | ---------- | ------------ | ------ |
+| copy | 是否开启表格复制 | boolean | false |
+| paste | 是否开启表格粘贴，开启后只有可编辑的单元格才能被粘贴数据。 | boolean | false |
+| description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - |
 
 ### instance methods
 

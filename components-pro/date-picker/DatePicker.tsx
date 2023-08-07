@@ -327,6 +327,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         const [startValue = '', endValue = ''] = this.processRangeValue(this.rangeValue);
         const startText = this.getText(startValue) as string;
         const endText = this.getText(endValue) as string;
+        const splitClassNames = classNames(`${prefixCls}-range-split`, {
+          [`${prefixCls}-range-split-custom`]: this.rangeSeparator !== '~',
+        });
         return (
           <span key="popup-editor" className={classNames(className, `${prefixCls}-range-text`)}>
             <input
@@ -339,7 +342,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
               ref={rangeTarget === 0 ? this.savePopupInputEditor : undefined}
               onKeyDown={this.handlePopupEditorKeyDown}
             />
-            <span className={`${prefixCls}-range-split`}>~</span>
+            <span className={splitClassNames}>{this.rangeSeparator}</span>
             <input
               className={`${prefixCls}-range-end`}
               onChange={this.handleChange}

@@ -15,8 +15,14 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 rangeSeparator 属性。
 - 🌟 `<pro>Table`: 新增动态筛选条字段 onFieldEnterDown 回车回调。
+- 🌟 `<pro>Table`: 新增 clipboard 属性支持表格到 Excel 双向复制的功能。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
+- 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
+- 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。
+- 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
+- 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
 
 ## 1.6.3
 
