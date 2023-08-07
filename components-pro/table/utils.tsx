@@ -1,6 +1,9 @@
 import React, { isValidElement, Key, ReactElement, ReactNode } from 'react';
 import { DraggingStyle, DropResult, NotDraggingStyle } from 'react-beautiful-dnd';
+import moment, { Moment } from 'moment';
 import isString from 'lodash/isString';
+import attempt from 'lodash/attempt';
+import isError from 'lodash/isError'
 import warning from 'choerodon-ui/lib/_util/warning';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isStickySupport from 'choerodon-ui/lib/_util/isStickySupport';
@@ -472,4 +475,30 @@ export function getCount(dataSet: DataSet, type?: RecordCachedType): number {
     default:
       return 0;
   }
+}
+
+/**
+ * 是否是 JSON  字符串
+ * @param str 
+ * @returns 
+ */
+export function isJsonString(str) {
+  const result = attempt(JSON.parse, str);
+  return !isError(result);
+}
+
+/**
+ * 将某一周转换对应周的第一天 
+ * @param week 
+ * @returns 
+ */
+export function getDateByISOWeek(week): Moment {
+  const matches = String(week).match(/\d+/g);
+  if (matches && matches.length > 1) {
+    week = Number(matches[1]);
+    const year = Number(matches[0]);
+    const weekday = moment().isoWeekYear(year).isoWeek(week).isoWeekday(1);
+    return weekday;
+  }
+  return moment();
 }

@@ -61,6 +61,44 @@
     }
   }
 
+  &-range-border {
+    position: absolute;
+    display: none;
+    border: @border-width-base @border-style-base @primary-color;
+    pointer-events: none;
+    
+  }
+
+  &-clipboard {
+    margin-bottom: 0.1rem;
+    .@{c7n-prefix}-alert-content {
+      width: 100%;
+    }
+  }
+
+  &-clipboard-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 0.2rem;
+    &-text {
+      width: calc(100% - 2.5rem);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &-suffix {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end ;
+      width: 2.5rem;
+    }
+  }
+
+  &-cell-choosed {
+    background-color: @item-active-bg !important;
+  }
+
   &-sibling {
     display: flex;
     flex-direction: column;
@@ -72,6 +110,9 @@
 
     &-overflow {
       overflow-x: auto;
+    }
+    &-copy .@{table-prefix-cls}-cell {
+      user-select: none;
     }
   }
 
