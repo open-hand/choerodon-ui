@@ -530,7 +530,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       if (key !== SELECTION_KEY) {
         dataSet.current = record;
       }
-      if (hasEditor) {
+      if (hasEditor && !tableStore.shiftKey) {
         showEditor(e.currentTarget);
       }
       if (!isStickySupport() && (key === SELECTION_KEY || !hasEditor)) {

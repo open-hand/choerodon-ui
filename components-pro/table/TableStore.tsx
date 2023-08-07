@@ -56,6 +56,7 @@ import Table, {
   TablePaginationConfig,
   TableProps,
   TableQueryBarHook,
+  Clipboard,
 } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
@@ -1025,6 +1026,16 @@ export default class TableStore {
   nextRenderColIndex?: [number, number];
 
   prevRenderColIndex?: [number, number];
+
+  @observable startChooseCell: { rowIndex: number; colIndex: number; target: HTMLElement } | null;
+
+  @observable endChooseCell: { rowIndex: number; colIndex: number; target: HTMLElement } | null;
+
+  @observable isFinishChooseCell: boolean;
+
+  @observable isCopyPristine: boolean;
+  
+  @observable shiftKey: boolean;
 
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
@@ -2343,6 +2354,13 @@ export default class TableStore {
     return this.props.editMode === TableEditMode.inline;
   }
 
+  get clipboard(): Clipboard | undefined {
+    if ('clipboard' in this.props) {
+      return this.props.clipboard;
+    }
+    return undefined;
+  }
+
   checkAllCurrent() {
     const { dataSet, filter } = this.props;
     dataSet.selectAll(filter);
@@ -2402,6 +2420,7 @@ export default class TableStore {
       this.rightOriginalColumns = [];
       this.tempCustomized = { columns: {} };
       this.customized = { columns: {} };
+      this.isCopyPristine = false;
       this.setProps(node.props);
       if (this.customizable) {
         this.loadCustomized();

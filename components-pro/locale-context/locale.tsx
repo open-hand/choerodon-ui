@@ -148,6 +148,17 @@ export interface Locale extends DataSetLocale {
     ad_search_add: string,
     ad_search_title: string,
     ad_search_validation: string,
+    table_support: string,
+    ctrl_c_info: string,
+    ctrl_v_info: string,
+    download_table_template: string,
+    download_table_template_tooltip: string,
+    copy_config: string,
+    copy_pristine: string,
+    copy_display: string,
+    copy_display_success: string,
+    copy_pristine_success: string,
+    paste_template: string,
   };
   Pagination: {
     page: string;
