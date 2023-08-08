@@ -17,26 +17,11 @@ Timing of scrolling to the next card/picture.
 import { Carousel } from 'choerodon-ui';
 
 ReactDOM.render(
-  <Carousel autoplay>
+  <Carousel autoplay className="c7n-slick-slide">
     <div><h3>1</h3></div>
     <div><h3>2</h3></div>
     <div><h3>3</h3></div>
     <div><h3>4</h3></div>
   </Carousel>,
   mountNode);
-````
-
-````css
-/* For demo */
-.c7n-carousel .slick-slide {
-  text-align: center;
-  height: 160px;
-  line-height: 160px;
-  background: #364d79;
-  overflow: hidden;
-}
-
-.c7n-carousel .slick-slide h3 {
-  color: #fff;
-}
 ````

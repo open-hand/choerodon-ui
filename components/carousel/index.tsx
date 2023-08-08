@@ -26,10 +26,17 @@ const SlickCarousel = require('react-slick').default;
 
 export type CarouselEffect = 'scrollx' | 'fade';
 
+
+export enum CarouselTheme {
+  DARK = "dark",
+  LIGHT = "light",
+}
+
 // Carousel
 export interface CarouselProps {
   effect?: CarouselEffect;
   dots?: boolean;
+  theme?: CarouselTheme;
   vertical?: boolean;
   autoplay?: boolean;
   easing?: string;
@@ -67,6 +74,8 @@ export interface CarouselProps {
   variableWidth?: boolean;
   useCSS?: boolean;
   slickGoTo?: number;
+  dotsActionType?: ["click", "hover"];
+  verticalSwiping?: boolean;
 }
 
 export default class Carousel extends Component<CarouselProps> {
@@ -80,11 +89,15 @@ export default class Carousel extends Component<CarouselProps> {
     dots: true,
     arrows: false,
     draggable: false,
+    theme: CarouselTheme.LIGHT,
+    dotsActionType: ["click"],
   };
 
   context: ConfigContextValue;
 
   innerSlider: any;
+
+  wrapper: HTMLElement | null;
 
   private slick: any;
 
@@ -106,15 +119,32 @@ export default class Carousel extends Component<CarouselProps> {
     if (autoplay) {
       window.addEventListener('resize', this.onWindowResized);
     }
+    this.bindDotsEvent();
 
     this.innerSlider = this.slick && this.slick.innerSlider;
   }
 
   componentWillUnmount() {
-    const { autoplay } = this.props;
+    const { autoplay, dotsActionType } = this.props;
     if (autoplay) {
       window.removeEventListener('resize', this.onWindowResized);
       (this.onWindowResized as any).cancel();
+    }
+    if (this.wrapper && dotsActionType && dotsActionType.includes('hover')) {
+      const dots = this.wrapper.querySelectorAll('.slick-slider .slick-dots li');
+      dots.forEach((dot, i) => {
+        dot.removeEventListener('mouseenter', () => this.goTo(i, true));
+      });
+    }
+  }
+
+  bindDotsEvent() {
+    const { dotsActionType } = this.props;
+    if (this.wrapper && dotsActionType && dotsActionType.includes('hover')) {
+      const dots = this.wrapper.querySelectorAll('.slick-slider .slick-dots li');
+      dots.forEach((dot, i) => {
+        dot.addEventListener('mouseenter', () => this.goTo(i, true));
+      });
     }
   }
 
@@ -130,15 +160,19 @@ export default class Carousel extends Component<CarouselProps> {
     this.slick.slickPrev();
   }
 
-  goTo(slide: number) {
-    this.slick.slickGoTo(slide);
+  goTo(slide: number, dontAnimate?: boolean) {
+    this.slick.slickGoTo(slide, dontAnimate);
   }
 
   render() {
     const { getPrefixCls } = this.context;
+    const { dotsClass } = this.props;
     const props: CarouselProps & { children?: any } = {
       ...this.props,
     };
+    if (dotsClass) {
+      props.dotsClass = ["slick-dots", dotsClass].join(' ');
+    }
 
     if (props.effect === 'fade') {
       props.fade = true;
@@ -148,10 +182,11 @@ export default class Carousel extends Component<CarouselProps> {
 
     const className = classNames(prefixCls, {
       [`${prefixCls}-vertical`]: props.vertical,
+      [`${prefixCls}-theme-dark`]: props.theme === CarouselTheme.DARK,
     });
 
     return (
-      <div className={className}>
+      <div className={className} ref={(wrapper) => { this.wrapper = wrapper }}>
         <SlickCarousel ref={this.saveSlick} {...props} />
       </div>
     );

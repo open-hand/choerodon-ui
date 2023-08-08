@@ -7,7 +7,7 @@ title:
 
 ## zh-CN
 
-垂直显示。
+垂直显示，可上下拖拽切换。
 
 ## en-US
 
@@ -17,26 +17,34 @@ Vertical pagination.
 import { Carousel } from 'choerodon-ui';
 
 ReactDOM.render(
-  <Carousel vertical>
-    <div><h3>1</h3></div>
-    <div><h3>2</h3></div>
-    <div><h3>3</h3></div>
-    <div><h3>4</h3></div>
+  <Carousel vertical draggable theme="dark" verticalSwiping>
+    <div>
+      <div>
+        <img alt="1" src="http://placekitten.com/g/400/200" />
+      </div>
+    </div>
+    <div>
+      <div>
+        <img alt="2" src="http://placekitten.com/g/400/200" />
+      </div>
+    </div>
+    <div>
+      <div>
+        <img alt="3" src="http://placekitten.com/g/400/200" />
+      </div>
+    </div>
+    <div>
+      <div>
+        <img alt="4" src="http://placekitten.com/g/400/200" />
+      </div>
+    </div>
   </Carousel>,
   mountNode);
 ````
 
 ````css
 /* For demo */
-.c7n-carousel .slick-slide {
-  text-align: center;
-  height: 160px;
-  line-height: 160px;
-  background: #364d79;
-  overflow: hidden;
-}
-
-.c7n-carousel .slick-slide h3 {
-  color: #fff;
+.slick-slide img {
+  margin: auto;
 }
 ````
