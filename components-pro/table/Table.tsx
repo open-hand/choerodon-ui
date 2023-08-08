@@ -994,6 +994,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (tableStore.performanceEnabled) {
       tableStore.performanceOn = true;
     }
+    this.setScrollTop(0);
     this.initDefaultExpandedRows();
     this.clearClipboard();
   }

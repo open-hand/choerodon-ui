@@ -174,7 +174,10 @@ const KanbanColumn: FunctionComponent<KanbanColumnProps> = function KanbanColumn
     ...kanbanProps.columnDsProps,
   }), [quotes]);
 
-  const defaultRowHeight = useMemo(() => (viewProps[ViewField.displayFields] ? viewProps[ViewField.displayFields].length : 1) * 24 + 30 + 24, [viewProps[ViewField.displayFields] && viewProps[ViewField.displayFields].length]);
+  const headHeight = useMemo(() => {
+    return columnDS.getState('__HEADHEIGHT__') || 30;
+  }, [columnDS, columnDS.getState('__HEADHEIGHT__'), commandsLimit, command, renderCommand]);
+  const defaultRowHeight = useMemo(() => (viewProps[ViewField.displayFields] ? viewProps[ViewField.displayFields].length : 1) * 24 + Math.max(30, headHeight) + 24, [viewProps[ViewField.displayFields] && viewProps[ViewField.displayFields].length, headHeight]);
   const totalCount = useMemo(() => Math.max(kanbanDS!.getState(`${columnId}_totalCount`) || 0, columnDS.totalCount), [columnId, columnDS.totalCount]);
 
 

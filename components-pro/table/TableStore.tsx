@@ -7,6 +7,7 @@ import isObject from 'lodash/isObject';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import lodashGet from 'lodash/get';
 import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { warning } from 'choerodon-ui/dataset/utils';
@@ -2840,7 +2841,7 @@ export default class TableStore {
     const { customized: { columns } } = this;
     set(column, value);
     const columnKey = getColumnKey(column).toString();
-    const oldCustomized = get(columns, columnKey);
+    const oldCustomized = get(columns, columnKey) || lodashGet(columns, columnKey);
     set(columns, columnKey, {
       ...oldCustomized,
       ...value,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, CSSProperties, useMemo } from 'react';
+import React, { FunctionComponent, CSSProperties, useMemo, useEffect, useRef } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
 import { observer } from 'mobx-react-lite'
 import CardCommand from './CardCommand';
@@ -60,6 +60,24 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
   } = props;
 
   const displayFields = useMemo(() => viewProps.displayFields, [viewProps.displayFields]);
+  const extraRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        // 更新高度
+        dataSet!.setState('__HEADHEIGHT__', entry.contentRect.height);
+      }
+    });
+
+    if (extraRef.current) {
+      observer.observe(extraRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <>
@@ -77,18 +95,20 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
         data-index={index}
       // aria-label={`${quote.author.name} quote ${quote.content}`}
       >
-        <CardCommand
-          command={command}
-          viewMode={ViewMode.kanban}
-          dataSet={dataSet!}
-          record={quote}
-          renderCommand={renderCommand}
-          prefixCls={prefixCls}
-          commandsLimit={commandsLimit}
-        />
+        <div className={`${prefixCls}-quote-head-wrapper`} ref={extraRef}>
+          {displayFields && displayFields.length ? <p><Typography.Text ellipsis={{ tooltip: true }} record={quote} name={displayFields[0]} renderer={columns.find(df => df.name === displayFields[0]).renderer} /></p> : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
+          <CardCommand
+            command={command}
+            viewMode={ViewMode.kanban}
+            dataSet={dataSet!}
+            record={quote}
+            renderCommand={renderCommand}
+            prefixCls={prefixCls}
+            commandsLimit={commandsLimit}
+          />
+        </div>
         {/* {isClone ? <div className="clone-badge">Clone</div> : null} */}
         <div className={`${prefixCls}-quote-content`}>
-          {displayFields && displayFields.length ? <p><Typography.Text ellipsis={{ tooltip: true }} record={quote} name={displayFields[0]} renderer={columns.find(df => df.name === displayFields[0]).renderer} /></p> : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
           {displayFields ? displayFields.map(fieldName => (
             <div key={`${fieldName}-item`} className={`${prefixCls}-quote-content-item`}>
               <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>

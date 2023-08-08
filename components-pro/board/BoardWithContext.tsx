@@ -286,7 +286,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
   const command = useMemo(() => {
     if (displayFields && displayFields.length) {
       const commandCol = displayFields.find(col => col.command);
-      return commandCol ? commandCol.command : [];
+      return commandCol ? commandCol.command : undefined;
     }
   }, [displayFields]);
 
