@@ -23,6 +23,7 @@ timeline: true
 - 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
 
 ## 1.6.3
 

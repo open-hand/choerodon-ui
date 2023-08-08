@@ -1,5 +1,6 @@
 import React, { FunctionComponent, CSSProperties, useMemo, useEffect, useRef } from 'react';
 import { DraggableProvided } from 'react-beautiful-dnd';
+import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react-lite'
 import CardCommand from './CardCommand';
 import DataSet from '../data-set';
@@ -60,7 +61,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
   } = props;
 
   const displayFields = useMemo(() => viewProps.displayFields, [viewProps.displayFields]);
-  const extraRef = useRef(null);
+  const extraRef = useRef<any>(null);
 
   useEffect(() => {
     const observer = new ResizeObserver(entries => {

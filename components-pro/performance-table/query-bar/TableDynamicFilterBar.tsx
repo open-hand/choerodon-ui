@@ -152,7 +152,10 @@ export const CONDITIONDATASET = '__CONDITIONDATASET__';
 export const OPTIONDATASET = '__OPTIONDATASET__';
 export const FILTERMENUDATASET = '__FILTERMENUDATASET__';
 export const MENURESULT = '__MENURESULT__';
+export const SEARCHTEXT = '__SEARCHTEXT__';
 export const SELECTCHANGE = '__SELECTCHANGE__';
+export const NEWFILTERDATASET = '__NEWFILTERDATASET__';
+export const ORIGINALVALUEOBJ = '__ORIGINALVALUEOBJ__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -246,7 +249,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   componentDidMount(): void {
-    const { fuzzyQueryOnly, queryDataSet } = this.props;
+    const { fuzzyQueryOnly, queryDataSet, dataSet } = this.props;
     if (!fuzzyQueryOnly) {
       this.processDataSetListener(true);
       if (queryDataSet && queryDataSet.records.length > 0 && !queryDataSet.getState(MENUDATASET)) {
@@ -261,7 +264,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         });
       }
     }
-    if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
+    const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
+    if (shouldInit && queryDataSet && queryDataSet.current) {
       this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
     }
   }
@@ -279,7 +283,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   componentWillReceiveProps(nextProps: Readonly<TableDynamicFilterBarProps>): void {
-    const { fuzzyQueryOnly, queryDataSet } = nextProps;
+    const { fuzzyQueryOnly, queryDataSet, dataSet } = nextProps;
     // eslint-disable-next-line react/destructuring-assignment
     if (queryDataSet !== this.props.queryDataSet || fuzzyQueryOnly !== this.props.fuzzyQueryOnly) {
       runInAction(() => {
@@ -298,7 +302,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           });
         }
       }
-      if (this.originalValue === undefined && queryDataSet && queryDataSet.current) {
+      const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
+      if (shouldInit && queryDataSet && queryDataSet.current) {
         this.initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
       }
     }
@@ -350,10 +355,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   setConditionStatus(value, orglValue?: object) {
-    const { queryDataSet } = this.props;
+    const { queryDataSet, dataSet } = this.props;
     queryDataSet.setState(CONDITIONSTATUS, value);
     if (value === RecordStatus.sync && orglValue) {
-      this.originalValue = orglValue;
+      // this.originalValue = orglValue;
+      const oriObj = dataSet.getState(ORIGINALVALUEOBJ);
+      dataSet.setState(ORIGINALVALUEOBJ, { ...oriObj, query: orglValue });
     }
   }
 
@@ -385,7 +392,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
-      status = isEqualDynamicProps(this.originalValue, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
+      this.handleSelect(name, record);
+      status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
     }
     this.setConditionStatus(status);
     if (autoQuery && shouldQuery) {
@@ -450,10 +458,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   @autobind
   @action
   initConditionFields(props) {
+    const { dataSet: tableDS } = this.props;   
     const { dataSet, record } = props;
     const originalValue = omit(record.toData(), ['__dirty']);
     const conditionData = Object.entries(originalValue);
-    this.originalValue = originalValue;
+    const newObj = tableDS.getState(ORIGINALVALUEOBJ) || {};
+    tableDS.setState(ORIGINALVALUEOBJ, { ...newObj, query: originalValue });
     this.originalConditionFields = [];
     const { fields } = dataSet;
     map(conditionData, data => {
@@ -474,9 +484,55 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     });
   }
 
+  /**
+* 加载动态筛选条相关初始数据 & 存储初始值
+*  1.筛选条
+*  2.高级搜索 //TODO 
+*  3.模糊搜索
+* @param param
+*/
+  loadConditionData({ conditionDataSet, menuRecord, dataSet, searchText }) {
+    const comparatorData: object[] = [];
+    // const regularData: object[] = [];
+    const newObj = dataSet.getState(ORIGINALVALUEOBJ) || {};
+    let searchTextValue = null;
+    // 暂不支持高级配置
+    // menuRecord.get('conditionList').forEach(condition => {
+    //   if (condition.conditionType !== 'comparator') {
+    //     regularData.push(condition);
+    //   } else {
+    //     const { fieldName, value, conditionType, comparator, ...rest } = condition;
+    //     comparatorData.push({
+    //       [AdvancedFieldSet.fieldName]: fieldName,
+    //       [fieldName]: value,
+    //       [AdvancedFieldSet.conditionType]: conditionType,
+    //       [AdvancedFieldSet.comparator]: comparator,
+    //       ...rest,
+    //     })
+    //   }
+    // });
+    // 加载筛选条数据
+    // conditionDataSet.loadData(regularData);
+    conditionDataSet.loadData(menuRecord.get('conditionList'));
+    // // 加载高级搜索面板数据
+    // newFilterDataSet.loadData(comparatorData);
+    // 初始高级搜索
+    // dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData });
+    // 加载模糊搜索数据
+    if (menuRecord && menuRecord.get('queryList') && menuRecord.get('queryList').length) {
+      const searchObj = menuRecord.get('queryList').find(ql => ql.fieldName === SEARCHTEXT);
+      searchTextValue = searchObj ? searchObj.value : null;
+      dataSet.setState(SEARCHTEXT, searchTextValue);
+      // 初始模糊搜索
+      dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData, fuzzy: searchTextValue });
+
+      dataSet.setQueryParameter(searchText, searchTextValue);
+    }
+  }
+
   @autobind
   async initMenuDataSet(): Promise<boolean> {
-    const { queryDataSet, dynamicFilterBar, searchCode } = this.props;
+    const { queryDataSet, dynamicFilterBar, searchCode, dataSet } = this.props;
     const { tableStore: { getConfig } } = this.context;
     const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
     const menuDataSet = new DataSet(QuickFilterDataSet({
@@ -513,7 +569,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }, { getConfig: getConfig as any });
     let status = RecordStatus.update;
     if (queryDataSet && queryDataSet.current) {
-      status = isEqualDynamicProps(this.originalValue, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
+      status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
     } else {
       status = RecordStatus.sync;
     }
@@ -529,7 +585,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     const menuRecord = menuDataSet.current;
     if (menuRecord) {
-      conditionDataSet.loadData(menuRecord.get('conditionList'));
+      this.loadConditionData({ menuRecord, conditionDataSet, dataSet, searchText: this.searchText });
+      // conditionDataSet.loadData(menuRecord.get('conditionList'));
     }
     if (result && result.length) {
       runInAction(() => {
@@ -898,7 +955,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             optionDataSet: queryDataSet.getState(OPTIONDATASET),
             shouldLocateData: this.shouldLocateData,
             initConditionFields: this.initConditionFields,
-            newFilterDataSet: {} as DataSet,
+            newFilterDataSet: new DataSet(),
           }}
         >
           <QuickFilterMenu />

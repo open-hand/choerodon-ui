@@ -23,6 +23,7 @@ timeline: true
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
 - 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
+- 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
 
 ## 1.6.3
 
