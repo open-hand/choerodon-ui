@@ -21,9 +21,11 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
 - 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。
+- 💄 `Carousel`: 优化走马灯可自定义箭头和自定义指示器样式并且可配置暗主题。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
+- 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 
 ## 1.6.3
 

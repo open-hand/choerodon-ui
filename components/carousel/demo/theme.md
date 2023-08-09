@@ -1,27 +1,23 @@
 ---
-order: 0
+order: 6
 title:
-  zh-CN: 基本
-  en-US: Basic
+  zh-CN: 主题
+  en-US: Theme
 ---
 
 ## zh-CN
 
-最简单的用法。
+指示器和箭头可分为浅色主题和深色主题.
 
 ## en-US
 
-Basic usage.
+There are light themes and dark themes.
 
 ````jsx
 import { Carousel } from 'choerodon-ui';
 
-function onChange(a, b, c) {
-  console.log(a, b, c);
-}
-
 ReactDOM.render(
-  <Carousel className="c7n-slick-slide" afterChange={onChange} arrows>
+  <Carousel className="c7n-dark-slick-slide" theme="dark" arrows>
     <div><h3>1</h3></div>
     <div><h3>2</h3></div>
     <div><h3>3</h3></div>
@@ -32,15 +28,12 @@ ReactDOM.render(
 
 ````css
 /* For demo */
-.c7n-slick-slide {
+.c7n-dark-slick-slide {
   text-align: center;
   height: 160px;
   line-height: 160px;
-  background: #364d79;
+  background: aliceblue;
   overflow: hidden;
 }
 
-.c7n-slick-slide h3 {
-  color: #fff;
-}
 ````

@@ -52,6 +52,9 @@
     .slick-loading & {
       visibility: hidden;
     }
+    > :not([aria-hidden="false"]) {
+      pointer-events: none;
+    }
   }
   .slick-slide {
     display: none;
@@ -102,16 +105,18 @@
     padding: 0;
     color: transparent;
     font-size: 0;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: icomoon;
     line-height: 0;
-    background: transparent;
+    background: @carousel-arrows-bg;
     border: 0;
     outline: none;
     cursor: pointer;
-    &:hover,
-    &:focus {
-      color: transparent;
-      background: transparent;
+    &:hover {
+      background: @carousel-arrows-hover-bg;
       outline: none;
+      transform: scaleY(1.1);
+      transition: transform @animation-duration-base;
       &::before {
         opacity: 1;
       }
@@ -122,17 +127,48 @@
   }
 
   .slick-prev {
-    left: -0.25rem;
+    left: 0;
+    z-index: 1;
+    border-radius: 0 0.1rem 0.1rem 0;
     &::before {
-      content: '←';
+      content: "\e408";
     }
   }
 
   .slick-next {
-    right: -0.25rem;
+    right: 0;
+    border-radius: 0.1rem 0 0 0.1rem;
     &::before {
-      content: '→';
+      content: '\e409';
     }
+  }
+
+  .slick-vertical {
+    .slick-prev,
+    .slick-next {
+      left: 50%;
+      transform: rotate(90deg);
+      transform-origin: left center;
+      &:hover {
+        transform: rotate(90deg) scaleY(1.1);
+        transition: transform @animation-duration-base;
+      }
+    }
+    .slick-prev {
+      top: 0;
+    }
+    .slick-next {
+      top: calc(100% - 0.2rem);
+    }
+  }
+
+  .slick-next::before,
+  .slick-prev::before {
+    color: @icon-text-color;
+    font-size: @carousel-icon-font-size;
+    line-height: 1;
+    opacity: 0.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   // Dots
@@ -203,6 +239,30 @@
       &.slick-active button {
         width: @carousel-dot-height;
         height: @carousel-dot-active-width;
+      }
+    }
+  }
+}
+
+.@{c7n-prefix}-carousel-theme-dark {
+  .slick-next,
+  .slick-prev {
+    &:hover::before {
+      color: @carousel-dark-color;
+    }
+  }
+  .slick-next::before,
+  .slick-prev::before {
+    color: @text-color-secondary;
+  }
+  .slick-dots {
+    li {
+      button {
+        background: @carousel-btn-bg;
+        opacity: 0.45;
+      }
+      &.slick-active button {
+        background: @carousel-dark-color;
       }
     }
   }
