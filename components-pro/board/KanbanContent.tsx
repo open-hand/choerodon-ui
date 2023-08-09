@@ -95,6 +95,9 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
 
   const loadColumnData = useCallback(async () => {
     setLoaded(false);
+    // 处理看板视图初始化onChange问题
+    const oldId = customizedDS && customizedDS.getState('__OLDID__');
+    const isChanged = !isEqual(oldId, customizedDS ? customizedDS.current!.get(ViewField.id) : undefined);
     if (dsField && dsField.getOptions() && dsField.getOptions()!.toData().length) {
       const res = [...dsField.getOptions()!.toData()];
       res.unshift({});
@@ -102,7 +105,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
       kanbanDS.setQueryParameter('groupingBy', dsField.name);
       dataSet.setState('__CURRENTVIEWDS__', kanbanDS);
       const changed = customizedDS && customizedDS.getState('__ISCHANGE__');
-      if (isFunction(onChange) && changed) {
+      if (isFunction(onChange) && changed && isChanged) {
         onChange({ dataSet, currentViewDS: kanbanDS, record: customizedDS!.current })
       }
       if (autoQuery) {
@@ -118,7 +121,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           kanbanDS.setQueryParameter('groupingBy', dsField.name);
           dataSet.setState('__CURRENTVIEWDS__', kanbanDS);
           const changed = customizedDS && customizedDS.getState('__ISCHANGE__');
-          if (isFunction(onChange) && changed) {
+          if (isFunction(onChange) && changed && isChanged) {
             onChange({ dataSet, currentViewDS: kanbanDS, record: customizedDS!.current })
           }
           if (autoQuery) {

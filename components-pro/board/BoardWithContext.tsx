@@ -440,6 +440,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       onClose: () => { groupDataSet.reset(); return true },
       onOk: () => {
         const groupField = groupDataSet!.current!.get('groupField').value;
+        customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
         customizedDS.create({
           [ViewField.viewMode]: ViewMode.kanban,
           [ViewField.viewName]: groupDataSet!.current!.get(ViewField.viewName),
@@ -506,7 +507,8 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                 if (record.get(ViewField.activeKey) === 1) {
                   setHidden(true);
                 } else {
-                  customizedDS!.current!.set(ViewField.activeKey, 0);
+                  customizedDS.current!.set(ViewField.activeKey, 0);
+                  customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
                   record.set(ViewField.activeKey, 1);
                   customizedDS.current = record;
                   // if (isFunction(onChange)) {
@@ -565,6 +567,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
             <div
               hidden={!viewTypeVisible.table}
               onClick={() => {
+                customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
                 customizedDS!.create({
                   [ViewField.viewMode]: ViewMode.table,
                   [ViewField.viewName]: '列表视图',
@@ -589,6 +592,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
             <div
               hidden={!viewTypeVisible.card}
               onClick={() => {
+                customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
                 customizedDS.create({
                   [ViewField.viewMode]: ViewMode.card,
                   [ViewField.viewName]: '卡片视图',
@@ -639,6 +643,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
             if (hidden && customizedDS.length <= 2) {
               loadListData(customizedDS.current!);
               customizedDS.setState('__ISCHANGE__', true);
+              customizedDS.setState('__OLDID__', customizedDS.current!.get(ViewField.id));
             }
             setHidden(!hidden)
           }}
