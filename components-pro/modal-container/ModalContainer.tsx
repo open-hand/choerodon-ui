@@ -146,6 +146,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   maskStyle?: CSSProperties | undefined;
 
+  isUnMount = false;
+
   @computed
   get baseOffsets() {
     const offsets = {
@@ -270,6 +272,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   componentWillUnmount() {
     const { modals, mount } = this.state;
+    this.isUnMount = true;
     ModalManager.removeInstance(this);
     if (!mount && modals.length) {
       const container = this.getContainer();

@@ -39,6 +39,7 @@ export interface IModalContainer {
 
   update(props: ModalProps);
 
+  isUnMount: boolean;
 }
 
 export type ModalManagerType = {
@@ -71,6 +72,9 @@ const removeInstance: (instance: IModalContainer) => void = action((instance: IM
 });
 
 const addInstance: (instance: IModalContainer) => void = action((instance: IModalContainer) => {
+  if (instance.isUnMount) {
+    return;
+  }
   removeInstance(instance);
   containerInstances.unshift(instance);
 });
