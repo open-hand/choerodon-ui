@@ -172,4 +172,11 @@ export const defaultColorCssVarsMap: ColorCssVarsMap[] = [
       { name: 'skeleton-to-color', convertMode: ColorConvertMode.shade, convertArg: 5 },
     ],
   },
+  {
+    name: 'carousel-btn-bg',
+    children: [
+      { name: 'carousel-arrows-bg', convertMode: ColorConvertMode.fade, convertArg: 0.15 },
+      { name: 'carousel-arrows-hover-bg', convertMode: ColorConvertMode.fade, convertArg: 0.3 },
+    ],
+  },
 ];

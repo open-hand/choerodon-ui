@@ -105,6 +105,11 @@
 @tree-node-selected-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 2) `);
 @tree-focus-bg-calculate: color(~`colorPalette('@{tree-primary-color-calculate}', 1) `);
 
+// Carousel
+@carousel-btn-bg-calculate: rgba(191, 191, 191, 1);
+@carousel-arrows-bg-calculate: fade(@carousel-btn-bg-calculate, 15%);
+@carousel-arrows-hover-bg-calculate: fade(@carousel-btn-bg-calculate, 30%);
+
 // Tabs
 // ---
 @tab-primary-color-calculate: @primary-color-calculate;
@@ -1129,11 +1134,10 @@
   --carousel-dot-padding: 0rem;
   --carousel-dot-text-align: center;
   --carousel-dot-border-radius: 0.01rem;
-
-  --carousel-btn-bg: rgba(191, 191, 191, 1);
+  --carousel-btn-bg: @carousel-btn-bg-calculate;
   --carousel-dot-dark-bg: var(--carousel-btn-bg);
-  --carousel-arrows-bg: fade(--carousel-btn-bg, 15%);
-  --carousel-arrows-hover-bg: fade(--carousel-btn-bg, 30%);;
+  --carousel-arrows-bg: @carousel-arrows-bg-calculate;
+  --carousel-arrows-hover-bg: @carousel-arrows-hover-bg-calculate;
   --carousel-dark-color: rgba(38, 38, 38, 1);
   --carousel-icon-font-size: 0.2rem;
 
