@@ -136,6 +136,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   getOtherClassName(otherProps: any) {
     return classNames(otherProps.className, {
       [`${this.prefixCls}-dark`]: this.theme === ThemeSwitch.material,
+      [`${this.prefixCls}-disabled`]: this.disabled,
     });
   }
 
@@ -200,7 +201,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   renderWrapper(): ReactNode {
     if (CodeMirror) {
-      this.cmOptions.readOnly = this.disabled ? 'nocursor' : this.readOnly;
+      this.cmOptions.readOnly = this.disabled || this.readOnly;
       this.cmOptions.theme = this.theme;
       const text = this.getTextNode();
       const header = this.getHeader();

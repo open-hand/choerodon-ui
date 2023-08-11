@@ -130,3 +130,11 @@
     box-shadow: none;
   }
 }
+
+// 处理 disabled 状态下无法复制的问题
+// 设置 disabled 状态，保持和 readOnly 效果一样，但隐藏了光标
+.@{c7n-pro-prefix}-code-area-disabled {
+  .CodeMirror-cursor {
+    display: none;
+  }
+}

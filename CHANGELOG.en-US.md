@@ -23,6 +23,7 @@ timeline: true
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
 - 💄 `Carousel`: Optimized Walking Lights have customizable arrows and custom indicator styles and are configurable with a dark theme.
 - 💄 `<pro>PerformanceTable`: Optimize the problem that the last column has no right-border when the table width is larger than all column widths for big data.
+- 💄 `<pro>CodeArea`: Optimize the issue of not being able to copy in disabled state.
 - 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
 - 🐞 `<pro>Modal`: Fixed the issue that the instance was not cleared when ModalContainer was unmounted, causing subsequent Modal to fail to open.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
