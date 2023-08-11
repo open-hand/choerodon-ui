@@ -181,7 +181,7 @@ class Cell extends React.PureComponent<CellProps> {
       hasChildren,
       ...rest
     } = this.props;
-    const { tableStore } = this.context;
+    const { tableStore, tableWidth } = this.context;
 
     const cellExternalProps = (
       typeof onCell === 'function'
@@ -212,7 +212,7 @@ class Cell extends React.PureComponent<CellProps> {
       {
         [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
         [this.addPrefix('first')]: firstColumn,
-        [this.addPrefix('last')]: lastColumn,
+        [this.addPrefix('last')]: lastColumn && ((left || 0) + (width || 0) >= tableWidth),
       },
     );
     const { rtl } = this.context;

@@ -65,6 +65,7 @@ export function mergeDefaultProps(
         // @ts-ignore
         const childrenColumns = mergeDefaultProps(children, customizedColumns, newColumn, defaultKey);
         newColumn.children = childrenColumns;
+        newColumn.width = childrenColumns.reduce((prev, current) => prev + current.width, 0);
       }
       if (parent || !newColumn.fixed) {
         if (newColumn.sort === undefined) {
