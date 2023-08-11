@@ -29,6 +29,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
       verticalAlign,
       parent,
       left: cellLeft,
+      fixed,
     } = cells[i].props;
 
     if (usedCells.includes(cells[i].key)) {
@@ -127,6 +128,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
               verticalAlign={verticalAlign}
               headerHeight={(headerHeight / 3) * 2}
               headerLeft={cellLeft}
+              fixed={fixed}
             >
               {groupChildren.map(x => React.cloneElement(x, { ...x.props, headerHeight: headerHeight / 3 }))}
             </ColumnGroup>) :
@@ -163,6 +165,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
                 header={groupHeader}
                 verticalAlign={verticalAlign}
                 headerLeft={cellLeft}
+                fixed={fixed}
               >
                 {groupChildren}
               </ColumnGroup>
@@ -238,6 +241,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
               header={header}
               verticalAlign={verticalAlign}
               headerLeft={cells[index].props.left}
+              fixed={fixed}
             >
               {mapGroup.map(x => x.content)}
             </ColumnGroup>

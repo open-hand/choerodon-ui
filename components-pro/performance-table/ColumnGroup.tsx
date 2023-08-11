@@ -33,6 +33,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     width,
     left,
     headerLeft = 0,
+    fixed,
     ...rest
   } = props;
   const { scrollX, tableWidth = 0, tableStore } = useContext(TableContext);
@@ -50,7 +51,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
   const addPrefix = (name: string) => prefix(classPrefix!)(name);
   // 组合列 header 随滚动条滚动居中。
   let headerMiddleStyle: React.CSSProperties | undefined = undefined;
-  if (groupHeaderRef && groupHeaderRef.current) {
+  if (groupHeaderRef && groupHeaderRef.current && !fixed) {
     const fixedWidth: { leftWidth: number; rightWidth: number } = originalColumns.reduce((prev, current) => {
       if (current.fixed === true || current.fixed === 'left') {
         prev.leftWidth = prev.leftWidth + (current.width || 0);

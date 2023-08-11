@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复 ModalContainer 卸载时实例未清除，导致后续 Modal 无法打开的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
+- 🐞 `<pro>PerformanceTable`: 修复大数据表格列合并固定的情况滑动滚动条导致内容错位的问题。
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 
 ## 1.6.3

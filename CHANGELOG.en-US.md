@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the issue that the instance was not cleared when ModalContainer was unmounted, causing subsequent Modal to fail to open.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
+- 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.
 - 🐞 `Carousel`: Fixed the problem that the component is half displayed when dragged vertically and fixed the problem that the panel click event does not work when fade is applied.
 
 ## 1.6.3
