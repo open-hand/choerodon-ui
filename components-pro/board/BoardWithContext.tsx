@@ -673,7 +673,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       fields: orderFields,
       autoQuery,
     });
-  }, [customizedDS.current]);
+  }, [customizedDS.current && customizedDS.current.get(ViewField.id)]);
 
   const tableDataSetName = useMemo(() => {
     if (customizedDS.current && customizedDS.current.get(ViewField.viewMode) === ViewMode.table) {
