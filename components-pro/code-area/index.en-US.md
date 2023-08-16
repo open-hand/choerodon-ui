@@ -25,6 +25,7 @@ subtitle: 代码域
 | editorDidMount | 在实例挂载前回调函数 | (editor: IInstance, value: string, cb: () => void) => void; |  |
 | themeSwitch | 默认主题切换设置( options 中设置 theme 或者不设置 themeSwitch，则不显示主题切换按钮)。不设置，默认 idea 主题，可选值 `idea` \| `material` | string |  |
 | title | 标题 | ReactNode |  |
+| placeholder | 占位词 | string |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
