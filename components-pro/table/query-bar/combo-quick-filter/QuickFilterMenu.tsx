@@ -11,6 +11,7 @@ import { RecordStatus } from '../../../data-set/enum';
 import { hide, show } from '../../../tooltip/singleton';
 import isOverflow from '../../../overflow-tip/util';
 import {
+  RESETQUERYFIELDS,
   SELECTFIELDS,
 } from '../TableComboBar';
 import { isEqualDynamicProps, parseValue } from '../TableDynamicFilterBar';
@@ -65,15 +66,17 @@ const QuickFilterMenu = function QuickFilterMenu() {
           initData[fieldName] = parseValue(value);
           onChange(fieldName);
         });
-        onOriginalChange(Object.keys(initData));
-        const emptyRecord = new Record({ ...initData }, queryDataSet);
-        dataSet.setState(SELECTFIELDS, Object.keys(initData));
-        shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
-        runInAction(() => {
-          queryDataSet.records.push(emptyRecord);
-          queryDataSet.current = emptyRecord;
-        });
-        onStatusChange(RecordStatus.sync, emptyRecord.toData());
+        if (!dataSet.getState(RESETQUERYFIELDS)) {
+          onOriginalChange(Object.keys(initData));
+          const emptyRecord = new Record({ ...initData }, queryDataSet);
+          dataSet.setState(SELECTFIELDS, Object.keys(initData));
+          shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
+          runInAction(() => {
+            queryDataSet.records.push(emptyRecord);
+            queryDataSet.current = emptyRecord;
+          });
+          onStatusChange(RecordStatus.sync, emptyRecord.toData());
+        }
       } else {
         shouldQuery = !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
         const emptyRecord = new Record({}, queryDataSet);
@@ -84,8 +87,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
         });
         onStatusChange(RecordStatus.sync);
       }
+      dataSet.setState(RESETQUERYFIELDS, false);
       const customizedColumn = current.get('personalColumn') && parseValue(current.get('personalColumn'));
-      if (tableStore) {
+      if (tableStore && customizedColumn) {
         runInAction(() => {
           const newCustomized: TableCustomized = { columns: { ...customizedColumn } };
           tableStore.tempCustomized = { columns: {} };
