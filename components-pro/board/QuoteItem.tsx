@@ -6,6 +6,7 @@ import CardCommand from './CardCommand';
 import DataSet from '../data-set';
 import { ViewMode } from './enum';
 import Typography from '../typography';
+import Output from '../output';
 
 type QuoteItemProps = {
   quote: any,
@@ -97,7 +98,16 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
       // aria-label={`${quote.author.name} quote ${quote.content}`}
       >
         <div className={`${prefixCls}-quote-head-wrapper`} ref={extraRef}>
-          {displayFields && displayFields.length ? <p><Typography.Text ellipsis={{ tooltip: true }} record={quote} name={displayFields[0]} renderer={columns.find(df => df.name === displayFields[0]).renderer} /></p> : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
+          {displayFields && displayFields.length ?
+            (<p>
+              <Typography.Paragraph
+                ellipsis={{ rows: 2, tooltip: <Output name={displayFields[0]} record={quote} renderer={columns.find(df => df.name === displayFields[0]).renderer} /> }}
+                record={quote}
+                name={displayFields[0]}
+                renderer={columns.find(df => df.name === displayFields[0]).renderer}
+              />
+            </p>)
+            : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
           <CardCommand
             command={command}
             viewMode={ViewMode.kanban}

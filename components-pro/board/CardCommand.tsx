@@ -16,6 +16,7 @@ import Record from '../data-set/Record';
 import { ButtonProps } from '../button/interface';
 import { TableButtonProps, Commands } from '../table/Table';
 import { TableCommandType } from '../table/interface';
+import { ViewMode } from './enum';
 
 export type cardCommandsProps = { dataSet: DataSet; record: Record; };
 
@@ -161,10 +162,13 @@ const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(pr
 
   return (
     item ? (
-      <div className={`${prefixCls}-quote-container-extra`}>
+      viewMode === ViewMode.kanban ? <div className={`${prefixCls}-quote-container-extra`}>
         {item.slice(0, commandsLimit)}
         {renderMoreBtns()}
-      </div>
+      </div> : (<>
+        {item.slice(0, commandsLimit)}
+        {renderMoreBtns()}
+      </>)
     ) : null
   );
 }

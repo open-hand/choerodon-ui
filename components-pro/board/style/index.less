@@ -141,17 +141,16 @@
 
     .@{c7n-prefix}-card-head {
       margin-right: 0.08rem !important;
-      padding: 0 0 0 0.16rem !important;
     }
 
     .@{c7n-prefix}-card-extra {
-      flex: 1;
       min-width: 30%;
       max-width: 70%;
       padding: 14px 0 10px 0 !important;
     }
 
     .@{c7n-prefix}-card-head-title {
+      flex: auto;
       min-width: 30%;
       max-width: 70%;
       white-space: break-spaces !important;
@@ -208,9 +207,9 @@
       }
 
       &-extra {
-        flex: 1;
         min-width: 30%;
         max-width: 70%;
+        margin-left: auto;
         text-align: right;
       }
     }
@@ -250,6 +249,7 @@
       &-item {
         display: flex;
         align-items: center;
+        height: 24px;
       }
 
       .@{c7n-pro-prefix}-output,
