@@ -6,6 +6,7 @@ import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 import { axiosConfigAdapter } from '../../data-set/utils';
 import { FieldType } from '../../data-set/enum';
 import { iteratorSome } from '../../iterator-helper';
+import math from '../../math';
 
 export default function uniqueError(
   value: any,
@@ -69,12 +70,16 @@ export default function uniqueError(
               item =>
                 item !== record &&
                 Object.keys(fields).every(field => {
+                  const fieldValue = fields[field];
                   const dataSetField = dataSet.getField(name);
                   if (dataSetField && dataSetField.get('type', record) === FieldType.object) {
                     const valueField = dataSetField.get('valueField', record);
-                    return fields[field] === item.get(field)[valueField];
+                    return fieldValue === item.get(field)[valueField];
                   }
-                  return fields[field] === item.get(field);
+                  if (math.isBigNumber(fieldValue)) {
+                    return math.eq(fieldValue, item.get(field));
+                  }
+                  return fieldValue === item.get(field);
                 }),
             );
             const call = ($invalid: boolean): methodReturn => {

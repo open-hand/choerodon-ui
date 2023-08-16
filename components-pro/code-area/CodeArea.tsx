@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
+import 'codemirror/addon/display/placeholder.js';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
@@ -36,6 +37,10 @@ export interface CodeAreaProps extends FormFieldProps {
   formatter?: CodeAreaFormatter;
   editorDidMount?: (editor: IInstance, value: string, cb: () => void) => void;
   themeSwitch?: ThemeSwitch,
+  /**
+   * 占位词
+   */
+  placeholder?: string;
 }
 
 const defaultCodeMirrorOptions: any = {
@@ -114,7 +119,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   getCodeMirrorOptions(options: any = this.props.options!): any {
-    return { ...defaultCodeMirrorOptions, ...options };
+    const { placeholder } = this.props;
+    return { ...defaultCodeMirrorOptions, placeholder , ...options };
   }
 
   getOmitPropsKeys(): string[] {

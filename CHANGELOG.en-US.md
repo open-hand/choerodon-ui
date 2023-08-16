@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `rangeSeparator` property.
 - 🌟 `<pro>Table`: Added dynamic filter bar field `onFieldEnterDown` return callback.
 - 🌟 `<pro>Table`: Added `clipboard` property to support two-way copying from table to Excel.
+- 🌟 `<pro>CodeArea`: Added `placeholder` property.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
@@ -30,6 +31,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.
 - 🐞 `Carousel`: Fixed the problem that the component is half displayed when dragged vertically and fixed the problem that the panel click event does not work when fade is applied.
+- 🐞 `<pro>Table`: Fixed an issue where the `unique` check failed when the field value became a `BigNumber` type.
 
 ## 1.6.3
 
