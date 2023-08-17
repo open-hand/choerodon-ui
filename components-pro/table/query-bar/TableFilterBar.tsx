@@ -6,9 +6,11 @@ import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
 import TableContext, { TableContextValue } from '../TableContext';
 import DataSet from '../../data-set/DataSet';
+import Record from '../../data-set/Record';
 import { $l } from '../../locale-context';
 import { ButtonProps } from '../../button/Button';
 import { PaginationProps } from '../../pagination/Pagination';
+import { FormFieldProps } from '../../field/interface';
 
 export interface FilterBarProps {
   prefixCls?: string;
@@ -21,6 +23,7 @@ export interface FilterBarProps {
   editable?: boolean;
   onQuery?: () => void;
   onReset?: () => void;
+  editorProps?: (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object;
 }
 
 @observer
@@ -60,7 +63,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
   }
 
   render() {
-    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop, editable } = this.props;
+    const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop, editable, editorProps } = this.props;
     const { prefixCls } = this;
     const buttons = this.getButtons();
     return [
@@ -77,6 +80,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
         onQuery={onQuery}
         onReset={onReset}
         editable={editable}
+        editorProps={editorProps}
       />,
     ];
   }

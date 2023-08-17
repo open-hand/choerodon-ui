@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增动态筛选条字段 onFieldEnterDown 回车回调。
 - 🌟 `<pro>Table`: 新增 clipboard 属性支持表格到 Excel 双向复制的功能。
 - 🌟 `<pro>CodeArea`: 新增 placeholder 属性。
+- 🌟 `<pro>Table`: 新增 bar 筛选条属性 editorProps 支持扩展弹出编辑器属性。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
 - 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。

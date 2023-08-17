@@ -34,6 +34,7 @@ export interface FilterSelectProps extends TextFieldProps {
   editable?: boolean;
   hiddenIfNone?: boolean;
   filter?: (string) => boolean;
+  editorProps?: (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object;
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -489,13 +490,17 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     return data;
   }
 
-  getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> {
+  getFieldEditor(props, selectField: Field): ReactElement<FormFieldProps> { // TODO
     const current = this.queryDataSet ? this.queryDataSet.current : undefined;
     const editor: ReactElement<FormFieldProps> = getEditorByField(selectField, current, true);
-    const editorProps: FormFieldProps = {
+    const record = this.getQueryRecord();
+    const { editorProps = noop } = this.props;
+    const editorFunProps = editorProps({name: selectField.name, record, editor});
+    const editorMergeProps: FormFieldProps = {
+      ...editorFunProps,
       ...props,
       key: 'value',
-      record: this.getQueryRecord(),
+      record,
       name: selectField.name,
       autoFocus: true,
       onInput: this.handleInput,
@@ -505,10 +510,10 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     };
 
     if ((editor.type as any).__PRO_SELECT) {
-      (editorProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
-      (editorProps as SelectProps).dropdownMatchSelectWidth = false;
+      (editorMergeProps as SelectProps).dropdownMenuStyle = this.props.dropdownMenuStyle;
+      (editorMergeProps as SelectProps).dropdownMatchSelectWidth = false;
     }
-    return cloneElement<FormFieldProps>(editor, editorProps);
+    return cloneElement<FormFieldProps>(editor, editorMergeProps);
   }
 
   getFieldSelect(props): ReactElement<SelectProps> {
