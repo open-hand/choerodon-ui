@@ -1,12 +1,12 @@
-import React, {FunctionComponent, useCallback, useContext} from 'react';
-import {observer} from 'mobx-react-lite';
+import React, { FunctionComponent, useCallback, useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import Button from '../../../button/Button';
-import {ButtonColor, ButtonTooltip, FuncType} from '../../../button/enum';
-import {Size} from '../../../core/enum';
+import { ButtonColor, ButtonTooltip, FuncType } from '../../../button/enum';
+import { Size } from '../../../core/enum';
 import TableContext from '../../TableContext';
 import Record from '../../../data-set/Record';
-import {ColumnLock} from '../../enum';
-import {$l} from '../../../locale-context';
+import { ColumnLock } from '../../enum';
+import { $l } from '../../../locale-context';
 import Tooltip from '../../../tooltip';
 
 

@@ -100,6 +100,8 @@ export const MENURESULT = '__MENURESULT__';
 export const SEARCHTEXT = '__SEARCHTEXT__';
 export const SELECTCHANGE = '__SELECTCHANGE__';
 
+export const RESETQUERYFIELDS = '__RESETQUERYFIELDS__';
+
 @observer
 export default class TableComboBar extends Component<TableComboBarProps> {
   static get contextType(): typeof TableContext {
