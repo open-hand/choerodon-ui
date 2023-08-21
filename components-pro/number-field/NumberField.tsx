@@ -454,11 +454,22 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     delete otherProps.maxLength;
     otherProps.max = this.max;
     otherProps.min = this.min;
+    otherProps.onKeyPress = this.handleKeyPress;
     otherProps.onCompositionEnd = (e) => {
       this.lock = false;
       this.handleChange(e);
     };
     return otherProps;
+  }
+
+
+  @autobind
+  handleKeyPress(e) { 
+    const keychar = String.fromCharCode(e.charCode);
+    // 中文句号阻止输入
+    if (keychar === "。") {
+      e.preventDefault();
+    }
   }
 
   getObservableProps(props, context) {

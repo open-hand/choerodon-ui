@@ -26,6 +26,7 @@ timeline: true
 - 💄 `Carousel`: 优化走马灯可自定义箭头和自定义指示器样式并且可配置暗主题。
 - 💄 `<pro>PerformanceTable`: 优化大数据表格宽度大于所有列宽时最后一列没有 right-border 的问题。
 - 💄 `<pro>CodeArea`: 优化 disabled 状态下无法复制的问题。
+- 💄 `<pro>NumberField`: 优化使中文句号无法输入。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Modal`: 修复 ModalContainer 卸载时实例未清除，导致后续 Modal 无法打开的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
