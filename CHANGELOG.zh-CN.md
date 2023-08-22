@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格列合并固定的情况滑动滚动条导致内容错位的问题。
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 - 🐞 `<pro>Table`: 修复字段值变为大数字类型时 unique 校验失效的问题。
+- 🐞 `<pro>NumberField`: 修复整数模式下可以输入句号的问题。
 
 ## 1.6.3
 
