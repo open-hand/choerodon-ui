@@ -553,9 +553,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   restrictInput(value: string): string {
-    if (this.lock) return value;
     if (value) {
-      value = value.replace('。', '.');
+      const nextInputStr = value.replace(/。/, '.');
+      if (nextInputStr !== value) {
+        this.lock = false;
+        value = nextInputStr;
+      }
+      if (this.lock) return value;
       let restrict = '0-9';
       if (this.allowDecimal) {
         restrict += '.';
