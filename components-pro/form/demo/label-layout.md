@@ -126,7 +126,7 @@ const App = () => {
         </Select>
         <EmailField label="邮箱" name="email" prefix={<Icon type="mail_outline" />} multiple />
         <TextArea resize="both" rowSpan={2} colSpan={2} label="简介" placeholder="请输入简介" name="description" style={{ height: 80 }} help="请输入100~300个字符请输入100~300个字符请输入100~300个字符" />
-        <CodeArea colSpan={3} rows={4} label="代码" name="code" required />
+        <CodeArea colSpan={3} rows={4} label="代码" name="code" required placeholder='xxx' />
         <UrlField label={<span>个人主页</span>} name="homepage" required help="请输入你的个人主页，如Github Pages个人博客" />
         <DatePicker label="生日" placeholder="请选择生日日期" name="birth" required />
         <div newLine colSpan={3}>

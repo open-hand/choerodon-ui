@@ -8,7 +8,6 @@ import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codem
 import 'codemirror/addon/display/placeholder.js';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
-import isEqual from 'lodash/isEqual';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
@@ -119,7 +118,12 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   getCodeMirrorOptions(options: any = this.props.options!): any {
-    const { placeholder } = this.props;
+    let { placeholder } = this.props;
+    if (this.labelLayout === LabelLayout.placeholder) {
+      placeholder = this.getDisplayProp('label');
+    } else if (this.labelLayout === LabelLayout.float) {
+      placeholder = undefined;
+    }
     return { ...defaultCodeMirrorOptions, placeholder , ...options };
   }
 
@@ -157,10 +161,6 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    const { options } = nextProps;
-    if (!isEqual(options, this.props.options)) {
-      this.cmOptions = this.getCodeMirrorOptions(options);
-    }
     this.setThemeWrapper(nextProps);
     super.componentWillReceiveProps(nextProps, nextContext);
   }
@@ -207,6 +207,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   renderWrapper(): ReactNode {
     if (CodeMirror) {
+      this.cmOptions = this.getCodeMirrorOptions();
       this.cmOptions.readOnly = this.disabled || this.readOnly;
       this.cmOptions.theme = this.theme;
       const text = this.getTextNode();
