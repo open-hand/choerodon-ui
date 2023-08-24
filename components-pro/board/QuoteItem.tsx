@@ -2,6 +2,7 @@ import React, { FunctionComponent, CSSProperties, useMemo, useEffect, useRef } f
 import { DraggableProvided } from 'react-beautiful-dnd';
 import ResizeObserver from 'resize-observer-polyfill';
 import { observer } from 'mobx-react-lite'
+import noop from 'lodash/noop';
 import CardCommand from './CardCommand';
 import DataSet from '../data-set';
 import { ViewMode } from './enum';
@@ -62,6 +63,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
   } = props;
 
   const displayFields = useMemo(() => viewProps.displayFields, [viewProps.displayFields]);
+  const firstDisplayFields = useMemo(() => columns.find(df => df.name === displayFields[0]), [columns]);
   const extraRef = useRef<any>(null);
 
   useEffect(() => {
@@ -101,10 +103,10 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
           {displayFields && displayFields.length ?
             (<p>
               <Typography.Paragraph
-                ellipsis={{ rows: 2, tooltip: <Output name={displayFields[0]} record={quote} renderer={columns.find(df => df.name === displayFields[0]).renderer} /> }}
+                ellipsis={{ rows: 2, tooltip: <Output name={displayFields[0]} record={quote} renderer={firstDisplayFields ? firstDisplayFields.renderer : noop} /> }}
                 record={quote}
                 name={displayFields[0]}
-                renderer={columns.find(df => df.name === displayFields[0]).renderer}
+                renderer={firstDisplayFields ? firstDisplayFields.renderer : noop}
               />
             </p>)
             : <span className={`${prefixCls}-quote-content-label`}>请配置显示字段</span>}
@@ -125,7 +127,7 @@ const QuoteItem: FunctionComponent<QuoteItemProps> = function QuoteItem(props) {
               <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
                 {quote.getField(fieldName).get('label')}
               </span>
-              <Typography.Text ellipsis={{ tooltip: true }} record={quote} name={fieldName} renderer={columns.find(df => df.name === fieldName).renderer} />
+              <Typography.Text ellipsis={{ tooltip: true }} record={quote} name={fieldName} renderer={columns.find(df => df.name === fieldName) ? columns.find(df => df.name === fieldName).renderer : noop} />
             </div>
           )) : null}
         </div>

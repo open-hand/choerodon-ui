@@ -448,10 +448,10 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                   }}
                   title={viewProps && viewProps.displayFields ?
                     <Typography.Paragraph
-                      ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]).renderer} /> }}
+                      ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]) ? displayFields.find(df => df.name === viewProps.displayFields[0]).renderer : noop} /> }}
                       name={viewProps.displayFields[0]}
                       record={record}
-                      renderer={displayFields.find(df => df.name === viewProps.displayFields[0]).renderer}
+                      renderer={displayFields.find(df => df.name === viewProps.displayFields[0]) ? displayFields.find(df => df.name === viewProps.displayFields[0]).renderer : noop}
                     />
                     : null}
                   onClick={
@@ -498,7 +498,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                         }}
                         name={fieldName}
                         record={record}
-                        renderer={displayFields.find(df => df.name === fieldName).renderer}
+                        renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
                       />
                     </div>
                   )) : null}
