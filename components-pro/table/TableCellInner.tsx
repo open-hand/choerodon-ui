@@ -44,6 +44,7 @@ import { findFirstFocusableElement } from '../_util/focusable';
 import SelectionTreeBox from './SelectionTreeBox';
 import {
   getDateFormatByField,
+  getValueKey,
   isFieldValueEmpty,
   processFieldValue,
   processValue as utilProcessValue,
@@ -67,7 +68,7 @@ import { ShowHelp } from '../field/enum';
 import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
-import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 let inTab = false;
 
@@ -431,46 +432,46 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return !message || pristine;
   }, [pristine]);
   const editorBorder = !inlineEdit && hasEditor;
-  const getRenderedValue = () => {
-    const processValue = (v) => {
-      if (!isNil(v)) {
-        const text = isPlainObject(v) ? v : utilProcessValue(v, {
-          dateFormat: getDateFormatByField(field, undefined, record),
-          showInvalidDate: tableStore.getConfig('showInvalidDate'),
-          isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
-          precision: field && field.get('precision', record),
-          useZeroFilledDecimal: tableStore.getConfig('useZeroFilledDecimal'),
-        });
-        return processFieldValue(text, field, {
-          getProp: (propName) => field && field.get(propName, record),
-          lang: dataSet && dataSet.lang || localeContext.locale.lang,
-        }, true, record, tableStore.getConfig);
+  const processValue = (v) => {
+    if (!isNil(v)) {
+      const text = isPlainObject(v) ? v : utilProcessValue(v, {
+        dateFormat: getDateFormatByField(field, undefined, record),
+        showInvalidDate: tableStore.getConfig('showInvalidDate'),
+        isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
+        precision: field && field.get('precision', record),
+        useZeroFilledDecimal: tableStore.getConfig('useZeroFilledDecimal'),
+      });
+      return processFieldValue(text, field, {
+        getProp: (propName) => field && field.get(propName, record),
+        lang: dataSet && dataSet.lang || localeContext.locale.lang,
+      }, true, record, tableStore.getConfig);
+    }
+    return '';
+  };
+  const processRenderer = (value, repeat?: number) => {
+    let processedValue;
+    if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+      if (isArrayLike(value)) {
+        const isCascader = !field.get('multiple', record) || value.some(v => isArrayLike(v));
+        processedValue = value.map(v => field.getText(v, undefined, record)).join(isCascader ? '/' : '、');
+      } else {
+        processedValue = field.getText(value, undefined, record) as string;
       }
-      return '';
-    };
-    const processRenderer = (value, repeat?: number) => {
-      let processedValue;
-      if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
-        if (isArrayLike(value)) {
-          const isCascader = !field.get('multiple', record) || value.some(v => isArrayLike(v));
-          processedValue = value.map(v => field.getText(v, undefined, record)).join(isCascader ? '/' : '、');
-        } else {
-          processedValue = field.getText(value, undefined, record) as string;
-        }
-      }
-      // 值集中不存在 再去取直接返回的值
-      const text = isNil(processedValue) ? processValue(value) : processedValue;
-      return (cellRenderer || defaultOutputRenderer)({
-        value,
-        text,
-        record,
-        dataSet,
-        name,
-        repeat,
-        headerGroup,
-        rowGroup,
-      } as ColumnRenderProps);
-    };
+    }
+    // 值集中不存在 再去取直接返回的值
+    const text = isNil(processedValue) ? processValue(value) : processedValue;
+    return (cellRenderer || defaultOutputRenderer)({
+      value,
+      text,
+      record,
+      dataSet,
+      name,
+      repeat,
+      headerGroup,
+      rowGroup,
+    } as ColumnRenderProps);
+  };
+  const getRenderedValue = (): any => {
     if (field) {
       if (!cellEditorInCell) {
         const multiple = field.get('multiple', record);
@@ -491,13 +492,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             rangeSeparator: tableStore.getConfig('rangeSeparator'),
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
-          if (isOverflowMaxTagCount) {
-            return (<Tooltip title={processRenderer(value)}>{tags}</Tooltip>)
-          }
-          return tags;
+          return { result: tags, isOverflowMaxTagCount };
         }
         if (range) {
-          return renderRangeValue(toRangeValue(value, range), { processRenderer, rangeSeparator: tableStore.getConfig('rangeSeparator') });
+          return {
+            result: renderRangeValue(toRangeValue(value, range), { processRenderer }),
+          };
         }
       }
       if (field.get('multiLine', record)) {
@@ -519,9 +519,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     const textNode = processRenderer(value);
-    return textNode === '' ? tableStore.getConfig('tableDefaultRenderer') : textNode;
+    return {
+      result: textNode === '' ? tableStore.getConfig('tableDefaultRenderer') : textNode,
+    };
   };
-  const result = getRenderedValue();
+
+  const { result, isOverflowMaxTagCount } = getRenderedValue();
+
   const text = isEmpty(result) || (isArrayLike(result) && !result.length) ? editorBorder ? undefined : tableStore.getConfig('renderEmpty')('Output') : result;
 
   const handleFocus = useCallback((e) => {
@@ -556,13 +560,28 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     const element = e.currentTarget;
-    if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element)))) {
+    if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) || isOverflowMaxTagCount) {
       const { current } = innerRef;
       if (text && current && current.contains(element)) {
         const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+        const getMultipleText = () => {
+          const values = field ? toMultipleValue(value, field.get('range', record)) : [];
+          const repeats: Map<any, number> = new Map<any, number>();
+          const texts = values.map((v) => {
+            const key = getValueKey(v);
+            const repeat = repeats.get(key) || 0;
+            const text = processRenderer(v);
+            repeats.set(key, repeat + 1);
+            if (!isNil(text)) {
+              return text;
+            }
+            return undefined;
+          });
+          return texts.join('、');
+        };
         const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
         show(element, {
-          title: text,
+          title: isOverflowMaxTagCount ? getMultipleText() : text,
           placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
           ...tooltipConfig,
