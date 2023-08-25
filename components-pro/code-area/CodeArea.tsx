@@ -119,10 +119,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   getCodeMirrorOptions(options: any = this.props.options!): any {
     let { placeholder } = this.props;
-    if (this.labelLayout === LabelLayout.placeholder) {
+    if (this.labelLayout === LabelLayout.placeholder && !this.isFocused) {
       placeholder = this.getDisplayProp('label');
-    } else if (this.labelLayout === LabelLayout.float) {
-      placeholder = undefined;
+    } else if (this.labelLayout === LabelLayout.float && !this.isFocused) {
+      placeholder = '';
     }
     return { ...defaultCodeMirrorOptions, placeholder , ...options };
   }
