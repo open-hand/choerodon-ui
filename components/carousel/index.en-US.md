@@ -32,6 +32,8 @@ A carousel component. Scales with its container.
 | dotsActionType | Indicator Trigger Mode | [['click', 'hover']] | ['ckick'] |
 | slidesToShow | How many sheets are displayed in a screen (can be decimal) | number ｜1 ｜
 | verticalSwiping | Vertical Drag | boolean | false |
+| pauseOnDotsHover | Mouse over indicator to stop playback | boolean | true |
+| pauseOnArrowsHover | Mouse over arrows to stop playback | boolean | true |
 
 ## Methods
 

@@ -33,6 +33,8 @@ subtitle: 走马灯
 | dotsActionType | 指示器触发方式 | [['click', 'hover']] | ['ckick'] |
 | slidesToShow | 一个画面中显示多少张（可以是小数）| number | 1 |
 | verticalSwiping | 垂直方向拖动 | boolean | false |
+| pauseOnDotsHover | 鼠标在指示器上停止播放 | boolean | true |
+| pauseOnArrowsHover | 鼠标在箭头上停止播放 | boolean | true |
 
 
 ## 方法
