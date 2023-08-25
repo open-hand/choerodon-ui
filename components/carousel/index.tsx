@@ -76,6 +76,8 @@ export interface CarouselProps {
   slickGoTo?: number;
   dotsActionType?: ["click", "hover"];
   verticalSwiping?: boolean;
+  pauseOnDotsHover?: boolean;
+  pauseOnArrowsHover?: boolean;
 }
 
 export default class Carousel extends Component<CarouselProps> {
@@ -90,6 +92,8 @@ export default class Carousel extends Component<CarouselProps> {
     arrows: false,
     draggable: false,
     theme: CarouselTheme.LIGHT,
+    pauseOnDotsHover: true,
+    pauseOnArrowsHover: true,
     dotsActionType: ["click"],
   };
 
@@ -98,6 +102,10 @@ export default class Carousel extends Component<CarouselProps> {
   innerSlider: any;
 
   wrapper: HTMLElement | null;
+
+  arrowsRef: NodeListOf<Element>;
+
+  dotsRef: NodeListOf<Element>;
 
   private slick: any;
 
@@ -119,38 +127,83 @@ export default class Carousel extends Component<CarouselProps> {
     if (autoplay) {
       window.addEventListener('resize', this.onWindowResized);
     }
-    this.bindDotsEvent();
 
+    if (this.wrapper) {
+      this.arrowsRef = this.wrapper.querySelectorAll('.slick-slider .slick-arrow');
+      this.dotsRef = this.wrapper.querySelectorAll('.slick-slider .slick-dots li');
+    }
+
+    this.bindDotsEvent();
+    this.bindArrowEvent();
     this.innerSlider = this.slick && this.slick.innerSlider;
   }
 
   componentWillUnmount() {
-    const { autoplay, dotsActionType } = this.props;
+    const { autoplay } = this.props;
     if (autoplay) {
       window.removeEventListener('resize', this.onWindowResized);
       (this.onWindowResized as any).cancel();
     }
-    if (this.wrapper && dotsActionType && dotsActionType.includes('hover')) {
-      const dots = this.wrapper.querySelectorAll('.slick-slider .slick-dots li');
-      dots.forEach((dot, i) => {
-        dot.removeEventListener('mouseenter', () => this.goTo(i, true));
+    if (this.dotsRef) {
+      this.dotsRef.forEach((dot, i) => {
+        dot.removeEventListener('mouseenter', () => this.handleDotsHover(i));
+      });
+    }
+    if (this.arrowsRef) {
+      this.arrowsRef.forEach((arrow) => {
+        arrow.removeEventListener('mouseenter', this.handleArrowMouseChange);
+        arrow.removeEventListener('mouseleave', this.handleArrowMouseChange);
       });
     }
   }
 
   bindDotsEvent() {
-    const { dotsActionType } = this.props;
-    if (this.wrapper && dotsActionType && dotsActionType.includes('hover')) {
-      const dots = this.wrapper.querySelectorAll('.slick-slider .slick-dots li');
-      dots.forEach((dot, i) => {
-        dot.addEventListener('mouseenter', () => this.goTo(i, true));
+    if (this.wrapper) {
+      this.dotsRef.forEach((dot, i) => {
+        dot.addEventListener('mouseenter', () => this.handleDotsHover(i));
       });
+    }
+  }
+
+  bindArrowEvent() {
+    const { autoplay } = this.props;
+    if (this.arrowsRef && autoplay) {
+      this.arrowsRef.forEach((arrow) => {
+        arrow.addEventListener('mouseenter', this.handleArrowMouseChange);
+        arrow.addEventListener('mouseleave', this.handleArrowMouseChange);
+      });
+    }
+  }
+
+  handleDotsHover(index) {
+    const { dotsActionType } = this.props;
+    if (dotsActionType && dotsActionType.includes('hover')) {
+      this.goTo(index, true);
+    }
+  }
+
+  handleArrowMouseChange = (event) => {
+    const { pauseOnArrowsHover } = this.props;
+    if (pauseOnArrowsHover) {
+      if (event.type === 'mouseleave') {
+        this.play();
+      } else if (event.type === 'mouseenter') {
+        this.pause();
+      }
     }
   }
 
   saveSlick = (node: any) => {
     this.slick = node;
   };
+
+  play() {
+    this.slick.slickPlay();
+  }
+
+  pause() {
+    this.slick.slickPause();
+  }
 
   next() {
     this.slick.slickNext();
