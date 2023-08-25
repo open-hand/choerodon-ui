@@ -153,18 +153,12 @@
   }
 
   &-disabled&-today &-cell-inner {
-    position: relative;
+    color: @date-primary-color;
+  }
 
-    &::before {
-      position: absolute;
-      top: 0.01rem;
-      left: 0.01rem;
-      width: 0.2rem;
-      height: 0.2rem;
-      border: @border-width-base @border-style-base #bcbcbc;
-      border-radius: @border-radius-base;
-      content: ' ';
-    }
+  &-disabled&-selected &-cell-inner {
+    color: #fff;
+    opacity: 0.6;
   }
 
   /* Time 模式 cell 层级样式控制
