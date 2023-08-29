@@ -645,6 +645,7 @@ export default class Lov extends Select<LovProps> {
     super.handlePopupHiddenChange(hidden);
     if (hidden) {
       delete this.fetched;
+      this.searchText = undefined;
     }
   }
 
