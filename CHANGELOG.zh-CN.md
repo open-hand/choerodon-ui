@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下重新展开查询条件未清空的情况。
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态筛选条初始化状态错误的问题。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格列合并固定的情况滑动滚动条导致内容错位的问题。
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 - 🐞 `<pro>Table`: 修复字段值变为大数字类型时 unique 校验失效的问题。
