@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `clipboard` property to support two-way copying from table to Excel.
 - 🌟 `<pro>CodeArea`: Added `placeholder` property.
 - 🌟 `<pro>Table`: Added bar filter bar property `editorProps` to support extended popup editor properties.
+- 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
