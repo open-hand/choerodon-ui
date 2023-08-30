@@ -16,7 +16,9 @@
 
   &-wrapper {
     .@{spin-prefix-cls}-nested-loading > .@{spin-prefix-cls} .@{spin-prefix-cls}-dot {
-      animation: ~'@{c7n-prefix}-progress-rotate' 1.2s linear infinite;
+      .@{c7n-prefix}-progress-inner {
+        animation: ~'@{c7n-prefix}-progress-rotate' 1.2s linear infinite;
+      }
       .@{c7n-prefix}-progress-inner circle {
         stroke-dasharray: 95px;
         animation: none;

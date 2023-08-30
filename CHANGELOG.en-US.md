@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
+- 💄 `<pro>Table`: Optimized `loading` style code, compatible with custom `spin` property.
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
 - 💄 `Carousel`: Optimized Walking Lights have customizable arrows and custom indicator styles and are configurable with a dark theme.
 - 💄 `<pro>PerformanceTable`: Optimize the problem that the last column has no right-border when the table width is larger than all column widths for big data.
