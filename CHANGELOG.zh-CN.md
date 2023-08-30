@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
+- 💄 `<pro>Table`: 优化 loading 样式代码，兼容自定义 spin 属性。
 - 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。
 - 💄 `Carousel`: 优化走马灯可自定义箭头和自定义指示器样式并且可配置暗主题。
 - 💄 `<pro>PerformanceTable`: 优化大数据表格宽度大于所有列宽时最后一列没有 right-border 的问题。
