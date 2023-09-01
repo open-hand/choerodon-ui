@@ -20,8 +20,10 @@ timeline: true
 - 🌟 `<pro>Table`: Added `clipboard` property to support two-way copying from table to Excel.
 - 🌟 `<pro>CodeArea`: Added `placeholder` property.
 - 🌟 `<pro>Table`: Added bar filter bar property `editorProps` to support extended popup editor properties.
+- 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
+- 💄 `<pro>Table`: Optimized `loading` style code, compatible with custom `spin` property.
 - 💄 `Tree`: Optimize horizontal scroll bar for virtual scroll mode.
 - 💄 `Carousel`: Optimized Walking Lights have customizable arrows and custom indicator styles and are configurable with a dark theme.
 - 💄 `<pro>PerformanceTable`: Optimize the problem that the last column has no right-border when the table width is larger than all column widths for big data.
@@ -32,11 +34,13 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
 - 🐞 `<pro>Lov`: Fix the condition that the query condition is not cleared when re-expanding in popup mode.
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the initialization status of the dynamic filter bar was wrong.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.
 - 🐞 `Carousel`: Fixed the problem that the component is half displayed when dragged vertically and fixed the problem that the panel click event does not work when fade is applied.
 - 🐞 `<pro>Table`: Fixed an issue where the `unique` check failed when the field value became a `BigNumber` type.
 - 🐞 `<pro>NumberField`: Fixed the issue that a period can be entered in integer mode.
 - 🐞 `<pro>Attachment`: Fixed the problem that read-only and disabled are invalid in drag-and-drop mode.
+- 🐞 `<pro>Select`: Fixed an issue where a record error was checked when `multiple` selections were set and the option display value was `ReactElement` type.
 
 ## 1.6.3
 

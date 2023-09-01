@@ -6,7 +6,7 @@ import isNumber from 'lodash/isNumber';
 import defaultTo from 'lodash/defaultTo';
 import isPlainObject from 'lodash/isPlainObject';
 import noop from 'lodash/noop';
-import { get, isArrayLike, isObservableObject } from 'mobx';
+import { get, isArrayLike, isObservableObject, runInAction } from 'mobx';
 import classNames from 'classnames';
 import { isMoment } from 'moment';
 import { BigNumber } from 'bignumber.js';
@@ -373,31 +373,33 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
       );
       let inner;
-      if (typeof tagRenderer === 'function') {
-        const onClose = e => {
-          stopEvent(e);
-          handleMultipleValueRemove(e, v, repeat);
+      runInAction(() => {
+        if (typeof tagRenderer === 'function') {
+          const onClose = e => {
+            stopEvent(e);
+            handleMultipleValueRemove(e, v, repeat);
+          }
+          inner = tagRenderer({
+            value: v,
+            text,
+            key: String(index), 
+            invalid: !!validationResult,
+            disabled: blockDisabled,
+            readOnly,
+            className,
+            onClose,
+          });
+        } else {
+          inner = readOnly ? (
+            <span key={String(index)} className={className}>{text}</span>
+          ) : (
+            <li key={String(index)} className={className}>
+              <div>{text}</div>
+              {closeBtn}
+            </li>
+          );
         }
-        inner = tagRenderer({
-          value: v,
-          text,
-          key: String(index), 
-          invalid: !!validationResult,
-          disabled: blockDisabled,
-          readOnly,
-          className,
-          onClose,
-        });
-      } else {
-        inner = readOnly ? (
-          <span key={String(index)} className={className}>{text}</span>
-        ) : (
-          <li key={String(index)} className={className}>
-            <div>{text}</div>
-            {closeBtn}
-          </li>
-        );
-      }
+      });
       if (!isValidationMessageHidden(validationMessage)) {
         return cloneElement(inner, {
           onMouseEnter: (e) => selfShowValidationMessage(e, validationMessage, tooltipTheme),

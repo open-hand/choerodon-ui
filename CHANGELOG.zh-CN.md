@@ -20,8 +20,10 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 clipboard 属性支持表格到 Excel 双向复制的功能。
 - 🌟 `<pro>CodeArea`: 新增 placeholder 属性。
 - 🌟 `<pro>Table`: 新增 bar 筛选条属性 editorProps 支持扩展弹出编辑器属性。
+- 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
+- 💄 `<pro>Table`: 优化 loading 样式代码，兼容自定义 spin 属性。
 - 💄 `Tree`: 优化虚拟滚动模式的横向滚动条。
 - 💄 `Carousel`: 优化走马灯可自定义箭头和自定义指示器样式并且可配置暗主题。
 - 💄 `<pro>PerformanceTable`: 优化大数据表格宽度大于所有列宽时最后一列没有 right-border 的问题。
@@ -32,11 +34,13 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
 - 🐞 `<pro>Lov`: 修复 popup 模式下重新展开查询条件未清空的情况。
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
+- 🐞 `<pro>PerformanceTable`: 修复动态筛选条初始化状态错误的问题。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格列合并固定的情况滑动滚动条导致内容错位的问题。
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 - 🐞 `<pro>Table`: 修复字段值变为大数字类型时 unique 校验失效的问题。
 - 🐞 `<pro>NumberField`: 修复整数模式下可以输入句号的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下只读、禁用失效的问题。
+- 🐞 `<pro>Select`: 修复了当设置多选且选项显示值为 ReactElement 类型时，勾选报错的问题。
 
 ## 1.6.3
 

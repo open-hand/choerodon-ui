@@ -2,6 +2,7 @@ import React, { Key, ReactNode } from 'react';
 import classNames from 'classnames';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
+import isNil from 'lodash/isNil';
 import Tree, { TreeProps } from 'choerodon-ui/lib/tree';
 import TreeNode from './TreeNode';
 import { DISABLED_FIELD, isSearchTextEmpty, MORE_KEY, Select, SelectProps } from '../select/Select';
@@ -22,6 +23,8 @@ export interface TreeSelectProps extends SelectProps {
   async?: boolean;
   loadData?: (node) => Promise<any>;
   showCheckedStrategy?: CheckedStrategy;
+  /** checkable状态下节点选择完全受控（父子节点选中状态不再关联） */
+  checkStrictly?: boolean;
 }
 
 function recordIsDisabled(record: Record): boolean {
@@ -93,6 +96,14 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     return this.options.reduce<Key[]>((array, r) => this.isSelected(r) ? array.concat(String(r.get(idField))) : array, []);
   }
 
+  get checkStrictly(): boolean | undefined {
+    const { dataSet, checkStrictly } = this.props;
+    if (dataSet && !isNil(dataSet.props.treeCheckStrictly)) {
+      return dataSet.props.treeCheckStrictly;
+    }
+    return checkStrictly;
+  }
+
   @action
   handleSearch(text?: string | string[] | undefined) {
     if (!isSearchTextEmpty(text)) {
@@ -136,13 +147,21 @@ export default class TreeSelect extends Select<TreeSelectProps> {
   @autobind
   handleTreeCheck(_e, { node }) {
     const { record, disabled, key, disableCheckbox } = node;
-    const { valueField } = this;
+    const { valueField, checkStrictly } = this;
     if (key === MORE_KEY) {
       const { options } = this;
       options.queryMore(options.currentPage + 1);
     } else if (!disabled && !disableCheckbox) {
       const { multiple } = this;
       if (multiple) {
+        if (checkStrictly) {
+          if (this.isSelected(record)) {
+            this.unChoose(record);
+          } else {
+            this.choose(record);
+          }
+          return;
+        }
         const disabledChildRecords: Record[] = [];
         const records = (record as Record).treeReduce((array, r) => {
           if (recordIsDisabled(r)) {
@@ -328,6 +347,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       expandedKeys,
       multiple,
       text,
+      checkStrictly,
       props: {
         dropdownMenuStyle, optionRenderer = defaultRenderer, optionsFilter,
         treeDefaultExpandAll, treeDefaultExpandedKeys, treeCheckable,
@@ -392,6 +412,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         className={menuPrefixCls}
         multiple={multiple}
         loadData={async ? this.handleLoadData : loadData}
+        checkStrictly={checkStrictly}
         {...props}
         {...menuProps}
       />
