@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 - 🐞 `<pro>Table`: 修复字段值变为大数字类型时 unique 校验失效的问题。
 - 🐞 `<pro>NumberField`: 修复整数模式下可以输入句号的问题。
+- 🐞 `<pro>Attachment`: 修复拖拽模式下只读、禁用失效的问题。
 
 ## 1.6.3
 

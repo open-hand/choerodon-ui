@@ -36,6 +36,7 @@ timeline: true
 - 🐞 `Carousel`: Fixed the problem that the component is half displayed when dragged vertically and fixed the problem that the panel click event does not work when fade is applied.
 - 🐞 `<pro>Table`: Fixed an issue where the `unique` check failed when the field value became a `BigNumber` type.
 - 🐞 `<pro>NumberField`: Fixed the issue that a period can be entered in integer mode.
+- 🐞 `<pro>Attachment`: Fixed the problem that read-only and disabled are invalid in drag-and-drop mode.
 
 ## 1.6.3
 

@@ -1122,16 +1122,18 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderDragUploadArea() {
-    const { dragUpload, dragBoxRender, disabled } = this.props;
+    const { dragUpload, dragBoxRender, readOnly } = this.props;
     const { prefixCls, accept } = this;
     if (dragUpload) {
+      const isDisabled = this.isDisabled() || readOnly;
       const dragCls = classNames(prefixCls, {
         [`${prefixCls}-drag`]: true,
         [`${prefixCls}-drag-hover`]: this.dragState === 'dragover',
-        [`${prefixCls}-drag-disabled`]: disabled,
+        [`${prefixCls}-drag-disabled`]: isDisabled,
       });
       const rcUploadProps = {
         ...this.props,
+        disabled: isDisabled,
         accept: accept ? accept.join(',') : undefined,
         beforeUpload: this.handleDragUpload,
         prefixCls,
