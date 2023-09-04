@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the issue that the instance was not cleared when ModalContainer was unmounted, causing subsequent Modal to fail to open.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
 - 🐞 `<pro>Lov`: Fix the condition that the query condition is not cleared when re-expanding in popup mode.
+- 🐞 `<pro>Lov`: Fixed the issue of double-clicking the selection drop-down in popup mode.
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the initialization status of the dynamic filter bar was wrong.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.

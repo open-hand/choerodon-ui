@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { action, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -151,8 +152,7 @@ export default class LovView extends Component<LovViewProps> {
     }
   }
 
-  @autobind
-  handleSelect(event?: React.MouseEvent) {
+  handleSelect = debounce((event?: React.MouseEvent) => {
     const { selectionMode } = this;
     const {
       onBeforeSelect = noop,
@@ -180,7 +180,7 @@ export default class LovView extends Component<LovViewProps> {
       this.closeModal(record);
     }
     return false;
-  }
+  }, 300)
 
   /* istanbul ignore next */
   @autobind
