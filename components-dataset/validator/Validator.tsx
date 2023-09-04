@@ -38,6 +38,10 @@ export interface ValidationMessages {
   customError?: ReactNode;
   uniqueError?: ReactNode;
   unknown?: ReactNode;
+  /**
+   * 用于确认 valueMissing 展示信息
+   */
+  label?: ReactNode;
 }
 
 function* execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): any {

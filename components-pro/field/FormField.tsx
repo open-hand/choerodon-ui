@@ -1244,7 +1244,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           if (record) {
             const { field } = this;
             if (field && !field.get('defaultValidationMessages', record)) {
-              field.set('defaultValidationMessages', this.defaultValidationMessages);
+              field.set('defaultValidationMessages', { ...this.defaultValidationMessages, label: this.getProp('label') });
             }
             record.set(name, value);
           }

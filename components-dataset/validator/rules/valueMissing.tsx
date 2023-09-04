@@ -1,4 +1,5 @@
 import { isArrayLike } from 'mobx';
+import isNil from 'lodash/isNil';
 import { isEmpty, toRangeValue } from '../../utils';
 import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
@@ -16,7 +17,8 @@ export default function valueMissing(value: any, validatorBaseProps: ValidatorBa
     const injectionOptions = { label };
     const key = label ? 'value_missing' : 'value_missing_no_label';
     const ruleName = label ? 'valueMissing' : 'valueMissingNoLabel';
-    const { [ruleName]: validationMessage = $l('Validator', key) } = getProp('defaultValidationMessages') || {};
+    const originMessages = getProp('defaultValidationMessages') || {};
+    const { [ruleName]: validationMessage = $l('Validator', key) } = !isNil(originMessages.label) && originMessages.label !== label ? {} : originMessages;
     return new ValidationResult({
       validationProps: {
         ...validatorBaseProps,
