@@ -815,6 +815,10 @@ export interface TableProps extends DataSetComponentProps {
    * 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度
    */
   boxSizing?: TableBoxSizing;
+  /**
+   * 是否开启多表拖拽，配合 rowDraggable 属性 + react-beautiful-dnd 一起使用，开启后，表格与表格之间可以进行行拖拽
+   */
+   multiTableRowDraggable?: boolean;
 }
 
 @observer
@@ -1653,6 +1657,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragColumnAlign',
       'columnDraggable',
       'rowDraggable',
+      'multiTableRowDraggable',
       'pageSizeChangeable',
       'onCustomizedLoad',
       'onDragEnd',
@@ -2297,6 +2302,9 @@ export default class Table extends DataSetComponent<TableProps> {
     const virtualWrapper = virtual ? <VirtualWrapper>{wrapper}</VirtualWrapper> : wrapper();
     if (hasBody && tableStore.rowDraggable) {
       const { dragDropContextProps } = this.props;
+      if (tableStore.multiTableRowDraggable) { 
+        return virtualWrapper;
+      }
       return (
         <DragDropContext
           {...dragDropContextProps}

@@ -35,7 +35,7 @@ function getRowHeight(tableStore: TableStore, dataSet: DataSet, draggableId: str
 const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualWrapper(props) {
   const { children } = props;
   const { tableStore, prefixCls, virtualSpin, spinProps, isTree, rowDragRender, dataSet } = useContext(TableContext);
-  const { virtualTop, virtualHeight, scrolling = false } = tableStore;
+  const { virtualTop, virtualHeight, scrolling = false, multiTableRowDraggable } = tableStore;
   const [height, setHeight] = useState(virtualHeight);
   useEffect(action(() => {
     if (virtualHeight !== height) {
@@ -90,7 +90,7 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
   const renderClone = useRenderClone();
   const content = tableStore.rowDraggable ? (
     <Droppable
-      droppableId="table"
+      droppableId={multiTableRowDraggable ? tableStore.node.code : "table"}
       key="table"
       isCombineEnabled={isTree}
       mode="virtual"

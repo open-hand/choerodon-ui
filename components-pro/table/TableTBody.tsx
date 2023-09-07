@@ -664,7 +664,7 @@ const ObserverRows = observer(Rows);
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
   const { prefixCls, tableStore, rowDragRender, dataSet, expandedRowRenderer, isTree } = useContext(TableContext);
-  const { rowDraggable, virtualCell, isFixedRowHeight } = tableStore;
+  const { rowDraggable, virtualCell, isFixedRowHeight, multiTableRowDraggable } = tableStore;
   const expandIconColumnIndex = (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
@@ -739,7 +739,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   );
   const tbody = rowDraggable && !tableStore.virtual ? (
     <Droppable
-      droppableId="table"
+      droppableId={multiTableRowDraggable ? tableStore.node.code : "table"}
       key="table"
       isCombineEnabled={isTree}
       mode="standard"
