@@ -25,6 +25,8 @@ import { Tooltip as LabelTooltip } from '../core/enum';
 import { hide, show } from '../tooltip/singleton';
 import { TooltipProps } from '../tooltip/Tooltip';
 import isOverflow from '../overflow-tip/util';
+import { ShowHelp } from '../field/enum';
+import Icon from '../icon';
 
 export interface ItemProps extends FormFieldProps {
   children: ReactElement<FormFieldProps>;
@@ -35,6 +37,11 @@ export interface LabelProps {
   children?: ReactNode;
   tooltip?: LabelTooltip | [LabelTooltip, TooltipProps];
   width?: number;
+  help?: ReactNode;
+}
+
+export interface LabelHelpProps {
+  help?: ReactNode;
 }
 
 export interface IItem extends FunctionComponent<ItemProps> {
@@ -42,7 +49,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Label: FunctionComponent<LabelProps> = (props) => {
-  const { children, className, tooltip, width } = props;
+  const { children, className, tooltip, width, help } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => width ? ({ width }) : undefined, [width]);
@@ -90,11 +97,53 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       style={style}
     >
       {children}
+      {help}
     </label>
   );
 };
 
 Label.displayName = 'Label';
+
+const LabelHelp: FunctionComponent<LabelHelpProps> = (props) => {
+  const { help } = props;
+  const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
+  const tooltipRef = useRef<boolean>(false);
+  useEffect(() => {
+    return () => {
+      if (tooltipRef.current) {
+        hide();
+        tooltipRef.current = false;
+      }
+    };
+  }, []);
+
+  const handleHelpMouseEnter = useCallback((e, help) => {
+    const { target } = e;
+    show(target as HTMLElement, {
+      title: help,
+      theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
+    });
+    tooltipRef.current = true;
+  }, []);
+  const handleHelpMouseLeave = useCallback(() => {
+    hide();
+    tooltipRef.current = false;
+  }, []);
+
+  if (help) {
+    return (
+      <Icon
+        type="help"
+        onMouseEnter={(e) => handleHelpMouseEnter(e, help)}
+        onMouseLeave={handleHelpMouseLeave}
+      />
+    );
+  }
+  return null;
+}
+
+LabelHelp.displayName = 'LabelHelp';
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
   const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, requiredMarkAlign, getProPrefixCls } = useContext(FormContext);
@@ -120,23 +169,27 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const label = getProperty(fieldProps, 'label', dataSet, record);
     const required = getPropertyDSFirst(fieldProps, 'required', dataSet, record);
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
+    const help = getProperty(fieldProps, 'help', dataSet, record);
+    const isLabelShowHelp = (fieldElementProps.showHelp || getConfig('showHelp')) === ShowHelp.label;
     const isOutput = labelLayout === LabelLayout.horizontal && ((child.type as any).displayName === 'Output' || intlFieldOutput);
-    const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
+    const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-grid`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
       [`${prefixCls}-required`]: required && !((child.type as any).displayName === 'Output' || intlFieldOutput),
       [`${prefixCls}-readonly`]: readOnly,
       [`${prefixCls}-label-vertical`]: labelLayout === LabelLayout.vertical,
       [`${prefixCls}-label-output`]: isOutput,
       [`${prefixCls}-label-useColon`]: label && fieldUseColon,
       [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: labelLayout === LabelLayout.horizontal && required && !((child.type as any).displayName === 'Output' || intlFieldOutput) && getRequiredMarkAlign(fieldRequiredMarkAlign),
+      [`${prefixCls}-label-help`]: isLabelShowHelp,
     });
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
       [`${prefixCls}-output`]: isOutput,
     });
     const tooltip = props.labelTooltip || labelTooltip;
+    const helpWrap = isLabelShowHelp ? <LabelHelp help={help} /> : undefined;
     if (labelLayout === LabelLayout.vertical) {
       return (
         <>
-          <Label className={labelClassName} tooltip={tooltip}>{label}</Label>
+          <Label className={labelClassName} tooltip={tooltip} help={helpWrap}>{label}</Label>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>
         </>
       );
@@ -147,7 +200,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>
-          <Label className={labelClassName} width={labelWidth} tooltip={tooltip}><span>{label}</span></Label>
+          <Label className={labelClassName} width={labelWidth} tooltip={tooltip} help={helpWrap}><span>{label}</span></Label>
         </Col>
         <Col className={`${prefixCls}-col ${prefixCls}-col-control`}>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>

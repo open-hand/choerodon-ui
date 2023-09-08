@@ -107,13 +107,13 @@ class App extends React.Component {
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item>
+              <Form.Item help='请正确填写手机号' showHelp='label'>
                 <TextField pattern="1[3-9]\d{9}" name="phone" />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item>
-                <Password name="password" />
+                <Password name="password"  help='请正确填写密码' showHelp='label' />
               </Form.Item>
             </Col>
             <Col span={6}>
