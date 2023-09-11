@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>CodeArea`: Added `placeholder` property.
 - 🌟 `<pro>Table`: Added bar filter bar property `editorProps` to support extended popup editor properties.
 - 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
+- 🌟 `<pro>Table`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimized display of disabled fields `placeholder` in dynamic filters.
 - 💄 `<pro>Table`: Optimized `loading` style code, compatible with custom `spin` property.

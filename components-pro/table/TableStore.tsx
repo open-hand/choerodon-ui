@@ -1598,6 +1598,13 @@ export default class TableStore {
     return this.getConfig('tableDragRow') === true;
   }
 
+  get customDragDropContenxt(): boolean {
+    if ('customDragDropContenxt' in this.props) {
+      return this.rowDraggable && this.props.customDragDropContenxt!;
+    }
+    return false;
+  }
+
   get size(): Size {
     const { size } = this.customized;
     if (size !== undefined) {

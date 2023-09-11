@@ -90,7 +90,7 @@ const VirtualWrapper: FunctionComponent<VirtualWrapperProps> = function VirtualW
   const renderClone = useRenderClone();
   const content = tableStore.rowDraggable ? (
     <Droppable
-      droppableId="table"
+      droppableId={tableStore.node.props.id || "table"}
       key="table"
       isCombineEnabled={isTree}
       mode="virtual"

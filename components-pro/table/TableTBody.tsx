@@ -739,7 +739,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   );
   const tbody = rowDraggable && !tableStore.virtual ? (
     <Droppable
-      droppableId="table"
+      droppableId={tableStore.node.props.id || "table"}
       key="table"
       isCombineEnabled={isTree}
       mode="standard"
