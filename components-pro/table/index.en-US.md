@@ -117,6 +117,7 @@ subtitle: 表格
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度  | 'content' \| 'wrapper' | 'content' |
 | fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true |
 | clipboard | 配置 Table 是否可复制粘贴。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } |
+| customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义  react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽  | boolean | false |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

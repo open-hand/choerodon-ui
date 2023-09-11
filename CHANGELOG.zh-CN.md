@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>CodeArea`: 新增 placeholder 属性。
 - 🌟 `<pro>Table`: 新增 bar 筛选条属性 editorProps 支持扩展弹出编辑器属性。
 - 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
+- 🌟 `<pro>Table`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化动态筛选条中禁用字段 placeholder 显示。
 - 💄 `<pro>Table`: 优化 loading 样式代码，兼容自定义 spin 属性。
