@@ -1830,7 +1830,8 @@ export default class DataSet extends EventManager {
         (await this.fireEvent(DataSetEvents.beforeDelete, { dataSet: this, records })) !== false &&
         (confirmMessage === false || (await this.getConfig('confirm')(confirmMessage && confirmMessage !== true ? confirmMessage : $l('DataSet', 'delete_selected_row_confirm'))))
       ) {
-        this.remove(records, false, false);
+        const locale = records.every(record => record.status === RecordStatus.add);
+        this.remove(records, false, locale);
         const res = await this.pending.add(this.write(this.destroyed, true));
         // 处理自动定位
         const { current } = this;

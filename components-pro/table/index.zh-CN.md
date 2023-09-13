@@ -71,6 +71,7 @@ subtitle: 表格
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/components/configure#API) |
 | rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用 | boolean | [globalConfig.tableRowDraggable](/components/configure#API) |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/components/configure#API) |
+| pageSizeChangeable | 分页大小设置, customizable 为 true 才起作用 | boolean \| { autoQuery：boolean } | [globalConfig.tablePageSizeChangeable](/components/configure#API) |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |
 | pristine | 显示原始值 | boolean | false |
 | onExpand | 点击展开图标时触发 | (expanded, record) => void |  |
