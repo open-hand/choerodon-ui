@@ -2586,8 +2586,8 @@ export default class TableStore {
         }
       });
 
-      this.groupedData = mergeGroupStates(normalizeGroups(rowGroupNames.concat(groupNames), headerGroupNames, dataSet.records, parentFields), this.groupedData);
-      this.groupedDataWithHeader = mergeGroupStates(normalizeGroups(headerGroupNames.concat(rowGroupNames, groupNames), [], dataSet.records), this.groupedDataWithHeader);
+      this.groupedData = mergeGroupStates(normalizeGroups(rowGroupNames.concat(groupNames), headerGroupNames, this.currentData, parentFields), this.groupedData);
+      this.groupedDataWithHeader = mergeGroupStates(normalizeGroups(headerGroupNames.concat(rowGroupNames, groupNames), [], this.currentData), this.groupedDataWithHeader);
       this.groups = [...header, ...row, ...column];
     } else {
       this.groups = [];

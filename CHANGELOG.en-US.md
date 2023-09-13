@@ -45,6 +45,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the problem that read-only and disabled are invalid in drag-and-drop mode.
 - 🐞 `<pro>Select`: Fixed an issue where a record error was checked when `multiple` selections were set and the option display value was `ReactElement` type.
 - 🐞 `<pro>FormField`: Fixed an error in the display information that required verification failed when the `Field` dynamic `label` was set.
+- 🐞 `<pro>Table`: Fixed the issue that the filter attribute does not take effect when groups grouping is turned on.
 
 ## 1.6.3
 
