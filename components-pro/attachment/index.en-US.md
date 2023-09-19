@@ -54,7 +54,7 @@ title: Attachment
 | onUploadProgress | 上传进度变化的回调 | (percent: number, attachment: AttachmentFile) => void | 无 |
 | onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile) => void | 无 |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
-| getPreviewUrl | 获取预览地址，默认使用 AttachmentFile.url，返回空则不可预览 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| (() => string \| Promise< string>) \| undefined |  |
+| getPreviewUrl | 获取预览地址，默认使用 AttachmentFile.url，返回空则不可预览。其中函数的返回值为 (() => string \| Promise< string>) 时，仅支持 listType 为 text 的情况 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => (string \| (() => string \| Promise< string>) \| undefined) |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)
