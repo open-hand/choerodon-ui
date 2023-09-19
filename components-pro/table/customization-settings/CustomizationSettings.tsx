@@ -45,7 +45,7 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
         width: column.width,
         header: column.header,
         title: column.title,
-        hidden: column.hidden,
+        hidden: !!column.hidden,
         name: column.name,
         sort: column.sort,
         titleEditable: column.titleEditable,
