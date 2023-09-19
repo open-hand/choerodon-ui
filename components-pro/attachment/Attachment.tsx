@@ -80,7 +80,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   template?: AttachmentValue;
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
-  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
+  getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
 }
 
 export type Sort = {

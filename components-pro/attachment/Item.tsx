@@ -52,7 +52,7 @@ export interface ItemProps {
   isPublic?: boolean;
   previewTarget?: string;
   buttons?: AttachmentButtons[];
-  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
+  getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
@@ -80,12 +80,6 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = !!previewUrl && (status === 'success' || status === 'done');
-  const handlePreview = useCallback(() => {
-    const { current } = pictureRef;
-    if (current) {
-      current.preview();
-    }
-  }, [pictureRef]);
   const handleOpenPreview = useCallback(async () => {
     if (isFunction(previewUrl)) {
       const result = await previewUrl();
@@ -94,6 +88,14 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       }
     }
   }, [previewUrl, previewTarget]);
+  const handlePreview = useCallback(() => {
+    const { current } = pictureRef;
+    if (current && isString(previewUrl)) {
+      current.preview();
+    } else if (isFunction(previewUrl)) {
+      handleOpenPreview();
+    }
+  }, [pictureRef, previewUrl, handleOpenPreview]);
   const renderDragger = (): ReactNode => {
     if (draggable && !isCard) {
       const iconProps = {

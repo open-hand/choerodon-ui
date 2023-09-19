@@ -453,6 +453,7 @@ timeline: true
 - 💄 `InputNumber`: Optimized conversion of scientific notation to normal strings.
 - 💄 `<pro>Transfer`: Optimize the situation of page jam when customizing tansfer to select all shuttles under large amount of data.
 - 💄 `<pro>TextArea`: Optimized `autoSize` mode, the component will not automatically update the height after the `dataSet` of the data changes.
+- 💄 `<pro>Attachment`: Optimized for asynchronous preview of image types in `text` mode.
 - 🐞 Fix the bug of mobx-react in lower version.
 - 🐞 `Align`: Fixed logic error caused by keyword nodeName.
 - 🐞 `formatter`: Fix the problem of invalid formatting precision parameter for big numbers.

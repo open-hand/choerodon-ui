@@ -38,7 +38,7 @@ export interface AttachmentListProps {
   isPublic?: boolean;
   record?: Record;
   buttons?: AttachmentButtons[];
-  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined;
+  getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {

@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: 优化选择面板中 today 的样式。
 - 💄 `<pro>DataSet`: 优化 delete 删除临时数据时的 current 记录定位。
 - 💄 `<pro>Form`: 优化当设置 layout 为 none 且 showHelp 为 label 时，栅格布局下 help 信息显示。
+- 💄 `<pro>Attachment`: 优化支持 listType 为 text 模式下图片类型异步预览。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Modal`: 修复 ModalContainer 卸载时实例未清除，导致后续 Modal 无法打开的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
