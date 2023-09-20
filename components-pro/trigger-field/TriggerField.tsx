@@ -16,6 +16,7 @@ import { hide } from '../tooltip/singleton';
 export interface TriggerFieldPopupContentProps {
   setValue: (value) => void;
   setPopup: (hidden: boolean) => void;
+  content: ReactNode;
 }
 
 export {
@@ -176,6 +177,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     return {
       setValue: this.setValue.bind(this),
       setPopup: this.setPopup.bind(this),
+      content: this.getPopupContent(),
     };
   }
 
