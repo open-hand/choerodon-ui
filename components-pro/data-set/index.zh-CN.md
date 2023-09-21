@@ -170,6 +170,7 @@ title: DataSet
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | `enabled` - 是否开启 |  |
 | getValidationErrors() | 获取records校验错误信息 |  |  |
 | getAllValidationErrors() | 获取所有校验错误信息 |  |  |
+| generateOrderQueryString() | 获取排序信息。设置 combineSort 属性为 true 时，返回字符串数组，数组形如：\['age,desc', 'name,asc'\]；否则返回 object |  | { sortname?: string; sortorder?: string; } \| string[] |
 
 ### DataSet Events
 

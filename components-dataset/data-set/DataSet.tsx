@@ -3530,7 +3530,11 @@ Then the query method will be auto invoke.`,
     return params;
   }
 
-  private generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
+  /**
+   * 获取排序信息
+   * @returns 排序信息
+   */
+  generateOrderQueryString(): { sortname?: string; sortorder?: string; } | string[] {
     const { props: { combineSort } } = this;
     const orderFields = getOrderFields(this);
     if (combineSort) {
