@@ -8,9 +8,10 @@ import React, {
   ReactElement,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from 'react';
-import { action } from 'mobx';
+import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -18,6 +19,7 @@ import isFunction from 'lodash/isFunction';
 import { IteratorHelper } from 'choerodon-ui/dataset';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { ColumnProps, defaultAggregationRenderer } from './Column';
 import TableContext from './TableContext';
 import { getColumnLock, getEditorByColumnAndRecord, isDisabledRow, isStickySupport } from './utils';
@@ -41,6 +43,16 @@ function getRowSpan(group: Group, tableStore: TableStore): number {
   return group.expandedRecords.length;
 }
 
+function getTdElementByTarget(target: HTMLElement): HTMLElement {
+  if (target.tagName.toLowerCase() !== "td") {
+    return getTdElementByTarget(target.parentElement!);
+  }
+  return target;
+}
+
+const AUTO_SCROLL_SENSITIVITY = 50; // 控制开始滚动的边距
+const AUTO_SCROLL_SPEED = 20; // 滚动速率
+
 export interface TableCellProps extends TableVirtualCellProps {
   intersectionRef?: (node?: Element | null) => void;
   inView?: boolean;
@@ -53,10 +65,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
     groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, isRenderCell,
   } = props;
+  const mousePosition = React.useRef<{ x: number; y: number } | null>(null);
+
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
-  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, node: { rangeBorder } } = tableStore;
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -104,68 +118,134 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
-    const startTarget = (target as HTMLElement).parentElement;
-    const colIndex = tableStore.columns.findIndex(x => x.name === key);
-    if (colIndex < 0 || startTarget && startTarget.tagName.toLowerCase() === 'tr' || target.tagName.toLowerCase() === 'input') return;
+    // 往上层一直找到  td  元素
+    const startTarget = getTdElementByTarget(target);
+    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.key === key);
+    if (colIndex < 0) return;
     if (startTarget) {
       const initPosition = { rowIndex, colIndex, target: startTarget };
       if (tableStore.startChooseCell && event.shiftKey) {
         tableStore.shiftKey = true;
         tableStore.endChooseCell = initPosition;
-        if (rangeBorder) {
-          drawCopyBorder({ startTarget: tableStore.startChooseCell.target, endTarget: startTarget })
-        }
       } else {
         tableStore.shiftKey = false;
         tableStore.startChooseCell = initPosition;
         tableStore.endChooseCell = initPosition;
-        if (rangeBorder) {
-          drawCopyBorder({ startTarget, endTarget: startTarget })
-        }
       }
+      drawCopyBorder(tableStore.startChooseCell.target, startTarget);
       tableStore.isFinishChooseCell = false;
+
+      document.addEventListener('mouseup', handleDocumentMouseUp, { once: true });
     }
   }), [endChooseCell]);
 
-  const handleMouseMove = useCallback(action<(e) => void>(({ target }) => {
+  const handleDocumentMouseUp = useCallback(action<(e) => void>(() => {
+    tableStore.isFinishChooseCell = true;
+    stopAutoScroll();
+  }), []);
+
+  const handleMouseOver = useCallback(action<(e) => void>((event) => {
     if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
-      const colIndex = tableStore.columns.findIndex(x => x.name === key);
+      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.key === key);
       if (colIndex > 0) {
         const startTarget = startChooseCell.target;
-        const endTarget = target && (target as HTMLElement).parentElement;
+        const endTarget = getTdElementByTarget(event.target);
         tableStore.endChooseCell = { colIndex, rowIndex, target: endTarget! };
-        if (endTarget && endTarget !== startTarget && endTarget.tagName.toLowerCase() === 'td' && rangeBorder) {
-          drawCopyBorder({ startTarget, endTarget })
+        if (endTarget) {
+          drawCopyBorder(startTarget, endTarget)
         }
       }
-
+      autoScroll(event)
     }
-  }), [startChooseCell, isFinishChooseCell, currentEditorName])
+  }), [startChooseCell, isFinishChooseCell, currentEditorName]);
 
-  const drawCopyBorder = ({ startTarget, endTarget }) => {
-    if (rangeBorder) {
-      const rectStart = startTarget.getBoundingClientRect();
-      const rectEnd = endTarget.getBoundingClientRect();
-      const minX = Math.min(rectStart.left, rectEnd.left);
-      const maxX = Math.max(rectStart.right, rectEnd.right);
-      const minY = Math.min(rectStart.top, rectEnd.top);
-      const maxY = Math.max(rectStart.bottom, rectEnd.bottom);
-      const left = Math.min(startTarget.offsetLeft, endTarget.offsetLeft);
-      const top = Math.min(startTarget.offsetTop, endTarget.offsetTop);
-      const width = maxX - minX;
-      const height = maxY - minY;
-      rangeBorder.style.left = pxToRem(left)!;
-      rangeBorder.style.top = pxToRem(top)!;
-      rangeBorder.style.width = pxToRem(width)!;
-      rangeBorder.style.height = pxToRem(height)!;
-      rangeBorder.style.display = 'block';
+  const autoScroll = (event) => {
+    // 控制滚动条自动滚动
+    const { node, rightColumnGroups, leftColumnGroups, overflowY, overflowX } = tableStore;
+    const tableRect = node.tableBodyWrap!.getBoundingClientRect();
+
+    const { height, width, x, y } = tableRect;
+    const mouseX = event.clientX - x;
+    const mouseY = event.clientY - y;
+    mousePosition.current = { x: mouseX, y: mouseY };
+
+    const hasEnteredVerticalSensitivityArea =
+      mouseY <= AUTO_SCROLL_SENSITIVITY || mouseY >= height - AUTO_SCROLL_SENSITIVITY - (overflowX ? measureScrollbar('horizontal') : 0);
+
+    const hasEnteredHorizontalSensitivityArea =
+      mouseX - leftColumnGroups.width <= AUTO_SCROLL_SENSITIVITY || mouseX >= width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - (overflowY ? measureScrollbar() : 0);
+
+    const hasEnteredSensitivityArea =
+      hasEnteredVerticalSensitivityArea || hasEnteredHorizontalSensitivityArea;
+
+    if (hasEnteredSensitivityArea) {
+      // 鼠标在sensitivity区域，开始自动滚动
+      startAutoScroll();
+    } else {
+      // 鼠标离开sensitivity区域，停止自动滚动
+      stopAutoScroll();
     }
   }
 
-  const handleMouseUp = useCallback(action<(e) => void>((e) => {
-    e.preventDefault();
+  const startAutoScroll = () => {
+    if (tableStore.autoScrollRAF  || !tableStore.node.tableBodyWrap || !mousePosition.current) {
+      return;
+    }
+    const execScroll= action(()=> {
+      const { tableBodyWrap } = tableStore.node;
+      const { rightColumnGroups, leftColumnGroups, overflowX, overflowY, lastScrollLeft, lastScrollTop } = tableStore;
+      const { x: mouseX, y: mouseY } = mousePosition.current!;
+      const { height, width } = tableBodyWrap!.getBoundingClientRect()
+
+      let deltaX = 0;
+      let deltaY = 0;
+      let factor = 0;
+
+      const scrollVerticalWidth = overflowY ? measureScrollbar() : 0;
+      const scrollHorizontalWidth = overflowX ? measureScrollbar('horizontal') : 0;
+
+      if (mouseY <= AUTO_SCROLL_SENSITIVITY && overflowY) {
+        // 向上滚动，距离越近，滚动的速度越快
+        factor = (AUTO_SCROLL_SENSITIVITY - mouseY) / -AUTO_SCROLL_SENSITIVITY;
+        deltaY = AUTO_SCROLL_SPEED;
+      } else if (mouseY >= height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY && overflowY) {
+        // 向下滚动，距离越近，滚动的速度越快
+        factor = (mouseY - (height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY)) / AUTO_SCROLL_SENSITIVITY;
+        deltaY = AUTO_SCROLL_SPEED;
+      } else if (mouseX - leftColumnGroups.width <= AUTO_SCROLL_SENSITIVITY && overflowX) {
+        // 滚动到最左边，距离越近，滚动的速度越快
+        factor = (AUTO_SCROLL_SENSITIVITY - mouseX + leftColumnGroups.width) / -AUTO_SCROLL_SENSITIVITY;
+        deltaX = AUTO_SCROLL_SPEED;
+      } else if (mouseX >= width - rightColumnGroups.width - scrollVerticalWidth - AUTO_SCROLL_SENSITIVITY && overflowX) {
+        // 滚动到最右边，距离越近，滚动的速度越快
+        factor = (mouseX - (width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - scrollVerticalWidth)) / AUTO_SCROLL_SENSITIVITY;
+        deltaX = AUTO_SCROLL_SPEED;
+      }
+      
+      if (deltaX !== 0 || deltaY !== 0) {
+        tableBodyWrap!.scrollTo({
+          left: lastScrollLeft + deltaX * factor,
+          top: lastScrollTop + deltaY * factor,
+        })
+      }
+      tableStore.autoScrollRAF = requestAnimationFrame(execScroll);
+    }) 
+    execScroll();
+  }
+
+  const stopAutoScroll = () => {
+    if (tableStore.autoScrollRAF) {
+      cancelAnimationFrame(tableStore.autoScrollRAF);
+      runInAction(()=>{
+        tableStore.autoScrollRAF = null;
+      })
+    }
+  }
+
+  const handleMouseUp = useCallback(action<(e) => void>(() => {
     tableStore.isFinishChooseCell = true;
-  }), [])
+    stopAutoScroll();
+  }), []);
 
   const isChoose = useMemo(() => {
     const colIndex = tableStore.columns.findIndex(x => x.name === key);
@@ -374,10 +454,18 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   if (clipboard && clipboard.copy) {
     clipboardCopyEvents = {
       onMouseDown: handleMouseDown,
-      onMouseMove: handleMouseMove,
+      onMouseOver: handleMouseOver,
       onMouseUp: handleMouseUp,
     }
   }
+
+  useEffect(() => {
+    return () => {
+      stopAutoScroll();
+      document.removeEventListener('mouseup', handleDocumentMouseUp);
+    }
+  }, [])
+
   return (
     <TCell
       colSpan={colSpan}

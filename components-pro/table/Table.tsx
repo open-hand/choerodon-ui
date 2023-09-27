@@ -1392,7 +1392,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   handleCopyChoose() {
-    const { columns, startChooseCell, endChooseCell, clipboard, isCopyPristine } = this.tableStore;
+    const { columnGroups, startChooseCell, endChooseCell, clipboard, isCopyPristine } = this.tableStore;
+    const columns = columnGroups.leafs;
     if (startChooseCell && endChooseCell) {
       if (this.dataSet) {
         const minRowIndex = Math.min(startChooseCell.rowIndex, endChooseCell.rowIndex);
@@ -1400,15 +1401,14 @@ export default class Table extends DataSetComponent<TableProps> {
         const minColIndex = Math.min(startChooseCell.colIndex, endChooseCell.colIndex);
         const maxColIndex = Math.max(startChooseCell.colIndex, endChooseCell.colIndex);
 
-        const records = this.dataSet.slice(minRowIndex, maxRowIndex + 1);
         const copyData: string[] = [];
-        for (let i = 0; i < records.length; i++) {
-          const record = records[i];
+        for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
+          const record = this.dataSet.records[i];
           for (let j = minColIndex; j <= maxColIndex; j++) {
-            const fieldName = columns[j].name;
+            const fieldName = columns[j].key as string;
             const field = this.dataSet.getField(fieldName);
             const fieldType = field && field.type;
-            let recordData = record.get(columns[j].name);
+            let recordData = record.get(fieldName);
 
             if (clipboard && !isCopyPristine) {
               const field = this.dataSet.getField(fieldName);
@@ -1420,14 +1420,19 @@ export default class Table extends DataSetComponent<TableProps> {
                 const text = field.getText(recordData);
                 recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
               }
+              if (columns[j] && columns[j].column.renderer) {
+                const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
+                const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
+                recordData = td ? td.innerText : null;
+              }
             } else if (fieldType === 'object') {
               recordData = JSON.stringify(recordData);
             }
-
-            if (columns[j] && columns[j].renderer) {
-              recordData = columns[j].renderer!({ record });
+            // 去掉换行符
+            if (isString(recordData)) {
+              recordData = recordData.replace(/[\r\n]/g,"")
             }
-            copyData.push(j === maxColIndex ? `${recordData || ''} \t\r` : `${recordData || ''} \t`);
+            copyData.push(j === maxColIndex ? `${recordData} \t\r` : `${recordData} \t`);
           }
         }
         navigator.clipboard.writeText(copyData.join('')).then(() => {
@@ -1469,7 +1474,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const fieldName = column.name;
             const field = this.dataSet.getField(fieldName);
             // 非编辑项则跳过赋值
-            if (!column.editor || !field || !this.dataSet) {
+            if (!column.editor || !field || field.disabled || field.readOnly || !this.dataSet) {
               continue;
             }
             const fieldType = field.type;
@@ -1988,7 +1993,6 @@ export default class Table extends DataSetComponent<TableProps> {
                 {isStickySupport() && overflowX && <StickyShadow position="left" />}
                 {isStickySupport() && overflowX && <StickyShadow position="right" />}
                 <div ref={this.saveResizeRef} className={`${prefixCls}-split-line`} />
-                <div ref={this.saveRangeBorderRef} className={`${prefixCls}-range-border`} hidden={tableStore.editing} />
               </div>
             </Spin>
             <TableSibling position="after" boxSizing={boxSizing}>
@@ -2292,6 +2296,7 @@ export default class Table extends DataSetComponent<TableProps> {
         hasHeader={hasHeader}
         hasFooter={hasFooter}
         columnGroups={columnGroups}
+        getCopyBodyRef={this.saveRangeBorderRef}
       >
         {hasHeader && this.getTableHeader(lock)}
         {hasBody && this.getTableBody(columnGroups, lock, snapshot, dragRowHeight)}
@@ -2302,7 +2307,7 @@ export default class Table extends DataSetComponent<TableProps> {
     const virtualWrapper = virtual ? <VirtualWrapper>{wrapper}</VirtualWrapper> : wrapper();
     if (hasBody && tableStore.rowDraggable) {
       const { dragDropContextProps } = this.props;
-      if (tableStore.customDragDropContenxt) { 
+      if (tableStore.customDragDropContenxt) {
         return virtualWrapper;
       }
       return (
