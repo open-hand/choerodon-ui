@@ -19,13 +19,14 @@ export interface TableWrapperProps extends ElementProps {
   hasHeader?: boolean;
   hasFooter?: boolean;
   columnGroups: ColumnGroups;
+  getCopyBodyRef?: React.LegacyRef<HTMLDivElement>;
 }
 
 const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper(props) {
-  const { children, hasBody, lock, hasHeader, hasFooter, columnGroups } = props;
+  const { children, hasBody, lock, hasHeader, hasFooter, columnGroups, getCopyBodyRef } = props;
   const { prefixCls, summary, tableStore, fullColumnWidth } = useContext(TableContext);
   const { leafs, width } = columnGroups;
-  const { overflowX, customizable, rowDraggable, dragColumnAlign } = tableStore;
+  const { overflowX, customizable, rowDraggable, dragColumnAlign, clipboard } = tableStore;
   const hasPlaceHolder = lock !== ColumnLock.left && (hasHeader || hasFooter) && tableStore.overflowY;
   const tableWidth: number | string | undefined = overflowX ?
     lock !== ColumnLock.left && !hasBody && tableStore.overflowY ?
@@ -89,6 +90,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
         {colGroup}
         {children}
       </table>
+      {clipboard &&  <div ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={tableStore.editing} />}
       {editors}
     </>
   );
