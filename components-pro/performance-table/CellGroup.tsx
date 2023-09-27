@@ -79,7 +79,7 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
     return (
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
-          if (translateDOMPositionXY) {
+          if (translateDOMPositionXY && !fixed) {
             translateDOMPositionXY(styles, left, 0);
           }
           return (
