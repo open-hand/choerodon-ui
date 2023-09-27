@@ -12,7 +12,7 @@ import defaultTo from 'lodash/defaultTo';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import { warning } from 'choerodon-ui/dataset/utils';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
-import { isCalcSize, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { isCalcSize, pxToRem, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Config, ConfigKeys, DefaultConfig } from 'choerodon-ui/lib/configure';
 import { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Icon from 'choerodon-ui/lib/icon';
@@ -1038,6 +1038,8 @@ export default class TableStore {
   
   @observable shiftKey: boolean;
 
+  @observable autoScrollRAF: number | null;
+
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -1323,8 +1325,8 @@ export default class TableStore {
     }
 
     if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
-      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, leafs.length)]; 
-      this.prevRenderColIndex = [firstIndex, lastIndex]; 
+      this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, leafs.length)];
+      this.prevRenderColIndex = [firstIndex, lastIndex];
       return [firstIndex, lastIndex];
     }
 
@@ -1389,11 +1391,11 @@ export default class TableStore {
   }
 
   get blankVirtualCell() {
-    const { virtualColumnRange } = this; 
+    const { virtualColumnRange } = this;
     const { left, center, right } = virtualColumnRange;
     return {
       left: [...Array(center[0] - (left ? left[1] : 0)).keys()].map((key) => <td key={`empty-left-${key}`} />),
-      right: right ? [...Array(right[0] - center[1]).keys()].map((key) => <td key={`empty-right-${key}`}/>) : [],
+      right: right ? [...Array(right[0] - center[1]).keys()].map((key) => <td key={`empty-right-${key}`} />) : [],
     }
   }
 
@@ -2422,6 +2424,7 @@ export default class TableStore {
       this.headerHeight = 0;
       this.footerHeight = 0;
       this.lastScrollTop = 0;
+      this.lastScrollLeft = 0;
       this.customizedActiveKey = ['columns'];
       this.leftOriginalColumns = [];
       this.originalColumns = [];
@@ -2469,18 +2472,14 @@ export default class TableStore {
 
   @action
   setLastScrollTop(lastScrollTop: number) {
-    if (this.virtual) {
-      this.lastScrollTop = lastScrollTop;
-      this.startScroll();
-    }
+    this.lastScrollTop = lastScrollTop;
+    this.startScroll();
   }
 
   @action
   setLastScrollLeft(lastScrollLeft: number) {
-    if (this.propVirtual) {
-      this.lastScrollLeft = lastScrollLeft;
-      this.startScroll();
-    }
+    this.lastScrollLeft = lastScrollLeft;
+    this.startScroll();
   }
 
   @action
@@ -2843,6 +2842,30 @@ export default class TableStore {
     }
   }
 
+  @autobind
+  drawCopyBorder(sTarget?: HTMLElement, eTarget?: HTMLElement) {
+    const { node: { rangeBorder }, startChooseCell, endChooseCell } = this;
+    const startTarget = sTarget || (startChooseCell && startChooseCell.target);
+    const endTarget = eTarget || (endChooseCell && endChooseCell.target);
+    if (rangeBorder && startTarget && endTarget) {
+      const rectStart = startTarget.getBoundingClientRect();
+      const rectEnd = endTarget.getBoundingClientRect();
+      const minX = Math.min(rectStart.left, rectEnd.left);
+      const maxX = Math.max(rectStart.right, rectEnd.right);
+      const minY = Math.min(rectStart.top, rectEnd.top);
+      const maxY = Math.max(rectStart.bottom, rectEnd.bottom);
+      const left = Math.min(startTarget.offsetLeft, endTarget.offsetLeft);
+      const top = Math.min(startTarget.offsetTop, endTarget.offsetTop);
+      const width = maxX - minX;
+      const height = maxY - minY;
+      rangeBorder.style.left = pxToRem(left)!;
+      rangeBorder.style.top = pxToRem(top)!;
+      rangeBorder.style.width = pxToRem(width)!;
+      rangeBorder.style.height = pxToRem(height)!;
+      rangeBorder.style.display = 'block';
+    }
+  }
+
   @action
   changeCustomizedColumnValue(column: ColumnProps, value: object, saveToCustomization = true) {
     const { customized: { columns } } = this;
@@ -2887,8 +2910,8 @@ export default class TableStore {
             try {
               const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['size', 'parityRow', 'pageSize', 'columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
               // @ts-ignore
-              this.customized = {columns: {}, ...omit(res, 'dataJson'), ...dataJson};
-              currentRecord.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
+              this.customized = { columns: {}, ...omit(res, 'dataJson'), ...dataJson };
+              currentRecord.set({ objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
             } catch (error) {
               warning(false, error.message);
             }
@@ -2945,9 +2968,9 @@ export default class TableStore {
           });
           try {
             const dataJson = res.dataJson ? pick(JSON.parse(res.dataJson), ['size', 'parityRow', 'pageSize', 'columns', 'combineSort', 'defaultFlag', 'height', 'heightDiff', 'viewName']) : {};
-            boardCustomized.customizedDS.current.set({objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
+            boardCustomized.customizedDS.current.set({ objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
             // @ts-ignore
-            customized = {...omit(res, 'dataJson'), ...dataJson};
+            customized = { ...omit(res, 'dataJson'), ...dataJson };
           } catch (error) {
             warning(false, error.message);
           }

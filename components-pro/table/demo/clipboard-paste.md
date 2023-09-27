@@ -24,7 +24,9 @@ import {
   SelectBox,
   Modal,
   Button,
+  TextArea,
 } from 'choerodon-ui/pro';
+import {Avatar, Tag, Badge} from 'choerodon-ui';
 
 const { Column } = Table;
 
@@ -51,7 +53,7 @@ class App extends React.Component {
     },
     autoQuery: true,
     combineSort: true,
-    pageSize: 5,
+    pageSize: 20,
     // paging: false,
     fields: [
       {
@@ -71,6 +73,13 @@ class App extends React.Component {
         label: '年龄',
         max: 100,
         step: 1,
+        // disabled: true,
+        readOnly: true,
+      },
+      {
+        name: 'email',
+        type: 'string',
+        label: '邮箱',
       },
       {
         name: 'codeMultiple',
@@ -113,6 +122,7 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: ',',
       },
+      { name: 'userStatus', type: 'boolean', label: '员工状态' },
       { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
     ],
   });
@@ -232,6 +242,7 @@ class App extends React.Component {
   };
 
   render() {
+    const statusMap = ['error', 'success'];
     return (
       <>
         <p>复制功能</p>
@@ -240,25 +251,67 @@ class App extends React.Component {
           key="user" 
           dataSet={this.userDs} 
           // columnEditorBorder={false}
-          clipboard={{paste: true, copy: true, autoAdd: true}}
+          // virtual
+          customizable
+          customizedCode="zza"
+          clipboard={{paste: true, copy: true}}
+          style={{height: 300}}
         >
-          <Column name="userid" filter />
+          <Column name="userid" filter editor />
+          
           <Column 
             name="age" 
             filter 
-            width={100} 
+            width={200} 
             editor
             />
-          <Column 
-            name="enable" 
+            <Column 
+            name="email" 
+            editor={(record, name) => <TextArea autoSize record={record} name={name} />}
             sortable 
-            width={100} 
-            editor
+            width={200} 
           />
-          <Column name="name" sortable width={100} />
-          <Column name="sex" sortable width={100} />
-          <Column name="codeMultiple" sortable width={200} editor />
-          <Column name="sexMultiple" sortable width={100} />
+        
+          
+          <Column name="name" 
+          renderer={({record, text}) => <span><Avatar  size={22} style={{ fontSize: 12 }} src={record?.get('src')}>{text.substr(0,1)}</Avatar> {text}</span>}
+          sortable 
+          width={200} 
+          />
+          <Column name="userStatus" 
+          renderer={
+           ({record})=>{
+             if (record?.get('age') < 26) {
+            return <Tag color="yellow">待入职</Tag>;
+          } else if (record?.get('age') < 50) {
+            return <Tag color="blue">在职</Tag>;
+          }
+          return <Tag color="gray">离职</Tag>;
+           }
+           }
+          sortable 
+          width={200} 
+          />
+          <Column name="enable" 
+          renderer={
+            ({record})=>{
+              const v = record?.get('enable') ? 1 : 0;
+             return <Badge
+              status={statusMap[v]}
+              text={
+                v === 1
+                  ? '启用'
+                  : '禁用'
+              }
+            />
+            }
+           }
+          sortable 
+          width={200} 
+          />
+          <Column name="sex" sortable width={200} />
+          <Column name="codeMultiple" sortable width={300} editor />
+          <Column name="sexMultiple" sortable width={200} />
           <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
         </Table>
 

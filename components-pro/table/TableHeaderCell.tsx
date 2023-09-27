@@ -23,6 +23,7 @@ import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import isUndefined from 'lodash/isUndefined';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { IconProps } from 'choerodon-ui/lib/icon';
 import Popover from 'choerodon-ui/lib/popover';
@@ -673,14 +674,24 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   if (!isRenderCell) {
     return <th {...thProps} />
   }
+
+  const handleResize = useCallback(() => {
+    const { clipboard, startChooseCell, endChooseCell, drawCopyBorder } = tableStore;
+    if (clipboard && startChooseCell && endChooseCell) {
+      drawCopyBorder();
+    }
+  }, [column.width])
   return (
-    <th {...thProps}>
-      <div
-        {...innerProps}
-        className={innerClassNames.join(' ')}
-      />
-      {columnResizable && renderResizer()}
-    </th>
+    <ReactResizeObserver onResize={handleResize}>
+      <th {...thProps}>
+        <div
+          {...innerProps}
+          className={innerClassNames.join(' ')}
+        />
+        {columnResizable && renderResizer()}
+      </th>
+    </ReactResizeObserver>
+
   );
 };
 
