@@ -263,6 +263,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
       'onResize',
       'type',
       'displayOutput',
+      'modalProps',
     ]);
   }
 

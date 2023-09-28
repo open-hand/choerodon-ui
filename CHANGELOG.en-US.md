@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 🌟 `<pro>Table`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 🌟 `<pro>DataSet`: Added `generateOrderQueryString` method.
+- 🌟 `<pro>Modal`: Added `beforeOpen` property.
 - 💄 `<pro>TriggerField`: Extended `popupContent` parameter supports `content`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimize the hidden type judgment of personalized inner columns.

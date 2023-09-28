@@ -336,6 +336,10 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   open(props: ModalProps) {
+    const { beforeOpen } = props;
+    if (beforeOpen) {
+      beforeOpen();
+    }
     const { modals } = this.state;
     if (!props.key) {
       props.key = ModalManager.getKey();
