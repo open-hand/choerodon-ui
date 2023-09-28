@@ -118,6 +118,7 @@ export interface ModalProps extends ViewComponentProps {
   resizable?: boolean;
   customizable?: boolean;
   customizedCode?: string;
+  beforeOpen?: () => void;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -369,6 +370,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'resizable',
       'customizable',
       'customizedCode',
+      'beforeOpen',
     ]);
   }
 
