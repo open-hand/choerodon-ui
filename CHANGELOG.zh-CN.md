@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
 - 🌟 `<pro>Table`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>DataSet`: 新增 generateOrderQueryString 方法。
+- 🌟 `<pro>Modal`: 新增 beforeOpen 属性。
 - 💄 `<pro>TriggerField`: 扩展 popupContent 参数支持 content。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化个性化内列 hidden 类型判断。
@@ -44,6 +45,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条保存报错的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态筛选条初始化状态错误的问题。
 - 🐞 `<pro>PerformanceTable`: 修复大数据表格列合并固定的情况滑动滚动条导致内容错位的问题。
+- 🐞 `<pro>PerformanceTable`: 修复大数据表格固定列会横向滚动的问题。
 - 🐞 `Carousel`: 修复组件垂直拖拽显示半张的问题及修复 fade 情况下面板点击事件失效的问题。
 - 🐞 `<pro>Table`: 修复字段值变为大数字类型时 unique 校验失效的问题。
 - 🐞 `<pro>NumberField`: 修复整数模式下可以输入句号的问题。

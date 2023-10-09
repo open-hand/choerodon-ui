@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 🌟 `<pro>Table`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 🌟 `<pro>DataSet`: Added `generateOrderQueryString` method.
+- 🌟 `<pro>Modal`: Added `beforeOpen` property.
 - 💄 `<pro>TriggerField`: Extended `popupContent` parameter supports `content`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimize the hidden type judgment of personalized inner columns.
@@ -43,6 +44,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the initialization status of the dynamic filter bar was wrong.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that fixed columns of PerformanceTable would scroll horizontally.
 - 🐞 `Carousel`: Fixed the problem that the component is half displayed when dragged vertically and fixed the problem that the panel click event does not work when fade is applied.
 - 🐞 `<pro>Table`: Fixed an issue where the `unique` check failed when the field value became a `BigNumber` type.
 - 🐞 `<pro>NumberField`: Fixed the issue that a period can be entered in integer mode.
