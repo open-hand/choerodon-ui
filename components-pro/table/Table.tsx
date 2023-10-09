@@ -1405,7 +1405,7 @@ export default class Table extends DataSetComponent<TableProps> {
         for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
           const record = this.dataSet.records[i];
           for (let j = minColIndex; j <= maxColIndex; j++) {
-            const fieldName = columns[j].key as string;
+            const fieldName = columns[j].column.name;
             const field = this.dataSet.getField(fieldName);
             const fieldType = field && field.type;
             let recordData = record.get(fieldName);
@@ -1432,6 +1432,7 @@ export default class Table extends DataSetComponent<TableProps> {
             if (isString(recordData)) {
               recordData = recordData.replace(/[\r\n]/g,"")
             }
+            recordData = isNil(recordData) ? '' : recordData;
             copyData.push(j === maxColIndex ? `${recordData} \t\r` : `${recordData} \t`);
           }
         }

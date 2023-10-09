@@ -763,7 +763,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
-    return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
+    const prevOmitState = omit(this.state, ['width']);
+    const nextOmitState = omit(nextState, ['width']);
+    return !eq(this.props, nextProps) || !isEqual(prevOmitState, nextOmitState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {

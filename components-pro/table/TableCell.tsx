@@ -120,7 +120,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const { target } = event;
     // 往上层一直找到  td  元素
     const startTarget = getTdElementByTarget(target);
-    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.key === key);
+    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key);
     if (colIndex < 0) return;
     if (startTarget) {
       const initPosition = { rowIndex, colIndex, target: startTarget };
@@ -146,7 +146,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseOver = useCallback(action<(e) => void>((event) => {
     if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
-      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.key === key);
+      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key);
       if (colIndex > 0) {
         const startTarget = startChooseCell.target;
         const endTarget = getTdElementByTarget(event.target);
@@ -162,7 +162,10 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const autoScroll = (event) => {
     // 控制滚动条自动滚动
     const { node, rightColumnGroups, leftColumnGroups, overflowY, overflowX } = tableStore;
-    const tableRect = node.tableBodyWrap!.getBoundingClientRect();
+    const { tableContentWrap, tableBodyWrap } = node;
+    const overflowWrapper = tableBodyWrap || tableContentWrap;
+    if (!overflowWrapper) return;
+    const tableRect = overflowWrapper.getBoundingClientRect();
 
     const { height, width, x, y } = tableRect;
     const mouseX = event.clientX - x;
@@ -180,22 +183,21 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
     if (hasEnteredSensitivityArea) {
       // 鼠标在sensitivity区域，开始自动滚动
-      startAutoScroll();
+      startAutoScroll(overflowWrapper);
     } else {
       // 鼠标离开sensitivity区域，停止自动滚动
       stopAutoScroll();
     }
   }
 
-  const startAutoScroll = () => {
-    if (tableStore.autoScrollRAF  || !tableStore.node.tableBodyWrap || !mousePosition.current) {
+  const startAutoScroll = (overflowWrapper: HTMLElement) => {
+    if (tableStore.autoScrollRAF || !mousePosition.current) {
       return;
     }
     const execScroll= action(()=> {
-      const { tableBodyWrap } = tableStore.node;
       const { rightColumnGroups, leftColumnGroups, overflowX, overflowY, lastScrollLeft, lastScrollTop } = tableStore;
       const { x: mouseX, y: mouseY } = mousePosition.current!;
-      const { height, width } = tableBodyWrap!.getBoundingClientRect()
+      const { height, width } = overflowWrapper.getBoundingClientRect()
 
       let deltaX = 0;
       let deltaY = 0;
@@ -223,7 +225,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
       
       if (deltaX !== 0 || deltaY !== 0) {
-        tableBodyWrap!.scrollTo({
+        overflowWrapper.scrollTo({
           left: lastScrollLeft + deltaX * factor,
           top: lastScrollTop + deltaY * factor,
         })
