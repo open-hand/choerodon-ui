@@ -45,6 +45,7 @@ const prefixCls = getConfig('prefixCls');
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
+| selectOptionsFilter | 选项过滤。 | (record: Record) => boolean | |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectReserveParam | 是否保留查询参数。 | boolean | true |

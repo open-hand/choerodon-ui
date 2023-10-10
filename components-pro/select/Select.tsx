@@ -321,7 +321,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @computed
   get filteredOptions(): Record[] {
-    const { optionsWithCombo, observableProps: { optionsFilter } } = this;
+    const { optionsWithCombo, optionsFilter } = this;
     return this.searchData(optionsFilter ? optionsWithCombo.filter(optionsFilter) : optionsWithCombo);
   }
 
@@ -818,6 +818,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   get defaultActiveFirstOption(): boolean | undefined {
     const { defaultActiveFirstOption = this.getContextConfig('defaultActiveFirstOption') } = this.observableProps;
     return defaultActiveFirstOption;
+  }
+
+  get optionsFilter(): (record: Record, index: number, records: Record[]) => boolean {
+    const { optionsFilter = this.getContextConfig('selectOptionsFilter') } = this.observableProps;
+    return optionsFilter;
   }
 
   get selectReverse(): boolean | undefined {

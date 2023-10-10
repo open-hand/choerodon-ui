@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 rangeSeparator 属性。
+- 🌟 `configure`: 新增 rangeSeparator, selectOptionsFilter 属性。
 - 🌟 `<pro>Table`: 新增动态筛选条字段 onFieldEnterDown 回车回调。
 - 🌟 `<pro>Table`: 新增 clipboard 属性支持表格到 Excel 双向复制的功能。
 - 🌟 `<pro>CodeArea`: 新增 placeholder 属性。

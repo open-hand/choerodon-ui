@@ -219,6 +219,7 @@ export interface Config extends DataSetConfig {
   dropdownMatchSelectWidth?: boolean;
   defaultActiveFirstOption?: boolean;
   selectReverse?: boolean;
+  selectOptionsFilter?:  (record: Record, index: number, records: Record[]) => boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
   selectBoxSearchable?: boolean;

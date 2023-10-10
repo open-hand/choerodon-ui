@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `rangeSeparator` property.
+- 🌟 `configure`: Added `rangeSeparator`, `selectOptionsFilter` property.
 - 🌟 `<pro>Table`: Added dynamic filter bar field `onFieldEnterDown` return callback.
 - 🌟 `<pro>Table`: Added `clipboard` property to support two-way copying from table to Excel.
 - 🌟 `<pro>CodeArea`: Added `placeholder` property.

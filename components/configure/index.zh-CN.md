@@ -48,6 +48,7 @@ const prefixCls = getConfig('prefixCls');
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
 | selectReverse | 是否开启下拉多选反向功能。 | boolean | true |
+| selectOptionsFilter | 选项过滤。 | (record: Record) => boolean | |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectBoxSearchable | 是否开启下拉搜索功能。 | boolean | false |
 | selectReserveParam | 是否保留查询参数。 | boolean | true |
