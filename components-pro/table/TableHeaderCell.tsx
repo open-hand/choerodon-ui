@@ -417,6 +417,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
   }, [filterText, tableStore, name, filter]);
 
+  const handleResize = useCallback(() => {
+    const { clipboard, startChooseCell, endChooseCell, drawCopyBorder } = tableStore;
+    if (clipboard && startChooseCell && endChooseCell) {
+      drawCopyBorder();
+    }
+  }, [column.width])
+  
   const renderResizer = () => {
     const { rightColumnGroups: { columns }, overflowX } = tableStore;
     const { columnGroup } = props;
@@ -675,12 +682,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     return <th {...thProps} />
   }
 
-  const handleResize = useCallback(() => {
-    const { clipboard, startChooseCell, endChooseCell, drawCopyBorder } = tableStore;
-    if (clipboard && startChooseCell && endChooseCell) {
-      drawCopyBorder();
-    }
-  }, [column.width])
+  
   return (
     <ReactResizeObserver onResize={handleResize}>
       <th {...thProps}>

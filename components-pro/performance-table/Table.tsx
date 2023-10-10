@@ -6,7 +6,6 @@ import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import defaultTo from 'lodash/defaultTo';
-import eq from 'lodash/eq';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import isNil from 'lodash/isNil';
@@ -763,9 +762,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
-    const prevOmitState = omit(this.state, ['width']);
-    const nextOmitState = omit(nextState, ['width']);
-    return !eq(this.props, nextProps) || !isEqual(prevOmitState, nextOmitState);
+    const prevOmitState = omit(this.state, ['width', 'contentWidth']);
+    const nextOmitState = omit(nextState, ['width', 'contentWidth']);
+    return !isEqual(this.props, nextProps) || !isEqual(prevOmitState, nextOmitState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
