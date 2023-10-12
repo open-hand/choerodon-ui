@@ -1,5 +1,6 @@
 import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
 import { action, computed, get, IReactionDisposer, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
+import classNames from 'classnames';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -1952,10 +1953,11 @@ export default class TableStore {
   get selectionColumn(): ColumnProps | undefined {
     if (this.hasRowBox) {
       const { dataSet, prefixCls } = this;
-      const { rowBoxPlacement } = this.props;
-      const className = `${prefixCls}-selection-column`;
+      const { rowBoxPlacement, selectionColumnProps = {} } = this.props;
+      const { lock: sLock, className, headerClassName, footerClassName, ...rest } = selectionColumnProps;
+      const sClassName = `${prefixCls}-selection-column`;
 
-      let lock: ColumnLock | boolean = ColumnLock.left;
+      let lock: ColumnLock | boolean = sLock || ColumnLock.left;
       if (rowBoxPlacement === RowBoxPlacement.start) {
         lock = ColumnLock.left;
       } else if (rowBoxPlacement === RowBoxPlacement.end) {
@@ -1968,13 +1970,14 @@ export default class TableStore {
         key: SELECTION_KEY,
         resizable: false,
         titleEditable: false,
-        headerClassName: className,
-        className,
-        footerClassName: className,
         renderer: this.renderSelectionBox,
         align: ColumnAlign.center,
         width: scaleSize(50),
+        headerClassName: classNames(sClassName, headerClassName),
+        className: classNames(sClassName, className),
+        footerClassName: classNames(sClassName, footerClassName),
         lock,
+        ...rest,
       };
       if (dataSet && dataSet.selection === DataSetSelection.multiple) {
         selectionColumn.header = this.multipleSelectionRenderer;

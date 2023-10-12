@@ -373,6 +373,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   rowBoxPlacement?: RowBoxPlacement | number;
   /**
+   * 选择框列属性
+   */
+  selectionColumnProps?: ColumnProps;
+  /**
    * 在其他模式下是不是要是要rowbox
    */
   alwaysShowRowBox?: boolean;
@@ -1608,6 +1612,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'columnEditorBorder',
       'selectionMode',
       'rowBoxPlacement',
+      'selectionColumnProps',
       'alwaysShowRowBox',
       'showSelectionTips',
       'showSelectionCachedButton',

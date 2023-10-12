@@ -113,6 +113,7 @@ subtitle: 表格
 | onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | |
 | searchCode | 动态筛选条后端接口唯一编码  | string | |
 | rowBoxPlacement | 行选择框位置  | `start` \| `end` \| number | start |
+| selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  |
 | renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度  | 'content' \| 'wrapper' | 'content' |
