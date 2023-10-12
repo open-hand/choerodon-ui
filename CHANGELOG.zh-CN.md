@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 clipboard 属性支持表格到 Excel 双向复制的功能。
 - 🌟 `<pro>CodeArea`: 新增 placeholder 属性。
 - 🌟 `<pro>Table`: 新增 bar 筛选条属性 editorProps 支持扩展弹出编辑器属性。
+- 🌟 `<pro>Table`: 新增 selectionColumnProps 支持行选择列属性扩展。
 - 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
 - 🌟 `<pro>Table`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>DataSet`: 新增 generateOrderQueryString 方法。
