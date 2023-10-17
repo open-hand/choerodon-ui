@@ -1036,7 +1036,7 @@ export default class TableStore {
   @observable isFinishChooseCell: boolean;
 
   @observable isCopyPristine: boolean;
-  
+
   @observable shiftKey: boolean;
 
   @observable autoScrollRAF: number | null;
@@ -1263,7 +1263,7 @@ export default class TableStore {
     if (typeof configTableVirtual === 'function') {
       return configTableVirtual(this.currentData.length, this.columnGroups.leafs.length);
     }
-    
+
     return configTableVirtual;
   }
 
@@ -1341,7 +1341,7 @@ export default class TableStore {
     left?: [number, number];
     center: [number, number];
     right?: [number, number];
-    } {
+  } {
     const { columnGroups: { leafs, leftLeafs, rightLeafs }, columnBuffer } = this;
     if (!this.propVirtual || !this.overflowX) {
       return { center: [0, leafs.length] };
@@ -2483,11 +2483,20 @@ export default class TableStore {
   setLastScrollLeft(lastScrollLeft: number) {
     this.lastScrollLeft = lastScrollLeft;
     this.startScroll();
+    if (this.clipboard && this.clipboard.copy && this.startChooseCell && this.endChooseCell) {
+      const { fixLeftLength, fixRightLength } = this.calcDrawBorderFixColumn(this.startChooseCell.target, this.endChooseCell.target);
+      if (fixLeftLength || fixRightLength) {
+        this.drawCopyBorder();
+      }
+    }
   }
 
   @action
   hideEditor() {
     this.currentEditorName = undefined;
+    if (this.clipboard) {
+      this.drawCopyBorder();
+    }
   }
 
   @action
@@ -2845,12 +2854,38 @@ export default class TableStore {
     }
   }
 
+  calcDrawBorderFixColumn(startTarget, endTarget) {
+    const startAndTargetClassValues = `${startTarget.classList.value} ${endTarget.classList.value}`.split(" ");
+    const fixLeftClassname = `${this.prefixCls}-cell-fix-left`;
+    const fixRightClassname = `${this.prefixCls}-cell-fix-right`;
+    const fixLeftLength = startAndTargetClassValues.filter(x => x === fixLeftClassname).length; // 选中左固定列的数量  0 ~ 2
+    const fixRightLength = startAndTargetClassValues.filter(x => x === fixRightClassname).length; // 选中右固定列的数量 0 ～ 2
+    return { fixLeftClassname, fixRightClassname, fixLeftLength, fixRightLength };
+  }
+
   @autobind
   drawCopyBorder(sTarget?: HTMLElement, eTarget?: HTMLElement) {
-    const { node: { rangeBorder }, startChooseCell, endChooseCell } = this;
+    const { node: { rangeBorder, tableContentWrap, tableBodyWrap }, startChooseCell, endChooseCell, lastScrollLeft, columnGroups, leftColumnGroups, customizable } = this;
+
     const startTarget = sTarget || (startChooseCell && startChooseCell.target);
     const endTarget = eTarget || (endChooseCell && endChooseCell.target);
+    const positionWrapper = tableBodyWrap || tableContentWrap;
+    const maxScrollLeft = positionWrapper!.scrollWidth - positionWrapper!.clientWidth;
+
+    // 动态改变固定列层级
+    const changeFixIndex = (classname, zIndex = "") => {
+      if (positionWrapper) {
+        const fixElements = positionWrapper.querySelectorAll(`td.${classname}`);
+        const choosedRows = Array.from(fixElements);
+        choosedRows.forEach((element: HTMLElement) => {
+          element.style.zIndex = zIndex;
+        });
+      }
+    }
+
     if (rangeBorder && startTarget && endTarget) {
+      const { fixLeftClassname, fixRightClassname, fixLeftLength, fixRightLength } = this.calcDrawBorderFixColumn(startTarget, endTarget);
+
       const rectStart = startTarget.getBoundingClientRect();
       const rectEnd = endTarget.getBoundingClientRect();
       const minX = Math.min(rectStart.left, rectEnd.left);
@@ -2861,11 +2896,90 @@ export default class TableStore {
       const top = Math.min(startTarget.offsetTop, endTarget.offsetTop);
       const width = maxX - minX;
       const height = maxY - minY;
-      rangeBorder.style.left = pxToRem(left)!;
       rangeBorder.style.top = pxToRem(top)!;
-      rangeBorder.style.width = pxToRem(width)!;
       rangeBorder.style.height = pxToRem(height)!;
       rangeBorder.style.display = 'block';
+
+      if ((!fixLeftLength && !fixRightLength) || (fixLeftLength && fixRightLength) || (fixLeftLength > 1) || (fixRightLength > 1) || !this.overflowX) {
+        // 一般选框处理
+        rangeBorder.style.width = pxToRem(width)!;
+        rangeBorder.style.left = pxToRem(left)!;
+      } else {
+        // 动态选框处理
+        let extraDistance = 0;
+        let fixChoosedWidth = 0;
+
+        // 获取框选的固定列的宽度
+        if (startChooseCell && endChooseCell) {
+          const [firstColIndex, lastColIndex] = [startChooseCell.colIndex, endChooseCell.colIndex].sort((a, b) => a - b);
+
+          const { leafs, rightLeafs } = columnGroups;
+          let totalWidth = leafs.slice(firstColIndex, lastColIndex + 1).reduce((total, col) => total + (col.column.width || 0), 0);
+          // 存在自定义列的情况
+          if (leafs[lastColIndex + 1] && customizable && rightLeafs[rightLeafs.length - 2] === leafs[lastColIndex]) {
+            totalWidth += (leafs[lastColIndex + 1].column.width || 0);
+          }
+
+          if (fixLeftLength) {
+            extraDistance = ((lastScrollLeft > (endTarget.offsetLeft)) ? lastScrollLeft - (endTarget.offsetLeft - leftColumnGroups.width + endTarget.offsetWidth) : 0)
+            let fixChoosedLeft = 0;
+
+            for (let i = firstColIndex; i <= lastColIndex; i++) {
+              const col = leafs[i];
+              if (col.column.lock === "left" || col.column.lock === true) {
+                fixChoosedWidth += col.column.width || 0;
+                if (i === firstColIndex) {
+                  fixChoosedLeft = (startChooseCell.colIndex === firstColIndex ? startChooseCell.target.offsetLeft : endChooseCell.target.offsetLeft);
+                }
+              }
+            }
+
+            rangeBorder.style.left = pxToRem(fixChoosedLeft)!;
+            rangeBorder.style.width = pxToRem(Math.max(fixChoosedWidth, totalWidth - lastScrollLeft))!;
+          } else if (fixRightLength) {
+            let unFixedWidth = 0;
+            let minLeft = 0;
+
+            for (let i = lastColIndex; i >= firstColIndex; i--) {
+              const col = leafs[i];
+              if (col.column.lock === "right") {
+                fixChoosedWidth += col.column.width || 0;
+                if (lastColIndex === i && customizable && lastColIndex === columnGroups.leafs.length - 2) {
+                  fixChoosedWidth += (leafs[i + 1].column.width || 0);
+                }
+              } else if (!col.column.lock) {
+                unFixedWidth += col.column.width || 0
+                minLeft = col.left;
+              }
+            }
+
+            extraDistance = (maxScrollLeft - lastScrollLeft) > unFixedWidth ? (maxScrollLeft - lastScrollLeft) - unFixedWidth : 0
+            rangeBorder.style.left = pxToRem(minLeft - extraDistance)!;
+            rangeBorder.style.width = pxToRem(Math.max(fixChoosedWidth, totalWidth - (maxScrollLeft - lastScrollLeft)))!;
+          }
+        }
+      }
+
+      // 动态改变固定列层级
+      if (fixLeftLength && fixRightLength) {
+        rangeBorder.style.zIndex = "2";
+        changeFixIndex(fixLeftClassname);
+        changeFixIndex(fixRightClassname);
+      } else if (fixLeftLength) {
+        rangeBorder.style.zIndex = "2";
+        if (fixLeftLength === 1) {
+          changeFixIndex(fixRightClassname, "3");
+        }
+        changeFixIndex(fixLeftClassname);
+      } else if (fixRightLength) {
+        rangeBorder.style.zIndex = "2";
+        if (fixRightLength === 1) {
+          changeFixIndex(fixLeftClassname, "3");
+        }
+        changeFixIndex(fixRightClassname);
+      } else {
+        rangeBorder.style.zIndex = "1";
+      }
     }
   }
 

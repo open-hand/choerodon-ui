@@ -90,7 +90,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
         {colGroup}
         {children}
       </table>
-      {clipboard &&  <div ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={tableStore.editing} />}
+      {clipboard && <div ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={!!tableStore.currentEditorName} />}
       {editors}
     </>
   );

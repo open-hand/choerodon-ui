@@ -38,7 +38,7 @@ import TableHeaderCell from './TableHeaderCell';
 import DataSet, { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { TransportProps } from '../data-set/Transport';
-import TableStore, { CUSTOMIZED_KEY } from './TableStore';
+import TableStore, { CUSTOMIZED_KEY, SELECTION_KEY } from './TableStore';
 import TableHeader from './TableHeader';
 import autobind from '../_util/autobind';
 import Pagination, { PaginationProps } from '../pagination/Pagination';
@@ -822,7 +822,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 是否自定义 DragDropContenxt，配合 rowDraggable 属性一起使用。开启后，使用 react-beautiful-dnd 的 DragDropContenxt 可以实现表格与表格之间的拖拽
    */
-   customDragDropContenxt?: boolean;
+  customDragDropContenxt?: boolean;
 }
 
 @observer
@@ -1409,33 +1409,41 @@ export default class Table extends DataSetComponent<TableProps> {
         for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
           const record = this.dataSet.records[i];
           for (let j = minColIndex; j <= maxColIndex; j++) {
-            const fieldName = columns[j].column.name;
-            const field = this.dataSet.getField(fieldName);
-            const fieldType = field && field.type;
-            let recordData = record.get(fieldName);
-
-            if (clipboard && !isCopyPristine) {
+            let recordData;
+            const fieldName = columns[j].column.name || String(columns[j].column.key || '');
+            if (fieldName === SELECTION_KEY) {
+              recordData = String(record.isSelected);
+            } else {
               const field = this.dataSet.getField(fieldName);
-              if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
-                // 处理 lookup、lov
-                recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData);
+              if (field) {
+                const fieldType = field && field.type;
+                recordData = record.get(fieldName);
+
+                if (clipboard && !isCopyPristine) {
+                  const field = this.dataSet.getField(fieldName);
+                  if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+                    // 处理 lookup、lov
+                    recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData);
+                  }
+                  if (field && fieldType === 'boolean') {
+                    const text = field.getText(recordData);
+                    recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
+                  }
+                  if (columns[j] && columns[j].column.renderer) {
+                    const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
+                    const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
+                    recordData = td ? td.innerText : null;
+                  }
+                } else if (fieldType === 'object') {
+                  recordData = JSON.stringify(recordData);
+                }
+                // 去掉换行符
+                if (isString(recordData)) {
+                  recordData = recordData.replace(/[\r\n]/g, "")
+                }
               }
-              if (field && fieldType === 'boolean') {
-                const text = field.getText(recordData);
-                recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
-              }
-              if (columns[j] && columns[j].column.renderer) {
-                const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
-                recordData = td ? td.innerText : null;
-              }
-            } else if (fieldType === 'object') {
-              recordData = JSON.stringify(recordData);
             }
-            // 去掉换行符
-            if (isString(recordData)) {
-              recordData = recordData.replace(/[\r\n]/g,"")
-            }
+
             recordData = isNil(recordData) ? '' : recordData;
             copyData.push(j === maxColIndex ? `${recordData} \t\r` : `${recordData} \t`);
           }
@@ -1449,9 +1457,27 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @action
   async handlePasteChoose() {
-    const { columns, currentEditorName } = this.tableStore;
-    if (!currentEditorName) return;
-    const colIndex = columns.findIndex(x => x.name === currentEditorName);
+    const { columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit } = this.tableStore;
+    if (!currentEditorName && !currentEditRecord) return;
+    let colIndex;
+    const columns = columnGroups.leafs;
+    if (currentEditorName) {
+      colIndex = columns.findIndex(x => x.column.name === currentEditorName);
+    } else if (currentEditRecord) {
+      const keys = Array.from(editors.keys());
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const editorItem = editors.get(key);
+        if (editors.get(key)) {
+          const cellIsFocus = editorItem && editorItem.editor && editorItem.editor.isFocus;
+          if (cellIsFocus) {
+            colIndex = columns.findIndex(x => x.column.name === key);
+            break;
+          }
+        }
+      }
+    }
+
     // 先失焦
     this.tableStore.blurEditor();
     if (this.dataSet) {
@@ -1466,7 +1492,10 @@ export default class Table extends DataSetComponent<TableProps> {
       try {
         for (let i = 0; i < rows.length; i++) {
           // 判断超出时自动新增行
-          const editorRowIndex = i + currentIndex;
+          if (currentEditRecord && i > 0) {
+            break;
+          }
+          const editorRowIndex = !currentEditRecord ? i + currentIndex : currentEditRecord.index;
           if (editorRowIndex >= length) {
             this.dataSet.create({}, editorRowIndex + 1);
           }
@@ -1475,12 +1504,12 @@ export default class Table extends DataSetComponent<TableProps> {
           for (let j = 0; j < cols.length; j++) {
             let text: boolean | string | object | number = cols[j];
             const record = this.dataSet.get(editorRowIndex);
-            const column = columns[colIndex + j];
+            const { column } = columns[colIndex + j];
             const fieldName = column.name;
             const field = this.dataSet.getField(fieldName);
             // 非编辑项则跳过赋值
             if (!column.editor || !field || field.disabled || field.readOnly || !this.dataSet) {
-              continue;
+              break;
             }
             const fieldType = field.type;
             const optionDs = field.getOptions();
@@ -1580,11 +1609,14 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
                 break;
             }
-            if (columns[colIndex + j].renderer) {
-              columns[colIndex + j].renderer = () => text;
+            if (columns[colIndex + j].column.renderer) {
+              columns[colIndex + j].column.renderer = () => text;
             }
             batchRecord.push({ record, name: fieldName, value: text });
           }
+        }
+        if (inlineEdit) {
+          this.focus();
         }
         // 再批量赋值
         batchRecord.forEach(item => {
@@ -1597,6 +1629,7 @@ export default class Table extends DataSetComponent<TableProps> {
       runInAction(() => {
         if (this.dataSet) {
           this.dataSet.status = DataSetStatus.ready;
+          this.clearClipboard();
         }
       })
     }
@@ -2062,12 +2095,15 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { dataSet, rowMetaData, isTree, showRemovedRow } = this.tableStore;
+    const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
     const recordFromIndex = rowMetaData ? rowMetaData[resultBefore.source.index].record?.index : undefined;
     const recordToIndex = rowMetaData && resultBefore.destination ? rowMetaData[resultBefore.destination.index].record?.index : undefined;
+    if (clipboard && clipboard.copy) {
+      this.clearClipboard();
+    }
     if (onDragEndBefore) {
       const result = onDragEndBefore(this.tableStore.dataSet, toJS(this.tableStore.columns), resultDrag, provided, [recordFromIndex, recordToIndex]);
       if (result === false) {

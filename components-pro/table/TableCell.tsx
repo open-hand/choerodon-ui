@@ -27,7 +27,7 @@ import { ColumnLock } from './enum';
 import TableCellInner from './TableCellInner';
 import { treeSome } from '../_util/treeUtils';
 import TableGroupCellInner from './TableGroupCellInner';
-import TableStore, { DRAG_KEY, SELECTION_KEY } from './TableStore';
+import TableStore, { DRAG_KEY, SELECTION_KEY, ROW_NUMBER_KEY } from './TableStore';
 import { AggregationTreeProps, groupedAggregationTree } from './AggregationTree';
 import AggregationTreeGroups from './AggregationTreeGroups';
 import { TableVirtualCellProps } from './TableVirtualCell';
@@ -70,7 +70,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
-  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder } = tableStore;
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -118,9 +118,10 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
     // 往上层一直找到  td  元素
     const startTarget = getTdElementByTarget(target);
-    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key);
+    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
     if (colIndex < 0) return;
     if (startTarget) {
       const initPosition = { rowIndex, colIndex, target: startTarget };
@@ -145,9 +146,10 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   }), []);
 
   const handleMouseOver = useCallback(action<(e) => void>((event) => {
+    if ((rowDraggable && !dragColumnAlign) || key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
     if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
-      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key);
-      if (colIndex > 0) {
+      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
+      if (colIndex >= 0) {
         const startTarget = startChooseCell.target;
         const endTarget = getTdElementByTarget(event.target);
         tableStore.endChooseCell = { colIndex, rowIndex, target: endTarget! };
@@ -166,6 +168,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const overflowWrapper = tableBodyWrap || tableContentWrap;
     if (!overflowWrapper) return;
     const tableRect = overflowWrapper.getBoundingClientRect();
+    const overflowYWidth = overflowY ? measureScrollbar() : 0;
 
     const { height, width, x, y } = tableRect;
     const mouseX = event.clientX - x;
@@ -176,7 +179,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       mouseY <= AUTO_SCROLL_SENSITIVITY || mouseY >= height - AUTO_SCROLL_SENSITIVITY - (overflowX ? measureScrollbar('horizontal') : 0);
 
     const hasEnteredHorizontalSensitivityArea =
-      mouseX - leftColumnGroups.width <= AUTO_SCROLL_SENSITIVITY || mouseX >= width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - (overflowY ? measureScrollbar() : 0);
+      (mouseX >= leftColumnGroups.width - AUTO_SCROLL_SENSITIVITY && mouseX <= AUTO_SCROLL_SENSITIVITY + leftColumnGroups.width) ||
+      (mouseX >= width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - overflowYWidth && mouseX <= width - rightColumnGroups.width + AUTO_SCROLL_SENSITIVITY - overflowYWidth);
 
     const hasEnteredSensitivityArea =
       hasEnteredVerticalSensitivityArea || hasEnteredHorizontalSensitivityArea;
@@ -194,7 +198,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     if (tableStore.autoScrollRAF || !mousePosition.current) {
       return;
     }
-    const execScroll= action(()=> {
+    const execScroll = action(() => {
       const { rightColumnGroups, leftColumnGroups, overflowX, overflowY, lastScrollLeft, lastScrollTop } = tableStore;
       const { x: mouseX, y: mouseY } = mousePosition.current!;
       const { height, width } = overflowWrapper.getBoundingClientRect()
@@ -208,7 +212,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
       if (mouseY <= AUTO_SCROLL_SENSITIVITY && overflowY) {
         // 向上滚动，距离越近，滚动的速度越快
-        factor = (AUTO_SCROLL_SENSITIVITY - mouseY) / -AUTO_SCROLL_SENSITIVITY;
+        factor = (AUTO_SCROLL_SENSITIVITY - mouseY) / - AUTO_SCROLL_SENSITIVITY;
         deltaY = AUTO_SCROLL_SPEED;
       } else if (mouseY >= height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY && overflowY) {
         // 向下滚动，距离越近，滚动的速度越快
@@ -223,7 +227,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         factor = (mouseX - (width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - scrollVerticalWidth)) / AUTO_SCROLL_SENSITIVITY;
         deltaX = AUTO_SCROLL_SPEED;
       }
-      
+
       if (deltaX !== 0 || deltaY !== 0) {
         overflowWrapper.scrollTo({
           left: lastScrollLeft + deltaX * factor,
@@ -231,14 +235,14 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         })
       }
       tableStore.autoScrollRAF = requestAnimationFrame(execScroll);
-    }) 
+    })
     execScroll();
   }
 
   const stopAutoScroll = () => {
     if (tableStore.autoScrollRAF) {
       cancelAnimationFrame(tableStore.autoScrollRAF);
-      runInAction(()=>{
+      runInAction(() => {
         tableStore.autoScrollRAF = null;
       })
     }
@@ -250,7 +254,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   }), []);
 
   const isChoose = useMemo(() => {
-    const colIndex = tableStore.columns.findIndex(x => x.name === key);
+    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
     if (startChooseCell && startChooseCell.colIndex === colIndex && startChooseCell.rowIndex === rowIndex) {
       return true;
     }
@@ -284,7 +288,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   }, [startChooseCell, endChooseCell])
 
   const isFirstChoosed = useMemo(() => {
-    const colIndex = tableStore.columns.findIndex(x => x.name === key);
+    const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
     return startChooseCell && startChooseCell.rowIndex === rowIndex && startChooseCell.colIndex === colIndex;
   }, [startChooseCell]);
 
