@@ -430,11 +430,11 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           style={{
             height: viewProps && viewProps.viewHeight || 366,
             overflowX: 'hidden',
-            overflowY: 'scroll',
+            overflowY: 'auto',
           }}
           grid={{ gutter: 16, column: (24 / customizedDS!.current!.get(ViewField.cardWidth)) as ColumnCount || 4 as ColumnCount }}
           dataSet={cardDS}
-          pagination
+          pagination={!!cardDS.paging}
           renderItem={({ record }) => (
             <List.Item key={`${record.id}-card`} className={`${prefixCls}-card-container`}>
               <ReactResizeObserver resizeProp="height" onResize={handleResize} immediately>
