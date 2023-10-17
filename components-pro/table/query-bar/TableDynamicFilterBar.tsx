@@ -1591,7 +1591,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
+    const { onReset = noop, onRefresh = noop, defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
     const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
@@ -1622,6 +1622,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             queryDataSet,
             refEditors: this.refEditors,
             onChange: this.handleSelect,
+            onReset,
+            onRefresh,
             conditionStatus: dataSet.getState(CONDITIONSTATUS),
             onStatusChange: this.setConditionStatus,
             selectFields: dataSet.getState(SELECTFIELDS),

@@ -267,6 +267,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     searchText = 'params',
     loadConditionData = noop,
     defaultActiveKey,
+    onReset = noop,
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -415,6 +416,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       }
     }
     onStatusChange(RecordStatus.sync);
+    onReset();
   };
 
   /**

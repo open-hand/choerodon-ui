@@ -14,6 +14,7 @@ export interface QuickFilterProps {
   queryDataSet: DataSet;
   tempQueryFields?: Fields;
   onChange?: (code: string) => void;
+  onReset?: () => void;
   initConditionFields?: Function;
   conditionStatus?: RecordStatus;
   onStatusChange?: (status: RecordStatus, data?: object) => void;
