@@ -348,8 +348,9 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       multiple,
       text,
       checkStrictly,
+      optionsFilter,
       props: {
-        dropdownMenuStyle, optionRenderer = defaultRenderer, optionsFilter,
+        dropdownMenuStyle, optionRenderer = defaultRenderer,
         treeDefaultExpandAll, treeDefaultExpandedKeys, treeCheckable,
         async, loadData,
       },
