@@ -1341,7 +1341,7 @@ export default class TableStore {
     left?: [number, number];
     center: [number, number];
     right?: [number, number];
-  } {
+    } {
     const { columnGroups: { leafs, leftLeafs, rightLeafs }, columnBuffer } = this;
     if (!this.propVirtual || !this.overflowX) {
       return { center: [0, leafs.length] };
@@ -2926,7 +2926,7 @@ export default class TableStore {
 
             for (let i = firstColIndex; i <= lastColIndex; i++) {
               const col = leafs[i];
-              if (col.column.lock === "left" || col.column.lock === true) {
+              if (col.column.lock === ColumnLock.left || col.column.lock === true) {
                 fixChoosedWidth += col.column.width || 0;
                 if (i === firstColIndex) {
                   fixChoosedLeft = (startChooseCell.colIndex === firstColIndex ? startChooseCell.target.offsetLeft : endChooseCell.target.offsetLeft);
@@ -2942,7 +2942,7 @@ export default class TableStore {
 
             for (let i = lastColIndex; i >= firstColIndex; i--) {
               const col = leafs[i];
-              if (col.column.lock === "right") {
+              if (col.column.lock === ColumnLock.right) {
                 fixChoosedWidth += col.column.width || 0;
                 if (lastColIndex === i && customizable && lastColIndex === columnGroups.leafs.length - 2) {
                   fixChoosedWidth += (leafs[i + 1].column.width || 0);

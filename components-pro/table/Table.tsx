@@ -94,7 +94,7 @@ import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
-import { DataSetEvents, DataSetSelection, DataSetStatus, RecordStatus } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
@@ -1416,16 +1416,15 @@ export default class Table extends DataSetComponent<TableProps> {
             } else {
               const field = this.dataSet.getField(fieldName);
               if (field) {
-                const fieldType = field && field.type;
+                const fieldType = field && field.get('type', record);
                 recordData = record.get(fieldName);
 
                 if (clipboard && !isCopyPristine) {
-                  const field = this.dataSet.getField(fieldName);
-                  if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+                  if (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record)) {
                     // 处理 lookup、lov
                     recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData);
                   }
-                  if (field && fieldType === 'boolean') {
+                  if (field && fieldType === FieldType.boolean) {
                     const text = field.getText(recordData);
                     recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
                   }
@@ -1434,7 +1433,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
                     recordData = td ? td.innerText : null;
                   }
-                } else if (fieldType === 'object') {
+                } else if (fieldType === FieldType.object) {
                   recordData = JSON.stringify(recordData);
                 }
                 // 去掉换行符
@@ -1515,7 +1514,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const optionDs = field.getOptions();
 
             const jsonText = isJsonString(text);
-            if (fieldType !== 'object' || !jsonText) {
+            if (fieldType !== FieldType.object || !jsonText) {
               text = String(text).trim();
               if (text.includes(',')) { // 默认以英文逗号分割
                 text = text.split(',');
@@ -1524,41 +1523,41 @@ export default class Table extends DataSetComponent<TableProps> {
               }
             }
             switch (fieldType) {
-              case 'boolean':
+              case FieldType.boolean:
                 text = String(text).toLowerCase() === 'true' || String(text) === "1" || String(text) === "是";
                 break;
-              case 'number':
+              case FieldType.number:
                 if (isArrayLike(text)) {
                   text = text.map(item => Number(item));
                 } else {
                   text = Number(text);
                 }
                 break;
-              case 'date':
-              case 'dateTime':
-              case 'month':
-              case 'year':
+              case FieldType.date:
+              case FieldType.dateTime:
+              case FieldType.month:
+              case FieldType.year:
                 if (isArrayLike(text)) {
                   text = text.map(item => moment(item));
                 } else {
                   text = moment(text);
                 }
                 break;
-              case 'week':
+              case FieldType.week:
                 if (isArrayLike(text)) {
                   text = text.map(item => moment(getDateByISOWeek(item)));
                 } else {
                   text = moment(getDateByISOWeek(text));
                 }
                 break;
-              case 'time':
+              case FieldType.time:
                 if (isArrayLike(text)) {
                   text = text.map(item => moment(`${moment().format('YYYY-MM-DD')} ${item}`));
                 } else {
                   text = moment(`${moment().format('YYYY-MM-DD')} ${text}`);
                 }
                 break;
-              case 'object':
+              case FieldType.object:
                 if (jsonText) {
                   text = attempt(JSON.parse, text);
                 } else if (optionDs) {
