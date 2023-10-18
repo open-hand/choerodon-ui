@@ -197,11 +197,11 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   }
 
   handleAnimationEnd = (modalKey, isEnter) => {
-    if (!isEnter) {
-      const { modals } = this.state;
-      const index = this.findIndex(modalKey);
-      if (index !== -1) {
-        const props = modals[index];
+    const { modals } = this.state;
+    const index = this.findIndex(modalKey);
+    if (index !== -1) {
+      const props = modals[index];
+      if (!isEnter) {
         modals.splice(index, 1);
         if (!props.destroyOnClose) {
           modals.unshift(props);
@@ -210,6 +210,9 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
           props.afterClose();
         }
         this.updateModals(modals);
+      }
+      if (props.afterOpenChange) {
+        props.afterOpenChange(isEnter);
       }
     }
   };

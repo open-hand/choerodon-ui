@@ -12,6 +12,7 @@ import defer from 'lodash/defer';
 import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
+import throttle from 'lodash/throttle';
 import classNames from 'classnames';
 import classes from 'component-classes';
 import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -119,6 +120,7 @@ export interface ModalProps extends ViewComponentProps {
   customizable?: boolean;
   customizedCode?: string;
   beforeOpen?: () => void;
+  afterOpenChange?: (open: boolean) => void;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -308,8 +310,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     this.cancelButton = node;
   }
 
-  @autobind
-  handleKeyDown(e) {
+  handleKeyDown = throttle((e) => {
     if (e.keyCode === KeyCode.ESC) {
       e.stopPropagation();
       const { cancelButton } = this;
@@ -322,7 +323,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (e.keyCode === KeyCode.TAB && !this.props.hidden) {
       this.changeActive(!e.shiftKey);
     }
-  }
+  }, 300, { trailing: false });
 
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
@@ -371,6 +372,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'customizable',
       'customizedCode',
       'beforeOpen',
+      'afterOpenChange',
     ]);
   }
 
