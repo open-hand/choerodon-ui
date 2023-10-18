@@ -24,7 +24,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: 新增 checkStrictly 属性，并支持 DataSet 的 treeCheckStrictly 属性。
 - 🌟 `<pro>Table`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>DataSet`: 新增 generateOrderQueryString 方法。
-- 🌟 `<pro>Modal`: 新增 beforeOpen 属性。
+- 🌟 `<pro>Modal`: 新增 beforeOpen, afterOpenChange 属性。
 - 💄 `<pro>TriggerField`: 扩展 popupContent 参数支持 content。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化个性化内列 hidden 类型判断。
@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化 delete 删除临时数据时的 current 记录定位。
 - 💄 `<pro>Form`: 优化当设置 layout 为 none 且 showHelp 为 label 时，栅格布局下 help 信息显示。
 - 💄 `<pro>Attachment`: 优化支持 listType 为 text 模式下图片类型异步预览。
+- 💄 `<pro>Modal`: 优化连续按下 ESC 键，触发多次关闭弹窗回调的问题。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Modal`: 修复 ModalContainer 卸载时实例未清除，导致后续 Modal 无法打开的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。

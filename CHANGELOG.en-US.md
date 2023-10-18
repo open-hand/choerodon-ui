@@ -24,7 +24,7 @@ timeline: true
 - 🌟 `<pro>TreeSelect`: Added the `checkStrictly` property and support for the `treeCheckStrictly` property of the `DataSet`.
 - 🌟 `<pro>Table`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 🌟 `<pro>DataSet`: Added `generateOrderQueryString` method.
-- 🌟 `<pro>Modal`: Added `beforeOpen` property.
+- 🌟 `<pro>Modal`: Added `beforeOpen`, `afterOpenChange` properties.
 - 💄 `<pro>TriggerField`: Extended `popupContent` parameter supports `content`.
 - 💄 `<pro>Table`: Optimize dynamic filter bar cascade query field interaction.
 - 💄 `<pro>Table`: Optimize the hidden type judgment of personalized inner columns.
@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>DatePicker`: Optimize the style of `today` in the selection panel.
 - 💄 `<pro>DataSet`: Optimize the current record positioning when delete deletes temporary data.
 - 💄 `<pro>Form`: Optimization When `layout` is set to `none` and `showHelp` is set to `label`, `help` information is displayed in the grid layout.
+- 💄 `<pro>Modal`: Optimized the problem of repeatedly pressing the `ESC` key to trigger a callback to close the pop-up window.
 - 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
 - 🐞 `<pro>Modal`: Fixed the issue that the instance was not cleared when ModalContainer was unmounted, causing subsequent Modal to fail to open.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.

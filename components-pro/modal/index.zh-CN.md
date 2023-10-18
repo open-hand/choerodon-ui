@@ -54,6 +54,7 @@ title: Modal
 | customizedCode | 个性化编码，设置后默认将会存储调整大小后的宽高等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/components/configure)中的表格个性化钩子： `customizedSave` `customizedLoad` | string | |
 | transitionAppear | 是否开启 Modal 打开和关闭时的动画 | boolean | true |
 | beforeOpen | 弹框打开前回调 | () => void |  |
+| afterOpenChange | 打开和关闭 Modal 时动画结束后的回调 | (open: boolean) => void |  |
 
 <style>
 .code-box-demo .c7n-pro-btn {
