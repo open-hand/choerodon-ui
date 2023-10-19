@@ -219,6 +219,10 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   optionRenderer?: Renderer;
   /**
+   * 渲染 group 文本的钩子
+   */
+  groupRenderer?: Renderer;
+  /**
    * 渲染分页 Item 内容
    */
   pagingOptionContent?: string | ReactNode;
@@ -655,6 +659,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getMenu(menuProps: object = {}): ReactNode {
     const {
       options,
+      props: { groupRenderer },
     } = this;
     if (!options) {
       return null;
@@ -678,12 +683,17 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
         const label = record.get(field);
+        let renderLable: ReactNode = label;
+        if (groupRenderer && typeof groupRenderer === 'function') {
+          renderLable = groupRenderer({ record, dataSet: options, text: label, value: label });
+        }
         if (label !== undefined) {
+          const groupKey = `group-${label}`;
           if (!previousGroup) {
-            previousGroup = optGroups.find(item => item.props.title === label);
+            previousGroup = optGroups.find(item => item.key === groupKey);
             if (!previousGroup) {
               previousGroup = (
-                <ItemGroup key={`group-${label}`} title={label}>
+                <ItemGroup key={groupKey} title={renderLable}>
                   {[]}
                 </ItemGroup>
               );
@@ -691,10 +701,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
             }
           } else {
             const { children } = previousGroup.props;
-            previousGroup = children.find(item => item.props.title === label);
+            previousGroup = children.find(item => item.key === groupKey);
             if (!previousGroup) {
               previousGroup = (
-                <ItemGroup key={`group-${label}`} title={label}>
+                <ItemGroup key={groupKey} title={renderLable}>
                   {[]}
                 </ItemGroup>
               );

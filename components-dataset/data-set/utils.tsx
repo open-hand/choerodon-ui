@@ -127,7 +127,7 @@ export function processToJSON(value, field: Field, record?: Record) {
     const range = field.get('range', record);
     if (isArrayLike(value) && (multiple || !range)) {
       value = value.map(v => processOneToJSON(v, field, record));
-      if (isString(multiple)) {
+      if (isString(multiple) && field.get('type', record) !== FieldType.object) {
         return value.join(multiple);
       }
       return value;
