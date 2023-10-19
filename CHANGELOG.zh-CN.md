@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>DataSet`: 新增 generateOrderQueryString 方法。
 - 🌟 `<pro>Modal`: 新增 beforeOpen, afterOpenChange 属性。
+- 🌟 `<pro>Select`: 新增 groupRenderer 属性。
 - 💄 `<pro>TriggerField`: 扩展 popupContent 参数支持 content。
 - 💄 `<pro>Table`: 优化动态筛选条级联查询字段交互。
 - 💄 `<pro>Table`: 优化个性化内列 hidden 类型判断。
