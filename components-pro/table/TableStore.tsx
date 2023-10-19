@@ -2913,10 +2913,11 @@ export default class TableStore {
         if (startChooseCell && endChooseCell) {
           const [firstColIndex, lastColIndex] = [startChooseCell.colIndex, endChooseCell.colIndex].sort((a, b) => a - b);
 
-          const { leafs, rightLeafs } = columnGroups;
+          const { leafs } = columnGroups;
           let totalWidth = leafs.slice(firstColIndex, lastColIndex + 1).reduce((total, col) => total + (col.column.width || 0), 0);
           // 存在自定义列的情况
-          if (leafs[lastColIndex + 1] && customizable && rightLeafs[rightLeafs.length - 2] === leafs[lastColIndex]) {
+          const lastLeafs = leafs[lastColIndex + 1];
+          if (customizable && lastLeafs && lastLeafs.key === CUSTOMIZED_KEY) {
             totalWidth += (leafs[lastColIndex + 1].column.width || 0);
           }
 
