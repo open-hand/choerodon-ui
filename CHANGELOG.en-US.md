@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
 - 🐞 `<pro>Lov`: Fix the condition that the query condition is not cleared when re-expanding in popup mode.
 - 🐞 `<pro>Lov`: Fixed the issue of double-clicking the selection drop-down in popup mode.
+- 🐞 `<pro>Lov`: Fixed an issue where a record error was checked when `multiple` selections were set and the option display value was `ReactElement` type.
 - 🐞 `<pro>PerformanceTable`: Fixed dynamic filter bar saving issue.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the initialization status of the dynamic filter bar was wrong.
 - 🐞 `<pro>PerformanceTable`: Fixed the problem of misaligned content caused by sliding the scrollbar in the case of large data table with fixed column merge.
@@ -53,7 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where the `unique` check failed when the field value became a `BigNumber` type.
 - 🐞 `<pro>NumberField`: Fixed the issue that a period can be entered in integer mode.
 - 🐞 `<pro>Attachment`: Fixed the problem that read-only and disabled are invalid in drag-and-drop mode.
-- 🐞 `<pro>Select`: Fixed an issue where a record error was checked when `multiple` selections were set and the option display value was `ReactElement` type.
+- 🐞 `<pro>Select`: Fixed the issue of not updating values when selecting the same amount of data when multiple is a comma.
 - 🐞 `<pro>FormField`: Fixed an error in the display information that required verification failed when the `Field` dynamic `label` was set.
 - 🐞 `<pro>Table`: Fixed the issue that the filter attribute does not take effect when groups grouping is turned on.
 - 🐞 `<pro>Table`: Fixed the problem that the `onReset` callback does not take effect after configuring the dynamic filter bar interface.
