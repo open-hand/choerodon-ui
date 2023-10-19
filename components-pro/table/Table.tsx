@@ -1486,7 +1486,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       const { currentIndex, length } = this.dataSet;
       const batchRecord: any = [];
-      const rows = clipText.split('\r').filter(line => line.trim() !== '');
+      const rows = clipText.split('\n').filter(line => line.trim() !== '');
 
       try {
         for (let i = 0; i < rows.length; i++) {
