@@ -146,7 +146,7 @@ const LabelHelp: FunctionComponent<LabelHelpProps> = (props) => {
 LabelHelp.displayName = 'LabelHelp';
 
 const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
-  const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, requiredMarkAlign, getProPrefixCls } = useContext(FormContext);
+  const { getConfig, dataSet, record, labelLayout = getConfig('labelLayout'), labelAlign, labelWidth: contextLabelWidth = defaultLabelWidth, labelTooltip, useColon, requiredMarkAlign, getProPrefixCls, showHelp } = useContext(FormContext);
   const { children, useColon: fieldUseColon = useColon, requiredMarkAlign: fieldRequiredMarkAlign = requiredMarkAlign, ...rest } = props;
   const child = Children.only<ReactElement<FormFieldProps>>(children);
   if (isValidElement<FormFieldProps>(child)) {
@@ -170,7 +170,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     const required = getPropertyDSFirst(fieldProps, 'required', dataSet, record);
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
     const help = getProperty(fieldProps, 'help', dataSet, record);
-    const isLabelShowHelp = (fieldElementProps.showHelp || getConfig('showHelp')) === ShowHelp.label;
+    const isLabelShowHelp = (fieldElementProps.showHelp || showHelp || getConfig('showHelp')) === ShowHelp.label;
     const isOutput = labelLayout === LabelLayout.horizontal && ((child.type as any).displayName === 'Output' || intlFieldOutput);
     const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-grid`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
       [`${prefixCls}-required`]: required && !((child.type as any).displayName === 'Output' || intlFieldOutput),
