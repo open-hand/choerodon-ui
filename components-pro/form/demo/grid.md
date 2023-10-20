@@ -100,6 +100,7 @@ class App extends React.Component {
           header="栅格布局"
           record={this.ds.current}
           layout="none"
+          showHelp='label'
           useColon={current.get('useColon')}
           labelAlign={current.get('labelAlign')}
           labelLayout={current.get('labelLayout')}
@@ -107,7 +108,7 @@ class App extends React.Component {
         >
           <Row gutter={10}>
             <Col span={6}>
-              <Form.Item help='请正确填写手机号' showHelp='label'>
+              <Form.Item help='请正确填写手机号'>
                 <TextField pattern="1[3-9]\d{9}" name="phone" />
               </Form.Item>
             </Col>
