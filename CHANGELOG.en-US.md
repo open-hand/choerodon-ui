@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the current record positioning when delete deletes temporary data.
 - 💄 `<pro>Form`: Optimization When `layout` is set to `none` and `showHelp` is set to `label`, `help` information is displayed in the grid layout.
 - 💄 `<pro>Modal`: Optimized the problem of repeatedly pressing the `ESC` key to trigger a callback to close the pop-up window.
+- 💄 `<pro>Lov`: Optimize Popup Lov to support carriage return selection.
 - 🐞 `<pro>Table`: Fixed an issue where the sort icon would display incorrectly when setting `combineSort` and table column front sort.
 - 🐞 `<pro>Modal`: Fixed the issue that the instance was not cleared when ModalContainer was unmounted, causing subsequent Modal to fail to open.
 - 🐞 `<pro>Lov`: Fixed an issue where `onEnterDown` events failed.
