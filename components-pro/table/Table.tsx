@@ -1444,7 +1444,7 @@ export default class Table extends DataSetComponent<TableProps> {
             }
 
             recordData = isNil(recordData) ? '' : recordData;
-            copyData.push(j === maxColIndex ? `${recordData} \t\r` : `${recordData} \t`);
+            copyData.push(j === maxColIndex ? `${recordData} \t\n` : `${recordData} \t`);
           }
         }
         navigator.clipboard.writeText(copyData.join('')).then(() => {

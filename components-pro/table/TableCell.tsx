@@ -163,7 +163,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const autoScroll = (event) => {
     // 控制滚动条自动滚动
-    const { node, rightColumnGroups, leftColumnGroups, overflowY, overflowX } = tableStore;
+    const { node, rightColumnGroups, leftColumnGroups, overflowY, overflowX, lastScrollLeft, lastScrollTop } = tableStore;
     const { tableContentWrap, tableBodyWrap } = node;
     const overflowWrapper = tableBodyWrap || tableContentWrap;
     if (!overflowWrapper) return;
@@ -175,12 +175,15 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const mouseY = event.clientY - y;
     mousePosition.current = { x: mouseX, y: mouseY };
 
+    const maxScrollLeft = overflowWrapper.scrollWidth - overflowWrapper.clientWidth;
+    const maxScrollHeight = overflowWrapper.scrollHeight - overflowWrapper.clientHeight;
+
     const hasEnteredVerticalSensitivityArea =
-      mouseY <= AUTO_SCROLL_SENSITIVITY || mouseY >= height - AUTO_SCROLL_SENSITIVITY - (overflowX ? measureScrollbar('horizontal') : 0);
+     (mouseY <= AUTO_SCROLL_SENSITIVITY && lastScrollTop !== 0) || (lastScrollTop !== maxScrollHeight && mouseY >= height - AUTO_SCROLL_SENSITIVITY - (overflowX ? measureScrollbar('horizontal') : 0));
 
     const hasEnteredHorizontalSensitivityArea =
       (mouseX >= leftColumnGroups.width - AUTO_SCROLL_SENSITIVITY && mouseX <= AUTO_SCROLL_SENSITIVITY + leftColumnGroups.width) ||
-      (mouseX >= width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - overflowYWidth && mouseX <= width - rightColumnGroups.width + AUTO_SCROLL_SENSITIVITY - overflowYWidth);
+      (maxScrollLeft !== lastScrollLeft && mouseX >= width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - overflowYWidth && mouseX <= width - rightColumnGroups.width + AUTO_SCROLL_SENSITIVITY - overflowYWidth);
 
     const hasEnteredSensitivityArea =
       hasEnteredVerticalSensitivityArea || hasEnteredHorizontalSensitivityArea;
@@ -210,11 +213,14 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       const scrollVerticalWidth = overflowY ? measureScrollbar() : 0;
       const scrollHorizontalWidth = overflowX ? measureScrollbar('horizontal') : 0;
 
-      if (mouseY <= AUTO_SCROLL_SENSITIVITY && overflowY) {
+      const maxScrollLeft = overflowWrapper.scrollWidth - overflowWrapper.clientWidth;
+      const maxScrollHeight = overflowWrapper.scrollHeight - overflowWrapper.clientHeight;
+
+      if (mouseY <= AUTO_SCROLL_SENSITIVITY && overflowY && lastScrollTop !== 0) {
         // 向上滚动，距离越近，滚动的速度越快
         factor = (AUTO_SCROLL_SENSITIVITY - mouseY) / - AUTO_SCROLL_SENSITIVITY;
         deltaY = AUTO_SCROLL_SPEED;
-      } else if (mouseY >= height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY && overflowY) {
+      } else if (mouseY >= height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY && overflowY && maxScrollHeight !== lastScrollTop) {
         // 向下滚动，距离越近，滚动的速度越快
         factor = (mouseY - (height - scrollHorizontalWidth - AUTO_SCROLL_SENSITIVITY)) / AUTO_SCROLL_SENSITIVITY;
         deltaY = AUTO_SCROLL_SPEED;
@@ -222,7 +228,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         // 滚动到最左边，距离越近，滚动的速度越快
         factor = (AUTO_SCROLL_SENSITIVITY - mouseX + leftColumnGroups.width) / -AUTO_SCROLL_SENSITIVITY;
         deltaX = AUTO_SCROLL_SPEED;
-      } else if (mouseX >= width - rightColumnGroups.width - scrollVerticalWidth - AUTO_SCROLL_SENSITIVITY && overflowX) {
+      } else if (mouseX >= width - rightColumnGroups.width - scrollVerticalWidth - AUTO_SCROLL_SENSITIVITY && overflowX && maxScrollLeft !== lastScrollLeft) {
         // 滚动到最右边，距离越近，滚动的速度越快
         factor = (mouseX - (width - rightColumnGroups.width - AUTO_SCROLL_SENSITIVITY - scrollVerticalWidth)) / AUTO_SCROLL_SENSITIVITY;
         deltaX = AUTO_SCROLL_SPEED;
