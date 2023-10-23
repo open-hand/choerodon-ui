@@ -76,6 +76,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const { __tableGroup, style, lock, onCell, aggregation } = column;
   const [group, isLast]: [Group | undefined, boolean] = __tableGroup && groupPath && groupPath.find(([path]) => path.name === __tableGroup.name) || [undefined, false];
   const [rowGroup]: [Group | undefined, boolean] = group || !groupPath || !groupPath.length ? [undefined, false] : groupPath[groupPath.length - 1];
+  useEffect(() => {
+    return () => {
+      stopAutoScroll();
+      document.removeEventListener('mouseup', handleDocumentMouseUp);
+    }
+  }, [])
   const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean, headerGroup?: Group) => record ? (
     <TableCellInner
       column={col}
@@ -470,13 +476,6 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       onMouseUp: handleMouseUp,
     }
   }
-
-  useEffect(() => {
-    return () => {
-      stopAutoScroll();
-      document.removeEventListener('mouseup', handleDocumentMouseUp);
-    }
-  }, [])
 
   return (
     <TCell
