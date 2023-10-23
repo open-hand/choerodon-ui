@@ -160,6 +160,7 @@ const locale: Locale = {
     copy_display_success: '表示値のコピーに成功しました',
     copy_pristine_success: '元の値のコピーに成功しました',
     paste_template: 'テンプレートの貼り付け',
+    no_xlsx: 'xlsx構成がありません。エクスポートする前にxlsx構成を構成してください',
   },
   Pagination: {
     page: 'ページ',

@@ -157,6 +157,7 @@ const locale: Locale = {
     copy_display_success: 'Successfully copied display values',
     copy_pristine_success: 'Successfully copied the original value',
     paste_template: 'Paste Template',
+    no_xlsx: 'Missing xlsx configuration, please configure xlsx configuration before exporting',
   },
   Pagination: {
     page: 'Page',

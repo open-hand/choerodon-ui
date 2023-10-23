@@ -1608,8 +1608,9 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
                 break;
             }
-            if (columns[colIndex + j].column.renderer) {
-              columns[colIndex + j].column.renderer = () => text;
+            const columnRenderer = columns[colIndex + j].column.renderer;
+            if (columnRenderer) {
+              columnRenderer({record, text, value: text, name: fieldName, dataSet: this.dataSet});  
             }
             batchRecord.push({ record, name: fieldName, value: text });
           }

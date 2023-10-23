@@ -16,6 +16,7 @@ import Tooltip from '../tooltip';
 import Button from '../button';
 import { ButtonColor, FuncType } from '../button/enum';
 import { Size } from '../core/enum';
+import message from '../message';
 
 const { Text } = Typography;
 
@@ -26,23 +27,32 @@ export interface ClipboardBarProps {
 const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar(props) {
   const { clipboard } = props;
   const { tableStore, prefixCls, dataSet } = useContext(TableContext);
-  const { columns } = tableStore;
+
   const refText = useRef<HTMLDivElement>(null);
 
   const handleDownloadtemplate = useCallback(() => {
+    const getXlsxConfig = getConfig('xlsx');
+    if (getXlsxConfig.name !== 'xlsx') {
+      message.warning($l('Table', 'no_xlsx'));
+      return;
+    }
+    const { columnGroups: { leafs } } = tableStore;
     const templateHeader = {}; // 表头
     const templateType = {}; // 字段类型
     const templateIsMutiple = {}; // 是否多值
-    for (let i = 0; i < columns.length; i++) {
-      const item = columns[i];
-      if (item && item.name) {
-        const label = dataSet.fields.get(item.name)?.get('label');
-        const type = dataSet.fields.get(item.name)?.get('type');
-        const isMutiple = dataSet.fields.get(item.name)?.get('multiple');
-        templateHeader[item.name] = label;
-        templateType[item.name] = type;
-
-        templateIsMutiple[item.name] = isMutiple;
+    for (let i = 0; i < leafs.length; i++) {
+      const item = leafs[i];
+      const columnName = item && item.column.name;
+      if (columnName) {
+        const field = dataSet.fields.get(columnName)
+        if (field) {
+          const label = field.get('label');
+          const type = field.get('type');
+          const isMutiple = field.get('multiple');
+          templateHeader[columnName] = label;
+          templateType[columnName] = type;
+          templateIsMutiple[columnName] = isMutiple;
+        }
       }
     }
     const data: any = [];
@@ -98,8 +108,8 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
       data.push(row);
     }
     data.unshift(templateHeader);
-    exportExcel(data, $l('Table', 'paste_template'), getConfig('xlsx'));
-  }, [columns, dataSet])
+    exportExcel(data, $l('Table', 'paste_template'), getXlsxConfig);
+  }, [dataSet])
 
   const clipboardDescription = useMemo(() => {
     if (clipboard.description) {

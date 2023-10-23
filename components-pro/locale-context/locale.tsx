@@ -159,6 +159,7 @@ export interface Locale extends DataSetLocale {
     copy_display_success: string,
     copy_pristine_success: string,
     paste_template: string,
+    no_xlsx: string,
   };
   Pagination: {
     page: string;

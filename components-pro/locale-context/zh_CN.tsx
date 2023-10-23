@@ -157,6 +157,7 @@ const locale: Locale = {
     copy_display_success: '复制显示值成功',
     copy_pristine_success: '复制原始值成功',
     paste_template: '粘贴模板',
+    no_xlsx: '缺少 xlsx 配置，请先配置 xlsx 后再进行下载',
   },
   Pagination: {
     page: '页',
