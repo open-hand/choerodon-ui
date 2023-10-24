@@ -2914,11 +2914,11 @@ export default class TableStore {
           const [firstColIndex, lastColIndex] = [startChooseCell.colIndex, endChooseCell.colIndex].sort((a, b) => a - b);
 
           const { leafs } = columnGroups;
-          let totalWidth = leafs.slice(firstColIndex, lastColIndex + 1).reduce((total, col) => total + (col.column.width || 0), 0);
+          let totalWidth = leafs.slice(firstColIndex, lastColIndex + 1).reduce((total, col) => total + (col.width || 0), 0);
           // 存在自定义列的情况
           const lastLeafs = leafs[lastColIndex + 1];
           if (customizable && lastLeafs && lastLeafs.key === CUSTOMIZED_KEY) {
-            totalWidth += (leafs[lastColIndex + 1].column.width || 0);
+            totalWidth += (leafs[lastColIndex + 1].width || 0);
           }
 
           if (fixLeftLength) {
@@ -2928,7 +2928,7 @@ export default class TableStore {
             for (let i = firstColIndex; i <= lastColIndex; i++) {
               const col = leafs[i];
               if (col.column.lock === ColumnLock.left || col.column.lock === true) {
-                fixChoosedWidth += col.column.width || 0;
+                fixChoosedWidth += col.width || 0;
                 if (i === firstColIndex) {
                   fixChoosedLeft = (startChooseCell.colIndex === firstColIndex ? startChooseCell.target.offsetLeft : endChooseCell.target.offsetLeft);
                 }
@@ -2944,12 +2944,12 @@ export default class TableStore {
             for (let i = lastColIndex; i >= firstColIndex; i--) {
               const col = leafs[i];
               if (col.column.lock === ColumnLock.right) {
-                fixChoosedWidth += col.column.width || 0;
+                fixChoosedWidth += col.width || 0;
                 if (lastColIndex === i && customizable && lastColIndex === columnGroups.leafs.length - 2) {
-                  fixChoosedWidth += (leafs[i + 1].column.width || 0);
+                  fixChoosedWidth += (leafs[i + 1].width || 0);
                 }
               } else if (!col.column.lock) {
-                unFixedWidth += col.column.width || 0
+                unFixedWidth += col.width || 0
                 minLeft = col.left;
               }
             }

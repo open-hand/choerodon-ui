@@ -5,6 +5,7 @@ import isFunction from 'lodash/isFunction';
 import flatten from 'lodash/flatten';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import eq from 'lodash/eq';
 import defaultTo from 'lodash/defaultTo';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
@@ -762,9 +763,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (flag) {
       runInAction(() => this.setSelectionColumn(nextProps));
     }
-    const prevOmitState = omit(this.state, ['width', 'contentWidth']);
-    const nextOmitState = omit(nextState, ['width', 'contentWidth']);
-    return !isEqual(this.props, nextProps) || !isEqual(prevOmitState, nextOmitState);
+    return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
@@ -997,7 +996,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           return Math.min(offsetHeight, headerHeight + contentHeight + (showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH) + diff) - diff;
         }
       }
-    } 
+    }
     return tableHeight;
   }
 
@@ -1838,11 +1837,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // 第一根手指的坐标
       const one = {
         x: events1.pageX,
-        y: events1.pageY, 
-      }; 
+        y: events1.pageY,
+      };
       // 第二根手指的坐标
       const two = {
-        x: events2.pageX, 
+        x: events2.pageX,
         y: events2.pageY,
       };
       // 取手指中间坐标
@@ -1864,10 +1863,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const one = {
         x: events1.pageX,
         y: events1.pageY,
-      }; 
+      };
       // 第二根手指的横坐标
       const two = {
-        x: events2.pageX, 
+        x: events2.pageX,
         y: events2.pageY,
       };
       const distance = getDistance(one, two);
@@ -2597,7 +2596,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               snapshot={snapshot}
               isHeaderRow={isHeaderRow}
               rowRef={this.bindTableRowsRef(props.key!, rowData, provided)}
-              // {...(rowDragRender && rowDragRender.draggableProps)} todo
+            // {...(rowDragRender && rowDragRender.draggableProps)} todo
             >
               <CellGroup
                 provided={provided}
@@ -3163,7 +3162,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const height = this.getTableHeight();
 
     const styles = {
-      width: width || 'auto',
+      width: rest.width || 'auto',
       height: height,
       lineHeight: `${toPx(this.getRowHeight())}px`,
       ...style,
