@@ -230,12 +230,13 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         );
       }
       if (checkField && !tableStore.hasCheckFieldColumn) {
+        const indeterminate = !dataSet.props.treeCheckStrictly && record.isIndeterminate;
         return (
           <ObserverCheckBox
             name={checkField}
             record={record}
             disabled={disabled}
-            indeterminate={record.isIndeterminate}
+            indeterminate={indeterminate}
           />
         );
       }
