@@ -33,6 +33,7 @@ export interface AttachmentListProps {
   uploadButton?: ReactNode;
   sortable?: boolean;
   readOnly?: boolean;
+  disabled?: boolean;
   showHistory?: boolean;
   showSize?: boolean;
   isPublic?: boolean;
@@ -57,6 +58,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     uploadButton,
     sortable,
     readOnly,
+    disabled,
     onFetchAttachments,
     onAttachmentsChange,
     limit,
@@ -135,6 +137,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 onUpload={onUpload}
                 isCard={isCard}
                 readOnly={readOnly}
+                disabled={disabled}
                 restCount={restCount}
                 draggable={itemDraggable}
                 index={itemIndex}

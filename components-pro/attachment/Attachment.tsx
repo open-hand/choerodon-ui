@@ -354,6 +354,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'onUploadSuccess',
       'onUploadError',
       'onRemove',
+      'getPreviewUrl',
     ]);
   }
 
@@ -838,7 +839,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, 
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -866,6 +867,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           sortable={sortable}
           showSize={showSize}
           readOnly={readOnly}
+          disabled={disabled}
           isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
           previewTarget={previewTarget}

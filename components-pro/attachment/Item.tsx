@@ -35,6 +35,7 @@ export interface ItemProps {
   onPreview?: () => void;
   onRemove: (attachment: AttachmentFile) => Promise<any> | undefined;
   readOnly?: boolean;
+  disabled?: boolean;
   isCard?: boolean;
   prefixCls?: string;
   pictureWidth?: number;
@@ -58,7 +59,7 @@ export interface ItemProps {
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
-    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
+    bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
     getPreviewUrl: getPreviewUrlProp,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
@@ -328,12 +329,13 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
               }
               break;
             case AttachmentButtonType.remove:
-              if (attachmentUUID && !readOnly && status !== 'uploading') {
+              if (attachmentUUID && status !== 'uploading') {
                 buttons.splice(
                   index,
                   1,
                   <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
                     <Button
+                      hidden={readOnly || disabled}
                       {...defaultButtonProps}
                       {...btnProps}
                     />

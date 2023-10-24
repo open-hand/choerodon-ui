@@ -26,10 +26,12 @@ const App = () => {
     label: '技术附件',
     labelLayout: 'float',
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
-    max: 9,
+    max: 3,
     value,
     onChange: setValue,
     showHistory: true,
+    disabled: true,
+    //buttons: [['remove', { hidden: false }]],
     help: '支持文件类型： .deb .txt .pdf image/*',
   };
 
