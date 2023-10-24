@@ -89,6 +89,8 @@ import {
   isStickySupport,
   onlyCustomizedColumn,
   isJsonString,
+  copyToClipboard,
+  pasteFromClipboard,
 } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -903,6 +905,11 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
+  navigatorClipboard = navigator.clipboard || {
+    writeText: copyToClipboard,
+    readText: pasteFromClipboard,
+  }
+
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls, element } = this;
     return element ? element.querySelector(
@@ -1447,7 +1454,7 @@ export default class Table extends DataSetComponent<TableProps> {
             copyData.push(j === maxColIndex ? `${recordData} \t\n` : `${recordData} \t`);
           }
         }
-        navigator.clipboard.writeText(copyData.join('')).then(() => {
+        this.navigatorClipboard.writeText(copyData.join('')).then(() => {
           message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
         });
       }
@@ -1482,7 +1489,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       this.dataSet.status = DataSetStatus.loading;
     }
-    const clipText = await navigator.clipboard.readText();
+    const clipText = await this.navigatorClipboard.readText();
     if (this.dataSet) {
       const { currentIndex, length } = this.dataSet;
       const batchRecord: any = [];
@@ -1610,7 +1617,7 @@ export default class Table extends DataSetComponent<TableProps> {
             }
             const columnRenderer = columns[colIndex + j].column.renderer;
             if (columnRenderer) {
-              columnRenderer({record, text, value: text, name: fieldName, dataSet: this.dataSet});  
+              columnRenderer({ record, text, value: text, name: fieldName, dataSet: this.dataSet });
             }
             batchRecord.push({ record, name: fieldName, value: text });
           }

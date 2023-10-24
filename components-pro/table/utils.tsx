@@ -502,3 +502,39 @@ export function getDateByISOWeek(week): Moment {
   }
   return moment();
 }
+
+// 复制文本到剪贴板
+export function copyToClipboard(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // 将文本框添加到文档并选中文本
+  document.body.appendChild(textArea);
+  textArea.select();
+
+  // 执行复制命令
+  document.execCommand('copy');
+
+  // 清理并删除文本框
+  document.body.removeChild(textArea);
+}
+
+// 从剪贴板中粘贴文本
+export function pasteFromClipboard() {
+  const textArea = document.createElement("textarea");
+
+  // 将文本框添加到文档
+  document.body.appendChild(textArea);
+
+  // 焦点文本框并执行粘贴命令
+  textArea.focus();
+  document.execCommand('paste');
+
+  // 获取粘贴的文本
+  const pastedText = textArea.value;
+
+  // 清理并删除文本框
+  document.body.removeChild(textArea);
+
+  return pastedText;
+}
