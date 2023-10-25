@@ -905,11 +905,6 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
-  navigatorClipboard = navigator.clipboard || {
-    writeText: copyToClipboard,
-    readText: pasteFromClipboard,
-  }
-
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls, element } = this;
     return element ? element.querySelector(
@@ -1454,7 +1449,7 @@ export default class Table extends DataSetComponent<TableProps> {
             copyData.push(j === maxColIndex ? `${recordData} \t\n` : `${recordData} \t`);
           }
         }
-        this.navigatorClipboard.writeText(copyData.join('')).then(() => {
+        copyToClipboard().writeText(copyData.join('')).then(() => {
           message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
         });
       }
@@ -1463,7 +1458,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @action
   async handlePasteChoose() {
-    const { columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit } = this.tableStore;
+    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit } = this.tableStore;
     if (!currentEditorName && !currentEditRecord) return;
     let colIndex;
     const columns = columnGroups.leafs;
@@ -1489,7 +1484,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       this.dataSet.status = DataSetStatus.loading;
     }
-    const clipText = await this.navigatorClipboard.readText();
+    const clipText = await pasteFromClipboard(node.element);
     if (this.dataSet) {
       const { currentIndex, length } = this.dataSet;
       const batchRecord: any = [];
