@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
-import 'codemirror/addon/display/placeholder.js';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -23,6 +22,8 @@ let CodeMirror: ComponentClass<CodeMirrorProps>;
 if (typeof window !== 'undefined') {
   // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   CodeMirror = require('react-codemirror2').Controlled;
+  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+  require('codemirror/addon/display/placeholder.js');
 }
 
 export {
