@@ -1264,7 +1264,7 @@ export default class Field {
     const lookupCode = this.get('lookupCode', record);
     const useLookupBatch = lookupCode && this.dataSet.getConfig('useLookupBatch')(lookupCode, this) !== false;
     let promise;
-    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch) {
+    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);

@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: Fixed the issue that a period can be entered in integer mode.
 - 🐞 `<pro>Attachment`: Fixed the problem that read-only and disabled are invalid in drag-and-drop mode.
 - 🐞 `<pro>Select`: Fixed the issue of not updating values when selecting the same amount of data when multiple is a comma.
+- 🐞 `<pro>Select`: Fixed the problem that `noCache` is invalid under batch query.
 - 🐞 `<pro>FormField`: Fixed an error in the display information that required verification failed when the `Field` dynamic `label` was set.
 - 🐞 `<pro>Table`: Fixed the issue that the filter attribute does not take effect when groups grouping is turned on.
 - 🐞 `<pro>Table`: Fixed the problem that the `onReset` callback does not take effect after configuring the dynamic filter bar interface.

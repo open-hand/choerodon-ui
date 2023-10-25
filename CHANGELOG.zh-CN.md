@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>NumberField`: 修复整数模式下可以输入句号的问题。
 - 🐞 `<pro>Attachment`: 修复拖拽模式下只读、禁用失效的问题。
 - 🐞 `<pro>Select`: 修复了当设置多选且选项显示值为 ReactElement 类型时，勾选报错的问题。
+- 🐞 `<pro>Select`: 修复批量查询下 noCache 失效问题。
 - 🐞 `<pro>FormField`: 修复了当 Field 字段设置动态 label 时，必填校验失败的展示信息错误的问题。
 - 🐞 `<pro>Table`: 修复开启了 groups 分组后，filter 属性不生效的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条配置接口后，onReset 回调不生效的问题。
