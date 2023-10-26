@@ -941,7 +941,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const props: any = {
       ref: (node) => this.refEditors.set(name, node),
       border: false,
-      clearButton: true,
       _inTable: true,
       showValidation: 'tooltip',
       onEnterDown: onEnterDown && isFunction(onEnterDown) ? onEnterDown : (e) => onFieldEnterDown({e, name}),
@@ -1781,7 +1780,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>
               {this.queryFields.slice(0, fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled, help, placeholder } = element.props;
+                const { name, hidden, showHelp, disabled, help, placeholder, label: elLabel } = element.props;
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -1789,7 +1788,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
-                const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
+                const label = elLabel || this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
                 const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {
@@ -1860,7 +1859,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 );
               })}
               {this.queryFields.slice(fieldsLimit).map(element => {
-                const { name, hidden, showHelp, disabled, help, placeholder } = element.props;
+                const { name, hidden, showHelp, disabled, help, placeholder, label: elLabel } = element.props;
                 const isLabelShowHelp = (showHelp || getConfig('showHelp')) === ShowHelp.label;
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
@@ -1868,7 +1867,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 const isRequired = queryField && queryField.get('required');
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
-                const label = this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
+                const label = elLabel || this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
                 const isDisabled = disabled || fieldIsDisabled(queryField, queryDataSet);
                 const itemContentClassName = classNames(`${prefixCls}-filter-content`,
                   {

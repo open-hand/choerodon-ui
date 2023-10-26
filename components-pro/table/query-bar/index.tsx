@@ -792,12 +792,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
+            const clearButton = isValidElement(element) && element.props.clearButton !== undefined ? element.props.clearButton : true;
             filterBarProps = {
               placeholder,
               border: false,
-              clearButton: true,
+              clearButton,
             };
-
           }
           const props: any = {
             key: name,
