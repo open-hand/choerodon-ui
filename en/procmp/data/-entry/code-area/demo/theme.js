@@ -40,6 +40,11 @@ const jsonText = `{
 
 const style = { height: 525 };
 
+const placeholder = `demo:
+function example() {
+  console.log('xxx');
+}`;
+
 class App extends React.Component {
   state = {
     theme: 'neat',
@@ -69,6 +74,7 @@ class App extends React.Component {
           name="content"
           options={{ theme: this.state.theme }}
           style={style}
+          placeholder={placeholder}
         />
         <Switch onChange={this.handleThemeChange} unCheckedChildren="neat">
           eclipse

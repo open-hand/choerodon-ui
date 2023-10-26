@@ -82,6 +82,7 @@ title: API
 | showAllPageSelectionButton | 是否显示切换跨页全选按钮 | boolean | | 1.4.0  |
 | customizable | 是否显示个性化设置入口按钮  | boolean | [globalConfig.customizable](/zh/procmp/configure/configure) | 1.3.0   |
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/zh/procmp/configure/configure)中的表格个性化钩子： customizedSave \| customizedLoad | string | | 1.2.0   |
+| onCustomizedLoad | 表格个性化接口请求回调函数 | (TableCustomized) => Promise<any> | | 1.6.3 |
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | | 1.3.1   |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | | 1.4.0   |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | | 1.4.0   |
@@ -102,6 +103,9 @@ title: API
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
 | boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度 | 'content' \| 'wrapper' | 'content' | 1.5.6 |
 | fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true | 1.5.6 |
+| clipboard | 配置 Table 是否可复制粘贴。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
+| customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 | boolean | false | 1.6.4 |
+| selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  | 1.6.4 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -123,7 +127,7 @@ title: API
 | lock            | 是否锁定， 可选值 false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
 | align           | 文字对齐方式，可选值： left \| center \| right                                                                                                                                                    | string                                                                                                                             |      [globalConfig.tableColumnAlign](/zh/procmp/configure/configure)     |  |
 | resizable       | 是否可调整宽度                                                                                                                                                                                    | boolean                                                                                                                            | [globalConfig.tableColumnResizable](/zh/procmp/configure/configure)      |  |
-| sortable | 是否可排序，前端排序(1.6.0)请定义 CompareFn | boolean \|CompareFn  | false | |
+| sortable | 是否可排序，前端排序(1.6.0)请定义 [CompareFn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#comparefn): (v1, v2, order) => number | boolean \| CompareFn  | false | |
 | filter | 是否可前端过滤 | boolean \| ((props: { record: Record, filterText?: string }) => boolean)  | false | 1.6.0 |
 | filterPopover | 前端过滤自定义筛选，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  | 1.6.0 |
 | hideable | 是否可隐藏 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure)  |  |
@@ -168,6 +172,7 @@ title: API
 | ----------- | ---------------------- | ------ | -------- |
 | paramName   | 输入的过滤条件的字段名 | string | params |
 | placeholder | 输入框的占位符         | string | 过滤表 |
+| queryBarProps.editorProps(1.6.4) | 扩展弹出编辑器属性         | (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object; |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 
@@ -202,7 +207,8 @@ title: API
 | refreshBtn | 刷新按钮  | boolean | true | 1.5.1 |
 | onQuery | 查询回调 | () => void |  | 1.4.5 |
 | onReset | 重置回调 | () => void |  | 1.4.5 |
-| onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | 1.5.7 |
+| onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
+| onFieldEnterDown | 字段回车回调 | () => void  | | 1.6.4 |
 
 #### DynamicFilterBarConfig
 
@@ -288,6 +294,16 @@ configure({
 ```
 
 全局配置操作，建议在初始化的时候进行。更多的配置参考[pagination](/zh/procmp/navigation/pagination/);
+
+### clipboard
+
+剪贴板配置项
+
+| 参数      | 说明       | 类型         | 默认值 |
+| --------- | ---------- | ------------ | ------ |
+| copy | 是否开启表格复制 | boolean | false |
+| paste | 是否开启表格粘贴，开启后只有可编辑的单元格才能被粘贴数据。 | boolean | false |
+| description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - |
 
 ### 导出配置
 

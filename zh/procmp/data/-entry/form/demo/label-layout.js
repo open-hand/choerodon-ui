@@ -193,7 +193,14 @@ const App = () => {
           style={{ height: 80 }}
           help="请输入100~300个字符请输入100~300个字符请输入100~300个字符"
         />
-        <CodeArea colSpan={3} rows={4} label="代码" name="code" required />
+        <CodeArea
+          colSpan={3}
+          rows={4}
+          label="代码"
+          name="code"
+          required
+          placeholder="xxx"
+        />
         <UrlField
           label={<span>个人主页</span>}
           name="homepage"

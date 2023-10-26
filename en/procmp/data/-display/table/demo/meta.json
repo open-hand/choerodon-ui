@@ -507,6 +507,36 @@
       "category": "pro"
     },
     {
+      "filename": "clipboard-paste.js",
+      "title": {
+        "zh": "数据复制&粘贴",
+        "en": "Clipboard-Paste"
+      },
+      "description": {
+        "zh": "实现 Table 与 Excel 表格之间的数据复制、粘贴功能。可编辑区域需要按下 shift 进行鼠标框选。",
+        "en": "Data copy and paste between Table and Excel tables. Editable areas need to be selected by holding down shift."
+      },
+      "order": 32,
+      "screenshot": "",
+      "height": 806,
+      "category": "pro"
+    },
+    {
+      "filename": "multi-table-drag.js",
+      "title": {
+        "zh": "多表拖拽",
+        "en": "MultiTableDrag"
+      },
+      "description": {
+        "zh": "使用 react-beautiful-dnd 扩展多表之间的行拖拽能力。开启 rowDraggable 和 customDragDropContenxt 属性，同时使用 id 属性区分 Table 拖拽标识. 批量拖拽参考：https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/patterns/multi-drag.md",
+        "en": "Extend row dragging between multiple tables using react-beautiful-dnd.Enable the rowDraggable and customDragDropContenxt attributes, and use the code attribute to differentiate between table drags. multi-drag：https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/patterns/multi-drag.md"
+      },
+      "order": 33,
+      "screenshot": "",
+      "height": 450,
+      "category": "pro"
+    },
+    {
       "filename": "multifunction.js",
       "title": {
         "zh": "功能总和",

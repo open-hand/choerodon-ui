@@ -3,18 +3,33 @@ import ReactDOM from 'react-dom';
 import { Carousel } from 'choerodon-ui';
 
 ReactDOM.render(
-  <Carousel vertical>
+  <Carousel
+    vertical
+    draggable
+    theme="dark"
+    verticalSwiping
+    style={{ height: 200 }}
+    className="pic-carousel"
+  >
     <div>
-      <h3 style={{ height: 150 }}>1</h3>
+      <div>
+        <img alt="1" src="http://placekitten.com/g/400/200" />
+      </div>
     </div>
     <div>
-      <h3 style={{ height: 150 }}>2</h3>
+      <div>
+        <img alt="2" src="http://placekitten.com/g/400/200" />
+      </div>
     </div>
     <div>
-      <h3 style={{ height: 150 }}>3</h3>
+      <div>
+        <img alt="3" src="http://placekitten.com/g/400/200" />
+      </div>
     </div>
     <div>
-      <h3 style={{ height: 150 }}>4</h3>
+      <div>
+        <img alt="4" src="http://placekitten.com/g/400/200" />
+      </div>
     </div>
   </Carousel>,
   document.getElementById('container'),

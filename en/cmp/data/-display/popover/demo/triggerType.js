@@ -20,5 +20,9 @@ ReactDOM.render(
     <Popover content={content} title="Title" trigger="click">
       <Button>Click me</Button>
     </Popover>
+    <Popover content={content} title="Title" trigger="contextMenu">
+      <Button>Right mouse click</Button>
+    </Popover>
   </div>,
-  document.getElementById('container'));
+  document.getElementById('container'),
+);
