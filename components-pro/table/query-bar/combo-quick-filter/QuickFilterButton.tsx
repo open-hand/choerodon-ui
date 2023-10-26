@@ -91,7 +91,7 @@ const QuickFilterButton = function QuickFilterButton() {
   const customized = tableStore && tableStore.customized;
 
   useEffect(() => {
-    if (customized || personalColumn) {
+    if (customized && !isEnumEmpty(personalColumn)) {
       const columns = customized && customized.columns;
       setCustomizedChange(isEqual(parseValue(columns), personalColumn))
     }
