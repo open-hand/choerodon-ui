@@ -86,7 +86,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
       const { formatter } = props;
       const recordValue = this.getValue();
-      const value  = formatter ? formatter.getFormatted(recordValue) : recordValue;
+      const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
       // 分别监听 受控 及 DataSet 进行管理时值的变化
       if (recordValue !== this.midText || (this.dataSet && this.name)) {
         this.setText(value);
@@ -125,7 +125,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     } else if (this.labelLayout === LabelLayout.float && !this.isFocused) {
       placeholder = '';
     }
-    return { ...defaultCodeMirrorOptions, placeholder , ...options };
+    return { ...defaultCodeMirrorOptions, placeholder, ...options };
   }
 
   getOmitPropsKeys(): string[] {
@@ -213,19 +213,22 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       this.cmOptions.theme = this.theme;
       const text = this.getTextNode();
       const header = this.getHeader();
+      const { onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
       return (
         <div {...this.getWrapperProps()}>
           {header}
           <label>
-            <CodeMirror
-              {...this.getOtherProps()}
-              value={isString(text) ? text : this.processValue(this.getValue())}
-              options={this.cmOptions}
-              onBeforeChange={this.handleBeforeChange}
-              onBlur={this.handleCodeMirrorBlur}
-              editorDidMount={this.handleCodeMirrorDidMount}
-            />
-            {this.renderFloatLabel()}
+            <span onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+              <CodeMirror
+                {...otherProps}
+                value={isString(text) ? text : this.processValue(this.getValue())}
+                options={this.cmOptions}
+                onBeforeChange={this.handleBeforeChange}
+                onBlur={this.handleCodeMirrorBlur}
+                editorDidMount={this.handleCodeMirrorDidMount}
+              />
+              {this.renderFloatLabel()}
+            </span>
           </label>
         </div>
       );
