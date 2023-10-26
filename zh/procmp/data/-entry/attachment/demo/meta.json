@@ -123,6 +123,21 @@
       "screenshot": "",
       "height": 350,
       "category": "pro"
+    },
+    {
+      "filename": "filePreview.js",
+      "title": {
+        "zh": "文件预览",
+        "en": "File preview"
+      },
+      "description": {
+        "zh": "设置 getPreviewUrl 可以设置预览地址，默认使用 AttachmentFile.url 预览。\n示例展示了 同步 和 异步 设置预览地址\n",
+        "en": "File preview.\n"
+      },
+      "order": 8,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

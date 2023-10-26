@@ -63,7 +63,7 @@ abstract: true
 | exportMode | 导出模式选择：前端导出，后端导出 | client \| server | server |   |
 | combineSort | 是否开启组件列排序传参 | boolean | false | 1.4.2 |
 | [forceValidate](/zh/datasetapi/dataset-props/force-validate) | 始终校验全部数据 | boolean | false | 1.4.5 |
-| [validationRules](/zh/datasetapi/dataset-props/validation-rules) | dataSet校验规则，详见[ValidationRule](#validationrule) | ValidationRule\[\] |  |  1.5.1  |
+| [validationRules](/zh/datasetapi/dataset-props/validation-rules) | 针对 dataSet 主体的校验规则，详见[ValidationRule](#validationrule) | ValidationRule\[\] |  |  1.5.1  |
 
 ### DataSet Values
 
@@ -172,6 +172,7 @@ abstract: true
 | modifiedCheck(message) | 变更检查 | message - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage | | 1.3.1 |
 | setAllPageSelection(enabled) | 切换是否跨页全选。 | enabled - 是否开启 |  | 1.4.0 |
 | getValidationErrors() | 获取校验错误信息 |  |  | 1.4.0 |
+| generateOrderQueryString() | 获取排序信息。设置 combineSort 属性为 true 时，返回字符串数组，数组形如：\['age,desc', 'name,asc'\]；否则返回 object |  | { sortname?: string; sortorder?: string; } \| string[] | 1.6.4 |
 
 ### DataSet Events
 
@@ -203,8 +204,8 @@ abstract: true
 | beforeRemove | 数据临时删除前的事件， 返回值为 false 将阻止临时删除 | ({ dataSet, records }) =&gt; boolean | dataSet - 数据集 records - 记录集 | 否 | |
 | beforeDelete | 数据删除前的事件， 返回值为 false 将阻止删除 | ({ dataSet, records }) =&gt; boolean | dataSet - 数据集 records - 记录集 | 是 | 1.0.0 |
 | reset | 数据重置事件 | ({ dataSet, records }) =&gt; void | dataSet - 数据集 records - 记录集 | 是 |   |
-| validate | 校验事件 | ({ dataSet, result }) =&gt; void | dataSet - 数据集 result - 校验结果集 | 是 |  |
-| validateSelf | 校验dataSet事件 | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果 | 是 |  1.5.1  |
+| validate | 校验事件，针对DS数据，区别于 validateSelf | ({ dataSet, result }) =&gt; void | dataSet - 数据集 result - 校验结果集 | 是 |  |
+| validateSelf | 校验dataSet事件,校验只针对DS主体，参考ValidationRule | ({ dataSet, result }) =&gt; void | `dataSet` - 数据集 `result` - 校验结果 | 是 |  1.5.1  |
 
 
 ### Record Props
@@ -325,7 +326,7 @@ abstract: true
 | cascadeMap | 快码和 LOV 查询时的级联参数映射，详见[级联](/zh/tutorials/select#级联)。 | object |  |   |
 | currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |  |   |
 | ignore | 忽略提交, 可选值: always - 总是忽略 clean - 值未变化时忽略 never - 从不忽略 | string | |   |
-| transformRequest | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |    |
+| [transformRequest](/zh/datasetapi/field-props/transform-request) | 在发送请求之前对数据进行处理 | (value: any, record: Record) => any |  |    |
 | transformResponse | 在获得响应之后对数据进行处理 | (value: any, object: any) => any |  |  |
 | trim | 字符串值是否去掉首尾空格，可选值: both \| left \| right \| none | string | both |  |
 | defaultValidationMessages | 默认校验信息，详见[ValidationMessages](/zh/procmp/configure/configure#validationmessages) | ValidationMessages |  |  |

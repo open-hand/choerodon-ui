@@ -32,6 +32,20 @@
       "order": 3,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "langFieldProps.js",
+      "title": {
+        "zh": "设置多语言字段校验属性",
+        "en": "Set the multilingual field verification property"
+      },
+      "description": {
+        "zh": "通过 modalProps 提供的 beforeOpen 回调函数，在打开多语言弹窗前设置多语言字段的校验属性。\n",
+        "en": "Set the multilingual field verification property.\n"
+      },
+      "order": 4,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

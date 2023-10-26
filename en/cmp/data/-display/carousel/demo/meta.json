@@ -29,7 +29,7 @@
         "en": "Vertical pagination.\n"
       },
       "order": 1,
-      "height": 256,
+      "height": 250,
       "screenshot": ""
     },
     {
@@ -57,6 +57,34 @@
         "en": "Timing of scrolling to the next card/picture.\n"
       },
       "order": 3,
+      "height": 256,
+      "screenshot": ""
+    },
+    {
+      "filename": "customArrows.js",
+      "title": {
+        "zh": "自定义箭头",
+        "en": "Custom Arrows"
+      },
+      "description": {
+        "zh": "配置 class 类名来自定义箭头样式，也可以使用 prevArrow、nextArrow 返回自定义 dom 结构样式。\n",
+        "en": "Configure the class class name to customize the arrow style, or you can use prevArrow, nextArrow to return a custom dom structure style.\n"
+      },
+      "order": 4,
+      "height": 256,
+      "screenshot": ""
+    },
+    {
+      "filename": "customDots.js",
+      "title": {
+        "zh": "自定义指示器",
+        "en": "Custom Dots"
+      },
+      "description": {
+        "zh": "配置 dotsClass 类名，可根据类名自定义指示器样式。\n",
+        "en": "Configure the dotsClass class name to customize the indicator style based on the class name.\n"
+      },
+      "order": 4,
       "height": 256,
       "screenshot": ""
     }

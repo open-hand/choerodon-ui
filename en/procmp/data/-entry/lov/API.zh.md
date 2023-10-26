@@ -41,3 +41,6 @@ title: API
 ### 如何配置一个树形 Lov
 
 参考 [Lov 树形教程示例](/zh/tutorials/lov#树形-lov)。
+
+### Lov 搜索下拉弹出规则
+参考 [Lov 搜索下拉菜单弹出规则](/zh/tutorials/lov#搜索下拉菜单)。

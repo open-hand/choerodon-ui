@@ -114,6 +114,7 @@ class App extends React.Component {
           header="栅格布局"
           record={this.ds.current}
           layout="none"
+          showHelp="label"
           useColon={current.get('useColon')}
           labelAlign={current.get('labelAlign')}
           labelLayout={current.get('labelLayout')}

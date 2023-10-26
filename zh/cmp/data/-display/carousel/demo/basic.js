@@ -7,10 +7,19 @@ function onChange(a, b, c) {
 }
 
 ReactDOM.render(
-  <Carousel afterChange={onChange}>
-    <div><h3>1</h3></div>
-    <div><h3>2</h3></div>
-    <div><h3>3</h3></div>
-    <div><h3>4</h3></div>
+  <Carousel className="c7n-slick-slide" afterChange={onChange} arrows>
+    <div>
+      <h3>1</h3>
+    </div>
+    <div>
+      <h3>2</h3>
+    </div>
+    <div>
+      <h3>3</h3>
+    </div>
+    <div>
+      <h3>4</h3>
+    </div>
   </Carousel>,
-  document.getElementById('container'));
+  document.getElementById('container'),
+);

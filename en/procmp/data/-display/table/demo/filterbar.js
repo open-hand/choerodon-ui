@@ -116,6 +116,16 @@ class App extends React.Component {
         columnResizable={false}
         buttons={this.buttons}
         columns={this.getColumns()}
+        queryBarProps={{
+          editorProps: ({ name }) => {
+            if (name === 'sexMultiple') {
+              return {
+                searchable: true,
+                searchFieldInPopup: true,
+              };
+            }
+          },
+        }}
       />
     );
   }

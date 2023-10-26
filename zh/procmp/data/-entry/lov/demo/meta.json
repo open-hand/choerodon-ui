@@ -93,6 +93,21 @@
       "category": "pro"
     },
     {
+      "filename": "options-props.js",
+      "title": {
+        "zh": "Lov配置覆盖",
+        "en": "options props"
+      },
+      "description": {
+        "zh": "Lov 组件内关联的内置 DataSet 配置可通过 optionsProps 进行覆盖。可实现监听值集数据源事件、阻止查询、修改配置等功能。\n",
+        "en": "The associated built-in DataSet configuration within the Lov component can be overridden via optionsProps. Functions such as monitoring value set data source events, blocking queries, and modifying configurations can be realized.\n"
+      },
+      "order": 6,
+      "screenshot": "",
+      "height": 140,
+      "category": "pro"
+    },
+    {
       "filename": "other-mode.js",
       "title": {
         "zh": "其他模式",
@@ -102,7 +117,7 @@
         "zh": "其他展示模式，popup & drawer\n",
         "en": "Other popup & drawer.\n"
       },
-      "order": 6,
+      "order": 9,
       "screenshot": "",
       "height": 300,
       "category": "pro"

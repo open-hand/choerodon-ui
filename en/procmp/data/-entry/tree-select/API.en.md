@@ -11,6 +11,7 @@ title: API
 | treeCheckable | 显示 checkbox | boolean | false | 1.0.0 |
 | treeDefaultExpandAll | 默认展开所有树节点 | boolean | false | 1.0.0 |
 | treeDefaultExpandedKeys | 默认展开的树节点, 对应TreeNode的key或value | string\[] | - | 1.0.0  |
+| checkStrictly | checkable 状态下节点选择完全受控（父子节点选中状态不再关联）。此属性设置后 showCheckedStrategy 属性无效 | boolean |  | 1.6.4 |
 
 更多属性请参考  [Select](/zh/procmp/data-entry/select/#Select)。
 
