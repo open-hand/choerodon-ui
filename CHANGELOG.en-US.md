@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.4
+
+`2023-10-26`
+
 - 🌟 `configure`: Added `rangeSeparator`, `selectOptionsFilter` property.
 - 🌟 `<pro>Table`: Added dynamic filter bar field `onFieldEnterDown` return callback.
 - 🌟 `<pro>Table`: Added `selectionColumnProps` to support row selection column property extension.
