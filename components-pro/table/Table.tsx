@@ -1739,6 +1739,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'selectionBoxRenderer',
       'boxSizing',
       'fullColumnWidth',
+      'dragDropContextProps',
     ]);
   }
 

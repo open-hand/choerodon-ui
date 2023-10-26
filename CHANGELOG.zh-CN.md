@@ -41,6 +41,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 优化支持 listType 为 text 模式下图片类型异步预览。
 - 💄 `<pro>Modal`: 优化连续按下 ESC 键，触发多次关闭弹窗回调的问题。
 - 💄 `<pro>Lov`: 优化 Popup Lov 支持回车选中。
+- 💄 `<pro>CodeArea`: 优化 CodeArea 验证不通过没有报错信息的问题。
 - 🐞 `<pro>Table`: 修复当设置组合排序和表格列前端排序时，排序 icon 显示错误的问题。
 - 🐞 `<pro>Modal`: 修复 ModalContainer 卸载时实例未清除，导致后续 Modal 无法打开的问题。
 - 🐞 `<pro>Lov`: 修复 onEnterDown 事件失效的问题。
