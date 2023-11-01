@@ -2068,6 +2068,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   updatePositionByFixedCell() {
     const wheelGroupStyle = {};
     const wheelStyle = {};
+    const headerTranslateStyle = {};
     const scrollGroups = this.getScrollCellGroups();
     const fixedLeftGroups = this.getFixedLeftCellGroups();
     const fixedRightGroups = this.getFixedRightCellGroups();
@@ -2077,6 +2078,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     this.translateDOMPositionXY(wheelGroupStyle, this.scrollX, 0);
     // @ts-ignore
     this.translateDOMPositionXY(wheelStyle, 0, this.scrollY);
+    // @ts-ignore
+    this.translateDOMPositionXY(headerTranslateStyle, 0, 0);
 
     const scrollArrayGroups = Array.from(scrollGroups);
 
@@ -2085,8 +2088,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       addStyle(group, wheelGroupStyle);
     }
     const header = this.wheelWrapperRef && this.wheelWrapperRef.current;
+    const headerTranslate = this.headerWrapperRef && this.headerWrapperRef.current;
     if (header) {
       addStyle(header, wheelStyle);
+      addStyle(headerTranslate, headerTranslateStyle);
     }
 
     const leftShadowClassName = this.addPrefix('cell-group-left-shadow');
