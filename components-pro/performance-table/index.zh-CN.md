@@ -72,7 +72,7 @@ cols: 1
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
-
+| components |  [TableComponents](#TableComponents) | 覆盖默认的 table 元素 |
 
 ### Form methods
 
@@ -191,3 +191,11 @@ scrollLeft: (left: number) => void;
 | onQuery | (props: object) => void         | 查询回调                                    |
 | onRefresh | (props: object) => void         | 刷新回调                                    |
 | onReset | () => void         | 重置回调                                    |
+
+### TableComponents
+
+| 属性名称 | 类型  | 描述 |
+| -------- | ----- | ---- |
+| table |  ReactNode          | 覆盖表格组件 |
+| header | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }          | 覆盖表格 header 组件  |
+| body | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }         | 覆盖表格 body 组件 |

@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+🌟 `<pro>PerformanceTable`: Added `components` property.
+
 ## 1.6.4
 
 `2023-10-26`

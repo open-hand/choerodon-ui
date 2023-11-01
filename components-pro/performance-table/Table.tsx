@@ -233,6 +233,7 @@ export interface TableProps extends StandardProps {
   headerTitle?: React.ReactNode;
   rowSelection?: TableRowSelection;
   queryBar?: false | TableQueryBarProps;
+  components?: TableComponents;
   toolbar?: ToolBarProps,
   /** 渲染操作栏 */
   toolBarRender?: ToolBarProps['toolBarRender'] | false,
@@ -301,6 +302,22 @@ export interface TableProps extends StandardProps {
   onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
   onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;
   onDragEndBefore?: (result: DropResult, provided: ResponderProvided) => boolean;
+}
+
+export type CustomizeComponent = React.Component<any>;
+
+export interface TableComponents {
+  table?: CustomizeComponent;
+  header?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
+  body?: {
+    wrapper?: CustomizeComponent;
+    row?: CustomizeComponent;
+    cell?: CustomizeComponent;
+  };
 }
 
 interface TableRowProps extends RowProps {
@@ -440,7 +457,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   static Column = Column;
 
+  static Row = Row;
+
   static Cell = Cell;
+
+  static CellGroup = CellGroup;
 
   static ColumnGroup = ColumnGroup;
 
@@ -1014,6 +1035,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    */
   processTableColumns(columns: any[]) {
     const visibleColumn = columns.filter(col => !col.hidden);
+    const { components } = this.props;
     return visibleColumn.map((column) => {
       const dataKey = column.dataIndex;
       if (column.type === 'ColumnGroup') {
@@ -1027,7 +1049,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         <Column {...this.getColumnProps(column)} dataKey={dataKey} key={dataKey}>
           {
             <HeaderCell>
-              {typeof column.title === 'function' ? column.title() : column.title}
+              {components &&
+                components.header &&
+                components.header.cell &&
+                React.isValidElement(components.header.cell) ?
+                React.cloneElement(components.header.cell, { ...column }) :
+                (typeof column.title === 'function' ? column.title() : column.title)}
             </HeaderCell>
           }
           {typeof column.render === 'function' ? (
@@ -1036,7 +1063,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 (rowData, rowIndex) => column.render!({ rowData, rowIndex, dataIndex: dataKey })
               }
             </Cell>
-          ) : <Cell dataKey={dataKey} />}
+          ) : (
+            components &&
+              components.body &&
+              components.body.cell &&
+              React.isValidElement(components.body.cell) ?
+              React.cloneElement(components.body.cell, { ...column, dataKey }) :
+              <Cell dataKey={dataKey} />
+          )}
         </Column>
       );
     });
@@ -2336,7 +2370,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     props: TableRowProps,
     shouldRenderExpandedRow?: boolean,
   ) {
-    const { renderTreeToggle, rowKey, wordWrap, isTree } = this.props;
+    const { renderTreeToggle, rowKey, wordWrap, isTree, components } = this.props;
     const hasChildren = isTree && rowData.children && Array.isArray(rowData.children);
     const nextRowKey = typeof rowData[rowKey!] !== 'undefined' ? rowData[rowKey!] : props.key;
 
@@ -2373,7 +2407,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       );
     }
 
-    return this.renderRow(rowProps, cells, shouldRenderExpandedRow, rowData);
+    return components &&
+      components.body &&
+      components.body.row &&
+      React.isValidElement(components.body.row) ?
+      (React.cloneElement(components.body.row, { rowProps, cells, shouldRenderExpandedRow, rowData })) :
+      this.renderRow(rowProps, cells, shouldRenderExpandedRow, rowData);
   }
 
   calculateFixedAndScrollColumn(cells: any[]) {
@@ -2647,7 +2686,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderTableHeader(headerCells: any[], rowWidth: number) {
-    const { affixHeader } = this.props;
+    const { affixHeader, components } = this.props;
     const { width: tableWidth } = this.state;
     const top = typeof affixHeader === 'number' ? affixHeader : 0;
     const headerHeight = this.getTableHeaderHeight();
@@ -2680,16 +2719,34 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       </div>
     );
 
+    // cusomized header
+    const cusomizedHeader = components &&
+      components.header &&
+      components.header.row &&
+      React.isValidElement(components.header.row) ?
+      (React.cloneElement(components.header.row, { rowProps, headerCells })) :
+      this.renderRow(rowProps, headerCells);
+
     return (
       <React.Fragment>
         {(affixHeader === 0 || affixHeader) && header}
-        <div
-          role="rowgroup"
-          className={this.addPrefix('header-row-wrapper')}
-          ref={this.headerWrapperRef}
-        >
-          {this.renderRow(rowProps, headerCells)}
-        </div>
+        {components &&
+          components.header &&
+          components.header.wrapper &&
+          React.isValidElement(components.header.wrapper) ?
+          (React.cloneElement(components.header.wrapper,
+            { role: "rowgroup", className: this.addPrefix('header-row-wrapper'), ref: this.headerWrapperRef },
+            cusomizedHeader,
+          )) : (
+            <div
+              role="rowgroup"
+              className={this.addPrefix('header-row-wrapper')}
+              ref={this.headerWrapperRef}
+            >
+              {cusomizedHeader}
+            </div>
+          )
+        }
       </React.Fragment>
     );
   }
@@ -2704,6 +2761,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       virtualized,
       rowHeight,
       rowDraggable,
+      components,
     } = this.props;
 
     const headerHeight = this.getTableHeaderHeight();
@@ -2979,14 +3037,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const body = (
       <LocaleReceiver componentName="PerformanceTable" defaultLocale={defaultLocale.PerformanceTable}>
         {(locale: PerformanceTableLocal) => {
-          return (
-            <div
-              ref={this.tableBodyRef}
-              role="rowgroup"
-              className={this.addPrefix('body-row-wrapper')}
-              style={bodyStyles}
-              onScroll={this.handleBodyScroll}
-            >
+          const rowWrapperChildren = (
+            <>
               <div
                 style={wheelStyles}
                 className={this.addPrefix('body-wheel-area')}
@@ -3000,8 +3052,26 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               {this.renderInfo(locale)}
               {this.renderScrollbar()}
               {this.renderLoading()}
-            </div>
-          );
+            </>
+          )
+          return components && components.body && components.body.wrapper && React.isValidElement(components.body.wrapper) ?
+            React.cloneElement(components.body.wrapper, {
+              refs: this.tableBodyRef,
+              role: "rowgroup",
+              className: this.addPrefix('body-row-wrapper'),
+              style: bodyStyles,
+              onScroll: this.handleBodyScroll,
+            }, components.body.wrapper.props.children || rowWrapperChildren) : (
+              <div
+                ref={this.tableBodyRef}
+                role="rowgroup"
+                className={this.addPrefix('body-row-wrapper')}
+                style={bodyStyles}
+                onScroll={this.handleBodyScroll}
+              >
+                {rowWrapperChildren}
+              </div>
+            );
         }}
       </LocaleReceiver>
     );
@@ -3144,6 +3214,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       loading,
       showHeader,
       queryBar,
+      components,
       ...rest
     } = this.props;
     const { isColumnResizing, width } = this.state;
@@ -3176,6 +3247,25 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const { tableStore, translateDOMPositionXY } = this;
 
+    const gridChildren = (
+      <>
+        {showHeader && this.renderTableHeader(headerCells, rowWidth)}
+        {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
+        {showHeader && this.renderMouseArea()}
+      </>
+    )
+
+    const gridProps = {
+      role: isTree ? 'treegrid' : 'grid',
+      // The aria-rowcount is specified on the element with the table.
+      // Its value is an integer equal to the total number of rows available, including header rows.
+      "aria-rowcount": data.length + 1,
+      "aria-colcount": this._cacheChildrenSize,
+      ...unhandled,
+      className: clesses,
+      style: styles,
+    }
+
     return (
       <TableContext.Provider
         value={{
@@ -3191,21 +3281,21 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         <ModalProvider>
           {queryBar === false ? null : <PerformanceTableQueryBar />}
           {this.renderTableToolbar()}
-          <div
-            role={isTree ? 'treegrid' : 'grid'}
-            // The aria-rowcount is specified on the element with the table.
-            // Its value is an integer equal to the total number of rows available, including header rows.
-            aria-rowcount={data.length + 1}
-            aria-colcount={this._cacheChildrenSize}
-            {...unhandled}
-            className={clesses}
-            style={styles}
-            ref={this.tableRef}
-          >
-            {showHeader && this.renderTableHeader(headerCells, rowWidth)}
-            {columns && columns.length ? this.renderTableBody(bodyCells, rowWidth) : children && this.renderTableBody(bodyCells, rowWidth)}
-            {showHeader && this.renderMouseArea()}
-          </div>
+          {
+            components && components.table && React.isValidElement(components.table) ?
+              React.cloneElement(
+                components.table,
+                { ...gridProps, refs: this.tableRef },
+                components.table.props.children || gridChildren) :
+              (
+                <div
+                  {...gridProps}
+                  ref={this.tableRef}
+                >
+                  {gridChildren}
+                </div>
+              )
+          }
         </ModalProvider>
       </TableContext.Provider>
     );
