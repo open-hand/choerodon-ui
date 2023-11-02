@@ -15,6 +15,9 @@ timeline: true
 
 ---
 
+🌟 `<pro>PerformanceTable`: Added `components` property.
+🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
+
 ## 1.6.4
 
 `2023-10-26`
