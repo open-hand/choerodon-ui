@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
+- 💄 优化部分 warning。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 
 ## 1.6.4

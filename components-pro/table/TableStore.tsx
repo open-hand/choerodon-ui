@@ -107,6 +107,9 @@ function getOverScanCount(tableStore: TableStore, index: number, next?: boolean)
     let height = 0;
     while (height < VIRTUAL_ROOT_MARGIN) {
       index += next ? 1 : -1;
+      if (index < 0 || index >= rowMetaData.length) {
+        return count;
+      }
       const metaData = rowMetaData[index];
       if (!metaData) {
         return count;

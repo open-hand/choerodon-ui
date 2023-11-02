@@ -18,6 +18,24 @@ const TEXT_STYLE_KEYS = [
   'textRendering',
 ];
 
+const fontStretchValues = {
+  '100%': 'normal',
+  '50%': 'ultra-condensed',
+  '62.5%': 'extra-condensed',
+  '75%': 'condensed',
+  '87.5%': 'semi-condensed',
+  '112.5%': 'semi-expanded',
+  '125%': 'expanded',
+  '150%': 'extra-expanded',
+  '200%': 'ultra-expanded',
+};
+
+const textRenderingValues = {
+  optimizespeed: 'optimizeSpeed',
+  optimizelegibility: 'optimizeLegibility',
+  geometricprecision: 'geometricPrecision',
+}
+
 function getCanvasContext() {
   if (!_context) {
     _context = document.createElement('canvas').getContext('2d')!;
@@ -32,7 +50,13 @@ function getCanvasTextStyle(style: CSSProperties | CSSStyleDeclaration = getComp
     font += ` ${style[k]}`;
   });
   TEXT_STYLE_KEYS.forEach((k: string) => {
-    textStyle[k] = style[k];
+    if (k === 'fontStretch') {
+      textStyle[k] = fontStretchValues[style[k]] || style[k];
+    } else if (k === 'textRendering') {
+      textStyle[k] = textRenderingValues[style[k]] || style[k];
+    } else {
+      textStyle[k] = style[k];
+    }
   });
   return { ...textStyle, font: font.trim() };
 }
