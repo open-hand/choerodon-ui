@@ -20,6 +20,7 @@ timeline: true
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
+- 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
 
 ## 1.6.4
 
