@@ -135,7 +135,6 @@ export default class Modal extends ViewComponent<ModalProps> {
     fullScreen: false,
     drawer: false,
     drawerOffset: 150,
-    autoFocus: true,
     closeOnLocationChange: true,
   };
 
@@ -241,6 +240,13 @@ export default class Modal extends ViewComponent<ModalProps> {
     return this.getContextConfig('modalClosable');
   }
 
+  get modalAutoFocus(): boolean {
+    if ('autoFocus' in this.props) {
+      return this.props.autoFocus!;
+    }
+    return this.getContextConfig('modalAutoFocus');
+  }
+
   get doc(): Document {
     return getDocument(window);
   }
@@ -277,6 +283,9 @@ export default class Modal extends ViewComponent<ModalProps> {
   componentDidMount() {
     super.componentDidMount();
     this.initResizableRange(this.props);
+    if (this.modalAutoFocus && this.sentinelStartRef) {
+      this.focus();
+    }
   }
 
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {

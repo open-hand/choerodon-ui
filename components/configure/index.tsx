@@ -202,6 +202,7 @@ export interface Config extends DataSetConfig {
   drawerTransitionName?: string;
   modalMovable?: boolean;
   modalAutoCenter?: boolean;
+  modalAutoFocus?: boolean;
   modalOkFirst?: boolean;
   drawerOkFirst?: boolean;
   drawerHeaderFooterCombined?: boolean;
