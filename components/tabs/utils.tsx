@@ -289,3 +289,25 @@ export function normalizePanes(children: ReactNode, customized?: TabsCustomized 
   }
   return [new Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>(panelList), groupedPanels];
 }
+
+export function getTextHeight(text, font = '') {
+  // 创建一个隐藏的div元素
+  const container = document.createElement('div');
+  container.style.visibility = 'hidden';
+  container.style.position = 'absolute';
+  document.body.appendChild(container);
+
+  // 创建一个span元素来容纳文本
+  const span = document.createElement('span');
+  span.style.font = font;
+  span.textContent = text;
+  container.appendChild(span);
+
+  // 获取字符串的高度
+  const height = span.offsetHeight;
+
+  // 移除临时元素
+  document.body.removeChild(container);
+
+  return height;
+}

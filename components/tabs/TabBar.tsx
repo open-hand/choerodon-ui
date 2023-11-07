@@ -27,7 +27,7 @@ import { iteratorReduce, iteratorSome } from 'choerodon-ui/pro/lib/_util/iterato
 import { ModalProps } from 'choerodon-ui/pro/lib/modal/Modal';
 import Dropdown from 'choerodon-ui/pro/lib/dropdown';
 import { $l } from 'choerodon-ui/pro/lib/locale-context';
-import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getStyle, getTop, isTransformSupported, isVertical, setTransform } from './utils';
+import { getActiveKeyByGroupKey, getDataAttr, getHeader, getLeft, getStyle, getTextHeight, getTop, isTransformSupported, isVertical, setTransform } from './utils';
 import warning from '../_util/warning';
 import Ripple, { RippleProps } from '../ripple';
 import TabBarInner, { TabBarInnerProps } from './TabBarInner';
@@ -192,7 +192,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const [menuList, setMenuList] = useState<Array<MenuKeyValue>>([]);
   const tabsRef = useRef<any>([]);
-  const getTabs = (): ReactElement<RippleProps>[] => {
+  const getTabs = useMemo((): ReactElement<RippleProps>[] => {
     const length = currentPanelMap.size;
     const tabBarRef = [...currentPanelMap.entries()].map((item) => ({ key: item[0], value: item[1], ref: React.createRef<HTMLDivElement>() }));
     tabsRef.current = tabBarRef;
@@ -254,7 +254,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       );
       return rst;
     }, []);
-  };
+  }, [currentPanelMap, tabBarGutter, activeKey, activeTabRef, prefixCls, rippleDisabled, validationMap]);
 
   const isNextPrevShown = useCallback((state?: { prev: boolean; next: boolean }): boolean => {
     if (state) {
@@ -592,55 +592,45 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     );
   };
   // 发生滚动事件，改变更多的菜单。
-  const handleScrollEvent = useCallback(({ target }) => {
+  const handleScrollEvent = useCallback(() => {
     const vertical = isVertical(tabBarPosition);
-    const { scrollLeft, scrollTop } = target;
-    let hiddenOffset = 0;
-    const prevMenuList: Array<MenuKeyValue> = [];
-    // 计算前面隐藏的tabs
+    const scrollDom = navScrollRef.current;
+   
+    let scrollLeft = 0;
+    let scrollTop = 0;
+    if (scrollDom) {
+      scrollLeft = scrollDom.scrollLeft;
+      scrollTop = scrollDom.scrollTop;
+    }
+    const menuList: Array<MenuKeyValue> = [];
+
+    const navWrap = navWrapRef.current; // 节点滚动区域
+    let navWrapNodeWH = 0;
+    if (navWrap) {
+      navWrapNodeWH = getOffsetWH(navWrap);
+    }
+
     for (let i = 0; i < tabsRef.current.length; i++) {
       const { key, value, ref } = tabsRef.current[i];
       const dom = ref.current;
-      let currentTabOffset = 0;
       if (dom) {
-        currentTabOffset = vertical ? dom.offsetHeight + getStyle(dom, 'margin-bottom') : dom.offsetWidth + getStyle(dom, 'margin-right');
-      }
-      hiddenOffset += currentTabOffset || 0;
-      if ((!vertical && scrollLeft > 0) || (vertical && scrollTop > 0)) {
-        prevMenuList.push({ key, ...value });
-      }
-      if ((!vertical && scrollLeft < hiddenOffset) || (vertical && scrollTop < hiddenOffset)) {
-        break;
-      }
-    }
-    // 计算后面隐藏的tabs
-    const nextMenuList: Array<MenuKeyValue> = [];
-    const navNode = navRef.current; // 节点长度
-    const navWrap = navWrapRef.current; // 节点滚动区域
-    let totalHiddenOffset = 0;
-    if (navNode && navWrap) {
-      const navNodeWH = getScrollWH(navNode);
-      const navWrapNodeWH = getOffsetWH(navWrap);
-      totalHiddenOffset = navNodeWH - navWrapNodeWH - (vertical ? scrollTop : scrollLeft);
-    }
-    let hiddenBackOffset = 0;
-    for (let i = tabsRef.current.length - 1; i >= 0; i--) {
-      const { key, value, ref } = tabsRef.current[i];
-      const dom = ref.current;
-      let endTabOffset = 0;
-      if (dom) {
-        endTabOffset = vertical ? dom.offsetHeight + getStyle(dom, 'margin-bottom') : dom.offsetWidth + getStyle(dom, 'margin-right');
-      }
-      hiddenBackOffset += endTabOffset || 0;
-      if (totalHiddenOffset > 0) {
-        nextMenuList.push({ key, ...value });
-      }
-      if (hiddenBackOffset >= totalHiddenOffset) {
-        break;
+        if (!vertical) {
+          const domLeft = dom.offsetLeft;
+          const domWidth = dom.offsetWidth;
+          if (domLeft - scrollLeft < 0 || (domLeft - scrollLeft + domWidth) > navWrapNodeWH) {
+            menuList.push({ key, ...value });
+          }
+        } else {
+          const domTop = dom.offsetTop;
+          const font = getComputedStyle(dom).getPropertyValue('font');
+          const domHeight = getTextHeight(dom, font);
+          if (domTop - scrollLeft < 0 || (domTop - scrollTop + domHeight) > navWrapNodeWH) {
+            menuList.push({ key, ...value });
+          }
+        }
       }
     }
-    nextMenuList.reverse();
-    setMenuList(prevMenuList.concat(nextMenuList));
+    setMenuList(menuList);
     setOffset(vertical ? scrollTop : scrollLeft, setNextPrev);
   }, [tabBarPosition]);
 
@@ -708,15 +698,13 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   });
 
   useEffect(() => {
-    handleScrollEvent({ target: { scrollLeft: 0, scrollTop: 0 } });
-    const debouncedScroll = debounce(e => {
-      handleScrollEvent(e);
+    handleScrollEvent();
+    const debouncedScroll = debounce(() => {
+      handleScrollEvent();
     }, 200);
 
-    const debouncedWheel = debounce(e => {
-      const originalScrollLeft = navScrollRef && navScrollRef.current ? navScrollRef.current.scrollLeft : 0;
-      const scrollLeft = originalScrollLeft + e.deltaY;
-      handleScrollEvent({ target: { scrollLeft: scrollLeft > 0 ? scrollLeft : 0 , scrollTop: 0 } });
+    const debouncedWheel = debounce(() => {
+      handleScrollEvent();
     }, 50);
     const debouncedWheelWrap = (e) => {
       // 仅处理横向显示且为鼠标滚动
@@ -777,7 +765,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   }, [getContent]);
 
   const inkBarNode = getInkBarNode();
-  const tabs = getTabs();
+  const tabs = getTabs;
   const groupNode = getGroupNode();
   const scrollbarNode = getScrollBarNode([inkBarNode, tabs]);
   const classString = classnames(
@@ -801,6 +789,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       onResize={debounce(() => {
         setNextPrev();
         scrollToActiveTab();
+        handleScrollEvent();
       }, 200)}>
       <div
         {...tabBarProps}
