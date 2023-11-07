@@ -172,6 +172,10 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         tableStore.saveCustomized(tempCustomized);
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
+        if (tableStore.node.props.virtualized) { 
+          tableStore.node.scrollLeft();
+          tableStore.node.scrollX = 0;
+        }
       }));
     }
     if (handleCancel) {
