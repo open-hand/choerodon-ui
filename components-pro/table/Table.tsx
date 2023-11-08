@@ -1500,7 +1500,7 @@ export default class Table extends DataSetComponent<TableProps> {
           if (editorRowIndex >= length) {
             this.dataSet.create({}, editorRowIndex + 1);
           }
-          const cols = rows[i].split('\t').filter(x => !!x);
+          const cols = rows[i].split('\t');
 
           for (let j = 0; j < cols.length; j++) {
             let text: boolean | string | object | number = cols[j];
@@ -1510,7 +1510,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const field = this.dataSet.getField(fieldName);
             // 非编辑项则跳过赋值
             if (!column.editor || !field || field.disabled || field.readOnly || !this.dataSet) {
-              break;
+              continue;
             }
             const fieldType = field.type;
             const optionDs = field.getOptions();
