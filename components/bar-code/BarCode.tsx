@@ -20,7 +20,7 @@ const BarCode: FunctionComponent<QRBarCodeProps> = function BarCode(props) {
     } catch (error) {
       console.warn(error);
     }
-  }, [canvasBarCodeRef, svgBarCodeRef]);
+  }, [canvasBarCodeRef, svgBarCodeRef, value, option,  bgColor, fgColor]);
 
   useEffect(() => {
     renderCode();
