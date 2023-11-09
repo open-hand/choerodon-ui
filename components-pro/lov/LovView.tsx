@@ -167,6 +167,9 @@ export default class LovView extends Component<LovViewProps> {
     if (tableProps && tableProps.alwaysShowRowBox && !event) {
       records = dataSet.selected;
     }
+    if (!multiple && records[0].disabled) {
+      return false;
+    }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     const beforeSelect = onBeforeSelect(record);
     if (isPromise(beforeSelect)) {

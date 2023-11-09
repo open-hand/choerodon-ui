@@ -141,6 +141,7 @@ const defaults = {
   drawerTransitionName: 'slide-right',
   modalOkFirst: true,
   modalAutoCenter: false,
+  modalAutoFocus: true,
   modalKeyboard: true,
   modalMaskClosable: false,
   modalMovable: true,
