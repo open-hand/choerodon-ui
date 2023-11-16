@@ -167,9 +167,6 @@ export default class LovView extends Component<LovViewProps> {
     if (tableProps && tableProps.alwaysShowRowBox && !event) {
       records = dataSet.selected;
     }
-    if (!multiple && records[0].disabled) {
-      return false;
-    }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
     const beforeSelect = onBeforeSelect(record);
     if (isPromise(beforeSelect)) {
@@ -200,34 +197,36 @@ export default class LovView extends Component<LovViewProps> {
   @autobind
   handleRow(props) {
     const { tableProps } = this.props;
+    const isDisabled = (props.record as Record).disabled;
     if (tableProps) {
       const { onRow } = tableProps;
       if (onRow) {
         return {
-          onDoubleClick: this.handleSelect,
+          onDoubleClick: !isDisabled ? this.handleSelect : noop,
           ...onRow(props),
         };
       }
     }
     return {
-      onDoubleClick: this.handleSelect,
+      onDoubleClick: !isDisabled ? this.handleSelect : noop ,
     };
   }
 
   @autobind
   handleSingleRow(props) {
     const { tableProps } = this.props;
+    const isDisabled = (props.record as Record).disabled;
     if (tableProps) {
       const { onRow } = tableProps;
       if (onRow) {
         return {
-          onClick: this.handleSelect,
+          onClick: !isDisabled ? this.handleSelect : noop,
           ...onRow(props),
         };
       }
     }
     return {
-      onClick: this.handleSelect,
+      onClick: !isDisabled ? this.handleSelect : noop,
     };
   }
 
