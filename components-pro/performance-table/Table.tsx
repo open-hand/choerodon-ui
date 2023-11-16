@@ -2493,13 +2493,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         const { rowSpan = 1 } = cellExternalProps;
         if (rowSpan > 1 && !currnetRowIndex) {
           currnetRowIndex = `${rowIndex}`;
-          rowStyles.zIndex = fixed ? cells.length - i : 0;
+          rowStyles.zIndex = fixed ? cells.length - i : 1;
         }
       }
     }
     // 优化拖拽行被 rowSpan 合并行覆盖的问题
     if (dragRowIndex === `${rowIndex}`) {
-      rowStyles.zIndex = 1;
+      rowStyles.zIndex = 2;
     }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {

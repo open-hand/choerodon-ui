@@ -50,12 +50,13 @@ function getCanvasTextStyle(style: CSSProperties | CSSStyleDeclaration = getComp
     font += ` ${style[k]}`;
   });
   TEXT_STYLE_KEYS.forEach((k: string) => {
+    const styleKey = style[k];
     if (k === 'fontStretch') {
-      textStyle[k] = fontStretchValues[style[k]] || style[k];
+      textStyle[k] = fontStretchValues[styleKey] || styleKey;
     } else if (k === 'textRendering') {
-      textStyle[k] = textRenderingValues[style[k]] || style[k];
+      textStyle[k] = textRenderingValues[styleKey] || styleKey;
     } else {
-      textStyle[k] = style[k];
+      textStyle[k] = styleKey;
     }
   });
   return { ...textStyle, font: font.trim() };

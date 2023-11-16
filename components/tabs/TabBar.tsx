@@ -715,7 +715,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         && navRef.current.offsetWidth > navScrollRef.current.offsetWidth) {
         e.preventDefault();
         e.stopPropagation();
-        debouncedWheel(e);
+        debouncedWheel();
       }
     };
 
