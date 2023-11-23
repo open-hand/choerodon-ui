@@ -22,6 +22,7 @@ timeline: true
 - 💄 `BarCode`: 优化组件内部监听value值变化。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
+- 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
 - 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题.
 
 ## 1.6.4

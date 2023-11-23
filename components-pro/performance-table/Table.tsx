@@ -1790,11 +1790,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       onScroll(this.scrollX, this.scrollY);
     }
     this.setState({
-      isScrolling: true,
       scrollY: this.scrollY,
       scrollX: this.scrollX,
     });
     if (virtualized) {
+      this.setState({
+        isScrolling: true,
+      });
       if (this.disableEventsTimeoutId) {
         // @ts-ignore
         cancelAnimationTimeout(this.disableEventsTimeoutId);
