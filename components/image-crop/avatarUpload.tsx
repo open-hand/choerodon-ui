@@ -15,13 +15,11 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import { imageCrop } from '../locale-provider';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '.';
 
 const Dragger = Upload.Dragger;
 const { round } = Math;
 const ButtonGroup = Button.Group;
-
-const maxZoomVal = 3;
-const zoomStep = 0.5;
 
 function rotateFlag(rotate): boolean {
   return (rotate / 90) % 2 !== 0;
@@ -105,15 +103,14 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   zoomImage = (type): void => {
     let { zoom } = this.state;
     const { imageStyle: { width, height }, cropSize } = this.state;
-    const minZoomVal: number = cropSize / Math.min(width, height);
     switch (type) {
       case 'add': {
-        zoom = (zoom + zoomStep) >= maxZoomVal ? maxZoomVal : (zoom + zoomStep);
+        zoom = (zoom + ZOOM_STEP) >= MAX_ZOOM ? MAX_ZOOM : (zoom + ZOOM_STEP);
         this.setState({ zoom });
         break;
       }
       case 'sub': {
-        zoom = (zoom - zoomStep) <= minZoomVal ? minZoomVal : (zoom - zoomStep);
+        zoom = (zoom - ZOOM_STEP) <= MIN_ZOOM ? MIN_ZOOM : (zoom - ZOOM_STEP);
         this.setState({ zoom });
         break;
       }
@@ -314,14 +311,13 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   }
 
   renderEditor(props) {
-    const { img, rotate, zoom, crop, imageStyle: { width, height }, cropSize } = this.state;
+    const { img, rotate, zoom, crop, cropSize } = this.state;
     const { prefixCls: customizePrefixCls, previewList, editorWidth, editorHeight, previewTitle, reloadTitle } = this.props;
     const { getPrefixCls } = this.context;
     const { src } = img;
     const style: object = { width: editorWidth, height: editorHeight, position: 'relative' };
-    const minZoomVal: number = cropSize / Math.min(width, height);
-    const isMinZoom = zoom === minZoomVal;
-    const isMaxZoom = zoom === maxZoomVal;
+    const isMinZoom = zoom === MIN_ZOOM;
+    const isMaxZoom = zoom === MAX_ZOOM;
     const prefixCls = getPrefixCls('avatar-crop-edit', customizePrefixCls);
     const previewTitleFlag = isString(previewTitle) || React.isValidElement(previewTitle);
     const renderPreviewTitle = (): React.ReactElement | null => {
@@ -346,7 +342,9 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
               showGrid={false}
               cropSize={{ width: cropSize, height: cropSize }}
               zoom={zoom}
-              minZoom={minZoomVal}
+              minZoom={MIN_ZOOM}
+              maxZoom={MAX_ZOOM}
+              restrictPosition={false}
               rotation={rotate}
               aspect={1 / 1}
               onCropChange={(crop): void => this.setState({ crop })}
