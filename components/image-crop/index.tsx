@@ -54,9 +54,9 @@ if (typeof window !== 'undefined') {
   })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 }
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 3;
-const ZOOM_STEP = 0.1;
+export const MIN_ZOOM = 0.1;
+export const MAX_ZOOM = 5;
+export const ZOOM_STEP = 0.1;
 
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<ImgCropProps> {
@@ -177,6 +177,9 @@ const EasyCrop = forwardRef<unknown, EasyCropProps>((props, ref: Ref<Cropper>) =
       onRotationChange={setRotateVal}
       onCropComplete={onCropComplete}
       classes={{ containerClassName: `${prefixCls}-container`, mediaClassName: `${prefixCls}-media` }}
+      restrictPosition={false}
+      maxZoom={MAX_ZOOM}
+      minZoom={MIN_ZOOM}
     />
   );
 });
