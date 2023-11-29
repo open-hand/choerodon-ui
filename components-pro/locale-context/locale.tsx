@@ -105,6 +105,7 @@ export interface Locale extends DataSetLocale {
     restore_default: string;
     left_lock: string;
     right_lock: string;
+    drag_lock_tip: string;
     unlocked: string;
     unlock: string;
     top: string;
