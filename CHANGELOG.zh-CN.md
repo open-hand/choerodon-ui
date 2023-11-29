@@ -21,6 +21,7 @@ timeline: true
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
 - 💄 `ImageCrop`: 优化支持留白裁剪和不限制裁剪区域。
+- 💄 `<pro>Table`: 优化个性化面板列分组无数据时展示占位符。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

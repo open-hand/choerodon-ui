@@ -103,6 +103,7 @@ const locale: Locale = {
     column_settings: '表头设置',
     left_lock: '左侧冻结',
     right_lock: '右侧冻结',
+    drag_lock_tip: '支持拖动控制列冻结',
     unlocked: '未冻结',
     unlock: '取消冻结',
     top: '置顶',

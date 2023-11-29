@@ -17,20 +17,24 @@ export interface GroupProps {
 
 const Group: FunctionComponent<GroupProps> = function Group(props) {
   const { header, records, value, onDragEnd, treeNodeRenderer, treeNodeSuffix } = props;
-  const { prefixCls } = useContext(TableContext);
+  const { tableStore: { columnDraggable }, prefixCls } = useContext(TableContext);
   return (
     <>
-      <div className={`${prefixCls}-customization-tree-group-header`}>
-        {header}
-      </div>
-      <Tree value={value}>
-        <SubGroups
-          records={records}
-          onDragEnd={onDragEnd}
-          treeNodeRenderer={treeNodeRenderer}
-          treeNodeSuffix={treeNodeSuffix}
-        />
-      </Tree>
+      {
+        records.length > 0 || columnDraggable ? <div className={`${prefixCls}-customization-tree-group-header`}>
+          {header}
+        </div> : null
+      }
+      {
+        records.length > 0 || columnDraggable ? <Tree value={value}>
+          <SubGroups
+            records={records}
+            onDragEnd={onDragEnd}
+            treeNodeRenderer={treeNodeRenderer}
+            treeNodeSuffix={treeNodeSuffix}
+          />
+        </Tree> : null
+      }
     </>
   );
 };
