@@ -306,6 +306,7 @@
   --btn-font-weight: var(--font-weight-base);
   --btn-border-radius-base: var(--border-radius-base);
   --btn-border-radius-sm: var(--border-radius-base);
+  --btn-border-radius-lg: var(--btn-border-radius-base);
   //
   --btn-hover-default-color: rgba(0, 0, 0, 0.08);
   --btn-hover-other-color: rgba(255, 255, 255, 0.08);
@@ -755,6 +756,12 @@
   --input-float-multiple-margin: 0 0 0 0.03rem;
   --input-float-multiple-padding: 0.07rem 0;
   --textarea-padding: 0.04rem var(--input-padding-horizontal);
+  // 新增
+  --input-wrapper-border-radius: unset;
+  --input-pro-bg: transparent;
+  --input-multiple-empty-input-margin-left: var(--input-padding-horizontal);
+  --input-tag-default-font-size: inherit;
+  --input-tag-default-border: none;
   // Input basic
   --input-number-handler-inner-distance: -0.05rem;
   --input-basic-height: 0.36rem;
@@ -764,6 +771,9 @@
   --input-basic-focus-border-color: var(--primary-color);
   --input-basic-disabled-border-style: dashed;
   --input-basic-disabled-bg: unset;
+  --input-basic-border-radius: unset;
+  --input-basic-has-border-border-radius: 0.04rem;
+  --input-basic-has-border-bg: transparent;
 
     // Mentions
   --mentions-measure-padding: 0.07rem 0.13rem 0.07rem 0.1rem;
@@ -1103,6 +1113,7 @@
   --tree-primary-color: @tree-primary-color-calculate;
 	--tree-bg: var(--component-background);
 	--tree-title-height: 24px;
+  --tree-item-width: var(--tree-title-height);
 	--tree-child-padding: 18px;
 	--tree-directory-selected-color: #fff; // 使用了，但是directory的渲染不会走
 	--tree-directory-selected-bg: var(--tree-primary-color);
@@ -1541,6 +1552,7 @@
   --dropdown-button-group-spacing: 0;
 
   // Alert
+  --alert-font-size: unset;
   --alert-border-radius: var(--border-radius-base);
   --alert-border-width: var(--border-width-base);
   --alert-icon-top: calc(0.05rem + var(--font-size-base) * var(--line-height-base) / 2 - var(--font-size-base) / 2);
@@ -1561,6 +1573,7 @@
   --alert-with-description-no-icon-padding: 0.15rem;
   --alert-with-description-icon-size: 0.24rem;
   --alert-with-description-message-font-size: var(--font-size-lg);
+  --alert-with-description-border-radius: var(--border-radius-base);
 
   // Lov
   --lov-selection-list-bg: transparent;
