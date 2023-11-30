@@ -98,7 +98,7 @@
 
       &-unit {
         display: inline-block;
-        width: @tree-title-height;
+        width: @tree-item-width;
       }
     }
 
@@ -128,7 +128,7 @@
       flex: none;
       align-self: stretch;
 
-      width: @tree-title-height;
+      width: @tree-item-width;
       margin: 0;
       line-height: @tree-title-height;
       text-align: center;
@@ -166,7 +166,7 @@
         }
         &::after {
           position: absolute;
-          width: calc(@tree-title-height - 14px);
+          width: calc(@tree-item-width - 14px);
           height: calc(@tree-title-height - 10px);
           margin-left: @tree-line-margin-left;
           border-bottom: 1px solid @normal-color;
@@ -219,7 +219,7 @@
       // Icon
       .@{tree-prefix-cls}-iconEle {
         display: inline-block;
-        width: @tree-title-height;
+        width: @tree-item-width;
         height: @tree-title-height;
         line-height: @tree-title-height;
         text-align: center;
@@ -278,7 +278,7 @@
           &::before {
             position: absolute;
             top: 0;
-            right: calc(@tree-title-height / 2);
+            right: calc(@tree-item-width / 2);
             bottom: @tree-line-before-bottom;
             border-right: 1px solid @border-color-base;
             content: '';
