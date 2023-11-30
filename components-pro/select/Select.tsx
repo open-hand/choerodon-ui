@@ -827,7 +827,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   get defaultActiveFirstOption(): boolean | undefined {
     const { defaultActiveFirstOption = this.getContextConfig('defaultActiveFirstOption') } = this.observableProps;
-    return defaultActiveFirstOption;
+    return defaultActiveFirstOption && this.options.currentPage === 1;
   }
 
   get optionsFilter(): (record: Record, index: number, records: Record[]) => boolean {
