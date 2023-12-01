@@ -22,6 +22,7 @@ timeline: true
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
 - 💄 `ImageCrop`: Optimized support for blank cropping and no restriction on cropping area.
 - 💄 `<pro>Table`: Optimized the display of placeholders when there is no data in the column grouping of the personalized panel.
+- 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
