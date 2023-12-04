@@ -134,8 +134,8 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
     </ConfigProvider>
   );
 
-  const handleFocus = () => {
-    if (!active && paneRef.current) {
+  const handleFocus = (e) => {
+    if (!active && paneRef.current && e.currentTarget.contains(e.target)) {
       paneRef.current.focus();
     }
   }

@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
+- 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 
 ## 1.6.4
 
