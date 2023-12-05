@@ -294,6 +294,10 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
                 reject();
                 return;
               }
+              // 上传失败的重新上传
+              if (file.status === 'error') {
+                resolve(file);
+              }
               fileRef.current = file;
               resolveRef.current = resolve;
               rejectRef.current = reject;
@@ -375,8 +379,8 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   }, [isMaxRotate, rotateVal]);
 
   const initVal = useCallback(() => {
-    if (!isMinZoom || !isMinRotate) {
-      setZoomVal(MIN_ZOOM);
+    if (zoomVal !== 1 || !isMinRotate) {
+      setZoomVal(1);
       setRotateVal(MIN_ROTATE);
     }
   }, [zoomVal, rotateVal]);

@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
+- 🐞 `ImageCrop`: Fixed re-upload failure.
 
 ## 1.6.4
 

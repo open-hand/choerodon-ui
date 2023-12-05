@@ -98,15 +98,6 @@ class AjaxUploader extends Component {
   };
 
   upload(file, fileList) {
-    const { originReuploadItem, fileList: originFileList, setReplaceReuploadItem } = this.props;
-    // Upload 重新上传的替换处理
-    if (originReuploadItem) {
-      const reuploadItemIndex = originFileList.findIndex(item => item.uid === originReuploadItem.uid);
-      file.uid = originReuploadItem.uid;
-      file.originFileObj = originReuploadItem;
-      originFileList[reuploadItemIndex] = fileToObject(file);
-      setReplaceReuploadItem(null);
-    }
     const { props } = this;
     if (!props.beforeUpload) {
       // always async in case use react state to keep fileList
@@ -130,6 +121,16 @@ class AjaxUploader extends Component {
   }
 
   post(file) {
+    const { originReuploadItem, fileList: originFileList, setReplaceReuploadItem } = this.props;
+    // Upload 重新上传的替换处理
+    if (originReuploadItem) {
+      const reuploadItemIndex = originFileList.findIndex(item => item.uid === originReuploadItem.uid);
+      file.uid = originReuploadItem.uid;
+      file.originFileObj = originReuploadItem;
+      originFileList[reuploadItemIndex] = fileToObject(file);
+      setReplaceReuploadItem(null);
+    }
+
     if (!this._isMounted) {
       return;
     }
