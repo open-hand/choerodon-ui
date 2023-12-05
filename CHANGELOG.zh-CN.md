@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题。
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
+- 🐞 `ImageCrop`: 修复重新上传失败的问题。
 
 ## 1.6.4
 
