@@ -105,12 +105,14 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { imageStyle: { width, height }, cropSize } = this.state;
     switch (type) {
       case 'add': {
-        zoom = (zoom + ZOOM_STEP) >= MAX_ZOOM ? MAX_ZOOM : (zoom + ZOOM_STEP);
+        const newZoomVal = (zoom * 10 + ZOOM_STEP * 10) / 10;
+        zoom = newZoomVal >= MAX_ZOOM ? MAX_ZOOM : newZoomVal;
         this.setState({ zoom });
         break;
       }
       case 'sub': {
-        zoom = (zoom - ZOOM_STEP) <= MIN_ZOOM ? MIN_ZOOM : (zoom - ZOOM_STEP);
+        const newZoomVal = (zoom * 10 - ZOOM_STEP * 10) / 10;
+        zoom = newZoomVal <= MIN_ZOOM ? MIN_ZOOM : newZoomVal;
         this.setState({ zoom });
         break;
       }
@@ -178,6 +180,12 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const { onClose } = this.props;
     this.setState({
       img: null,
+      crop: {
+        x: 0,
+        y: 0,
+      },
+      rotate: 0,
+      zoom: 1,
     });
     if (onClose) {
       onClose(false);
