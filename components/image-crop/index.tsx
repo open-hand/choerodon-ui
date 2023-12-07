@@ -54,7 +54,7 @@ if (typeof window !== 'undefined') {
   })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 }
 
-export const MIN_ZOOM = 0.1;
+export const MIN_ZOOM = 0.5;
 export const MAX_ZOOM = 5;
 export const ZOOM_STEP = 0.1;
 
@@ -363,11 +363,17 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const isMaxRotate = rotateVal >= MAX_ROTATE;
 
   const subZoomVal = useCallback(() => {
-    if (!isMinZoom) setZoomVal(zoomVal - ZOOM_STEP);
+    if (!isMinZoom) {
+      const newZoomVal = (zoomVal * 10 - ZOOM_STEP * 10) / 10;
+      setZoomVal(newZoomVal < MIN_ZOOM ? MIN_ZOOM : newZoomVal);
+    }
   }, [isMinZoom, zoomVal]);
 
   const addZoomVal = useCallback(() => {
-    if (!isMaxZoom) setZoomVal(zoomVal + ZOOM_STEP);
+    if (!isMaxZoom) {
+      const newZoomVal = (zoomVal * 10 + ZOOM_STEP * 10) / 10;
+      setZoomVal(newZoomVal > MAX_ZOOM ? MAX_ZOOM : newZoomVal);
+    }
   }, [isMaxZoom, zoomVal]);
 
   const addRotateVal = useCallback(() => {
