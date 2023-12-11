@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
+- 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 
 ## 1.6.4
 

@@ -46,6 +46,14 @@ export class AttachmentStore {
     return Promise.resolve(undefined);
   }
 
+  updateCacheCount(code: string, count: number | undefined): void {
+    const { merger: { cache } } = this;
+    const cacheCount = cache.get(code);
+    if (cacheCount !== undefined && count !== undefined && cacheCount !== count) {
+      cache.set(code, count);
+    }
+  }
+
   /**
    * @deprecated
    */

@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `ImageCrop`: Fixed re-upload failure.
+- 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 
 ## 1.6.4
 

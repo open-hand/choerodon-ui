@@ -314,6 +314,14 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
+  updateCacheCount() {
+    const attachmentUUID = this.getValue();
+    if (attachmentUUID && this.count) {
+      attachmentStore.updateCacheCount(attachmentUUID, this.count);
+    }
+  }
+
+  @autobind
   handleDataSetLoad() {
     this.fetchCount();
   }
@@ -448,9 +456,12 @@ export default class Attachment extends FormField<AttachmentProps> {
       } else {
         runInAction(() => {
           const { tempAttachmentUUID } = this;
-          if (attachment.status === 'success' && tempAttachmentUUID) {
-            this.tempAttachmentUUID = undefined;
-            this.setValue(tempAttachmentUUID);
+          if (attachment.status === 'success') {
+            this.updateCacheCount();
+            if (tempAttachmentUUID) {
+              this.tempAttachmentUUID = undefined;
+              this.setValue(tempAttachmentUUID);
+            }
           } else {
             this.checkValidity();
           }
@@ -585,6 +596,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         attachments.splice(index, 1);
         this.attachments = attachments;
         this.checkValidity();
+        this.updateCacheCount();
       }
     }
     return undefined;
