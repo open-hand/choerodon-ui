@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
+- 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 
 ## 1.6.4
 

@@ -31,6 +31,7 @@ timeline: true
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
+- 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 
 ## 1.6.4
 
