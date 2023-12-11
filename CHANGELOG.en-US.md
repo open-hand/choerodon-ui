@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
+- 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 
 ## 1.6.4
 

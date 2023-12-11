@@ -32,6 +32,7 @@ timeline: true
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
+- 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
 
 ## 1.6.4
 
