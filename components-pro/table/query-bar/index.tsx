@@ -193,7 +193,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   /**
    * 多行汇总
    */
-  @observable moreSummary: ReactElement[] | undefined;
+  @observable showMoreSummary: boolean | undefined;
 
   static defaultProps = {
     summaryBarFieldWidth: 170,
@@ -561,32 +561,26 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   /**
    * 点击汇总条展开收起
-   * @param summary
    */
   @action
-  openMore = (summary?: SummaryBar[]) => {
-    if (this.moreSummary && this.moreSummary.length) {
-      this.moreSummary = [];
-    } else {
-      this.moreSummary = this.renderSummary(summary);
-    }
-    return this.moreSummary;
+  toggleShowMoreSummary = () => {
+    this.showMoreSummary = !this.showMoreSummary;
   };
 
   /**
    * 汇总条展开收起按钮
    * @param summary
    */
-  getMoreSummaryButton(summary: SummaryBar[]) {
+  getMoreSummaryButton(summary) {
     if (summary.length) {
       const { prefixCls } = this.context;
       return (
         <div className={`${prefixCls}-summary-button-more`}>
           <a
-            onClick={() => this.openMore(summary)}
+            onClick={() => this.toggleShowMoreSummary()}
           >
             {$l('Table', 'more')}
-            {this.moreSummary && this.moreSummary.length ? <Icon type='expand_less' /> : <Icon type='expand_more' />}
+            {this.showMoreSummary ? <Icon type='expand_less' /> : <Icon type='expand_more' />}
           </a>
         </div>
       );
@@ -611,14 +605,15 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
     const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
     if (summaryBar) {
-      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
-      const moreSummary = summaryBar.slice(summaryFieldsLimits);
+      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits - 1));
+      const moreSummary = summaryBar.slice(summaryFieldsLimits - 1);
+      const moreSummaryBar = this.renderSummary(moreSummary);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
       return (
         <div className={`${prefixCls}-summary-group-wrapper`}>
           <div className={`${prefixCls}-summary-group`}>
             {currentSummaryBar}
-            {this.moreSummary}
+            {this.showMoreSummary && moreSummaryBar}
           </div>
           {moreSummaryButton}
         </div>

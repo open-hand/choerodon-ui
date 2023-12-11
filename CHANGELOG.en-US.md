@@ -26,10 +26,14 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the column grouping tree structure was missing after the default restoration of the personalized table header.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `ImageCrop`: Fixed re-upload failure.
+- 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
+- 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
+- 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 
 ## 1.6.4
 

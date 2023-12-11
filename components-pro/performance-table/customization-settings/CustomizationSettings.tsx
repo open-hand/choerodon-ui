@@ -24,6 +24,7 @@ import { ShowHelp } from '../../field/enum';
 import Icon from '../../icon';
 import { treeReduce } from '../../_util/treeUtils';
 import { ModalChildrenProps } from '../../modal/interface';
+import { mergeDefaultProps } from '../TableStore';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]) {
   return treeReduce<object[], ColumnProps>(columns, (list, column, _sort, parentColumn) => list.concat({
@@ -141,7 +142,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
     e.stopPropagation();
     const { columns = [] } = tableStore.node.props;
-    setCustomizedColumns(columns.map((column) => {
+    setCustomizedColumns(mergeDefaultProps(columns).map((column) => {
       const fixed = getColumnFixed(column.fixed);
       const hidden = column.hidden || false;
       return { ...column, fixed, hidden };
