@@ -196,7 +196,7 @@ export default class Popup extends ViewComponent<PopupProps> {
       const mountNode = getPopupContainer(getRootDomNode());
       const popupContainer = newPopupContainer();
       const root = window.document.body;
-      if (mountNode === root) {
+      if (window === window.top && mountNode === root) {
         if (globalContainer) {
           this.popupContainer = globalContainer;
           return globalContainer;

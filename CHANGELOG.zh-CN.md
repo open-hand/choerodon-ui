@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
+- 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
 
 ## 1.6.4
 
