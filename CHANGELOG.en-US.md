@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized the display of placeholders when there is no data in the column grouping of the personalized panel.
 - 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
 - 💄 `<pro>Lov`: Optimizes the style of displaying selected records in `drawer` mode.
+- 💄 `<pro>Lov`: Optimized support for enabling asynchronous tree loading through view interface configuration.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
