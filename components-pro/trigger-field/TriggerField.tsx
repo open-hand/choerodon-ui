@@ -158,19 +158,6 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     return findDOMNode(this);
   }
 
-  @autobind
-  getPopupContainer(target: HTMLElement): HTMLElement | undefined {
-    if (target) {
-      let containerNode = target as HTMLElement;
-      while (containerNode && containerNode.tagName.toLowerCase() !== 'body') {
-        containerNode = containerNode.parentNode as HTMLElement;
-      }
-      if (containerNode) {
-        return containerNode as HTMLElement;
-      }
-    }
-  }
-
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'popupContent',
@@ -247,7 +234,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         trigger = this.getDefaultAction(),
         triggerShowDelay,
         triggerHiddenDelay,
-        getPopupContainer = this.getPopupContainer,
+        getPopupContainer,
         tabIntoPopupContent,
         getPopupAlignTarget = this.getRootDomNode,
       },
