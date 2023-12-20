@@ -44,6 +44,7 @@ export interface LovConfig {
   lovPageSize?: string;
   lovItems: LovConfigItem[] | null;
   treeFlag?: 'Y' | 'N';
+  delayLoad?: 'Y' | 'N';
   parentIdField?: string;
   idField?: string;
   textField?: string;

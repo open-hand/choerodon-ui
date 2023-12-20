@@ -239,7 +239,7 @@ export default class LovView extends Component<LovViewProps> {
   renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, queryColumns, tableProps: configTableProps = {}, lovItems },
+      config: { queryBar, height, treeFlag, delayLoad, queryColumns, tableProps: configTableProps = {}, lovItems },
       multiple,
       tableProps,
       viewMode,
@@ -262,6 +262,7 @@ export default class LovView extends Component<LovViewProps> {
     const lovTableProps: TableProps = {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
+      treeAsync: delayLoad === 'Y',
       onKeyDown: this.handleKeyDown,
       dataSet,
       columns,
@@ -370,6 +371,7 @@ export default class LovView extends Component<LovViewProps> {
         textField={textField}
         selectionsPosition={selectionsPosition}
         selectionProps={getSelectionProps && getSelectionProps()}
+        selectionMode={this.selectionMode}
         context={context}
       />
     );

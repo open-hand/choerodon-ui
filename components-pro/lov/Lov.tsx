@@ -30,7 +30,7 @@ import ObserverSelect, {
   SelectProps,
 } from '../select/Select';
 import Option from '../option/Option';
-import { TableQueryBarType } from '../table/enum';
+import { TableMode, TableQueryBarType } from '../table/enum';
 import { CheckedStrategy, DataSetStatus, RecordStatus } from '../data-set/enum';
 import { PopupSearchMode, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -185,12 +185,14 @@ export default class Lov extends Select<LovProps> {
   }
 
   /**
-   * 点击查询仅存在一条数据时自动选中, Button 模式禁用
+   * 点击查询仅存在一条数据时自动选中, 树形数据和 Button 模式禁用
    */
   get autoSelectSingle(): boolean | undefined {
+    const { treeFlag } = this.getConfig() || {};
+    const { mode: tableMode } = this.getTableProps();
     const { viewMode } = this.observableProps;
     const { mode } = this.props;
-    if (viewMode === TriggerViewMode.popup || mode === ViewMode.button) {
+    if (viewMode === TriggerViewMode.popup || mode === ViewMode.button || treeFlag === 'Y' || tableMode === TableMode.tree) {
       return false;
     }
     if ('autoSelectSingle' in this.props) {

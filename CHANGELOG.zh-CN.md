@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化个性化面板列分组无数据时展示占位符。
 - 💄 `<pro>Output`: 当 Output 内部渲染有弹窗时，优化 tooltip 显示逻辑。
 - 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
+- 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
