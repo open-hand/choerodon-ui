@@ -89,6 +89,7 @@ class App extends React.Component {
     combineSort: true,
     cacheSelection: true,
     pageSize: 5,
+    paging: false,
     queryFields: [
       { name: 'name', type: 'string', label: '姓名' },
       { name: 'age', type: 'number', label: '年龄' },
@@ -309,7 +310,7 @@ class App extends React.Component {
         viewVisible={this.userDs.getState('viewVisible')}
         customizedCode="board"
         onChange={(props) => {
-          console.log('onChange', props.currentViewDS.name, props.currentViewDS.$mobx, props.record.get('viewType'))
+          console.log('onChange', props, props.currentViewDS.name, props.currentViewDS.$mobx, props.record.get('viewType'))
         }}
         onConfigChange={(props) => {
           console.log('onConfigChange', props)

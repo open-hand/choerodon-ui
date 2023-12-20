@@ -1,4 +1,4 @@
-import React, { isValidElement, CSSProperties, FunctionComponent, ReactElement, ReactNode, useCallback, useContext, useEffect, useState, cloneElement, useMemo, JSXElementConstructor, MouseEventHandler } from 'react';
+import React, { isValidElement, CSSProperties, FunctionComponent, ReactElement, ReactNode, useCallback, useContext, useEffect, useState, cloneElement, useMemo, JSXElementConstructor, MouseEventHandler, useRef } from 'react';
 import classnames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -56,7 +56,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
   const dataKey = kanbanProps.columnDsProps ? kanbanProps.columnDsProps.dataKey || getConfig('dataKey') : getConfig('dataKey');
   const totalKey = kanbanProps.columnDsProps ? kanbanProps.columnDsProps.totalKey || getConfig('totalKey') : getConfig('dataKey');
   const dsField = useMemo(() => dataSet.fields.get(groupField), [dataSet, groupField]);
-
+  const oldDSRef = useRef(null);
 
   const modal = useModal();
   const openCustomizationModal = useCallback(() => {
@@ -97,6 +97,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
     setLoaded(false);
     // 处理看板视图初始化onChange问题
     const oldId = customizedDS && customizedDS.getState('__OLDID__');
+    oldDSRef.current = dataSet!.getState('__CURRENTVIEWDS__');
     const isChanged = !isEqual(oldId, customizedDS ? customizedDS.current!.get(ViewField.id) : undefined);
     if (dsField && dsField.getOptions() && dsField.getOptions()!.toData().length) {
       const res = [...dsField.getOptions()!.toData()];
@@ -106,7 +107,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
       dataSet.setState('__CURRENTVIEWDS__', kanbanDS);
       const changed = customizedDS && customizedDS.getState('__ISCHANGE__');
       if (isFunction(onChange) && changed && isChanged) {
-        onChange({ dataSet, currentViewDS: kanbanDS, record: customizedDS!.current })
+        onChange({ dataSet, currentViewDS: kanbanDS, oldViewDS: oldDSRef.current, record: customizedDS!.current })
       }
       if (autoQuery) {
         await kanbanDS.query();
@@ -122,7 +123,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           dataSet.setState('__CURRENTVIEWDS__', kanbanDS);
           const changed = customizedDS && customizedDS.getState('__ISCHANGE__');
           if (isFunction(onChange) && changed && isChanged) {
-            onChange({ dataSet, currentViewDS: kanbanDS, record: customizedDS!.current })
+            onChange({ dataSet, currentViewDS: kanbanDS, oldViewDS: oldDSRef.current, record: customizedDS!.current })
           }
           if (autoQuery) {
             await kanbanDS.query();
@@ -137,6 +138,9 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
 
   useEffect(() => {
     loadColumnData();
+    return () => {
+      oldDSRef.current = null;
+    };
   }, [dataSet, customizedDS!.current, groupField, kanbanProps]);
 
   /**

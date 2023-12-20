@@ -1,4 +1,4 @@
-import React, { isValidElement, CSSProperties, FunctionComponent, ReactElement, ReactNode, useCallback, useContext, cloneElement, useMemo, JSXElementConstructor, useEffect, MouseEventHandler, useState } from 'react';
+import React, { isValidElement, CSSProperties, FunctionComponent, ReactElement, ReactNode, useCallback, useContext, cloneElement, useMemo, JSXElementConstructor, useEffect, MouseEventHandler, useState, useRef } from 'react';
 import classnames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
@@ -50,6 +50,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
   const { onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand, commandsLimit } = useContext(BoardContext);
   const viewProps = customizedDS!.current!.get(ViewField.viewProps);
   const [cardHeight, setCardHeight] = useState(0);
+  const oldDSRef = useRef(null);
 
   const modal = useModal();
   const openCustomizationModal = useCallback(() => {
@@ -90,11 +91,12 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
    * 查询看板数据
    */
   const loadData = useCallback(async () => {
+    oldDSRef.current = dataSet!.getState('__CURRENTVIEWDS__');
     dataSet!.setState('__CURRENTVIEWDS__', cardDS);
     if (isFunction(onChange) && customizedDS) {
       const changed = customizedDS.getState('__ISCHANGE__');
       if (changed) {
-        onChange({ dataSet, currentViewDS: cardDS, record: customizedDS!.current })
+        onChange({ dataSet, currentViewDS: cardDS, oldViewDS: oldDSRef.current, record: customizedDS!.current })
       }
     }
     if (autoQuery) {
@@ -104,6 +106,9 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
 
   useEffect(() => {
     loadData();
+    return () => {
+      oldDSRef.current = null;
+    };
   }, [dataSet, cardDS]);
 
   const cls = classnames(

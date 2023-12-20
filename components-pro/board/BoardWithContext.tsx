@@ -264,6 +264,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
   const TableRef = useRef(null);
   const DropdownRef = useRef(null);
   const SwitchBtnRef = useRef(null);
+  const oldDSRef = useRef(null);
 
   const optionDS = useMemo(() => new DataSet({
     data: processGroupData(dataSet),
@@ -678,11 +679,18 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
   const tableDataSetName = useMemo(() => {
     if (customizedDS.current && customizedDS.current.get(ViewField.viewMode) === ViewMode.table) {
       const changed = customizedDS.getState('__ISCHANGE__');
+      oldDSRef.current = dataSet!.getState('__CURRENTVIEWDS__');
       if (isFunction(onChange) && tableDataSet && changed) {
-        onChange({ record: customizedDS.current, dataSet, currentViewDS: tableDataSet });
+        onChange({ record: customizedDS.current, dataSet, currentViewDS: tableDataSet, oldViewDS: oldDSRef.current });
       }
     }
   }, [tableDataSet]);
+
+  useEffect(() => {
+    return () => {
+      oldDSRef.current = null;
+    };
+  }, [dataSet, tableDataSet]);
 
 
   const renderContent = useCallback((): ReactNode => {
