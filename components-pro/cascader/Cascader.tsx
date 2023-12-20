@@ -1142,6 +1142,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       options.queryMore(options.currentPage + 1);
       return;
     }
+    if (changeOnSelect && ExpandTrigger.dblclick === trigger) {
+      this.setPopup(false);
+      return;
+    }
     // 单选模式
     if (!this.isSelected(targetOption.value) || isClickTab || !this.multiple) {
       if (targetOption.children) {
