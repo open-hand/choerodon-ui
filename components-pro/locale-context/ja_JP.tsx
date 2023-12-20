@@ -106,6 +106,7 @@ const locale: Locale = {
     restore_default: 'デフォルトに戻す',
     left_lock: '左側をロック',
     right_lock: '右側をロック',
+    drag_lock_tip: 'ドラッグ制御列の凍結をサポート',
     unlocked: 'ロック解除',
     unlock: 'ロックを解除する',
     top: '上',

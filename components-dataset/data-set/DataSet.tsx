@@ -3507,6 +3507,8 @@ Then the query method will be auto invoke.`,
       } else if (paging === true || paging === 'server') {
         params.page = page;
         params.pagesize = pageSize;
+      } else {
+        params.pagesize = 0; // no paging
       }
 
       if (autoCount === false) {

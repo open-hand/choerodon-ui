@@ -22,6 +22,7 @@ const { Column, HeaderCell, Cell } = PerformanceTable;
 
 const Table = () => {
   const tableRef = React.createRef();
+  const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
   const columns = [
     {
       title: 'Id',
@@ -64,7 +65,9 @@ const Table = () => {
   ];
 
   const rowSelection = {
+    selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRowKeys(selectedRowKeys);
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: rowData => ({
@@ -82,6 +85,7 @@ const Table = () => {
         rowDraggable
         rowKey="id"
         rowSelection={rowSelection}
+        shouldUpdateScroll={false}
         customizable
         customizedCode="pre-customized-p"
         columnDraggable

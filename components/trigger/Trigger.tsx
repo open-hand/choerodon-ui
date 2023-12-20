@@ -131,6 +131,8 @@ export default class Trigger extends Component<TriggerProps> {
     defaultPopupHidden: true,
   };
 
+  domNode: Element | Text | null;
+
   popup: Popup | null;
 
   popupTask?: TaskRunner;
@@ -281,6 +283,7 @@ export default class Trigger extends Component<TriggerProps> {
   @mobxAction
   componentDidMount() {
     this.mounted = true;
+    this.domNode = findDOMNode(this);
     if (!isChrome() && (isSafari() || isWeChat())) {
       this.mouseDownEvent = new EventManager(document).addEventListener('mousedown', (e) => {
         if (!this.popupHidden) {
@@ -299,6 +302,7 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   componentDidUpdate() {
+    this.domNode = findDOMNode(this);
     const { popupHidden } = this;
     if (this.documentEvent) {
       this.documentEvent.clear();
@@ -536,6 +540,19 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
+  @autobind
+  getPopupContainer(target: HTMLElement): HTMLElement | undefined {
+    if (target) {
+      let containerNode = target as HTMLElement;
+      while (containerNode && containerNode.tagName.toLowerCase() !== 'body') {
+        containerNode = containerNode.parentNode as HTMLElement;
+      }
+      if (containerNode) {
+        return containerNode as HTMLElement;
+      }
+    }
+  }
+
   getPopup(): ReactNode {
     const {
       prefixCls,
@@ -552,7 +569,7 @@ export default class Trigger extends Component<TriggerProps> {
       getPopupStyleFromAlign,
       getRootDomNode = this.getRootDomNode,
       transitionName,
-      getPopupContainer,
+      getPopupContainer = this.getPopupContainer,
       forceRender,
     } = this.props;
     if (this.mounted || !getPopupContainer) {
@@ -596,6 +613,9 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   getRootDomNode() {
+    if (this.domNode) {
+      return this.domNode;
+    }
     return findDOMNode(this);
   }
 

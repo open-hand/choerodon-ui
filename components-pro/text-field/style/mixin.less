@@ -8,12 +8,20 @@
     height: @input-height-lg;
     padding: @input-padding-vertical-lg @input-padding-horizontal;
   }
+  &-lg &-placeholder,
+  &-lg &-rendered-value {
+    line-height: @input-height-lg;
+  }
 }
 
 .input-sm() {
   &-sm & {
     height: @input-height-sm;
     padding: @input-padding-vertical-sm @input-padding-horizontal;
+  }
+  &-sm &-placeholder,
+  &-sm &-rendered-value {
+    line-height: @input-height-sm;
   }
 }
 
@@ -89,7 +97,7 @@
   font-weight: @input-font-weight-base;
   font-size: @input-font-size-base;
   line-height: @input-line-height-base;
-  background-color: transparent;
+  background-color: @input-pro-bg;
   background-image: none;
   border: @border-width-base none @input-border-color;
   border-radius: @input-border-radius;
@@ -107,12 +115,14 @@
     border-right-width: @border-width-base;
   }
 
-  &-compact:not(:first-child) & {
+  &-compact:not(:first-child) &,
+  &-compact:not(:first-child) &-wrapper {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  &-compact:not(:last-child) & {
+  &-compact:not(:last-child) &,
+  &-compact:not(:last-child) &-wrapper {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -145,6 +155,7 @@
     line-height: 1;
     vertical-align: middle;
     background-color: @input-wrapper-bg;
+    border-radius: @input-wrapper-border-radius;
 
     label {
       position: relative;
@@ -402,6 +413,10 @@
     padding-left: 0;
   }
 
+  &-multiple &:not(textarea) ul li:first-child &-multiple-input {
+    margin-left: @input-multiple-empty-input-margin-left;
+  }
+
   &-multiple&-lg & {
     height: @input-multiple-height-lg;
     min-height: @input-height-lg;
@@ -552,12 +567,14 @@
     }
   }
 
-  &-group-input:not(:last-child) & {
+  &-group-input:not(:last-child) &,
+  &-group-input:not(:last-child) &-wrapper {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  &-group-input:not(:first-child) & {
+  &-group-input:not(:first-child) &,
+  &-group-input:not(:first-child) &-wrapper {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -773,9 +790,11 @@
   padding: @tag-padding;
   overflow: hidden;
   color: @input-tag-default-color;
+  font-size: @input-tag-default-font-size;
   line-height: @line-height-base;
   white-space: nowrap;
   background-color: @input-tag-default-bg;
+  border: @input-tag-default-border;
   border-radius: @input-tag-border-radius;
   > div {
     height: 100%;

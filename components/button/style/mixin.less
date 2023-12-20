@@ -94,7 +94,7 @@
 
   // size
   &-lg > .@{btnClassName} {
-    .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
+    .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-lg);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
       margin-right: calc(@btn-height-lg / 8);
@@ -104,7 +104,7 @@
   }
 
   &-sm > .@{btnClassName} {
-    .button-size(@btn-height-sm; @btn-padding-sm; @font-size-base; @btn-border-radius-sm);
+    .button-size(@btn-height-sm; @btn-padding-sm; @btn-font-size-sm; @btn-border-radius-sm);
     line-height: @btn-height-sm;
     > .@{iconfont-css-prefix} {
       margin-right: calc(@btn-height-sm / 8);
@@ -162,7 +162,7 @@
   }
 
   &&-lg {
-    .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-base);
+    .button-size(@btn-height-lg; @btn-padding-lg; @btn-font-size-lg; @btn-border-radius-lg);
     line-height: @btn-height-lg;
     > .@{iconfont-css-prefix} {
       margin-right: calc(@btn-height-lg / 8);
@@ -247,7 +247,7 @@
 
   &.@{btnClassName}-sm {
     .square(@btn-circle-size-sm);
-    .button-size(@btn-circle-size-sm; 0; @font-size-base; @btn-circle-border-radius);
+    .button-size(@btn-circle-size-sm; 0; @btn-font-size-sm; @btn-circle-border-radius);
     > .@{iconfont-css-prefix} {
       margin-right: 0;
       font-size: @icon-font-size-sm;

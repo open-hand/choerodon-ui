@@ -52,6 +52,7 @@
   background-color: @input-bg;
   background-image: none;
   border: none;
+  border-radius: @input-basic-border-radius;
   transition: all @animation-duration-slow;
   .placeholder(); // Reset placeholder
 
@@ -228,8 +229,9 @@
       bottom: 0;
       left: 0;
       display: block;
+      background: @input-basic-has-border-bg;
       border: @border-width-base @border-style-base @input-border-color;
-      border-radius: 0.04rem;
+      border-radius: @input-basic-has-border-border-radius;
       content: ' ';
     }
   }

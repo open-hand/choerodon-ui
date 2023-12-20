@@ -54,9 +54,9 @@ if (typeof window !== 'undefined') {
   })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 }
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 3;
-const ZOOM_STEP = 0.1;
+export const MIN_ZOOM = 0.5;
+export const MAX_ZOOM = 5;
+export const ZOOM_STEP = 0.1;
 
 interface CompoundedComponent
   extends React.ForwardRefExoticComponent<ImgCropProps> {
@@ -177,6 +177,9 @@ const EasyCrop = forwardRef<unknown, EasyCropProps>((props, ref: Ref<Cropper>) =
       onRotationChange={setRotateVal}
       onCropComplete={onCropComplete}
       classes={{ containerClassName: `${prefixCls}-container`, mediaClassName: `${prefixCls}-media` }}
+      restrictPosition={false}
+      maxZoom={MAX_ZOOM}
+      minZoom={MIN_ZOOM}
     />
   );
 });
@@ -291,6 +294,10 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
                 reject();
                 return;
               }
+              // 上传失败的重新上传
+              if (file.status === 'error') {
+                resolve(file);
+              }
               fileRef.current = file;
               resolveRef.current = resolve;
               rejectRef.current = reject;
@@ -356,11 +363,17 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const isMaxRotate = rotateVal >= MAX_ROTATE;
 
   const subZoomVal = useCallback(() => {
-    if (!isMinZoom) setZoomVal(zoomVal - ZOOM_STEP);
+    if (!isMinZoom) {
+      const newZoomVal = (zoomVal * 10 - ZOOM_STEP * 10) / 10;
+      setZoomVal(newZoomVal < MIN_ZOOM ? MIN_ZOOM : newZoomVal);
+    }
   }, [isMinZoom, zoomVal]);
 
   const addZoomVal = useCallback(() => {
-    if (!isMaxZoom) setZoomVal(zoomVal + ZOOM_STEP);
+    if (!isMaxZoom) {
+      const newZoomVal = (zoomVal * 10 + ZOOM_STEP * 10) / 10;
+      setZoomVal(newZoomVal > MAX_ZOOM ? MAX_ZOOM : newZoomVal);
+    }
   }, [isMaxZoom, zoomVal]);
 
   const addRotateVal = useCallback(() => {
@@ -372,8 +385,8 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   }, [isMaxRotate, rotateVal]);
 
   const initVal = useCallback(() => {
-    if (!isMinZoom || !isMinRotate) {
-      setZoomVal(MIN_ZOOM);
+    if (zoomVal !== 1 || !isMinRotate) {
+      setZoomVal(1);
       setRotateVal(MIN_ROTATE);
     }
   }, [zoomVal, rotateVal]);

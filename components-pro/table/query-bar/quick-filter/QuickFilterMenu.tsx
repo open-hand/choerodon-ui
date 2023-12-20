@@ -812,7 +812,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
           {isChooseMenu && (isTenant ? null :
-            <Button onClick={handleSaveOther}>
+            <Button onClick={handleSaveOther} className={`${prefixCls}-filter-buttons-saveas`}>
               {$l('Table', 'save_as')}
             </Button>
           )}
@@ -823,11 +823,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
               :
               false
           ) ? null : (
-              <Button onClick={handleSave} hidden={isTenant}>
+              <Button onClick={handleSave} hidden={isTenant} className={`${prefixCls}-filter-buttons-save`}>
                 {$l('Table', 'save_button')}
               </Button>
             )}
-          <Button onClick={handleQueryReset}>
+          <Button onClick={handleQueryReset} className={`${prefixCls}-filter-buttons-reset`}>
             {$l('Table', 'reset_button')}
           </Button>
         </div>

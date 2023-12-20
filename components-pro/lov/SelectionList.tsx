@@ -18,6 +18,7 @@ import autobind from '../_util/autobind';
 import { FormContextValue } from '../form/FormContext';
 import { SelectionProps } from './Lov';
 import { SelectionsPosition } from './enum';
+import { SelectionMode } from '../table/enum';
 
 export {
   SelectionsPosition,
@@ -31,6 +32,7 @@ export interface SelectionListProps {
   selectionsPosition?: SelectionsPosition;
   selectionProps?: SelectionProps;
   context: FormContextValue;
+  selectionMode?: SelectionMode;
 }
 
 @observer
@@ -73,9 +75,9 @@ export default class SelectionList extends Component<SelectionListProps> {
   };
 
   renderSide() {
-    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
+    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {}, selectionMode } = this.props;
     const { nodeRenderer, placeholder } = selectionProps;
-    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
+    const records: Record[] = (treeFlag === 'Y' && selectionMode === SelectionMode.treebox ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
     const isEmptyList = isEmpty(records);
     if (isEmptyList && !placeholder) {
       return null;
@@ -115,9 +117,9 @@ export default class SelectionList extends Component<SelectionListProps> {
   }
 
   renderBelow = (): ReactNode => {
-    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {} } = this.props;
+    const { dataSet, treeFlag, valueField = '', textField = '', selectionProps = {}, selectionMode } = this.props;
     const { nodeRenderer } = selectionProps;
-    const records: Record[] = (treeFlag === 'Y' ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
+    const records: Record[] = (treeFlag === 'Y' && selectionMode === SelectionMode.treebox ? dataSet.treeSelected : dataSet.selected).filter(record => !isNil(record.get(valueField)));
     if (isEmpty(records)) {
       return null;
     }

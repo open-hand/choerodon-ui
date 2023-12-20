@@ -122,6 +122,92 @@
       color: @text-color-secondary;
       font-size: @font-size-sm;
     }
+
+    &-group-placeholder {
+      position: relative;
+      height: @table-customization-group-placeholder-height;
+      padding: @table-customization-group-placeholder-padding;
+      background-color: @table-customization-group-placeholder-bg-color;
+      border-radius: @border-radius-base;
+
+      &-description {
+        display: block;
+        color: @table-customization-group-placeholder-description-color;
+        font-size: @table-customization-group-placeholder-description-font-size;
+        text-align: center;
+      }
+
+      &-example {
+        position: relative;
+        z-index: 1;
+        width: @table-customization-group-placeholder-example-width;
+        height: @table-customization-group-placeholder-example-height;
+        margin: @table-customization-group-placeholder-example-margin;
+        background-color: @table-customization-group-placeholder-example-bg-color;
+        border: @table-customization-group-placeholder-example-border;
+        border-radius: @border-radius-base;
+        box-shadow: @table-customization-group-placeholder-example-box-shadow;
+
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: @table-customization-group-placeholder-example-before-left;
+          width: @table-customization-group-placeholder-example-before-width;
+          height: @table-customization-group-placeholder-example-before-height;
+          background-color: @table-customization-group-placeholder-example-before-bg-color;
+          border-radius: @border-radius-base;
+          transform: translateY(-50%);
+          opacity: @table-customization-group-placeholder-example-before-opacity;
+          content: '';
+        }
+
+        .@{iconfont-css-prefix}-open_with {
+          position: absolute;
+          top: 50%;
+          margin: @table-customization-group-placeholder-example-drag-icon-margin;
+          color: @table-customization-group-placeholder-example-drag-icon-color;
+          transform: translateY(-50%);
+        }
+
+        .@{iconfont-css-prefix}-navigation {
+          position: absolute;
+          top: @table-customization-group-placeholder-example-pointer-icon-top;
+          left: @table-customization-group-placeholder-example-pointer-icon-left;
+          color: @table-customization-group-placeholder-example-pointer-icon-color;
+          transform: scale(1.3) rotate(-45deg);
+        }
+      }
+
+      &-bg-image {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: @table-customization-group-placeholder-bg-image-width;
+        height: @table-customization-group-placeholder-bg-image-height;
+        background-image: @table-customization-group-placeholder-bg-image;
+        transform: translateX(-50%);
+
+        &::before {
+          position: absolute;
+          left: 0;
+          width: 0.48rem;
+          height: 100%;
+          background-color: @table-customization-group-placeholder-bg-color;
+          border-bottom-right-radius: 100%;
+          content: '';
+        }
+
+        &::after {
+          position: absolute;
+          right: 0;
+          width: 0.48rem;
+          height: 100%;
+          background-color: @table-customization-group-placeholder-bg-color;
+          border-bottom-left-radius: 100%;
+          content: '';
+        }
+      }
+    }
   }
 
   &-panel {

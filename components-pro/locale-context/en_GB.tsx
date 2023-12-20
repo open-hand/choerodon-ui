@@ -103,6 +103,7 @@ const locale: Locale = {
     restore_default: 'Restore to default',
     left_lock: 'Lock on the left',
     right_lock: 'Lock on the right',
+    drag_lock_tip: 'Support dragging control column freezing',
     unlocked: 'Unlocked',
     unlock: 'Unlock',
     top: 'Top',

@@ -20,9 +20,23 @@ timeline: true
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
+- 💄 `ImageCrop`: Optimized support for blank cropping and no restriction on cropping area.
+- 💄 `<pro>Table`: Optimized the display of placeholders when there is no data in the column grouping of the personalized panel.
+- 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
+- 💄 `<pro>Lov`: Optimizes the style of displaying selected records in `drawer` mode.
+- 💄 `<pro>Lov`: Optimized support for enabling asynchronous tree loading through view interface configuration.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the column grouping tree structure was missing after the default restoration of the personalized table header.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
+- 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
+- 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
+- 🐞 `ImageCrop`: Fixed re-upload failure.
+- 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
+- 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
+- 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
+- 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
 
 ## 1.6.4
 

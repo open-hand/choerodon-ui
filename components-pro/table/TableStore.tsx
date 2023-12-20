@@ -2763,7 +2763,13 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage));
+      const generatePageQuery = this.getConfig('generatePageQuery');
+      let params;
+      if (typeof generatePageQuery === 'function') {
+        // treeAsync 子节点查询不分页
+        params = generatePageQuery({ pageSize: 0 })
+      }
+      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage, params));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));

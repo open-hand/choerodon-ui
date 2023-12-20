@@ -20,9 +20,23 @@ timeline: true
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
+- 💄 `ImageCrop`: 优化支持留白裁剪和不限制裁剪区域。
+- 💄 `<pro>Table`: 优化个性化面板列分组无数据时展示占位符。
+- 💄 `<pro>Output`: 当 Output 内部渲染有弹窗时，优化 tooltip 显示逻辑。
+- 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
+- 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
-- 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题.
+- 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
+- 🐞 `<pro>PerformanceTable`: 修复个性化表头恢复默认后列分组树形结构丢失。
+- 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题。
+- 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
+- 🐞 `Tabs`: 修复焦点切换异常的问题。
+- 🐞 `ImageCrop`: 修复重新上传失败的问题。
+- 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
+- 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
+- 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
+- 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
 
 ## 1.6.4
 
