@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Output`: 当 Output 内部渲染有弹窗时，优化 tooltip 显示逻辑。
 - 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
 - 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
+- 💄 `<pro>Cascader`: 优化 changeOnSelect 模式下父级选择的交互。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
@@ -37,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
 - 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
+- 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
 
 ## 1.6.4
 

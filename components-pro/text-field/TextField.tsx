@@ -792,7 +792,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.left = 0;
     }
     if (!editable) {
-      editorStyle.textIndent = -1000;
+      editorStyle.textIndent = -10000;
       editorStyle.color = 'transparent';
     }
     // 筛选条默认宽度处理
@@ -809,11 +809,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.boxSizing = !isNil(rangeTarget) ? 'content-box' : undefined;
     }
     if (startRenderedValue && (!editable || !isFocused)) {
-      startStyle.textIndent = -1000;
+      startStyle.textIndent = -10000;
       startStyle.color = 'transparent';
     }
     if (endRenderedValue && (!editable || !isFocused)) {
-      endStyle.textIndent = -1000;
+      endStyle.textIndent = -10000;
       endStyle.color = 'transparent';
     }
     const splitClassNames = classNames(`${prefixCls}-range-split`, {
@@ -1005,7 +1005,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (renderedValue && (!this.editable || !this.isFocused)) {
       otherProps.style = {
         ...otherProps.style,
-        textIndent: -1000,
+        textIndent: -10000,
         color: 'transparent',
       };
     }

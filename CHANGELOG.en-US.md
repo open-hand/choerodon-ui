@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
 - 💄 `<pro>Lov`: Optimizes the style of displaying selected records in `drawer` mode.
 - 💄 `<pro>Lov`: Optimized support for enabling asynchronous tree loading through view interface configuration.
+- 💄 `<pro>Cascader`: Optimizes parent-selected interactions in `changeOnSelect` mode.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
@@ -37,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 - 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
+- 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 
 ## 1.6.4
 

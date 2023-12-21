@@ -52,7 +52,10 @@ export default class Menus extends Component {
     let expandProps = {
       onClick: () => {
         return onSelect('click');
-      }
+      },
+      onDoubleClick: () => {
+        return onSelect('dblclick');
+      },
     };
     let menuItemCls = `${prefixCls}-menu-item`;
     let expandIconNode = null;
