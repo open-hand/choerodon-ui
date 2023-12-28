@@ -228,7 +228,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     if (renderedValue) {
       otherProps.style = {
         ...elementProps.style,
-        textIndent: -10000,
+        textIndent: -100000,
         color: 'transparent',
       };
     }
