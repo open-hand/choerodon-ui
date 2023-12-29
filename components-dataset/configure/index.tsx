@@ -163,6 +163,7 @@ export interface Config {
   min?: (type: FieldType) => number | MomentInput | string | null;
   max?: (type: FieldType) => number | MomentInput | string | null;
   xlsx?: () => Promise<any>;
+  strictPageSize?: boolean;
 }
 
 export type ConfigKeys = keyof Config;
@@ -207,6 +208,7 @@ const defaultConfig = {
   validationMessageFormatter: defaultValidationMessageFormatter,
   validationMessageReportFormatter: defaultValidationMessageReportFormatter,
   xlsx: noop,
+  strictPageSize: true,
   useLookupBatch: noop,
   useLovDefineBatch: noop,
 };
