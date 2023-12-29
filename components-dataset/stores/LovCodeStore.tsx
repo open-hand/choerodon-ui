@@ -200,7 +200,7 @@ export class LovCodeStore {
       if (treeFlag === 'Y' && parentIdField && idField) {
         dsProps.parentField = parentIdField;
         dsProps.idField = idField;
-        if (dsProps?.pageSize) {
+        if (dsProps.pageSize) {
           dsProps.paging = 'server';
         }
       }

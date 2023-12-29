@@ -490,7 +490,6 @@ export default class DataSet extends EventManager {
     modifiedCheck: true,
     pageSize: 10,
     paging: true,
-    strictPageSize: true,
     combineSort: false,
     dataToJSON: DataToJSON.dirty,
     cascadeParams(parent, primaryKey) {
@@ -2760,7 +2759,7 @@ export default class DataSet extends EventManager {
 
   @action
   commitData(allData: any[], total?: number, onlyDelete?: boolean): DataSet {
-    const { autoQueryAfterSubmit, primaryKey, strictPageSize } = this.props;
+    const { autoQueryAfterSubmit, primaryKey, strictPageSize = this.getConfig('strictPageSize') } = this.props;
     if (strictPageSize) {
       const { paging } = this;
       if (paging === 'server') {
@@ -2924,7 +2923,7 @@ Then the query method will be auto invoke.`,
     const {
       paging,
       pageSize,
-      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize },
+      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize = this.getConfig('strictPageSize') },
     } = this;
     if (strictPageSize) {
       switch (paging) {

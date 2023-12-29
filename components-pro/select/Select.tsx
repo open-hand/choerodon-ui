@@ -769,6 +769,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       );
     }
     const menuPrefix = this.getMenuPrefixCls();
+    const { strictPageSize = this.getContextConfig('strictPageSize')} = options.props;
+    const showQueryMore = options.paging && options.currentPage < options.totalPage &&
+      (strictPageSize || (!strictPageSize && options.length < options.totalCount));
     return (
       <Menu
         ref={this.saveMenu}
@@ -785,7 +788,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       >
         {optGroups}
         {
-          options.paging && options.currentPage < options.totalPage && (
+          showQueryMore && (
             <Item key={MORE_KEY} checkable={false} className={`${menuPrefix}-item-more`}>
               {this.getPagingOptionContent()}
             </Item>
