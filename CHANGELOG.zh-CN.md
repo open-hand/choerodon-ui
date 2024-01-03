@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
 - 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
 - 💄 `<pro>Cascader`: 优化 changeOnSelect 模式下父级选择的交互。
+- 💄 `<pro>Output`: 优化文本为长单词场景的换行样式。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
