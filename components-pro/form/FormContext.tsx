@@ -22,6 +22,7 @@ export interface FormContextValue extends ConfigContextValue {
   labelLayout?: LabelLayout | undefined;
   labelAlign?: LabelAlign | undefined;
   labelWidth?: LabelWidth | undefined;
+  labelWordBreak?: boolean;
   labelTooltip?: Tooltip | [Tooltip, TooltipProps] | undefined;
   showValidation?: ShowValidation | undefined;
   showHelp?: ShowHelp | undefined;

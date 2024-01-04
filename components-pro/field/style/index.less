@@ -21,6 +21,13 @@
     vertical-align: middle;
   }
 
+  &-row &-label&-label-word-break,
+  &-label&-label-word-break label > span,
+  &-label-vertical&-label-word-break {
+    white-space: break-spaces;
+    word-break: break-all;
+  }
+
   &-label {
     padding: @label-wrapper-padding;
     padding-top: 0;

@@ -13,15 +13,16 @@ export interface FormLabelProps {
   style?: CSSProperties;
   tooltip?: LabelTooltip | [LabelTooltip, TooltipProps];
   help?: ReactNode;
+  labelWordBreak?: boolean;
 }
 
 const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(props) {
-  const { className, rowSpan, style, tooltip, children, help } = props;
+  const { className, rowSpan, style, tooltip, children, help, labelWordBreak } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
-    if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && isOverflow(currentTarget))) {
+    if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && !labelWordBreak && isOverflow(currentTarget))) {
       show(currentTarget, {
         title: children,
         theme: getTooltipTheme('label'),
@@ -32,7 +33,7 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(
       const tooltipType = tooltip[0];
       const labelTooltipProps = tooltip[1] || {};
       const duration: number = (labelTooltipProps.mouseEnterDelay || 0.1) * 1000;
-      if (tooltipType === LabelTooltip.always || (tooltipType === LabelTooltip.overflow && isOverflow(currentTarget))) {
+      if (tooltipType === LabelTooltip.always || (tooltipType === LabelTooltip.overflow && !labelWordBreak && isOverflow(currentTarget))) {
         show(currentTarget, {
           theme: getTooltipTheme('label'),
           placement: getTooltipPlacement('label'),

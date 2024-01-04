@@ -110,6 +110,10 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    */
   labelWidth?: number;
   /**
+   * 设置标签是否换行显示
+   */
+  labelWordBreak?: boolean;
+  /**
    * 用tooltip显示标签内容
    * 可选值：`none` `always` `overflow`
    * 扩展 tooltip 属性：tooltip={['always', { theme: 'light', ... }]}
@@ -628,6 +632,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'requiredMarkAlign',
       'showValidation',
       'tagRenderer',
+      'labelWordBreak',
     ]);
   }
 

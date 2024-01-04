@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
+- 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
