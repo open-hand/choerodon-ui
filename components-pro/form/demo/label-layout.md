@@ -112,7 +112,7 @@ const App = () => {
         <TextField labelTooltip={['always', { title: 'ceshi', mouseEnterDelay: 1 }]} colSpan={3} label="手机号" placeholder="请输入手机号" pattern="1[3-9]\d{9}" name="phone" addonBefore="+86" addonAfter="中国大陆" help="请输入你的手机号" showHelp="tooltip" required highlight="高亮" />
         <RichText label="富文本" required />
         <Password label="密码" name="password" required />
-        <NumberField rowSpan={2} label="年龄—请填写大于18的数字" name="age" min={18} step={1} required addonAfter="周岁" />
+        <NumberField rowSpan={2} label="年龄—请填写大于18的数字" name="age" min={18} step={1} required addonAfter="周岁" labelWordBreak />
         <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与左侧相同的密码" showHelp="tooltip" />
         <Radio label="是否勾选" name="base" value="B"  required mode="button">B</Radio>
         <Radio label="是否勾选" name="base" value="C"  required >C</Radio>

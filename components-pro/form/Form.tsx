@@ -116,6 +116,10 @@ export interface FormProps extends DataSetComponentProps {
    */
   labelWidth?: LabelWidthType;
   /**
+   * 设置标签是否换行显示
+   */
+  labelWordBreak?: boolean;
+  /**
    * 标签文字对齐方式
    * 可选值： 'left' | 'center' | 'right'
    * @default right;
@@ -375,6 +379,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   }
 
   @computed
+  get labelWordBreak(): boolean {
+    const { labelWordBreak } = this.observableProps;
+    return labelWordBreak;
+  }
+
+  @computed
   get labelAlign(): LabelAlign {
     const { labelAlign } = this.observableProps;
     if (isString(labelAlign)) {
@@ -506,6 +516,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       disabled: 'disabled' in props ? props.disabled : context.disabled,
       readOnly: 'readOnly' in props ? props.readOnly : context.readOnly,
       labelWidth: defaultTo(props.labelWidth, context.labelWidth),
+      labelWordBreak: 'labelWordBreak' in props ? props.labelWordBreak : context.labelWordBreak,
       pristine: 'pristine' in props ? props.pristine : context.pristine,
       columns: props.columns,
       useColon: props.useColon,
@@ -543,6 +554,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       'layout',
       'showValidation',
       'showHelp',
+      'labelWordBreak',
     ]);
   }
 
@@ -740,6 +752,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       excludeUseColonTagList,
       readOnly: formReadOnly,
       showHelp,
+      labelWordBreak: formLabelWordBreak,
       props: { children },
     } = this;
     const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
@@ -819,8 +832,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const label = getProperty(props, 'label', dataSet, record);
       const help = getProperty(props, 'help', dataSet, record);
       const fieldLabelWidth = getProperty(props, 'labelWidth', dataSet, record);
+      const fieldLabelWordBreak = getProperty(props, 'labelWordBreak', dataSet, record);
       const required = getPropertyDSFirst(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
+      const labelWordBreak = !isNil(fieldLabelWordBreak) ? fieldLabelWordBreak : formLabelWordBreak;
       const intlFieldOutput = TagName === 'IntlField' && props && props.displayOutput;
       const {
         rowSpan = 1,
@@ -882,6 +897,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
         [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: isLabelLayoutHorizontal && required && !isOutput && getRequiredMarkAlign(fieldRequiredMarkAlign),
         [`${prefixCls}-label-help`]: isLabelShowHelp,
+        [`${prefixCls}-label-word-break`]: labelWordBreak,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {
         [`${prefixCls}-output`]: isLabelLayoutHorizontal && isOutput,
@@ -901,6 +917,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
             style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : undefined}
+            labelWordBreak={labelWordBreak}
           >
             {toJS(label)}
           </FormItemLabel>,
@@ -1004,6 +1021,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       requiredMarkAlign,
       showValidation,
       showHelp,
+      labelWordBreak,
     } = this;
     const { formNode, getConfig, getProPrefixCls, getPrefixCls, getCustomizable, getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
     const value: FormContextValue = {
@@ -1023,6 +1041,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       requiredMarkAlign,
       showValidation,
       showHelp,
+      labelWordBreak,
       getConfig,
       getPrefixCls,
       getProPrefixCls,

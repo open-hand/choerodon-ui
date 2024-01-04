@@ -40,6 +40,7 @@ title: Form
 | fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位  | boolean | true |
+| labelWordBreak | 设置标签是否换行显示  | boolean |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -62,6 +63,7 @@ title: Form
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
 | requiredMarkAlign | 控制必输星号位置 | `left` \| `right` | `left` |
 | hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
+| labelWordBreak | 设置标签是否换行显示  | boolean |  |
 
 #### Form.Item
 
@@ -73,6 +75,7 @@ title: Form
 | useColon | 是否使用冒号,当开启时会在所有的label后面加上冒号, 在没有label时不显示。未设置时沿用Form的useColon属性 | boolean | |
 | requiredMarkAlign | 控制必输星号位置 | `left` \| `right` | `left` |
 | hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
+| labelWordBreak | 设置标签是否换行显示  | boolean |  |
 
 #### Form.ItemGroup
 
@@ -92,6 +95,7 @@ title: Form
 | rowSpan | 表单下控件跨越的行数 | number | 1 |
 | colSpan | 表单下控件跨越的列数 | number | 1 |
 | newLine | 另起新行 | boolean |  |
+| labelWordBreak | 设置标签是否换行显示  | boolean |  |
 
 ### Form Responsive
 

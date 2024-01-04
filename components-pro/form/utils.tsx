@@ -3,6 +3,7 @@ import { isArrayLike } from 'mobx';
 import isNumber from 'lodash/isNumber';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
+import isNil from 'lodash/isNil';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -27,7 +28,7 @@ export function normalizeLabelWidth(labelWidth: LabelWidth, columns: number): (n
 }
 
 export function getProperty(props: any, key: string, dataSet?: DataSet, record?: Record): any {
-  if (props[key]) {
+  if (!isNil(props[key])) {
     return props[key];
   }
   const { name } = props;
@@ -36,7 +37,7 @@ export function getProperty(props: any, key: string, dataSet?: DataSet, record?:
 
   if (field) {
     const fieldProperty = field.get(key, record);
-    if (fieldProperty) {
+    if (!isNil(fieldProperty)) {
       return fieldProperty;
     }
   }
@@ -56,11 +57,11 @@ export function getPropertyDSFirst(props: any, key: string, dataSet?: DataSet, r
 
   if (field) {
     const fieldProperty = field.get(key, record);
-    if (fieldProperty) {
+    if (!isNil(fieldProperty)) {
       return fieldProperty;
     }
   }
-  else if (props[key]) {
+  else if (!isNil(props[key])) {
     return props[key];
   }
 }

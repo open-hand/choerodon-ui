@@ -15,6 +15,7 @@ export interface ItemGroupProps {
   children?: ReactNode;
   label?: string | ReactNode;
   labelWidth?: number;
+  labelWordBreak?: boolean;
   labelTooltip?: TextTooltip;
   help?: string;
   showHelp?: ShowHelp.label;
@@ -99,6 +100,7 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     'colSpan',
     'rowSpan',
     'newLine',
+    'labelWordBreak',
   ]);
 
   return (

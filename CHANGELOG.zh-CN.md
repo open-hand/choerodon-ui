@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 modalAutoFocus, strictPageSize 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
+- 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
