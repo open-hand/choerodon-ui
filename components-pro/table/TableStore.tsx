@@ -585,10 +585,10 @@ function mergeDefaultProps(
           isHideDisabled = true;
         }
         if (parent || !newColumn.lock) {
+          columnSort.center++;
           if (newColumn.sort === undefined) {
             newColumn.sort = columnSort.center;
           }
-          columnSort.center++;
           columns.push(newColumn);
         } else if (newColumn.lock === true || newColumn.lock === ColumnLock.left) {
           if (newColumn.sort === undefined) {
@@ -692,10 +692,10 @@ function normalizeColumns(
             isHideDisabled = true;
           }
           if (parent || !column.lock) {
+            columnSort.center++;
             if (column.sort === undefined) {
               column.sort = columnSort.center;
             }
-            columnSort.center++;
             columns.push(column);
           } else if (column.lock === true || column.lock === ColumnLock.left) {
             if (column.sort === undefined) {

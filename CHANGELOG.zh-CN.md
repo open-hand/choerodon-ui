@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
+- 🐞 `<pro>Table`: 修复 comboBar 个性化字段配置列顺序错误问题。
 - 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
 

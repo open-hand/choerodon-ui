@@ -39,6 +39,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
+- 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
 - 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 
