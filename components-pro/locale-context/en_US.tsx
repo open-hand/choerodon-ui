@@ -128,7 +128,7 @@ const locale: Locale = {
     lock_column: 'Locked',
     cancel_lock_first_column: 'Cancel the freeze',
     cancel_lock_column: 'Unlocked',
-    enter_search_filter: 'Please enter search',
+    enter_search_filter: 'Search',
     search: 'Search',
     clear: 'Clear',
     show: 'Show',
