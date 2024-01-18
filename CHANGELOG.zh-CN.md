@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize, separateSpacing 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
+- 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -42,6 +43,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 comboBar 个性化字段配置列顺序错误问题。
 - 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
+- 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
+- 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
 
 ## 1.6.4
 

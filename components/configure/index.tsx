@@ -32,6 +32,7 @@ import {
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
+import { SeparateSpacing } from 'choerodon-ui/pro/lib/form/interface';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
@@ -144,6 +145,7 @@ export interface Config extends DataSetConfig {
    * @default right;
    */
   labelAlign?: LabelAlign;
+  separateSpacing?: number | [number, number] | SeparateSpacing;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   tableVirtual?: boolean | ((rows: number, columns: number) => boolean);

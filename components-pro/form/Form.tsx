@@ -457,7 +457,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   @computed
   get separateSpacing(): SeparateSpacing | undefined {
-    const { separateSpacing } = this.observableProps;
+    let { separateSpacing } = this.observableProps;
+    if (isNil(separateSpacing)) {
+      separateSpacing = this.getContextConfig('separateSpacing');
+    }
     if (separateSpacing) {
       const { width = 0, height = 0 } = normalizeSeparateSpacing(separateSpacing);
       if (width || height) {

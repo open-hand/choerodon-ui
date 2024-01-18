@@ -15,9 +15,10 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize`, `separateSpacing` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
+- 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -42,6 +43,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
 - 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
+- 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
+- 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
 
 ## 1.6.4
 
