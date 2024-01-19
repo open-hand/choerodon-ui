@@ -19,8 +19,8 @@ const ColumnGroups: FunctionComponent<ColumnGroupsProps> = observer<ColumnGroups
   const { treeRecords } = dataSet;
   const { tableStore: { columnDraggable }, prefixCls } = useContext(TableContext);
   const handleDragTree = useCallback(action((srcIndex: number, destIndex: number) => {
-    const [removed] = treeRecords.splice(srcIndex, 1);
     const destRecord = treeRecords[destIndex];
+    const [removed] = treeRecords.splice(srcIndex, 1);
     const destRecordLock = destRecord.get('lock');
     if (destRecordLock) {
       removed.set('lock', true);

@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  memo,
 } from 'react';
 import noop from 'lodash/noop';
 import ModalContainer, { ModalContainerProps } from '../modal-container/ModalContainer';
@@ -103,4 +104,11 @@ ModalProvider.useModal = useModal;
 
 ModalProvider.injectModal = injectModal;
 
-export default ModalProvider;
+export default memo(ModalProvider, (props, nextProps) => {
+  if (typeof props.getContainer === 'function' && typeof nextProps.getContainer === 'function') {
+    return props.getContainer() === nextProps.getContainer() &&
+      props.location === nextProps.location;
+  }
+  return props.getContainer === nextProps.getContainer &&
+    props.location === nextProps.location;
+});
