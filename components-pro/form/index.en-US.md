@@ -23,7 +23,7 @@ title: Form
 | processParams | Ajax 提交时的参数回调 | (event) => object |  |
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false |
 | requiredMarkAlign | 控制必输星号位置 | `left` \| `right` | `left` |
-| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#Form Responsive), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 |
+| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#Form Responsive), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object |  |
 | labelAlign | 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right`, 响应式参考[Responsive](#Form Responsive) | string \| object | right |
 | labelLayout | 标签位置, 可选值 `horizontal` `vertical` `placeholder` `float` `none`, 响应式参考[Responsive](#Form Responsive) | string \| object | horizontal |
 | labelTooltip | 用 Tooltip 显示标签内容。可选值 `none` `always` `overflow` | string | 'none' |

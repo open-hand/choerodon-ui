@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize`, `separateSpacing` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.

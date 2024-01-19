@@ -8,7 +8,7 @@ import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnProps } from 'choerodon-ui/pro/lib/table/Column';
-import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
+import { defaultExcludeUseColonTag, defaultLabelWidth } from 'choerodon-ui/pro/lib/form/utils';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
@@ -101,6 +101,7 @@ const defaults = {
   lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,
   labelAlign: LabelAlign.right,
+  labelWidth: defaultLabelWidth,
   queryBar: TableQueryBarType.normal,
   tableBorder: true,
   tableHighLightRow: true,
