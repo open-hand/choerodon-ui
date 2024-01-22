@@ -58,7 +58,7 @@ function updateActiveKey(menu: Menu, activeKey: string) {
 
 function defaultSearchMatcher({ record, text, textField }) {
   if (record.get(textField) && isString(record.get(textField))) {
-    return record.get(textField).indexOf(text) !== -1;
+    return record.get(textField).toLowerCase().indexOf(text.toLowerCase()) !== -1;
   }
 }
 
