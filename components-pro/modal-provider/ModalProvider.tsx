@@ -98,13 +98,16 @@ export const injectModal = Target => {
   return Hoc;
 };
 
-ModalProvider.displayName = 'ModalProvider';
+type ExtendedModalProviderMemo = React.MemoExoticComponent<React.FC<ModalProviderProps>> & {
+  useModal: () => ModalContextValue;
+  injectModal: (Target: any) => {
+    (props: any): JSX.Element;
+    displayName: string;
+  };
+};
 
-ModalProvider.useModal = useModal;
-
-ModalProvider.injectModal = injectModal;
-
-export default memo(ModalProvider, (props, nextProps) => {
+// @ts-ignore
+const ModalProviderMemo: ExtendedModalProviderMemo = memo(ModalProvider, (props, nextProps) => {
   if (typeof props.getContainer === 'function' && typeof nextProps.getContainer === 'function') {
     return props.getContainer() === nextProps.getContainer() &&
       props.location === nextProps.location;
@@ -112,3 +115,11 @@ export default memo(ModalProvider, (props, nextProps) => {
   return props.getContainer === nextProps.getContainer &&
     props.location === nextProps.location;
 });
+
+ModalProviderMemo.displayName = 'ModalProvider';
+
+ModalProviderMemo.useModal = useModal;
+
+ModalProviderMemo.injectModal = injectModal;
+
+export default ModalProviderMemo;
