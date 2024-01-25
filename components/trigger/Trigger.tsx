@@ -116,6 +116,7 @@ export interface TriggerProps extends ElementProps {
   children?: ReactNode | ChildrenFunction;
   childrenProps?: any;
   getContextConfig?<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
+  otherProps?: object;
 }
 
 @observer
@@ -376,10 +377,14 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   handleTriggerEvent(eventName, child, e) {
-    const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
+    let { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
     const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
       childHandle(e);
+    }
+    if (!handle) {
+      const { otherProps } = this.props;
+      handle = otherProps && otherProps[`on${eventName}`];
     }
     if (!e.isDefaultPrevented()) {
       if (handle) {

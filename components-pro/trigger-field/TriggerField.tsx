@@ -219,6 +219,15 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     return popupContent;
   }
 
+  renderMultipleEditor(props: T) {
+    // 多值情况下，和 Action 相同的自定义事件已绑定在外层元素，避免重复触发
+    delete props.onMouseDown;
+    delete props.onClick;
+    delete props.onContextMenu;
+    delete props.onKeyDown;
+    return super.renderMultipleEditor(props);
+  }
+
   getDefaultAction(): Action[] {
     return [Action.focus, Action.click];
   }
@@ -263,6 +272,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}
         getContextConfig={this.getContextConfig}
+        otherProps={this.multiple ? this.getOtherProps() : undefined}
       >
         {this.getEditor}
       </Trigger>

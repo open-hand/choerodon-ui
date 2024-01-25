@@ -44,6 +44,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 - 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
 - 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
+- 🐞 `<pro>TriggerField`: Fixed the issue that multi-value drop-down custom events were invalid.
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 - 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
 - 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
