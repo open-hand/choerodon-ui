@@ -533,6 +533,8 @@ export default class DataSet extends EventManager {
 
   originalData: Record[] = [];
 
+  cacheAllData: (object | Record)[] = [];
+
   resetInBatch = false;
 
   validating = false;
@@ -2908,6 +2910,14 @@ Then the query method will be auto invoke.`,
 
   @action
   loadData(allData: (object | Record)[] = [], total?: number, cache?: boolean): DataSet {
+    const {
+      paging,
+      pageSize,
+      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize = this.getConfig('strictPageSize') },
+    } = this;
+    if (strictPageSize && paging && allData.length > pageSize && (!total || (total && allData.length >= total) )) {
+      this.cacheAllData = allData;
+    }
     this.performance.timing.loadStart = Date.now();
     const cacheRecords = this.getConfig('cacheRecords');
     const { cacheSelection } = this.props;
@@ -2920,11 +2930,6 @@ Then the query method will be auto invoke.`,
     } else {
       this.storeRecords(cache === true);
     }
-    const {
-      paging,
-      pageSize,
-      props: { autoLocateFirst, idField, parentField, childrenField, strictPageSize = this.getConfig('strictPageSize') },
-    } = this;
     if (strictPageSize) {
       switch (paging) {
         case true:

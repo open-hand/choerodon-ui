@@ -769,9 +769,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       );
     }
     const menuPrefix = this.getMenuPrefixCls();
-    const { strictPageSize = this.getContextConfig('strictPageSize')} = options.props;
-    const showQueryMore = options.paging && options.currentPage < options.totalPage &&
-      (strictPageSize || (!strictPageSize && options.length < options.totalCount));
+    const showQueryMore = (options.paging && options.currentPage < options.totalPage) || (options.cacheAllData.length > options.originalData.length);
     return (
       <Menu
         ref={this.saveMenu}
@@ -1223,6 +1221,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @autobind
+  @action
   handleMenuClick({
     key,
     item: {
@@ -1230,8 +1229,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     },
   }) {
     if (key === MORE_KEY) {
-      const { searchMatcher, searchText } = this;
-      this.options.queryMore(this.options.currentPage + 1, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
+      const { searchMatcher, searchText, options } = this;
+      const { cacheAllData, originalData, currentPage, pageSize } = options;
+      if (originalData.length < cacheAllData.length) {
+        const nextPageData = cacheAllData.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+        options.appendData(nextPageData);
+        options.currentPage = currentPage + 1;
+      } else {
+        options.queryMore(options.currentPage + 1, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
+      }
     } else if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);
     } else {
