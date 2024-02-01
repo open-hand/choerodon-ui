@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Cascader`: 优化 changeOnSelect 模式下父级选择的交互。
 - 💄 `<pro>Output`: 优化文本为长单词场景的换行样式。
 - 💄 `<pro>Select`: 优化下拉数据一次性加载的情况下自动前端分页。
+- 💄 `<pro>Table`: 优化自定义 renderer 渲染，校验失败后 tooltip 遮挡的问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
@@ -49,6 +50,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
 - 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
 - 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
+- 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 
 ## 1.6.4
 

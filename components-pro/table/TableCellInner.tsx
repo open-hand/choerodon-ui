@@ -593,7 +593,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return false;
   }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef]);
   const handleMouseEnter = useCallback((e) => {
-    if (!tableStore.columnResizing && !tooltipShownRef.current && showTooltip(e)) {
+    if (!tableStore.columnResizing && !tooltipShownRef.current &&
+      (e.currentTarget && e.currentTarget.contains(e.target)) && showTooltip(e)) {
       tooltipShownRef.current = true;
     }
   }, [tooltipShownRef, tableStore, showTooltip]);

@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Cascader`: Optimizes parent-selected interactions in `changeOnSelect` mode.
 - 💄 `<pro>Output`: Optimize the line feed style of text for long word scenes.
 - 💄 `<pro>Select`: Optimize automatic front-end pagination when drop-down data is loaded at one time.
+- 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
@@ -49,6 +50,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 - 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
 - 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
+- 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 
 ## 1.6.4
 
