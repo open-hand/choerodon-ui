@@ -14,6 +14,7 @@ import noop from 'lodash/noop';
 import { TabsPosition, TabsType } from './enum';
 import TabPane, { TabPaneProps } from './TabPane';
 import TabGroup, { TabGroupProps } from './TabGroup';
+import { TabBarProps } from './TabBar';
 import { Size } from '../_util/enum';
 import TabsWithContext from './TabsWithContext';
 import ConfigContext from '../config-provider/ConfigContext';
@@ -24,6 +25,11 @@ export interface TabsCustomized {
   defaultActiveKey?: string;
   panes: { [key: string]: TabPaneProps };
 }
+
+export type RenderTabBar = (
+  props: TabBarProps,
+  DefaultTabBar: React.ComponentType<TabBarProps>,
+) => React.ReactElement;
 
 export interface TabsProps {
   activeKey?: string;
@@ -58,6 +64,7 @@ export interface TabsProps {
   rippleDisabled?: boolean;
   flex?: boolean;
   restoreDefault?: boolean;
+  renderTabBar?: RenderTabBar;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }

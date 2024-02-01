@@ -49,6 +49,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true |
 | showMore | 页签超过容器宽度是否显示更多 | boolean | false |
 | flex | 是否柔性布局 | boolean | 无 |
+| renderTabBar | 替换 TabBar，用于二次封装标签头。DefaultTabBar 为组件库默认 TabBar 组件，props 为组件默认参数 | (props: TabBarProps, DefaultTabBar: React.ComponentType<TabBarProps>) => React.ReactElement |  |
 
 ### Tabs.TabPane
 

@@ -46,6 +46,7 @@ Choerodon UI has 3 types of Tabs for different situations.
 | restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true |
 | showMore | Display more tabs than the width of the container | boolean | false |
 | flex | Whether flexible layout | boolean | - |
+| renderTabBar | 替换 TabBar，用于二次封装标签头。DefaultTabBar 为组件库默认 TabBar 组件，props 为组件默认参数 | (props: TabBarProps, DefaultTabBar: React.ComponentType<TabBarProps>) => React.ReactElement |  |
 
 ### Tabs.TabPane
 

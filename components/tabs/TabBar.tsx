@@ -17,6 +17,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  forwardRef,
 } from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
@@ -61,6 +62,7 @@ export interface TabBarProps {
   hideAdd?: boolean;
   onRemoveTab: (targetKey: Key | null, e: MouseEvent<HTMLElement>) => void;
   onEdit?: (targetKey: Key | MouseEvent<HTMLElement>, action: 'add' | 'remove') => void;
+  children?: (node: React.ReactElement) => React.ReactElement;
 }
 
 interface MenuKeyValue {
@@ -82,6 +84,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     hideAdd,
     onRemoveTab,
     onEdit,
+    children: renderChildBar,
     ...restProps
   } = props;
   const {
@@ -236,9 +239,17 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
           )}
         </>
       );
-      rst.push(
-        <Ripple disabled={disabled || rippleDisabled} key={key}>
-          <TabBarInner ref={tabBarRef[index].ref} {...tabProps}>
+
+      const TabBarInnerWrapper = forwardRef(function TabBarInnerWrapper(props, ref: any) {
+        // 兼容 @dnd-kit/core 的 ref, ref 为 function
+        if (typeof ref === 'function') {
+          ref(tabBarRef[index].ref.current);
+        } else {
+          ref = tabBarRef[index].ref;
+        }
+
+        return (
+          <TabBarInner ref={tabBarRef[index].ref} {...tabProps} {...props}>
             <InvalidBadge prefixCls={prefixCls} isInvalid={() => key !== activeKey && validationMap.get(key) === false}>
               {
                 type === TabsType['editable-card'] ? (
@@ -250,7 +261,16 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
               }
             </InvalidBadge>
           </TabBarInner>
-        </Ripple>,
+        );
+      });
+      rst.push(
+        typeof renderChildBar === 'function' ? (
+          renderChildBar(<TabBarInnerWrapper key={key} data-node-key={String(key)} />)
+        ) : (
+          <Ripple disabled={disabled || rippleDisabled} key={key}>
+            <TabBarInnerWrapper />
+          </Ripple>
+        ),
       );
       return rst;
     }, []);
