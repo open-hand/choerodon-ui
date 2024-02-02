@@ -7,7 +7,7 @@ export interface TabBarWrapperProps extends TabBarProps {
 }
 
 const TabBarWrapper: React.FunctionComponent<TabBarWrapperProps> = ({ renderTabBar, ...restProps }) => {
-  if (renderTabBar) {
+  if (typeof renderTabBar === 'function') {
     return renderTabBar(restProps, TabBar);
   }
 
