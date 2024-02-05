@@ -1074,6 +1074,33 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     );
   }
 
+  handleExpandIconClick(hidden): void {
+    const { refSingleWrapper } = this;
+    if (refSingleWrapper) {
+      const { height } = refSingleWrapper.getBoundingClientRect();
+      const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
+      runInAction(() => {
+        this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
+      });
+      if (hidden && height) {
+        // 收起全部
+        refSingleWrapper.style.display = 'none';
+      } else {
+        refSingleWrapper.style.display = 'flex';
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
+      if (height > (childHeight + 18) && !hidden) {
+        // 收起留一行高度
+        refSingleWrapper.style.height = pxToRem(childHeight + 18, true) || '';
+        refSingleWrapper.style.overflow = 'hidden';
+      } else {
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
+    }
+  }
+
   /**
    * 渲染展开逻辑
    * @param hidden 是否隐藏全部
@@ -1084,38 +1111,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
-        onClick={() => {
-          const { refSingleWrapper } = this;
-          if (refSingleWrapper) {
-            const { height } = refSingleWrapper.getBoundingClientRect();
-            const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
-            runInAction(() => {
-              this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
-            });
-            if (hidden && height) {
-              // 收起全部
-              refSingleWrapper.style.display = 'none';
-            } else {
-              refSingleWrapper.style.display = 'flex';
-              refSingleWrapper.style.height = '';
-              refSingleWrapper.style.overflow = '';
-            }
-            if (height > (childHeight + 18) && !hidden) {
-              // 收起留一行高度
-              refSingleWrapper.style.height = pxToRem(childHeight + 18, true) || '';
-              refSingleWrapper.style.overflow = 'hidden';
-            } else {
-              refSingleWrapper.style.height = '';
-              refSingleWrapper.style.overflow = '';
-            }
-          }
-        }}
       >
         {refreshBtn ? this.renderRefreshBtn() : null}
         {this.expand ? (<Tooltip title={$l('Table', 'collapse')}>
-          <Icon type="baseline-arrow_drop_up" />
+          <Icon type="baseline-arrow_drop_up" onClick={() => this.handleExpandIconClick(hidden)} />
         </Tooltip>) : (<Tooltip title={$l('Table', 'expand_button')}>
-          <Icon type="baseline-arrow_drop_down" />
+          <Icon type="baseline-arrow_drop_down" onClick={() => this.handleExpandIconClick(hidden)} />
         </Tooltip>)}
       </span>
     );
