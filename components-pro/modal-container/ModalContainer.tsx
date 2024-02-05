@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, Key } from 'react';
+import React, { Component, CSSProperties, Key, memo, forwardRef, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -111,7 +111,7 @@ export interface ModalContainerProps {
 }
 
 @observer
-export default class ModalContainer extends Component<ModalContainerProps> implements IModalContainer {
+export class ModalContainerClass extends Component<ModalContainerProps> implements IModalContainer {
   static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
@@ -595,6 +595,24 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     return null;
   }
 }
+
+const ModalContainerRef: ForwardRefExoticComponent<PropsWithoutRef<ModalContainerProps> & RefAttributes<ModalContainerClass>> =
+forwardRef((props, ref) => {
+  return <ModalContainerClass {...props} ref={ref} />;
+});
+
+const ModalContainer = memo(ModalContainerRef, (props, nextProps) => {
+  if (typeof props.getContainer === 'function' && typeof nextProps.getContainer === 'function') {
+    return props.getContainer() === nextProps.getContainer() &&
+      props.location === nextProps.location;
+  }
+  return props.getContainer === nextProps.getContainer &&
+    props.location === nextProps.location;
+});
+
+ModalContainer.displayName = 'ModalContainer';
+
+export default ModalContainer;
 
 export async function getContainer(): Promise<IModalContainer> {
   const { length } = containerInstances;
