@@ -5,10 +5,9 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  memo,
 } from 'react';
 import noop from 'lodash/noop';
-import ModalContainer, { ModalContainerProps } from '../modal-container/ModalContainer';
+import ModalContainer, { ModalContainerProps, ModalContainerClass } from '../modal-container/ModalContainer';
 import Modal, { ModalProps } from '../modal/Modal';
 import ModalContext, { ModalContextValue } from './ModalContext';
 
@@ -19,7 +18,7 @@ export interface ModalProviderProps extends ModalContainerProps {
 const ModalProvider = (props: ModalProviderProps) => {
   const { location: contextLocation } = useContext(ModalContext);
   const { location = contextLocation, children, getContainer } = props;
-  const ref = useRef<ModalContainer | null>(null);
+  const ref = useRef<ModalContainerClass | null>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
   [],
@@ -98,28 +97,10 @@ export const injectModal = Target => {
   return Hoc;
 };
 
-type ExtendedModalProviderMemo = React.MemoExoticComponent<React.FC<ModalProviderProps>> & {
-  useModal: () => ModalContextValue;
-  injectModal: (Target: any) => {
-    (props: any): JSX.Element;
-    displayName: string;
-  };
-};
+ModalProvider.displayName = 'ModalProvider';
 
-// @ts-ignore
-const ModalProviderMemo: ExtendedModalProviderMemo = memo(ModalProvider, (props, nextProps) => {
-  if (typeof props.getContainer === 'function' && typeof nextProps.getContainer === 'function') {
-    return props.getContainer() === nextProps.getContainer() &&
-      props.location === nextProps.location;
-  }
-  return props.getContainer === nextProps.getContainer &&
-    props.location === nextProps.location;
-});
+ModalProvider.useModal = useModal;
 
-ModalProviderMemo.displayName = 'ModalProvider';
+ModalProvider.injectModal = injectModal;
 
-ModalProviderMemo.useModal = useModal;
-
-ModalProviderMemo.injectModal = injectModal;
-
-export default ModalProviderMemo;
+export default ModalProvider;
