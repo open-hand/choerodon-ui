@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize, separateSpacing, labelWidth, labelWordBreak 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
 - 🌟 `Tabs`: 新增 renderTabBar 属性。
+- 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。

@@ -478,13 +478,11 @@
 
     .@{upload-item}-actions {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 0;
       z-index: 10;
       width: 100%;
-      height: 100%;
+      height: .8rem;
       white-space: nowrap;
-      transform: translate(-50%, -50%);
       opacity: 0;
       transition: all @animation-duration-slow;
 
@@ -494,9 +492,9 @@
 
       .@{upload-prefix-cls}-reupload-action {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 40%;
+        display: inline-block;
+        width: 100%;
       }
 
       .@{upload-prefix-cls}-other-actions {
@@ -513,6 +511,22 @@
         font-size: 0.16rem;
         cursor: pointer;
         transition: all @animation-duration-slow;
+      }
+    }
+
+    &.@{upload-prefix-cls}-list-show-name {
+      .@{upload-item} {
+        height: @upload-picture-card-show-name-height;
+      }
+
+      .@{upload-item}-file-name {
+        display: inline-block;
+        width: 100%;
+        margin-top: 0.04rem;
+        overflow: hidden;
+        color: rgb(89, 89, 89);
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
 

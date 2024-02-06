@@ -50,6 +50,7 @@ title: Upload
 | onReUpload | 文件重新上传的实现   | (file: UploadFile) => void |  |
 | renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
+| pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  |
 
 
 ### ShowUploadListInterface

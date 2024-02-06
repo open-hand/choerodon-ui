@@ -101,6 +101,7 @@ export interface UploadProps {
   renderIcon?: (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement;
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
+  pictureCardShowName?: boolean;
 }
 
 export interface UploadState {
@@ -142,4 +143,5 @@ export interface UploadListProps {
   popconfirmProps?: PopconfirmProps;
   getUploadRef: () => any;
   setReplaceReuploadItem: (file: UploadFile) => void;
+  pictureCardShowName?: boolean;
 }
