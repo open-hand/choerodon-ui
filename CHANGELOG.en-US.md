@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 - 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
 - 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
+- 🐞 `<pro>Table.DynamicFilterBar`: Fixed the issue that if you did not click the expand and collapse icon, the query condition would still be folded.
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 
 ## 1.6.4
