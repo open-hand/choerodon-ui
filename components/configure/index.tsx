@@ -335,6 +335,7 @@ export interface Config extends DataSetConfig {
    * 当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
    */
   uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
+  pictureCardShowName?: boolean;
   /**
    * 输入框 range 分隔符
    */

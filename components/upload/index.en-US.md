@@ -49,6 +49,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | onReUpload | File re-upload implementation   | (file: UploadFile) => void |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
+| pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  |
 
 ### ShowUploadListInterface
 | 参数 | 说明 | 类型 | 默认值 |

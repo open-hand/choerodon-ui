@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
 - 🌟 `Tabs`: Added `renderTabBar` property.
+- 🌟 `Upload`: Added `pictureCardShowName` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.

@@ -320,6 +320,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       renderIcon,
       tooltipPrefixCls,
       popconfirmProps,
+      pictureCardShowName = getConfig('pictureCardShowName'),
     } = this.props;
     const prefixCls = this.getPrefixCls();
     const { fileList } = this.state;
@@ -369,6 +370,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
         popconfirmProps={popconfirmProps}
         getUploadRef={this.getUpload}
         setReplaceReuploadItem={this.setReplaceReuploadItem}
+        pictureCardShowName={pictureCardShowName}
       />
     );
   };

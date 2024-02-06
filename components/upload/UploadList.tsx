@@ -188,6 +188,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       tooltipPrefixCls,
       popconfirmProps,
       renderIcon = defaultRenderIcon,
+      pictureCardShowName,
     } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
@@ -459,6 +460,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       [`${prefixCls}-list`]: true,
       [`${prefixCls}-list-${listType}`]: true,
       [`${prefixCls}-list-drag`]: dragUploadList,
+      [`${prefixCls}-list-show-name`]: pictureCardShowName,
     });
     const animationDirection = listType === 'picture-card' ? 'animate-inline' : 'animate';
     if (dragUploadList) {
