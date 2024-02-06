@@ -116,7 +116,7 @@ export interface TriggerProps extends ElementProps {
   children?: ReactNode | ChildrenFunction;
   childrenProps?: any;
   getContextConfig?<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
-  otherProps?: object;
+  labelEmitClick?: boolean;
 }
 
 @observer
@@ -233,7 +233,11 @@ export default class Trigger extends Component<TriggerProps> {
           newChildProps.onContextMenu = this.handleEvent;
         }
         if (this.isClickToHide() || this.isClickToShow()) {
-          newChildProps.onClick = this.handleEvent;
+          const { labelEmitClick } = this.props;
+          if (!labelEmitClick) {
+            // TriggerField 存在 label 触发下级表单元素的点击事件，就不需要手动调用
+            newChildProps.onClick = this.handleEvent;
+          }
           newChildProps.onMouseDown = this.handleEvent;
         }
         if (this.isMouseEnterToShow()) {
@@ -377,14 +381,10 @@ export default class Trigger extends Component<TriggerProps> {
   }
 
   handleTriggerEvent(eventName, child, e) {
-    let { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
+    const { [`on${eventName}`]: handle } = this.props as { [key: string]: any };
     const { [`on${eventName}`]: childHandle } = child.props;
     if (childHandle) {
       childHandle(e);
-    }
-    if (!handle) {
-      const { otherProps } = this.props;
-      handle = otherProps && otherProps[`on${eventName}`];
     }
     if (!e.isDefaultPrevented()) {
       if (handle) {
