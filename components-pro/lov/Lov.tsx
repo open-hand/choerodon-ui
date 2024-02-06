@@ -929,13 +929,16 @@ export default class Lov extends Select<LovProps> {
 
   getSuffix(): ReactNode {
     const { viewMode } = this.observableProps;
-    const { suffix } = this.props;
+    const { suffix, onMouseDown, onMouseUp, onContextMenu } = this.props;
+    // onDoubleClick 无法触发，不关联
+    const eventsProps = (this.disabled || this.readOnly || this.loading) ? {} : { onMouseDown, onMouseUp, onContextMenu };
     if (viewMode === TriggerViewMode.popup) {
       return super.getSuffix();
     }
     const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
     return this.wrapperSuffix(suffix || icon, {
       onClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
+      ...eventsProps,
     });
   }
 
