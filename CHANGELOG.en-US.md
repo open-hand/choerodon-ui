@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Output`: Optimize the line feed style of text for long word scenes.
 - 💄 `<pro>Select`: Optimize automatic front-end pagination when drop-down data is loaded at one time.
 - 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
+- 💄 `<pro>CodeArea`: Optimized the style of loading `CodeArea` components asynchronously in `Modal`.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.

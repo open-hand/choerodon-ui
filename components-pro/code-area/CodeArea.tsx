@@ -16,6 +16,7 @@ import { ThemeSwitch } from './enum';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
+import { hasAncestorWithClassName } from './utils';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -71,6 +72,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @observable theme?: string;
 
+  editor?: IInstance;
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -92,6 +95,21 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         this.setText(value);
       }
     });
+  }
+
+  componentDidMount() {
+    super.componentDidMount();
+
+    const { context, element } = this;
+    const modalCls = context.getProPrefixCls('modal-wrapper');
+    if (typeof document !== 'undefined' && element && hasAncestorWithClassName(element, modalCls)) {
+      setTimeout(() => {
+        if (this.editor) {
+          // modal 中异步加载 CodeArea 时，更新样式
+          this.editor.refresh();
+        }
+      }, 0);
+    }
   }
 
   componentWillUnmount(): void {
@@ -286,6 +304,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    * @memberof CodeArea
    */
   handleCodeMirrorDidMount = (editor: IInstance, value: string, cb: () => void) => {
+    this.editor = editor;
     const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount } = this.props;
     const { width = '100%', height = 100 } = style || {};
     const options = {
