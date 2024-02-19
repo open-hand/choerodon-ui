@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
 - 🌟 `Tabs`: Added `renderTabBar` property.
 - 🌟 `Upload`: Added `pictureCardShowName` property.
+- 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.

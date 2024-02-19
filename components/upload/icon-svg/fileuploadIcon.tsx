@@ -2,8 +2,12 @@ import * as React from 'react';
 
 const FileuploadIcon = ({
   className,
+  style,
+}: {
+  className: string,
+  style?: React.CSSProperties,
 }) => (
-  <svg className={className} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+  <svg style={style} className={className} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <title>icon/file-upload</title>
     <g id="icon/file-upload" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="wenjianleixing-biaozhuntu-wenjianjia" opacity="0.513044085" transform="translate(79.000000, 142.000000)" fillRule="nonzero">
