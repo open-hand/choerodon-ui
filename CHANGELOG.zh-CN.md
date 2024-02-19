@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Output`: 优化文本为长单词场景的换行样式。
 - 💄 `<pro>Select`: 优化下拉数据一次性加载的情况下自动前端分页。
 - 💄 `<pro>Table`: 优化自定义 renderer 渲染，校验失败后 tooltip 遮挡的问题。
+- 💄 `<pro>CodeArea`: 优化 Modal 中异步加载 CodeArea 组件的样式。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

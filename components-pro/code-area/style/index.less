@@ -88,16 +88,17 @@
     box-shadow: @input-active-box-shadow;
   }
 
-  &-required-colors,
-  &-required-colors:hover {
-    .CodeMirror {
-      border-color: @input-required-border-color;
-    }
+  &-required-colors .CodeMirror {
+    border-color: @input-required-border-color;
+  }
+
+  &-required-colors:hover .CodeMirror {
+    border-color: @input-required-hover-border-color;
   }
 
   &-required-colors {
     .CodeMirror-focused {
-      border-color: @input-required-border-color;
+      border-color: @input-required-focus-border-color;
       outline: 0;
       box-shadow: @input-required-active-box-shadow;
     }
