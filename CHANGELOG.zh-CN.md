@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
 - 🌟 `Tabs`: 新增 renderTabBar 属性。
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
+- 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。

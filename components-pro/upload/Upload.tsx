@@ -131,6 +131,13 @@ export interface UploadProps extends FormFieldProps {
    */
   previewImageWidth?: number;
   /**
+   * 自定义预览图片
+   *
+   * @type {function}
+   * @memberof UploadProps
+   */
+  previewImageRenderer?: (file: UploadFile) => ReactNode;
+  /**
    * 是否显示上传按钮
    *
    * @type {boolean}
@@ -256,6 +263,7 @@ export default class Upload extends FormField<UploadProps> {
       'fileListMaxLength',
       'showPreviewImage',
       'previewImageWidth',
+      'previewImageRenderer',
       'showUploadBtn',
       'showUploadList',
       'onRemoveFile',
@@ -299,6 +307,7 @@ export default class Upload extends FormField<UploadProps> {
         uploadImmediately,
         showPreviewImage,
         previewImageWidth,
+        previewImageRenderer,
         showUploadBtn,
         showUploadList,
         extra,
@@ -351,6 +360,7 @@ export default class Upload extends FormField<UploadProps> {
           <UploadList
             previewImageWidth={previewImageWidth as number}
             showPreviewImage={showPreviewImage as boolean}
+            previewImageRenderer={previewImageRenderer}
             items={[...this.fileList]}
             remove={this.handleRemove}
           />

@@ -2,8 +2,12 @@ import * as React from 'react';
 
 const ImageIcon = ({
   className,
+  style,
+}: {
+  className: string,
+  style?: React.CSSProperties,
 }) => (
-  <svg className={className} viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+  <svg style={style} className={className} viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <title>icon/image</title>
     <g id="OCR" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="icon/image" fillRule="nonzero">
