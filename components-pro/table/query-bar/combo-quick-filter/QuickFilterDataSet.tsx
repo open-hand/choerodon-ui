@@ -34,10 +34,7 @@ export const ConditionDataSet: () => DataSetProps = () => ({
       },
       transformResponse: value => {
         try {
-          if (typeof value === 'object') {
-            return JSON.parse(value);
-          }
-          return value;
+          return JSON.parse(value);
         } catch (e) {
           return value;
         }
