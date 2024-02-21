@@ -37,7 +37,7 @@ export const ConditionDataSet: () => DataSetProps = () => ({
       name: 'conditionType',
       type: FieldType.string,
       defaultValue: 'regular',
-    },
+    },    
     {
       name: 'value',
       transformRequest: value => {
@@ -48,10 +48,7 @@ export const ConditionDataSet: () => DataSetProps = () => ({
       },
       transformResponse: value => {
         try {
-          if (typeof value === 'object') {
-            return JSON.parse(value);
-          }
-          return value;
+          return JSON.parse(value);
         } catch (e) {
           return value;
         }
@@ -117,7 +114,7 @@ export const NewFilterDataSet = ({ propFields }) => {
         name: AdvancedFieldSet.conditionType,
         type: FieldType.string,
         defaultValue: 'comparator',
-      },
+      }, 
       {
         name: 'value',
         computedProps: {
@@ -178,9 +175,9 @@ export const QuickFilterDataSet = ({ searchCode, queryDataSet, tableFilterAdapte
     { name: 'searchName', label: $l('Table', 'filter_name'), type: 'string', maxLength: 20, required: true },
     { name: 'searchId', type: 'string' },
     // 条件逻辑值
-    {
-      name: 'conExpression',
-      type: 'string',
+    { 
+      name: 'conExpression', 
+      type: 'string', 
       defaultValue: 'all',
       // 兼容旧数据
       transformResponse: value => {
