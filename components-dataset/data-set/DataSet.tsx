@@ -1852,6 +1852,7 @@ export default class DataSet extends EventManager {
         }
         return res;
       }
+      return false;
     }
   }
 
