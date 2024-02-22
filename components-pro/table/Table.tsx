@@ -2018,7 +2018,7 @@ export default class Table extends DataSetComponent<TableProps> {
               />
               <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             </TableSibling>
-            <Spin {...tableSpinProps} key="content">
+            <Spin animateProps={{ transitionLeave: false }} {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, {

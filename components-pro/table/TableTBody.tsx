@@ -25,7 +25,7 @@ import TableRow, { TableRowProps } from './TableRow';
 import Record from '../data-set/Record';
 import { ColumnLock, DragColumnAlign, GroupType } from './enum';
 import ExpandedRow from './ExpandedRow';
-import { DataSetStatus, RecordCachedType } from '../data-set/enum';
+import { RecordCachedType } from '../data-set/enum';
 import { DragRender, instance } from './Table';
 import { getHeader, isStickySupport } from './utils';
 import ColumnGroups from './ColumnGroups';
@@ -485,7 +485,7 @@ function generateRows(
 
 function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
   const { tableStore, columnGroups, lock } = props;
-  const { emptyText, width, prefixCls, dataSet } = tableStore;
+  const { emptyText, width, prefixCls } = tableStore;
   const styles: CSSProperties = width ? {
     position: isStickySupport() ? 'sticky' : 'relative',
     left: pxToRem(width / 2, true)!,
@@ -501,7 +501,7 @@ function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
           className={`${prefixCls}-empty-text-wrapper`}
           style={styles}
         >
-          {!lock && dataSet.status === DataSetStatus.ready && emptyText}
+          {!lock && emptyText}
         </div>
       </td>
     </tr>

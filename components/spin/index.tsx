@@ -4,6 +4,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import { global } from 'choerodon-ui/shared';
 import Animate from '../animate';
+import { AnimateProps } from '../animate/Animate';
 import Progress from '../progress/progress';
 import { Size } from '../_util/enum';
 import { ProgressType } from '../progress/enum';
@@ -22,6 +23,7 @@ export interface SpinProps {
   wrapperClassName?: string;
   indicator?: SpinIndicator;
   children?: ReactNode;
+  animateProps?: AnimateProps;
 }
 
 export interface SpinState {
@@ -137,6 +139,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
       wrapperClassName,
       children,
       style,
+      animateProps,
       ...restProps
     } = this.props;
     const { spinning } = this.state;
@@ -173,7 +176,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
         [`${prefixCls}-blur`]: spinning,
       });
       return (
-        <Animate {...divProps} component="div" className={animateClassName} transitionName="fade">
+        <Animate {...animateProps} {...divProps} component="div" className={animateClassName} transitionName="fade">
           {spinning && spinElement}
           <div className={containerClassName} key="container">
             {children}
