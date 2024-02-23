@@ -650,7 +650,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {otherPrevNode}
         {placeholderDiv}
         {renderedValue}
-        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown}>
+        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown} onClick={preventDefault}>
           {prefix}
           {input}
           {floatLabel}
@@ -950,7 +950,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       onMouseLeave: propsOnMouseLeave,
       onMouseDown,
       onMouseUp,
-      // onClick,
+      onClick,
       onDoubleClick,
       onContextMenu,
       ...otherProps
@@ -964,7 +964,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,
-      // onClick,
+      onClick,
       onDoubleClick,
       onContextMenu,
     } : undefined;
@@ -1326,7 +1326,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  getInnerSpanButton(): ReactNode {
+  getInnerSpanButton(hidden?: boolean): ReactNode {
+    if (hidden) return null; 
     const {
       clearButton,
       prefixCls,

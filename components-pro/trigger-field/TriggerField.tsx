@@ -263,7 +263,6 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}
         getContextConfig={this.getContextConfig}
-        labelEmitClick // 存在 label 触发下级表单元素的点击事件
       >
         {this.getEditor}
       </Trigger>
@@ -280,8 +279,8 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
 
   getDefaultSuffix(): ReactNode {
     const { prefixCls } = this;
-    const { onMouseDown, onMouseUp, onDoubleClick, onContextMenu } = this.getOtherProps();
-    const eventsProps = !this.disabled ? { onMouseDown, onMouseUp, onDoubleClick, onContextMenu } : {};
+    const { onMouseDown, onMouseUp, onClick, onDoubleClick, onContextMenu } = this.getOtherProps();
+    const eventsProps = !this.disabled ? { onMouseDown, onMouseUp, onClick, onDoubleClick, onContextMenu } : {};
     return (
       <Icon
         type={this.getTriggerIconFont()}

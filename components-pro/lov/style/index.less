@@ -214,3 +214,11 @@
     }
   }
 }
+
+// Lov 有值时点击后缀仍能显示 loading
+.@{select-prefix-cls} {
+  &-wrapper:not(&-empty):hover &-allow-clear,
+  &-focused:not(&-empty) &-allow-clear {
+    opacity: 1;
+  }
+}

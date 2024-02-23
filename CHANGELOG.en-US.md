@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
 - 💄 `<pro>Lov`: Optimizes the style of displaying selected records in `drawer` mode.
 - 💄 `<pro>Lov`: Optimized support for enabling asynchronous tree loading through view interface configuration.
+- 💄 `<pro>Lov`: Optimized the suffix to display loading normally when there is a value.
 - 💄 `<pro>Cascader`: Optimizes parent-selected interactions in `changeOnSelect` mode.
 - 💄 `<pro>Output`: Optimize the line feed style of text for long word scenes.
 - 💄 `<pro>Select`: Optimize automatic front-end pagination when drop-down data is loaded at one time.
