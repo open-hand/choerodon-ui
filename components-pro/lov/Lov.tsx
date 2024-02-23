@@ -915,6 +915,11 @@ export default class Lov extends Select<LovProps> {
     return props;
   }
 
+  getInnerSpanButton() {
+    const hidden = this.loading;
+    return super.getInnerSpanButton(hidden);
+  }
+
   @computed
   get loading(): boolean {
     const { options } = this;

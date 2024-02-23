@@ -30,6 +30,7 @@ timeline: true
 - 💄 `<pro>Output`: 当 Output 内部渲染有弹窗时，优化 tooltip 显示逻辑。
 - 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
 - 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
+- 💄 `<pro>Lov`: 优化有值时后缀能正常显示 loading 。
 - 💄 `<pro>Cascader`: 优化 changeOnSelect 模式下父级选择的交互。
 - 💄 `<pro>Output`: 优化文本为长单词场景的换行样式。
 - 💄 `<pro>Select`: 优化下拉数据一次性加载的情况下自动前端分页。
