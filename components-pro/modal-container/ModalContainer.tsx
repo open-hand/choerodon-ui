@@ -148,6 +148,8 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
 
   isUnMount = false;
 
+  delayToActive?: boolean;
+
   @computed
   get baseOffsets() {
     const offsets = {
@@ -202,6 +204,7 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     if (index !== -1) {
       const props = modals[index];
       if (!isEnter) {
+        this.delayToActive = false;
         modals.splice(index, 1);
         if (!props.destroyOnClose) {
           modals.unshift(props);
@@ -362,8 +365,15 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
 
   close(props: ModalProps) {
     const { modals } = this.state;
+    const { isTop } = this;
     const target = modals.find(({ key }) => key === props.key);
     if (target) {
+      if (!target.hidden) {
+        const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
+        if (modals[activeModalIndex] === target) {
+          this.delayToActive = true;
+        }
+      }
       Object.assign(target, props, { hidden: true });
       this.updateModals(modals);
     }
@@ -399,7 +409,7 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     const { modals } = this.state;
     const { context } = this;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
-    const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
+    const activeModalIndex: number = isTop && !this.delayToActive ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
     const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
     const offsetContainer = this.getOffsetContainer();
