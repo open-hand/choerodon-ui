@@ -108,7 +108,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
           // modal 中异步加载 CodeArea 时，更新样式
           this.editor.refresh();
         }
-      }, 0);
+      }, 1000);
     }
   }
 
