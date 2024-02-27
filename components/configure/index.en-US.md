@@ -130,6 +130,7 @@ const prefixCls = getConfig('prefixCls');
 | modalResizable | modal是否可调整大小 | boolean |   |
 | modalMovable | modal是否可移动 | boolean |   |
 | modalClosable | modal关闭按钮 | boolean |   |
+| modalButtonTrigger | ok 和 cancel 按钮的触发方式 | `click` `mouseDown` | `click` |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |
 | autoInsertSpaceInButton | 设置为 true 时，添加按钮中 2 个汉字之间的空格 | boolean | false |

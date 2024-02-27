@@ -18,6 +18,7 @@ import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTempl
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
 import { FieldFocusMode, Tooltip } from 'choerodon-ui/pro/lib/core/enum';
+import { ModalButtonTrigger } from 'choerodon-ui/pro/lib/modal/interface';
 import { Size } from '../_util/enum';
 import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook } from './index';
 import { Action } from '../trigger/enum';
@@ -147,6 +148,7 @@ const defaults = {
   modalMaskClosable: false,
   modalMovable: true,
   modalClosable: false,
+  modalButtonTrigger: ModalButtonTrigger.CLICK,
   buttonColor: ButtonColor.default,
   buttonFuncType: FuncType.raised,
   autoInsertSpaceInButton: false,

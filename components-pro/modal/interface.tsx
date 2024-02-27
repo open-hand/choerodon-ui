@@ -32,3 +32,8 @@ export interface ModalCustomized {
   width?: BigNumber | string | number;
   height?: BigNumber | string | number;
 }
+
+export enum  ModalButtonTrigger {
+  CLICK = 'click',
+  MOUSEDOWN = 'mouseDown',
+}

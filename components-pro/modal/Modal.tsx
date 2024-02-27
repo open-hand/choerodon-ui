@@ -31,7 +31,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
-import { ModalChildrenProps, ModalCustomized } from './interface';
+import { ModalButtonTrigger, ModalChildrenProps, ModalCustomized } from './interface';
 import { getDocument, MousePosition, transformZoomData } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
@@ -98,6 +98,7 @@ export interface ModalProps extends ViewComponentProps {
   update?: (props?: ModalProps) => void;
   okButton?: boolean;
   cancelButton?: boolean;
+  buttonTrigger?: ModalButtonTrigger;
   /**
    * @deprecated
    */
@@ -179,8 +180,11 @@ export default class Modal extends ViewComponent<ModalProps> {
       okProps,
       okText = $l('Modal', 'ok'),
       drawer,
+      buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
+    const handleOkKey = `on${buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? 'MouseDown' : 'Click'}`;
+    const handleOk = { [handleOkKey]: this.handleOk };
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -189,7 +193,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="ok"
         funcType={funcType}
         color={ButtonColor.primary}
-        onClick={this.handleOk}
+        {...handleOk}
         {...modalButtonProps}
         {...okProps}
       >
@@ -203,8 +207,11 @@ export default class Modal extends ViewComponent<ModalProps> {
       cancelProps,
       cancelText = $l('Modal', 'cancel'),
       drawer,
+      buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
+    const handleCancelKey = `on${buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? 'MouseDown' : 'Click'}`;
+    const handleCancel = { [handleCancelKey]: this.handleCancel };
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -214,7 +221,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="cancel"
         ref={this.saveCancelRef}
         funcType={funcType}
-        onClick={this.handleCancel}
+        {...handleCancel}
         {...modalButtonProps}
         {...cancelProps}
       >
