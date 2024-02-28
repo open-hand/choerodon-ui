@@ -38,7 +38,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalButtonTrigger, ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
@@ -211,6 +211,7 @@ export interface Config extends DataSetConfig {
   drawerOkFirst?: boolean;
   drawerHeaderFooterCombined?: boolean;
   modalButtonProps?: ButtonProps;
+  modalButtonTrigger?: ModalButtonTrigger;
   modalKeyboard?: boolean;
   modalMaskClosable?: boolean | 'click' | 'dblclick';
   modalResizable?: boolean;

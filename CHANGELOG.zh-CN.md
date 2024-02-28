@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。

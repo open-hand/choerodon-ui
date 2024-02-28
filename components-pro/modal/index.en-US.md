@@ -40,6 +40,7 @@ title: Modal
 | drawerOffset | 抽屉之间的位移距离 | number | 150 |
 | okButton | 显示 ok 按钮 | boolean | true |
 | cancelButton | 显示 cancel 按钮 | boolean | |
+| buttonTrigger | ok 和 cancel 按钮的触发方式 | `click` `mouseDown` | `click` |
 | okCancel | \<deprecated\> 同时显示 ok 和 cancel 按钮，false 的时候只显示 ok 按钮 | boolean | true |
 | okFirst | ok 按钮是否排在第一个 | boolean | true |
 | okProps | ok 按钮属性 | object |  |
