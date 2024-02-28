@@ -183,8 +183,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
-    const handleOkKey = `on${buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? 'MouseDown' : 'Click'}`;
-    const handleOk = { [handleOkKey]: this.handleOk };
+    const handleMouseDownOk = buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? { onMouseDown: this.handleOk } : {};
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -193,7 +192,8 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="ok"
         funcType={funcType}
         color={ButtonColor.primary}
-        {...handleOk}
+        onClick={this.handleOk}
+        {...handleMouseDownOk}
         {...modalButtonProps}
         {...okProps}
       >
@@ -210,8 +210,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
-    const handleCancelKey = `on${buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? 'MouseDown' : 'Click'}`;
-    const handleCancel = { [handleCancelKey]: this.handleCancel };
+    const handleMouseDownCancel = buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? { onMouseDown: this.handleCancel } : {};
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -221,7 +220,8 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="cancel"
         ref={this.saveCancelRef}
         funcType={funcType}
-        {...handleCancel}
+        onClick={this.handleCancel}
+        {...handleMouseDownCancel}
         {...modalButtonProps}
         {...cancelProps}
       >
@@ -389,6 +389,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'customizedCode',
       'beforeOpen',
       'afterOpenChange',
+      'buttonTrigger',
     ]);
   }
 
