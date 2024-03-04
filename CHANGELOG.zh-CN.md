@@ -58,6 +58,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
 - 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
 - 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
+- 🐞 `<pro>Table`: 修复大数据量下虚拟滚动报错问题。
 - 🐞 `<pro>Table.DynamicFilterBar`: 修复未点击到展开收起图标仍会触发查询条件折叠的问题。
 - 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 

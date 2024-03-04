@@ -37,10 +37,15 @@ export default class VirtualRowMetaData {
   @computed
   get offset(): number {
     const { prev } = this;
+    let result = 0;
     if (prev) {
-      return prev.offset + prev.height;
+      let current = this as VirtualRowMetaData;
+      while (current) {
+        result += current.height;
+        current = current.prev!;
+      }
     }
-    return 0;
+    return result;
   }
 
   constructor(store: TableStore, type: 'row' | 'group', prev?: VirtualRowMetaData, record?: Record) {
