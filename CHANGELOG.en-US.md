@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized support for pagination query of sub-nodes.
 - 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
 - 💄 `<pro>Modal`: Optimized animations when `multi-modal` is closed.
+- 💄 `<pro>FormField`: Optimized the association of suffix mouse events with component.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.

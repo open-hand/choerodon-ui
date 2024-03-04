@@ -279,13 +279,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
 
   getDefaultSuffix(): ReactNode {
     const { prefixCls } = this;
-    const { onMouseDown, onMouseUp, onClick, onDoubleClick, onContextMenu } = this.getOtherProps();
-    const eventsProps = !this.disabled ? { onMouseDown, onMouseUp, onClick, onDoubleClick, onContextMenu } : {};
     return (
       <Icon
         type={this.getTriggerIconFont()}
         className={`${prefixCls}-trigger`}
-        {...eventsProps}
       />
     );
   }

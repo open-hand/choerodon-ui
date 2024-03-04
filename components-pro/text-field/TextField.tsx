@@ -1156,7 +1156,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @action
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
-    const { prefixCls, clearButton } = this;
+    const suffixEvents = ['MouseDown', 'MouseUp', 'Click', 'DoubleClick', 'ContextMenu'];
+    const {
+      prefixCls,
+      clearButton,
+      props: {
+        onMouseDown,
+        onMouseUp,
+        onClick,
+        onDoubleClick,
+        onContextMenu,
+      },
+    } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
       this.suffixWidth = toPx('0.21rem');
@@ -1190,12 +1201,32 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
     const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
+    const eventsProps = {
+      onMouseDown,
+      onMouseUp,
+      onClick,
+      onDoubleClick,
+      onContextMenu,
+    };
+    suffixEvents.forEach((evt: string) => {
+      eventsProps[`on${evt}`] = (e: Event) => {
+        if (`on${evt}` === 'onMouseDown') {
+          preventDefault(e);
+        }
+        if (props && props[`on${evt}`]) {
+          props[`on${evt}`](e);
+        }
+        if (this.element) {
+          this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: true }));
+        }
+      };
+    })
     return (
       <div
         className={classString}
         style={{ ...divStyle, right }}
-        onMouseDown={preventDefault}
         {...props}
+        {...eventsProps}
         ref={this.saveSuffixRef}
       >
         {children}

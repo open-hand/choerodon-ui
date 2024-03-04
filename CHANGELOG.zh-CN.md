@@ -40,6 +40,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化支持子节点分页查询。
 - 💄 `<pro>DataSet`: 优化 delete 方法，在取消删除时返回 false。
 - 💄 `<pro>Modal`: 优化多层 modal 关闭时的动画效果。
+- 💄 `<pro>FormField`: 优化后缀鼠标事件关联到组件。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

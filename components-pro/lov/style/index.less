@@ -213,12 +213,9 @@
       }
     }
   }
-}
 
-// Lov 有值时点击后缀仍能显示 loading
-.@{select-prefix-cls} {
-  &-wrapper:not(&-empty):hover &-suffix&-allow-clear,
-  &-focused:not(&-empty) &-suffix&-allow-clear {
+  &.@{select-prefix-cls}-wrapper:not(.@{select-prefix-cls}-empty):hover .@{select-prefix-cls}-allow-clear,
+  &.@{select-prefix-cls}-focused:not(.@{select-prefix-cls}-empty) .@{select-prefix-cls}-allow-clear {
     opacity: 1;
   }
 }
