@@ -164,6 +164,7 @@ export interface Config {
   max?: (type: FieldType) => number | MomentInput | string | null;
   xlsx?: () => Promise<any>;
   strictPageSize?: boolean;
+  noPagingParams?: (config: AxiosRequestConfig) => object;
 }
 
 export type ConfigKeys = keyof Config;
@@ -211,6 +212,7 @@ const defaultConfig = {
   strictPageSize: true,
   useLookupBatch: noop,
   useLovDefineBatch: noop,
+  noPagingParams: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;

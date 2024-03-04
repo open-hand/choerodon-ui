@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
@@ -37,8 +37,10 @@ timeline: true
 - 💄 `<pro>Table`: 优化自定义 renderer 渲染，校验失败后 tooltip 遮挡的问题。
 - 💄 `<pro>CodeArea`: 优化 Modal 中异步加载 CodeArea 组件的样式。
 - 💄 `<pro>Table`: 优化 loading 效果。
+- 💄 `<pro>Table`: 优化支持子节点分页查询。
 - 💄 `<pro>DataSet`: 优化 delete 方法，在取消删除时返回 false。
 - 💄 `<pro>Modal`: 优化多层 modal 关闭时的动画效果。
+- 💄 `<pro>FormField`: 优化后缀鼠标事件关联到组件。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
@@ -57,6 +59,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
 - 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
 - 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
+- 🐞 `<pro>Table`: 修复大数据量下虚拟滚动报错问题。
 - 🐞 `<pro>Table.DynamicFilterBar`: 修复未点击到展开收起图标仍会触发查询条件折叠的问题。
 - 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 

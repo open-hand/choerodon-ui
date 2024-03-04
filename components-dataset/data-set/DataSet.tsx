@@ -90,6 +90,8 @@ const QUERY_PARAMETER = '__QUERY_PARAMETER__';  // TODO:Symbol
 
 const TOTAL_KEY = '__TOTAL__';  // TODO:Symbol
 
+export const CHILDREN_PAGE_INFO = '__CHILDREN_PAGE_INFO__';
+
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
@@ -1329,7 +1331,7 @@ export default class DataSet extends EventManager {
 
   queryMoreChild(parent: Record, page?: number, params: object = {}): Promise<any> {
     const { idField, parentField } = this.props;
-    if (idField && parentField && !parent.children) {
+    if (idField && parentField && (!parent.children || parent.children && parent.children.length < parent.getState(CHILDREN_PAGE_INFO).total)) {
       const id = parent.get(idField);
       if (!isEmpty(id)) {
         if (parentField) {
@@ -1372,7 +1374,11 @@ export default class DataSet extends EventManager {
   }
 
   async doQueryMoreChild(parent: Record, page, params?: object): Promise<any> {
-    const data = await this.read(page, params, true);
+    const data = await this.read(page, params, true, undefined, true);
+    const { dataKey, totalKey } = this;
+    const dataLength: number = generateResponseData(data, dataKey).length;
+    const total: number | undefined = ObjectChainValue.get(data, totalKey) || dataLength;
+    parent.setState(CHILDREN_PAGE_INFO, { currentPage: page, total });
     this.appendDataFromResponse(data, parent);
     if (data) {
       const { counting, totalKey } = this;
@@ -3187,7 +3193,7 @@ Then the query method will be auto invoke.`,
     }
   }
 
-  private async read(page = 1, params?: object, more?: boolean, paging?: boolean): Promise<any> {
+  private async read(page = 1, params?: object, more?: boolean, paging?: boolean, queryChildren?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
       try {
         if (!more) {
@@ -3195,6 +3201,13 @@ Then the query method will be auto invoke.`,
         }
         const data = await this.generateQueryParameter(params);
         const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, undefined, paging));
+        if (this.paging === false && isFunction(this.getConfig('noPagingParams'))) {
+          const noPagingParams = this.getConfig('noPagingParams')(newConfig);
+          if (!isNil(noPagingParams)) {
+            newConfig.params = Object.assign(newConfig.params || {}, noPagingParams);
+            newConfig.data = Object.assign(newConfig.data || {}, noPagingParams);
+          }
+        }
         if (newConfig.url) {
           const queryEventResult = await this.fireEvent(DataSetEvents.query, {
             dataSet: this,
@@ -3207,7 +3220,7 @@ Then the query method will be auto invoke.`,
             const result = await this.axios(fixAxiosConfig(newConfig));
             this.performance.timing.fetchEnd = Date.now();
             runInAction(() => {
-              if (page >= 0) {
+              if (page >= 0 && !queryChildren) {
                 this.currentPage = page;
               }
               const { countKey } = this;
@@ -3512,8 +3525,6 @@ Then the query method will be auto invoke.`,
       } else if (paging === true || paging === 'server') {
         params.page = page;
         params.pagesize = pageSize;
-      } else {
-        params.pagesize = 0; // no paging
       }
 
       if (autoCount === false) {

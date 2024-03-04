@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
@@ -37,8 +37,10 @@ timeline: true
 - 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
 - 💄 `<pro>CodeArea`: Optimized the style of loading `CodeArea` components asynchronously in `Modal`.
 - 💄 `<pro>Table`: Optimized `loading` effect.
+- 💄 `<pro>Table`: Optimized support for pagination query of sub-nodes.
 - 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
 - 💄 `<pro>Modal`: Optimized animations when `multi-modal` is closed.
+- 💄 `<pro>FormField`: Optimized the association of suffix mouse events with component.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
@@ -57,6 +59,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
 - 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
 - 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
+- 🐞 `<pro>Table`: Fixed the issue of `virtual` scrolling error when large data volume is generated.
 - 🐞 `<pro>Table.DynamicFilterBar`: Fixed the issue that if you did not click the expand and collapse icon, the query condition would still be folded.
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 

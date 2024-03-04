@@ -50,6 +50,7 @@ const locale: Locale = {
     advanced_query: 'Advanced Query',
     advanced_query_conditions: 'Advanced Queries',
     more: 'More',
+    query_more_children: 'More',
     default_export: 'Default export file',
     download_button: 'Download',
     export_failed: 'Export failed ',
