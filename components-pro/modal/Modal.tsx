@@ -13,6 +13,7 @@ import noop from 'lodash/noop';
 import isNil from 'lodash/isNil';
 import isNumber from 'lodash/isNumber';
 import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import classes from 'component-classes';
 import { pxToPercent, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -183,7 +184,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
-    const handleMouseDownOk = buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? { onMouseDown: this.handleOk } : {};
+    let handleMouseDownOk = {};
+    if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN && !okProps?.onClick) {
+      handleMouseDownOk = { onMouseDown: this.handleMouseDownOk };
+    }
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -192,7 +196,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="ok"
         funcType={funcType}
         color={ButtonColor.primary}
-        onClick={this.handleOk}
+        onClick={this.handleClickOk}
         {...handleMouseDownOk}
         {...modalButtonProps}
         {...okProps}
@@ -210,7 +214,10 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
-    const handleMouseDownCancel = buttonTrigger === ModalButtonTrigger.MOUSEDOWN ? { onMouseDown: this.handleCancel } : {};
+    let handleMouseDownCancel = {};
+    if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN && !cancelProps?.onClick) {
+      handleMouseDownCancel = { onMouseDown: this.handleMouseDownCancel };
+    }
     const funcType: FuncType | undefined = drawer
       ? FuncType.raised
       : (this.getContextConfig('buttonFuncType') as FuncType);
@@ -220,7 +227,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         key="cancel"
         ref={this.saveCancelRef}
         funcType={funcType}
-        onClick={this.handleCancel}
+        onClick={this.handleClickCancel}
         {...handleMouseDownCancel}
         {...modalButtonProps}
         {...cancelProps}
@@ -853,7 +860,10 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   async handleOk() {
-    const { onOk = noop } = this.props;
+    const { onOk = noop, buttonTrigger = this.getContextConfig('modalButtonTrigger') } = this.props;
+    if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN) {
+      document.removeEventListener('mouseup', this.handleDelayOk);
+    }
     const promise = Promise.all([onOk(), this.okCancelEvent.fireEvent('ok')]);
     try {
       const [ret1, ret2] = await promise;
@@ -870,7 +880,10 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   @autobind
   async handleCancel() {
-    const { onCancel = noop } = this.props;
+    const { onCancel = noop, buttonTrigger = this.getContextConfig('modalButtonTrigger') } = this.props;
+    if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN) {
+      document.removeEventListener('mouseup', this.handleDelayCancel);
+    }
     const promise = Promise.all([onCancel(), this.okCancelEvent.fireEvent('cancel')]);
     try {
       const [ret1, ret2] = await promise;
@@ -884,6 +897,32 @@ export default class Modal extends ViewComponent<ModalProps> {
       throw e;
     }
   }
+
+  @autobind
+  handleClickOk() {
+    this.handleDelayOk.cancel();
+    this.handleOk();
+  }
+
+  @autobind
+  handleClickCancel() {
+    this.handleDelayCancel.cancel();
+    this.handleCancel();
+  }
+
+  @autobind
+  handleMouseDownOk() {
+    document.addEventListener('mouseup', this.handleDelayOk);
+  }
+
+  @autobind
+  handleMouseDownCancel() {
+    document.addEventListener('mouseup', this.handleDelayCancel);
+  }
+
+  handleDelayOk = debounce(this.handleOk, 200);
+
+  handleDelayCancel = debounce(this.handleCancel, 200);
 
   getHeader(): ReactNode {
     const {
