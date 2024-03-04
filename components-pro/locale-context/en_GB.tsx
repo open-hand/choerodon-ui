@@ -59,6 +59,7 @@ const locale: Locale = {
     export_break: 'Data export interrupted, click Retry to export again.',
     export_operating: 'Exporting table data. Click Cancel to terminate the export',
     more: 'More',
+    query_more_children: 'More',
     enter_text_filter: 'Enter text to filter',
     clear_filter: 'Clear filter',
     save_filter: 'Save filter',

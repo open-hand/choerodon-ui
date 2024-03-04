@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
 - 💄 `<pro>CodeArea`: Optimized the style of loading `CodeArea` components asynchronously in `Modal`.
 - 💄 `<pro>Table`: Optimized `loading` effect.
+- 💄 `<pro>Table`: Optimized support for pagination query of sub-nodes.
 - 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
 - 💄 `<pro>Modal`: Optimized animations when `multi-modal` is closed.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.

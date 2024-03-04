@@ -69,6 +69,7 @@ import { defaultOutputRenderer } from '../output/utils';
 import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
 import { TooltipProps } from '../tooltip/Tooltip';
+import ChildrenQueryButton from './ChildrenQueryButton';
 
 let inTab = false;
 
@@ -734,6 +735,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     </span>
   );
 
+  const queryMoreButton = children && (
+    <ChildrenQueryButton
+      record={record}
+      expanded={tableStore.isRowExpanded(record)}
+      style={prefixStyle}
+    />
+  );
+
   const output: ReactNode = (
     <span
       key="output"
@@ -745,6 +754,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   return (
     <>
       {prefix}
+      {queryMoreButton}
       {
         highlight ? (column.highlightRenderer || tableStore.cellHighlightRenderer)(transformHighlightProps(highlight, {
           dataSet,
