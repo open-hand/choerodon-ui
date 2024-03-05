@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 import { Moment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
@@ -12,6 +12,29 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
 
   static type = FieldType.month;
 
+  getTargetDate(target?: 0 | 1): Moment {
+    const { comboRangeMode } = this;
+    const { date, dateRangeValue, rangeTarget } = this.props;
+    if (!comboRangeMode || !dateRangeValue || rangeTarget === undefined || target === undefined) return date;
+
+    if (dateRangeValue[0] && dateRangeValue[1] && dateRangeValue[0].isSame(dateRangeValue[1], 'y')) {
+      return target === 1 ? date.clone().add(1, 'y') : date;
+    }
+    if (rangeTarget === 0) {
+      if (!dateRangeValue[0] && dateRangeValue[1]) {
+        return target === 0 ? date.clone().add(-1, 'y') : date;
+      }
+      return target === 1 ? date.clone().add(1, 'y') : date;
+    }
+    if (rangeTarget === 1) {
+      if (!dateRangeValue[1]) {
+        return target === 1 ? date.clone().add(1, 'y') : date;
+      }
+      return target === 0 ? date.clone().add(-1, 'y') : date;
+    }
+    return date;
+  }
+
   getViewClassName(): string {
     const { prefixCls } = this;
     return `${prefixCls}-month`;
@@ -19,16 +42,19 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
 
   handleKeyDownHome(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().startOf('y'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().endOf('y'));
   }
 
   handleKeyDownLeft(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (e.altKey) {
       this.changeViewMode(ViewMode.year);
     } else {
@@ -38,6 +64,7 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
 
   handleKeyDownRight(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (e.altKey) {
       const { mode } = this.props;
       if (mode !== ViewMode.month) {
@@ -50,38 +77,45 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
 
   handleKeyDownUp(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().subtract(3, 'M'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().add(3, 'M'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().subtract(e.altKey ? 10 : 1, 'y'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().add(e.altKey ? 10 : 1, 'y'));
   }
 
-  renderHeader(): ReactNode {
+  renderHeader(target?: 0 | 1): ReactNode {
     const {
       prefixCls,
-      props: { date },
+      comboRangeMode,
     } = this;
+    const date = this.getTargetDate(target);
+    const startStyle: CSSProperties = comboRangeMode && target === 0 ? { visibility: 'hidden' } : {};
+    const endStyle: CSSProperties = comboRangeMode && target === 1 ? { visibility: 'hidden' } : {};
     return (
       <div className={`${prefixCls}-header`}>
-        <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick}>
+        <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick} style={endStyle}>
           <Icon type="first_page" />
         </a>
         <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
           {date.year()}
         </a>
-        <a className={`${prefixCls}-next-year`}>
+        <a className={`${prefixCls}-next-year`} style={startStyle}>
           <Icon type="last_page" onClick={this.handleNextYearClick} />
         </a>
       </div>
@@ -92,11 +126,15 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
     return undefined;
   }
 
-  renderPanelBody(): ReactNode {
+  renderPanelBody(target?: 0 | 1): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
+      comboRangeMode,
+      startDate,
+      endDate,
+      props: { renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
     } = this;
+    const date = this.getTargetDate(target);
     const selected = date.clone();
     const prevMonth = date.clone().startOf('y');
     const lastMonth = prevMonth.clone().add(12, 'M');
@@ -106,9 +144,15 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
     while (prevMonth.isBefore(lastMonth)) {
       const currentMonth = prevMonth.clone();
       const isDisabled = !isValidDate(currentMonth, selected);
+      const isStart = comboRangeMode && startDate && prevMonth.isSame(startDate, 'M');
+      const isEnd = comboRangeMode && endDate && prevMonth.isSame(endDate, 'M');
       const className = classNames(`${prefixCls}-cell`, {
-        [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'M'),
+        [`${prefixCls}-selected`]: (!comboRangeMode && prevMonth.isSame(selected, 'M')) ||
+        (comboRangeMode && (isStart || isEnd)),
         [`${prefixCls}-disabled`]: isDisabled,
+        [`${prefixCls}-in-range`]: comboRangeMode && this.isInRange(prevMonth),
+        [`${prefixCls}-range-start`]: isStart,
+        [`${prefixCls}-range-end`]: isEnd,
       });
       const text = prevMonth.localeData().monthsShort(prevMonth);
 

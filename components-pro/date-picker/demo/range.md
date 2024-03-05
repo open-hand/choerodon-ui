@@ -108,6 +108,15 @@ class App extends React.Component {
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="multipleDate" placeholder="Choose Date" />
         </Col>
+        <Col span={24}>
+          <DatePicker
+            range
+            placeholder={['date', 'comboRangeMode']}
+            onChange={handleChange}
+            mode="date"
+            comboRangeMode
+          />
+        </Col>
       </Row>
     );
   }

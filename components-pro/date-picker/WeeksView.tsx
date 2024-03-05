@@ -21,6 +21,7 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
 
   handleKeyDownLeft(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
@@ -30,26 +31,52 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
 
   handleKeyDownRight(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (!e.altKey) {
       this.changeCursorDate(this.getCloneDate().add(1, 'M'));
     }
   }
 
-  renderPanelBody(): ReactNode {
+  renderPanelBody(target?: 0 | 1): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, onDateMouseLeave },
+      comboRangeMode,
+      startDate,
+      endDate,
+      props: { renderer = this.renderCell, onDateMouseLeave },
     } = this;
+    const date = this.getTargetDate(target);
     const selected = date.clone();
     const firstDay = this.getFirstDay(date);
     const lastDay = firstDay.clone().add(42, 'd');
+    const currentYear = date.year();
+    const currentMonth = date.month();
     const rows: ReactNode[] = [];
     let cells: ReactNode[] = [];
+    let weekIsOld = false;
+    let weekIsNew = false;
 
     while (firstDay.isBefore(lastDay)) {
       const currentDate = firstDay.clone();
+      const isOld = firstDay.year() < currentYear ||
+      (firstDay.year() === currentYear && firstDay.month() < currentMonth);
+      const isNew = firstDay.year() > currentYear ||
+      (firstDay.year() === currentYear && firstDay.month() > currentMonth);
+      if (cells.length === 0) {
+        weekIsOld = isOld;
+        weekIsNew = isNew;
+      }
+      const isStart = comboRangeMode && !weekIsOld && !weekIsNew && startDate && firstDay.isSame(startDate, 'w');
+      const isEnd = comboRangeMode && !weekIsOld && !weekIsNew && endDate && firstDay.isSame(endDate, 'w');
+
       const className = classNames(`${prefixCls}-cell`, {
-        [`${prefixCls}-selected`]: firstDay.isSame(selected, 'w'),
+        [`${prefixCls}-selected`]: (!comboRangeMode && firstDay.isSame(selected, 'w')) ||
+        (comboRangeMode && (isStart || isEnd)),
+        [`${prefixCls}-old`]: isOld,
+        [`${prefixCls}-new`]: isNew,
+        [`${prefixCls}-in-range`]: comboRangeMode && !weekIsOld && !weekIsNew && !isStart && !isEnd && this.isInRange(firstDay),
+        [`${prefixCls}-range-start`]: isStart,
+        [`${prefixCls}-range-end`]: isEnd,
       });
 
       const text = String(currentDate.date());
@@ -82,6 +109,8 @@ export default class WeeksView<T extends DateViewProps> extends DaysView<T> impl
           </tr>,
         );
         cells = [];
+        weekIsOld = false;
+        weekIsNew = false;
       }
 
       firstDay.add(1, 'd');

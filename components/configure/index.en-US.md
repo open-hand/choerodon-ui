@@ -192,6 +192,7 @@ const prefixCls = getConfig('prefixCls');
 | labelWidth | Form 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 如果为auto，则根据内部label最大长度来对齐所有label | (number\| 'auto' \| ('auto' \| number)[]) \| ((lang, columns) => (number\| 'auto' \| ('auto' \| number)[])) | 100 |
 | labelWordBreak | From 设置标签是否换行显示  | boolean |  |
 | pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
+| datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 
 ### Customizable
 
