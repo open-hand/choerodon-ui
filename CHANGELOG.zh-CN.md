@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>Select`: 优化下拉数据一次性加载的情况下自动前端分页。
 - 💄 `<pro>Table`: 优化自定义 renderer 渲染，校验失败后 tooltip 遮挡的问题。
 - 💄 `<pro>CodeArea`: 优化 Modal 中异步加载 CodeArea 组件的样式。
+- 💄 `<pro>CodeArea`: 优化设置换行显示时的样式。
 - 💄 `<pro>Table`: 优化 loading 效果。
 - 💄 `<pro>Table`: 优化支持子节点分页查询。
 - 💄 `<pro>DataSet`: 优化 delete 方法，在取消删除时返回 false。
