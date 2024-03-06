@@ -8,6 +8,8 @@ import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codem
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
+import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -114,11 +116,19 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   componentWillUnmount(): void {
     this.disposer();
+    this.editorRefreshDebounce.cancel();
   }
+
+  editorRefreshDebounce = debounce(() => {
+    if (this.editor) {
+      this.editor.refresh();
+    }
+  }, 600);
 
   @autobind
   handleBeforeChange(_editor, _data, value) {
     this.setText(value);
+    this.editorRefreshDebounce();
   }
 
   @autobind
@@ -306,7 +316,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   handleCodeMirrorDidMount = (editor: IInstance, value: string, cb: () => void) => {
     this.editor = editor;
     const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount } = this.props;
-    const { width = '100%', height = 100 } = style || {};
+    const { width, height = 100 } = style || {};
     const options = {
       Tab(cm) {
         if (cm.somethingSelected()) {
@@ -328,7 +338,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         options[unFormatHotKey] = cm => cm.setValue(formatter.getRaw(cm.getValue()));
       }
     }
-    editor.setSize(width, height); // default size: ('100%', 100)
+    editor.setSize(isNil(width) ? '100%' : null, height); // default size: ('100%', 100)
     editor.setOption('extraKeys', options);
     if (editorDidMount) {
       editorDidMount(editor, value, cb);

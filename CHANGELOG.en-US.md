@@ -37,6 +37,7 @@ timeline: true
 - 💄 `<pro>Select`: Optimize automatic front-end pagination when drop-down data is loaded at one time.
 - 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
 - 💄 `<pro>CodeArea`: Optimized the style of loading `CodeArea` components asynchronously in `Modal`.
+- 💄 `<pro>CodeArea`: Optimizes the style when setting the line feed display.
 - 💄 `<pro>Table`: Optimized `loading` effect.
 - 💄 `<pro>Table`: Optimized support for pagination query of sub-nodes.
 - 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
