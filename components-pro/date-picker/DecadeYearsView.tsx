@@ -10,6 +10,10 @@ import { stopEvent } from '../_util/EventManager';
 export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T> {
   static displayName = 'DecadeYearView';
 
+  get comboRangeMode(): boolean | undefined {
+    return false;
+  }
+
   getViewClassName(): string {
     const { prefixCls } = this;
     return `${prefixCls}-decade-year`;

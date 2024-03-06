@@ -45,6 +45,10 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     return `${prefixCls}-time`;
   }
 
+  get comboRangeMode(): boolean | undefined {
+    return false;
+  }
+
   @computed
   get showHour(): boolean {
     const { format } = this.observableProps;

@@ -8,7 +8,7 @@ import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import { observer } from 'mobx-react';
-import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS, autorun, IReactionDisposer } from 'mobx';
 import { TimeStep } from 'choerodon-ui/dataset/interface';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -109,6 +109,10 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 允许使用非法日期
    */
   useInvalidDate?: boolean;
+  /**
+   * range 模式，选择弹窗组合显示（time 和 dateTime 模式不支持）
+   */
+  comboRangeMode?: boolean;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -135,10 +139,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     useInvalidDate: true,
   };
 
+  componentDidMount(): void {
+    super.componentDidMount();
+    this.disposer = this.autoChangeCursorDate();
+  }
+
   componentWillUnmount() {
     if (this.timeID) {
       clearTimeout(this.timeID);
       delete this.timeID;
+    }
+    if (this.disposer) {
+      this.disposer();
     }
   }
 
@@ -191,6 +203,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return this.getLimit('max');
   }
 
+  @computed
+  get comboRangeMode(): boolean | undefined {
+    const { range } = this;
+    let { comboRangeMode } = this.observableProps;
+    comboRangeMode = isNil(comboRangeMode) ? this.getContextConfig('datePickerComboRangeMode') : comboRangeMode;
+    const mode = this.getDefaultViewMode();
+    const viewMode = this.getViewMode();
+    return range && comboRangeMode && mode !== ViewMode.dateTime && mode !== ViewMode.time && mode === viewMode;
+  }
+
+  disposer: IReactionDisposer;
+
   view: DatePickerKeyboardEvent | null;
 
   @observable cursorDate?: Moment | undefined;
@@ -207,6 +231,18 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @observable hoverValue?: Moment | undefined;
 
   popupInputEditor?: HTMLInputElement | ObserverTextField | null;
+
+  @autobind
+  autoChangeCursorDate() {
+    return autorun(() => {
+      const { comboRangeMode, popup, rangeValue, rangeTarget } = this;
+      if (comboRangeMode && popup && rangeValue && rangeTarget !== undefined) {
+        if (!rangeValue[rangeTarget] && rangeValue[rangeTarget === 0 ? 1 : 0]) {
+          this.changeCursorDate(rangeValue[rangeTarget === 0 ? 1 : 0]);
+        }
+      }
+    });
+  }
 
   @autobind
   savePopupInputEditor(node: HTMLInputElement | ObserverTextField | null) {
@@ -250,6 +286,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return {
       ...super.getObservableProps(props, context),
       editorInPopup: props.editorInPopup,
+      comboRangeMode: props.comboRangeMode,
     };
   }
 
@@ -295,6 +332,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return classNames(
       super.getPopupClassName(defaultClassName), {
         [`${this.prefixCls}-popup-${String(viewMode).toLowerCase()}`]: viewMode,
+        [`${this.prefixCls}-popup-combo-range`]: this.comboRangeMode,
       },
     );
   }
@@ -424,6 +462,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getPopupContent() {
+    const { comboRangeMode, rangeValue, rangeTarget, hoverValue } = this;
     const mode = this.getViewMode();
     const date = this.getCursorDate();
     return (
@@ -451,6 +490,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             onDateMouseEnter: this.handleDateMouseEnter,
             onDateMouseLeave: this.handleDateMouseLeave,
             okButton: this.getContextConfig('dateTimePickerOkButton'),
+            comboRangeMode,
+            dateRangeValue: rangeValue,
+            rangeTarget,
+            hoverValue,
           } as DateViewProps)
         }
       </>
@@ -999,7 +1042,9 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       this.expand();
     }
     if (!isNil(target)) {
-      this.cursorDate = undefined;
+      if (target !== this.rangeTarget) {
+        this.cursorDate = undefined;
+      }
     } else {
       if (isNil(this.cursorDate)) {
         this.cursorDate = this.getCursorDate();

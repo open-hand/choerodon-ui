@@ -342,6 +342,10 @@ export interface Config extends DataSetConfig {
    */
   rangeSeparator?: string;
   /**
+   * DatePicker 组件 range 模式，选择弹窗组合显示
+   */
+  datePickerComboRangeMode?: boolean;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;

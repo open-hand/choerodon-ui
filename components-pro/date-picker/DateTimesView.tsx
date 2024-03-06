@@ -16,6 +16,10 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
 
   static type = FieldType.dateTime;
 
+  get comboRangeMode(): boolean | undefined {
+    return false;
+  }
+
   getViewClassName(): string {
     const { prefixCls } = this;
     return `${prefixCls}-datetime`;
@@ -96,6 +100,7 @@ export default class DateTimesView<T extends DateViewProps> extends DaysView<T> 
       datetimeSide: true,
       format,
       renderExtraFooter: undefined,
+      comboRangeMode: false,
     } as TimesViewProps;
     return timeProps;
   };

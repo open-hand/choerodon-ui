@@ -30,6 +30,7 @@ title: DatePicker
 | editorInPopup | 编辑器在下拉框中  | boolean |  |
 | defaultTime | 设置用户选择日期时默认的时分秒  | moment \| \[moment, moment\] | moment('00:00:00', 'HH:mm:ss') |
 | useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true |
+| comboRangeMode | 设置在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
