@@ -694,7 +694,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getLabel() {
-    return toJS(this.getProp('label'));
+    return toJS(this.getDisplayProp('label'));
   }
 
   renderFloatLabel(): ReactNode {

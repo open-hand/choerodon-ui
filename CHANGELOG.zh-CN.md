@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化表头恢复默认后列分组树形结构丢失。
 - 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题。
+- 🐞 `<pro>Lov`: 修复双击后缀会查询两次和表格双击选中模式下单选框选值错误的问题。
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。

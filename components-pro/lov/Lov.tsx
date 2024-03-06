@@ -30,7 +30,7 @@ import ObserverSelect, {
   SelectProps,
 } from '../select/Select';
 import Option from '../option/Option';
-import { TableMode, TableQueryBarType } from '../table/enum';
+import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
 import { CheckedStrategy, DataSetStatus, RecordStatus } from '../data-set/enum';
 import { PopupSearchMode, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
@@ -419,6 +419,7 @@ export default class Lov extends Select<LovProps> {
   @action
   beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
     const { multiple, primitive, valueField } = this;
+    const { selectionMode, alwaysShowRowBox } = this.getTableProps();
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
     }
@@ -432,7 +433,10 @@ export default class Lov extends Select<LovProps> {
         Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
     }
-    if (multiple) {
+    // 勾选 value 对应的单选框
+    const needSingleSelected = !multiple && options.selection && this.getValues().length > 0 
+      && (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick || alwaysShowRowBox);
+    if (multiple || needSingleSelected) {
       const needToFetch = new Map();
       options.setCachedSelected(
         this.getValues().map(value => {
@@ -761,7 +765,7 @@ export default class Lov extends Select<LovProps> {
 
   getWrapperProps() {
     return super.getWrapperProps({
-      onDoubleClick: (this.disabled || this.readOnly) ? undefined : this.handleOpenModal,
+      onDoubleClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
       // Support ued to distinguish between select and lov
       className: this.getWrapperClassNames(`${this.prefixCls}-lov`),
     });
