@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the column grouping tree structure was missing after the default restoration of the personalized table header.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
+- 🐞 `<pro>Lov`: Fixed the issue that double-clicking the suffix would query twice and the single-check box selection error in the double-click selection mode of the table.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `ImageCrop`: Fixed re-upload failure.

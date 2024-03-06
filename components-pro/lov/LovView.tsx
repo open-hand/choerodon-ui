@@ -161,7 +161,7 @@ export default class LovView extends Component<LovViewProps> {
       tableProps,
     } = this.props;
     let records: Record[] = selectionMode === SelectionMode.treebox ?
-      dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || multiple) ?
+      dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     // 满足单选模式下，双击和勾选框选中均支持
     if (tableProps && tableProps.alwaysShowRowBox && !event) {
