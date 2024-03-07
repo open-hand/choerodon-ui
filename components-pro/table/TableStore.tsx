@@ -21,6 +21,7 @@ import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import pick from 'lodash/pick';
 import noop from 'lodash/noop';
+import { CHILDREN_PAGE_INFO } from 'choerodon-ui/dataset/data-set/DataSet';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
@@ -2763,13 +2764,12 @@ export default class TableStore {
     const promises: Promise<any>[] = [];
     this.setRowPending(record, true);
     if (treeAsync && dataSet) {
-      const generatePageQuery = this.getConfig('generatePageQuery');
-      let params;
-      if (typeof generatePageQuery === 'function') {
-        // treeAsync 子节点查询不分页
-        params = generatePageQuery({ pageSize: 0 })
+      if (dataSet.paging) {
+        const { currentPage = 1 } = (record.getState(CHILDREN_PAGE_INFO) || {})
+        promises.push(dataSet.queryMoreChild(record, currentPage));
+      } else {
+        promises.push(dataSet.queryMoreChild(record));
       }
-      promises.push(dataSet.queryMoreChild(record, dataSet.currentPage, params));
     }
     if (treeLoadData) {
       promises.push(treeLoadData({ record, dataSet }));

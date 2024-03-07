@@ -67,6 +67,7 @@ class PicturesWall extends React.Component {
             reUploadText: '重新上传？',
             reUploadPopConfirmTitle: '是否要重新上传？',
           }}
+          pictureCardShowName
         >
           {fileList.length >= 30 ? null : uploadButton}
         </Upload>

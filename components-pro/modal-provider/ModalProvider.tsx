@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from 'react';
 import noop from 'lodash/noop';
-import ModalContainer, { ModalContainerProps } from '../modal-container/ModalContainer';
+import ModalContainer, { ModalContainerProps, ModalContainerClass } from '../modal-container/ModalContainer';
 import Modal, { ModalProps } from '../modal/Modal';
 import ModalContext, { ModalContextValue } from './ModalContext';
 
@@ -18,7 +18,7 @@ export interface ModalProviderProps extends ModalContainerProps {
 const ModalProvider = (props: ModalProviderProps) => {
   const { location: contextLocation } = useContext(ModalContext);
   const { location = contextLocation, children, getContainer } = props;
-  const ref = useRef<ModalContainer | null>(null);
+  const ref = useRef<ModalContainerClass | null>(null);
   const prepareToOpen = useMemo<(ModalProps & { children })[]>(
     () => [] as (ModalProps & { children })[],
   [],

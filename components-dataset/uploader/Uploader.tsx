@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { runInAction } from 'mobx';
+import isPromise from 'is-promise';
 import AttachmentFile from '../data-set/AttachmentFile';
 import { beforeUploadFile, uploadFile } from './utils';
 import { getConfig } from '../configure';
@@ -70,9 +71,11 @@ export default class Uploader {
         const resp = await uploadFile(props, attachment, attachmentUUID, context, chunkSize, useChunk);
         runInAction(() => {
           attachment.status = 'success';
+          let handleUploadSuccessResult;
           const { onUploadSuccess: handleUploadSuccess } = globalConfig;
+          const { onUploadSuccess } = props;
           if (handleUploadSuccess) {
-            handleUploadSuccess(resp, attachment, {
+            handleUploadSuccessResult = handleUploadSuccess(resp, attachment, {
               useChunk,
               bucketName: props.bucketName,
               bucketDirectory: props.bucketDirectory,
@@ -80,9 +83,14 @@ export default class Uploader {
               isPublic: props.isPublic,
             });
           }
-          const { onUploadSuccess } = props;
           if (onUploadSuccess) {
-            onUploadSuccess(resp, attachment, useChunk);
+            if (isPromise(handleUploadSuccessResult)) {
+              handleUploadSuccessResult.then((res) => {
+                onUploadSuccess(res, attachment, useChunk);
+              });
+            } else {
+              onUploadSuccess(resp, attachment, useChunk);
+            }
           }
         });
         return resp;

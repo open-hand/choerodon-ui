@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode, CSSProperties } from 'react';
 import moment, { Moment } from 'moment';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
@@ -35,6 +35,10 @@ export interface DateViewProps extends ViewComponentProps {
   okButton?: boolean;
   onDateMouseEnter?: (date?: Moment) => void;
   onDateMouseLeave?: () => void;
+  comboRangeMode?: boolean;
+  dateRangeValue?: [Moment | undefined, Moment | undefined];
+  rangeTarget?: 0 | 1;
+  hoverValue?: Moment | undefined;
 }
 
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
@@ -48,25 +52,89 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   static type = FieldType.date;
 
+  get comboRangeMode(): boolean | undefined {
+    const { comboRangeMode } = this.props;
+    return comboRangeMode;
+  }
+
+  get startDate(): Moment | undefined {
+    const { dateRangeValue, rangeTarget, hoverValue } = this.props;
+    if (rangeTarget === undefined || !dateRangeValue) return hoverValue;
+    if (hoverValue) {
+      const another = dateRangeValue[rangeTarget === 0 ? 1 : 0];
+      return hoverValue.isBefore(another) ? hoverValue : another;
+    }
+    return dateRangeValue[0] || dateRangeValue[1];
+  }
+
+  get endDate(): Moment | undefined {
+    const { dateRangeValue, rangeTarget, hoverValue } = this.props;
+    if (rangeTarget === undefined || !dateRangeValue) return hoverValue;
+    if (hoverValue) {
+      const another = dateRangeValue[rangeTarget === 0 ? 1 : 0];
+      return hoverValue.isAfter(another) ? hoverValue : another;
+    }
+    return dateRangeValue[1] || dateRangeValue[0];
+  }
+
+  getTargetDate(target?: 0 | 1): Moment {
+    const { comboRangeMode } = this;
+    const { date, dateRangeValue, rangeTarget } = this.props;
+    if (!comboRangeMode || !dateRangeValue || rangeTarget === undefined || target === undefined) return date;
+
+    if (dateRangeValue[0] && dateRangeValue[1] && dateRangeValue[0].isSame(dateRangeValue[1], 'M')) {
+      return target === 1 ? date.clone().add(1, 'M') : date;
+    }
+    if (rangeTarget === 0) {
+      if (!dateRangeValue[0] && dateRangeValue[1]) {
+        return target === 0 ? date.clone().add(-1, 'M') : date;
+      }
+      return target === 1 ? date.clone().add(1, 'M') : date;
+    }
+    if (rangeTarget === 1) {
+      if (!dateRangeValue[1]) {
+        return target === 1 ? date.clone().add(1, 'M') : date;
+      }
+      return target === 0 ? date.clone().add(-1, 'M') : date;
+    }
+    return date;
+  }
+
   getViewClassName(): string {
     return '';
   }
 
-  render() {
+  renderSingle(target?: 0 | 1) {
     const {
       prefixCls,
       props: { className, extraFooterPlacement },
     } = this;
     const classString = classNames(`${prefixCls}-view`, className, this.getViewClassName());
     return (
-      <div className={classString}>
-        {this.renderHeader()}
-        {this.renderBody()}
-        {extraFooterPlacement === 'top' && this.customFooter}
-        {this.renderFooter()}
-        {extraFooterPlacement === 'bottom' && this.customFooter}
+      <div className={classString} key={target}>
+        {this.renderHeader(target)}
+        {this.renderBody(target)}
+        {target !== 1 && extraFooterPlacement === 'top' && this.customFooter}
+        {target !== 1 && this.renderFooter()}
+        {target !== 1 && extraFooterPlacement === 'bottom' && this.customFooter}
       </div>
     );
+  }
+
+  render() {
+    const {
+      prefixCls,
+      comboRangeMode,
+    } = this;
+    if (comboRangeMode) {
+      return (
+        <div className={`${prefixCls}-view-combo`}>
+          {this.renderSingle(0)}
+          {this.renderSingle(1)}
+        </div>
+      );
+    }
+    return this.renderSingle();
   }
 
   @autobind
@@ -101,16 +169,19 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   handleKeyDownHome(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().startOf('M'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().endOf('M'));
   }
 
   handleKeyDownLeft(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (e.altKey) {
       this.changeViewMode(ViewMode.month);
     } else {
@@ -120,6 +191,7 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   handleKeyDownRight(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     if (!e.altKey) {
       this.changeCursorDate(this.getCloneDate().add(1, 'd'));
     }
@@ -127,26 +199,31 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
 
   handleKeyDownUp(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().subtract(1, 'w'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().add(1, 'w'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().subtract(1, e.altKey ? 'y' : 'M'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
+    if (this.comboRangeMode) return;
     this.changeCursorDate(this.getCloneDate().add(1, e.altKey ? 'y' : 'M'));
   }
 
   handleKeyDownEnter(e) {
     e.preventDefault();
+    if (this.comboRangeMode) return;
     this.choose(this.props.date);
   }
 
@@ -174,17 +251,20 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     onViewModeChange(mode);
   }
 
-  renderHeader(): ReactNode {
+  renderHeader(target?: 0 | 1): ReactNode {
     const {
       prefixCls,
-      props: { date },
+      comboRangeMode,
     } = this;
+    const date = this.getTargetDate(target);
+    const startStyle: CSSProperties = comboRangeMode && target === 0 ? { visibility: 'hidden' } : {};
+    const endStyle: CSSProperties = comboRangeMode && target === 1 ? { visibility: 'hidden' } : {};
     return (
       <div className={`${prefixCls}-header`}>
-        <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick}>
+        <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick} style={endStyle}>
           <Icon type="first_page" />
         </a>
-        <a className={`${prefixCls}-prev-month`} onClick={this.handlePrevMonthClick}>
+        <a className={`${prefixCls}-prev-month`} onClick={this.handlePrevMonthClick}  style={endStyle}>
           <Icon type="navigate_before" />
         </a>
         <a className={`${prefixCls}-view-select`} onClick={this.handleMonthSelect}>
@@ -193,25 +273,25 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
         <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
           {date.year()}
         </a>
-        <a className={`${prefixCls}-next-year`}>
+        <a className={`${prefixCls}-next-year`} style={startStyle}>
           <Icon type="last_page" onClick={this.handleNextYearClick} />
         </a>
-        <a className={`${prefixCls}-next-month`} onClick={this.handleNextMonthClick}>
+        <a className={`${prefixCls}-next-month`} onClick={this.handleNextMonthClick} style={startStyle}>
           <Icon type="navigate_next" />
         </a>
       </div>
     );
   }
 
-  renderBody() {
-    return <div className={`${this.prefixCls}-body`}>{this.renderPanel()}</div>;
+  renderBody(target?: 0 | 1) {
+    return <div className={`${this.prefixCls}-body`}>{this.renderPanel(target)}</div>;
   }
 
-  renderPanel() {
+  renderPanel(target?: 0 | 1) {
     return (
       <table className={this.getPanelClass()} cellSpacing={0}>
         {this.renderPanelHead()}
-        <tbody>{this.renderPanelBody()}</tbody>
+        <tbody>{this.renderPanelBody(target)}</tbody>
       </table>
     );
   }
@@ -275,11 +355,20 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     return onDateMouseEnter(currentDate);
   };
 
-  renderPanelBody(): ReactNode {
+  isInRange = (currentDate?: Moment): boolean => {
+    const { startDate, endDate } = this;
+    return !!(startDate && endDate && currentDate && currentDate.isBetween(startDate, endDate));
+  }
+
+  renderPanelBody(target?: 0 | 1): ReactNode {
     const {
       prefixCls,
-      props: { date, renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
+      comboRangeMode,
+      startDate,
+      endDate,
+      props: { renderer = this.renderCell, isValidDate = alwaysValidDate, onDateMouseLeave },
     } = this;
+    const date = this.getTargetDate(target);
     const selected = date.clone();
     const prevMonth = this.getFirstDay(date);
     const currentYear = date.year();
@@ -291,16 +380,22 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     while (prevMonth.isBefore(lastDay)) {
       const currentDate = prevMonth.clone();
       const isDisabled = !isValidDate(currentDate, selected);
+      const isOld = prevMonth.year() < currentYear ||
+      (prevMonth.year() === currentYear && prevMonth.month() < currentMonth);
+      const isNew = prevMonth.year() > currentYear ||
+      (prevMonth.year() === currentYear && prevMonth.month() > currentMonth);
+      const isStart = comboRangeMode && !isOld && !isNew && startDate && prevMonth.isSame(startDate, 'd');
+      const isEnd = comboRangeMode && !isOld && !isNew && endDate && prevMonth.isSame(endDate, 'd');
       const className = classNames(`${prefixCls}-cell`, {
-        [`${prefixCls}-old`]:
-        prevMonth.year() < currentYear ||
-        (prevMonth.year() === currentYear && prevMonth.month() < currentMonth),
-        [`${prefixCls}-new`]:
-        prevMonth.year() > currentYear ||
-        (prevMonth.year() === currentYear && prevMonth.month() > currentMonth),
-        [`${prefixCls}-selected`]: prevMonth.isSame(selected, 'd'),
+        [`${prefixCls}-old`]: isOld,
+        [`${prefixCls}-new`]: isNew,
+        [`${prefixCls}-selected`]: (!comboRangeMode && prevMonth.isSame(selected, 'd')) ||
+        (comboRangeMode && (isStart || isEnd)),
         [`${prefixCls}-today`]: prevMonth.isSame(today, 'd'),
         [`${prefixCls}-disabled`]: isDisabled,
+        [`${prefixCls}-in-range`]: comboRangeMode && !isOld && !isNew && this.isInRange(prevMonth),
+        [`${prefixCls}-range-start`]: isStart,
+        [`${prefixCls}-range-end`]: isEnd,
       });
       const text = String(currentDate.date());
       const dayProps: any = {

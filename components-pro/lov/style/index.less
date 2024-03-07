@@ -213,4 +213,9 @@
       }
     }
   }
+
+  &.@{select-prefix-cls}-wrapper:not(.@{select-prefix-cls}-empty):hover .@{select-prefix-cls}-allow-clear,
+  &.@{select-prefix-cls}-focused:not(.@{select-prefix-cls}-empty) .@{select-prefix-cls}-allow-clear {
+    opacity: 1;
+  }
 }

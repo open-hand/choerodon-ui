@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, Key } from 'react';
+import React, { Component, CSSProperties, Key, memo, forwardRef, ForwardRefExoticComponent, PropsWithoutRef, RefAttributes } from 'react';
 import { createPortal, render } from 'react-dom';
 import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
@@ -111,7 +111,7 @@ export interface ModalContainerProps {
 }
 
 @observer
-export default class ModalContainer extends Component<ModalContainerProps> implements IModalContainer {
+export class ModalContainerClass extends Component<ModalContainerProps> implements IModalContainer {
   static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
@@ -147,6 +147,8 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
   maskStyle?: CSSProperties | undefined;
 
   isUnMount = false;
+
+  delayToActive?: boolean;
 
   @computed
   get baseOffsets() {
@@ -202,6 +204,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     if (index !== -1) {
       const props = modals[index];
       if (!isEnter) {
+        this.delayToActive = false;
         modals.splice(index, 1);
         if (!props.destroyOnClose) {
           modals.unshift(props);
@@ -362,8 +365,15 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
 
   close(props: ModalProps) {
     const { modals } = this.state;
+    const { isTop } = this;
     const target = modals.find(({ key }) => key === props.key);
     if (target) {
+      if (!target.hidden) {
+        const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
+        if (modals[activeModalIndex] === target) {
+          this.delayToActive = true;
+        }
+      }
       Object.assign(target, props, { hidden: true });
       this.updateModals(modals);
     }
@@ -399,7 +409,7 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     const { modals } = this.state;
     const { context } = this;
     const indexes = { 'slide-up': 1, 'slide-right': 1, 'slide-down': 1, 'slide-left': 1 };
-    const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
+    const activeModalIndex: number = isTop && !this.delayToActive ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
     const activeModal: ModalProps | undefined = modals[activeModalIndex];
     let maskTransition = true;
     const offsetContainer = this.getOffsetContainer();
@@ -595,6 +605,24 @@ export default class ModalContainer extends Component<ModalContainerProps> imple
     return null;
   }
 }
+
+const ModalContainerRef: ForwardRefExoticComponent<PropsWithoutRef<ModalContainerProps> & RefAttributes<ModalContainerClass>> =
+forwardRef((props, ref) => {
+  return <ModalContainerClass {...props} ref={ref} />;
+});
+
+const ModalContainer = memo(ModalContainerRef, (props, nextProps) => {
+  if (typeof props.getContainer === 'function' && typeof nextProps.getContainer === 'function') {
+    return props.getContainer() === nextProps.getContainer() &&
+      props.location === nextProps.location;
+  }
+  return props.getContainer === nextProps.getContainer &&
+    props.location === nextProps.location;
+});
+
+ModalContainer.displayName = 'ModalContainer';
+
+export default ModalContainer;
 
 export async function getContainer(): Promise<IModalContainer> {
   const { length } = containerInstances;

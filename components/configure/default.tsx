@@ -8,7 +8,7 @@ import { $l } from 'choerodon-ui/pro/lib/locale-context';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import { ColumnProps } from 'choerodon-ui/pro/lib/table/Column';
-import { defaultExcludeUseColonTag } from 'choerodon-ui/pro/lib/form/utils';
+import { defaultExcludeUseColonTag, defaultLabelWidth } from 'choerodon-ui/pro/lib/form/utils';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import { FieldType } from 'choerodon-ui/pro/lib/data-set/enum';
@@ -18,6 +18,7 @@ import formatReactTemplate from 'choerodon-ui/pro/lib/formatter/formatReactTempl
 import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
 import { FieldFocusMode, Tooltip } from 'choerodon-ui/pro/lib/core/enum';
+import { ModalButtonTrigger } from 'choerodon-ui/pro/lib/modal/interface';
 import { Size } from '../_util/enum';
 import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook } from './index';
 import { Action } from '../trigger/enum';
@@ -101,6 +102,7 @@ const defaults = {
   lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,
   labelAlign: LabelAlign.right,
+  labelWidth: defaultLabelWidth,
   queryBar: TableQueryBarType.normal,
   tableBorder: true,
   tableHighLightRow: true,
@@ -146,6 +148,7 @@ const defaults = {
   modalMaskClosable: false,
   modalMovable: true,
   modalClosable: false,
+  modalButtonTrigger: ModalButtonTrigger.CLICK,
   buttonColor: ButtonColor.default,
   buttonFuncType: FuncType.raised,
   autoInsertSpaceInButton: false,

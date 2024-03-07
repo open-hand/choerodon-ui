@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import { computed, isArrayLike } from 'mobx';
+import { isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import { Select, SelectProps } from '../select/Select';
 import ObserverRadio from '../radio/Radio';
@@ -17,12 +17,6 @@ import Icon from '../icon';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { OTHER_OPTION_PROPS } from '../option/normalizeOptions';
-
-const GroupIdGen = (function* (id) {
-  while (true) {
-    yield `__group-${id++}__`;
-  }
-})(1);
 
 export interface SelectBoxProps extends SelectProps {
   /**
@@ -62,11 +56,6 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
   get searchable(): boolean {
     const { searchable = this.getContextConfig('selectBoxSearchable') } = this.observableProps;
     return !!searchable;
-  }
-
-  @computed
-  get name(): string | undefined {
-    return this.observableProps.name || GroupIdGen.next().value;
   }
 
   get mode(): ViewMode | undefined {

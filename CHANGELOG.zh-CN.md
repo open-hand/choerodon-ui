@@ -15,9 +15,14 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, strictPageSize 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
+- 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
+- 🌟 `Tabs`: 新增 renderTabBar 属性。
+- 🌟 `Upload`: 新增 pictureCardShowName 属性。
+- 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
+- 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -26,22 +31,40 @@ timeline: true
 - 💄 `<pro>Output`: 当 Output 内部渲染有弹窗时，优化 tooltip 显示逻辑。
 - 💄 `<pro>Lov`: 优化 drawer 模式下显示已选记录的样式。
 - 💄 `<pro>Lov`: 优化支持通过视图接口配置开启异步树形加载。
+- 💄 `<pro>Lov`: 优化有值时后缀能正常显示 loading 。
 - 💄 `<pro>Cascader`: 优化 changeOnSelect 模式下父级选择的交互。
 - 💄 `<pro>Output`: 优化文本为长单词场景的换行样式。
+- 💄 `<pro>Select`: 优化下拉数据一次性加载的情况下自动前端分页。
+- 💄 `<pro>Table`: 优化自定义 renderer 渲染，校验失败后 tooltip 遮挡的问题。
+- 💄 `<pro>CodeArea`: 优化 Modal 中异步加载 CodeArea 组件的样式。
+- 💄 `<pro>CodeArea`: 优化设置换行显示时的样式。
+- 💄 `<pro>Table`: 优化 loading 效果。
+- 💄 `<pro>Table`: 优化支持子节点分页查询。
+- 💄 `<pro>DataSet`: 优化 delete 方法，在取消删除时返回 false。
+- 💄 `<pro>Modal`: 优化多层 modal 关闭时的动画效果。
+- 💄 `<pro>FormField`: 优化后缀鼠标事件关联到组件。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化表头恢复默认后列分组树形结构丢失。
 - 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题。
+- 🐞 `<pro>Lov`: 修复双击后缀会查询两次和表格双击选中模式下单选框选值错误的问题。
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
+- 🐞 `<pro>Attachment`: 修复分片上传情况下 onUploadSuccess 执行时机过早的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
 - 🐞 `<pro>Table`: 修复 comboBar 个性化字段配置列顺序错误问题。
 - 🐞 `<pro>TriggerField`: 修复弹出框在 iframe 中定位错误的问题。
+- 🐞 `<pro>TriggerField`: 修复多值下拉自定义事件失效问题。
 - 🐞 `<pro>TextField`: 修复在禁用模式下，超长文本且设置 renderer 时的显示问题。 
+- 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
+- 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
+- 🐞 `<pro>Table`: 修复大数据量下虚拟滚动报错问题。
+- 🐞 `<pro>Table.DynamicFilterBar`: 修复未点击到展开收起图标仍会触发查询条件折叠的问题。
+- 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 
 ## 1.6.4
 

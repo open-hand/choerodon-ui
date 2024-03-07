@@ -438,4 +438,48 @@
   &-picker-popup-decade &-body {
     padding: 0.08rem;
   }
+
+  &-picker-popup-combo-range {
+    width: @date-picker-width * 2;
+
+    .@{date-picker-prefix}-view-combo {
+      display: flex;
+    }
+
+    .@{date-picker-prefix}-view {
+      width: @date-picker-width;
+    }
+
+    .@{date-picker-prefix}-footer-extra,
+    .@{date-picker-prefix}-footer {
+      width: @date-picker-width * 2;
+    }
+
+    .@{date-picker-prefix}-in-range {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: 0.04rem;
+        right: 0;
+        bottom: 0.04rem;
+        left: 0;
+        display: block;
+        height: @date-picker-cell-inner-height;
+        background: @date-picker-cell-in-range-bg;
+        border: 0;
+        border-radius: 0;
+        content: '';
+      }
+    }
+
+    &.@{date-picker-prefix}-picker-popup-month,
+    &.@{date-picker-prefix}-picker-popup-year {
+      .@{date-picker-prefix}-in-range {
+        &::before {
+          top: 0.2rem;
+        }
+      }
+    }
+  }
 }

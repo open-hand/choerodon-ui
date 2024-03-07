@@ -20,7 +20,7 @@ import { TabsPosition, TabsType } from './enum';
 import { getDataAttr, getDefaultActiveKey, getDefaultActiveKeyInGroup, getDefaultGroupKey, getHeader, isVertical, normalizePanes } from './utils';
 import { Size } from '../_util/enum';
 import warning from '../_util/warning';
-import TabBar, { TabBarProps } from './TabBar';
+import TabBarWrapper, { TabBarWrapperProps } from './TabBarWrapper';
 import TabContent, { TabContentProps } from './TabContent';
 import isFlexSupported from '../_util/isFlexSupported';
 import KeyCode from '../_util/KeyCode';
@@ -82,6 +82,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     rippleDisabled,
     flex,
     restoreDefault,
+    renderTabBar,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -298,7 +299,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     </div>
   ) : tabBarExtraContent;
 
-  const tabBarProps: TabBarProps = {
+  const tabBarProps: TabBarWrapperProps = {
     inkBarAnimated,
     extraContent,
     style: tabBarStyle,
@@ -309,6 +310,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     onEdit,
     inkBarStyle,
     hideAdd,
+    renderTabBar,
   };
   const tabContentProps: TabContentProps = {
     animatedWithMargin: true,
@@ -317,7 +319,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
   };
 
   const contents = [
-    <TabBar key="tabBar" {...tabBarProps} />,
+    <TabBarWrapper key="tabBar" {...tabBarProps} />,
     <TabContent key="tabContent" {...tabContentProps} />,
   ];
   if (tabPosition === TabsPosition.bottom) {

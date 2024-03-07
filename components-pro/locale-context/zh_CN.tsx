@@ -59,6 +59,7 @@ const locale: Locale = {
     advanced_query: '高级查询',
     advanced_query_conditions: '高级查询条件',
     more: '更多',
+    query_more_children: '更多',
     enter_text_filter: '搜索过滤条件',
     clear_filter: '清除筛选项',
     save_filter: '保存筛选',

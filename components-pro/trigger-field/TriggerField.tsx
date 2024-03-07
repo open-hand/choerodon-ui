@@ -279,7 +279,12 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
 
   getDefaultSuffix(): ReactNode {
     const { prefixCls } = this;
-    return <Icon type={this.getTriggerIconFont()} className={`${prefixCls}-trigger`} />;
+    return (
+      <Icon
+        type={this.getTriggerIconFont()}
+        className={`${prefixCls}-trigger`}
+      />
+    );
   }
 
   @autobind

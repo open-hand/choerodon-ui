@@ -53,6 +53,7 @@ const locale: Locale = {
     advanced_query: '高度なクエリ',
     advanced_query_conditions: '高度なクエリ条件',
     more: 'もっと',
+    query_more_children: 'もっとその',
     download_button: 'ダウンロード',
     export_failed: 'エクスポート失敗',
     export_success: 'エクスポート成功',

@@ -32,12 +32,13 @@ import {
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
 import Field from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
+import { SeparateSpacing, LabelWidth } from 'choerodon-ui/pro/lib/form/interface';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalButtonTrigger, ModalCustomized, ModalProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
@@ -144,6 +145,9 @@ export interface Config extends DataSetConfig {
    * @default right;
    */
   labelAlign?: LabelAlign;
+  separateSpacing?: number | [number, number] | SeparateSpacing;
+  labelWidth?: LabelWidth | ((lang: string, columns: number) => LabelWidth);
+  labelWordBreak?: boolean;
   queryBar?: TableQueryBarType | TableQueryBarHook;
   queryBarProps?: Partial<TableQueryBarHookCustomProps>;
   tableVirtual?: boolean | ((rows: number, columns: number) => boolean);
@@ -207,6 +211,7 @@ export interface Config extends DataSetConfig {
   drawerOkFirst?: boolean;
   drawerHeaderFooterCombined?: boolean;
   modalButtonProps?: ButtonProps;
+  modalButtonTrigger?: ModalButtonTrigger;
   modalKeyboard?: boolean;
   modalMaskClosable?: boolean | 'click' | 'dblclick';
   modalResizable?: boolean;
@@ -331,10 +336,15 @@ export interface Config extends DataSetConfig {
    * 当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式
    */
   uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
+  pictureCardShowName?: boolean;
   /**
    * 输入框 range 分隔符
    */
   rangeSeparator?: string;
+  /**
+   * DatePicker 组件 range 模式，选择弹窗组合显示
+   */
+  datePickerComboRangeMode?: boolean;
   /**
    * @deprecated
    */

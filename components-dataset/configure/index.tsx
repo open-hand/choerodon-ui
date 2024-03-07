@@ -96,7 +96,7 @@ export interface AttachmentConfig {
   getAttachmentUUID?: (props: { isPublic?: boolean; }) => Promise<string> | string;
   onBeforeUpload?: (attachment: AttachmentFile, attachments: AttachmentFile[], props: AttachmentUseChunkProps) => boolean | undefined | PromiseLike<boolean | undefined>;
   onBeforeUploadChunk?: (props: AttachmentChunkProps) => boolean | undefined | PromiseLike<boolean | undefined>;
-  onUploadSuccess?: (response: any, attachment: AttachmentFile, props: AttachmentUseChunkProps) => void;
+  onUploadSuccess?: (response: any, attachment: AttachmentFile, props: AttachmentUseChunkProps) => Promise<any> | void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: AttachmentsProps) => Promise<void>;
   onRemove?: (props: AttachmentFileProps, multiple: boolean) => Promise<boolean>;
@@ -164,6 +164,7 @@ export interface Config {
   max?: (type: FieldType) => number | MomentInput | string | null;
   xlsx?: () => Promise<any>;
   strictPageSize?: boolean;
+  noPagingParams?: (config: AxiosRequestConfig) => object;
 }
 
 export type ConfigKeys = keyof Config;
@@ -211,6 +212,7 @@ const defaultConfig = {
   strictPageSize: true,
   useLookupBatch: noop,
   useLovDefineBatch: noop,
+  noPagingParams: noop,
 };
 
 export type DefaultConfig = typeof defaultConfig;

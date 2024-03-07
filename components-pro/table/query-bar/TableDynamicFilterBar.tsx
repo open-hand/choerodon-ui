@@ -289,6 +289,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   advancedSearchFields?: AdvancedSearchField[];
   defaultActiveKey?: string;
   tableStore?: TableStore;
+  showSingleLine?: boolean;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -1073,6 +1074,33 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     );
   }
 
+  handleExpandIconClick(hidden): void {
+    const { refSingleWrapper } = this;
+    if (refSingleWrapper) {
+      const { height } = refSingleWrapper.getBoundingClientRect();
+      const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
+      runInAction(() => {
+        this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
+      });
+      if (hidden && height) {
+        // 收起全部
+        refSingleWrapper.style.display = 'none';
+      } else {
+        refSingleWrapper.style.display = 'flex';
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
+      if (height > (childHeight + 18) && !hidden) {
+        // 收起留一行高度
+        refSingleWrapper.style.height = pxToRem(childHeight + 18, true) || '';
+        refSingleWrapper.style.overflow = 'hidden';
+      } else {
+        refSingleWrapper.style.height = '';
+        refSingleWrapper.style.overflow = '';
+      }
+    }
+  }
+
   /**
    * 渲染展开逻辑
    * @param hidden 是否隐藏全部
@@ -1083,38 +1111,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     return (
       <span
         className={`${prefixCls}-filter-menu-expand`}
-        onClick={() => {
-          const { refSingleWrapper } = this;
-          if (refSingleWrapper) {
-            const { height } = refSingleWrapper.getBoundingClientRect();
-            const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
-            runInAction(() => {
-              this.expand = hidden ? height <= 0 : height <= (childHeight + 18);
-            });
-            if (hidden && height) {
-              // 收起全部
-              refSingleWrapper.style.display = 'none';
-            } else {
-              refSingleWrapper.style.display = 'flex';
-              refSingleWrapper.style.height = '';
-              refSingleWrapper.style.overflow = '';
-            }
-            if (height > (childHeight + 18) && !hidden) {
-              // 收起留一行高度
-              refSingleWrapper.style.height = pxToRem(childHeight + 18, true) || '';
-              refSingleWrapper.style.overflow = 'hidden';
-            } else {
-              refSingleWrapper.style.height = '';
-              refSingleWrapper.style.overflow = '';
-            }
-          }
-        }}
       >
         {refreshBtn ? this.renderRefreshBtn() : null}
         {this.expand ? (<Tooltip title={$l('Table', 'collapse')}>
-          <Icon type="baseline-arrow_drop_up" />
+          <Icon type="baseline-arrow_drop_up" onClick={() => this.handleExpandIconClick(hidden)} />
         </Tooltip>) : (<Tooltip title={$l('Table', 'expand_button')}>
-          <Icon type="baseline-arrow_drop_down" />
+          <Icon type="baseline-arrow_drop_down" onClick={() => this.handleExpandIconClick(hidden)} />
         </Tooltip>)}
       </span>
     );
@@ -1752,7 +1754,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getQueryBar(): ReactNode {
     const { getConfig } = this.context;
-    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly } = this.props;
+    const { queryFieldsLimit = 3, queryFields, queryDataSet, dataSet, fuzzyQueryOnly, showSingleLine } = this.props;
     const menuDataSet = dataSet.getState(MENUDATASET);
     const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
     let fieldsLimit = queryFieldsLimit;
@@ -1761,9 +1763,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     const { prefixCls } = this;
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
+    const filterBarCls = classNames(`${prefixCls}-dynamic-filter-bar`, {
+      [`${prefixCls}-dynamic-filter-bar-single-line`]: showSingleLine,
+    });
     if (fuzzyQueryOnly) {
       return (
-        <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
+        <div key="query_bar" className={filterBarCls}>
           {this.getFilterMenu()}
         </div>
       );
@@ -1775,7 +1780,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           {this.getExpandNode(false)}
         </div> : null;
       return (
-        <div key="query_bar" className={`${prefixCls}-dynamic-filter-bar`}>
+        <div key="query_bar" className={filterBarCls}>
           {this.getFilterMenu()}
           <div className={`${prefixCls}-dynamic-filter-single-wrapper`} ref={(node) => this.refSingleWrapper = node}>
             <div className={`${prefixCls}-filter-wrapper`}>

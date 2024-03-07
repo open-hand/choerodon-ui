@@ -222,7 +222,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   static defaultProps = {
     suffixCls: 'form',
     columns: defaultColumns,
-    labelWidth: defaultLabelWidth,
     layout: FormLayout.table,
   };
 
@@ -362,7 +361,14 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   @computed
   get labelWidth(): LabelWidth {
-    const { labelWidth } = this.observableProps;
+    let { labelWidth } = this.observableProps;
+    if (isNil(labelWidth)) {
+      labelWidth = this.getContextConfig('labelWidth');
+    }
+    if (typeof labelWidth === 'function') {
+      labelWidth = labelWidth(this.lang, this.columns);
+    }
+
     if (labelWidth === 'auto') {
       return labelWidth;
     }
@@ -380,7 +386,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   @computed
   get labelWordBreak(): boolean {
-    const { labelWordBreak } = this.observableProps;
+    let { labelWordBreak } = this.observableProps;
+    if (isNil(labelWordBreak)) {
+      labelWordBreak = this.getContextConfig('labelWordBreak');
+    }
     return labelWordBreak;
   }
 
@@ -457,7 +466,10 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   @computed
   get separateSpacing(): SeparateSpacing | undefined {
-    const { separateSpacing } = this.observableProps;
+    let { separateSpacing } = this.observableProps;
+    if (isNil(separateSpacing)) {
+      separateSpacing = this.getContextConfig('separateSpacing');
+    }
     if (separateSpacing) {
       const { width = 0, height = 0 } = normalizeSeparateSpacing(separateSpacing);
       if (width || height) {

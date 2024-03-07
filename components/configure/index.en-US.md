@@ -130,6 +130,7 @@ const prefixCls = getConfig('prefixCls');
 | modalResizable | modal是否可调整大小 | boolean |   |
 | modalMovable | modal是否可移动 | boolean |   |
 | modalClosable | modal关闭按钮 | boolean |   |
+| modalButtonTrigger | ok 和 cancel 按钮的触发方式 | `click` `mouseDown` | `click` |
 | buttonFuncType | Default Button function type | string | raised |
 | buttonColor | Default Button color | string | default |
 | autoInsertSpaceInButton | 设置为 true 时，添加按钮中 2 个汉字之间的空格 | boolean | false |
@@ -187,6 +188,11 @@ const prefixCls = getConfig('prefixCls');
 | useZeroFilledDecimal | `NumberField` 和 `Currency` 组件的值是否在输入和显示时开启根据 `precision` 补零，真实值不受影响 | boolean |  |
 | rangeSeparator | 自定义组件 range 模式的分隔符 | string | ~ |
 | strictPageSize | 严格分页 | boolean | true |
+| noPagingParams | 不分页查询时需要携带的参数 | (config: AxiosRequestConfig) => object |  |
+| labelWidth | Form 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 如果为auto，则根据内部label最大长度来对齐所有label | (number\| 'auto' \| ('auto' \| number)[]) \| ((lang, columns) => (number\| 'auto' \| ('auto' \| number)[])) | 100 |
+| labelWordBreak | From 设置标签是否换行显示  | boolean |  |
+| pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
+| datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 
 ### Customizable
 
@@ -277,7 +283,7 @@ const prefixCls = getConfig('prefixCls');
 | renderHistory               | 渲染操作历史                | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string }) => ReactNode                            | |
 | onBeforeUpload | 上传前的回调 | (attachment: AttachmentFile, attachments: AttachmentFile[], props: { useChunk?: boolean, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
 | onBeforeUploadChunk | 上传分片前的回调 | ({ chunk: AttachmentFileChunk, attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => boolean \| undefined \| PromiseLike<boolean \| undefined> | |
-| onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile, props: { useChunk?: boolean, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => void | |
+| onUploadSuccess | 上传成功的回调 | (response: any, attachment: AttachmentFile, props: { useChunk?: boolean, bucketName?: string, bucketDirectory?: string, storageCode?: string, isPublic?: boolean }) => Promise<any\> \| void | |
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | |
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |

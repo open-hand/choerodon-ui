@@ -8,6 +8,8 @@ import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codem
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
+import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
 import { FormField, FormFieldProps } from '../field/FormField';
@@ -16,6 +18,7 @@ import { ThemeSwitch } from './enum';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
+import { hasAncestorWithClassName } from './utils';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -71,6 +74,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @observable theme?: string;
 
+  editor?: IInstance;
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -94,13 +99,36 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     });
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+
+    const { context, element } = this;
+    const modalCls = context.getProPrefixCls('modal-wrapper');
+    if (typeof document !== 'undefined' && element && hasAncestorWithClassName(element, modalCls)) {
+      setTimeout(() => {
+        if (this.editor) {
+          // modal 中异步加载 CodeArea 时，更新样式
+          this.editor.refresh();
+        }
+      }, 1000);
+    }
+  }
+
   componentWillUnmount(): void {
     this.disposer();
+    this.editorRefreshDebounce.cancel();
   }
+
+  editorRefreshDebounce = debounce(() => {
+    if (this.editor) {
+      this.editor.refresh();
+    }
+  }, 600);
 
   @autobind
   handleBeforeChange(_editor, _data, value) {
     this.setText(value);
+    this.editorRefreshDebounce();
   }
 
   @autobind
@@ -286,8 +314,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    * @memberof CodeArea
    */
   handleCodeMirrorDidMount = (editor: IInstance, value: string, cb: () => void) => {
+    this.editor = editor;
     const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount } = this.props;
-    const { width = '100%', height = 100 } = style || {};
+    const { width, height = 100 } = style || {};
     const options = {
       Tab(cm) {
         if (cm.somethingSelected()) {
@@ -309,7 +338,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         options[unFormatHotKey] = cm => cm.setValue(formatter.getRaw(cm.getValue()));
       }
     }
-    editor.setSize(width, height); // default size: ('100%', 100)
+    editor.setSize(isNil(width) ? '100%' : null, height); // default size: ('100%', 100)
     editor.setOption('extraKeys', options);
     if (editorDidMount) {
       editorDidMount(editor, value, cb);

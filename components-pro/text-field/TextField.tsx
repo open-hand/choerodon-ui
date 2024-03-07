@@ -504,7 +504,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMultipleMouseEnter(e) {
     const { onMouseEnter } = this.getOtherProps();
-    if (onMouseEnter) {
+    // 禁用时 ViewComponent 会在 wrapper 层触发 mouseEnter
+    if (!this.disabled && onMouseEnter) {
       onMouseEnter(e);
     }
     show(e.currentTarget, {
@@ -516,7 +517,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMultipleMouseLeave() {
     const { onMouseLeave } = this.getOtherProps();
-    if (onMouseLeave) {
+    // 禁用时 ViewComponent 会在 wrapper 层触发 mouseLeave
+    if (!this.disabled && onMouseLeave) {
       onMouseLeave();
     }
     this.handleHelpMouseLeave();
@@ -648,7 +650,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {otherPrevNode}
         {placeholderDiv}
         {renderedValue}
-        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown}>
+        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown} onClick={preventDefault}>
           {prefix}
           {input}
           {floatLabel}
@@ -935,56 +937,94 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
-  getEditor(wrap: (node: ReactNode) => ReactNode, renderedValue?: ReactNode): ReactNode {
+  getMultipleWrap(wrap: (node: ReactNode) => ReactNode): ReactNode {
     const {
       prefixCls,
+      range,
+      props: { isFlat },
+    } = this;
+    const {
+      onFocus,
+      onBlur,
+      onMouseEnter: propsOnMouseEnter,
+      onMouseLeave: propsOnMouseLeave,
+      onMouseDown,
+      onMouseUp,
+      onClick,
+      onDoubleClick,
+      onContextMenu,
+      ...otherProps
+    } = this.getOtherProps();
+    // 禁用时 ViewComponent 会在 wrapper 层触发 mouseEnter & mouseLeave
+    const onMouseEnter = this.disabled ? noop : propsOnMouseEnter;
+    const onMouseLeave = this.disabled ? noop : propsOnMouseLeave;
+    const { record } = this;
+    const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
+    const isOverflow = isOverflowMaxTagCount || isFlat;
+    const eventsProps = !this.disabled ? {
+      onMouseDown,
+      onMouseUp,
+      onClick,
+      onDoubleClick,
+      onContextMenu,
+    } : undefined;
+    const tags = (
+      <Animate
+        component="ul"
+        componentProps={{
+          ref: this.saveTagContainer,
+          onScroll: stopPropagation,
+        }}
+        transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
+        exclusive
+        onEnd={this.handleTagAnimateEnd}
+        onEnter={this.handleTagAnimateEnter}
+      >
+        {multipleTags}
+        {
+          range
+            ? this.renderRangeEditor(otherProps)
+            : this.renderMultipleEditor({
+              ...otherProps,
+              className: `${prefixCls}-multiple-input`,
+            } as T)
+        }
+      </Animate>
+    );
+    this.lastAnimationRecord = record;
+    this.setInputStylePadding(otherProps);
+    return wrap(
+      <div
+        key="text"
+        className={otherProps.className}
+        style={otherProps.style}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onMouseEnter={isOverflow ? this.handleMultipleMouseEnter : onMouseEnter}
+        onMouseLeave={isOverflow ? this.handleMultipleMouseLeave : onMouseLeave}
+        {...eventsProps}
+      >
+        {tags}
+      </div>,
+    );
+  }
+
+  @autobind
+  getEditor(wrap: (node: ReactNode) => ReactNode, renderedValue?: ReactNode): ReactNode {
+    const {
       multiple,
       range,
       props: { isFlat },
     } = this;
-    const { onFocus, onBlur, onMouseEnter, onMouseLeave, ...otherProps } = this.getOtherProps();
+    const {
+      onFocus,
+      onBlur,
+      onMouseEnter,
+      onMouseLeave,
+      ...otherProps
+    } = this.getOtherProps();
     if (multiple) {
-      const { record } = this;
-      const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
-      const isOverflow = isOverflowMaxTagCount || isFlat;
-      const tags = (
-        <Animate
-          component="ul"
-          componentProps={{
-            ref: this.saveTagContainer,
-            onScroll: stopPropagation,
-          }}
-          transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
-          exclusive
-          onEnd={this.handleTagAnimateEnd}
-          onEnter={this.handleTagAnimateEnter}
-        >
-          {multipleTags}
-          {
-            range
-              ? this.renderRangeEditor(otherProps)
-              : this.renderMultipleEditor({
-                ...otherProps,
-                className: `${prefixCls}-multiple-input`,
-              } as T)
-          }
-        </Animate>
-      );
-      this.lastAnimationRecord = record;
-      this.setInputStylePadding(otherProps);
-      return wrap(
-        <div
-          key="text"
-          className={otherProps.className}
-          style={otherProps.style}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onMouseEnter={isOverflow ? this.handleMultipleMouseEnter : onMouseEnter}
-          onMouseLeave={isOverflow ? this.handleMultipleMouseLeave : onMouseLeave}
-        >
-          {tags}
-        </div>,
-      );
+      return this.getMultipleWrap(wrap);
     }
     if (range) {
       return wrap(
@@ -1116,7 +1156,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @action
   wrapperSuffix(children: ReactNode, props?: any): ReactNode {
-    const { prefixCls, clearButton } = this;
+    const suffixEvents = ['MouseDown', 'MouseUp', 'Click', 'DoubleClick', 'ContextMenu'];
+    const {
+      prefixCls,
+      clearButton,
+      props: {
+        onMouseDown,
+        onMouseUp,
+        onClick,
+        onDoubleClick,
+        onContextMenu,
+      },
+    } = this;
     let divStyle = {};
     if (isValidElement<any>(children)) {
       this.suffixWidth = toPx('0.21rem');
@@ -1150,12 +1201,32 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
     const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
+    const eventsProps = {
+      onMouseDown,
+      onMouseUp,
+      onClick,
+      onDoubleClick,
+      onContextMenu,
+    };
+    suffixEvents.forEach((evt: string) => {
+      eventsProps[`on${evt}`] = (e: Event) => {
+        if (`on${evt}` === 'onMouseDown') {
+          preventDefault(e);
+        }
+        if (props && props[`on${evt}`]) {
+          props[`on${evt}`](e);
+        }
+        if (this.element) {
+          this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: true }));
+        }
+      };
+    })
     return (
       <div
         className={classString}
         style={{ ...divStyle, right }}
-        onMouseDown={preventDefault}
         {...props}
+        {...eventsProps}
         ref={this.saveSuffixRef}
       >
         {children}
@@ -1286,7 +1357,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
-  getInnerSpanButton(): ReactNode {
+  getInnerSpanButton(hidden?: boolean): ReactNode {
+    if (hidden) return null; 
     const {
       clearButton,
       prefixCls,

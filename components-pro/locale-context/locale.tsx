@@ -61,6 +61,7 @@ export interface Locale extends DataSetLocale {
     export_operating: string;
     export_waiting: string;
     more: string;
+    query_more_children: string;
     enter_text_filter: string;
     clear_filter: string;
     save_filter: string;

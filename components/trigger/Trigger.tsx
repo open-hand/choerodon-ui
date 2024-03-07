@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import raf from 'raf';
 import { action as mobxAction, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
+import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
 import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
@@ -473,15 +474,14 @@ export default class Trigger extends Component<TriggerProps> {
     }
   }
 
-  @autobind
-  handleDocumentMouseDown(e) {
+  handleDocumentMouseDown = debounce((e) => {
     if (this.popup) {
       const { target } = e;
       if (!contains(findDOMNode(this), target) && !contains(findDOMNode(this.popup), target)) {
         this.setPopupHidden(true);
       }
     }
-  }
+  }, 200);
 
   @autobind
   handleDocumentScroll({ target }) {
@@ -506,6 +506,10 @@ export default class Trigger extends Component<TriggerProps> {
       this.focusTime = 0;
     }
     this.preClickTime = 0;
+    if (this.isClickToHide() && !popupHidden) {
+      // 避免点击隐藏弹框会重新打开（如：点击 Select 后缀）
+      this.handleDocumentMouseDown.cancel();
+    }
     if ((this.isClickToHide() && !popupHidden) || (popupHidden && this.isClickToShow())) {
       e.preventDefault();
       this.setPopupHidden(!popupHidden);

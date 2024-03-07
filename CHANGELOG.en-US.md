@@ -15,9 +15,14 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `strictPageSize` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
+- 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
+- 🌟 `Tabs`: Added `renderTabBar` property.
+- 🌟 `Upload`: Added `pictureCardShowName` property.
+- 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
+- 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -26,22 +31,40 @@ timeline: true
 - 💄 `<pro>Output`: Optimizes `tooltip` display logic when pop-ups are rendered inside the `Output`.
 - 💄 `<pro>Lov`: Optimizes the style of displaying selected records in `drawer` mode.
 - 💄 `<pro>Lov`: Optimized support for enabling asynchronous tree loading through view interface configuration.
+- 💄 `<pro>Lov`: Optimized the suffix to display loading normally when there is a value.
 - 💄 `<pro>Cascader`: Optimizes parent-selected interactions in `changeOnSelect` mode.
 - 💄 `<pro>Output`: Optimize the line feed style of text for long word scenes.
+- 💄 `<pro>Select`: Optimize automatic front-end pagination when drop-down data is loaded at one time.
+- 💄 `<pro>Table`: Optimized custom `renderer` rendering, `tooltip` occlusion after validation failure.
+- 💄 `<pro>CodeArea`: Optimized the style of loading `CodeArea` components asynchronously in `Modal`.
+- 💄 `<pro>CodeArea`: Optimizes the style when setting the line feed display.
+- 💄 `<pro>Table`: Optimized `loading` effect.
+- 💄 `<pro>Table`: Optimized support for pagination query of sub-nodes.
+- 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
+- 💄 `<pro>Modal`: Optimized animations when `multi-modal` is closed.
+- 💄 `<pro>FormField`: Optimized the association of suffix mouse events with component.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the column grouping tree structure was missing after the default restoration of the personalized table header.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
+- 🐞 `<pro>Lov`: Fixed the issue that double-clicking the suffix would query twice and the single-check box selection error in the double-click selection mode of the table.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
+- 🐞 `<pro>Attachment`: Fixed the issue that `onUploadSuccess` was executed too early in the case of multipart upload.
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 - 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
 - 🐞 `<pro>TriggerField`: Fixed the issue that the popup box was incorrectly positioned in the iframe.
+- 🐞 `<pro>TriggerField`: Fixed the issue that multi-value drop-down custom events were invalid.
 - 🐞 `<pro>TextField`: Fixed a display issue with very long text in `disabled` mode when setting `renderer`.
+- 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
+- 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
+- 🐞 `<pro>Table`: Fixed the issue of `virtual` scrolling error when large data volume is generated.
+- 🐞 `<pro>Table.DynamicFilterBar`: Fixed the issue that if you did not click the expand and collapse icon, the query condition would still be folded.
+- 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 
 ## 1.6.4
 
