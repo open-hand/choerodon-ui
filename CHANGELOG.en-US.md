@@ -43,6 +43,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `delete` method to return `false` when cancelling the delete.
 - 💄 `<pro>Modal`: Optimized animations when `multi-modal` is closed.
 - 💄 `<pro>FormField`: Optimized the association of suffix mouse events with component.
+- 💄 `<pro>Picture`: Optimized the `border` display.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
@@ -65,6 +66,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of `virtual` scrolling error when large data volume is generated.
 - 🐞 `<pro>Table.DynamicFilterBar`: Fixed the issue that if you did not click the expand and collapse icon, the query condition would still be folded.
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
+- 🐞 `<pro>Pagination`: Fix parameter error of `onChange`. Optimize interactions that are disabled in `simple` mode.
+- 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 
 ## 1.6.4
 

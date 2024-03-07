@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import noop from 'lodash/noop';
+import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import Slider, { SliderProps } from 'choerodon-ui/lib/slider';
 import { NumberField } from '../number-field/NumberField';
@@ -37,6 +39,24 @@ export default class Range extends NumberField<RangeProps> {
     tipFormatter: null,
   };
 
+  getWrapperClassNames(...args): string {
+    const { prefixCls, props: { vertical } } = this;
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-wrapper-vertical`]: vertical,
+      },
+      ...args,
+    );
+  }
+
+  handleValueChange = (value) => {
+    const { readOnly, props: { onChange = noop } } = this;
+    if (!readOnly) {
+      this.setValue(value);
+      onChange(value);
+    }
+  }
+
   renderWrapper(): ReactNode {
     return (
       <label key="wrapper" {...omit(this.getWrapperProps(), ['style'])}>
@@ -47,35 +67,38 @@ export default class Range extends NumberField<RangeProps> {
 
   renderTrack() {
     const {
-      props: { dataSet, onChange = noop, ...otherProps },
+      props: { onChange = noop, ...otherProps },
       prefixCls,
+      readOnly,
+      dataSet,
+      name,
+      disabled,
+      max,
+      min,
+      range,
     } = this;
-    if (this.readOnly) {
-      otherProps.value = this.value;
+    if (readOnly) {
+      otherProps.value = toJS(this.getValue());
     }
-    if (dataSet) {
-      let props: RangeProps = {};
-      if (otherProps.name) {
-        const field = dataSet.getField(otherProps.name);
-        if (field) {
-          props = { ...field.getProps() } as RangeProps;
-        }
-        const { current } = dataSet;
-        if (current) {
-          props.value = current.get(otherProps.name);
-        }
-      }
+
+    if (dataSet && name) {
+      const props: RangeProps = {
+        defaultValue: this.getProp('defaultValue'),
+        disabled,
+        max: !isNil(max) ? Number(max) : 100,
+        min: !isNil(min) ? Number(min) : 1,
+        range: !!range,
+        step: this.getProp('step'),
+        value: toJS(this.getValue()),
+      };
 
       return (
-        <Slider prefixCls={prefixCls} {...otherProps} {...props} onChange={(value) => {
-          this.setValue(value)
-          onChange(value)
-        }} />
+        <Slider prefixCls={prefixCls} {...otherProps} {...props} onChange={this.handleValueChange} />
       );
     }
     
     return (
-      <Slider prefixCls={prefixCls} {...otherProps} onChange={onChange} />
+      <Slider prefixCls={prefixCls} {...otherProps} onChange={!readOnly ? onChange : undefined} />
     );
   }
 }

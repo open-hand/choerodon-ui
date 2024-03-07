@@ -162,7 +162,9 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   async handleChange(page: number, pageSize: number) {
     const { dataSet, onChange, beforeChange = noop } = this.props;
+    let pageChange = page;
     if (this.pageSize !== pageSize && await beforeChange(page, pageSize) !== false) {
+      pageChange = 1;
       runInAction(() => {
         this.observableProps.pageSize = pageSize;
         this.observableProps.page = 1;
@@ -178,7 +180,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       });
     }
     if (onChange) {
-      onChange(page, pageSize);
+      onChange(pageChange, pageSize);
     }
   }
 
@@ -449,7 +451,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
     const {
       totalPage,
-      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition },
+      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition, disabled },
     } = this;
 
     const sizeChanger = this.renderSizeChange(pageSize);
@@ -466,6 +468,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
               min={1}
               onChange={this.handleJumpChange}
               valueChangeAction={ValueChangeAction.input} wait={200}
+              disabled={disabled}
             />
             <span>／</span>
             {totalPage}
