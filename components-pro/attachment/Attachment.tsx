@@ -865,12 +865,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
       const { bucketName, bucketDirectory, storageCode, readOnly, isPublic } = this;
       const width = this.getPictureWidth();
+      const { orderField } = this.getContextConfig('attachment');
       return (
         <AttachmentList
           prefixCls={`${this.prefixCls}-list`}
           pictureWidth={width}
           listType={listType}
-          attachments={sortAttachments(attachments, this.sort || defaultSort)}
+          attachments={sortAttachments(attachments, this.sort || defaultSort, orderField)}
           bucketName={bucketName}
           bucketDirectory={bucketDirectory}
           storageCode={storageCode}
