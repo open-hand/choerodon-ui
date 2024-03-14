@@ -290,6 +290,7 @@ const prefixCls = getConfig('prefixCls');
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | |
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |
+| orderField | 附件排序字段名，初始化或自定义排序时会以该字段值升序排序 | string | |
 
 ### SecretFieldConfig
 

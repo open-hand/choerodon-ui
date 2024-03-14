@@ -100,6 +100,7 @@ export interface AttachmentConfig {
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: AttachmentsProps) => Promise<void>;
   onRemove?: (props: AttachmentFileProps, multiple: boolean) => Promise<boolean>;
+  orderField?: string;
 }
 
 export interface Config {
