@@ -77,6 +77,11 @@ export interface AttachmentActionProps extends AttachmentFileProps {
   chunk?: AttachmentFileChunk | undefined;
 }
 
+export interface AttachmentOnRemoveProps extends Omit<AttachmentFileProps, 'attachment'> {
+  attachment?: AttachmentFile;
+  attachments?: AttachmentFile[];
+}
+
 export type TemplateUrlType = string | Function | undefined;
 
 export interface AttachmentConfig {
@@ -99,7 +104,7 @@ export interface AttachmentConfig {
   onUploadSuccess?: (response: any, attachment: AttachmentFile, props: AttachmentUseChunkProps) => Promise<any> | void;
   onUploadError?: (error: AxiosError, attachment: AttachmentFile) => void;
   onOrderChange?: (props: AttachmentsProps) => Promise<void>;
-  onRemove?: (props: AttachmentFileProps, multiple: boolean) => Promise<boolean>;
+  onRemove?: (props: AttachmentOnRemoveProps, multiple: boolean) => Promise<boolean>;
   orderField?: string;
 }
 
