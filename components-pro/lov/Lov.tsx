@@ -764,10 +764,14 @@ export default class Lov extends Select<LovProps> {
   }
 
   getWrapperProps() {
+    const { viewMode } = this.props;
     return super.getWrapperProps({
       onDoubleClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
       // Support ued to distinguish between select and lov
-      className: this.getWrapperClassNames(`${this.prefixCls}-lov`),
+      className: this.getWrapperClassNames(
+        `${this.prefixCls}-lov`,
+        { [`${this.prefixCls}-lov-${TriggerViewMode.popup}-mode`]: viewMode === TriggerViewMode.popup },
+      ),
     });
   }
 
