@@ -925,6 +925,7 @@ timeline: true
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
 - 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement, buttonsLimit 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
+- 🌟 `<pro>Attachment`: 新增 removeImmediately, onTempRemovedAttachmentsChange 属性和 remove, reset 实例方法。
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
 - 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。

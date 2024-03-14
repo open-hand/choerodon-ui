@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `Upload`: Added `pictureCardShowName` property.
 - 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
+- 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
