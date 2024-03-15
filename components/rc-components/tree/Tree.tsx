@@ -158,6 +158,7 @@ export interface TreeProps {
   // direction for drag logic
   direction?: Direction;
   ripple?: boolean;
+  checkboxShowBefore?: boolean;
 }
 
 interface TreeState {
@@ -1315,6 +1316,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       direction,
       ripple,
       onMouseDown,
+      checkboxShowBefore,
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1329,6 +1331,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
           draggable,
           checkable,
           checkStrictly,
+          checkboxShowBefore,
           disabled,
           keyEntities,
           dropLevelOffset,
@@ -1368,6 +1371,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             [`${prefixCls}-show-line`]: showLine,
             [`${prefixCls}-focused`]: focused,
             [`${prefixCls}-active-focused`]: activeKey !== null,
+            [`${prefixCls}-checkbox-show-before`]: checkboxShowBefore,
           })}
           onMouseDown={onMouseDown}
         >

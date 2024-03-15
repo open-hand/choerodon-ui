@@ -39,6 +39,7 @@ export interface TreeContextProps {
   draggable?: ((node?: DataNode) => boolean) | boolean | DraggableProps;
   checkable: boolean | React.ReactNode;
   checkStrictly?: boolean;
+  checkboxShowBefore?: boolean;
   disabled?: boolean;
   keyEntities: Record<Key, DataEntity>;
   // for details see comment in Tree.state (Tree.tsx)
