@@ -565,6 +565,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       dropContainerKey,
       dropTargetKey,
       ripple,
+      checkboxShowBefore,
     } = context!;
     const disabled = this.isDisabled();
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
@@ -608,10 +609,11 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
             onMouseMove={onMouseMove}
             {...dataOrAriaAttributeProps}
           >
+            {checkboxShowBefore && this.renderCheckbox()}
             <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
             {this.renderDraggableIcon()}
             {this.renderSwitcher()}
-            {this.renderCheckbox()}
+            {!checkboxShowBefore && this.renderCheckbox()}
             {this.renderSelector()}
           </div>
         </Ripple>

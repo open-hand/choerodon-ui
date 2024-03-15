@@ -24,6 +24,7 @@ Almost anything can be represented in a tree structure. Examples include directo
 | async | Asynchronous loading requires the cooperation of the back-end interface. The corresponding data source will automatically call the query interface. The interface parameters will contain the parameter name corresponding to parentField and the parameter value corresponding to idField. The data returned by the interface will be appended to the existing data. | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 | selectable | 是否可选中 | boolean | true |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
+| checkboxShowBefore | checkbox 是否显示在最前面 | boolean |  |
 
 
 ### TreeNodeRenderer props
