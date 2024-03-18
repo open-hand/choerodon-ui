@@ -313,7 +313,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const nextPrevShown = isNextPrevShown();
 
     const moreTool = nextPrevShown && !!showMore && (
-      <Dropdown overlay={menu} key="more">
+      <Dropdown overlay={menu} key="more" popupClassName={`${prefixCls}-more-dropdown-popup`}>
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
     );

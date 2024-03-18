@@ -45,6 +45,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化多层 modal 关闭时的动画效果。
 - 💄 `<pro>FormField`: 优化后缀鼠标事件关联到组件。
 - 💄 `<pro>Picture`: 优化 border 显示。
+- 💄 `<pro>Pagination`: 扩展 showPager 属性，支持输入框模式。showTotal 回调函数增加 page 和 pageSize 参数。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
