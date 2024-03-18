@@ -15,7 +15,7 @@ Basic Usage
 
 ````jsx
 import { configure, Row, Col, notification } from 'choerodon-ui';
-import { Attachment, Axios } from 'choerodon-ui/pro';
+import { Attachment, Button, Axios } from 'choerodon-ui/pro';
 import uuid from 'uuid/v4';
 import moment from 'moment';
 

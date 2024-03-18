@@ -164,6 +164,14 @@ export default class Tree extends Component<TreeProps, any> {
 
   context: ConfigContextValue;
 
+  get checkboxPosition(): undefined | 'default' | 'left' {
+    const { props: { checkboxPosition }, context } = this;
+    if (checkboxPosition) {
+      return checkboxPosition;
+    }
+    return context.getConfig('treeCheckboxPosition');
+  }
+
   renderSwitcherIcon = ({ isLeaf, loading }: C7nTreeNodeProps) => {
     const { showLine, switcherIcon } = this.props;
     const prefixCls = this.getPrefixCls();

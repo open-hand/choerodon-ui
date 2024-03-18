@@ -38,8 +38,8 @@ export interface PaginationProps extends DataSetComponentProps {
   showSizeChanger?: boolean;
   showQuickJumper?: boolean | { goButton?: React.ReactNode };
   showSizeChangerLabel?: boolean;
-  showTotal?: boolean | ((total: number, range: [number, number], counting?: boolean) => React.ReactNode);
-  showPager?: boolean;
+  showTotal?: boolean | ((total: number, range: [number, number], counting: boolean, page: number, pageSize: number) => React.ReactNode);
+  showPager?: boolean | 'input';
   hideOnSinglePage?: boolean;
   simple?: boolean;
   quickJumperPosition?: QuickJumperPosition;
@@ -380,7 +380,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
-          {showTotal(total, [from, to], counting !== undefined)}
+          {showTotal(total, [from, to], counting !== undefined, page, pageSize)}
         </span>
       );
     }
@@ -456,6 +456,20 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
     const sizeChanger = this.renderSizeChange(pageSize);
 
+    const inputNode = (
+      <>
+        <ObserverNumberField
+          value={page}
+          min={1}
+          onChange={this.handleJumpChange}
+          valueChangeAction={ValueChangeAction.input} wait={200}
+          disabled={disabled}
+        />
+        <span className={`${prefixCls}-pager-separator`}>／</span>
+        {totalPage}
+      </>
+    );
+
     if (simple) {
       return (
         <nav {...this.getMergedProps()}>
@@ -463,34 +477,34 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
           <li
             className={`${prefixCls}-simple-pager`}
           >
-            <ObserverNumberField
-              value={page}
-              min={1}
-              onChange={this.handleJumpChange}
-              valueChangeAction={ValueChangeAction.input} wait={200}
-              disabled={disabled}
-            />
-            <span>／</span>
-            {totalPage}
+            {inputNode}
           </li>
           {this.getPager(page + 1, 'next', false, !this.next)}
         </nav>
       );
     }
 
+    const pagersNode = showPager === 'input'
+      ? (
+        <span className={`${prefixCls}-pager ${prefixCls}-pager-input`}>
+          {inputNode}
+        </span>
+      )
+      : showPager ? this.renderPagers(page) : null;
+
     return (
       <nav {...this.getMergedProps()}>
         {children}
         {sizeChangerPosition === SizeChangerPosition.left && sizeChanger}
-        {showQuickJumper && quickJumperPosition === QuickJumperPosition.left && this.renderQuickGo()}
+        {showQuickJumper && showPager !== 'input' && quickJumperPosition === QuickJumperPosition.left && this.renderQuickGo()}
         {showTotal && this.renderTotal(pageSize, page, total)}
         {this.getPager(1, 'first', false, page === 1)}
         {this.getPager(page - 1, 'prev', false, page === 1)}
-        {showPager && this.renderPagers(page)}
+        {pagersNode}
         {this.getPager(page + 1, 'next', false, !this.next)}
         {this.getPager(totalPage, 'last', false, !this.next)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
-        {showQuickJumper && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
+        {showQuickJumper && showPager !== 'input' && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
       </nav>
     );
   }

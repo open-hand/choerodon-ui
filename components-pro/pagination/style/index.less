@@ -29,6 +29,18 @@
   &-pager {
     min-width: @pagination-pager-min-width;
     height: @pagination-pager-height;
+
+    &-input {
+      display: inline-block;
+      height: 0.3rem;
+      margin: 0 0.1rem;
+      vertical-align: middle;
+
+      .@{c7n-pro-prefix}-input-number {
+        width: 0.5rem;
+        height: @pagination-pager-height;
+      }
+    }
   }
 
   &-quick-jumper {
