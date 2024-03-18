@@ -196,6 +196,7 @@ const prefixCls = getConfig('prefixCls');
 | labelWordBreak | From 设置标签是否换行显示  | boolean |  |
 | pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
+| treeCheckboxPosition | Tree 组件 checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | 'default' |
 
 ### Customizable
 

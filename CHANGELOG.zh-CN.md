@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
@@ -23,7 +23,7 @@ timeline: true
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
-- 🌟 `Tree`: 新增 checkboxShowBefore 属性。
+- 🌟 `Tree`: 新增 checkboxPosition 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。

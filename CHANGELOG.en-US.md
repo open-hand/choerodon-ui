@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
@@ -24,7 +24,7 @@ timeline: true
 - 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
 - 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
-- 🌟 `Tree`: Added `checkboxShowBefore` property.
+- 🌟 `Tree`: Added `checkboxPosition` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
