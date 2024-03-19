@@ -372,8 +372,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const button = this.getInnerSpanButton();
     return super.getWrapperClassNames({
       [`${prefixCls}-step-suffix`]: button && isValidElement<{ onClick }>(suffix) && step,
-      ...args,
-    });
+    }, ...args);
   }
 
   @action

@@ -193,6 +193,7 @@ const prefixCls = getConfig('prefixCls');
 | labelWordBreak | From 设置标签是否换行显示  | boolean |  |
 | pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
+| treeCheckboxPosition | Tree 组件 checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | 'default' |
 
 ### Customizable
 
@@ -287,6 +288,7 @@ const prefixCls = getConfig('prefixCls');
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | |
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |
+| orderField | 附件排序字段名，初始化或自定义排序时会以该字段值升序排序 | string | |
 
 ### SecretFieldConfig
 

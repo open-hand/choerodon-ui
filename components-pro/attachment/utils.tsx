@@ -8,7 +8,7 @@ export {
   formatFileSize,
 };
 
-export function sortAttachments(attachments: AttachmentFile[] | undefined, sort: Sort): AttachmentFile[] | undefined {
+export function sortAttachments(attachments: AttachmentFile[] | undefined, sort: Sort, orderField?: string): AttachmentFile[] | undefined {
   if (attachments) {
     if (!sort.custom) {
       const { type, order } = sort;
@@ -24,6 +24,9 @@ export function sortAttachments(attachments: AttachmentFile[] | undefined, sort:
         }
         return a.creationDate.getTime() - b.creationDate.getTime();
       });
+    }
+    if (sort.custom && orderField) {
+      return attachments.sort((a, b) => a[orderField] - b[orderField]);
     }
     return attachments;
   }

@@ -14,8 +14,8 @@ title:
 Basic Usage
 
 ````jsx
-import { configure, Row, Col, Button } from 'choerodon-ui';
-import { Attachment, Axios } from 'choerodon-ui/pro';
+import { configure, Row, Col, notification } from 'choerodon-ui';
+import { Attachment, Button, Axios } from 'choerodon-ui/pro';
 import uuid from 'uuid/v4';
 import moment from 'moment';
 
@@ -29,6 +29,7 @@ const fetchList = ({ attachmentUUID }) => {
       url: file.fileUrl,
       creationDate: moment(file.creationDate).toDate(),
       status: 'done',
+      orderSeq: file.orderSeq,
     }));
   });
 }
@@ -40,6 +41,7 @@ configure({
     defaultFileSize: 500 * 1024 * 1024,
     defaultChunkSize: 5 * 1024 * 1024,
     defaultChunkThreads: 3,
+    orderField: 'orderSeq',
     action: {
       url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       headers: {
@@ -51,8 +53,13 @@ configure({
     batchFetchCount(uuids){
       return Axios.get(`/attachment-count/${uuids.sort().join(',')}`);
     },
-    onRemove() {
-      return new Promise((resolve) => setTimeout(() => resolve(Math.random() >= 0.1), 1000));
+    onRemove: (props, multiple) => {
+      console.log('props, multiple:', props, multiple);
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(true), 100);
+      }).then(() => {
+        notification.success({description: '删除成功!'})
+      });
     },
     onOrderChange() {
       return Promise.resolve();

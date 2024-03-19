@@ -26,6 +26,7 @@ subtitle: 树形控件
 | async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
 | selectable | 是否可选中 | boolean | true |
 | filter | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean |  |
+| checkboxPosition | checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' |  |
 
 ### TreeNodeRenderer Props
 

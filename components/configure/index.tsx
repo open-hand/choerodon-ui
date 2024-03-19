@@ -121,6 +121,8 @@ export interface AttachmentConfig extends DataSetAttachmentConfig {
   renderHistory?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => ReactNode;
 }
 
+export type TreeCheckboxPosition = undefined | 'default' | 'left';
+
 export interface Config extends DataSetConfig {
   prefixCls?: string;
   proPrefixCls?: string;
@@ -345,6 +347,10 @@ export interface Config extends DataSetConfig {
    * DatePicker 组件 range 模式，选择弹窗组合显示
    */
   datePickerComboRangeMode?: boolean;
+  /**
+   * Tree checkbox 显示位置
+   */
+  treeCheckboxPosition?: TreeCheckboxPosition;
   /**
    * @deprecated
    */

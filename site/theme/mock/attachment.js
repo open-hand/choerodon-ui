@@ -2,20 +2,22 @@ import Mock from 'mockjs';
 
 const dataSetAttachmentTemple = [
   {
-    fileId: 1,
-    fileName: 'demo1.png',
-    fileType: 'image/png',
-    fileSize: 300000,
-    fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    creationDate: '2021-08-16 19:19:00',
-  },
-  {
     fileId: 2,
     fileName: 'demo2.png',
     fileType: 'image/png',
     fileSize: 300000,
     fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     creationDate: '2021-08-17 19:19:00',
+    orderSeq: 1,
+  },
+  {
+    fileId: 1,
+    fileName: 'demo1.png',
+    fileType: 'image/png',
+    fileSize: 300000,
+    fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    creationDate: '2021-08-16 19:19:00',
+    orderSeq: 1,
   },
 ];
 

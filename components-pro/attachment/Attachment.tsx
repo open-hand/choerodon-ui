@@ -81,6 +81,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
+  removeImmediately?: boolean;
+  onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
 }
 
 export type Sort = {
@@ -111,6 +113,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     listType: 'text',
     viewMode: 'list',
     dragUpload: false,
+    removeImmediately: true,
   };
 
   // eslint-disable-next-line camelcase
@@ -131,10 +134,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @observable tempAttachmentUUID?: string | undefined;
 
+  tempRemovedAttachments?: AttachmentFile[];
+
   get help() {
     return this.getDisplayProp('help');
   }
-
 
   @computed
   get showAttachmentHelp() {
@@ -363,6 +367,8 @@ export default class Attachment extends FormField<AttachmentProps> {
       'onUploadError',
       'onRemove',
       'getPreviewUrl',
+      'removeImmediately',
+      'onTempRemovedAttachmentsChange',
     ]);
   }
 
@@ -506,33 +512,61 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
   }
 
-  doRemove(attachment: AttachmentFile): Promise<any> | undefined {
-    const { onRemove: onAttachmentRemove = noop } = this.props;
-    return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
-      if (ret !== false) {
-        const { onRemove } = this.getContextConfig('attachment');
-        if (onRemove) {
-          if (attachment.status === 'error' || attachment.invalid) {
-            return this.removeAttachment(attachment);
-          }
-          const attachmentUUID = this.getValue();
-          if (attachmentUUID) {
-            const { bucketName, bucketDirectory, storageCode, isPublic, multiple } = this;
-            attachment.status = 'deleting';
-            return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic }, multiple)
-              .then(mobxAction((result) => {
-                if (result !== false) {
-                  this.removeAttachment(attachment);
-                }
-                attachment.status = 'done';
-              }))
-              .catch(mobxAction(() => {
-                attachment.status = 'done';
-              }));
+  doRemove(attachment?: AttachmentFile, attachments: AttachmentFile[] = []): Promise<any> | undefined {
+    const { bucketName, bucketDirectory, storageCode, isPublic, multiple, props: { removeImmediately, onRemove: onAttachmentRemove = noop } } = this;
+    if (attachment) {
+      return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
+        if (ret !== false) {
+          const { onRemove } = this.getContextConfig('attachment');
+          if (onRemove) {
+            if (attachment.status === 'error' || attachment.invalid) {
+              return this.removeAttachment(attachment);
+            }
+            const attachmentUUID = this.getValue();
+            if (attachmentUUID) {
+              attachment.status = 'deleting';
+              return onRemove({ attachment, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic }, multiple)
+                .then(mobxAction((result) => {
+                  if (result !== false) {
+                    this.removeAttachment(attachment);
+                  }
+                  attachment.status = 'done';
+                }))
+                .catch(mobxAction(() => {
+                  attachment.status = 'done';
+                }));
+            }
           }
         }
-      }
-    }));
+      }));
+    }
+    // 批量删除临时移除文件
+    let validAttachments = attachments.filter(attachment => attachment.status !== 'error' && !attachment.invalid);
+    if (!removeImmediately && validAttachments.length > 0) {
+      return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
+        if (ret !== false) {
+          const { onRemove } = this.getContextConfig('attachment');
+          if (onRemove) {
+            const attachmentUUID = this.getValue();
+            if (attachmentUUID) {
+              validAttachments = validAttachments.map(attachment => {
+                attachment.status = 'deleting';
+                return attachment;
+              });
+              return onRemove({ attachments: validAttachments, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic }, multiple)
+                .then(mobxAction((result) => {
+                  if (result === false) {
+                    this.handleFetchAttachment({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+                  }
+                }))
+                .catch(mobxAction(() => {
+                  this.handleFetchAttachment({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+                }));
+            }
+          }
+        }
+      }));
+    }
   }
 
   @autobind
@@ -558,7 +592,41 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @autobind
   handleRemove(attachment: AttachmentFile): Promise<any> | undefined {
-    return this.doRemove(attachment);
+    const { tempRemovedAttachments = [], props: { removeImmediately, onTempRemovedAttachmentsChange } } = this;
+    if (removeImmediately) {
+      return this.doRemove(attachment);
+    }
+    // 临时移除
+    this.removeAttachment(attachment);
+    tempRemovedAttachments.push(attachment);
+    this.tempRemovedAttachments = tempRemovedAttachments;
+    if (onTempRemovedAttachmentsChange) {
+      onTempRemovedAttachmentsChange(this.tempRemovedAttachments);
+    }
+  }
+
+  @autobind
+  public remove() {
+    const { tempRemovedAttachments = [], props: { onTempRemovedAttachmentsChange } } = this;
+    if (tempRemovedAttachments.length > 0) {
+      this.tempRemovedAttachments = undefined;
+      if (onTempRemovedAttachmentsChange) {
+        onTempRemovedAttachmentsChange(this.tempRemovedAttachments);
+      }
+      this.doRemove(undefined, tempRemovedAttachments);
+    }
+  }
+
+  @autobind
+  public reset() {
+    const { attachments = [], tempRemovedAttachments = [], props: { onTempRemovedAttachmentsChange } } = this;
+    if (tempRemovedAttachments.length > 0) {
+      this.attachments = [...attachments, ...tempRemovedAttachments];
+    }
+    this.tempRemovedAttachments = undefined;
+    if (onTempRemovedAttachmentsChange) {
+      onTempRemovedAttachmentsChange(this.tempRemovedAttachments);
+    }
   }
 
   @autobind
@@ -865,12 +933,13 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (attachmentUUID || uploadButton || (attachments && attachments.length)) {
       const { bucketName, bucketDirectory, storageCode, readOnly, isPublic } = this;
       const width = this.getPictureWidth();
+      const { orderField } = this.getContextConfig('attachment');
       return (
         <AttachmentList
           prefixCls={`${this.prefixCls}-list`}
           pictureWidth={width}
           listType={listType}
-          attachments={sortAttachments(attachments, this.sort || defaultSort)}
+          attachments={sortAttachments(attachments, this.sort || defaultSort, orderField)}
           bucketName={bucketName}
           bucketDirectory={bucketDirectory}
           storageCode={storageCode}
