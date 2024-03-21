@@ -168,6 +168,8 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   offset?: [number | string | undefined, number | string | undefined];
 
+  okButton: Button | null;
+
   cancelButton: Button | null;
 
   minWidth: number;
@@ -194,6 +196,7 @@ export default class Modal extends ViewComponent<ModalProps> {
     return (
       <Button
         key="ok"
+        ref={this.saveOkRef}
         funcType={funcType}
         color={ButtonColor.primary}
         onClick={this.handleClickOk}
@@ -326,6 +329,11 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.minHeight = style && toPx(style.minHeight) || contentStyle && toPx(contentStyle.minHeight) || this.contentNode.offsetHeight;
       });
     }
+  }
+
+  @autobind
+  saveOkRef(node) {
+    this.okButton = node;
   }
 
   @autobind
@@ -899,15 +907,15 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   @autobind
-  handleClickOk() {
+  async handleClickOk() {
     this.handleDelayOk.cancel();
-    this.handleOk();
+    await this.handleOk();
   }
 
   @autobind
-  handleClickCancel() {
+  async handleClickCancel() {
     this.handleDelayCancel.cancel();
-    this.handleCancel();
+    await this.handleCancel();
   }
 
   @autobind
@@ -920,9 +928,13 @@ export default class Modal extends ViewComponent<ModalProps> {
     document.addEventListener('mouseup', this.handleDelayCancel);
   }
 
-  handleDelayOk = debounce(this.handleOk, 200);
+  handleDelayOk = debounce((e) => {
+    this.okButton?.getOtherProps()?.onClick(e);
+  }, 200);
 
-  handleDelayCancel = debounce(this.handleCancel, 200);
+  handleDelayCancel = debounce((e) => {
+    this.cancelButton?.getOtherProps()?.onClick(e);
+  }, 200);
 
   getHeader(): ReactNode {
     const {
