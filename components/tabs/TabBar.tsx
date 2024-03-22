@@ -63,6 +63,7 @@ export interface TabBarProps {
   onRemoveTab: (targetKey: Key | null, e: MouseEvent<HTMLElement>) => void;
   onEdit?: (targetKey: Key | MouseEvent<HTMLElement>, action: 'add' | 'remove') => void;
   children?: (node: React.ReactElement) => React.ReactElement;
+  showMorePopupClassName?: string;
 }
 
 interface MenuKeyValue {
@@ -85,6 +86,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     onRemoveTab,
     onEdit,
     children: renderChildBar,
+    showMorePopupClassName,
     ...restProps
   } = props;
   const {
@@ -285,7 +287,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   }, [next, prev]);
 
   const onMenuClick = ({ key }) => {
-    changeActiveKey(key);
+    handleTabClick(key);
     scrollToActiveTab();
   };
   const menu = () => {
@@ -312,8 +314,10 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
 
     const nextPrevShown = isNextPrevShown();
 
+    const popupClassName = classnames(`${prefixCls}-more-dropdown-popup`, showMorePopupClassName);
+
     const moreTool = nextPrevShown && !!showMore && (
-      <Dropdown overlay={menu} key="more" popupClassName={`${prefixCls}-more-dropdown-popup`}>
+      <Dropdown overlay={menu} key="more" popupClassName={popupClassName}>
         <Icon type="more_horiz" className={dropDownClass} />
       </Dropdown>
     );

@@ -1743,6 +1743,16 @@ export default class Table extends DataSetComponent<TableProps> {
     ]);
   }
 
+  getWrapperClassNames(...args): string {
+    const { prefixCls, tableStore: { border } } = this;
+    return super.getWrapperClassNames(
+      {
+        [`${prefixCls}-wrapper-border`]: border,
+      },
+      ...args,
+    );
+  }
+
   getWrapperProps(props: any = {}): any {
     const { autoWidth } = this.props;
     const wrapperProps = {
