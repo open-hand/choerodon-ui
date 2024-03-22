@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
-- 🌟 `Tabs`: Added `renderTabBar` property.
+- 🌟 `Tabs`: Added `renderTabBar`, `showMorePopupClassName` property.
 - 🌟 `Upload`: Added `pictureCardShowName` property.
 - 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue that double-clicking the suffix would query twice and the single-check box selection error in the double-click selection mode of the table.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
+- 🐞 `Tabs`: Fixed an issue where clicking `tab` in `showMore` did not trigger the `onTabClick` callback function.
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 - 🐞 `<pro>Attachment`: Fixed the issue that `onUploadSuccess` was executed too early in the case of multipart upload.

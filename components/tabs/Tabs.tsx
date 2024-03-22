@@ -65,6 +65,7 @@ export interface TabsProps {
   flex?: boolean;
   restoreDefault?: boolean;
   renderTabBar?: RenderTabBar;
+  showMorePopupClassName?: string;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }

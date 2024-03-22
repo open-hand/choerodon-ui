@@ -19,7 +19,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
-- 🌟 `Tabs`: 新增 renderTabBar 属性。
+- 🌟 `Tabs`: 新增 renderTabBar, showMorePopupClassName 属性。
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复双击后缀会查询两次和表格双击选中模式下单选框选值错误的问题。
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
+- 🐞 `Tabs`: 修复点击 showMore 中的 tab 没有触发 onTabClick 回调函数的问题。
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Attachment`: 修复分片上传情况下 onUploadSuccess 执行时机过早的问题。
