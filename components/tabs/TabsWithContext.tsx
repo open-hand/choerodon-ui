@@ -83,6 +83,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     flex,
     restoreDefault,
     renderTabBar,
+    showMorePopupClassName,
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -311,6 +312,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     inkBarStyle,
     hideAdd,
     renderTabBar,
+    showMorePopupClassName,
   };
   const tabContentProps: TabContentProps = {
     animatedWithMargin: true,

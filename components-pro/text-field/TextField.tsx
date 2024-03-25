@@ -650,7 +650,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {otherPrevNode}
         {placeholderDiv}
         {renderedValue}
-        <label {...ZIndexOfIEProps} onMouseDown={this.handleMouseDown} onClick={preventDefault}>
+        <label
+          {...ZIndexOfIEProps}
+          onMouseDown={this.handleMouseDown}
+          onClick={this.handleClick}
+        >
           {prefix}
           {input}
           {floatLabel}
@@ -1517,6 +1521,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       if (!this.isFocused) {
         this.focus();
       }
+    }
+  }
+
+  @autobind
+  handleClick(e) {
+    const { target, currentTarget } = e;
+    if (target && currentTarget && currentTarget.contains(target as any)) {
+      preventDefault(e);
     }
   }
 
