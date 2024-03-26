@@ -48,6 +48,11 @@
   &:hover {
     border-color: @input-border-color;
   }
+  &::selection {
+    color: @input-disabled-selection-color;
+    -webkit-text-fill-color: @input-disabled-selection-color;
+    background: @primary-color;
+  }
 }
 
 // Placeholder text
@@ -196,7 +201,7 @@
   &-focused&-required-colors & {
     .active(@input-required-focus-border-color, @input-required-active-box-shadow);
   }
-  
+
   &:focus,
   &-focused & {
     .active;
