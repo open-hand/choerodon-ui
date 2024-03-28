@@ -790,7 +790,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       >
         <div>{children || $l('Attachment', 'upload_picture')}</div>
         {countText ? <div>{countText}</div> : undefined}
-        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block' }} />
+        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }} />
       </Button>
     ) : (
       <Button
@@ -804,7 +804,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         onMouseLeave={this.handleMouseLeave}
       >
         {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {countText}
-        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block' }} />
+        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }} />
       </Button>
     );
   }
