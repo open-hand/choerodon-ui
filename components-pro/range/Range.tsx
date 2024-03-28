@@ -85,8 +85,8 @@ export default class Range extends NumberField<RangeProps> {
       const props: RangeProps = {
         defaultValue: this.getProp('defaultValue'),
         disabled,
-        max: !isNil(max) ? Number(max) : 100,
-        min: !isNil(min) ? Number(min) : 1,
+        max: !isNil(max) && max !== Infinity ? !Number.isNaN(Number(max)) ? Number(max) : 100 : 100,
+        min: !isNil(min) && min !== -Infinity ? !Number.isNaN(Number(min)) ? Number(min) : 1 : 1,
         range: !!range,
         step: this.getProp('step'),
         value: toJS(this.getValue()),
