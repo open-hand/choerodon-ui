@@ -160,6 +160,11 @@ const locale: Locale = {
     copy_pristine_success: 'Successfully copied the original value',
     paste_template: 'Paste Template',
     no_xlsx: 'Missing xlsx configuration, please configure xlsx configuration before exporting',
+    arrange_count: 'count',
+    arrange_avg: 'avg',
+    arrange_max: 'max',
+    arrange_min: 'min',
+    arrange_sum: 'sum',
   },
   Pagination: {
     page: 'Page',

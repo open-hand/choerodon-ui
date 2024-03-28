@@ -299,9 +299,10 @@ Clipboard configuration item
 
 | 参数      | 说明       | 类型         | 默认值 |
 | --------- | ---------- | ------------ | ------ |
-| copy | Enable table copying | boolean | false |
+| copy | Enable table copying and batch filling | boolean | false |
 | paste | Enable table pasting, after opening, only editable cells can be pasted with data. | boolean | false |
 | description | Enable table copying or pasting, customize and modify description information | string \| ReactNode | - |
+| arrangeCalc | Enable range counting | boolean \| ReactNode | false |
 
 ### instance methods
 
