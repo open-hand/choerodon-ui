@@ -12,6 +12,7 @@ import isUndefined from 'lodash/isUndefined';
 import noop from 'lodash/noop';
 import defer from 'lodash/defer';
 import attempt from 'lodash/attempt';
+import isFunction from 'lodash/isFunction';
 import { action, isArrayLike, runInAction, toJS } from 'mobx';
 import {
   DragDropContext,
@@ -301,6 +302,15 @@ export interface Clipboard {
   paste?: boolean;
   copy?: boolean;
   description?: string | ReactNode;
+  arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
+}
+
+export interface ArrangeValue {
+  count: number;
+  avg: number;
+  sum: number;
+  max: number;
+  min: number;
 }
 
 let _instance;
@@ -883,6 +893,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   rangeBorder: HTMLDivElement | null;
 
+  expandBorder: HTMLDivElement | null;
+
   tableHeadWrap: HTMLDivElement | null;
 
   tableBodyWrap: HTMLDivElement | null;
@@ -939,6 +951,11 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   saveRangeBorderRef(node: HTMLDivElement | null) {
     this.rangeBorder = node;
+  }
+
+  @autobind
+  saveExpandBorderRef(node: HTMLDivElement | null) {
+    this.expandBorder = node;
   }
 
   useFocusedClassName() {
@@ -2050,6 +2067,7 @@ export default class Table extends DataSetComponent<TableProps> {
             <TableSibling position="after" boxSizing={boxSizing}>
               {this.getFooter()}
               {this.getPagination(TablePaginationPosition.bottom)}
+              {this.getArrangeValue()}
             </TableSibling>
           </TableContextProvider>
         </div>
@@ -2352,6 +2370,7 @@ export default class Table extends DataSetComponent<TableProps> {
         hasFooter={hasFooter}
         columnGroups={columnGroups}
         getCopyBodyRef={this.saveRangeBorderRef}
+        getExpandBodyRef={this.saveExpandBorderRef}
       >
         {hasHeader && this.getTableHeader(lock)}
         {hasBody && this.getTableBody(columnGroups, lock, snapshot, dragRowHeight)}
@@ -2406,6 +2425,30 @@ export default class Table extends DataSetComponent<TableProps> {
           {typeof footer === 'function' ? footer(data) : footer}
         </div>
       );
+    }
+  }
+
+  getArrangeValue(): ReactNode | undefined {
+    const {
+      tableStore: { arrangeValue, clipboard },
+    } = this;
+    if (clipboard && clipboard.copy && clipboard.arrangeCalc && arrangeValue) {
+      const { prefixCls } = this;
+      const { count, avg, sum, max, min } = arrangeValue;
+      if (isFunction(clipboard.arrangeCalc)) {
+        return clipboard.arrangeCalc(arrangeValue);
+      }
+      if (clipboard.arrangeCalc) {
+        return (
+          <div key="arrangeValue" className={`${prefixCls}-arrangeValue`}>
+            <span>{$l('Table', 'arrange_count')}：{count}</span>
+            <span>{$l('Table', 'arrange_sum')}：{sum}</span>
+            <span>{$l('Table', 'arrange_avg')}：{avg}</span>
+            <span>{$l('Table', 'arrange_max')}：{max}</span>
+            <span>{$l('Table', 'arrange_min')}：{min}</span>
+          </div >
+        );
+      }
     }
   }
 

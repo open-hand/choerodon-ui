@@ -37,7 +37,7 @@ class EditButton extends React.Component {
   };
 
   render() {
-    return <Button funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
+    return <Button tabindex="-1" funcType="flat" icon="mode_edit" onClick={this.handleClick} size="small" />;
   }
 }
 
@@ -254,20 +254,19 @@ class App extends React.Component {
           // virtual
           customizable
           customizedCode="zza"
-          clipboard={{paste: true, copy: true}}
+          clipboard={{paste: true, copy: true, arrangeCalc: true}}
           style={{height: 300}}
         >
-          <Column name="userid" filter editor />
-          
           <Column 
             name="age" 
             filter 
             width={200} 
+            lock
             editor
             />
             <Column 
             name="email" 
-            editor={(record, name) => <TextArea autoSize record={record} name={name} />}
+            // editor={(record, name) => <TextArea autoSize record={record} name={name} />}
             sortable 
             width={200} 
           />

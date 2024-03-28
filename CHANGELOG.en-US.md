@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
 - 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
 - 🌟 `Tree`: Added `checkboxPosition` property.
+- 🌟 `<pro>Table`: Adds batch filling and counting functions in Excel.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.

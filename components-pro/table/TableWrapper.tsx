@@ -1,5 +1,6 @@
 import React, { FunctionComponent, Key, ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
+import { action } from 'mobx';
 import classNames from 'classnames';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -20,10 +21,11 @@ export interface TableWrapperProps extends ElementProps {
   hasFooter?: boolean;
   columnGroups: ColumnGroups;
   getCopyBodyRef?: React.LegacyRef<HTMLDivElement>;
+  getExpandBodyRef?: React.LegacyRef<HTMLDivElement>;
 }
 
 const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper(props) {
-  const { children, hasBody, lock, hasHeader, hasFooter, columnGroups, getCopyBodyRef } = props;
+  const { children, hasBody, lock, hasHeader, hasFooter, columnGroups, getCopyBodyRef, getExpandBodyRef } = props;
   const { prefixCls, summary, tableStore, fullColumnWidth } = useContext(TableContext);
   const { leafs, width } = columnGroups;
   const { overflowX, customizable, rowDraggable, dragColumnAlign, clipboard } = tableStore;
@@ -79,6 +81,15 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
     [`${prefixCls}-last-row-bordered`]: hasBody && !tableStore.overflowY && (tableStore.height !== undefined || (!tableStore.hasFooter && overflowX)),
   });
 
+  const handleCornerMouseDown = action((e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault();
+    tableStore.dragCorner = true;
+    tableStore.dragCornerPosition = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+  });
+
   return (
     <>
       <table
@@ -90,7 +101,17 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
         {colGroup}
         {children}
       </table>
-      {clipboard && <div ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={!!tableStore.currentEditorName} />}
+      {clipboard &&
+        [
+          <div key="rangBorder" ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={!!tableStore.currentEditorName}>
+            <span
+              className={`${prefixCls}-range-border-corner`}
+              onMouseDown={handleCornerMouseDown}
+            />
+          </div>,
+          <div key="expandBorder" ref={getExpandBodyRef} className={`${prefixCls}-expand-border`} />,
+        ]
+      }
       {editors}
     </>
   );

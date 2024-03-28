@@ -61,6 +61,7 @@ export {
   TableCustomized,
   TableGroup,
   Clipboard,
+  ArrangeValue,
 } from './Table';
 
 export {

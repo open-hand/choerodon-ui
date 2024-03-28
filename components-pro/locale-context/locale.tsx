@@ -162,6 +162,11 @@ export interface Locale extends DataSetLocale {
     copy_pristine_success: string,
     paste_template: string,
     no_xlsx: string,
+    arrange_count: string,
+    arrange_avg: string,
+    arrange_max: string,
+    arrange_min: string,
+    arrange_sum: string,
   };
   Pagination: {
     page: string;
