@@ -20,7 +20,6 @@ import classNames from 'classnames';
 import { Property } from 'csstype';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import isNumber from 'lodash/isNumber';
-import isNil from 'lodash/isNil';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from '../icon';
@@ -29,7 +28,7 @@ import PictureContext, { PictureContextValue, PictureProvider } from './PictureC
 import modalPreview from '../modal/preview';
 import { ModalProps } from '../modal/interface';
 
-export type ImageStatus = 'loaded' | 'error' | 'empty';
+export type ImageStatus = 'loaded' | 'error' | 'empty' | 'loading';
 
 export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   prefixCls?: string;
@@ -58,6 +57,11 @@ export interface PictureRef {
   downloadUrl?: string | Function | undefined;
 }
 
+export interface OldPropsRef {
+  src?: string | undefined;
+  status?: ImageStatus;
+}
+
 export interface PictureForwardRef {
   preview();
 
@@ -77,6 +81,8 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = useState<ImageStatus>(propStatus || 'empty');
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
+  const oldPropsRef = useRef<OldPropsRef>({ src, status: propStatus });
+
   const handlePreview = useCallback(() => {
     if (preview && !previewTarget && status === 'loaded' && url) {
       if (context && isNumber(index)) {
@@ -113,12 +119,13 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     wrapperStyle.height = h;
   }
   useEffect(() => {
-    if (isNil(propStatus)) {
-      setStatus('empty');
-    }
-  }, [propStatus, src]);
-  useEffect(() => {
     if (!propStatus && inView && src) {
+      if (src !== oldPropsRef.current.src) {
+        setStatus('loading');
+      } else {
+        setStatus('empty');
+      }
+
       const img = new Image(width, height);
       const onLoad = () => {
         setStatus('loaded');
@@ -134,7 +141,8 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
         img.removeEventListener('error', onError, false);
       };
     }
-  }, [inView, src, propStatus]);
+    oldPropsRef.current = { src, status: propStatus };
+  }, [inView, src, propStatus, oldPropsRef]);
 
   useEffect(() => {
     if (propStatus) {
@@ -182,7 +190,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
           <img
             ref={imgRef}
             style={elementStyle}
-            className={`${customPrefixCls}-img`}
+            className={`${customPrefixCls}-img ${customPrefixCls}-${status}`}
             src={src}
             alt={alt || title}
             title={title}
@@ -192,14 +200,20 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
       }
       case 'error':
         return (
-          <div className={`${customPrefixCls}-icon`}>
+          <div className={`${customPrefixCls}-icon ${customPrefixCls}-${status}`}>
             <Icon type="sentiment_dissatisfied" />
+          </div>
+        );
+      case 'loading':
+        return (
+          <div className={`${customPrefixCls}-icon ${customPrefixCls}-${status}`}>
+            <Icon type="downloading" />
           </div>
         );
       case 'empty':
       default:
         return (
-          <div className={`${customPrefixCls}-icon`}>
+          <div className={`${customPrefixCls}-icon ${customPrefixCls}-${status}`}>
             <Icon type="photo_size_select_actual" />
           </div>
         );
