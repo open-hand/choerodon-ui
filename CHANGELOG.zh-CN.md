@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>Picture`: 优化 border 显示。
 - 💄 `<pro>Pagination`: 扩展 showPager 属性，支持输入框模式。showTotal 回调函数增加 page 和 pageSize 参数。
 - 💄 `<pro>Select`: 优化弹窗最小宽度限制。
+- 💄 `<pro>Picture`: 优化图片链接切换后的中间态样式。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

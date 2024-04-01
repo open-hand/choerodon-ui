@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import { Property } from 'csstype';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import isNumber from 'lodash/isNumber';
+import isNil from 'lodash/isNil';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from '../icon';
@@ -111,6 +112,11 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     elementStyle.height = h;
     wrapperStyle.height = h;
   }
+  useEffect(() => {
+    if (isNil(propStatus)) {
+      setStatus('empty');
+    }
+  }, [propStatus, src]);
   useEffect(() => {
     if (!propStatus && inView && src) {
       const img = new Image(width, height);
