@@ -560,6 +560,7 @@ export default class Lov extends Select<LovProps> {
           const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
           const valueField = this.getProp('valueField');
           const textField = this.getProp('textField');
+          const { tableProps: originalTableProps } = this.props;
           this.initedModalLovViewProps = {
             ...lovViewProps,
             viewMode,
@@ -579,7 +580,7 @@ export default class Lov extends Select<LovProps> {
           }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
-            children: (
+            children: isFunction(originalTableProps) ? null : (
               <LovView
                 {...this.initedModalLovViewProps}
               />
