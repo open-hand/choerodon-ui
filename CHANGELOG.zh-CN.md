@@ -74,6 +74,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 - 🐞 `<pro>Pagination`: 修复 onChange 的参数错误。优化 simple 模式下禁用的交互。
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
+- 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
 
 ## 1.6.4
 

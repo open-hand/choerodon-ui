@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 - 🐞 `<pro>Pagination`: Fix parameter error of `onChange`. Optimize interactions that are disabled in `simple` mode.
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
+- 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 
 ## 1.6.4
 
