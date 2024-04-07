@@ -49,6 +49,7 @@ timeline: true
 - 💄 `<pro>Picture`: Optimized the `border` display.
 - 💄 `<pro>Pagination`: Extends the `showPager` property to support input box mode. The `showTotal` callback adds the `page` and `pageSize` parameters.
 - 💄 `<pro>Select`: Optimized the minimum popup width limit.
+- 💄 `<pro>CodeArea`: Optimizing the display of the bottom scrolling area in CodeArea.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
