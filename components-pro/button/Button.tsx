@@ -246,6 +246,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleClickIfBubble(e) {
+    e.persist();
     const { wait, waitType } = this.props;
     if (wait && waitType) {
       e.stopPropagation();
@@ -257,7 +258,6 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   async handleClick(e) {
-    e.persist();
     const onButtonClick = this.context.getConfig('onButtonClick');
     if (onButtonClick && e) {
       const { target } = e;
