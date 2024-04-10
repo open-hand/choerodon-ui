@@ -77,6 +77,7 @@ timeline: true
 - 🐞 `<pro>Pagination`: Fix parameter error of `onChange`. Optimize interactions that are disabled in `simple` mode.
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
+- 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
 
 ## 1.6.4
 

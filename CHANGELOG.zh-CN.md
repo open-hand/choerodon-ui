@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>Pagination`: 修复 onChange 的参数错误。优化 simple 模式下禁用的交互。
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
 - 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
+- 🐞 `<pro>Modal`: 修复更新 Modal 内容后再关闭 Modal 时，Modal 内容显示错误的问题。
 
 ## 1.6.4
 

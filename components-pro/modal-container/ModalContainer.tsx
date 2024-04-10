@@ -651,9 +651,9 @@ export function open(props: ModalProps): ModalProxy {
     if ((await onClose()) !== false) {
       const $container = await getCurrentContainer();
       if (destroy) {
-        $container.close({ ...props, destroyOnClose: true });
+        $container.close({ key: props.key, destroyOnClose: true });
       } else {
-        $container.close(props);
+        $container.close({ key: props.key });
       }
     }
   }
