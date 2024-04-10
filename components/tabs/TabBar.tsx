@@ -18,9 +18,14 @@ import React, {
   useRef,
   useState,
   forwardRef,
+  ForwardRefExoticComponent,
+  isValidElement,
+  cloneElement,
+  RefObject,
 } from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 import Button from 'choerodon-ui/pro/lib/button';
 import { FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { useModal } from 'choerodon-ui/pro/lib/modal-provider/ModalProvider';
@@ -70,6 +75,24 @@ interface MenuKeyValue {
   key: string;
   tab: string;
 }
+
+const TabBarInnerWrapper: ForwardRefExoticComponent<PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> & { originalRef: RefObject<HTMLDivElement> }> =
+// @ts-ignore
+forwardRef(function TabBarInnerWrapper(props, ref: any) {
+  // 兼容 @dnd-kit/core 的 ref, ref 为 function
+  if (typeof ref === 'function') {
+    ref(props.originalRef.current);
+  } else {
+    ref = props.originalRef;
+  }
+
+  if (!isValidElement(props.children)) {
+    return props.children;
+  }
+  return cloneElement(props.children as ReactElement, {
+    ...omit(props, ['originalRef', 'children']),
+  });
+});
 
 const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const {
@@ -242,35 +265,33 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         </>
       );
 
-      const TabBarInnerWrapper = forwardRef(function TabBarInnerWrapper(props, ref: any) {
-        // 兼容 @dnd-kit/core 的 ref, ref 为 function
-        if (typeof ref === 'function') {
-          ref(tabBarRef[index].ref.current);
-        } else {
-          ref = tabBarRef[index].ref;
-        }
+      const tabBarInnerNode = (
+        <TabBarInner ref={tabBarRef[index].ref} {...tabProps} key={key} data-node-key={String(key)}>
+          <InvalidBadge prefixCls={prefixCls} isInvalid={() => key !== activeKey && validationMap.get(key) === false}>
+            {
+              type === TabsType['editable-card'] ? (
+                <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
+                  {title}
+                  {closable && <Icon type="close" onClick={e => onRemoveTab(key, e)} />}
+                </div>
+              ) : title
+            }
+          </InvalidBadge>
+        </TabBarInner>
+      );
 
-        return (
-          <TabBarInner ref={tabBarRef[index].ref} {...tabProps} {...props}>
-            <InvalidBadge prefixCls={prefixCls} isInvalid={() => key !== activeKey && validationMap.get(key) === false}>
-              {
-                type === TabsType['editable-card'] ? (
-                  <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
-                    {title}
-                    {closable && <Icon type="close" onClick={e => onRemoveTab(key, e)} />}
-                  </div>
-                ) : title
-              }
-            </InvalidBadge>
-          </TabBarInner>
-        );
-      });
+      const tabBarInnerWrapperNode = (
+        <TabBarInnerWrapper originalRef={tabBarRef[index].ref} {...tabProps} key={key} data-node-key={String(key)}>
+          {tabBarInnerNode}
+        </TabBarInnerWrapper>
+      );
+
       rst.push(
         typeof renderChildBar === 'function' ? (
-          renderChildBar(<TabBarInnerWrapper key={key} data-node-key={String(key)} />)
+          renderChildBar(tabBarInnerWrapperNode)
         ) : (
           <Ripple disabled={disabled || rippleDisabled} key={key}>
-            <TabBarInnerWrapper />
+            {tabBarInnerNode}
           </Ripple>
         ),
       );

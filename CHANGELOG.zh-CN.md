@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
 - 🌟 `Tree`: 新增 checkboxPosition 属性。
+- 🌟 `<pro>Table`: 新增 excel 批量填充和计数功能。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -46,12 +47,15 @@ timeline: true
 - 💄 `<pro>FormField`: 优化后缀鼠标事件关联到组件。
 - 💄 `<pro>Picture`: 优化 border 显示。
 - 💄 `<pro>Pagination`: 扩展 showPager 属性，支持输入框模式。showTotal 回调函数增加 page 和 pageSize 参数。
+- 💄 `<pro>Select`: 优化弹窗最小宽度限制。
+- 💄 `<pro>CodeArea`: 优化 CodeArea  底部滚动区域显示问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
 - 🐞 `<pro>PerformanceTable`: 修复个性化表头恢复默认后列分组树形结构丢失。
 - 🐞 `<pro>Lov`: 修复 Lov 单选禁用选项双击会关闭的问题。
 - 🐞 `<pro>Lov`: 修复双击后缀会查询两次和表格双击选中模式下单选框选值错误的问题。
+- 🐞 `<pro>Lov`: 修复回调类型 tableProps 设置 onRow 失效的问题。
 - 🐞 `<pro>Select`: 修复开启 defaultActiveFirstOption 时，分页查询后会定位到第一条数据的问题。
 - 🐞 `Tabs`: 修复焦点切换异常的问题。
 - 🐞 `Tabs`: 修复点击 showMore 中的 tab 没有触发 onTabClick 回调函数的问题。
@@ -71,6 +75,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 - 🐞 `<pro>Pagination`: 修复 onChange 的参数错误。优化 simple 模式下禁用的交互。
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
+- 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
 
 ## 1.6.4
 

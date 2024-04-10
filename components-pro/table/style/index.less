@@ -68,7 +68,25 @@
     display: none;
     border: @border-width-base @border-style-base @primary-color;
     pointer-events: none;
+    &-corner {
+      position: absolute;
+      right: -0.02rem;
+      bottom: -0.02rem;
+      width: 0.06rem;
+      height: 0.06rem;
+      background-color: @primary-color;
+      border: 1px solid rgb(255, 255, 255); 
+      cursor: crosshair;
+      pointer-events: all;
+    }
   }
+  &-expand-border {
+    position: absolute;
+    display: none;
+    border: @border-width-base @border-style-base red;
+    pointer-events: none;
+  }
+  
 
   &-clipboard {
     margin-bottom: 0.1rem;
@@ -91,7 +109,7 @@
     &-suffix {
       display: flex;
       align-items: center;
-      justify-content: flex-end ;
+      justify-content: flex-end;
     }
   }
 
@@ -119,6 +137,12 @@
   &-footer {
     padding: 0.08rem;
     text-align: left;
+  }
+
+  &-arrangeValue {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 20px;
   }
 
   &-export-progress-footer {
@@ -299,7 +323,11 @@
       position: sticky !important;
       z-index: 2;
       background-color: #fff;
-      background-image: linear-gradient(to right, @component-background 0%, @component-background 100%);
+      background-image: linear-gradient(
+        to right,
+        @component-background 0%,
+        @component-background 100%
+      );
       background-blend-mode: multiply;
     }
 
@@ -430,22 +458,34 @@
     }
   }
 
-  &-thead &-cell when not(@table-header-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
+  &-thead
+    &-cell
+    when
+    not(@table-header-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
     padding-top: @table-header-cell-padding-vertical-base;
     padding-bottom: @table-header-cell-padding-vertical-base;
   }
 
-  &-thead &-cell when not(@table-header-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
+  &-thead
+    &-cell
+    when
+    not(@table-header-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
     padding-right: @table-header-cell-padding-horizontal-base;
     padding-left: @table-header-cell-padding-horizontal-base;
   }
 
-  &-tfoot &-cell when not(@table-footer-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
+  &-tfoot
+    &-cell
+    when
+    not(@table-footer-cell-padding-vertical-base = @table-cell-padding-vertical-base) {
     padding-top: @table-footer-cell-padding-vertical-base;
     padding-bottom: @table-footer-cell-padding-vertical-base;
   }
 
-  &-tfoot &-cell when not(@table-footer-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
+  &-tfoot
+    &-cell
+    when
+    not(@table-footer-cell-padding-horizontal-base = @table-cell-padding-horizontal-base) {
     padding-right: @table-footer-cell-padding-horizontal-base;
     padding-left: @table-footer-cell-padding-horizontal-base;
   }
@@ -533,7 +573,7 @@
       padding-left: 0 !important;
     }
   }
-  
+
   .@{table-prefix-cls}-customized-column .@{c7n-pro-prefix}-btn:not(:hover) {
     color: @table-customization-button-color;
   }
@@ -590,7 +630,7 @@
     margin-top: .1rem;
 
     span {
-      line-height: .3rem
+      line-height: .3rem;
     }
 
     .@{c7n-prefix}-col-18 {
@@ -872,7 +912,6 @@
       margin-left: .05rem;
     }
   }
-
 
   &-toolbar {
     padding-bottom: 0.1rem;
@@ -1294,7 +1333,6 @@
     border-top: @table-tfoot-cell-border-top;
   }
 
-
   &:not(&-bordered) &-tbody &-cell {
     border-bottom-color: @table-notbordered-body-border-bottom-color;
   }
@@ -1349,7 +1387,9 @@
 
     .@{table-prefix-cls}-cell,
     .@{table-prefix-cls}-body .@{table-prefix-cls}-cell:last-child,
-    .@{table-prefix-cls}-fixed-left .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell:last-child {
+    .@{table-prefix-cls}-fixed-left
+      .@{table-prefix-cls}-tfoot
+      .@{table-prefix-cls}-cell:last-child {
       border-right-color: @border-color-base;
     }
 
@@ -1377,32 +1417,48 @@
 
 .sm() {
   &-small {
-    .@{table-prefix-cls}-cell when not(@table-cell-padding-vertical-sm = @table-cell-padding-vertical-base) {
+    .@{table-prefix-cls}-cell
+      when
+      not(@table-cell-padding-vertical-sm = @table-cell-padding-vertical-base) {
       padding-top: @table-cell-padding-vertical-sm;
       padding-bottom: @table-cell-padding-vertical-sm;
     }
 
-    .@{table-prefix-cls}-cell when not(@table-cell-padding-horizontal-sm = @table-cell-padding-horizontal-base) {
+    .@{table-prefix-cls}-cell
+      when
+      not(@table-cell-padding-horizontal-sm = @table-cell-padding-horizontal-base) {
       padding-right: @table-cell-padding-horizontal-sm;
       padding-left: @table-cell-padding-horizontal-sm;
     }
 
-    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell when not(@table-header-cell-padding-vertical-sm = @table-header-cell-padding-vertical-base) {
+    .@{table-prefix-cls}-thead
+      .@{table-prefix-cls}-cell
+      when
+      not(@table-header-cell-padding-vertical-sm = @table-header-cell-padding-vertical-base) {
       padding-top: @table-header-cell-padding-vertical-sm;
       padding-bottom: @table-header-cell-padding-vertical-sm;
     }
 
-    .@{table-prefix-cls}-thead .@{table-prefix-cls}-cell when not(@table-header-cell-padding-horizontal-sm = @table-header-cell-padding-horizontal-base) {
+    .@{table-prefix-cls}-thead
+      .@{table-prefix-cls}-cell
+      when
+      not(@table-header-cell-padding-horizontal-sm = @table-header-cell-padding-horizontal-base) {
       padding-right: @table-header-cell-padding-horizontal-sm;
       padding-left: @table-header-cell-padding-horizontal-sm;
     }
 
-    .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell when not(@table-footer-cell-padding-vertical-sm = @table-footer-cell-padding-vertical-base) {
+    .@{table-prefix-cls}-tfoot
+      .@{table-prefix-cls}-cell
+      when
+      not(@table-footer-cell-padding-vertical-sm = @table-footer-cell-padding-vertical-base) {
       padding-top: @table-footer-cell-padding-vertical-sm;
       padding-bottom: @table-footer-cell-padding-vertical-sm;
     }
 
-    .@{table-prefix-cls}-tfoot .@{table-prefix-cls}-cell when not(@table-footer-cell-padding-horizontal-sm = @table-footer-cell-padding-horizontal-base) {
+    .@{table-prefix-cls}-tfoot
+      .@{table-prefix-cls}-cell
+      when
+      not(@table-footer-cell-padding-horizontal-sm = @table-footer-cell-padding-horizontal-base) {
       padding-right: @table-footer-cell-padding-horizontal-sm;
       padding-left: @table-footer-cell-padding-horizontal-sm;
     }

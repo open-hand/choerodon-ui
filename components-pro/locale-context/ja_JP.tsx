@@ -163,6 +163,11 @@ const locale: Locale = {
     copy_pristine_success: '元の値のコピーに成功しました',
     paste_template: 'テンプレートの貼り付け',
     no_xlsx: 'xlsx構成がありません。エクスポートする前にxlsx構成を構成してください',
+    arrange_count: 'カウント',
+    arrange_avg: '平均',
+    arrange_max: '最大値',
+    arrange_min: '最小値',
+    arrange_sum: '合計＃ゴウケイ＃',
   },
   Pagination: {
     page: 'ページ',

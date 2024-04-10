@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
 - 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
 - 🌟 `Tree`: Added `checkboxPosition` property.
+- 🌟 `<pro>Table`: Adds batch filling and counting functions in Excel.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -47,12 +48,15 @@ timeline: true
 - 💄 `<pro>FormField`: Optimized the association of suffix mouse events with component.
 - 💄 `<pro>Picture`: Optimized the `border` display.
 - 💄 `<pro>Pagination`: Extends the `showPager` property to support input box mode. The `showTotal` callback adds the `page` and `pageSize` parameters.
+- 💄 `<pro>Select`: Optimized the minimum popup width limit.
+- 💄 `<pro>CodeArea`: Optimizing the display of the bottom scrolling area in CodeArea.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the column grouping tree structure was missing after the default restoration of the personalized table header.
 - 🐞 `<pro>Lov`: Fixed the issue where double clicking the Lov radio disable option would close.
 - 🐞 `<pro>Lov`: Fixed the issue that double-clicking the suffix would query twice and the single-check box selection error in the double-click selection mode of the table.
+- 🐞 `<pro>Lov`: Fixed the issue that the callback type `tableProps` setting `onRow` was invalid.
 - 🐞 `<pro>Select`: Fixed the issue that when `defaultActiveFirstOption` was enabled, the first piece of data would be found after a pagination query.
 - 🐞 `Tabs`: Fixed an issue with abnormal focus switching.
 - 🐞 `Tabs`: Fixed an issue where clicking `tab` in `showMore` did not trigger the `onTabClick` callback function.
@@ -72,6 +76,7 @@ timeline: true
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 - 🐞 `<pro>Pagination`: Fix parameter error of `onChange`. Optimize interactions that are disabled in `simple` mode.
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
+- 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 
 ## 1.6.4
 

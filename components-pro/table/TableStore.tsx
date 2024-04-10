@@ -60,6 +60,7 @@ import Table, {
   TableProps,
   TableQueryBarHook,
   Clipboard,
+  ArrangeValue,
 } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
@@ -76,6 +77,7 @@ import VirtualRowMetaData from './VirtualRowMetaData';
 import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
 import ColumnGroup from './ColumnGroup';
+import { getTdElementByTarget } from './TableCell';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -1044,6 +1046,14 @@ export default class TableStore {
   @observable shiftKey: boolean;
 
   @observable autoScrollRAF: number | null;
+
+  @observable arrangeValue: ArrangeValue;
+
+  @observable dragCorner: boolean;
+
+  @observable dragCornerPosition: { x: number; y: number };
+
+  @observable batchExpandRowNumber: number;
 
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
@@ -2872,6 +2882,19 @@ export default class TableStore {
     return { fixLeftClassname, fixRightClassname, fixLeftLength, fixRightLength };
   }
 
+  // 动态改变固定列层级
+  changeFixIndex(classname, zIndex = "") {
+    const { node: { tableContentWrap, tableBodyWrap } } = this;
+    const positionWrapper = tableBodyWrap || tableContentWrap;
+    if (positionWrapper) {
+      const fixElements = positionWrapper.querySelectorAll(`td.${classname}`);
+      const choosedRows = Array.from(fixElements);
+      choosedRows.forEach((element: HTMLElement) => {
+        element.style.zIndex = zIndex;
+      });
+    }
+  }
+
   @autobind
   drawCopyBorder(sTarget?: HTMLElement, eTarget?: HTMLElement) {
     const { node: { rangeBorder, tableContentWrap, tableBodyWrap }, startChooseCell, endChooseCell, lastScrollLeft, columnGroups, leftColumnGroups, customizable } = this;
@@ -2880,17 +2903,6 @@ export default class TableStore {
     const endTarget = eTarget || (endChooseCell && endChooseCell.target);
     const positionWrapper = tableBodyWrap || tableContentWrap;
     const maxScrollLeft = positionWrapper!.scrollWidth - positionWrapper!.clientWidth;
-
-    // 动态改变固定列层级
-    const changeFixIndex = (classname, zIndex = "") => {
-      if (positionWrapper) {
-        const fixElements = positionWrapper.querySelectorAll(`td.${classname}`);
-        const choosedRows = Array.from(fixElements);
-        choosedRows.forEach((element: HTMLElement) => {
-          element.style.zIndex = zIndex;
-        });
-      }
-    }
 
     if (rangeBorder && startTarget && endTarget) {
       const { fixLeftClassname, fixRightClassname, fixLeftLength, fixRightLength } = this.calcDrawBorderFixColumn(startTarget, endTarget);
@@ -2973,23 +2985,137 @@ export default class TableStore {
       // 动态改变固定列层级
       if (fixLeftLength && fixRightLength) {
         rangeBorder.style.zIndex = "2";
-        changeFixIndex(fixLeftClassname);
-        changeFixIndex(fixRightClassname);
+        this.changeFixIndex(fixLeftClassname);
+        this.changeFixIndex(fixRightClassname);
       } else if (fixLeftLength) {
         rangeBorder.style.zIndex = "2";
         if (fixLeftLength === 1) {
-          changeFixIndex(fixRightClassname, "3");
+          this.changeFixIndex(fixRightClassname, "3");
         }
-        changeFixIndex(fixLeftClassname);
+        this.changeFixIndex(fixLeftClassname);
       } else if (fixRightLength) {
         rangeBorder.style.zIndex = "2";
         if (fixRightLength === 1) {
-          changeFixIndex(fixLeftClassname, "3");
+          this.changeFixIndex(fixLeftClassname, "3");
         }
-        changeFixIndex(fixRightClassname);
+        this.changeFixIndex(fixRightClassname);
       } else {
         rangeBorder.style.zIndex = "1";
       }
+    }
+  }
+
+  @autobind
+  drawExpandArea(event) {
+    // 说明有起点 & 终点
+    const { node: { rangeBorder, expandBorder }, rowHeight, startChooseCell, endChooseCell } = this;
+    const sTarget = startChooseCell && startChooseCell.target;
+    const eTarget = endChooseCell && endChooseCell.target;
+    const pointTarget = getTdElementByTarget(event.target);
+
+    const targetTop = pointTarget.offsetTop + pointTarget.offsetHeight;
+    // 分析对比两点的位置，第一个点是 右下角。第二个点是 左上角
+    // 计算右下角的位置
+   
+    if (rangeBorder) {
+      const cornerTop = rangeBorder.offsetTop + rangeBorder.offsetHeight;
+
+      if (targetTop > cornerTop && sTarget && eTarget) {
+        // 往下绘制扩展区域
+        // 起点
+        const LT = {
+          x: Math.min(sTarget.offsetLeft, eTarget.offsetLeft),
+          y: Math.max(sTarget.offsetTop + sTarget.offsetHeight, eTarget.offsetTop + eTarget.offsetHeight),
+        }
+        // 终点
+        const RB = {
+          x: Math.max(sTarget.offsetLeft + sTarget.offsetWidth, eTarget.offsetLeft + eTarget.offsetWidth),
+          y: pointTarget.offsetTop + pointTarget.offsetHeight,
+        }
+
+        if (expandBorder) {
+          expandBorder.style.left = pxToRem(rangeBorder.offsetLeft)!;
+          expandBorder.style.top = pxToRem(LT.y)!;
+          expandBorder.style.width = pxToRem(rangeBorder.offsetWidth)!;
+          expandBorder.style.height = pxToRem(RB.y - LT.y)!;
+          expandBorder.style.borderTop = "none";
+          expandBorder.style.display = "block";
+
+          expandBorder.style.zIndex = rangeBorder.style.zIndex;
+
+        }
+
+        if (typeof rowHeight === 'number') {
+          const rows = (targetTop - cornerTop) / rowHeight;
+          this.batchExpandRowNumber = Math.floor(rows);
+        }
+      } else {
+        this.batchExpandRowNumber = 0;
+        if (expandBorder) { 
+          expandBorder.style.display = "none"; 
+        }
+      }
+    }
+  }
+
+  // 批量赋值款选单元格的值
+  @action
+  batchSetCellValue() {
+    const { node: { tableBodyWrap, expandBorder } } = this;
+    if (!this.batchExpandRowNumber) return;
+    // 记录初始框选的值
+    const { colIndex: startColIndex, rowIndex: startRowIndex, target: sTarget } = this.startChooseCell!;
+    const { colIndex: endColIndex, rowIndex: endRowIndex, target: eTarget } = this.endChooseCell!;
+
+    const minRowIndex = Math.min(startRowIndex, endRowIndex);
+    const minColIndex = Math.min(startColIndex, endColIndex);
+    const maxRowIndex = Math.max(startRowIndex, endRowIndex);
+    const maxColIndex = Math.max(startColIndex, endColIndex);
+
+    const data = this.currentData.map(x => x.toData());
+    const cols = this.columns.filter(x => !x.hidden);
+
+    let i = minRowIndex;
+    for (let k = 1; k <= this.batchExpandRowNumber; k++) {
+      for (let j = minColIndex; j <= maxColIndex; j++) {
+        const cField = cols[j].name;
+        const cValue = data[i][cField!];
+        const record = this.currentData[maxRowIndex + k];
+        record.set(cField!, cValue);
+      }
+      if (i < maxRowIndex && (k % (maxRowIndex - minRowIndex + 1) !== 0)) {
+        i++;
+      } else {
+        i = minRowIndex;
+      }
+    }
+    // 新起点
+    const newSTarget: HTMLElement = startRowIndex > endRowIndex ? eTarget : sTarget;
+    // 新终点
+    const trs = tableBodyWrap?.querySelectorAll('.c7n-pro-table-tbody tr');
+    if (trs) {
+      const dataIndex =(startRowIndex > endRowIndex ? sTarget : eTarget).getAttribute('data-index');
+      const newETarget: HTMLElement | null = trs[(startRowIndex > endRowIndex ? startRowIndex : endRowIndex) + this.batchExpandRowNumber].querySelector(`td[data-index="${dataIndex}"]`);
+      if (newETarget) {
+        this.drawCopyBorder(newSTarget, newETarget);
+      }
+      // 更新起始点
+      this.startChooseCell = {
+        rowIndex: startRowIndex > endRowIndex ? endRowIndex : startRowIndex,
+        colIndex: startRowIndex > endRowIndex ? endColIndex : startColIndex,
+        target: newSTarget,
+      }
+      this.endChooseCell = {
+        rowIndex: (startRowIndex > endRowIndex ? startRowIndex : endRowIndex) + this.batchExpandRowNumber,
+        colIndex: startRowIndex > endRowIndex ? startColIndex : endColIndex,
+        target: newETarget!,
+      }
+    }
+    if (expandBorder) {
+      expandBorder.style.display = "none"; 
+    }
+    if (this.clipboard && this.clipboard.copy) {
+      this.calcArrangeValue()
     }
   }
 
@@ -3255,6 +3381,52 @@ export default class TableStore {
       if (currentEditor) {
         currentEditor.blur();
       }
+    }
+  }
+
+  @action
+  calcArrangeValue() {
+    this.dragCorner = false;
+    const { colIndex: startColIndex, rowIndex: startRowIndex } = this.startChooseCell!;
+    const { colIndex: endColIndex, rowIndex: endRowIndex } = this.endChooseCell!;
+
+    const data = this.currentData.map(x => x.toData());
+    const cols = this.columns.filter(x => !x.hidden);
+
+    let sum = 0;
+    let avg = 0;
+    let count = 0;
+    let max = 0;
+    let min = 0;
+    const arrayValue: number[] = []
+
+    const minRowIndex = Math.min(startRowIndex, endRowIndex);
+    const minColIndex = Math.min(startColIndex, endColIndex);
+    const maxRowIndex = Math.max(startRowIndex, endRowIndex);
+    const maxColIndex = Math.max(startColIndex, endColIndex);
+
+    for (let i = minRowIndex; i <= maxRowIndex; i++) {
+      for (let j = minColIndex; j <= maxColIndex; j++) {
+        const field = cols[j].name;
+        const value: any = data[i][field!];
+        if (!isNaN(parseFloat(value)) && isFinite(value)) {
+          sum += Number(value);
+          arrayValue.push(Number(value));
+          count++;
+        }
+      }
+    }
+
+    avg = count ? Math.floor(sum / count) : 0;
+    max = arrayValue.length ? Math.max(...arrayValue) : 0;
+    min = arrayValue.length ? Math.min(...arrayValue) : 0;
+
+    this.arrangeValue = {
+      avg,
+      sum,
+      max,
+      min,
+      count,
     }
   }
 }

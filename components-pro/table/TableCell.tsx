@@ -43,7 +43,7 @@ function getRowSpan(group: Group, tableStore: TableStore): number {
   return group.expandedRecords.length;
 }
 
-function getTdElementByTarget(target: HTMLElement): HTMLElement {
+export function getTdElementByTarget(target: HTMLElement): HTMLElement {
   if (target.tagName.toLowerCase() !== "td") {
     return getTdElementByTarget(target.parentElement!);
   }
@@ -70,7 +70,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
-  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable } = tableStore;
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -148,24 +148,31 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleDocumentMouseUp = useCallback(action<(e) => void>(() => {
     tableStore.isFinishChooseCell = true;
+    // 开始计数求和、求平均、个数、最小、最大
+    tableStore.calcArrangeValue()
     stopAutoScroll();
-  }), []);
+  }), [dragCorner]);
 
   const handleMouseOver = useCallback(action<(e) => void>((event) => {
-    if ((rowDraggable && !dragColumnAlign) || key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
-    if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
-      const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
-      if (colIndex >= 0) {
-        const startTarget = startChooseCell.target;
-        const endTarget = getTdElementByTarget(event.target);
-        tableStore.endChooseCell = { colIndex, rowIndex, target: endTarget! };
-        if (endTarget) {
-          drawCopyBorder(startTarget, endTarget)
+    if (dragCorner) {
+      // 绘制扩展区域
+      drawExpandArea(event);
+    } else {
+      if ((rowDraggable && !dragColumnAlign) || key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
+      if (startChooseCell && !isFinishChooseCell && !currentEditorName) {
+        const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
+        if (colIndex >= 0) {
+          const startTarget = startChooseCell.target;
+          const endTarget = getTdElementByTarget(event.target);
+          tableStore.endChooseCell = { colIndex, rowIndex, target: endTarget! };
+          if (endTarget) {
+            drawCopyBorder(startTarget, endTarget)
+          }
         }
+        autoScroll(event)
       }
-      autoScroll(event)
     }
-  }), [startChooseCell, isFinishChooseCell, currentEditorName]);
+  }), [startChooseCell, isFinishChooseCell, currentEditorName, dragCorner]);
 
   const autoScroll = (event) => {
     // 控制滚动条自动滚动
@@ -262,8 +269,14 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseUp = useCallback(action<(e) => void>(() => {
     tableStore.isFinishChooseCell = true;
+    // 开始计数求和、求平均、个数、最小、最大
+    tableStore.calcArrangeValue()
+    if (dragCorner) {
+      // 批量赋值
+      tableStore.batchSetCellValue()
+    }
     stopAutoScroll();
-  }), []);
+  }), [dragCorner]);
 
   const isChoose = useMemo(() => {
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
