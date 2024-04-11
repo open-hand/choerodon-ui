@@ -433,6 +433,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }
 
   componentDidUpdate() {
+    super.componentDidUpdate();
     this.forcePopupAlign();
   }
 

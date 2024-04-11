@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 import noop from 'lodash/noop';
 import ModalManager from '../modal-manager';
-import Modal, { ModalProps } from './Modal';
+import Modal from './index';
+import { ModalProps } from './Modal';
 import { getContainer } from '../modal-container/ModalContainer';
 import Icon from '../icon';
 import { confirmProps, normalizeProps } from './utils';

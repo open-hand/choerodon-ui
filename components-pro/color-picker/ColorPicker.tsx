@@ -160,6 +160,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   componentDidUpdate() {
+    super.componentDidUpdate();
     const { popup } = this;
     if (popup) {
       const { h, s, v, a } = this.HSV;
