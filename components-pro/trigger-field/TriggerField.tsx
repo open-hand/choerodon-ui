@@ -109,12 +109,12 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
   }
 
   componentDidMount(): void {
-    this.domNode = this.getRootDomNode();
+    this.domNode = findDOMNode(this);
     super.componentDidMount();
   }
 
   componentDidUpdate() {
-    this.domNode = this.getRootDomNode();
+    this.domNode = findDOMNode(this);
   }
 
   @autobind

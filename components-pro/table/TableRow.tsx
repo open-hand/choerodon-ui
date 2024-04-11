@@ -290,8 +290,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       mounted.current = false;
       /**
        * Fixed the when row resize has scrollbar the expanded row would be collapsed
+       * !propVirtual: Tree virtual scrolling collapses parent rows automatically collapses some of the child rows
        */
-      if (!tableStore.isRowExpanded(record)) {
+      if (!tableStore.isRowExpanded(record) && !propVirtual) {
         tableStore.setRowExpanded(record, false, true);
       }
       if (!isStickySupport()) {

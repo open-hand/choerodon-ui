@@ -31,9 +31,9 @@ const ModalProvider = (props: ModalProviderProps) => {
         const { onClose = noop } = modalProps;
         if ((await onClose()) !== false) {
           if (destroy) {
-            container.close({ ...modalProps, destroyOnClose: true });
+            container.close({ key: modalProps.key, destroyOnClose: true });
           } else {
-            container.close(modalProps);
+            container.close({ key: modalProps.key });
           }
         }
       };

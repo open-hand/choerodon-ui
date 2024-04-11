@@ -71,11 +71,13 @@ timeline: true
 - 🐞 `<pro>ModalProvider`: 修复弹窗嵌套弹窗，并设置 getContainer 属性时死循环的问题。
 - 🐞 `<pro>Table`: 修复组合筛选条下，个性化中列拖拽不到最后的问题。
 - 🐞 `<pro>Table`: 修复大数据量下虚拟滚动报错问题。
+- 🐞 `<pro>Table`: 修复树形模式下开启虚拟滚动，收起父节点会导致部分子节点被收起的问题。
 - 🐞 `<pro>Table.DynamicFilterBar`: 修复未点击到展开收起图标仍会触发查询条件折叠的问题。
 - 🐞 `<pro>SelectBox`: 修复在关联了 DataSet 的 Form 下，受控模式显示错误问题。
 - 🐞 `<pro>Pagination`: 修复 onChange 的参数错误。优化 simple 模式下禁用的交互。
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
 - 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
+- 🐞 `<pro>Modal`: 修复更新 Modal 内容后再关闭 Modal 时，Modal 内容显示错误的问题。
 
 ## 1.6.4
 

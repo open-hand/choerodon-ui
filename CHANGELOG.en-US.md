@@ -72,11 +72,13 @@ timeline: true
 - 🐞 `<pro>ModalProvider`: Fixed an issue where pop-ups nested pop-ups and set `getContainer` property.
 - 🐞 `<pro>Table`: Fixed an issue where the personalization column could not be dragged to the end under the `ComboBar`.
 - 🐞 `<pro>Table`: Fixed the issue of `virtual` scrolling error when large data volume is generated.
+- 🐞 `<pro>Table`: Fixed the issue that if `virtual` scrolling is enabled in tree mode, collapsing the parent node will cause some child nodes to be collapsed.
 - 🐞 `<pro>Table.DynamicFilterBar`: Fixed the issue that if you did not click the expand and collapse icon, the query condition would still be folded.
 - 🐞 `<pro>SelectBox`: Fixed a controlled mode display error in the `Form` associated with the `DataSet`.
 - 🐞 `<pro>Pagination`: Fix parameter error of `onChange`. Optimize interactions that are disabled in `simple` mode.
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
+- 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
 
 ## 1.6.4
 
