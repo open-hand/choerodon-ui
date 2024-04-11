@@ -477,7 +477,7 @@ export default class Trigger extends Component<TriggerProps> {
   handleDocumentMouseDown = debounce((e) => {
     if (this.popup) {
       const { target } = e;
-      if (!contains(findDOMNode(this), target) && !contains(findDOMNode(this.popup), target)) {
+      if (target.isConnected && !contains(findDOMNode(this), target) && !contains(findDOMNode(this.popup), target)) {
         this.setPopupHidden(true);
       }
     }
