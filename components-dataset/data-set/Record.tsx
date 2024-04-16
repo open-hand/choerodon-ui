@@ -21,6 +21,7 @@ import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
 import omit from 'lodash/omit';
 import isPlainObject from 'lodash/isPlainObject';
+import cloneDeep from 'lodash/cloneDeep';
 import { isSame, warning } from '../utils';
 import DataSet, { addDataSetField, RecordValidationErrors } from './DataSet';
 import Field, { FieldProps, Fields } from './Field';
@@ -1170,7 +1171,7 @@ export default class Record {
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
-    const newData = { ...data };
+    const newData = cloneDeep(data);
     const fields = getSortedFields(this.dataSet);
     fields.forEach((field, fieldName) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }
