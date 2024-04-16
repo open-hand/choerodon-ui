@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `Tree`: 新增 checkboxPosition 属性。
 - 🌟 `<pro>Table`: 新增 excel 批量填充和计数功能。
 - 🌟 `<pro>DataSet`: 新增 submitRecord 方法。
+- 🌟 `<pro>Picture`: status 属性新增 loading 状态。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -79,6 +80,7 @@ timeline: true
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
 - 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
 - 🐞 `<pro>Modal`: 修复更新 Modal 内容后再关闭 Modal 时，Modal 内容显示错误的问题。
+- 🐞 `<pro>DataSet`: 修复使用 loadData 加载数据且字段设置 transformResponse 时，原数据被修改的问题。
 
 ## 1.6.4
 

@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `Tree`: Added `checkboxPosition` property.
 - 🌟 `<pro>Table`: Adds batch filling and counting functions in Excel.
 - 🌟 `<pro>DataSet`: Added `submitRecord` method.
+- 🌟 `<pro>Picture`: The `loading` state is added to the `status` attribute.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -80,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 - 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
+- 🐞 `<pro>DataSet`: Fixed an issue where the original data was modified when the data was loaded using `loadData` and the field set `transformResponse`.
 
 ## 1.6.4
 
