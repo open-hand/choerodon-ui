@@ -47,7 +47,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
     eventKey,
     ...restProps
   } = props;
-  const { validationMap } = useContext(TabsContext);
+  const { validationMap, showInvalidTips } = useContext(TabsContext);
   const dsList: DataSet[] = dataSet ? ([] as DataSet[]).concat(dataSet) : [];
   const invalidComponents: Set<any> = useMemo(() => new Set<any>(), []);
   const { length } = dsList;
@@ -57,6 +57,12 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   const paneRef = useRef<HTMLDivElement>(null);
 
   const handleValidationReport = useCallback(action<(props: { showInvalid, component }) => void>((validationProps) => {
+    if (showInvalidTips === false) {
+      if (validationMap.size) {
+        validationMap.clear();
+      }
+      return;
+    }
     // why validationProps is undefined?
     if (validationProps) {
       const { showInvalid, component } = validationProps;
@@ -69,7 +75,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
         validationMap.set(eventKey, invalidComponents.size === 0);
       }
     }
-  }), [eventKey, disabled, invalidComponents]);
+  }), [eventKey, disabled, invalidComponents, showInvalidTips]);
   const handleValidate = useCallback(({ valid, dataSet }) => {
     handleValidationReport({
       showInvalid: !valid,
@@ -110,7 +116,7 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
   }, [destroyInactiveTabPane, active]);
 
   useEffect(() => {
-    if (length && !disabled) {
+    if (length && !disabled && showInvalidTips !== false) {
       dsList.forEach(
         ds => ds
           .addEventListener(DataSetEvents.validate, handleValidate)
@@ -126,9 +132,9 @@ const TabPane: FunctionComponent<TabPaneProps> = function TabPane(props) {
           .removeEventListener(DataSetEvents.reset, handleReset),
       );
     }
-  }, [active, disabled, handleValidate, handleReset, handleRemove, length, ...dsList]);
+  }, [active, disabled, handleValidate, handleReset, handleRemove, length, showInvalidTips, ...dsList]);
 
-  const childrenWithProvider = length ? children : (
+  const childrenWithProvider = length || showInvalidTips === false ? children : (
     <ConfigProvider onComponentValidationReport={handleValidationReport}>
       {children}
     </ConfigProvider>

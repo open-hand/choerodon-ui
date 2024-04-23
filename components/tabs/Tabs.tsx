@@ -66,6 +66,10 @@ export interface TabsProps {
   restoreDefault?: boolean;
   renderTabBar?: RenderTabBar;
   showMorePopupClassName?: string;
+  /**
+   * 是否开启 DataSet 校验
+   */
+  showInvalidTips?: boolean;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }

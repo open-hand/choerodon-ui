@@ -15,11 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition 属性。
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition, tabsShowInvalidTips 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
-- 🌟 `Tabs`: 新增 renderTabBar, showMorePopupClassName 属性。
+- 🌟 `Tabs`: 新增 renderTabBar, showMorePopupClassName, showInvalidTips 属性。
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
@@ -81,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
 - 🐞 `<pro>Modal`: 修复更新 Modal 内容后再关闭 Modal 时，Modal 内容显示错误的问题。
 - 🐞 `<pro>DataSet`: 修复使用 loadData 加载数据且字段设置 transformResponse 时，原数据被修改的问题。
+- 🐞 `<pro>DatePicker`: 修复在 week 和 range 模式下且关联 DataSet 时，值不更新的问题。
 
 ## 1.6.4
 
