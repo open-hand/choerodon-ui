@@ -15,11 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition` property.
+- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition`, `tabsShowInvalidTips` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
-- 🌟 `Tabs`: Added `renderTabBar`, `showMorePopupClassName` property.
+- 🌟 `Tabs`: Added `renderTabBar`, `showMorePopupClassName`, `showInvalidTips` property.
 - 🌟 `Upload`: Added `pictureCardShowName` property.
 - 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
@@ -82,6 +82,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 - 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
 - 🐞 `<pro>DataSet`: Fixed an issue where the original data was modified when the data was loaded using `loadData` and the field set `transformResponse`.
+- 🐞 `<pro>DatePicker`: Fixed an issue where values were not updated in `week` and `range` mode and when the `DataSet` was associated.
 
 ## 1.6.4
 

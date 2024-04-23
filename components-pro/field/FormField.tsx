@@ -500,6 +500,13 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return rangeSeparator || '~';
   }
 
+  /**
+   * blur 时特殊需要执行 endRange
+   */
+  get doEndRange(): boolean {
+    return false;
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -918,7 +925,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   handleBlur(e) {
     super.handleBlur(e);
-    if (this.range && (this.editable || this.isEditableLike())) {
+    if (this.range && (this.editable || this.isEditableLike() || this.doEndRange)) {
       this.endRange();
     }
   }
