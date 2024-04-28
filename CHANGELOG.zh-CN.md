@@ -64,6 +64,7 @@ timeline: true
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Attachment`: 修复分片上传情况下 onUploadSuccess 执行时机过早的问题。
+- 🐞 `<pro>Attachment`: 修复 DS 值变更后附件列表信息不更新的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
 - 🐞 `<pro>Table`: 修复 comboBar 个性化字段配置列顺序错误问题。

@@ -65,6 +65,7 @@ timeline: true
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 - 🐞 `<pro>Attachment`: Fixed the issue that `onUploadSuccess` was executed too early in the case of multipart upload.
+- 🐞 `<pro>Attachment`: Fixed an issue where attachment list information was not updated after the DS value was changed.
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 - 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
