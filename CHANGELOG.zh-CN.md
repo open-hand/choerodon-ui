@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
 - 🌟 `Tree`: 新增 checkboxPosition 属性。
 - 🌟 `<pro>Table`: 新增 excel 批量填充和计数功能。
+- 🌟 `<pro>IntlField`: 新增语言字段支持主字段 trim 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。

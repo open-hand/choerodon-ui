@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
 - 🌟 `Tree`: Added `checkboxPosition` property.
 - 🌟 `<pro>Table`: Adds batch filling and counting functions in Excel.
+- 🌟 `<pro>IntlField`: Added support for the language field to support the `trim` attribute of the main field.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
