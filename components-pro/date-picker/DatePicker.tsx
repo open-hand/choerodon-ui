@@ -213,6 +213,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return range && comboRangeMode && mode !== ViewMode.dateTime && mode !== ViewMode.time && mode === viewMode;
   }
 
+  /**
+   * blur 时特殊需要执行 endRange
+   */
+  get doEndRange(): boolean {
+    return this.getViewMode() === ViewMode.week;
+  }
+
   disposer: IReactionDisposer;
 
   view: DatePickerKeyboardEvent | null;

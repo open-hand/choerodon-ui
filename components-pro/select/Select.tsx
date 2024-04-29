@@ -490,6 +490,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   componentDidUpdate() {
+    super.componentDidUpdate();
     this.forcePopupAlign();
   }
 

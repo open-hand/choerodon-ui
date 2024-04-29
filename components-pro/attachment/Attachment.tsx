@@ -132,6 +132,8 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   uploader?: Uploader;
 
+  @observable oldValue?: string | undefined;
+
   @observable tempAttachmentUUID?: string | undefined;
 
   tempRemovedAttachments?: AttachmentFile[];
@@ -242,6 +244,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { value, viewMode } = this.props;
     if (prevProps.value !== value || prevProps.viewMode !== viewMode) {
       this.fetchCount();
+    }
+    if (viewMode === 'popup' && this.oldValue !== this.getValue()) {
+      this.fetchCount();
+      runInAction(() => this.oldValue = this.getValue());
     }
   }
 

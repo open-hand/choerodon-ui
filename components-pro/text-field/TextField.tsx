@@ -1221,7 +1221,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           props[`on${evt}`](e);
         }
         if (this.element) {
-          this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: true }));
+          setTimeout(() => this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: true })));
         }
       };
     })

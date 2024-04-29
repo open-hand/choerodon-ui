@@ -355,7 +355,7 @@ export type FieldProps = {
   /**
    * LOV查询请求的钩子
    */
-  lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig) => AxiosRequestConfig);
+  lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig, props?: TransportHookProps) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */
@@ -1357,6 +1357,7 @@ export default class Field {
     if (fetchList) {
       fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results: FileLike[]) => {
         this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
+        this.checkValidity(record);
       }));
     }
   }
@@ -1372,6 +1373,7 @@ export default class Field {
         isPublic,
       }, this).then((count) => {
         this.setAttachmentCount(count, record);
+        this.checkValidity(record);
       });
     }
   }

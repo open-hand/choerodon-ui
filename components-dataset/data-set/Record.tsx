@@ -1170,7 +1170,11 @@ export default class Record {
   }
 
   private processData(data: object = {}, needMerge?: boolean): void {
-    const newData = { ...data };
+    const newData = toJS(data, {
+      detectCycles: true,
+      exportMapsAsObjects: true,
+      recurseEverything: true,
+    });
     const fields = getSortedFields(this.dataSet);
     fields.forEach((field, fieldName) => this.processFieldValue(fieldName, field, fields, newData, data, needMerge));
   }

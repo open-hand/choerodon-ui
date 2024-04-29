@@ -84,6 +84,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     restoreDefault,
     renderTabBar,
     showMorePopupClassName,
+    showInvalidTips = getConfig('tabsShowInvalidTips'),
     ...restProps
   } = props;
   const hasPropActiveKey = 'activeKey' in props;
@@ -214,6 +215,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     defaultChangeable,
     rippleDisabled,
     restoreDefault,
+    showInvalidTips,
   };
   const inkBarAnimated = isAnimated(animated) ? animated.inkBar : animated;
   let tabPaneAnimated = isAnimated(animated) ? animated.tabPane : animated;
