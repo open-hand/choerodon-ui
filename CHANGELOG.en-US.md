@@ -83,7 +83,6 @@ timeline: true
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 - 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
-- 🐞 `<pro>DataSet`: Fixed an issue where the original data was modified when the data was loaded using `loadData` and the field set `transformResponse`.
 - 🐞 `<pro>DatePicker`: Fixed an issue where values were not updated in `week` and `range` mode and when the `DataSet` was associated.
 
 ## 1.6.4
