@@ -70,7 +70,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
-  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea } = tableStore;
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea, node: { rangeBorder } } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -124,7 +124,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
-    if (key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) {
+      if (rangeBorder) {
+        rangeBorder.style.display = 'none';
+      }
+      tableStore.clearArrangeValue();
+      return;
+    }
     // 往上层一直找到  td  元素
     const startTarget = getTdElementByTarget(target);
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
@@ -141,15 +147,16 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
       drawCopyBorder(tableStore.startChooseCell.target, startTarget);
       tableStore.isFinishChooseCell = false;
-
       document.addEventListener('mouseup', handleDocumentMouseUp, { once: true });
     }
   }), [endChooseCell]);
 
-  const handleDocumentMouseUp = useCallback(action<(e) => void>(() => {
+  const handleDocumentMouseUp = useCallback(action<(e) => void>((event) => {
     tableStore.isFinishChooseCell = true;
+    const { target } = event;
     // 开始计数求和、求平均、个数、最小、最大
-    tableStore.calcArrangeValue()
+    tableStore.calcArrangeValue();
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
     stopAutoScroll();
   }), [dragCorner]);
 
@@ -267,13 +274,15 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
   }
 
-  const handleMouseUp = useCallback(action<(e) => void>(() => {
+  const handleMouseUp = useCallback(action<(e) => void>((event) => {
     tableStore.isFinishChooseCell = true;
+    const { target } = event;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
     // 开始计数求和、求平均、个数、最小、最大
-    tableStore.calcArrangeValue()
+    tableStore.calcArrangeValue();
     if (dragCorner) {
       // 批量赋值
-      tableStore.batchSetCellValue()
+      tableStore.batchSetCellValue();
     }
     stopAutoScroll();
   }), [dragCorner]);
