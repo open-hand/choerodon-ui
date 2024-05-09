@@ -149,8 +149,10 @@ export class LovCodeStore {
       const defineBatch = field
         ? field.get('lovDefineBatchAxiosConfig', record) || field.dataSet.getConfig('lovDefineBatchAxiosConfig')
         : globalGetConfig('lovDefineBatchAxiosConfig');
-      const useLovDefineBatch = code &&
-        (field ? field.dataSet.getConfig('useLovDefineBatch') : globalGetConfig('useLovDefineBatch'))(code, field) !== false;
+      const useLovDefineBatchFunc = field
+        ? field.get('useLovDefineBatch', record) || field.dataSet.getConfig('useLovDefineBatch')
+        : globalGetConfig('useLovDefineBatch');
+      const useLovDefineBatch = code && useLovDefineBatchFunc(code, field) !== false;
       if (defineBatch && useLovDefineBatch) {
         config = await this.fetchDefineInBatch(code, defineBatch, field);
         runInAction(() => {

@@ -10,12 +10,14 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  CSSProperties,
 } from 'react';
 import { isArrayLike } from 'mobx';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import isNil from 'lodash/isNil';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import FormContext from './FormContext';
 import { defaultLabelWidth, FIELD_SUFFIX, getProperty, normalizeLabelWidth, getPropertyDSFirst, getRequiredMarkAlign } from './utils';
 import { LabelLayout } from './enum';
@@ -40,6 +42,7 @@ export interface LabelProps {
   width?: number;
   help?: ReactNode;
   labelWordBreak?: boolean;
+  labelStyle?: CSSProperties;
 }
 
 export interface LabelHelpProps {
@@ -51,10 +54,15 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Label: FunctionComponent<LabelProps> = (props) => {
-  const { children, className, tooltip, width, help, labelWordBreak } = props;
+  const { children, className, tooltip, width, help, labelWordBreak, labelStyle } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
-  const style = useMemo(() => width ? ({ width }) : undefined, [width]);
+  const style = useMemo(() => {
+    return {
+      ...labelStyle,
+      width: pxToRem(width),
+    }
+  }, [width, labelStyle]);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
     if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && !labelWordBreak && isOverflow(currentTarget))) {
@@ -78,7 +86,7 @@ const Label: FunctionComponent<LabelProps> = (props) => {
         tooltipRef.current = true;
       }
     }
-  }, [children, tooltip, tooltipRef]);
+  }, [children, tooltip, tooltipRef, labelWordBreak]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();
@@ -170,12 +178,22 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
         </div>
       );
     }
+    let labelStyle: { minWidth?: string; maxWidth?: string } = {};
+    if (typeof contextLabelWidth === 'object' && !isArrayLike(contextLabelWidth) &&
+      (!isNil(contextLabelWidth.minWidth) || !isNil(contextLabelWidth.maxWidth))) {
+      labelStyle = {
+        minWidth: pxToRem(contextLabelWidth.minWidth),
+        maxWidth: pxToRem(contextLabelWidth.maxWidth),
+      };
+    }
     const label = getProperty(fieldProps, 'label', dataSet, record);
     const required = getPropertyDSFirst(fieldProps, 'required', dataSet, record);
     const readOnly = getProperty(fieldProps, 'readOnly', dataSet, record);
     const help = getProperty(fieldProps, 'help', dataSet, record);
     const fieldLabelWordBreak = getProperty(fieldProps, 'labelWordBreak', dataSet, record);
-    const labelWordBreak = !isNil(fieldLabelWordBreak) ? fieldLabelWordBreak : contextLabelWordBreak;
+    const labelWordBreak = (!isNil(labelStyle.minWidth) || !isNil(labelStyle.maxWidth))
+      ? false
+      : !isNil(fieldLabelWordBreak) ? fieldLabelWordBreak : contextLabelWordBreak;
     const isLabelShowHelp = (fieldElementProps.showHelp || showHelp || getConfig('showHelp')) === ShowHelp.label;
     const isOutput = labelLayout === LabelLayout.horizontal && ((child.type as any).displayName === 'Output' || intlFieldOutput);
     const labelClassName = classNames(`${prefixCls}-label`, `${prefixCls}-label-grid`, `${prefixCls}-label-${labelAlign}`, fieldClassName, {
@@ -207,7 +225,16 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     return (
       <Row className={`${prefixCls}-row`}>
         <Col className={`${prefixCls}-col`}>
-          <Label className={labelClassName} width={labelWidth} tooltip={tooltip} help={helpWrap} labelWordBreak={labelWordBreak}><span>{label}</span></Label>
+          <Label
+            className={labelClassName}
+            width={labelWidth}
+            tooltip={tooltip}
+            help={helpWrap}
+            labelWordBreak={labelWordBreak}
+            labelStyle={labelStyle}
+          >
+            <span>{label}</span>
+          </Label>
         </Col>
         <Col className={`${prefixCls}-col ${prefixCls}-col-control`}>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>

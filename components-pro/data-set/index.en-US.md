@@ -336,6 +336,8 @@ title: DataSet
 | help | 额外信息，常用于提示 | ReactNode |  |
 | dateMode | 显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  |
 | accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
+| useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  |
+| useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  |
 
 ### Field Values
 

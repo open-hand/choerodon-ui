@@ -280,6 +280,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'editorInPopup',
       'defaultTime',
       'useInvalidDate',
+      'comboRangeMode',
     ]);
   }
 
