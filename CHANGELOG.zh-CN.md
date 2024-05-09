@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>IntlField`: 新增语言字段支持主字段 trim 属性。
 - 🌟 `<pro>DataSet`: 新增 submitRecord 方法。
 - 🌟 `<pro>Picture`: status 属性新增 loading 状态。
+- 🌟 `<pro>Table`: 双向复制新增 hiddenTip 隐藏提示属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -52,6 +53,7 @@ timeline: true
 - 💄 `<pro>Pagination`: 扩展 showPager 属性，支持输入框模式。showTotal 回调函数增加 page 和 pageSize 参数。
 - 💄 `<pro>Select`: 优化弹窗最小宽度限制。
 - 💄 `<pro>CodeArea`: 优化 CodeArea  底部滚动区域显示问题。
+- 💄 `<pro>Table`: 优化开启双向复制后点击编辑框的响应性能。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

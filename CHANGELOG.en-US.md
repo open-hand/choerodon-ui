@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `<pro>IntlField`: Added support for the language field to support the `trim` attribute of the main field.
 - 🌟 `<pro>DataSet`: Added `submitRecord` method.
 - 🌟 `<pro>Picture`: The `loading` state is added to the `status` attribute.
+- 🌟 `<pro>Table`: Bidirectional replication adds `hiddenTip` hidden prompt attribute.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -53,6 +54,7 @@ timeline: true
 - 💄 `<pro>Pagination`: Extends the `showPager` property to support input box mode. The `showTotal` callback adds the `page` and `pageSize` parameters.
 - 💄 `<pro>Select`: Optimized the minimum popup width limit.
 - 💄 `<pro>CodeArea`: Optimizing the display of the bottom scrolling area in CodeArea.
+- 💄 `<pro>Table`: Optimize the response performance of clicking on the edit box after enabling bidirectional replication.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.

@@ -305,6 +305,7 @@ spin的配置项。
 | paste | 是否开启表格粘贴，开启后只有可编辑的单元格才能被粘贴数据。 | boolean | false |
 | description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - |
 | arrangeCalc | 开启范围计数 | boolean \| ReactNode | false |
+| hiddenTip | 关闭提示 | boolean | false |
 
 ### instance methods
 
