@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 submitRecord 方法。
 - 🌟 `<pro>Picture`: status 属性新增 loading 状态。
 - 🌟 `<pro>Table`: 双向复制新增 hiddenTip 隐藏提示属性。
+- 🌟 `<pro>DataSet.Field`: 新增 useLookupBatch, useLovDefineBatch 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -54,6 +55,9 @@ timeline: true
 - 💄 `<pro>Select`: 优化弹窗最小宽度限制。
 - 💄 `<pro>CodeArea`: 优化 CodeArea  底部滚动区域显示问题。
 - 💄 `<pro>Table`: 优化开启双向复制后点击编辑框的响应性能。
+- 💄 `<pro>Attachment`: renderIcon 扩展支持 picture 模式。
+- 💄 `<pro>Lov`: 优化 popup 模式下弹窗的宽度。
+- 💄 `<pro>Form`: 扩展 labelWidth 属性，支持设置最小和最大宽度。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。

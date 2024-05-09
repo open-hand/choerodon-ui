@@ -69,7 +69,7 @@ const NameGen: IterableIterator<string> = (function* (start: number) {
   }
 })(0);
 
-export type LabelWidth = number | 'auto' | (number | 'auto')[];
+export type LabelWidth = number | 'auto' | (number | 'auto')[] | ({ minWidth?: number; maxWidth?: number });
 
 export type LabelWidthType = LabelWidth | { [key in ResponsiveKeys]: LabelWidth };
 export type LabelAlignType = LabelAlign | { [key in ResponsiveKeys]: LabelAlign };
@@ -375,6 +375,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     if (isNumber(labelWidth) || (isArrayLike(labelWidth) && !hasBreakPointMap(labelWidth))) {
       return labelWidth;
     }
+    if (labelWidth && (!isNil(labelWidth.minWidth) || !isNil(labelWidth.maxWidth))) {
+      return labelWidth;
+    }
     if (labelWidth) {
       const responsiveWidth = this.responsiveItems[1];
       if (responsiveWidth !== undefined) {
@@ -386,6 +389,11 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   @computed
   get labelWordBreak(): boolean {
+    const { labelWidth: oriLabelWidth } = this;
+    if (typeof oriLabelWidth === 'object' && !isArrayLike(oriLabelWidth) &&
+      (!isNil(oriLabelWidth.minWidth) || !isNil(oriLabelWidth.maxWidth))) {
+      return false;
+    }
     let { labelWordBreak } = this.observableProps;
     if (isNil(labelWordBreak)) {
       labelWordBreak = this.getContextConfig('labelWordBreak');
@@ -837,6 +845,18 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       matrix[rowIndex] = matrix[rowIndex] || [];
     }
 
+    let labelWidthStyle: { minWidth?: string; maxWidth?: string } = {};
+    if (!noLabel) {
+      const { labelWidth: oriLabelWidth } = this;
+      if (typeof oriLabelWidth === 'object' && !isArrayLike(oriLabelWidth) &&
+        (!isNil(oriLabelWidth.minWidth) || !isNil(oriLabelWidth.maxWidth))) {
+        labelWidthStyle = {
+          minWidth: pxToRem(oriLabelWidth.minWidth),
+          maxWidth: pxToRem(oriLabelWidth.maxWidth),
+        };
+      }
+    }
+
     for (let index = 0, len = childrenArray.length; index < len;) {
       const { props, key, type, ref } = childrenArray[index];
 
@@ -847,7 +867,9 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const fieldLabelWordBreak = getProperty(props, 'labelWordBreak', dataSet, record);
       const required = getPropertyDSFirst(props, 'required', dataSet, record);
       const readOnly = getProperty(props, 'readOnly', dataSet, record) || formReadOnly;
-      const labelWordBreak = !isNil(fieldLabelWordBreak) ? fieldLabelWordBreak : formLabelWordBreak;
+      const labelWordBreak = (!isNil(labelWidthStyle.minWidth) || !isNil(labelWidthStyle.maxWidth))
+        ? false
+        : !isNil(fieldLabelWordBreak) ? fieldLabelWordBreak : formLabelWordBreak;
       const intlFieldOutput = TagName === 'IntlField' && props && props.displayOutput;
       const {
         rowSpan = 1,
@@ -921,12 +943,13 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
           labelWidth[colIndex] = Math.max(columnLabelWidth, fieldLabelWidth);
         }
         const tooltip = 'labelTooltip' in props ? props.labelTooltip : labelTooltip;
+        const itemLabelStyle = spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined;
         cols.push(
           <FormItemLabel
             key={`row-${rowIndex}-col-${colIndex}-label`}
             className={labelClassName}
             rowSpan={rowSpan}
-            style={spacingProperties ? getSpacingLabelStyle(spacingProperties, isLabelLayoutHorizontal, rowIndex) : undefined}
+            style={{ ...(itemLabelStyle || {}), ...labelWidthStyle }}
             tooltip={tooltip}
             help={isLabelShowHelp ? this.renderTooltipHelp(help, fieldElementProps.helpTooltipProps) : undefined}
             labelWordBreak={labelWordBreak}
@@ -973,7 +996,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         const key = `label-${i}`;
         const columnLabelWidth = labelWidth[i % columns];
         if (columnLabelWidth === 'auto') {
-          cols.push(<col key={key} />);
+          cols.push(<col key={key} style={labelWidthStyle} />);
         } else {
           cols.push(
             <col

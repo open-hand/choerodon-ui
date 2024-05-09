@@ -470,6 +470,8 @@ export type FieldProps = {
    * 占位词
    */
   placeholder?: string | string[];
+  useLookupBatch?: (code: string, field?: Field) => boolean;
+  useLovDefineBatch?: (code: string, field?: Field) => boolean;
 };
 
 const defaultProps: FieldProps = {
@@ -1262,7 +1264,8 @@ export default class Field {
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || this.dataSet.getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
-    const useLookupBatch = lookupCode && this.dataSet.getConfig('useLookupBatch')(lookupCode, this) !== false;
+    const useLookupBatchFunc = this.get('useLookupBatch', record) || this.dataSet.getConfig('useLookupBatch');
+    const useLookupBatch = lookupCode && useLookupBatchFunc(lookupCode, this) !== false;
     let promise;
     if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());

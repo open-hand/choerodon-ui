@@ -340,6 +340,7 @@ export default class Lov extends Select<LovProps> {
         queryBar: popupSearchMode === PopupSearchMode.single ? TableQueryBarType.none : this.renderSearchField,
         border: false,
         size: Size.small,
+        autoWidth: false,
       });
       const { onBeforeSelect, viewMode } = this.props;
       return (

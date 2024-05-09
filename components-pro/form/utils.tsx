@@ -22,8 +22,14 @@ export function normalizeLabelWidth(labelWidth: LabelWidth, columns: number): (n
   if (isNumber(labelWidth) || labelWidth === 'auto') {
     return new Array(columns).fill(labelWidth);
   }
+  if (labelWidth && !isArrayLike(labelWidth) &&
+    (!isNil(labelWidth.minWidth) || !isNil(labelWidth.maxWidth))) {
+    return new Array(columns).fill('auto');
+  }
   const labelWidths = new Array(columns).fill(defaultLabelWidth);
-  labelWidth.slice(0, columns).forEach((width, index) => (labelWidths[index] = width));
+  if (isArrayLike(labelWidth)) {
+    labelWidth.slice(0, columns).forEach((width, index) => (labelWidths[index] = width));
+  }
   return labelWidths;
 }
 
