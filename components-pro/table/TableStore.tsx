@@ -3061,7 +3061,7 @@ export default class TableStore {
   // 批量赋值款选单元格的值
   @action
   batchSetCellValue() {
-    const { node: { tableBodyWrap, expandBorder } } = this;
+    const { node: { tableBodyWrap, expandBorder }, dataSet } = this;
     if (!this.batchExpandRowNumber) return;
     // 记录初始框选的值
     const { colIndex: startColIndex, rowIndex: startRowIndex, target: sTarget } = this.startChooseCell!;
@@ -3081,7 +3081,10 @@ export default class TableStore {
         const cField = cols[j].name;
         const cValue = data[i][cField!];
         const record = this.currentData[maxRowIndex + k];
-        record.set(cField!, cValue);
+        const field = dataSet.fields.get(cField!);
+        if (cols[j].editor && field && !field.readOnly && !field.disabled) {
+          record.set(cField!, cValue);
+        }
       }
       if (i < maxRowIndex && (k % (maxRowIndex - minRowIndex + 1) !== 0)) {
         i++;
@@ -3398,6 +3401,7 @@ export default class TableStore {
     let count = 0;
     let max = 0;
     let min = 0;
+    let cellCount = 0;
     const arrayValue: number[] = []
 
     const minRowIndex = Math.min(startRowIndex, endRowIndex);
@@ -3414,10 +3418,11 @@ export default class TableStore {
           arrayValue.push(Number(value));
           count++;
         }
+        cellCount++;
       }
     }
 
-    avg = count ? Math.floor(sum / count) : 0;
+    avg = count ? Number((sum / count).toPrecision(3)) : 0;
     max = arrayValue.length ? Math.max(...arrayValue) : 0;
     min = arrayValue.length ? Math.min(...arrayValue) : 0;
 
@@ -3426,7 +3431,7 @@ export default class TableStore {
       sum,
       max,
       min,
-      count,
+      count: cellCount,
     }
   }
 }

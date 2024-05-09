@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
 import { observer } from 'mobx-react';
-import moment from 'moment';
+import moment, { isMoment } from 'moment';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
@@ -301,6 +301,7 @@ export interface TableCustomized {
 export interface Clipboard {
   paste?: boolean;
   copy?: boolean;
+  hiddenTip?: boolean;
   description?: string | ReactNode;
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
 }
@@ -1447,6 +1448,9 @@ export default class Table extends DataSetComponent<TableProps> {
                     const text = field.getText(recordData);
                     recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
                   }
+                  if (field && fieldType === FieldType.date && isMoment(recordData)) { 
+                    recordData = recordData.format(field.get('format') || 'YYYY-MM-DD');
+                  }
                   if (columns[j] && columns[j].column.renderer) {
                     const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
                     const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
@@ -2026,7 +2030,7 @@ export default class Table extends DataSetComponent<TableProps> {
           >
             <TableSibling position="before" boxSizing={boxSizing}>
               {this.getHeader()}
-              {clipboard && (clipboard.copy || clipboard.paste) && <ClipboardBar clipboard={clipboard} />}
+              {clipboard && !clipboard.hiddenTip && <ClipboardBar clipboard={clipboard} />}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}

@@ -124,7 +124,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
-    if (key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
     // 往上层一直找到  td  元素
     const startTarget = getTdElementByTarget(target);
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
@@ -141,15 +141,16 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
       drawCopyBorder(tableStore.startChooseCell.target, startTarget);
       tableStore.isFinishChooseCell = false;
-
       document.addEventListener('mouseup', handleDocumentMouseUp, { once: true });
     }
   }), [endChooseCell]);
 
-  const handleDocumentMouseUp = useCallback(action<(e) => void>(() => {
+  const handleDocumentMouseUp = useCallback(action<(e) => void>((event) => {
     tableStore.isFinishChooseCell = true;
+    const { target } = event;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
     // 开始计数求和、求平均、个数、最小、最大
-    tableStore.calcArrangeValue()
+    tableStore.calcArrangeValue();
     stopAutoScroll();
   }), [dragCorner]);
 
@@ -267,13 +268,15 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
   }
 
-  const handleMouseUp = useCallback(action<(e) => void>(() => {
+  const handleMouseUp = useCallback(action<(e) => void>((event) => {
     tableStore.isFinishChooseCell = true;
     // 开始计数求和、求平均、个数、最小、最大
-    tableStore.calcArrangeValue()
+    const { target } = event;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
+    tableStore.calcArrangeValue();
     if (dragCorner) {
       // 批量赋值
-      tableStore.batchSetCellValue()
+      tableStore.batchSetCellValue();
     }
     stopAutoScroll();
   }), [dragCorner]);
