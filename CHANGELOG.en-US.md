@@ -59,6 +59,7 @@ timeline: true
 - 💄 `<pro>Attachment`: The `renderIcon` extension supports `picture` mode.
 - 💄 `<pro>Lov`: Optimized the popup width in `popup` mode.
 - 💄 `<pro>Form`: Extends the `labelWidth` property to support setting minimum and maximum widths.
+- 💄 `<pro>Attachment`: Optimize the display of the number of `readOnly` mode.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.

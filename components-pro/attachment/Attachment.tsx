@@ -723,8 +723,11 @@ export default class Attachment extends FormField<AttachmentProps> {
       return true;
     }
     const max = this.getProp('max');
+    const { count = 0 } = this;
+    if (this.readOnly) {
+      return count === 0;
+    }
     if (max) {
-      const { count = 0 } = this;
       return count >= max;
     }
     return false;
@@ -838,7 +841,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {...omit(rest, ['ref'])}
         className={this.getMergedClassNames()}
       >
-        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
+        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple ? this.count || 0 : undefined}
       </Button>
     );
   }
