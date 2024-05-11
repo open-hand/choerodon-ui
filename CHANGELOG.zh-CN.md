@@ -58,6 +58,7 @@ timeline: true
 - 💄 `<pro>Attachment`: renderIcon 扩展支持 picture 模式。
 - 💄 `<pro>Lov`: 优化 popup 模式下弹窗的宽度。
 - 💄 `<pro>Form`: 扩展 labelWidth 属性，支持设置最小和最大宽度。
+- 💄 `<pro>Attachment`: 优化只读状态文件数量显示。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
