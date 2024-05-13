@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `<pro>Picture`: status 属性新增 loading 状态。
 - 🌟 `<pro>Table`: 双向复制新增 hiddenTip 隐藏提示属性。
 - 🌟 `<pro>DataSet.Field`: 新增 useLookupBatch, useLovDefineBatch 属性。
+- 🌟 `<pro>Table`: 新增 rowNumberColumnProps 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
