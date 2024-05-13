@@ -836,6 +836,7 @@ export interface TableProps extends DataSetComponentProps {
    * 是否自定义 DragDropContenxt，配合 rowDraggable 属性一起使用。开启后，使用 react-beautiful-dnd 的 DragDropContenxt 可以实现表格与表格之间的拖拽
    */
   customDragDropContenxt?: boolean;
+  rowNumberColumnProps?: ColumnProps | ((defaultProps: ColumnProps) => ColumnProps);
 }
 
 @observer
@@ -1761,6 +1762,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'boxSizing',
       'fullColumnWidth',
       'dragDropContextProps',
+      'rowNumberColumnProps',
     ]);
   }
 

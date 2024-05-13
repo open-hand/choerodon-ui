@@ -1946,9 +1946,9 @@ export default class TableStore {
 
   @computed
   get rowNumberColumn(): ColumnProps | undefined {
-    const { rowNumber } = this.props;
+    const { rowNumber, rowNumberColumnProps = {} } = this.props;
     if (rowNumber) {
-      return {
+      const defaultProps = {
         key: ROW_NUMBER_KEY,
         resizable: true,
         titleEditable: false,
@@ -1959,6 +1959,9 @@ export default class TableStore {
         width: scaleSize(50),
         lock: true,
       };
+      return isFunction(rowNumberColumnProps)
+        ? { ...defaultProps, ...rowNumberColumnProps(defaultProps) }
+        : { ...defaultProps, ...rowNumberColumnProps };
     }
     return undefined;
   }
