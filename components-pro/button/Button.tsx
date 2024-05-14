@@ -1,5 +1,5 @@
 import React, { Children, ReactNode } from 'react';
-import { DebouncedFunc, DebounceSettings } from 'lodash';
+import { DebouncedFunc, DebounceSettings, isFunction } from 'lodash';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -246,7 +246,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleClickIfBubble(e) {
-    e.persist();
+    if (isFunction(e.persist)) e.persist();
     const { wait, waitType } = this.props;
     if (wait && waitType) {
       e.stopPropagation();
