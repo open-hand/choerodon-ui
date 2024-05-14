@@ -21,6 +21,8 @@ export interface UploadListProps extends FormFieldProps {
   remove: (file: UploadFile) => void;
 }
 
+const fileIconSize = '0.2rem';
+
 export default class UploadList extends FormField<UploadListProps> {
   static displayName = 'UploadList';
 
@@ -44,16 +46,16 @@ export default class UploadList extends FormField<UploadListProps> {
           previewImg = <CompressedfileIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
           break;
         case 'doc':
-          previewImg = <DocIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
+          previewImg = <DocIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
           break;
         case 'pdf':
-          previewImg = <PdfIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
+          previewImg = <PdfIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
           break;
         case 'xls':
-          previewImg = <XlsIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
+          previewImg = <XlsIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
           break;
         default:
-          previewImg = <FileuploadIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
+          previewImg = <FileuploadIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
       }
     }
     return previewImg;
