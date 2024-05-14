@@ -547,12 +547,13 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   getPopupContainer(target: HTMLElement): HTMLElement | undefined {
     if (target) {
-      let docNode: HTMLElement | ParentNode | null = target;
-      while (docNode && !(docNode instanceof Document)) {
+      let docNode: Document | HTMLElement | ParentNode | null = target;
+      // find document
+      while (docNode && (docNode as HTMLElement).nodeType !== 9) {
         docNode = (docNode as HTMLElement).parentNode;
       }
-      if (docNode && (docNode instanceof Document)) {
-        return docNode.body;
+      if (docNode) {
+        return (docNode as Document).body;
       }
     }
   }
