@@ -605,8 +605,8 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
     const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
     if (summaryBar) {
-      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits - 1));
-      const moreSummary = summaryBar.slice(summaryFieldsLimits - 1);
+      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
+      const moreSummary = summaryBar.slice(summaryFieldsLimits);
       const moreSummaryBar = this.renderSummary(moreSummary);
       const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
       return (
