@@ -1449,7 +1449,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     const text = field.getText(recordData);
                     recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
                   }
-                  if (field && fieldType === FieldType.date && isMoment(recordData)) { 
+                  if (field && [FieldType.date, FieldType.dateTime, FieldType.time].includes(fieldType) && isMoment(recordData)) { 
                     recordData = recordData.format(field.get('format') || 'YYYY-MM-DD');
                   }
                   if (columns[j] && columns[j].column.renderer) {
@@ -1468,7 +1468,17 @@ export default class Table extends DataSetComponent<TableProps> {
             }
 
             recordData = isNil(recordData) ? '' : recordData;
-            copyData.push(j === maxColIndex ? `${recordData} \t\n` : `${recordData} \t`);
+            let parseData;
+            if (j === maxColIndex) { 
+              if (i !== maxRowIndex) { 
+                parseData = `${recordData}\t\n`
+              } else {
+                parseData = `${recordData}`
+              }
+            } else {
+              parseData = `${recordData}\t`
+            }
+            copyData.push(parseData);
           }
         }
         copyToClipboard().writeText(copyData.join('')).then(() => {
@@ -1593,7 +1603,7 @@ export default class Table extends DataSetComponent<TableProps> {
                       }
                       const data = await optionDs.query(1, obj);
                       if (this.dataSet && data) {
-                        const current = data[this.dataSet.dataKey][0];
+                        const current = data[optionDs.dataKey][0];
                         text = current || null;
                       }
                       return text;
@@ -1609,7 +1619,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     // eslint-disable-next-line no-await-in-loop
                     const data = await optionDs.query(1, obj);
                     if (this.dataSet && data) {
-                      const current = data[this.dataSet.dataKey][0];
+                      const current = data[optionDs.dataKey][0];
                       text = current || null;
                     }
                   }
