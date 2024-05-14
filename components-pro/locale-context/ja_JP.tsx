@@ -196,6 +196,7 @@ const locale: Locale = {
     view_attachment: '添付ファイルを表示',
     no_attachments: '添付ファイルなし',
     by_upload_time: 'アップロード時間別',
+    by_custom: 'カスタムソート',
     by_name: '名前で',
     operation_records: '運用記録',
     view_operation_records: '操作記録の表示',
