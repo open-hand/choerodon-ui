@@ -3433,7 +3433,7 @@ export default class TableStore {
       }
     }
 
-    avg = count ? Number((sum / count).toPrecision(3)) : 0;
+    avg = count ? Number((sum / count).toFixed(3)) : 0;
     max = arrayValue.length ? Math.max(...arrayValue) : 0;
     min = arrayValue.length ? Math.min(...arrayValue) : 0;
 

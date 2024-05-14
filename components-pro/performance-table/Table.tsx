@@ -3289,7 +3289,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             components && components.table && React.isValidElement(components.table) ?
               React.cloneElement(
                 components.table,
-                { ...gridProps, refs: this.tableRef },
+                { ...gridProps, ref: this.tableRef },
                 components.table.props.children || gridChildren) :
               (
                 <div
