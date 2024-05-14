@@ -193,6 +193,7 @@ const locale: Locale = {
     view_attachment: 'View attachment',
     no_attachments: 'No attachments',
     by_upload_time: 'By upload time',
+    by_custom: 'Custom sorting',
     by_name: 'By name',
     operation_records: 'Operation records',
     view_operation_records: 'View operation records',

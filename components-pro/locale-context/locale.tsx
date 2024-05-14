@@ -195,6 +195,7 @@ export interface Locale extends DataSetLocale {
     no_attachments: string;
     by_upload_time: string;
     by_name: string;
+    by_custom: string;
     operation_records: string;
     view_operation_records: string;
     download: string;
