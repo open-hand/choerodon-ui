@@ -622,9 +622,12 @@
     &-item-group-title {
       height: 0.32rem;
       padding: 0 @control-padding-horizontal;
+      overflow: hidden;
       color: @text-color-secondary;
       font-size: @font-size-sm;
       line-height: 0.32rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     &-item {
