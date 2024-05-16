@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.5
+
+`2024-05-16`
+
 - 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition`, `tabsShowInvalidTips` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.

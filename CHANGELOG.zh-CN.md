@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.5
+
+`2024-05-16`
+
 - 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition, tabsShowInvalidTips 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
