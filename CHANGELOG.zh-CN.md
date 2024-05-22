@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
+
 ## 1.6.5
 
 `2024-05-16`

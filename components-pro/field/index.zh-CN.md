@@ -35,6 +35,7 @@ title: FormField
 | maxTagPlaceholder | 多值标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxTagCount | 多值标签最大数量 | number |  |
 | maxTagTextLength | 多值标签文案最大长度 | number |  |
+| overMaxTagCountTooltip | 超过多值标签最大数量是否显示 tooltip, 或者自定义 tooltip 内容 | boolean \| (options: { title: string, record?: Record }) => ReactNode | true |
 | pristine | 显示原始值 | boolean | false |
 | trim | 字符串值是否去掉首尾空格，如果绑定 DataSet 需要在 DataSet 的 Field 上设置 trim，可选值: `both` `left` `right` `none` | string | `both` |
 | format | 字符串格式化，可选值: `uppercase` `lowercase` `capitalize` | string |  |
