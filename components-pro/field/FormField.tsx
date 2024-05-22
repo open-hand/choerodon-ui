@@ -233,6 +233,11 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
    */
   maxTagTextLength?: number;
   /**
+   * 多值超过 maxTagCount 时是否显示 tooltip，或者设置自定义内容
+   * @default true;
+   */
+  overMaxTagCountTooltip?: boolean | ((options: { title: string, record?: Record }) => ReactNode);
+  /**
    * 显示原始值
    */
   pristine?: boolean;
@@ -305,6 +310,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     disabled: false,
     noValidate: false,
     trim: FieldTrim.both,
+    overMaxTagCountTooltip: true,
   };
 
   emptyValue?: any = null;
@@ -640,6 +646,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       'showValidation',
       'tagRenderer',
       'labelWordBreak',
+      'overMaxTagCountTooltip',
     ]);
   }
 

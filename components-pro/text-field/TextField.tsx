@@ -10,7 +10,7 @@ import React, {
   ReactElement,
   ReactNode,
 } from 'react';
-import { DebouncedFunc, DebounceSettings } from 'lodash';
+import { DebouncedFunc, DebounceSettings, isFunction } from 'lodash';
 import omit from 'lodash/omit';
 import defer from 'lodash/defer';
 import isArray from 'lodash/isArray';
@@ -504,14 +504,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMultipleMouseEnter(e) {
     const { onMouseEnter } = this.getOtherProps();
+    const { overMaxTagCountTooltip } = this.props;
     // 禁用时 ViewComponent 会在 wrapper 层触发 mouseEnter
     if (!this.disabled && onMouseEnter) {
       onMouseEnter(e);
     }
-    show(e.currentTarget, {
-      title: this.getMultipleText(),
-    });
-    this.tooltipShown = true;
+    if (overMaxTagCountTooltip) {
+      const title = isFunction(overMaxTagCountTooltip) ? overMaxTagCountTooltip({ title: this.getMultipleText(), record: this.record }) : this.getMultipleText();
+      show(e.currentTarget, {
+        title,
+      });
+      this.tooltipShown = true;
+    }
   }
 
   @autobind
