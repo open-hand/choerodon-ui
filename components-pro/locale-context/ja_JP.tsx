@@ -271,6 +271,8 @@ const locale: Locale = {
   },
   Transfer: {
     items: 'アイテム',
+    search_placeholder_right: '検索をお願いします',
+    search_placeholder_left: '検索をお願いします',
   },
   UrlField: {
     value_missing_no_label: 'urlを入力してください。',

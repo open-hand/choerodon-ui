@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isString from 'lodash/isString';
 import { Select, SelectProps } from '../select/Select';
 import Option from '../option/Option';
 import OptGroup from '../option/OptGroup';
@@ -19,6 +20,7 @@ export interface TransferProps extends SelectProps {
   operations?: string[] | ReactNode[];
   sortable?: boolean;
   sortOperations?: string[] | ReactNode[];
+  placeholderOperations?: string[] | string;
   oneWay?: boolean;
 }
 
@@ -252,7 +254,7 @@ export default class Transfer extends Select<TransferProps> {
       sourceSelected,
       multiple,
       valueField,
-      props: { titles = [], operations = [], sortOperations = [], sortable, oneWay },
+      props: { titles = [], operations = [], sortOperations = [], sortable, oneWay, placeholderOperations = [] },
     } = this;
 
     const targetValues = this.getValues();
@@ -300,6 +302,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelect={this.handleMenuClick}
           optionsFilter={this.sourceFilter}
           direction="left"
+          placeholder={isString(placeholderOperations) ? placeholderOperations : placeholderOperations[0]}
           {...customOption}
         />
         <TransferOperation
@@ -323,6 +326,7 @@ export default class Transfer extends Select<TransferProps> {
           onSelect={this.handleTargetMenuClick}
           optionsFilter={this.targetFilter}
           direction="right"
+          placeholder={isString(placeholderOperations) ? placeholderOperations : placeholderOperations[1]}
           setTargetOption={this.handleSetTargetOption}
           {...customOption}
           {...oneWayProps}

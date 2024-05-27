@@ -268,6 +268,8 @@ const locale: Locale = {
   },
   Transfer: {
     items: '项',
+    search_placeholder_right: '请输入搜索内容',
+    search_placeholder_left: '请输入搜索内容',
   },
   UrlField: {
     value_missing_no_label: '请输入网址。',

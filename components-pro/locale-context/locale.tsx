@@ -271,6 +271,8 @@ export interface Locale extends DataSetLocale {
   };
   Transfer: {
     items: string;
+    search_placeholder_left: string;
+    search_placeholder_right: string;
   };
   UrlField: {
     value_missing: string;

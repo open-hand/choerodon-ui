@@ -163,7 +163,7 @@ export default class TransferList extends Select<TransferListProps> {
   }
 
   getSearchField(): ReactNode {
-    const { prefixCls } = this;
+    const { prefixCls, props: { direction, placeholder } } = this;
     return (
       <div className={`${prefixCls}-body-search-wrapper`}>
         <ObserverTextField
@@ -172,6 +172,7 @@ export default class TransferList extends Select<TransferListProps> {
           onClear={this.handleClear}
           onKeyDown={this.handleKeyDown}
           prefix={<Icon type="search" />}
+          placeholder={placeholder || $l('Transfer', `search_placeholder_${direction === 'left' ? 'left' : 'right'}`)}
           clearButton
         />
       </div>

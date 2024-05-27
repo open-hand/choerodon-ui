@@ -268,6 +268,8 @@ const locale: Locale = {
   },
   Transfer: {
     items: 'items',
+    search_placeholder_right: 'Please enter your search',
+    search_placeholder_left: 'Please enter your search',
   },
   UrlField: {
     value_missing_no_label: 'Please input a url address.',

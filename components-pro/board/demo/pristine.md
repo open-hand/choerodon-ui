@@ -382,7 +382,7 @@ class App extends React.Component {
                   return {
                     // url: `read api`,
                     url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                      'https://hzero-test.open.hand-china.com/mock/filterlist',
                     method: 'get',
                   };
                 case 'create':
@@ -401,7 +401,7 @@ class App extends React.Component {
                   return {
                     // url: `destroy api`,
                     url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                      'https://hzero-test.open.hand-china.com/mock/listDel',
                     data: data[0],
                     method: 'delete',
                   };
@@ -438,7 +438,7 @@ class App extends React.Component {
                 const { page, pagesize } = params;
                 console.log('allDsProps', params, data)
                 return {
-                  url: `https://www.fastmock.site/mock/88094cedc533477197594c65034be8ce/views/kanbanall`,
+                  url: `https://hzero-test.open.hand-china.com/mock/kanbanall`,
                   method: 'get',
                 };
               },
@@ -450,7 +450,7 @@ class App extends React.Component {
                 const { page, pagesize } = params;
                 console.log('columnDsProps', params, data)
                 return {
-                  url: `https://www.fastmock.site/mock/88094cedc533477197594c65034be8ce/views/querymore`,
+                  url: `https://hzero-test.open.hand-china.com/mock/querymore`,
                   method: 'get',
                 };
               },

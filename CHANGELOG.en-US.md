@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
+- 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
 
 ## 1.6.5
 

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
+- 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
 
 ## 1.6.5
 

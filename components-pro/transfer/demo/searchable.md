@@ -39,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Transfer dataSet={this.ds} name="last-name" searchable>
+      <Transfer dataSet={this.ds} name="last-name" searchable placeholderOperations={["请搜索", "请搜索右侧"]}>
         <Option value="jack">Jack</Option>
         <Option value="lucy">Lucy</Option>
         <Option value="huazhen">Huazhen</Option>
