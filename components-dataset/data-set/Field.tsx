@@ -1021,7 +1021,7 @@ export default class Field {
       }
       return value[textField];
     }
-    return value;
+    return showValueIfNotFound ? value : undefined;
   }
 
   setOptions(options: DataSet): void {

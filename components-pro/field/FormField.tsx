@@ -1045,18 +1045,20 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       dataSet,
       props: { renderer = this.defaultRenderer, name, maxTagTextLength },
     } = this;
+    const showValueIfNotFound = this.getContextConfig('showValueIfNotFound');
     let processedValue;
-    if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
+
+    if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record) || field.get('lookupCode', record))) {
       // Cascader 值集处理
       if (isArrayLike(value)) {
         const isCascader = !field.get('multiple', record) || value.some(v => isArrayLike(v));
-        processedValue = value.map(v => field.getText(v, undefined, record)).join(isCascader ? '/' : '、');
+        processedValue = value.map(v => field.getText(v, showValueIfNotFound, record)).join(isCascader ? '/' : '、');
       } else {
         processedValue = field.getText(value, undefined, record) as string;
       }
     }
     // 值集中不存在 再去取直接返回的值
-    const text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
+    const text = this.processText((isNil(processedValue) && showValueIfNotFound) ? this.processValue(value) : processedValue);
     return renderer
       ? renderer({
         value,

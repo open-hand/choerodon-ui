@@ -188,6 +188,7 @@ const defaults = {
   tabsShowInvalidTips: true,
   rangeSeparator: '~',
   treeCheckboxPosition: 'default' as TreeCheckboxPosition,
+  showValueIfNotFound: true,
 };
 
 export default defaults;
