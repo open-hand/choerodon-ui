@@ -20,6 +20,7 @@ title: Transfer
 | operations | A set of operations that are sorted from bottom to top. | string\[] \| ReactNode[] | ['>', '<'] |
 | sortable | If included, it will show sort button | boolean | false |
 | sortOperations | A set of sort that are sorted raise and down. | string\[] \| ReactNode[] | ['∧', '∨'] |
+| placeholderOperations | 搜索文案集合 | string\[]\| string | Please enter your search |
 | oneWay | One way shuttle | boolean | false |
 
 更多属性请参考 [Select](/components-pro/select/#Select)。

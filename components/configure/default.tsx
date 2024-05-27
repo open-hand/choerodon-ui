@@ -185,6 +185,7 @@ const defaults = {
   fieldFocusMode: FieldFocusMode.checked,
   formAutoFocus: false,
   tabsDefaultChangeable: true,
+  tabsShowInvalidTips: true,
   rangeSeparator: '~',
   treeCheckboxPosition: 'default' as TreeCheckboxPosition,
 };

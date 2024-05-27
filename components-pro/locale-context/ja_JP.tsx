@@ -196,6 +196,7 @@ const locale: Locale = {
     view_attachment: '添付ファイルを表示',
     no_attachments: '添付ファイルなし',
     by_upload_time: 'アップロード時間別',
+    by_custom: 'カスタムソート',
     by_name: '名前で',
     operation_records: '運用記録',
     view_operation_records: '操作記録の表示',
@@ -270,6 +271,8 @@ const locale: Locale = {
   },
   Transfer: {
     items: 'アイテム',
+    search_placeholder_right: '検索をお願いします',
+    search_placeholder_left: '検索をお願いします',
   },
   UrlField: {
     value_missing_no_label: 'urlを入力してください。',

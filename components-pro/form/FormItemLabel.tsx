@@ -43,7 +43,7 @@ const FormItemLabel: FunctionComponent<FormLabelProps> = function FormItemLabel(
         tooltipRef.current = true;
       }
     }
-  }, [tooltip, children, tooltipRef]);
+  }, [tooltip, children, tooltipRef, labelWordBreak]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();

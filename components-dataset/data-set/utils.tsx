@@ -885,7 +885,7 @@ export function processIntlField(
 ): [Field, Map<string, Field> | undefined] {
   const field = callback({ ...fieldProps, name });
   if (fieldProps && fieldProps.type === FieldType.intl) {
-    const { transformRequest } = fieldProps;
+    const { transformRequest, trim } = fieldProps;
     const tlsKey = dataSet.getConfig('tlsKey');
     const { supports } = localeContext;
     const languages = Object.keys(supports);
@@ -896,6 +896,7 @@ export function processIntlField(
         type: FieldType.string,
         label: `${supports[language]}`,
         transformRequest,
+        trim,
         dynamicProps: {
           bind: ({ record }) => {
             if (record) {

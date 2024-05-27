@@ -92,12 +92,16 @@ const App = () => {
             <SelectBox label="labelWidth" value={labelWidth} onChange={setLabelWidth}>
               <Option value={fixedLabelWidth}>固定宽度[{fixedLabelWidth}]</Option>
               <Option value="auto">自动宽度auto</Option>
+              <Option value="minWidth&maxWidth">范围宽度</Option>
             </SelectBox>
           )
         }
       </Form>
       <Form
-        labelWidth={labelWidth === 'auto' ? labelWidth : labelWidth.split(',').map(width => Number(width))}
+        labelWidth={(labelWidth === 'auto' ? labelWidth
+          : labelWidth === 'minWidth&maxWidth'
+            ? { minWidth: 100, maxWidth: 150 }
+            : labelWidth.split(',').map(width => Number(width)))}
         labelLayout={labelLayout}
         labelTooltip="overflow"
         labelAlign={labelAlign}

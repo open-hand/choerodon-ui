@@ -1410,6 +1410,18 @@ export default class DataSet extends EventManager {
     return false;
   }
 
+  async submitRecord(record: Record): Promise<any> {
+    if (!record) return false;
+    const records = ([] as Record[]).concat(record);
+    await this.ready();
+    if (await this.validateRecords(records)) {
+      return this.pending.add(
+        this.write(records),
+      );
+    }
+    return false;
+  }
+
   /**
    * 强制将数据集中的增删改的记录进行远程提交, 绕过校验
    * @return Promise
@@ -2540,6 +2552,28 @@ export default class DataSet extends EventManager {
     }
   }
 
+  async validateRecords(records: Record | Record[]): Promise<boolean> {
+    if (!records) return false;
+    records = ([] as Record[]).concat(records);
+    this.validating = true;
+    try {
+      if (!this.validateSelf()) {
+        return false;
+      }
+      const { dataToJSON } = this;
+      const validateResult = Promise.all(
+        records.map(record =>
+          record.isRemoved || record.validate(this.props.forceValidate || useAll(dataToJSON), !useCascade(dataToJSON)),
+        ),
+      ).then(results => results.every(result => result));
+      const valid: boolean = await validateResult;
+      this.reportValidityImmediately(valid);
+      return valid;
+    } finally {
+      this.validating = false;
+    }
+  }
+
   /**
    * 校验dataSet是否有效
    * @return true | false
@@ -2767,7 +2801,7 @@ export default class DataSet extends EventManager {
   }
 
   @action
-  commitData(allData: any[], total?: number, onlyDelete?: boolean): DataSet {
+  commitData(allData: any[], total?: number, onlyDelete?: boolean, submitRecords?: Record[]): DataSet {
     const { autoQueryAfterSubmit, primaryKey, strictPageSize = this.getConfig('strictPageSize') } = this.props;
     if (strictPageSize) {
       const { paging } = this;
@@ -2806,7 +2840,12 @@ export default class DataSet extends EventManager {
           restUpdatedData.push(data);
         }
       });
-      const { created, updated, destroyed } = this;
+      let { created, updated, destroyed } = this;
+      if (submitRecords) {
+        created = submitRecords.filter(r => r.status === RecordStatus.add);
+        updated = submitRecords.filter(r => r.status === RecordStatus.update);
+        destroyed = submitRecords.filter(r => r.status === RecordStatus.delete);
+      }
       // 没有回写成功的新增数据按顺序回写
       if (restCreatedData.length === created.length) {
         created.forEach((r, index) => r.commit(restCreatedData[index], this));
@@ -3181,7 +3220,7 @@ Then the query method will be auto invoke.`,
             const result: any[] = await axiosStatic.all(
               axiosConfigs.map(config => this.axios(config)),
             );
-            return this.handleSubmitSuccess(result, onlyDelete);
+            return this.handleSubmitSuccess(result, onlyDelete, records);
           }
         } catch (e) {
           this.handleSubmitFail(e);
@@ -3371,7 +3410,7 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  private handleSubmitSuccess(resp: any[], onlyDelete?: boolean) {
+  private handleSubmitSuccess(resp: any[], onlyDelete?: boolean, submitRecords?: Record[]) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: {
@@ -3398,9 +3437,9 @@ Then the query method will be auto invoke.`,
     // 针对 204 的情况进行特殊处理
     // 不然在设置了 primaryKey 的情况 下,在先新增一条再使用delete的情况下，会将204这个请求内容填入到record中
     if (!(data[0] && data[0].status === 204 && data[0].statusText === 'No Content')) {
-      this.commitData(data, total, onlyDelete);
+      this.commitData(data, total, onlyDelete, submitRecords);
     } else {
-      this.commitData([], total);
+      this.commitData([], total, undefined, submitRecords);
     }
     submitSuccess(result);
     this.clearCachedModified();

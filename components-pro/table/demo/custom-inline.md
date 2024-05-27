@@ -7,7 +7,7 @@ title:
 
 ## zh-CN
 
-自定义行内编辑
+自定义行内编辑，可仅提交当前行数据
 
 ## en-US
 
@@ -27,9 +27,25 @@ class App extends React.Component {
           url: `/dataset/user/page/${pagesize}/${page}`,
         };
       },
+      create(props) {
+        return {
+          url: '/dataset/user/mutations',
+          method: 'put',
+          transformResponse: () => {
+            // 新增数据提交成功后，需要返回所有数据以便对 record 回写，如果未返回数据，会重新查询数据
+            // mock 接口返回新增数据信息
+            const { data } = props;
+            const bData = { ...data[0] };
+            bData.userid = Date.now();
+            return bData;
+          }
+        };
+      },
     },
     autoQuery: true,
     pageSize: 5,
+    // 关闭严格分页，在提交新增数据后，不会按照分页截断数据
+    strictPageSize: false,
     fields: [
       {
         name: 'userid',
@@ -78,8 +94,14 @@ class App extends React.Component {
     }
   };
   
-  handleSubmit = async () => {
-    const res = await this.userDs.submit();
+  handleSubmit = async (record) => {
+    // 仅提交当前行数据
+    const res = await this.userDs.submitRecord(record);
+    if (res && res.success) {
+      // 提交成功后，修改编辑状态
+      record.reset();
+      record.setState('editing', false);
+    }
     // 对应抛出处理
     console.log(res);
   }
@@ -90,7 +112,7 @@ class App extends React.Component {
     const btns = [];
     if (record.getState('editing')) {
       btns.push(
-        <a onClick={this.handleSubmit} key='confirm'>
+        <a onClick={this.handleSubmit.bind(this, record)} key='confirm'>
           确认
         </a>,
         <a onClick={() => this.handleCancel(record)} key='cancel'>

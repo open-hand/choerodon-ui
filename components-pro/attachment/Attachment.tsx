@@ -86,13 +86,13 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
 }
 
 export type Sort = {
-  type: 'time' | 'name';
+  type: 'time' | 'name' | 'custom';
   order: 'asc' | 'desc';
   custom?: boolean;
 };
 
 const defaultSort: Sort = {
-  type: 'time',
+  type: 'custom',
   order: 'asc',
   custom: true,
 };
@@ -131,6 +131,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable dragState?: string;
 
   uploader?: Uploader;
+
+  @observable oldValue?: string | undefined;
 
   @observable tempAttachmentUUID?: string | undefined;
 
@@ -242,6 +244,10 @@ export default class Attachment extends FormField<AttachmentProps> {
     const { value, viewMode } = this.props;
     if (prevProps.value !== value || prevProps.viewMode !== viewMode) {
       this.fetchCount();
+    }
+    if (viewMode === 'popup' && this.oldValue !== this.getValue()) {
+      this.fetchCount();
+      runInAction(() => this.oldValue = this.getValue());
     }
   }
 
@@ -717,8 +723,11 @@ export default class Attachment extends FormField<AttachmentProps> {
       return true;
     }
     const max = this.getProp('max');
+    const { count = 0 } = this;
+    if (this.readOnly) {
+      return count === 0;
+    }
     if (max) {
-      const { count = 0 } = this;
       return count >= max;
     }
     return false;
@@ -832,7 +841,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {...omit(rest, ['ref'])}
         className={this.getMergedClassNames()}
       >
-        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple && this.count || undefined}
+        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple ? this.count || 0 : undefined}
       </Button>
     );
   }
@@ -847,6 +856,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   handleOrderChange(props) {
     const { attachments } = props;
     this.attachments = attachments;
+    this.sort = defaultSort;
     this.changeOrder();
   }
 
@@ -895,7 +905,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           <>
             <ObserverSelect
               value={type}
-              onChange={(newType) => this.handleSort({ type: newType, order, custom: false })}
+              onChange={(newType) => this.handleSort({ type: newType, order, custom: newType === 'custom' })}
               clearButton={false}
               isFlat
               popupPlacement="bottomRight"
@@ -905,11 +915,12 @@ export default class Attachment extends FormField<AttachmentProps> {
             >
               <ObserverSelect.Option value="time">{$l('Attachment', 'by_upload_time')}</ObserverSelect.Option>
               <ObserverSelect.Option value="name">{$l('Attachment', 'by_name')}</ObserverSelect.Option>
+              <ObserverSelect.Option value="custom">{$l('Attachment', 'by_custom')}</ObserverSelect.Option>
             </ObserverSelect>
             <Button
               funcType={FuncType.link}
               className={classNames(`${prefixCls}-order-icon`, order)}
-              onClick={() => this.handleSort({ type, order: order === 'asc' ? 'desc' : 'asc', custom: false })}
+              onClick={() => this.handleSort({ type, order: order === 'asc' ? 'desc' : 'asc', custom: type === 'custom' })}
             />
           </>
         );

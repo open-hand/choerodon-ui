@@ -194,6 +194,7 @@ const locale: Locale = {
     no_attachments: '暂无附件',
     by_upload_time: '按上传时间',
     by_name: '按名称',
+    by_custom: '自定义排序',
     operation_records: '操作记录',
     view_operation_records: '查看操作记录',
     download: '下载',
@@ -267,6 +268,8 @@ const locale: Locale = {
   },
   Transfer: {
     items: '项',
+    search_placeholder_right: '请输入搜索内容',
+    search_placeholder_left: '请输入搜索内容',
   },
   UrlField: {
     value_missing_no_label: '请输入网址。',

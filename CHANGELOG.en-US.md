@@ -15,17 +15,30 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition` property.
+- 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
+- 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
+
+## 1.6.5
+
+`2024-05-16`
+
+- 🌟 `configure`: Added `modalAutoFocus`, `modalButtonTrigger`, `strictPageSize`, `separateSpacing`, `labelWidth`, `labelWordBreak`, `pictureCardShowName`, `noPagingParams`, `datePickerComboRangeMode`, `attachment.orderField`, `treeCheckboxPosition`, `tabsShowInvalidTips` property.
 - 🌟 `<pro>PerformanceTable`: Added `components` property.
 - 🌟 `<pro>Form`: Added `labelWordBreak` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `showSingleLine` property.
-- 🌟 `Tabs`: Added `renderTabBar`, `showMorePopupClassName` property.
+- 🌟 `Tabs`: Added `renderTabBar`, `showMorePopupClassName`, `showInvalidTips` property.
 - 🌟 `Upload`: Added `pictureCardShowName` property.
 - 🌟 `<pro>Upload`: Added the `previewImageRenderer` property and optimized the display of file lists.
 - 🌟 `<pro>DatePicker`: Added `comboRangeMode` property.
 - 🌟 `<pro>Attachment`: Added `removeImmediately`, `onTempRemovedAttachmentsChange` properties and `remove`, `reset` instance methods.
 - 🌟 `Tree`: Added `checkboxPosition` property.
 - 🌟 `<pro>Table`: Adds batch filling and counting functions in Excel.
+- 🌟 `<pro>IntlField`: Added support for the language field to support the `trim` attribute of the main field.
+- 🌟 `<pro>DataSet`: Added `submitRecord` method.
+- 🌟 `<pro>Picture`: The `loading` state is added to the `status` attribute.
+- 🌟 `<pro>Table`: Bidirectional replication adds `hiddenTip` hidden prompt attribute.
+- 🌟 `<pro>DataSet.Field`: Added `useLookupBatch`, `useLovDefineBatch` property.
+- 🌟 `<pro>Table`: Added `rowNumberColumnProps` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
@@ -50,6 +63,11 @@ timeline: true
 - 💄 `<pro>Pagination`: Extends the `showPager` property to support input box mode. The `showTotal` callback adds the `page` and `pageSize` parameters.
 - 💄 `<pro>Select`: Optimized the minimum popup width limit.
 - 💄 `<pro>CodeArea`: Optimizing the display of the bottom scrolling area in CodeArea.
+- 💄 `<pro>Table`: Optimize the response performance of clicking on the edit box after enabling bidirectional replication.
+- 💄 `<pro>Attachment`: The `renderIcon` extension supports `picture` mode.
+- 💄 `<pro>Lov`: Optimized the popup width in `popup` mode.
+- 💄 `<pro>Form`: Extends the `labelWidth` property to support setting minimum and maximum widths.
+- 💄 `<pro>Attachment`: Optimize the display of the number of `readOnly` mode.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of fixed combination columns being misaligned in the first column due to personalization.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of merging row hierarchies.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table content could not be selected after scrolling.
@@ -63,6 +81,7 @@ timeline: true
 - 🐞 `ImageCrop`: Fixed re-upload failure.
 - 🐞 `<pro>Attachment`: Fixed the issue that the number of attachments in the cache is not updated.
 - 🐞 `<pro>Attachment`: Fixed the issue that `onUploadSuccess` was executed too early in the case of multipart upload.
+- 🐞 `<pro>Attachment`: Fixed an issue where attachment list information was not updated after the DS value was changed.
 - 🐞 `<pro>Table`: Fixed the issue that summary bar data was not updated instantly.
 - 🐞 `<pro>Table`: Fixed the issue that more query conditions in `professionalBar` could not be collapsed.
 - 🐞 `<pro>Table`: Fixed the issue that the `comboBar` customization field configuration column order was incorrect.
@@ -79,6 +98,7 @@ timeline: true
 - 🐞 `<pro>Range`: Fixed an interaction issue when associating `dataSet`.
 - 🐞 `<pro>Button`: Fixed the issue that the event object was abnormal in the click event.
 - 🐞 `<pro>Modal`: Fixed an issue where the `Modal` content would appear incorrectly when you update it and then close it.
+- 🐞 `<pro>DatePicker`: Fixed an issue where values were not updated in `week` and `range` mode and when the `DataSet` was associated.
 
 ## 1.6.4
 

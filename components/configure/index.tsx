@@ -310,6 +310,10 @@ export interface Config extends DataSetConfig {
    */
   tabsDefaultChangeable?: boolean;
   /**
+   * Tabs 是否开启 DataSet 校验
+   */
+  tabsShowInvalidTips?: boolean;
+  /**
    * 个性化开关
    */
   customizable?: boolean | Customizable;

@@ -112,11 +112,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     }
   };
   const renderImagePreview = (): ReactNode => {
-    if (listType === 'text') {
-      const { renderIcon } = attachmentConfig;
-      const defaultIcon = <Icon type="insert_drive_file" />;
-      const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
-      const isSrcIcon = isString(icon);
+    if (!listType) return;
+    const { renderIcon } = attachmentConfig;
+    const defaultIcon = <Icon type="insert_drive_file" />;
+    const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
+    const isSrcIcon = isString(icon);
+    if (listType === 'text' || ((isCard || listType === 'picture') && !isPicture)) {
       if (isPicture || isSrcIcon) {
         const pictureProps: PictureProps = {};
         if (isString(previewUrl)) {

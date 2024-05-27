@@ -15,16 +15,29 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition 属性。
+- 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
+- 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
+
+## 1.6.5
+
+`2024-05-16`
+
+- 🌟 `configure`: 新增 modalAutoFocus, modalButtonTrigger, strictPageSize, separateSpacing, labelWidth, labelWordBreak, pictureCardShowName, noPagingParams, datePickerComboRangeMode, attachment.orderField, treeCheckboxPosition, tabsShowInvalidTips 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 components 属性。
 - 🌟 `<pro>Form`: 新增 labelWordBreak 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 showSingleLine 属性。
-- 🌟 `Tabs`: 新增 renderTabBar, showMorePopupClassName 属性。
+- 🌟 `Tabs`: 新增 renderTabBar, showMorePopupClassName, showInvalidTips 属性。
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
 - 🌟 `Tree`: 新增 checkboxPosition 属性。
 - 🌟 `<pro>Table`: 新增 excel 批量填充和计数功能。
+- 🌟 `<pro>IntlField`: 新增语言字段支持主字段 trim 属性。
+- 🌟 `<pro>DataSet`: 新增 submitRecord 方法。
+- 🌟 `<pro>Picture`: status 属性新增 loading 状态。
+- 🌟 `<pro>Table`: 双向复制新增 hiddenTip 隐藏提示属性。
+- 🌟 `<pro>DataSet.Field`: 新增 useLookupBatch, useLovDefineBatch 属性。
+- 🌟 `<pro>Table`: 新增 rowNumberColumnProps 属性。
 - 💄 优化部分 warning。
 - 💄 `Tabs`: 优化计算 showMore 的算法逻辑。
 - 💄 `BarCode`: 优化组件内部监听value值变化。
@@ -49,6 +62,11 @@ timeline: true
 - 💄 `<pro>Pagination`: 扩展 showPager 属性，支持输入框模式。showTotal 回调函数增加 page 和 pageSize 参数。
 - 💄 `<pro>Select`: 优化弹窗最小宽度限制。
 - 💄 `<pro>CodeArea`: 优化 CodeArea  底部滚动区域显示问题。
+- 💄 `<pro>Table`: 优化开启双向复制后点击编辑框的响应性能。
+- 💄 `<pro>Attachment`: renderIcon 扩展支持 picture 模式。
+- 💄 `<pro>Lov`: 优化 popup 模式下弹窗的宽度。
+- 💄 `<pro>Form`: 扩展 labelWidth 属性，支持设置最小和最大宽度。
+- 💄 `<pro>Attachment`: 优化只读状态文件数量显示。
 - 🐞 `<pro>PerformanceTable`: 修复个性化导致固定组合列在第一列错位的问题。
 - 🐞 `<pro>PerformanceTable`: 修复合并行层级问题。
 - 🐞 `<pro>PerformanceTable`: 修复滚动后无法选中表格内容的问题。
@@ -62,6 +80,7 @@ timeline: true
 - 🐞 `ImageCrop`: 修复重新上传失败的问题。
 - 🐞 `<pro>Attachment`: 修复缓存附件个数未即时更新的问题。
 - 🐞 `<pro>Attachment`: 修复分片上传情况下 onUploadSuccess 执行时机过早的问题。
+- 🐞 `<pro>Attachment`: 修复 DS 值变更后附件列表信息不更新的问题。
 - 🐞 `<pro>Table`: 修复汇总条数据未即时更新的问题。
 - 🐞 `<pro>Table`: 修复 professionalBar 更多查询条件无法收起的问题。
 - 🐞 `<pro>Table`: 修复 comboBar 个性化字段配置列顺序错误问题。
@@ -78,6 +97,7 @@ timeline: true
 - 🐞 `<pro>Range`: 修复关联 dataSet 时的交互问题。
 - 🐞 `<pro>Button`: 修复点击事件中事件对象属性为空的问题。
 - 🐞 `<pro>Modal`: 修复更新 Modal 内容后再关闭 Modal 时，Modal 内容显示错误的问题。
+- 🐞 `<pro>DatePicker`: 修复在 week 和 range 模式下且关联 DataSet 时，值不更新的问题。
 
 ## 1.6.4
 

@@ -26,6 +26,10 @@ export function sortAttachments(attachments: AttachmentFile[] | undefined, sort:
       });
     }
     if (sort.custom && orderField) {
+      const { order } = sort;
+      if (order === 'desc') {
+        return attachments.sort((a, b) => b[orderField] - a[orderField]);
+      }
       return attachments.sort((a, b) => a[orderField] - b[orderField]);
     }
     return attachments;

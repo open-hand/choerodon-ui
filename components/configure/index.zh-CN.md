@@ -192,11 +192,13 @@ const prefixCls = getConfig('prefixCls');
 | rangeSeparator | 自定义组件 range 模式的分隔符 | string | ~ |
 | strictPageSize | 严格分页 | boolean | true |
 | noPagingParams | 不分页查询时需要携带的参数 | (config: AxiosRequestConfig) => object |  |
-| labelWidth | Form 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 如果为auto，则根据内部label最大长度来对齐所有label | (number\| 'auto' \| ('auto' \| number)[]) \| ((lang, columns) => (number\| 'auto' \| ('auto' \| number)[])) | 100 |
+| labelWidth | Form 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 如果为auto，则根据内部label最大长度来对齐所有label。设置 minWidth 或 maxWidth 时，table 布局样式为 auto | (number \| 'auto' \| ('auto' \| number)[] \| ({ minWidth?: number; maxWidth?: number })) \| ((lang, columns) => (number\| 'auto' \| ('auto' \| number)[] \| ({ minWidth?: number; maxWidth?: number }))) | 100 |
 | labelWordBreak | From 设置标签是否换行显示  | boolean |  |
 | pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 | treeCheckboxPosition | Tree 组件 checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | 'default' |
+| tabsShowInvalidTips | Tabs 是否开启 DataSet 校验  | boolean | true |
+| separateSpacing | Form 组件切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合labelwidth效果会更好 | number \| \[number, number \] \| {width:number,height:number} | - |
 
 ### Customizable
 

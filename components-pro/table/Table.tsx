@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import ResizeObserver from 'resize-observer-polyfill';
 import raf from 'raf';
 import { observer } from 'mobx-react';
-import moment from 'moment';
+import moment, { isMoment } from 'moment';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 import isString from 'lodash/isString';
@@ -301,6 +301,7 @@ export interface TableCustomized {
 export interface Clipboard {
   paste?: boolean;
   copy?: boolean;
+  hiddenTip?: boolean;
   description?: string | ReactNode;
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
 }
@@ -835,6 +836,7 @@ export interface TableProps extends DataSetComponentProps {
    * 是否自定义 DragDropContenxt，配合 rowDraggable 属性一起使用。开启后，使用 react-beautiful-dnd 的 DragDropContenxt 可以实现表格与表格之间的拖拽
    */
   customDragDropContenxt?: boolean;
+  rowNumberColumnProps?: ColumnProps | ((defaultProps: ColumnProps) => ColumnProps);
 }
 
 @observer
@@ -1447,6 +1449,9 @@ export default class Table extends DataSetComponent<TableProps> {
                     const text = field.getText(recordData);
                     recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
                   }
+                  if (field && [FieldType.date, FieldType.dateTime, FieldType.time].includes(fieldType) && isMoment(recordData)) { 
+                    recordData = recordData.format(field.get('format') || 'YYYY-MM-DD');
+                  }
                   if (columns[j] && columns[j].column.renderer) {
                     const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
                     const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
@@ -1463,7 +1468,17 @@ export default class Table extends DataSetComponent<TableProps> {
             }
 
             recordData = isNil(recordData) ? '' : recordData;
-            copyData.push(j === maxColIndex ? `${recordData} \t\n` : `${recordData} \t`);
+            let parseData;
+            if (j === maxColIndex) { 
+              if (i !== maxRowIndex) { 
+                parseData = `${recordData}\t\n`
+              } else {
+                parseData = `${recordData}`
+              }
+            } else {
+              parseData = `${recordData}\t`
+            }
+            copyData.push(parseData);
           }
         }
         copyToClipboard().writeText(copyData.join('')).then(() => {
@@ -1588,7 +1603,7 @@ export default class Table extends DataSetComponent<TableProps> {
                       }
                       const data = await optionDs.query(1, obj);
                       if (this.dataSet && data) {
-                        const current = data[this.dataSet.dataKey][0];
+                        const current = data[optionDs.dataKey][0];
                         text = current || null;
                       }
                       return text;
@@ -1604,7 +1619,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     // eslint-disable-next-line no-await-in-loop
                     const data = await optionDs.query(1, obj);
                     if (this.dataSet && data) {
-                      const current = data[this.dataSet.dataKey][0];
+                      const current = data[optionDs.dataKey][0];
                       text = current || null;
                     }
                   }
@@ -1757,6 +1772,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'boxSizing',
       'fullColumnWidth',
       'dragDropContextProps',
+      'rowNumberColumnProps',
     ]);
   }
 
@@ -2026,7 +2042,7 @@ export default class Table extends DataSetComponent<TableProps> {
           >
             <TableSibling position="before" boxSizing={boxSizing}>
               {this.getHeader()}
-              {clipboard && (clipboard.copy || clipboard.paste) && <ClipboardBar clipboard={clipboard} />}
+              {clipboard && !clipboard.hiddenTip && <ClipboardBar clipboard={clipboard} />}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}

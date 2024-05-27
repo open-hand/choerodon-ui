@@ -32,6 +32,10 @@ export interface TabsContextValue {
   defaultChangeable?: boolean | undefined;
   rippleDisabled?: boolean | undefined;
   restoreDefault?: boolean | undefined;
+  /**
+   * 是否开启 DataSet 校验
+   */
+  showInvalidTips?: boolean;
 }
 
 const TabsContext = getContext<TabsContextValue>(Symbols.TabsContext, {
