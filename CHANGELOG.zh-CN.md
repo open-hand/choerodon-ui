@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
+- 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 
 ## 1.6.5
 

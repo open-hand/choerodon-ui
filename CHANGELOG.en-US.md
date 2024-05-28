@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
 - 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
+- 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 
 ## 1.6.5
 
