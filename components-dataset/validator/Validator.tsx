@@ -28,6 +28,8 @@ export interface ValidationMessages {
   patternMismatch?: ReactNode;
   rangeOverflow?: ReactNode;
   rangeUnderflow?: ReactNode;
+  rangeOverflowExcl?: ReactNode;
+  rangeUnderflowExcl?: ReactNode;
   stepMismatch?: ReactNode;
   stepMismatchBetween?: ReactNode;
   tooLong?: ReactNode;

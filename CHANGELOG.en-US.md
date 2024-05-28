@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `showValueIfNotFound` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
+- 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
 
 ## 1.6.5
 

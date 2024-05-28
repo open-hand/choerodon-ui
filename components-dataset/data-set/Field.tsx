@@ -213,6 +213,14 @@ export type FieldProps = {
    */
   min?: MomentInput | null;
   /**
+   * 最大值，严格大于
+   */
+  maxExcl?: MomentInput | null;
+  /**
+   * 最小值，严格小于
+   */
+  minExcl?: MomentInput | null;
+  /**
    * 小数点精度， 提交时会截断
    */
   precision?: number;
@@ -815,9 +823,9 @@ export default class Field {
     if (propsName === 'lookupUrl') {
       return this.dataSet.getConfig('lookupUrl');
     }
-    if (['min', 'max'].includes(propsName)) {
+    if (['min', 'max', 'maxExcl', 'minExcl'].includes(propsName)) {
       if (this.get('type', record) === FieldType.number) {
-        if (propsName === 'max') {
+        if (propsName === 'max' || propsName === 'maxExcl') {
           return Infinity;
         }
         return -Infinity;
@@ -1199,6 +1207,8 @@ export default class Field {
           }
           case 'max':
           case 'min':
+          case 'maxExcl':
+          case 'minExcl':
             return getLimit(this.get(key, record), record, key, this.get('type', record));
           case 'minLength':
           case 'maxLength':

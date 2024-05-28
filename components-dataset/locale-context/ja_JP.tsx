@@ -21,6 +21,8 @@ const locale: Locale = {
     pattern_mismatch: '有効な値を入力してください。',
     range_overflow: '{label}は{max}以下でなければなりません。',
     range_underflow: '{label}は{min}以上でなければなりません。',
+    range_overflow_excl: '{label}は{maxExcl}より小さくなければなりません。',
+    range_underflow_excl: '{label}は{minExcl}より大きくなければなりません。',
     step_mismatch: '有効な値を入力してください。 最も近い有効な値は{0}です。',
     step_mismatch_between:
       '有効な値を入力してください。 最も近い有効な2つの値は、それぞれ{0}と{1}です。',

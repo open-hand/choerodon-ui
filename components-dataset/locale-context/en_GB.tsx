@@ -20,6 +20,8 @@ const locale: Locale = {
     pattern_mismatch: 'Please input a valid value.',
     range_overflow: '{label} must be less than or equal to {max}.',
     range_underflow: '{label} must be greater than or equal to {min}.',
+    range_overflow_excl: '{label} must be less than {maxExcl}.',
+    range_underflow_excl: '{label} must be greater than {minExcl}.',
     step_mismatch: 'Please input a valid value. The closest valid value is {0}.',
     step_mismatch_between:
       'Please input a valid value. The two closest valid values are {0} and {1}.',

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 showValueIfNotFound 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 
 ## 1.6.5
 

@@ -21,6 +21,8 @@ export interface Locale {
     pattern_mismatch: string;
     range_overflow: string;
     range_underflow: string;
+    range_overflow_excl: string;
+    range_underflow_excl: string;
     step_mismatch: string;
     step_mismatch_between: string;
     too_long: string;

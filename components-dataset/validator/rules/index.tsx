@@ -4,6 +4,8 @@ import badInput from './badInput';
 import patternMismatch from './patternMismatch';
 import rangeOverflow from './rangeOverflow';
 import rangeUnderflow from './rangeUnderflow';
+import rangeOverflowExcl from './rangeOverflowExcl';
+import rangeUnderflowExcl from './rangeUnderflowExcl';
 import stepMismatch from './stepMismatch';
 import tooLong from './tooLong';
 import tooShort from './tooShort';
@@ -26,6 +28,8 @@ const validationRules: validationRule[] = [
   patternMismatch,
   rangeOverflow,
   rangeUnderflow,
+  rangeOverflowExcl,
+  rangeUnderflowExcl,
   stepMismatch,
   tooLong,
   tooShort,
@@ -49,6 +53,8 @@ export interface ValidatorProps extends ValidatorBaseProps {
   pattern?: string | RegExp | undefined;
   min?: number | Moment | null | undefined;
   max?: number | Moment | null | undefined;
+  minExcl?: number | Moment | null | undefined;
+  maxExcl?: number | Moment | null | undefined;
   step?: number | TimeStep | undefined;
   nonStrictStep?: boolean | undefined;
   minLength?: number | undefined;
