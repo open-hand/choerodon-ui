@@ -2342,7 +2342,7 @@ export default class TableStore {
       const [cachedSelectedLength, cachedRecordsLength] =
         getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
       const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.length);
+      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
     }
     return this.currentIndeterminate;
   }
@@ -2355,7 +2355,7 @@ export default class TableStore {
       const [cachedSelectedLength, cachedRecordsLength] =
         getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
       const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.length);
+      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
     }
     return this.allCurrentChecked;
   }

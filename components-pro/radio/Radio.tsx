@@ -77,6 +77,12 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     ]);
   }
 
+  getObservablePropsExcludeOutput(props, context): object | undefined {
+    return {
+      readOnly: context.readOnly || props.readOnly,
+    };
+  }
+
   getOtherProps() {
     const otherProps = super.getOtherProps();
     otherProps.type = this.type;
