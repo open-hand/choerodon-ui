@@ -83,6 +83,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
   removeImmediately?: boolean;
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
+  filesLengthLimitNotice?: (defaultInfo: string) => void;
 }
 
 export type Sort = {
@@ -409,8 +410,14 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const max = this.getProp('max');
+    const { filesLengthLimitNotice } = this.props;
     if (max > 0 && (this.count || 0) + attachments.length > max) {
-      Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
+      const defaultInfo = $l('Attachment', 'file_list_max_length', { count: max });
+      if (typeof filesLengthLimitNotice === 'function') {
+        filesLengthLimitNotice(defaultInfo);
+      } else {
+        Modal.error(defaultInfo);
+      }
       return;
     }
     const oldAttachments = this.attachments || [];

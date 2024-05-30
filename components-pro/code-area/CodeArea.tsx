@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
+import ResizeObserver from 'resize-observer-polyfill';
+import shallowEqual from 'shallowequal';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -18,7 +20,6 @@ import { ThemeSwitch } from './enum';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
-import { hasAncestorWithClassName } from './utils';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -76,6 +77,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   editor?: IInstance;
 
+  private parentResizeObserver?: ResizeObserver;
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -102,21 +105,36 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   componentDidMount() {
     super.componentDidMount();
 
-    const { context, element } = this;
-    const modalCls = context.getProPrefixCls('modal-wrapper');
-    if (typeof document !== 'undefined' && element && hasAncestorWithClassName(element, modalCls)) {
-      setTimeout(() => {
+    const { wrapper } = this;
+    if (wrapper && wrapper.parentNode) {
+      this.parentResizeObserver = new ResizeObserver(() => {
         if (this.editor) {
-          // modal 中异步加载 CodeArea 时，更新样式
+          // 异步加载 CodeArea 时，更新样式
           this.editor.refresh();
         }
-      }, 1000);
+      });
+      this.parentResizeObserver.observe(wrapper.parentNode);
     }
   }
 
   componentWillUnmount(): void {
     this.disposer();
+    this.disconnect();
     this.editorRefreshDebounce.cancel();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!shallowEqual(this.props.style, prevProps.style) && this.editor) {
+      this.editor.refresh();
+    }
+  }
+
+  disconnect() {
+    const { parentResizeObserver } = this;
+    if (parentResizeObserver) {
+      parentResizeObserver.disconnect();
+      delete this.parentResizeObserver;
+    }
   }
 
   editorRefreshDebounce = debounce(() => {
@@ -305,6 +323,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     const element = this.wrapper || findDOMNode(this);
     if (element) {
       classes(element).remove(`${this.prefixCls}-focused`);
+    }
+
+    const recordValue = this.getValue();
+    if (recordValue !== this.midText) {
+      this.setText(formatter ? formatter.getFormatted(recordValue) : recordValue);
     }
   });
 

@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import noop from 'lodash/noop';
 import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
 import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
+import isMobile from 'choerodon-ui/pro/lib/_util/isMobile';
 import KeyCode from '../../_util/KeyCode';
 import Checkbox from '../../checkbox/Checkbox';
 import Ripple from '../../ripple';
@@ -178,8 +179,13 @@ export class MenuItem extends React.Component {
       disabled: props.disabled || props.rippleDisabled,
     };
     if (['overflow', 'always'].includes(props.tooltip)) {
-      rippleProps.onMouseEnter = this.handleRippleMouseEnter;
-      rippleProps.onMouseLeave = hide;
+      if (!isMobile()) {
+        rippleProps.onMouseEnter = this.handleRippleMouseEnter;
+        rippleProps.onMouseLeave = hide;
+      } else {
+        rippleProps.onTouchStart = this.handleRippleMouseEnter;
+        rippleProps.onTouchEnd = hide;
+      }
     }
     menuAllProps.forEach(key => delete props[key]);
     return (
