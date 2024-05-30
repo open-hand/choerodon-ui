@@ -18,6 +18,7 @@ import { getProPrefixCls } from 'choerodon-ui/lib/configure/utils';
 import { getGlobalPopupContainer } from 'choerodon-ui/lib/trigger/Popup';
 import Tooltip, { TooltipProps } from './Tooltip';
 import TaskRunner from '../_util/TaskRunner';
+import isMobile from '../_util/isMobile';
 
 export const suffixCls = 'singleton-tooltip';
 
@@ -51,10 +52,14 @@ const TooltipContainer: ForwardRefExoticComponent<any> = forwardRef<TooltipConta
     return task;
   }, [task]);
   const handlePopupMouseEnter = useCallback(() => {
-    task.cancel();
+    if (!isMobile()) {
+      task.cancel();
+    }
   }, [task]);
   const handlePopupMouseLeave = useCallback(() => {
-    close();
+    if (!isMobile()) {
+      close();
+    }
   }, [close]);
   useImperativeHandle(ref, () => ({
     open,
