@@ -335,11 +335,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const menuDataSet = dataSet.getState(MENUDATASET);
     const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
     return queryFields.filter(component => {
+      const { name } = component.props;
       if (component.props.hidden) {
         return !component.props.hidden;
       }
-      if (isTenant && queryDataSet && queryDataSet.getField(component.props.name)) {
-        return queryDataSet.getField(component.props.name)!.get('fieldVisible') !== 0;
+      if (isTenant && queryDataSet && queryDataSet.getField(name)) {
+        return queryDataSet.getField(name)!.get('fieldVisible') !== 0;
+      }
+      if (!name || (name && queryDataSet && !queryDataSet.getField(name))) {
+        return false;
       }
       return !component.props.hidden;
     });
@@ -1774,6 +1778,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       );
     }
     if (queryDataSet && queryFields.length) {
+      let moreFields: Field[] = [];
+      if (fieldsLimit < this.queryFields.length) {
+        // 单独使用动态筛选条组件，且queryFields设置了部分字段时
+        moreFields = isTenant ? [...queryDataSet.fields.values()].filter(field => {
+          return this.queryFields.find(item => item.props.name === field.name);
+        }) : this.originOrderQueryFields.filter(field => {
+          return this.queryFields.find(item => item.props.name === field.name);
+        }).slice(fieldsLimit);
+      }
       const singleLineModeAction = this.isSingleLineOpt() ?
         <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
           {this.getResetButton()}
@@ -1970,7 +1983,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: isTenant ? [...queryDataSet.fields.values()] : this.originOrderQueryFields.slice(fieldsLimit),
+                          fields: moreFields,
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}

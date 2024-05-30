@@ -1274,10 +1274,11 @@ export default class Field {
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || this.dataSet.getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
+    const lookupAxiosConfig = this.get('lookupAxiosConfig', record);
     const useLookupBatchFunc = this.get('useLookupBatch', record) || this.dataSet.getConfig('useLookupBatch');
     const useLookupBatch = lookupCode && useLookupBatchFunc(lookupCode, this) !== false;
     let promise;
-    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
+    if (batch && lookupCode && !lookupAxiosConfig && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);
