@@ -447,7 +447,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           [ViewField.viewName]: groupDataSet!.current!.get(ViewField.viewName),
           [ViewField.viewProps]: {
             [ViewField.groupField]: groupField,
-            [ViewField.cardWidth]: 6,
+            [ViewField.cardWidth]: cardProps?.cardWidth || 6,
             [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
             [ViewField.showLabel]: 1,
           },
@@ -598,7 +598,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                   [ViewField.viewMode]: ViewMode.card,
                   [ViewField.viewName]: '卡片视图',
                   [ViewField.viewProps]: {
-                    [ViewField.cardWidth]: 6,
+                    [ViewField.cardWidth]: cardProps?.cardWidth || 6,
                     [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
                     [ViewField.showLabel]: 1,
                   },

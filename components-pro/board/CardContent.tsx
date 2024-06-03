@@ -492,21 +492,25 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     />
                   }
                 >
-                  {viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
-                    <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
-                      <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
-                        {record.getField(fieldName).get('label')}
-                      </span>
-                      <Typography.Text
-                        ellipsis={{
-                          tooltip: true,
-                        }}
-                        name={fieldName}
-                        record={record}
-                        renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
-                      />
-                    </div>
-                  )) : null}
+                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps) : 
+                    (
+                      viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
+                        <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
+                          <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
+                            {record.getField(fieldName).get('label')}
+                          </span>
+                          <Typography.Text
+                            ellipsis={{
+                              tooltip: true,
+                            }}
+                            name={fieldName}
+                            record={record}
+                            renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
+                          />
+                        </div>
+                      )) : null
+                    )
+                  }
                 </Card>
               </ReactResizeObserver>
             </List.Item>
