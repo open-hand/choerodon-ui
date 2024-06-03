@@ -447,7 +447,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           [ViewField.viewName]: groupDataSet!.current!.get(ViewField.viewName),
           [ViewField.viewProps]: {
             [ViewField.groupField]: groupField,
-            [ViewField.cardWidth]: cardProps?.cardWidth || 6,
+            [ViewField.cardWidth]: kanbanProps?.cardWidth || 6,
             [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
             [ViewField.showLabel]: 1,
           },
