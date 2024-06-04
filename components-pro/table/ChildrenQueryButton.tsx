@@ -31,7 +31,7 @@ const ChildrenQueryButton: FunctionComponent<ChildrenQueryButtonProps> = functio
 
   const queryMoreChild = useCallback(async () => {
     if (parent.getState(CHILDREN_PAGE_INFO)) {
-      const { currentPage } = parent.getState(CHILDREN_PAGE_INFO);
+      const { currentPage = 1 } = parent.getState(CHILDREN_PAGE_INFO);
       await dataSet.queryMoreChild(parent, currentPage + 1);
       updateHasMoreChild();
     }
