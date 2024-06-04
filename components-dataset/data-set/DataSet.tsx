@@ -1331,7 +1331,9 @@ export default class DataSet extends EventManager {
 
   queryMoreChild(parent: Record, page?: number, params: object = {}): Promise<any> {
     const { idField, parentField } = this.props;
-    if (idField && parentField && (!parent.children || parent.children && parent.children.length < parent.getState(CHILDREN_PAGE_INFO).total)) {
+    const { total } = parent.getState(CHILDREN_PAGE_INFO) || {};
+    const needQueryMore = total && parent.children && parent.children.length < total;
+    if (idField && parentField && (!parent.children || needQueryMore)) {
       const id = parent.get(idField);
       if (!isEmpty(id)) {
         if (parentField) {
