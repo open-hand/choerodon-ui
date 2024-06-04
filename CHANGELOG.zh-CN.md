@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 - 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice 属性。
 - 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。
+- 🌟 `<pro>Table.DynamicFilterBar`: 新增 fuzzyQueryProps 属性。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。

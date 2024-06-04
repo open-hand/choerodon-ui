@@ -61,6 +61,7 @@ import { ShowValidation } from '../../form/enum';
 import { TriggerViewMode } from '../../trigger-field/enum';
 import CombineSort from './CombineSort';
 import TableStore from '../TableStore';
+import { TextFieldProps } from '../../text-field/TextField';
 
 /**
  * 当前数据是否有值并需要选中
@@ -281,6 +282,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   fuzzyQuery?: boolean;
   fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
+  fuzzyQueryProps?: TextFieldProps;
   searchCode?: string;
   autoQuery?: boolean;
   refreshBtn?: boolean;
@@ -1521,7 +1523,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, fuzzyQueryProps, onReset = noop } = this.props;
     const { prefixCls } = this;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     const fuzzyValue = dataSet.getState(ORIGINALVALUEOBJ) && dataSet.getState(ORIGINALVALUEOBJ).fuzzy;
@@ -1536,6 +1538,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         valueChangeAction={ValueChangeAction.input}
         waitType={WaitType.debounce}
         wait={500}
+        {...fuzzyQueryProps}
         onChange={(value: string, oldValue: string) => {
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
