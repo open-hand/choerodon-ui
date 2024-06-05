@@ -128,6 +128,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       if (rangeBorder) {
         rangeBorder.style.display = 'none';
       }
+      tableStore.startChooseCell = null;
+      tableStore.endChooseCell = null;
       tableStore.clearArrangeValue();
       return;
     }
@@ -274,13 +276,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
   }
 
-  const handleMouseUp = useCallback(action<(e) => void>((event) => {
+  const handleMouseUp = useCallback(action<(e) => void>(( ) => {
     tableStore.isFinishChooseCell = true;
-    const { target } = event;
-    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
     // 开始计数求和、求平均、个数、最小、最大
-    tableStore.calcArrangeValue();
     if (dragCorner) {
+      tableStore.calcArrangeValue();
       // 批量赋值
       tableStore.batchSetCellValue();
     }

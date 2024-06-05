@@ -29,6 +29,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 - 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.
 - 🐞 `<pro>Table`: Fixed an issue where non-asynchronous trees reported an error when using `treeAsync`.
+- 🐞 `<pro>Table`: Fixed the issue of adding a new row when copying and pasting the second page of data in both directions.
+- 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
 
 ## 1.6.5

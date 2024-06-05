@@ -1518,7 +1518,7 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const clipText = await pasteFromClipboard(node.element);
     if (this.dataSet) {
-      const { currentIndex, length } = this.dataSet;
+      const { current, totalCount } = this.dataSet;
       const batchRecord: any = [];
       const rows = clipText.split('\n').filter(line => line.trim() !== '');
 
@@ -1528,8 +1528,8 @@ export default class Table extends DataSetComponent<TableProps> {
           if (currentEditRecord && i > 0) {
             break;
           }
-          const editorRowIndex = !currentEditRecord ? i + currentIndex : currentEditRecord.index;
-          if (editorRowIndex >= length) {
+          const editorRowIndex = !currentEditRecord ? i + (current ? current.index : 0) : currentEditRecord.index;
+          if (editorRowIndex >= totalCount) {
             this.dataSet.create({}, editorRowIndex + 1);
           }
           const cols = rows[i].split('\t');
