@@ -28,6 +28,8 @@ timeline: true
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。
+- 🐞 `<pro>Table`: 修复非异步树使用 treeAsync 报错的问题。
+- 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
 
 ## 1.6.5
 
