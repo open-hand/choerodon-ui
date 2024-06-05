@@ -58,7 +58,7 @@ function createDefaultTime() {
   return moment('00:00:00', 'HH:mm:ss');
 }
 
-function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, max?: Moment | null, viewMode?: ViewMode): Moment {
+function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment | null, minExcl?: Moment | null, max?: Moment | null, maxExcl?: Moment | null, viewMode?: ViewMode): Moment {
   if (min && defaultTime.isBefore(min)) {
     defaultTime.year(min.year());
     defaultTime.month(min.month());
@@ -67,6 +67,25 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
       defaultTime.add(1, 'd');
     }
   }
+  
+  if (minExcl && defaultTime.isSameOrBefore(minExcl)) {
+    defaultTime.year(minExcl.year());
+    defaultTime.month(minExcl.month());
+    defaultTime.date(minExcl.date());
+    if (defaultTime.isSameOrBefore(minExcl) && viewMode !== ViewMode.time) {
+      defaultTime.add(1, 'd');
+    }
+  }
+
+  if (maxExcl && defaultTime.isSameOrAfter(maxExcl)) {
+    defaultTime.year(maxExcl.year());
+    defaultTime.month(maxExcl.month());
+    defaultTime.date(maxExcl.date());
+    if (defaultTime.isSameOrAfter(maxExcl) && viewMode !== ViewMode.time) {
+      defaultTime.subtract(1, 'd');
+    }
+  }
+
   if (max && defaultTime.isAfter(max)) {
     defaultTime.year(max.year());
     defaultTime.month(max.month());
@@ -90,6 +109,8 @@ export interface DatePickerProps extends TriggerFieldProps {
   filter?: (currentDate: Moment, selected: Moment, mode?: ViewMode, rangeTarget?: 0 | 1, rangeValue?: [any, any]) => boolean;
   min?: MomentInput | null;
   max?: MomentInput | null;
+  minExcl?: MomentInput | null;
+  maxExcl?: MomentInput | null;
   step?: TimeStep;
   renderExtraFooter?: () => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
@@ -201,6 +222,16 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   @computed
   get max(): Moment | undefined | null {
     return this.getLimit('max');
+  }
+
+  @computed
+  get minExcl(): Moment | undefined | null {
+    return this.getLimit('minExcl');
+  }
+
+  @computed
+  get maxExcl(): Moment | undefined | null {
+    return this.getLimit('maxExcl');
   }
 
   @computed
@@ -319,11 +350,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   getDefaultTime(): [Moment, Moment] {
     const { defaultTime = createDefaultTime() } = this.props;
     const viewMode = this.getDefaultViewMode();
-    const { min, max } = this;
+    const { min, max, minExcl, maxExcl } = this;
     if (isArrayLike(defaultTime)) {
-      return [getInRangeDefaultTime(defaultTime[0], min, max, viewMode), getInRangeDefaultTime(defaultTime[1], min, max, viewMode)];
+      return [getInRangeDefaultTime(defaultTime[0], min, minExcl, max,  maxExcl, viewMode), getInRangeDefaultTime(defaultTime[1], min, minExcl, max, maxExcl, viewMode)];
     }
-    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, max, viewMode);
+    const inRangeDefaultTime = getInRangeDefaultTime(defaultTime, min, minExcl, max, maxExcl, viewMode);
     return [inRangeDefaultTime, inRangeDefaultTime];
   }
 
@@ -602,7 +633,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return this.getValidDate(this.getDefaultTime()[range && rangeTarget !== undefined ? rangeTarget : 0]);
   }
 
-  getLimit(minOrMax: 'min' | 'max'): Moment | undefined {
+  getLimit(minOrMax: any): Moment | undefined {
     let limit = this.getProp(minOrMax);
     if (isNil(limit)) {
       const configLimit = this.getContextConfig(minOrMax);
@@ -630,8 +661,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     }
   }
 
-  getLimitWithType(limit: Moment, minOrMax: 'min' | 'max'): Moment {
-    if (minOrMax === 'min') {
+  getLimitWithType(limit: Moment, minOrMax: any): Moment {
+    if (minOrMax === 'min' || minOrMax === 'minExcl') {
       return limit.startOf('d');
     }
     return limit.endOf('d');
@@ -1065,11 +1096,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getValidDate(date: Moment): Moment {
-    const { min, max } = this;
+    const { min, max, minExcl, maxExcl } = this;
     if (min && date.isSameOrBefore(min)) {
       date = min;
     } else if (max && date.isSameOrAfter(max)) {
       date = max;
+    } else if (minExcl && date.isSameOrBefore(minExcl)) {
+      date = minExcl.clone().add(1, 'seconds');
+    } else if (maxExcl && date.isSameOrAfter(maxExcl)) {
+      date = maxExcl.clone().subtract(1, 'seconds');
     }
     return date;
   }
@@ -1084,10 +1119,12 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   isUnderRange(date: Moment, mode?: ViewMode): boolean {
-    const { min, max } = this;
-    if (min || max) {
+    const { min, max, minExcl, maxExcl } = this;
+    if (min || max || minExcl || maxExcl) {
       let start = (min || date).clone();
-      let end = (max || date).clone();
+      if (minExcl) start = minExcl.clone().add(1, 'seconds');
+      let end = (max || maxExcl || date).clone();
+      if (maxExcl) end = maxExcl.clone().subtract(1, 'seconds');
       switch (mode || this.getViewMode()) {
         case ViewMode.month:
           start = start.startOf('M');
