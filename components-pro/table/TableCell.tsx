@@ -128,7 +128,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       if (rangeBorder) {
         rangeBorder.style.display = 'none';
       }
-      tableStore.endChooseCell = null;
+      tableStore.startChooseCell = null;
       tableStore.endChooseCell = null;
       tableStore.clearArrangeValue();
       return;
