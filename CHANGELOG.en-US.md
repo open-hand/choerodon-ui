@@ -19,12 +19,13 @@ timeline: true
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
 - 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
-- 🌟 `<pro>Attachment`: Added `filesLengthLimitNotice` property.
+- 🌟 `<pro>Attachment`: Added `filesLengthLimitNotice`, `countTextRenderer` properties.
 - 🌟 `<pro>Board`: Added card default width `cardWidth` and content custom rendering `contentRenderer` properties.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `fuzzyQueryProps` property.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.
+- 💄 `<pro>DataSet`: Optimize single line save logic.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 - 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.

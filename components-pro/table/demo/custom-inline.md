@@ -42,10 +42,9 @@ class App extends React.Component {
         };
       },
     },
+    name: 'user',
     autoQuery: true,
     pageSize: 5,
-    // 关闭严格分页，在提交新增数据后，不会按照分页截断数据
-    strictPageSize: false,
     fields: [
       {
         name: 'userid',
@@ -137,7 +136,6 @@ class App extends React.Component {
       <Button icon="playlist_add" onClick={this.handleAdd} key="add">
         新增
       </Button>,
-      'save',
       'delete',
       'reset',
     ];

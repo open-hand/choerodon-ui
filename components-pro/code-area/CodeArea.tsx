@@ -20,6 +20,7 @@ import { ThemeSwitch } from './enum';
 import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
+import { hasAncestorWithClassName } from './utils';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -77,7 +78,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   editor?: IInstance;
 
-  private parentResizeObserver?: ResizeObserver;
+  resizeObserver?: ResizeObserver;
+
+  mutationObserver?: MutationObserver;
+
+  beforeWrapperSize?: { width: number; height: number; };
 
   constructor(props, content) {
     super(props, content);
@@ -105,16 +110,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   componentDidMount() {
     super.componentDidMount();
 
-    const { wrapper } = this;
-    if (wrapper && wrapper.parentNode) {
-      this.parentResizeObserver = new ResizeObserver(() => {
-        if (this.editor) {
-          // 异步加载 CodeArea 时，更新样式
-          this.editor.refresh();
-        }
-      });
-      this.parentResizeObserver.observe(wrapper.parentNode);
-    }
+    this.handleMountRefresh();
   }
 
   componentWillUnmount(): void {
@@ -129,11 +125,46 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     }
   }
 
+  handleMountRefresh() {
+    const { wrapper, context, element } = this;
+    if (wrapper) {
+      this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        entries.forEach(entry => {
+          if (this.beforeWrapperSize && (this.beforeWrapperSize.width === 0 || this.beforeWrapperSize.height === 0)) {
+            if (this.editor) {
+              // 由隐藏变为显示，更新样式
+              this.editor.refresh();
+            }
+          }
+          this.beforeWrapperSize = { width: entry.contentRect.width, height: entry.contentRect.height };
+        });
+      });
+      this.resizeObserver.observe(wrapper);
+    }
+
+    const modalCls = context.getProPrefixCls('modal-wrapper');
+    const parent = hasAncestorWithClassName(element, modalCls);
+    if (typeof window !== 'undefined' && element && parent) {
+      this.mutationObserver = new MutationObserver(() => {
+        if (this.editor) {
+          // modal 中异步加载 CodeArea 时，更新样式
+          this.editor.refresh();
+        }
+      });
+      // 监控 modal 类名变化，modal 开启动画时，需要更新 codemirror 样式
+      this.mutationObserver.observe(parent, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
+  }
+
   disconnect() {
-    const { parentResizeObserver } = this;
-    if (parentResizeObserver) {
-      parentResizeObserver.disconnect();
-      delete this.parentResizeObserver;
+    const { resizeObserver, mutationObserver } = this;
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      delete this.resizeObserver;
+    }
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      delete this.mutationObserver;
     }
   }
 

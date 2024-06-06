@@ -84,6 +84,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   removeImmediately?: boolean;
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
   filesLengthLimitNotice?: (defaultInfo: string) => void;
+  countTextRenderer?: (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode;
 }
 
 export type Sort = {
@@ -376,6 +377,8 @@ export default class Attachment extends FormField<AttachmentProps> {
       'getPreviewUrl',
       'removeImmediately',
       'onTempRemovedAttachmentsChange',
+      'filesLengthLimitNotice',
+      'countTextRenderer',
     ]);
   }
 
@@ -779,7 +782,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       prefixCls,
       accept,
       props: {
-        children, viewMode,
+        children, viewMode, countTextRenderer,
       },
     } = this;
     const buttonProps = this.getOtherProps();
@@ -794,7 +797,10 @@ export default class Attachment extends FormField<AttachmentProps> {
       onChange,
     };
     const width = isCardButton ? pxToRem(this.getPictureWidth()) : undefined;
-    const countText = multiple && (max ? `${count}/${max}` : count) || undefined;
+    let countText: ReactNode = multiple && (max ? `${count}/${max}` : count) || undefined;
+    if (typeof countTextRenderer ==='function') {
+      countText = countTextRenderer(count, max, countText);
+    }
     return isCardButton ? (
       <Button
         funcType={FuncType.link}
@@ -837,8 +843,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderViewButton(label?: ReactNode): ReactElement<ButtonProps> {
-    const { children, multiple, viewMode } = this.props;
+    const { children, multiple, viewMode, countTextRenderer } = this.props;
+    const max = this.getProp('max');
     const rest = this.getOtherProps();
+    let countText: ReactNode = multiple ? this.count || 0 : undefined;
+    if (typeof countTextRenderer ==='function') {
+      countText = countTextRenderer(this.count, max, countText);
+    }
     return (
       <Button
         funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
@@ -848,7 +859,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {...omit(rest, ['ref'])}
         className={this.getMergedClassNames()}
       >
-        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple ? this.count || 0 : undefined}
+        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {countText}
       </Button>
     );
   }

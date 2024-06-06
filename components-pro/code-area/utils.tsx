@@ -7,3 +7,21 @@
 export function removeUnprintableChar(text: string): string {
   return text.replace(/\s*\n\s*/g, '');
 }
+
+/**
+ * 判断 target 的祖先中是否有指定类名的元素
+ * @param targetElement 
+ * @param ancestorClassName 祖先元素类名
+ * @returns 祖先元素
+ */
+export function hasAncestorWithClassName(targetElement: HTMLElement, ancestorClassName: string) {
+  if (!targetElement) return null;
+  let parent = targetElement.parentElement;
+  while (parent) {
+    if (parent.classList && parent.classList.contains(ancestorClassName)) {
+      return parent;
+    }
+    parent = parent.parentElement;
+  }
+  return null;
+}
