@@ -19,12 +19,13 @@ timeline: true
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
-- 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice 属性。
+- 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice, countTextRenderer 属性。
 - 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 fuzzyQueryProps 属性。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
+- 💄 `<pro>DataSet`: 优化单行保存逻辑。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。

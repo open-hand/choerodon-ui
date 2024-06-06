@@ -1412,13 +1412,13 @@ export default class DataSet extends EventManager {
     return false;
   }
 
-  async submitRecord(record: Record): Promise<any> {
+  async submitRecord(record: Record, strictPageSize = false): Promise<any> {
     if (!record) return false;
     const records = ([] as Record[]).concat(record);
     await this.ready();
     if (await this.validateRecords(records)) {
       return this.pending.add(
-        this.write(records),
+        this.write(records, undefined, strictPageSize),
       );
     }
     return false;
@@ -1639,7 +1639,10 @@ export default class DataSet extends EventManager {
    */
   page(page: number): Promise<any> {
     if (page > 0 && this.paging) {
-      return this.locate((page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length : 0));
+      return this.locate(
+        (page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length : 0),
+        true,
+      );
     }
     warning(page > 0, 'Page number is incorrect.');
     warning(!!this.paging, 'Can not paging query util the property<paging> of DataSet is true or `server`.');
@@ -1664,13 +1667,14 @@ export default class DataSet extends EventManager {
   /**
    * 定位记录
    * @param index 索引
+   * @param forceQuery 是否强制查询，仅内部使用
    * @return Promise
    */
-  async locate(index: number): Promise<Record | undefined> {
+  async locate(index: number, forceQuery?: boolean): Promise<Record | undefined> {
     const { paging, pageSize, totalCount } = this;
     const { autoLocateFirst } = this.props;
     let currentRecord = this.findInAllPage(index);
-    if (currentRecord) {
+    if (currentRecord && !forceQuery) {
       this.current = currentRecord;
       return currentRecord;
     }
@@ -2803,9 +2807,9 @@ export default class DataSet extends EventManager {
   }
 
   @action
-  commitData(allData: any[], total?: number, onlyDelete?: boolean, submitRecords?: Record[]): DataSet {
+  commitData(allData: any[], total?: number, onlyDelete?: boolean, submitRecords?: Record[], strictPageSizeArg = true): DataSet {
     const { autoQueryAfterSubmit, primaryKey, strictPageSize = this.getConfig('strictPageSize') } = this.props;
-    if (strictPageSize) {
+    if (strictPageSize && strictPageSizeArg) {
       const { paging } = this;
       if (paging === 'server') {
         const { idField, parentField, childrenField } = this.props;
@@ -3201,7 +3205,7 @@ Then the query method will be auto invoke.`,
   //     ), allData);
   // }
 
-  private async write(records: Record[], onlyDelete?: boolean): Promise<any> {
+  private async write(records: Record[], onlyDelete?: boolean, strictPageSize = true): Promise<any> {
     if (records.length) {
       const [created, updated, destroyed] = prepareSubmitData(records, this.dataToJSON);
       const axiosConfigs: AxiosRequestConfig[] = [];
@@ -3222,7 +3226,7 @@ Then the query method will be auto invoke.`,
             const result: any[] = await axiosStatic.all(
               axiosConfigs.map(config => this.axios(config)),
             );
-            return this.handleSubmitSuccess(result, onlyDelete, records);
+            return this.handleSubmitSuccess(result, onlyDelete, records, strictPageSize);
           }
         } catch (e) {
           this.handleSubmitFail(e);
@@ -3412,7 +3416,7 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  private handleSubmitSuccess(resp: any[], onlyDelete?: boolean, submitRecords?: Record[]) {
+  private handleSubmitSuccess(resp: any[], onlyDelete?: boolean, submitRecords?: Record[], strictPageSize = true) {
     const { dataKey, totalKey } = this;
     const { submitSuccess = defaultFeedback.submitSuccess } = this.feedback;
     const data: {
@@ -3439,9 +3443,9 @@ Then the query method will be auto invoke.`,
     // 针对 204 的情况进行特殊处理
     // 不然在设置了 primaryKey 的情况 下,在先新增一条再使用delete的情况下，会将204这个请求内容填入到record中
     if (!(data[0] && data[0].status === 204 && data[0].statusText === 'No Content')) {
-      this.commitData(data, total, onlyDelete, submitRecords);
+      this.commitData(data, total, onlyDelete, submitRecords, strictPageSize);
     } else {
-      this.commitData([], total, undefined, submitRecords);
+      this.commitData([], total, undefined, submitRecords, strictPageSize);
     }
     submitSuccess(result);
     this.clearCachedModified();

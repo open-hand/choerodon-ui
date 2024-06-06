@@ -1355,7 +1355,7 @@ export default class TableStore {
     left?: [number, number];
     center: [number, number];
     right?: [number, number];
-  } {
+    } {
     const { columnGroups: { leafs, leftLeafs, rightLeafs }, columnBuffer } = this;
     if (!this.propVirtual || !this.overflowX) {
       return { center: [0, leafs.length] };
