@@ -26,6 +26,7 @@ timeline: true
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.
 - 💄 `<pro>DataSet`: Optimize single line save logic.
+- 💄 `<pro>Board`: The dropdown option to optimize the grouping displays the logic.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 - 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.
