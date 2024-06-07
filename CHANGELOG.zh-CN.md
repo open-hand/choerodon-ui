@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
 - 💄 `<pro>DataSet`: 优化单行保存逻辑。
 - 💄 `<pro>Board`: 优化分组的下拉选项显示逻辑。
+- 💄 `<pro>NumberField`: 优化移动端点击步距按钮数字变化逻辑。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。
