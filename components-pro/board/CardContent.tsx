@@ -451,7 +451,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     ...cardProps.style,
                     minHeight: cardHeight,
                   }}
-                  title={viewProps && viewProps.displayFields ?
+                  title={viewProps && viewProps.displayFields && !(cardProps && cardProps.contentRenderer) ?
                     <Typography.Paragraph
                       ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]) ? displayFields.find(df => df.name === viewProps.displayFields[0]).renderer : noop} /> }}
                       name={viewProps.displayFields[0]}
@@ -481,15 +481,16 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     }
                   }
                   extra={
-                    <CardCommand
-                      command={command}
-                      dataSet={cardDS}
-                      record={record}
-                      renderCommand={renderCommand}
-                      prefixCls={prefixCls}
-                      viewMode={ViewMode.card}
-                      commandsLimit={commandsLimit}
-                    />
+                    cardProps && cardProps.contentRenderer ? null :
+                      <CardCommand
+                        command={command}
+                        dataSet={cardDS}
+                        record={record}
+                        renderCommand={renderCommand}
+                        prefixCls={prefixCls}
+                        viewMode={ViewMode.card}
+                        commandsLimit={commandsLimit}
+                      />
                   }
                 >
                   {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps) : 
