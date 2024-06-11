@@ -167,6 +167,7 @@ function processGroupData(dataSet: DataSet): object[] {
     if (
       !multiple && (
         field.get('lookupCode') ||
+        field.get('lookupAxiosConfig') ||
         isString(field.get('lookupUrl')) ||
         (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options')))
       )
