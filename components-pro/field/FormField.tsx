@@ -79,6 +79,7 @@ export type TagRendererProps = {
   readOnly?: boolean;
   className?: string;
   onClose?: (e: any) => void;
+  inputBoxIsFocus?: boolean;
 };
 
 export type Renderer<T extends RenderProps = RenderProps> = (props: T) => ReactNode;
@@ -1344,6 +1345,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       showValidationMessage: this.showValidationMessage,
       getKey: this.getValueKey,
       rangeSeparator: this.rangeSeparator,
+      inputBoxIsFocus: this.isFocus,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;
     return values;
