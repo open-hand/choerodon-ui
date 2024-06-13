@@ -32,6 +32,7 @@ import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
 import isIE from '../_util/isIE';
+import isMobile from '../_util/isMobile';
 import Icon from '../icon';
 import { preventDefault, stopPropagation } from '../_util/EventManager';
 import measureTextWidth from '../_util/measureTextWidth';
@@ -1379,11 +1380,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           : this.lengthInfoWidth;
       }
       return this.wrapperInnerSpanButton(
-        <Icon
-          type="close"
-          onClick={this.handleClearButtonClick}
-          onMouseDown={this.handleInnerButtonMouseDown}
-        />,
+        isMobile() && !this.isFocused
+          ? null
+          : <Icon
+            type="close"
+            onClick={this.handleClearButtonClick}
+            onMouseDown={this.handleInnerButtonMouseDown}
+          />,
         {
           className: `${prefixCls}-clear-button`,
           style: { right: pxToRem(right, true) },
