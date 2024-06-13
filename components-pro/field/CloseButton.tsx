@@ -7,17 +7,18 @@ export interface CloseButtonProps {
   value: any;
   index: number;
   onClose?: (e, value: any, index: number) => void;
+  onMouseDown?: React.MouseEventHandler<any>;
 }
 
 const CloseButton: FunctionComponent<CloseButtonProps> = memo((props) => {
-  const { onClose = noop, value, index } = props;
+  const { onClose = noop, value, index, onMouseDown = stopPropagation } = props;
   const handleClick = useCallback((e) => {
     stopEvent(e);
     onClose(e, value, index);
   }, [onClose, value, index]);
 
   return (
-    <Icon type="cancel" onClick={handleClick} onFocus={stopPropagation} onMouseDown={stopEvent} tabIndex={-1} />
+    <Icon type="cancel" onClick={handleClick} onFocus={stopPropagation} onMouseDown={onMouseDown} tabIndex={-1} />
   );
 });
 

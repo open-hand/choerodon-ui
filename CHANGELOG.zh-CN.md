@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `configure`: 新增 showValueIfNotFound 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
+- 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 - 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice, countTextRenderer 属性。
@@ -35,6 +36,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制粘贴第二页数据会新增一行的问题。
 - 🐞 `<pro>Table`: 修复双向复制下拉批量赋值数量不对的问题。
 - 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
+- 🐞 `<pro>Select`: 修复多选且级联模式下，删除父级单个值会导致级联字段弹窗不关闭的问题。
 
 ## 1.6.5
 
