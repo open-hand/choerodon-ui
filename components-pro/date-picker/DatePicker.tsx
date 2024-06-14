@@ -662,7 +662,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   getLimitWithType(limit: Moment, minOrMax: any): Moment {
-    if (minOrMax === 'min' || minOrMax === 'minExcl') {
+    const viewMode = this.getDefaultViewMode();
+    if (viewMode === ViewMode.dateTime || viewMode === viewMode.time) {
+      return limit;
+    }
+    if (minOrMax === 'min' || minOrMax === 'minExcl' || minOrMax === 'maxExcl') {
       return limit.startOf('d');
     }
     return limit.endOf('d');
