@@ -38,6 +38,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
 - 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
+- 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.
 
 ## 1.6.5
 
