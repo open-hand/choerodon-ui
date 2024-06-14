@@ -1029,7 +1029,8 @@ export default class Field {
       }
       return value[textField];
     }
-    return showValueIfNotFound ? value : undefined;
+    const showValueIfNotFoundConfig = showValueIfNotFound !== undefined ? showValueIfNotFound : this.dataSet.getConfig('showValueIfNotFound');
+    return showValueIfNotFoundConfig ? value : undefined;
   }
 
   setOptions(options: DataSet): void {
