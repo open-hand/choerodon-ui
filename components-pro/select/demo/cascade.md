@@ -14,6 +14,7 @@ title:
 Options Cascade
 
 ````jsx
+import { Divider } from 'choerodon-ui';
 import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
 
 function handleDataSetChange({ record, value, oldValue }) {
@@ -29,7 +30,7 @@ class App extends React.Component {
         label: '省',
         lookupCode: 'SHENG',
         valueField: 'codeValueId',
-        defaultValue: '10206',
+        defaultValue: 10206,
       },
       {
         name: 'shi',
@@ -39,6 +40,23 @@ class App extends React.Component {
         lookupCode: 'SHI',
         cascadeMap: { parentCodeValueId: 'sheng' },
       },
+      {
+        name: 'sheng-multiple',
+        label: '省（多选）',
+        lookupCode: 'SHENG',
+        valueField: 'codeValueId',
+        defaultValue: 10206,
+        multiple: true,
+      },
+      {
+        name: 'shi-multiple',
+        type: 'number',
+        valueField: 'codeValueId',
+        label: '市（多选）',
+        lookupCode: 'SHI',
+        multiple: true,
+        cascadeMap: { parentCodeValueId: 'sheng-multiple' },
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -47,14 +65,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <Row gutter={10}>
-        <Col span={12}>
-          <Select dataSet={this.ds} name="sheng" />
-        </Col>
-        <Col span={12}>
-          <Select dataSet={this.ds} name="shi" />
-        </Col>
-      </Row>
+      <>
+        <Divider>单选</Divider>
+        <Row gutter={10}>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="sheng" />
+          </Col>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="shi" />
+          </Col>
+        </Row>
+        <Divider>多选</Divider>
+        <Row gutter={10}>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="sheng-multiple" />
+          </Col>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="shi-multiple" />
+          </Col>
+        </Row>
+      </>
     );
   }
 }

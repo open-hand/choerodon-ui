@@ -345,9 +345,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         if (record) {
           const cascades = Object.keys(cascadeMap);
           return data.filter(item =>
-            cascades.every(cascade =>
-              isSameLike(record.get(cascadeMap[cascade]), item.get(cascade)),
-            ),
+            cascades.every(cascade => {
+              if (isArrayLike(record.get(cascadeMap[cascade]))) {
+                return record.get(cascadeMap[cascade]).some(parentValue => isSameLike(parentValue, item.get(cascade)));
+              }
+              return isSameLike(record.get(cascadeMap[cascade]), item.get(cascade));
+            }),
           );
         }
         return [];
