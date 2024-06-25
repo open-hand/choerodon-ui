@@ -171,6 +171,7 @@ export interface Config {
   xlsx?: () => Promise<any>;
   strictPageSize?: boolean;
   noPagingParams?: (config: AxiosRequestConfig) => object;
+  showValueIfNotFound?: boolean;
 }
 
 export type ConfigKeys = keyof Config;
@@ -219,6 +220,7 @@ const defaultConfig = {
   useLookupBatch: noop,
   useLovDefineBatch: noop,
   noPagingParams: noop,
+  showValueIfNotFound: true,
 };
 
 export type DefaultConfig = typeof defaultConfig;

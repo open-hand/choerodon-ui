@@ -283,6 +283,7 @@ export type MultipleRenderOption = {
   showValidationMessage(e, message?: ReactNode, tooltipTheme?: TooltipTheme, tooltipPlacement?: TooltipPlacement): void;
   getKey?(v: any): string;
   rangeSeparator?: string;
+  inputBoxIsFocus?: boolean;
 }
 
 export type RangeRenderOption = {
@@ -342,6 +343,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     showValidationMessage: selfShowValidationMessage,
     tooltipTheme,
     rangeSeparator = getConfigDefault('rangeSeparator'),
+    inputBoxIsFocus,
   } = option;
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
@@ -370,7 +372,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         multipleValidateMessageLength++;
       }
       const closeBtn = !blockDisabled && !readOnly && (
-        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} />
+        <CloseButton onClose={handleMultipleValueRemove} value={v} index={repeat} onMouseDown={inputBoxIsFocus ? noop : undefined} />
       );
       let inner;
       runInAction(() => {
@@ -388,6 +390,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
             readOnly,
             className,
             onClose,
+            inputBoxIsFocus,
           });
         } else {
           inner = readOnly ? (
@@ -437,6 +440,7 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         disabled,
         readOnly,
         className: blockClassName,
+        inputBoxIsFocus,
       });
     } else {
       moreBlock = (

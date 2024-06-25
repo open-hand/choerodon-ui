@@ -332,6 +332,8 @@ class App extends React.Component {
         //   return buttons;
         // }}
         cardProps={{
+          contentRenderer: () => 123,
+          cardWidth: 4,
           onClick: (e, record) => {
             console.log('crad click', e, record.toData())
           },
@@ -411,6 +413,7 @@ class App extends React.Component {
         }
         }}
         kanbanProps={{
+          cardWidth: 12,
           isDragDropDisabled: false,
           dragDropContext: (props) => {
             console.log('dragDropContext', props);

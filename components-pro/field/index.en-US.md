@@ -30,7 +30,7 @@ title: FormField
 | showHelp | 展示提示信息的方式，`tooltip`只有在`TextField`及其子类上生效， 可选值 `tooltip` `newLine` `none` | string | `newLine` |
 | helpTooltipProps | 用于配置 help 提示信息的 Tooltip 相关参数 | [TooltipProps](/components-pro/tooltip#API) |  |
 | renderer | 渲染器，覆盖默认渲染行为 | ({ value, text, name, record, dataSet }) => ReactNode | ({ text }) => text |
-| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  |
+| tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus }: TagRendererProps) => ReactNode |  |
 | noValidate | 不校验，不影响 DataSet 校验 | boolean | false |
 | maxTagPlaceholder | 多值标签超出最大数量时的占位描述 | ReactNode \| (restValues) => ReactNode |  |
 | maxTagCount | 多值标签最大数量 | number |  |

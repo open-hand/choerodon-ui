@@ -20,6 +20,8 @@ const locale: Locale = {
     pattern_mismatch: '请输入有效的值。',
     range_overflow: '{label}必须小于或等于{max}。',
     range_underflow: '{label}必须大于或等于{min}。',
+    range_overflow_excl: '{label}必须小于{maxExcl}。',
+    range_underflow_excl: '{label}必须大于{minExcl}。',
     step_mismatch: '请输入有效值。最接近的有效值为{0}。',
     step_mismatch_between: '请输入有效值。两个最接近的有效值分别为{0}和{1}。',
     too_long: '请将该内容减少到{maxLength}个或更少字符（目前您使用了{length}个字符）。',

@@ -15,8 +15,30 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 showValueIfNotFound 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
+- 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
+- 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice, countTextRenderer 属性。
+- 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。
+- 🌟 `<pro>Table.DynamicFilterBar`: 新增 fuzzyQueryProps 属性。
+- 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
+- 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
+- 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
+- 💄 `<pro>DataSet`: 优化单行保存逻辑。
+- 💄 `<pro>Board`: 优化分组的下拉选项显示逻辑。
+- 💄 `<pro>NumberField`: 优化移动端点击步距按钮数字变化逻辑。
+- 💄 `<pro>TextField`: 优化兼容 IOS 移动端聚焦两次才唤起键盘的问题。
+- 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
+- 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
+- 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。
+- 🐞 `<pro>Table`: 修复非异步树使用 treeAsync 报错的问题。
+- 🐞 `<pro>Table`: 修复双向复制粘贴第二页数据会新增一行的问题。
+- 🐞 `<pro>Table`: 修复双向复制下拉批量赋值数量不对的问题。
+- 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
+- 🐞 `<pro>Select`: 修复多选且级联模式下，删除父级单个值会导致级联字段弹窗不关闭的问题。
+- 🐞 `<pro>Select`: 修复级联模式下，父级多值会导致级联下拉框无数据的问题。
 
 ## 1.6.5
 
@@ -30,6 +52,7 @@ timeline: true
 - 🌟 `Upload`: 新增 pictureCardShowName 属性。
 - 🌟 `<pro>Upload`: 新增 previewImageRenderer 属性并优化文件列表显示。
 - 🌟 `<pro>DatePicker`: 新增 comboRangeMode 属性。
+- 🌟 `<pro>Attachment`: 新增 removeImmediately, onTempRemovedAttachmentsChange 属性和 remove, reset 实例方法。
 - 🌟 `Tree`: 新增 checkboxPosition 属性。
 - 🌟 `<pro>Table`: 新增 excel 批量填充和计数功能。
 - 🌟 `<pro>IntlField`: 新增语言字段支持主字段 trim 属性。
@@ -955,7 +978,6 @@ timeline: true
 - 🌟 `<pro>Dropdown`: 新增 onHiddenBeforeChange 回调。
 - 🌟 `<pro>Table`：新增 searchCode, autoWidth, rowBoxPlacement, buttonsLimit 属性, 优化 TableQueryBarType.filterBar 动态筛选条，支持保存筛选条件, 废弃 autoMaxWidth 属性。
 - 🌟 `<pro>Pagination`: 新增 quickJumperPosition 属性。
-- 🌟 `<pro>Attachment`: 新增 removeImmediately, onTempRemovedAttachmentsChange 属性和 remove, reset 实例方法。
 - 💄 `Tabs`：优化 count 为零时不显示。
 - 💄 `<pro>Pagination`: 优化 quickJumper 显示。
 - 💄 `<pro>Attachment`：优化删除、拖拽、预览和标签显示, 优化删除错误状态的附件为直接删除。

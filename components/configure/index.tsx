@@ -267,6 +267,10 @@ export interface Config extends DataSetConfig {
    */
   showRequiredColorsOnlyEmpty?: boolean;
   /**
+   * 对应值集内值不存在显示值时是否显示 value
+   */
+  showValueIfNotFound?: boolean;
+  /**
    * 性能监控钩子
    */
   onPerformance?: PerformanceEventHook<keyof PerformanceEvents>;

@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import { action, autorun, IReactionDisposer, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
+import ResizeObserver from 'resize-observer-polyfill';
+import shallowEqual from 'shallowequal';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -76,6 +78,12 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   editor?: IInstance;
 
+  resizeObserver?: ResizeObserver;
+
+  mutationObserver?: MutationObserver;
+
+  beforeWrapperSize?: { width: number; height: number; };
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -102,21 +110,62 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   componentDidMount() {
     super.componentDidMount();
 
-    const { context, element } = this;
-    const modalCls = context.getProPrefixCls('modal-wrapper');
-    if (typeof document !== 'undefined' && element && hasAncestorWithClassName(element, modalCls)) {
-      setTimeout(() => {
-        if (this.editor) {
-          // modal 中异步加载 CodeArea 时，更新样式
-          this.editor.refresh();
-        }
-      }, 1000);
-    }
+    this.handleMountRefresh();
   }
 
   componentWillUnmount(): void {
     this.disposer();
+    this.disconnect();
     this.editorRefreshDebounce.cancel();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!shallowEqual(this.props.style, prevProps.style) && this.editor) {
+      this.editor.refresh();
+    }
+  }
+
+  handleMountRefresh() {
+    const { wrapper, context, element } = this;
+    if (wrapper) {
+      this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        entries.forEach(entry => {
+          if (this.beforeWrapperSize && (this.beforeWrapperSize.width === 0 || this.beforeWrapperSize.height === 0)) {
+            if (this.editor) {
+              // 由隐藏变为显示，更新样式
+              this.editor.refresh();
+            }
+          }
+          this.beforeWrapperSize = { width: entry.contentRect.width, height: entry.contentRect.height };
+        });
+      });
+      this.resizeObserver.observe(wrapper);
+    }
+
+    const modalCls = context.getProPrefixCls('modal-wrapper');
+    const parent = hasAncestorWithClassName(element, modalCls);
+    if (typeof window !== 'undefined' && element && parent) {
+      this.mutationObserver = new MutationObserver(() => {
+        if (this.editor) {
+          // modal 中异步加载 CodeArea 时，更新样式
+          this.editor.refresh();
+        }
+      });
+      // 监控 modal 类名变化，modal 开启动画时，需要更新 codemirror 样式
+      this.mutationObserver.observe(parent, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+    }
+  }
+
+  disconnect() {
+    const { resizeObserver, mutationObserver } = this;
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+      delete this.resizeObserver;
+    }
+    if (mutationObserver) {
+      mutationObserver.disconnect();
+      delete this.mutationObserver;
+    }
   }
 
   editorRefreshDebounce = debounce(() => {
@@ -305,6 +354,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     const element = this.wrapper || findDOMNode(this);
     if (element) {
       classes(element).remove(`${this.prefixCls}-focused`);
+    }
+
+    const recordValue = this.getValue();
+    if (recordValue !== this.midText) {
+      this.setText(formatter ? formatter.getFormatted(recordValue) : recordValue);
     }
   });
 

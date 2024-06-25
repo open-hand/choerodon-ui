@@ -83,6 +83,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
   removeImmediately?: boolean;
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
+  filesLengthLimitNotice?: (defaultInfo: string) => void;
+  countTextRenderer?: (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode;
 }
 
 export type Sort = {
@@ -375,6 +377,8 @@ export default class Attachment extends FormField<AttachmentProps> {
       'getPreviewUrl',
       'removeImmediately',
       'onTempRemovedAttachmentsChange',
+      'filesLengthLimitNotice',
+      'countTextRenderer',
     ]);
   }
 
@@ -409,8 +413,14 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const max = this.getProp('max');
+    const { filesLengthLimitNotice } = this.props;
     if (max > 0 && (this.count || 0) + attachments.length > max) {
-      Modal.error($l('Attachment', 'file_list_max_length', { count: max }));
+      const defaultInfo = $l('Attachment', 'file_list_max_length', { count: max });
+      if (typeof filesLengthLimitNotice === 'function') {
+        filesLengthLimitNotice(defaultInfo);
+      } else {
+        Modal.error(defaultInfo);
+      }
       return;
     }
     const oldAttachments = this.attachments || [];
@@ -772,7 +782,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       prefixCls,
       accept,
       props: {
-        children, viewMode,
+        children, viewMode, countTextRenderer,
       },
     } = this;
     const buttonProps = this.getOtherProps();
@@ -787,7 +797,10 @@ export default class Attachment extends FormField<AttachmentProps> {
       onChange,
     };
     const width = isCardButton ? pxToRem(this.getPictureWidth()) : undefined;
-    const countText = multiple && (max ? `${count}/${max}` : count) || undefined;
+    let countText: ReactNode = multiple && (max ? `${count}/${max}` : count) || undefined;
+    if (typeof countTextRenderer ==='function') {
+      countText = countTextRenderer(count, max, countText);
+    }
     return isCardButton ? (
       <Button
         funcType={FuncType.link}
@@ -830,8 +843,13 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   renderViewButton(label?: ReactNode): ReactElement<ButtonProps> {
-    const { children, multiple, viewMode } = this.props;
+    const { children, multiple, viewMode, countTextRenderer } = this.props;
+    const max = this.getProp('max');
     const rest = this.getOtherProps();
+    let countText: ReactNode = multiple ? this.count || 0 : undefined;
+    if (typeof countTextRenderer ==='function') {
+      countText = countTextRenderer(this.count, max, countText);
+    }
     return (
       <Button
         funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
@@ -841,7 +859,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {...omit(rest, ['ref'])}
         className={this.getMergedClassNames()}
       >
-        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {multiple ? this.count || 0 : undefined}
+        {children || $l('Attachment', 'view_attachment')}{label && <>({label})</>} {countText}
       </Button>
     );
   }

@@ -11,6 +11,10 @@ export default class Validity {
 
   @observable rangeUnderflow: boolean;
 
+  @observable rangeOverflowExcl: boolean;
+
+  @observable rangeUnderflowExcl: boolean;
+
   @observable stepMismatch: boolean;
 
   @observable tooLong: boolean;
@@ -45,6 +49,8 @@ export default class Validity {
     this.patternMismatch = false;
     this.rangeOverflow = false;
     this.rangeUnderflow = false;
+    this.rangeOverflowExcl = false;
+    this.rangeUnderflowExcl = false;
     this.stepMismatch = false;
     this.tooLong = false;
     this.tooShort = false;

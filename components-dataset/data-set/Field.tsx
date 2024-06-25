@@ -213,6 +213,14 @@ export type FieldProps = {
    */
   min?: MomentInput | null;
   /**
+   * 最大值，严格大于
+   */
+  maxExcl?: MomentInput | null;
+  /**
+   * 最小值，严格小于
+   */
+  minExcl?: MomentInput | null;
+  /**
    * 小数点精度， 提交时会截断
    */
   precision?: number;
@@ -815,9 +823,9 @@ export default class Field {
     if (propsName === 'lookupUrl') {
       return this.dataSet.getConfig('lookupUrl');
     }
-    if (['min', 'max'].includes(propsName)) {
+    if (['min', 'max', 'maxExcl', 'minExcl'].includes(propsName)) {
       if (this.get('type', record) === FieldType.number) {
-        if (propsName === 'max') {
+        if (propsName === 'max' || propsName === 'maxExcl') {
           return Infinity;
         }
         return -Infinity;
@@ -1021,7 +1029,8 @@ export default class Field {
       }
       return value[textField];
     }
-    return value;
+    const showValueIfNotFoundConfig = showValueIfNotFound !== undefined ? showValueIfNotFound : this.dataSet.getConfig('showValueIfNotFound');
+    return showValueIfNotFoundConfig ? value : undefined;
   }
 
   setOptions(options: DataSet): void {
@@ -1199,6 +1208,8 @@ export default class Field {
           }
           case 'max':
           case 'min':
+          case 'maxExcl':
+          case 'minExcl':
             return getLimit(this.get(key, record), record, key, this.get('type', record));
           case 'minLength':
           case 'maxLength':
@@ -1264,10 +1275,11 @@ export default class Field {
     const oldToken = getLookupToken(this, record);
     const batch = this.get('lookupBatchAxiosConfig', record) || this.dataSet.getConfig('lookupBatchAxiosConfig');
     const lookupCode = this.get('lookupCode', record);
+    const lookupAxiosConfig = this.get('lookupAxiosConfig', record);
     const useLookupBatchFunc = this.get('useLookupBatch', record) || this.dataSet.getConfig('useLookupBatch');
     const useLookupBatch = lookupCode && useLookupBatchFunc(lookupCode, this) !== false;
     let promise;
-    if (batch && lookupCode && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
+    if (batch && lookupCode && !lookupAxiosConfig && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);

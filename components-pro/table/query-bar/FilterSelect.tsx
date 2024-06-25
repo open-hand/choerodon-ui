@@ -227,7 +227,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
                   getValue: () => this.getValue(),
                   lang: this.lang,
                   getDisplayProp: (name) => this.getDisplayProp(name),
-                }, undefined, current, this.getContextConfig);
+                }, true, current, this.getContextConfig);
             }).join(this.rangeSeparator)}`;
           }
           if (field.get('bind', current) || isNil(fieldValue)) return;
@@ -242,7 +242,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
               getValue: () => this.getValue(),
               lang: this.lang,
               getDisplayProp: (name) => this.getDisplayProp(name),
-            }, undefined, current, this.getContextConfig,
+            }, true, current, this.getContextConfig,
           )}`;
         }
         return value;

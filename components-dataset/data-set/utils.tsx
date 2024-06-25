@@ -703,7 +703,7 @@ export function findMinOrMaxFields(myField: Field, fields: Fields, record: Recor
   const minOrMaxFields: Field[] = [];
   fields.forEach((field) => {
     const { name } = field;
-    if (fieldName !== name && !isNil(record.get(name)) && (field.get('min', record) === fieldName || field.get('max', record) === fieldName)) {
+    if (fieldName !== name && !isNil(record.get(name)) && (field.get('min', record) === fieldName || field.get('max', record) === fieldName || field.get('minExcl', record) === fieldName || field.get('maxExcl', record) === fieldName)) {
       minOrMaxFields.push(field);
     }
   });

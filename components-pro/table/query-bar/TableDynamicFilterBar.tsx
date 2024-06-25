@@ -61,6 +61,7 @@ import { ShowValidation } from '../../form/enum';
 import { TriggerViewMode } from '../../trigger-field/enum';
 import CombineSort from './CombineSort';
 import TableStore from '../TableStore';
+import { TextFieldProps } from '../../text-field/TextField';
 
 /**
  * 当前数据是否有值并需要选中
@@ -281,6 +282,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   fuzzyQuery?: boolean;
   fuzzyQueryOnly?: boolean,
   fuzzyQueryPlaceholder?: string;
+  fuzzyQueryProps?: TextFieldProps;
   searchCode?: string;
   autoQuery?: boolean;
   refreshBtn?: boolean;
@@ -335,11 +337,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const menuDataSet = dataSet.getState(MENUDATASET);
     const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
     return queryFields.filter(component => {
+      const { name } = component.props;
       if (component.props.hidden) {
         return !component.props.hidden;
       }
-      if (isTenant && queryDataSet && queryDataSet.getField(component.props.name)) {
-        return queryDataSet.getField(component.props.name)!.get('fieldVisible') !== 0;
+      if (isTenant && queryDataSet && queryDataSet.getField(name)) {
+        return queryDataSet.getField(name)!.get('fieldVisible') !== 0;
+      }
+      if (!name || (name && queryDataSet && !queryDataSet.getField(name))) {
+        return false;
       }
       return !component.props.hidden;
     });
@@ -1517,7 +1523,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染模糊搜索
    */
   getFuzzyQuery(): ReactNode {
-    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, onReset = noop } = this.props;
+    const { dataSet, fuzzyQuery, fuzzyQueryPlaceholder, fuzzyQueryProps, onReset = noop } = this.props;
     const { prefixCls } = this;
     const placeholder = fuzzyQueryPlaceholder || $l('Table', 'enter_search_content');
     const fuzzyValue = dataSet.getState(ORIGINALVALUEOBJ) && dataSet.getState(ORIGINALVALUEOBJ).fuzzy;
@@ -1532,6 +1538,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         valueChangeAction={ValueChangeAction.input}
         waitType={WaitType.debounce}
         wait={500}
+        {...fuzzyQueryProps}
         onChange={(value: string, oldValue: string) => {
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
@@ -1774,6 +1781,15 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       );
     }
     if (queryDataSet && queryFields.length) {
+      let moreFields: Field[] = [];
+      if (fieldsLimit < this.queryFields.length) {
+        // 单独使用动态筛选条组件，且queryFields设置了部分字段时
+        moreFields = isTenant ? [...queryDataSet.fields.values()].filter(field => {
+          return this.queryFields.find(item => item.props.name === field.name);
+        }) : this.originOrderQueryFields.filter(field => {
+          return this.queryFields.find(item => item.props.name === field.name);
+        }).slice(fieldsLimit);
+      }
       const singleLineModeAction = this.isSingleLineOpt() ?
         <div className={`${prefixCls}-dynamic-filter-bar-single-action`}>
           {this.getResetButton()}
@@ -1970,7 +1986,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: isTenant ? [...queryDataSet.fields.values()] : this.originOrderQueryFields.slice(fieldsLimit),
+                          fields: moreFields,
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}

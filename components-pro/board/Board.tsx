@@ -24,6 +24,8 @@ export const VIEWLISTDS = '__VIEWLISTDS__';
 export interface BoardCardProps extends Omit<CardProps, 'onHeadClick' | 'onClick'> {
   onHeadClick?: (e: MouseEvent, record: Record) => void;
   onClick?: (e: MouseEvent, record: Record) => void;
+  cardWidth?: 4 | 6 | 8 | 12;
+  contentRenderer?: (viewProps: any) => ReactElement;
 }
 
 export interface KanbanProps {
@@ -33,6 +35,7 @@ export interface KanbanProps {
   droppableProps: DroppableProps;
   draggableProps: DraggableProps;
   dragDropContext: DragDropContextProps;
+  cardWidth?: 4 | 6 | 8 | 12;
 }
 
 export interface BoardProps extends DataSetComponentProps {

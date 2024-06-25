@@ -57,6 +57,8 @@ title: Attachment
 | getPreviewUrl | 获取预览地址，默认使用 AttachmentFile.url，返回空则不可预览。其中函数的返回值为 (() => string \| Promise< string>) 时，仅支持 listType 为 text 的情况 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => (string \| (() => string \| Promise< string>) \| undefined) |  |
 | removeImmediately | 是否立即删除 | boolean | true |
 | onTempRemovedAttachmentsChange | 临时删除文件变化回调，`removeImmediately` 为 false 时生效 | (tempRemovedAttachments: AttachmentFile[]) => void |  |
+| filesLengthLimitNotice | 上传文件时，数量超过限定数量的自定义提示 | (defaultInfo: string) => void | (defaultInfo) => Modal.error(defaultInfo) |
+| countTextRenderer | 上传按钮中数量显示 renderer | (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

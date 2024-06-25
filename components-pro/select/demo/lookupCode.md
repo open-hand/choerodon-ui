@@ -39,6 +39,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
+      { name: 'user', type: 'string', lookupCode: 'USER', valueField: 'code', textField: 'name', defaultValue: 'zf', lookupUrl: 'https://7b3fb464-bab8-478c-9350-1957e484162f.mock.pstmn.io/user' },
       { name: 'sex', type: 'string', lookupCode: 'HR.EMPLOYEE_GENDER' },
       {
         name: 'lov2',
@@ -104,6 +105,9 @@ class App extends React.Component {
             style={{ width: '100%' }}
             trigger={['hover']}
           />
+        </Col>
+        <Col span={24}>
+          <Select dataSet={this.ds} noCache name="user" placeholder="USER" />
         </Col>
       </Row>
     );

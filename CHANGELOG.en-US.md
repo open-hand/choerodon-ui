@@ -15,8 +15,30 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `showValueIfNotFound` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
+- 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
+- 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
+- 🌟 `<pro>Attachment`: Added `filesLengthLimitNotice`, `countTextRenderer` properties.
+- 🌟 `<pro>Board`: Added card default width `cardWidth` and content custom rendering `contentRenderer` properties.
+- 🌟 `<pro>Table.DynamicFilterBar`: Added `fuzzyQueryProps` property.
+- 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
+- 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
+- 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.
+- 💄 `<pro>DataSet`: Optimize single line save logic.
+- 💄 `<pro>Board`: The dropdown option to optimize the grouping displays the logic.
+- 💄 `<pro>NumberField`: Optimize the digital change logic of click step button on mobile terminal.
+- 💄 `<pro>TextField`: Optimize compatibility with `IOS` mobile focus twice before evoking keyboard issues.
+- 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
+- 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
+- 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.
+- 🐞 `<pro>Table`: Fixed an issue where non-asynchronous trees reported an error when using `treeAsync`.
+- 🐞 `<pro>Table`: Fixed the issue of adding a new row when copying and pasting the second page of data in both directions.
+- 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
+- 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
+- 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
+- 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.
 
 ## 1.6.5
 

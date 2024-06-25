@@ -120,6 +120,7 @@ subtitle: 表格
 | fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true |
 | clipboard | 配置 Table 是否可复制粘贴。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } |
 | customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽   | boolean | false |
+| rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -215,6 +216,7 @@ subtitle: 表格
 | fuzzyQuery | 是否开启模糊查询 | boolean | true |
 | fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false |
 | fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  |
+| fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  |
 | autoQuery | 条件变更是否自动查询  | boolean | true |
 | refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |

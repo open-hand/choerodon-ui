@@ -23,6 +23,7 @@ import defaultFormatNumber from '../formatter/formatNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
 import { getNumberFormatOptions, getNumberFormatter, ProcessValueOptions } from '../field/utils';
+import isMobile from '../_util/isMobile';
 
 function getCurrentValidValue(value: string, options: BigNumberOptions): BigNumber.Value {
   const valueBig = new BigNumber(value.replace(/\.$/, ''));
@@ -320,20 +321,23 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     const { prefixCls, range, clearButton } = this;
     const { longPressPlus } = this.props;
     const step = this.getProp('step');
+    const isMob = isMobile();
+    const plusEvent = longPressPlus ? this.handlePlus : this.handleOncePlus;
+    const minusEvent = longPressPlus ? this.handleMinus : this.handleOnceMinus;
     if (step && !range && !this.readOnly && !this.disabled) {
       const plusIconProps: any = {
         ref: this.savePlusRef,
         key: 'plus',
         className: `${prefixCls}-plus`,
-        onMouseDown: longPressPlus ? this.handlePlus : this.handleOncePlus,
-        onTouchStart: this.handleOncePlus,
+        onMouseDown: isMob ? undefined : plusEvent,
+        onTouchStart: isMob ? plusEvent : undefined,
       };
       const minIconProps: any = {
         ref: this.saveMinusRef,
         key: 'minus',
         className: `${prefixCls}-minus`,
-        onMouseDown: longPressPlus ? this.handleMinus : this.handleOnceMinus,
-        onTouchStart: this.handleOnceMinus,
+        onMouseDown: isMob ? undefined : minusEvent,
+        onTouchStart: isMob ? minusEvent : undefined,
       };
       return this.wrapperInnerSpanButton(
         <div>

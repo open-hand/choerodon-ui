@@ -2342,7 +2342,7 @@ export default class TableStore {
       const [cachedSelectedLength, cachedRecordsLength] =
         getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
       const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.length);
+      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
     }
     return this.currentIndeterminate;
   }
@@ -2355,7 +2355,7 @@ export default class TableStore {
       const [cachedSelectedLength, cachedRecordsLength] =
         getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
       const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.length);
+      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
     }
     return this.allCurrentChecked;
   }
@@ -3008,7 +3008,7 @@ export default class TableStore {
   @autobind
   drawExpandArea(event) {
     // 说明有起点 & 终点
-    const { node: { rangeBorder, expandBorder }, rowHeight, startChooseCell, endChooseCell } = this;
+    const { node: { rangeBorder, expandBorder }, startChooseCell, endChooseCell } = this;
     const sTarget = startChooseCell && startChooseCell.target;
     const eTarget = endChooseCell && endChooseCell.target;
     const pointTarget = getTdElementByTarget(event.target);
@@ -3016,7 +3016,7 @@ export default class TableStore {
     const targetTop = pointTarget.offsetTop + pointTarget.offsetHeight;
     // 分析对比两点的位置，第一个点是 右下角。第二个点是 左上角
     // 计算右下角的位置
-   
+
     if (rangeBorder) {
       const cornerTop = rangeBorder.offsetTop + rangeBorder.offsetHeight;
 
@@ -3045,14 +3045,12 @@ export default class TableStore {
 
         }
 
-        if (typeof rowHeight === 'number') {
-          const rows = (targetTop - cornerTop) / rowHeight;
-          this.batchExpandRowNumber = Math.floor(rows);
-        }
+        const rows = (targetTop - cornerTop) / pointTarget.offsetHeight;
+        this.batchExpandRowNumber = Math.floor(rows);
       } else {
         this.batchExpandRowNumber = 0;
-        if (expandBorder) { 
-          expandBorder.style.display = "none"; 
+        if (expandBorder) {
+          expandBorder.style.display = "none";
         }
       }
     }
@@ -3097,7 +3095,7 @@ export default class TableStore {
     // 新终点
     const trs = tableBodyWrap?.querySelectorAll('.c7n-pro-table-tbody tr');
     if (trs) {
-      const dataIndex =(startRowIndex > endRowIndex ? sTarget : eTarget).getAttribute('data-index');
+      const dataIndex = (startRowIndex > endRowIndex ? sTarget : eTarget).getAttribute('data-index');
       const newETarget: HTMLElement | null = trs[(startRowIndex > endRowIndex ? startRowIndex : endRowIndex) + this.batchExpandRowNumber].querySelector(`td[data-index="${dataIndex}"]`);
       if (newETarget) {
         this.drawCopyBorder(newSTarget, newETarget);
@@ -3115,7 +3113,7 @@ export default class TableStore {
       }
     }
     if (expandBorder) {
-      expandBorder.style.display = "none"; 
+      expandBorder.style.display = "none";
     }
     if (this.clipboard && this.clipboard.copy) {
       this.calcArrangeValue()
@@ -3397,7 +3395,7 @@ export default class TableStore {
       count: 0,
     }
   }
-  
+
   @action
   calcArrangeValue() {
     this.dragCorner = false;

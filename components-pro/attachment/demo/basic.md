@@ -14,7 +14,7 @@ title:
 Basic Usage
 
 ````jsx
-import { configure, Row, Col, notification } from 'choerodon-ui';
+import { configure, Row, Col, notification, message } from 'choerodon-ui';
 import { Attachment, Button, Axios } from 'choerodon-ui/pro';
 import uuid from 'uuid/v4';
 import moment from 'moment';
@@ -116,13 +116,17 @@ const App = () => {
     label: '技术附件',
     labelLayout: 'float',
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
-    max: 9,
+    max: 4,
     value,
     onChange: setValue,
     showHistory: true,
     useChunk: true,
     chunkSize: 1024,
     help: '支持文件类型： .deb .txt .pdf image/*',
+    // 上传文件时，数量超过限定数量的自定义提示
+    filesLengthLimitNotice: (defaultInfo) => {
+      message.error(defaultInfo);
+    }
   };
   
   const getPreviewUrl = (props) => {

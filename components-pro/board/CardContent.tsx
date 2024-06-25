@@ -451,7 +451,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     ...cardProps.style,
                     minHeight: cardHeight,
                   }}
-                  title={viewProps && viewProps.displayFields ?
+                  title={viewProps && viewProps.displayFields && !(cardProps && cardProps.contentRenderer) ?
                     <Typography.Paragraph
                       ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]) ? displayFields.find(df => df.name === viewProps.displayFields[0]).renderer : noop} /> }}
                       name={viewProps.displayFields[0]}
@@ -481,32 +481,37 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     }
                   }
                   extra={
-                    <CardCommand
-                      command={command}
-                      dataSet={cardDS}
-                      record={record}
-                      renderCommand={renderCommand}
-                      prefixCls={prefixCls}
-                      viewMode={ViewMode.card}
-                      commandsLimit={commandsLimit}
-                    />
+                    cardProps && cardProps.contentRenderer ? null :
+                      <CardCommand
+                        command={command}
+                        dataSet={cardDS}
+                        record={record}
+                        renderCommand={renderCommand}
+                        prefixCls={prefixCls}
+                        viewMode={ViewMode.card}
+                        commandsLimit={commandsLimit}
+                      />
                   }
                 >
-                  {viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
-                    <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
-                      <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
-                        {record.getField(fieldName).get('label')}
-                      </span>
-                      <Typography.Text
-                        ellipsis={{
-                          tooltip: true,
-                        }}
-                        name={fieldName}
-                        record={record}
-                        renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
-                      />
-                    </div>
-                  )) : null}
+                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps) : 
+                    (
+                      viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
+                        <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
+                          <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
+                            {record.getField(fieldName).get('label')}
+                          </span>
+                          <Typography.Text
+                            ellipsis={{
+                              tooltip: true,
+                            }}
+                            name={fieldName}
+                            record={record}
+                            renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
+                          />
+                        </div>
+                      )) : null
+                    )
+                  }
                 </Card>
               </ReactResizeObserver>
             </List.Item>
