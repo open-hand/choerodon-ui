@@ -5,6 +5,7 @@ import uniqBy from 'lodash/uniqBy';
 import isEmpty from 'lodash/isEmpty';
 import isPromise from 'is-promise';
 import { T } from 'choerodon-ui/lib/upload/utils';
+import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
 import Button from '../button/Button';
 import { ButtonColor } from '../button/enum';
 import autobind from '../_util/autobind';
@@ -452,12 +453,12 @@ export default class Upload extends FormField<UploadProps> {
    * 分别上传fileList中的每个文件对象
    *
    * @param {UploadFile[]} fileList 文件对象数组
-   * @returns {void}
+   * @returns {Promise<void>}
    * @memberof Upload
    */
   @autobind
   @action
-  uploadFiles(fileList: UploadFile[]): void {
+  async uploadFiles(fileList: UploadFile[]): Promise<void> {
     const {
       action: formAction,
       accept,
@@ -477,6 +478,16 @@ export default class Upload extends FormField<UploadProps> {
       Modal.error(`${$l('Upload', 'file_list_max_length')}: ${fileListMaxLength}`);
       return;
     }
+
+    const secretLevel = getConfigDefault('uploadSecretLevel');
+    let secretLevelHeadersInfo = {};
+    if (secretLevel) {
+      secretLevelHeadersInfo = await secretLevel();
+      if (secretLevelHeadersInfo === false) {
+        return;
+      }
+    }
+
     const files = partialUpload
       ? fileList
         .filter(item => !item.status || item.status !== 'success')
@@ -489,7 +500,7 @@ export default class Upload extends FormField<UploadProps> {
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
       setTimeout(() => {
-        that.upload(file);
+        that.upload(file, secretLevelHeadersInfo);
       }, 0);
     });
   }
@@ -505,7 +516,7 @@ export default class Upload extends FormField<UploadProps> {
   /* istanbul ignore next */
   @autobind
   @action
-  upload(file: any): void {
+  upload(file: any, extraHeaders?: object): void {
     const {
       data,
       action: formAction,
@@ -555,6 +566,13 @@ export default class Upload extends FormField<UploadProps> {
       Object.keys(headers).forEach(key => {
         if ({}.hasOwnProperty.call(headers, key)) {
           xhr.setRequestHeader(key, headers[key]);
+        }
+      });
+    }
+    if (extraHeaders !== undefined) {
+      Object.keys(extraHeaders).forEach(key => {
+        if ({}.hasOwnProperty.call(extraHeaders, key)) {
+          xhr.setRequestHeader(key, extraHeaders[key]);
         }
       });
     }

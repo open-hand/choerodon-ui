@@ -12,6 +12,7 @@ import { AttachmentValue, AttachmentFileProps } from 'choerodon-ui/dataset/confi
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
 import { DownloadAllMode } from 'choerodon-ui/dataset/data-set/enum';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
+import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import Trigger from 'choerodon-ui/lib/trigger/Trigger';
 import RcUpload from 'choerodon-ui/lib/rc-components/upload';
@@ -423,6 +424,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
       return;
     }
+    const secretLevel = getConfigDefault('uploadSecretLevel');
+    let secretLevelHeadersInfo = {};
+    if (secretLevel) {
+      secretLevelHeadersInfo = await secretLevel();
+      if (secretLevelHeadersInfo === false) {
+        return;
+      }
+    }
     const oldAttachments = this.attachments || [];
     if (this.multiple) {
       this.attachments = [...oldAttachments.slice(), ...attachments];
@@ -431,7 +440,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       this.attachments = [...attachments];
     }
     try {
-      await Promise.all(attachments.map((attachment) => this.upload(attachment)));
+      await Promise.all(attachments.map((attachment) => this.upload(attachment, secretLevelHeadersInfo)));
     } finally {
       this.changeOrder();
     }
@@ -461,7 +470,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
-  async upload(attachment: AttachmentFile) {
+  async upload(attachment: AttachmentFile, extraHeaders?: object) {
     try {
       const uploader = getIf(this, 'uploader', () => {
         return new Uploader(
@@ -471,7 +480,15 @@ export default class Attachment extends FormField<AttachmentProps> {
           },
         );
       });
-      uploader.setProps(this.getUploaderProps());
+      const uploaderProps = this.getUploaderProps();
+      if (extraHeaders) {
+        if (uploaderProps.headers) {
+          Object.assign(uploaderProps.headers, extraHeaders);
+        } else {
+          uploaderProps.headers = extraHeaders;
+        }
+      }
+      uploader.setProps(uploaderProps);
       const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
       if (result === false) {
         this.removeAttachment(attachment);
