@@ -103,6 +103,7 @@ async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chu
       bucketDirectory: props.bucketDirectory,
       storageCode: props.storageCode,
       isPublic: props.isPublic,
+      headers: props.headers,
       attachmentUUID,
     }) !== false) {
       const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {

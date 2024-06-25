@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `showValueIfNotFound` property.
+- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevel` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.

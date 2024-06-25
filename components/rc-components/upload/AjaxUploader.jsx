@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
+import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';;
 import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
@@ -82,8 +83,16 @@ class AjaxUploader extends Component {
     this.abort();
   }
 
-  uploadFiles = (files) => {
+  uploadFiles = async (files) => {
     const { beforeUploadFiles = noop } = this.props;
+    const secretLevel = getConfigDefault('uploadSecretLevel');
+    let secretLevelHeadersInfo = {};
+    if (secretLevel) {
+      secretLevelHeadersInfo = await secretLevel();
+      if (secretLevelHeadersInfo === false) {
+        return;
+      }
+    }
     const postFiles = Array.prototype.slice.call(files).map((file) => {
       file.uid = getUid();
       return file;
@@ -91,17 +100,17 @@ class AjaxUploader extends Component {
     Promise.resolve(beforeUploadFiles(files)).then((res) => {
       if (res !== false) {
         postFiles.forEach((file) => {
-          this.upload(file, postFiles);
+          this.upload(file, postFiles, secretLevelHeadersInfo);
         });
       }
     });
   };
 
-  upload(file, fileList) {
+  upload(file, fileList, extraHeaders = {}) {
     const { props } = this;
     if (!props.beforeUpload) {
       // always async in case use react state to keep fileList
-      return setTimeout(() => this.post(file), 0);
+      return setTimeout(() => this.post(file, extraHeaders), 0);
     }
 
     const before = props.beforeUpload(file, fileList);
@@ -109,18 +118,18 @@ class AjaxUploader extends Component {
       before.then((processedFile) => {
         const processedFileType = Object.prototype.toString.call(processedFile);
         if (processedFileType === '[object File]' || processedFileType === '[object Blob]') {
-          return this.post(processedFile);
+          return this.post(processedFile, extraHeaders);
         }
-        return this.post(file);
+        return this.post(file, extraHeaders);
       }).catch(e => {
         console && console.log(e); // eslint-disable-line
       });
     } else if (before !== false) {
-      setTimeout(() => this.post(file), 0);
+      setTimeout(() => this.post(file, extraHeaders), 0);
     }
   }
 
-  post(file) {
+  post(file, extraHeaders) {
     const { originReuploadItem, fileList: originFileList, setReplaceReuploadItem } = this.props;
     // Upload 重新上传的替换处理
     if (originReuploadItem) {
@@ -155,7 +164,7 @@ class AjaxUploader extends Component {
         file,
         data,
         requestFileKeys, // 判断传递的是数据不是文件
-        headers: props.headers,
+        headers: {...(props.headers || {}), ...extraHeaders},
         withCredentials: props.withCredentials,
         onProgress: onProgress ? e => {
           onProgress(e, file);

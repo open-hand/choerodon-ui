@@ -47,6 +47,7 @@ export interface AttachmentOption {
   bucketDirectory?: string;
   storageCode?: string;
   isPublic?: boolean;
+  headers?: object;
 }
 
 export interface AttachmentValue extends AttachmentOption {

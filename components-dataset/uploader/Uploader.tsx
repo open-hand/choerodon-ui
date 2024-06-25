@@ -81,6 +81,7 @@ export default class Uploader {
               bucketDirectory: props.bucketDirectory,
               storageCode: props.storageCode,
               isPublic: props.isPublic,
+              headers: props.headers,
             });
           }
           if (onUploadSuccess) {
