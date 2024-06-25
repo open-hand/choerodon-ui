@@ -1,9 +1,11 @@
 import React, { Key, ReactNode } from 'react';
 import classNames from 'classnames';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import isNil from 'lodash/isNil';
 import Tree, { TreeProps } from 'choerodon-ui/lib/tree';
+import { Size } from 'choerodon-ui/lib/_util/enum';
+import Spin from '../spin';
 import TreeNode from './TreeNode';
 import { DISABLED_FIELD, isSearchTextEmpty, MORE_KEY, Select, SelectProps } from '../select/Select';
 import DataSet from '../data-set/DataSet';
@@ -129,7 +131,13 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     const { record, disabled, key } = node;
     if (key === MORE_KEY) {
       const { options } = this;
-      options.queryMore(options.currentPage + 1);
+      runInAction(() => {
+        this.moreQuerying = true;
+        options.queryMore(options.currentPage + 1)
+          .finally(() => {
+            runInAction(() => this.moreQuerying = false);
+          });
+      });
     } else if (!disabled) {
       const { multiple } = this;
       if (multiple) {
@@ -150,7 +158,13 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     const { valueField, checkStrictly } = this;
     if (key === MORE_KEY) {
       const { options } = this;
-      options.queryMore(options.currentPage + 1);
+      runInAction(() => {
+        this.moreQuerying = true;
+        options.queryMore(options.currentPage + 1)
+          .finally(() => {
+            runInAction(() => this.moreQuerying = false);
+          });
+      });
     } else if (!disabled && !disableCheckbox) {
       const { multiple } = this;
       if (multiple) {
@@ -383,9 +397,10 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       treeData.push({
         key: MORE_KEY,
         eventKey: MORE_KEY,
-        title: this.getPagingOptionContent(),
+        title: <Spin style={{ left: 0 }} size={Size.small} spinning={this.moreQuerying === true}>{this.getPagingOptionContent()}</Spin>,
         className: `${menuPrefixCls}-item ${menuPrefixCls}-item-more`,
         isLeaf: true,
+        disabled: this.moreQuerying,
       });
     }
     const props: TreeProps = {};

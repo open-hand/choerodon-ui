@@ -15,6 +15,7 @@ import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import { Tooltip as OptionTooltip } from '../core/enum';
 import TriggerField, { TriggerFieldPopupContentProps, TriggerFieldProps } from '../trigger-field/TriggerField';
 import autobind from '../_util/autobind';
@@ -274,6 +275,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   menu?: Menu | null;
 
   @observable $searchText?: string | string[] | undefined;
+
+  @observable moreQuerying?: boolean;
 
   get range(): boolean | [string, string] {
     if (this.multiple && super.range) {
@@ -792,8 +795,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         {optGroups}
         {
           showQueryMore && (
-            <Item key={MORE_KEY} checkable={false} className={`${menuPrefix}-item-more`}>
-              {this.getPagingOptionContent()}
+            <Item
+              disabled={this.moreQuerying}
+              key={MORE_KEY}
+              checkable={false}
+              className={`${menuPrefix}-item-more`}
+            >
+              <Spin style={{ left: 0 }} size={Size.small} spinning={this.moreQuerying === true}>
+                {this.getPagingOptionContent()}
+              </Spin>
             </Item>
           )
         }
@@ -833,7 +843,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   get defaultActiveFirstOption(): boolean | undefined {
     const { defaultActiveFirstOption = this.getContextConfig('defaultActiveFirstOption') } = this.observableProps;
-    return defaultActiveFirstOption && this.options.currentPage === 1;
+    return defaultActiveFirstOption && this.options.currentPage === 1 && !this.moreQuerying;
   }
 
   get optionsFilter(): (record: Record, index: number, records: Record[]) => boolean {
@@ -1241,7 +1251,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         options.appendData(nextPageData);
         options.currentPage = currentPage + 1;
       } else {
-        options.queryMore(options.currentPage + 1, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
+        runInAction(() => {
+          this.moreQuerying = true;
+          options.queryMore(options.currentPage + 1, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined)
+            .finally(() => {
+              runInAction(() => this.moreQuerying = false);
+            });
+        });
       }
     } else if (this.multiple && this.isSelected(value)) {
       this.unChoose(value);

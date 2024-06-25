@@ -12,6 +12,7 @@ import { Menus, SingleMenu } from 'choerodon-ui/lib/rc-components/cascader';
 import { defaultFieldNames } from 'choerodon-ui/lib/rc-components/cascader/Cascader';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { Size } from 'choerodon-ui/lib/_util/enum';
 import cloneDeep from 'lodash/cloneDeep';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
@@ -208,6 +209,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   @observable menuItemWith: number;
 
   @observable clickTab;
+
+  @observable moreQuerying;
 
   optionsIsChange: boolean | undefined;
 
@@ -720,9 +723,10 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       optGroups.push({
         key: MORE_KEY,
         eventKey: MORE_KEY,
-        label: this.getPagingOptionContent(),
+        label: <Spin style={{ left: 0 }} size={Size.small} spinning={this.moreQuerying === true}>{this.getPagingOptionContent()}</Spin>,
         className: `${menuPrefixCls}-item ${menuPrefixCls}-item-more`,
         isLeaf: true,
+        disabled: this.moreQuerying,
       });
     }
 
@@ -1140,7 +1144,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     if (targetOption.key === MORE_KEY) {
       const { options } = this;
-      options.queryMore(options.currentPage + 1);
+      runInAction(() => {
+        this.moreQuerying = true;
+        options.queryMore(options.currentPage + 1)
+          .finally(() => {
+            runInAction(() => this.moreQuerying = false);
+          });
+      });
       return;
     }
     if (changeOnSelect && ExpandTrigger.dblclick === trigger) {
