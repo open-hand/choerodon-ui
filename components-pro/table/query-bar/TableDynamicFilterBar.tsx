@@ -292,6 +292,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   defaultActiveKey?: string;
   tableStore?: TableStore;
   showSingleLine?: boolean;
+  filterQueryCallback?: Function;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -307,6 +308,7 @@ export const EXPTYPE = '__EXPTYPE__';
 export const SEARCHEXP = '__SEARCHEXP__';
 export const NEWFILTERDATASET = '__NEWFILTERDATASET__';
 export const ORIGINALVALUEOBJ = '__ORIGINALVALUEOBJ__';
+export const HASINIT = '__HASINIT__';
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -427,10 +429,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
 
   componentWillUnmount(): void {
-    const { fuzzyQueryOnly } = this.props;
+    const { fuzzyQueryOnly, dataSet } = this.props;
     if (!fuzzyQueryOnly) {
       document.removeEventListener('mousedown', this.handleMouseDownOut);
       this.processDataSetListener(false);
+      dataSet.setState(HASINIT, undefined)
     }
     if (this.isTooltipShown) {
       hide();
@@ -491,7 +494,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   @autobind
   async handleDataSetQuery({ dataSet }) {
-    if (!dataSet.getState(MENURESULT) && this.tableFilterAdapter) {
+    if (!dataSet.getState(MENURESULT) && this.tableFilterAdapter && !dataSet.getState(HASINIT)) {
+      dataSet.setState(HASINIT, true);
       await this.initMenuDataSet();
       const res = dataSet.getState(MENURESULT);
       if (res && res.length && res.filter(menu => menu.defaultFlag).length) {
@@ -505,7 +509,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
               initQueryData[fieldName] = parseValue(value);
             }
           });
-          const { queryDataSet } = this.props;
+          const { queryDataSet, filterQueryCallback = noop } = this.props;
+          filterQueryCallback({ dataSet })
           if (queryDataSet && queryDataSet.current && dataSet.props.autoQuery) {
             if (Object.keys(initQueryData).length) {
               dataSet.query();

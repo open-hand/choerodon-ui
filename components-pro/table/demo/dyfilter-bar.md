@@ -69,12 +69,13 @@ class App extends React.Component {
     transport: {
       read({ params: { page, pagesize } }) {
         return {
-          url: `https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/user`,
+          url: `https://hzero-test.open.hand-china.com/mock/sortUser`,
         };
       },
     },
-    autoQuery: true,
-    pageSize: 5,
+    autoQuery: false,
+    dataKey: 'rows',
+    pageSize: 10,
     queryFields: [
       {
         name: 'START_TIME',
@@ -203,6 +204,11 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, sortable: true }, { name: 'age', sortable: true }];
   }
 
+  // componentDidMount() {
+  //   console.log('componentDidMount query')
+  //   ds.query();
+  // }
+
   render() {
     window.ds = this.ds;
     return (
@@ -215,6 +221,10 @@ class App extends React.Component {
         // }}
         queryBar="filterBar"
         queryBarProps={{
+          filterQueryCallback: () => {
+            console.log('filterQueryCallback')
+            ds.query();
+          },
           // 高级搜索配置
           advancedSearchFields: [
             {
@@ -272,7 +282,7 @@ class App extends React.Component {
                 case 'read':
                   return {
                     // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
-                    url: 'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                    url: 'https://hzero-test.open.hand-china.com/mock/filterlist',
                     method: 'get',
                   };
                 case 'create':
