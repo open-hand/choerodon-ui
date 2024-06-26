@@ -37,3 +37,5 @@ export enum  ModalButtonTrigger {
   CLICK = 'click',
   MOUSEDOWN = 'mouseDown',
 }
+
+export type ModalOkAndCancelIcon = undefined | boolean | { okIconType?: string | boolean, cancelIconType?: string | boolean };

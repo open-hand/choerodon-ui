@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevel 属性。
+- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevel, modalOkAndCancelIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
@@ -24,6 +24,8 @@ timeline: true
 - 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 fuzzyQueryProps 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 filterQueryCallback 属性。
+- 🌟 `<pro>Modal`: 新增 modalOkAndCancelIcon 属性。
+- 🌟 `Tree`: 新增 onDragEnterBefore, onDragOverBefore 属性。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
@@ -31,6 +33,7 @@ timeline: true
 - 💄 `<pro>Board`: 优化分组的下拉选项显示逻辑。
 - 💄 `<pro>NumberField`: 优化移动端点击步距按钮数字变化逻辑。
 - 💄 `<pro>TextField`: 优化兼容 IOS 移动端聚焦两次才唤起键盘的问题。
+- 💄 `Tree`: 优化第一个和最后一个子节点，以及禁用节点的拖拽交互。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。
@@ -41,6 +44,8 @@ timeline: true
 - 🐞 `<pro>Select`: 修复多选且级联模式下，删除父级单个值会导致级联字段弹窗不关闭的问题。
 - 🐞 `<pro>Select`: 修复级联模式下，父级多值会导致级联下拉框无数据的问题。
 - 🐞 `<pro>Select`: 修复分页按钮可重复点击的问题。
+- 🐞 `<pro>TreeSelect`: 修复有多个根节点，且 showCheckedStrategy 属性为 SHOW_PARENT 或者 SHOW_CHILD 时，值选择不正确的问题。
+- 🐞 `<pro>IntlField`: 修复 displayOutput 属性变化后样式渲染不正确的问题。
 
 ## 1.6.5
 

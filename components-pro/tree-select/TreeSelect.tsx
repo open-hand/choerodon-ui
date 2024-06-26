@@ -155,7 +155,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
   @autobind
   handleTreeCheck(_e, { node }) {
     const { record, disabled, key, disableCheckbox } = node;
-    const { valueField, checkStrictly } = this;
+    const { checkStrictly } = this;
     if (key === MORE_KEY) {
       const { options } = this;
       runInAction(() => {
@@ -177,6 +177,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           return;
         }
         const disabledChildRecords: Record[] = [];
+        // 未选择且未禁用（祖先也未禁用，根祖先为record）的子节点（包含自己）
         const records = (record as Record).treeReduce((array, r) => {
           if (recordIsDisabled(r)) {
             disabledChildRecords.push(r);
@@ -184,6 +185,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           }
           return this.isSelected(r) || r.parents.some(parent => disabledChildRecords.includes(parent)) ? array : array.concat(r);
         }, [] as Record[]);
+        // 仅差一个子级未选择的祖先节点；或者是子级全部选择的祖先节点
         const parents: Record[] = [];
         (record as Record).parents.every((parent, index) => {
           if (recordIsDisabled(parent)) {
@@ -218,53 +220,30 @@ export default class TreeSelect extends Select<TreeSelectProps> {
           }
         } else if (showCheckedStrategy === CheckedStrategy.SHOW_PARENT) {
           const disabledParentRecords: Record[] = [];
+          let oldSelectedRecord: Record = record;
           if (this.isSelected(record) ||
             (record as Record).parents.some(parent => {
               if (recordIsDisabled(parent)) {
                 disabledParentRecords.push(parent, ...parent.parents);
+                return false;
               }
-              return this.isSelected(parent) && !recordIsDisabled(parent) && !disabledParentRecords.includes(parent);
+              const parentSelect = this.isSelected(parent) && !recordIsDisabled(parent) && !disabledParentRecords.includes(parent);
+              if (parentSelect) {
+                oldSelectedRecord = parent;
+              }
+              return parentSelect;
             })) {
-            const recordFirstDisabledParent = (record as Record).parents.find(parent => recordIsDisabled(parent));
             const selectedRecords = this.options.filter(option => {
-              if (recordIsDisabled(option)) {
-                return this.isSelected(option);
-              }
-              if (key === option.get(valueField) || (option.children && option.children.includes(record))) {
-                return false;
-              }
-              const firstDisabledParent = option.parents.find(parent => recordIsDisabled(parent));
-              if ((firstDisabledParent && !(record as Record).parents.includes(firstDisabledParent)) ||
-                (recordFirstDisabledParent && !option.parents.includes(recordFirstDisabledParent)) ||
-                (firstDisabledParent && recordFirstDisabledParent &&
-                  (firstDisabledParent.parents.includes(recordFirstDisabledParent) || recordFirstDisabledParent.parents.includes(firstDisabledParent)))) {
-                return this.isSelected(option);
-              }
-              if (firstDisabledParent && recordFirstDisabledParent === firstDisabledParent) {
-                if ((record as Record).parents.includes(option) || option.parents.includes(record)) {
-                  return false;
-                }
-                if ((record as Record).parents.some(recordParent => recordParent === option.parent && recordParent.parents.includes(firstDisabledParent)) &&
-                  (option.parents.some(parent => this.isSelected(parent) && parent.parents.includes(firstDisabledParent)) || this.isSelected(option))) {
-                  return true;
-                }
-                if (option.parents.some(optionParent => (record as Record).parents.includes(optionParent) && optionParent.parents.includes(firstDisabledParent)) &&
-                  this.isSelected(option)) {
-                  return true;
-                }
-                return this.isSelected(option);
-              }
-              if ((record as Record).parents.includes(option) || option.parents.includes(record)) {
-                return false;
-              }
-              if (option.parent && (record as Record).parents.includes(option.parent) && (option.parents.some(parent => this.isSelected(parent)) || this.isSelected(option))) {
-                return true;
-              }
-              if (option.parents.some(optionParent => (record as Record).parents.includes(optionParent)) && this.isSelected(option)) {
-                return true;
-              }
-              return false;
+              return option !== oldSelectedRecord && this.isSelected(option);
             });
+            if (oldSelectedRecord.children) {
+              oldSelectedRecord.children.forEach(child => {
+                if (!recordIsDisabled(child) && !this.isSelected(record) &&
+                  child !== record && (record as Record).parents.every(parent => child !== parent)) {
+                  selectedRecords.push(child);
+                }
+              });
+            }
             this.setValue(selectedRecords.map(this.processRecordToObject, this));
           } else {
             const preSelected = this.options.filter(option => this.isSelected(option)).concat(record, parents);
@@ -274,45 +253,23 @@ export default class TreeSelect extends Select<TreeSelectProps> {
             this.setValue(selectedRecords.map(this.processRecordToObject, this));
           }
         } else if (showCheckedStrategy === 'SHOW_CHILD') {
-          if (!record.parent) {
-            const disabledRootRecords = this.options.filter(option => recordIsDisabled(option) && option.parents.every(optionParent => !recordIsDisabled(optionParent)));
-            if (disabledRootRecords &&
-              this.options.every(option => recordIsDisabled(option) || option.parents.some(optionParent => disabledRootRecords.includes(optionParent)) ||
-                (this.isSelected(option) && (!option.children || (!!option.children && option.children.every(child => disabledRootRecords.includes(child))))) ||
-                (!!option.children && option.children.some(optionChild => !recordIsDisabled(optionChild))))) {
-              const unchooseRecords = this.options.filter(option => !recordIsDisabled(option) &&
-                option.parents.every(optionParent => !recordIsDisabled(optionParent)) && this.isSelected(option));
-              this.unChoose(unchooseRecords);
-            }
-            else if (!disabledRootRecords && this.options.every(option => (!option.children && this.isSelected(option)) || !!option.children)) {
-              this.unChooseAll();
-            } else {
-              this.choose(records.filter(childRecord => !childRecord.children || childRecord.children.every(childChild => recordIsDisabled(childChild))));
-            }
-            return;
-          }
-          if (this.isSelected(record) && (!record.children || record.children.every(recordChild => recordIsDisabled(recordChild)))) {
-            this.unChoose(record);
-          } else if (!this.isSelected(record) && record.children && record.parent) {
-            const allLeafChildren: Record[] = [];
-            const selectedChildren: Record[] = [];
-            (record as Record).treeReduce((_, r) => {
-              if (r.parents.every(parent => !disabledChildRecords.includes(parent)) &&
-                ((!recordIsDisabled(r) && !r.children) || (r.children && r.children.every(recordChild => recordIsDisabled(recordChild))))) {
-                allLeafChildren.push(r);
-                if (this.isSelected(r)) {
-                  selectedChildren.push(r);
-                }
+          const allLeafChildren: Record[] = [];
+          const selectedChildren: Record[] = [];
+          (record as Record).treeReduce((_, r) => {
+            if (!recordIsDisabled(r) &&
+              r.parents.every(parent => !disabledChildRecords.includes(parent)) &&
+              (!r.children || r.children.length === 0 || (r.children && r.children.every(recordChild => recordIsDisabled(recordChild))))) {
+              allLeafChildren.push(r);
+              if (this.isSelected(r)) {
+                selectedChildren.push(r);
               }
-              return [];
-            }, [] as Record[]);
-            if (allLeafChildren.length === selectedChildren.length && selectedChildren.length !== 0) {
-              this.unChoose(selectedChildren);
-            } else {
-              this.choose(records.filter(chooseRecord => !chooseRecord.children || chooseRecord.children.every(childChild => recordIsDisabled(childChild))));
             }
+            return [];
+          }, [] as Record[]);
+          if (allLeafChildren.length === selectedChildren.length) {
+            this.unChoose(selectedChildren);
           } else {
-            this.choose(records.filter(chooseRecord => !chooseRecord.children || chooseRecord.children.every(childChild => recordIsDisabled(childChild))));
+            this.choose(allLeafChildren.filter(leaf => selectedChildren.length === 0 || !selectedChildren.includes(leaf)));
           }
         }
       } else {

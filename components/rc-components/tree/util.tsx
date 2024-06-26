@@ -108,7 +108,10 @@ export function calcDropPosition(
   // find abstract drop node by horizontal offset
   let abstractDropNodeEntity: DataEntity = keyEntities[targetNode.props.eventKey!];
 
-  if (clientY < top + height / 2) {
+  // 拖动到节点上半部分
+  // 或者是第一个子节点时，拖动到节点的上四分之一，选择前一个节点
+  if ((clientY < top + height / 2 && !isFirstChild(abstractDropNodeEntity)) ||
+    (clientY < top + height * 0.25 && isFirstChild(abstractDropNodeEntity))) {
     // first half, set abstract drop node to previous node
     const nodeIndex = flattenedNodes.findIndex(
       flattenedNode => flattenedNode.data.key === abstractDropNodeEntity.key,
@@ -139,10 +142,12 @@ export function calcDropPosition(
   }
   const abstractDropDataNode = abstractDropNodeEntity.node;
   let dropAllowed = true;
+  // 根节点的，拖动上半部分
+  // 或者第一个节点，拖动到上四分之二，选择自己，横线top
   if (
     isFirstChild(abstractDropNodeEntity) &&
-    abstractDropNodeEntity.level === 0 &&
-    clientY < top + height / 2 &&
+    ((abstractDropNodeEntity.level === 0 && clientY < top + height / 2) ||
+    (clientY < top + height / 2 && clientY > top + height * 0.25)) &&
     allowDrop({
       dropNode: abstractDropDataNode,
       dropPosition: -1,
@@ -190,7 +195,14 @@ export function calcDropPosition(
       // 1. try drop inside
       // 2. try drop after
       // 3. do not allow drop
-      if (allowDrop({
+      // 最后一个子节点，拖动到下四分之四，选择自己，横线bottom
+      if ((clientY > top + height * 0.75 && isLastChild(abstractDropNodeEntity)) &&
+        allowDrop({
+          dropNode: abstractDropDataNode,
+          dropPosition: 1,
+        })) {
+        dropPosition = 1;
+      } else if (allowDrop({
         dropNode: abstractDropDataNode,
         dropPosition: 0,
       })) {
@@ -345,3 +357,16 @@ export function getDataAndAria(props: Partial<TreeProps | TreeNodeProps>) {
 
   return omitProps;
 }
+
+export const getMergedDraggable = (draggable, data) => {
+  if (typeof draggable === 'function') {
+    return draggable(data);
+  }
+  if (typeof draggable === 'object') {
+    const { nodeDraggable = false } = draggable;
+    return typeof nodeDraggable === 'function'
+      ? nodeDraggable(data)
+      : nodeDraggable;
+  }
+  return draggable;
+};
