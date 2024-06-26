@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import Icon from '../../icon';
 import { TreeContext, TreeContextProps } from './contextTypes';
-import { getDataAndAria } from './util';
+import { getDataAndAria, getMergedDraggable } from './util';
 import { DataNode, IconType, Key } from './interface';
 import Indent from './Indent';
 import { convertNodePropsToEventData } from './utils/treeUtil';
@@ -337,19 +337,6 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return treeSelectable;
   }
 
-  getMergedDraggable = (draggable, data) => {
-    if (typeof draggable === 'function') {
-      return draggable(data);
-    }
-    if (typeof draggable === 'object') {
-      const { nodeDraggable = false } = draggable;
-      return typeof nodeDraggable === 'function'
-        ? nodeDraggable(data)
-        : nodeDraggable;
-    }
-    return draggable;
-  };
-
   // renderDraggableIcon
   renderDraggableIcon = () => {
     const { context } = this.props;
@@ -455,7 +442,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
       prefixCls, showIcon, icon: treeIcon, draggable, loadData, titleRender,
     } = context!;
     const disabled = this.isDisabled();
-    const mergedDraggable = this.getMergedDraggable(draggable, data);
+    const mergedDraggable = getMergedDraggable(draggable, data);
 
     const wrapClass = `${prefixCls}-node-content-wrapper`;
 
@@ -571,7 +558,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     const dataOrAriaAttributeProps = getDataAndAria(otherProps);
     const { level } = keyEntities[eventKey!] || {};
     const isEndNode = isEnd[isEnd.length - 1];
-    const mergedDraggable = this.getMergedDraggable(draggable, data);
+    const mergedDraggable = getMergedDraggable(draggable, data);
     const draggableWithoutDisabled = !disabled && mergedDraggable;
 
     return (

@@ -57,6 +57,7 @@ const App = () => {
       children: <ModalContent />,
       okText: '确定',
       maskClosable: 'dblclick',
+      modalOkAndCancelIcon: true,
       okProps: { disabled: true },
       closeOnLocationChange: false,
       autoCenter: true,

@@ -198,6 +198,7 @@ const prefixCls = getConfig('prefixCls');
 | tabsShowInvalidTips | Tabs 是否开启 DataSet 校验  | boolean | true |
 | separateSpacing | Form 组件切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合labelwidth效果会更好 | number \| \[number, number \] \| {width:number,height:number} | - |
 | showValueIfNotFound | 对应值集内未请求时或值不存在显示值时，是否显示 value | boolean | true |
+| modalOkAndCancelIcon | Modal 确认和取消按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置确认和取消icon | boolean \| { okIconType?: string \| boolean, cancelIconType?: string \| boolean } |  |
 
 ### Customizable
 

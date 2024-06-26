@@ -19,6 +19,7 @@ import {
   getDragChildrenKeys,
   parseCheckedKeys,
   posToArr,
+  getMergedDraggable,
 } from './util';
 import { DataEntity, DataNode, Direction, EventDataNode, FlattenNode, IconType, Key, NodeInstance, ScrollTo } from './interface';
 import {
@@ -122,7 +123,23 @@ export interface TreeProps {
   onRightClick?: (info: { event: React.MouseEvent; node: EventDataNode }) => void;
   onDragStart?: (info: NodeDragEventParams) => void;
   onDragEnter?: (info: NodeDragEventParams & { expandedKeys: Key[] }) => void;
+  onDragEnterBefore?: (
+    info: NodeDragEventParams & {
+      dragNode: EventDataNode | null;
+      dragNodesKeys: Key[];
+      dropPosition: number;
+      dropToGap: boolean;
+    } | null,
+  ) => boolean;
   onDragOver?: (info: NodeDragEventParams) => void;
+  onDragOverBefore?: (
+    info: NodeDragEventParams & {
+      dragNode: EventDataNode | null;
+      dragNodesKeys: Key[];
+      dropPosition: number;
+      dropToGap: boolean;
+    } | null,
+  ) => boolean;
   onDragLeave?: (info: NodeDragEventParams) => void;
   onDragEnd?: (info: NodeDragEventParams) => void;
   onDrop?: (
@@ -430,7 +447,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
    * Better for use mouse move event to refresh drag state.
    * But let's just keep it to avoid event trigger logic change.
    */
-  onNodeDragEnter = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragEnter = async (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const {
       expandedKeys,
       keyEntities,
@@ -438,7 +455,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       flattenNodes,
       indent,
     } = this.state;
-    const { onDragEnter, onExpand, allowDrop, direction } = this.props;
+    const { onDragEnter, onExpand, allowDrop, direction, onDragEnterBefore, draggable } = this.props;
     const { pos } = node.props;
     const { dragNode } = this;
 
@@ -461,6 +478,19 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys,
       direction,
     );
+    const fNode = flattenNodes.find(flattenedNode => flattenedNode.data.key === dragOverNodeKey);
+    if (fNode && (dropPosition === -1 || dropPosition === 0) && !getMergedDraggable(draggable, fNode.data)) {
+      this.setState({
+        dragOverNodeKey: null,
+        dropPosition: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null,
+        dropAllowed: false,
+      });
+      return;
+    }
 
     if (
       !dragNode ||
@@ -534,8 +564,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       return;
     }
 
-    // Update drag over node and drag state
-    this.setState({
+    const partialState = {
       dragOverNodeKey,
       dropPosition,
       dropLevelOffset,
@@ -543,7 +572,22 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropContainerKey,
       dropTargetPos,
       dropAllowed,
-    });
+    };
+    if (onDragEnterBefore && partialState.dropTargetKey !== null) {
+      const tempState = {
+        ...this.state,
+        ...partialState,
+      };
+      const dropResult = this.getOnBeforeInfo(event, tempState);
+      const resultStatus = onDragEnterBefore(dropResult);
+      const result = isPromise(resultStatus) ? await resultStatus : resultStatus;
+      if (!result) {
+        return;
+      }
+    }
+
+    // Update drag over node and drag state
+    this.setState(partialState);
 
     if (onDragEnter) {
       onDragEnter({
@@ -554,7 +598,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  onNodeDragOver = (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
+  onNodeDragOver = async (event: React.MouseEvent<HTMLDivElement>, node: NodeInstance) => {
     const {
       dragChildrenKeys,
       flattenNodes,
@@ -562,7 +606,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys,
       indent,
     } = this.state;
-    const { onDragOver, allowDrop, direction } = this.props;
+    const { onDragOver, allowDrop, direction, onDragOverBefore, draggable } = this.props;
     const { dragNode } = this;
 
     const {
@@ -584,6 +628,19 @@ class Tree extends React.Component<TreeProps, TreeState> {
       expandedKeys,
       direction,
     );
+    const fNode = flattenNodes.find(flattenedNode => flattenedNode.data.key === dragOverNodeKey);
+    if (fNode && (dropPosition === -1 || dropPosition === 0) && !getMergedDraggable(draggable, fNode.data)) {
+      this.setState({
+        dropPosition: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null,
+        dropAllowed: false,
+        dragOverNodeKey: null,
+      });
+      return;
+    }
 
     if (
       !dragNode ||
@@ -597,6 +654,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
     // Update drag position
 
+    let partialState: any;
     const {
       dropPosition: stateDropPosition,
       dropLevelOffset: stateDropLevelOffset,
@@ -639,7 +697,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dragOverNodeKey === stateDragOverNodeKey
       )
     ) {
-      this.setState({
+      partialState = {
         dropPosition,
         dropLevelOffset,
         dropTargetKey,
@@ -647,7 +705,24 @@ class Tree extends React.Component<TreeProps, TreeState> {
         dropTargetPos,
         dropAllowed,
         dragOverNodeKey,
-      });
+      };
+    }
+
+    if (partialState) {
+      if (onDragOverBefore && partialState.dropTargetKey !== null) {
+        const tempState = {
+          ...this.state,
+          ...partialState,
+        };
+        const dropResult = this.getOnBeforeInfo(event, tempState);
+        const resultStatus = onDragOverBefore(dropResult);
+        const result = isPromise(resultStatus) ? await resultStatus : resultStatus;
+        if (!result) {
+          return;
+        }
+      }
+
+      this.setState(partialState);
     }
 
     if (onDragOver) {
@@ -688,12 +763,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
 
   onNodeDrop = async (event: React.MouseEvent<HTMLDivElement>, _node, outsideTree = false) => {
     const {
-      dragChildrenKeys,
-      dropPosition,
       dropTargetKey,
-      dropTargetPos,
       dropAllowed,
-      keyEntities,
     } = this.state;
 
     if (!dropAllowed) return;
@@ -706,11 +777,37 @@ class Tree extends React.Component<TreeProps, TreeState> {
     this.cleanDragState();
 
     if (dropTargetKey === null) return;
+    const dropResult = this.getOnBeforeInfo(event, { ...this.state, dropTargetKey });
+
+    if (onDropBefore && !outsideTree) {
+      const resultStatus = onDropBefore(dropResult);
+      const result = isPromise(resultStatus) ? await resultStatus : resultStatus;
+      if (!result) {
+        return;
+      }
+    }
+
+    if (onDrop && !outsideTree) {
+      onDrop(dropResult);
+    }
+
+    this.dragNode = null;
+  };
+
+  getOnBeforeInfo = (event: React.MouseEvent<HTMLDivElement>, tempState: TreeState & { dropTargetKey: Key }) => {
+    const {
+      dragChildrenKeys,
+      dropPosition,
+      dropTargetKey,
+      dropTargetPos,
+      keyEntities,
+    } = tempState;
+
     const activeItem = this.getActiveItem();
     const abstractDropNodeProps = {
       ...getTreeNodeProps(
         dropTargetKey,
-        this.getTreeNodeRequiredProps() as TreeNodeRequiredProps,
+        this.getTreeNodeRequiredProps(tempState) as TreeNodeRequiredProps,
       ),
       active: activeItem ? activeItem.data.key === dropTargetKey : false,
       data: keyEntities[dropTargetKey].node,
@@ -733,20 +830,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dropPosition: dropPosition === null ? 0 : dropPosition + Number(posArr[posArr.length - 1]),
     };
 
-    if (onDropBefore && !outsideTree) {
-      const resultStatus = onDropBefore(dropResult);
-      const result = isPromise(resultStatus) ? await resultStatus : resultStatus;
-      if (!result) {
-        return;
-      }
-    }
-
-    if (onDrop && !outsideTree) {
-      onDrop(dropResult);
-    }
-
-    this.dragNode = null;
-  };
+    return dropResult;
+  }
 
   cleanDragState = () => {
     const { dragging } = this.state;
@@ -993,7 +1078,8 @@ class Tree extends React.Component<TreeProps, TreeState> {
     }
   };
 
-  getTreeNodeRequiredProps = () => {
+  getTreeNodeRequiredProps = (tempState?: TreeState) => {
+    const state = { ...this.state, ...tempState };
     const {
       expandedKeys,
       selectedKeys,
@@ -1004,7 +1090,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       dragOverNodeKey,
       dropPosition,
       keyEntities,
-    } = this.state;
+    } = state;
     return {
       expandedKeys: expandedKeys || [],
       selectedKeys: selectedKeys || [],

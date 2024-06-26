@@ -93,6 +93,9 @@ class App extends React.Component {
                 <TreeNode value="leaf rrr" title="leaf rrr" />
               </TreeNode>
             </TreeNode>
+            <TreeNode value="parent 2" title="parent 2">
+              <TreeNode value="leaf rrr22" title="leaf rrr22" />
+            </TreeNode>
           </TreeSelect>
         </Col>
         <Col span={12}>

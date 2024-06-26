@@ -304,8 +304,12 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.type !== this.props.type) {
-      const suffixCls = nextProps.type !== IntlType.multipleLine ? 'input' : 'textarea';
+    if (nextProps.type !== this.props.type ||
+      nextProps.displayOutput !== this.props.displayOutput
+    ) {
+      const suffixCls = nextProps.displayOutput
+        ? 'output'
+        : (nextProps.type !== IntlType.multipleLine ? 'input' : 'textarea');
       this.prefixCls = this.getContextProPrefixCls(suffixCls, nextProps.prefixCls);
     }
     super.componentWillReceiveProps(nextProps, nextContext);

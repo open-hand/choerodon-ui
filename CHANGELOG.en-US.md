@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevel` property.
+- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevel`, `modalOkAndCancelIcon` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
@@ -24,6 +24,8 @@ timeline: true
 - 🌟 `<pro>Board`: Added card default width `cardWidth` and content custom rendering `contentRenderer` properties.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `fuzzyQueryProps` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `filterQueryCallback` property.
+- 🌟 `<pro>Modal`: Added `modalOkAndCancelIcon` property.
+- 🌟 `Tree`: Added `onDragEnterBefore`, `onDragOverBefore` properties.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.
@@ -31,6 +33,7 @@ timeline: true
 - 💄 `<pro>Board`: The dropdown option to optimize the grouping displays the logic.
 - 💄 `<pro>NumberField`: Optimize the digital change logic of click step button on mobile terminal.
 - 💄 `<pro>TextField`: Optimize compatibility with `IOS` mobile focus twice before evoking keyboard issues.
+- 💄 `Tree`: Optimize the first and last child nodes, and disable drag and drop interactions for nodes.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 - 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.
@@ -41,6 +44,8 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
 - 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.
 - 🐞 `<pro>Select`: Fixed the issue that the pagination button could be clicked repeatedly.
+- 🐞 `<pro>TreeSelect`: Fixed incorrect value selection when there are multiple root nodes and the `showCheckedStrategy` property is `SHOW_PARENT` or `SHOW_CHILD`.
+- 🐞 `<pro>IntlField`: Fixed an issue where styles were rendered incorrectly after `displayOutput` attribute changes.
 
 ## 1.6.5
 

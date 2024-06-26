@@ -107,6 +107,18 @@ class Demo extends React.Component {
     });
   };
 
+  onDragEnterBefore = (info) => {
+    const { dragNode, node } = info;
+    if (node.key === '0-0-1-1' && (node.dragOver || node.dragOverGapTop || node.dragOverGapBottom)) {
+      return false;
+    }
+    return true;
+  }
+
+  onDragOverBefore = (info) => {
+    return this.onDragEnterBefore(info);
+  }
+
   render() {
     const loop = data =>
       data.map(item => {
@@ -123,9 +135,13 @@ class Demo extends React.Component {
       <Tree
         className="draggable-tree"
         defaultExpandedKeys={this.state.expandedKeys}
-        draggable
+        draggable={(node) => {
+          return node.key !== '0-0-1';
+        }}
         onDragEnter={this.onDragEnter}
         onDrop={this.onDrop}
+        onDragEnterBefore={this.onDragEnterBefore}
+        onDragOverBefore={this.onDragOverBefore}
       >
         {loop(this.state.gData)}
       </Tree>

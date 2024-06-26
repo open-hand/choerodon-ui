@@ -32,7 +32,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
-import { ModalButtonTrigger, ModalChildrenProps, ModalCustomized } from './interface';
+import { ModalButtonTrigger, ModalChildrenProps, ModalCustomized, ModalOkAndCancelIcon } from './interface';
 import { getDocument, MousePosition, transformZoomData } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
@@ -123,6 +123,7 @@ export interface ModalProps extends ViewComponentProps {
   customizedCode?: string;
   beforeOpen?: () => void;
   afterOpenChange?: (open: boolean) => void;
+  modalOkAndCancelIcon?: ModalOkAndCancelIcon;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -186,6 +187,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
+    const iconProps = { icon: this.getModalOkAndCancelIcon('okIconType') };
     let handleMouseDownOk = {};
     if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN && !okProps?.onClick) {
       handleMouseDownOk = { onMouseDown: this.handleMouseDownOk };
@@ -202,6 +204,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleClickOk}
         {...handleMouseDownOk}
         {...modalButtonProps}
+        {...iconProps}
         {...okProps}
       >
         {okText}
@@ -217,6 +220,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       buttonTrigger = this.getContextConfig('modalButtonTrigger'),
     } = this.props;
     const modalButtonProps = this.getContextConfig('modalButtonProps');
+    const iconProps = { icon: this.getModalOkAndCancelIcon('cancelIconType') };
     let handleMouseDownCancel = {};
     if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN && !cancelProps?.onClick) {
       handleMouseDownCancel = { onMouseDown: this.handleMouseDownCancel };
@@ -233,6 +237,7 @@ export default class Modal extends ViewComponent<ModalProps> {
         onClick={this.handleClickCancel}
         {...handleMouseDownCancel}
         {...modalButtonProps}
+        {...iconProps}
         {...cancelProps}
       >
         {cancelText}
@@ -328,6 +333,20 @@ export default class Modal extends ViewComponent<ModalProps> {
         this.minWidth = style && toPx(style.minWidth) || contentStyle && toPx(contentStyle.minWidth) || (this.element as HTMLDivElement).getBoundingClientRect().width;
         this.minHeight = style && toPx(style.minHeight) || contentStyle && toPx(contentStyle.minHeight) || this.contentNode.offsetHeight;
       });
+    }
+  }
+
+  getModalOkAndCancelIcon(icon: 'okIconType' | 'cancelIconType'): string | undefined {
+    const { modalOkAndCancelIcon = this.getContextConfig('modalOkAndCancelIcon') } = this.props;
+    if (modalOkAndCancelIcon === true) {
+      return icon === 'okIconType' ? 'done' : 'close';
+    }
+    if (typeof modalOkAndCancelIcon === 'object') {
+      const type = modalOkAndCancelIcon[icon];
+      if (type === true) {
+        return icon === 'okIconType' ? 'done' : 'close';
+      }
+      return typeof type === 'string' ? type : undefined;
     }
   }
 

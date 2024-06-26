@@ -41,8 +41,10 @@ Almost anything can be represented in a tree structure. Examples include directo
 | onCheck | Callback function for when the onCheck event occurs | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys}, oldCheckedKeys) | - |
 | onDragEnd | Callback function for when the onDragEnd event occurs | function({event, node}) | - |
 | onDragEnter | Callback function for when the onDragEnter event occurs | function({event, node, expandedKeys}) | - |
+| onDragEnterBefore | dragenter 触发完成前调用。可用于处理是否允许拖到节点上方，拖入节点或者拖入到下方。参数中的 dragNode 是拖拽的节点信息，node 是拖入的节点信息，其中 node 中的 dragOver 代表是否拖入，dragOverGapTop 是否拖入到节点上方，dragOverGapBottom 是否拖入节点下方 | function({event, node, dragNode, dragNodesKeys}) => boolean | - |
 | onDragLeave | Callback function for when the onDragLeave event occurs | function({event, node}) | - |
 | onDragOver | Callback function for when the onDragOver event occurs | function({event, node}) | - |
+| onDragOverBefore | dragover 触发完成前调用。可用于处理是否允许拖到节点上方，拖入节点或者拖入到下方。参数中的 dragNode 是拖拽的节点信息，node 是拖入的节点信息，其中 node 中的 dragOver 代表是否拖入，dragOverGapTop 是否拖入到节点上方，dragOverGapBottom 是否拖入节点下方 | function({event, node, dragNode, dragNodesKeys}) => boolean | - |
 | onDragStart | Callback function for when the onDragStart event occurs | function({event, node}) | - |
 | onDrop | Callback function for when the onDrop event occurs | function({event, node, dragNode, dragNodesKeys}) | - |
 | onDropBefore | Callback function for when the onDrop before event occurs | function({event, node, dragNode, dragNodesKeys}) | - |
