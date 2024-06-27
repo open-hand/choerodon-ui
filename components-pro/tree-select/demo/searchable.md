@@ -54,37 +54,54 @@ class App extends React.Component {
 
   render() {
     return (
-      <Row>
-        <Col span={8}>
-          <TreeSelect dataSet={this.ds} name="last-name" searchable>
-            <TreeNode value="parent 1" title="parent 1">
-              <TreeNode value="parent 1-0" title="parent 1-0">
-                <TreeNode value="leaf1" title="my leaf" />
-                <TreeNode value="leaf2" title="your leaf" />
+      <>
+        <Row>
+          <Col span={10}>
+            <TreeSelect dataSet={this.ds} name="last-name" searchable>
+              <TreeNode value="parent 1" title="parent 1">
+                <TreeNode value="parent 1-0" title="parent 1-0">
+                  <TreeNode value="leaf1" title="my leaf" />
+                  <TreeNode value="leaf2" title="your leaf" />
+                </TreeNode>
+                <TreeNode value="parent 1-1" title="parent 1-1">
+                  <TreeNode value="sss" title="sss" />
+                </TreeNode>
               </TreeNode>
-              <TreeNode value="parent 1-1" title="parent 1-1">
-                <TreeNode value="sss" title="sss" />
+            </TreeSelect>
+          </Col>
+          <Col span={10}>
+            <TreeSelect dataSet={this.ds} name="last-name" searchable searchFieldInPopup>
+              <TreeNode value="parent 1" title="parent 1">
+                <TreeNode value="parent 1-0" title="parent 1-0">
+                  <TreeNode value="leaf1" title="my leaf" />
+                  <TreeNode value="leaf2" title="your leaf" />
+                </TreeNode>
+                <TreeNode value="parent 1-1" title="parent 1-1">
+                  <TreeNode value="sss" title="sss" />
+                </TreeNode>
               </TreeNode>
-            </TreeNode>
-          </TreeSelect>
-        </Col>
-        <Col span={8}>
-          <TreeSelect dataSet={this.ds} name="first-name" searchable searchMatcher={searchMatcher}>
-            <TreeNode value="parent 1" title="parent 1">
-              <TreeNode value="parent 1-0" title="parent 1-0">
-                <TreeNode value="leaf1" title="my leaf" />
-                <TreeNode value="leaf2" title="your leaf" />
+            </TreeSelect>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={10}>
+            <TreeSelect dataSet={this.ds} name="first-name" searchable searchMatcher={searchMatcher}>
+              <TreeNode value="parent 1" title="parent 1">
+                <TreeNode value="parent 1-0" title="parent 1-0">
+                  <TreeNode value="leaf1" title="my leaf" />
+                  <TreeNode value="leaf2" title="your leaf" />
+                </TreeNode>
+                <TreeNode value="parent 1-1" title="parent 1-1">
+                  <TreeNode value="sss" title="sss" />
+                </TreeNode>
               </TreeNode>
-              <TreeNode value="parent 1-1" title="parent 1-1">
-                <TreeNode value="sss" title="sss" />
-              </TreeNode>
-            </TreeNode>
-          </TreeSelect>
-        </Col>
-        <Col span={8}>
-          <TreeSelect dataSet={this.ds} name="sex" searchable searchMatcher="key" />
-        </Col>
-      </Row>
+            </TreeSelect>
+          </Col>
+          <Col span={10}>
+            <TreeSelect dataSet={this.ds} name="sex" searchable searchMatcher="key" />
+          </Col>
+        </Row>
+      </>
     );
   }
 }

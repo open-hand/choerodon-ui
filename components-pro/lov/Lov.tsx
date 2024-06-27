@@ -434,6 +434,18 @@ export default class Lov extends Select<LovProps> {
         Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
     }
+    if (viewMode === TriggerViewMode.popup && multiple && selected && this.getValues().length !== selected.length) {
+      // record reset 场景
+      const values = this.getValues();
+      selected.forEach(record => {
+        if (!values.find(value => {
+          const primitiveValue = primitive ? value : value[valueField];
+          return record.get(valueField) === primitiveValue;
+        })) {
+          record.isSelected = false;
+        }
+      });
+    }
     // 勾选 value 对应的单选框
     const needSingleSelected = !multiple && options.selection && this.getValues().length > 0 
       && (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick || alwaysShowRowBox);

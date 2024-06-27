@@ -1,6 +1,6 @@
 import React, { Key, ReactNode } from 'react';
 import classNames from 'classnames';
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed, observable, runInAction, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import isNil from 'lodash/isNil';
 import Tree, { TreeProps } from 'choerodon-ui/lib/tree';
@@ -317,7 +317,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       selectedKeys,
       expandedKeys,
       multiple,
-      text,
+      searchText: text,
       checkStrictly,
       optionsFilter,
       props: {
@@ -339,7 +339,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       textField,
       optionsFilter,
       this.matchRecordBySearch,
-      text,
+      isArrayLike(text) ? text[0] : text,
     );
     if (!treeData || !treeData.length) {
       return (

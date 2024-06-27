@@ -80,6 +80,25 @@ export default class LovView extends Component<LovViewProps> {
     }
   }
 
+  @action
+  componentWillReceiveProps(nextProps: LovViewProps) {
+    const { dataSet: beforeDataSet } = this.props;
+    if (beforeDataSet !== nextProps.dataSet) {
+      const {
+        dataSet,
+        dataSet: { selection },
+        multiple,
+        viewMode,
+      } = nextProps;
+      this.selection = selection;
+      dataSet.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
+      if (viewMode === TriggerViewMode.popup && multiple) {
+        dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
+        dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
+      }
+    }
+  }
+
   shouldComponentUpdate(nextProps: Readonly<LovViewProps>): boolean {
     const { viewMode } = this.props;
     if (viewMode === TriggerViewMode.popup && nextProps.popupHidden) {
