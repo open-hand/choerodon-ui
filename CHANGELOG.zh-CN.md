@@ -46,6 +46,8 @@ timeline: true
 - 🐞 `<pro>Select`: 修复分页按钮可重复点击的问题。
 - 🐞 `<pro>TreeSelect`: 修复有多个根节点，且 showCheckedStrategy 属性为 SHOW_PARENT 或者 SHOW_CHILD 时，值选择不正确的问题。
 - 🐞 `<pro>IntlField`: 修复 displayOutput 属性变化后样式渲染不正确的问题。
+- 🐞 `<pro>TreeSelect`: 修复设置 searchFieldInPopup 属性时，搜索无效的问题。
+- 🐞 `<pro>Lov`: 修复多选且 popup 模式下，选中记录后 reset dataSet，无法再选择的问题。
 
 ## 1.6.5
 

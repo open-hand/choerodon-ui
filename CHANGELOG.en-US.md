@@ -46,6 +46,8 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the issue that the pagination button could be clicked repeatedly.
 - 🐞 `<pro>TreeSelect`: Fixed incorrect value selection when there are multiple root nodes and the `showCheckedStrategy` property is `SHOW_PARENT` or `SHOW_CHILD`.
 - 🐞 `<pro>IntlField`: Fixed an issue where styles were rendered incorrectly after `displayOutput` attribute changes.
+- 🐞 `<pro>TreeSelect`: Fixed an issue where the search was invalid when setting the `searchFieldInPopup` property.
+- 🐞 `<pro>Lov`: Fixed an issue where the `reset dataSet` could not be selected again after a record was selected in `popup` mode.
 
 ## 1.6.5
 
