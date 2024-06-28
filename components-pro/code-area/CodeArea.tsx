@@ -84,6 +84,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   beforeWrapperSize?: { width: number; height: number; };
 
+  firstTimeoutId?: number;
+
+  secondTimeoutId?: number;
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -120,8 +124,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }
 
   componentDidUpdate(prevProps) {
-    if (!shallowEqual(this.props.style, prevProps.style) && this.editor) {
-      this.editor.refresh();
+    if (!shallowEqual(this.props.style, prevProps.style)) {
+      this.editorRefresh();
     }
   }
 
@@ -131,10 +135,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
         entries.forEach(entry => {
           if (this.beforeWrapperSize && (this.beforeWrapperSize.width === 0 || this.beforeWrapperSize.height === 0)) {
-            if (this.editor) {
+            this.firstTimeoutId = window.setTimeout(() => {
               // 由隐藏变为显示，更新样式
-              this.editor.refresh();
-            }
+              this.editorRefresh();
+            }, 200);
           }
           this.beforeWrapperSize = { width: entry.contentRect.width, height: entry.contentRect.height };
         });
@@ -146,18 +150,22 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     const parent = hasAncestorWithClassName(element, modalCls);
     if (typeof window !== 'undefined' && element && parent) {
       this.mutationObserver = new MutationObserver(() => {
-        if (this.editor) {
-          // modal 中异步加载 CodeArea 时，更新样式
-          this.editor.refresh();
-        }
+        // modal 中异步加载 CodeArea 时，更新样式
+        this.editorRefresh();
       });
       // 监控 modal 类名变化，modal 开启动画时，需要更新 codemirror 样式
       this.mutationObserver.observe(parent, { attributes: true, attributeFilter: ['class'], attributeOldValue: true });
     }
+    if (typeof window !== 'undefined') {
+      this.secondTimeoutId = window.setTimeout(() => {
+        // 保底未知场景
+        this.editorRefresh();
+      }, 1000);
+    }
   }
 
   disconnect() {
-    const { resizeObserver, mutationObserver } = this;
+    const { resizeObserver, mutationObserver, firstTimeoutId, secondTimeoutId } = this;
     if (resizeObserver) {
       resizeObserver.disconnect();
       delete this.resizeObserver;
@@ -166,12 +174,22 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       mutationObserver.disconnect();
       delete this.mutationObserver;
     }
+    if (typeof window !== 'undefined') {
+      window.clearTimeout(firstTimeoutId);
+      window.clearTimeout(secondTimeoutId);
+      delete this.firstTimeoutId;
+      delete this.secondTimeoutId;
+    }
   }
 
-  editorRefreshDebounce = debounce(() => {
+  editorRefresh = () => {
     if (this.editor) {
       this.editor.refresh();
     }
+  }
+
+  editorRefreshDebounce = debounce(() => {
+    this.editorRefresh();
   }, 600);
 
   @autobind
