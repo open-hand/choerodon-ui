@@ -3136,7 +3136,7 @@ export default class TableStore {
   }
 
   @action
-  async saveCustomized(customized?: TableCustomized | null) {
+  async saveCustomized(customized?: TableCustomized | null, otherInfo?: { columnDataSet: DataSet }) {
     if (this.customizable && this.customizedLoaded) {
       const { customizedCode, boardCustomized } = this.props;
       if (customized) {
@@ -3154,7 +3154,7 @@ export default class TableStore {
               dataJson: JSON.stringify(omit(this.customized, ['dataJson', 'creationDate', 'createdBy', 'lastUpdateDate', 'lastUpdatedBy', '_token', 'userId', 'tenantId', 'id'])),
               ...omit(this.customized, ['dataJson']), defaultFlag: 1, viewType: 'table', id: currentRecord.get('id'), objectVersionNumber: currentRecord.get('objectVersionNumber'),
             },
-            this.customizedBtn ? 'Board' : 'Table');
+            this.customizedBtn ? 'Board' : 'Table', otherInfo);
 
           if (customizedCode) {
             const res = await tableCustomizedLoad(customizedCode, 'Board', {
@@ -3171,7 +3171,7 @@ export default class TableStore {
             }
           }
         } else {
-          tableCustomizedSave(customizedCode, this.customized, 'Table');
+          tableCustomizedSave(customizedCode, this.customized, 'Table', otherInfo);
         }
       }
     }

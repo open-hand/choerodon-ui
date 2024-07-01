@@ -112,7 +112,7 @@ const prefixCls = getConfig('prefixCls');
 | tableAutoHeightDiff | Table 自动高度误差值配置 | number | 80 |
 | confirm | 变更检查行为自定义，可与[modifiedCheckMessage](/components-pro/data-set/#API)关联使用(source - 修改提示信息来源 查询条：'query' 翻页： undefined) | (message: any, dataSet?: DataSet, source?: string) => Promise<boolean>  | async (message) => (await confirm(message)) !== 'cancel' |
 | customizable | 是否开启个性化 | boolean \| [Customizable](#Customizable) | false |
-| customizedSave | Table 个性化保存的钩子 | (code, customized, component: keyof [Customizable](#Customizable)) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
+| customizedSave | Table 个性化保存的钩子 | (code, customized, component: keyof [Customizable](#Customizable), otherInfo?: { columnDataSet?: DataSet }) => void | (code, customized) => localStorage.setItem(`table.customized.${code}`, JSON.stringify(customized)) |
 | customizedLoad | Table 个性化加载的钩子 | (code, component: keyof [Customizable](#Customizable)) => Promise | (code) => Promise.resolve(JSON.parse(localStorage.getItem(`table.customized.${code}`) \|\| 'null')) |
 | tableShowRemovedRow |	默认 Table 是否显示临时移除的行，默认置灰显示 |	boolean |	true |
 | pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
