@@ -170,7 +170,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       handleOk(action(() => {
         const { tempCustomized } = tableStore;
         tableStore.tempCustomized = { columns: {} };
-        tableStore.saveCustomized(tempCustomized);
+        tableStore.saveCustomized(tempCustomized, { columnDataSet });
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
         if (tableStore.node.props.virtualized) { 

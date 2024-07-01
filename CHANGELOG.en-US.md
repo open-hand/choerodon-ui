@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>NumberField`: Optimize the digital change logic of click step button on mobile terminal.
 - 💄 `<pro>TextField`: Optimize compatibility with `IOS` mobile focus twice before evoking keyboard issues.
 - 💄 `Tree`: Optimize the first and last child nodes, and disable drag and drop interactions for nodes.
+- 💄 `configure`: The `customizedSave` property is extended to obtain complete personalized column configuration information for Table.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
 - 🐞 `<pro>Table`: Fixed an issue where query fields were displayed incorrectly when using the `DynamicFilterBar` component alone.

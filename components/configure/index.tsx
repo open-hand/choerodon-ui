@@ -50,6 +50,7 @@ import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
 import { UploadListReUploadIconFunc } from '../upload/interface';
+import { DataSet } from '../../components-pro';
 
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
@@ -113,7 +114,7 @@ export interface Customized {
   Board?: BoardCustomized | BoardCustomized[] | any;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T) => void;
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: { columnDataSet?: DataSet }) => void;
 export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T, params?: any) => Promise<Customized[T] | null>;
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {

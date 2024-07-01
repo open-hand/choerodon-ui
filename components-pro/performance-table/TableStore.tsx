@@ -335,7 +335,7 @@ export default class TableStore {
   }
 
   @action
-  saveCustomized(customized?: PerformanceTableCustomized | null) {
+  saveCustomized(customized?: PerformanceTableCustomized | null, otherInfo?: { columnDataSet?: DataSet }) {
     if (this.customizable) {
       const { customizedCode } = this.node.props;
       if (customized) {
@@ -344,7 +344,7 @@ export default class TableStore {
       this.node.forceUpdate();
       if (customizedCode) {
         const tableCustomizedSave = this.getConfig('tableCustomizedSave') || this.getConfig('customizedSave');
-        tableCustomizedSave(customizedCode, this.customized, 'PerformanceTable');
+        tableCustomizedSave(customizedCode, this.customized, 'PerformanceTable', otherInfo);
       }
     }
   };

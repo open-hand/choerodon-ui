@@ -190,7 +190,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       handleOk(action(() => {
         const { tempCustomized, aggregation, props: { onAggregationChange } } = tableStore;
         tableStore.tempCustomized = { columns: {} };
-        tableStore.saveCustomized(tempCustomized);
+        tableStore.saveCustomized(tempCustomized, { columnDataSet });
         tableStore.initColumns();
         tableStore.node.handleHeightTypeChange();
         const { aggregation: customAggregation, pageSize } = tempCustomized;
