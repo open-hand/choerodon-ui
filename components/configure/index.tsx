@@ -175,7 +175,7 @@ export interface Config extends DataSetConfig {
   tableColumnDraggable?: boolean;
   tableColumnResizeTransition?: boolean;
   performanceTableColumnDraggable?: boolean;
-  tableRowDraggable?: boolean;
+  tableRowDraggable?: boolean | 'multiDrag';
   tableExpandIcon?: (props: expandIconProps) => ReactNode;
   tableSpinProps?: SpinProps;
   tableButtonProps?: ButtonProps;

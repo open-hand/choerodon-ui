@@ -150,7 +150,7 @@ class App extends React.Component {
   render() {
     const buttons = [this.leftDrag ,this.noneDrag, this.rightDrag, 'save', 'delete', 'reset'];
     return (
-      <Table dragColumnAlign={this.state.dragColumnAlign} rowDraggable  key="user" buttons={buttons} dataSet={this.userDs} pristine>
+      <Table dragColumnAlign={this.state.dragColumnAlign} rowDraggable='multiDrag'  key="user" buttons={buttons} dataSet={this.userDs} pristine>
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />
