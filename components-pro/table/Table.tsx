@@ -97,7 +97,7 @@ import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
-import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType, RecordStatus } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
@@ -677,9 +677,9 @@ export interface TableProps extends DataSetComponentProps {
    */
   columnDraggable?: boolean;
   /**
-   * 开启行拖拽
+   * 开启行拖拽; multiDrag 支持多行拖拽选中记录(树形不支持多拖)
    */
-  rowDraggable?: boolean;
+  rowDraggable?: boolean | 'multiDrag';
   /**
    * 拖拽触发事件
    */
@@ -2121,6 +2121,20 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   @action
+  clearSortInfo() {
+    const { dataSet } = this.tableStore;
+    dataSet.fields.forEach(field => {
+      if (field.order) {
+        field.order = undefined;
+      }
+    });
+    if (dataSet.combineSort) {
+      dataSet.combineSort = false;
+    }
+  }
+
+  @autobind
+  @action
   handleDragStart(initial: DragStart, provided: ResponderProvided): void {
     const { dragDropContextProps } = this.props;
     const { rowMetaData, isTree, currentEditorName } = this.tableStore;
@@ -2142,7 +2156,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard } = this.tableStore;
+    const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard, rowDraggable } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
@@ -2189,6 +2203,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 currentRecord.set(parentField, undefined);
                 dataSet.move(currentRecord.index, destinationRecord.index);
               }
+              this.clearSortInfo();
             }
           }
         }
@@ -2229,6 +2244,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
                 dataSet.move(currentRecord.index, destinationRecord.index);
               }
+              this.clearSortInfo();
             }
           }
         }
@@ -2236,42 +2252,44 @@ export default class Table extends DataSetComponent<TableProps> {
     } else if (resultBefore && resultBefore.destination) {
       if (resultBefore.source.index !== resultBefore.destination.index) {
         // 非树形拖拽排序
-        const { records, data } = dataSet;
+        const { records, data, currentSelected: selected } = dataSet;
+        const destinationIndex = resultBefore.destination.index;
+        let recordsSourceIndex = resultBefore.source.index;
+        let recordsToIndex = destinationIndex;
         // 若存在没有展示的 delete 数据，则需要对数据的起点落点做校正
         if (!showRemovedRow && records.length !== data.length) {
-          const destinationIndex = resultBefore.destination.index;
           // 操作的数据在 records 中的真实起落点索引
-          let recordsSourceIndex; let recordsToIndex;
-          let findSourceFlag = false; let findDestinationFlag = false;
-          let showedRecordsCount = 0;
-          for (let i = 0; i < records.length; i++) {
-            if (!findSourceFlag && records[i].key === resultBefore.draggableId) {
-              recordsSourceIndex = i;
-              findSourceFlag = true;
-            }
-            if (!findDestinationFlag) {
-              if (records[i].status !== RecordStatus.delete) {
-                if (showedRecordsCount === destinationIndex) {
-                  recordsToIndex = destinationIndex + (i - showedRecordsCount);
-                  findDestinationFlag = true;
-                }
-                showedRecordsCount++;
-              }
-            }
-            if (findSourceFlag && findDestinationFlag) {
-              break;
-            }
-          }
+          recordsSourceIndex = records.findIndex(record => String(record.key) === resultBefore.draggableId);
+          const recordTo = data.find((_, index) => index === destinationIndex);
+          recordsToIndex = recordTo ? records.findIndex(record => record === recordTo) : -1;
+        }
+        const dragRecord = selected.find(record => String(record.key) === resultBefore.draggableId);
+        if (rowDraggable === 'multiDrag' && selected.length > 1 && dragRecord) {
+          this.reorderDataSet(
+            records.indexOf(dragRecord),
+            recordsToIndex,
+          );
+          const selectedAfterDrag = selected.filter(r => records.indexOf(r) > records.indexOf(dragRecord));
+          const selectedBeforeDrag = selected.filter(r => records.indexOf(r) < records.indexOf(dragRecord));
+          selectedAfterDrag.reverse().forEach((record) => {
+            this.reorderDataSet(
+              records.indexOf(record),
+              recordsToIndex + 1,
+            );
+          });
+          selectedBeforeDrag.forEach((record) => {
+            this.reorderDataSet(
+              records.indexOf(record),
+              recordsToIndex,
+            );
+          });
+        } else {
           this.reorderDataSet(
             recordsSourceIndex,
             recordsToIndex,
           );
-        } else {
-          this.reorderDataSet(
-            resultBefore.source.index,
-            resultBefore.destination.index,
-          );
         }
+        this.clearSortInfo();
       }
     }
     /**

@@ -98,7 +98,7 @@ const prefixCls = getConfig('prefixCls');
 | tablePageSizeChangeable | 默认 Table 个性化是否开启分页大小设置 | boolean | false |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
-| tableRowDraggable | Table是否开启行拖拽 | boolean | false |
+| tableRowDraggable | Table是否开启行拖拽; multiDrag 支持多行拖拽选中记录(树形不支持多拖) | boolean \| 'multiDrag' | false |
 | tableDragColumnAlign | Table行拖拽的模式 | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableColumnOnCell | 自定义单元格属性配置 | (dataSet, record, column) => object | - |

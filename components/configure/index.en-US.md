@@ -94,7 +94,7 @@ const prefixCls = getConfig('prefixCls');
 | tablePageSizeChangeable | Default Table pageSizeChangeable | boolean | false |
 | performanceTableColumnDraggable | performanceTable 是否开启列拖拽 | boolean | false |
 | performanceTableAutoHeight | performanceTable 是否开启自动高度，传入对象则自适应父节点高度，为 true 则由内容撑开高度) | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number} | false |
-| tableRowDraggable | Default Table rowDraggable | boolean | false |
+| tableRowDraggable | Default Table rowDraggable; multiDrag 支持多行拖拽选中记录(树形不支持多拖) | boolean \| 'multiDrag' | false |
 | tableDragColumnAlign | Default align of Table row drag handler | 'left'\|'right' | - |
 | tableAutoFocus | Table 新增行自动聚焦至第一个可编辑字段 | boolean | false |
 | tableColumnOnCell | Custom cell property configuration | (dataSet, record, column) => object | - |

@@ -64,7 +64,7 @@ interface GenerateSimpleRowsProps {
   lock?: ColumnLock | undefined;
   isTree?: boolean | undefined;
   virtual?: boolean | undefined;
-  rowDraggable?: boolean | undefined;
+  rowDraggable?: boolean | undefined | 'multiDrag';
   draggableId?: string | undefined;
   dragRowHeight?: number | undefined;
   isFixedRowHeight?: boolean | undefined;

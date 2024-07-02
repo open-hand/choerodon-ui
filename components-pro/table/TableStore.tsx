@@ -1599,7 +1599,7 @@ export default class TableStore {
     return this.getConfig('tableDragColumn') === true;
   }
 
-  get rowDraggable(): boolean {
+  get rowDraggable(): boolean | 'multiDrag' {
     if (this.groups.length) {
       return false;
     }
@@ -1609,8 +1609,9 @@ export default class TableStore {
     if ('dragRow' in this.props) {
       return this.props.dragRow!;
     }
-    if (this.getConfig('tableRowDraggable') === true) {
-      return true;
+    const tableRowDraggable = this.getConfig('tableRowDraggable') as boolean | 'multiDrag' | undefined;
+    if (tableRowDraggable === true || tableRowDraggable === 'multiDrag') {
+      return tableRowDraggable;
     }
     return this.getConfig('tableDragRow') === true;
   }
