@@ -55,7 +55,7 @@ const App = () => {
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
           </OptGroup>
-          <OptGroup label="Engineer">
+          <OptGroup label={<em>Engineer</em>}>
             <Option value="wu">Wu</Option>
           </OptGroup>
         </Select>

@@ -4,7 +4,7 @@ export interface OptGroupProps {
   /**
    * 选项组标题
    */
-  label?: string;
+  label?: ReactNode;
   children?: ReactNode;
 }
 

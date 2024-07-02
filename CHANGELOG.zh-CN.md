@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化兼容 IOS 移动端聚焦两次才唤起键盘的问题。
 - 💄 `Tree`: 优化第一个和最后一个子节点，以及禁用节点的拖拽交互。
 - 💄 `configure`: 扩展 customizedSave 属性支持获取表格完整个性化列配置信息。
+- 💄 `<pro>Select`: 优化分组的 label 可以设置 ReactNode 类型。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。

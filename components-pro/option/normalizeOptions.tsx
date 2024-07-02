@@ -1,4 +1,5 @@
 import { Children, isValidElement, ReactNode } from 'react';
+import { toJS } from 'mobx';
 import DataSet from '../data-set/DataSet';
 import { DataSetSelection, FieldType } from '../data-set/enum';
 import { FieldProps } from '../data-set/Field';
@@ -15,7 +16,7 @@ function getOptionsFromChildren(
   textField: string,
   valueField: string,
   disabledField: string,
-  groups: string[] = [],
+  groups: ReactNode[] = [],
 ) {
   if (elements) {
     const getOption = (child) => {
@@ -41,9 +42,9 @@ function getOptionsFromChildren(
           const { value, children, disabled, ...rest } = child.props as OptionProps & { children };
           data.push(
             groups.reduce(
-              (obj, group, index) => {
+              (obj: object, group, index) => {
                 const name = `group-${index}`;
-                obj[name] = group;
+                obj[name] = toJS(group);
                 if (!fields.find(field => field.name === name)) {
                   fields.push({
                     name,

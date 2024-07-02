@@ -690,7 +690,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
         const label = record.get(field);
-        let renderLable: ReactNode = label;
+        let renderLable: ReactNode = toJS(label);
         if (groupRenderer && typeof groupRenderer === 'function') {
           renderLable = groupRenderer({ record, dataSet: options, text: label, value: label });
         }
