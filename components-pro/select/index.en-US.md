@@ -52,7 +52,7 @@ title: Select
 
 | 参数  | 说明       | 类型   | 默认值 |
 | ----- | ---------- | ------ | ------ |
-| label | 选项组标题 | string |        |
+| label | 选项组标题 | ReactNode |        |
 
 ### Select.Option
 
