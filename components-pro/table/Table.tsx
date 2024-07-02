@@ -2253,17 +2253,18 @@ export default class Table extends DataSetComponent<TableProps> {
       if (resultBefore.source.index !== resultBefore.destination.index) {
         // 非树形拖拽排序
         const { records, data, currentSelected: selected } = dataSet;
+        const { draggableId } = resultBefore;
         const destinationIndex = resultBefore.destination.index;
         let recordsSourceIndex = resultBefore.source.index;
         let recordsToIndex = destinationIndex;
         // 若存在没有展示的 delete 数据，则需要对数据的起点落点做校正
         if (!showRemovedRow && records.length !== data.length) {
           // 操作的数据在 records 中的真实起落点索引
-          recordsSourceIndex = records.findIndex(record => String(record.key) === resultBefore.draggableId);
+          recordsSourceIndex = records.findIndex(record => String(record.key) === draggableId);
           const recordTo = data.find((_, index) => index === destinationIndex);
           recordsToIndex = recordTo ? records.findIndex(record => record === recordTo) : -1;
         }
-        const dragRecord = selected.find(record => String(record.key) === resultBefore.draggableId);
+        const dragRecord = selected.find(record => String(record.key) === draggableId);
         if (rowDraggable === 'multiDrag' && selected.length > 1 && dragRecord) {
           this.reorderDataSet(
             records.indexOf(dragRecord),
