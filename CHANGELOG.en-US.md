@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed an issue where styles were rendered incorrectly after `displayOutput` attribute changes.
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the search was invalid when setting the `searchFieldInPopup` property.
 - 🐞 `<pro>Lov`: Fixed an issue where the `reset dataSet` could not be selected again after a record was selected in `popup` mode.
+- 🐞 `<pro>TextArea`: Fixed an issue where scroll bars did not appear when text exceeded the input field height when setting `autoSize` property.
 
 ## 1.6.5
 
