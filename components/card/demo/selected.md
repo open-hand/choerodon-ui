@@ -41,6 +41,16 @@ class App extends React.Component {
           <p>Card content</p>
           <p>Card content</p>
         </Card>
+        <Card title="Title" style={{ width: 300 }} selected={this.state.selected} onSelectChange={this.handleSelect} cornerPlacement="topLeft">
+          <p>Card content</p>
+          <p>Card content</p>
+          <p>Card content</p>
+        </Card>
+        <Card title="Title" style={{ width: 300 }} selected={this.state.selected} onSelectChange={this.handleSelect} cornerPlacement="bottomLeft">
+          <p>Card content</p>
+          <p>Card content</p>
+          <p>Card content</p>
+        </Card>
         <Card style={{ height: 50 }} selected={this.state.selected} onSelectChange={this.handleSelect} cornerPlacement="bottomLeft">
           <p>small card</p>
         </Card>
