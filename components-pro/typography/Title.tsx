@@ -39,13 +39,19 @@ export default class Title extends FormField<TitleProps> {
       component = 'h1';
     }
 
-    return (
-      <>
+    const floatLabel = this.renderFloatLabel();
+
+    return floatLabel ? (
+      <span {...this.getWrapperProps()}>
+        {floatLabel}
         <Base {...restProps} component={component}>
           {this.processRenderer(this.getValue()) || children}
         </Base>
-        {this.renderFloatLabel()}
-      </>
+      </span>
+    ) : (
+      <Base {...restProps} component={component}>
+        {this.processRenderer(this.getValue()) || children}
+      </Base>
     )
   }
 }

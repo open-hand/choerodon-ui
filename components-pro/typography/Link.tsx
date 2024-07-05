@@ -32,14 +32,19 @@ export default class Link extends FormField<LinkProps> {
       ...restProps,
       rel: rel === undefined && restProps.target === '_blank' ? 'noopener noreferrer' : rel,
     };
+    const floatLabel = this.renderFloatLabel();
 
-    return (
-      <>
+    return floatLabel ? (
+      <span {...this.getWrapperProps()}>
+        {floatLabel}
         <Base {...mergedProps} ellipsis={!!ellipsis} component="a">
           {this.processRenderer(this.getValue()) || children}
         </Base>
-        {this.renderFloatLabel()}
-      </>
+      </span>
+    ) : (
+      <Base {...mergedProps} ellipsis={!!ellipsis} component="a">
+        {this.processRenderer(this.getValue()) || children}
+      </Base>
     )
   }
 }
