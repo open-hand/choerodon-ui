@@ -269,11 +269,11 @@
 
 .cornerAfter() {
   position: absolute;
-  width: 0;
-  height: 0;
-  border-color: @primary-color;
-  border-style: solid;
-  content: "";
+  color: @primary-color;
+  font-size: 0.24rem;
+  /* stylelint-disable */
+  font-family: 'icomoon' !important;
+  content: "\E1C8";
 }
 
 .common() {
@@ -289,43 +289,30 @@
     }
 
     &-topLeft::after {
-      top: 0;
-      left: 0;
+      top: -0.08rem;
+      left: -0.02rem;
+      transform: rotate(180deg);
       .cornerAfter();
-      border-right-color: transparent;
-      border-right-style: solid;
-      border-bottom-color: transparent;
-      border-bottom-style: solid;
     }
 
     &-topRight::after {
-      top: 0;
-      right: 0;
+      top: -0.08rem;
+      right: -0.02rem;
+      transform: rotate(-90deg);
       .cornerAfter();
-      border-bottom-color: transparent;
-      border-bottom-style: solid;
-      border-left-color: transparent;
-      border-left-style: solid;
     }
 
     &-bottomLeft::after {
-      bottom: 0;
-      left: 0;
+      bottom: -0.08rem;
+      left: -0.02rem;
+      transform: rotate(90deg);
       .cornerAfter();
-      border-top-color: transparent;
-      border-top-style: solid;
-      border-right-color: transparent;
-      border-right-style: solid;
     }
 
     &-bottomRight::after {
-      right: 0;
-      bottom: 0;
+      right: -0.02rem;
+      bottom: -0.08rem;
       .cornerAfter();
-      border-top-color: transparent;
-      border-top-style: solid;
-      border-left-color: transparent;
-      border-left-style: solid;
     }
   }
 }

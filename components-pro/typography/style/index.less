@@ -2,7 +2,27 @@
 @import '../../../components/style/mixins/index';
 
 @typography-prefix-cls: ~'@{c7n-pro-prefix}-typography';
+@field-label-prefix-cls: ~'@{c7n-pro-prefix}-field-label';
 
+.@{c7n-pro-prefix} {
+  &-text-float-label,
+  &-link-float-label,
+  &-paragraph-float-label {
+    line-height: @float-label-height-base;
+  
+    > .@{field-label-prefix-cls}-wrapper > .@{field-label-prefix-cls} {
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      color: inherit;
+      font-weight: @output-font-weight;
+      font-size: @output-float-label-font-size;
+      line-height: @output-float-label-line-height;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
 // =============== Basic ===============
 .@{typography-prefix-cls} {
   color: @text-color;

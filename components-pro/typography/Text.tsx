@@ -40,13 +40,18 @@ export default class Text extends FormField<TextProps> {
       (!('expandable' in ellipsis) && !('rows' in ellipsis)),
       'Typography.Text `ellipsis` do not support `expandable` or `rows` props.',
     );
-    return (
-      <>
+    const floatLabel = this.renderFloatLabel();
+    return floatLabel ? (
+      <span {...this.getWrapperProps()}>
+        {floatLabel}
         <Base {...restProps} ellipsis={this.mergedEllipsis} component="span">
           {this.processRenderer(this.getValue()) || children}
         </Base>
-        {this.renderFloatLabel()}
-      </>
+      </span>
+    ) : (
+      <Base {...restProps} ellipsis={this.mergedEllipsis} component="span">
+        {this.processRenderer(this.getValue()) || children}
+      </Base>
     );
   }
 }

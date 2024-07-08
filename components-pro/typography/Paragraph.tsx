@@ -9,7 +9,7 @@ export interface ParagraphProps extends BlockProps, FormFieldProps {
 }
 
 @observer
-export default class Paragraph extends FormField<ParagraphProps>{
+export default class Paragraph extends FormField<ParagraphProps> {
   static displayName = 'Paragraph';
 
   static __PRO_TEXT = true;
@@ -20,13 +20,16 @@ export default class Paragraph extends FormField<ParagraphProps>{
   };
 
   renderWrapper(): React.ReactNode {
-    return (
-      <>
+    const floatLabel = this.renderFloatLabel();
+    return floatLabel ? (
+      <span {...this.getWrapperProps()}>
+        {floatLabel}
         <Base {...this.props} component="div">
           {this.processRenderer(this.getValue()) || this.props.children}
         </Base>
-        {this.renderFloatLabel()}
-      </>
-    )
+      </span>
+    ) : <Base {...this.props} component="div">
+      {this.processRenderer(this.getValue()) || this.props.children}
+    </Base>;
   }
 }
