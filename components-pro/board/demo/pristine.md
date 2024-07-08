@@ -332,7 +332,7 @@ class App extends React.Component {
         //   return buttons;
         // }}
         cardProps={{
-          contentRenderer: () => 123,
+          // contentRenderer: () => 123,
           cardWidth: 4,
           onClick: (e, record) => {
             console.log('crad click', e, record.toData())
@@ -346,8 +346,12 @@ class App extends React.Component {
           // columns: this.columns,
           // children: this.columnsChilds,
           children: [
-            <Column name="userid" />,
-            <Column name="name" renderer={({text}) => <span style={{ color: 'red' }}>{text}texttexttexttexttexttexttexttexttext</span>} sortable editor />,
+            <Column header="组合">
+              <Column name="name" onCell={() => ({ style: { backgroundColor: 'red'} })}sortable editor />
+              <Column name="userid" />
+            </Column>,
+              //             <Column name="name" onCell={() => ({ style: { backgroundColor: 'red'} })}sortable editor />,
+              // <Column name="userid" />,
             <Column name="age" renderer={({text}) => text > 65 ? <span style={{ color: 'red' }}>{text}texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext</span> : text} sortable editor />,
             <Column name="sex" sortable editor />,
             <Column name="group" editor />,

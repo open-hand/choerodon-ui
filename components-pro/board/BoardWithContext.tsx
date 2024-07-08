@@ -99,6 +99,8 @@ export function normalizeColumns(
           hasAggregationColumn = true;
         }
         if (tableAggregation || !aggregation) {
+          const [, childrenColumns] = normalizeColumns(children, false, undefined, column);
+          column.children = childrenColumns;
           if (!isHideDisabled && column.hideable === false) {
             isHideDisabled = true;
           }
@@ -108,6 +110,7 @@ export function normalizeColumns(
             }
             columnSort.center++;
             columns.push(column);
+            columns.push(...childrenColumns);
           } else if (column.lock === true || column.lock === ColumnLock.left) {
             if (column.sort === undefined) {
               column.sort = columnSort.left;
