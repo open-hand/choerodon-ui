@@ -494,7 +494,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                       />
                   }
                 >
-                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps) : 
+                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps, cardDS) : 
                     (
                       viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
                         <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>

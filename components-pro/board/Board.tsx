@@ -25,7 +25,7 @@ export interface BoardCardProps extends Omit<CardProps, 'onHeadClick' | 'onClick
   onHeadClick?: (e: MouseEvent, record: Record) => void;
   onClick?: (e: MouseEvent, record: Record) => void;
   cardWidth?: 4 | 6 | 8 | 12;
-  contentRenderer?: (viewProps: any) => ReactElement;
+  contentRenderer?: (viewProps: any, dataSet: DataSet) => ReactElement;
 }
 
 export interface KanbanProps {
