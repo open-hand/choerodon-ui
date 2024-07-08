@@ -96,7 +96,9 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
       const { minRows, maxRows } = autoSize as AutoSizeType;
       const calculateStyle = calculateNodeHeight(element, true, minRows, maxRows);
       const { autoSizeCalcHeight } = this;
-      if (!autoSizeCalcHeight || calculateStyle.height !== autoSizeCalcHeight.height) {
+      if (!autoSizeCalcHeight || calculateStyle.height !== autoSizeCalcHeight.height ||
+        calculateStyle.overflowY !== autoSizeCalcHeight.overflowY
+      ) {
         runInAction(() => {
           this.autoSizeCalcHeight = calculateStyle;
         });
