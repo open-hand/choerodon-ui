@@ -3,6 +3,7 @@ order: 2
 title:
   zh-CN: 显示原始值
   en-US: Pristine
+only: true  
 ---
 
 ## zh-CN
@@ -44,6 +45,7 @@ class App extends React.Component {
     primaryKey: 'userid',
     transport: {
       read({ params: { page, pagesize } }) {
+        console.log('page, pagesize', page, pagesize)
         return {
           url: `/dataset/user/page/${pagesize}/${page}`,
         };
@@ -52,6 +54,7 @@ class App extends React.Component {
     autoQuery: true,
     combineSort: true,
     pageSize: 5,
+    paging: 'noCount',
     fields: [
       {
         name: 'userid',

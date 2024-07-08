@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
+- 🌟 `<pro>DataSet`: 新增 paging noCount 属性值，支持无总数查询翻页。
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 - 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice, countTextRenderer 属性。
 - 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。

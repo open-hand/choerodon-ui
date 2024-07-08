@@ -336,7 +336,7 @@ export interface DataSetProps {
   /**
    * 前端分页、后端分页还是不分页
    */
-  paging?: boolean | 'server';
+  paging?: boolean | 'server' | 'noCount';
   /**
    * 查询返回的json中对应的数据的key
    * @default "rows"
@@ -990,9 +990,9 @@ export default class DataSet extends EventManager {
     return this.filter(record => !record.parent);
   }
 
-  get paging(): boolean | 'server' {
+  get paging(): boolean | 'server' | 'noCount' {
     const { idField, parentField, childrenField, paging } = this.props;
-    return (paging === `server`) && ((parentField && idField) || childrenField) ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;
+    return ((paging === `server`) && ((parentField && idField) || childrenField) || paging === 'noCount')  ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;
   }
 
   set paging(paging) {
@@ -1678,11 +1678,11 @@ export default class DataSet extends EventManager {
       this.current = currentRecord;
       return currentRecord;
     }
-    if (paging === true || paging === 'server') {
+    if (paging === true || paging === 'server' || paging === 'noCount') {
       if (index > this.currentIndex) {
         index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
       }
-      if (index >= 0 && index < totalCount) {
+      if (index >= 0 && (index < totalCount || paging === 'noCount')) {
         if (await this.modifiedCheck()) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
           currentRecord = this.findInAllPage(index);
@@ -3567,7 +3567,7 @@ Then the query method will be auto invoke.`,
       if (isNumber(pageSizeInner)) {
         params.page = page;
         params.pagesize = pageSizeInner;
-      } else if (paging === true || paging === 'server') {
+      } else if (paging === true || paging === 'server' || paging === 'noCount') {
         params.page = page;
         params.pagesize = pageSize;
       }

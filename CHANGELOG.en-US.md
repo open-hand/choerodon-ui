@@ -19,6 +19,7 @@ timeline: true
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
+- 🌟 `<pro>DataSet`: Added the value of `paging` noCount, which supports paging without total query.
 - 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
 - 🌟 `<pro>Attachment`: Added `filesLengthLimitNotice`, `countTextRenderer` properties.
 - 🌟 `<pro>Board`: Added card default width `cardWidth` and content custom rendering `contentRenderer` properties.

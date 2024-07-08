@@ -124,8 +124,10 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   @computed
   get next(): boolean {
+    const { dataSet } = this.observableProps;
     const { total = 0, pageSize, page } = this;
-    return page < Math.floor((total - 1) / pageSize) + 1;
+    const noCount = dataSet && dataSet.paging === 'noCount';
+    return noCount ? true : page < Math.floor((total - 1) / pageSize) + 1;
   }
 
   getObservableProps(props, context) {
@@ -377,6 +379,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const from = pageSize * (page - 1) + 1;
     const to = Math.min(pageSize * page, total);
     const counting = dataSet && dataSet.counting;
+    const noCount = dataSet && dataSet.paging === 'noCount';
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
@@ -386,7 +389,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     }
     return (
       <span key="total" className={`${prefixCls}-page-info`}>
-        {from} - {to} / {counting ? '...' : total}
+        {from} - {to} {noCount ? null : `/ ${counting ? '...' : total}`}
       </span>
     );
   }
@@ -454,6 +457,9 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition, disabled },
     } = this;
 
+    const { dataSet } = this.observableProps;
+    const noCount = dataSet && dataSet.paging === 'noCount';
+
     const sizeChanger = this.renderSizeChange(pageSize);
 
     const inputNode = (
@@ -502,7 +508,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
         {this.getPager(page - 1, 'prev', false, page === 1)}
         {pagersNode}
         {this.getPager(page + 1, 'next', false, !this.next)}
-        {this.getPager(totalPage, 'last', false, !this.next)}
+        {!noCount && this.getPager(totalPage, 'last', false, !this.next)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
         {showQuickJumper && showPager !== 'input' && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
       </nav>
