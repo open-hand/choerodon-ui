@@ -202,6 +202,7 @@ const locale: Locale = {
     file_list_max_length: 'The maximum number of files is limited to: {count}',
     drag_info: 'Click or drag files here to upload',
     download_template: 'Download template',
+    secret_level_modal_title: 'Secret level selection',
   },
   Modal: {
     ok: 'OK',

@@ -205,6 +205,7 @@ export interface Locale extends DataSetLocale {
     file_type_mismatch: string;
     drag_info: string;
     download_template: string;
+    secret_level_modal_title: string;
   };
   Modal: {
     ok: string;

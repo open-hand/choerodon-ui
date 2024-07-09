@@ -18,6 +18,10 @@ import UploadList from './UploadList';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import isIE from '../_util/isIE';
+import ModalProvider from '../modal-provider';
+import DataSet from '../data-set';
+import { ModalContextValue } from '../modal-provider/ModalContext';
+import { getSecretLevelModal } from '../attachment/utils';
 
 /**
  * 把XMLHttpRequest对象的返回信息转化为字符串
@@ -187,8 +191,11 @@ export interface UploadProps extends FormFieldProps {
    * @memberof UploadProps
    */
   partialUpload?: boolean;
+  
+  Modal?: ModalContextValue;
 }
 
+@ModalProvider.injectModal
 @observer
 export default class Upload extends FormField<UploadProps> {
   static displayName = 'Upload';
@@ -238,11 +245,21 @@ export default class Upload extends FormField<UploadProps> {
    */
   private nativeInputElement: HTMLInputElement;
 
+  secretLevelDataSet?: DataSet;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
       this.fileList = props.uploadFileList || props.defaultFileList || [];
     });
+    if (!this.secretLevelDataSet) {
+      const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+      const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+      if (secretLevelFlag && secretLevelOptions) {
+        const { fields } = secretLevelOptions;
+        this.secretLevelDataSet = new DataSet({ fields, autoCreate: true });
+      }
+    }
   }
 
   @action
@@ -276,6 +293,7 @@ export default class Upload extends FormField<UploadProps> {
       'partialUpload',
       'appendUpload',
       'uploadFileList',
+      'Modal',
     ]);
   }
 
@@ -479,10 +497,18 @@ export default class Upload extends FormField<UploadProps> {
       return;
     }
 
-    const secretLevel = getConfigDefault('uploadSecretLevel');
+    const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+    const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+    const { Modal: modalInProps } = this.props;
     let secretLevelHeadersInfo = {};
-    if (secretLevel) {
-      secretLevelHeadersInfo = await secretLevel();
+    if (secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
+      const { formProps, modalProps } = secretLevelOptions;
+      secretLevelHeadersInfo = await getSecretLevelModal({
+        dataSet: this.secretLevelDataSet,
+        Modal: modalInProps,
+        formProps,
+        modalProps,
+      });
       if (secretLevelHeadersInfo === false) {
         return;
       }
