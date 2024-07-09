@@ -1596,10 +1596,12 @@ export default class Table extends DataSetComponent<TableProps> {
                   text = attempt(JSON.parse, text);
                 } else if (optionDs) {
                   const textField = field.get('textField');
+                  const param = field.get('lovPara');
                   if (isArrayLike(text)) {
                     const promises = text.map(async t => {
                       const obj = {
                         [textField]: t.trim(),
+                        ...param,
                       }
                       const data = await optionDs.query(1, obj);
                       if (this.dataSet && data) {
@@ -1615,6 +1617,7 @@ export default class Table extends DataSetComponent<TableProps> {
                   } else if (isString(text)) {
                     const obj = {
                       [textField]: text.trim(),
+                      ...param,
                     }
                     // eslint-disable-next-line no-await-in-loop
                     const data = await optionDs.query(1, obj);
