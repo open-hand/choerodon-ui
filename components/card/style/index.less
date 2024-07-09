@@ -269,11 +269,11 @@
 
 .cornerAfter() {
   position: absolute;
-  color: @primary-color;
-  font-size: 0.24rem;
-  /* stylelint-disable */
-  font-family: 'icomoon' !important;
-  content: "\E1C8";
+  width: 0;
+  height: 0;
+  border-color: @primary-color;
+  border-style: solid;
+  content: "";
 }
 
 .common() {
@@ -289,30 +289,43 @@
     }
 
     &-topLeft::after {
-      top: -0.08rem;
-      left: -0.03rem;
-      transform: rotate(180deg);
+      top: 0;
+      left: 0;
       .cornerAfter();
+      border-right-color: transparent;
+      border-right-style: solid;
+      border-bottom-color: transparent;
+      border-bottom-style: solid;
     }
 
     &-topRight::after {
-      top: -0.08rem;
-      right: -0.03rem;
-      transform: rotate(-90deg);
+      top: 0;
+      right: 0;
       .cornerAfter();
+      border-bottom-color: transparent;
+      border-bottom-style: solid;
+      border-left-color: transparent;
+      border-left-style: solid;
     }
 
     &-bottomLeft::after {
-      bottom: -0.08rem;
-      left: -0.03rem;
-      transform: rotate(90deg);
+      bottom: 0;
+      left: 0;
       .cornerAfter();
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-right-color: transparent;
+      border-right-style: solid;
     }
 
     &-bottomRight::after {
-      right: -0.03rem;
-      bottom: -0.08rem;
+      right: 0;
+      bottom: 0;
       .cornerAfter();
+      border-top-color: transparent;
+      border-top-style: solid;
+      border-left-color: transparent;
+      border-left-style: solid;
     }
   }
 }
