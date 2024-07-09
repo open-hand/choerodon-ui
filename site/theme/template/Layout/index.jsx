@@ -7,10 +7,6 @@ import { addLocaleData, IntlProvider } from 'react-intl';
 import { ConfigProvider, configure as UIconfigure, LocaleProvider } from 'choerodon-ui';
 import {
   localeContext, ModalProvider,
-  // DataSet,
-  // Modal,
-  // Form,
-  // TextField
 } from 'choerodon-ui/pro';
 // import omit from 'lodash/omit';
 import moment from 'moment';
@@ -38,27 +34,20 @@ UIconfigure({
       url: `/common/lov/dataset/${code}${code === 'LOV_CODE' && params ? `/${params.pagesize}/${params.page}` : ''}`,
     };
   },
+  // 密级开关
+  uploadSecretLevelFlag: false,
   // 密级配置
-  // uploadSecretLevel: () => {
-  //   return new Promise((resolve) => {
-  //     Modal.open({
-  //       title: '密级选择',
-  //       children: <Form dataSet={ds}><TextField name="H-SECRET-LEVEL" /></Form>,
-  //       onOk: async () => {
-  //         if (await ds.get(0).validate()) {
-  //           resolve(omit(ds.get(0).toData(), ['__dirty']));
-  //           ds.reset();
-  //         } else {
-  //           return false;
-  //         }
-  //       },
-  //       onCancel: () => {
-  //         ds.reset();
-  //         resolve(false);
-  //       }
-  //     });
-  //   });
-  // },
+  uploadSecretLevelOptions: {
+    fields: [
+      {
+        name: 'H-Secret-Level',
+        type: 'number',
+        label: '密级'
+      },
+    ],
+    // formProps: {},
+    // modalProps: {},
+  },
 });
 
 export const uiConfigure = {

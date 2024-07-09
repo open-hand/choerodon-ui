@@ -87,14 +87,14 @@ export const useModal = (): ModalContextValue => {
 };
 
 export const injectModal = Target => {
-  const Hoc = props => {
+  const Hoc = React.forwardRef((props, ref) => {
     const modal = useModal();
-    return <Target {...props} Modal={modal} />;
-  };
+    return <Target ref={ref} {...props} Modal={modal} />;
+  });
 
   Hoc.displayName = `${Target.displayName || Target.name || 'Anonymous'}-with-inject-modal`;
 
-  return Hoc;
+  return Hoc as any;
 };
 
 ModalProvider.displayName = 'ModalProvider';

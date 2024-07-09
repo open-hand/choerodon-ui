@@ -30,9 +30,9 @@ import {
   TableQueryBarType,
 } from 'choerodon-ui/pro/lib/table/enum';
 import Record from 'choerodon-ui/pro/lib/data-set/Record';
-import Field from 'choerodon-ui/pro/lib/data-set/Field';
+import Field, { FieldProps } from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
-import { SeparateSpacing, LabelWidth } from 'choerodon-ui/pro/lib/form/interface';
+import { SeparateSpacing, LabelWidth, FormProps } from 'choerodon-ui/pro/lib/form/interface';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
@@ -349,9 +349,13 @@ export interface Config extends DataSetConfig {
    */
   uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   /**
-   * 是否开启密级，开启后可以自定义密级选择入口，将返回的参数传入请求头，返回 false 终止上传
+   * 是否开启上传密级配置
    */
-  uploadSecretLevel?: () => Promise<false | object>;
+  uploadSecretLevelFlag?: boolean;
+  /**
+   * 上传密级配置项
+   */
+  uploadSecretLevelOptions?: { fields: FieldProps[], formProps?: FormProps, modalProps?: ModalProps };
   pictureCardShowName?: boolean;
   /**
    * 输入框 range 分隔符

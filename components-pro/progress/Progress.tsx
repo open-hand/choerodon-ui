@@ -28,7 +28,7 @@ export default class Progress extends FormField<ProgressProps & { format?: Field
   render() {
     return (
       <C7NProgress
-        {...omit(this.props, ['dataSet', 'showHelp', 'renderer'])}
+        {...omit(this.props, ['dataSet', 'showHelp', 'renderer', 'overMaxTagCountTooltip'])}
         percent={this.getValue()}
       />
     );
