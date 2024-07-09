@@ -3046,7 +3046,7 @@ export default class TableStore {
 
         }
 
-        const rows = (targetTop - cornerTop) / pointTarget.offsetHeight;
+        const rows = (RB.y - LT.y + 1) / pointTarget.offsetHeight;
         this.batchExpandRowNumber = Math.floor(rows);
       } else {
         this.batchExpandRowNumber = 0;
