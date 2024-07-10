@@ -171,7 +171,7 @@ export default class LovView extends Component<LovViewProps> {
     }
   }
 
-  handleSelect = debounce((event?: React.MouseEvent) => {
+  handleSelect = (event?: React.MouseEvent) => {
     const { selectionMode } = this;
     const {
       onBeforeSelect = noop,
@@ -199,7 +199,9 @@ export default class LovView extends Component<LovViewProps> {
       this.closeModal(record);
     }
     return false;
-  }, 300)
+  }
+
+  handleDelaySelect = debounce(this.handleSelect, 300);
 
   /* istanbul ignore next */
   @autobind
@@ -239,13 +241,13 @@ export default class LovView extends Component<LovViewProps> {
       const { onRow } = tableProps;
       if (onRow) {
         return {
-          onClick: !isDisabled ? this.handleSelect : noop,
+          onClick: !isDisabled ? this.handleDelaySelect : noop,
           ...onRow(props),
         };
       }
     }
     return {
-      onClick: !isDisabled ? this.handleSelect : noop,
+      onClick: !isDisabled ? this.handleDelaySelect : noop,
     };
   }
 
