@@ -5,6 +5,7 @@ import raf from 'raf';
 import isString from 'lodash/isString';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
+import cloneDeep from 'lodash/cloneDeep';
 import merge from 'lodash/merge';
 import { AxiosRequestConfig } from 'axios';
 import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
@@ -515,6 +516,8 @@ export default class Field {
   @observable props: ObservableMap<string, any>;
 
   @observable dirtyProps?: Partial<FieldProps> | undefined;
+
+  @observable searchPara?: object;
 
   get attachments(): AttachmentFile[] | undefined {
     return this.getAttachments();
@@ -1187,11 +1190,14 @@ export default class Field {
    */
   @action
   setLovPara(name: string, value: any, record: Record | undefined = this.record) {
-    const p = toJS(this.get('lovPara', record)) || {};
+    const isComputedLovPara = this.get('computedProps')?.lovPara;
+    const p = isComputedLovPara ? cloneDeep(toJS(this.get('lovPara', record))) : toJS(this.get('lovPara', record)) || {};
     if (value === null) {
       delete p[name];
+      this.searchPara = undefined;
     } else {
       p[name] = value;
+      this.searchPara = { [name]: value };
     }
     this.set('lovPara', p);
   }
@@ -1302,6 +1308,18 @@ export default class Field {
       }
     } else {
       const axiosConfig = lookupStore.getAxiosConfig(this, record, noCache);
+      if (this.searchPara) {
+        if (axiosConfig.params) {
+          Object.keys(this.searchPara).forEach((key) => {
+            // 计算或动态属性设置了 lovPara 会导致 searchable 搜索参数丢失
+            if (!axiosConfig.params[key]) {
+              axiosConfig.params[key] = this.searchPara![key];
+            }
+          });
+        } else {
+          axiosConfig.params = this.searchPara;
+        }
+      }
       if (axiosConfig.url) {
         const lookupToken = buildURLWithAxiosConfig(axiosConfig);
         if (lookupToken !== oldToken) {

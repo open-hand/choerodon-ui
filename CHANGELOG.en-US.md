@@ -57,6 +57,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed an issue where `modalProps.afterClose` would be executed before the value was selected.
 - 🐞 `<pro>TextArea`: Fixed an issue where scroll bars did not appear when text exceeded the input field height when setting `autoSize` property.
 - 🐞 `<pro>Typography`: Fixed the form float layout issue.
+- 🐞 `<pro>DataSet.Field`: Fixed the issue that setting `lovPara` in `dynamicProps` or `computedProps` would cause the `searchable` to be invalidated.
 
 ## 1.6.5
 
