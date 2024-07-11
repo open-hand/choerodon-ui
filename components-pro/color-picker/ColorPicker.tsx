@@ -236,7 +236,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       {
         [`${prefixCls}-color`]: !isButtonMode,
         [`${prefixCls}-button-color`]: isButtonMode,
-        [`${prefixCls}-prefix-border`]: !isButtonMode && this.getBorder(r, g, b),
+        [`${prefixCls}-prefix-border`]: !isButtonMode && this.getBorder(r, g, b) && backgroundColor !== undefined,
       });
     return (
       <div className={`${prefixCls}-prefix`}>
