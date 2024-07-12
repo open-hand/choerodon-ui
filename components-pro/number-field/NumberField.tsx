@@ -532,10 +532,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
   }
 
   afterStep(newValue) {
-    if (this.multiple) {
-      this.setText(String(newValue));
-    } else {
-      this.prepareSetValue(newValue);
+    this.setText(String(newValue));
+    if (!this.multiple) {
+      this.handleChangeWait(newValue);
     }
   }
 
