@@ -529,6 +529,10 @@ export default class Attachment extends FormField<AttachmentProps> {
               this.tempAttachmentUUID = undefined;
               this.setValue(tempAttachmentUUID);
             }
+            const results = this.getValidationResults();
+            if (results && results.length) {
+              this.checkValidity();
+            }
           } else {
             this.checkValidity();
           }

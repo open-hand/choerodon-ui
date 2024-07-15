@@ -38,6 +38,7 @@ timeline: true
 - 💄 `Tree`: 优化第一个和最后一个子节点，以及禁用节点的拖拽交互。
 - 💄 `configure`: 扩展 customizedSave 属性支持获取表格完整个性化列配置信息。
 - 💄 `<pro>Select`: 优化分组的 label 可以设置 ReactNode 类型。
+- 💄 `<pro>NumberField`: 优化点击步距按钮时，值的防抖效果。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
@@ -59,6 +60,8 @@ timeline: true
 - 🐞 `<pro>Typography`: 修复表单 float 布局问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性或计算属性中设置了 lovPara 导致下拉 searchable 失效的问题。
 - 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。
+- 🐞 `<pro>Attachment`: 修复重新上传文件后未清除报错的问题。
+
 ## 1.6.5
 
 `2024-05-16`
