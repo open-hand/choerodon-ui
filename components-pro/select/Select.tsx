@@ -686,6 +686,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
      */
     const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? { padding: '.08rem' } : {};
     const IeItemStyle = !this.dropdownMatchSelectWidth && isIE() ? { overflow: 'visible' } : {};
+    const optGroupKeyMap: Map<ReactNode, string> = new Map();
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -695,7 +696,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           renderLable = groupRenderer({ record, dataSet: options, text: label, value: label });
         }
         if (label !== undefined) {
-          const groupKey = `group-${label}`;
+          let groupKey = optGroupKeyMap.get(label);
+          if (!groupKey) {
+            groupKey = typeof label === 'object'
+              ? `group-${record.id}-${field}`
+              : `group-${label}`;
+            optGroupKeyMap.set(label, groupKey);
+          }
           if (!previousGroup) {
             previousGroup = optGroups.find(item => item.key === groupKey);
             if (!previousGroup) {
