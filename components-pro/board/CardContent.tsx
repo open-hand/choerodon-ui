@@ -47,7 +47,7 @@ export interface CardContentProps {
 
 const CardContent: FunctionComponent<CardContentProps> = function CardContent(props) {
   const { tableBtns, buttonsLimit, buttons, cardProps = {}, queryBarProps } = props;
-  const { onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand, commandsLimit } = useContext(BoardContext);
+  const { styleIsolation, onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand, commandsLimit } = useContext(BoardContext);
   const viewProps = customizedDS!.current!.get(ViewField.viewProps);
   const [cardHeight, setCardHeight] = useState(0);
   const oldDSRef = useRef(null);
@@ -453,7 +453,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                   }}
                   title={viewProps && viewProps.displayFields && !(cardProps && cardProps.contentRenderer) ?
                     <Typography.Paragraph
-                      style={displayFields.find(df => df.name === viewProps.displayFields[0]) && displayFields.find(df => df.name === viewProps.displayFields[0]).onCell ? displayFields.find(df => df.name === viewProps.displayFields[0]).onCell()?.style : {}}
+                      style={!styleIsolation ? displayFields.find(df => df.name === viewProps.displayFields[0]) && displayFields.find(df => df.name === viewProps.displayFields[0]).onCell ? displayFields.find(df => df.name === viewProps.displayFields[0]).onCell()?.style : {} : {}}
                       ellipsis={{ rows: 2, tooltip: <Output name={viewProps.displayFields[0]} record={record} renderer={displayFields.find(df => df.name === viewProps.displayFields[0]) ? displayFields.find(df => df.name === viewProps.displayFields[0]).renderer : noop} /> }}
                       name={viewProps.displayFields[0]}
                       record={record}
@@ -505,7 +505,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                             ellipsis={{
                               tooltip: true,
                             }}
-                            style={displayFields.find(df => df.name === fieldName) && displayFields.find(df => df.name === fieldName).onCell ? displayFields.find(df => df.name === fieldName).onCell()?.style : {}}
+                            style={!styleIsolation ? displayFields.find(df => df.name === fieldName) && displayFields.find(df => df.name === fieldName).onCell ? displayFields.find(df => df.name === fieldName).onCell()?.style : {} : {}}
                             name={fieldName}
                             record={record}
                             renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}

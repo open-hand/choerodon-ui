@@ -12,6 +12,7 @@ export interface BoardContextValue {
   actuallyDefaultActiveKey?: string | undefined;
   propActiveKey?: string | undefined;
   keyboard?: boolean | undefined;
+  styleIsolation?: boolean | undefined;
   autoQuery?: boolean | undefined;
   // customizable?: boolean | undefined;
   // customized?: TabsCustomized | undefined | null;
@@ -44,6 +45,7 @@ const BoardContext = getContext<BoardContextValue>(Symbols.BoardContext, {
   saveCustomized: noop,
   getConfig: noop,
   getProPrefixCls: noop,
+  styleIsolation: false,
 });
 
 export default BoardContext;

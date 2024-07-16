@@ -41,6 +41,7 @@ export interface KanbanProps {
 export interface BoardProps extends DataSetComponentProps {
   customized?: BoardCustomized | null;
   customizable?: boolean;
+  styleIsolation?: boolean;
   customizedCode: string;
   className?: string;
   dataSet: DataSet;
