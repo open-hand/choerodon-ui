@@ -127,7 +127,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { dataSet } = this.observableProps;
     const { total = 0, pageSize, page } = this;
     const noCount = dataSet && dataSet.paging === 'noCount';
-    return noCount ? true : page < Math.floor((total - 1) / pageSize) + 1;
+    return noCount ?  dataSet.length === pageSize : page < Math.floor((total - 1) / pageSize) + 1;
   }
 
   getObservableProps(props, context) {
@@ -377,9 +377,9 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   renderTotal(pageSize: number, page: number, total: number): ReactNode {
     const { prefixCls, props: { showTotal }, dataSet } = this;
     const from = pageSize * (page - 1) + 1;
-    const to = Math.min(pageSize * page, total);
     const counting = dataSet && dataSet.counting;
     const noCount = dataSet && dataSet.paging === 'noCount';
+    const to = noCount ? pageSize * page : Math.min(pageSize * page, total);
     if (typeof showTotal === 'function') {
       return (
         <span key="total" className={`${prefixCls}-page-info`}>
