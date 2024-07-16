@@ -43,7 +43,7 @@ export default class UploadList extends FormField<UploadListProps> {
       const filetype = getFileType(file.name);
       switch (filetype) {
         case 'compressedfile':
-          previewImg = <CompressedfileIcon style={{width: previewImageWidth}} className={`${prefixCls}-icon-file`} />;
+          previewImg = <CompressedfileIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
           break;
         case 'doc':
           previewImg = <DocIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
