@@ -3,7 +3,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
-import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';;
+import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
+import DataSet from 'choerodon-ui/pro/lib/data-set';
+import { getSecretLevelModal } from 'choerodon-ui/pro/lib/attachment/utils';
 import defaultRequest from './request';
 import getUid from './uid';
 import attrAccept from './attr-accept';
@@ -11,6 +13,18 @@ import traverseFileTree from './traverseFileTree';
 import { fileToObject } from '../../upload/utils';
 
 class AjaxUploader extends Component {
+  constructor(props, context) {
+    super(props, context);
+    if (!this.secretLevelDataSet) {
+      const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+      const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+      if (secretLevelFlag && secretLevelOptions) {
+        const { fields } = secretLevelOptions;
+        this.secretLevelDataSet = new DataSet({ fields, autoCreate: true });
+      }
+    }
+  }
+
   state = { uid: getUid() };
 
   reqs = {};
@@ -84,11 +98,18 @@ class AjaxUploader extends Component {
   }
 
   uploadFiles = async (files) => {
-    const { beforeUploadFiles = noop } = this.props;
-    const secretLevel = getConfigDefault('uploadSecretLevel');
+    const { beforeUploadFiles = noop, Modal: modalInProps } = this.props;
+    const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+    const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
     let secretLevelHeadersInfo = {};
-    if (secretLevel) {
-      secretLevelHeadersInfo = await secretLevel();
+    if (secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
+      const { formProps, modalProps } = secretLevelOptions;
+      secretLevelHeadersInfo = await getSecretLevelModal({
+        dataSet: this.secretLevelDataSet,
+        Modal: modalInProps,
+        formProps,
+        modalProps,
+      });
       if (secretLevelHeadersInfo === false) {
         return;
       }

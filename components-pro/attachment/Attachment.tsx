@@ -27,7 +27,7 @@ import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import Modal from '../modal';
 import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
-import { sortAttachments } from './utils';
+import { getSecretLevelModal, sortAttachments } from './utils';
 import ObserverSelect from '../select/Select';
 import BUILT_IN_PLACEMENTS from '../trigger-field/placements';
 import attachmentStore from '../stores/AttachmentStore';
@@ -45,6 +45,9 @@ import { getIf } from '../data-set/utils';
 import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
 import { hide, show } from '../tooltip/singleton';
+import DataSet from '../data-set';
+import ModalProvider from '../modal-provider';
+import { ModalContextValue } from '../modal-provider/ModalContext';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -86,6 +89,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
   filesLengthLimitNotice?: (defaultInfo: string) => void;
   countTextRenderer?: (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode;
+  Modal?: ModalContextValue;
 }
 
 export type Sort = {
@@ -100,6 +104,7 @@ const defaultSort: Sort = {
   custom: true,
 };
 
+@ModalProvider.injectModal
 @observer
 export default class Attachment extends FormField<AttachmentProps> {
   static displayName = 'Attachment';
@@ -118,6 +123,18 @@ export default class Attachment extends FormField<AttachmentProps> {
     dragUpload: false,
     removeImmediately: true,
   };
+
+  constructor(props, context) {
+    super(props, context);
+    if (!this.secretLevelDataSet) {
+      const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+      const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+      if (secretLevelFlag && secretLevelOptions) {
+        const { fields } = secretLevelOptions;
+        this.secretLevelDataSet = new DataSet({ fields, autoCreate: true });
+      }
+    }
+  }
 
   // eslint-disable-next-line camelcase
   static __IS_IN_CELL_EDITOR = true;
@@ -140,6 +157,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable tempAttachmentUUID?: string | undefined;
 
   tempRemovedAttachments?: AttachmentFile[];
+
+  secretLevelDataSet?: DataSet;
 
   get help() {
     return this.getDisplayProp('help');
@@ -380,6 +399,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'onTempRemovedAttachmentsChange',
       'filesLengthLimitNotice',
       'countTextRenderer',
+      'Modal',
     ]);
   }
 
@@ -424,10 +444,18 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
       return;
     }
-    const secretLevel = getConfigDefault('uploadSecretLevel');
+    const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+    const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+    const { Modal: modalInProps } = this.props;
     let secretLevelHeadersInfo = {};
-    if (secretLevel) {
-      secretLevelHeadersInfo = await secretLevel();
+    if (secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
+      const { formProps, modalProps } = secretLevelOptions;
+      secretLevelHeadersInfo = await getSecretLevelModal({
+        dataSet: this.secretLevelDataSet,
+        Modal: modalInProps,
+        formProps,
+        modalProps,
+      });
       if (secretLevelHeadersInfo === false) {
         return;
       }
@@ -500,6 +528,10 @@ export default class Attachment extends FormField<AttachmentProps> {
             if (tempAttachmentUUID) {
               this.tempAttachmentUUID = undefined;
               this.setValue(tempAttachmentUUID);
+            }
+            const results = this.getValidationResults();
+            if (results && results.length) {
+              this.checkValidity();
             }
           } else {
             this.checkValidity();

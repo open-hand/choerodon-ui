@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import isUndefined from 'lodash/isUndefined';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
+import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import defaultLocale from '../locale-provider/default';
 import Dragger from './Dragger';
@@ -14,6 +15,7 @@ import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigCont
 
 export { UploadProps };
 
+@ModalProvider.injectModal
 export default class Upload extends Component<UploadProps, UploadState> {
   static displayName = 'Upload';
 

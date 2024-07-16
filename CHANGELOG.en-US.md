@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevel`, `modalOkAndCancelIcon` property.
+- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
@@ -38,6 +38,7 @@ timeline: true
 - 💄 `Tree`: Optimize the first and last child nodes, and disable drag and drop interactions for nodes.
 - 💄 `configure`: The `customizedSave` property is extended to obtain complete personalized column configuration information for Table.
 - 💄 `<pro>Select`: The `label` of the optimized grouping can be set to the `ReactNode` type.
+- 💄 `<pro>NumberField`: Optimize the anti-shake effect of the value when the step button is clicked.
 - 🐞 `<pro>Board` : Fixed column merge scene card field not rendering.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where non-asynchronous trees reported an error when using `treeAsync`.
 - 🐞 `<pro>Table`: Fixed the issue of adding a new row when copying and pasting the second page of data in both directions.
 - 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
+- 🐞 `<pro>Table`: Fixed the issue of bidirectional replication of lov types without carrying query parameters.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
 - 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
 - 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.
@@ -53,8 +55,12 @@ timeline: true
 - 🐞 `<pro>IntlField`: Fixed an issue where styles were rendered incorrectly after `displayOutput` attribute changes.
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the search was invalid when setting the `searchFieldInPopup` property.
 - 🐞 `<pro>Lov`: Fixed an issue where the `reset dataSet` could not be selected again after a record was selected in `popup` mode.
+- 🐞 `<pro>Lov`: Fixed an issue where `modalProps.afterClose` would be executed before the value was selected.
 - 🐞 `<pro>TextArea`: Fixed an issue where scroll bars did not appear when text exceeded the input field height when setting `autoSize` property.
 - 🐞 `<pro>Typography`: Fixed the form float layout issue.
+- 🐞 `<pro>DataSet.Field`: Fixed the issue that setting `lovPara` in `dynamicProps` or `computedProps` would cause the `searchable` to be invalidated.
+- 🐞 `<pro>ColorPicker`: Fixed the issue that the white prefix could not be cleared.
+- 🐞 `<pro>Attachment`: Fixed an issue where errors were not cleared after reuploading files.
 
 ## 1.6.5
 

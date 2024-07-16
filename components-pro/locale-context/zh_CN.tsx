@@ -202,6 +202,7 @@ const locale: Locale = {
     delete: '删除',
     file_list_max_length: '文件数量最大限制为：{count}',
     drag_info: '点击或将文件拖拽到这里上传',
+    secret_level_modal_title: '密级选择',
   },
   Modal: {
     ok: '确定',

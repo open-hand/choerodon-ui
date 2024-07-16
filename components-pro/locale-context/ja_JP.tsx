@@ -205,6 +205,7 @@ const locale: Locale = {
     file_list_max_length: 'ファイルの最大数は次のように制限されています：{count}',
     drag_info: 'ここでファイルをクリックまたはドラッグしてアップロードします',
     download_template: 'テンプレートをダウンロード',
+    secret_level_modal_title: 'シークレットレベルの選択',
   },
   Modal: {
     ok: 'OK',

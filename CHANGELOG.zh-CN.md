@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevel, modalOkAndCancelIcon 属性。
+- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
@@ -38,6 +38,7 @@ timeline: true
 - 💄 `Tree`: 优化第一个和最后一个子节点，以及禁用节点的拖拽交互。
 - 💄 `configure`: 扩展 customizedSave 属性支持获取表格完整个性化列配置信息。
 - 💄 `<pro>Select`: 优化分组的 label 可以设置 ReactNode 类型。
+- 💄 `<pro>NumberField`: 优化点击步距按钮时，值的防抖效果。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
@@ -45,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复非异步树使用 treeAsync 报错的问题。
 - 🐞 `<pro>Table`: 修复双向复制粘贴第二页数据会新增一行的问题。
 - 🐞 `<pro>Table`: 修复双向复制下拉批量赋值数量不对的问题。
+- 🐞 `<pro>Table`: 修复双向复制 lov 类型未携带查询参数的问题。
 - 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
 - 🐞 `<pro>Select`: 修复多选且级联模式下，删除父级单个值会导致级联字段弹窗不关闭的问题。
 - 🐞 `<pro>Select`: 修复级联模式下，父级多值会导致级联下拉框无数据的问题。
@@ -53,8 +55,12 @@ timeline: true
 - 🐞 `<pro>IntlField`: 修复 displayOutput 属性变化后样式渲染不正确的问题。
 - 🐞 `<pro>TreeSelect`: 修复设置 searchFieldInPopup 属性时，搜索无效的问题。
 - 🐞 `<pro>Lov`: 修复多选且 popup 模式下，选中记录后 reset dataSet，无法再选择的问题。
+- 🐞 `<pro>Lov`: 修复 modalProps.afterClose 会在选值之前执行的问题。
 - 🐞 `<pro>TextArea`: 修复设置 autoSize 属性时，文本超过输入框高度未出现滚动条的问题。
 - 🐞 `<pro>Typography`: 修复表单 float 布局问题。
+- 🐞 `<pro>DataSet.Field`: 修复动态属性或计算属性中设置了 lovPara 导致下拉 searchable 失效的问题。
+- 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。
+- 🐞 `<pro>Attachment`: 修复重新上传文件后未清除报错的问题。
 
 ## 1.6.5
 
