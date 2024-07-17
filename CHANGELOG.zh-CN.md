@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: 修复动态属性或计算属性中设置了 lovPara 导致下拉 searchable 失效的问题。
 - 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。
 - 🐞 `<pro>Attachment`: 修复重新上传文件后未清除报错的问题。
+- 🐞 `<pro>Attachment`: 修复上传时校验信息闪烁的问题。
 
 ## 1.6.5
 
