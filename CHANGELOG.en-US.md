@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: Fixed the issue that setting `lovPara` in `dynamicProps` or `computedProps` would cause the `searchable` to be invalidated.
 - 🐞 `<pro>ColorPicker`: Fixed the issue that the white prefix could not be cleared.
 - 🐞 `<pro>Attachment`: Fixed an issue where errors were not cleared after reuploading files.
+- 🐞 `<pro>Attachment`: Fixed the issue that the validation information flickered during upload.
 
 ## 1.6.5
 

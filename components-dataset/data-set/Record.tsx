@@ -819,9 +819,11 @@ export default class Record {
         ...findBindFields(field, fields, true, this),
         ...findBindTargetFields(field, fields, true, this),
         ...findMinOrMaxFields(field, fields, this),
-      ].forEach((oneField) => (
-        oneField.checkValidity(this)
-      ));
+      ].forEach((oneField) => {
+        if (oneField.get('type') !== FieldType.attachment) {
+          return oneField.checkValidity(this);
+        }
+      });
     } else if (isPlainObject(item)) {
       Object.keys(item).forEach(key => this.set(key, item[key]));
     }
