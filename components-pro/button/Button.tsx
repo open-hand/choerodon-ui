@@ -396,7 +396,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   render() {
-    const { children, icon, href, funcType } = this.props;
+    const { children, icon, href, funcType, hidden } = this.props;
     const { loading, disabled } = this;
     const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
     const buttonIcon: any = loading ? (
@@ -437,6 +437,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
         style={props.style}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        hidden={hidden}
       >
         {button}
       </span>

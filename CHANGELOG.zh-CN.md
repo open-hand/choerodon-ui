@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。
 - 🐞 `<pro>Attachment`: 修复重新上传文件后未清除报错的问题。
 - 🐞 `<pro>Attachment`: 修复上传时校验信息闪烁的问题。
+- 🐞 `<pro>Button`: 修复无法通过 hidden 属性完全隐藏的问题。
 
 ## 1.6.5
 
