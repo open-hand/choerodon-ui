@@ -63,6 +63,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: Fixed the issue that the white prefix could not be cleared.
 - 🐞 `<pro>Attachment`: Fixed an issue where errors were not cleared after reuploading files.
 - 🐞 `<pro>Attachment`: Fixed the issue that the validation information flickered during upload.
+- 🐞 `<pro>Button`: Fixed an issue where it could not be completely `hidden` via the hidden attribute.
 
 ## 1.6.5
 
