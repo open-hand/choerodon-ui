@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>Modal`: Added `modalOkAndCancelIcon` property.
 - 🌟 `Tree`: Added `onDragEnterBefore`, `onDragOverBefore` properties.
 - 🌟 `<pro>Table`: The `rowDraggable` property adds the `multiDrag` value, which supports multi-line dragging.
+- 🌟 `<pro>CodeArea`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.

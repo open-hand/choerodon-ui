@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import { IControlledCodeMirror as CodeMirrorProps, IInstance } from 'react-codemirror2';
 import ResizeObserver from 'resize-observer-polyfill';
 import shallowEqual from 'shallowequal';
+import { DebouncedFunc, DebounceSettings } from 'lodash';
 import defaultTo from 'lodash/defaultTo';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -14,6 +15,8 @@ import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
+import { WaitType } from '../core/enum';
+import { ValueChangeAction } from '../text-field/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import { CodeAreaFormatter } from './CodeAreaFormatter';
 import { ThemeSwitch } from './enum';
@@ -46,6 +49,19 @@ export interface CodeAreaProps extends FormFieldProps {
    * 占位词
    */
   placeholder?: string;
+  /**
+   * 触发值变更的动作， default: blur
+   */
+  valueChangeAction?: ValueChangeAction;
+  /**
+   * 值变更间隔时间，只有在valueChangeAction为input时起作用
+   */
+  wait?: number;
+  /**
+   * 值变更间隔类型，可选值：throttle | debounce
+   * @default throttle
+   */
+  waitType?: WaitType;
 }
 
 const defaultCodeMirrorOptions: any = {
@@ -64,6 +80,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     suffixCls: 'code-area',
     formatHotKey: 'Alt-F',
     unFormatHotKey: 'Alt-R',
+    valueChangeAction: ValueChangeAction.blur,
+    waitType: WaitType.debounce,
   };
 
   cmOptions: any = this.getCodeMirrorOptions();
@@ -88,6 +106,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   secondTimeoutId?: number;
 
+  handleChangeWait: DebouncedFunc<(codeMirrorInstance: IInstance, event?: Event, focus?: boolean) => void>;
+
   constructor(props, content) {
     super(props, content);
     const { options } = props;
@@ -109,6 +129,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
         this.setText(value);
       }
     });
+    this.handleChangeWait = this.getHandleChange(props);
   }
 
   componentDidMount() {
@@ -121,6 +142,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     this.disposer();
     this.disconnect();
     this.editorRefreshDebounce.cancel();
+    this.handleChangeWait.cancel();
   }
 
   componentDidUpdate(prevProps) {
@@ -193,9 +215,12 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   }, 600);
 
   @autobind
-  handleBeforeChange(_editor, _data, value) {
+  handleBeforeChange(editor: IInstance, _data, value) {
     this.setText(value);
     this.editorRefreshDebounce();
+    if (this.props.valueChangeAction === ValueChangeAction.input) {
+      this.handleChangeWait(editor, undefined, true);
+    }
   }
 
   @autobind
@@ -228,6 +253,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       'formatHotKey',
       'unFormatHotKey',
       'editorDidMount',
+      'valueChangeAction',
+      'wait',
+      'waitType',
     ]);
   }
 
@@ -259,6 +287,11 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   componentWillReceiveProps(nextProps, nextContext) {
     this.setThemeWrapper(nextProps);
     super.componentWillReceiveProps(nextProps, nextContext);
+
+    const { wait, waitType } = this.props;
+    if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
+      this.handleChangeWait = this.getHandleChange(nextProps);
+    }
   }
 
   handleThemeChange = (value) => {
@@ -352,12 +385,27 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     return formatter && isString(text) ? formatter.getFormatted(text) : text;
   }
 
+  getHandleChange(props: CodeAreaProps): DebouncedFunc<(codeMirrorInstance: IInstance, event?: Event, focus?: boolean) => void> {
+    const { wait, waitType } = props;
+    if (wait && waitType) {
+      const options: DebounceSettings = { leading: true, trailing: true };
+      if (waitType === WaitType.throttle) {
+        options.trailing = false;
+        options.maxWait = wait;
+      } else if (waitType === WaitType.debounce) {
+        options.leading = false;
+      }
+      return debounce(this.handleCodeMirrorBlur, wait, options);
+    }
+    return debounce(this.handleCodeMirrorBlur, 0);
+  }
+
   /**
    * 编辑器失去焦点时，调用父类方法，同步DataSet中的内容
    *
    * @memberof CodeArea
    */
-  handleCodeMirrorBlur = action((codeMirrorInstance: IInstance) => {
+  handleCodeMirrorBlur = action((codeMirrorInstance: IInstance, _event?: Event, focus?: boolean) => {
     const { formatter } = this.props;
     // 更新DataSet的值之前，先去拿到原始的raw格式
     let value = codeMirrorInstance.getValue();
@@ -367,11 +415,14 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     }
     this.midText = value;
     this.setValue(value);
-    this.isFocused = false;
-    this.isFocus = false;
-    const element = this.wrapper || findDOMNode(this);
-    if (element) {
-      classes(element).remove(`${this.prefixCls}-focused`);
+    if (!focus) {
+      this.isFocused = false;
+      this.isFocus = false;
+      const element = this.wrapper || findDOMNode(this);
+      if (element) {
+        classes(element).remove(`${this.prefixCls}-focused`);
+      }
+      this.handleChangeWait.cancel();
     }
 
     const recordValue = this.getValue();
