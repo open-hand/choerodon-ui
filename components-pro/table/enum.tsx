@@ -112,3 +112,14 @@ export enum TableBoxSizing {
   content = 'content',
   wrapper = 'wrapper',
 }
+
+export enum MultiDragSelectMode {
+  /**
+   * ctrl + 点击
+   */
+  keyboard = 'keyboard',
+  /**
+   * 使用表格勾选框勾选
+   */
+  checkbox = 'checkbox',
+}

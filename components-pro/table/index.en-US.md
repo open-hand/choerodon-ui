@@ -70,6 +70,7 @@ subtitle: 表格
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/components/configure#API) |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/components/configure#API) |
 | rowDraggable | 行拖拽，实现行的拖拽， 树形数据无法使用; multiDrag 支持多行拖拽选中记录(树形不支持多拖) | boolean \| 'multiDrag' | [globalConfig.tableRowDraggable](/components/configure#API) |
+| multiDragSelectMode | 多行拖拽时，多选记录的方式: keyboard: ctrl + 点击; checkbox: 使用表格勾选框勾选 | 'keyboard' \| 'checkbox' | 'keyboard' |
 | heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/components/configure#API) |
 | pageSizeChangeable | 分页大小设置, customizable 为 true 才起作用 | boolean \| { autoQuery：boolean } | [globalConfig.tablePageSizeChangeable](/components/configure#API) |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | 'left'\|'right' |  |

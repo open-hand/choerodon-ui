@@ -68,6 +68,7 @@ import {
   TableMode,
   TablePaginationPosition,
   TableQueryBarType,
+  MultiDragSelectMode,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -681,6 +682,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   rowDraggable?: boolean | 'multiDrag';
   /**
+   * 多行拖拽时，多选记录的方式: keyboard: ctrl + 点击; checkbox: 使用表格勾选框勾选
+   */
+  multiDragSelectMode?: MultiDragSelectMode;
+  /**
    * 拖拽触发事件
    */
   onDragEnd?: (dataSet: DataSet, columns: ColumnProps[], resultDrag: DropResult, provided: ResponderProvided) => void;
@@ -883,6 +888,7 @@ export default class Table extends DataSetComponent<TableProps> {
     showSelectionCachedButton: true,
     showHeader: true,
     fullColumnWidth: true,
+    multiDragSelectMode: MultiDragSelectMode.keyboard,
   };
 
   tableStore: TableStore = new TableStore(this);
@@ -1776,6 +1782,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'fullColumnWidth',
       'dragDropContextProps',
       'rowNumberColumnProps',
+      'multiDragSelectMode',
     ]);
   }
 
@@ -2159,9 +2166,9 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
-    const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard, rowDraggable } = this.tableStore;
+    const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard, rowDraggable, selectedDragRows } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
-    const { onDragEnd, onDragEndBefore, dragDropContextProps } = this.props;
+    const { onDragEnd, onDragEndBefore, dragDropContextProps, multiDragSelectMode, rowDragRender } = this.props;
     let resultBefore: DropResult | undefined = resultDrag;
     const recordFromIndex = rowMetaData ? rowMetaData[resultBefore.source.index].record?.index : undefined;
     const recordToIndex = rowMetaData && resultBefore.destination ? rowMetaData[resultBefore.destination.index].record?.index : undefined;
@@ -2255,7 +2262,16 @@ export default class Table extends DataSetComponent<TableProps> {
     } else if (resultBefore && resultBefore.destination) {
       if (resultBefore.source.index !== resultBefore.destination.index) {
         // 非树形拖拽排序
-        const { records, data, currentSelected: selected } = dataSet;
+        const { records, data } = dataSet;
+        let isDragDisabled: boolean | ((record?: Record) => boolean) | undefined;
+        if (rowDragRender && rowDragRender.draggableProps && rowDragRender.draggableProps.isDragDisabled) {
+          isDragDisabled = rowDragRender.draggableProps.isDragDisabled;
+        }
+        let selected = multiDragSelectMode !== MultiDragSelectMode.checkbox
+          ? selectedDragRows
+          : dataSet.currentSelected.filter(r => !(isFunction(isDragDisabled) ? isDragDisabled(r) : isDragDisabled));
+        // 升序
+        selected = selected.sort((a, b) => a.index - b.index);
         const { draggableId } = resultBefore;
         const destinationIndex = resultBefore.destination.index;
         let recordsSourceIndex = resultBefore.source.index;
@@ -2269,24 +2285,28 @@ export default class Table extends DataSetComponent<TableProps> {
         }
         const dragRecord = selected.find(record => String(record.key) === draggableId);
         if (rowDraggable === 'multiDrag' && selected.length > 1 && dragRecord) {
-          this.reorderDataSet(
-            records.indexOf(dragRecord),
-            recordsToIndex,
-          );
-          const selectedAfterDrag = selected.filter(r => records.indexOf(r) > records.indexOf(dragRecord));
-          const selectedBeforeDrag = selected.filter(r => records.indexOf(r) < records.indexOf(dragRecord));
-          selectedAfterDrag.reverse().forEach((record) => {
+          // 选中行之间顺序不变，作为一个整体调整顺序
+          const selectedAfterTo = selected.filter(r => records.indexOf(r) > recordsToIndex);
+          const selectedBeforeTo = selected.filter(r => records.indexOf(r) < recordsToIndex);
+          const recordsToIndexSelect = selected.find(r => records.indexOf(r) === recordsToIndex);
+          selectedAfterTo.reverse().forEach((record) => {
             this.reorderDataSet(
               records.indexOf(record),
-              recordsToIndex + 1,
+              recordsToIndex + (recordsToIndex > recordsSourceIndex ? 1 : 0),
             );
           });
-          selectedBeforeDrag.forEach((record) => {
+          selectedBeforeTo.forEach((record) => {
             this.reorderDataSet(
               records.indexOf(record),
+              recordsToIndex - (recordsToIndex > recordsSourceIndex ? 0 : 1),
+            );
+          });
+          if (recordsToIndexSelect) {
+            this.reorderDataSet(
+              records.indexOf(recordsToIndexSelect),
               recordsToIndex,
             );
-          });
+          }
         } else {
           this.reorderDataSet(
             recordsSourceIndex,
