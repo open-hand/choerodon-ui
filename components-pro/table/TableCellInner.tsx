@@ -15,13 +15,14 @@ import React, {
   useState,
 } from 'react';
 import { observer } from 'mobx-react-lite';
-import { isArrayLike } from 'mobx';
+import { isArrayLike, action } from 'mobx';
 import raf from 'raf';
 import classNames from 'classnames';
 import isNil from 'lodash/isNil';
 import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
+import isFunction from 'lodash/isFunction';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -33,7 +34,7 @@ import { TableButtonProps } from './Table';
 import { findCell, getColumnKey, getEditorByColumnAndRecord, isInCellEditor, isStickySupport } from './utils';
 import { FieldType, RecordStatus } from '../data-set/enum';
 import { COMBOBAR_KEY, SELECTION_KEY } from './TableStore';
-import { ColumnAlign, SelectionMode, TableCommandType } from './enum';
+import { ColumnAlign, SelectionMode, TableCommandType, MultiDragSelectMode } from './enum';
 import ObserverCheckBox from '../check-box/CheckBox';
 import { FormFieldProps, Renderer } from '../field/FormField';
 import { $l } from '../locale-context';
@@ -70,6 +71,7 @@ import { iteratorReduce } from '../_util/iteratorUtils';
 import { Group } from '../data-set/DataSet';
 import { TooltipProps } from '../tooltip/Tooltip';
 import ChildrenQueryButton from './ChildrenQueryButton';
+import ColumnGroup from './ColumnGroup';
 
 let inTab = false;
 
@@ -83,10 +85,13 @@ export interface TableCellInnerProps {
   colSpan?: number;
   headerGroup?: Group;
   rowGroup?: Group;
+  columnGroup?: ColumnGroup;
+  isDragging?: boolean;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
-  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup } = props;
+  const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup,
+    columnGroup, isDragging } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -107,11 +112,19 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const { name, key, lock, renderer, command, align, tooltipProps } = column;
   const columnKey = getColumnKey(column);
   const height = record.getState(`__column_resize_height_${name}`);
-  const { currentEditRecord } = tableStore;
+  const {
+    currentEditRecord, rowDraggable, showRemovedRow, selectedDragRows, isTree, columnGroups,
+    props: { multiDragSelectMode, rowDragRender },
+  } = tableStore;
+  let isDragDisabled: boolean | ((record?: Record) => boolean) | undefined;
+  if (rowDragRender && rowDragRender.draggableProps && rowDragRender.draggableProps.isDragDisabled) {
+    isDragDisabled = rowDragRender.draggableProps.isDragDisabled;
+  }
   const field = dataSet.getField(name);
   const fieldDisabled = disabled || (field && field.get('disabled', record));
   const innerRef = useRef<HTMLSpanElement | null>(null);
   const prefixRef = useRef<HTMLSpanElement | null>(null);
+  const previousCurrentRef = useRef<Record | undefined>(dataSet.current);
   const [paddingLeft, setPaddingLeft] = useState<number>(children ? indentSize * record.level : 0);
   const columnCommand = useComputed(() => {
     if (typeof command === 'function') {
@@ -534,6 +547,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     if (canFocus) {
       handleMouseEnter(e);
       if (key !== SELECTION_KEY) {
+        // focus 比 click 先触发，记录 click 前的 current
+        previousCurrentRef.current = dataSet.current;
         dataSet.current = record;
       }
       if (hasEditor && !tableStore.shiftKey) {
@@ -550,7 +565,60 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     inTab = false;
-  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor, text]);
+  }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor, text, previousCurrentRef]);
+
+  const handleClick = useCallback(action((e) => {
+    if (
+      rowDraggable === 'multiDrag' && !isTree &&
+      multiDragSelectMode !== MultiDragSelectMode.checkbox
+    ) {
+      const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
+      if (dragDisabled) {
+        tableStore.selectedDragRows.length = 0;
+        return;
+      }
+      if (e.ctrlKey) {
+        if (tableStore.selectedDragRows.includes(record)) {
+          tableStore.selectedDragRows.splice(tableStore.selectedDragRows.indexOf(record), 1);
+          if (tableStore.selectedDragRows.length > 0) {
+            dataSet.current = tableStore.selectedDragRows[tableStore.selectedDragRows.length - 1];
+          }
+        } else {
+          const clickBeforeCurrent = previousCurrentRef.current;
+          if (clickBeforeCurrent && tableStore.selectedDragRows.length === 0) {
+            const preCurrentDisabled = isFunction(isDragDisabled) ? isDragDisabled(clickBeforeCurrent) : isDragDisabled;
+            if (!preCurrentDisabled) {
+              tableStore.selectedDragRows.push(clickBeforeCurrent);
+            }
+          }
+          if (!tableStore.selectedDragRows.includes(record)) {
+            tableStore.selectedDragRows.push(record);
+          }
+        }
+      } else if (e.shiftKey) {
+        const lastClickRecord = (tableStore.selectedDragRows.length
+          ? tableStore.selectedDragRows[tableStore.selectedDragRows.length - 1]
+          : previousCurrentRef.current) || dataSet.current;
+        if (lastClickRecord) {
+          const maxIndex = Math.max(lastClickRecord.index, record.index);
+          const minIndex = Math.min(lastClickRecord.index, record.index);
+          const shiftSelectedRows = dataSet[showRemovedRow ? 'records' : 'data']
+            .filter(r => r.index <= maxIndex && r.index >= minIndex && !(isFunction(isDragDisabled) ? isDragDisabled(r) : isDragDisabled));
+          const allSelected = [
+            ...tableStore.selectedDragRows.filter(r => r.index > maxIndex || r.index < minIndex),
+            ...shiftSelectedRows,
+          ];
+          tableStore.selectedDragRows.length = 0;
+          tableStore.selectedDragRows.push(...allSelected);
+        }
+      } else {
+        tableStore.selectedDragRows.length = 0;
+      }
+      previousCurrentRef.current = undefined;
+    } else if (tableStore.selectedDragRows.length !== 0) {
+      tableStore.selectedDragRows.length = 0;
+    }
+  }), [rowDraggable, isDragDisabled, isTree, multiDragSelectMode, selectedDragRows, tableStore, record, previousCurrentRef, showRemovedRow]);
 
   const showTooltip = useCallback((e) => {
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
@@ -644,9 +712,28 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   const innerProps: any = {
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
+    onClick: handleClick,
     children: text,
     ref: innerRef,
   };
+
+  let dragCountNode: ReactNode;
+  const selectRecords = multiDragSelectMode !== MultiDragSelectMode.checkbox
+    ? selectedDragRows
+    : dataSet.currentSelected.filter(r => !(isFunction(isDragDisabled) ? isDragDisabled(r) : isDragDisabled));
+  if (isDragging && !isTree && columnGroup && selectRecords.length > 1 && selectRecords.includes(record)) {
+    const colIndex = columnGroups.leafs.findIndex(x => x.column.name === columnGroup.key || x.column.key === columnGroup.key);
+    if (colIndex === 0) {
+      dragCountNode = (
+        <div
+          className={`${prefixCls}-drag-count`}
+        >
+          {selectRecords.length}
+        </div>
+      );
+    }
+  }
+
   const empty = field ? isFieldValueEmpty(
     value,
     field.get('range', record),
@@ -753,6 +840,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   );
   return (
     <>
+      {dragCountNode}
       {prefix}
       {queryMoreButton}
       {

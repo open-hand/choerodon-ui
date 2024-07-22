@@ -93,10 +93,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       colSpan={colSpan}
       headerGroup={headerGroup}
       rowGroup={rowGroup}
+      columnGroup={columnGroup}
+      isDragging={isDragging}
     >
       {children}
     </TableCellInner>
-  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup]);
+  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging]);
   const isBuiltInColumn = tableStore.isBuiltInColumn(column);
 
   const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);

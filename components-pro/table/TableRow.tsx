@@ -466,7 +466,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     {
       [`${rowPrefixCls}-current`]: isCurrent && (highLightRow === HighLightRowType.click ? tableStore.rowClicked : highLightRow === HighLightRowType.focus ? node.isFocused : highLightRow), // 性能优化，在 highLightRow 为 false 时，不受 record.isCurrent 影响
       [`${rowPrefixCls}-hover`]: !isStickySupport() && highLightRow && isHover,
-      [`${rowPrefixCls}-selected`]: selectedHighLightRow && isSelectedRow(record),
+      [`${rowPrefixCls}-selected`]: (selectedHighLightRow && isSelectedRow(record)) ||
+        tableStore.selectedDragRows.includes(record),
       [`${rowPrefixCls}-disabled`]: disabled,
       [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (tableStore.mouseBatchChooseIdList || []).includes(id),
       [`${rowPrefixCls}-expanded`]: expandable && isExpanded,

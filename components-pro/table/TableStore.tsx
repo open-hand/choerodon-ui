@@ -1055,6 +1055,8 @@ export default class TableStore {
 
   @observable batchExpandRowNumber: number;
 
+  @observable selectedDragRows: Record[];
+
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;
     return autoHeight ? autoHeightToStyle(autoHeight, parentPaddingTop).height : style && style.height;
@@ -2459,6 +2461,7 @@ export default class TableStore {
       } else {
         this.initColumns();
       }
+      this.selectedDragRows = [];
     });
   }
 
