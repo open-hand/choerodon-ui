@@ -13,6 +13,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  MouseEvent,
 } from 'react';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike, action } from 'mobx';
@@ -567,7 +568,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     inTab = false;
   }, [tableStore, dataSet, record, lock, columnKey, canFocus, hasEditor, showEditor, text, previousCurrentRef]);
 
-  const handleClick = useCallback(action((e) => {
+  const handleClick = useCallback(action((e: MouseEvent<any>) => {
     if (
       rowDraggable === 'multiDrag' && !isTree &&
       multiDragSelectMode !== MultiDragSelectMode.checkbox
