@@ -1193,6 +1193,31 @@ export default class Table extends DataSetComponent<TableProps> {
     onKeyDown(e);
   }
 
+  @autobind
+  handleMouseDown(e) {
+    const {
+      disabled,
+      props: {
+        multiDragSelectMode,
+        onMouseDown = noop,
+      },
+      tableStore: {
+        rowDraggable,
+      },
+    } = this;
+
+    if (
+      multiDragSelectMode === MultiDragSelectMode.keyboard && rowDraggable === 'multiDrag' &&
+      e.shiftKey && window.getSelection
+    ) {
+      window.getSelection()?.removeAllRanges();
+    }
+
+    if (!disabled) {
+      onMouseDown(e);
+    }
+  }
+
   focusRow(row: HTMLTableRowElement | null): Record | void {
     if (row) {
       const { index } = row.dataset;
@@ -1813,6 +1838,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getOtherProps() {
     const otherProps = super.getOtherProps();
     otherProps.onKeyDown = this.handleKeyDown;
+    otherProps.onMouseDown = this.handleMouseDown;
     const { rowHeight } = this.tableStore;
     if (rowHeight === 'auto') {
       delete otherProps.style;
