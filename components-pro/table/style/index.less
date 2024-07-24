@@ -750,6 +750,10 @@
   }
 
   //ROW
+  // 设置 cursor: move; 时，按住shift键点击表格会有 outline 样式
+  &-row:focus-visible {
+    outline: none;
+  }
   &-empty-row &-empty-text-wrapper {
     display: inline-block;
     line-height: .3rem;
