@@ -589,9 +589,9 @@ export interface TableProps extends DataSetComponentProps {
    */
   parityRow?: boolean;
   /**
-   * 可调整列宽
+   * 可调整列宽，如果表格横向有缩放样式，需要传入 { xZoom: [缩放倍数] } 矫正缩放引起的计算误差
    */
-  columnResizable?: boolean;
+  columnResizable?: boolean | { xZoom: number };
   /**
    * 可调整列显示
    */

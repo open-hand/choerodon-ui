@@ -164,7 +164,10 @@ export interface Config extends DataSetConfig {
   tableRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
   tableHeaderRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
   tableFooterRowHeight?: 'auto' | number | ((props: { size: Size }) => 'auto' | number);
-  tableColumnResizable?: boolean;
+   /**
+   * 可调整列宽，如果表格横向有缩放样式，需要传入 { xZoom: [缩放倍数] } 矫正缩放引起的计算误差
+   */
+  tableColumnResizable?: boolean | { xZoom: number };
   tableColumnHideable?: boolean;
   performanceTableColumnHideable?: boolean;
   tableColumnTitleEditable?: boolean;

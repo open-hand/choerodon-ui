@@ -1538,9 +1538,21 @@ export default class TableStore {
       return false;
     }
     if ('columnResizable' in this.props) {
-      return this.props.columnResizable!;
+      return this.props.columnResizable !== false;
     }
     return this.getConfig('tableColumnResizable') !== false;
+  }
+
+  /**
+   * 自定义样式对表格的横向缩放倍数，用于矫正列宽拖拽的计算
+   */
+  get xZoom(): number {
+    const { columnResizable = this.getConfig('tableColumnResizable') } = this.props;
+    if (typeof columnResizable === 'boolean') {
+      return 1;
+    }
+    const { xZoom = 1 } = columnResizable || {};
+    return xZoom;
   }
 
   get columnHideable(): boolean {

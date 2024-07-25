@@ -83,7 +83,7 @@ const prefixCls = getConfig('prefixCls');
 | tableAlwaysShowRowBox | Table是否一直显示rowbox,开启后在其他模式下也会显示rowbox | boolean | false |
 | tableUseMouseBatchChoose | Table是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false || pagination | 默认 pagination 的属性 | TablePaginationConfig \| false | 详见[Pagination](/components-pro/pagination/#Pagination) |
 | tableEditorNextKeyEnterDown | Table是否开启可编辑行回车编辑下一行 | boolean | true |
-| tableColumnResizable | Default Table columnResizable | boolean | true |
+| tableColumnResizable | Default Table columnResizable; xZoom can be passed in to correct the calculation error caused by horizontal zoom | boolean \| { xZoom: number } | true |
 | tableColumnHideable | Default Table columnHideable | boolean | true |
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
