@@ -156,6 +156,8 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @observable tempAttachmentUUID?: string | undefined;
 
+  @observable uploadWithoutUuid?: boolean;
+
   tempRemovedAttachments?: AttachmentFile[];
 
   secretLevelDataSet?: DataSet;
@@ -320,27 +322,31 @@ export default class Attachment extends FormField<AttachmentProps> {
   fetchCount() {
     const { field } = this;
     const { viewMode } = this.props;
-    if (viewMode !== 'list' && isNil(this.count)) {
-      const value = this.getValue();
-      if (value) {
-        const { isPublic } = this;
-        if (field) {
-          field.fetchAttachmentCount(value, isPublic, this.record);
-        } else {
-          const { batchFetchCount } = this.getContextConfig('attachment');
-          if (batchFetchCount && !this.attachments) {
-            const { bucketName, bucketDirectory, storageCode } = this;
-            attachmentStore.fetchCountInBatch({
-              attachmentUUID: value,
-              bucketName,
-              bucketDirectory,
-              storageCode,
-              isPublic,
-            }).then(mobxAction((count) => {
-              this.observableProps.count = count || 0;
-            }));
+    if (viewMode !== 'list') {
+      if (isNil(this.count)) {
+        const value = this.getValue();
+        if (value) {
+          const { isPublic } = this;
+          if (field) {
+            field.fetchAttachmentCount(value, isPublic, this.record);
+          } else {
+            const { batchFetchCount } = this.getContextConfig('attachment');
+            if (batchFetchCount && !this.attachments) {
+              const { bucketName, bucketDirectory, storageCode } = this;
+              attachmentStore.fetchCountInBatch({
+                attachmentUUID: value,
+                bucketName,
+                bucketDirectory,
+                storageCode,
+                isPublic,
+              }).then(mobxAction((count) => {
+                this.observableProps.count = count || 0;
+              }));
+            }
           }
         }
+      } else if (this.field && !this.field.isValid(this.record)) {
+        this.field.checkValidity(this.record);
       }
     }
   }
@@ -414,6 +420,9 @@ export default class Attachment extends FormField<AttachmentProps> {
   async getAttachmentUUID(): Promise<string> {
     this.autoCreate();
     const oldAttachmentUUID = this.tempAttachmentUUID || this.getValue();
+    if (!oldAttachmentUUID) {
+      runInAction(() => this.uploadWithoutUuid = true);
+    }
     const attachmentUUID = oldAttachmentUUID || (await this.fetchAttachmentUUID());
     if (attachmentUUID !== oldAttachmentUUID) {
       runInAction(() => {
@@ -470,6 +479,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     try {
       await Promise.all(attachments.map((attachment) => this.upload(attachment, secretLevelHeadersInfo)));
     } finally {
+      runInAction(() => this.uploadWithoutUuid = false);
       this.changeOrder();
     }
   }
@@ -1040,6 +1050,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           record={this.record}
           buttons={mergeButtons}
           getPreviewUrl={getPreviewUrl}
+          fetchAttachmentsFlag={!this.uploadWithoutUuid}
         />
       );
     }

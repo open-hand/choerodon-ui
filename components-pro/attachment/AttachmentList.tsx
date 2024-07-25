@@ -40,6 +40,10 @@ export interface AttachmentListProps {
   record?: Record;
   buttons?: AttachmentButtons[];
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
+  /**
+   * 避免无 uuid 时，上传前通过接口获取更新 uuid 触发列表查询及后续的校验
+   */
+  fetchAttachmentsFlag: boolean;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -59,6 +63,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     sortable,
     readOnly,
     disabled,
+    fetchAttachmentsFlag,
     onFetchAttachments,
     onAttachmentsChange,
     limit,
@@ -90,7 +95,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     }
   }, [attachments, onOrderChange]);
   useEffect(() => {
-    if (attachmentUUID) {
+    if (attachmentUUID && fetchAttachmentsFlag) {
       const { current } = oldValues;
       if (!current || current.attachmentUUID !== attachmentUUID || current.record !== record) {
         if (attachments) {
@@ -100,7 +105,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
         onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
       }
     }
-  }, [onFetchAttachments, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, record]);
+  }, [onFetchAttachments, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, record, fetchAttachmentsFlag]);
 
   if (attachments) {
     const { length } = attachments;

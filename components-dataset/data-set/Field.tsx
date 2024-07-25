@@ -1390,8 +1390,11 @@ export default class Field {
     if (fetchList) {
       fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results: FileLike[]) => {
         this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
-        this.checkValidity(record);
-      }));
+      })).finally(() => {
+        if (this.isDirty(record)) {
+          this.checkValidity(record);
+        }
+      });
     }
   }
 
@@ -1406,7 +1409,10 @@ export default class Field {
         isPublic,
       }, this).then((count) => {
         this.setAttachmentCount(count, record);
-        this.checkValidity(record);
+      }).finally(() => {
+        if (this.isDirty(record)) {
+          this.checkValidity(record);
+        }
       });
     }
   }
