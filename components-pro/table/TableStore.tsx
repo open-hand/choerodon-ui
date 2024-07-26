@@ -3096,7 +3096,13 @@ export default class TableStore {
         const cValue = data[i][cField!];
         const record = this.currentData[maxRowIndex + k];
         const field = dataSet.fields.get(cField!);
-        if (cols[j].editor && field && !field.readOnly && !field.disabled) {
+        
+        let colEditor = cols[j].editor;
+        if (typeof colEditor === 'function') {
+          colEditor = colEditor(record, cField!);
+        }
+
+        if (colEditor && field && !field.readOnly && !field.disabled) {
           record.set(cField!, cValue);
         }
       }
