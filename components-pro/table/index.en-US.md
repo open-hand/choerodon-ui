@@ -65,7 +65,7 @@ subtitle: 表格
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click,  true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行  | boolean \| string | [globalConfig.tableHighLightRow](/components/configure#API) |
 | selectedHighLightRow | 勾选行高亮 | boolean | [globalConfig.tableSelectedHighLightRow](/components/configure#API) |
 | parityRow | 奇偶行 | boolean | [globalConfig.tableParityRow](/components/configure#API) |
-| columnResizable | 可调整列宽 | boolean | [globalConfig.tableColumnResizable](/components/configure#API) |
+| columnResizable | 可调整列宽, 可以传入 xZoom 矫正横向缩放引起的计算误差 | boolean \| { xZoom: number } | [globalConfig.tableColumnResizable](/components/configure#API) |
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnHideable](/components/configure#API) |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/components/configure#API) |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/components/configure#API) |

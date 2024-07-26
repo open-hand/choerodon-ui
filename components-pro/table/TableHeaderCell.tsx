@@ -161,9 +161,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const resize = useCallback((e): void => {
     const { current } = globalRef;
     const { resizeColumnGroup } = current;
+    const { xZoom } = tableStore;
     if (resizeColumnGroup) {
       const limit = current.resizeBoundary + minColumnWidth(resizeColumnGroup.column, tableStore);
-      let left = e.touches ? transformZoomData(e.touches[0].clientX) : transformZoomData(e.clientX);
+      let left = e.touches ? transformZoomData(e.touches[0].clientX) / xZoom : transformZoomData(e.clientX) / xZoom;
       if (left < limit) {
         left = limit;
       }
@@ -216,12 +217,12 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     tableStore.columnResizing = true;
     delete globalRef.current.resizePosition;
     setSplitLineHidden(false);
-    const { node: { element, tableBodyWrap }, tableColumnResizeTrigger } = tableStore;
+    const { node: { element, tableBodyWrap }, tableColumnResizeTrigger, xZoom } = tableStore;
     if (tableColumnResizeTrigger !== TableColumnResizeTriggerType.hover) {
       const left = Math.round(element.getBoundingClientRect().left);
-      globalRef.current.bodyLeft = border ? left + 1 : left;
+      globalRef.current.bodyLeft = (border ? left + 1 : left) / xZoom;
     }
-    setSplitLinePosition(transformZoomData(e.clientX));
+    setSplitLinePosition(transformZoomData(e.clientX) / xZoom);
     resizeEvent
       .setTarget(element.ownerDocument)
       .addEventListener('mousemove', resize)
@@ -310,8 +311,9 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     globalRef.current.resizeColumnGroup = group;
     const headerDom: Element | null = getHeaderNode();
     const node = headerDom && headerDom.querySelector(`[data-index="${group.key}"]`);
+    const { xZoom } = tableStore;
     if (node) {
-      globalRef.current.resizeBoundary = Math.round(node.getBoundingClientRect().left);
+      globalRef.current.resizeBoundary = Math.round(node.getBoundingClientRect().left / xZoom);
     }
   }, [globalRef, getHeaderNode]);
 
@@ -340,7 +342,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }, [currentColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
 
   const showSplitLine = useCallback((e, type) => {
-    const { columnResizing } = tableStore;
+    const { columnResizing, xZoom } = tableStore;
     if (columnResizing) return;
     setSplitLineHidden(false);
     const { node: { element } } = tableStore;
@@ -349,7 +351,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const width = Math.round(rect.width);
     const resizerLeft = Math.round(rect.left);
     const newLeft = resizerLeft + (type === 'pre' ? 0 : width);
-    globalRef.current.bodyLeft = border ? left + 1 : left;
+    globalRef.current.bodyLeft = (border ? left + 1 : left) / xZoom;
     setSplitLinePosition(newLeft);
   }, []);
 

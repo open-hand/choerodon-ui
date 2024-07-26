@@ -820,7 +820,7 @@ export default class Record {
         ...findBindTargetFields(field, fields, true, this),
         ...findMinOrMaxFields(field, fields, this),
       ].forEach((oneField) => {
-        if (oneField.get('type') !== FieldType.attachment) {
+        if (oneField.get('type') !== FieldType.attachment || (oneField.get('type') === FieldType.attachment && !value)) {
           return oneField.checkValidity(this);
         }
       });
