@@ -18,7 +18,7 @@ function returnDocument() {
 }
 
 const ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter',
-  'onMouseLeave', 'onFocus', 'onBlur', 'onContextMenu'];
+  'onMouseLeave', 'onFocus', 'onBlur', 'onContextMenu', 'onMouseOver'];
 
 class Trigger extends Component {
   static displayName = 'Trigger';
@@ -135,6 +135,15 @@ class Trigger extends Component {
     this.fireEvents('onMouseEnter', e);
     this.delaySetPopupVisible(true, mouseEnterDelay, mouseEnterDelay ? null : e);
   };
+
+  onMouseOver = (e) => {
+    const { popupVisible } = this.state;
+    const { mouseEnterDelay } = this.props;
+    this.fireEvents('onMouseOver', e);
+    if (!this.delayTimer && !popupVisible) {
+      this.delaySetPopupVisible(true, mouseEnterDelay, mouseEnterDelay ? null : e);
+    }
+  }
 
   onMouseMove = (e) => {
     this.fireEvents('onMouseMove', e);
@@ -527,11 +536,13 @@ class Trigger extends Component {
     }
     if (this.isMouseEnterToShow()) {
       newChildProps.onMouseEnter = this.onMouseEnter;
+      newChildProps.onMouseOver = this.onMouseOver;
       if (alignPoint) {
         newChildProps.onMouseMove = this.onMouseMove;
       }
     } else {
       newChildProps.onMouseEnter = this.createTwoChains('onMouseEnter');
+      newChildProps.onMouseOver = this.createTwoChains('onMouseOver');
     }
     if (this.isMouseLeaveToHide()) {
       newChildProps.onMouseLeave = this.onMouseLeave;

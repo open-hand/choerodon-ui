@@ -65,6 +65,8 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed an issue where errors were not cleared after reuploading files.
 - 🐞 `<pro>Attachment`: Fixed the issue that the validation information flickered during upload.
 - 🐞 `<pro>Button`: Fixed an issue where it could not be completely `hidden` via the hidden attribute.
+- 🐞 `<pro>Tooltip`: Fixed a style issue where arrows and content areas had gaps.
+- 🐞 `Popover`: Fixed an issue where the mouse entered from the upper level of the content area and the pop-up box was not displayed.
 
 ## 1.6.5
 
