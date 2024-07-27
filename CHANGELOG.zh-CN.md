@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon 属性。
+- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。

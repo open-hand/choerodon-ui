@@ -34,6 +34,7 @@ import Field, { FieldProps } from 'choerodon-ui/pro/lib/data-set/Field';
 import { LabelLayout, ShowValidation, LabelAlign, RequiredMarkAlign } from 'choerodon-ui/pro/lib/form/enum';
 import { SeparateSpacing, LabelWidth, FormProps } from 'choerodon-ui/pro/lib/form/interface';
 import { ShowHelp } from 'choerodon-ui/pro/lib/field/enum';
+import { ValueChangeAction } from 'choerodon-ui/pro/lib/text-field/enum';
 import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
@@ -310,6 +311,10 @@ export interface Config extends DataSetConfig {
    * 显示提示信息的方式
    */
   showHelp?: ShowHelp;
+  /**
+   * 显示提示信息的方式
+   */
+  valueChangeAction?: ValueChangeAction;
   /**
    * Tabs 墨条样式
    */

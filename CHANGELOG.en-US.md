@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon` property.
+- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon`,  `valueChangeAction` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.

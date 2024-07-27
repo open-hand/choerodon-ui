@@ -163,7 +163,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     clearButton: false,
     multiple: false,
     border: true,
-    valueChangeAction: ValueChangeAction.blur,
     waitType: WaitType.debounce,
   };
 
@@ -218,6 +217,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   /**
    * 是否显示长度信息
    */
+  @computed
+  get valueChangeAction(): ValueChangeAction | undefined {
+    if ('valueChangeAction' in this.props) {
+      return this.props.valueChangeAction;
+    }
+    return this.getContextConfig('valueChangeAction');
+  }
+
   @computed
   get showLengthInfo(): boolean | undefined {
     if ('showLengthInfo' in this.props) {
@@ -1622,7 +1629,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       type,
       target: { value },
     } = e;
-    const { valueChangeAction } = this.props;
+    const { valueChangeAction } = this;
     if (type === 'compositionend') {
       this.lock = false;
     }

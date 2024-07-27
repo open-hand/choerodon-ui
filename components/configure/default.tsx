@@ -19,6 +19,7 @@ import defaultFeedback from 'choerodon-ui/pro/lib/data-set/FeedBack';
 import confirm from 'choerodon-ui/pro/lib/modal/confirm';
 import { FieldFocusMode, Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { ModalButtonTrigger } from 'choerodon-ui/pro/lib/modal/interface';
+import { ValueChangeAction } from 'choerodon-ui/pro/lib/text-field/enum';
 import { Size } from '../_util/enum';
 import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook, TreeCheckboxPosition } from './index';
 import { Action } from '../trigger/enum';
@@ -174,6 +175,7 @@ const defaults = {
   tooltipTheme: defaultTooltipTheme,
   showValidation: ShowValidation.tooltip,
   showHelp: ShowHelp.newLine,
+  valueChangeAction: ValueChangeAction.blur,
   numberFieldKeyboard: true,
   colorPreset: false,
   feedback: defaultFeedback,
