@@ -1345,7 +1345,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       showValidationMessage: this.showValidationMessage,
       getKey: this.getValueKey,
       rangeSeparator: this.rangeSeparator,
-      inputBoxIsFocus: this.isFocus,
+      inputBoxIsFocus: this.isFocused,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;
     return values;
