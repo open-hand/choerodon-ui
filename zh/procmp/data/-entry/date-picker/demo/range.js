@@ -120,6 +120,16 @@ class App extends React.Component {
             placeholder="Choose Date"
           />
         </Col>
+        <Divider orientation="left">range 模式，弹窗组合显示：</Divider>
+        <Col span={24}>
+          <DatePicker
+            range
+            placeholder={['date', 'comboRangeMode']}
+            onChange={handleChange}
+            mode="date"
+            comboRangeMode
+          />
+        </Col>
       </Row>
     );
   }

@@ -59,6 +59,7 @@ title: API
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
+| components |  [TableComponents](#tablecomponents) | 覆盖默认的 table 元素 | 1.6.5 ｜
 
 ### Form methods
 
@@ -173,3 +174,11 @@ scrollLeft: (left: number) => void;
 | key      | React 需要的 key，建议设置 | string                      |
 | text     | 选择项显示的文字           | string\|React.ReactNode     |
 | onSelect | 选择项点击回调             | Function(changeableRowKeys) |
+
+### tablecomponents
+
+| 属性名称 | 类型  | 描述 |
+| -------- | ----- | ---- |
+| table |  ReactNode          | 覆盖表格组件 |
+| header | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }          | 覆盖表格 header 组件  |
+| body | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }         | 覆盖表格 body 组件 |

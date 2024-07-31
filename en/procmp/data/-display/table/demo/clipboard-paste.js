@@ -8,8 +8,7 @@ const App = () => {
     () =>
       new DataSet({
         primaryKey: 'userid',
-        queryUrl:
-          'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/sortUser',
+        queryUrl: 'https://hzero-test.open.hand-china.com/mock/sortUser',
         pageSize: 10,
         dataKey: 'rows',
         autoQuery: true,

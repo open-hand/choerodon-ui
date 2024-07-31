@@ -55,11 +55,12 @@ title: API
 | columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 | 1.4.3    |
 | customizable | boolean | 是否显示个性化设置入口按钮  |  | 1.4.3    |
 | customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： customizedSave customizedLoad | 1.4.3      |
-| rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  | 
+| rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  |
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
+| components |  [TableComponents](#tablecomponents) | 覆盖默认的 table 元素 |
 
 ### Form methods
 
@@ -176,3 +177,11 @@ scrollLeft: (left: number) => void;
 | key      | React 需要的 key，建议设置 | string                      |
 | text     | 选择项显示的文字           | string\|React.ReactNode     |
 | onSelect | 选择项点击回调             | Function(changeableRowKeys) |
+
+### tablecomponents
+
+| 属性名称 | 类型  | 描述 |
+| -------- | ----- | ---- |
+| table |  ReactNode          | 覆盖表格组件 |
+| header | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }          | 覆盖表格 header 组件  |
+| body | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }         | 覆盖表格 body 组件 |

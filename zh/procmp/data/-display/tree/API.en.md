@@ -4,8 +4,8 @@ title: API
 
 ### Tree props
 
-| Property            | Description                                                                                            | Type                                                                                      | Default  |
-| ------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | -------- |
+| Property            | Description                                                                                            | Type                                                                                      | Default  | Version |
+| ------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | -------- | -------- |
 | dataSet             | The data source binded to the tree.                                                                    | DataSet                                                                                   |          |
 | renderer            | Node render hooks, only works when binding data sources.                                               | ({ dataSet, record, text }) => ReactNode                                                  |          |
 | titleField          | The node text corresponds to the field of the data source and only works when binding the data source. | string                                                                                    |          |
@@ -48,6 +48,7 @@ title: API
 | onRightClick | Callback function for when the user right clicks a treeNode | function({event, node}) | - |
 | onSelect | Callback function for when the user clicks a treeNode | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |
 | treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (key should be unique across the whole array) | array\<{ key, title, children, \[disabled, selectable] }> | - |
+| checkboxPosition | checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | [全局配置](/en/procmp/configure/configure) treeCheckboxPosition | 1.6.5 |
 
 ### TreeNodeRenderer props
 

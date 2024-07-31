@@ -13,6 +13,7 @@ configure({
     defaultFileSize: 500 * 1024 * 1024,
     defaultChunkSize: 5 * 1024 * 1024,
     defaultChunkThreads: 3,
+    orderField: 'orderSeq',
     action: {
       url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
       headers: {
@@ -29,6 +30,7 @@ configure({
           url: file.fileUrl,
           creationDate: moment(file.creationDate).toDate(),
           status: 'done',
+          orderSeq: file.orderSeq,
         }));
       });
     },

@@ -97,7 +97,7 @@ class App extends React.Component {
                   return {
                     // url: `read api`,
                     url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                      'https://hzero-test.open.hand-china.com/mock/filterlist',
                     method: 'get',
                   };
                 case 'create':
@@ -115,8 +115,7 @@ class App extends React.Component {
                 case 'destroy':
                   return {
                     // url: `destroy api`,
-                    url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                    url: 'https://hzero-test.open.hand-china.com/mock/listDel',
                     data: data[0],
                     method: 'delete',
                   };

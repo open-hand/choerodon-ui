@@ -31,6 +31,9 @@ title: API
 | restoreDefault | &lt;个性化&gt;是否开启恢复默认  | boolean | true | 1.6.3 |
 | showMore | Display more tabs than the width of the container | boolean | false | 1.5.0-beta.0 |
 | flex | 是否柔性布局 | boolean |  | 1.5.4 |
+| renderTabBar | 替换 TabBar，用于二次封装标签头。DefaultTabBar 为组件库默认 TabBar 组件，props 为组件默认参数 | (props: TabBarProps, DefaultTabBar: React.ComponentType<TabBarProps>) => React.ReactElement |  | 1.6.5 |
+| showMorePopupClassName | showMore 下拉 popup 的自定义类名 | string |  | 1.6.5 |
+| showInvalidTips | 是否开启 DataSet 校验  | boolean | [全局配置](/en/procmp/configure/configure) tabsShowInvalidTips | 1.6.5 |
 
 ### Tabs.TabPane
 

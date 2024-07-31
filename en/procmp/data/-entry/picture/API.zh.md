@@ -16,7 +16,7 @@ title: API
 | downloadUrl | 预览时的下载路径 | string \| Function |  | 1.5.1 |
 | previewTarget | 预览方式，若设置则通过 a 标签来预览， 默认是弹窗预览 | string |  |  |
 | index | 序号, 配合[Picture.Provider](#pictureprovider)进行组预览 | number |  |  |
-| status | 状态 | 'empty' \| 'loaded' \| 'error' |  |  |
+| status | 状态 | 'empty' \| 'loaded' \| 'error' \| 'loading' |  |  |
 | objectFit | 填充方式, [ObjectFit](#objectfit) | ObjectFit | 'fill' |  |
 | objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |  |
 | sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#source) | Source[] |   |  |

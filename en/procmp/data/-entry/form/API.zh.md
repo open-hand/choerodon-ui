@@ -11,7 +11,7 @@ title: API
 | processParams          | Ajax 提交时的参数回调                                                                                                                 | (event) => object           |                           |    |
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
 | requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
-| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#响应式), 如果为auto，则根据内部label最大长度来对齐所有label | number\| 'auto' \| ('auto' \| number)[] \| object | 100 | |
+| labelWidth | 内部控件的标签宽度。如果为数组则分别对应每列的标签宽度。数组长度不够列数，以默认值补全, 响应式参考[Responsive](#响应式), 如果为auto，则根据内部label最大长度来对齐所有label。设置 minWidth 或 maxWidth 时，table 布局样式为 auto | number\| 'auto' \| ('auto' \| number)[] \| ({ minWidth?: number; maxWidth?: number }) \| object | [全局配置](/zh/procmp/configure/configure) labelWidth | |
 | labelAlign             | 标签文字对齐方式，只在 labelLayout 为 horizontal 时起作用，可选值：left \| center \| right，响应式参考[Responsive](#响应式) | string \| object            | right                     | |
 | labelLayout      | 标签位置，可选值 horizontal \| vertical \| placeholder \| float \| none，响应式参考[Responsive](#响应式) | string \| object  | horizontal     |  |
 | labelTooltip | 用 Tooltip 显示标签内容。可选值 'none'\|'always'\|'overflow' | string | 'none' | |
@@ -28,6 +28,7 @@ title: API
 | fieldHighlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |    |
 | showValidation | 校验信息提示方式 | tooltip \| newLine | | 1.4.4 |
 | autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
+| labelWordBreak | 设置标签是否换行显示 (仅支持 labelWidth 为固定宽度)  | boolean |  | 1.6.5 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -46,6 +47,7 @@ title: API
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
 | requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
 | hidden | 是否隐藏字段（依然会校验字段）| boolean | | 1.4.4 |
+| labelWordBreak | 设置标签是否换行显示 (仅支持 labelWidth 为固定宽度)  | boolean |  | 1.6.5 |
 
 #### Form.Item
 
@@ -58,6 +60,7 @@ title: API
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
 | requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
 | hidden | 是否隐藏字段（依然会校验字段）| boolean | | 1.4.4 |
+| labelWordBreak | 设置标签是否换行显示 (仅支持 labelWidth 为固定宽度)  | boolean |  | 1.6.5 |
 
 #### Form.ItemGroup
 
@@ -78,6 +81,7 @@ title: API
 | rowSpan | 表单下控件跨越的行数 | number | 1 |
 | colSpan | 表单下控件跨越的列数 | number | 1 |
 | newLine | 另起新行 | boolean |  |
+| labelWordBreak | 设置标签是否换行显示 (仅支持 labelWidth 为固定宽度)  | boolean |  | 1.6.5 |
 
 ### Form.FormVirtualGroup
 

@@ -145,7 +145,7 @@ const Table = () => {
                   return {
                     // url: `${HZERO_PLATFORM}/v1/${organizationId}/search-config?searchCode=${searchCode}`,
                     url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/filterlist',
+                      'https://hzero-test.open.hand-china.com/mock/filterlist',
                     method: 'get',
                   };
                 case 'create':
@@ -163,8 +163,7 @@ const Table = () => {
                 case 'destroy':
                   return {
                     // url: `/v1/${searchCode}/search-config/${data[0].searchId}`,
-                    url:
-                      'https://www.fastmock.site/mock/423302b318dd24f1712751d9bfc1cbbc/mock/listDel',
+                    url: 'https://hzero-test.open.hand-china.com/mock/listDel',
                     data: data[0],
                     method: 'delete',
                   };

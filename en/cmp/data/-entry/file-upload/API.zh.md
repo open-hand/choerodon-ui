@@ -4,12 +4,12 @@ title: API
 
 > 服务端上传接口实现可以参考 [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki)。
 
-| 参数                | 说明                                                                                                                                                                           | 类型                                                               | 默认值 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------ |
+| 参数                | 说明                                                                                                                                                                           | 类型                                                               | 默认值 | 版本 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------ | ------ |
 | accept              | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)                                                 | string                                                             | 无     |
 | action              | 必选参数, 上传的地址                                                                                                                                                           | string                                                             | 无     |
-| beforeUpload        | 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (file, fileList) => `boolean | Promise`                            | 无     |
-| beforeUploadFiles(1.5.6)        | 上传文件 List 之前的钩子，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (fileList) => `boolean | Promise`                            | 无     |
+| beforeUpload        | 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (file, fileList) => `boolean \| Promise`                            | 无     |
+| beforeUploadFiles(1.5.6)        | 上传文件 List 之前的钩子，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (fileList) => `boolean \| Promise`                            | 无     |
 | customRequest       | 通过覆盖默认的上传行为，可以自定义自己的上传实现                                                                                                                               | Function                                                           | 无     |
 | data                | 上传所需参数或返回上传参数的方法                                                                                                                                               | object\|function(file)                                             | 无     |
 | defaultFileList     | 默认已经上传的文件列表                                                                                                                                                         | object\[]                                                          | 无     |
@@ -25,7 +25,7 @@ title: API
 | withCredentials     | 上传请求时是否携带 cookie                                                                                                                                                      | boolean                                                            | false  |
 | onChange            | 上传文件改变时的状态，详见 [onChange](#onchange)                                                                                                                               | Function                                                           | 无     |
 | onPreview           | 点击文件链接或预览图标时的回调                                                                                                                                                 | Function(file)                                                     | 无     |
-| onRemove            | 点击移除文件时的回调，返回值为 false 时不移除。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时不移除。                                                     | Function(file): `boolean | Promise`                                | 无     |
+| onRemove            | 点击移除文件时的回调，返回值为 false 时不移除。支持返回一个 Promise 对象，Promise 对象 resolve(false) 或 reject 时不移除。                                                     | Function(file): `boolean \| Promise`                                | 无     |
 | onSuccess           | 上传成功事件                                                                                                                                                                   | Function(response, file)                                           | 无     |
 | onProgress          | 上传进度中事件                                                                                                                                                                 | Function({ percent }, file)                                        | 无     |
 | onError             | 上传失败事件                                                                                                                                                                   | Function(error, response, file)                                    | 无     |
@@ -36,6 +36,7 @@ title: API
 | onReUpload | 文件重新上传的实现   | (file: UploadFile) => void \| boolean |  |
 | renderIcon | 文件列表中渲染图标   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
+| pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  | 1.6.5 |
 
 
 ### ShowUploadListInterface
