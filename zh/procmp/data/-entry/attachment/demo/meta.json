@@ -138,6 +138,21 @@
       "screenshot": "",
       "height": 200,
       "category": "pro"
+    },
+    {
+      "filename": "temp-remove.js",
+      "title": {
+        "zh": "临时删除",
+        "en": "Temporarily Remove"
+      },
+      "description": {
+        "zh": "设置 removeImmediately 属性为 false 则不会立即删除附件。\n可通过实例方法 remove 和 reset 进行删除或还原。\n",
+        "en": "Setting the Removim Medili property to Fars does not immediately delete the attachment.\nYou can delete or restore via the instance methods remove and reset.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 200,
+      "category": "pro"
     }
   ]
 }

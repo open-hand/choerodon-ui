@@ -1,0 +1,23 @@
+{
+  "title": {
+    "zh": "中文分类",
+    "en": "Category"
+  },
+  "demos": [
+    {
+      "filename": "basic.js",
+      "title": {
+        "zh": "多视图切换",
+        "en": "Multiple view"
+      },
+      "description": {
+        "zh": "基于表格默认视图，结合后端接口实现多视图切换查看。\n",
+        "en": "Multiple view switching.\n"
+      },
+      "order": 0,
+      "screenshot": "",
+      "height": 650,
+      "category": "pro"
+    }
+  ]
+}

@@ -4,8 +4,8 @@ title: API
 
 ### Tree props
 
-| 参数                | 说明                                                      | 类型                                                                                      | 默认值   |
-| ------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------- |
+| 参数                | 说明                                                      | 类型                                                                                      | 默认值   | 版本 |
+| ------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------- | -------- |
 | dataSet             | 绑定的数据源                                              | DataSet                                                                                   |          |
 | renderer            | 节点 title 渲染钩子，只在绑定数据源时起效                 | ({ dataSet, record, text }) => ReactNode                                                  |          |
 | titleField          | 节点文字对应数据源的字段，只在绑定数据源时起效              | string                                                                                    |        |
@@ -48,6 +48,7 @@ title: API
 | onRightClick | 响应右键点击 | function({event, node}) | - |
 | onSelect | 点击树节点触发 | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |
 | treeData | treeNodes 数据，如果设置则不需要手动构造 TreeNode 节点（key 在整个树范围内唯一） | array\<{key, title, children, \[disabled, selectable]}> | - |
+| checkboxPosition | checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | [全局配置](/zh/procmp/configure/configure) treeCheckboxPosition | 1.6.5 |
 
 ### TreeNodeRenderer Props
 

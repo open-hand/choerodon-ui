@@ -111,6 +111,7 @@ const App = () => {
           >
             <Option value={fixedLabelWidth}>固定宽度[{fixedLabelWidth}]</Option>
             <Option value="auto">自动宽度auto</Option>
+            <Option value="minWidth&maxWidth">范围宽度</Option>
           </SelectBox>
         )}
       </Form>
@@ -118,6 +119,8 @@ const App = () => {
         labelWidth={
           labelWidth === 'auto'
             ? labelWidth
+            : labelWidth === 'minWidth&maxWidth'
+            ? { minWidth: 100, maxWidth: 150 }
             : labelWidth.split(',').map((width) => Number(width))
         }
         labelLayout={labelLayout}
@@ -154,6 +157,7 @@ const App = () => {
           step={1}
           required
           addonAfter="周岁"
+          labelWordBreak
         />
         <Password
           label="确认密码"

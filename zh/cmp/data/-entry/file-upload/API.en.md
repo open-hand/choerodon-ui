@@ -4,12 +4,12 @@ title: API
 
 > You can consult [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki) about how to implement server side upload interface.
 
-| Property            | Description                                                                                                                                                                          | Type                                                               | Default |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------- |
+| Property            | Description                                                                                                                                                                          | Type                                                               | Default | Version |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------- | ------- |
 | accept              | File types that can be accepted. See [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)                                           | string                                                             | -       |
 | action              | Required. Uploading URL                                                                                                                                                              | string                                                             | -       |
-| beforeUpload        | Hook function which will be executed before uploading. Uploading will be stopped with `false` or a rejected Promise returned. **Warning：this function is not supported in IE9**。   | (file, fileList) => `boolean | Promise`                            | -       |
-| beforeUploadFiles(1.5.6)        | 上传文件 List 之前的钩子，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (fileList) => `boolean | Promise`                            | 无     |
+| beforeUpload        | Hook function which will be executed before uploading. Uploading will be stopped with `false` or a rejected Promise returned. **Warning：this function is not supported in IE9**。   | (file, fileList) => `boolean \| Promise`                            | -       |
+| beforeUploadFiles(1.5.6)        | 上传文件 List 之前的钩子，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (fileList) => `boolean \| Promise`                            | 无     |
 | customRequest       | override for the default xhr behavior allowing for additional customization and ability to implement your own XMLHttpRequest                                                         | Function                                                           | -       |
 | data                | Uploading params or function which can return uploading params.                                                                                                                      | object\|function(file)                                             | -       |
 | defaultFileList     | Default list of files that have been uploaded.                                                                                                                                       | object\[]                                                          | -       |
@@ -25,7 +25,7 @@ title: API
 | withCredentials     | ajax upload with cookie sent                                                                                                                                                         | boolean                                                            | false   |
 | onChange            | A callback function, can be executed when uploading state is changing. See [onChange](#onchange)                                                                                     | Function                                                           | -       |
 | onPreview           | A callback function, will be executed when file link or preview icon is clicked.                                                                                                     | Function(file)                                                     | -       |
-| onRemove            | A callback function, will be executed when removing file button is clicked, remove event will be prevented when return value is `false` or a Promise which resolve(false) or reject. | Function(file): `boolean | Promise`                                | -       |
+| onRemove            | A callback function, will be executed when removing file button is clicked, remove event will be prevented when return value is `false` or a Promise which resolve(false) or reject. | Function(file): `boolean \| Promise`                                | -       |
 | onSuccess           | A callback function, will be executed when upload success.                                                                                                                           | Function(response, file)                                           | 无      |
 | onProgress          | A callback function, will be executed when upload in progress.                                                                                                                       | Function({ percent }, file)                                        | 无      |
 | onError             | A callback function, will be executed when upload error.                                                                                                                             | Function(error, response, file)                                    | 无      |
@@ -36,6 +36,7 @@ title: API
 | onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
+| pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  | 1.6.5 |
 
 
 ### ShowUploadListInterface

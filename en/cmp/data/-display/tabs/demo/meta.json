@@ -243,6 +243,20 @@
       "order": 17,
       "height": 280,
       "screenshot": ""
+    },
+    {
+      "filename": "draggable-tabs.js",
+      "title": {
+        "zh": "可拖拽标签",
+        "en": "Draggable Tabs"
+      },
+      "description": {
+        "zh": "使用 renderTabBar 属性 和 dnd-kit 实现标签可拖拽。\n",
+        "en": "Use renderTabBar property and dnd-kit to make tabs draggable.\n"
+      },
+      "order": 18,
+      "height": 280,
+      "screenshot": ""
     }
   ]
 }

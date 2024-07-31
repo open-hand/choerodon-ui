@@ -71,7 +71,7 @@
         "en": "Custom inline"
       },
       "description": {
-        "zh": "通过 editor 自定义控制行内编辑。\n",
+        "zh": "自定义行内编辑，可仅提交当前行数据。通过 editor 自定义控制行内编辑。\n",
         "en": "Custom inline.\n"
       },
       "order": 4,

@@ -12,7 +12,7 @@ title: API
 | notFoundContent          | 当下拉列表为空时显示的内容                                                                                                                                                  | ReactNode                                                          |         |   |
 | pagingOptionContent | 渲染分页 option | ReactNode | | 1.4.4 |
 | onOption                 | 设置选项属性，如 disabled                                                                                                                                                   | ({ dataSet, record })) => object \| ({ options, item })) => object |         |   |
-| menuMode | Single box pop-up form switch| single \| multiple | |  |
+| menuMode | 单弹框属性 | single \| multiple | |  |
 | onChoose | 选择一个值的时候触发| (value,record) => void | |   |
 | onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | |    |
 | changeOnSelect | 所选既所得 | boolean | | |
