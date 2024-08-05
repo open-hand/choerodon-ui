@@ -126,10 +126,11 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
-    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) {
+    if ((key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) && !event.shiftKey) {
       if (rangeBorder) {
         rangeBorder.style.display = 'none';
       }
+      tableStore.shiftKey = false;
       tableStore.startChooseCell = null;
       tableStore.endChooseCell = null;
       tableStore.clearArrangeValue();
@@ -291,6 +292,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   }), [dragCorner]);
 
   const isChoose = useMemo(() => {
+    if (!startChooseCell) return;
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
     if (startChooseCell && startChooseCell.colIndex === colIndex && startChooseCell.rowIndex === rowIndex) {
       return true;

@@ -104,12 +104,14 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
       {clipboard &&
         [
           <div key="rangBorder" ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={!!tableStore.currentEditorName}>
-            <span
-              className={`${prefixCls}-range-border-corner`}
-              onMouseDown={handleCornerMouseDown}
-            />
+            {clipboard.paste &&
+              <span
+                className={`${prefixCls}-range-border-corner`}
+                onMouseDown={handleCornerMouseDown}
+              />
+            }
           </div>,
-          <div key="expandBorder" ref={getExpandBodyRef} className={`${prefixCls}-expand-border`} />,
+          clipboard.paste && <div key="expandBorder" ref={getExpandBodyRef} className={`${prefixCls}-expand-border`} />,
         ]
       }
       {editors}

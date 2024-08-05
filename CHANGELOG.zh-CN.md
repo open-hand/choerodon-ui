@@ -49,6 +49,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复单独使用 DynamicFilterBar 组件时，查询字段显示不正确的问题。
 - 🐞 `<pro>Table`: 修复非异步树使用 treeAsync 报错的问题。
 - 🐞 `<pro>Table`: 修复双向复制粘贴第二页数据会新增一行的问题。
+- 🐞 `<pro>Table`: 修复双向复制在虚拟滚动下选框显示异常的问题。
 - 🐞 `<pro>Table`: 修复双向复制下拉批量赋值数量不对的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 类型未携带查询参数的问题。
 - 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
