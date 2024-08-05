@@ -193,6 +193,7 @@ export default class LovView extends Component<LovViewProps> {
         if (result !== false) {
           this.closeModal(record);
         }
+        return result;
       });
     }
     if (beforeSelect !== false) {
