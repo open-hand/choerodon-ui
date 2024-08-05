@@ -61,6 +61,7 @@ timeline: true
 - 🐞 `<pro>TreeSelect`: Fixed an issue where the search was invalid when setting the `searchFieldInPopup` property.
 - 🐞 `<pro>Lov`: Fixed an issue where the `reset dataSet` could not be selected again after a record was selected in `popup` mode.
 - 🐞 `<pro>Lov`: Fixed an issue where `modalProps.afterClose` would be executed before the value was selected.
+- 🐞 `<pro>Lov`: Fixed an issue where `onBeforeSelect` was invalid.
 - 🐞 `<pro>TextArea`: Fixed an issue where scroll bars did not appear when text exceeded the input field height when setting `autoSize` property.
 - 🐞 `<pro>Typography`: Fixed the form float layout issue.
 - 🐞 `<pro>DataSet.Field`: Fixed the issue that setting `lovPara` in `dynamicProps` or `computedProps` would cause the `searchable` to be invalidated.
