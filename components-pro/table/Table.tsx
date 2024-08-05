@@ -1563,7 +1563,7 @@ export default class Table extends DataSetComponent<TableProps> {
           if (editorRowIndex >= totalCount) {
             this.dataSet.create({}, editorRowIndex + 1);
           }
-          const cols = rows[i].split('\t');
+          const cols = rows[i].split('\t').filter(Boolean);
 
           for (let j = 0; j < cols.length; j++) {
             let text: boolean | string | object | number = cols[j];
@@ -2354,9 +2354,17 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   handleBodyScroll(e: React.SyntheticEvent) {
     const { currentTarget } = e;
+    const { tableStore } = this;
     const handle = () => {
       this.handleBodyScrollTop(e, currentTarget);
       this.handleBodyScrollLeft(e, currentTarget);
+      if (tableStore.virtual && this.rangeBorder && tableStore.startChooseCell && tableStore.endChooseCell) {
+        this.rangeBorder.style.display = 'none';
+        runInAction(() => {
+          tableStore.startChooseCell = null;
+          tableStore.endChooseCell = null;
+        })
+      }
     };
     if (isStickySupport()) {
       handle();
