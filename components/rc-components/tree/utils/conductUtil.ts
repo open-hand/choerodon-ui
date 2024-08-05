@@ -27,9 +27,10 @@ function fillConductCheck(
   levelEntities: Map<number, Set<DataEntity>>,
   maxLevel: number,
   syntheticGetCheckDisabled: GetCheckDisabled<DataNode>,
+  tempHalfCheckedKeys?: Key[],
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
-  const halfCheckedKeys = new Set<Key>();
+  const halfCheckedKeys = new Set<Key>(tempHalfCheckedKeys);
 
   // Add checked keys top to bottom
   for (let level = 0; level <= maxLevel; level += 1) {
@@ -80,7 +81,7 @@ function fillConductCheck(
           }
         });
 
-      if (allChecked) {
+      if (allChecked && (!tempHalfCheckedKeys || !tempHalfCheckedKeys.includes(parent.key))) {
         checkedKeys.add(parent.key);
       }
       if (partialChecked) {
@@ -181,12 +182,14 @@ function cleanConductCheck(
  * @param keyList current key list
  * @param keyEntities key - dataEntity map
  * @param mode `fill` to fill missing key, `clean` to remove useless key
+ * @param tempHalfCheckedKeys 初始化时半选中节点, 优先级最高
  */
 export function conductCheck(
   keyList: Key[],
   checked: true | { checked: false; halfCheckedKeys: Key[] },
   keyEntities: Record<Key, DataEntity>,
   getCheckDisabled?: GetCheckDisabled<DataNode>,
+  tempHalfCheckedKeys?: Key[],
 ): ConductReturnType {
   const warningMissKeys: Key[] = [];
 
@@ -237,7 +240,7 @@ export function conductCheck(
 
   let result: ConductReturnType;
   if (checked === true) {
-    result = fillConductCheck(keys, levelEntities, maxLevel, syntheticGetCheckDisabled);
+    result = fillConductCheck(keys, levelEntities, maxLevel, syntheticGetCheckDisabled, tempHalfCheckedKeys);
   } else {
     result = cleanConductCheck(
       keys,

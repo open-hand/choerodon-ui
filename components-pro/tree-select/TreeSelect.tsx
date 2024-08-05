@@ -320,6 +320,8 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       searchText: text,
       checkStrictly,
       optionsFilter,
+      idField,
+      searchable,
       props: {
         dropdownMenuStyle, optionRenderer = defaultRenderer,
         treeDefaultExpandAll, treeDefaultExpandedKeys, treeCheckable,
@@ -330,6 +332,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
      * fixed when ie the scroll width would cover the item width
      */
     const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? { padding: '.08rem' } : {};
+    const filterText = isArrayLike(text) ? text[0] : text;
     const treeData = getTreeNodes(
       options,
       this.treeData,
@@ -339,8 +342,26 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       textField,
       optionsFilter,
       this.matchRecordBySearch,
-      isArrayLike(text) ? text[0] : text,
+      filterText,
     );
+    const halfChecked: Key[] = [];
+    if (!checkStrictly && treeCheckable && searchable && filterText && selectedKeys.length > 0) {
+      selectedKeys.forEach(key => {
+        const record = options.find(r => String(r.get(idField)) === key);
+        if (record && record.parent && record.parent.children) {
+          const parentChildren = record.parent.children;
+          const parentNoCheck = parentChildren.some(r =>
+            !selectedKeys.includes(String(r.get(idField))) &&
+            !recordIsDisabled(r) &&
+            (!optionsFilter || optionsFilter(r, parentChildren.indexOf(r), parentChildren)));
+          if (parentNoCheck) {
+            halfChecked.push(String(record.parent.get(idField)));
+          }
+        }
+      });
+    }
+    const checkedKeys = halfChecked.length > 0 ? { checked: selectedKeys, halfChecked } : selectedKeys;
+    const isAfterFilter = !!(!checkStrictly && searchable && filterText);
     if (!treeData || !treeData.length) {
       return (
         <div className={menuPrefixCls}>
@@ -380,12 +401,13 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         defaultExpandAll={treeDefaultExpandAll}
         defaultExpandedKeys={treeDefaultExpandedKeys}
         selectedKeys={selectedKeys}
-        checkedKeys={selectedKeys}
+        checkedKeys={checkedKeys}
         checkable={treeCheckable}
         className={menuPrefixCls}
         multiple={multiple}
         loadData={async ? this.handleLoadData : loadData}
         checkStrictly={checkStrictly}
+        isAfterFilter={isAfterFilter}
         {...props}
         {...menuProps}
       />

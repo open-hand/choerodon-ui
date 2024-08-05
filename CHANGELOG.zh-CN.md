@@ -42,6 +42,7 @@ timeline: true
 - 💄 `<pro>Select`: 优化分组的 label 可以设置 ReactNode 类型。
 - 💄 `<pro>NumberField`: 优化点击步距按钮时，值的防抖效果。
 - 💄 `<pro>Table`: 扩展 columnResizable 属性可传入横向缩放倍数，矫正缩放引起的计算误差。
+- 💄 `<pro>TreeSelect`: 优化在多选情况下，筛选且勾选子节点后父级勾选框的样式。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。

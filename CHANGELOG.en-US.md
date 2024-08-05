@@ -42,6 +42,7 @@ timeline: true
 - 💄 `<pro>Select`: The `label` of the optimized grouping can be set to the `ReactNode` type.
 - 💄 `<pro>NumberField`: Optimize the anti-shake effect of the value when the step button is clicked.
 - 💄 `<pro>Table`: Extending the `columnResizable` property can pass in a horizontal scaling multiplier to correct for calculation errors caused by scaling.
+- 💄 `<pro>TreeSelect`: Optimize the style of parent checkboxes after filtering and checking child nodes in multiple selection cases.
 - 🐞 `<pro>Board` : Fixed column merge scene card field not rendering.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.

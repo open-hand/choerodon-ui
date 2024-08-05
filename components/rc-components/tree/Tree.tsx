@@ -176,6 +176,10 @@ export interface TreeProps {
   direction?: Direction;
   ripple?: boolean;
   checkboxPosition?: 'default' | 'left';
+  /**
+   * 节点有进行筛选, 结合 checkedKeys 用于处理勾选框显示（内部使用）
+   */
+  isAfterFilter?: boolean;
 }
 
 interface TreeState {
@@ -392,7 +396,10 @@ class Tree extends React.Component<TreeProps, TreeState> {
       if (checkedKeyEntity) {
         let { checkedKeys = [], halfCheckedKeys = [] } = checkedKeyEntity;
 
-        if (!props.checkStrictly) {
+        if (props.isAfterFilter && !props.checkStrictly) {
+          const conductKeys = conductCheck(checkedKeys, true, keyEntities, undefined, halfCheckedKeys);
+          ({ checkedKeys, halfCheckedKeys } = conductKeys);
+        } else if (!props.checkStrictly) {
           const conductKeys = conductCheck(checkedKeys, true, keyEntities);
           ({ checkedKeys, halfCheckedKeys } = conductKeys);
         }
