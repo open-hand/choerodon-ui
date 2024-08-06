@@ -99,6 +99,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     isRenderRange,
     blankVirtualCell,
     virtualColumnRange: { left, center, right },
+    dragUpdateState,
   } = tableStore;
   const { id, key: rowKey } = record;
   const mounted = useRef<boolean>(false);
@@ -460,6 +461,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     }
   }, [isCurrent, focusRow]);
 
+  const isDragOver = isTree && dragUpdateState && dragUpdateState.combine &&
+    dragUpdateState.combine.draggableId === String(record.key);
+
   const rowPrefixCls = `${prefixCls}-row`;
   const classString = classNames(
     rowPrefixCls,
@@ -472,6 +476,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       [`${rowPrefixCls}-mouse-batch-choose`]: mouseBatchChooseState && record.selectable && (tableStore.mouseBatchChooseIdList || []).includes(id),
       [`${rowPrefixCls}-expanded`]: expandable && isExpanded,
       [`${rowPrefixCls}-has-next`]: metaData && metaData.next,
+      [`${rowPrefixCls}-drag-over`]: isDragOver,
     },
     className, // 增加可以自定义类名满足拖拽功能
     rowExternalProps.className,

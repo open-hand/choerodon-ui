@@ -886,6 +886,20 @@
     }
   }
 
+  &-row-drag-over,
+  &-parity-row &-row-drag-over:nth-of-type(even) {
+    &,
+    & + .@{table-prefix-cls}-expanded-row {
+      & > .@{table-prefix-cls}-cell {
+        background-color: @table-row-drag-over-bg !important;
+
+        &-cell-inner-editable&-cell-inner-disabled {
+          background: @table-row-drag-over-inner-disabled-bg;
+        }
+      }
+    }
+  }
+
   &-row-group {
     display: table-row;
 
