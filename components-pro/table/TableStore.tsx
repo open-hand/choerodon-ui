@@ -1,6 +1,7 @@
 import React, { Children, CSSProperties, isValidElement, Key, ReactNode } from 'react';
 import { action, computed, get, IReactionDisposer, observable, ObservableMap, reaction, runInAction, set } from 'mobx';
 import classNames from 'classnames';
+import { DragUpdate } from 'react-beautiful-dnd';
 import sortBy from 'lodash/sortBy';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
@@ -1056,6 +1057,8 @@ export default class TableStore {
   @observable batchExpandRowNumber: number;
 
   @observable selectedDragRows: Record[];
+
+  @observable dragUpdateState?: DragUpdate;
 
   get styleHeight(): string | number | undefined {
     const { autoHeight, props: { style }, parentPaddingTop } = this;

@@ -26,6 +26,7 @@ import {
   DroppableStateSnapshot,
   DropResult,
   ResponderProvided,
+  DragUpdate,
 } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';
 import warning from 'choerodon-ui/lib/_util/warning';
@@ -2171,6 +2172,18 @@ export default class Table extends DataSetComponent<TableProps> {
 
   @autobind
   @action
+  handleDragUpdate(initial: DragUpdate, provided: ResponderProvided): void {
+    if (this.tableStore.isTree) {
+      this.tableStore.dragUpdateState = initial;
+    }
+    const { dragDropContextProps } = this.props;
+    if (dragDropContextProps && dragDropContextProps.onDragUpdate) {
+      dragDropContextProps.onDragUpdate(initial, provided);
+    }
+  }
+
+  @autobind
+  @action
   handleDragStart(initial: DragStart, provided: ResponderProvided): void {
     const { dragDropContextProps } = this.props;
     const { rowMetaData, isTree, currentEditorName } = this.tableStore;
@@ -2192,6 +2205,9 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   @action
   handleDragEnd(resultDrag: DropResult, provided: ResponderProvided) {
+    if (this.tableStore.dragUpdateState) {
+      this.tableStore.dragUpdateState = undefined;
+    }
     const { dataSet, rowMetaData, isTree, showRemovedRow, clipboard, rowDraggable, selectedDragRows } = this.tableStore;
     const { parentField, idField, childrenField } = dataSet.props;
     const { onDragEnd, onDragEndBefore, dragDropContextProps, multiDragSelectMode, rowDragRender } = this.props;
@@ -2480,6 +2496,7 @@ export default class Table extends DataSetComponent<TableProps> {
         <DragDropContext
           {...dragDropContextProps}
           onDragStart={this.handleDragStart}
+          onDragUpdate={this.handleDragUpdate}
           onDragEnd={this.handleDragEnd}
           key='drag-drop-context'
         >
