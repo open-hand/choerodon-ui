@@ -60,17 +60,20 @@
   // Firefox
   &::-moz-placeholder {
     color: @color;
+    -webkit-text-fill-color: @color;
     text-align: left;
     opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
   }
   // Internet Explorer 10+
   &:-ms-input-placeholder {
     color: @color;
+    -webkit-text-fill-color: @color;
     text-align: left;
   }
   // Safari and Chrome
   &::-webkit-input-placeholder {
     color: @color;
+    -webkit-text-fill-color: @color;
     text-align: left;
   }
 }
@@ -610,6 +613,7 @@
   &-disabled label:hover &,
   &:disabled {
     .disabled;
+    .placeholder(@input-placeholder-disabled-color);
   }
 
   &-disabled &-prefix,

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import map from 'lodash/map';
@@ -13,8 +13,8 @@ import { $l } from '../../../locale-context';
 import Button from '../../../button';
 import { ButtonColor } from '../../../button/enum';
 import Record from '../../../data-set/Record';
-import { RecordStatus} from '../../../data-set/enum';
-import { SELECTFIELDS } from '../TableComboBar';
+import { RecordStatus } from '../../../data-set/enum';
+import { SELECTFIELDS, SEARCHTEXT } from '../TableComboBar';
 import { isEqualDynamicProps, parseValue, stringifyValue, isSelect } from '../TableDynamicFilterBar';
 import Store from './QuickFilterMenuContext';
 import { TableCustomized } from '../../Table';
@@ -193,6 +193,7 @@ const QuickFilterButton = function QuickFilterButton() {
         }
       }
     }
+    dataSet.setState(SEARCHTEXT, '');
     onReset();
     onStatusChange(RecordStatus.sync);
   };
@@ -246,7 +247,7 @@ const QuickFilterButton = function QuickFilterButton() {
       });
       const data = [...conditionDataSet.toJSONData(), ...putData];
       const customizedColumns = tableStore && tableStore.customized && tableStore.customized.columns;
-      filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns)});
+      filterSaveCallback({ personalFilter: stringifyValue(data), personalColumn: stringifyValue(customizedColumns) });
     } else {
       dataSet.query();
     }

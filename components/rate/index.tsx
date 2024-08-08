@@ -16,6 +16,8 @@ export interface RateProps {
   character?: ReactNode;
   className?: string;
   style?: CSSProperties;
+  checkedColor?: string;
+  unCheckedColor?: string;
 }
 
 export default class Rate extends Component<RateProps, any> {
