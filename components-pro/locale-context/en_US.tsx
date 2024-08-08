@@ -266,6 +266,7 @@ const locale: Locale = {
   Lov: {
     choose: 'Choose',
     selection_tips: '{count} data selected',
+    non_conformity_warning: 'The value set does not meet the requirements of the read-only display value set specification, you can contact the system administrator to deal with it!',
   },
   Transfer: {
     items: 'items',

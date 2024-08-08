@@ -1,4 +1,4 @@
-import React, { Component, Key } from 'react';
+import React, { Component, Key, ReactNode } from 'react';
 import classNames from 'classnames';
 import { action, toJS } from 'mobx';
 import isPromise from 'is-promise';
@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import Alert from 'choerodon-ui/lib/alert';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import Table, { onColumnResizeProps, TableProps, TableQueryBarHookCustomProps } from '../table/Table';
@@ -23,6 +24,7 @@ import { FormContextValue } from '../form/FormContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import Picture from '../picture';
 import ObserverNumberField from '../number-field';
+import { $l } from '../locale-context';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -41,6 +43,7 @@ export interface LovViewProps {
   viewRenderer?: ViewRenderer;
   showSelectedInView?: boolean;
   getSelectionProps?: () => SelectionProps,
+  showDetailWhenReadonly?: boolean;
 }
 
 export default class LovView extends Component<LovViewProps> {
@@ -267,6 +270,8 @@ export default class LovView extends Component<LovViewProps> {
       viewMode,
       context,
       showSelectedInView,
+      showDetailWhenReadonly,
+      values,
     } = this.props;
     const { getConfig } = context;
     const columns = this.getColumns();
@@ -346,11 +351,30 @@ export default class LovView extends Component<LovViewProps> {
     if ((modal || drawer) && showSelectedInView) {
       lovTableProps.showSelectionTips = false;
     }
+    let warningNode: ReactNode;
+    if (showDetailWhenReadonly) {
+      lovTableProps.queryBar = TableQueryBarType.none;
+      lovTableProps.selectionMode = SelectionMode.none;
+      if (values.length !== dataSet.length) {
+        lovTableProps.filter = (() => false);
+        if (values.length) {
+          warningNode = (
+            <Alert
+              style={{ marginBottom: '10px' }}
+              message={$l('Lov', 'non_conformity_warning')}
+              type="warning"
+              showIcon
+            />
+          );
+        }
+      }
+    }
     this.selectionMode = lovTableProps.selectionMode;
     return (
       <>
+        {warningNode}
         <Table {...lovTableProps} />
-        {modal && this.renderSelectionList()}
+        {!showDetailWhenReadonly && modal && this.renderSelectionList()}
       </>
     );
   }

@@ -108,6 +108,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   showSelectedInView?: boolean;
   selectionProps?: SelectionProps;
   popupSearchMode?: PopupSearchMode;
+  showDetailWhenReadonly?: boolean;
 }
 
 @observer
@@ -139,8 +140,7 @@ export default class Lov extends Select<LovProps> {
     if (isString(searchMatcher)) {
       return searchMatcher;
     }
-    const { viewMode } = this.observableProps;
-    const { textField } = this;
+    const { textField, viewMode } = this;
     if (viewMode === TriggerViewMode.popup) {
       const { options: { queryDataSet } } = this;
       if (queryDataSet) {
@@ -177,7 +177,7 @@ export default class Lov extends Select<LovProps> {
 
   get popup(): boolean {
     const { popupSearchMode } = this.props;
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup && popupSearchMode === PopupSearchMode.single) {
       return this.modal || (this.isSearchFieldInPopup() && !this.searchText) ? false : this.statePopup;
     }
@@ -188,9 +188,12 @@ export default class Lov extends Select<LovProps> {
    * 点击查询仅存在一条数据时自动选中, 树形数据和 Button 模式禁用
    */
   get autoSelectSingle(): boolean | undefined {
+    if (this.showDetailWhenReadonly) {
+      return false;
+    }
     const { treeFlag } = this.getConfig() || {};
     const { mode: tableMode } = this.getTableProps();
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     const { mode } = this.props;
     if (viewMode === TriggerViewMode.popup || mode === ViewMode.button || treeFlag === 'Y' || tableMode === TableMode.tree) {
       return false;
@@ -229,14 +232,29 @@ export default class Lov extends Select<LovProps> {
     }
     const lovShowSelectedInView = this.getContextConfig('lovShowSelectedInView');
     if (isFunction(lovShowSelectedInView)) {
-      return lovShowSelectedInView(this.props.viewMode as LovViewTarget);
+      return lovShowSelectedInView(this.viewMode as LovViewTarget);
     }
     return lovShowSelectedInView;
   }
 
+  get showDetailWhenReadonly(): boolean {
+    const { readOnly, disabled, props: { showDetailWhenReadonly } } = this;
+    return !!(showDetailWhenReadonly && (readOnly || disabled));
+  }
+
+  @computed
+  get viewMode(): TriggerViewMode {
+    const { viewMode } = this.observableProps;
+    const { showDetailWhenReadonly } = this;
+    if (viewMode === TriggerViewMode.popup && showDetailWhenReadonly) {
+      return TriggerViewMode.modal;
+    }
+    return viewMode;
+  }
+
   getSearchFieldProps(): TextFieldProps {
     const searchFieldProps = super.getSearchFieldProps();
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup) {
       return {
         multiple: true,
@@ -249,7 +267,7 @@ export default class Lov extends Select<LovProps> {
   isSearchFieldInPopup(): boolean | undefined {
     const searchFieldInPopup = super.isSearchFieldInPopup();
     if (searchFieldInPopup === undefined) {
-      const { viewMode } = this.observableProps;
+      const { viewMode } = this;
       if (viewMode === TriggerViewMode.popup) {
         const { popupSearchMode } = this.props;
         return popupSearchMode !== PopupSearchMode.single;
@@ -263,7 +281,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   isEditable(): boolean {
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     const { popupSearchMode } = this.props;
     if (viewMode === TriggerViewMode.popup) {
       return popupSearchMode === PopupSearchMode.single && this.popupEditable();
@@ -319,7 +337,8 @@ export default class Lov extends Select<LovProps> {
   getPopupLovView() {
     const config = this.getConfig();
     this.autoCreate();
-    const { options } = this;
+    const { options, viewMode, showDetailWhenReadonly } = this;
+    const { popupSearchMode, onBeforeSelect } = this.props;
     if (config && options) {
       let lovViewProps;
       if (!this.popup) delete this.fetched;
@@ -331,7 +350,6 @@ export default class Lov extends Select<LovProps> {
         });
       }
       const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
-      const { popupSearchMode } = this.props;
       const mergedTableProps: Partial<TableProps> | undefined = mergeProps<Partial<TableProps>>(tableProps, {
         style: {
           maxHeight: 250,
@@ -342,7 +360,6 @@ export default class Lov extends Select<LovProps> {
         size: Size.small,
         autoWidth: false,
       });
-      const { onBeforeSelect, viewMode } = this.props;
       return (
         <LovView
           {...lovViewProps}
@@ -356,6 +373,7 @@ export default class Lov extends Select<LovProps> {
           multiple={this.multiple}
           values={this.getValues()}
           popupHidden={!this.popup}
+          showDetailWhenReadonly={showDetailWhenReadonly}
         />
       );
     }
@@ -364,7 +382,7 @@ export default class Lov extends Select<LovProps> {
   @autobind
   getPopupContent(): ReactNode {
     const { searchAction } = this.props;
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup) {
       return this.getPopupLovView();
     }
@@ -375,7 +393,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   syncOptionsSelectedAfterValueRemove(values: any[]) {
-    const { viewMode } = this.props;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup) {
       const { options, valueField, primitive } = this;
       if (options) {
@@ -407,7 +425,7 @@ export default class Lov extends Select<LovProps> {
 
   clear() {
     super.clear();
-    const { viewMode } = this.props;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup) {
       const { options } = this;
       if (options) {
@@ -419,12 +437,12 @@ export default class Lov extends Select<LovProps> {
 
   @action
   beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
-    const { multiple, primitive, valueField } = this;
+    const { multiple, primitive, valueField, viewMode } = this;
     const { selectionMode, alwaysShowRowBox } = this.getTableProps();
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;
     }
-    const { viewMode, viewRenderer } = this.props;
+    const { viewRenderer } = this.props;
     const { selected } = options;
     if (viewMode === TriggerViewMode.modal || viewMode === TriggerViewMode.drawer) {
       options.unSelectAll();
@@ -511,8 +529,7 @@ export default class Lov extends Select<LovProps> {
   @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
     const { tableProps } = this.props;
-    const { modal } = this;
-    const { viewMode } = this.observableProps;
+    const { modal, viewMode } = this;
     // 模态框模式下， tableProps 支持获取 modal 实例
     if (isFunction(tableProps) && [TriggerViewMode.modal, TriggerViewMode.drawer].includes(viewMode) && modal) {
       const lovViewProps = this.beforeOpen(options);
@@ -555,7 +572,7 @@ export default class Lov extends Select<LovProps> {
   @action
   private openModal(fetchSingle?: boolean) {
     this.collapse();
-    const { viewMode } = this.observableProps;
+    const { viewMode, showDetailWhenReadonly } = this;
     const { onBeforeSelect, viewRenderer } = this.props;
     const drawer = viewMode === TriggerViewMode.drawer;
     if (viewMode === TriggerViewMode.modal || drawer) {
@@ -590,6 +607,7 @@ export default class Lov extends Select<LovProps> {
             viewRenderer,
             showSelectedInView: this.showSelectedInView,
             getSelectionProps: this.getSelectionProps,
+            showDetailWhenReadonly,
           }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
@@ -612,6 +630,7 @@ export default class Lov extends Select<LovProps> {
               width: pxToRem(width),
             },
             afterClose: this.handleLovViewAfterClose,
+            footer: showDetailWhenReadonly ? null : undefined,
           }, modalProps) || {});
           this.afterOpen(options, fetchSingle);
         }
@@ -620,7 +639,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   getModalClassName(): string {
-    const { viewMode } = this.props;
+    const { viewMode } = this;
     return classNames({
       [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === TriggerViewMode.modal && this.showSelectedInView,
       [`${this.prefixCls}-lov-custom-drawer`]: viewMode === TriggerViewMode.drawer && this.multiple && this.showSelectedInView,
@@ -646,7 +665,7 @@ export default class Lov extends Select<LovProps> {
    */
   @action
   searchRemote(text?: string | string[] | undefined) {
-    const { options, searchMatcher, observableProps: { viewMode } } = this;
+    const { options, searchMatcher, viewMode } = this;
     if (isString(searchMatcher) && (viewMode === TriggerViewMode.popup || !isSearchTextEmpty(text))) {
       this.resetOptions(true);
       const searchPara = this.getSearchPara(searchMatcher, text);
@@ -663,7 +682,7 @@ export default class Lov extends Select<LovProps> {
   @autobind
   handlePopupHiddenChange(hidden: boolean) {
     super.handlePopupHiddenChange(hidden);
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     if (viewMode === TriggerViewMode.popup && !this.multiple && this.searchText) {
       this.searchText = undefined;
     }
@@ -695,7 +714,7 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleLovViewSelect(records: Record | Record[]) {
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     if (isArrayLike(records)) {
       this.setValue(records.map(record => this.processRecordToObject(record)));
     } else {
@@ -719,7 +738,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   resetOptions(noCache = false): boolean {
-    const { field, record, options } = this;
+    const { field, record, options, valueField, showDetailWhenReadonly, primitive } = this;
     const { queryDataSet, props: { pageSize } } = options;
     let dirty = noCache;
     if (noCache) {
@@ -734,6 +753,14 @@ export default class Lov extends Select<LovProps> {
     }
     if (field) {
       const lovPara = getLovPara(field, record);
+      if (showDetailWhenReadonly) {
+        const values = this.getValues();
+        if (values && values.length) {
+          options.paging = false;
+          const valueFieldValues = values.map(value => (primitive ? value : value[valueField]));
+          lovPara[valueField] = valueFieldValues;
+        }
+      }
       if (!isEqual(lovPara, options.queryParameter)) {
         options.queryParameter = lovPara;
         return true;
@@ -778,19 +805,19 @@ export default class Lov extends Select<LovProps> {
   }
 
   getWrapperProps() {
-    const { viewMode } = this.props;
+    const { viewMode, showDetailWhenReadonly } = this;
     return super.getWrapperProps({
       onDoubleClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
       // Support ued to distinguish between select and lov
-      className: this.getWrapperClassNames(
-        `${this.prefixCls}-lov`,
-        { [`${this.prefixCls}-lov-${TriggerViewMode.popup}-mode`]: viewMode === TriggerViewMode.popup },
-      ),
+      className: this.getWrapperClassNames(`${this.prefixCls}-lov`, {
+        [`${this.prefixCls}-lov-${TriggerViewMode.popup}-mode`]: viewMode === TriggerViewMode.popup,
+        [`${this.prefixCls}-lov-readonly-show-detail`]: showDetailWhenReadonly,
+      }),
     });
   }
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
-    const { viewMode } = this.observableProps;
+    const { viewMode } = this;
     return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup });
   }
 
@@ -861,8 +888,7 @@ export default class Lov extends Select<LovProps> {
       tablePropsData = tableProps;
     }
     if (isFunction(tableProps)) {
-      const { modal } = this;
-      const { viewMode } = this.observableProps;
+      const { modal, viewMode } = this;
       const lovTableProps = {...lovTablePropsConfig, ...localTableProps};
       if (viewMode === TriggerViewMode.popup) {
         tablePropsData = tableProps(lovTableProps);
@@ -895,7 +921,9 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleOpenModal() {
-    if (!this.disabled && !this.readOnly) {
+    if (this.showDetailWhenReadonly) {
+      this.openModal();
+    } else if (!this.disabled && !this.readOnly) {
       return this.autoSelectSingle ? this.selectSingle() : this.openModal();
     }
   }
@@ -917,6 +945,7 @@ export default class Lov extends Select<LovProps> {
       'showSelectedInView',
       'selectionProps',
       'popupSearchMode',
+      'showDetailWhenReadonly',
     ]);
   }
 
@@ -955,14 +984,15 @@ export default class Lov extends Select<LovProps> {
   }
 
   getSuffix(): ReactNode {
-    const { viewMode } = this.observableProps;
+    const { viewMode, showDetailWhenReadonly } = this;
     const { suffix } = this.props;
     if (viewMode === TriggerViewMode.popup) {
       return super.getSuffix();
     }
-    const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : <Icon type="search" />;
+    const showIcon = showDetailWhenReadonly ? <Icon type="manage_search" /> : <Icon type="search" />
+    const icon = this.loading && !this.modal ? <Spin className={`${this.prefixCls}-lov-spin`} /> : showIcon;
     return this.wrapperSuffix(suffix || icon, {
-      onClick: (this.disabled || this.readOnly || this.loading) ? undefined : this.handleOpenModal,
+      onClick: (((this.disabled || this.readOnly) && !this.showDetailWhenReadonly) || this.loading) ? undefined : this.handleOpenModal,
     });
   }
 

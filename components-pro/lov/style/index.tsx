@@ -1,3 +1,5 @@
+import 'choerodon-ui/lib/alert/style';
+
 import '../../text-field/style';
 // style dependencies
 import '../../table/style';

@@ -30,6 +30,7 @@ timeline: true
 - 🌟 `<pro>Table`: rowDraggable 属性新增 multiDrag 值, 支持多行拖拽。
 - 🌟 `<pro>Table`: 新增 multiDragSelectMode 属性。
 - 🌟 `<pro>CodeArea`: 新增 valueChangeAction, wait, waitType 属性。
+- 🌟 `<pro>Lov`: 新增 showDetailWhenReadonly 属性。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。

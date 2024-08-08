@@ -269,6 +269,7 @@ export interface Locale extends DataSetLocale {
   Lov: {
     choose: string;
     selection_tips: string;
+    non_conformity_warning: string;
   };
   Transfer: {
     items: string;
