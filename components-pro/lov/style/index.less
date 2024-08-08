@@ -218,4 +218,20 @@
   &.@{select-prefix-cls}-focused:not(.@{select-prefix-cls}-empty):not(&-popup-mode) .@{select-prefix-cls}-allow-clear {
     opacity: 1;
   }
+
+  &&-readonly-show-detail {
+    &,
+    &.@{select-prefix-cls}-suffix-button {
+      .@{select-prefix-cls}-suffix {
+        cursor: pointer;
+      }
+    }
+    &.@{select-prefix-cls}-disabled {
+      .@{select-prefix-cls}-suffix {
+        width: 0.26rem;
+        height: calc(100% - @border-width-base * 2);
+        background: #fff;
+      }
+    }
+  }
 }

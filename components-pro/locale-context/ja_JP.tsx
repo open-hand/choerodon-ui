@@ -269,6 +269,7 @@ const locale: Locale = {
   Lov: {
     choose: '選択してください',
     selection_tips: '{count} データがチェックされました',
+    non_conformity_warning: '値セットは読み取り専用に示された値セット仕様の要求を満たしていません。システム管理者に連絡して処理することができます。',
   },
   Transfer: {
     items: 'アイテム',

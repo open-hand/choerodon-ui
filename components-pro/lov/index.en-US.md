@@ -36,6 +36,7 @@ title: Lov
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  |
 | selectionProps | 显示已选记录时的参数 | SelectionProps |  |
 | popupSearchMode | viewMode 为 popup 时，查询条件显示位置 | PopupSearchMode: 'single', 'multiple' | multiple |
+| showDetailWhenReadonly | 组件为 readOnly 或 disabled 时，可点击后缀查看选中项详情(需值集支持详情查询) | boolean |  |
 
 ### SelectionProps
 
