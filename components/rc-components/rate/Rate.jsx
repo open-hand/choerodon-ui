@@ -189,6 +189,8 @@ export default class Rate extends Component {
       className,
       character,
       tabIndex,
+      checkedColor,
+      unCheckedColor,
     } = this.props;
     const { value, hoverValue, focused } = this.state;
     const stars = [];
@@ -208,6 +210,8 @@ export default class Rate extends Component {
           key={index}
           character={character}
           focused={focused}
+          checkedColor={checkedColor}
+          unCheckedColor={unCheckedColor}
         />,
       );
     }
