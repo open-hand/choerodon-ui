@@ -137,6 +137,7 @@ export interface Config {
     code: string,
     lovConfig: LovConfig | undefined,
     props: TransportHookProps,
+    lovQueryUrl: string,
   ) => AxiosRequestConfig);
   axios?: AxiosInstance;
   feedback?: FeedBack;

@@ -364,7 +364,7 @@ export type FieldProps = {
   /**
    * LOV查询请求的钩子
    */
-  lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig, props?: TransportHookProps) => AxiosRequestConfig);
+  lovQueryAxiosConfig?: AxiosRequestConfig | ((code: string, lovConfig?: LovConfig, props?: TransportHookProps, lovQueryUrl?: string) => AxiosRequestConfig);
   /**
    * 批量值列表请求的axiosConfig
    */

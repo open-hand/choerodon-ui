@@ -15,6 +15,7 @@ export type TransportHookProps = {
   data?: any;
   params?: any;
   dataSet?: DataSet;
+  lovQueryDetail?: boolean;
   [key: string]: any;
 };
 

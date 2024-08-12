@@ -269,6 +269,41 @@ const dataSetLovTemple = {
   total: 20,
 };
 
+const dataSetLovDetailTemple = {
+  rows: [
+    {
+      _token: '5fd2371f43d3c75c44682b0750e7bfb5',
+      objectVersionNumber: 2,
+      code: 'HR.EMPLOYEE_GENDER',
+      codeId: 10001,
+      codeValues: null,
+      description: '性别',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+      homeUrl: 'https://open.hand-china.com/choerodon-ui/zh',
+      selfie: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      percent: 0.55,
+    },
+    {
+      _token: 'd8f3d1a86b47be97d570220f09f9da70',
+      objectVersionNumber: 1,
+      code: 'HR.EMPLOYEE_STATUS',
+      codeId: 10002,
+      codeValues: null,
+      description: '员工状态',
+      type: 'USER',
+      enabledFlag: 'Y',
+      parentCodeId: null,
+      parentCodeDescription: null,
+      percent: 0.123456789,
+    },
+  ],
+  success: true,
+  total: 2,
+};
+
 const dataSetLovMockTemple = {
   'rows|10': [
     {
@@ -452,6 +487,8 @@ const lovDefineTemple = {
   treeFlag: 'N',
   idField: null,
   parentIdField: null,
+  detailUrl: '/common/lov/dataset/detail/LOV_CODE',
+  detailField: 'code',
 };
 const lovMockDefineTemple = {
   _token: '@guid()',
@@ -533,6 +570,8 @@ const lovMockDefineTemple = {
   treeFlag: 'N',
   idField: null,
   parentIdField: null,
+  detailUrl: undefined,
+  detailField: 'code',
 };
 const lovTreeDefineTemple = {
   _token: '@guid()',
@@ -619,6 +658,8 @@ const lovTreeDefineTemple = {
       maxHeight: 'calc(100vh - 400px)',
     },
   },
+  detailUrl: undefined,
+  detailField: undefined,
 };
 
 const dataSetLovData10Page1 = Mock.mock(dataSetLovTempleSize10Page1);
@@ -626,6 +667,7 @@ const dataSetLovData10Page2 = Mock.mock(dataSetLovTempleSize10Page2);
 const dataSetLovData = Mock.mock(dataSetLovTemple);
 const dataSetLovMockData = Mock.mock(dataSetLovMockTemple);
 const dataSetLovTreeData = Mock.mock(treeMockTemple);
+const dataSetLovDetailData = Mock.mock(dataSetLovDetailTemple);
 
 const lovDefineData = Mock.mock(lovDefineTemple);
 const lovDefineMockData = Mock.mock(lovMockDefineTemple);
@@ -639,6 +681,7 @@ const dataSetLovRuleSize100Page1 = /\/common\/lov\/dataset\/LOV_CODE\/100\/1/;
 const dataSetLovRule = /\/common\/lov\/dataset\/LOV_CODE/;
 const dataSetLovMockRule = /\/common\/lov\/dataset\/LOV_MOCK_CODE/;
 const dataSetLovTreeRule = /\/common\/lov\/dataset\/LOV_TREE_CODE/;
+const dataSetLovDetailRule = /\/common\/lov\/dataset\/detail\/LOV_CODE/;
 
 const lovDefineRule = /\/sys\/lov\/lov_define\?code=LOV_CODE/;
 const lovDefineMockRule = /\/sys\/lov\/lov_define\?code=LOV_MOCK_CODE/;
@@ -669,6 +712,8 @@ export default function () {
     Mock.mock(lovDefineMockRule, lovMockDefineTemple);
 
     Mock.mock(lovTreeDefineRule, lovTreeDefineTemple);
+
+    Mock.mock(dataSetLovDetailRule, dataSetLovDetailTemple);
   }
 }
 
@@ -684,4 +729,5 @@ export const lovTempleList = [
   { rule: lovDefineRule, data: lovDefineData },
   { rule: lovDefineMockRule, data: lovDefineMockData },
   { rule: lovTreeDefineRule, data: lovDefineTreeData },
+  { rule: dataSetLovDetailRule, data: dataSetLovDetailData },
 ];

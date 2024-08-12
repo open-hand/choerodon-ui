@@ -28,7 +28,7 @@ configure({ enforceActions: 'always' });
 
 UIconfigure({
   lovQueryUrl: undefined,
-  lovQueryAxiosConfig(code, lovConfig, props) {
+  lovQueryAxiosConfig(code, lovConfig, props, lovQueryUrl) {
     const { params } = props || {};
     return {
       url: `/common/lov/dataset/${code}${code === 'LOV_CODE' && params ? `/${params.pagesize}/${params.page}` : ''}`,
