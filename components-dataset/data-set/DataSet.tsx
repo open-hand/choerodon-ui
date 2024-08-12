@@ -1530,7 +1530,7 @@ export default class DataSet extends EventManager {
         const queryExportList: { getPromise: () => AxiosPromise<any> }[] = [];
         for (let i = 0; i < queryTime; i++) {
           const params = { ...this.generateQueryString(1 + i, quantity) };
-          const newConfig = axiosConfigAdapter('read', this, data, params);
+          const newConfig = axiosConfigAdapter('read', this, data, params, this.getState('__LOV_QUERY_STATE__'));
           queryExportList.push({
             getPromise: () => this.axios(newConfig),
           });
@@ -3245,7 +3245,7 @@ Then the query method will be auto invoke.`,
           this.changeStatus(DataSetStatus.loading);
         }
         const data = await this.generateQueryParameter(params);
-        const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, undefined, paging));
+        const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, undefined, paging), this.getState('__LOV_QUERY_STATE__'));
         if (this.paging === false && isFunction(this.getConfig('noPagingParams'))) {
           const noPagingParams = this.getConfig('noPagingParams')(newConfig);
           if (!isNil(noPagingParams)) {
@@ -3300,7 +3300,7 @@ Then the query method will be auto invoke.`,
 
   private async count(page = 1, params?: object): Promise<any> {
     const data = await this.generateQueryParameter(params);
-    const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, true));
+    const newConfig = axiosConfigAdapter('read', this, data, this.generateQueryString(page, undefined, true), this.getState('__LOV_QUERY_STATE__'));
     if (newConfig.url) {
       const countEventResult = await this.fireEvent(DataSetEvents.count, {
         dataSet: this,

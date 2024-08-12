@@ -13,7 +13,7 @@ import Record from '../data-set/Record';
 import Table, { onColumnResizeProps, TableProps, TableQueryBarHookCustomProps } from '../table/Table';
 import TableProfessionalBar from '../table/query-bar/TableProfessionalBar';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
-import { DataSetEvents, DataSetSelection } from '../data-set/enum';
+import { DataSetEvents, DataSetSelection, DataSetStatus } from '../data-set/enum';
 import { ColumnProps } from '../table/Column';
 import { ModalChildrenProps } from '../modal/interface';
 import autobind from '../_util/autobind';
@@ -46,7 +46,11 @@ export interface LovViewProps {
   showDetailWhenReadonly?: boolean;
 }
 
-export default class LovView extends Component<LovViewProps> {
+interface LovViewState {
+  dataSetLoaded: boolean;
+}
+
+export default class LovView extends Component<LovViewProps, LovViewState> {
   static get contextType(): typeof ConfigContext {
     return ConfigContext;
   }
@@ -56,6 +60,20 @@ export default class LovView extends Component<LovViewProps> {
   selectionMode: SelectionMode | undefined;
 
   resizedColumns: Map<Key, number> = new Map<Key, number>();
+
+  constructor(props: LovViewProps) {
+    super(props);
+    const {
+      dataSet,
+      showDetailWhenReadonly,
+    } = props;
+    if (showDetailWhenReadonly) {
+      dataSet.addEventListener(DataSetEvents.load, this.handleDataSetLoad);
+    }
+    this.state = {
+      dataSetLoaded: dataSet.status === DataSetStatus.ready,
+    };
+  }
 
   @action
   componentWillMount() {
@@ -75,17 +93,20 @@ export default class LovView extends Component<LovViewProps> {
 
   @action
   componentWillUnmount() {
-    const { dataSet, multiple, viewMode } = this.props;
+    const { dataSet, multiple, viewMode, showDetailWhenReadonly } = this.props;
     dataSet.selection = this.selection;
     if (viewMode === TriggerViewMode.popup && multiple) {
       dataSet.removeEventListener(DataSetEvents.batchSelect, this.handleSelect);
       dataSet.removeEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
     }
+    if (showDetailWhenReadonly) {
+      dataSet.removeEventListener(DataSetEvents.load, this.handleDataSetLoad);
+    }
   }
 
   @action
   componentWillReceiveProps(nextProps: LovViewProps) {
-    const { dataSet: beforeDataSet } = this.props;
+    const { dataSet: beforeDataSet, showDetailWhenReadonly } = this.props;
     if (beforeDataSet !== nextProps.dataSet) {
       const {
         dataSet,
@@ -98,6 +119,9 @@ export default class LovView extends Component<LovViewProps> {
       if (viewMode === TriggerViewMode.popup && multiple) {
         dataSet.addEventListener(DataSetEvents.batchSelect, this.handleSelect);
         dataSet.addEventListener(DataSetEvents.batchUnSelect, this.handleSelect);
+      }
+      if (showDetailWhenReadonly) {
+        dataSet.addEventListener(DataSetEvents.load, this.handleDataSetLoad);
       }
     }
   }
@@ -162,6 +186,15 @@ export default class LovView extends Component<LovViewProps> {
           };
         })
       : undefined;
+  }
+
+  handleDataSetLoad = () => {
+    const { showDetailWhenReadonly } = this.props;
+    if (showDetailWhenReadonly) {
+      this.setState({
+        dataSetLoaded: true,
+      });
+    }
   }
 
   closeModal(record: Record | Record[] | undefined) {
@@ -273,6 +306,7 @@ export default class LovView extends Component<LovViewProps> {
       showDetailWhenReadonly,
       values,
     } = this.props;
+    const { dataSetLoaded } = this.state;
     const { getConfig } = context;
     const columns = this.getColumns();
     const popup = viewMode === TriggerViewMode.popup;
@@ -355,24 +389,20 @@ export default class LovView extends Component<LovViewProps> {
     if (showDetailWhenReadonly) {
       lovTableProps.queryBar = TableQueryBarType.none;
       lovTableProps.selectionMode = SelectionMode.none;
-      if (values.length !== dataSet.length) {
-        lovTableProps.filter = (() => false);
-        if (values.length) {
-          warningNode = (
-            <Alert
-              style={{ marginBottom: '10px' }}
-              message={$l('Lov', 'non_conformity_warning')}
-              type="warning"
-              showIcon
-            />
-          );
-        }
-      }
+      lovTableProps.filter = () => (values.length === dataSet.length);
+      warningNode = (
+        <Alert
+          style={{ marginBottom: '10px' }}
+          message={$l('Lov', 'non_conformity_warning')}
+          type="warning"
+          showIcon
+        />
+      );
     }
     this.selectionMode = lovTableProps.selectionMode;
     return (
       <>
-        {warningNode}
+        {dataSetLoaded && values.length !== dataSet.length && warningNode}
         <Table {...lovTableProps} />
         {!showDetailWhenReadonly && modal && this.renderSelectionList()}
       </>

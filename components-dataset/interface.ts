@@ -54,4 +54,6 @@ export interface LovConfig {
   queryColumns?: number;
   dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps);
   transformSelectedData?: (value: object) => object;
+  detailUrl?: string;
+  detailField?: string;
 }

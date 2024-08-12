@@ -31,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `multiDragSelectMode` property.
 - 🌟 `<pro>CodeArea`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 🌟 `<pro>Lov`: Added `showDetailWhenReadonly` property.
+- 🌟 `<pro>DataSet`: The `lovQueryUrl` and `lovQueryAxiosConfig` properties add the `lovQueryDetail` parameter.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.

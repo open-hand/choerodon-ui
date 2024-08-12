@@ -239,7 +239,7 @@ export default class Lov extends Select<LovProps> {
 
   get showDetailWhenReadonly(): boolean {
     const { readOnly, disabled, props: { showDetailWhenReadonly } } = this;
-    return !!(showDetailWhenReadonly && (readOnly || disabled));
+    return !!(showDetailWhenReadonly && (readOnly || disabled) && this.getValues().length);
   }
 
   @computed
@@ -529,7 +529,7 @@ export default class Lov extends Select<LovProps> {
   @action
   afterOpen(options: DataSet, fetchSingle?: boolean) {
     const { tableProps } = this.props;
-    const { modal, viewMode } = this;
+    const { modal, viewMode, showDetailWhenReadonly, primitive, valueField } = this;
     // 模态框模式下， tableProps 支持获取 modal 实例
     if (isFunction(tableProps) && [TriggerViewMode.modal, TriggerViewMode.drawer].includes(viewMode) && modal) {
       const lovViewProps = this.beforeOpen(options);
@@ -542,7 +542,22 @@ export default class Lov extends Select<LovProps> {
       if (this.multiple) options.releaseCachedSelected();
     } else {
       const noCache = defaultTo(this.getProp('noCache'), this.getContextConfig('lovNoCache'));
-      if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
+      if (showDetailWhenReadonly) {
+        const values = this.getValues();
+        if (values.length) {
+          const { paging = true } = options.props;
+          options.setState('__LOV_QUERY_STATE__', { lovQueryDetail: true });
+          options.paging = false;
+          const valueFieldValues = values.map(value => (primitive ? value : value[valueField]));
+          const lovConfig = this.getConfig();
+          const paramKeyValue = lovConfig ? (lovConfig.detailField || valueField) : valueField;
+          const lovPara = { [paramKeyValue]: valueFieldValues };
+          options.query(1, lovPara, true).then(() => {
+            options.setState('__LOV_QUERY_STATE__', undefined);
+            options.paging = paging;
+          });
+        }
+      } else if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
         options.query(1, undefined, true);
       } else if (this.multiple) {
         if (this.resetOptions(noCache)) {
@@ -738,7 +753,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   resetOptions(noCache = false): boolean {
-    const { field, record, options, valueField, showDetailWhenReadonly, primitive } = this;
+    const { field, record, options } = this;
     const { queryDataSet, props: { pageSize } } = options;
     let dirty = noCache;
     if (noCache) {
@@ -753,14 +768,6 @@ export default class Lov extends Select<LovProps> {
     }
     if (field) {
       const lovPara = getLovPara(field, record);
-      if (showDetailWhenReadonly) {
-        const values = this.getValues();
-        if (values && values.length) {
-          options.paging = false;
-          const valueFieldValues = values.map(value => (primitive ? value : value[valueField]));
-          lovPara[valueField] = valueFieldValues;
-        }
-      }
       if (!isEqual(lovPara, options.queryParameter)) {
         options.queryParameter = lovPara;
         return true;
