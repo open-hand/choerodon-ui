@@ -552,7 +552,7 @@ export default class Lov extends Select<LovProps> {
           const lovConfig = this.getConfig();
           const paramKeyValue = lovConfig ? (lovConfig.detailField || valueField) : valueField;
           const lovPara = { [paramKeyValue]: valueFieldValues };
-          options.query(1, lovPara, true).then(() => {
+          options.query(1, lovPara, true).finally(() => {
             options.setState('__LOV_QUERY_STATE__', undefined);
             options.paging = paging;
           });
