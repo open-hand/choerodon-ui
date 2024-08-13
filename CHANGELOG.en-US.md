@@ -55,6 +55,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of abnormal display of checkbox under virtual scrolling for bidirectional replication of Table.
 - 🐞 `<pro>Table`: Fixed the issue of bidirectional replication of lov types without carrying query parameters.
+- 🐞 `<pro>Table`: Fixed the issue where the `autoSize` property of the TextArea under automatic rowHeight was invalid.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
 - 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
 - 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.

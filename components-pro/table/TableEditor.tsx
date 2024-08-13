@@ -555,7 +555,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           newEditorProps.resize = resize;
           if (resize !== ResizeType.none) {
             newEditorProps.onResize = this.handleEditorResize;
-            if (rowHeight === 'auto') {
+            if (rowHeight === 'auto' && !newEditorProps?.autoSize) {
               newEditorProps.autoSize = true;
             }
           }
