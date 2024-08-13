@@ -390,6 +390,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       lovTableProps.queryBar = TableQueryBarType.none;
       lovTableProps.selectionMode = SelectionMode.none;
       lovTableProps.filter = () => (values.length === dataSet.length);
+      lovTableProps.pagination = false;
       warningNode = (
         <Alert
           style={{ marginBottom: '10px' }}
