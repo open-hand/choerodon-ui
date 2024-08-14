@@ -1,4 +1,4 @@
-import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
+import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef, CSSProperties} from 'react';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
 import classnames from 'classnames';
@@ -115,7 +115,8 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     if (!listType) return;
     const { renderIcon } = attachmentConfig;
     const defaultIcon = <Icon type="insert_drive_file" />;
-    const icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
+    let icon = renderIcon ? renderIcon(attachment, listType, defaultIcon) : defaultIcon;
+    icon = icon === undefined ? defaultIcon : icon;
     const isSrcIcon = isString(icon);
     if (listType === 'text' || ((isCard || listType === 'picture') && !isPicture)) {
       if (isPicture || isSrcIcon) {
@@ -146,6 +147,16 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           </Picture>
         );
       }
+      let cardOtherFilestyle: CSSProperties = {};
+      if (isCard) {
+        cardOtherFilestyle = {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width,
+          height: width,
+        };
+      }
       if (preview) {
         const previewButtonProps: ButtonProps = {
           funcType: FuncType.link,
@@ -158,13 +169,13 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           previewButtonProps.onClick = handleOpenPreview;
         }
         return (
-          <Button {...previewButtonProps}>
+          <Button {...previewButtonProps} style={cardOtherFilestyle}>
             {icon}
           </Button>
         );
       }
       return (
-        <div className={`${prefixCls}-icon`}>
+        <div className={`${prefixCls}-icon`} style={cardOtherFilestyle}>
           {icon}
         </div>
       );
@@ -182,6 +193,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             objectFit="contain"
             index={index}
             preview={preview}
+            ref={pictureRef}
           />
         );
       }
@@ -204,7 +216,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
       </>
     );
-    const nameNode = preview && listType === 'text' ? (
+    const nameNode = preview && (listType === 'text' || listType === 'picture') ? (
       <a
         {
           ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
