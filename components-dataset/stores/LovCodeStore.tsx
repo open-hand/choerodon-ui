@@ -118,9 +118,16 @@ export class LovCodeStore {
     this.lovCodes = observable.map<string, LovConfig>();
   }
 
-  getDefineAxiosConfig(code: string, field?: Field, record?: Record): AxiosRequestConfig | undefined {
+  getDefineAxiosConfig(
+    code: string,
+    field?: Field,
+    record?: Record,
+    fieldLovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig),
+  ): AxiosRequestConfig | undefined {
     const lovDefineAxiosConfig =
-      (field && field.get('lovDefineAxiosConfig', record)) || getGlobalConfig('lovDefineAxiosConfig', field);
+      fieldLovDefineAxiosConfig ||
+      (field && field.get('lovDefineAxiosConfig', record)) ||
+      getGlobalConfig('lovDefineAxiosConfig', field);
     const config = processAxiosConfig(lovDefineAxiosConfig, code, field);
     return {
       ...config,
@@ -153,7 +160,13 @@ export class LovCodeStore {
         ? field.get('useLovDefineBatch', record) || field.dataSet.getConfig('useLovDefineBatch')
         : globalGetConfig('useLovDefineBatch');
       const useLovDefineBatch = code && useLovDefineBatchFunc(code, field) !== false;
-      const lovDefineAxiosConfig = field ? field.get('lovDefineAxiosConfig', record) : null;
+
+      let lovDefineAxiosConfig: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig) | undefined;
+      let pending: any = this.pendings[code];
+      // 优化 dynamicProps 中配置 lovCode 和 lovDefineAxiosConfig 引起循环调用问题
+      if ((defineBatch && useLovDefineBatch) || !pending) {
+        lovDefineAxiosConfig = field ? field.get('lovDefineAxiosConfig', record) : undefined;
+      }
       if (defineBatch && useLovDefineBatch && !lovDefineAxiosConfig) {
         config = await this.fetchDefineInBatch(code, defineBatch, field);
         runInAction(() => {
@@ -162,10 +175,10 @@ export class LovCodeStore {
           }
         });
       } else {
-        const axiosConfig = this.getDefineAxiosConfig(code, field, record);
-        if (axiosConfig) {
+        const axiosConfig = !pending ? this.getDefineAxiosConfig(code, field, record, lovDefineAxiosConfig) : undefined;
+        if (pending || axiosConfig) {
           try {
-            const pending = this.pendings[code] || this.getAxios(field)(axiosConfig);
+            pending = pending || this.pendings[code] || this.getAxios(field)(axiosConfig!);
             this.pendings[code] = pending;
             config = await pending;
             runInAction(() => {
