@@ -23,7 +23,7 @@ function handleChange(value, oldValue) {
 ReactDOM.render(
   <Row gutter={10}>
     <Col span={12}>
-      <DatePicker placeholder="Select date" onChange={handleChange} useInvalidDate={false} />
+      <DatePicker placeholder="Select date" inputReadOnly onChange={handleChange} useInvalidDate={false} />
     </Col>
     <Col span={12}>
       <MonthPicker placeholder="Select month" onChange={handleChange} />

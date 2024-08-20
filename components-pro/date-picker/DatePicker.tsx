@@ -134,6 +134,10 @@ export interface DatePickerProps extends TriggerFieldProps {
    * range 模式，选择弹窗组合显示（time 和 dateTime 模式不支持）
    */
   comboRangeMode?: boolean;
+  /**
+   * 设置输入框为只读（避免在移动设备上打开虚拟键盘）
+   */
+  inputReadOnly?: boolean;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -158,6 +162,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     suffixCls: 'calendar-picker',
     mode: ViewMode.date,
     useInvalidDate: true,
+    inputReadOnly: false,
   };
 
   componentDidMount(): void {
@@ -293,7 +298,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
   }
 
   isEditable(): boolean {
-    return super.isEditable() && !this.isEditableLike() && this.getViewMode() !== ViewMode.week;
+    return super.isEditable() && !this.isEditableLike() && this.getViewMode() !== ViewMode.week && !this.props.inputReadOnly;
   }
 
   isEditableLike(): boolean {
@@ -312,6 +317,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
       'defaultTime',
       'useInvalidDate',
       'comboRangeMode',
+      'inputReadOnly',
     ]);
   }
 

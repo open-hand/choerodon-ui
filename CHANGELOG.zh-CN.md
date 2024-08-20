@@ -32,6 +32,7 @@ timeline: true
 - 🌟 `<pro>CodeArea`: 新增 valueChangeAction, wait, waitType 属性。
 - 🌟 `<pro>Lov`: 新增 showDetailWhenReadonly 属性。
 - 🌟 `<pro>DataSet`: lovQueryUrl 和 lovQueryAxiosConfig 属性增加 lovQueryDetail 参数。
+- 🌟 `<pro>DatePicker`: 新增 inputReadOnly 属性，设置输入框为只读（避免在移动设备上打开虚拟键盘）。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
