@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon`,  `valueChangeAction` property.
+- 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon`,  `valueChangeAction`, `tableFilterBarButtonIcon` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.
 - 🌟 `<pro>Transfer`: Added `placeholderOperations` property.
@@ -28,7 +28,7 @@ timeline: true
 - 🌟 `<pro>Modal`: Added `modalOkAndCancelIcon` property.
 - 🌟 `Tree`: Added `onDragEnterBefore`, `onDragOverBefore` properties.
 - 🌟 `<pro>Table`: The `rowDraggable` property adds the `multiDrag` value, which supports multi-line dragging.
-- 🌟 `<pro>Table`: Added `multiDragSelectMode` property.
+- 🌟 `<pro>Table`: Added `multiDragSelectMode`, `tableFilterBarButtonIcon` property.
 - 🌟 `<pro>CodeArea`: Added `valueChangeAction`, `wait`, `waitType` properties.
 - 🌟 `<pro>Lov`: Added `showDetailWhenReadonly` property.
 - 🌟 `<pro>DataSet`: The `lovQueryUrl` and `lovQueryAxiosConfig` properties add the `lovQueryDetail` parameter.

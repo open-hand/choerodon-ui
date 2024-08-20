@@ -153,8 +153,8 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width,
-          height: width,
+          width: pxToRem(width),
+          height: pxToRem(width),
         };
       }
       if (preview) {

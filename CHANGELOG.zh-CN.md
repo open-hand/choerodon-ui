@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction 属性。
+- 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction, tableFilterBarButtonIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
 - 🌟 `<pro>Transfer`: 新增 placeholderOperations 属性。
@@ -28,7 +28,7 @@ timeline: true
 - 🌟 `<pro>Modal`: 新增 modalOkAndCancelIcon 属性。
 - 🌟 `Tree`: 新增 onDragEnterBefore, onDragOverBefore 属性。
 - 🌟 `<pro>Table`: rowDraggable 属性新增 multiDrag 值, 支持多行拖拽。
-- 🌟 `<pro>Table`: 新增 multiDragSelectMode 属性。
+- 🌟 `<pro>Table`: 新增 multiDragSelectMode, tableFilterBarButtonIcon 属性。
 - 🌟 `<pro>CodeArea`: 新增 valueChangeAction, wait, waitType 属性。
 - 🌟 `<pro>Lov`: 新增 showDetailWhenReadonly 属性。
 - 🌟 `<pro>DataSet`: lovQueryUrl 和 lovQueryAxiosConfig 属性增加 lovQueryDetail 参数。

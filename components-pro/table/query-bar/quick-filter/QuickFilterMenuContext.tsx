@@ -1,5 +1,5 @@
 import { Context, createContext } from 'react';
-import { DynamicFilterBarConfig } from '../../Table';
+import { DynamicFilterBarConfig, TableFilterBarButtonIcon } from '../../Table';
 import DataSet from '../../../data-set';
 import { RecordStatus } from '../../../data-set/enum';
 import { Fields } from '../../../data-set/Field';
@@ -22,6 +22,7 @@ export interface QuickFilterProps {
   selectFields?: string[];
   onOriginalChange?: (fieldName?: string | string[]) => void;
   loadConditionData?: ({ conditionDataSet, newFilterDataSet, menuRecord, dataSet, searchText }: { conditionDataSet: any; newFilterDataSet: any; menuRecord: any; dataSet: any; searchText: any; }) => void;
+  tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
 }
 
 export interface QuickFilterContextValue extends QuickFilterProps {

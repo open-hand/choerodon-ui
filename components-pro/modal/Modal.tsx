@@ -32,7 +32,7 @@ import exception from '../_util/exception';
 import { $l } from '../locale-context';
 import DataSetRequestError from '../data-set/DataSetRequestError';
 import { suffixCls, toUsefulDrawerTransitionName } from './utils';
-import { ModalButtonTrigger, ModalChildrenProps, ModalCustomized, ModalOkAndCancelIcon } from './interface';
+import { ModalButtonTrigger, ModalChildrenProps, ModalCustomized, ModalOkAndCancelIcon, ModalOkAndCancelIconItem } from './interface';
 import { getDocument, MousePosition, transformZoomData } from '../_util/DocumentUtils';
 
 export type DrawerTransitionName = 'slide-up' | 'slide-right' | 'slide-down' | 'slide-left';
@@ -336,17 +336,19 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
   }
 
-  getModalOkAndCancelIcon(icon: 'okIconType' | 'cancelIconType'): string | undefined {
+  getModalOkAndCancelIcon(icon: keyof ModalOkAndCancelIconItem): string | undefined {
     const { modalOkAndCancelIcon = this.getContextConfig('modalOkAndCancelIcon') } = this.props;
     if (modalOkAndCancelIcon === true) {
       return icon === 'okIconType' ? 'done' : 'close';
     }
     if (typeof modalOkAndCancelIcon === 'object') {
       const type = modalOkAndCancelIcon[icon];
-      if (type === true) {
+      if (typeof type === 'string') {
+        return type;
+      }
+      if (type !== false) {
         return icon === 'okIconType' ? 'done' : 'close';
       }
-      return typeof type === 'string' ? type : undefined;
     }
   }
 

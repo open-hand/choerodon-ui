@@ -316,6 +316,13 @@ export interface ArrangeValue {
   min: number;
 }
 
+export type TableFilterBarButtonIconItem = {
+  saveIconType?: string | boolean;
+  saveAsIconType?: string | boolean;
+  resetIconType?: string | boolean;
+}
+export type TableFilterBarButtonIcon = undefined | boolean | TableFilterBarButtonIconItem;
+
 let _instance;
 // 构造一个单例table来防止body下不能有table元素的报错
 export const instance = (wrapperClassName: string | undefined, prefixCls?: string): Instance => {
@@ -843,6 +850,10 @@ export interface TableProps extends DataSetComponentProps {
    */
   customDragDropContenxt?: boolean;
   rowNumberColumnProps?: ColumnProps | ((defaultProps: ColumnProps) => ColumnProps);
+  /**
+   * 动态筛选条按钮icon
+   */
+  tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
 }
 
 @observer
@@ -1809,6 +1820,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'dragDropContextProps',
       'rowNumberColumnProps',
       'multiDragSelectMode',
+      'tableFilterBarButtonIcon',
     ]);
   }
 
@@ -2040,6 +2052,7 @@ export default class Table extends DataSetComponent<TableProps> {
         boxSizing,
         fullColumnWidth,
         clipboard,
+        tableFilterBarButtonIcon,
       },
       tableStore,
       prefixCls,
@@ -2095,6 +2108,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 filterBarPlaceholder={filterBarPlaceholder}
                 treeQueryExpanded={treeQueryExpanded}
                 searchCode={searchCode}
+                tableFilterBarButtonIcon={tableFilterBarButtonIcon}
               />
               <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             </TableSibling>

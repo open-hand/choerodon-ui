@@ -20,7 +20,7 @@ import isNil from 'lodash/isNil';
 import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { TableFilterAdapterProps } from 'choerodon-ui/lib/configure';
-import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
+import { getProPrefixCls as getProPrefixClsDefault, getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -41,7 +41,7 @@ import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { DynamicFilterBarConfig, Suffixes } from '../Table';
+import { DynamicFilterBarConfig, Suffixes, TableFilterBarButtonIcon, TableFilterBarButtonIconItem } from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
@@ -244,6 +244,39 @@ export function fieldIsDisabled(field: Field, queryDataSet: DataSet) {
   return false;
 }
 
+export function getTableFilterBarButtonIcon(
+  icon: keyof TableFilterBarButtonIconItem,
+  getConfig: typeof getConfigDefault,
+  tableFilterBarButtonIconProp?: TableFilterBarButtonIcon,
+): string | undefined {
+  const tableFilterBarButtonIcon = isNil(tableFilterBarButtonIconProp)
+    ? getConfig('tableFilterBarButtonIcon')
+    : tableFilterBarButtonIconProp;
+  const getDefaultIcon = (iconName: keyof TableFilterBarButtonIconItem) => {
+    switch (iconName) {
+      case 'saveIconType':
+        return 'save';
+      case 'saveAsIconType':
+        return 'donut_large';
+      case 'resetIconType':
+        return 'undo';
+      default:
+    }
+  };
+  if (tableFilterBarButtonIcon === true) {
+    return getDefaultIcon(icon);
+  }
+  if (typeof tableFilterBarButtonIcon === 'object') {
+    const type = tableFilterBarButtonIcon[icon];
+    if (typeof type === 'string') {
+      return type;
+    }
+    if (type !== false) {
+      return getDefaultIcon(icon);
+    }
+  }
+}
+
 /**
  * 高级搜索字段配置类型声明
  */
@@ -293,6 +326,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   tableStore?: TableStore;
   showSingleLine?: boolean;
   filterQueryCallback?: Function;
+  tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -1469,12 +1503,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           <div className={`${prefixCls}-new-filter-popover-footer`}>
             <Button
               onClick={this.handleFilterCancel}
+              icon='close'
             >
               {$l('Modal', 'cancel')}
             </Button>
             <Button
               onClick={this.handleFilterOk}
               color={ButtonColor.primary}
+              icon='done'
             >
               {$l('Modal', 'ok')}
             </Button>
@@ -1564,8 +1600,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * 渲染重置按钮
    */
   getResetButton() {
-    const { queryDataSet, dataSet, autoQueryAfterReset, onReset = noop } = this.props;
-    const { prefixCls } = this;
+    const { queryDataSet, dataSet, autoQueryAfterReset, onReset = noop, tableFilterBarButtonIcon } = this.props;
+    const { prefixCls, context: { getConfig } } = this;
+    const resetIconType = getTableFilterBarButtonIcon('resetIconType', getConfig, tableFilterBarButtonIcon);
     return (
       <div className={`${prefixCls}-filter-buttons`}>
         {
@@ -1590,6 +1627,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                   this.handleQuery();
                 }
               }}
+              icon={resetIconType}
             >
               {$l('Table', 'reset_button')}
             </Button>
@@ -1604,7 +1642,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * fuzzyQuery + quickFilterMenu + resetButton + buttons
    */
   getFilterMenu(): ReactNode {
-    const { onReset = noop, defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery, fuzzyQueryOnly } = this.props;
+    const { onReset = noop, defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery,
+      fuzzyQueryOnly, tableFilterBarButtonIcon } = this.props;
     const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
@@ -1650,6 +1689,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
             searchText: this.searchText,
             loadConditionData: this.loadConditionData,
             defaultActiveKey,
+            tableFilterBarButtonIcon,
           }}
         >
           <QuickFilterMenu />

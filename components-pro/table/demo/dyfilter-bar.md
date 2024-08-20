@@ -216,6 +216,7 @@ class App extends React.Component {
         searchCode='xxx'
         buttons={['add', 'query', 'remove', 'collapseAll', 'reset']}
         dataSet={this.ds}
+        tableFilterBarButtonIcon
         // queryFields={{
         //   age: <NumberField addonAfter="%"/>
         // }}

@@ -253,8 +253,8 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
           </div>
         </div>
         <div className={`${sortPrefixCls}-footer`}>
-          <Button onClick={handleCancel}>{$l('Modal', 'cancel')}</Button>
-          <Button onClick={handleConfirm} color={ButtonColor.primary}>{$l('Modal', 'ok')}</Button>
+          <Button onClick={handleCancel} icon='close'>{$l('Modal', 'cancel')}</Button>
+          <Button onClick={handleConfirm} color={ButtonColor.primary} icon='done'>{$l('Modal', 'ok')}</Button>
         </div>
       </div>
     );
