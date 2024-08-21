@@ -94,6 +94,8 @@ export const injectModal = Target => {
 
   Hoc.displayName = `${Target.displayName || Target.name || 'Anonymous'}-with-inject-modal`;
 
+  Object.assign(Hoc, Target);
+
   return Hoc as any;
 };
 
