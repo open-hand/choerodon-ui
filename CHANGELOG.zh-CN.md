@@ -74,6 +74,7 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。
 - 🐞 `<pro>Attachment`: 修复重新上传文件后未清除报错的问题。
 - 🐞 `<pro>Attachment`: 修复上传时校验信息闪烁的问题。
+- 🐞 `<pro>Attachment`: 修复删除最后一个附件不会更新缓存数量的问题。
 - 🐞 `<pro>Button`: 修复无法通过 hidden 属性完全隐藏的问题。
 - 🐞 `<pro>Tooltip`: 修复箭头和内容区域有间隙的样式问题。
 - 🐞 `<pro>Tooltip`: 修复箭头指向不准确的问题。
