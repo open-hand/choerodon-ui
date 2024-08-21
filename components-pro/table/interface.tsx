@@ -62,6 +62,8 @@ export {
   TableGroup,
   Clipboard,
   ArrangeValue,
+  TableFilterBarButtonIcon,
+  TableFilterBarButtonIconItem,
 } from './Table';
 
 export {

@@ -266,7 +266,7 @@ const locale: Locale = {
   Lov: {
     choose: '请选择',
     selection_tips: '已勾选 {count} 条数据',
-    non_conformity_warning: '值集不符合只读展示的值集规范要求，可联系系统管理员去处理！',
+    non_conformity_warning: '此值集不符合可展示值集值详细的值集规范要求，请联系系统管理员去处理！',
   },
   Transfer: {
     items: '项',

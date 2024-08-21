@@ -23,6 +23,7 @@ import Table, {
   TableQueryBarHook,
   TableQueryBarHookCustomProps,
   TableQueryBarHookProps,
+  TableFilterBarButtonIcon,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import Radio from '../../radio';
@@ -70,6 +71,7 @@ export interface TableQueryBarProps {
   onReset?: () => void;
   treeQueryExpanded?: boolean;
   comboFilterBar?: ComboFilterBarConfig;
+  tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
 }
 
 const ExportBody = observer((props) => {
@@ -875,7 +877,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   }
 
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
-    const { dynamicFilterBar, searchCode } = this.props;
+    const { dynamicFilterBar, searchCode, tableFilterBarButtonIcon } = this.props;
     const { prefixCls, tableStore } = this.context;
     const sortableFieldNames = this.getSortableFieldNames();
     return (
@@ -886,6 +888,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         prefixCls={prefixCls}
         sortableFieldNames={sortableFieldNames}
         tableStore={tableStore}
+        tableFilterBarButtonIcon={tableFilterBarButtonIcon}
         {...props}
       />
     );

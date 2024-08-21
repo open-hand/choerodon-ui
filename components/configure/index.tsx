@@ -17,6 +17,7 @@ import {
   TableProps,
   TableQueryBarHook,
   TableQueryBarHookCustomProps,
+  TableFilterBarButtonIcon,
 } from 'choerodon-ui/pro/lib/table/Table';
 import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
@@ -207,6 +208,7 @@ export interface Config extends DataSetConfig {
   performanceTableAutoHeight?: boolean | { type: TableAutoHeightType, diff: number };
   tableShowRemovedRow?: boolean;
   tableButtonsLimit?: number;
+  tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;

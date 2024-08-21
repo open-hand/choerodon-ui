@@ -38,6 +38,7 @@ import {
   SELECTCHANGE,
   SELECTFIELDS,
   stringifyValue,
+  getTableFilterBarButtonIcon,
 } from '../TableDynamicFilterBar';
 
 import Store from './QuickFilterMenuContext';
@@ -268,6 +269,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     loadConditionData = noop,
     defaultActiveKey,
     onReset = noop,
+    tableFilterBarButtonIcon,
   } = useContext(Store);
   const isChooseMenu = filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName');
   const isTenant = menuDataSet && menuDataSet.current && menuDataSet.current.get('isTenant');
@@ -789,6 +791,10 @@ const QuickFilterMenu = function QuickFilterMenu() {
     );
   };
 
+  const saveIconType = getTableFilterBarButtonIcon('saveIconType', getConfig, tableFilterBarButtonIcon);
+  const saveAsIconType = getTableFilterBarButtonIcon('saveAsIconType', getConfig, tableFilterBarButtonIcon);
+  const resetIconType = getTableFilterBarButtonIcon('resetIconType', getConfig, tableFilterBarButtonIcon);
+
   // 租户预置筛选，无保存按钮和另存为
   return (
     <>
@@ -812,7 +818,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
       {conditionStatus === RecordStatus.update && (
         <div className={`${prefixCls}-filter-buttons`}>
           {isChooseMenu && (isTenant ? null :
-            <Button onClick={handleSaveOther} className={`${prefixCls}-filter-buttons-saveas`}>
+            <Button onClick={handleSaveOther} className={`${prefixCls}-filter-buttons-saveas`} icon={saveAsIconType}>
               {$l('Table', 'save_as')}
             </Button>
           )}
@@ -823,11 +829,11 @@ const QuickFilterMenu = function QuickFilterMenu() {
               :
               false
           ) ? null : (
-              <Button onClick={handleSave} hidden={isTenant} className={`${prefixCls}-filter-buttons-save`}>
+              <Button onClick={handleSave} hidden={isTenant} className={`${prefixCls}-filter-buttons-save`} icon={saveIconType}>
                 {$l('Table', 'save_button')}
               </Button>
             )}
-          <Button onClick={handleQueryReset} className={`${prefixCls}-filter-buttons-reset`}>
+          <Button onClick={handleQueryReset} className={`${prefixCls}-filter-buttons-reset`} icon={resetIconType}>
             {$l('Table', 'reset_button')}
           </Button>
         </div>
