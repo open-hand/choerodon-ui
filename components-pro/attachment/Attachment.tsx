@@ -354,7 +354,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @autobind
   updateCacheCount() {
     const attachmentUUID = this.getValue();
-    if (attachmentUUID && this.count) {
+    if (attachmentUUID) {
       attachmentStore.updateCacheCount(attachmentUUID, this.count);
     }
   }

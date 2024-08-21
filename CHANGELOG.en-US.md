@@ -74,9 +74,12 @@ timeline: true
 - 🐞 `<pro>ColorPicker`: Fixed the issue that the white prefix could not be cleared.
 - 🐞 `<pro>Attachment`: Fixed an issue where errors were not cleared after reuploading files.
 - 🐞 `<pro>Attachment`: Fixed the issue that the validation information flickered during upload.
+- 🐞 `<pro>Attachment`: Fixed the issue that deleting the last attachment would not update the cache count.
 - 🐞 `<pro>Button`: Fixed an issue where it could not be completely `hidden` via the hidden attribute.
 - 🐞 `<pro>Tooltip`: Fixed a style issue where arrows and content areas had gaps.
+- 🐞 `<pro>Tooltip`: Fixed an issue where the arrow was pointing inaccurately.
 - 🐞 `Popover`: Fixed an issue where the mouse entered from the upper level of the content area and the pop-up box was not displayed.
+- 🐞 `<pro>ModalProvider`: Fixed an issue where class components were missing properties after using `ModalProvider.injectModal`.
 
 ## 1.6.5
 

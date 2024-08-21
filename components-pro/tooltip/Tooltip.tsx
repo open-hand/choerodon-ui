@@ -5,6 +5,7 @@ import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provi
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
+import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
 
@@ -84,15 +85,16 @@ const PopupContent: React.FC<{
   theme?: TooltipTheme;
   translate: { x: number; y: number };
   popupInnerStyle?: CSSProperties;
+  arrowAdjustPosition?: any;
 }> = (props) => {
-  const { content, prefixCls, theme, translate: { x, y }, popupInnerStyle } = props;
+  const { content, prefixCls, theme, translate: { x, y }, popupInnerStyle, arrowAdjustPosition } = props;
 
   const arrowCls = `${prefixCls}-popup-arrow`;
   const contentCls = `${prefixCls}-popup-inner`;
-  const arrowStyle = x || y ? { marginLeft: -x, marginTop: -y } : undefined;
+  const arrowStyle = x || y ? { marginLeft: arrowAdjustPosition?.left ? undefined : -x, marginTop: arrowAdjustPosition?.top ? undefined : -y } : undefined;
   return (
     <div>
-      <div className={`${arrowCls} ${arrowCls}-${theme}`} style={arrowStyle} />
+      <div className={`${arrowCls} ${arrowCls}-${theme}`} style={{...arrowStyle, ...arrowAdjustPosition}} />
       <div className={`${contentCls} ${contentCls}-${theme}`} style={popupInnerStyle}>
         {toJS(content)}
       </div>
@@ -127,6 +129,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   state = {
     translate: { x: 0, y: 0 },
+    arrowAdjustPosition: undefined,
   };
 
   get prefixCls(): string {
@@ -162,18 +165,31 @@ export default class Tooltip extends Component<TooltipProps, any> {
   }
 
   @autobind
-  handlePopupAlign(_source, _align, _target, translate) {
+  handlePopupAlign(source, align, target, translate) {
     const { translate: { x, y } } = this.state;
+    const { overflow: { adjustX, adjustY } } = align;
     if (x !== translate.x || y !== translate.y) {
       this.setState({
         translate,
       });
     }
+    if (adjustX || adjustY) {
+      const { top: popupTop, left: popupLeft } = source.getBoundingClientRect();
+      const { width, height, top: targetTop, left: targetLeft } = target.getBoundingClientRect();
+      if (adjustX) {
+        this.setState({ arrowAdjustPosition: { left: pxToRem(targetLeft - popupLeft + width / 2) } });
+      }
+      if (adjustY) {
+        this.setState({ arrowAdjustPosition: { top: pxToRem(targetTop - popupTop + height / 2) } });
+      }
+    } else {
+      this.setState({ arrowAdjustPosition: undefined })
+    }
   }
 
   @autobind
   renderPopupContent(...props) {
-    const { translate } = this.state;
+    const { translate, arrowAdjustPosition } = this.state;
     const { getTooltipTheme } = this.context;
     const { theme = getTooltipTheme(), popupInnerStyle } = this.props;
     const content = this.getContent(...props);
@@ -185,6 +201,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
           prefixCls={this.prefixCls}
           translate={translate}
           popupInnerStyle={popupInnerStyle}
+          arrowAdjustPosition={arrowAdjustPosition}
         />
       );
     }
