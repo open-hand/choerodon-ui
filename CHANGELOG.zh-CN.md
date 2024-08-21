@@ -76,6 +76,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复上传时校验信息闪烁的问题。
 - 🐞 `<pro>Button`: 修复无法通过 hidden 属性完全隐藏的问题。
 - 🐞 `<pro>Tooltip`: 修复箭头和内容区域有间隙的样式问题。
+- 🐞 `<pro>Tooltip`: 修复箭头指向不准确的问题。
 - 🐞 `Popover`: 修复鼠标从内容区域上层进入，弹框不显示的问题。
 - 🐞 `<pro>ModalProvider`: 修复类组件使用 ModalProvider.injectModal 后属性丢失的问题。
 
