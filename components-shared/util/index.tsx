@@ -46,10 +46,8 @@ export function getMousePosition(x: number, y: number, self: Window, client?: bo
       return getPageMousePosition(x, y, self, client);
     }
     const { parent } = self;
-    const iframe = findIFrame(self);
-    const { top, left } = iframe ? iframe.getBoundingClientRect() : { top: 0, left: 0 };
-    const newX = x + left;
-    const newY = y + top;
+    const newX = x;
+    const newY = y;
     if (parent === self.top) {
       return getPageMousePosition(newX, newY, parent, client);
     }
