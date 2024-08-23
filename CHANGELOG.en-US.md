@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>TreeSelect`: Optimize the style of parent checkboxes after filtering and checking child nodes in multiple selection cases.
 - 💄 `<pro>Table`: Optimized `tree` mode drag-and-drop interaction style.
 - 💄 `<pro>Attachment`: Improved display of other files in `picture` and `picture-card` mode.
+- 💄 `Popup`: Optimize the pop-up position of the popup in the iframe.
 - 🐞 `<pro>Board` : Fixed column merge scene card field not rendering.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
@@ -58,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of abnormal display of checkbox under virtual scrolling for bidirectional replication of Table.
 - 🐞 `<pro>Table`: Fixed the issue of bidirectional replication of lov types without carrying query parameters.
 - 🐞 `<pro>Table`: Fixed the issue where the `autoSize` property of the TextArea under automatic rowHeight was invalid.
+- 🐞 `<pro>Table`: Fixed the issue of personalized clearing of fixed column horizontal virtual scrolling display of blank cells.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
 - 🐞 `<pro>Select`: Fixed an issue where deleting a single value of the parent level would cause the cascade field popup not to close in multiple selection and cascading mode.
 - 🐞 `<pro>Select`: Fixed the issue that in cascade mode, multiple values of the parent would cause no data in the cascade drop-down list.

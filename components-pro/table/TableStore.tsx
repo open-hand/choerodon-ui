@@ -1330,13 +1330,16 @@ export default class TableStore {
     let firstIndex = -1;
     let lastIndex = -1;
     const centerLeafsLength = leafs.length - rightLeafs.length;
-    for (let i = leftLeafs.length; i < centerLeafsLength; i++) {
+    for (let i = (leftLeafs.length ? leftLeafs.length - 1 : 0); i < centerLeafsLength; i++) {
       const { width } = leafs[i];
       visibleColumnWidth += width;
       if (firstIndex === -1 && visibleColumnWidth > scrollLeft) {
         firstIndex = i;
       }
-      if (lastIndex === -1 && i === centerLeafsLength - 1 || this.width && visibleColumnWidth >= scrollLeft + this.width - leftLeafColumnsWidth - rightLeafColumnsWidth - (this.overflowY ? measureScrollbar() : 0)) {
+      if (
+        (lastIndex === -1 && i === centerLeafsLength - 1) ||
+        (this.width && visibleColumnWidth >= scrollLeft + this.width - leftLeafColumnsWidth - rightLeafColumnsWidth - (this.overflowY ? measureScrollbar() : 0))
+      ) {
         lastIndex = i;
       }
       if (lastIndex !== -1 && firstIndex !== -1) {
@@ -1344,7 +1347,7 @@ export default class TableStore {
       }
     }
 
-    if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (lastIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
+    if (!nextRenderColIndex || (nextRenderColIndex && nextRenderColIndex.includes(lastIndex)) || (firstIndex < nextRenderColIndex[0] || lastIndex > nextRenderColIndex[1])) {
       this.nextRenderColIndex = [lastIndex - columnThreshold, Math.min(lastIndex + columnThreshold, leafs.length)];
       this.prevRenderColIndex = [firstIndex, lastIndex];
       return [firstIndex, lastIndex];
@@ -3099,7 +3102,7 @@ export default class TableStore {
         const cValue = data[i][cField!];
         const record = this.currentData[maxRowIndex + k];
         const field = dataSet.fields.get(cField!);
-        
+
         let colEditor = cols[j].editor;
         if (typeof colEditor === 'function') {
           colEditor = colEditor(record, cField!);

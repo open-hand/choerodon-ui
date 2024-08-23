@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>TreeSelect`: 优化在多选情况下，筛选且勾选子节点后父级勾选框的样式。
 - 💄 `<pro>Table`: 优化 tree 模式拖拽交互样式。
 - 💄 `<pro>Attachment`: 优化 picture 和 picture-card 模式下其他文件显示效果。
+- 💄 `Popup`: 优化 popup 在 iframe 中的弹出位置。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
@@ -58,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制下拉批量赋值数量不对的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 类型未携带查询参数的问题。
 - 🐞 `<pro>Table`: 修复自动行高下文本域编辑器 autoSize 属性失效的问题。
+- 🐞 `<pro>Table`: 修复配置个性化清除固定列横向虚拟滚动显示空白单元格问题。
 - 🐞 `<pro>FormField`: 修复非空多值输入框最小宽度异常的问题。
 - 🐞 `<pro>Select`: 修复多选且级联模式下，删除父级单个值会导致级联字段弹窗不关闭的问题。
 - 🐞 `<pro>Select`: 修复级联模式下，父级多值会导致级联下拉框无数据的问题。
