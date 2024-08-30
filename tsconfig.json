@@ -36,6 +36,9 @@
       ],
       "choerodon-ui/shared": [
         "./components-shared/index"
+      ],
+      "axios": [
+        "./components-dataset/axios/_helpers/axios.d.ts"
       ]
     }
   },

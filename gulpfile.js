@@ -28,6 +28,7 @@ const esRcDir = path.join(cwd, 'es', 'rc-components');
 const libProDir = path.join(cwd, 'pro', 'lib');
 const esProDir = path.join(cwd, 'pro', 'es');
 const datasetDir = path.join(cwd, 'dataset');
+const datasetAxiosHelpersDir = path.join(cwd, 'dataset', 'axios', '_helpers');
 const sharedDir = path.join(cwd, 'shared');
 
 const packageJson = require(`${cwd}/package.json`);
@@ -400,12 +401,18 @@ gulp.task('compile-with-pro-lib', done => {
     .on('finish', done);
 });
 
-gulp.task('compile-with-dataset', done => {
+gulp.task('compile-with-dataset-compile', done => {
   rimraf.sync(datasetDir);
   compileDataset()
     .pipe(gulp.dest(datasetDir))
     .on('finish', done);
 });
+gulp.task('compile-with-dataset-move-js', done => {
+  gulp.src(['components-dataset/axios/_helpers/*.js'])
+    .pipe(gulp.dest(datasetAxiosHelpersDir))
+    .on('finish', done);
+});
+gulp.task('compile-with-dataset', gulp.series('compile-with-dataset-compile', 'compile-with-dataset-move-js'));
 
 gulp.task('compile-with-shared', done => {
   rimraf.sync(sharedDir);
