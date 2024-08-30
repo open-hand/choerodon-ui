@@ -1,5 +1,5 @@
-import buildURL from 'axios/lib/helpers/buildURL';
 import { AxiosRequestConfig } from 'axios';
+import buildURL from './_helpers/buildURL';
 
 export function buildSortedURL(...args: any[]) {
   const builtURL = buildURL(...args);
