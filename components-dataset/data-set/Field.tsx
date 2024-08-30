@@ -130,7 +130,8 @@ function setLookupToken(field: Field, token: string | undefined, record: Record 
 
 function combineWithOldLookupData(lookup: object[], field: Field, record?: Record): object[] {
   const lookupData = field.get(LOOKUP_DATA, record);
-  if (lookupData) {
+  const checkValue = field.get('checkValueOnOptionsChange');
+  if (lookupData && !checkValue) {
     const valueField = field.get('valueField', record);
     const others = lookupData.filter((data) => lookup.every(item => item[valueField] !== data[valueField]));
     if (others.length) {
@@ -480,6 +481,7 @@ export type FieldProps = {
   placeholder?: string | string[];
   useLookupBatch?: (code: string, field?: Field) => boolean;
   useLovDefineBatch?: (code: string, field?: Field) => boolean;
+  checkValueOnOptionsChange?: boolean,
 };
 
 const defaultProps: FieldProps = {
@@ -493,6 +495,7 @@ const defaultProps: FieldProps = {
   trueValue: true,
   falseValue: false,
   trim: FieldTrim.both,
+  checkValueOnOptionsChange: true,
 };
 
 export default class Field {
