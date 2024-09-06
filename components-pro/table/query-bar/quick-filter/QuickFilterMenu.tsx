@@ -664,7 +664,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
             fieldName: SEARCHTEXT,
             comparator: 'EQUAL',
             value: fuzzySrearchValue,
-            status: statusUpdate,
+            [statusKey]: statusUpdate,
           }];
           menuRecord.set('queryList', fuzzySrearchData);
         }

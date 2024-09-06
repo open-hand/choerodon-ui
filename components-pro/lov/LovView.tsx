@@ -197,10 +197,10 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
     }
   }
 
-  closeModal(record: Record | Record[] | undefined) {
+  closeModal(record: Record | Record[] | undefined, closeModal?: boolean) {
     if (record) {
       const { onSelect, modal } = this.props;
-      if (modal) {
+      if (modal && closeModal) {
         modal.close();
       }
       onSelect(record);
@@ -208,6 +208,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   }
 
   handleSelect = (event?: React.MouseEvent) => {
+    const { type: eventType } = event || {};
     const { selectionMode } = this;
     const {
       onBeforeSelect = noop,
@@ -227,13 +228,14 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
     if (isPromise(beforeSelect)) {
       return beforeSelect.then(result => {
         if (result !== false) {
-          this.closeModal(record);
+          this.closeModal(record, eventType === 'dblclick');
         }
         return result;
       });
     }
     if (beforeSelect !== false) {
-      this.closeModal(record);
+      this.closeModal(record, eventType === 'dblclick');
+      return beforeSelect;
     }
     return false;
   }
@@ -248,6 +250,11 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
     }
   }
 
+  handleDoubleClickSelect = (e: React.MouseEvent) => {
+    e.persist();
+    this.handleSelect(e);
+  }
+
   /**
    * 单选 onRow 处理
    * @param props
@@ -260,13 +267,13 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       const { onRow } = tableProps;
       if (onRow) {
         return {
-          onDoubleClick: !isDisabled ? this.handleSelect : noop,
+          onDoubleClick: !isDisabled ? this.handleDoubleClickSelect : noop,
           ...onRow(props),
         };
       }
     }
     return {
-      onDoubleClick: !isDisabled ? this.handleSelect : noop ,
+      onDoubleClick: !isDisabled ? this.handleDoubleClickSelect : noop ,
     };
   }
 
