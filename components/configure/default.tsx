@@ -34,7 +34,7 @@ const defaultTooltip: TooltipHook = target => {
   }
 };
 
-const defaultTooltipTheme: TooltipThemeHook = target => target === 'validation' ? 'light' : 'dark';
+const defaultTooltipTheme: TooltipThemeHook = target => ['validation', 'table-validation'].includes(target || '') ? 'light' : 'dark';
 
 const defaultRenderEmpty: renderEmptyHandler = (componentName?: string): ReactNode => {
   switch (componentName) {

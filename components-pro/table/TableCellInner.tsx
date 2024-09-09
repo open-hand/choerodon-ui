@@ -625,8 +625,10 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
-      if (!isValidationMessageHidden(message)) {
-        showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'), tableStore.getConfig);
+      if (!isValidationMessageHidden(message) &&(getTooltip('table-validation') !== TextTooltip.none)) {
+        const validateTheme = getTooltipTheme('table-validation') || getTooltipTheme('validation');
+        const validatePlacement = getTooltipPlacement('table-validation') || getTooltipPlacement('validation');
+        showValidationMessage(e, message, validateTheme, validatePlacement, tableStore.getConfig);
         return true;
       }
     }

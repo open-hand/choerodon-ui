@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added the `inputReadOnly` property, setting the input box to read-only (avoid opening the virtual keyboard on mobile devices).
 - 🌟 Upgrade `axios`.
 - 🌟 `<pro>IntlField`: Optimized for multiple languages, the current language is viewed first.
+- 💄 `configure`: extends TooltipTaget to support `table-validation` cell validation configuration.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
 - 💄 `<pro>CodeArea`: Optimize component styles after asynchronous loading. Optimizes the style after modifying the `style` property.

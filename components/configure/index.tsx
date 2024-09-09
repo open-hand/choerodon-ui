@@ -79,7 +79,7 @@ export type PerformanceEvents = {
 
 export type PerformanceEventHook<T extends keyof PerformanceEvents> = (key: T, event: PerformanceEvents[T]) => void;
 
-export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'validation' | 'help' | 'text-field-disabled';
+export type TooltipTarget = 'table-cell' | 'output' | 'label' | 'button' | 'select-option' | 'table-validation'  | 'validation' | 'help' | 'text-field-disabled';
 
 export type TooltipHook = (target?: TooltipTarget) => Tooltip | undefined;
 
