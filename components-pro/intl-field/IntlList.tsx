@@ -33,7 +33,17 @@ export default class IntlList extends Component<IntlListProps> {
     const tlsKey = getConfig('tlsKey');
     const FieldTag = type === IntlType.multipleLine ? TextArea : ObserverTextField;
     const otherProps = type === IntlType.multipleLine ? { rows, cols, resize } : {};
-    return Object.keys(supports).map(key => {
+    const supportsArr = Object.keys(supports)
+    const index = supportsArr.indexOf(lang);
+    if (index !== -1) {
+      if (index !== 0) {
+        supportsArr.splice(index, 1); 
+        supportsArr.unshift(lang);
+      }
+    } else {
+      supportsArr.unshift(lang);
+    }
+    return supportsArr.map(key => {
       const maxLengthProps = maxLengths && maxLengths[key] ? { maxLength: maxLengths[key] } : {};
       return (
         <FieldTag
