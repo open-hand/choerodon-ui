@@ -639,8 +639,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
-      this.handleSelect(name, record);
-      status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
+      const selectStatus = this.handleSelect(name, record);
+      if (selectStatus === RecordStatus.sync) {
+        status = isEqualDynamicProps(omit(dataSet.getState(ORIGINALVALUEOBJ).query, ['__dirty']), omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
+      }
     }
     this.setConditionStatus(status);
     if (autoQuery && shouldQuery) {
@@ -1037,6 +1039,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const isDirty = record ? record.dirty : false;
     this.setConditionStatus(shouldUpdate || isDirty ? RecordStatus.update : RecordStatus.sync);
     dataSet.setState(SELECTCHANGE, shouldUpdate);
+    return shouldUpdate || isDirty ? RecordStatus.update : RecordStatus.sync;
   };
 
   /**
