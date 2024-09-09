@@ -40,7 +40,12 @@ export default class Star extends Component {
 
   render() {
     const { onHover, onClick, onKeyDown } = this;
-    const { disabled, prefixCls, character, index, count, value } = this.props;
+    const { disabled, prefixCls, character, index, count, value, checkedColor, unCheckedColor } = this.props;
+    const starValue = index + 1;
+    const isHalf = value + 0.5 === starValue;
+    const isFull = starValue <= value;
+    const firstStyle = checkedColor && unCheckedColor ? { color: isFull || isHalf ? checkedColor : unCheckedColor } : {};
+    const secondStyle = checkedColor && unCheckedColor ? { color: isFull ? checkedColor : unCheckedColor } : {};
     return (
       <li
         className={this.getClassName()}
@@ -53,8 +58,8 @@ export default class Star extends Component {
         aria-setsize={count}
         tabIndex={0}
       >
-        <div className={`${prefixCls}-first`}>{character}</div>
-        <div className={`${prefixCls}-second`}>{character}</div>
+        <div className={`${prefixCls}-first`} style={firstStyle}>{character}</div>
+        <div className={`${prefixCls}-second`} style={secondStyle}>{character}</div>
       </li>
     );
   }
