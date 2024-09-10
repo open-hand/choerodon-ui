@@ -1584,7 +1584,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const fieldName = column.name;
             const field = this.dataSet.getField(fieldName);
             // 非编辑项则跳过赋值
-            if (!column.editor || !field || field.disabled || field.readOnly || !this.dataSet) {
+            if (!column.editor || !field || field.get('disabled', record) || field.get('readOnly', record) || !this.dataSet) {
               continue;
             }
             const fieldType = field.type;
@@ -2553,7 +2553,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getArrangeValue(): ReactNode | undefined {
     const {
-      tableStore: { arrangeValue, clipboard },
+      tableStore: { arrangeValue, clipboard, startChooseCell, endChooseCell },
     } = this;
     if (clipboard && clipboard.copy && clipboard.arrangeCalc && arrangeValue) {
       const { prefixCls } = this;
@@ -2561,7 +2561,7 @@ export default class Table extends DataSetComponent<TableProps> {
       if (isFunction(clipboard.arrangeCalc)) {
         return clipboard.arrangeCalc(arrangeValue);
       }
-      if (clipboard.arrangeCalc) {
+      if (clipboard.arrangeCalc && startChooseCell && endChooseCell) {
         return (
           <div key="arrangeValue" className={`${prefixCls}-arrangeValue`}>
             <span>{$l('Table', 'arrange_count')}：{count}</span>
