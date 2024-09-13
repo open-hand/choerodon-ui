@@ -87,6 +87,7 @@ timeline: true
 - 🐞 `Popover`: Fixed an issue where the mouse entered from the upper level of the content area and the pop-up box was not displayed.
 - 🐞 `<pro>ModalProvider`: Fixed an issue where class components were missing properties after using `ModalProvider.injectModal`.
 - 🐞 `<pro>Table`: Fixed the abnormal status of the operation button after the value of the dynamic filter bar is modified and the selected items are selected.
+- 🐞 `<pro>Table`: Fixed an issue where data created under data grouping could not be synced to Table.
 
 ## 1.6.5
 
