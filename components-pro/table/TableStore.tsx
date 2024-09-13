@@ -2601,7 +2601,7 @@ export default class TableStore {
     this.disposeGroupReaction();
     const { groups = [] } = this.props;
     if (groups.length) {
-      this.groupReaction = reaction(() => dataSet.records, () => this.initGroups());
+      this.groupReaction = reaction(() => dataSet.data, () => this.initGroups());
       const headerGroupNames: string[] = [];
       const rowGroupNames: string[] = [];
       const groupNames: string[] = [];

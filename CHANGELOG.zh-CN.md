@@ -87,6 +87,7 @@ timeline: true
 - 🐞 `Popover`: 修复鼠标从内容区域上层进入，弹框不显示的问题。
 - 🐞 `<pro>ModalProvider`: 修复类组件使用 ModalProvider.injectModal 后属性丢失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条修改值及勾选项后操作按钮状态异常的问题。
+- 🐞 `<pro>Table`: 修复数据分组下新增数据无法同步更新到表格。
 
 ## 1.6.5
 
