@@ -8,6 +8,7 @@ import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
+import isMobile from '../_util/isMobile';
 
 export { TooltipPlacement, TooltipTheme };
 
@@ -221,6 +222,9 @@ export default class Tooltip extends Component<TooltipProps, any> {
       (restProps as TriggerProps).popupHidden = hidden!;
     }
     delete restProps.theme;
+    if (isMobile()) {
+      return child;
+    }
     return !isNil(child) || (getRootDomNode && hasHiddenProp) ? (
       <Trigger
         prefixCls={prefixCls}
