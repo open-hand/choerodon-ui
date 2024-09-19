@@ -129,8 +129,10 @@
     &-overflow {
       overflow-x: auto;
     }
-    &-copy .@{table-prefix-cls}-cell {
-      user-select: none;
+    &-copy {
+      td.@{table-prefix-cls}-cell {
+        user-select: none;
+      }
     }
   }
 
