@@ -25,6 +25,7 @@ import {
   Modal,
   Button,
 } from 'choerodon-ui/pro';
+import { runInAction } from 'mobx';
 
 const { Column } = Table;
 
@@ -39,7 +40,34 @@ class EditButton extends React.Component {
   }
 }
 
+function customCombineSort(props) {
+  console.log('combineSort', props);
+  const { dataSet, sortInfo } = props;
+  dataSet.records = dataSet.records.sort((a, b) => {
+    const sortKeys = [...sortInfo.keys()];
+    for (let index = 0; index < sortKeys.length; index++) {
+      const fieldName = sortKeys[index];
+      const sortOrder = sortInfo.get(fieldName);
+      const aValue = a.get(fieldName);
+      const bValue = b.get(fieldName);
+      if (typeof aValue === 'string' || typeof bValue === 'string') {
+        if (aValue !== bValue) {
+          return sortOrder === 'asc'
+            ? String(aValue).localeCompare(String(bValue))
+            : String(bValue).localeCompare(String(aValue));
+        }
+      } else if (aValue !== bValue) {
+        return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+      if (index + 1 === sortInfo.size) {
+        return 0;
+      }
+    }
+  });
+}
+
 class App extends React.Component {
+  oriRecords;
   userDs = new DataSet({
     primaryKey: 'userid',
     transport: {
@@ -50,7 +78,12 @@ class App extends React.Component {
       },
     },
     autoQuery: true,
-    combineSort: true,
+    // combineSort 为函数时, 为前端排序
+    combineSort: (props) => {
+      runInAction(() => {
+        customCombineSort(props);
+      });
+    },
     pageSize: 5,
     paging: false,
     fields: [
@@ -95,10 +128,15 @@ class App extends React.Component {
         lookupCode: 'HR.EMPLOYEE_GENDER',
         multiple: ',',
       },
+      { name: 'date.startDate', type: 'date', label: '开始日期', defaultValue: new Date() },
     ],
     events: {
       submit: ({ data }) => console.log('submit data', data),
       query: ({ data, params }) => console.log('query data', data, params),
+      load: ({ dataSet }) => {
+        // 记录原始记录, 实际项目中需要注意数据可能被修改
+        this.oriRecords = dataSet.records;
+      }
     },
   });
 
@@ -143,7 +181,7 @@ class App extends React.Component {
   render() {
     const buttons = ['save', this.createButton, 'delete', 'reset'];
     return (
-      <Table queryBar="none" key="user" buttons={buttons} dataSet={this.userDs} buttonsLimit={2} pristine>
+      <Table queryBar="none" key="user" buttons={buttons} dataSet={this.userDs} buttonsLimit={2} combineColumnFilter>
         <Column name="userid" filter sortable={(a,b,s) => {
             console.log('handleClick', s)
             if (s === 'asc') {
@@ -151,6 +189,7 @@ class App extends React.Component {
             } else if (s === 'desc') {
               return (b.get('userid') - a.get('userid'));
             } else {
+              // 还原排序
               return (a.get('userid') - b.get('userid'));
             }
           }} />
@@ -159,13 +198,19 @@ class App extends React.Component {
           filter 
           sortable={(a,b,s) => {
             console.log('handleClick', s)
-            if (s === 'desc') {
+            if (s === 'asc') {
               return (a.get('age') - b.get('age'));
-            } else if (s === 'asc') {
-              return (b.get('age') - a.get('age'));
             } else {
-              return (a.get('userid') - b.get('userid'));
+              return (b.get('age') - a.get('age'));
             }
+          }}
+          sortableCallback={({ dataSet, field, order }) => {
+            runInAction(() => {
+              if (!order) {
+                // 自定义还原排序
+                dataSet.records = this.oriRecords;
+              }
+            });
           }}
           width={200} 
           />
@@ -187,6 +232,7 @@ class App extends React.Component {
         <Column name="sex" filter sortable width={200} />
         <Column name="code_select" filter sortable width={200} />
         <Column name="sexMultiple" filter sortable width={200} />
+        <Column name="date.startDate" filter sortable width={200} />
         <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
       </Table>
     );

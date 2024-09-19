@@ -123,6 +123,7 @@ subtitle: 表格
 | customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义  react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽  | boolean | false |
 | rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  |
+| combineColumnFilter | 是否开启前端组合过滤  | boolean  |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 
@@ -170,6 +171,7 @@ subtitle: 表格
 | aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+| sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  |
 
 ### TableGroup
 

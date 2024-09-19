@@ -854,6 +854,10 @@ export interface TableProps extends DataSetComponentProps {
    * 动态筛选条按钮icon
    */
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
+  /**
+   * 前端组合过滤
+   */
+  combineColumnFilter?: boolean;
 }
 
 @observer

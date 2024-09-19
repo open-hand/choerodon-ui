@@ -122,6 +122,12 @@ export interface ColumnPropsBase extends ElementProps {
    */
   sortable?: boolean | CompareFn;
   /**
+   * 排序结束的回调函数
+   * @param props 
+   * @returns 
+   */
+  sortableCallback?: (props: { dataSet: DataSet, field: Field, order?: string }) => void;
+  /**
    * 是否可前端过滤
    * @default false
    */

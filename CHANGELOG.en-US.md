@@ -35,6 +35,9 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added the `inputReadOnly` property, setting the input box to read-only (avoid opening the virtual keyboard on mobile devices).
 - 🌟 Upgrade `axios`.
 - 🌟 `<pro>IntlField`: Optimized for multiple languages, the current language is viewed first.
+- 🌟 `<pro>DataSet`: The `combineSort` property adds callback function types to support front-end combinatorial sorting.
+- 🌟 `<pro>Table`: Added `combineColumnFilter` property.
+- 🌟 `<pro>Table.Column`: Added `sortableCallback` property.
 - 💄 `configure`: extends TooltipTaget to support `table-validation` cell validation configuration.
 - 💄 `<pro>Tooltip`: Compatible with `hover` trigger mode of mobile terminal.
 - 💄 `<pro>DataSet`: If `lookupAxiosConfig` is configured, the batch query logic is not executed.
@@ -53,6 +56,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Improved display of other files in `picture` and `picture-card` mode.
 - 💄 `Popup`: Optimize the pop-up position of the popup in the iframe.
 - 💄 `Tooltip`: Disable mobile interaction.
+- 💄 `<pro>Table`: Optimized front-end filtering for date formats.
 - 🐞 `<pro>Board` : Fixed column merge scene card field not rendering.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.
