@@ -72,10 +72,10 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     isRenderCell,
   } = props;
   const { column, key, prev } = columnGroup;
-  const { tooltipProps } = column;
+  const { tooltipProps, sortableCallback } = column;
   const { rowHeight, border, prefixCls, tableStore, dataSet, aggregation, autoMaxWidth } = useContext(TableContext);
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
-  const { columnResizable, headerRowHeight, headerFilter } = tableStore;
+  const { columnResizable, headerRowHeight, props: { combineColumnFilter } } = tableStore;
   const {
     headerClassName,
     headerStyle = {},
@@ -248,8 +248,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const currentColumnGroup: ColumnGroup | undefined = columnResizable ? columnGroup.lastLeaf : undefined;
 
-  const handleClick = useCallback(() => {
-    if (name) {
+  const handleClick = useCallback(async () => {
+    if (name && field) {
       const { sortable } = column;
       if (typeof sortable === 'function') {
         const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
@@ -279,10 +279,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
           dataSet.records = dataSet.records.sort((record1, record2) => sortable(record1, record2, field!.order as SortOrder));
         })
       } else {
-        dataSet.sort(name);
+        await dataSet.sort(name);
+      }
+      if (sortableCallback) {
+        sortableCallback({ dataSet, field, order: field.order });
       }
     }
-  }, [dataSet, name]);
+  }, [dataSet, name, sortableCallback]);
 
   const handleMouseEnter = useCallback((e) => {
     const tooltip = tableStore.getColumnTooltip(column);
@@ -403,21 +406,37 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const onReset = useCallback(() => {
     setFilterText('');
     runInAction(() => {
-      tableStore.headerFilter = undefined;
+      if (!combineColumnFilter) {
+        tableStore.headerFilter = undefined;
+        return;
+      }
+      if (tableStore.headerFilter && tableStore.headerFilter.length) {
+        tableStore.headerFilter = tableStore.headerFilter.filter(item => item.fieldName !== name);
+      }
     })
-  }, [setFilterText, tableStore]);
+  }, [setFilterText, tableStore, name, combineColumnFilter]);
 
   const doFilter = useCallback(() => {
     if (!isUndefined(filterText)) {
       runInAction(() => {
-        tableStore.headerFilter = {
+        const filterItem = {
           fieldName: name,
           filterText: filterText === null ? '' : filterText,
           filter,
         };
+        if (!combineColumnFilter) {
+          tableStore.headerFilter = [filterItem];
+          return;
+        }
+        if (tableStore.headerFilter && tableStore.headerFilter.length) {
+          tableStore.headerFilter = tableStore.headerFilter.filter(item => item.fieldName !== name);
+          tableStore.headerFilter.push(filterItem);
+        } else {
+          tableStore.headerFilter = [filterItem];
+        }
       })
     }
-  }, [filterText, tableStore, name, filter]);
+  }, [filterText, tableStore, name, filter, combineColumnFilter]);
 
   const handleResize = useCallback(() => {
     const { clipboard, startChooseCell, endChooseCell, drawCopyBorder } = tableStore;
@@ -558,19 +577,21 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
           </div>
         );
       }
+      const { headerFilter } = tableStore;
+      const filterItem = headerFilter && headerFilter.length > 0 ? headerFilter.find(item => item.fieldName === name) : undefined;
       return (
         <Popover
           content={popoverContent}
           overlayClassName={`${prefixCls}-sort-popup-content`}
           trigger="click"
           onVisibleChange={() => {
-            if (headerFilter) {
-              setFilterText(headerFilter.fieldName === name ? String(headerFilter.filterText) : '');
+            if (filterItem) {
+              setFilterText(filterItem.fieldName === name ? String(filterItem.filterText) : '');
             }
           }}
           key='filter'
         >
-          <Icon key="filter" className={filterText && String(headerFilter && headerFilter.fieldName) === name ? `${prefixCls}-filter-icon ${prefixCls}-filter-icon-active` : `${prefixCls}-filter-icon`} type="search" onClick={(e) => e.stopPropagation()} />
+          <Icon key="filter" className={filterText && String(filterItem && filterItem.fieldName) === name ? `${prefixCls}-filter-icon ${prefixCls}-filter-icon-active` : `${prefixCls}-filter-icon`} type="search" onClick={(e) => e.stopPropagation()} />
         </Popover>
       );
     }

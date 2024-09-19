@@ -461,9 +461,9 @@ export interface DataSetProps {
    */
   cascadeParams?: (parent: Record, primaryKey?: string) => object;
   /**
-   * 组合列排序查询
+   * 组合列排序查询; 当为回调函数时, 为前端组合排序, 需要在函数中自定义排序数据
    */
-  combineSort?: boolean;
+  combineSort?: boolean | ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void);
   /**
    * 树形选择策略
    */
@@ -2149,7 +2149,7 @@ export default class DataSet extends EventManager {
    * @param sortInfo 字段名 或 有顺序的字段列表
    */
   @action
-  sort(sortInfo: string | Map<string, SortOrder>): void {
+  async sort(sortInfo: string | Map<string, SortOrder>): Promise<void> {
     const { combineSort } = this.props;
     const { combineSort: nowCombineSort } = this;
     if (typeof sortInfo === 'string') {
@@ -2185,17 +2185,21 @@ export default class DataSet extends EventManager {
           field.order = sortOrder;
         }
       });
+      if (typeof combineSort === 'function') {
+        combineSort({ dataSet: this, sortInfo });
+        return;
+      }
     } else {
       return;
     }
     if (this.paging) {
-      this.query();
+      await this.query();
     } else {
       const orderFields = getOrderFields(this);
       if (orderFields.length) {
         this.records = sortTree(this.records, orderFields, true);
       } else {
-        this.query();
+        await this.query();
       }
     }
   }
@@ -3177,7 +3181,7 @@ Then the query method will be auto invoke.`,
   @action
   private initCombineSort(): void {
     const { combineSort } = this.props;
-    this.combineSort = combineSort;
+    this.combineSort = !!combineSort;
     const orderFieldNames: Map<string, SortOrder> = new Map();
     this.fields.forEach(field => {
       if (field.order && field.name) {

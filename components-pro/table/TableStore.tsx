@@ -22,6 +22,7 @@ import isFunction from 'lodash/isFunction';
 import omit from 'lodash/omit';
 import pick from 'lodash/pick';
 import noop from 'lodash/noop';
+import { isMoment } from 'moment';
 import { CHILDREN_PAGE_INFO } from 'choerodon-ui/dataset/data-set/DataSet';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
@@ -79,6 +80,9 @@ import BatchRunner from '../_util/BatchRunner';
 import { LabelLayout } from '../form/enum';
 import ColumnGroup from './ColumnGroup';
 import { getTdElementByTarget } from './TableCell';
+import {
+  getDateFormatByField,
+} from '../field/utils';
 
 export const SELECTION_KEY = '__selection-column__'; // TODO:Symbol
 
@@ -1030,7 +1034,7 @@ export default class TableStore {
 
   @observable footerHeight: number;
 
-  @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) };
+  @observable headerFilter?: { fieldName?: string; filterText?: any; filter?: boolean | ((props: { record: Record; filterText?: string }) => boolean) }[];
 
   nextRenderColIndex?: [number, number];
 
@@ -2244,7 +2248,7 @@ export default class TableStore {
   @computed
   get currentData(): Record[] {
     const { pristine, filter: recordFilter, treeFilter } = this.props;
-    const { dataSet, isTree, headerFilter } = this;
+    const { dataSet, isTree, headerFilter: headerFilterArr } = this;
     const filter = (
       isTree
         ? typeof treeFilter === 'function' ? treeFilter : recordFilter
@@ -2257,39 +2261,46 @@ export default class TableStore {
     if (pristine) {
       data = data.filter(record => !record.isNew);
     }
-    if (headerFilter) {
-      const { filter, filterText } = headerFilter;
-      if (typeof filter === 'function') {
-        data = data.filter(record => filter({ record, filterText }));
-      } else {
-        const field = dataSet.getField(headerFilter.fieldName);
-        const type = field && field.get('type');
-        const multiple = field && field.get('multiple');
-        let isLookUp = false;
-        if (field &&
-          (
-            field.get('lookupCode') ||
-            isString(field.get('lookupUrl')) ||
-            (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options'))) ||
-            field.get('lovCode')
-          )
-        ) {
-          isLookUp = true;
-        }
-        data = data.filter(record => {
-          let recordText: string;
-          if (multiple) {
-            if (isLookUp) {
-              recordText = record.get(headerFilter.fieldName).map(value => field!.getText(value)).join('');
-            } else {
-              recordText = record.get(headerFilter.fieldName).join('');
-            }
-          } else {
-            recordText = isLookUp ? String(field!.getText(record.get(headerFilter.fieldName))) : String(record.get(headerFilter.fieldName));
+    if (headerFilterArr && headerFilterArr.length) {
+      headerFilterArr.forEach(headerFilter => {
+        const { filter, filterText } = headerFilter;
+        if (typeof filter === 'function') {
+          data = data.filter(record => filter({ record, filterText }));
+        } else {
+          const field = dataSet.getField(headerFilter.fieldName);
+          const type = field && field.get('type');
+          const multiple = field && field.get('multiple');
+          let isLookUp = false;
+          if (field &&
+            (
+              field.get('lookupCode') ||
+              isString(field.get('lookupUrl')) ||
+              (type !== FieldType.object && (field.get('lovCode') || field.getLookup() || field.get('options'))) ||
+              field.get('lovCode')
+            )
+          ) {
+            isLookUp = true;
           }
-          return recordText.toLocaleLowerCase().includes(String(headerFilter.filterText).toLocaleLowerCase())
-        });
-      }
+          data = data.filter(record => {
+            let recordText: string;
+            const fieldValue = record.get(headerFilter.fieldName);
+            if (multiple) {
+              if (isLookUp) {
+                recordText = fieldValue.map(value => field!.getText(value)).join('');
+              } else {
+                recordText = fieldValue.map(value => {
+                  return isMoment(value) ? value.format(getDateFormatByField(field, undefined, record)) : value;
+                }).join('');
+              }
+            } else {
+              recordText = isLookUp
+                ? String(field!.getText(fieldValue))
+                : String(isMoment(fieldValue) ? fieldValue.format(getDateFormatByField(field, undefined, record)) : fieldValue);
+            }
+            return recordText.toLocaleLowerCase().includes(String(headerFilter.filterText).toLocaleLowerCase())
+          });
+        }
+      });
     }
     return data;
   }
