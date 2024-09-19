@@ -706,7 +706,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (customizable && customizedBtn) {
       buttons = [customizedColumnHeader(), ...(buttons || [])];
     }
-    const hasCombineSort = queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort;
+    const hasCombineSort = !!(queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort);
     if (hasCombineSort) {
       const sortableFieldNames = this.getSortableFieldNames();
       if (sortableFieldNames.length > 0) {
