@@ -66,6 +66,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of incorrect batch assignment quantity in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of abnormal display of checkbox under virtual scrolling for bidirectional replication of Table.
 - 🐞 `<pro>Table`: Fixed the issue of bidirectional replication of lov types without carrying query parameters.
+- 🐞 `<pro>Table`: Fixed the issue where table column headings cannot be selected after enabling bidirectional copying.
 - 🐞 `<pro>Table`: Fixed the issue where the `autoSize` property of the TextArea under automatic rowHeight was invalid.
 - 🐞 `<pro>Table`: Fixed the issue of personalized clearing of fixed column horizontal virtual scrolling display of blank cells.
 - 🐞 `<pro>FormField`: Fixed the issue that the min-width of the non-empty multiple input was abnormal.
