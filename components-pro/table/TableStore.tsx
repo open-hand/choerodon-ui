@@ -3119,7 +3119,7 @@ export default class TableStore {
           colEditor = colEditor(record, cField!);
         }
 
-        if (colEditor && field && !field.readOnly && !field.disabled) {
+        if (colEditor && field && !field.get('readOnly', record) && !field.get('disabled', record)) {
           record.set(cField!, cValue);
         }
       }
