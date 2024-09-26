@@ -1,6 +1,5 @@
 import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
-import isMobile from 'choerodon-ui/pro/lib/_util/isMobile';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -258,10 +257,6 @@ export default class Tooltip extends Component<TooltipProps, any> {
     const childCls = classNames(childProps.className, {
       [openClassName || `${prefixCls}-open`]: true,
     });
-
-    if (isMobile()) {
-      return child;
-    }
 
     return (
       <RcTooltip
