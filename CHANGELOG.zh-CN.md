@@ -35,9 +35,9 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增 inputReadOnly 属性，设置输入框为只读（避免在移动设备上打开虚拟键盘）。
 - 🌟 升级 axios。
 - 🌟 `<pro>IntlField`: 优化多语言，当前语言在首位查看。
-- 🌟 `<pro>DataSet`: combineSort 属性新增回调函数类型, 支持前端组合排序。
 - 🌟 `<pro>Table`: 新增 combineColumnFilter 属性。
 - 🌟 `<pro>Table.Column`: 新增 sortableCallback 属性。
+- 🌟 `<pro>Table`: 新增 combineSortConfig 属性。
 - 💄 `configure`: 扩展 TooltipTaget，支持 `table-validation` 单元格校验配置。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
@@ -57,6 +57,7 @@ timeline: true
 - 💄 `Popup`: 优化 popup 在 iframe 中的弹出位置。
 - 💄 `Tooltip`: 禁用在移动端的交互。
 - 💄 `<pro>Table`: 优化日期格式的前端筛选。
+- 💄 `<pro>Upload`: 优化进度条宽度。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。

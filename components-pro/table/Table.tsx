@@ -29,6 +29,7 @@ import {
   DragUpdate,
 } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';
+import { SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -70,6 +71,7 @@ import {
   TablePaginationPosition,
   TableQueryBarType,
   MultiDragSelectMode,
+  SortRangeOption,
 } from './enum';
 import TableQueryBar from './query-bar';
 import ToolBar from './query-bar/TableToolBar';
@@ -322,6 +324,21 @@ export type TableFilterBarButtonIconItem = {
   resetIconType?: string | boolean;
 }
 export type TableFilterBarButtonIcon = undefined | boolean | TableFilterBarButtonIconItem;
+
+export type CombineSortConfig = {
+  /**
+   * 当前页排序(前端排序)
+   */
+  currentDataSort?: boolean | ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void);
+  /**
+   * 所有页排序(后端排序)
+   */
+  allDataSort?: boolean;
+  /**
+   * 是否显示排序选项, 可设置默认选项
+   */
+  showSortOption?: boolean | SortRangeOption;
+};
 
 let _instance;
 // 构造一个单例table来防止body下不能有table元素的报错
@@ -858,6 +875,10 @@ export interface TableProps extends DataSetComponentProps {
    * 前端组合过滤
    */
   combineColumnFilter?: boolean;
+  /**
+   * 组合排序配置
+   */
+  combineSortConfig?: CombineSortConfig;
 }
 
 @observer
@@ -905,6 +926,7 @@ export default class Table extends DataSetComponent<TableProps> {
     showHeader: true,
     fullColumnWidth: true,
     multiDragSelectMode: MultiDragSelectMode.keyboard,
+    combineColumnFilter: true,
   };
 
   tableStore: TableStore = new TableStore(this);

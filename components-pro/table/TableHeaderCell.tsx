@@ -403,6 +403,13 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     resizeDoubleClick();
   }, [delayResizeStart, resizeDoubleClick]);
 
+  const onAllReset = useCallback(() => {
+    setFilterText('');
+    runInAction(() => {
+      tableStore.headerFilter = undefined;
+    });
+  }, [setFilterText, tableStore]);
+
   const onReset = useCallback(() => {
     setFilterText('');
     runInAction(() => {
@@ -542,6 +549,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       let popoverContent: React.ReactNode;
       const footer: React.ReactNode = (
         <div className={`${prefixCls}-sort-popup-footer`}>
+          {combineColumnFilter && (
+            <Button onClick={onAllReset} key='allReset' className={`${prefixCls}-filter-all-reset`}>
+              {$l('Table', 'all_reset_button')}
+            </Button>
+          )}
           <Button onClick={onReset} key='reset'>
             {$l('Table', 'reset_button')}
           </Button>
@@ -563,6 +575,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
               dataSet,
               field,
               filterText,
+              clearAllFilters: onAllReset,
               clearFilters: onReset,
               confirm: doFilter,
               footer,
@@ -572,7 +585,15 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
       } else {
         popoverContent = (
           <div onClick={(e) => e.stopPropagation()}>
-            <TextField autoFocus onEnterDown={doFilter} style={{ width: '100%' }} valueChangeAction={ValueChangeAction.input} value={filterText} onChange={(value) => setFilterText(value)} />
+            <TextField
+              autoFocus
+              onEnterDown={doFilter}
+              style={{ width: '100%' }}
+              valueChangeAction={ValueChangeAction.input}
+              value={filterText}
+              onChange={(value) => setFilterText(value)}
+              placeholder={$l('Table', 'filter_placeholder')}
+            />
             {footer}
           </div>
         );
@@ -587,6 +608,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
           onVisibleChange={() => {
             if (filterItem) {
               setFilterText(filterItem.fieldName === name ? String(filterItem.filterText) : '');
+            } else if (filterText) {
+              setFilterText('');
             }
           }}
           key='filter'

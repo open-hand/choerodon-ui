@@ -58,7 +58,7 @@ title: DataSet
 | axios | 覆盖默认 axios | AxiosInstance |  |
 | dataToJSON | 数据转为 json 的方式，详见[DataToJSON](#DataToJSON) | DataToJSON | dirty |
 | cascadeParams | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |
-| combineSort | 是否开启组件列排序传参; 当为回调函数时, 为前端组合排序, 需要在函数中自定义排序数据 | boolean \| ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void) | false |
+| combineSort | 是否开启组件列排序传参; 前端排序和后端排序具体配置参考 Table API | boolean | false |
 | forceValidate | 始终校验全部数据 | boolean | false |
 | validationRules | dataSet校验规则，详见[ValidationRule](#ValidationRule) | ValidationRule\[\] |  |
 
