@@ -1073,7 +1073,7 @@
   &-sort-popup-footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 0.08rem;
+    margin-top: 0.16rem;
   }
 
   &-sort-popup-content {
@@ -1081,7 +1081,7 @@
     min-height: 0.8rem;
 
     .@{c7n-prefix}-popover-inner-content {
-      padding: 0.08rem;
+      padding: 0.16rem;
     }
   }
 
@@ -1091,6 +1091,10 @@
     &-active {
       color: @primary-color;
     }
+  }
+
+  &-filter-all-reset {
+    margin-right: auto;
   }
 
   &-sort-icon,
@@ -1266,6 +1270,21 @@
       .@{c7n-prefix}-popover-inner-content {
         padding: 0.06rem 0.16rem 0.16rem !important;
       }
+    }
+
+    &-header-inner {
+      position: relative;
+      display: flex;
+
+      &-title {
+        font-weight: 500;
+        font-size: 0.14rem;
+        line-height: 0.22rem;
+      }
+    }
+
+    &-range-option {
+      margin-left: auto;
     }
 
     &-content {

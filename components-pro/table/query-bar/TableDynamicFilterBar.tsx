@@ -41,7 +41,7 @@ import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { DynamicFilterBarConfig, Suffixes, TableFilterBarButtonIcon, TableFilterBarButtonIconItem } from '../Table';
+import { DynamicFilterBarConfig, Suffixes, TableFilterBarButtonIcon, TableFilterBarButtonIconItem, CombineSortConfig } from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
@@ -327,6 +327,10 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   showSingleLine?: boolean;
   filterQueryCallback?: Function;
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
+  /**
+   * 组合排序配置
+   */
+  combineSortConfig?: CombineSortConfig;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -1550,11 +1554,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   getCombineSort(): ReactNode {
-    const { dataSet, sortableFieldNames, tableStore } = this.props;
+    const { dataSet, sortableFieldNames, tableStore, combineSortConfig } = this.props;
     const { prefixCls } = this;
     let combineSort: ReactNode = null;
-    if (dataSet.props.combineSort && sortableFieldNames && sortableFieldNames.length > 0) {
-      combineSort = <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} />;
+    if (dataSet.props.combineSort && sortableFieldNames && sortableFieldNames.length > 0 &&
+      (!combineSortConfig || combineSortConfig.currentDataSort !== false || combineSortConfig.allDataSort !== false)
+    ) {
+      combineSort = <CombineSort dataSet={dataSet} prefixCls={prefixCls} sortableFieldNames={sortableFieldNames} combineSortConfig={combineSortConfig} />;
     }
     if (!tableStore) return combineSort;
 

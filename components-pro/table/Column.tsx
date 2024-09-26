@@ -25,6 +25,7 @@ export type FilterPopoverProps = {
   field?: Field;
   filterText: any;
   setFilterText: Function;
+  clearAllFilters: Function,
   clearFilters: Function;
   confirm: Function;
   footer: ReactNode;

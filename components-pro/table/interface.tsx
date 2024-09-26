@@ -23,6 +23,7 @@ export {
   RowBoxPlacement,
   GroupType,
   TableColumnResizeTriggerType,
+  SortRangeOption,
 } from './enum';
 
 export {
@@ -64,6 +65,7 @@ export {
   ArrangeValue,
   TableFilterBarButtonIcon,
   TableFilterBarButtonIconItem,
+  CombineSortConfig,
 } from './Table';
 
 export {

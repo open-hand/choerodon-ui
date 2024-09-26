@@ -40,32 +40,6 @@ class EditButton extends React.Component {
   }
 }
 
-function customCombineSort(props) {
-  console.log('combineSort', props);
-  const { dataSet, sortInfo } = props;
-  dataSet.records = dataSet.records.sort((a, b) => {
-    const sortKeys = [...sortInfo.keys()];
-    for (let index = 0; index < sortKeys.length; index++) {
-      const fieldName = sortKeys[index];
-      const sortOrder = sortInfo.get(fieldName);
-      const aValue = a.get(fieldName);
-      const bValue = b.get(fieldName);
-      if (typeof aValue === 'string' || typeof bValue === 'string') {
-        if (aValue !== bValue) {
-          return sortOrder === 'asc'
-            ? String(aValue).localeCompare(String(bValue))
-            : String(bValue).localeCompare(String(aValue));
-        }
-      } else if (aValue !== bValue) {
-        return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-      }
-      if (index + 1 === sortInfo.size) {
-        return 0;
-      }
-    }
-  });
-}
-
 class App extends React.Component {
   oriRecords;
   userDs = new DataSet({
@@ -78,14 +52,9 @@ class App extends React.Component {
       },
     },
     autoQuery: true,
-    // combineSort 为函数时, 为前端排序
-    combineSort: (props) => {
-      runInAction(() => {
-        customCombineSort(props);
-      });
-    },
-    pageSize: 5,
-    paging: false,
+    combineSort: true,
+    pageSize: 10,
+    paging: true,
     fields: [
       {
         name: 'userid',

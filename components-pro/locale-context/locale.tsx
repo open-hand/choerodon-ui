@@ -37,6 +37,8 @@ export interface Locale extends DataSetLocale {
     delete_button: string;
     remove_button: string;
     reset_button: string;
+    all_reset_button: string;
+    filter_placeholder: string;
     query_button: string;
     expand_button: string;
     collapse_button: string;
@@ -142,6 +144,8 @@ export interface Locale extends DataSetLocale {
     please_select_column: string,
     ascending: string,
     descending: string,
+    current_data_sort: string;
+    all_data_sort: string;
     ad_search_help: string,
     ad_search_all: string,
     ad_search_any: string,

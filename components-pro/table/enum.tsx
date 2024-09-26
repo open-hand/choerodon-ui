@@ -123,3 +123,14 @@ export enum MultiDragSelectMode {
    */
   checkbox = 'checkbox',
 }
+
+export enum SortRangeOption {
+  /**
+   * 当前页排序
+   */
+  currentDataSort = 'currentDataSort',
+  /**
+   * 所有页排序
+   */
+  allDataSort = 'allDataSort',
+}
