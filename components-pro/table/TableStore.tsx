@@ -2846,6 +2846,7 @@ export default class TableStore {
       }
       this.setRowLoaded(record, true);
     } finally {
+      this.setRowLoaded(record, true);
       this.setRowPending(record, false);
     }
   }

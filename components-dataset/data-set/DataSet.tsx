@@ -1710,6 +1710,7 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   last(): Promise<Record | undefined> {
+    if (this.paging === 'noCount') return Promise.resolve(undefined);
     return this.locate((this.paging ? this.totalCount : this.length) - 1);
   }
 
@@ -1760,6 +1761,7 @@ export default class DataSet extends EventManager {
    * @return Promise
    */
   lastPage(): Promise<any> {
+    if (this.paging === 'noCount') return Promise.resolve(undefined);
     return this.page(this.totalPage);
   }
 
@@ -3091,7 +3093,7 @@ Then the query method will be auto invoke.`,
   private findInAllPage(index: number): Record | undefined {
     const { paging } = this;
     let indexRecord;
-    if (paging === true) {
+    if (paging === true || paging === 'noCount') {
       indexRecord = this.data[this.getIndexInCurrentPage(index)];
     } else if (paging === 'server') {
       indexRecord = this.treeData[this.getIndexInCurrentPage(index)];

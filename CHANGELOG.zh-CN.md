@@ -95,6 +95,7 @@ timeline: true
 - 🐞 `<pro>ModalProvider`: 修复类组件使用 ModalProvider.injectModal 后属性丢失的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条修改值及勾选项后操作按钮状态异常的问题。
 - 🐞 `<pro>Table`: 修复数据分组下新增数据无法同步更新到表格。
+- 🐞 `<pro>Table`: 修复树形异步查询报错情况下循环的问题。
 
 ## 1.6.5
 

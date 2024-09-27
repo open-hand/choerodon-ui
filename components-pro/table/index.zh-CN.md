@@ -222,6 +222,7 @@ subtitle: 表格
 | fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false |
 | fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  |
 | fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  |
+| filterQueryCallback | 查询回调  | ({ dataSet })=> void |  |
 | autoQuery | 条件变更是否自动查询  | boolean | true |
 | refreshBtn | 刷新按钮  | boolean | true |
 | onQuery | 查询回调 | () => void |  |
