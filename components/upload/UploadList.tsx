@@ -314,7 +314,11 @@ export default class UploadList extends Component<UploadListProps, any> {
           )}
         </PopConfirm>
       ) : null;
-      const removeIcon = showRemoveIcon ? (
+      const removeIcon = (
+        isFunction(showRemoveIcon)
+          ? (showRemoveIcon as UploadListIconFunc)(file)
+          : showRemoveIcon
+      ) ? (
         <PopConfirm
           {...popconfirmProps}
           title={removePopConfirmTitle || locale.confirmRemove}

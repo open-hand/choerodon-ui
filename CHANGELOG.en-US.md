@@ -58,6 +58,7 @@ timeline: true
 - 💄 `Tooltip`: Disable mobile interaction.
 - 💄 `<pro>Table`: Optimized front-end filtering for date formats.
 - 💄 `<pro>Upload`: Optimized progress bar width.
+- 💄 `<pro>Upload`: optimizes extension showRemoveIcon type.
 - 🐞 `<pro>Board` : Fixed column merge scene card field not rendering.
 - 🐞 `<pro>Radio`: Fixed the issue that if the `onChange` is not used in controlled mode, the component will become `readOnly`.
 - 🐞 `<pro>Table`: Fixed the issue that if you enabled `cacheSelection`, you could not unselect all.

@@ -35,7 +35,7 @@ export interface UploadChangeParam {
 }
 
 export interface ShowUploadListInterface {
-  showRemoveIcon?: boolean;
+  showRemoveIcon?: boolean | UploadListIconFunc;
   showPreviewIcon?: boolean | UploadListIconFunc;
   showDownloadIcon?: boolean | UploadListIconFunc;
   showReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
@@ -124,7 +124,7 @@ export interface UploadListProps {
   items?: Array<UploadFile>;
   progressAttr?: Record<string, any>;
   prefixCls?: string;
-  showRemoveIcon?: boolean;
+  showRemoveIcon?: boolean | UploadListIconFunc;
   dragUploadList?: boolean;
   showPreviewIcon?: boolean | UploadListIconFunc;
   showDownloadIcon?: boolean | UploadListIconFunc;

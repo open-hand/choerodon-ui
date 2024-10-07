@@ -58,6 +58,7 @@ timeline: true
 - 💄 `Tooltip`: 禁用在移动端的交互。
 - 💄 `<pro>Table`: 优化日期格式的前端筛选。
 - 💄 `<pro>Upload`: 优化进度条宽度。
+- 💄 `<pro>Upload`: 优化扩展 showRemoveIcon 类型。
 - 🐞 `<pro>Board`: 修复列合并场景卡片字段不渲染的情况。
 - 🐞 `<pro>Radio`: 修复受控模式下不使用 onChange 会成为只读状态的问题。
 - 🐞 `<pro>Table`: 修复开启勾选缓存无法取消全选的问题。
