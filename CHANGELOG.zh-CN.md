@@ -42,6 +42,7 @@ timeline: true
 - 💄 `configure`: 扩展 TooltipTaget，支持 `table-validation` 单元格校验配置。
 - 💄 `<pro>Tooltip`: 兼容移动端的 hover 触发方式。
 - 💄 `<pro>DataSet`: 当字段配置 lookupAxiosConfig 属性时，不执行批量查询逻辑。
+- 💄 `<pro>DataSet`: 优化连续查询接口返回异步的问题，连续查询下会终止前一次未完成的请求。
 - 💄 `<pro>CodeArea`: 优化异步加载后的组件样式。优化修改 style 属性后的样式。
 - 💄 `<pro>DataSet`: 优化单行保存逻辑。
 - 💄 `<pro>Board`: 优化分组的下拉选项显示逻辑。

@@ -507,6 +507,8 @@ export default class DataSet extends EventManager {
   children: DataSetChildren = {};
 
   private prepareForReport?: { result: ValidationErrors[]; timeout?: number; valid: boolean };
+  
+  private lastRequestSource;
 
   @computed
   get queryParameter(): object {
@@ -3264,7 +3266,14 @@ Then the query method will be auto invoke.`,
           if (queryEventResult) {
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
-            const result = await this.axios(fixAxiosConfig(newConfig));
+            if (this.lastRequestSource) {
+              this.lastRequestSource.cancel('New request started, cancelling the previous one.');
+            }
+            this.lastRequestSource = axiosStatic.CancelToken.source();
+            const result = await this.axios({
+              cancelToken: this.lastRequestSource.token,
+              ...fixAxiosConfig(newConfig),
+            });
             this.performance.timing.fetchEnd = Date.now();
             runInAction(() => {
               if (page >= 0 && !queryChildren) {
