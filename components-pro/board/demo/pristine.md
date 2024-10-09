@@ -24,10 +24,9 @@ import {
   SelectBox,
   Modal,
   Button,
-  Board
+  Board,
 } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
-
 
 const { Column } = Table;
 
@@ -69,9 +68,9 @@ class EditButton extends React.Component {
 
 @observer
 class App extends React.Component {
-    optionDs = new DataSet({
+  optionDs = new DataSet({
     selection: 'single',
-    data: [{value: 0, meaning: '关'},{value: 1, meaning: '开'}],
+    data: [{ value: 0, meaning: '关' }, { value: 1, meaning: '开' }],
     autoQuery: true,
   });
 
@@ -200,7 +199,7 @@ class App extends React.Component {
         label: '开关',
         options: this.optionDs,
         trueValue: 1,
-        falseValue: 0, 
+        falseValue: 0,
         required: true,
       },
       {
@@ -260,13 +259,16 @@ class App extends React.Component {
     console.log('record', record);
     // record.setState('ceshi', '测试0')
     return [
-    'edit',
-    <Button icon="playlist_add" onClick={() => console.log('playlist_add zzzzzzzzzz')
-} key="add123">
-      新增
-    </Button>,
-    ['delete', { color: 'red' }],
-  ]
+      'edit',
+      <Button
+        icon="playlist_add"
+        onClick={() => console.log('playlist_add zzzzzzzzzz')}
+        key="add123"
+      >
+        新增
+      </Button>,
+      ['delete', { color: 'red' }],
+    ];
   };
 
   // get columns() {
@@ -287,16 +289,14 @@ class App extends React.Component {
   // }
 
   get columnsChilds() {
-    return (
-      [
-        <Column name="userid" />,
-        <Column name="name" sortable editor />,
-        <Column name="age" sortable editor />,
-        <Column name="sex" sortable editor />,
-        <Column name="group" editor />,
-        <Column header="操作" command={this.commands} lock="right" />,
-      ]
-    );
+    return [
+      <Column name="userid" />,
+      <Column name="name" sortable editor />,
+      <Column name="age" sortable editor />,
+      <Column name="sex" sortable editor />,
+      <Column name="group" editor />,
+      <Column header="操作" command={this.commands} lock="right" />,
+    ];
   }
 
   render() {
@@ -309,11 +309,17 @@ class App extends React.Component {
         autoQuery
         viewVisible={this.userDs.getState('viewVisible')}
         customizedCode="board"
-        onChange={(props) => {
-          console.log('onChange', props, props.currentViewDS.name, props.currentViewDS.$mobx, props.record.get('viewType'))
+        onChange={props => {
+          console.log(
+            'onChange',
+            props,
+            props.currentViewDS.name,
+            props.currentViewDS.$mobx,
+            props.record.get('viewType'),
+          );
         }}
-        onConfigChange={(props) => {
-          console.log('onConfigChange', props)
+        onConfigChange={props => {
+          console.log('onConfigChange', props);
         }}
         renderCommand={({ command, viewMode, record, dataSet }) => {
           // console.log('viewMode', viewMode, command);
@@ -335,7 +341,7 @@ class App extends React.Component {
           // contentRenderer: () => 123,
           cardWidth: 4,
           onClick: (e, record) => {
-            console.log('crad click', e, record.toData())
+            console.log('crad click', e, record.toData());
           },
         }}
         tableProps={{
@@ -347,83 +353,91 @@ class App extends React.Component {
           // children: this.columnsChilds,
           children: [
             <Column header="组合">
-              <Column name="name" onCell={() => ({ style: { backgroundColor: 'red'} })}sortable editor />
+              <Column
+                name="name"
+                // onCell={() => ({ style: { backgroundColor: 'red'} })}
+                sortable
+                editor
+              />
               <Column name="userid" />
             </Column>,
-              //             <Column name="name" onCell={() => ({ style: { backgroundColor: 'red'} })}sortable editor />,
-              // <Column name="userid" />,
-            <Column name="age" renderer={({text}) => text > 65 ? <span style={{ color: 'red' }}>{text}texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext</span> : text} sortable editor />,
+            //             <Column name="name" onCell={() => ({ style: { backgroundColor: 'red'} })}sortable editor />,
+            // <Column name="userid" />,
+            <Column
+              name="age"
+              // renderer={({text}) => text > 65 ? <span style={{ color: 'red' }}>{text}texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext</span> : text}
+              sortable
+              editor
+            />,
             <Column name="sex" sortable editor />,
             <Column name="group" editor />,
             <Column header="操作" command={this.commands} lock="right" />,
           ],
           queryBar: 'filterBar',
-          key: "board",
+          key: 'board',
           columnDraggable: true,
           queryBarProps: {
-          // fuzzyQuery: false,
-          // autoQuery: false,
-          // onRefresh: () => {
-          //   console.log('props onRefresh');
-          //   return false;
-          // },
-          //
-          dynamicFilterBar: {
-            // suffixes: [<Button icon="close" />],
-            // tableFilterAdapter: 后端保存筛选项时，过滤条请求适配器，支持全局配置;  使用该功能前通常在全局配置中配置相关通用 API 适配器，开发者无需单独配置。
-            tableFilterAdapter: (props) => {
-              const {
-                config,
-                config: { data },
-                type,
-                searchCode,
-                queryDataSet,
-                tableFilterTransport,
-              } = props;
-              console.log('defaultTableFilterAdapter config', config);
-              const userId = 1;
-              const tenantId = 0;
-              switch (type) {
-                case 'read':
-                  return {
-                    // url: `read api`,
-                    url:
-                      'https://hzero-test.open.hand-china.com/mock/filterlist',
-                    method: 'get',
-                  };
-                case 'create':
-                  return {
-                    // url: `create api`,
-                    method: 'put',
-                    data: data[0],
-                  };
-                case 'update':
-                  return {
-                    // url: `update api`,
-                    method: 'put',
-                    data: data[0],
-                  };
-                case 'destroy':
-                  return {
-                    // url: `destroy api`,
-                    url:
-                      'https://hzero-test.open.hand-china.com/mock/listDel',
-                    data: data[0],
-                    method: 'delete',
-                  };
-              }
+            // fuzzyQuery: false,
+            // autoQuery: false,
+            // onRefresh: () => {
+            //   console.log('props onRefresh');
+            //   return false;
+            // },
+            //
+            dynamicFilterBar: {
+              // suffixes: [<Button icon="close" />],
+              // tableFilterAdapter: 后端保存筛选项时，过滤条请求适配器，支持全局配置;  使用该功能前通常在全局配置中配置相关通用 API 适配器，开发者无需单独配置。
+              tableFilterAdapter: props => {
+                const {
+                  config,
+                  config: { data },
+                  type,
+                  searchCode,
+                  queryDataSet,
+                  tableFilterTransport,
+                } = props;
+                console.log('defaultTableFilterAdapter config', config);
+                const userId = 1;
+                const tenantId = 0;
+                switch (type) {
+                  case 'read':
+                    return {
+                      // url: `read api`,
+                      url: 'https://hzero-test.open.hand-china.com/mock/filterlist',
+                      method: 'get',
+                    };
+                  case 'create':
+                    return {
+                      // url: `create api`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'update':
+                    return {
+                      // url: `update api`,
+                      method: 'put',
+                      data: data[0],
+                    };
+                  case 'destroy':
+                    return {
+                      // url: `destroy api`,
+                      url: 'https://hzero-test.open.hand-china.com/mock/listDel',
+                      data: data[0],
+                      method: 'delete',
+                    };
+                }
+              },
             },
           },
-        }
         }}
         kanbanProps={{
           cardWidth: 12,
           isDragDropDisabled: false,
-          dragDropContext: (props) => {
+          dragDropContext: props => {
             console.log('dragDropContext', props);
             // window.csDS = props;
             return {
-              onDragStart: (props1) => console.log('dragDropContext, s', props, props1),
+              onDragStart: props1 => console.log('dragDropContext, s', props, props1),
             };
           },
           // droppableProps: (props) => {
@@ -443,7 +457,7 @@ class App extends React.Component {
             transport: {
               read({ params, data }) {
                 const { page, pagesize } = params;
-                console.log('allDsProps', params, data)
+                console.log('allDsProps', params, data);
                 return {
                   url: `https://hzero-test.open.hand-china.com/mock/kanbanall`,
                   method: 'get',
@@ -455,14 +469,14 @@ class App extends React.Component {
             transport: {
               read({ params, data }) {
                 const { page, pagesize } = params;
-                console.log('columnDsProps', params, data)
+                console.log('columnDsProps', params, data);
                 return {
                   url: `https://hzero-test.open.hand-china.com/mock/querymore`,
                   method: 'get',
                 };
               },
             },
-          }
+          },
         }}
       />
     );

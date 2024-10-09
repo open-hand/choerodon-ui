@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field` : Added `maxExcl`, `minExcl` strictly compares the size properties.
 - 🌟 `<pro>Attachment`: Added `filesLengthLimitNotice`, `countTextRenderer` properties.
 - 🌟 `<pro>Board`: Added card default width `cardWidth` and content custom rendering `contentRenderer` properties.
+- 🌟 `<pro>Board`: Added configuration properties such as cardLayout, buttonPosition, and buttonDisplay.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `fuzzyQueryProps` property.
 - 🌟 `<pro>Table.DynamicFilterBar`: Added `filterQueryCallback` property.
 - 🌟 `<pro>Modal`: Added `modalOkAndCancelIcon` property.

@@ -143,6 +143,26 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
         bind: `${ViewField.viewProps}.${ViewField.cardWidth}`,
       },
       {
+        name: ViewField.cardLayout,
+        bind: `${ViewField.viewProps}.${ViewField.cardLayout}`,
+      },
+      {
+        name: ViewField.commandsLimit,
+        bind: `${ViewField.viewProps}.${ViewField.commandsLimit}`,
+      },
+      {
+        name: ViewField.buttonPosition,
+        bind: `${ViewField.viewProps}.${ViewField.buttonPosition}`,
+      },
+      {
+        name: ViewField.buttonDisplay,
+        bind: `${ViewField.viewProps}.${ViewField.buttonDisplay}`,
+      },
+      {
+        name: ViewField.cardLayoutData,
+        bind: `${ViewField.viewProps}.${ViewField.cardLayoutData}`,
+      },
+      {
         name: ViewField.showLabel,
         bind: `${ViewField.viewProps}.${ViewField.showLabel}`,
       },
@@ -205,6 +225,9 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
             [ViewField.cardWidth]: 6,
             [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
             [ViewField.showLabel]: 1,
+            [ViewField.cardLayout]: 'form',
+            [ViewField.buttonDisplay]: 'limit',
+            [ViewField.buttonPosition]: 'rightTop',
           },
           table: {},
           kanban: {

@@ -23,6 +23,7 @@ export type cardCommandsProps = { dataSet: DataSet; record: Record; };
 type CardCommandProps = {
   record: Record;
   prefixCls: string;
+  buttonDisplay: string;
   dataSet: DataSet;
   command?: Commands[] | ((props: cardCommandsProps) => Commands[]);
   renderCommand?: Function | ((props: any) => PromiseLike<any>);
@@ -32,6 +33,7 @@ type CardCommandProps = {
 
 const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(props) {
   const {
+    buttonDisplay,
     record,
     prefixCls,
     command,
@@ -138,14 +140,15 @@ const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(pr
   }, []);
 
   const renderMoreBtns = useCallback(() => {
-    if (commandsLimit >= item.length) {
+    const thiscCommandsLimit = buttonDisplay === 'limit' ?  commandsLimit : 0;
+    if (thiscCommandsLimit >= item.length) {
       return null;
     }
     return (<Dropdown
       popupClassName={`${prefixCls}-quote-container-extra-popup`}
       overlay={() => (
         <Menu>
-          {item.slice(commandsLimit).map(cmd => (
+          {item.slice(thiscCommandsLimit).map(cmd => (
             <Menu.Item key={cmd.key || `${record.id}_cmd`}>
               {cmd}
             </Menu.Item>
@@ -162,13 +165,15 @@ const CardCommand: FunctionComponent<CardCommandProps> = function CardCommand(pr
 
   return (
     item ? (
-      viewMode === ViewMode.kanban ? <div className={`${prefixCls}-quote-container-extra`}>
-        {item.slice(0, commandsLimit)}
-        {renderMoreBtns()}
-      </div> : (<>
-        {item.slice(0, commandsLimit)}
-        {renderMoreBtns()}
-      </>)
+      buttonDisplay === 'limit' ?
+        viewMode === ViewMode.kanban ? <div className={`${prefixCls}-quote-container-extra`}>
+          {item.slice(0, commandsLimit)}
+          {renderMoreBtns()}
+        </div> : (<>
+          {item.slice(0, commandsLimit)}
+          {renderMoreBtns()}
+        </>) :
+        renderMoreBtns()
     ) : null
   );
 }

@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: 新增 maxExcl, minExcl 严格比较大小属性。
 - 🌟 `<pro>Attachment`: 新增 filesLengthLimitNotice, countTextRenderer 属性。
 - 🌟 `<pro>Board`: 新增卡片默认宽度 cardWidth 和 内容自定义渲染 contentRenderer 属性。
+- 🌟 `<pro>Board`: 新增卡片字段布局、按钮位置、按钮限制等配置属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 fuzzyQueryProps 属性。
 - 🌟 `<pro>Table.DynamicFilterBar`: 新增 filterQueryCallback 属性。
 - 🌟 `<pro>Modal`: 新增 modalOkAndCancelIcon 属性。

@@ -134,6 +134,19 @@
         }
       }
     }
+    .@{c7n-prefix}-card-actions {
+      margin-bottom: 12px;
+      background: none !important;
+      border-top: none !important;
+      > li {
+        margin: 0 !important;
+        > span {
+          display: flex !important;
+          justify-content: space-around !important;
+          font-size: unset !important;
+        }
+      }
+    }
 
     .@{c7n-prefix}-card {
       margin: 8px;
@@ -245,6 +258,10 @@
       /* flex parent */
       overflow: hidden;
       font-size: 12px;
+
+      &-grid-item {
+        display: inline-flex;
+      }
 
       &-item {
         display: flex;
@@ -432,7 +449,74 @@
     }
   }
 
-  &-combine-sort-list-item {
+  &-panel-grid-des {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    color: @text-color-secondary;
+  }
+
+  &-panel-btn-des {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    i {
+      margin-left: 0.04rem;
+      color: @text-color-secondary;
+    }
+  }
+
+  &-panel-grid-wrapper {
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.04);
+  }
+  &-panel-limit-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &-layout-list-item {
+    flex-direction: column !important;
+    align-self: start !important;
+  }
+
+  &-layout-list-row {
+    margin-top: 8px;
+    padding: 12px 8px;
+    background-color: #FFF;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+
+      &-left {
+        margin-right: 24px;
+      }
+
+      &-delete {
+        margin-left: auto;
+      }
+    }
+
+    &-col {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 48%;
+      margin-top: 8px;
+      margin-right: 2%;
+
+      &-name {
+        width: 1.47rem;
+        margin: 0 0 0 0.04rem;
+      }
+    }
+  }
+  
+  &-combine-sort-list-item, &-layout-list-item {
     display: flex;
     align-items: center;
     margin: 0.1rem 0;

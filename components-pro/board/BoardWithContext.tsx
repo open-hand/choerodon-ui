@@ -349,6 +349,9 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           [ViewField.cardWidth]: 6,
           [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
           [ViewField.showLabel]: 1,
+          [ViewField.cardLayout]: 'form',
+          [ViewField.buttonDisplay]: 'limit',
+          [ViewField.buttonPosition]: 'rightTop',
         },
         table: {},
         kanban: {
@@ -605,6 +608,9 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                     [ViewField.cardWidth]: cardProps?.cardWidth || 6,
                     [ViewField.displayFields]: displayFields.map(field => field.name).filter(Boolean).slice(0, 3),
                     [ViewField.showLabel]: 1,
+                    [ViewField.cardLayout]: 'form',
+                    [ViewField.buttonDisplay]: 'limit',
+                    [ViewField.buttonPosition]: 'rightTop',
                   },
                   [ViewField.activeKey]: 1,
                 }, 0);

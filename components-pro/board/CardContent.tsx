@@ -6,6 +6,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
 import isFunction from 'lodash/isFunction';
+import uuid from 'uuid/v4';
 import List, { ColumnCount } from 'choerodon-ui/lib/list';
 import Icon from 'choerodon-ui/lib/icon';
 import Card from 'choerodon-ui/lib/card';
@@ -47,7 +48,7 @@ export interface CardContentProps {
 
 const CardContent: FunctionComponent<CardContentProps> = function CardContent(props) {
   const { tableBtns, buttonsLimit, buttons, cardProps = {}, queryBarProps } = props;
-  const { styleIsolation, onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand, commandsLimit } = useContext(BoardContext);
+  const { styleIsolation, onChange, displayFields, renderButtons = noop, autoQuery, getConfig, getProPrefixCls, prefixCls = '', customizedDS, dataSet, queryFields, command, renderCommand } = useContext(BoardContext);
   const viewProps = customizedDS!.current!.get(ViewField.viewProps);
   const [cardHeight, setCardHeight] = useState(0);
   const oldDSRef = useRef(null);
@@ -413,7 +414,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
       setCardHeight(height + 1);
     }
   }, [cardHeight]);
-  
+
   useEffect(() => {
     setCardHeight(0);
   }, [customizedDS!.current]);
@@ -482,36 +483,79 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     }
                   }
                   extra={
-                    cardProps && cardProps.contentRenderer ? null :
+                    cardProps && cardProps.contentRenderer || (viewProps.buttonPosition !== 'rightTop') ? null :
                       <CardCommand
+                        buttonDisplay={viewProps.buttonDisplay}
                         command={command}
                         dataSet={cardDS}
                         record={record}
                         renderCommand={renderCommand}
                         prefixCls={prefixCls}
                         viewMode={ViewMode.card}
-                        commandsLimit={commandsLimit}
+                        commandsLimit={viewProps.commandsLimit}
                       />
                   }
+                  actions={(cardProps && cardProps.contentRenderer) || (viewProps.buttonPosition === 'rightTop') ? null : [
+                    <CardCommand
+                      key='command'
+                      buttonDisplay={viewProps.buttonDisplay}
+                      command={command}
+                      dataSet={cardDS}
+                      record={record}
+                      renderCommand={renderCommand}
+                      prefixCls={prefixCls}
+                      viewMode={ViewMode.card}
+                      commandsLimit={viewProps.commandsLimit}
+                    />,
+                  ]}
                 >
-                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps, cardDS) : 
+                  {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps, cardDS) :
                     (
-                      viewProps && viewProps.displayFields ? viewProps.displayFields.map(fieldName => (
-                        <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
-                          <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
-                            {record.getField(fieldName).get('label')}
-                          </span>
-                          <Typography.Text
-                            ellipsis={{
-                              tooltip: true,
-                            }}
-                            style={!styleIsolation ? displayFields.find(df => df.name === fieldName) && displayFields.find(df => df.name === fieldName).onCell ? displayFields.find(df => df.name === fieldName).onCell()?.style : {} : {}}
-                            name={fieldName}
-                            record={record}
-                            renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
-                          />
-                        </div>
-                      )) : null
+                      viewProps && viewProps.displayFields ? viewProps.cardLayout === 'grid' ?
+                        viewProps.cardLayoutData.map((layout) => {
+                          const cols: any = [];
+                          for (let index = 0; index < layout.colNumber; index++) {
+                            const style = { width: `${1 / layout.colNumber * 100}%` };
+                            const fieldName = layout.displayName[index];
+                            cols.push(
+                              fieldName ?
+                                <div style={style} className={`${prefixCls}-quote-content-grid-item`}>
+                                  <span className={`${prefixCls}-quote-content-label`} hidden={!layout.showLabel}>
+                                    {record.getField(fieldName).get('label')}
+                                  </span>
+                                  <Typography.Text
+                                    ellipsis={{
+                                      tooltip: true,
+                                    }}
+                                    style={!styleIsolation ? displayFields.find(df => df.name === fieldName) && displayFields.find(df => df.name === fieldName).onCell ? displayFields.find(df => df.name === fieldName).onCell()?.style : {} : {}}
+                                    name={fieldName}
+                                    record={record}
+                                    renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
+                                  />
+                                </div> : <div style={style} className={`${prefixCls}-quote-content-grid-item`} />)
+                          }
+                          return (<div key={`${uuid()}-card-cols`}>
+                            {cols}
+                          </div>)
+                        })
+                        :
+                        viewProps.displayFields.map(fieldName => (
+                          <div key={`${fieldName}-card-label`} className={`${prefixCls}-quote-content-item`}>
+                            <span className={`${prefixCls}-quote-content-label`} hidden={!viewProps.showLabel}>
+                              {record.getField(fieldName).get('label')}
+                            </span>
+                            <Typography.Text
+                              ellipsis={{
+                                tooltip: true,
+                              }}
+                              style={!styleIsolation ? displayFields.find(df => df.name === fieldName) && displayFields.find(df => df.name === fieldName).onCell ? displayFields.find(df => df.name === fieldName).onCell()?.style : {} : {}}
+                              name={fieldName}
+                              record={record}
+                              renderer={displayFields.find(df => df.name === fieldName) ? displayFields.find(df => df.name === fieldName).renderer : noop}
+                            />
+                          </div>
+                        ))
+                        : null
                     )
                   }
                 </Card>
