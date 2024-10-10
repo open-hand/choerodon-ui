@@ -318,8 +318,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         isFunction(showRemoveIcon)
           ? (showRemoveIcon as UploadListIconFunc)(file)
           : showRemoveIcon
-      ) ? (
-        <PopConfirm
+      ) ? (<PopConfirm
           {...popconfirmProps}
           title={removePopConfirmTitle || locale.confirmRemove}
           onConfirm={() => {
@@ -331,8 +330,7 @@ export default class UploadList extends Component<UploadListProps, any> {
             className={stat.isPictureCard ? `${prefixCls}-list-item-action-remove` : undefined}
             title={locale.removeFile}
           />
-        </PopConfirm>
-      ) : null;
+        </PopConfirm>) : null;
       const downloadLinkProps: any = {
         ...file.linkProps,
         rel: 'noopener noreferrer',

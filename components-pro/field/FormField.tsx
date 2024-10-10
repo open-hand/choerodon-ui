@@ -1048,6 +1048,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     } = this;
     const showValueIfNotFound = this.getContextConfig('showValueIfNotFound');
     let processedValue;
+    let text;
 
     if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record) || field.get('lookupCode', record))) {
       // Cascader 值集处理
@@ -1057,9 +1058,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       } else {
         processedValue = field.getText(value, undefined, record) as string;
       }
+      text = this.processText((isNil(processedValue) && showValueIfNotFound) ? this.processValue(value) : processedValue);
     }
     // 值集中不存在 再去取直接返回的值
-    const text = this.processText((isNil(processedValue) && showValueIfNotFound) ? this.processValue(value) : processedValue);
+    text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
     return renderer
       ? renderer({
         value,
