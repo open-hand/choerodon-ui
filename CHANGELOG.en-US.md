@@ -99,6 +99,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the abnormal status of the operation button after the value of the dynamic filter bar is modified and the selected items are selected.
 - 🐞 `<pro>Table`: Fixed an issue where data created under data grouping could not be synced to Table.
 - 🐞 `<pro>Table`: Fixed looping when an error is reported in asynchronous tree query.
+- 🐞 `<pro>Table`: Fixed the styling issue of the collapsed status of the `filterBar`.
 - 🐞 `<pro>RichText`: Fixed the issue that fontSize does not take effect.
 
 ## 1.6.5
