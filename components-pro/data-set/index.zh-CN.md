@@ -29,7 +29,7 @@ title: DataSet
 | modifiedCheckMessage | 查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |
 | pageSize | 分页大小 | number | 10 |
 | strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |
-| paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致 | boolean \| `server`| true |
+| paging | 是否分页, `server` 主要为table的tree服务,约定total为根节点数目,index的定位都是基于根节点, 为`server`时候保证同时存在idField 和parentField(根节点为空或者undefind) 不然表现和原有版本一致; `noCount`用于无总数分页查询 | boolean \| `server`\| `noCount`| true |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null |  [dataKey](components/configure) |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | [totalKey](components/configure) |
 | countKey | 查询返回的 json 中对应的是否需要异步计数的 key | string | [countKey](components/configure) |
@@ -279,6 +279,8 @@ title: DataSet
 | minLength | 最小长度 | number |  |
 | max | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName  | Infinity |
 | min | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName  | -Infinity |
+| maxExcl | 严格最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName  | Infinity |
+| minExcl | 严格最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName  | -Infinity |
 | step | 步距。 | BigNumber.Value \| { hour: number, minute: number, second: number } |  |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |
 | precision | 小数点精度, 提交时会截断 | number |  |

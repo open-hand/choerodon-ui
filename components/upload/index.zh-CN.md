@@ -56,7 +56,7 @@ title: Upload
 ### ShowUploadListInterface
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| showRemoveIcon | 是否显示删除按钮   | boolean | true |
+| showRemoveIcon | 是否显示删除按钮  | boolean\| ((file: UploadFile) => boolean) | true |
 | showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showReUploadIcon | 是否显示重新上传按钮（当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/components/configure) |

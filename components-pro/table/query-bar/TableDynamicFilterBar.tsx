@@ -62,6 +62,7 @@ import { TriggerViewMode } from '../../trigger-field/enum';
 import CombineSort from './CombineSort';
 import TableStore from '../TableStore';
 import { TextFieldProps } from '../../text-field/TextField';
+import isMobile from '../../_util/isMobile';
 
 /**
  * 当前数据是否有值并需要选中
@@ -1119,7 +1120,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           await this.modifiedCheckQuery(undefined, undefined, true);
         }}
       >
-        <Tooltip title={$l('Table', 'refresh')}>
+        <Tooltip title={$l('Table', 'refresh')} hidden={isMobile()}>
           <Icon type="refresh" />
         </Tooltip>
       </span>

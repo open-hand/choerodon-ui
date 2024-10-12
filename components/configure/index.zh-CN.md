@@ -204,6 +204,7 @@ const prefixCls = getConfig('prefixCls');
 | showValueIfNotFound | 对应值集内未请求时或值不存在显示值时，是否显示 value | boolean | true |
 | modalOkAndCancelIcon | Modal 确认和取消按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置确认和取消icon | boolean \| { okIconType?: string \| boolean, cancelIconType?: string \| boolean } |  |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  |
+| valueChangeAction | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
 
 ### Customizable
 

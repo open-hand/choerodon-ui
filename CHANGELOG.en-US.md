@@ -57,7 +57,6 @@ timeline: true
 - 💄 `<pro>Table`: Optimized `tree` mode drag-and-drop interaction style.
 - 💄 `<pro>Attachment`: Improved display of other files in `picture` and `picture-card` mode.
 - 💄 `Popup`: Optimize the pop-up position of the popup in the iframe.
-- 💄 `Tooltip`: Disable mobile interaction.
 - 💄 `<pro>Table`: Optimized front-end filtering for date formats.
 - 💄 `<pro>Upload`: Optimized progress bar width.
 - 💄 `<pro>Upload`: optimizes extension showRemoveIcon type.
