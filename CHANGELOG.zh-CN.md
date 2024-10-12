@@ -84,6 +84,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复 onBeforeSelect 失效的问题。
 - 🐞 `<pro>Lov`: 修复 modalProps.onOk 返回 false 不能阻止弹框关闭的问题。
 - 🐞 `<pro>TextArea`: 修复设置 autoSize 属性时，文本超过输入框高度未出现滚动条的问题。
+- 🐞 `<pro>TextArea`: 修复设置 autoSize 属性时，输入文本超过最大行时报错的问题。
 - 🐞 `<pro>Typography`: 修复表单 float 布局问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性或计算属性中设置了 lovPara 导致下拉 searchable 失效的问题。
 - 🐞 `<pro>ColorPicker`: 修复白色前缀无法清除的问题。

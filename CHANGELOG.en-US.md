@@ -84,6 +84,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed an issue where `onBeforeSelect` was invalid.
 - 🐞 `<pro>Lov`: Fixed the issue that `modalProps.onOk` returning false could not prevent the modal from closing.
 - 🐞 `<pro>TextArea`: Fixed an issue where scroll bars did not appear when text exceeded the input field height when setting `autoSize` property.
+- 🐞 `<pro>TextArea`: Fixed an error when the `autoSize` property was set when the entered text exceeded the maximum line.
 - 🐞 `<pro>Typography`: Fixed the form float layout issue.
 - 🐞 `<pro>DataSet.Field`: Fixed the issue that setting `lovPara` in `dynamicProps` or `computedProps` would cause the `searchable` to be invalidated.
 - 🐞 `<pro>ColorPicker`: Fixed the issue that the white prefix could not be cleared.

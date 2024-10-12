@@ -154,7 +154,7 @@ export default function calculateNodeHeight(
       if (boxSizing === 'border-box') {
         maxHeight = maxHeight + paddingSize + borderSize;
       }
-      overflowY = height > maxHeight ? '' : 'hidden';
+      // overflowY = height > maxHeight ? '' : 'hidden';
       height = Math.min(maxHeight, height);
     }
   }
@@ -165,9 +165,9 @@ export default function calculateNodeHeight(
   }
 
   return {
-    height: height && Math.round(height),
-    minHeight: minHeight && Math.round(minHeight),
-    maxHeight: maxHeight && Math.round(maxHeight),
+    height: height && Math.ceil(height),
+    minHeight: minHeight && Math.ceil(minHeight),
+    maxHeight: maxHeight && Math.ceil(maxHeight),
     overflowY,
   };
 }
