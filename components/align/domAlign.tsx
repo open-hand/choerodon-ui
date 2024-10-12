@@ -1,5 +1,4 @@
 import { getDocument, getMousePosition } from 'choerodon-ui/pro/lib/_util/DocumentUtils';
-import { findIFrame } from 'choerodon-ui/shared/util';
 import isString from 'lodash/isString';
 import { pxToRem } from '../_util/UnitConvertor';
 import { AlignPoint } from './Align';
@@ -74,7 +73,7 @@ function getVisibleRectForElement(element: HTMLElement) {
   if (ownerDocument) {
     const { defaultView } = ownerDocument;
     if (defaultView) {
-      isIframe = !!findIFrame(defaultView);
+      isIframe = defaultView.self !== defaultView.top;  // !!findIFrame(defaultView.self);
       const { body, documentElement } = ownerDocument;
       let offsetParentAndStyle = getOffsetParentAndStyle(element, defaultView);
       while (offsetParentAndStyle) {
