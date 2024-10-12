@@ -77,6 +77,8 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     srcIndex: 0,
   };
 
+  static Quill = Quill;
+
   editor: any;
 
   deltaOps?: DeltaOperation[];

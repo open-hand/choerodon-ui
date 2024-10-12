@@ -23,7 +23,7 @@ export type cardCommandsProps = { dataSet: DataSet; record: Record; };
 type CardCommandProps = {
   record: Record;
   prefixCls: string;
-  buttonDisplay: string;
+  buttonDisplay?: string;
   dataSet: DataSet;
   command?: Commands[] | ((props: cardCommandsProps) => Commands[]);
   renderCommand?: Function | ((props: any) => PromiseLike<any>);
