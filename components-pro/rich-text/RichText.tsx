@@ -43,6 +43,8 @@ const defaultRichTextOptions: ReactQuillProps = {
 export default class RichText extends FormField<RichTextProps> {
   static displayName = 'RichText';
 
+  static Quill = BaseEditor.Quill;
+
   static RichTextViewer = RichTextViewer;
 
   static defaultProps = {

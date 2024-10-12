@@ -382,7 +382,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
             }}
           />
         </div>
-        {renderCol(index)}
+        {renderCol()}
       </div>
     );
   }
