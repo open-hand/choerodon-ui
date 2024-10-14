@@ -1455,6 +1455,18 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
+      if ((e.ctrlKey || e.metaKey) && e.keyCode === KeyCode.C && this.format) {
+        e.preventDefault();
+        // 执行复制操作
+        this.blur();
+        const text = this.getValue();
+        navigator.clipboard.writeText(text).then(() => {
+          this.focus();
+        }).catch(err => {
+          this.focus();
+          console.error('Failed to copy text: ', err);
+        });
+      }
       if (e.keyCode === KeyCode.TAB) {
         const { _inTable } = this.props;
         if (_inTable) {

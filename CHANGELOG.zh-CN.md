@@ -48,6 +48,7 @@ timeline: true
 - 💄 `<pro>Board`: 优化分组的下拉选项显示逻辑。
 - 💄 `<pro>NumberField`: 优化移动端点击步距按钮数字变化逻辑。
 - 💄 `<pro>TextField`: 优化兼容 IOS 移动端聚焦两次才唤起键盘的问题。
+- 💄 `<pro>TextField`: 优化存在格式化配置时，复制需要失焦的问题。
 - 💄 `Tree`: 优化第一个和最后一个子节点，以及禁用节点的拖拽交互。
 - 💄 `configure`: 扩展 customizedSave 属性支持获取表格完整个性化列配置信息。
 - 💄 `<pro>Select`: 优化分组的 label 可以设置 ReactNode 类型。
