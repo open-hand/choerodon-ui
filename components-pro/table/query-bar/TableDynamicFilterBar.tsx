@@ -1120,9 +1120,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           await this.modifiedCheckQuery(undefined, undefined, true);
         }}
       >
-        <Tooltip title={$l('Table', 'refresh')} hidden={isMobile()}>
+        {isMobile() ? <Icon type="refresh" /> : <Tooltip title={$l('Table', 'refresh')}>
           <Icon type="refresh" />
-        </Tooltip>
+        </Tooltip>}
       </span>
     );
   }
