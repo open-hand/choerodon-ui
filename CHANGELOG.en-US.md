@@ -102,6 +102,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed looping when an error is reported in asynchronous tree query.
 - 🐞 `<pro>Table`: Fixed the styling issue of the collapsed status of the `filterBar`.
 - 🐞 `<pro>RichText`: Fixed the issue that fontSize does not take effect.
+- 🐞 `Upload`: Fixed the issue where multiple re-uploads do not trigger re-rendering or requests.
 
 ## 1.6.5
 
