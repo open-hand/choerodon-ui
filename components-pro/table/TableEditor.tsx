@@ -88,6 +88,8 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   cellNode: HTMLSpanElement | undefined;
 
+  cellEditor: React.ReactElement<FormFieldProps<any>, string | React.JSXElementConstructor<any>> | undefined;
+
   tdNode: HTMLTableDataCellElement | null | undefined;
 
   get lock(): ColumnLock | boolean | undefined {
@@ -167,6 +169,23 @@ export default class TableEditor extends Component<TableEditorProps> {
         this.reaction = reaction(() => tableStore.currentEditRecord, r => r ? raf(() => this.alignEditor()) : this.hideEditor());
       }
       editors.set(name, this);
+    }
+  }
+
+  componentDidUpdate(): void {
+    const { editor, cellNode, cellEditor } = this;
+    if (editor && cellNode && cellEditor && isTextArea(cellEditor)) {
+      const { column: { name } } = this.props;
+      const { tableStore, dataSet, rowHeight } = this.context;
+      const { currentEditRecord } = tableStore;
+      const { offsetHeight: height } = editor?.element;
+      const current = currentEditRecord || dataSet.current;
+      if (current && name && (rowHeight !== height || current.getState(`__column_resize_height_${name}`) !== undefined)) {
+        current.setState(`__column_resize_height_${name}`, height);
+      }
+      if (cellNode) {
+        this.alignEditor(cellNode, height);
+      }
     }
   }
 
@@ -524,6 +543,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         return this.renderMultiLineEditor();
       }
       const cellEditor = getEditorByColumnAndRecord(column, record);
+      this.cellEditor = cellEditor;
       if (!pristine && isValidElement(cellEditor) && !isInCellEditor(cellEditor)) {
         this.editorProps = cellEditor.props;
         const { height } = this;

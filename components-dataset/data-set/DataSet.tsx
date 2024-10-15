@@ -2973,6 +2973,8 @@ Then the query method will be auto invoke.`,
     } = this;
     if (strictPageSize && paging && allData.length > pageSize && (!total || (total && allData.length >= total) )) {
       this.cacheAllData = allData;
+    } else {
+      this.cacheAllData = [];
     }
     this.performance.timing.loadStart = Date.now();
     const cacheRecords = this.getConfig('cacheRecords');
