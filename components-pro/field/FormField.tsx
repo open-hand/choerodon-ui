@@ -1059,9 +1059,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         processedValue = field.getText(value, undefined, record) as string;
       }
       text = this.processText((isNil(processedValue) && showValueIfNotFound) ? this.processValue(value) : processedValue);
+    } else {
+      // 值集中不存在 再去取直接返回的值
+      text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
     }
-    // 值集中不存在 再去取直接返回的值
-    text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
     return renderer
       ? renderer({
         value,
