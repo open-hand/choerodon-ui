@@ -392,7 +392,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     });
   }
 
-  @observable moreFields: Field[];
+  moreFields: Field[];
 
   /**
    * 控制添加筛选下拉显隐
@@ -644,7 +644,12 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
-      const selectStatus = this.handleSelect(name, record);
+      const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
+      || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
+      let selectStatus = shouldUpdate ? RecordStatus.update : RecordStatus.sync;
+      if (!(dataSet.getState(SELECTFIELDS) || []).includes(name) && this.moreFields?.map(m => m.name).includes(name)) {
+        selectStatus = this.handleSelect(name, record);
+      }
       if (selectStatus === RecordStatus.sync) {
         status = isEqualDynamicProps(omit(dataSet.getState(ORIGINALVALUEOBJ).query, ['__dirty']), omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
       }
@@ -1836,10 +1841,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       );
     }
     if (queryDataSet && queryFields.length) {
-      let moreFields: Field[] = [];
+      // let moreFields: Field[] = [];
       if (fieldsLimit < this.queryFields.length) {
         // 单独使用动态筛选条组件，且queryFields设置了部分字段时
-        moreFields = isTenant ? [...queryDataSet.fields.values()].filter(field => {
+        this.moreFields = isTenant ? [...queryDataSet.fields.values()].filter(field => {
           return this.queryFields.find(item => item.props.name === field.name);
         }) : this.originOrderQueryFields.filter(field => {
           return this.queryFields.find(item => item.props.name === field.name);
@@ -2041,7 +2046,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                       <FieldList
                         groups={[{
                           title: $l('Table', 'predefined_fields'),
-                          fields: moreFields,
+                          fields: this.moreFields,
                         }]}
                         prefixCls={`${prefixCls}-filter-list` || 'c7n-pro-table-filter-list'}
                         closeMenu={() => runInAction(() => this.fieldSelectHidden = true)}
