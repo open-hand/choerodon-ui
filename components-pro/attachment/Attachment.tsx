@@ -854,6 +854,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       type: 'file',
       ref,
       onChange,
+      tabIndex: -1, // Tab 切换焦点会跳过 input
     };
     const width = isCardButton ? pxToRem(this.getPictureWidth()) : undefined;
     let countText: ReactNode = multiple && (max ? `${count}/${max}` : count) || undefined;
