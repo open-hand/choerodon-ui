@@ -57,6 +57,7 @@ timeline: true
 - 💄 `<pro>TreeSelect`: Optimize the style of parent checkboxes after filtering and checking child nodes in multiple selection cases.
 - 💄 `<pro>Table`: Optimized `tree` mode drag-and-drop interaction style.
 - 💄 `<pro>Attachment`: Improved display of other files in `picture` and `picture-card` mode.
+- 💄 `<pro>Attachment`: Optimized the Tab toggle focus to skip the internal input element.
 - 💄 `Popup`: Optimize the pop-up position of the popup in the iframe.
 - 💄 `<pro>Table`: Optimized front-end filtering for date formats.
 - 💄 `<pro>Upload`: Optimized progress bar width.

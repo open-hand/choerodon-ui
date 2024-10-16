@@ -57,6 +57,7 @@ timeline: true
 - 💄 `<pro>TreeSelect`: 优化在多选情况下，筛选且勾选子节点后父级勾选框的样式。
 - 💄 `<pro>Table`: 优化 tree 模式拖拽交互样式。
 - 💄 `<pro>Attachment`: 优化 picture 和 picture-card 模式下其他文件显示效果。
+- 💄 `<pro>Attachment`: 优化 Tab 切换焦点跳过内部 input 元素。
 - 💄 `Popup`: 优化 popup 在 iframe 中的弹出位置。
 - 💄 `<pro>Table`: 优化日期格式的前端筛选。
 - 💄 `<pro>Upload`: 优化进度条宽度。
