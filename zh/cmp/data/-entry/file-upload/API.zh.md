@@ -4,7 +4,7 @@ title: API
 
 > 服务端上传接口实现可以参考 [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki)。
 
-| 参数                | 说明                                                                                                                                                                           | 类型                                                               | 默认值 | 版本 |
+| 属性名 | 说明                                                                                                                                                                           | 类型                                                               | 默认值 | 版本 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ------ | ------ |
 | accept              | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)                                                 | string                                                             | 无     |
 | action              | 必选参数, 上传的地址                                                                                                                                                           | string                                                             | 无     |
@@ -40,9 +40,9 @@ title: API
 
 
 ### ShowUploadListInterface
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| showRemoveIcon | 是否显示删除按钮   | boolean | true |
+| showRemoveIcon | 是否显示删除按钮  | boolean\| ((file: UploadFile) => boolean) | true |
 | showPreviewIcon | 是否显示预览按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
 | showReUploadIcon | 是否显示重新上传按钮（上传成功状态则重新选择文件上传，上传失败状态则重新上传该文件；当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/zh/procmp/configure/configure) |

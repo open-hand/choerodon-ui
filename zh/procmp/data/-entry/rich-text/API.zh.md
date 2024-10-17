@@ -12,9 +12,17 @@ title: API
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field/#FormField)。
 
+### RichText 静态属性
+
+| 属性  | 说明     | 类型     | 默认值  | 版本 |
+| ----- | -------- | -------- | ------ | ----- |
+| Quill | 组件内部 Quill, 可用于注册配置 | Quill | 1.6.6 |
+
+项目中直接使用 Quill 注册配置对 RichText 不生效时，可以使用 RichText.Quill。
+
 ### RichText.RichTextViewer
 
-| 参数 | 说明 | 类型 | 
+| 属性名 | 说明 | 类型 | 
 | --- | --- | --- | 
 | deltaOps | 编辑器渲染值 | Delta.ops |
 

@@ -4,7 +4,7 @@ title: API
 
 ### NumberField
 
-| 参数 | 说明   | 类型   | 默认值 | 版本    |
+| 属性名 | 说明   | 类型   | 默认值 | 版本    |
 | ---- | ------ | ------ | ------ |------ |
 | min  | 最小值 | BigNumber.Value |   Infinity  ||
 | max  | 最大值 | BigNumber.Value |   -Infinity   ||
@@ -21,7 +21,7 @@ title: API
 
 ### Static method
 
-| 名称                         | 说明       | 参数    |
+| 名称                         | 说明       | 属性名 |
 | ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | format(value, lang, options) | 数字格式化 | `value` - number \| BigNumber `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 

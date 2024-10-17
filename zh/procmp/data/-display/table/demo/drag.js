@@ -160,7 +160,7 @@ class App extends React.Component {
     return (
       <Table
         dragColumnAlign={dragColumnAlign}
-        rowDraggable
+        rowDraggable="multiDrag"
         dragDropContextProps={{
           onDragEnd: () => {
             console.log('Finish dragging.');

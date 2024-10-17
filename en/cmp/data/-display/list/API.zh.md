@@ -4,7 +4,7 @@ title: API
 
 ### List
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | bordered | 是否展示边框 | boolean | false |
 | footer | 列表底部 | string\|ReactNode | - |
@@ -20,7 +20,7 @@ title: API
 
 ### List grid props
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | column | 列数 | number | - |
 | gutter | 栅格间隔 | number | 0 |
@@ -33,14 +33,14 @@ title: API
 
 ### List.Item
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | actions | 列表操作组，根据 `itemLayout` 的不同, 位置在卡片底部或者最右侧 | Array&lt;ReactNode> | - |
 | extra | 额外内容, 通常用在 `itemLayout` 为 `vertical` 的情况下, 展示右侧内容; `horizontal` 展示在列表元素最右侧 | string\|ReactNode | - |
 
 ### List.Item.Meta
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | avatar | 列表元素的图标 | ReactNode | - |
 | description | 列表元素的描述内容 | string\|ReactNode | - |
@@ -48,7 +48,7 @@ title: API
 
 ### Pagination
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | current | 当前页数 | number | - |
 | defaultCurrent | 默认的当前页数 | number | 1 |
@@ -69,7 +69,7 @@ title: API
 
 ### rowSelection
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string[] \| number[] | - |
 | defaultSelectedRowKeys | 默认选中项的 key 数组 | string[] \| number[] | |

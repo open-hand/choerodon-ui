@@ -4,7 +4,7 @@ title: API
 
 #### Statistic
 
-| 参数             | 说明             | 类型                 | 默认值 | 版本 |
+| 属性名             | 说明             | 类型                 | 默认值 | 版本 |
 | ---------------- | ---------------- | -------------------- | ------ | ---- |
 | decimalSeparator | 设置小数点       | string               | `.`    |      |
 | formatter        | 自定义数值展示   | (value) => ReactNode | -      |      |
@@ -18,7 +18,7 @@ title: API
 
 #### Statistic.Countdown
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | format | 格式化倒计时展示，参考 [moment](http://momentjs.com/) | string | `HH:mm:ss` |  |
 | onFinish | 倒计时完成时触发 | () => void | - |  |

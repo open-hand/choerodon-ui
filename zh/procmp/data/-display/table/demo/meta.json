@@ -533,6 +533,21 @@
       },
       "order": 33,
       "screenshot": "",
+      "height": 400,
+      "category": "pro"
+    },
+    {
+      "filename": "sortable.js",
+      "title": {
+        "zh": "排序和筛选",
+        "en": "Sorting and filtering"
+      },
+      "description": {
+        "zh": "列配置 sortable 即开启排序，配置为函数类型则为前端排序，DataSet 配置 combineSort 开启组合排序，可进一步配置 Table 的 combineSortConfig 属性配置前端或后端排序。 \n 列配置 filter 开启列筛选，可进一步配置为函数自定义筛选逻辑。",
+        "en": "When sortable is configured for columns, the sorting is enabled. When function type is configured, the front-end sorting is enabled. When DataSet is configured with combineSort, the combineSortConfig property of the Table can be further configured to configure the front-end or back-end sorting.  \n column Configuration filter Enables column filtering, which can be further configured to customize filtering logic for functions."
+      },
+      "order": 34,
+      "screenshot": "",
       "height": 450,
       "category": "pro"
     },

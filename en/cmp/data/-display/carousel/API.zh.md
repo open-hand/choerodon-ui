@@ -2,7 +2,7 @@
 title: API
 ---
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | afterChange | 切换面板的回调 | function(current) | 无 | |
 | autoplay | 是否自动切换 | boolean | false | |

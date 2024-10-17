@@ -12,7 +12,7 @@ title: API
 <Badge count={5} />
 ```
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | count | 展示的数字，大于 overflowCount 时显示为 `${overflowCount}+`，为 0 时隐藏 | ReactNode  |  | |
 | dot | 不展示数字，只有一个小红点 | boolean | false | |

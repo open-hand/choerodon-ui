@@ -4,7 +4,7 @@ title: API
 
 ### Table
 
-| 参数                  | 说明                                                                                                                                                                                                                           | 类型                                                                                                   | 默认值   | 版本   |
+| 属性名 | 说明                                                                                                                                                                                                                           | 类型                                                                                                   | 默认值   | 版本   |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | -------- | ----- |
 | columns | 列组， 优先级和性能高于children | ColumnProps[] |  ||
 | groups | 分组 | [TableGroup](#tablegroup)[] |  | 1.5.1 |
@@ -45,11 +45,12 @@ title: API
 | pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |    |
 | highLightRow | 当前行高亮, 可选值: boolean \| focus \| click, true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | [globalConfig.tableHighLightRow](/zh/procmp/configure/configure) |   |
 | selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | [globalConfig.tableSelectedHighLightRow](/zh/procmp/configure/configure)    |    |
-| columnResizable       | 可调整列宽                                                                                                                                                                                                                     | boolean                                                                                                | [globalConfig.tableColumnResizable](/zh/procmp/configure/configure)    |   |
+| columnResizable | 可调整列宽, 可以传入 xZoom 矫正横向缩放引起的计算误差 | boolean \| { xZoom: number } | [globalConfig.tableColumnResizable](/zh/procmp/configure/configure)    |   |
 | columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure) | 1.2.0  |
 | columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/zh/procmp/configure/configure) | 1.2.0   |
 | columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/zh/procmp/configure/configure) | 1.2.0  |
-| rowDraggable | 行拖拽，实现行的拖拽 | boolean | [globalConfig.tableRowDraggable](/zh/procmp/configure/configure) | 1.2.0   |
+| rowDraggable | 行拖拽，实现行的拖拽；multiDrag 支持多行拖拽选中记录(树形不支持多拖) | boolean \| 'multiDrag' | [globalConfig.tableRowDraggable](/zh/procmp/configure/configure) | 1.2.0   |
+| multiDragSelectMode | 多行拖拽时，多选记录的方式: keyboard: ctrl + 点击; checkbox: 使用表格勾选框勾选 | 'keyboard' \| 'checkbox' | 'keyboard' | 1.6.6  |
 | dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left\|right |  |   |
 | pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |    |
 | onExpand              | 点击展开图标时触发                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |    |
@@ -107,12 +108,15 @@ title: API
 | customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 | boolean | false | 1.6.4 |
 | selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  | 1.6.4 |
 | rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
+| tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
+| combineColumnFilter | 是否开启前端组合过滤  | boolean  | true | 1.6.6 |
+| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); showSortOption: 是否显示排序选项 | { currentDataSort?: boolean \| ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: boolean; showSortOption?: boolean \| SortRangeOption; }  |  | 1.6.6 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
 ### Table.Column
 
-| 参数            | 说明                                                                                                                                                                                              | 类型                                                                                                                               | 默认值    | 版本 |
+| 属性名            | 说明                                                                                                                                                                                              | 类型                                                                                                                               | 默认值    | 版本 |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------- | --- |
 | children | 子列组， JSX模式下请对应 ReactElement<ColumnProps>[] | ColumnProps[] \| ReactElement<ColumnProps>[] | | 1.5.1 |
 | name            | 列对照的字段名                                                                                                                                                                                    | string                                                                                                                             |           |  |
@@ -154,12 +158,13 @@ title: API
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  | |
 | highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | 1.5.1 |
+| sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
 
 ### TableGroup
 
 > 1.5.1 版本新增方法。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | type | 分组类型， 可选值 `column` `row` `header` `none` | string | 'none' |
 | name | 分组对照的字段名 | string |  |
@@ -169,7 +174,7 @@ title: API
 
 ### Table.FilterBar
 
-| 参数        | 说明                   | 类型   | 默认值   |
+| 属性名       | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
 | paramName   | 输入的过滤条件的字段名 | string | params |
 | placeholder | 输入框的占位符         | string | 过滤表 |
@@ -179,7 +184,7 @@ title: API
 
 ### Table.AdvancedQueryBar
 
-| 参数             | 说明                                                     | 类型   | 默认值 |
+| 属性名             | 说明                                                     | 类型   | 默认值 |
 | ---------------- | -------------------------------------------------------- | ------ | ------ |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1      |
 
@@ -187,7 +192,7 @@ title: API
 
 ### Table.ToolBar
 
-| 参数             | 说明                                                     | 类型                | 默认值 |
+| 属性名             | 说明                                                     | 类型                | 默认值 |
 | ---------------- | -------------------------------------------------------- | ------------------- | ------ |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number              | 1      |
 | pagination       | 分页器，参考[pagination](/zh/procmp/navigation/pagination/)    | PaginationComponent |   |
@@ -196,7 +201,7 @@ title: API
 
 ### Table.DynamicFilterBar
 
-| 参数        | 说明                   | 类型   | 默认值   | 版本 |
+| 属性名       | 说明                   | 类型   | 默认值   | 版本 |
 | ----------- | ---------------------- | ------ | -------- | --- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
@@ -204,6 +209,8 @@ title: API
 | fuzzyQuery | 是否开启模糊查询 | boolean | true | 1.4.5 |
 | fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false | 1.5.1 |
 | fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  | 1.4.5 |
+| fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  | 1.6.6 |
+| filterQueryCallback | 筛选接口查询回调  | ({ dataSet })=> void |  | 1.6.6 |
 | autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5 |
 | refreshBtn | 刷新按钮  | boolean | true | 1.5.1 |
 | onQuery | 查询回调 | () => void |  | 1.4.5 |
@@ -211,10 +218,11 @@ title: API
 | onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
 | onFieldEnterDown | 字段回车回调 | () => void  | | 1.6.4 |
 | showSingleLine | 筛选条是否单行显示 | boolean |  | 1.6.5 |
+| tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
 
 #### DynamicFilterBarConfig
 
-| 参数        | 说明                   | 类型   | 默认值   |
+| 属性名       | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
 | searchText | 模糊查询参数名，参数值可通过 dataSet.getState('\_\_SEARCHTEXT\_\_') 获取 | string | params |
 | suffixes | 过滤条后缀渲染区 | React.ReactElement<any>[]，数组元素支持 'filter' |  |
@@ -225,7 +233,7 @@ title: API
 
 ### Table.ProfessionalBar
 
-| 参数             | 说明                                                     | 类型   | 默认值 | 版本 |
+| 属性名             | 说明                                                     | 类型   | 默认值 | 版本 |
 | ---------------- | -------------------------------------------------------- | ------ | ------ | --- |
 | queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3      | |
 | autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
@@ -239,7 +247,7 @@ title: API
 
 分页的配置项。
 
-| 参数     | 说明               | 类型                        | 默认值   |
+| 属性名 | 说明               | 类型                        | 默认值   |
 | -------- | ------------------ | --------------------------- | -------- |
 | position | 指定分页显示的位置 | top \| bottom \| both | bottom |
 
@@ -254,7 +262,7 @@ title: API
 防止拖拽在dom结构外报错的table 类名 c7n-pro-table-drag-container
 
 
-| 参数     | 说明               | 类型                        |
+| 属性名 | 说明               | 类型                        |
 | -------- | ------------------ | --------------------------- |
 | droppableProps | droppableProps 参考文档 | object |
 | draggableProps | DraggableProps 参考文档 | object |
@@ -266,7 +274,7 @@ title: API
 
 spin 的配置项。
 
-| 参数      | 说明       | 类型         |
+| 属性名 | 说明       | 类型         |
 | --------- | ---------- | ------------ |
 | indicator | 加载指示符 | ReactElement |
 | spinning  | 是否旋转   | boolean      |
@@ -275,7 +283,7 @@ spin 的配置项。
 
 ### instance methods
 
-| 名称 | 说明 | 参数 | 返回值类型 | 版本 |
+| 名称 | 说明 | 属性名 | 返回值类型 | 版本 |
 | --- | --- | --- | --- | --- |
 | setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  | 1.5.1 |
 | setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  | 1.5.1 |
@@ -301,7 +309,7 @@ configure({
 
 剪贴板配置项
 
-| 参数      | 说明       | 类型         | 默认值 | 版本 |
+| 属性名 | 说明       | 类型         | 默认值 | 版本 |
 | --------- | ---------- | ------------ | ------ | ------ |
 | copy | 是否开启表格复制 | boolean | false | ｜
 | paste | 是否开启表格粘贴，开启后只有可编辑的单元格才能被粘贴数据。 | boolean | false | ｜

@@ -2,7 +2,7 @@
 title: API
 ---
 
-| 参数              | 说明           | 类型              | 默认值 |
+| 属性名 | 说明           | 类型              | 默认值 |
 | ----------------- | -------------- | ----------------- | ------ |
 | unCheckedValue    | 未选中时的值   | any               |        |
 | unCheckedChildren | 非选中时的内容 | string \| ReactNode |        |

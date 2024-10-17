@@ -3,7 +3,7 @@ title: API
 ---
 
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | value | 文本字符串 | string |  |
 | renderAs | 渲染方式 | 'canvas' \| 'svg' | canvas |
@@ -19,7 +19,7 @@ title: API
 
 用于设置条形码参数。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | format | 条形码格式类型 | string | auto (CODE128) |
 | displayValue | 是否显示文本 | boolean | true |

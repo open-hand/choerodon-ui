@@ -474,6 +474,7 @@ class App extends React.Component {
         searchCode="xxx"
         buttons={['add', 'query']}
         dataSet={this.ds}
+        tableFilterBarButtonIcon
         queryBar="filterBar"
         queryBarProps={{
           // fuzzyQuery: false,

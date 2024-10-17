@@ -69,7 +69,7 @@ title: API
 
 ### rowSelection
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | selectedRowKeys | Specify the key array of the selected item, which needs to be matched with onchange | string[] \| number[] | - |
 | defaultSelectedRowKeys | Key array of default selected items | string[] \| number[] | |

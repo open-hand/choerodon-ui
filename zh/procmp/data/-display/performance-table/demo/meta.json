@@ -22,7 +22,7 @@
     {
       "filename": "resizable-column.js",
       "title": {
-        "zh": "调整列宽",
+        "zh": "大数据表格调整列宽",
         "en": "Resizable"
       },
       "description": {

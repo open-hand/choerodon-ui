@@ -13,7 +13,7 @@ abstract: true
 
 ### DataSet Props
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | [name](/en/datasetapi/dataset-props/name) | 对应后台 ds 的 name，自动生成约定的 submitUrl, queryUrl, tlsUrl, validateUrl | Array&lt;string&gt; |  |    |
 | [data](/en/datasetapi/dataset-props/data) | 初始化数据 | Array&lt;object&gt; |  |  |
@@ -31,7 +31,7 @@ abstract: true
 | modifiedCheckMessage | 翻页查询前，当有记录更改过时，警告提示。 | ReactNode \| ModalProps |  |    |
 | pageSize | 分页大小 | number | 10 |   |
 | strictPageSize | 严格分页大小, 前端将截断超出 pageSize 的数据 | boolean | true |  1.5.1  |
-| [paging](/en/procmp/data-display/table#Tree%20data%20asynchronous%20paging) | 是否分页，server 主要为 Table 的 Tree 模式服务，约定 total 为根节点数目，index 的定位都是基于根节点，为 server 时候保证同时存在 idField 和 parentField (根节点为空或者 undefined) 不然表现和原有版本一致 | boolean \| 'server'| true |   |
+| [paging](/en/procmp/data-display/table#Tree%20data%20asynchronous%20paging) | 是否分页，server 主要为 Table 的 Tree 模式服务，约定 total 为根节点数目，index 的定位都是基于根节点，为 server 时候保证同时存在 idField 和 parentField (根节点为空或者 undefined) 不然表现和原有版本一致; noCount用于无总数分页查询 | boolean \| 'server'\| 'noCount'| true |   |
 | dataKey | 查询返回的 json 中对应的数据的 key, 当为 null 时对应整个 json 数据, json 不是数组时自动作为新数组的第一条数据 | string \| null |  [dataKey](/en/procmp/configure/configure) | |
 | totalKey | 查询返回的 json 中对应的总数的 key | string | [totalKey](/en/procmp/configure/configure) | |
 | countKey | 查询返回的 json 中对应的是否需要异步计数的 key | string | [countKey](/en/procmp/configure/configure) | 1.5.5 |
@@ -61,7 +61,7 @@ abstract: true
 | [dataToJSON](/en/datasetapi/dataset-props/data-to-json) | 数据转为 json 的方式，详见[DataToJSON](#datatojson) | DataToJSON | dirty |   |
 | [cascadeParams](/en/datasetapi/dataset-props/children) | 级联查询参数 | (record, primaryKey) => object | (record, primaryKey) => primaryKey ? record.get(primaryKey) : record.toData() |   |
 | exportMode | 导出模式选择：前端导出，后端导出 | client \| server | server |   |
-| combineSort | 是否开启组件列排序传参 | boolean | false | 1.4.2 |
+| combineSort | 是否开启组件列排序传参; 前端排序和后端排序具体配置参考 Table API | boolean | false | 1.4.2 |
 | [forceValidate](/en/datasetapi/dataset-props/force-validate) | 始终校验全部数据 | boolean | false | 1.4.5 |
 | [validationRules](/en/datasetapi/dataset-props/validation-rules) | 针对 dataSet 主体的校验规则，详见[ValidationRule](#validationrule) | ValidationRule\[\] |  |  1.5.1  |
 
@@ -104,13 +104,13 @@ abstract: true
 
 ### DataSet Methods
 
-| 名称 | 说明 | 参数 | 返回值类型 | 版本 |
+| 名称 | 说明 | 属性名 | 返回值类型 | 版本 |
 | --- | --- | --- | --- | --- |
 | ready() | 判断数据源是否准备就绪 |  | Promise |   |
 | query(page, params, cache) | 查询 | `page`&lt;optional,default:1&gt; - 指定页码 `params`&lt;optional&gt; - 临时查询参数  `cache`&lt;optional&gt;(1.5.0-beta.0) - 是否保留缓存的变更记录  | Promise&lt;any&gt; | |
 | queryMore(page, params) | 查询更多， 保留原数据 | page&lt;optional,default:1&gt; - 指定页码 params&lt;optional&gt; - 临时查询参数  | Promise&lt;any&gt; | 1.1.0 |
 | [submit()](/en/datasetapi/dataset-methods/submit) | 将数据集中的增删改的记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; false - 校验失败，undefined - 无数据提交或提交相关配置不全，如没有 submitUrl。 | |
-| submitRecord(record) | 将单条记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 | 1.6.5 |
+| submitRecord(record, strictPageSize = false) | 将单条记录先进行校验再进行远程提交。submit 会抛出请求的异常，请用 promise.catch 或 try-await-catch 来处理异常。 |  | Promise&lt;any&gt; `false` - 校验失败，`undefined` - 无数据提交或提交相关配置不全，如没有 submitUrl。 | 1.6.5 |
 | forceSubmit() | 强制提交，绕过校验。 | | Promise&lt;any&gt; undefined - 无数据提交或提交相关配置不全，如没有 submitUrl。 | 1.5.2 |
 | [reset()](/en/datasetapi/dataset-methods/reset) | 重置更改, 并清除校验状态 |  |  |    |
 | locate(index) | 定位到指定记录, 如果paging 为 true和server，则做远程查询 为server指代的是根节点节点的index坐标| index - 记录索引 | Promise&lt;Record&gt; |  |
@@ -213,7 +213,7 @@ abstract: true
 
 > 1.5.0 版本新增属性，更多案例参考 [Form](/en/procmp/data-entry/form#禁用) & [Table](/en/procmp/data-display/table#功能总和)。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | [disabled](/en/datasetapi/record-props/disabled) | 是否禁用 | boolean | false |
 | selectable | 是否可选 | boolean | true |
@@ -251,7 +251,7 @@ abstract: true
 
 > 详细介绍：[Record](/en/tutorials/dataSet-more#record-%E5%AF%B9%E8%B1%A1)
 
-| 名称 | 说明 | 参数 | 返回值类型 | 版本|
+| 名称 | 说明 | 属性名 | 返回值类型 | 版本|
 | --- | --- | --- | --- | --- |
 | get(fieldName) | 根据字段名获取字段值或根据字段名数组获取字段名与字段值的对象。注意：禁止通过 record.data\[fieldName\]的方式获取字段值。 | fieldName - 字段名 或 字段名数组 | any |  |
 | getPristineValue(fieldName) | 根据字段名获取字段的原始值。 | fieldName - 字段名 | any | |
@@ -277,7 +277,7 @@ abstract: true
 
 > 详细介绍：[Field](/en/tutorials/dataSet-more#fields)
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | name | 字段名 | string |  |   |
 | [type](/en/datasetapi/field-props/type) | 字段类型，可选值：boolean \| number \| string \| date \| dateTime \| time \| week \| month \| year \| email \| url \| intl \| object \| attachment \| json \| bigNumber(1.5.1) | string | auto |  |
@@ -290,6 +290,8 @@ abstract: true
 | [minLength](/en/datasetapi/other/validate) | 最小长度 | number |  |    |
 | [max](/en/datasetapi/other/validate) | 最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName | Infinity |  | |
 | [min](/en/datasetapi/other/validate) | 最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName | -Infinity |   | |
+| maxExcl | 严格最大值。 fieldName 指向当前记录的 fieldName 值作为最大值。 | BigNumber.Value \| MomentInput \| fieldName  | Infinity | 1.6.6 |
+| minExcl | 严格最小值。 fieldName 指向当前记录的 fieldName 值作为最小值。 | BigNumber.Value \| MomentInput \| fieldName  | -Infinity | 1.6.6 |
 | [step](/en/datasetapi/field-props/precision) | 步距。| BigNumber.Value \| number \| { hour: number, minute: number, second: number } \| string |  | |
 | nonStrictStep | 非严格步距，在非严格步距下，允许输入值不为步距的倍数加上最小值，也允许在设置整数步距的情况下输入小数   | boolean | false |    |
 | [precision](/en/datasetapi/field-props/precision) | 小数点精度, 提交时会截断 | number |  | 1.3.0 |
@@ -315,11 +317,11 @@ abstract: true
 | lookupCode | 值列表代码 | string |  | |
 | lookupUrl | 值列表请求地址 | string \| (code) => string |  |  |
 | lovDefineUrl | lov 配置请求地址 | string \| (code) => string |  | |
-| lovQueryUrl | lov 查询请求地址 | string \| (code, config, { dataSet, params, data }) => string |  |   |
+| lovQueryUrl | lov 查询请求地址 | string \| (code: string, lovConfig?: LovConfig, { dataSet, params, data, lovQueryDetail }) => string |  |   |
 | lookupAxiosConfig | 值列表请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure#axiosrequestconfig)。配置中默认 url 为 lookupUrl， method 为 post。 | AxiosRequestConfig\| ({ dataSet, record, params, lookupCode }) => AxiosRequestConfig |  |  |
 | lovDefineAxiosConfig | lov 配置的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure#axiosrequestconfig)。 配置中默认 url 为 lovDefineUrl， method 为 post。 | AxiosRequestConfig\| (code: string, field?: Field) => AxiosRequestConfig |  |  |
 | lovDefineBatchAxiosConfig | 返回 lov 配置批量查询配置的钩子，优先级高于全局配置的 lovDefineBatchAxiosConfig ，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.6.3 |
-| lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure#axiosrequestconfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data }) => AxiosRequestConfig |  | |
+| lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/en/procmp/configure/configure#axiosrequestconfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data, lovQueryDetail }) => AxiosRequestConfig |  | |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/en/procmp/configure/configure#axiosrequestconfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.0.0 |
 | bind | 内部字段别名绑定 | string |  | |
 | [dynamicProps](/en/datasetapi/other/dynamic-props) | [动态属性对象](/en/tutorials/dataSet-more#dynamicprops)。对象为字段属性和返回该字段值的钩子的键值对。| { fieldProp: ({ dataSet, record, name }) => value } |  |  |
@@ -365,7 +367,7 @@ abstract: true
 
 * 当 field 是通过 ds.getField 获取的字段时， 以上传了 record 参数的方法等同于调用了通过 record.getField 得到的 field 对应的方法。版本：1.5.0-beta.0+
 
-| 名称 | 说明 | 参数 | 返回值类型 | 版本 |
+| 名称 | 说明 | 属性名 | 返回值类型 | 版本 |
 | --- | --- | --- | --- | --- |
 | get(propsName, record) | 根据属性名获取属性值 | `propsName` - 属性名 `record` - 记录 | any |
 | set(propsName, value) | 设置属性值 | propsName - 属性名；value - 属性值 |  |
@@ -404,7 +406,7 @@ abstract: true
 
 > 1.5.1 版本新增属性
 
-| 名称 | 说明 | 参数 | 返回值类型 |
+| 名称 | 说明 | 属性名 | 返回值类型 |
 | --- | --- | --- | --- |
 | [setState(key, value)](/en/datasetapi/other/state) | 设置自定义状态值。 | key - 键名或者键值对对象；value - 值 |  |
 | [getState(key)](/en/datasetapi/other/state) | 获取自定义状态值。 | key - 键名 |  |

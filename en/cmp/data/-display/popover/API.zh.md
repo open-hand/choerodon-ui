@@ -2,7 +2,7 @@
 title: API
 ---
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | content | 卡片内容 | ReactNode \| () => ReactNode | |
 | title | 卡片标题 | ReactNode \| () => ReactNode | |
@@ -11,7 +11,7 @@ title: API
 
 以下 API 为 Tooltip、Popconfirm、Popover 共享的 API。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | `false` |
 | autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | `true` |
