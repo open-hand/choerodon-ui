@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configure, Row, Col } from 'choerodon-ui';
+import { configure, Row, Col, message } from 'choerodon-ui';
 import { Attachment, Axios } from 'choerodon-ui/pro';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
@@ -91,13 +91,17 @@ const App = () => {
     label: '技术附件',
     labelLayout: 'float',
     accept: ['.deb', '.txt', '.pdf', 'image/*'],
-    max: 9,
+    max: 4,
     value,
     onChange: setValue,
     showHistory: true,
     useChunk: true,
     chunkSize: 1024,
     help: '支持文件类型： .deb .txt .pdf image/*',
+    // 上传文件时，数量超过限定数量的自定义提示
+    filesLengthLimitNotice: (defaultInfo) => {
+      message.error(defaultInfo);
+    },
   };
 
   const getPreviewUrl = (props) => {

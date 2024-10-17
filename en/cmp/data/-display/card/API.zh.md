@@ -8,7 +8,7 @@ title: API
 
 ### Card
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | actions | 卡片操作组，位置在卡片底部 | Array<ReactNode> | - |
 | bodyStyle | 内容区域自定义样式 | object | - |

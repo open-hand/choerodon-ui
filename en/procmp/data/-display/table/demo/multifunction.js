@@ -556,8 +556,6 @@ class App extends React.Component {
         showSelectionTips
         parityRow
         summary="BASIC DEMO"
-        virtual
-        virtualCell
         headerRowHeight={50}
         footerRowHeight={40}
         pagination={{

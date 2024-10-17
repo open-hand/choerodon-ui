@@ -4,7 +4,7 @@ title: API
 
 ### DatePicker
 
-| 参数         | 说明                                                                             | 类型                                                        | 默认值 | 版本 |
+| 属性名        | 说明                                                                             | 类型                                                        | 默认值 | 版本 |
 | ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------ | --- |
 | mode | 显示模式,可选值: date \| dateTime \| time \| year \| month \| week | string | date  |  |
 | min          | 最小日期                                                                         | MomentInput                                                 |        |  |
@@ -20,5 +20,6 @@ title: API
 | defaultTime | 设置用户选择日期时默认的时分秒，仅应用于 dateTime mode，DateTimePicker 组件  | moment \| \[moment, moment\] | 1.4.5 |
 | useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true | 1.5.4 |
 | comboRangeMode | 设置在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  | 1.6.5 |
+| inputReadOnly | 设置输入框为只读（避免在移动设备上打开虚拟键盘） | boolean | false | 1.6.6 |
 
 更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。

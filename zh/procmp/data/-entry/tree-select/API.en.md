@@ -4,7 +4,7 @@ title: API
 
 ### TreeSelect
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | multiple | 支持多选（当设置 treeCheckable 时自动变为 true）|	boolean |	false   | 1.0.0  |
 | showCheckedStrategy | 定义选中项回填的方式。SHOW_CHILD: 只显示子节点. SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL |  1.4.1  |
@@ -17,7 +17,7 @@ title: API
 
 ### TreeSelect.TreeNode
 
-| 参数  | 说明       | 类型   | 默认值 |
+| 属性名 | 说明       | 类型   | 默认值 |
 | ----- | ---------- | ------ | ------ |
 | disableCheckbox | 禁掉 checkbox | boolean | false |
 | disabled | 是否禁用 | boolean | false |

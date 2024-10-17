@@ -14,6 +14,9 @@ title: API
 | themeSwitch(1.5.0) | 默认主题切换设置( options 中设置 theme 或者不设置 themeSwitch，则不显示主题切换按钮)。不设置，默认 idea 主题，可选值 `idea` \| `material` | string |  |
 | title(1.5.0) | 标题 | ReactNode |  |
 | placeholder(1.6.4) | 占位词 | string |  |
+| valueChangeAction(1.6.6) | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
+| wait(1.6.6) | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | - |
+| waitType(1.6.6) | 设置值变更间隔类型，只有在 valueChangeAction 为 input 时起作用，可选值： `throttle` `debounce` | string | `debounce` |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
 

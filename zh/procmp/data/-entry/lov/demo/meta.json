@@ -121,6 +121,21 @@
       "screenshot": "",
       "height": 300,
       "category": "pro"
+    },
+    {
+      "filename": "show-detail.js",
+      "title": {
+        "zh": "查看详情",
+        "en": "showDetailWhenReadonly"
+      },
+      "description": {
+        "zh": "只读支持查看详情，不分页查询。需要后端支持。\n",
+        "en": "showDetailWhenReadonly.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 140,
+      "category": "pro"
     }
   ]
 }

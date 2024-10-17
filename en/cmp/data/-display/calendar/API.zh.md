@@ -18,7 +18,7 @@ title: API
 />
 ```
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | dateCellRender | 自定义渲染日期单元格，返回内容会被追加到单元格 | function(date: moment): ReactNode | 无 | |
 | dateFullCellRender | 自定义渲染日期单元格，返回内容覆盖单元格 | function(date: moment): ReactNode | 无 | |

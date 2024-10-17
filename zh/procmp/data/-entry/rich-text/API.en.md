@@ -12,6 +12,13 @@ title: API
 
 For more attributes, please refer to [FormField](/zh/procmp/abstract/field/#FormField).
 
+### RichText static property
+
+| 属性  | 说明     | 类型     | 默认值  | 版本 |
+| ----- | -------- | -------- | ------ | ----- |
+| Quill | Quill inside the component, which can be used to register the configuration | Quill | 1.6.6 |
+
+When the Quill registration configuration is directly used in the project does not take effect on RichText, you can use RichText.Quill.
 
 ### RichText.RichTextViewer
 

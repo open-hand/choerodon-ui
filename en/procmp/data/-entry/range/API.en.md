@@ -4,7 +4,7 @@ title: API
 
 ### Range
 
-| 参数      | 说明                                     | 类型        | 默认值 | 版本 |
+| 属性名 | 说明                                     | 类型        | 默认值 | 版本 |
 |-----------|------------------------------------------|------------|--------|--------|
 | defaultValue | The default value of slider. When `range` is `false`, use `number`, otherwise, use `[number, number]` | number\|number\[] | 0 or \[0, 0\] | 1.5.0-beta.0 |
 | disabled | If true, the slider will not be interactable. | boolean | false | 1.5.0-beta.0 |

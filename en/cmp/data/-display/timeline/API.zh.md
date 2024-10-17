@@ -15,7 +15,7 @@ title: API
 
 时间轴。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | pending | 指定最后一个幽灵节点是否存在或内容 | boolean\|string\|ReactNode | false |
 | pendingDot | 当最后一个幽灵节点存在時，指定其时间图点 | \|string\|ReactNode | `<Icon type="loading" />` |
@@ -24,7 +24,7 @@ title: API
 
 时间轴的每一个节点。
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | color | 指定圆圈颜色 `blue, red, green`，或自定义的色值 | string | blue |
 | dot | 自定义时间轴点 | string\|ReactNode | - |

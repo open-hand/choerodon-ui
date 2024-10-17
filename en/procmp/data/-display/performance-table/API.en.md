@@ -2,7 +2,7 @@
 title: API
 ---
 
-### Table
+### PerformanceTable
 
 | Property                 | Type `(Default)`                                                                  | Description                                                                                   | Supported version  |
 | ------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --- |
@@ -149,7 +149,7 @@ scrollLeft: (left: number) => void;
 
 选择功能的配置，使用请指明 rowKey。
 
-| 参数 | 说明 | 类型 | 默认值 | 
+| 属性名 | 说明 | 类型 | 默认值 | 
 | --- | --- | --- | --- | 
 | columnWidth | 自定义列表选择框宽度 | string\|number | `60px` | 
 | columnTitle | 自定义列表选择框标题 | string\|React.ReactNode |  | 
@@ -169,7 +169,7 @@ scrollLeft: (left: number) => void;
 
 ### selection
 
-| 参数     | 说明                       | 类型                        |
+| 属性名 | 说明                       | 类型                        |
 | -------- | -------------------------- | --------------------------- |
 | key      | React 需要的 key，建议设置 | string                      |
 | text     | 选择项显示的文字           | string\|React.ReactNode     |

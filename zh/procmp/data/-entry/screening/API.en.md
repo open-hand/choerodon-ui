@@ -4,14 +4,14 @@ title: API
 
 ### Screening
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | ({ labelTitle, TagsProps }) => ReactElement<any> | - |
 | onChange | 当值改变触发的回调方法 | `(value: any, oldValue: any) => void` | - |
 
 ### ScreeningItem
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | multiple | 初始打开多选 | string | - |
 | name | 绑定指定field（必填） | string | - |
@@ -24,7 +24,7 @@ title: API
 
 ### PropsTab 
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | text | 每个小tag展示的内容文本 | string | - |
 | label | tag的小标题 | string | - |

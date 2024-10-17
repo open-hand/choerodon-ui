@@ -17,7 +17,7 @@ title: API
 
 ### Mentions
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | notFoundContent | 当下拉列表为空时显示的内容 | ReactNode | 无匹配结果。 |
 | split | 设置选中项前后分隔符 | string | ' ' |
@@ -33,7 +33,7 @@ title: API
 
 ### Option
 
-| 参数 | 说明 | 类型 | 默认值 |
+| 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | value | 选择时填充的值 | string |  |
 | key | 唯一值 | string |  |

@@ -2,7 +2,7 @@
 title: API
 ---
 
-| 参数       | 说明                                                 | 类型             | 默认值  | 版本 |
+| 属性名       | 说明                                                 | 类型             | 默认值  | 版本 |
 | ---------- | ---------------------------------------------------- | ---------------- | ------- | --- |
 | modalProps | 弹窗属性，详见[ModalProps](/zh/procmp/feedback/modal/#Modal)，优先级高于视图配置  | object           |         ||
 | tableProps | 表格属性，详见[TableProps](/zh/procmp/data-display/table/#Table)，优先级高于视图配置（modal 参数仅在模态框模式下存在）  | object \| (lovTablePropsConfig, modal) => object |       |  |
@@ -21,12 +21,14 @@ title: API
 | viewMode | 弹窗视图渲染模式，可选值：modal \| drawer \| popup | string | modal | |
 | showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  | 1.5.0 |
 | selectionProps | 显示已选记录时的参数，详情见[selectionProps](#selectionprops) | object |  |  1.5.1  |
+| popupSearchMode | viewMode 为 popup 时，查询条件显示位置 | PopupSearchMode: 'single', 'multiple' | multiple | 1.5.7 |
+| showDetailWhenReadonly | 组件为 readOnly 或 disabled 时，可点击后缀查看选中项详情(需值集支持详情查询) | boolean |  | 1.6.6 |
 
 ## selectionProps
 
 > 1.5.1 版本新增属性。
 
-| 参数        | 说明                   | 类型   | 默认值   |
+| 属性名       | 说明                   | 类型   | 默认值   |
 | ----------- | ---------------------- | ------ | -------- |
 | nodeRenderer | 节点渲染器 | (record: Record) => ReactNode | |
 | placeholder | 已选记录为空时的默认文案 | string \| ReactNode  | |

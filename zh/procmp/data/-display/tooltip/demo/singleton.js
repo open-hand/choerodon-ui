@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Tooltip, Row, Col } from 'choerodon-ui/pro';
 
 const App = () => {
+  // 注意单例模式修改参数影响当前界面使用的所有单例实例;特别注意挂载节点的修改（getPopupContainer）
   const handleMouseEnter = React.useCallback(
     (e) =>
       Tooltip.show(e.target, {

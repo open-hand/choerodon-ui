@@ -4,7 +4,7 @@ title: API
 
 ### Tabs
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | activeKey | 当前激活 tab 面板的 key | string | 无 | |
 | animated | 是否使用动画切换 Tabs，在 `tabPosition=top|bottom` 时有效 | boolean \| {inkBar:boolean, tabPane:boolean} | true, 当 type="card" 时为 false | |
@@ -37,7 +37,7 @@ title: API
 
 ### Tabs.TabPane
 
-| 参数        | 说明                      | 类型              | 默认值 | 版本 |
+| 属性名       | 说明                      | 类型              | 默认值 | 版本 |
 | ----------- | ------------------------- | ----------------- | ------ | ------ |
 | forceRender | 被隐藏时是否渲染 DOM 结构 | boolean           | false  | |
 | key         | 对应 activeKey            | string            | 无     | |
@@ -55,7 +55,7 @@ title: API
 
 > 1.4.4 版本支持
 
-| 参数        | 说明                      | 类型              | 默认值 |
+| 属性名       | 说明                      | 类型              | 默认值 |
 | ----------- | ------------------------- | ----------------- | ------ |
 | tab         | 选项组显示文字          | string\|ReactNode | 无     |
 | disabled         | 是否禁用          | boolean | 无     |
