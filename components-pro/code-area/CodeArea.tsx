@@ -410,8 +410,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     // 更新DataSet的值之前，先去拿到原始的raw格式
     let value = codeMirrorInstance.getValue();
     if (formatter) {
-      const { getRaw, getFormatted } = formatter;
-      value = getRaw(getFormatted(value));
+      const { getFormatted } = formatter;
+      value = getFormatted(value);
     }
     this.midText = value;
     this.setValue(value);

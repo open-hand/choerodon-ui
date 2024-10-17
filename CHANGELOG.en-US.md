@@ -105,6 +105,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the display issue of the TextArea editor.
 - 🐞 `<pro>RichText`: Fixed the issue that fontSize does not take effect.
 - 🐞 `Upload`: Fixed the issue where multiple re-uploads do not trigger re-rendering or requests.
+- 🐞 `<pro>CodeArea`: Fixed HTML formatting errors.
 
 ## 1.6.5
 

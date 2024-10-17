@@ -105,6 +105,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复文本域编辑器显示问题。
 - 🐞 `<pro>RichText`: 修复字体大小样式不生效的问题。
 - 🐞 `Upload`: 修复多次重新上传不触发渲染、请求的问题。
+- 🐞 `<pro>CodeArea`: 修复 HTML 格式化报错的问题。
 
 ## 1.6.5
 

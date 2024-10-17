@@ -3,8 +3,7 @@ order: 6
 title:
   zh-CN: HTML格式化
   en-US: HTML Format
-iframe: 320
-across: true
+only: true
 ---
 
 ## zh-CN
@@ -46,7 +45,9 @@ class App extends React.Component {
     fields: [{ name: 'content', type: 'string', defaultValue: htmlText, required: true }],
   });
 
+
   render() {
+    window.ds = this.ds;
     return (
       <div>
         <h4>HTML</h4>
