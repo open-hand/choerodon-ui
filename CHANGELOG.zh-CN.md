@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
+
+## 1.6.6
+
+`2024-10-18`
+
 - 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction, tableFilterBarButtonIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 inputBoxIsFocus 参数。
