@@ -15,10 +15,11 @@ timeline: true
 
 ---
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
+- 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 
 ## 1.6.6
 
-`2024-10-17`
+`2024-10-18`
 
 - 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction, tableFilterBarButtonIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。

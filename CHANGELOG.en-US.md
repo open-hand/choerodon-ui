@@ -16,10 +16,11 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
+- 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 
 ## 1.6.6
 
-`2024-10-17`
+`2024-10-18`
 
 - 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon`,  `valueChangeAction`, `tableFilterBarButtonIcon` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
