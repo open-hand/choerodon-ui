@@ -15,7 +15,9 @@ timeline: true
 
 ---
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
+- 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
+- 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 
 ## 1.6.6
 

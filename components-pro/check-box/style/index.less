@@ -48,7 +48,7 @@
     border-color: @checkbox-uncheck-hover-border-color;
   }
 
-  &:focus + &-inner {
+  &-wrapper:not(&-readonly) &:focus + &-inner {
     border-color: @checkbox-color;
     box-shadow: 0 0 @outline-blur-size @outline-width @checkbox-shadow-color;
   }

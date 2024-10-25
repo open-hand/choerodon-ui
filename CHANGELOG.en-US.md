@@ -16,7 +16,9 @@ timeline: true
 ---
 
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
+- 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
+- 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 
 ## 1.6.6
 

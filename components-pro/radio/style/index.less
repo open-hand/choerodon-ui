@@ -63,7 +63,7 @@
 
   &&:hover:not(:checked) + &-inner,
   &-wrapper:hover &&:not(:checked) + &-inner,
-  &&:focus:not(:checked) + &-inner {
+  &-wrapper:not(&-readonly) &:focus:not(:checked) + &-inner {
     border-color: @radio-uncheck-hover-border-color;
 
     &::before {
@@ -83,7 +83,7 @@
     }
   }
 
-  &&:focus + &-inner {
+  &-wrapper:not(&-readonly) &:focus + &-inner {
     box-shadow: 0 0 @outline-blur-size @outline-width @radio-shadow-color;
   }
 
