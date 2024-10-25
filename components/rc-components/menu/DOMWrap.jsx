@@ -1,6 +1,7 @@
 import React, { cloneElement, Component } from 'react';
 import ReactDOM from 'react-dom';
 import ResizeObserver from 'resize-observer-polyfill';
+import List from 'rc-virtual-list';
 import SubMenu from './SubMenu';
 import { getWidth, menuAllProps, setStyle } from './util';
 
@@ -292,11 +293,29 @@ export default class DOMWrap extends Component {
       tag: Tag,
       children,
       theme,
+      virtual,
       ...rest
     } = this.props;
 
     if (hidden) {
       rest.className += ` ${hiddenClassName}`;
+    }
+
+    // virtual height/itemHeight 暂用默认值
+    if (virtual) {
+      return (
+        <List
+          component={Tag}
+          data={this.renderChildren(this.props.children)}
+          height={234}
+          itemHeight={28}
+          fullHeight={false}
+          virtual
+          {...rest}
+        >
+          {(item) => item}
+        </List>
+      );
     }
 
     return <Tag {...rest}>{this.renderChildren(this.props.children)}</Tag>;

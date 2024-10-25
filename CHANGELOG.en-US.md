@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
+
+## 1.6.6
+
+`2024-10-17`
+
 - 🌟 `configure`: Added `showValueIfNotFound`, `uploadSecretLevelFlag`, `uploadSecretLevelOptions`, `modalOkAndCancelIcon`,  `valueChangeAction`, `tableFilterBarButtonIcon` property.
 - 🌟 `<pro>FormField`: Added `overMaxTagCountTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback adds the `inputBoxIsFocus` argument.

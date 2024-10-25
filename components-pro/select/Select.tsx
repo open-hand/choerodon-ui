@@ -185,6 +185,11 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   dropdownMatchSelectWidth?: boolean;
   /**
+   * 下拉框虚拟滚动
+   * @default true
+   */
+  virtual?: boolean;
+  /**
    * 多选时显示全选按钮;
    * @default true
    */
@@ -519,6 +524,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'options',
       'optionsFilter',
       'dropdownMatchSelectWidth',
+      'virtual',
       'dropdownMenuStyle',
       'checkValueOnOptionsChange',
       'primitiveValue',
@@ -547,6 +553,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       searchable: props.searchable,
       reserveParam: props.reserveParam,
       dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
+      virtual: props.virtual,
       defaultActiveFirstOption: props.defaultActiveFirstOption,
       selectReverse: props.reverse,
       optionsFilter: props.optionsFilter,
@@ -787,6 +794,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const showQueryMore = (strictPageSize && options.paging && options.currentPage < options.totalPage) || (options.cacheAllData.length > options.originalData.length);
     return (
       <Menu
+        virtual={this.virtual}
         ref={this.saveMenu}
         disabled={menuDisabled}
         defaultActiveFirst={this.defaultActiveFirstOption}
@@ -846,6 +854,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   get dropdownMatchSelectWidth(): boolean | undefined {
     const { dropdownMatchSelectWidth = this.getContextConfig('dropdownMatchSelectWidth') } = this.observableProps;
     return dropdownMatchSelectWidth;
+  }
+
+  get virtual(): boolean | undefined {
+    const { virtual = false } = this.observableProps;
+    return virtual;
   }
 
   get defaultActiveFirstOption(): boolean | undefined {

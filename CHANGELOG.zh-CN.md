@@ -14,6 +14,11 @@ timeline: true
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+- 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
+
+## 1.6.6
+
+`2024-10-17`
 
 - 🌟 `configure`: 新增 showValueIfNotFound, uploadSecretLevelFlag, uploadSecretLevelOptions, modalOkAndCancelIcon, valueChangeAction, tableFilterBarButtonIcon 属性。
 - 🌟 `<pro>FormField`: 新增 overMaxTagCountTooltip 属性。
