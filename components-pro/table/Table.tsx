@@ -1512,7 +1512,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 if (clipboard && !isCopyPristine) {
                   if (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record)) {
                     // 处理 lookup、lov
-                    recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData);
+                    recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData, undefined, record);
                   }
                   if (field && fieldType === FieldType.boolean) {
                     const text = field.getText(recordData);
