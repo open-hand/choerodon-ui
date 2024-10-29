@@ -175,6 +175,7 @@ const locale: Locale = {
     jump_to: '跳转至:',
     jump_to_confirm: '确定',
     records_per_page: '每页行数:',
+    max_pagesize_info: '超出最大分页数 {count}，请重新输入',
   },
   Upload: {
     file_selection: '选择文件',

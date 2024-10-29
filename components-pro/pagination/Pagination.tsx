@@ -20,6 +20,7 @@ import { QuickJumperPosition, SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
 import { ValueChangeAction } from '../text-field/enum';
 import QuickJumper from './QuickJumper';
+import Tooltip from '../tooltip';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -29,7 +30,7 @@ export interface PaginationProps extends DataSetComponentProps {
   pageSize?: number;
   maxPageSize?: number;
   onChange?: (page: number, pageSize: number) => void;
-  beforeChange?:  (page: number, pageSize: number) => Promise<boolean | undefined> | boolean | undefined | void; // apaas event test
+  beforeChange?: (page: number, pageSize: number) => Promise<boolean | undefined> | boolean | undefined | void; // apaas event test
   itemRender?: (page: number, type: PagerType) => ReactNode;
   pageSizeOptions?: string[];
   pageSizeEditable?: boolean;
@@ -82,6 +83,8 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   @observable pageInput?: number | '';
 
+  private container: ObserverSelect;
+
   @computed
   get pageSize(): number {
     const { dataSet, pageSize } = this.observableProps;
@@ -127,7 +130,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     const { dataSet } = this.observableProps;
     const { total = 0, pageSize, page } = this;
     const noCount = dataSet && dataSet.paging === 'noCount';
-    return noCount ?  dataSet.length === pageSize : page < Math.floor((total - 1) / pageSize) + 1;
+    return noCount ? dataSet.length === pageSize : page < Math.floor((total - 1) / pageSize) + 1;
   }
 
   getObservableProps(props, context) {
@@ -148,6 +151,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   @autobind
   handlePageSizeBeforeChange(value): boolean | Promise<boolean> {
     if (value < 1 || value > this.observableProps.maxPageSize) {
+      this.handleTooltipEnter(value);
       return false;
     }
     const { dataSet } = this.props;
@@ -338,6 +342,19 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return pagerList;
   }
 
+  handleTooltipEnter = (value) => {
+    Tooltip.show(this.container.domNode, {
+      title: <div className={`${this.prefixCls}-warning`}><Icon type='warning' />{value} {$l('Pagination', 'max_pagesize_info', { count: this.observableProps.maxPageSize })}</div>,
+      placement: 'top',
+      theme: 'light',
+    });
+    setTimeout(() => Tooltip.hide(), 2000);
+  }
+
+  saveRef = (node: ObserverSelect) => {
+    this.container = node;
+  };
+
   renderSizeChange(pageSize: number): ReactNode {
     const {
       showSizeChangerLabel,
@@ -364,6 +381,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
           combo={pageSizeEditable}
           restrict="0-9"
           size={Size.small}
+          ref={this.saveRef}
         >
           {this.getOptions()}
         </ObserverSelect>

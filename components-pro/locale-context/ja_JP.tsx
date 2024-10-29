@@ -178,6 +178,7 @@ const locale: Locale = {
     jump_to: 'ジャンプする:',
     jump_to_confirm: 'を選択します',
     records_per_page: 'ページあたりの行数:',
+    max_pagesize_info: '最大ページ数 {count} を超えましたら,再入力してください。',
   },
   Upload: {
     file_selection: 'ファイルを選択',

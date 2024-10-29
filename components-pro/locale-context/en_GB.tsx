@@ -175,6 +175,7 @@ const locale: Locale = {
     jump_to: 'Jump to:',
     jump_to_confirm: 'Confirm',
     records_per_page: 'Number of items per page:',
+    max_pagesize_info: 'The maximum number of pages exceeds {count}, please re-enter',
   },
   Upload: {
     file_selection: 'Select File',

@@ -18,6 +18,7 @@ timeline: true
 - 🌟 `configure`: Added performanceTableUseMouseBatchChoose properties.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
+- 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.

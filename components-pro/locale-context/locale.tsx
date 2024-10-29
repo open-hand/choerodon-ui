@@ -177,6 +177,7 @@ export interface Locale extends DataSetLocale {
     jump_to: string;
     jump_to_confirm: string;
     records_per_page: string;
+    max_pagesize_info: string;
   };
   Upload: {
     file_selection: string;
