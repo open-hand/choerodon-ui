@@ -124,6 +124,7 @@ const defaults = {
   tableCommandProps: defaultButtonProps,
   tableAlwaysShowRowBox: false,
   tableUseMouseBatchChoose: false,
+  performanceTableUseMouseBatchChoose: false,
   tableEditorNextKeyEnterDown: true,
   tableAutoFocus: false,
   tableKeyboard: false,

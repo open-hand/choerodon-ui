@@ -75,6 +75,7 @@ cols: 1
 | onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
 | components |  [TableComponents](#TableComponents) | 覆盖默认的 table 元素 |
+| useMouseBatchChoose |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
 
 ### Form methods
 

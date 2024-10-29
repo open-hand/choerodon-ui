@@ -135,6 +135,14 @@ export default class TableStore {
 
   @observable selectedRowKeys: string[] | number[];
 
+  mouseBatchChooseStartId = 0;
+
+  mouseBatchChooseEndId = 0;
+
+  @observable mouseBatchChooseState: boolean;
+
+  @observable mouseBatchChooseIdList: number[];
+
   get queryBar(): TableQueryBarProps | false | undefined {
     return this.node.props.queryBar;
   }
@@ -149,6 +157,14 @@ export default class TableStore {
     }
     return this.getConfig('performanceTableColumnTitleEditable') === true;
   }
+
+  get useMouseBatchChoose(): boolean {
+    if ('useMouseBatchChoose' in this.node.props) {
+      return this.node.props.useMouseBatchChoose!;
+    }
+    return this.getConfig('performanceTableUseMouseBatchChoose') === true;
+  }
+
 
 
   get dataSet(): DataSet | undefined {
@@ -364,6 +380,11 @@ export default class TableStore {
   @autobind
   getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {
     return this.node.context.getConfig(key);
+  }
+
+  @action
+  changeMouseBatchChooseIdList(idList: number[]) {
+    this.mouseBatchChooseIdList = idList;
   }
 
   constructor(node: PerformanceTable) {

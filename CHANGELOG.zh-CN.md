@@ -14,7 +14,10 @@ timeline: true
 - 主版本号：含有破坏性更新和新特性，不在发布周期内。
 
 ---
+
+- 🌟 `configure`: 新增 performanceTableUseMouseBatchChoose 属性。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
+- 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。

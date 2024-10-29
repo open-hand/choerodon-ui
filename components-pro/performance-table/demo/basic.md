@@ -3,6 +3,7 @@ order: 0
 title:
   zh-CN: 基本使用
   en-US: Basic usage
+only: true  
 ---
 
 ## zh-CN
@@ -74,13 +75,14 @@ const Table = () => {
       disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
       name: rowData.firstName,
     }),
-    columnIndex: 99,
-    fixed: false,
+    // columnIndex: 99,
+    // fixed: false,
   };
 
   return (
     <div>
       <PerformanceTable
+        useMouseBatchChoose
         virtualized
         rowDraggable
         rowKey="id"

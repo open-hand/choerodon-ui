@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { get, isArrayLike, runInAction } from 'mobx';
+import { action, get, isArrayLike, runInAction } from 'mobx';
 import classNames from 'classnames';
 import isFunction from 'lodash/isFunction';
 import flatten from 'lodash/flatten';
@@ -1347,16 +1347,112 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     });
   };
 
+  getIdList = () => {
+    const { mouseBatchChooseStartId, mouseBatchChooseEndId } = this.tableStore;
+    const { data } = this.state;
+
+    // const rows = Array.from<HTMLTableRowElement>(element.querySelectorAll(`.${prefixCls}-row`));
+    let endId;
+    const idList: number[] = [];
+    data.some((row, i) => {
+      const index = this.getRecordKey(row, i);
+      if (!endId) {
+        if (mouseBatchChooseStartId === index) {
+          endId = mouseBatchChooseEndId;
+        } else if (mouseBatchChooseEndId === index) {
+          endId = mouseBatchChooseStartId;
+        }
+      }
+      if (endId) {
+        idList.push(index);
+      }
+      return endId === index;
+    });
+    return idList;
+  }
+
   renderSelectionBox = (type: RowSelectionType | undefined, rowData: object, rowIndex: number) => {
+    const { data } = this.state;
     const rowKey = this.getRecordKey(rowData, rowIndex);
     const props = this.getCheckboxPropsByItem(rowData, rowIndex);
+    const batchSelectProps: any = {};
     const handleChange = (e: RadioChangeEvent | CheckboxChangeEvent) =>
       type === 'radio'
         ? this.handleRadioSelect(rowData, rowIndex, e)
         : this.handleSelect(rowData, rowIndex, e);
+    if (type !== 'radio') {
+      const defaultSelection = this.tableStore.selectionDirty
+        ? []
+        : this.getDefaultSelection();
+      // @ts-ignore
+      let selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
+
+      const handleDragMouseUp = action((e) => {
+        const { mouseBatchChooseIdList } = this.tableStore;
+        if (this.tableStore.mouseBatchChooseState) {
+          this.tableStore.mouseBatchChooseState = false;
+          const { mouseBatchChooseStartId, mouseBatchChooseEndId } = this.tableStore;
+          if (mouseBatchChooseStartId === mouseBatchChooseEndId) {
+            return;
+          }
+          const changeRowKeys: string[] = [];
+
+          const checked = e.target.checked;
+          const nativeEvent = e.nativeEvent;
+          mouseBatchChooseIdList.map((itemKey: any) => {
+            const checkboxProps = this.getCheckboxPropsByItem(data[itemKey], itemKey);
+            if (!checkboxProps.disabled) {
+              if (selectedRowKeys.includes(itemKey)) {
+                if (!checked) {
+                  selectedRowKeys = selectedRowKeys.filter((j: string) => itemKey !== j);
+                  changeRowKeys.push(itemKey);
+                }
+              } else {
+                selectedRowKeys.push(itemKey);
+                changeRowKeys.push(itemKey);
+              }
+            }
+          })
+          this.tableStore.changeMouseBatchChooseIdList([]);
+          this.tableStore.selectionDirty = true;
+          this.setSelectedRowKeys(selectedRowKeys, {
+            selectWay: 'onSelectMultiple',
+            record: rowData,
+            checked,
+            changeRowKeys,
+            nativeEvent,
+          });
+        }
+        document.removeEventListener('pointerup', handleDragMouseUp);
+      });
+
+      if (this.tableStore.useMouseBatchChoose) {
+        batchSelectProps.onMouseDown = action(() => {
+          this.tableStore.mouseBatchChooseStartId = rowKey;
+          this.tableStore.mouseBatchChooseEndId = rowKey;
+          this.tableStore.mouseBatchChooseState = true;
+          // 为什么使用 pointerup
+          // 因为需要对disabled的元素进行特殊处理
+          // 因为状态的改变依赖 mouseup 而在disabled的元素上 无法触发mouseup事件
+          // 导致状态无法进行修正
+          // 以下两种方案通过 pointer-events:none 进行处理
+          // https://stackoverflow.com/questions/322378/javascript-check-if-mouse-button-down
+          // https://stackoverflow.com/questions/62081666/the-event-of-the-document-is-not-triggered-when-it-is-on-a-disabled-element
+          // 而使用指针事件可以突破disabled的限制
+          // https://stackoverflow.com/questions/62126515/how-to-get-the-state-of-the-mouse-through-javascript/62127845#62127845
+          document.addEventListener('pointerup', handleDragMouseUp);
+        });
+        batchSelectProps.onMouseEnter = () => {
+          if (this.tableStore.mouseBatchChooseState) {
+            this.tableStore.mouseBatchChooseEndId = rowKey;
+            this.tableStore.changeMouseBatchChooseIdList(this.getIdList());
+          }
+        };
+      }
+    }
 
     return (
-      <span onClick={stopPropagation}>
+      <span onClick={stopPropagation} {...batchSelectProps}>
         <SelectionBox
           store={this.tableStore}
           type={type}

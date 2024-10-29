@@ -88,6 +88,7 @@ const prefixCls = getConfig('prefixCls');
 | performanceTableColumnHideable | 默认 performanceTable 列可调整显示 | boolean | true |
 | tableColumnTitleEditable | Default Table columnTitleEditable | boolean | false |
 | performanceTableColumnTitleEditable | 默认 performanceTable 列可编辑标题 | boolean | false |
+| performanceTableUseMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | false |
 | tableColumnDraggable | Default Table columnDraggable| boolean | false |
 | tableColumnResizeTransition | Excessive effect of column dragging | boolean | true |
 | tableHeightChangeable | Default Table heightChangeable| boolean | true |

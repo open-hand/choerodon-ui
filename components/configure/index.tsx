@@ -176,6 +176,7 @@ export interface Config extends DataSetConfig {
   tableHeightChangeable?: boolean;
   tablePageSizeChangeable?: boolean;
   performanceTableColumnTitleEditable?: boolean;
+  performanceTableUseMouseBatchChoose?: boolean;
   tableDragColumnAlign?: DragColumnAlign;
   tableColumnDraggable?: boolean;
   tableColumnResizeTransition?: boolean;
