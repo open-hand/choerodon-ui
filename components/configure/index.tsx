@@ -210,6 +210,7 @@ export interface Config extends DataSetConfig {
   tableShowRemovedRow?: boolean;
   tableButtonsLimit?: number;
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
+  tableSize?: Size;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
