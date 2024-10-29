@@ -23,6 +23,7 @@ export enum ViewField {
   cardWidth = 'cardWidth',
   cardLayout = 'cardLayout',
   buttonPosition = 'buttonPosition',
+  buttonSecPosition = 'buttonSecPosition',
   buttonDisplay = 'buttonDisplay',
   commandsLimit = 'commandsLimit',
   cardLayoutData = 'cardLayoutData',

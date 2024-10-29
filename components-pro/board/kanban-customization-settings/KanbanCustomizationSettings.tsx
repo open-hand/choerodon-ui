@@ -104,6 +104,13 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
 
   const kanbanRecord: Record = useMemo(() => new DataSet({
     autoCreate: true,
+    events: {
+      update: ({ name, value, record }) => {
+        if (name === ViewField.buttonPosition && value === 'top' && record.get(ViewField.buttonSecPosition) === 'center') {
+          record.set(ViewField.buttonSecPosition, 'right');
+        }
+      },
+    },
     fields: [
       {
         name: ViewField.groupField,
@@ -139,7 +146,12 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
       {
         name: ViewField.buttonPosition,
         type: FieldType.string,
-        defaultValue: defaultData[ViewField.buttonPosition] || 'rightTop',
+        defaultValue: defaultData[ViewField.buttonPosition] || 'top',
+      },
+      {
+        name: ViewField.buttonSecPosition,
+        type: FieldType.string,
+        defaultValue: defaultData[ViewField.buttonSecPosition] || 'right',
       },
       {
         name: ViewField.buttonDisplay,
@@ -745,11 +757,27 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
               key="buttonPosition"
               clearButton={false}
             >
-              <ObserverSelectBox.Option value="rightTop">
-                卡片右上角
+              <ObserverSelectBox.Option value="top">
+                卡片上方
               </ObserverSelectBox.Option>
               <ObserverSelectBox.Option value="bottom">
                 卡片下方
+              </ObserverSelectBox.Option>
+            </ObserverSelectBox>
+            <ObserverSelectBox
+              name="buttonSecPosition"
+              // label="按钮位置"
+              key="buttonSecPosition"
+              clearButton={false}
+            >
+              <ObserverSelectBox.Option value="left">
+                左对齐
+              </ObserverSelectBox.Option>
+              <ObserverSelectBox.Option hidden={kanbanRecord.get('buttonPosition') === 'top'}  value="center">
+                居中
+              </ObserverSelectBox.Option>
+              <ObserverSelectBox.Option value="right">
+                右对齐
               </ObserverSelectBox.Option>
             </ObserverSelectBox>
           </Form>

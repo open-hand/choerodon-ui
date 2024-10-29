@@ -351,7 +351,8 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           [ViewField.showLabel]: 1,
           [ViewField.cardLayout]: 'form',
           [ViewField.buttonDisplay]: 'limit',
-          [ViewField.buttonPosition]: 'rightTop',
+          [ViewField.buttonPosition]: 'top',
+          [ViewField.buttonSecPosition]: 'right',
         },
         table: {},
         kanban: {
@@ -610,7 +611,8 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                     [ViewField.showLabel]: 1,
                     [ViewField.cardLayout]: 'form',
                     [ViewField.buttonDisplay]: 'limit',
-                    [ViewField.buttonPosition]: 'rightTop',
+                    [ViewField.buttonPosition]: 'top',
+                    [ViewField.buttonSecPosition]: 'right',
                   },
                   [ViewField.activeKey]: 1,
                 }, 0);

@@ -419,6 +419,17 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
     setCardHeight(0);
   }, [customizedDS!.current]);
 
+  const btnStyle = useMemo(() => {
+    switch (viewProps.buttonSecPosition) {
+      case 'right':
+        return { justifyContent: 'flex-end' };
+      case 'center':
+        return { justifyContent: 'space-around' };    
+      default:
+        return {};
+    }
+  }, [viewProps.buttonSecPosition]);
+
   return (
     <div style={{ height: '100%' }}>
       {cardDS && cardDS.queryDataSet ? (
@@ -483,8 +494,24 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                     }
                   }
                   extra={
-                    cardProps && cardProps.contentRenderer || (viewProps.buttonPosition !== 'rightTop') ? null :
+                    cardProps && cardProps.contentRenderer || (viewProps.buttonPosition !== 'top') ? null :
+                      <div style={btnStyle}>
+                        <CardCommand
+                          buttonDisplay={viewProps.buttonDisplay}
+                          command={command}
+                          dataSet={cardDS}
+                          record={record}
+                          renderCommand={renderCommand}
+                          prefixCls={prefixCls}
+                          viewMode={ViewMode.card}
+                          commandsLimit={viewProps.commandsLimit}
+                        />
+                      </div>
+                  }
+                  actions={(cardProps && cardProps.contentRenderer) || (viewProps.buttonPosition === 'top') ? null : [
+                    <div style={btnStyle} key="command-wrap">
                       <CardCommand
+                        key='command'
                         buttonDisplay={viewProps.buttonDisplay}
                         command={command}
                         dataSet={cardDS}
@@ -494,20 +521,9 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
                         viewMode={ViewMode.card}
                         commandsLimit={viewProps.commandsLimit}
                       />
+                    </div>,
+                  ]
                   }
-                  actions={(cardProps && cardProps.contentRenderer) || (viewProps.buttonPosition === 'rightTop') ? null : [
-                    <CardCommand
-                      key='command'
-                      buttonDisplay={viewProps.buttonDisplay}
-                      command={command}
-                      dataSet={cardDS}
-                      record={record}
-                      renderCommand={renderCommand}
-                      prefixCls={prefixCls}
-                      viewMode={ViewMode.card}
-                      commandsLimit={viewProps.commandsLimit}
-                    />,
-                  ]}
                 >
                   {cardProps && cardProps.contentRenderer ? cardProps.contentRenderer(viewProps, cardDS) :
                     (

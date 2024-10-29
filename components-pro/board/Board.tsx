@@ -155,6 +155,10 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
         bind: `${ViewField.viewProps}.${ViewField.buttonPosition}`,
       },
       {
+        name: ViewField.buttonSecPosition,
+        bind: `${ViewField.viewProps}.${ViewField.buttonSecPosition}`,
+      },
+      {
         name: ViewField.buttonDisplay,
         bind: `${ViewField.viewProps}.${ViewField.buttonDisplay}`,
       },
@@ -227,7 +231,8 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
             [ViewField.showLabel]: 1,
             [ViewField.cardLayout]: 'form',
             [ViewField.buttonDisplay]: 'limit',
-            [ViewField.buttonPosition]: 'rightTop',
+            [ViewField.buttonPosition]: 'top',
+            [ViewField.buttonSecPosition]: 'right',
           },
           table: {},
           kanban: {
