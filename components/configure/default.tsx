@@ -192,6 +192,7 @@ const defaults = {
   rangeSeparator: '~',
   treeCheckboxPosition: 'default' as TreeCheckboxPosition,
   showValueIfNotFound: true,
+  tableSize: Size.default,
 };
 
 export default defaults;

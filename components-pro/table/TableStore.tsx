@@ -1649,10 +1649,11 @@ export default class TableStore {
 
   get size(): Size {
     const { size } = this.customized;
+    const tableSize = this.getConfig('tableSize');
     if (size !== undefined) {
       return size;
     }
-    return this.props.size || Size.default;
+    return this.props.size || tableSize || Size.default;
   }
 
   get rowHeight(): 'auto' | number {

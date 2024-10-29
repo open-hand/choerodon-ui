@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added performanceTableUseMouseBatchChoose properties.
+- 🌟 `configure`: Added `performanceTableUseMouseBatchChoose`, `tableSize` properties.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
