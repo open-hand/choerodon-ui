@@ -98,9 +98,9 @@ export function mergeDefaultProps(
   ];
 }
 
-export interface CheckboxPropsCache {
-  [key: string]: any;
-}
+// export interface CheckboxPropsCache {
+//   [key: string]: any;
+// }
 
 export default class TableStore {
   node: PerformanceTable;
@@ -111,7 +111,7 @@ export default class TableStore {
 
   originalChildren: any[];
 
-  checkboxPropsCache: CheckboxPropsCache = {};
+  // checkboxPropsCache: CheckboxPropsCache = {};
 
   selectionDirty?: boolean;
 
@@ -374,8 +374,6 @@ export default class TableStore {
     }
     return this.getConfig('performanceTableColumnDraggable') === true;
   }
-
-  setCheckboxPropsCache = (cache: CheckboxPropsCache) => this.checkboxPropsCache = cache;
 
   @autobind
   getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T] {

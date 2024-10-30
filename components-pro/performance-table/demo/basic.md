@@ -3,7 +3,6 @@ order: 0
 title:
   zh-CN: 基本使用
   en-US: Basic usage
-only: true  
 ---
 
 ## zh-CN
@@ -23,7 +22,9 @@ const { Column, HeaderCell, Cell } = PerformanceTable;
 
 const Table = () => {
   const tableRef = React.createRef();
-  const [selectedRowKeys, setSelectedRowKeys] = React.useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = React.useState([0]);
+  const [disabledItem, setDisabledItem] = React.useState('Osbaldo');  
+
   const columns = [
     {
       title: 'Id',
@@ -65,15 +66,18 @@ const Table = () => {
     },
   ];
 
-  const rowSelection = {
+    const rowSelection = {
     selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys);
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: rowData => ({
-      disabled: rowData.firstName === 'Libbie', // Column configuration not to be checked
+      disabled: rowData.firstName === disabledItem, // Column configuration not to be checked
       name: rowData.firstName,
+    }),
+    onCell: (rowData) => ({
+      disabled: rowData.firstName === disabledItem, // Column 
     }),
     // columnIndex: 99,
     // fixed: false,
@@ -105,6 +109,7 @@ const Table = () => {
       <Button
         onClick={() => {
           tableRef.current.scrollTop(0);
+          setDisabledItem('Fletcher')
         }}
       >
         Scroll top

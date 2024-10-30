@@ -23,6 +23,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
+- 🐞 `<pro>PerformanceTable`: Fixes invalid rowSelection dynamic configuration.
 
 ## 1.6.6
 

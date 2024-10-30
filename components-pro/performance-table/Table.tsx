@@ -668,6 +668,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           fixed: rowSelectionFixed,
         };
         columns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
+        this._cacheChildrenSize = flatten(columns).length;
       }
 
       if (children && (children as any[]).length) {
@@ -681,6 +682,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             (children as any[]).splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelection);
           }
         }
+        this._cacheChildrenSize = flatten(children as any[]).length;
       }
     }
     this.tableStore.originalColumns = columns;
@@ -734,12 +736,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   shouldComponentUpdate(nextProps: TableProps, nextState: TableState) {
+    const nextPropsRowSelection = getRowSelection(nextProps);
     const _cacheChildrenSize = flatten((nextProps.children as any[] || nextProps.columns) || []).length;
+    const hasRowSelection = nextProps.columns?.some(column => column.key === 'rowSelection');
 
     /**
      * 单元格列的信息在初始化后会被缓存，在某些属性被更新以后，需要清除缓存。
      */
-    if (_cacheChildrenSize !== this._cacheChildrenSize) {
+    const real_cacheChildrenSize = (!hasRowSelection && nextPropsRowSelection) ? 1 + _cacheChildrenSize : _cacheChildrenSize;
+    if (real_cacheChildrenSize !== this._cacheChildrenSize) {
       this._cacheChildrenSize = _cacheChildrenSize;
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
@@ -778,19 +783,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         this._cacheCells.headerCells[0] = checkboxAllHeaderCell;
       }
     }
-    const flag = this.props.columns !== nextProps.columns
-      || this.props.children !== nextProps.children
-      || this.props.rowSelection !== nextProps.rowSelection;
-    if (flag) {
-      runInAction(() => this.setSelectionColumn(nextProps));
-    }
+    runInAction(() => this.setSelectionColumn(nextProps));
+
     return !eq(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
     const { rowHeight, data, autoHeight, height, virtualized, children, columns } = prevProps;
     const { props, state } = this;
-    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, rowSelection, children: nextChildren } = props;
+    const rowSelection = getRowSelection(this.props);
+    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren } = props;
     if (data !== nextData) {
       this.calculateRowMaxHeight();
       if (onDataUpdated) {
@@ -823,12 +825,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         };
         runInAction(() => {
           this.tableStore.originalColumns = nextColumns.splice(rowSelection.columnIndex || 0, 0, columnsWithRowSelectionProps);
-        });
-      }
-
-      if (rowSelection) {
-        runInAction(() => {
-          this.tableStore.selectedRowKeys = rowSelection.selectedRowKeys || [];
         });
       }
 
@@ -1173,17 +1169,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (!rowSelection.getCheckboxProps) {
       return {};
     }
-    const key = this.getRecordKey(item, index);
+    return rowSelection.getCheckboxProps(item);
+    // const key = this.getRecordKey(item, index);
     // Cache checkboxProps
-    if (!this.tableStore.checkboxPropsCache[key]) {
-      this.tableStore.checkboxPropsCache[key] = rowSelection.getCheckboxProps(item) || {};
-      const checkboxProps = this.tableStore.checkboxPropsCache[key];
-      warning(
-        !('checked' in checkboxProps) && !('defaultChecked' in checkboxProps),
-        'Do not set `checked` or `defaultChecked` in `getCheckboxProps`. Please use `selectedRowKeys` instead.',
-      );
-    }
-    return this.tableStore.checkboxPropsCache[key];
+    // if (!this.tableStore.checkboxPropsCache[key]) {
+    //   this.tableStore.checkboxPropsCache[key] = rowSelection.getCheckboxProps(item) || {};
+    //   const checkboxProps = this.tableStore.checkboxPropsCache[key];
+    //   warning(
+    //     !('checked' in checkboxProps) && !('defaultChecked' in checkboxProps),
+    //     'Do not set `checked` or `defaultChecked` in `getCheckboxProps`. Please use `selectedRowKeys` instead.',
+    //   );
+    // }
+    // return this.tableStore.checkboxPropsCache[key];
   };
 
   getDefaultSelection() {
