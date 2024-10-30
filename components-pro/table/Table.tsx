@@ -308,6 +308,7 @@ export interface Clipboard {
   hiddenTip?: boolean;
   description?: string | ReactNode;
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
+  tipCallback?: (type: string, success: boolean) => void;
 }
 
 export interface ArrangeValue {
@@ -1552,18 +1553,26 @@ export default class Table extends DataSetComponent<TableProps> {
             }
           }
           copyToClipboard().writeText(copyData.join('')).then(() => {
-            message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
+            if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+              clipboard.tipCallback('copy', true)
+            } else {
+              message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
+            }
           });
         }
       }
     } catch (error) {
-      message.warning(error.message);
+      if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+        clipboard.tipCallback('copy', false)
+      } else {
+        message.warning(error.message);
+      }
     }
   }
 
   @action
   async handlePasteChoose() {
-    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit } = this.tableStore;
+    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit, clipboard } = this.tableStore;
     if (!currentEditorName && !currentEditRecord) return;
     let colIndex;
     const columns = columnGroups.leafs;
@@ -1733,8 +1742,15 @@ export default class Table extends DataSetComponent<TableProps> {
           const { record, name, value } = item;
           record.set(name, value);
         });
+        if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+          clipboard.tipCallback('paste', true)
+        }
       } catch (error) {
-        message.warning(error.message);
+        if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+          clipboard.tipCallback('paste', false)
+        } else {
+          message.warning(error.message);
+        }
       }
       runInAction(() => {
         if (this.dataSet) {
