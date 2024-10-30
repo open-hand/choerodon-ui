@@ -78,7 +78,7 @@ import Spin from '../spin';
 import PerformanceTableQueryBar from './query-bar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
 import DynamicFilterBar from './query-bar/TableDynamicFilterBar';
-import TableStore from './TableStore';
+import TableStore, { mergeDefaultProps } from './TableStore';
 import Toolbar, { ToolBarProps } from './tool-bar';
 import { TableAutoHeightType, TableColumnResizeTriggerType, TableHeightType } from '../table/enum';
 import { isDropresult } from '../table/utils';
@@ -684,9 +684,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         }
         this._cacheChildrenSize = flatten(children as any[]).length;
       }
+      const { customized, customizable } = this.tableStore;
+      const customizedColumns = customizable ? customized.columns : undefined;
+      this.tableStore.originalColumns = mergeDefaultProps(columns, customizedColumns);;
+      this.tableStore.originalChildren = children as any[];
     }
-    this.tableStore.originalColumns = columns;
-    this.tableStore.originalChildren = children as any[];
   };
 
   listenWheel = (deltaX: number, deltaY: number) => {
@@ -743,7 +745,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     /**
      * 单元格列的信息在初始化后会被缓存，在某些属性被更新以后，需要清除缓存。
      */
-    const real_cacheChildrenSize = (!hasRowSelection && nextPropsRowSelection) ? 1 + _cacheChildrenSize : _cacheChildrenSize;
+    const real_cacheChildrenSize = (!hasRowSelection && Object.keys(nextPropsRowSelection).length) ? 1 + _cacheChildrenSize : _cacheChildrenSize;
     if (real_cacheChildrenSize !== this._cacheChildrenSize) {
       this._cacheChildrenSize = _cacheChildrenSize;
       this._cacheCells = null;
