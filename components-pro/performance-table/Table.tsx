@@ -1380,12 +1380,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         ? this.handleRadioSelect(rowData, rowIndex, e)
         : this.handleSelect(rowData, rowIndex, e);
     if (type !== 'radio') {
-      const defaultSelection = this.tableStore.selectionDirty
-        ? []
-        : this.getDefaultSelection();
-      // @ts-ignore
-      let selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
-
       const handleDragMouseUp = action((e) => {
         const { mouseBatchChooseIdList } = this.tableStore;
         if (this.tableStore.mouseBatchChooseState) {
@@ -1401,18 +1395,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           mouseBatchChooseIdList.map((itemKey: any) => {
             const checkboxProps = this.getCheckboxPropsByItem(data[itemKey], itemKey);
             if (!checkboxProps.disabled) {
-              if (selectedRowKeys.includes(itemKey)) {
-                selectedRowKeys = selectedRowKeys.filter((j: string) => itemKey !== j);
+              if (this.tableStore.selectedRowKeys.includes(itemKey)) {
+                this.tableStore.selectedRowKeys = this.tableStore.selectedRowKeys.filter((j: string) => itemKey !== j);
                 changeRowKeys.push(itemKey);
               } else {
-                selectedRowKeys.push(itemKey);
+                this.tableStore.selectedRowKeys.push(itemKey);
                 changeRowKeys.push(itemKey);
               }
             }
-          })
+          });
           this.tableStore.changeMouseBatchChooseIdList([]);
           this.tableStore.selectionDirty = true;
-          this.setSelectedRowKeys(selectedRowKeys, {
+          this.setSelectedRowKeys(this.tableStore.selectedRowKeys, {
             selectWay: 'onSelectMultiple',
             record: rowData,
             checked,
