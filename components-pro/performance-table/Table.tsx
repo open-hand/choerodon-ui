@@ -1402,10 +1402,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             const checkboxProps = this.getCheckboxPropsByItem(data[itemKey], itemKey);
             if (!checkboxProps.disabled) {
               if (selectedRowKeys.includes(itemKey)) {
-                if (!checked) {
-                  selectedRowKeys = selectedRowKeys.filter((j: string) => itemKey !== j);
-                  changeRowKeys.push(itemKey);
-                }
+                selectedRowKeys = selectedRowKeys.filter((j: string) => itemKey !== j);
+                changeRowKeys.push(itemKey);
               } else {
                 selectedRowKeys.push(itemKey);
                 changeRowKeys.push(itemKey);
