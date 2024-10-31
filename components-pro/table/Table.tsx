@@ -308,6 +308,7 @@ export interface Clipboard {
   hiddenTip?: boolean;
   description?: string | ReactNode;
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
+  tipCallback?: (type: string, success: boolean) => void;
 }
 
 export interface ArrangeValue {
@@ -1488,78 +1489,90 @@ export default class Table extends DataSetComponent<TableProps> {
   handleCopyChoose() {
     const { columnGroups, startChooseCell, endChooseCell, clipboard, isCopyPristine } = this.tableStore;
     const columns = columnGroups.leafs;
-    if (startChooseCell && endChooseCell) {
-      if (this.dataSet) {
-        const minRowIndex = Math.min(startChooseCell.rowIndex, endChooseCell.rowIndex);
-        const maxRowIndex = Math.max(startChooseCell.rowIndex, endChooseCell.rowIndex);
-        const minColIndex = Math.min(startChooseCell.colIndex, endChooseCell.colIndex);
-        const maxColIndex = Math.max(startChooseCell.colIndex, endChooseCell.colIndex);
-
-        const copyData: string[] = [];
-        for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
-          const record = this.dataSet.records[i];
-          for (let j = minColIndex; j <= maxColIndex; j++) {
-            let recordData;
-            const fieldName = columns[j].column.name || String(columns[j].column.key || '');
-            if (fieldName === SELECTION_KEY) {
-              recordData = String(record.isSelected);
-            } else {
-              const field = this.dataSet.getField(fieldName);
-              if (field) {
-                const fieldType = field && field.get('type', record);
-                recordData = record.get(fieldName);
-
-                if (clipboard && !isCopyPristine) {
-                  if (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record)) {
-                    // 处理 lookup、lov
-                    recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData, undefined, record);
-                  }
-                  if (field && fieldType === FieldType.boolean) {
-                    const text = field.getText(recordData);
-                    recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
-                  }
-                  if (field && [FieldType.date, FieldType.dateTime, FieldType.time].includes(fieldType) && isMoment(recordData)) { 
-                    recordData = recordData.format(field.get('format') || 'YYYY-MM-DD');
-                  }
-                  if (columns[j] && columns[j].column.renderer) {
-                    const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                    const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
-                    recordData = td ? td.innerText : null;
-                  }
-                } else if (fieldType === FieldType.object) {
-                  recordData = JSON.stringify(recordData);
-                }
-                // 去掉换行符
-                if (isString(recordData)) {
-                  recordData = recordData.replace(/[\r\n]/g, "")
-                }
-              }
-            }
-
-            recordData = isNil(recordData) ? '' : recordData;
-            let parseData;
-            if (j === maxColIndex) { 
-              if (i !== maxRowIndex) { 
-                parseData = `${recordData}\t\n`
+    try {
+      if (startChooseCell && endChooseCell) {
+        if (this.dataSet) {
+          const minRowIndex = Math.min(startChooseCell.rowIndex, endChooseCell.rowIndex);
+          const maxRowIndex = Math.max(startChooseCell.rowIndex, endChooseCell.rowIndex);
+          const minColIndex = Math.min(startChooseCell.colIndex, endChooseCell.colIndex);
+          const maxColIndex = Math.max(startChooseCell.colIndex, endChooseCell.colIndex);
+  
+          const copyData: string[] = [];
+          for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
+            const record = this.dataSet.records[i];
+            for (let j = minColIndex; j <= maxColIndex; j++) {
+              let recordData;
+              const fieldName = columns[j].column.name || String(columns[j].column.key || '');
+              if (fieldName === SELECTION_KEY) {
+                recordData = String(record.isSelected);
               } else {
-                parseData = `${recordData}`
+                const field = this.dataSet.getField(fieldName);
+                if (field) {
+                  const fieldType = field && field.get('type', record);
+                  recordData = record.get(fieldName);
+  
+                  if (clipboard && !isCopyPristine) {
+                    if (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record)) {
+                      // 处理 lookup、lov
+                      recordData = isArrayLike(recordData) ? recordData.map(x => field.getText(x, undefined, record)).join(',') : field.getText(recordData, undefined, record);
+                    }
+                    if (field && fieldType === FieldType.boolean) {
+                      const text = field.getText(recordData);
+                      recordData = isString(text) ? text : (text ? $l('Table', 'query_option_yes') : $l('Table', 'query_option_no'));
+                    }
+                    if (field && [FieldType.date, FieldType.dateTime, FieldType.time].includes(fieldType) && isMoment(recordData)) { 
+                      recordData = recordData.format(field.get('format', record) || 'YYYY-MM-DD');
+                    }
+                    if (columns[j] && columns[j].column.renderer) {
+                      const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
+                      const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
+                      recordData = td ? td.innerText : null;
+                    }
+                  } else if (fieldType === FieldType.object) {
+                    recordData = JSON.stringify(recordData);
+                  }
+                  // 去掉换行符
+                  if (isString(recordData)) {
+                    recordData = recordData.replace(/[\r\n]/g, "")
+                  }
+                }
               }
-            } else {
-              parseData = `${recordData}\t`
+  
+              recordData = isNil(recordData) ? '' : recordData;
+              let parseData;
+              if (j === maxColIndex) { 
+                if (i !== maxRowIndex) { 
+                  parseData = `${recordData}\t\n`
+                } else {
+                  parseData = `${recordData}`
+                }
+              } else {
+                parseData = `${recordData}\t`
+              }
+              copyData.push(parseData);
             }
-            copyData.push(parseData);
           }
+          copyToClipboard().writeText(copyData.join('')).then(() => {
+            if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+              clipboard.tipCallback('copy', true)
+            } else {
+              message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
+            }
+          });
         }
-        copyToClipboard().writeText(copyData.join('')).then(() => {
-          message.success($l('Table', isCopyPristine ? 'copy_pristine_success' : 'copy_display_success'));
-        });
+      }
+    } catch (error) {
+      if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+        clipboard.tipCallback('copy', false)
+      } else {
+        message.warning(error.message);
       }
     }
   }
 
   @action
   async handlePasteChoose() {
-    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit } = this.tableStore;
+    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit, clipboard } = this.tableStore;
     if (!currentEditorName && !currentEditRecord) return;
     let colIndex;
     const columns = columnGroups.leafs;
@@ -1613,8 +1626,8 @@ export default class Table extends DataSetComponent<TableProps> {
             if (!column.editor || !field || field.get('disabled', record) || field.get('readOnly', record) || !this.dataSet) {
               continue;
             }
-            const fieldType = field.type;
-            const optionDs = field.getOptions();
+            const fieldType = field.get('type', record);
+            const optionDs = field.getOptions(record);
 
             const jsonText = isJsonString(text);
             if (fieldType !== FieldType.object || !jsonText) {
@@ -1664,8 +1677,8 @@ export default class Table extends DataSetComponent<TableProps> {
                 if (jsonText) {
                   text = attempt(JSON.parse, text);
                 } else if (optionDs) {
-                  const textField = field.get('textField');
-                  const param = field.get('lovPara');
+                  const textField = field.get('textField', record);
+                  const param = field.get('lovPara', record);
                   if (isArrayLike(text)) {
                     const promises = text.map(async t => {
                       const obj = {
@@ -1700,8 +1713,8 @@ export default class Table extends DataSetComponent<TableProps> {
               default:
                 if (optionDs) {
                   const optionData = optionDs.toData();
-                  const textField = field.get('textField');
-                  const valueField = field.get('valueField');
+                  const textField = field.get('textField', record);
+                  const valueField = field.get('valueField', record);
                   if (isArrayLike(text)) {
                     text = text.map(v => {
                       const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
@@ -1729,8 +1742,15 @@ export default class Table extends DataSetComponent<TableProps> {
           const { record, name, value } = item;
           record.set(name, value);
         });
+        if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+          clipboard.tipCallback('paste', true)
+        }
       } catch (error) {
-        message.warning(error.message);
+        if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
+          clipboard.tipCallback('paste', false)
+        } else {
+          message.warning(error.message);
+        }
       }
       runInAction(() => {
         if (this.dataSet) {

@@ -315,6 +315,7 @@ spin的配置项。
 | description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - |
 | arrangeCalc | 开启范围计数 | boolean \| ReactNode | false |
 | hiddenTip | 关闭提示 | boolean | false |
+| tipCallback | 复制、粘贴成功或者失败的回调 | (type: 'copy' | 'paste', success: boolean) => void | - |
 
 ### instance methods
 

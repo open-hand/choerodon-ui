@@ -19,10 +19,12 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。
 - 🌟 `<pro>Pagination`: 新增输入超过最大分页数提示。
+- 🌟 `<pro>Table`: 新增双向复制操作提示回调。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
+- 🐞 `<pro>Table`: 修复双向复制lov计算属性变化导致粘贴没有请求的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态配置 rowSelection 无效的问题。
 
 ## 1.6.6

@@ -70,7 +70,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
-  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea, node: { rangeBorder } } = tableStore;
+  const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea, node: { rangeBorder, element } } = tableStore;
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -126,6 +126,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
+    if (element && !element.contains(target)) return;
     if ((key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) && !event.shiftKey) {
       if (rangeBorder) {
         rangeBorder.style.display = 'none';
