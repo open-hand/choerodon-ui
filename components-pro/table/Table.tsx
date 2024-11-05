@@ -1542,7 +1542,7 @@ export default class Table extends DataSetComponent<TableProps> {
               let parseData;
               if (j === maxColIndex) { 
                 if (i !== maxRowIndex) { 
-                  parseData = `${recordData}\t\n`
+                  parseData = `${recordData}\n`
                 } else {
                   parseData = `${recordData}`
                 }
