@@ -27,6 +27,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制lov计算属性变化导致粘贴没有请求的问题。
 - 🐞 `<pro>Table`: 修复双向复制成功复制后粘贴多出空白列的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态配置 rowSelection 无效的问题。
+- 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 
 ## 1.6.6
 

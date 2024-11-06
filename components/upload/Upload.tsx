@@ -15,8 +15,7 @@ import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigCont
 
 export { UploadProps };
 
-@ModalProvider.injectModal
-export default class Upload extends Component<UploadProps, UploadState> {
+class Upload extends Component<UploadProps, UploadState> {
   static displayName = 'Upload';
 
   static get contextType(): typeof ConfigContext {
@@ -471,3 +470,5 @@ export default class Upload extends Component<UploadProps, UploadState> {
     );
   }
 }
+
+export default ModalProvider.injectModal(Upload);

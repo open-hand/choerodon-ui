@@ -104,9 +104,8 @@ const defaultSort: Sort = {
   custom: true,
 };
 
-@ModalProvider.injectModal
 @observer
-export default class Attachment extends FormField<AttachmentProps> {
+class Attachment extends FormField<AttachmentProps> {
   static displayName = 'Attachment';
 
   static Dragger: typeof Dragger;
@@ -1355,3 +1354,5 @@ export default class Attachment extends FormField<AttachmentProps> {
     return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));
   }
 }
+
+export default ModalProvider.injectModal(Attachment);
