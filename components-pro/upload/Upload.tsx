@@ -195,9 +195,8 @@ export interface UploadProps extends FormFieldProps {
   Modal?: ModalContextValue;
 }
 
-@ModalProvider.injectModal
 @observer
-export default class Upload extends FormField<UploadProps> {
+class Upload extends FormField<UploadProps> {
   static displayName = 'Upload';
 
   static defaultProps = {
@@ -771,3 +770,5 @@ export default class Upload extends FormField<UploadProps> {
     }
   }
 }
+
+export default ModalProvider.injectModal(Upload);
