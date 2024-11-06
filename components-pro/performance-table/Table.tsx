@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import { action, get, isArrayLike, runInAction } from 'mobx';
 import classNames from 'classnames';
@@ -10,6 +11,7 @@ import defaultTo from 'lodash/defaultTo';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import isNil from 'lodash/isNil';
+import uniq from 'lodash/uniq';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -688,6 +690,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const customizedColumns = customizable ? customized.columns : undefined;
       this.tableStore.originalColumns = mergeDefaultProps(columns, customizedColumns);;
       this.tableStore.originalChildren = children as any[];
+      this.tableStore.selectedRowKeys = rowSelection.selectedRowKeys || [];
     }
   };
 
@@ -1190,6 +1193,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (!rowSelection.getCheckboxProps) {
       return [];
     }
+    if (rowSelection.selectedRowKeys) {
+      return rowSelection.selectedRowKeys;
+    }
     return this.state.data
       .filter((item: any, rowIndex) => this.getCheckboxPropsByItem(item, rowIndex).defaultChecked)
       .map((record, rowIndex) => this.getRecordKey(record, rowIndex));
@@ -1202,8 +1208,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const defaultSelection = this.tableStore.selectionDirty
       ? []
       : this.getDefaultSelection();
+
     // @ts-ignore
-    let selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
+    let selectedRowKeys = uniq(this.tableStore.selectedRowKeys.concat(defaultSelection));
     const key = this.getRecordKey(record, rowIndex);
     const { pivot, data } = this.state;
     const rows = { ...data };

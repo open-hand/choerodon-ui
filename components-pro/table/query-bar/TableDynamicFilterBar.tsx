@@ -437,6 +437,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       this.fieldSelectHidden = true;
       this.expand = true;
     });
+    if (!props.dataSet.getState(SELECTFIELDS)) {
+      props.dataSet.setState(SELECTFIELDS, []);
+    }
   }
 
   componentDidMount(): void {
