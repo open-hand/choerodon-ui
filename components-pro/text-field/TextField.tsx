@@ -1591,10 +1591,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @action
-  setValue(value: any, noVaidate?: boolean, reserveParam?: boolean): void {
+  setValue(value: any, noVaidate?: boolean, reserveParam?: boolean, triggerHiddenDelay?: number): void {
     super.setValue(value, noVaidate);
     if (!reserveParam) {
-      this.setText(undefined);
+      // 下拉框收起后再清除搜索值
+      setTimeout(() => this.setText(undefined), triggerHiddenDelay);
     }
     if (this.tooltipShown) {
       hide();

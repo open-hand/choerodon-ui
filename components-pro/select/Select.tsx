@@ -1320,7 +1320,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (this.reserveParam && this.multiple && this.searchable && !isSearchTextEmpty(this.searchText)) {
       super.setValue(value, noVaidate, true);
     } else {
-      super.setValue(value, noVaidate);
+      const { triggerHiddenDelay } = this.props;
+      super.setValue(value, noVaidate, undefined, triggerHiddenDelay);
     }
   }
 
