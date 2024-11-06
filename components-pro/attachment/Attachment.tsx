@@ -46,7 +46,6 @@ import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
 import { hide, show } from '../tooltip/singleton';
 import DataSet from '../data-set';
-import ModalProvider from '../modal-provider';
 import { ModalContextValue } from '../modal-provider/ModalContext';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
@@ -105,7 +104,7 @@ const defaultSort: Sort = {
 };
 
 @observer
-class Attachment extends FormField<AttachmentProps> {
+export default class Attachment extends FormField<AttachmentProps> {
   static displayName = 'Attachment';
 
   static Dragger: typeof Dragger;
@@ -1354,5 +1353,3 @@ class Attachment extends FormField<AttachmentProps> {
     return this.renderWrapperList(readOnly ? undefined : this.renderUploadBtn(listType === 'picture-card'));
   }
 }
-
-export default ModalProvider.injectModal(Attachment);
