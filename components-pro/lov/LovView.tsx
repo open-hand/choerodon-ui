@@ -262,7 +262,8 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   @autobind
   handleRow(props) {
     const { tableProps } = this.props;
-    const isDisabled = (props.record as Record).disabled;
+    const { record: { disabled, selectable } } = props;
+    const isDisabled = disabled || !selectable;
     if (tableProps) {
       const { onRow } = tableProps;
       if (onRow) {
