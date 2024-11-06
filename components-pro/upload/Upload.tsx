@@ -18,7 +18,6 @@ import UploadList from './UploadList';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import isIE from '../_util/isIE';
-import ModalProvider from '../modal-provider';
 import DataSet from '../data-set';
 import { ModalContextValue } from '../modal-provider/ModalContext';
 import { getSecretLevelModal } from '../attachment/utils';
@@ -196,7 +195,7 @@ export interface UploadProps extends FormFieldProps {
 }
 
 @observer
-class Upload extends FormField<UploadProps> {
+export default class Upload extends FormField<UploadProps> {
   static displayName = 'Upload';
 
   static defaultProps = {
@@ -770,5 +769,3 @@ class Upload extends FormField<UploadProps> {
     }
   }
 }
-
-export default ModalProvider.injectModal(Upload);
