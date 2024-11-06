@@ -268,7 +268,8 @@
     white-space: nowrap;
   }
 
-  &-horizontal &-nav-scroll {
+  // 避免影响 horizontal 下嵌套 vertical 的 tabs
+  &-horizontal > div > div > div > div > &-nav-scroll {
     overflow-y: hidden;
   }
 
