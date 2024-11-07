@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where bidirectional copying of lov calculation attribute changes resulted in no request for pasting.
 - 🐞 `<pro>PerformanceTable`: Fixes invalid rowSelection dynamic configuration.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
+- 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 
 ## 1.6.6
 
