@@ -1,6 +1,6 @@
+import ModalProvider from 'choerodon-ui/pro/lib/modal-provider';
 import Upload from './Upload';
 import Dragger from './Dragger';
-import { ModalProvider } from '../../components-pro';
 
 export { UploadProps, UploadListProps, UploadChangeParam } from './interface';
 export { DraggerProps } from './Dragger';
