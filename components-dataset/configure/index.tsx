@@ -3,6 +3,7 @@ import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } f
 import { Moment, MomentInput } from 'moment';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
+import { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import { LovConfig } from '../interface';
 import { ExportMode, RecordStatus, FieldType, DownloadAllMode } from '../data-set/enum';
 import { ValidationMessages } from '../validator/Validator';
@@ -107,6 +108,7 @@ export interface AttachmentConfig {
   onOrderChange?: (props: AttachmentsProps) => Promise<void>;
   onRemove?: (props: AttachmentOnRemoveProps, multiple: boolean) => Promise<boolean>;
   orderField?: string;
+  removeConfirm?: boolean | PopconfirmProps;
 }
 
 export interface Config {
