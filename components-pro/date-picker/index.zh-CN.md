@@ -32,6 +32,7 @@ title: DatePicker
 | useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true |
 | comboRangeMode | 设置在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 | inputReadOnly | 设置输入框为只读（避免在移动设备上打开虚拟键盘） | boolean | false |
+| yearFirst | 选择弹窗头部年份是否显示在前 | boolean \| undefined | [globalConfig.datePickerYearFirst](/components/configure#API) |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

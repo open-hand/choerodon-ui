@@ -211,6 +211,7 @@ const locale: Locale = {
     drag_info: 'ここでファイルをクリックまたはドラッグしてアップロードします',
     download_template: 'テンプレートをダウンロード',
     secret_level_modal_title: 'シークレットレベルの選択',
+    remove_confirm_title: 'レコードを削除するかどうか',
   },
   Modal: {
     ok: 'OK',
@@ -227,6 +228,7 @@ const locale: Locale = {
     now: 'この瞬間',
     this_week: '今週',
     invalid_date: '日付が無効です',
+    year: '年',
   },
   EmailField: {
     value_missing_no_label: 'メールアドレスを入力してください。',

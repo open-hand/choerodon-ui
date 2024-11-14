@@ -208,6 +208,7 @@ const locale: Locale = {
     drag_info: 'Click or drag files here to upload',
     download_template: 'Download template',
     secret_level_modal_title: 'Secret level selection',
+    remove_confirm_title: 'Whether to delete the record',
   },
   Modal: {
     ok: 'OK',
@@ -224,6 +225,7 @@ const locale: Locale = {
     now: 'Now',
     this_week: 'This week',
     invalid_date: 'Invalid date',
+    year: 'Year',
   },
   EmailField: {
     value_missing_no_label: 'Please input an email address.',

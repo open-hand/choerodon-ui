@@ -15,11 +15,12 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `performanceTableUseMouseBatchChoose`, `tableSize` properties.
+- 🌟 `configure`: Added `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst` properties.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
 - 🌟 `<pro>Table`: Added bidirectional copy operation prompt callback.
+- 🌟 `<pro>DatePicker`: Added `yearFirst` property.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
 - 💄 `<pro>Select`: Optimize the single-value Select after selecting a search result, not showing all the options, then closing the drop-down box.
