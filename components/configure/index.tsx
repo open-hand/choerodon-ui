@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import { CSSProperties, ReactNode } from 'react';
+import DataSet from 'choerodon-ui/dataset/data-set';
 import { configure as configureDataSet, overwriteConfigMergeProps, overwriteDefaultConfig } from 'choerodon-ui/dataset';
 import {
   AttachmentConfig as DataSetAttachmentConfig,
@@ -52,7 +53,6 @@ import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
 import { UploadListReUploadIconFunc } from '../upload/interface';
-import { DataSet } from '../../components-pro';
 
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
@@ -377,6 +377,10 @@ export interface Config extends DataSetConfig {
    * DatePicker 组件 range 模式，选择弹窗组合显示
    */
   datePickerComboRangeMode?: boolean;
+  /**
+   * DatePicker 选择弹窗头部年份是否显示在前
+   */
+    datePickerYearFirst?: boolean;
   /**
    * Tree checkbox 显示位置
    */

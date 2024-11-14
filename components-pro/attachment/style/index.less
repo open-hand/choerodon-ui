@@ -464,4 +464,9 @@
   &-drag-hover {
     background-color: @background-color-light;
   }
+
+  // 覆盖删除确认气泡框与附件列表气泡框层级一致
+  div&-list-item-remove-confirm-popover {
+    z-index: 1050;
+  }
 }

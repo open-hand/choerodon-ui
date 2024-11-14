@@ -211,6 +211,7 @@ export interface Locale extends DataSetLocale {
     drag_info: string;
     download_template: string;
     secret_level_modal_title: string;
+    remove_confirm_title: string;
   };
   Modal: {
     ok: string;
@@ -227,6 +228,7 @@ export interface Locale extends DataSetLocale {
     now: string;
     this_week: string;
     invalid_date: string;
+    year: string;
   };
   EmailField: {
     value_missing: string;
