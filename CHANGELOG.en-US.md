@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm` properties.
+- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm` properties.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.

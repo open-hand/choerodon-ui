@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm 属性。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。
 - 🌟 `<pro>Pagination`: 新增输入超过最大分页数提示。

@@ -386,6 +386,10 @@ export interface Config extends DataSetConfig {
    */
   treeCheckboxPosition?: TreeCheckboxPosition;
   /**
+   * Tree 是否显示连接线
+   */
+  treeShowLine?: boolean | { showLeafIcon: boolean };
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
