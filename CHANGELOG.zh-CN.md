@@ -22,6 +22,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增双向复制操作提示回调。
 - 🌟 `<pro>DatePicker`: 新增 yearFirst 属性。
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
+- 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
 - 💄 `<pro>Select`: 优化 Select 单选搜索效果，选值后不会弹出所有选项后再收起下拉框。

@@ -288,6 +288,7 @@ export interface TableProps extends StandardProps {
   renderEmpty?: (info: React.ReactNode) => React.ReactNode;
   renderLoading?: (loading: React.ReactNode) => React.ReactNode;
   onRowClick?: (rowData: object, event: React.MouseEvent) => void;
+  onRowDoubleClick?: (rowData: object, event: React.MouseEvent) => void;
   onRowContextMenu?: (rowData: object, event: React.MouseEvent) => void;
   onScroll?: (scrollX: number, scrollY: number) => void;
   onSortColumn?: (dataKey: string, sortType?: SortType) => void;
@@ -2429,8 +2430,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     };
   };
 
+  bindRowDblClick = (rowIndex: number | string, index: number | string, rowData: object) => {
+    return (event: React.MouseEvent) => {
+      this.onRowClick(rowData, event, rowIndex, index);
+    };
+  };
+
   onRowClick(rowData, event, rowIndex, index) {
-    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, virtualized } = this.props;
+    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, onRowDoubleClick, virtualized } = this.props;
     const useRowKey = rowDraggable || isTree || virtualized;
     const rowNum = useRowKey ? rowData[rowKey!] : rowIndex;
     if (highLightRow && (!useRowKey || useRowKey && !isNil(rowNum))) {
@@ -2450,6 +2457,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     if (onRowClick) {
       onRowClick(rowData, event);
+    }
+    if (onRowDoubleClick) {
+      onRowDoubleClick(rowData, event);
     }
   }
 
@@ -2479,6 +2489,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
       onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
+      onDoubleClick: this.bindRowDblClick(props.rowIndex, props.key!, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
 
