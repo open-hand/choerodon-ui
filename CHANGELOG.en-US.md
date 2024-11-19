@@ -15,18 +15,27 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `performanceTableUseMouseBatchChoose`, `tableSize` properties.
+- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm` properties.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
 - 🌟 `<pro>Table`: Added bidirectional copy operation prompt callback.
+- 🌟 `<pro>DatePicker`: Added `yearFirst` property.
+- 🌟 `<pro>Attachment`: Added `removeConfirm` property.
+- 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
+- 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
+- 💄 `<pro>Select`: Optimize the single-value Select after selecting a search result, not showing all the options, then closing the drop-down box.
+- 💄 `<pro>Form`: Optimize the style and layout of the title help in grid layout.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of pasting multiple blank columns after successful bidirectional copying.
 - 🐞 `<pro>Table`: Fixed the issue where bidirectional copying of lov calculation attribute changes resulted in no request for pasting.
 - 🐞 `<pro>PerformanceTable`: Fixes invalid rowSelection dynamic configuration.
+- 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
+- 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
+- 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 
 ## 1.6.6
 

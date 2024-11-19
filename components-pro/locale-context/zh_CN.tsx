@@ -208,6 +208,7 @@ const locale: Locale = {
     file_list_max_length: '文件数量最大限制为：{count}',
     drag_info: '点击或将文件拖拽到这里上传',
     secret_level_modal_title: '密级选择',
+    remove_confirm_title: '是否删除此条记录',
   },
   Modal: {
     ok: '确定',
@@ -224,6 +225,7 @@ const locale: Locale = {
     now: '此刻',
     this_week: '本周',
     invalid_date: '无效日期',
+    year: '年',
   },
   EmailField: {
     value_missing_no_label: '请输入邮箱地址。',

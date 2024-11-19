@@ -39,6 +39,7 @@ export interface DateViewProps extends ViewComponentProps {
   dateRangeValue?: [Moment | undefined, Moment | undefined];
   rangeTarget?: 0 | 1;
   hoverValue?: Moment | undefined;
+  yearFirst?: boolean;
 }
 
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
@@ -255,10 +256,16 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
     const {
       prefixCls,
       comboRangeMode,
+      props: { yearFirst },
     } = this;
     const date = this.getTargetDate(target);
     const startStyle: CSSProperties = comboRangeMode && target === 0 ? { visibility: 'hidden' } : {};
     const endStyle: CSSProperties = comboRangeMode && target === 1 ? { visibility: 'hidden' } : {};
+    const yearItem = (
+      <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
+        {date.year()}{$l('DatePicker', 'year') === '年' ? '年' : ''}
+      </a>
+    );
     return (
       <div className={`${prefixCls}-header`}>
         <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick} style={endStyle}>
@@ -267,12 +274,11 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
         <a className={`${prefixCls}-prev-month`} onClick={this.handlePrevMonthClick}  style={endStyle}>
           <Icon type="navigate_before" />
         </a>
+        {yearFirst && yearItem}
         <a className={`${prefixCls}-view-select`} onClick={this.handleMonthSelect}>
           {date.localeData().monthsShort(date)}
         </a>
-        <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
-          {date.year()}
-        </a>
+        {!yearFirst && yearItem}
         <a className={`${prefixCls}-next-year`} style={startStyle}>
           <Icon type="last_page" onClick={this.handleNextYearClick} />
         </a>

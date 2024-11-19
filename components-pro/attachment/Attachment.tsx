@@ -11,6 +11,7 @@ import { getConfig, Uploader } from 'choerodon-ui/dataset';
 import { AttachmentValue, AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import { UploaderProps } from 'choerodon-ui/dataset/uploader/Uploader';
 import { DownloadAllMode } from 'choerodon-ui/dataset/data-set/enum';
+import { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import { getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -46,7 +47,6 @@ import { ATTACHMENT_TARGET } from './Item';
 import TemplateDownloadButton from './TemplateDownloadButton';
 import { hide, show } from '../tooltip/singleton';
 import DataSet from '../data-set';
-import ModalProvider from '../modal-provider';
 import { ModalContextValue } from '../modal-provider/ModalContext';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
@@ -90,6 +90,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   filesLengthLimitNotice?: (defaultInfo: string) => void;
   countTextRenderer?: (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode;
   Modal?: ModalContextValue;
+  removeConfirm?: boolean | PopconfirmProps;
 }
 
 export type Sort = {
@@ -104,7 +105,6 @@ const defaultSort: Sort = {
   custom: true,
 };
 
-@ModalProvider.injectModal
 @observer
 export default class Attachment extends FormField<AttachmentProps> {
   static displayName = 'Attachment';
@@ -254,6 +254,12 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   get accept(): string[] | undefined {
     return this.getProp('accept');
+  }
+
+  get removeConfirm(): boolean | PopconfirmProps | undefined {
+    const { removeConfirm: globalRemoveConfirm } = this.getContextConfig('attachment');
+    const { removeConfirm = globalRemoveConfirm } = this.props;
+    return removeConfirm;
   }
 
   private reaction?: IReactionDisposer;
@@ -1052,6 +1058,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           buttons={mergeButtons}
           getPreviewUrl={getPreviewUrl}
           fetchAttachmentsFlag={!this.uploadWithoutUuid}
+          removeConfirm={this.removeConfirm}
         />
       );
     }

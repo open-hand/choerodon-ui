@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import classNames from 'classnames';
 import { DragDropContext, Draggable, DraggableProvided, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import isNumber from 'lodash/isNumber';
+import { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import { AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import Item from './Item';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -44,6 +45,7 @@ export interface AttachmentListProps {
    * 避免无 uuid 时，上传前通过接口获取更新 uuid 触发列表查询及后续的校验
    */
   fetchAttachmentsFlag: boolean;
+  removeConfirm?: boolean | PopconfirmProps;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -75,6 +77,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     showSize,
     buttons,
     getPreviewUrl,
+    removeConfirm,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -153,6 +156,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 isPublic={isPublic}
                 buttons={buttons}
                 getPreviewUrl={getPreviewUrl}
+                removeConfirm={removeConfirm}
               />
             )
           }

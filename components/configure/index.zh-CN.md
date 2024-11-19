@@ -199,7 +199,9 @@ const prefixCls = getConfig('prefixCls');
 | labelWordBreak | From 设置标签是否换行显示  | boolean |  |
 | pictureCardShowName | 设置 `Upload` 的 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | datePickerComboRangeMode | 设置 `DatePicker` 组件在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
+| datePickerYearFirst | 选择弹窗头部年份是否显示在前 | boolean \| undefined |  |
 | treeCheckboxPosition | Tree 组件 checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | 'default' |
+| treeShowLine | Tree 组件连接线配置 |  boolean \| { showLeafIcon: boolean } | false |
 | tabsShowInvalidTips | Tabs 是否开启 DataSet 校验  | boolean | true |
 | separateSpacing | Form 组件切分单元格间隔，当label布局为默认值 horizontal 时候使用 padding 修改单元格横向间距可能需要结合labelwidth效果会更好 | number \| \[number, number \] \| {width:number,height:number} | - |
 | showValueIfNotFound | 对应值集内未请求时或值不存在显示值时，是否显示 value | boolean | true |
@@ -302,6 +304,7 @@ const prefixCls = getConfig('prefixCls');
 | onOrderChange | 排序变化回调，用于发送排序请求 | (attachments: AttachmentFile[], { isPublic?: boolean }) => void | |
 | onRemove | 删除文件回调，用于发送删除请求, 返回 false 或抛出异常将中止删除 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => boolean | |
 | orderField | 附件排序字段名，初始化或自定义排序时会以该字段值升序排序 | string | |
+| removeConfirm | 删除前确认气泡框配置 | boolean \| PopconfirmProps | |
 
 ### SecretFieldConfig
 

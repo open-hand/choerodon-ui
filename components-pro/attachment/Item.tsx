@@ -13,6 +13,7 @@ import { AttachmentConfig } from 'choerodon-ui/lib/configure';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
 import { AttachmentFileProps } from 'choerodon-ui/dataset/configure';
+import Popconfirm, { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -54,6 +55,7 @@ export interface ItemProps {
   previewTarget?: string;
   buttons?: AttachmentButtons[];
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
+  removeConfirm?: boolean | PopconfirmProps;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
@@ -289,6 +291,11 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   }
 
   const renderButtons = (): ReactNode => {
+    const { removeConfirm } = props;
+    const popconfirmProps = {
+      title: $l('Attachment', 'remove_confirm_title'),
+      ...(typeof removeConfirm !== 'boolean' ? removeConfirm : {}),
+    };
     const buttons: ReactNode[] = [];
     if (!readOnly && status === 'error' && !attachment.invalid) {
       const upProps = {
@@ -346,13 +353,33 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
                 buttons.splice(
                   index,
                   1,
-                  <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
-                    <Button
-                      hidden={readOnly || disabled}
-                      {...defaultButtonProps}
-                      {...btnProps}
-                    />
-                  </Tooltip>,
+                  removeConfirm
+                    ? (
+                      <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
+                        <Popconfirm
+                          overlayClassName={`${prefixCls}-remove-confirm-popover`}
+                          onConfirm={({...defaultButtonProps, ...btnProps}).onClick}
+                          onCancel={noop}
+                          {...popconfirmProps}
+                        >
+                          <Button
+                            hidden={readOnly || disabled}
+                            {...defaultButtonProps}
+                            {...btnProps}
+                            onClick={noop}
+                          />
+                        </Popconfirm>
+                      </Tooltip>
+                    )
+                    : (
+                      <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
+                        <Button
+                          hidden={readOnly || disabled}
+                          {...defaultButtonProps}
+                          {...btnProps}
+                        />
+                      </Tooltip>
+                    ),
                 );
               }
               break;

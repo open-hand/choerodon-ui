@@ -43,6 +43,7 @@ export interface LabelProps {
   help?: ReactNode;
   labelWordBreak?: boolean;
   labelStyle?: CSSProperties;
+  labelLayout?: LabelLayout;
 }
 
 export interface LabelHelpProps {
@@ -54,7 +55,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Label: FunctionComponent<LabelProps> = (props) => {
-  const { children, className, tooltip, width, help, labelWordBreak, labelStyle } = props;
+  const { children, className, tooltip, width, help, labelWordBreak, labelStyle, labelLayout } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => {
@@ -106,8 +107,15 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       onMouseLeave={handleMouseLeave}
       style={style}
     >
-      {children}
-      {help}
+      {labelLayout === LabelLayout.vertical ? (<>
+        {children}
+      </>
+      ) : (
+        <label>
+          {children}
+          {help}
+        </label>
+      )}
     </label>
   );
 };
@@ -214,7 +222,8 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     if (labelLayout === LabelLayout.vertical) {
       return (
         <>
-          <Label className={labelClassName} tooltip={tooltip} help={helpWrap} labelWordBreak={labelWordBreak}>{label}</Label>
+          <Label labelLayout={labelLayout} className={labelClassName} tooltip={tooltip} help={helpWrap} labelWordBreak={labelWordBreak}>{label}</Label>
+          {labelLayout === LabelLayout.vertical ? helpWrap : null}
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>
         </>
       );

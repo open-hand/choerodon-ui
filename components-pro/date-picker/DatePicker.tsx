@@ -138,6 +138,10 @@ export interface DatePickerProps extends TriggerFieldProps {
    * 设置输入框为只读（避免在移动设备上打开虚拟键盘）
    */
   inputReadOnly?: boolean;
+  /**
+   * DatePicker 选择弹窗头部年份是否显示在前
+   */
+  yearFirst?: boolean;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -506,8 +510,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     });
   }
 
+  get yearFirst(): boolean | undefined {
+    const { yearFirst = this.getContextConfig('datePickerYearFirst') } = this.props;
+    return yearFirst;
+  }
+
   getPopupContent() {
-    const { comboRangeMode, rangeValue, rangeTarget, hoverValue } = this;
+    const { comboRangeMode, rangeValue, rangeTarget, hoverValue, yearFirst } = this;
     const mode = this.getViewMode();
     const date = this.getCursorDate();
     return (
@@ -539,6 +548,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             dateRangeValue: rangeValue,
             rangeTarget,
             hoverValue,
+            yearFirst,
           } as DateViewProps)
         }
       </>

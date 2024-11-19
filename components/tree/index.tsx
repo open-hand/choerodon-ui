@@ -172,8 +172,17 @@ export default class Tree extends Component<TreeProps, any> {
     return context.getConfig('treeCheckboxPosition');
   }
 
+  get showLine(): boolean | { showLeafIcon: boolean } {
+    const { props: { showLine }, context } = this;
+    if (showLine) {
+      return showLine;
+    }
+    return context.getConfig('treeShowLine');
+  }
+
   renderSwitcherIcon = ({ isLeaf, loading }: C7nTreeNodeProps) => {
-    const { showLine, switcherIcon } = this.props;
+    const { showLine } = this;
+    const { switcherIcon } = this.props;
     const prefixCls = this.getPrefixCls();
     if (loading) {
       return (
@@ -227,7 +236,8 @@ export default class Tree extends Component<TreeProps, any> {
 
   render() {
     const props = this.props;
-    const { className, showIcon, showLine, children, checkable } = props;
+    const { showLine } = this;
+    const { className, showIcon, children, checkable } = props;
     const prefixCls = this.getPrefixCls();
     const newProps = {
       ...props,

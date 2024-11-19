@@ -193,6 +193,7 @@ const defaults = {
   treeCheckboxPosition: 'default' as TreeCheckboxPosition,
   showValueIfNotFound: true,
   tableSize: Size.default,
+  treeShowLine: false,
 };
 
 export default defaults;

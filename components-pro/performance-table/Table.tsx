@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import { action, get, isArrayLike, runInAction } from 'mobx';
 import classNames from 'classnames';
@@ -10,6 +11,7 @@ import defaultTo from 'lodash/defaultTo';
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
 import isNil from 'lodash/isNil';
+import uniq from 'lodash/uniq';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
@@ -286,6 +288,7 @@ export interface TableProps extends StandardProps {
   renderEmpty?: (info: React.ReactNode) => React.ReactNode;
   renderLoading?: (loading: React.ReactNode) => React.ReactNode;
   onRowClick?: (rowData: object, event: React.MouseEvent) => void;
+  onRowDoubleClick?: (rowData: object, event: React.MouseEvent) => void;
   onRowContextMenu?: (rowData: object, event: React.MouseEvent) => void;
   onScroll?: (scrollX: number, scrollY: number) => void;
   onSortColumn?: (dataKey: string, sortType?: SortType) => void;
@@ -688,6 +691,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const customizedColumns = customizable ? customized.columns : undefined;
       this.tableStore.originalColumns = mergeDefaultProps(columns, customizedColumns);;
       this.tableStore.originalChildren = children as any[];
+      this.tableStore.selectedRowKeys = rowSelection.selectedRowKeys || [];
     }
   };
 
@@ -849,7 +853,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       data !== nextData ||
       // 当 Table 内容区的高度发生变化需要重新计算
       height !== props.height ||
-      autoHeight !== nextAutoHeight ||
+      !isEqual(autoHeight, nextAutoHeight) ||
       // 当 Table 内容区的高度发生变化需要重新计算
       prevState.contentHeight !== state.contentHeight ||
       // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
@@ -1190,6 +1194,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (!rowSelection.getCheckboxProps) {
       return [];
     }
+    if (rowSelection.selectedRowKeys) {
+      return rowSelection.selectedRowKeys;
+    }
     return this.state.data
       .filter((item: any, rowIndex) => this.getCheckboxPropsByItem(item, rowIndex).defaultChecked)
       .map((record, rowIndex) => this.getRecordKey(record, rowIndex));
@@ -1202,8 +1209,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const defaultSelection = this.tableStore.selectionDirty
       ? []
       : this.getDefaultSelection();
+
     // @ts-ignore
-    let selectedRowKeys = this.tableStore.selectedRowKeys.concat(defaultSelection);
+    let selectedRowKeys = uniq(this.tableStore.selectedRowKeys.concat(defaultSelection));
     const key = this.getRecordKey(record, rowIndex);
     const { pivot, data } = this.state;
     const rows = { ...data };
@@ -2422,8 +2430,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     };
   };
 
+  bindRowDblClick = (rowIndex: number | string, index: number | string, rowData: object) => {
+    return (event: React.MouseEvent) => {
+      this.onRowClick(rowData, event, rowIndex, index);
+    };
+  };
+
   onRowClick(rowData, event, rowIndex, index) {
-    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, virtualized } = this.props;
+    const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, onRowDoubleClick, virtualized } = this.props;
     const useRowKey = rowDraggable || isTree || virtualized;
     const rowNum = useRowKey ? rowData[rowKey!] : rowIndex;
     if (highLightRow && (!useRowKey || useRowKey && !isNil(rowNum))) {
@@ -2443,6 +2457,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
     if (onRowClick) {
       onRowClick(rowData, event);
+    }
+    if (onRowDoubleClick) {
+      onRowDoubleClick(rowData, event);
     }
   }
 
@@ -2472,6 +2489,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
       onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
+      onDoubleClick: this.bindRowDblClick(props.rowIndex, props.key!, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
     };
 

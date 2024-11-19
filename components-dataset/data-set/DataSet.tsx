@@ -3425,7 +3425,9 @@ Then the query method will be auto invoke.`,
   private handleLoadFail(e) {
     const { loadFailed = defaultFeedback.loadFailed } = this.feedback;
     this.fireEvent(DataSetEvents.loadFailed, { dataSet: this });
-    loadFailed(e);
+    if (e.code !== 'ERR_CANCELED') {
+      loadFailed(e);
+    }
   }
 
   @action
