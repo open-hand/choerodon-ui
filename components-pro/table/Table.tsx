@@ -1600,10 +1600,11 @@ export default class Table extends DataSetComponent<TableProps> {
     }
     const clipText = await pasteFromClipboard(node.element);
     if (this.dataSet) {
-      const { current, totalCount } = this.dataSet;
+      const { current, totalCount: noPagingTotoalCount, length, paging } = this.dataSet;
       const batchRecord: any = [];
       const rows = clipText.split('\n').filter(line => line.trim() !== '');
 
+      const totalCount = paging ? length : noPagingTotoalCount;
       try {
         for (let i = 0; i < rows.length; i++) {
           // 判断超出时自动新增行
