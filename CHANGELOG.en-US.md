@@ -23,6 +23,8 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added `yearFirst` property.
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
+- 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
+- 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
 - 💄 `<pro>Select`: Optimize the single-value Select after selecting a search result, not showing all the options, then closing the drop-down box.

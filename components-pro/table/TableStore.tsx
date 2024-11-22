@@ -40,6 +40,7 @@ import {
   RowBoxPlacement,
   ScrollPosition,
   SelectionMode,
+  SortRangeOption,
   TableAutoHeightType,
   TableBoxSizing,
   TableColumnResizeTriggerType,
@@ -63,6 +64,7 @@ import Table, {
   TableQueryBarHook,
   Clipboard,
   ArrangeValue,
+  CombineSortConfig,
 } from './Table';
 import { Size } from '../core/enum';
 import { $l } from '../locale-context';
@@ -2100,11 +2102,17 @@ export default class TableStore {
   @computed
   get leftColumns(): ColumnProps[] {
     const { dragColumnAlign, leftOriginalColumns, expandColumn, expandIconColumnIndex, draggableColumn, rowNumberColumn, selectionColumn, comboQueryColumn } = this;
+    const rowSelectCols = rowNumberColumn && (rowNumberColumn.rowNumberIndex || 0) > 0 ? [
+      selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
+      rowNumberColumn,
+    ] : [
+      rowNumberColumn,
+      selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
+    ];
     return observable.array([
       expandIconColumnIndex ? undefined : expandColumn,
       dragColumnAlign === DragColumnAlign.left ? draggableColumn : undefined,
-      rowNumberColumn,
-      selectionColumn && selectionColumn.lock === ColumnLock.left ? selectionColumn : undefined,
+      ...rowSelectCols,
       comboQueryColumn,
       ...leftOriginalColumns,
     ].filter<ColumnProps>(columnFilter));
@@ -2420,6 +2428,50 @@ export default class TableStore {
   get clipboard(): Clipboard | undefined {
     if ('clipboard' in this.props) {
       return this.props.clipboard;
+    }
+    return undefined;
+  }
+
+  get combineSortConfig(): CombineSortConfig | undefined {
+    const { combineSortConfig } = this.props;
+    // 如果存在 showSortOption，走历史逻辑
+    if (combineSortConfig && combineSortConfig.showSortOption) {
+      return combineSortConfig;
+    }
+    if (combineSortConfig) {
+      const { 
+        currentDataSort,
+        allDataSort,
+      } = combineSortConfig;
+      const processConfig: CombineSortConfig = {
+        showSortOption: SortRangeOption.allDataSort,
+      };
+
+      // 兼容 currentDataSort
+      if (typeof currentDataSort === 'object' && currentDataSort.enable === false) {
+        processConfig.currentDataSort = false;
+      } else if (typeof currentDataSort === 'object') {
+        processConfig.currentDataSort = true;
+      }
+      if (typeof currentDataSort === 'object' && typeof currentDataSort.customFn  ==='function') {
+        processConfig.currentDataSort = currentDataSort.customFn;
+      }
+
+
+      // 兼容 allDataSort
+      if (typeof allDataSort === 'object' && allDataSort.enable !== false) {
+        processConfig.allDataSort = true;
+      } else {
+        processConfig.allDataSort = false;
+      }
+      // 兼容 showSortOption, allDataSort 优先级更高
+      if (typeof currentDataSort === 'object' && currentDataSort.show) {
+        processConfig.showSortOption = SortRangeOption.currentDataSort;
+      }
+      if (typeof allDataSort === 'object' && allDataSort.show) {
+        processConfig.showSortOption = SortRangeOption.allDataSort;
+      }
+      return processConfig;
     }
     return undefined;
   }

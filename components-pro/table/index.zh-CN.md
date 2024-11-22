@@ -124,7 +124,7 @@ subtitle: 表格
 | rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  |
 | combineColumnFilter | 是否开启前端组合过滤  | boolean  | true |
-| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); showSortOption: 是否显示排序选项 | { currentDataSort?: boolean \| ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: boolean; showSortOption?: boolean \| SortRangeOption; }  |  |
+| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  |
 
 更多属性请参考 [DataSetComponent](/components-pro/core/#DataSetComponent)。
 

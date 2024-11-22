@@ -225,6 +225,10 @@ export interface ColumnPropsBase extends ElementProps {
    * 高亮渲染器
    */
   highlightRenderer?: HighlightRenderer;
+  /**
+   * rowNumber的列索引
+   */
+  rowNumberIndex?: number;
 }
 
 export interface ColumnProps extends ColumnPropsBase {

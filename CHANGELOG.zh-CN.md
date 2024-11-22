@@ -23,6 +23,8 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增 yearFirst 属性。
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
+- 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
+- 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
 - 💄 `<pro>Select`: 优化 Select 单选搜索效果，选值后不会弹出所有选项后再收起下拉框。

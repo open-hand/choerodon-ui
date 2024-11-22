@@ -330,13 +330,14 @@ export type CombineSortConfig = {
   /**
    * 当前页排序(前端排序)
    */
-  currentDataSort?: boolean | ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void);
+  currentDataSort?: boolean | ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void) | { show?: boolean; enable?: boolean; customFn?: (props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void };
   /**
    * 所有页排序(后端排序)
    */
-  allDataSort?: boolean;
+  allDataSort?: boolean | { show?: boolean; enable?: boolean};
   /**
    * 是否显示排序选项, 可设置默认选项
+   * @deprecated
    */
   showSortOption?: boolean | SortRangeOption;
 };

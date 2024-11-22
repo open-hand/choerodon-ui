@@ -706,7 +706,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     if (customizable && customizedBtn) {
       buttons = [customizedColumnHeader(), ...(buttons || [])];
     }
-    const { props: { combineSortConfig } } = tableStore;
+    const { combineSortConfig } = tableStore;
     const hasCombineSort = !!(queryBar !== TableQueryBarType.filterBar && dataSet.props.combineSort &&
       (!combineSortConfig || combineSortConfig.currentDataSort !== false || combineSortConfig.allDataSort !== false));
     if (hasCombineSort) {
@@ -887,7 +887,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
   renderDynamicFilterBar(props: TableQueryBarHookProps) {
     const { dynamicFilterBar, searchCode, tableFilterBarButtonIcon } = this.props;
     const { prefixCls, tableStore } = this.context;
-    const { props: { combineSortConfig } } = tableStore;
     const sortableFieldNames = this.getSortableFieldNames();
     return (
       <TableDynamicFilterBar
@@ -898,7 +897,6 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         sortableFieldNames={sortableFieldNames}
         tableStore={tableStore}
         tableFilterBarButtonIcon={tableFilterBarButtonIcon}
-        combineSortConfig={combineSortConfig}
         {...props}
       />
     );
