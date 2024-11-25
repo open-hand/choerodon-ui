@@ -888,6 +888,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     const { dynamicFilterBar, searchCode, tableFilterBarButtonIcon } = this.props;
     const { prefixCls, tableStore } = this.context;
     const sortableFieldNames = this.getSortableFieldNames();
+    const { combineSortConfig } = tableStore;
     return (
       <TableDynamicFilterBar
         key="toolbar"
@@ -897,6 +898,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         sortableFieldNames={sortableFieldNames}
         tableStore={tableStore}
         tableFilterBarButtonIcon={tableFilterBarButtonIcon}
+        combineSortConfig={combineSortConfig}
         {...props}
       />
     );
