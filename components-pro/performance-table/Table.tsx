@@ -2426,17 +2426,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   bindRowClick = (rowIndex: number | string, index: number | string, rowData: object) => {
     return (event: React.MouseEvent) => {
-      this.onRowClick(rowData, event, rowIndex, index);
+      this.onRowClick(rowData, event, rowIndex, index, 'click');
     };
   };
 
   bindRowDblClick = (rowIndex: number | string, index: number | string, rowData: object) => {
     return (event: React.MouseEvent) => {
-      this.onRowClick(rowData, event, rowIndex, index);
+      this.onRowClick(rowData, event, rowIndex, index, 'dblclick');
     };
   };
 
-  onRowClick(rowData, event, rowIndex, index) {
+  onRowClick(rowData, event, rowIndex, index, type) {
     const { highLightRow, rowKey, rowDraggable, isTree, onRowClick, onRowDoubleClick, virtualized } = this.props;
     const useRowKey = rowDraggable || isTree || virtualized;
     const rowNum = useRowKey ? rowData[rowKey!] : rowIndex;
@@ -2455,10 +2455,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
       this._lastRowIndex = rowNum;
     }
-    if (onRowClick) {
+    if (onRowClick && type === 'click') {
       onRowClick(rowData, event);
     }
-    if (onRowDoubleClick) {
+    if (onRowDoubleClick && type === 'dblclick') {
       onRowDoubleClick(rowData, event);
     }
   }
