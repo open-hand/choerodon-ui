@@ -46,7 +46,7 @@
     }
   }
 
-  label&-label label,
+  label&-label,
   &-label label {
     display: flex;
     align-items: baseline;
@@ -92,7 +92,7 @@
     }
   }
 
-  &-row &-label-required-mark-right>label,
+  &-row &-label-required-mark-right,
   &-label-required-mark-right label {
     > span {
       position: relative;
@@ -103,7 +103,7 @@
   &-row &-label-required-mark-right > span::after,
   &-label-required-mark-right label > span::after {
     position: absolute;
-    top: 50%;
+    top: 53%;
     display: inline-block;
     color: @label-required-color;
     font-family: @font-family-required-symbol;
@@ -119,7 +119,7 @@
     content: '*';
   }
 
-  &-row &-label&-label-useColon>label::after,
+  &-row &-label&-label-useColon::after,
   &-label&-label-useColon label::after {
     position: relative;
     top: -0.01rem;
@@ -131,9 +131,9 @@
     content: ':';
   }
 
-  // &-row &-label&-label-useColon>label::after {
-  //   width: 0.04rem;
-  // }
+  &-row &-label&-label-useColon::after {
+    width: 0.04rem;
+  }
 
   &-label-help {
     .icon-help {
@@ -155,18 +155,21 @@
     }
   }
 
-  // &-label-grid&-label-help {
-  //   .icon-help {
-  //     top: -0.015rem;
-  //   }
-  // }
+  &-label-grid&-label-help {
+    .icon-help {
+      top: -0.015rem;
+    }
+  }
 
   &-label-vertical&-label&-label-useColon {
     width: auto;
   }
 
+  &-row &-required&-label-required-mark-left::before,
   &-label-vertical&-required&-label::before,
   &-required&-label&-label-required-mark-left label > span::before {
+    position: relative;
+    top: 0.02rem;
     display: inline-block;
     margin-right: 0.04rem;
     color: @label-required-color;
@@ -224,6 +227,19 @@
   }
 
   &-col &-label {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    &.@{field-prefix-cls}-label-right {
+      justify-content: flex-end;
+    }
+    > span {
+      display: inline-block;
+      flex: initial;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &.@{field-prefix-cls}-label-help .icon-help {
+      top: 0;
+    }
   }
 }
