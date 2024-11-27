@@ -647,7 +647,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     }
     let status = RecordStatus.update;
     if (record) {
-      const shouldUpdate = dataSet.getState(SELECTFIELDS).length !== this.originalConditionFields.length
+      const shouldUpdate = (dataSet.getState(SELECTFIELDS) || []).length !== this.originalConditionFields.length
       || !!difference(toJS(dataSet.getState(SELECTFIELDS)), toJS(this.originalConditionFields)).length;
       let selectStatus = shouldUpdate ? RecordStatus.update : RecordStatus.sync;
       if (!(dataSet.getState(SELECTFIELDS) || []).includes(name) && this.moreFields?.map(m => m.name).includes(name)) {
