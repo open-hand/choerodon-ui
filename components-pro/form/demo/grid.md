@@ -48,7 +48,7 @@ class App extends React.Component {
   ds = new DataSet({
     autoCreate: true,
     fields: [
-      { name: 'phone', type: 'string', label: '手机号', required: true },
+      { name: 'phone', type: 'string', label: '手机号手机号', required: true },
       { name: 'password', type: 'string', label: '密码', required: true },
       { name: 'confirmPassword', type: 'string', label: '确认密码', required: true, validator: passwordValidator },
       { name: 'age', type: 'number', label: '年龄', required: true, help: '我们需要确定你的年龄' },
@@ -63,7 +63,7 @@ class App extends React.Component {
 
   settingDs = new DataSet({
     data: [
-      { labelLayout: 'horizontal', labelWidthType: 'size', labelWidth: 100, labelAlign: 'right', useColon: true },
+      { labelLayout: 'horizontal', labelWidthType: 'size', labelWidth: 100, labelAlign: 'right', useColon: true, requiredMarkAlign: 'left' },
     ],
   });
 
@@ -93,6 +93,12 @@ class App extends React.Component {
               <Option value="right">right</Option>
             </SelectBox>
           </Form.Item>
+          <Form.Item name="requiredMarkAlign" label="requiredMarkAlign">
+            <SelectBox>
+              <Option value="left">left</Option>
+              <Option value="right">right</Option>
+            </SelectBox>
+          </Form.Item>
           <Switch name="useColon" label="useColon" />
         </Form>
         <Form
@@ -105,6 +111,7 @@ class App extends React.Component {
           labelAlign={current.get('labelAlign')}
           labelLayout={current.get('labelLayout')}
           labelWidth={current.get('labelWidthType') === 'auto' ? 'auto' : current.get('labelWidth')}
+          requiredMarkAlign={current.get('requiredMarkAlign')}
         >
           <Row gutter={10}>
             <Col span={6}>

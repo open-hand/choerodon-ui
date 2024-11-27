@@ -43,7 +43,6 @@ export interface LabelProps {
   help?: ReactNode;
   labelWordBreak?: boolean;
   labelStyle?: CSSProperties;
-  labelLayout?: LabelLayout;
 }
 
 export interface LabelHelpProps {
@@ -55,7 +54,7 @@ export interface IItem extends FunctionComponent<ItemProps> {
 }
 
 const Label: FunctionComponent<LabelProps> = (props) => {
-  const { children, className, tooltip, width, help, labelWordBreak, labelStyle, labelLayout } = props;
+  const { children, className, tooltip, width, help, labelWordBreak, labelStyle } = props;
   const { getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const tooltipRef = useRef<boolean>(false);
   const style = useMemo(() => {
@@ -66,7 +65,10 @@ const Label: FunctionComponent<LabelProps> = (props) => {
   }, [width, labelStyle]);
   const handleMouseEnter = useCallback((e) => {
     const { currentTarget } = e;
-    if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && !labelWordBreak && isOverflow(currentTarget))) {
+    const calcOverflowDom = currentTarget && currentTarget.querySelector && currentTarget.querySelector(':scope > span')
+      ? currentTarget.querySelector(':scope > span')
+      : currentTarget;
+    if (tooltip === LabelTooltip.always || (tooltip === LabelTooltip.overflow && !labelWordBreak && isOverflow(calcOverflowDom))) {
       show(currentTarget, {
         title: children,
         theme: getTooltipTheme('label'),
@@ -77,7 +79,7 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       const tooltipType = tooltip[0];
       const labelTooltipProps = tooltip[1] || {};
       const duration: number = (labelTooltipProps.mouseEnterDelay || 0.1) * 1000;
-      if (tooltipType === LabelTooltip.always || (tooltipType === LabelTooltip.overflow && !labelWordBreak && isOverflow(currentTarget))) {
+      if (tooltipType === LabelTooltip.always || (tooltipType === LabelTooltip.overflow && !labelWordBreak && isOverflow(calcOverflowDom))) {
         show(currentTarget, {
           theme: getTooltipTheme('label'),
           placement: getTooltipPlacement('label'),
@@ -107,15 +109,8 @@ const Label: FunctionComponent<LabelProps> = (props) => {
       onMouseLeave={handleMouseLeave}
       style={style}
     >
-      {labelLayout === LabelLayout.vertical ? (<>
-        {children}
-      </>
-      ) : (
-        <label>
-          {children}
-          {help}
-        </label>
-      )}
+      {children}
+      {help}
     </label>
   );
 };
@@ -222,8 +217,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
     if (labelLayout === LabelLayout.vertical) {
       return (
         <>
-          <Label labelLayout={labelLayout} className={labelClassName} tooltip={tooltip} help={helpWrap} labelWordBreak={labelWordBreak}>{label}</Label>
-          {labelLayout === LabelLayout.vertical ? helpWrap : null}
+          <Label className={labelClassName} tooltip={tooltip} help={helpWrap} labelWordBreak={labelWordBreak}>{label}</Label>
           <div className={wrapperClassName}>{cloneElement(child, fieldElementProps)}</div>
         </>
       );
