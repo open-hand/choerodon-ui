@@ -29,6 +29,7 @@ timeline: true
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
 - 💄 `<pro>Select`: 优化 Select 单选搜索效果，选值后不会弹出所有选项后再收起下拉框。
 - 💄 `<pro>Form`: 优化栅格布局下标题 help 样式&布局。
+- 💄 `<pro>Modal`: 优化 title 过长遮挡关闭按钮样式问题。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
