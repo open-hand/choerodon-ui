@@ -25,7 +25,9 @@ const App = () => {
     name: 'attachment',
     help: '支持文件类型： .deb .txt .pdf image/*',
     labelLayout: 'float',
-    showValidation: 'newLine', viewMode: 'popup'
+    showValidation: 'newLine',
+    viewMode: 'popup',
+    listType: 'picture-card',
   };
 
   React.useEffect(() => {

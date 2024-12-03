@@ -1,4 +1,4 @@
-import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef, CSSProperties} from 'react';
+import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef, CSSProperties } from 'react';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
 import classnames from 'classnames';
@@ -60,7 +60,7 @@ export interface ItemProps {
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
-    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview, previewTarget = ATTACHMENT_TARGET,
+    attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
     getPreviewUrl: getPreviewUrlProp,
   } = props;
@@ -95,6 +95,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     const { current } = pictureRef;
     if (current && isString(previewUrl)) {
       current.preview();
+      onPreview();
     } else if (isFunction(previewUrl)) {
       handleOpenPreview();
     }
@@ -186,6 +187,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       if ((preview || status === 'deleting') && isPicture) {
         return (
           <Picture
+            onClick={() => onPreview()}
             width={width}
             height={width}
             alt={name}
@@ -199,7 +201,16 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           />
         );
       }
-      return <Picture width={width} height={width} alt={name} status={status === 'error' ? 'error' : 'empty'} index={index} />;
+      return (
+        <Picture
+          onClick={() => onPreview()}
+          width={width}
+          height={width}
+          alt={name}
+          status={status === 'error' ? 'error' : 'empty'}
+          index={index}
+        />
+      );
     }
   };
   const renderPlaceholder = (): ReactNode => {
@@ -308,7 +319,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       };
       buttons.push(<Button {...upProps} />);
     }
-    
+
     fileButtons!.forEach(btn => {
       let btnProps: TableButtonProps = {};
       if (isArrayLike(btn)) {
@@ -358,7 +369,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
                       <Tooltip key={btn} title={status === 'deleting' ? undefined : $l('Attachment', 'delete')}>
                         <Popconfirm
                           overlayClassName={`${prefixCls}-remove-confirm-popover`}
-                          onConfirm={({...defaultButtonProps, ...btnProps}).onClick}
+                          onConfirm={({ ...defaultButtonProps, ...btnProps }).onClick}
                           onCancel={noop}
                           {...popconfirmProps}
                         >
