@@ -61,6 +61,7 @@ title: DataSet
 | combineSort | 是否开启组件列排序传参; 前端排序和后端排序具体配置参考 Table API | boolean | false |
 | forceValidate | 始终校验全部数据 | boolean | false |
 | validationRules | dataSet校验规则，详见[ValidationRule](#ValidationRule) | ValidationRule\[\] |  |
+| customIntlFun | 自定义多语言信息。lang 为当前语言, component 和 key 对应组件库多语言对象键值对, defaultIntl 为默认文本 | ({ component, key, lang, defaultIntl }) => string |  |
 
 ### DataSet Values
 
