@@ -1419,3 +1419,34 @@ export function mergeDataSetProps(props: DataSetProps | undefined, dataSetProps?
 export function appendFormData(formData: FormData, data: object) {
   Object.keys(data).forEach(key => formData.append(key, data[key]));
 }
+
+/**
+ * 比较两个 formData 值是否相同
+ * @param oldFormData formData 值1
+ * @param newFormData formData 值2
+ * @returns boolean
+ */
+export function isFormDataEqual(oldFormData: FormData, newFormData: FormData): boolean {
+  const oldEntries = Array.from(oldFormData.entries());
+  const newEntries = Array.from(newFormData.entries());
+  if (oldEntries.length !== newEntries.length) {
+    return false;
+  }
+  for (const [oldKey, oldValue] of oldEntries) {
+    // 检查每个键值对是否在另一个 FormData 中存在
+    const found = newEntries.some(([newKey, newValue]) => {
+      if (oldKey !== newKey) return false;
+      // 如果值是文件，比较文件名和大小
+      if (oldValue instanceof File && newValue instanceof File) {
+        return oldValue.name === newValue.name && oldValue.size === newValue.size;
+      }
+      // 否则，比较值本身
+      return oldValue === newValue;
+    });
+
+    if (!found) {
+      return false;
+    }
+  }
+  return true;
+}

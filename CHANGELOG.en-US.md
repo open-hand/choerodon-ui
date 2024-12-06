@@ -41,6 +41,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 
 ## 1.6.6
 

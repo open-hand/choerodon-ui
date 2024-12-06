@@ -28,7 +28,8 @@ import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, mergeDataSetProps } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, mergeDataSetProps } from './utils';
+import { isFormData } from '../axios/_helpers/utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
 import { LovConfig, TimeStep } from '../interface';
@@ -60,6 +61,9 @@ function isEqualDynamicProps(oldProps, newProps) {
         }
         if (typeof value === 'function' && typeof oldValue === 'function') {
           return value.toString() === oldValue.toString();
+        }
+        if (isFormData(value) && isFormData(oldValue)) {
+          return isFormDataEqual(oldValue, value);
         }
         return isEqual(oldValue, value);
       });
