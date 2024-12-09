@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
+- 🌟 `<pro>DataSet`: Added `customIntlFun` property.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
@@ -40,6 +41,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 
 ## 1.6.6
 

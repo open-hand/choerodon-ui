@@ -15,6 +15,7 @@ import union from 'lodash/union';
 import { isEmpty, warning } from '../utils';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import localeContext, { $l } from '../locale-context';
+import { Locale } from '../locale-context/locale';
 import axios from '../axios';
 import Record, { RecordProps } from './Record';
 import Group from './Group';
@@ -473,6 +474,17 @@ export interface DataSetProps {
    * dataSet校验规则
    */
   validationRules?: ValidationRule[];
+  /**
+   * 自定义多语言信息
+   * @param props 
+   * @returns 
+   */
+  customIntlFun?: <L extends Locale, T extends keyof Omit<L, 'lang'>>(props: {
+    component: T,
+    key: keyof L[T],
+    lang: Lang,
+    defaultIntl: string,
+  }) => string;
 }
 
 export type DataSetContext = {
@@ -3690,13 +3702,18 @@ Then the query method will be auto invoke.`,
   }
 
   private async generateQueryParameter(params?: object): Promise<any> {
-    const { queryDataSet, props: { validateBeforeQuery } } = this;
+    const { queryDataSet, props: { validateBeforeQuery, customIntlFun } } = this;
     const parentParams = this.getParentParams();
     if (queryDataSet) {
       await queryDataSet.ready();
       if (validateBeforeQuery && queryDataSet && queryDataSet.current && !(await queryDataSet.current.validate())) {
         const validationMessage = queryDataSet.current.getValidationErrors().map(error => error.errors[0].validationMessage).join(' ');
-        throw new Error(`${$l('DataSet', 'invalid_query_dataset')}: ${validationMessage}`);
+        const defaultIntl = $l('DataSet', 'invalid_query_dataset');
+        let customIntl;
+        if (typeof customIntlFun === 'function') {
+          customIntl = customIntlFun({ component: 'DataSet', key: 'invalid_query_dataset', lang: this.lang, defaultIntl });
+        }
+        throw new Error(`${customIntl || defaultIntl}: ${validationMessage}`);
       }
     }
     let data: any = {};

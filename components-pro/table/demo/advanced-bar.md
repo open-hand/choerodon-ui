@@ -16,6 +16,20 @@ professionalBar.
 ```jsx
 import { DataSet, Table, Button } from 'choerodon-ui/pro';
 
+const customIntlObj = {
+  zh_CN: {
+    DataSet: {
+      invalid_query_dataset: '自定义文本',
+    },
+  },
+  en_US: {
+    DataSet: {
+      invalid_query_dataset: 'Custom text',
+    },
+  },
+  // 所有自定义语言信息...
+};
+
 const optionData = [{ text: '男', value: 'M' }, { text: '女', value: 'F' }];
 
 class App extends React.Component {
@@ -25,6 +39,10 @@ class App extends React.Component {
   });
 
   ds = new DataSet({
+    // 自定义多语言
+    customIntlFun: ({component, key, lang, defaultIntl}) => {
+      return customIntlObj[lang]?.[component]?.[key] || defaultIntl;
+    },
     primaryKey: 'userid',
     transport: {
       read({ params: { page, pagesize } }) {
@@ -36,7 +54,7 @@ class App extends React.Component {
     autoQuery: true,
     pageSize: 5,
     queryFields: [
-      { name: 'name', type: 'intl', label: '姓名' },
+      { name: 'name', type: 'intl', label: '姓名', required: true, defaultValue: '彭霞' },
       { name: 'age', type: 'number', label: '年龄' },
       {
         name: 'sex.text',
@@ -79,10 +97,14 @@ class App extends React.Component {
     return [{ name: 'name', width: 450, editor: true }, { name: 'age', editor: true }];
   }
 
+  customQueryBtn = (
+    <Button onClick={() => this.ds.query()}>自定义查询</Button>
+  );
+
   render() {
     return (
       <Table
-        buttons={['add']}
+        buttons={['add', this.customQueryBtn]}
         dataSet={this.ds}
         queryBar="professionalBar"
         border={false}
