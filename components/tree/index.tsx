@@ -174,8 +174,8 @@ export default class Tree extends Component<TreeProps, any> {
 
   get showLine(): boolean | { showLeafIcon: boolean } {
     const { props: { showLine }, context } = this;
-    if (showLine) {
-      return showLine;
+    if ('showLine' in this.props) {
+      return !!showLine;
     }
     return context.getConfig('treeShowLine');
   }
