@@ -412,7 +412,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     type: TableButtonType,
   ): ButtonProps & { onClick: MouseEventHandler<any>; children?: ReactNode } | undefined {
     const {
-      isTree, dataSet,
+      isTree, dataSet, prefixCls,
     } = this.context;
     const disabled = dataSet.status !== DataSetStatus.ready;
     switch (type) {
@@ -422,6 +422,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           onClick: this.handleButtonCreate,
           children: $l('Table', 'create_button'),
           disabled: disabled || (dataSet.parent ? !dataSet.parent.current : false),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.save:
         return {
@@ -430,6 +431,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           children: $l('Table', 'save_button'),
           type: ButtonType.submit,
           disabled,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.delete:
         return {
@@ -437,6 +439,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           onClick: this.handleButtonDelete,
           children: $l('Table', 'delete_button'),
           disabled: disabled || dataSet.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.remove:
         return {
@@ -444,6 +447,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           onClick: this.handleButtonRemove,
           children: $l('Table', 'remove_button'),
           disabled: disabled || dataSet.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.reset:
         return {
@@ -451,14 +455,16 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           onClick: this.handleButtonReset,
           children: $l('Table', 'reset_button'),
           type: ButtonType.reset,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.query:
-        return { icon: 'search', onClick: this.handleQuery, children: $l('Table', 'query_button') };
+        return { icon: 'search', onClick: this.handleQuery, children: $l('Table', 'query_button'), className: `${prefixCls}-btn-built-in` };
       case TableButtonType.export:
         return {
           icon: 'export',
           onClick: this.handleButtonExport,
           children: $l('Table', 'export_button'),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.expandAll:
         return isTree
@@ -466,6 +472,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             icon: 'add_box',
             onClick: this.handleExpandAll,
             children: $l('Table', 'expand_button'),
+            className: `${prefixCls}-btn-built-in`,
           }
           : undefined;
       case TableButtonType.collapseAll:
@@ -474,6 +481,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
             icon: 'short_text',
             onClick: this.handleCollapseAll,
             children: $l('Table', 'collapse_button'),
+            className: `${prefixCls}-btn-built-in`,
           }
           : undefined;
       default:

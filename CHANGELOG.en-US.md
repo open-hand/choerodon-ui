@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>Form`: Optimize the style and layout of the title help in grid layout.
 - 💄 `<pro>Modal`: optimization of the title is too long shade close button style.
 - 💄 `<pro>Attachment`: Optimized popup mode image preview not collapse problem.
+- 💄 `<pro>Table`: Built-in button to add class name.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
