@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性配置的 lookupAxiosConfig 中存在 FormData 参数会导致死循环的问题。
+- 🐞 `Progress`: 修复动画样式溢出的问题。
 
 ## 1.6.6
 

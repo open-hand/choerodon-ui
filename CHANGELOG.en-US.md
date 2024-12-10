@@ -42,6 +42,7 @@ timeline: true
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
+- 🐞 `Progress`: Fixed an issue where animation styles overflowed.
 
 ## 1.6.6
 
