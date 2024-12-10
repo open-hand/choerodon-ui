@@ -202,17 +202,20 @@
   }
 
   &-status-active {
-    .@{progress-prefix-cls}-bg::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: @component-background;
-      border-radius: 0.1rem;
-      opacity: 0;
-      animation: ~'@{c7n-prefix}-progress-active' 2.4s @ease-out-quint infinite;
-      content: '';
+    .@{progress-prefix-cls}-bg {
+      overflow: hidden;
+      &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: @component-background;
+        border-radius: 0.1rem;
+        opacity: 0;
+        animation: ~'@{c7n-prefix}-progress-active' 2.4s @ease-out-quint infinite;
+        content: '';
+      }
     }
   }
 
