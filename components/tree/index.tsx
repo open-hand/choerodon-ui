@@ -172,10 +172,10 @@ export default class Tree extends Component<TreeProps, any> {
     return context.getConfig('treeCheckboxPosition');
   }
 
-  get showLine(): boolean | { showLeafIcon: boolean } {
+  get showLine(): undefined | boolean | { showLeafIcon: boolean } {
     const { props: { showLine }, context } = this;
     if ('showLine' in this.props) {
-      return !!showLine;
+      return showLine;
     }
     return context.getConfig('treeShowLine');
   }
