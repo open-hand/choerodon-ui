@@ -260,6 +260,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           onClick: () => cardDS.create({}, 0),
           children: $l('Table', 'create_button'),
           disabled: disabled || (cardDS.parent ? !cardDS.parent.current : false),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.save:
         return {
@@ -268,6 +269,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           children: $l('Table', 'save_button'),
           type: ButtonType.submit,
           disabled,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.delete:
         return {
@@ -275,6 +277,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           onClick: () => cardDS.delete(cardDS.selected),
           children: $l('Table', 'delete_button'),
           disabled: disabled || cardDS.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.remove:
         return {
@@ -282,6 +285,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           onClick: () => cardDS.remove(cardDS.selected),
           children: $l('Table', 'remove_button'),
           disabled: disabled || cardDS.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.reset:
         return {
@@ -289,6 +293,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
           onClick: () => cardDS.reset(),
           children: $l('Table', 'reset_button'),
           type: ButtonType.reset,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.query:
         return {
@@ -299,6 +304,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
             }
           },
           children: $l('Table', 'query_button'),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.export:
         return undefined;
@@ -308,7 +314,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
         return undefined;
       default:
     }
-  }, []);
+  }, [prefixCls]);
 
   const getButtons = useCallback((buttonsArr?: ReactElement<ButtonProps>[]): ReactElement<ButtonProps>[] => {
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];

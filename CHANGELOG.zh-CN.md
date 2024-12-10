@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>Form`: 优化栅格布局下标题 help 样式&布局。
 - 💄 `<pro>Modal`: 优化 title 过长遮挡关闭按钮样式问题。
 - 💄 `<pro>Attachment`: 优化 popup 模式图片预览未收起问题。
+- 💄 `<pro>Table`: 内置按钮添加类名。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -42,6 +43,7 @@ timeline: true
 - 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性配置的 lookupAxiosConfig 中存在 FormData 参数会导致死循环的问题。
+- 🐞 `Progress`: 修复动画样式溢出的问题。
 
 ## 1.6.6
 
