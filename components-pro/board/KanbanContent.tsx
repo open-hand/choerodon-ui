@@ -263,6 +263,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           onClick: () => kanbanDS.create({}, 0),
           children: $l('Table', 'create_button'),
           disabled: disabled || (kanbanDS.parent ? !kanbanDS.parent.current : false),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.save:
         return {
@@ -271,6 +272,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           children: $l('Table', 'save_button'),
           type: ButtonType.submit,
           disabled,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.delete:
         return {
@@ -278,6 +280,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           onClick: () => kanbanDS.delete(kanbanDS.selected),
           children: $l('Table', 'delete_button'),
           disabled: disabled || kanbanDS.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.remove:
         return {
@@ -285,6 +288,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           onClick: () => kanbanDS.remove(kanbanDS.selected),
           children: $l('Table', 'remove_button'),
           disabled: disabled || kanbanDS.selected.length === 0,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.reset:
         return {
@@ -292,6 +296,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
           onClick: () => kanbanDS.reset(),
           children: $l('Table', 'reset_button'),
           type: ButtonType.reset,
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.query:
         return {
@@ -302,6 +307,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
             }
           },
           children: $l('Table', 'query_button'),
+          className: `${prefixCls}-btn-built-in`,
         };
       case TableButtonType.export:
         return undefined;
@@ -311,7 +317,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
         return undefined;
       default:
     }
-  }, []);
+  }, [prefixCls]);
 
   const getButtons = useCallback((buttonsArr?: ReactElement<ButtonProps>[]): ReactElement<ButtonProps>[] => {
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
