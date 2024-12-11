@@ -33,6 +33,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化 title 过长遮挡关闭按钮样式问题。
 - 💄 `<pro>Attachment`: 优化 popup 模式图片预览未收起问题。
 - 💄 `<pro>Table`: 内置按钮添加类名。
+- 💄 `<pro>Table`: 优化筛选条下拉关闭交互。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

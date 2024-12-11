@@ -2011,8 +2011,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                         className={`${prefixCls}-filter-item-close`}
                         onMouseDown={(e)=>{
                           e.stopPropagation();
-                        }}
-                        onClick={() => {
                           this.handleUnSelect([name]);
                         }}
                       />
