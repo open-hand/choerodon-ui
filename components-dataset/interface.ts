@@ -45,6 +45,7 @@ export interface LovConfig {
   lovItems: LovConfigItem[] | null;
   treeFlag?: 'Y' | 'N';
   delayLoad?: 'Y' | 'N';
+  expandFlag?: 'Y' | 'N'; // 树形 Lov 是否默认展开行
   parentIdField?: string;
   idField?: string;
   textField?: string;

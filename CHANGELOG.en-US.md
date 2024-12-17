@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
 - 🌟 `<pro>DataSet`: Added `customIntlFun` property.
+- 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
