@@ -305,7 +305,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, delayLoad, queryColumns, tableProps: configTableProps = {}, lovItems },
+      config: { queryBar, height, treeFlag, delayLoad, expandFlag, queryColumns, tableProps: configTableProps = {}, lovItems },
       multiple,
       tableProps,
       viewMode,
@@ -332,6 +332,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       autoFocus: true,
       mode: treeFlag === 'Y' ? TableMode.tree : TableMode.list,
       treeAsync: delayLoad === 'Y',
+      defaultRowExpanded: expandFlag === 'Y',
       onKeyDown: this.handleKeyDown,
       dataSet,
       columns,

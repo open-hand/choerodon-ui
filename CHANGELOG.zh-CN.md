@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
 - 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
+- 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
