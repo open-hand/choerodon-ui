@@ -1090,7 +1090,9 @@ export default class Record {
           });
         }
       }
-      ObjectChainValue.set(this.data, key, value[dataSet.lang]);
+      if (!field || !field.isDirty(this)) {
+        ObjectChainValue.set(this.data, key, value[dataSet.lang]);
+      }
       ObjectChainValue.set(this.data, `${tlsKey}.${key}`, value);
     });
   }
