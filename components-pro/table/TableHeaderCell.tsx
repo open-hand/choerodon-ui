@@ -285,7 +285,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
         sortableCallback({ dataSet, field, order: field.order });
       }
     }
-  }, [dataSet, name, sortableCallback]);
+  }, [dataSet, name, sortableCallback, field, column]);
 
   const handleMouseEnter = useCallback((e) => {
     const tooltip = tableStore.getColumnTooltip(column);

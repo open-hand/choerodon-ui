@@ -2065,7 +2065,7 @@ export default class Table extends DataSetComponent<TableProps> {
 
   render() {
     const {
-      tableStore: { overflowX, isAnyColumnsLeftLock, isAnyColumnsRightLock },
+      tableStore: { overflowX, overflowY, isAnyColumnsLeftLock, isAnyColumnsRightLock, columns },
       props: {
         dataSet,
         treeQueryExpanded,
@@ -2166,6 +2166,8 @@ export default class Table extends DataSetComponent<TableProps> {
                   className={classNames(`${prefixCls}-content`, {
                     [`${prefixCls}-content-overflow`]: isStickySupport() && overflowX && tableStore.height === undefined,
                     [`${prefixCls}-content-copy`]: clipboard && clipboard.copy,
+                    [`${prefixCls}-content-overflow-y`]: overflowY,
+                    [`${prefixCls}-content-column-has-percent`]: columns && columns.some(column => column.width && String(column.width).includes('%')),
                   })}
                   ref={this.saveContentRef}
                   onScroll={this.handleBodyScroll}

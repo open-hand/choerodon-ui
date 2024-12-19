@@ -35,6 +35,8 @@ timeline: true
 - 💄 `<pro>Attachment`: 优化 popup 模式图片预览未收起问题。
 - 💄 `<pro>Table`: 内置按钮添加类名。
 - 💄 `<pro>Table`: 优化筛选条下拉关闭交互。
+- 💄 `<pro>Table`: 优化表格设置自适应高度且列宽有百分比时的样式。
+- 💄 `<Tree>`: 优化连接线背景色。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -46,6 +48,7 @@ timeline: true
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性配置的 lookupAxiosConfig 中存在 FormData 参数会导致死循环的问题。
 - 🐞 `Progress`: 修复动画样式溢出的问题。
+- 🐞 `<pro>Table`: 修复 DataSet 动态设置字段时, 列排序不生效的问题。
 
 ## 1.6.6
 
