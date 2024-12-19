@@ -128,6 +128,24 @@
 
     &-overflow {
       overflow-x: auto;
+
+      // 列宽度设置百分比且表格纵向有滚动条场景
+      &-y.@{table-prefix-cls}-content-column-has-percent {
+        > .@{table-prefix-cls}-head {
+          overflow-y: scroll;
+
+          // 优化列头滚动条占位
+          &::-webkit-scrollbar {
+            background: @table-header-scrollbar-bg;
+          }
+          table {
+            col:last-of-type,
+            th:last-of-type {
+              display: none;
+            }
+          }
+        }
+      }
     }
     &-copy {
       td.@{table-prefix-cls}-cell {
