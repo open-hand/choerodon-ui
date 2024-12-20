@@ -36,6 +36,8 @@ timeline: true
 - 💄 `<pro>Table`: Built-in button to add class name.
 - 💄 `<pro>Table`: Optimize filter bar drop-down to close interaction.
 - 💄 `<pro>IntlField` : Optimizes multilingual value change logic.
+- 💄 `<pro>Table`: Optimizes the style when the table is set with `autoHeight` and a percentage of column width.
+- 💄 `<Tree>`: Optimized cable background color.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -47,6 +49,7 @@ timeline: true
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 - 🐞 `Progress`: Fixed an issue where animation styles overflowed.
+- 🐞 `<pro>Table`: Fixed an issue where column ordering did not take effect when the `DataSet` dynamically set fields.
 
 ## 1.6.6
 
