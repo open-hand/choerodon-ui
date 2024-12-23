@@ -25,6 +25,7 @@ export default class Password extends TextField<PasswordProps> {
     ...TextField.defaultProps,
     suffixCls: 'password',
     reveal: true,
+    tooltip: 'none',
   };
 
   type = 'password';

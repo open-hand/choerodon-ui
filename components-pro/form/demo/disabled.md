@@ -104,7 +104,7 @@ const App = () => {
     <>
       <Form header="Basic" disabled style={{ width: '4rem' }}>
         <TextField label="手机号" tooltip="overflow" defaultValue="1588888888822158888888882215888888888221588888888822" pattern="1[3-9]\d{9}" name="phone" required clearButton addonBefore="+86" addonAfter="中国大陆" />
-        <Password label="密码" name="password" required />
+        <Password label="密码" defaultValue="1588888888822158888888882215888888888221588888888822" name="password" required />
         <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与上方相同的密码" showHelp="tooltip" />
         <NumberField label="年龄" name="age" min={18} step={1} required help="我们需要确定你的年龄" addonAfter="周岁" />
         <SelectBox label="性别" name="sex" required>

@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm` properties.
+- 🌟 `configure`: TooltipTarget Adds the text-field global object.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
