@@ -46,6 +46,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where bidirectional copying of lov calculation attribute changes resulted in no request for pasting.
 - 🐞 `<pro>PerformanceTable`: Fixes invalid rowSelection dynamic configuration.
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
+- 🐞 `<pro>PerformanceTable`: Fix the issue where the last row of data is obscured by the scrollbar.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.

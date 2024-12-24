@@ -935,12 +935,19 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   get getScrollBarYWidth(): number {
-    const { contentHeight } = this.state;
+    const { width } = this.state;
     const { showScrollArrow } = this.props;
-    const height = this.getTableHeight();
-    if (contentHeight > height && !!this.scrollbarYRef) {
-      return showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH;
+
+    const table = this.tableRef && this.tableRef.current;
+    if (table) {
+      const row = table.querySelector(`.${this.addPrefix('row')}:not(.virtualized)`);
+      const contentWidth = row ? getWidth(row) : 0;
+
+      if (contentWidth > width && !!this.scrollbarXRef) {
+        return showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH;
+      }
     }
+
     return 0;
   }
 
