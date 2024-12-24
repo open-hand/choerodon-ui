@@ -426,7 +426,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
   }, [customizedDS!.current]);
 
   const btnStyle = useMemo(() => {
-    switch (viewProps.buttonSecPosition) {
+    switch (viewProps && viewProps.buttonSecPosition) {
       case 'right':
         return { justifyContent: 'flex-end' };
       case 'center':
@@ -434,7 +434,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
       default:
         return {};
     }
-  }, [viewProps.buttonSecPosition]);
+  }, [viewProps && viewProps.buttonSecPosition]);
 
   return (
     <div style={{ height: '100%' }}>
