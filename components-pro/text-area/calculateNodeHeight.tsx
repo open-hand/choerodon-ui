@@ -81,7 +81,7 @@ export function calculateNodeStyling(node: HTMLElement, useCache = false) {
     boxSizing,
   };
 
-  if (useCache && nodeRef) {
+  if (nodeRef) {
     computedStyleCache[nodeRef] = nodeInfo;
   }
 
