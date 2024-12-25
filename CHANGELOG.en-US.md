@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>IntlField` : Optimizes multilingual value change logic.
 - 💄 `<pro>Table`: Optimizes the style when the table is set with `autoHeight` and a percentage of column width.
 - 💄 `<Tree>`: Optimized cable background color.
+- 💄 `<pro>TextArea`: When setting the `autoSize` property optimally, the height changes depending on the browser window.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

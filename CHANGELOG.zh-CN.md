@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>IntlField`: 优化多语言值变更逻辑。
 - 💄 `<pro>Table`: 优化表格设置自适应高度且列宽有百分比时的样式。
 - 💄 `<Tree>`: 优化连接线背景色。
+- 💄 `<pro>TextArea`: 优化设置 autoSize 属性时, 高度根据浏览器窗口变化而变化。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
