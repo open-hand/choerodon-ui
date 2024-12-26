@@ -40,6 +40,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimizes the style when the table is set with `autoHeight` and a percentage of column width.
 - 💄 `<Tree>`: Optimized cable background color.
 - 💄 `<pro>TextArea`: When setting the `autoSize` property optimally, the height changes depending on the browser window.
+- 💄 `<pro>Table`: Optimizes the style of custom folding `icon`.
+- 💄 `<pro>Table`: Optimized display of multilingual type fields in non-edit mode.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -53,6 +55,7 @@ timeline: true
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 - 🐞 `Progress`: Fixed an issue where animation styles overflowed.
 - 🐞 `<pro>Table`: Fixed an issue where column ordering did not take effect when the `DataSet` dynamically set fields.
+- 🐞 `<pro>Select`: Fixed an issue where the `restrict` attribute could not restrict Chinese characters.
 
 ## 1.6.6
 

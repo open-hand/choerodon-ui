@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useContext } from 'react';
+import isNil from 'lodash/isNil';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { RenderProps } from '../field/FormField';
 import { BooleanValue, FieldType } from '../data-set/enum';
@@ -6,6 +7,7 @@ import Attachment from '../attachment/Attachment';
 import { FuncType } from '../button/enum';
 import { defaultRenderer } from '../field/utils';
 import { ShowHelp } from '../field/enum';
+import IntlField from '../intl-field/IntlField';
 
 interface SimpleCheckBoxProps {
   checked: boolean;
@@ -26,7 +28,7 @@ const SimpleCheckBox: FunctionComponent<SimpleCheckBoxProps> = function (props) 
 SimpleCheckBox.displayName = 'SimpleCheckBox';
 
 export function defaultOutputRenderer(renderOption: RenderProps) {
-  const { value, name, record } = renderOption;
+  const { value, name, record, readOnly: optionReadOnly } = renderOption;
   if (record) {
     const field = record.dataSet.getField(name);
     if (field) {
@@ -45,6 +47,16 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
             record={record}
             funcType={FuncType.link}
             showHelp={ShowHelp.none}
+          />
+        );
+      }
+      if (field.get('type', record) === FieldType.intl && !isNil(value) && value !== '' && optionReadOnly) {
+        return (
+          <IntlField
+            record={record}
+            name={name}
+            showHelp={ShowHelp.none}
+            displayOutput
           />
         );
       }
