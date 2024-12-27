@@ -323,11 +323,22 @@
       &-pre&-auto-height {
         white-space: pre-wrap;
       }
+
+      .@{c7n-pro-prefix}-output-intl-wrapper {
+        max-width: 100%;
+        .@{c7n-pro-prefix}-output {
+          width: calc(100% - @input-suffix-width-base);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     &-prefix {
       display: flex;
       flex-direction: row;
+      align-items: center;
       float: left;
       padding-right: @table-padding-horizontal;
       padding-left: @table-padding-horizontal;

@@ -1392,6 +1392,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       target: { value },
       type,
     } = e;
+    if (type === 'compositionend') {
+      this.lock = false;
+    }
+    const beforeText = this.text;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
       const selectionEnd = target.selectionEnd + restricted.length - value.length;
@@ -1400,7 +1404,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
     this.setText(restricted);
     if (this.observableProps.combo) {
-      if (type !== 'compositionend') {
+      if (restricted !== beforeText) {
         this.generateComboOption(restricted, text => this.setText(text));
       }
     }

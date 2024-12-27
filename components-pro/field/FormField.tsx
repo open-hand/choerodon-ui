@@ -68,6 +68,7 @@ export type RenderProps = {
   repeat?: number;
   maxTagTextLength?: number;
   multiLineFields?: Field[];
+  readOnly?: boolean;
 };
 
 export type TagRendererProps = {
