@@ -132,7 +132,7 @@ class App extends React.Component {
         <Column name="userid" sortable />
         <Column name="age" sortable width={200} />
         <Column name="enable" width={200} />
-        <Column name="name" width={200} />
+        <Column name="name" width={200} showDetail />
         <Column header="操作" align="center" renderer={this.renderEdit} lock="right" />
       </Table>
     );

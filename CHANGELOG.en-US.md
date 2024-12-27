@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
 - 🌟 `<pro>DataSet`: Added `customIntlFun` property.
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
+- 🌟 `<pro>Table.Column`: Added `showDetail` property.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
@@ -41,7 +42,6 @@ timeline: true
 - 💄 `<Tree>`: Optimized cable background color.
 - 💄 `<pro>TextArea`: When setting the `autoSize` property optimally, the height changes depending on the browser window.
 - 💄 `<pro>Table`: Optimizes the style of custom folding `icon`.
-- 💄 `<pro>Table`: Optimized display of multilingual type fields in non-edit mode.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

@@ -27,6 +27,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
 - 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
+- 🌟 `<pro>Table.Column`: 新增 showDetail 属性。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
@@ -41,7 +42,6 @@ timeline: true
 - 💄 `<Tree>`: 优化连接线背景色。
 - 💄 `<pro>TextArea`: 优化设置 autoSize 属性时, 高度根据浏览器窗口变化而变化。
 - 💄 `<pro>Table`: 优化自定义折叠 icon 的样式。
-- 💄 `<pro>Table`: 优化非编辑模式的多语言类型字段显示。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

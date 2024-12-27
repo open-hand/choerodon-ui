@@ -229,6 +229,10 @@ export interface ColumnPropsBase extends ElementProps {
    * rowNumber的列索引
    */
   rowNumberIndex?: number;
+  /**
+   * editor 为 false 时, 是否显示多语言详情按钮
+   */
+  showDetail?: boolean;
 }
 
 export interface ColumnProps extends ColumnPropsBase {
