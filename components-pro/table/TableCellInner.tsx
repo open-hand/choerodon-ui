@@ -476,7 +476,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     // 值集中不存在 再去取直接返回的值
     const text = isNil(processedValue) ? processValue(value) : processedValue;
-    const editor = name ? tableStore.editors.get(name) : undefined;
+    const showDetail = name && column ? column.showDetail && !tableStore.editors.get(name) : false;
     return (cellRenderer || defaultOutputRenderer)({
       value,
       text,
@@ -486,7 +486,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       repeat,
       headerGroup,
       rowGroup,
-      readOnly: !editor,
+      showDetail,
     } as ColumnRenderProps);
   };
   const getRenderedValue = (): any => {

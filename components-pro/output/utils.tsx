@@ -28,7 +28,7 @@ const SimpleCheckBox: FunctionComponent<SimpleCheckBoxProps> = function (props) 
 SimpleCheckBox.displayName = 'SimpleCheckBox';
 
 export function defaultOutputRenderer(renderOption: RenderProps) {
-  const { value, name, record, readOnly: optionReadOnly } = renderOption;
+  const { value, name, record, showDetail } = renderOption;
   if (record) {
     const field = record.dataSet.getField(name);
     if (field) {
@@ -50,7 +50,7 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
           />
         );
       }
-      if (field.get('type', record) === FieldType.intl && !isNil(value) && value !== '' && optionReadOnly) {
+      if (field.get('type', record) === FieldType.intl && !isNil(value) && value !== '' && showDetail) {
         return (
           <IntlField
             record={record}

@@ -68,7 +68,10 @@ export type RenderProps = {
   repeat?: number;
   maxTagTextLength?: number;
   multiLineFields?: Field[];
-  readOnly?: boolean;
+  /**
+   * 是否显示多语言详情按钮
+   */
+  showDetail?: boolean;
 };
 
 export type TagRendererProps = {
