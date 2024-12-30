@@ -214,6 +214,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
 
   optionsIsChange: boolean | undefined;
 
+  defaultOptions: DataSet = new DataSet(undefined, { getConfig: this.getContextConfig as any });
+
   get isClickTab() {
     return this.clickTab;
   }
@@ -365,7 +367,8 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
     return (
       options ||
-      (field && field.getOptions(this.record))
+      (field && field.getOptions(this.record)) ||
+      this.defaultOptions
     );
   }
 

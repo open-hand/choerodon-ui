@@ -2455,7 +2455,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         if (this._lastRowIndex || this._lastRowIndex === 0) {
           const row = useRowKey ? this.tableRows[this._lastRowIndex] : tableRows[this._lastRowIndex];
           if (row && row[0]) {
-            row[0].className = ref.className.replace(` ${this.addPrefix('row-highLight')}`, '');
+            row[0].className = row[0].className.replace(` ${this.addPrefix('row-highLight')}`, '');
           }
         }
         ref.className = `${ref.className} ${this.addPrefix('row-highLight')}`;
@@ -2575,13 +2575,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const rowKey = rowData && this.getRecordKey(rowData, rowIndex);
 
-    if (typeof rowClassName === 'function') {
-      restRowProps.className = rowClassName(rowData);
-    } else {
-      restRowProps.className = rowClassName;
-    }
+    const className = typeof rowClassName === 'function' ? rowClassName(rowData) : rowClassName;
+    restRowProps.className = className;
     if (rowKey === this._lastRowIndex && virtualized && highLightRow && !isHeaderRow) {
-      restRowProps.className = `${rowClassName} ${this.addPrefix('row-highLight')}`;
+      restRowProps.className = `${className} ${this.addPrefix('row-highLight')}`;
     }
 
     const rowStyles: React.CSSProperties = {};

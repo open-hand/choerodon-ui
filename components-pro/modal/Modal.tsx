@@ -682,7 +682,6 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   handleDrawerMouseResize(e) {
     const {
-      contentNode,
       drawerTransitionName,
       element,
       element: { offsetParent, offsetLeft: elementOffsetTop, offsetTop: elementOffsetLeft },
@@ -694,8 +693,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     const drawerOffset = this.getDrawerOffset(drawerTransitionName);
     const maxWidth = (embeddedOffsetWidth || docClientWidth) - drawerOffset;
     const maxHeight = (embeddedOffsetHeight || docClientHeight) - drawerOffset;
-    let { offsetHeight: height, offsetWidth: width } = contentNode;
     return (me) => {
+      let height: number | undefined;
+      let width: number | undefined;
       let clientX = transformZoomData(me.clientX);
       let clientY = transformZoomData(me.clientY);
       if (offsetParent) {

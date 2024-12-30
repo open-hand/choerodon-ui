@@ -42,6 +42,8 @@ timeline: true
 - 💄 `<Tree>`: 优化连接线背景色。
 - 💄 `<pro>TextArea`: 优化设置 autoSize 属性时, 高度根据浏览器窗口变化而变化。
 - 💄 `<pro>Table`: 优化自定义折叠 icon 的样式。
+- 💄 `<pro>Modal`: 优化抽屉模式下, 当调整弹窗宽度和浏览器宽度后的弹窗高度。
+- 💄 `<pro>Cascader`: 兼容未设置选项数据源报错的问题。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -56,6 +58,7 @@ timeline: true
 - 🐞 `Progress`: 修复动画样式溢出的问题。
 - 🐞 `<pro>Table`: 修复 DataSet 动态设置字段时, 列排序不生效的问题。
 - 🐞 `<pro>Select`: 修复 restrict 属性限制不住中文的问题。
+- 🐞 `<pro>PerformanceTable`: 修复使用 rowClassName 属性动态设置类名, 切换当前行时, 类名错误问题。
 
 ## 1.6.6
 
