@@ -1640,13 +1640,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleChange(e) {
     const {
       target,
-      type,
       target: { value },
     } = e;
     const { valueChangeAction } = this;
-    if (type === 'compositionend') {
-      this.lock = false;
-    }
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
       const selectionEnd = target.selectionEnd + restricted.length - value.length;

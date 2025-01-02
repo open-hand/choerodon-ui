@@ -659,7 +659,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     otherProps.onChange = !this.disabled && !this.readOnly ? this.handleChange : noop;
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.onCompositionStart = this.handleCompositionStart;
-    otherProps.onCompositionEnd = this.handleChange;
+    otherProps.onCompositionEnd = this.handleCompositionEnd;
     return otherProps;
   }
 
@@ -943,8 +943,18 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   @autobind
-  handleCompositionStart() {
+  handleCompositionStart(e) {
+    const { onCompositionStart = noop } = this.props;
     this.lock = true;
+    onCompositionStart(e);
+  }
+
+  @autobind
+  handleCompositionEnd(e) {
+    const { onCompositionEnd = noop } = this.props;
+    onCompositionEnd(e);
+    this.lock = false;
+    this.handleChange(e);
   }
 
   @autobind
