@@ -1390,11 +1390,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const {
       target,
       target: { value },
-      type,
     } = e;
-    if (type === 'compositionend') {
-      this.lock = false;
-    }
     const beforeText = this.text;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {

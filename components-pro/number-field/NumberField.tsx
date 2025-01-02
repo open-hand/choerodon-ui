@@ -457,10 +457,6 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     delete otherProps.maxLength;
     otherProps.max = this.max;
     otherProps.min = this.min;
-    otherProps.onCompositionEnd = (e) => {
-      this.lock = false;
-      this.handleChange(e);
-    };
     return otherProps;
   }
 

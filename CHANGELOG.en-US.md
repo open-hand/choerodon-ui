@@ -59,6 +59,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where column ordering did not take effect when the `DataSet` dynamically set fields.
 - 🐞 `<pro>Select`: Fixed an issue where the `restrict` attribute could not restrict Chinese characters.
 - 🐞 `<pro>PerformanceTable`: Fixed the class name error when using the `rowClassName` property to dynamically set the class name and switch the current row.
+- 🐞 `<pro>FormField`: Fixed an issue where input component `onCompositionStart` and `onCompositionEnd` events did not take effect.
 
 ## 1.6.6
 
