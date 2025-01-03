@@ -8,6 +8,8 @@ import { TextField, TextFieldProps } from '../text-field/TextField';
 import { AutoSizeType, ResizeType } from './enum';
 import calculateNodeHeight from './calculateNodeHeight';
 import autobind from '../_util/autobind';
+import { Tooltip as TextTooltip } from '../core/enum';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 function getResizeProp(resize: ResizeType) {
   switch (resize) {
@@ -83,6 +85,14 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
       return minRows || rows;
     }
     return rows;
+  }
+
+  get tooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
+    if (this.disabled) {
+      return super.tooltip;
+    }
+    const { tooltip } = this.props;
+    return tooltip || TextTooltip.none;
   }
 
   componentDidMount() {

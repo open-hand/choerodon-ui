@@ -246,6 +246,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return this.props.border;
   }
 
+  get tooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
+    const { getTooltip } = this.context;
+    const { tooltip: inputTooltip } = this.props;
+    const disabledTooltip = getTooltip('text-field-disabled');
+    const configTooltip = getTooltip('text-field');
+    const tooltip = this.disabled ? (inputTooltip || disabledTooltip) : (inputTooltip || configTooltip);
+    return tooltip;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -593,14 +602,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (super.showTooltip(e)) {
       return true;
     }
-    const { getTooltip, getTooltipTheme, getTooltipPlacement } = this.context;
-    const { tooltip: inputTooltip } = this.props;
-    const disabledTooltip =  getTooltip('text-field-disabled');
-    const configTooltip =  getTooltip('text-field');
-    const { element, renderedValue } = this;
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { element, renderedValue, tooltip } = this;
     const title = this.getRenderedValue();
     const judgeOverflowElement = renderedValue ? element.parentNode.previousElementSibling : element;
-    const tooltip = this.disabled ? (inputTooltip || disabledTooltip) : (inputTooltip || configTooltip);
     const tooltipPlacement = this.disabled ? getTooltipPlacement('text-field-disabled') : getTooltipPlacement('text-field');
     const tooltipTheme = this.disabled ? getTooltipTheme('text-field-disabled') : getTooltipTheme('text-field');
     if (judgeOverflowElement && !this.multiple && title) {
