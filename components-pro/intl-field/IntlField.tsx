@@ -25,6 +25,7 @@ import isSame from '../_util/isSame';
 import isEmpty from '../_util/isEmpty';
 import { show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 export interface IntlFieldProps extends TextAreaProps {
   modalProps?: ModalProps;
@@ -89,6 +90,17 @@ export default class IntlField extends TextArea<IntlFieldProps> {
       return false;
     }
     return super.border;
+  }
+
+  get tooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
+    if (this.disabled) {
+      return super.tooltip;
+    }
+    const { tooltip, type } = this.props;
+    const { getTooltip } = this.context;
+    return type === IntlType.multipleLine
+      ? (tooltip || TextTooltip.none)
+      : (tooltip || getTooltip('text-field'));
   }
 
   @autobind
