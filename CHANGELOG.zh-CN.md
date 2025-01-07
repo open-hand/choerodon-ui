@@ -60,6 +60,8 @@ timeline: true
 - 🐞 `<pro>Select`: 修复 restrict 属性限制不住中文的问题。
 - 🐞 `<pro>PerformanceTable`: 修复使用 rowClassName 属性动态设置类名, 切换当前行时, 类名错误问题。
 - 🐞 `<pro>FormField`: 修复输入组件 onCompositionStart 和 onCompositionEnd 事件不生效的问题。
+- 🐞 `<pro>TextField`: 修复 navigator.clipboard 不存在时, 复制报错的问题。
+- 🐞 `<pro>DatePicker`: 修复文本复制不正确的问题。
 
 ## 1.6.6
 
