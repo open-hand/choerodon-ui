@@ -51,6 +51,7 @@ import { hide, show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { toRangeValue } from '../field/utils';
 import { TooltipProps } from '../tooltip/Tooltip';
+import { copyToClipboard } from '../_util/clipboardUtils';
 
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
@@ -1461,12 +1462,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
-      if ((e.ctrlKey || e.metaKey) && e.keyCode === KeyCode.C && this.format) {
+      if ((e.ctrlKey || e.metaKey) && e.keyCode === KeyCode.C &&
+        [FieldFormat.uppercase, FieldFormat.lowercase, FieldFormat.capitalize].includes(this.format as FieldFormat)) {
         e.preventDefault();
         // 执行复制操作
         this.blur();
         const text = this.getValue();
-        navigator.clipboard.writeText(text).then(() => {
+        copyToClipboard().writeText(text).then(() => {
           this.focus();
         }).catch(err => {
           this.focus();
