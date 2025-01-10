@@ -1602,7 +1602,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
           dataSet.setQueryParameter(this.searchText, value);
-          this.setConditionStatus(value === fuzzyValue ? RecordStatus.sync : RecordStatus.update);
+          this.setConditionStatus(value === (isNil(fuzzyValue) ? null : fuzzyValue) ? RecordStatus.sync : RecordStatus.update);
         }}
         onClear={() => {
           runInAction(() => {

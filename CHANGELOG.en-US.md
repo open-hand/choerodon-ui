@@ -62,6 +62,7 @@ timeline: true
 - 🐞 `<pro>FormField`: Fixed an issue where input component `onCompositionStart` and `onCompositionEnd` events did not take effect.
 - 🐞 `<pro>TextField`: Fix to copy error when `navigator.clipboard` does not exist.
 - 🐞 `<pro>DatePicker`: Fixed an issue where text was copied incorrectly.
+- 🐞 `<pro>Table`: Fixed an issue where the reset button was still displayed after the fuzzy filter value of the dynamic filter bar was cleared.
 
 ## 1.6.6
 
