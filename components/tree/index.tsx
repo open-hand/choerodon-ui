@@ -201,10 +201,10 @@ export default class Tree extends Component<TreeProps, any> {
 
     if (isLeaf) {
       if (showLine) {
-        if (typeof showLine === 'object' && !showLeafIcon) {
-          return <span className={`${prefixCls}-switcher-leaf-line`} />;
+        if (typeof showLine === 'object' && showLeafIcon){
+          return <Icon type="note" className={`${prefixCls}-switcher-line-icon`} />;
         }
-        return <Icon type="note" className={`${prefixCls}-switcher-line-icon`} />;
+        return <span className={`${prefixCls}-switcher-leaf-line`} />;
       }
       return null;
     }

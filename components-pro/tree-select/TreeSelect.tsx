@@ -27,6 +27,7 @@ export interface TreeSelectProps extends SelectProps {
   showCheckedStrategy?: CheckedStrategy;
   /** checkable状态下节点选择完全受控（父子节点选中状态不再关联） */
   checkStrictly?: boolean;
+  showLine?: boolean | { showLeafIcon: boolean };
 }
 
 function recordIsDisabled(record: Record): boolean {
@@ -325,7 +326,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
       props: {
         dropdownMenuStyle, optionRenderer = defaultRenderer,
         treeDefaultExpandAll, treeDefaultExpandedKeys, treeCheckable,
-        async, loadData,
+        async, loadData, showLine,
       },
     } = this;
     /**
@@ -408,6 +409,7 @@ export default class TreeSelect extends Select<TreeSelectProps> {
         loadData={async ? this.handleLoadData : loadData}
         checkStrictly={checkStrictly}
         isAfterFilter={isAfterFilter}
+        showLine={showLine}
         {...props}
         {...menuProps}
       />

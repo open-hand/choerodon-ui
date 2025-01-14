@@ -28,6 +28,8 @@ timeline: true
 - 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
 - 🌟 `<pro>Table.Column`: 新增 showDetail 属性。
+- 🌟 `<pro>TreeSelect`: 新增 showLine 属性。
+- 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。

@@ -33,7 +33,7 @@ class App extends React.Component {
     return (
       <Row gutter={10}>
         <Col span={8}>
-          <TreeSelect placeholder="请选择" onChange={handleChange} treeDefaultExpandAll>
+          <TreeSelect  showLine={{ showLeafIcon: false }} placeholder="请选择" onChange={handleChange} treeDefaultExpandAll>
             <TreeNode value="parent 1" title="parent 1">
               <TreeNode value="parent 1-0" title="parent 1-0" selectable={false}>
                 <TreeNode value="leaf1" title="my leaf" />

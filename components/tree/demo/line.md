@@ -111,7 +111,7 @@ const treeData = [
 const Demo = () => {
   const [showLine, setShowLine] = useState(true);
   const [showIcon, setShowIcon] = useState(false);
-  const [showLeafIcon, setShowLeafIcon] = useState(true);
+  const [showLeafIcon, setShowLeafIcon] = useState(false);
 
   const onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
