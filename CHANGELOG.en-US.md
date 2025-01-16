@@ -29,6 +29,7 @@ timeline: true
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
 - 🌟 `<pro>Table.Column`: Added `showDetail` property.
 - 🌟 `<pro>TreeSelect`: Added `showLine` property.
+- 🌟 `<pro>DataSet.Field`: The `trueValue` and `falseValue` attributes add array types.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.

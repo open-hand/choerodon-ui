@@ -8,6 +8,7 @@ import { FuncType } from '../button/enum';
 import { defaultRenderer } from '../field/utils';
 import { ShowHelp } from '../field/enum';
 import IntlField from '../intl-field/IntlField';
+import { equalTrueValue } from '../data-set/utils';
 
 interface SimpleCheckBoxProps {
   checked: boolean;
@@ -33,7 +34,7 @@ export function defaultOutputRenderer(renderOption: RenderProps) {
     const field = record.dataSet.getField(name);
     if (field) {
       if (field.get('type', record) === FieldType.boolean) {
-        const checked = value === field.get(BooleanValue.trueValue, record);
+        const checked = equalTrueValue(field.get(BooleanValue.trueValue, record), value);
         return (
           <SimpleCheckBox checked={checked} />
         );

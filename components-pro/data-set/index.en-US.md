@@ -293,8 +293,8 @@ title: DataSet
 | disabled | 是否禁用 | boolean | false |
 | textField | 值列表的文本字段 | string | meaning |
 | valueField | 值列表的值字段 | string | value |
-| trueValue | 类型为 boolean 时，true 对应的值 | boolean\|string\|number | true |
-| falseValue | 类型为 boolean 时，false 对应的值 | boolean\|string\|number | false |
+| trueValue | 类型为 boolean 时，true 对应的值。当为数组时，默认使用数组第一个值，数组中的其他值会兼容显示  | boolean\|string\|number\|any[] | true |
+| falseValue | 类型为 boolean 时，false 对应的值。当为数组时，默认使用数组第一个值，数组中的其他值会兼容显示 | boolean\|string\|number\|any[] | false |
 | options | 下拉框组件的菜单数据集 | DataSet |  |
 | optionsProps | 值集组件的数据集配置 | DataSetProps \| | (DataSetProps) => DataSetProps |  |
 | group | 是否分组，如果是 number，则为分组的顺序(暂无实装) | boolean\|number |  |

@@ -6,6 +6,7 @@ import { Radio, RadioProps } from '../radio/Radio';
 import Icon from '../icon';
 import { hide, show } from '../tooltip/singleton';
 import { BooleanValue } from '../data-set/enum';
+import { equalTrueValue, getFirstValue } from '../data-set/utils';
 import autobind from '../_util/autobind';
 
 export interface CheckBoxProps extends RadioProps {
@@ -71,7 +72,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
-      this.value = this.props.defaultChecked ? this.checkedValue : this.unCheckedValue;
+      this.value = getFirstValue(this.props.defaultChecked ? this.checkedValue : this.unCheckedValue);
     });
   }
 
@@ -155,12 +156,12 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     }
     const { name, dataSet, checkedValue } = this;
     if (!this.isControlled && dataSet && name) {
-      return this.getValues().indexOf(checkedValue) !== -1;
+      return this.getValues().findIndex(value => equalTrueValue(checkedValue, value)) !== -1;
     }
     if (checked !== undefined) {
       return checked;
     }
-    return this.value === checkedValue;
+    return equalTrueValue(checkedValue, this.value);
   }
 
   getDataSetValues(): any[] {
@@ -178,10 +179,10 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
       let values;
       if (multiple) {
         values = this.getValues();
-        if (value === checkedValue) {
+        if (equalTrueValue(checkedValue, value)) {
           values.push(value);
         } else {
-          const index = values.indexOf(checkedValue);
+          const index = values.findIndex(value => equalTrueValue(checkedValue, value));
           if (index !== -1) {
             values.splice(index, 1);
           }
@@ -197,11 +198,11 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   @action
   setChecked(checked) {
-    this.setValue(checked ? this.checkedValue : this.unCheckedValue);
+    this.setValue(getFirstValue(checked ? this.checkedValue : this.unCheckedValue));
   }
 
   getOldValue() {
-    return this.isChecked() ? this.checkedValue : this.unCheckedValue;
+    return getFirstValue(this.isChecked() ? this.checkedValue : this.unCheckedValue);
   }
 }
 
