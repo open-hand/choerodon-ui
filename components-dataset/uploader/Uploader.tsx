@@ -69,9 +69,9 @@ export default class Uploader {
     if (result === true) {
       try {
         const resp = await uploadFile(props, attachment, attachmentUUID, context, chunkSize, useChunk);
+        let handleUploadSuccessResult;
         runInAction(() => {
           attachment.status = 'success';
-          let handleUploadSuccessResult;
           const { onUploadSuccess: handleUploadSuccess } = globalConfig;
           const { onUploadSuccess } = props;
           if (handleUploadSuccess) {
@@ -94,6 +94,11 @@ export default class Uploader {
             }
           }
         });
+        if (isPromise(handleUploadSuccessResult)) {
+          // 确保分片上传完成后再返回结果
+          await handleUploadSuccessResult;
+          return resp;
+        }
         return resp;
       } catch (error) {
         if (error instanceof UploadError) {
