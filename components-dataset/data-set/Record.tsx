@@ -51,6 +51,8 @@ import {
   useNormal,
   useSelected,
   findMinOrMaxFields,
+  equalTrueValue,
+  getFirstValue,
 } from './utils';
 import * as ObjectChainValue from '../object-chain-value';
 import DataSetSnapshot from './DataSetSnapshot';
@@ -336,7 +338,7 @@ export default class Record {
             if (record.isIndeterminate) {
               return true;
             }
-            if (record.get(checkField) === trueValue) {
+            if (equalTrueValue(trueValue, record.get(checkField))) {
               checkedLength += 1;
             }
             return false;
@@ -355,7 +357,7 @@ export default class Record {
     if (expandField) {
       const expanded = this.get(expandField);
       const field = dataSet.getField(expandField);
-      return expanded === (field ? field.get(BooleanValue.trueValue, this) : true);
+      return equalTrueValue((field ? field.get(BooleanValue.trueValue, this) : true), expanded);
     }
     const $expanded = this.getState(EXPANDED_KEY);
     if ($expanded !== undefined) {
@@ -372,7 +374,7 @@ export default class Record {
       this.set(
         expandField,
         field
-          ? field.get(expand ? BooleanValue.trueValue : BooleanValue.falseValue, this)
+          ? getFirstValue(field.get(expand ? BooleanValue.trueValue : BooleanValue.falseValue, this))
           : expand,
       );
     } else {

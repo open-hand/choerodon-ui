@@ -277,11 +277,11 @@ export type FieldProps = {
   /**
    *  类型为boolean时，true对应的值
    */
-  trueValue?: string | number | boolean;
+  trueValue?: string | number | boolean | any[];
   /**
    *  类型为boolean时，false对应的值
    */
-  falseValue?: string | number | boolean;
+  falseValue?: string | number | boolean | any[];
   /**
    * 下拉框组件的菜单数据集
    */

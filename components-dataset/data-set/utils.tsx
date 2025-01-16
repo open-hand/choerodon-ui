@@ -168,8 +168,8 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
         case FieldType.boolean: {
           const trueValue = field.get(BooleanValue.trueValue, record);
           const falseValue = field.get(BooleanValue.falseValue, record);
-          if (value !== trueValue) {
-            value = falseValue;
+          if (!equalTrueValue(trueValue, value)) {
+            value = getFirstValue(falseValue);
           }
           break;
         }
@@ -552,9 +552,11 @@ export function checkFieldType(value: any, field: Field, record?: Record): boole
       if (isArrayLike(value)) {
         return value.every(item => checkFieldType(item, field, record));
       }
+      const trueValue = field.get(BooleanValue.trueValue, record);
+      const falseValue = field.get(BooleanValue.falseValue, record);
       const valueType =
         field.get('type', record) === FieldType.boolean &&
-        [field.get(BooleanValue.trueValue, record), field.get(BooleanValue.falseValue, record)].includes(value)
+        [...(isArrayLike(trueValue) ? trueValue : [trueValue]), ...(isArrayLike(falseValue) ? falseValue: [falseValue])].includes(value)
           ? FieldType.boolean
           : getValueType(value);
       if (
@@ -868,9 +870,9 @@ export function getRecordValue(
       const falseValue = field ? field.get(BooleanValue.falseValue, record) : false;
       const { children } = record;
       if (children) {
-        return children.every(child => cb(child, checkField) === trueValue)
-          ? trueValue
-          : falseValue;
+        return children.every(child => equalTrueValue(trueValue, cb(child, checkField)))
+          ? getFirstValue(trueValue)
+          : getFirstValue(falseValue);
       }
     }
     return ObjectChainValue.get(record.data, chainFieldName as string);
@@ -1449,4 +1451,20 @@ export function isFormDataEqual(oldFormData: FormData, newFormData: FormData): b
     }
   }
   return true;
+}
+
+/**
+ * 判断是否为 trueValue 的值
+ * @param trueValue trueValue 值，可以是单个值或者数组
+ * @param value 待判断的值
+ * @returns 
+ */
+export function equalTrueValue(trueValue: string | number | boolean | any[], value: any): boolean {
+  const trueValueArr = isArrayLike(trueValue) ? trueValue : [trueValue];
+  return trueValueArr.includes(value);
+}
+
+export function getFirstValue(values: string | number | boolean | any[]): string | number | boolean {
+  const valueArr = isArrayLike(values) ? values : [values];
+  return valueArr[0];
 }

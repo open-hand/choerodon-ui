@@ -13,6 +13,7 @@ import ObserverCheckBox from 'choerodon-ui/pro/lib/check-box';
 import { PaginationProps } from 'choerodon-ui/pro/lib/pagination/interface';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { BooleanValue, DataSetEvents } from 'choerodon-ui/pro/lib/data-set/enum';
+import { equalTrueValue } from 'choerodon-ui/pro/lib/data-set/utils';
 import { getKey } from 'choerodon-ui/pro/lib/tree/util';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -141,7 +142,7 @@ export default class List extends Component<ListProps> {
         const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
           const key = getKey(record, primaryKey);
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (equalTrueValue((field ? field.get(BooleanValue.trueValue, record) : true), record.get(checkField))) {
             keys.push(key);
           }
         });
@@ -202,7 +203,7 @@ export default class List extends Component<ListProps> {
       if (checkField) {
         const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (equalTrueValue((field ? field.get(BooleanValue.trueValue, record) : true), record.get(checkField))) {
             record.isSelected = true;
           }
         });

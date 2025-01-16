@@ -29,7 +29,7 @@ class App extends React.Component {
     fields: [
       { name: 'bind', multiple: true },
       { name: 'bind2', type: 'boolean' },
-      { name: 'bind3', type: 'boolean', trueValue: 'Y', falseValue: 'N' },
+      { name: 'bind3', type: 'boolean', trueValue: ['Y', true, 1], falseValue: 'N' },
     ],
     data,
     events: {
@@ -38,6 +38,8 @@ class App extends React.Component {
   });
 
   render() {
+    // swds.current.set('bind3', 1);
+    window.swds = this.ds;
     return (
       <div>
         <Switch dataSet={this.ds} name="bind" value="A" />

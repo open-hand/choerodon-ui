@@ -35,6 +35,7 @@ import Output from '../output/Output';
 import Attachment from '../attachment/Attachment';
 import SecretField from '../secret-field/SecretField';
 import DataSet, { Group } from '../data-set/DataSet';
+import { getFirstValue } from '../data-set/utils';
 import TableStore, { CUSTOMIZED_KEY } from './TableStore';
 import { TablePaginationConfig } from './Table';
 import { $l } from '../locale-context';
@@ -82,8 +83,8 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
     case FieldType.boolean:
       return isQueryField ? (
         <ObserverSelect clearButton {...flatProps}>
-          <Option value={field.get('trueValue', record)}>{$l('Table', 'query_option_yes')}</Option>
-          <Option value={field.get('falseValue', record)}>{$l('Table', 'query_option_no')}</Option>
+          <Option value={getFirstValue(field.get('trueValue', record))}>{$l('Table', 'query_option_yes')}</Option>
+          <Option value={getFirstValue(field.get('falseValue', record))}>{$l('Table', 'query_option_no')}</Option>
         </ObserverSelect>
       ) : (
         <ObserverCheckBox />

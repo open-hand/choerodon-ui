@@ -18,6 +18,7 @@ import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
 import { getKey, getTreeNodes, NodeRenderer, TreeNodeRenderer } from './util';
 import { BooleanValue, DataSetEvents, DataSetSelection } from '../data-set/enum';
+import { equalTrueValue, getFirstValue } from '../data-set/utils';
 import Spin from '../spin';
 
 export interface C7nNodeEvent extends EventDataNode {
@@ -163,7 +164,7 @@ export default class Tree extends Component<TreeProps> {
         if (checkField) {
           const field = dataSet.getField(checkField);
           dataSet.forEach(record => {
-            if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+            if (equalTrueValue((field ? field.get(BooleanValue.trueValue, record) : true), record.get(checkField))) {
               record.isSelected = true;
             }
           });
@@ -261,7 +262,7 @@ export default class Tree extends Component<TreeProps> {
         const field = dataSet.getField(checkField);
         dataSet.forEach(record => {
           const key = getKey(record, idField);
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (equalTrueValue((field ? field.get(BooleanValue.trueValue, record) : true), record.get(checkField))) {
             keys.push(key);
           }
         });
@@ -332,7 +333,7 @@ export default class Tree extends Component<TreeProps> {
           const field = dataSet.getField(checkField);
           found.set(
             checkField,
-            field ? checked ? field.get(BooleanValue.trueValue, found) : field.get(BooleanValue.falseValue, found) : checked,
+            field ? getFirstValue(checked ? field.get(BooleanValue.trueValue, found) : field.get(BooleanValue.falseValue, found)) : checked,
           );
           return false;
         }
@@ -404,7 +405,7 @@ export default class Tree extends Component<TreeProps> {
         records.forEach((record) => {
           record.set(
             checkField,
-            field ? checked ? field.get(BooleanValue.trueValue, record) : field.get(BooleanValue.falseValue, record) : checked,
+            field ? getFirstValue(checked ? field.get(BooleanValue.trueValue, record) : field.get(BooleanValue.falseValue, record)) : checked,
           );
         });
       } else {
@@ -468,7 +469,7 @@ export default class Tree extends Component<TreeProps> {
       if (checkField) {
         const field = dataSet.getField(checkField);
         loadRecords.forEach(record => {
-          if (record.get(checkField) === (field ? field.get(BooleanValue.trueValue, record) : true)) {
+          if (equalTrueValue((field ? field.get(BooleanValue.trueValue, record) : true), record.get(checkField))) {
             dataSet.select(record);
           }
         });
