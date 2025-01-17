@@ -1222,24 +1222,29 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const res = await newFilterDataSet.validate();
     const customizeExpTypeValidation = !this.refCustomizeExpTypeEditor || await this.refCustomizeExpTypeEditor.checkValidity();
     if (res && customizeExpTypeValidation) {
-      runInAction(async () => {
-        // 初始状态下移除空行
-        if (newFilterDataSet.length !== 1) {
-          newFilterDataSet.map(r => {
-            if (!r.get(AdvancedFieldSet.fieldName)) {
-              newFilterDataSet.remove(r, true);
-            }
-            return null;
-          });
-        }
+      // 初始状态下移除空行
+      if (newFilterDataSet.length !== 1) {
+        newFilterDataSet.map(r => {
+          if (!r.get(AdvancedFieldSet.fieldName)) {
+            newFilterDataSet.remove(r, true);
+          }
+          return null;
+        });
+      }
+      const checkResult = await dataSet.modifiedCheck(undefined, dataSet, 'query');
+      if (checkResult) {
         const jsonData = newFilterDataSet.toJSONData();
         processFilterParam(dataSet);
         const status = isEqualDynamicProps(toJS(dataSet.getState(ORIGINALVALUEOBJ).advance), jsonData, newFilterDataSet) ? dataSet.getState(CONDITIONSTATUS) : RecordStatus.update;
         // 更新筛选条状态
         this.setConditionStatus(status);
         if (autoQuery) dataSet.query();
-        this.visible = false;
-      })
+        runInAction(() => {
+          this.visible = false;
+        });
+      } else {
+        this.handleFilterCancel();
+      }
     }
   }
 

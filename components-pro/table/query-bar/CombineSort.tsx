@@ -75,6 +75,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
 
   const sortPrefixCls = `${prefixCls}-combine-sort`;
   const [visible, setVisible] = useState<boolean>(false);
+  const [waiting, setWaiting] = useState<boolean>(false);
   const [sortRangeOption, setSortRangeOption] = useState<SortRangeOption>(() => {
     if (!sortConfig) {
       return SortRangeOption.allDataSort;
@@ -177,6 +178,9 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   }
 
   const onVisibleChange = (visible: boolean) => {
+    if (waiting) {
+      return;
+    }
     if (!visible) {
       sortDS.reset();
     }
@@ -194,6 +198,15 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
   const handleConfirm = () => {
     sortDS.validate().then(async result => {
       if (result) {
+        setWaiting(true);
+        const checkResult = await dataSet.modifiedCheck(undefined, dataSet, 'query').finally(() => {
+          setWaiting(false);
+        });
+        if (!checkResult) {
+          setVisible(false);
+          return;
+        }
+
         const records = sortDS.filter(r => r.get('sortName') && r.get('order'));
         const sortInfo: Map<string, SortOrder> = new Map();
         records.forEach(record => {
@@ -354,7 +367,7 @@ const CombineSort: FunctionComponent<CombineSortProps> = function CombineSort(pr
         </div>
       </div>
     );
-  }, [onDragEnd, sortFieldOptions.data, sortDS.data, sortConfig, sortRangeOption, setSortRangeOption]);
+  }, [onDragEnd, sortFieldOptions.data, sortDS.data, sortConfig, sortRangeOption, setSortRangeOption, dataSet, setWaiting, setVisible]);
 
   const popupTitle = useMemo(() => {
     return (

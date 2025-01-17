@@ -47,6 +47,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimizes the style of custom folding `icon`.
 - 💄 `<pro>Modal`: Optimize the popup height when adjusting the popup width and browser width in drawer mode.
 - 💄 `<pro>Cascader`: Compatible with errors reported when the options DataSet is not set.
+- 💄 `<pro>Table`: Verify whether data is modified before sorting and advanced filtering.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
