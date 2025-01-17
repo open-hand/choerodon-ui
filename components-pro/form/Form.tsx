@@ -1172,6 +1172,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
 
   reportValidity(result: boolean) {
     const { prepareForReport } = this;
+    const { autoValidationLocate } = this.props;
     if (!result) {
       prepareForReport.result = result;
     }
@@ -1179,7 +1180,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       window.clearTimeout(prepareForReport.timeout);
     }
     prepareForReport.timeout = window.setTimeout(() => {
-      if (!prepareForReport.result) {
+      if (autoValidationLocate !== false && !prepareForReport.result) {
         const field = this.getFields().find(one => !one.valid);
         if (field) {
           field.focus();
