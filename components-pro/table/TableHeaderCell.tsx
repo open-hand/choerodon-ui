@@ -249,7 +249,8 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   const currentColumnGroup: ColumnGroup | undefined = columnResizable ? columnGroup.lastLeaf : undefined;
 
   const handleClick = useCallback(async () => {
-    if (name && field) {
+    const checkResult = await dataSet.modifiedCheck(undefined, dataSet, 'query');
+    if (name && field && checkResult) {
       const { sortable } = column;
       if (typeof sortable === 'function') {
         const fieldProps = dataSet.props.fields ? dataSet.props.fields.find(f => f.name === name) : undefined;
