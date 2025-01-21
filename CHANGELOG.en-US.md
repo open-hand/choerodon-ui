@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added bidirectional copy operation prompt callback.
 - 🌟 `<pro>DatePicker`: Added `yearFirst` property.
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
+- 🌟 `<pro>Attachment`: Added `templateDownloadButtonRenderer` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
 - 🌟 `<pro>DataSet`: Added `customIntlFun` property.

@@ -60,6 +60,7 @@ title: Attachment
 | filesLengthLimitNotice | 上传文件时，数量超过限定数量的自定义提示 | (defaultInfo: string) => void | (defaultInfo) => Modal.error(defaultInfo) |
 | countTextRenderer | 上传按钮中数量显示 renderer | (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode |  |
 | removeConfirm | 删除前确认气泡框配置 | boolean \| PopconfirmProps | |
+| templateDownloadButtonRenderer | 自定义下载模板按钮，使用后需完全自定义下载模板相关逻辑 | () => ReactNode | |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

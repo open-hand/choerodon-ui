@@ -23,6 +23,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增双向复制操作提示回调。
 - 🌟 `<pro>DatePicker`: 新增 yearFirst 属性。
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
+- 🌟 `<pro>Attachment`: 新增 templateDownloadButtonRenderer 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
 - 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
