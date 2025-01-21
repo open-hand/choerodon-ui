@@ -91,6 +91,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   countTextRenderer?: (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode;
   Modal?: ModalContextValue;
   removeConfirm?: boolean | PopconfirmProps;
+  templateDownloadButtonRenderer?: () => ReactNode;
 }
 
 export type Sort = {
@@ -412,6 +413,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'filesLengthLimitNotice',
       'countTextRenderer',
       'Modal',
+      'templateDownloadButtonRenderer',
     ]);
   }
 
@@ -818,7 +820,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderTemplateDownloadButton(): ReactElement<ButtonProps> | undefined {
     if (!this.readOnly) {
+      const { templateDownloadButtonRenderer } = this.props;
       const template = this.getProp('template');
+      if (typeof templateDownloadButtonRenderer === 'function') {
+        return templateDownloadButtonRenderer() as ReactElement<ButtonProps>;
+      }
       if (template) {
         const { bucketName, bucketDirectory, storageCode, isPublic, attachmentUUID } = template;
         if (attachmentUUID) {

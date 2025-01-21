@@ -14,7 +14,8 @@ title:
 DataSet Binding
 
 ````jsx
-import { Attachment, DataSet, Form } from 'choerodon-ui/pro';
+import { Popover } from 'choerodon-ui';
+import { Attachment, DataSet, Form, Button } from 'choerodon-ui/pro';
 
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
@@ -43,6 +44,20 @@ const App = () => {
   return (
     <Form dataSet={ds}>
       <Attachment {...props} />
+      <Attachment
+        {...props}
+        templateDownloadButtonRenderer={() => 
+          <Popover title="模板标题" content="模板信息">
+            <Button
+              funcType="flat"
+              style={{marginLeft: 0 }}
+            >
+              下载模板
+            </Button>
+          </Popover>
+        }
+        label="自定义下载模板按钮"
+      />
     </Form>
   );
 }
