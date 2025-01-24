@@ -141,7 +141,7 @@ export type CustomizedRendererOtherInfo<T extends keyof Customized> = {
   handleCancel?: () => void;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: { columnDataSet?: DataSet, params: any }) => Promise<void> | void;
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: { columnDataSet?: DataSet, params?: any }) => Promise<void> | void;
 export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T, params?: any) => Promise<Customized[T] | null>;
 
 export type CustomizedRenderer = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: CustomizedRendererOtherInfo<T>) => {
