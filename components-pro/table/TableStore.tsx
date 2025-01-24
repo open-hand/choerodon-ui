@@ -3229,7 +3229,7 @@ export default class TableStore {
   }
 
   @action
-  async saveCustomized(customized?: TableCustomized | null, otherInfo?: { columnDataSet: DataSet }) {
+  async saveCustomized(customized?: TableCustomized | null, otherInfo?: { columnDataSet: DataSet, params: any }) {
     if (this.customizable && this.customizedLoaded) {
       const { customizedCode, boardCustomized } = this.props;
       if (customized) {
@@ -3264,7 +3264,11 @@ export default class TableStore {
             }
           }
         } else {
-          tableCustomizedSave(customizedCode, this.customized, 'Table', otherInfo);
+          await tableCustomizedSave(customizedCode, this.customized, 'Table', otherInfo);
+          if (otherInfo && otherInfo.params) {
+            // 需要重新加载, 获取个性化记录的名称和id等等
+            await this.loadCustomized();
+          }
         }
       }
     }
@@ -3293,7 +3297,8 @@ export default class TableStore {
     Modal.open(modalProps);
   }
 
-  async loadCustomized() {
+  @autobind
+  async loadCustomized(customizedProps?: TableCustomized) {
     const { customizedCode, boardCustomized, onCustomizedLoad = noop, dataSet } = this.props;
     const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
@@ -3301,14 +3306,15 @@ export default class TableStore {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;
+        this.tempCustomized = { columns: {} };
         this.loading = true;
       });
       try {
-        let customized: TableCustomized | undefined | null;
-        if (customizedCode && !boardCustomized) {
+        let customized: TableCustomized | undefined | null = customizedProps;
+        if (customizedCode && !boardCustomized && !customized) {
           customized = await tableCustomizedLoad(customizedCode, 'Table');
         }
-        if (customizedCode && boardCustomized && boardCustomized.customizedDS) {
+        if (customizedCode && boardCustomized && boardCustomized.customizedDS && !customized) {
           const res = await tableCustomizedLoad(customizedCode, 'Board', {
             type: 'detail',
             id: boardCustomized.customizedDS.current.get('id'),
@@ -3329,6 +3335,11 @@ export default class TableStore {
           // autoQuery：fasle 且分页参数与个性化不一致时进行修改
           if (newCustomized.pageSize && dataSet.pageSize !== Number(newCustomized.pageSize) && !dataSet.props.autoQuery) {
             dataSet.pageSize = Number(newCustomized.pageSize);
+            // 手动加载个性化时, 重新查询
+            if (customizedProps) {
+              dataSet.currentPage = 1;
+              dataSet.query(1, undefined, true);
+            }
           }
           await onCustomizedLoad(newCustomized);
           const { aggregation: customAggregation } = newCustomized;
