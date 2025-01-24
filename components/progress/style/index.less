@@ -11,6 +11,16 @@
     position: relative;
     width: 100%;
     font-size: @font-size-base;
+
+    > div {
+      display: flex;
+      align-items: center;
+
+      .@{progress-prefix-cls}-text {
+        width: auto;
+        max-width: 50%;
+      }
+    }
   }
 
   &-small&-line,

@@ -9,6 +9,7 @@ import Form from '../form/Form';
 import localeContext from '../locale-context';
 import Record from '../data-set/Record';
 import { Lang } from '../locale-context/enum';
+import Output from '../output/Output';
 
 export interface IntlListProps {
   record?: Record;
@@ -21,6 +22,7 @@ export interface IntlListProps {
   rows?: number;
   cols?: number;
   resize?: ResizeType;
+  displayOutput?: boolean;
 
   getConfig<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
 }
@@ -28,11 +30,11 @@ export interface IntlListProps {
 @observer
 export default class IntlList extends Component<IntlListProps> {
   renderOptions() {
-    const { name, lang, maxLengths, type, rows, cols, resize, getConfig } = this.props;
+    const { name, lang, maxLengths, type, rows, cols, resize, displayOutput, getConfig } = this.props;
     const { supports } = localeContext;
     const tlsKey = getConfig('tlsKey');
-    const FieldTag = type === IntlType.multipleLine ? TextArea : ObserverTextField;
-    const otherProps = type === IntlType.multipleLine ? { rows, cols, resize } : {};
+    const FieldTag = displayOutput ? Output : (type === IntlType.multipleLine ? TextArea : ObserverTextField);
+    const otherProps = !displayOutput && type === IntlType.multipleLine ? { rows, cols, resize } : {};
     const supportsArr = Object.keys(supports)
     const index = supportsArr.indexOf(lang);
     if (index !== -1) {
