@@ -325,12 +325,21 @@
       }
 
       .@{c7n-pro-prefix}-output-intl-wrapper {
-        max-width: 100%;
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
         .@{c7n-pro-prefix}-output {
           width: calc(100% - @input-suffix-width-base);
+          padding-right: 0.08rem;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+
+          &-suffix {
+            justify-content: flex-end;
+            height: 0.16rem;
+            border-left: @border-width-base @border-style-base @border-color-base;
+          }
         }
       }
     }

@@ -130,7 +130,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
 
   openModal = async () => {
     if (!this.modal) {
-      const { modalProps, maxLengths, type, rows, cols, resize } = this.props;
+      const { modalProps, maxLengths, type, rows, cols, resize, displayOutput } = this.props;
       const { record, lang, name, element } = this;
       const maxLength = this.getProp('maxLength');
       const { supports } = localeContext;
@@ -171,6 +171,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
             rows={rows}
             cols={cols}
             resize={resize}
+            displayOutput={displayOutput}
             getConfig={this.getContextConfig}
           />
         ),
