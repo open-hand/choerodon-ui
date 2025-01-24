@@ -3229,7 +3229,7 @@ export default class TableStore {
   }
 
   @action
-  async saveCustomized(customized?: TableCustomized | null, otherInfo?: { columnDataSet: DataSet, params: any }) {
+  async saveCustomized(customized?: TableCustomized | null, otherInfo?: { columnDataSet: DataSet, params?: any }) {
     if (this.customizable && this.customizedLoaded) {
       const { customizedCode, boardCustomized } = this.props;
       if (customized) {
