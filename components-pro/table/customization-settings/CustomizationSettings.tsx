@@ -79,6 +79,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const { prefixCls, tableStore } = context;
   const { leftOriginalColumns, originalColumns, rightOriginalColumns, customized, customizedBtn, dataSet } = tableStore;
   const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(() => [...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
+  const customizedRenderer = tableStore.getConfig('customizedRenderer');
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
       {
@@ -123,7 +124,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
         }
       },
     },
-  }).current!, [tableStore, boardCusCurrent]);
+  }).current!, [tableStore, boardCusCurrent, customized]);
   const columnDataSet = useMemo(() => new DataSet({
     data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
@@ -184,33 +185,77 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       heightDiff: diff(tableStore.totalHeight),
       ...toJS(customized),
     };
+  }), [tableStore, customized]);
+
+  const handleOkCallback = useCallback(action((props?: { params?: any }) => {
+    const { params } = props || {};
+    const beforePageSize = dataSet.pageSize;
+    const { tempCustomized, aggregation, props: { onAggregationChange } } = tableStore;
+    tableStore.tempCustomized = { columns: {} };
+    tableStore.saveCustomized(tempCustomized, { columnDataSet, params });
+    tableStore.initColumns();
+    tableStore.node.handleHeightTypeChange();
+    const { aggregation: customAggregation, pageSize } = tempCustomized;
+    if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
+      onAggregationChange(customAggregation);
+    }
+    if (pageSize && (beforePageSize !== Number(pageSize))) {
+      dataSet.pageSize = Number(pageSize);
+      dataSet.currentPage = 1;
+      dataSet.query(1, undefined, true);
+    }
+  }), [dataSet, columnDataSet, tableStore]);
+  const handleCancelCallback = useCallback(action(() => {
+    tableStore.tempCustomized = { columns: {} };
+    tableStore.node.handleHeightTypeChange();
   }), [tableStore]);
+
+  const getTempCustomized = useCallback(() => {
+    return tableStore.tempCustomized;
+  }, [tableStore]);
+  const {
+    onCustomizedSaveBefore,
+    onCancelBefore,
+  } = useMemo(() => {
+    if (!customizedDS && typeof customizedRenderer === 'function' && tableStore.props.customizedCode) {
+      return customizedRenderer(
+        tableStore.props.customizedCode,
+        customized,
+        'Table',
+        {
+          loadCustomized: tableStore.loadCustomized,
+          getTempCustomized,
+          modal,
+          handleOk: handleOkCallback,
+          handleCancel: handleCancelCallback,
+        },
+      ) || {};
+    }
+    return {};
+  }, [customizedDS, tableStore, customizedRenderer, customized, getTempCustomized, modal, handleOkCallback, handleCancelCallback]);
+
   useEffect(() => {
     if (handleOk) {
-      handleOk(action(() => {
-        const { tempCustomized, aggregation, props: { onAggregationChange } } = tableStore;
-        tableStore.tempCustomized = { columns: {} };
-        tableStore.saveCustomized(tempCustomized, { columnDataSet });
-        tableStore.initColumns();
-        tableStore.node.handleHeightTypeChange();
-        const { aggregation: customAggregation, pageSize } = tempCustomized;
-        if (onAggregationChange && customAggregation !== undefined && customAggregation !== aggregation) {
-          onAggregationChange(customAggregation);
+      handleOk(action(async () => {
+        let result;
+        if (typeof onCustomizedSaveBefore === 'function') {
+          result = await onCustomizedSaveBefore(tableStore.tempCustomized);
+          if (result === false) {
+            return false;
+          }
         }
-        if (pageSize && (dataSet.pageSize !== Number(pageSize))) {
-          dataSet.pageSize = Number(pageSize);
-          dataSet.currentPage = 1;
-          dataSet.query(1, undefined, true);
-        }
+        handleOkCallback(result);
       }));
     }
     if (handleCancel) {
-      handleCancel(action(() => {
-        tableStore.tempCustomized = { columns: {} };
-        tableStore.node.handleHeightTypeChange();
+      handleCancel(action(async () => {
+        if (typeof onCancelBefore === 'function') {
+          await onCancelBefore();
+        }
+        handleCancelCallback();
       }));
     }
-  }, [handleOk, handleCancel, columnDataSet, tableStore]);
+  }, [handleOk, handleCancel, tableStore, handleOkCallback, handleCancelCallback, onCustomizedSaveBefore, onCancelBefore]);
   const renderIcon = useCallback(({ isActive }) => <Icon type={isActive ? 'expand_more' : 'navigate_next'} />, []);
   const tableSettings: ReactElement[] = [];
   const globalPagination = tableStore.getConfig('pagination');

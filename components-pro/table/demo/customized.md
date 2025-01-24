@@ -14,6 +14,7 @@ title:
 Customized.
 
 ```jsx
+import React, { useMemo } from 'react';
 import {
   DataSet,
   Table,
@@ -24,7 +25,212 @@ import {
   Modal,
   Button,
   Icon,
+  Select,
 } from 'choerodon-ui/pro';
+import { configure } from 'choerodon-ui';
+import moment from 'moment';
+
+configure({
+  customizedRenderer: customizedRenderer,
+  customizedSave: defaultCustomizedSave,
+  customizedLoad: defaultCustomizedLoad,
+});
+
+function getComponentKey(component) {
+  switch (component) {
+    case 'Tabs':
+      return 'tabs';
+    case 'Modal':
+      return 'modal';
+    default:
+      return 'table';
+  }
+}
+function defaultCustomizedSave(code, customized, component, otherInfo) {
+  console.log('全局个性化保存:', code, customized, component, otherInfo);
+  if (component !== 'Table') {
+    localStorage.setItem(`${getComponentKey(component)}.customized.${code}`, JSON.stringify(customized));
+    return;
+  }
+  const {
+    columnDataSet,
+    params,
+  } = otherInfo;
+  const oldCustomized = localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null';
+  let newCustomized = JSON.parse(oldCustomized);
+  // 自定义异步保存个性化信息, id 可能为后端生成
+  if (!newCustomized || !Array.isArray(newCustomized) || newCustomized.length === 0) {
+    newCustomized = [{
+      ...customized,
+      current: true,
+      id: moment().format('yyyyMMDD-HHmmss'),
+    }];
+    if (params?.viewName) {
+      newCustomized[0].viewName = params?.viewName;
+    }
+  } else if (params?.status === 'add') {
+    newCustomized.forEach(item => {
+      item.current = null;
+    });
+    newCustomized.push({
+      ...customized,
+      current: true,
+      id: moment().format('yyyyMMDD-HHmmss'),
+      viewName: params?.viewName,
+    });
+  } else {
+    newCustomized.forEach(item => {
+      item.current = null;
+    });
+    const index = newCustomized.findIndex(item => item.id === customized.id);
+    if (index !== -1) {
+      const tempCustomized = {
+        ...customized,
+        current: true,
+      };
+      if (params?.viewName) {
+        tempCustomized.viewName = params?.viewName;
+      }
+      newCustomized.splice(index, 1, tempCustomized);
+    }
+  }
+  localStorage.setItem(`${getComponentKey(component)}.customized.${code}`, JSON.stringify(newCustomized));
+  return Promise.resolve();
+}
+function defaultCustomizedLoad(code, component) {
+  console.log('全局个性化加载:', code, component, localStorage.getItem(`${getComponentKey(component)}.customized.${code}`));
+  if (component !== 'Table') {
+    return Promise.resolve(JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null'));
+  }
+  // 加载默认
+  const customizedObj = JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null');
+  let customizedTmp;
+  if (Array.isArray(customizedObj)) {
+    customizedTmp = customizedObj.find(item => item.current) || customizedObj[0];
+  } else {
+    customizedTmp = customizedObj;
+  }
+  return Promise.resolve(customizedTmp);
+}
+
+
+
+const saveNewTemplate = async (modal, handleOkProp) => {
+  if (typeof handleOkProp === 'function') {
+    // 此处自定义实现获取模板名称、是否默认等信息(可用弹窗等方式)
+    // params 为自定义参数, 传递数据状态: 是否为新增、是否默认、模板名称等, 会传到 CustomizedSave 的 otherInfo.params 中
+    await handleOkProp({ params: { status: 'add', viewName: moment().format('yyyyMMDD-HHmmss') } });
+    // 保存后关闭弹窗
+    modal.close();
+  }
+};
+
+const onCustomizedSaveBefore = async (tempCustomized) => {
+  console.log('onCustomizedSaveBefore: 保存前', tempCustomized);
+  // 此处自定义实现获取模板名称、是否默认等信息(可用弹窗等方式)
+  // params 为自定义参数, 传递数据状态: 是否为新增、是否默认、模板名称等, 会传到 CustomizedSave 的 otherInfo.params 中; 返回 false 不保存
+  const viewName = moment().format('yyyyMMDD-HHmmss');
+  if (!tempCustomized.viewName) {
+    return Promise.resolve({ params: { viewName } });
+  }
+}
+
+const onCancelBefore = () => {
+  // 还原个性化信息等操作
+  console.log('onCancelBefore: 取消修改前');
+}
+
+const TemplateSelect = ({ code, customized, component, otherInfo }) => {
+  const {
+    loadCustomized,
+    getTempCustomized,
+    modal,
+    handleOk: handleOkProp,
+    handleCancel: handleCancelProps,
+  } = otherInfo;
+  
+  const customizedTemplateArray = useMemo(() => {
+    // 自定义查询模板列表, 可能为异步
+    const customizedObj = JSON.parse(localStorage.getItem(`${getComponentKey(component)}.customized.${code}`) || 'null');
+    if (Array.isArray(customizedObj)) {
+      return customizedObj;
+    } else if (customizedObj) {
+      return [customizedObj];
+    }
+    return [];
+  }, [component, code, customized, otherInfo]);  
+
+  const templateChange = (id) => {
+    const tempCustomized = customizedTemplateArray.find(item => item.id === id);
+    console.log('templateChange:', code, id, tempCustomized);
+    // 切换当前个性化模板信息, 加载个性化到表格中
+    if (typeof loadCustomized === 'function') {
+      loadCustomized(tempCustomized);
+    }
+  }
+
+  const deleteTemplate = (e, id) => {
+    e.stopPropagation();
+    console.log('deleteTemplate:', code, id);
+    // TODO: 自定义删除模板
+
+    // 如删除当前个性化, 需要重新加载个性化信息
+    if (typeof loadCustomized === 'function') {
+      // 参数为空时, 会走 customizedLoad 查询个性化
+      loadCustomized();
+    }
+  }
+
+  return (
+    <Form labelWidth={90}>
+      <Select label='个性化模板' onChange={templateChange} value={customized.id}>
+        {customizedTemplateArray.map(item => (
+          <Select.Option key={item.id} value={item.id || '默认'}>
+            {item.viewName || '默认'}
+            <Icon type="delete_black-o" onClick={(e) => deleteTemplate(e, item.id)} />
+          </Select.Option>
+        ))}
+      </Select>
+    </Form>
+  );
+}
+
+function customizedRenderer(code, customized, component, otherInfo) {
+  if (component === 'Table') {
+    const {
+      loadCustomized,
+      getTempCustomized,
+      modal,
+      handleOk: handleOkProp,
+      handleCancel: handleCancelProp,
+    } = otherInfo;
+
+    // 通过modal实例的update, 添加自定义按钮
+    if (modal) {
+      console.log('modal:', modal, customized, otherInfo);
+      modal.update({
+        children: (
+          <>
+            <TemplateSelect code={code} customized={customized} component={component} otherInfo={otherInfo} />
+            {modal.props && modal.props.children}
+          </>
+        ),
+        footer: (okBtn, cancelBtn) => (
+          <div>
+            {okBtn}
+            <Button color='primary' onClick={() => saveNewTemplate(modal, handleOkProp)}>另存为</Button>
+            {cancelBtn}
+          </div>
+        ),
+      });
+    }
+    // 返回个性化保存前钩子, 取消保存前钩子
+    return {
+      onCustomizedSaveBefore,
+      onCancelBefore,
+    };
+  }
+}
 
 const { Column } = Table;
 

@@ -41,7 +41,7 @@ import { ButtonColor, FuncType } from 'choerodon-ui/pro/lib/button/enum';
 import { HighlightRenderer } from 'choerodon-ui/pro/lib/field/FormField';
 import { SpinProps } from 'choerodon-ui/pro/lib/spin';
 import { FormatNumberFunc, FormatNumberFuncOptions } from 'choerodon-ui/pro/lib/number-field/NumberField';
-import { ModalButtonTrigger, ModalCustomized, ModalProps, ModalOkAndCancelIcon } from 'choerodon-ui/pro/lib/modal/interface';
+import { ModalButtonTrigger, ModalCustomized, ModalProps, ModalOkAndCancelIcon, ModalChildrenProps } from 'choerodon-ui/pro/lib/modal/interface';
 import { ColumnProps, FilterPopoverProps, onCellProps } from 'choerodon-ui/pro/lib/table/Column';
 import { AttachmentListType } from 'choerodon-ui/pro/lib/attachment/Attachment';
 import AttachmentFile from 'choerodon-ui/pro/lib/data-set/AttachmentFile';
@@ -116,8 +116,46 @@ export interface Customized {
   Board?: BoardCustomized | BoardCustomized[] | any;
 }
 
-export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: { columnDataSet?: DataSet }) => void;
+export type CustomizedRendererOtherInfo<T extends keyof Customized> = {
+  /**
+   * 加载个性化到表格中, 例如切换、删除个性化后, 需要重新加载
+   * @param props 要加载的个性化信息。参数为空时, 会走 customizedLoad 查询个性化
+   */
+  loadCustomized?: (props?: Customized[T]) => Promise<void>;
+  /**
+   * 获取当前被修改的个性化信息
+   */
+  getTempCustomized?: () => Customized[T];
+  /**
+   * modal 弹窗实例, 可用于 update 弹窗内容
+   */
+  modal?: ModalChildrenProps;
+  /**
+   * 个性化保存方法
+   * @param props params 为自定义参数, 传递数据状态: 是否为新增、是否默认、模板名称等, 会传到 CustomizedSave 的 otherInfo.params 中
+   */
+  handleOk?: (props?: { params?: any }) => void;
+  /**
+   * 个性化取消修改方法
+   */
+  handleCancel?: () => void;
+}
+
+export type CustomizedSave = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: { columnDataSet?: DataSet, params: any }) => Promise<void> | void;
 export type CustomizedLoad = <T extends keyof Customized>(code: string, component: T, params?: any) => Promise<Customized[T] | null>;
+
+export type CustomizedRenderer = <T extends keyof Customized>(code: string, customized: Customized[T], component?: T, otherInfo?: CustomizedRendererOtherInfo<T>) => {
+  /**
+   * 个性化保存前回调
+   * @param tempCustomized 将要保存的个性化配置
+   * @returns object 类型中的 params 为自定义参数, 传递数据状态: 是否为新增、是否默认、模板名称等, 会传到 CustomizedSave 的 otherInfo.params 中; 返回 false 则不保存
+   */
+  onCustomizedSaveBefore?: (tempCustomized: Customized[T]) => Promise<{ params?: any } | false | undefined>;
+  /**
+   * 个性化取消修改前回调
+   */
+  onCancelBefore?: () => Promise<void>;
+};
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
@@ -337,6 +375,7 @@ export interface Config extends DataSetConfig {
   customizable?: boolean | Customizable;
   customizedSave?: CustomizedSave;
   customizedLoad?: CustomizedLoad;
+  customizedRenderer?: CustomizedRenderer;
   /**
    * NumberField 是否启用UP DOWN键盘事件
    */
