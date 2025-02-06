@@ -10,6 +10,7 @@ import { math } from 'choerodon-ui/dataset';
 import { BigNumberOptions } from 'choerodon-ui/dataset/math';
 import { FormatNumberFuncOptions } from 'choerodon-ui/dataset/data-set/Field';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { TextField, TextFieldProps } from '../text-field/TextField';
 import autobind from '../_util/autobind';
 import keepRunning, { KeepRunningProps } from '../_util/keepRunning';
@@ -264,11 +265,28 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return super.clearButton;
   }
 
+  get innerButtonWidth(): number {
+    const step = this.getProp('step');
+    if (step) {
+      const suffixWidth = this.getSuffixWidth();
+      return suffixWidth && suffixWidth < 21 ? toPx('0.24rem')! : toPx('0.18rem')!;
+    }
+    return super.innerButtonWidth;
+  }
+
   get keyboard(): boolean {
     if ('keyboard' in this.props) {
       return this.props.keyboard!;
     }
     return this.getContextConfig('numberFieldKeyboard') !== false;
+  }
+
+  getSuffixWidth() {
+    const suffixWidth = super.getSuffixWidth();
+    if (suffixWidth && suffixWidth < 21) {
+      return 20;
+    }
+    return suffixWidth;
   }
 
   @autobind
@@ -317,6 +335,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
   }
 
+  @action
   getInnerSpanButton(): ReactNode {
     const { prefixCls, range, clearButton } = this;
     const { longPressPlus } = this.props;
@@ -339,6 +358,15 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         onMouseDown: isMob ? undefined : minusEvent,
         onTouchStart: isMob ? minusEvent : undefined,
       };
+      const suffix = this.getSuffix();
+      if (suffix) {
+        this.isSuffixClick = true;
+      }
+      let right: number | undefined;
+      const suffixWidth = this.getSuffixWidth();
+      if (suffixWidth && suffixWidth > 21) {
+        right = defaultTo(suffixWidth, 0);
+      }
       return this.wrapperInnerSpanButton(
         <div>
           <div {...plusIconProps}>
@@ -348,6 +376,9 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
             <Icon type="keyboard_arrow_down" />
           </div>
         </div>,
+        {
+          style: { right: pxToRem(right, true) },
+        },
       );
     }
     if (clearButton) {
@@ -363,7 +394,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
         />,
         {
           className: `${prefixCls}-clear-button`,
-          style: { right },
+          style: { right: pxToRem(right, true) },
         },
       )
     }
