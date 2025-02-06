@@ -23,13 +23,13 @@ function log(value) {
 ReactDOM.render(
   <div>
     <Row gutter={10}>
-      <Col span={12}>
+      <Col span={12} style={{ marginBottom: 10 }}>
         <NumberField formatterOptions={{options:{useGrouping:false}}} placeholder="请输入整数" step={1} onChange={log} />
       </Col>
-      <Col span={12}>
+      <Col span={12} style={{ marginBottom: 10 }}>
         <NumberField formatterOptions={{lang:'en-IN'}} placeholder="请输入小数" step={0.1} onChange={log} />
       </Col>
-      <Col span={12}>
+      <Col span={12} style={{ marginBottom: 10 }}>
         <NumberField formatter={(value)=>value} placeholder="请输入整数" step={1} onChange={log} />
       </Col>
     </Row>

@@ -61,21 +61,21 @@ class App extends React.Component {
   render() {
     return (
       <Row gutter={10}>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField
             dataSet={this.ds}
             name="number1"
             placeholder={['Range Start', 'Range End']}
           />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField
             dataSet={this.ds}
             name="number2"
             placeholder={['Range Start', 'Range End']}
           />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField
             range
             defaultValue={[0, 4]}
@@ -83,7 +83,7 @@ class App extends React.Component {
             onChange={handleChange}
           />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField
             range={['start', 'end']}
             defaultValue={{ start: 0, end: 4 }}
@@ -91,7 +91,7 @@ class App extends React.Component {
             onChange={handleChange}
           />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField dataSet={this.ds} name="multipleNumber" placeholder="Input Number" />
         </Col>
       </Row>

@@ -41,13 +41,13 @@ class App extends React.Component {
   render() {
     return (
       <Row gutter={10}>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField prefix={'PX'} dataSet={this.ds} name="age" />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField prefix={'PX'} dataSet={this.ds} name="ageRange" placeholer="range" />
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 10 }}>
           <NumberField prefix={'PX'} dataSet={this.ds} name="ageMultiple" placeholer="multiple" />
         </Col>
       </Row>
