@@ -125,6 +125,9 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       },
     },
   }).current!, [tableStore, boardCusCurrent, customized]);
+  useEffect(() => {
+    setCustomizedColumns([...leftOriginalColumns, ...originalColumns, ...rightOriginalColumns]);
+  }, [leftOriginalColumns, originalColumns, rightOriginalColumns]);
   const columnDataSet = useMemo(() => new DataSet({
     data: normalizeColumnsToTreeData(customizedColumns),
     paging: false,
