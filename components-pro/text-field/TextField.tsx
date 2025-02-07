@@ -215,6 +215,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return !!clearButton && !this.readOnly && !this.disabled;
   }
 
+  get innerButtonWidth(): number {
+    if (this.clearButton) {
+      return toPx('0.18rem')!;
+    }
+    return 0;
+  }
+
   /**
    * 是否显示长度信息
    */
@@ -1123,11 +1130,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   setInputStylePadding(otherProps: any): void {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
-    if (this.lengthInfoWidth || this.getSuffixWidth() || this.clearButton) {
+    if (this.lengthInfoWidth || this.getSuffixWidth() || this.innerButtonWidth) {
       let paddingRight = this.isSuffixClick
-        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + (this.clearButton ? toPx('0.18rem')! : 0)
-        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), (this.clearButton ? toPx('0.18rem')! : 0));
-      if (this.lengthInfoWidth && !this.getSuffixWidth() && !this.clearButton) {
+        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + this.innerButtonWidth
+        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), this.innerButtonWidth);
+      if (this.lengthInfoWidth && !this.getSuffixWidth() && !this.innerButtonWidth) {
         paddingRight += toPx('0.03rem')!;
       }
       if (paddingRight >= toPx('0.25rem')!) {
@@ -1211,9 +1218,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     } else if (children && children !== true) {
       this.suffixWidth = this.measureTextWidth(children.toString()) + toPx('0.02rem')!;
-      divStyle = {
-        width: pxToRem(this.getSuffixWidth(), true),
-      };
+      const suffixWidth = this.getSuffixWidth();
+      const notSetSuffixWidth = !this.lengthInfoWidth && suffixWidth && suffixWidth < 21;
+      if (!notSetSuffixWidth) {
+        divStyle = {
+          width: pxToRem(suffixWidth, true),
+        };
+      }
     } else {
       this.suffixWidth = undefined;
     }
