@@ -219,6 +219,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const {
     onCustomizedSaveBefore,
     onCancelBefore,
+    customRenderNode,
   } = useMemo(() => {
     if (!customizedDS && typeof customizedRenderer === 'function' && tableStore.props.customizedCode) {
       return customizedRenderer(
@@ -347,6 +348,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   }
   return (
     <TableContext.Provider value={context}>
+      {customRenderNode}
       <Collapse
         activeKey={tableStore.customizedActiveKey.slice()}
         onChange={handleCollapseChange}

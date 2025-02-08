@@ -209,12 +209,6 @@ function customizedRenderer(code, customized, component, otherInfo) {
     if (modal) {
       console.log('modal:', modal, customized, otherInfo);
       modal.update({
-        children: (
-          <>
-            <TemplateSelect code={code} customized={customized} component={component} otherInfo={otherInfo} />
-            {modal.props && modal.props.children}
-          </>
-        ),
         footer: (okBtn, cancelBtn) => (
           <div>
             {okBtn}
@@ -224,10 +218,11 @@ function customizedRenderer(code, customized, component, otherInfo) {
         ),
       });
     }
-    // 返回个性化保存前钩子, 取消保存前钩子
+    // 返回个性化保存前钩子, 取消保存前钩子, 自定义渲染 Node
     return {
       onCustomizedSaveBefore,
       onCancelBefore,
+      customRenderNode: (<TemplateSelect code={code} customized={customized} component={component} otherInfo={otherInfo} />)
     };
   }
 }
