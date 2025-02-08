@@ -127,7 +127,7 @@ export type CustomizedRendererOtherInfo<T extends keyof Customized> = {
    */
   getTempCustomized?: () => Customized[T];
   /**
-   * modal 弹窗实例, 可用于 update 弹窗内容
+   * modal 弹窗实例, 可用于 update 弹窗按钮
    */
   modal?: ModalChildrenProps;
   /**
@@ -155,6 +155,10 @@ export type CustomizedRenderer = <T extends keyof Customized>(code: string, cust
    * 个性化取消修改前回调
    */
   onCancelBefore?: () => Promise<void>;
+  /**
+   * 自定义渲染元素, 例如个性化模板列表等等
+   */
+  customRenderNode?: ReactNode;
 };
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {
