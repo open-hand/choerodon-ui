@@ -53,6 +53,7 @@ timeline: true
 - 💄 `<pro>IntlField`: 优化 Output 模式的样式。
 - 💄 `<pro>NumberField`: 优化 suffix 显示。
 - 💄 `<pro>CheckBox`: 优化属性变化时选中状态的判断。
+- 💄 `Tabs`: 优化 tab 标题可设置高度。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
