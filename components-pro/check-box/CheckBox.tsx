@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
+import isNil from 'lodash/isNil';
 import { ShowHelp } from '../field/enum';
 import { Radio, RadioProps } from '../radio/Radio';
 import Icon from '../icon';
@@ -47,7 +48,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   get unCheckedValue() {
     const { unCheckedValue } = this.props;
-    if (unCheckedValue !== undefined) {
+    if (!isNil(unCheckedValue)) {
       return unCheckedValue;
     }
     const { field } = this;
@@ -59,7 +60,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   get checkedValue() {
     const { value } = this.props;
-    if (value !== undefined) {
+    if (!isNil(value)) {
       return value;
     }
     const { field } = this;
@@ -81,6 +82,14 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     if (this.showHelp === ShowHelp.tooltip) {
       hide();
     }
+  }
+
+  getObservableProps(props, context) {
+    const observableProps: any = {
+      ...super.getObservableProps(props, context),
+      value: this.observableProps && !isNil(this.observableProps.value) ? this.observableProps.value : 'value' in props ? props.value : props.defaultValue,
+    };
+    return observableProps;
   }
 
   getOmitPropsKeys(): string[] {
@@ -158,7 +167,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     if (!this.isControlled && dataSet && name) {
       return this.getValues().findIndex(value => equalTrueValue(checkedValue, value)) !== -1;
     }
-    if (checked !== undefined) {
+    if (!isNil(checked)) {
       return checked;
     }
     return equalTrueValue(checkedValue, this.value);
@@ -166,7 +175,7 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
 
   getDataSetValues(): any[] {
     const values = this.getDataSetValue();
-    if (values === undefined) {
+    if (isNil(values)) {
       return [];
     }
     return [].concat(values);

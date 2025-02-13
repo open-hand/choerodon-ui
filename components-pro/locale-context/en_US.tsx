@@ -234,6 +234,7 @@ const locale: Locale = {
   },
   IntlField: {
     modal_title: 'Input multi-language information.',
+    output_modal_title: 'multi-language information.',
   },
   NumberField: {
     value_missing_no_label: 'Please input a number.',
