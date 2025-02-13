@@ -158,7 +158,7 @@ export default class IntlField extends TextArea<IntlFieldProps> {
       }
 
       this.modal = Modal.open({
-        title: $l('IntlField', 'modal_title'),
+        title: $l('IntlField', displayOutput ? 'output_modal_title' : 'modal_title'),
         children: (
           <IntlList
             readOnly={this.readOnly}

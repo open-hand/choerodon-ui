@@ -237,6 +237,7 @@ const locale: Locale = {
   },
   IntlField: {
     modal_title: '多言語情報を入力してください',
+    output_modal_title: '多言語メッセージです',
   },
   NumberField: {
     value_missing_no_label: '数字を入力してください',

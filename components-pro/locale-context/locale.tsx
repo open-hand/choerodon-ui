@@ -237,6 +237,7 @@ export interface Locale extends DataSetLocale {
   };
   IntlField: {
     modal_title: string;
+    output_modal_title: string;
   };
   NumberField: {
     value_missing: string;

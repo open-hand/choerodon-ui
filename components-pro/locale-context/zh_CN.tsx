@@ -234,6 +234,7 @@ const locale: Locale = {
   },
   IntlField: {
     modal_title: '输入多语言信息',
+    output_modal_title: '多语言信息',
   },
   NumberField: {
     value_missing_no_label: '请输入数字。',
