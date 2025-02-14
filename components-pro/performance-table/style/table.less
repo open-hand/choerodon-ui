@@ -67,13 +67,38 @@
     }
   }
 
+  &-row &-cell-lastRow {
+    border-bottom: none
+  }
+
+  &-row-footer {
+    top: unset;
+    background: #fff;
+  }
+
+  &-row-footer &-cell-group {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &-cell-footer {
+    border-top: .01rem solid @border-color-base;
+  }
+  &-row-footer &-cell-footer:last-child {
+    border-right: .01rem solid @border-color-base;
+  }
+  &-row-footer &-cell-group-fixed-right {
+    bottom: 0;
+  }
+
   &-row-header &-cell-group-shadow {
     .box-shadow(0, 2px, 3px, rgba(0, 0, 0, 0.28));
     z-index: 5;
   }
 
   &-hover &-row:not(&-row-header):hover &-cell:first-child,
-  &-hover &-row:not(&-row-header):hover &-cell:first-child ~ &-cell {
+  &-hover &-row:not(&-row-header):hover &-cell:first-child~&-cell {
     background: @table-row-hover-bg;
   }
 
@@ -297,7 +322,8 @@
     display: flex;
     padding: 0.06rem 0;
 
-    .@{c7n-pro-prefix}-field-label, .@{c7n-pro-prefix}-field-wrapper {
+    .@{c7n-pro-prefix}-field-label,
+    .@{c7n-pro-prefix}-field-wrapper {
       .@{c7n-pro-prefix}-checkbox-wrapper {
         height: 30px;
         vertical-align: sub;
@@ -317,16 +343,24 @@
       }
     }
   }
+
+  &-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 &-table-dynamic-filter-bar {
   margin-bottom: 0.06rem;
 
-  input::-webkit-input-placeholder { // 谷歌
+  input::-webkit-input-placeholder {
+    // 谷歌
     color: #6A6A6A;
   }
 
-  input:-moz-placeholder { //火狐
+  input:-moz-placeholder {
+    //火狐
     color: #6A6A6A;
   }
 
@@ -334,11 +368,13 @@
     color: #6A6A6A;
   }
 
-  input:-ms-input-placeholder { //微软
+  input:-ms-input-placeholder {
+    //微软
     color: #6A6A6A;
   }
 
-  .@{c7n-pro-prefix}-input-number-placeholder, .@{c7n-pro-prefix}-select-placeholder {
+  .@{c7n-pro-prefix}-input-number-placeholder,
+  .@{c7n-pro-prefix}-select-placeholder {
     color: #6A6A6A;
   }
 }

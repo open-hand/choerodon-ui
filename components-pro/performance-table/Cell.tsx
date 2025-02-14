@@ -213,6 +213,7 @@ class Cell extends React.PureComponent<CellProps> {
         [this.addPrefix('expanded')]: expanded && this.isTreeCol(),
         [this.addPrefix('first')]: firstColumn,
         [this.addPrefix('last')]: lastColumn && ((left || 0) + (width || 0) >= tableWidth),
+        [this.addPrefix('lastRow')]: rest.isLastRow,
       },
     );
     const { rtl } = this.context;

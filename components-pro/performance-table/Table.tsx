@@ -1534,6 +1534,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     let left = 0; // Cell left margin
     const headerCells = []; // Table header cell
     const bodyCells = []; // Table body cell
+    const footerCells = [];
     const { children, columns: columnsJson } = this.props;
     let columnHack = children;
     if (columnsJson && columnsJson.length) {
@@ -1544,6 +1545,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this._cacheCells = {
         headerCells,
         bodyCells,
+        footerCells,
         hasCustomTreeCol,
         allColumnsWidth: left,
       };
@@ -1556,10 +1558,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { sortColumn, rowHeight, showHeader } = this.props;
     const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state);
     const headerHeight = this.getTableHeaderHeight();
+    const hasFooter = columns && columns.some(x => x.props.footer);
     React.Children.forEach(columns, (column, index) => {
       if (React.isValidElement(column)) {
         const columnChildren = column.props.children;
-        const { width, resizable, flexGrow, minWidth, onResize, treeCol } = column.props;
+        const { width, resizable, flexGrow, minWidth, onResize, treeCol, footer, fixed } = column.props;
 
         if (treeCol) {
           hasCustomTreeCol = true;
@@ -1599,11 +1602,22 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           onCell: column.props.onCell,
         };
 
+        const footerCellProps = {
+          onCell: undefined,
+          style: {
+            width: nextWidth,
+            height: rowHeight,
+            left: fixed === 'right' ? 'unset' : left,
+            position: 'absolute',
+          }
+        }
+
+        const dataKey = columnChildren[1].props.dataKey
         if (showHeader && headerHeight) {
           const headerCellProps = {
             // index 用于拖拽列宽时候（Resizable column），定义的序号
             index,
-            dataKey: columnChildren[1].props.dataKey,
+            dataKey,
             isHeaderCell: true,
             minWidth: column.props.minWidth,
             sortable: column.props.sortable,
@@ -1627,6 +1641,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           headerCells.push(
             // @ts-ignore
             React.cloneElement(columnChildren[0], { ...cellProps, ...headerCellProps }),
+          );
+        }
+
+        if (footer && typeof footer === 'function') {
+          footerCells.push(
+            // @ts-ignore
+            React.cloneElement(<div className={this.addPrefix('cell-footer')}>{footer({ data: this.state.data, dataIndex: dataKey })}</div>, { ...cellProps, ...footerCellProps }),
+          );
+        } else if (hasFooter) {
+          footerCells.push(
+            // @ts-ignore
+            React.cloneElement(<div className={this.addPrefix('cell-footer')}></div>, { ...cellProps, ...footerCellProps }),
           );
         }
 
@@ -1658,6 +1684,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return (this._cacheCells = {
       headerCells,
       bodyCells,
+      footerCells,
       allColumnsWidth: left,
       hasCustomTreeCol,
     });
@@ -2504,6 +2531,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const expanded = expandedRowKeys.some(key => key === rowData[rowKey!]);
     const cells = [];
 
+    const headerHeight = this.getTableHeaderHeight();
+    const height = this.getTableHeight();
+
     for (let i = 0; i < bodyCells.length; i++) {
       const cell = bodyCells[i];
       cells.push(
@@ -2519,6 +2549,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           onTreeToggle: this.handleTreeToggle,
           rowKey: nextRowKey,
           expanded,
+          isLastRow: props.isLast && height - headerHeight < this.state.contentHeight
         }),
       );
     }
@@ -2571,7 +2602,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName, highLightRow, virtualized, rowDraggable } = this.props;
     const { shouldFixedColumn, width, contentWidth, dragRowIndex } = this.state;
-    const { depth, rowIndex, isHeaderRow, ...restRowProps } = props;
+    const { depth, rowIndex, isHeaderRow, style, ...restRowProps } = props;
 
     const rowKey = rowData && this.getRecordKey(rowData, rowIndex);
 
@@ -2623,7 +2654,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         fixedRightCellGroupWidth = 0,
       } = this.calculateFixedAndScrollColumn(cells);
 
-      if (rowDraggable && !isHeaderRow) {
+      if (rowDraggable && !isHeaderRow && !restRowProps.isFooterRow) {
         return (
           <Draggable
             draggableId={String(rowKey)}
@@ -2637,7 +2668,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               <Row
                 {...restRowProps}
                 data-depth={depth}
-                style={rowStyles}
+                style={{ ...rowStyles, ...style }}
                 rowDraggable={rowDraggable}
                 isHeaderRow={isHeaderRow}
                 provided={provided}
@@ -2693,7 +2724,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
+        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...rowStyles, ...style }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"
@@ -2728,7 +2759,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       );
     }
 
-    if (rowDraggable && !isHeaderRow) {
+    if (rowDraggable && !isHeaderRow && !restRowProps.isFooterRow) {
       return (
         <Draggable
           draggableId={String(rowKey)}
@@ -2742,7 +2773,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             <Row
               {...restRowProps}
               data-depth={depth}
-              style={rowStyles}
+              style={{ ...rowStyles, ...style }}
               rowDraggable={rowDraggable}
               provided={provided}
               snapshot={snapshot}
@@ -2765,7 +2796,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     return (
-      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={rowStyles} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
+      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...rowStyles, ...style }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
         <CellGroup>{mergeCells(cells)}</CellGroup>
         {shouldRenderExpandedRow && this.renderRowExpanded(rowData)}
       </Row>
@@ -3031,6 +3062,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             width: rowWidth,
             depth,
             height: nextRowHeight,
+            isLast: index === data.length - 1
           };
 
           top += nextRowHeight;
@@ -3096,6 +3128,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 top: i * nextRowHeight,
                 width: rowWidth,
                 height: nextRowHeight,
+                isLast: i === data.length - 1,
               };
               if (calcHeight > this.calcStartRowSpan.height && rowSpanStartIndex >= i) {
                 const tempCalc = { rowIndex: i, rowSpan: cellRowSpan, height: calcHeight };
@@ -3119,6 +3152,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             top: index * nextRowHeight,
             width: rowWidth,
             height: nextRowHeight,
+            isLast: index === data.length - 1,
           };
           if (!hasSpanRow.length) {
             this._visibleRows.push(this.renderRowData(renderCols, rowData, rowProps, false));
@@ -3147,6 +3181,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const topRowStyles = { height: topHideHeight };
     const bottomRowStyles = { height: bottomHideHeight };
 
+    const { footerCells } = this.getCellDescriptor();
+
+    const getFooterProps = ()=>({
+      width: rowWidth,
+      height: this.getRowHeight(),
+      headerHeight,
+      isFooterRow: true,
+      bottom: 0,
+      style: {
+        bottom: contentWidth > width ? 10 : 0,
+        width: rowWidth,
+      }
+    })
+    
     const body = (
       <LocaleReceiver componentName="PerformanceTable" defaultLocale={defaultLocale.PerformanceTable}>
         {(locale: PerformanceTableLocal) => {
@@ -3161,7 +3209,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 {this._visibleRows}
                 {bottomHideHeight ? <Row style={bottomRowStyles} className="virtualized" /> : null}
               </div>
-
+              {!!footerCells.length ? this.renderRow(getFooterProps(), footerCells) : null}
               {this.renderInfo(locale)}
               {this.renderScrollbar()}
               {this.renderLoading()}

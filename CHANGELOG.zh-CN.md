@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
 - 🌟 `<pro>Attachment`: 新增 templateDownloadButtonRenderer 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
+- 🌟 `<pro>PerformanceTable.Column`: 新增 footer 属性，支持表格底部渲染。
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
 - 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
