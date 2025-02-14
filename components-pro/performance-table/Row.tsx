@@ -12,6 +12,7 @@ export interface RowProps extends StandardProps {
   headerHeight?: number;
   top?: number;
   isHeaderRow?: boolean;
+  isFooterRow?: boolean;
   rowDraggable?: boolean;
   rowRef?: React.Ref<any>;
   provided?: DraggableProvided;
@@ -50,6 +51,7 @@ class Row extends React.PureComponent<RowProps> {
       top,
       style,
       isHeaderRow,
+      isFooterRow,
       headerHeight,
       rowRef,
       classPrefix,
@@ -63,6 +65,7 @@ class Row extends React.PureComponent<RowProps> {
     const addPrefix = prefix(classPrefix);
     const classes = classNames(classPrefix, className, {
       [addPrefix('header')]: isHeaderRow,
+      [addPrefix('footer')]: isFooterRow,
     });
 
     let styles = {

@@ -114,6 +114,7 @@ scrollLeft: (left: number) => void;
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
 | onCell	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
 | render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
+| footer	| ({ data, dataIndex }) => ReactNode | Rendering content at the bottom of the table	| 
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.

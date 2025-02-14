@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>Attachment`: Added `templateDownloadButtonRenderer` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
+- 🌟 `<pro>PerformanceTable.Column`: Added footer attribute, supporting bottom rendering of tables.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
 - 🌟 `<pro>DataSet`: Added `customIntlFun` property.
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
