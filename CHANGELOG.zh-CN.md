@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。

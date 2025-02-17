@@ -256,6 +256,7 @@ const locale: Locale = {
     select_re: 'Re Select',
     unselect_all: 'None',
     common_item: 'Common Items',
+    query_loading: 'Loading...',
   },
   SecretField: {
     edit: '{label} Edit',

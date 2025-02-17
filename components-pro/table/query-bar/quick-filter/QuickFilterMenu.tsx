@@ -594,7 +594,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
     } else {
       const { current } = queryDataSet;
       if (current && conditionDataSet) {
-        const conditionData = Object.entries(omit(current.toData(), ['__dirty']));
+        const conditionData = Object.entries(omit(current.toData(), ['__dirty', 'objectVersionNumber']));
         conditionDataSet.reset();
         conditionDataSet.map(record => {
           if (!selectFields || !selectFields.includes(record.get('fieldName'))) {

@@ -259,6 +259,7 @@ const locale: Locale = {
     select_re: '逆選択',
     unselect_all: 'いや',
     common_item: '共通アイテム',
+    query_loading: '読み込み中...',
   },
   SecretField: {
     edit: '{label}編集',

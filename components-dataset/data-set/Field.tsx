@@ -1021,10 +1021,14 @@ export default class Field {
   getText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
     value = value === undefined ? this.getValue(record) : value;
     const lookup = this.getLookup(record);
+    const options = this.get('options', record);
+    const isSelect = this.get('lookupCode', record) ||
+    isString(this.get('lookupUrl', record)) ||
+    (this.type !== FieldType.object && (this.get('lovCode', record) || lookup ||options));
+
     if (lookup && !isObject(value)) {
       return this.getLookupText(value, showValueIfNotFound, record);
     }
-    const options = this.get('options', record);
     const textField = this.get('textField', record);
     if (options) {
       const valueField = this.get('valueField', record);
@@ -1040,7 +1044,8 @@ export default class Field {
       return value[textField];
     }
     const showValueIfNotFoundConfig = showValueIfNotFound !== undefined ? showValueIfNotFound : this.dataSet.getConfig('showValueIfNotFound');
-    return showValueIfNotFoundConfig ? value : undefined;
+    const showValue = this.dataSet.getConfig('showSelectLoading') && isSelect && !lookup ? '_loading_' : value;
+    return showValueIfNotFoundConfig ? showValue : undefined;
   }
 
   setOptions(options: DataSet): void {

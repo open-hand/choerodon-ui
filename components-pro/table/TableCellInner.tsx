@@ -28,6 +28,8 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
+import Progress from 'choerodon-ui/lib/progress';
+import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import Record from '../data-set/Record';
 import { ColumnProps, ColumnRenderProps } from './Column';
 import TableContext from './TableContext';
@@ -62,7 +64,7 @@ import {
 import ValidationResult from '../validator/ValidationResult';
 import localeContext from '../locale-context/LocaleContext';
 import isEmpty from '../_util/isEmpty';
-import { Tooltip as TextTooltip } from '../core/enum';
+import { Size, Tooltip as TextTooltip } from '../core/enum';
 import isOverflow from '../overflow-tip/util';
 import { hide, show } from '../tooltip/singleton';
 import useComputed from '../use-computed';
@@ -73,6 +75,7 @@ import { Group } from '../data-set/DataSet';
 import { TooltipProps } from '../tooltip/Tooltip';
 import ChildrenQueryButton from './ChildrenQueryButton';
 import ColumnGroup from './ColumnGroup';
+
 
 let inTab = false;
 
@@ -475,7 +478,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     // 值集中不存在 再去取直接返回的值
-    const text = isNil(processedValue) ? processValue(value) : processedValue;
+    const text = isNil(processedValue) ? processValue(value) : processedValue; 
+    if (text === '_loading_') {
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
+          <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
+          {$l('Select', 'query_loading')}
+        </div>);
+    }
     const showDetail = name && column ? column.showDetail && !tableStore.editors.get(name) : false;
     return (cellRenderer || defaultOutputRenderer)({
       value,

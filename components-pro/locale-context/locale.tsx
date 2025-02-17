@@ -259,6 +259,7 @@ export interface Locale extends DataSetLocale {
     select_re: string;
     unselect_all: string;
     common_item: string;
+    query_loading: string;
   };
   SecretField: {
     edit: string;

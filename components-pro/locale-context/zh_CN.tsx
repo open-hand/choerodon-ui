@@ -256,6 +256,7 @@ const locale: Locale = {
     select_re: '反选',
     unselect_all: '无',
     common_item: '常用项',
+    query_loading: '正在查询...',
   },
   SecretField: {
     edit: '{label}编辑',

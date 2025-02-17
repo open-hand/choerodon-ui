@@ -176,6 +176,7 @@ export interface Config {
   strictPageSize?: boolean;
   noPagingParams?: (config: AxiosRequestConfig) => object;
   showValueIfNotFound?: boolean;
+  showSelectLoading?: boolean;
 }
 
 export type ConfigKeys = keyof Config;
@@ -225,6 +226,7 @@ const defaultConfig = {
   useLovDefineBatch: noop,
   noPagingParams: noop,
   showValueIfNotFound: true,
+  showSelectLoading: false,
 };
 
 export type DefaultConfig = typeof defaultConfig;

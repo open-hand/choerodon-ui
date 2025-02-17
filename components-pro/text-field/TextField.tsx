@@ -25,9 +25,11 @@ import classNames from 'classnames';
 import { action, computed, observable, runInAction, toJS, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
+import Progress from 'choerodon-ui/lib/progress';
+import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { Tooltip as TextTooltip, WaitType, FieldFocusMode } from '../core/enum';
+import { Tooltip as TextTooltip, WaitType, FieldFocusMode, Size } from '../core/enum';
 import { FormField, FormFieldProps } from '../field/FormField';
 import autobind from '../_util/autobind';
 import isEmpty from '../_util/isEmpty';
@@ -52,6 +54,7 @@ import isOverflow from '../overflow-tip/util';
 import { toRangeValue } from '../field/utils';
 import { TooltipProps } from '../tooltip/Tooltip';
 import { copyToClipboard } from '../_util/clipboardUtils';
+import { $l } from '../locale-context';
 
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
@@ -1355,7 +1358,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       const hidden = this.editable && this.isFocused;
       if (!hidden || isReactChildren(this.processValue(noRangeValue ? this.getValue() : value))) {
         const text = this.processRenderer(noRangeValue ? this.getValue() : value);
-        if (isReactChildren(text)) {
+        const placeholderDom = text === '_loading_' ? (
+          <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
+            <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
+            {$l('Select', 'query_loading')}
+          </div>) : null;
+        if (isReactChildren(placeholderDom || text)) {
           return (
             <RenderedText
               key="renderedText"
@@ -1364,7 +1372,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
               hidden={hidden}
               {...props}
             >
-              {toJS(text)}
+              {placeholderDom || toJS(text)}
             </RenderedText>
           );
         }
