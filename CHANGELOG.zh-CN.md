@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: 修复文本复制不正确的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选值清空后, 重置按钮依然显示的问题。
 - 🐞 `<pro>Form`: 修复未设置 dataSet 属性时, 设置 autoValidationLocate 属性不生效的问题。
+- 🐞 `<pro>Table`: 修复虚拟滚动表格内部高度计算错误。
 
 ## 1.6.6
 

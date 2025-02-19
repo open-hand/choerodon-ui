@@ -39,7 +39,7 @@ export default class VirtualRowMetaData {
     const { prev } = this;
     let result = 0;
     if (prev) {
-      let current = this as VirtualRowMetaData;
+      let current = prev as VirtualRowMetaData;
       while (current) {
         result += current.height;
         current = current.prev!;

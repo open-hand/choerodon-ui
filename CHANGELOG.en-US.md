@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fixed an issue where text was copied incorrectly.
 - 🐞 `<pro>Table`: Fixed an issue where the reset button was still displayed after the fuzzy filter value of the dynamic filter bar was cleared.
 - 🐞 `<pro>Form`: Fixed an issue where setting the `autoValidationLocate` property did not take effect when the `dataSet` property was not set.
+- 🐞 `<pro>Table`: Fixed an internal height calculation error in the virtual scroll table.
 
 ## 1.6.6
 
