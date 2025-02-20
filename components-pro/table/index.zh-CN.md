@@ -173,7 +173,7 @@ subtitle: 表格
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
 | highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  |
-| showDetail | editor 为 false 时, 是否显示多语言详情按钮 | boolean |  |
+| showDetail | editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon | boolean \| `always` |  |
 
 ### TableGroup
 

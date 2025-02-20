@@ -323,25 +323,6 @@
       &-pre&-auto-height {
         white-space: pre-wrap;
       }
-
-      .@{c7n-pro-prefix}-output-intl-wrapper {
-        display: inline-flex;
-        justify-content: space-between;
-        width: 100%;
-        .@{c7n-pro-prefix}-output {
-          width: calc(100% - @input-suffix-width-base);
-          padding-right: 0.08rem;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-
-          &-suffix {
-            justify-content: flex-end;
-            height: 0.16rem;
-            border-left: @border-width-base @border-style-base @border-color-base;
-          }
-        }
-      }
     }
 
     &-prefix {
@@ -497,6 +478,36 @@
           border-right: .03rem solid transparent;
           border-left: .03rem solid transparent;
           content: '';
+        }
+      }
+    }
+  }
+
+  // 多语言详情
+  &-cell-inner .@{c7n-pro-prefix}-output-intl-wrapper {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    .@{c7n-pro-prefix}-output {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &-suffix {
+        display: none;
+      }
+    }
+  }
+  &-row:hover &-cell-inner,
+  &-cell-inner-show-intl-icon {
+    .@{c7n-pro-prefix}-output-intl-wrapper {
+      .@{c7n-pro-prefix}-output {
+        &-suffix {
+          display: inline-flex;
+          &:hover {
+            color: @primary-color;
+          }
         }
       }
     }

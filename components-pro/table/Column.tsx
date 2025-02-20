@@ -230,9 +230,9 @@ export interface ColumnPropsBase extends ElementProps {
    */
   rowNumberIndex?: number;
   /**
-   * editor 为 false 时, 是否显示多语言详情按钮
+   * editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon
    */
-  showDetail?: boolean;
+  showDetail?: boolean | 'always';
 }
 
 export interface ColumnProps extends ColumnPropsBase {

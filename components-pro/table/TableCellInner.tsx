@@ -467,6 +467,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     return '';
   };
+  const showDetail = name && column && !tableStore.editors.get(name) ? column.showDetail : false;
   const processRenderer = (value, repeat?: number) => {
     let processedValue;
     if (field && (field.getLookup(record) || field.get('options', record) || field.get('lovCode', record))) {
@@ -486,7 +487,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           {$l('Select', 'query_loading')}
         </div>);
     }
-    const showDetail = name && column ? column.showDetail && !tableStore.editors.get(name) : false;
     return (cellRenderer || defaultOutputRenderer)({
       value,
       text,
@@ -762,6 +762,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }
   if (editorBorder) {
     innerClassName.push(`${prefixCls}-inner-editable`);
+  }
+  if (showDetail === 'always') {
+    innerClassName.push(`${prefixCls}-inner-show-intl-icon`);
   }
   let highlight;
   let inValid;
