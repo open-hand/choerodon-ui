@@ -169,6 +169,7 @@ const locale: Locale = {
     arrange_max: '最大',
     arrange_min: '最小',
     arrange_sum: '总和',
+    add_new_row: '新增输入行',
   },
   Pagination: {
     page: '页',

@@ -169,6 +169,7 @@ const locale: Locale = {
     arrange_max: 'max',
     arrange_min: 'min',
     arrange_sum: 'sum',
+    add_new_row: 'New input line',
   },
   Pagination: {
     page: 'Page',
