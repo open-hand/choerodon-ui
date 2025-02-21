@@ -51,6 +51,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化抽屉模式下, 当调整弹窗宽度和浏览器宽度后的弹窗高度。
 - 💄 `<pro>Cascader`: 兼容未设置选项数据源报错的问题。
 - 💄 `<pro>Table`: 排序和高级筛选前校验数据是否修改。
+- 💄 `<pro>Table`: 个性化支持统一控制列显隐。
 - 💄 `Progress`: 优化 format 信息超长时的样式。
 - 💄 `<pro>IntlField`: 优化 Output 模式的样式。
 - 💄 `<pro>NumberField`: 优化 suffix 显示。

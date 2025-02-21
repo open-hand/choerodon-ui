@@ -170,6 +170,9 @@ const locale: Locale = {
     arrange_min: 'min',
     arrange_sum: 'sum',
     add_new_row: 'New input line',
+    columns_visibility_control: 'Batch display',
+    hide_all_columns: 'Hide all columns',
+    show_all_columns: 'Show all columns',
   },
   Pagination: {
     page: 'Page',

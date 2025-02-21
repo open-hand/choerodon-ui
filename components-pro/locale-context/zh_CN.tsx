@@ -170,6 +170,9 @@ const locale: Locale = {
     arrange_min: '最小',
     arrange_sum: '总和',
     add_new_row: '新增输入行',
+    columns_visibility_control: '批量显隐',
+    hide_all_columns: '隐藏全部列',
+    show_all_columns: '显示全部列',
   },
   Pagination: {
     page: '页',
