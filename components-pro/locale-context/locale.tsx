@@ -172,6 +172,9 @@ export interface Locale extends DataSetLocale {
     arrange_min: string,
     arrange_sum: string,
     add_new_row: string,
+    columns_visibility_control: string,
+    hide_all_columns: string,
+    show_all_columns: string,
   };
   Pagination: {
     page: string;

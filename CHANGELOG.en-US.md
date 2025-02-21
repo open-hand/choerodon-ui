@@ -51,6 +51,7 @@ timeline: true
 - 💄 `<pro>Modal`: Optimize the popup height when adjusting the popup width and browser width in drawer mode.
 - 💄 `<pro>Cascader`: Compatible with errors reported when the options DataSet is not set.
 - 💄 `<pro>Table`: Verify whether data is modified before sorting and advanced filtering.
+- 💄 `<pro>Table`: Personalized support for unified control column display and concealment.
 - 💄 `Progress`: Optimize the `format` message for long styles.
 - 💄 `<pro>IntlField`: Optimizes the style of the `Output` pattern.
 - 💄 `<pro>NumberField`: Optimized `suffix` display.

@@ -173,6 +173,9 @@ const locale: Locale = {
     arrange_min: '最小値',
     arrange_sum: '合計＃ゴウケイ＃',
     add_new_row: '入力ラインを追加します',
+    columns_visibility_control: 'バッチの表示と隠蔽',
+    hide_all_columns: '列を非表示',
+    show_all_columns: '列を表示',
   },
   Pagination: {
     page: 'ページ',

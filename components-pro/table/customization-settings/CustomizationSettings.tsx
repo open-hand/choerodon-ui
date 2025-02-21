@@ -33,6 +33,7 @@ import Icon from '../../icon';
 import Tooltip from '../../tooltip/Tooltip';
 import { ModalChildrenProps } from '../../modal/interface';
 import BoardContext from '../../board/BoardContext';
+import ColumnsVisibilityControl from './column-groups/ColumnsVisibilityControl';
 
 function normalizeColumnsToTreeData(columns: ColumnProps[]): object[] {
   return [...treeReduce<Map<Key, object>, ColumnProps>(columns, (map, column, _sort, parentColumn) => {
@@ -346,6 +347,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
       </ObserverSelectBox>,
     );
   }
+
   return (
     <TableContext.Provider value={context}>
       {customRenderNode}
@@ -461,6 +463,11 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
             </Button>
           }
         >
+          <ColumnsVisibilityControl
+            context={context}
+            columnDataSet={columnDataSet}
+            columnHideable={tableStore.columnHideable}
+          />
           <ColumnGroups dataSet={columnDataSet} />
         </CollapsePanel>
       </Collapse>
