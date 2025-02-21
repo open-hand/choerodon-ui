@@ -283,7 +283,7 @@ class App extends React.Component {
       this.toJSONDataButton,
     ];
     return [
-      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" columnDraggable rowNumber={({ text }) => `#${text}`}>
+      <Table key="user" buttons={buttons} dataSet={this.userDs} header="User" rowHeight="auto" columnDraggable rowNumber={({ text }) => `#${text}`} addNewButton>
         <Column name="userid" editor />
         <Column name="age" editor width={150} />
         <Column name="enable" editor width={50} />
@@ -300,6 +300,7 @@ class App extends React.Component {
         buttons={['add', 'delete']}
         dataSet={this.enemyDs}
         pagination={{ position: 'both' }}
+        addNewButton
       >
         <Column name="name" editor sortable />
         <Column name="age" editor sortable />
@@ -317,6 +318,7 @@ class App extends React.Component {
         ]}
         dataSet={this.enemyFriendsDs}
         pagination={{ position: 'top' }}
+        addNewButton
       >
         <Column name="name" editor={editorRenderer} sortable />
         <Column name="age" editor sortable />

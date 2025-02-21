@@ -485,7 +485,10 @@ function generateRows(
 
 function getEmptyRow(props: GenerateSimpleRowsProps): ReactElement {
   const { tableStore, columnGroups, lock } = props;
-  const { emptyText, width, prefixCls } = tableStore;
+  const { emptyText, width, prefixCls, addNewButton } = tableStore;
+  if (addNewButton) {
+    return <></>;
+  }
   const styles: CSSProperties = width ? {
     position: isStickySupport() ? 'sticky' : 'relative',
     left: pxToRem(width / 2, true)!,
@@ -664,7 +667,7 @@ const ObserverRows = observer(Rows);
 const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props) {
   const { lock, columnGroups, snapshot, dragRowHeight, ...rest } = props;
   const { prefixCls, tableStore, rowDragRender, dataSet, expandedRowRenderer, isTree } = useContext(TableContext);
-  const { rowDraggable, virtualCell, isFixedRowHeight } = tableStore;
+  const { rowDraggable, virtualCell, isFixedRowHeight, addNewButton } = tableStore;
   const expandIconColumnIndex = (expandedRowRenderer || isTree) ?
     (lock === ColumnLock.right ? columnGroups.leafs.filter(group => group.column.lock !== ColumnLock.right).length : 0) : -1;
   const handleResize = useCallback(action((_width: number, height: number, target: HTMLTableSectionElement) => {
@@ -707,6 +710,48 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   }, [lock, tableStore]);
 
   const renderClone = useRenderClone(lock ? undefined : columnGroups);
+
+  const handleButtonCreate = useCallback(() => {
+    dataSet.create({});
+  }, [dataSet]);
+
+  const newRowCell = (
+    <td key='NEW-ROW-CELL' className={`${prefixCls}-cell`} colSpan={columnGroups.leafs.length}>
+      <span className={`${prefixCls}-cell-inner ${prefixCls}-cell-inner-row-height-fixed`}>
+        <Button
+          icon='playlist_add'
+          className={`${prefixCls}-btn-built-in`}
+          onClick={handleButtonCreate}
+          funcType={FuncType.link}
+          color={ButtonColor.primary}
+        >
+          {$l('Table', 'add_new_row')}
+        </Button>
+      </span>
+    </td>
+  );
+
+  const newRowRow = addNewButton && (rowDraggable && !tableStore.virtual ? (
+    <Draggable key='NEW-ROW-ROW' draggableId='NEW-ROW-ROW' index={999999} isDragDisabled>
+      {(provided: DraggableProvided) => {
+        return (
+          <tr
+            key='NEW-ROW-ROW'
+            className={`${prefixCls}-row ${prefixCls}-row-add-new`}
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {newRowCell}
+          </tr>
+        )}
+      }
+    </Draggable>
+  ) : (
+    <tr key='NEW-ROW-ROW' className={`${prefixCls}-row ${prefixCls}-row-add-new`}>
+      {newRowCell}
+    </tr>
+  ));
 
   const body = tableStore.propVirtual ? (
     <ObserverVirtualRows
@@ -755,6 +800,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
           {...rest}
         >
           {body}
+          {newRowRow}
           {droppableProvided.placeholder}
         </tbody>
       )}
@@ -762,6 +808,7 @@ const TableTBody: FunctionComponent<TableTBodyProps> = function TableTBody(props
   ) : (
     <tbody className={`${prefixCls}-tbody`} {...rest}>
       {body}
+      {newRowRow}
     </tbody>
   );
   return lock ? tbody : (

@@ -171,6 +171,7 @@ export interface Locale extends DataSetLocale {
     arrange_max: string,
     arrange_min: string,
     arrange_sum: string,
+    add_new_row: string,
   };
   Pagination: {
     page: string;

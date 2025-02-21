@@ -2476,6 +2476,11 @@ export default class TableStore {
     return undefined;
   }
 
+  get addNewButton(): boolean | undefined {
+    const { addNewButton, pristine } = this.props;
+    return addNewButton && !pristine;
+  }
+
   checkAllCurrent() {
     const { dataSet, filter } = this.props;
     dataSet.selectAll(filter);

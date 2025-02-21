@@ -881,6 +881,10 @@ export interface TableProps extends DataSetComponentProps {
    * 组合排序配置
    */
   combineSortConfig?: CombineSortConfig;
+  /**
+   * 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效
+   */
+  addNewButton?: boolean;
 }
 
 @observer

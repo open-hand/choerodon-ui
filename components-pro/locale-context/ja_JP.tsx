@@ -172,6 +172,7 @@ const locale: Locale = {
     arrange_max: '最大値',
     arrange_min: '最小値',
     arrange_sum: '合計＃ゴウケイ＃',
+    add_new_row: '入力ラインを追加します',
   },
   Pagination: {
     page: 'ページ',

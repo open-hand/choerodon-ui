@@ -156,7 +156,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Table dataSet={this.ds} buttons={this.buttons} editMode="inline">
+      <Table dataSet={this.ds} buttons={this.buttons} editMode="inline" addNewButton>
         <Column name="userid" style={{ color: 'red' }} editor width={150} lock sortable />
         <Column name="enable" editor width={50} minWidth={50} lock />
         <Column name="age" editor width={150} sortable />
