@@ -200,7 +200,8 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
 
   handleAnimationEnd = (modalKey, isEnter) => {
     const { modals } = this.state;
-    const index = this.findIndex(modalKey);
+    // modalKey 为 Modal 的 key, React 默认转化为 string 类型
+    const index = this.findIndex(modalKey, true);
     if (index !== -1) {
       const props = modals[index];
       if (!isEnter) {
@@ -336,9 +337,9 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     this.updateModals(Array.from(map.values()));
   }
 
-  findIndex(modalKey) {
+  findIndex(modalKey, forceString = false) {
     const { modals } = this.state;
-    return modals.findIndex(({ key }) => key === modalKey);
+    return modals.findIndex(({ key }) => (forceString ? String(key) : key) === modalKey);
   }
 
   open(props: ModalProps) {

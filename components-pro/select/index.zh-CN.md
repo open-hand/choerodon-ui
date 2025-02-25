@@ -23,7 +23,7 @@ title: Select
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | |
 | optionsFilter | 选项过滤 | (record) => boolean |  |
-| checkValueOnOptionsChange | 当选项改变时，检查并清除不在选项中的值 | boolean | true |
+| checkValueOnOptionsChange | 关联 DataSet, 且 field 设置 cascadeMap 属性, 当选项改变时，检查并清除不在选项中的值 | boolean | true |
 | defaultActiveFirstOption | 是否默认高亮第一个选项。 | boolean | true |
 | dropdownMatchSelectWidth | 下拉框匹配输入框宽度 | boolean | true |
 | dropdownMenuStyle | 下拉框菜单样式名 | object |  |
