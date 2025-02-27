@@ -10,6 +10,7 @@ import defaultTo from 'lodash/defaultTo';
 import uniqWith from 'lodash/uniqWith';
 import isFunction from 'lodash/isFunction';
 import findLastIndex from 'lodash/findLastIndex';
+import isString from 'lodash/isString';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -336,6 +337,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @observable $validator?: Validator | undefined;
 
   @observable validationResults?: ValidationResult[] | undefined;
+
+  isOverflowMaxTagTextLength?: boolean;
 
   get name(): string | undefined {
     return this.observableProps.name;
@@ -1077,6 +1080,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       // 值集中不存在 再去取直接返回的值
       text = this.processText(isNil(processedValue) ? this.processValue(value) : processedValue);
     }
+    if (repeat !== undefined && maxTagTextLength && isString(text) && text.length > maxTagTextLength) {
+      this.isOverflowMaxTagTextLength = true;
+    }
     return renderer
       ? renderer({
         value,
@@ -1345,6 +1351,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         tagRenderer,
       },
     } = this;
+    delete this.isOverflowMaxTagTextLength;
     const values = renderMultipleValues(this.getValue(), {
       range,
       maxTagCount,

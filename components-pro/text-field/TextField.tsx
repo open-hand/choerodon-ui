@@ -993,7 +993,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const onMouseLeave = this.disabled ? noop : propsOnMouseLeave;
     const { record } = this;
     const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
-    const isOverflow = isOverflowMaxTagCount || isFlat;
+    const isOverflow = isOverflowMaxTagCount || isFlat || this.isOverflowMaxTagTextLength;
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,

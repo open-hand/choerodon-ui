@@ -100,7 +100,7 @@ class App extends React.Component {
             name="lov2" 
             placeholder="请选择" 
             maxTagCount={2} 
-            maxTagTextLength={3} 
+            maxTagTextLength={2} 
             maxTagPlaceholder={restValues => `+${restValues.length}...`}
             style={{ width: '100%' }}
             trigger={['hover']}
