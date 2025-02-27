@@ -81,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复未设置 dataSet 属性时, 设置 autoValidationLocate 属性不生效的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动表格内部高度计算错误。
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
+- 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
 
 ## 1.6.6
 

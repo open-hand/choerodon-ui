@@ -313,21 +313,21 @@ export default class Modal extends ViewComponent<ModalProps> {
   componentWillReceiveProps(nextProps: ModalProps, nextContext) {
     super.componentWillReceiveProps(nextProps, nextContext);
     if (!isEqual(this.props, nextProps)) {
-      const { close = noop, update = noop, resizable: nextResizable = false } = nextProps;
+      const { close = noop, update = noop, resizable: nextResizable = this.getContextConfig('modalResizable') } = nextProps;
       Object.assign(this.childrenProps, {
         close,
         update,
         props: nextProps,
       });
-
-      if (nextResizable !== this.props.resizable) {
+      const { resizable = this.getContextConfig('modalResizable') } = this.props;
+      if (nextResizable !== resizable) {
         this.initResizableRange(nextProps);
       }
     }
   }
 
   initResizableRange(props: ModalProps) {
-    const { resizable, contentStyle, style } = props;
+    const { resizable = this.getContextConfig('modalResizable'), contentStyle, style } = props;
     if (resizable) {
       runInAction(() => {
         this.minWidth = style && toPx(style.minWidth) || contentStyle && toPx(contentStyle.minWidth) || (this.element as HTMLDivElement).getBoundingClientRect().width;
