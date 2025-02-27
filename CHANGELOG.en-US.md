@@ -81,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Form`: Fixed an issue where setting the `autoValidationLocate` property did not take effect when the `dataSet` property was not set.
 - 🐞 `<pro>Table`: Fixed an internal height calculation error in the virtual scroll table.
 - 🐞 `<pro>Modal`: Fixed an issue where the popup display was abnormal the second time when key was set to a type other than `string`.
+- 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
 
 ## 1.6.6
 
