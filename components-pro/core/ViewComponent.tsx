@@ -389,13 +389,13 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
     otherProps.style = {};
     if (this.height) {
       otherProps.style.height = this.height;
-    } else if ('height' in style) {
+    } else if (style && 'height' in style) {
       otherProps.style.height = style.height;
     }
-    if ('minHeight' in style) {
+    if (style && 'minHeight' in style) {
       otherProps.style.minHeight = style.minHeight;
     }
-    if ('maxHeight' in style) {
+    if (style && 'maxHeight' in style) {
       otherProps.style.maxHeight = style.maxHeight;
     }
     otherProps.lang = normalizeLanguage(lang);

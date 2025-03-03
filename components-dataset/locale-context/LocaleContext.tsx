@@ -4,11 +4,15 @@ import defaultTo from 'lodash/defaultTo';
 import { Lang } from './enum';
 import defaultLocale, { Locale } from './locale';
 import defaultSupports, { Supports } from './supports';
-import { normalizeLanguage } from '../utils';
+import { normalizeLanguage, ZH_CN_MOMENT_LOCALE } from '../utils';
 import { mobxGet } from '../mobx-helper';
 
 function setMomentLocale(locale: Locale) {
-  moment.locale(normalizeLanguage(locale ? locale.lang : defaultLocale.lang));
+  const localeLang = normalizeLanguage(locale ? locale.lang : defaultLocale.lang);
+  moment.locale(localeLang);
+  if (localeLang === 'zh-cn') {
+    moment.updateLocale("zh-cn", ZH_CN_MOMENT_LOCALE);
+  }
 }
 
 export class LocaleContext {
