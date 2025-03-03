@@ -59,6 +59,7 @@ timeline: true
 - 💄 `Tabs`: Optimize `tab` title to set height.
 - 💄 `<pro>Modal`: Optimized the modal level when customizing `getContainer` properties.
 - 💄 `<pro>TextField`: Optimizes a single `tag` to display a tooltip when the text exceeds `maxTagTextLength`.
+- 💄 `<pro>DatePicker`: Improved 12-hour time display in Chinese environment.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
