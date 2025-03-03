@@ -1,4 +1,4 @@
-import React, { Children, ReactNode } from 'react';
+import React, { Children, CSSProperties, ReactNode } from 'react';
 import { DebouncedFunc, DebounceSettings, isFunction } from 'lodash';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -399,10 +399,17 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const { children, icon, href, funcType, hidden } = this.props;
     const { loading, disabled } = this;
     const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
-    const buttonIcon: any = loading ? (
-      <Progress key="loading" type={ProgressType.loading} size={Size.small} />
-    ) : (
-      icon && <Icon type={icon} />
+    const iconHiddenStyle: CSSProperties = {
+      color: 'transparent',
+      backgroundColor: 'transparent',
+      transition: 'none',
+      position: 'absolute',
+    };
+    const buttonIcon = (
+      <>
+        {icon && <Icon type={icon} style={loading ? iconHiddenStyle : {}} />}
+        {loading && <Progress key="loading" type={ProgressType.loading} size={Size.small} />}
+      </>
     );
     const hasString = Children.toArray(children).some(child => isString(child));
     const Cmp = href ? 'a' : 'button';
