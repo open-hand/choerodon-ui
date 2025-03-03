@@ -82,6 +82,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an internal height calculation error in the virtual scroll table.
 - 🐞 `<pro>Modal`: Fixed an issue where the popup display was abnormal the second time when key was set to a type other than `string`.
 - 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
+- 🐞 `<pro>Button`: Fixed an issue where the `Tooltip` on the button would not disappear after clicking the button with the icon to open `Modal` asynchronously.
 
 ## 1.6.6
 
