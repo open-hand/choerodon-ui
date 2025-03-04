@@ -115,6 +115,7 @@ const locale: Locale = {
     top: '上',
     up: 'アップ',
     down: 'ダウン',
+    bottom: '底を置きます',
     row_expand_settings: '行拡張設定',
     expand_cell: 'セルを展開します',
     expand_row: '行全体を展開します',

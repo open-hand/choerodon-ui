@@ -112,6 +112,7 @@ const locale: Locale = {
     top: '置顶',
     up: '前置一列',
     down: '后置一列',
+    bottom: '置底',
     row_expand_settings: '行展开设置',
     expand_cell: '展开单元格',
     expand_row: '展开整行',

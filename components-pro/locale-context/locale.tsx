@@ -114,6 +114,7 @@ export interface Locale extends DataSetLocale {
     top: string;
     up: string;
     down: string;
+    bottom: string;
     row_expand_settings: string;
     expand_cell: string;
     expand_row: string;

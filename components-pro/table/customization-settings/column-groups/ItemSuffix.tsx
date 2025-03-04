@@ -84,9 +84,12 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
       case 'down':
         changeIndex(index + 1);
         break;
+      case 'bottom':
+        changeIndex(findRecords(record, groups).length - 1);
+        break;
       default:
     }
-  }), [record, index, changeLock, changeIndex]);
+  }), [record, index, changeLock, changeIndex, groups]);
   const getTreeNodesMenus = () => {
     const lock = record.get('lock');
     const menus: ReactElement<any>[] = [];
@@ -112,6 +115,9 @@ const ItemSuffix: FunctionComponent<ItemSuffixProps> = function ItemSuffix(props
       }
       if (index < records.length - 1) {
         menus.push(<Item key="down">{$l('Table', 'down')}</Item>);
+      }
+      if (index < records.length - 2) {
+        menus.push(<Item key="bottom">{$l('Table', 'bottom')}</Item>);
       }
     }
     if (menus.length) {
