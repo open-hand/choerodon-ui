@@ -1013,10 +1013,6 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   }
 
   getDateFormat(field: Field | undefined = this.field): string {
-    const { format } = this;
-    if (!field && format) {
-      return format;
-    }
     return getDateFormatByField(field, this.getFieldType(field), this.record);
   }
 
