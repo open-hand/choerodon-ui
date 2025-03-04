@@ -112,6 +112,7 @@ const locale: Locale = {
     top: 'Top',
     up: 'Up',
     down: 'Down',
+    bottom: 'Bottom',
     row_expand_settings: 'Row expansion settings',
     expand_cell: 'Expand the cell',
     expand_row: 'Expand the entire row',
