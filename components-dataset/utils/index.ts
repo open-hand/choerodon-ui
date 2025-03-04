@@ -196,26 +196,6 @@ export function normalizeLanguage(language?: string): string | undefined {
   return language && language.replace('_', '-').toLowerCase();
 }
 
-export const ZH_CN_MOMENT_LOCALE = {
-  meridiemParse: /上午|下午/,
-  meridiemHour: (hour, meridiem) => {
-    if (hour === 12) {
-      hour = 0;
-    }
-    if (meridiem === '上午') {
-      return hour;
-    }
-    if (meridiem === '下午') {
-      return hour + 12;
-    }
-    return hour;
-  },
-  // eslint-disable-next-line no-unused-vars
-  meridiem: (hour, minute, isLower) => {
-    return hour < 12 ? "上午" : "下午";
-  },
-};
-
 export default {
   MAX_SAFE_INTEGER,
   MIN_SAFE_INTEGER,
@@ -232,5 +212,4 @@ export default {
   normalizeLanguage,
   parseBigNumber,
   formatFileSize,
-  ZH_CN_MOMENT_LOCALE,
 };

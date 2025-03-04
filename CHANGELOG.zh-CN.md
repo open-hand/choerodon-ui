@@ -59,7 +59,6 @@ timeline: true
 - 💄 `Tabs`: 优化 tab 标题可设置高度。
 - 💄 `<pro>Modal`: 优化自定义 getContainer 属性时弹窗的层级。
 - 💄 `<pro>TextField`: 优化单个 tag 的文本超过 maxTagTextLength 时, 显示 tooltip。
-- 💄 `<pro>DatePicker`: 优化 12 小时制时间在中文环境下的显示。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

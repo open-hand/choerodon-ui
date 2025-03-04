@@ -1,7 +1,6 @@
 import React, { Component, ReactNode } from 'react';
 import moment from 'moment';
 import { getContext, Symbols } from 'choerodon-ui/shared';
-import { Utils } from 'choerodon-ui/dataset';
 import { changeConfirmLocale, ModalLocale } from '../modal/locale';
 import { changeNoticeLocale, NoticeLocale } from '../notification/locale';
 import { LocaleReceiverContext } from './LocaleReceiver';
@@ -58,9 +57,6 @@ export const LocaleContext = getContext<LocaleReceiverContext>(Symbols.LocaleCon
 function setMomentLocale(locale: Locale) {
   if (locale && locale.locale) {
     moment.locale(locale.locale);
-    if (locale.locale === 'zh-cn') {
-      moment.updateLocale("zh-cn", Utils.ZH_CN_MOMENT_LOCALE);
-    }
   } else {
     moment.locale('en');
   }
