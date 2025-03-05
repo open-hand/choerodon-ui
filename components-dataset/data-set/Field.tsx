@@ -1044,7 +1044,8 @@ export default class Field {
       return value[textField];
     }
     const showValueIfNotFoundConfig = showValueIfNotFound !== undefined ? showValueIfNotFound : this.dataSet.getConfig('showValueIfNotFound');
-    const showValue = this.dataSet.getConfig('showSelectLoading') && isSelect && !lookup ? '_loading_' : value;
+    const showValue = this.dataSet.getConfig('showSelectLoading') && isSelect &&
+      ((!lookup && !options) || (options && (options as DataSet).status !== DataSetStatus.ready)) ? '_loading_' : value;
     return showValueIfNotFoundConfig ? showValue : undefined;
   }
 
