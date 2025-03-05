@@ -64,7 +64,11 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
     defaultTime.month(min.month());
     defaultTime.date(min.date());
     if (defaultTime.isBefore(min) && viewMode !== ViewMode.time) {
-      defaultTime.add(1, 'd');
+      if (viewMode ===  ViewMode.dateTime) {
+        defaultTime = min.clone();
+      } else {
+        defaultTime.add(1, 'd');
+      }
     }
   }
   
@@ -73,7 +77,11 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
     defaultTime.month(minExcl.month());
     defaultTime.date(minExcl.date());
     if (defaultTime.isSameOrBefore(minExcl) && viewMode !== ViewMode.time) {
-      defaultTime.add(1, 'd');
+      if (viewMode ===  ViewMode.dateTime) {
+        defaultTime = minExcl.clone().add(1, 's');
+      } else {
+        defaultTime.add(1, 'd');
+      }
     }
   }
 
@@ -95,6 +103,13 @@ function getInRangeDefaultTime(defaultTime = createDefaultTime(), min?: Moment |
     }
   }
   return defaultTime;
+}
+
+function floorMillisecond(value?: Moment) : Moment | undefined {
+  if (value && isMoment(value)) {
+    return value.millisecond(0);
+  }
+  return value;
 }
 
 export interface DatePickerProps extends TriggerFieldProps {
@@ -225,22 +240,22 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @computed
   get min(): Moment | undefined | null {
-    return this.getLimit('min');
+    return floorMillisecond(this.getLimit('min'));
   }
 
   @computed
   get max(): Moment | undefined | null {
-    return this.getLimit('max');
+    return floorMillisecond(this.getLimit('max'));
   }
 
   @computed
   get minExcl(): Moment | undefined | null {
-    return this.getLimit('minExcl');
+    return floorMillisecond(this.getLimit('minExcl'));
   }
 
   @computed
   get maxExcl(): Moment | undefined | null {
-    return this.getLimit('maxExcl');
+    return floorMillisecond(this.getLimit('maxExcl'));
   }
 
   @computed
