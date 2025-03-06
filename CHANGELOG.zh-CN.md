@@ -82,6 +82,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选值清空后, 重置按钮依然显示的问题。
 - 🐞 `<pro>Form`: 修复未设置 dataSet 属性时, 设置 autoValidationLocate 属性不生效的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动表格内部高度计算错误。
+- 🐞 `<pro>Table`: 修复动态筛选条切换条件仅模糊搜索值变更时无法触发查询的问题。
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
 - 🐞 `<pro>Button`: 修复点击带图标的按钮异步打开 Modal 后按钮上的 Tooltip 不会消失的问题。
