@@ -295,15 +295,16 @@ const QuickFilterMenu = function QuickFilterMenu() {
   /**
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
+   * @param oldOriginalValueObj 更新前的参数信息
    */
-  const conditionAssign = async (init?: boolean) => {
+  const conditionAssign = async (init?: boolean, oldOriginalValueObj?: any) => {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
 
     // 重置模糊搜素并判断是否查询
     const orgObj = dataSet.getState(ORIGINALVALUEOBJ);
-    shouldQuery = dataSet.getState(SEARCHTEXT) !== orgObj.fuzzy;
+    shouldQuery = (oldOriginalValueObj? oldOriginalValueObj.fuzzy : dataSet.getState(SEARCHTEXT)) !== orgObj.fuzzy;
     dataSet.setState(SEARCHTEXT, orgObj.fuzzy);
     dataSet.setQueryParameter(searchText, orgObj.fuzzy);
 
@@ -458,6 +459,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
    */
   const locateData = (searchId?: number | null, init?: boolean) => {
     const current = filterMenuDataSet ? filterMenuDataSet.current : undefined;
+    const oldOriginalValueObj = dataSet.getState(ORIGINALVALUEOBJ);
     if (searchId) {
       menuDataSet.locate(menuDataSet.findIndex((menu) => menu.get('searchId').toString() === searchId.toString()));
       const menuRecord = menuDataSet.current;
@@ -467,7 +469,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
       if (current) {
         current.set('filterName', searchId);
       }
-      conditionAssign(init);
+      // loadConditionData 更新了 SEARCHTEXT，需要传入更新前的值用作判断模糊搜索值是否更新
+      conditionAssign(init, menuRecord ? oldOriginalValueObj : undefined);
     } else if (searchId === null) {
       handleQueryReset();
     } else {
@@ -484,7 +487,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
             current.set('filterName', menuRecord.get('searchId'));
           }
         }
-        conditionAssign(init);
+        conditionAssign(init, menuRecord ? oldOriginalValueObj : undefined);
       } else if (current) {
         current.set('filterName', undefined);
         setFuzzyQuery();
