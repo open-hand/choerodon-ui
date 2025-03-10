@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { $l } from '../locale-context';
 import ObserverNumberField from '../number-field/NumberField';
+import { ShowValidation } from '../form/enum';
 
 export interface QuickJumperProps {
   prefixCls?: string;
@@ -33,6 +34,8 @@ const QuickJumper: FunctionComponent<QuickJumperProps> = function (props) {
           size={Size.small}
           isFlat
           border={false}
+          showValidation={ShowValidation.tooltip}
+          restrict={new RegExp('[.]|^0*', 'g')}
         />
         {$l('Pagination', 'page')}
       </span>

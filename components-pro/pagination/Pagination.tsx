@@ -21,6 +21,7 @@ import { Renderer } from '../field/FormField';
 import { ValueChangeAction } from '../text-field/enum';
 import QuickJumper from './QuickJumper';
 import Tooltip from '../tooltip';
+import { ShowValidation } from '../form/enum';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -221,7 +222,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   handleJumpChange(value) {
     const { page, totalPage, props: { showQuickJumper, simple } } = this;
     value = Number(value);
-    if (isNaN(value)) {
+    if (isNaN(value) || value < 1) {
       value = page;
     }
     if (value > totalPage) {
@@ -488,6 +489,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
           onChange={this.handleJumpChange}
           valueChangeAction={ValueChangeAction.input} wait={200}
           disabled={disabled}
+          showValidation={ShowValidation.tooltip}
         />
         <span className={`${prefixCls}-pager-separator`}>／</span>
         {totalPage}
