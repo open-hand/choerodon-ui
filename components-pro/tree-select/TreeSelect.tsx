@@ -127,6 +127,17 @@ export default class TreeSelect extends Select<TreeSelectProps> {
     return !!this.getProp('multiple') || !!this.props.treeCheckable;
   }
 
+  get showSelectLoading(): boolean | undefined {
+    const { displayName } = this.constructor as any;
+    const { field, record, props: { isFlat } } = this;
+    const showSelectLoading = field && field.getShowSelectLoading(record);
+    const value = this.getValues();
+    if (displayName === 'TreeSelect' && !isFlat && value.length > 0 && showSelectLoading) {
+      return true;
+    }
+    return false;
+  }
+
   @autobind
   handleTreeSelect(_e, { node }) {
     const { record, disabled, key } = node;

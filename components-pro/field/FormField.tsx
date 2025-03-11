@@ -1087,7 +1087,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (repeat !== undefined && maxTagTextLength && isString(text) && text.length > maxTagTextLength) {
       this.isOverflowMaxTagTextLength = true;
     }
-    return text !== '_loading_' && renderer
+    return renderer
       ? renderer({
         value,
         text,

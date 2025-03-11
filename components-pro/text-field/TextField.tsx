@@ -266,6 +266,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return tooltip;
   }
 
+  get showSelectLoading(): boolean | undefined {
+    return false;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -274,6 +278,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   @action
   handleRenderedValueChange(text: string, width: number, rangeTarget?: 0 | 1) {
+    if (this.showSelectLoading) {
+      return;
+    }
     switch (rangeTarget) {
       case 0: {
         this.renderedStartText = {
@@ -974,6 +981,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const {
       prefixCls,
       range,
+      showSelectLoading,
       props: { isFlat },
     } = this;
     const {
@@ -993,7 +1001,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const onMouseLeave = this.disabled ? noop : propsOnMouseLeave;
     const { record } = this;
     const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
-    const isOverflow = isOverflowMaxTagCount || isFlat || this.isOverflowMaxTagTextLength;
+    const isOverflow = !showSelectLoading && (isOverflowMaxTagCount || isFlat || this.isOverflowMaxTagTextLength);
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,
@@ -1001,6 +1009,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       onDoubleClick,
       onContextMenu,
     } : undefined;
+    const renderTags = showSelectLoading ? null : multipleTags;
     const tags = (
       <Animate
         component="ul"
@@ -1013,7 +1022,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         onEnd={this.handleTagAnimateEnd}
         onEnter={this.handleTagAnimateEnter}
       >
-        {multipleTags}
+        {renderTags}
         {
           range
             ? this.renderRangeEditor(otherProps)
@@ -1351,14 +1360,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderRenderedValue(value: any | undefined, props: RenderedTextProps & { key?: Key }): ReactNode {
-    const { prefixCls, range, multiple } = this;
+    const { prefixCls, range, multiple, showSelectLoading } = this;
     const { rangeTarget } = props;
     const noRangeValue = rangeTarget === undefined;
-    if ((!range && !multiple) || !noRangeValue) {
+    if ((!range && !multiple) || !noRangeValue || showSelectLoading) {
       const hidden = this.editable && this.isFocused;
       if (!hidden || isReactChildren(this.processValue(noRangeValue ? this.getValue() : value))) {
         const text = this.processRenderer(noRangeValue ? this.getValue() : value);
-        const placeholderDom = text === '_loading_' ? (
+        const placeholderDom = showSelectLoading ? (
           <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
             <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
             {$l('Select', 'query_loading')}

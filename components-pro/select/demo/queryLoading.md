@@ -98,6 +98,7 @@ class App extends React.Component {
         label: '性别',
         lookupCode: 'USER', valueField: 'code', textField: 'name', defaultValue: 'zf', lookupUrl: 'https://7b3fb464-bab8-478c-9350-1957e484162f.mock.pstmn.io/user',
         required: true,
+        multiple: true,
       },
       { name: 'enable', type: 'boolean', label: '是否开启' },
     ],

@@ -71,19 +71,6 @@ const App = () => {
     ],
   }), []);
 
-  const columns = React.useMemo(() => [
-    {
-      title: '人员',
-      key: 'aggregation',
-      aggregation: true,
-      children: [
-        { name: 'id' },
-        { name: 'name', editor: true },
-        { name: 'code' },
-      ]
-    }
-  ], []);
-
   const [companyGroup, setCompanyGroup] = React.useState('column');
   const [deptGroup, setDeptGroup] = React.useState('column');
   const [companyFirst, setCompanyFirst] = React.useState(true);
@@ -111,6 +98,31 @@ const App = () => {
       },
     },
   ][companyFirst? 'slice':'reverse'](), [companyGroup, deptGroup, companyFirst, companyTree, deptTree]);
+
+  const columns = React.useMemo(() => {
+    const result = [
+      {
+        title: '人员',
+        key: 'aggregation',
+        aggregation: true,
+        children: [
+          { name: 'id' },
+          { name: 'name', editor: true },
+          { name: 'code' },
+        ],
+      },
+    ];
+    if (deptGroup === 'none') {
+      result[0].children.unshift({ name: 'dept' })
+    }
+    if (companyGroup === 'none') {
+      result[0].children.unshift({ name: 'company' })
+    }
+    console.log('result::', result);
+    return result;
+  },
+    [companyGroup, deptGroup],
+  );
 
   return (
     <>
@@ -143,7 +155,7 @@ const App = () => {
         dataSet={userDs}
         columns={columns}
         groups={groups}
-        style={{ height: 200 }}
+        style={{ height: 300 }}
         virtual
       />
     </>
