@@ -57,10 +57,13 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
   const { name } = field;
   const flatProps = isFlat ? { isFlat, maxTagCount: 3 } : {};
 
+  const lookupUrl = field.get('lookupUrl', record);
   if (
     field.get('lookupCode', record) ||
-    isString(field.get('lookupUrl', record)) ||
-    (type !== FieldType.object && (field.get('lovCode', record) || field.getLookup(record) || field.get('options', record)))
+    (lookupUrl && isString(lookupUrl)) ||
+    field.get('lookupAxiosConfig', record) ||
+    (type !== FieldType.object && type !== FieldType.auto && field.get('lovCode', record)) ||
+    (type !== FieldType.object && (field.getLookup(record) || field.get('options', record)))
   ) {
     if (field.get('parentField', record)) {
       return <TreeSelect {...flatProps} />;

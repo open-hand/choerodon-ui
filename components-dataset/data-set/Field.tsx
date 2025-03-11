@@ -1012,6 +1012,24 @@ export default class Field {
     }
   }
 
+  getShowSelectLoading(record: Record | undefined = this.record): boolean {
+    if (!this.dataSet.getConfig('showSelectLoading')) {
+      return false;
+    }
+    const lookup = this.getLookup(record);
+    const options = this.get('options', record);
+    const lookupUrl = this.get('lookupUrl', record);
+    const isSelect = this.get('lookupCode', record) ||
+      (lookupUrl && isString(lookupUrl)) ||
+      this.get('lookupAxiosConfig', record) ||
+      (this.type !== FieldType.object && this.type !== FieldType.auto && this.get('lovCode', record)) ||
+      (this.type !== FieldType.object && (lookup || options));
+
+    const showSelectLoading = isSelect &&
+      ((!lookup && !options) || (options && (options as DataSet).status !== DataSetStatus.ready));
+    return showSelectLoading;
+  }
+
   /**
    * 根据lookup值获取lookup含义
    * @param value lookup值
@@ -1021,14 +1039,10 @@ export default class Field {
   getText(value?: any, showValueIfNotFound?: boolean, record: Record | undefined = this.record): string | undefined {
     value = value === undefined ? this.getValue(record) : value;
     const lookup = this.getLookup(record);
-    const options = this.get('options', record);
-    const isSelect = this.get('lookupCode', record) ||
-    isString(this.get('lookupUrl', record)) ||
-    (this.type !== FieldType.object && (this.get('lovCode', record) || lookup ||options));
-
     if (lookup && !isObject(value)) {
       return this.getLookupText(value, showValueIfNotFound, record);
     }
+    const options = this.get('options', record);
     const textField = this.get('textField', record);
     if (options) {
       const valueField = this.get('valueField', record);
@@ -1044,9 +1058,7 @@ export default class Field {
       return value[textField];
     }
     const showValueIfNotFoundConfig = showValueIfNotFound !== undefined ? showValueIfNotFound : this.dataSet.getConfig('showValueIfNotFound');
-    const showValue = this.dataSet.getConfig('showSelectLoading') && isSelect &&
-      ((!lookup && !options) || (options && (options as DataSet).status !== DataSetStatus.ready)) ? '_loading_' : value;
-    return showValueIfNotFoundConfig ? showValue : undefined;
+    return showValueIfNotFoundConfig ? value : undefined;
   }
 
   setOptions(options: DataSet): void {

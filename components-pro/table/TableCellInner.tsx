@@ -479,14 +479,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       }
     }
     // 值集中不存在 再去取直接返回的值
-    const text = isNil(processedValue) ? processValue(value) : processedValue; 
-    if (text === '_loading_') {
-      return (
-        <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
-          <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
-          {$l('Select', 'query_loading')}
-        </div>);
-    }
+    const text = isNil(processedValue) ? processValue(value) : processedValue;
     return (cellRenderer || defaultOutputRenderer)({
       value,
       text,
@@ -500,6 +493,16 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     } as ColumnRenderProps);
   };
   const getRenderedValue = (): any => {
+    if (((!isArrayLike(value) && !isNil(value)) || (isArrayLike(value) && value.length > 0)) &&
+      field && field.getShowSelectLoading(record)) {
+      const selectLoading = (
+        <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
+          <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
+          {$l('Select', 'query_loading')}
+        </div>);
+      return { result: selectLoading };
+    }
+
     if (field) {
       if (!cellEditorInCell) {
         const multiple = field.get('multiple', record);

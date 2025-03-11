@@ -880,6 +880,17 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return this.options.status === DataSetStatus.loading;
   }
 
+  get showSelectLoading(): boolean | undefined {
+    const { displayName } = this.constructor as any;
+    const { field, record, props: { isFlat } } = this;
+    const showSelectLoading = field && field.getShowSelectLoading(record);
+    const value = this.getValues();
+    if (displayName === 'Select' && !isFlat && value.length > 0 && showSelectLoading) {
+      return true;
+    }
+    return false;
+  }
+
   @autobind
   @action
   handlePopupSearch(value) {
