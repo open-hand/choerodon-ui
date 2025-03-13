@@ -51,9 +51,9 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     if (!isNil(unCheckedValue)) {
       return unCheckedValue;
     }
-    const { field } = this;
+    const { field, record } = this;
     if (field) {
-      return field.get(BooleanValue.falseValue);
+      return field.get(BooleanValue.falseValue, record);
     }
     return false;
   }
@@ -63,9 +63,9 @@ export class CheckBox<T extends CheckBoxProps> extends Radio<T & CheckBoxProps> 
     if (!isNil(value)) {
       return value;
     }
-    const { field } = this;
+    const { field, record } = this;
     if (field) {
-      return field.get(BooleanValue.trueValue);
+      return field.get(BooleanValue.trueValue, record);
     }
     return true;
   }
