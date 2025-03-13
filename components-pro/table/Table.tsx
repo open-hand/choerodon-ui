@@ -1636,7 +1636,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const optionDs = field.getOptions(record);
 
             const jsonText = isJsonString(text);
-            if (fieldType !== FieldType.object || !jsonText) {
+            if ((fieldType !== FieldType.object || !jsonText) && field.get('multiple', record)) {
               text = String(text).trim();
               if (text.includes(',')) { // 默认以英文逗号分割
                 text = text.split(',');

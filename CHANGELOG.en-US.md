@@ -85,6 +85,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an internal height calculation error in the virtual scroll table.
 - 🐞 `<pro>Modal`: Fixed an issue where the popup display was abnormal the second time when key was set to a type other than `string`.
 - 🐞 `<pro>Table`: Fixed an issue that the query could not be triggered when the dynamic filter bar switching condition only fuzzed search value was changed.
+- 🐞 `<pro>Table`: Fixed the issue that pasting a single value with a comma would be assigned to multiple values.
 - 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
 - 🐞 `<pro>Button`: Fixed an issue where the `Tooltip` on the button would not disappear after clicking the button with the icon to open `Modal` asynchronously.
 - 🐞 `<pro>CheckBox`: Fixed the issue that setting `trueValue` and `falseValue` with `dynamicProps` would cause `CheckBox` to fail to be checked.
