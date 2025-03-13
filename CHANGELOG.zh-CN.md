@@ -87,6 +87,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
 - 🐞 `<pro>Button`: 修复点击带图标的按钮异步打开 Modal 后按钮上的 Tooltip 不会消失的问题。
+- 🐞 `<pro>CheckBox`: 修复使用动态属性设置 trueValue 和 falseValue 会导致无法勾选的问题。
 
 ## 1.6.6
 
