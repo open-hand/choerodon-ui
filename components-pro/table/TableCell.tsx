@@ -101,7 +101,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging]);
   const isBuiltInColumn = tableStore.isBuiltInColumn(column);
 
-  const columnOnCell = !isBuiltInColumn && (onCell || tableColumnOnCell);
+  const columnOnCell = onCell || (!isBuiltInColumn && tableColumnOnCell);
   const cellExternalProps: HTMLProps<HTMLTableCellElement> =
     typeof columnOnCell === 'function' && record
       ? columnOnCell({

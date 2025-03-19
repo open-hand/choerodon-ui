@@ -82,7 +82,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const [status, setStatus] = useState<ImageStatus>(propStatus || 'empty');
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
-  const oldPropsRef = useRef<OldPropsRef>({ src, status: propStatus });
+  const oldPropsRef = useRef<OldPropsRef>({});
 
   const handlePreview = useCallback(() => {
     if (preview && !previewTarget && status === 'loaded' && url) {

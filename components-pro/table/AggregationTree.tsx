@@ -45,7 +45,7 @@ const AggregationTree: FunctionComponent<AggregationTreeProps> = function Aggreg
       if (!hidden && !(typeof hiddenInAggregation === 'function' ? record ? hiddenInAggregation(record) : false : hiddenInAggregation)) {
         const { key: columnKey } = colGroup;
         const isBuiltInColumn = tableStore.isBuiltInColumn(col);
-        const columnOnCell = !isBuiltInColumn && (col.onCell || tableColumnOnCell);
+        const columnOnCell = col.onCell || (!isBuiltInColumn && tableColumnOnCell);
         const cellExternalProps: Partial<TreeNodeProps> =
           typeof columnOnCell === 'function' && record
             ? columnOnCell({

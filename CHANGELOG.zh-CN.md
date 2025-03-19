@@ -62,6 +62,8 @@ timeline: true
 - 💄 `<pro>TextField`: 优化单个 tag 的文本超过 maxTagTextLength 时, 显示 tooltip。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 且最小值设置为当前时间时, 选择面板的默认时间显示为当前时间。以及修复设置为当前时间校验报错。
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。
+- 💄 `<pro>Picture`: 优化 loading 状态的判断。
+- 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
