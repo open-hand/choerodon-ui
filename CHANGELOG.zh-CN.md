@@ -71,6 +71,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制成功复制后粘贴多出空白列的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态配置 rowSelection 无效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启自动高度时勾选行会触发滚动的问题。
+- 🐞 `<pro>PerformanceTable`: 修复存在横向滚动条的情况下滚动到底部后，勾选数据会触发滚动的问题。
 - 🐞 `<pro>PerformanceTable`: 修复最后一行数据被滚动条遮挡的问题。
 - 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。

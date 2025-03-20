@@ -707,6 +707,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
   };
 
+  /**
+   * @param height 内容区高度（未包含横向滚动条）
+   * @returns 包含横向滚动条的内容区高度
+   */
+  getContentHeightWithScrollBarX(height: number) {
+    const { showScrollArrow } = this.props;
+    const { scrollBarOffset, decScrollBarOffset } = this.getScrollBarOffset();
+    const table = this.tableRef.current;
+    const width = getWidth(table);
+    const row = table.querySelector(`.${this.addPrefix('row')}:not(.virtualized)`);
+    const contentWidth = row ? getWidth(row) : 0;
+    const length = width - decScrollBarOffset;
+    const scrollLength = contentWidth - decScrollBarOffset;
+    const scrollBarXHeight = showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH;
+    return height + (scrollLength > length ? scrollBarXHeight : 0);
+  }
+
   componentDidMount() {
     this.calculateTableWidth();
     this.calculateTableContextHeight();
@@ -2352,7 +2369,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const nextContentHeight = contentHeight - (affixHeader ? headerHeight * 2 : headerHeight);
 
     if (nextContentHeight !== this.state.contentHeight) {
-      this.setState({ contentHeight: nextContentHeight });
+      this.setState({ contentHeight: this.getContentHeightWithScrollBarX(nextContentHeight) });
     }
 
     if (
@@ -3268,6 +3285,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       className={this.addPrefix('body-info')}>{this.tableStore.getConfig('renderEmpty')('Table')}</div>;
   }
 
+  getScrollBarOffset() {
+    const { showScrollArrow } = this.props;
+    const { contentWidth, contentHeight } = this.state;
+    const height = this.getTableHeight();
+    const headerHeight = this.getTableHeaderHeight();
+    const scrollBarOffset = (contentWidth <= this.state.width) || contentHeight <= (height - headerHeight) ? 40 : 60;
+    // 减去border的左右边框像素
+    const decScrollBarOffset = showScrollArrow ? scrollBarOffset : 2;
+    return { scrollBarOffset, decScrollBarOffset };
+  }
 
   renderScrollbar() {
     const { disabledScroll, affixHorizontalScrollbar, id, showScrollArrow, clickScrollLength } = this.props;
@@ -3281,10 +3308,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       return null;
     }
 
-    const scrollBarOffset = (contentWidth <= this.state.width) || contentHeight <= (height - headerHeight) ? 40 : 60;
-    // 减去border的左右边框像素
-    const decScrollBarOffset = showScrollArrow ? scrollBarOffset : 2;
-
+    const { scrollBarOffset, decScrollBarOffset } = this.getScrollBarOffset();
     return (
       <div>
         <Scrollbar
