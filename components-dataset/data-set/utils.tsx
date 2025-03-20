@@ -1468,3 +1468,10 @@ export function getFirstValue(values: string | number | boolean | any[]): string
   const valueArr = isArrayLike(values) ? values : [values];
   return valueArr[0];
 }
+
+export function isObjectEmptyByIgnore(obj, ignoreKeys: string[] = []) {
+  // 获取对象的所有键，并过滤掉需要忽略的键
+  const filteredKeys = Object.keys(obj).filter(key => !ignoreKeys.includes(key));
+  // 判断过滤后的键数量是否为 0
+  return filteredKeys.length === 0;
+}

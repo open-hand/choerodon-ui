@@ -19,17 +19,17 @@ const noCacheAdapter = throttleAdapterEnhancer(axios.defaults.adapter!);
 export type responseData = object[];
 export type responseType = responseData | undefined;
 
-type callbackArgs = [(codes: string[]) => AxiosRequestConfig, Field | undefined];
+type callbackArgs = [(codes: string[], batchParaList: object[]) => AxiosRequestConfig, Field | undefined];
 
 export class LookupCodeStore {
   getAxios(field?: Field): AxiosInstance {
     return getGlobalConfig('axios', field) || axios;
   }
 
-  batchCallback = (codes: string[], args: callbackArgs): Promise<{ [key: string]: responseData }> => {
+  batchCallback = (codes: string[], args: callbackArgs, _, batchParaList: object[]): Promise<{ [key: string]: responseData }> => {
     const [lookupBatchAxiosConfig, field] = args;
     if (lookupBatchAxiosConfig) {
-      return this.getAxios(field)(lookupBatchAxiosConfig(codes)) as any;
+      return this.getAxios(field)(lookupBatchAxiosConfig(codes, batchParaList)) as any;
     }
     return Promise.resolve({});
   };
@@ -67,12 +67,12 @@ export class LookupCodeStore {
     return Promise.resolve<responseType>(undefined);
   }
 
-  fetchLookupDataInBatch(code: string, lookupBatchAxiosConfig: (codes: string[]) => AxiosRequestConfig, field?: Field): Promise<responseType> {
+  fetchLookupDataInBatch(code: string, lookupBatchAxiosConfig: (codes: string[], batchParaList: object[]) => AxiosRequestConfig, field?: Field, batchPara?: object): Promise<responseType> {
     const getBatchKey = (defaultKey) => {
-      const { url } = lookupBatchAxiosConfig([code]);
+      const { url } = lookupBatchAxiosConfig([code], [batchPara!]);
       return url ? url.split('?')[0] : defaultKey;
     };
-    return this.merger.add(code, getBatchKey, [lookupBatchAxiosConfig, field]);
+    return this.merger.add(code, getBatchKey, [lookupBatchAxiosConfig, field], undefined, batchPara);
   }
 
   getAxiosConfig(field: Field, record?: Record | undefined, noCache?: boolean): AxiosRequestConfig {

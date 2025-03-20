@@ -125,6 +125,7 @@ export interface Config {
     lookupCode?: string;
   }) => AxiosRequestConfig);
   lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  batchParaKey?: string[];
   useLookupBatch?: (code: string, field?: Field) => boolean;
   lovDefineUrl?: string | ((code: string) => string);
   lovDefineAxiosConfig?: AxiosRequestConfig | ((code: string, field?: Field) => AxiosRequestConfig);

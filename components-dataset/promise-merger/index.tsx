@@ -10,19 +10,22 @@ export default class PromiseMerger<K, ARGS, V> {
 
   dataMap: Map<string, V>;
 
+  batchParaMap: Map<string, object>;
+
   promiseMap: Map<string | symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>;
 
   waitID;
 
-  callback: (codes: string[], args: ARGS, dataList: V[]) => Promise<{ [key: string]: K }>;
+  callback: (codes: string[], args: ARGS, dataList: V[], batchParaList: object[]) => Promise<{ [key: string]: K }>;
 
   reaction: IReactionDisposer;
 
-  constructor(callback: (codes: string[], args: ARGS, dataList: V[]) => Promise<{ [key: string]: K }>, config, timeout = 200) {
+  constructor(callback: (codes: string[], args: ARGS, dataList: V[], batchParaList: object[]) => Promise<{ [key: string]: K }>, config, timeout = 200) {
     this.timeout = timeout;
     this.promiseMap = new Map<string | symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
     this.cache = new Cache<string, K>(toJS(config));
     this.dataMap = new Map<string, V>();
+    this.batchParaMap = new Map<string, object>();
     this.callback = callback;
     this.reaction = refreshCacheOptions(this.cache);
   }
@@ -32,14 +35,17 @@ export default class PromiseMerger<K, ARGS, V> {
   }
 
   @action
-  add(code: string, getBatchKey: ((defaultKey: symbol) => string | symbol) | undefined, args: ARGS, data?: V): Promise<K> {
-    const { cache, promiseMap, dataMap } = this;
+  add(code: string, getBatchKey: ((defaultKey: symbol) => string | symbol) | undefined, args: ARGS, data?: V, batchPara?: object): Promise<K> {
+    const { cache, promiseMap, dataMap, batchParaMap } = this;
     const item = cache.get(code);
     if (item !== undefined) {
       return Promise.resolve(item);
     }
     if (data) {
       dataMap.set(code, data);
+    }
+    if (batchPara) {
+      batchParaMap.set(code, batchPara);
     }
     const batchKey = getBatchKey ? getBatchKey(KEY) : KEY;
     return new Promise<K>((resolve, reject) => {
@@ -63,19 +69,28 @@ export default class PromiseMerger<K, ARGS, V> {
         promiseList.set(code, promise);
         this.waitID = setTimeout(() => {
           const codeList: string[] = Array.from(promiseList.keys());
+          const batchParaList: object[] = codeList.map($code => batchParaMap.get($code)).filter($value => $value !== undefined) as object[];
 
           if (process.env.LOGGER_LEVEL === 'info') {
             // eslint-disable-next-line no-console
             console.info(`batch request: ${codeList}`);
           }
-          this.callback(codeList, args, codeList.reduce<V[]>((list, $code) => {
-            const $value = dataMap.get($code);
-            if ($value !== undefined) {
-              list.push($value);
-            }
-            return list;
-          }, [])).then(res => {
+          this.callback(
+            codeList,
+            args,
+            codeList.reduce<V[]>(
+              (list, $code) => {
+                const $value = dataMap.get($code);
+                if ($value !== undefined) {
+                  list.push($value);
+                }
+                return list;
+              },
+              []),
+            batchParaList,
+          ).then(res => {
             codeList.forEach((key) => {
+              this.batchParaMap.delete(key);
               const value = promiseList.get(key);
               promiseList.delete(key);
               const { resolves = [] } = value || {};
@@ -90,6 +105,7 @@ export default class PromiseMerger<K, ARGS, V> {
           })
             .catch(error => {
               codeList.forEach(key => {
+                this.batchParaMap.delete(key);
                 const value = promiseList.get(key);
                 promiseList.delete(key);
                 const { rejects = [] } = value || {};

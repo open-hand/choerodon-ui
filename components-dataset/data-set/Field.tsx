@@ -28,7 +28,7 @@ import lookupStore from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, mergeDataSetProps } from './utils';
+import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps } from './utils';
 import { isFormData } from '../axios/_helpers/utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -1309,8 +1309,11 @@ export default class Field {
     const lookupAxiosConfig = this.get('lookupAxiosConfig', record);
     const useLookupBatchFunc = this.get('useLookupBatch', record) || this.dataSet.getConfig('useLookupBatch');
     const useLookupBatch = lookupCode && useLookupBatchFunc(lookupCode, this) !== false;
+    const batchParaKey = this.dataSet.getConfig('batchParaKey');
+    // 移除  public 参数 对调用 batch 接口影响
+    const lovParaLength = isObjectEmptyByIgnore(getLovPara(this, record), batchParaKey);
     let promise;
-    if (batch && lookupCode && !lookupAxiosConfig && Object.keys(getLovPara(this, record)).length === 0 && useLookupBatch && !noCache) {
+    if (batch && lookupCode && !lookupAxiosConfig && lovParaLength && useLookupBatch && !noCache) {
       const cachedLookup = getIfForMap<ObservableMap<string, LookupCache>, LookupCache>(lookupCaches, lookupCode, () => new LookupCache());
       if (lookupCode !== oldToken) {
         setLookupToken(this, lookupCode, record);
@@ -1322,7 +1325,7 @@ export default class Field {
         promise = cachedLookup.promise;
       }
       if (!promise) {
-        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch).then(action((result: object[]) => {
+        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch, getLovPara(this, record)).then(action((result: object[]) => {
           if (result) {
             cachedLookup.items = result;
             cachedLookup.promise = undefined;
