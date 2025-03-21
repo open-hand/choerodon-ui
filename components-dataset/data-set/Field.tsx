@@ -24,7 +24,7 @@ import {
   FieldType,
   SortOrder,
 } from './enum';
-import lookupStore from '../stores/LookupCodeStore';
+import lookupStore, { BatchParaType } from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
@@ -373,7 +373,7 @@ export type FieldProps = {
   /**
    * 批量值列表请求的axiosConfig
    */
-  lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  lookupBatchAxiosConfig?: (codes: string[], batchParaObj: BatchParaType) => AxiosRequestConfig;
   /**
    * 内部字段别名绑定
    */
@@ -1325,7 +1325,7 @@ export default class Field {
         promise = cachedLookup.promise;
       }
       if (!promise) {
-        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch, getLovPara(this, record)).then(action((result: object[]) => {
+        promise = lookupStore.fetchLookupDataInBatch(lookupCode, batch, this, getLovPara(this, record)).then(action((result: object[]) => {
           if (result) {
             cachedLookup.items = result;
             cachedLookup.promise = undefined;

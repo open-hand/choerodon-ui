@@ -1,5 +1,9 @@
 import { action, IReactionDisposer, toJS } from 'mobx';
+import isNil from 'lodash/isNil';
 import Cache, { refreshCacheOptions } from '../cache';
+
+// key 为 lookupCode
+export type BatchParaType = { [key: string]: object };
 
 const KEY = Symbol('KEY');
 
@@ -16,11 +20,11 @@ export default class PromiseMerger<K, ARGS, V> {
 
   waitID;
 
-  callback: (codes: string[], args: ARGS, dataList: V[], batchParaList: object[]) => Promise<{ [key: string]: K }>;
+  callback: (codes: string[], args: ARGS, dataList: V[], batchParaObj: BatchParaType) => Promise<{ [key: string]: K }>;
 
   reaction: IReactionDisposer;
 
-  constructor(callback: (codes: string[], args: ARGS, dataList: V[], batchParaList: object[]) => Promise<{ [key: string]: K }>, config, timeout = 200) {
+  constructor(callback: (codes: string[], args: ARGS, dataList: V[], batchParaObj: BatchParaType) => Promise<{ [key: string]: K }>, config, timeout = 200) {
     this.timeout = timeout;
     this.promiseMap = new Map<string | symbol, Map<string, { resolves: Function[]; rejects: Function[] }>>();
     this.cache = new Cache<string, K>(toJS(config));
@@ -69,7 +73,13 @@ export default class PromiseMerger<K, ARGS, V> {
         promiseList.set(code, promise);
         this.waitID = setTimeout(() => {
           const codeList: string[] = Array.from(promiseList.keys());
-          const batchParaList: object[] = codeList.map($code => batchParaMap.get($code)).filter($value => $value !== undefined) as object[];
+          const batchParaObj: BatchParaType = codeList.reduce<BatchParaType>((obj, code) => {
+            const value = batchParaMap.get(code);
+            if (!isNil(value)) {
+              obj[code] = value;
+            }
+            return obj;
+          }, {});
 
           if (process.env.LOGGER_LEVEL === 'info') {
             // eslint-disable-next-line no-console
@@ -87,7 +97,7 @@ export default class PromiseMerger<K, ARGS, V> {
                 return list;
               },
               []),
-            batchParaList,
+            batchParaObj,
           ).then(res => {
             codeList.forEach((key) => {
               this.batchParaMap.delete(key);

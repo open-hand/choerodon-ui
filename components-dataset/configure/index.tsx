@@ -21,6 +21,7 @@ import Record from '../data-set/Record';
 import { CacheOptions } from '../cache';
 import AttachmentFile, { FileLike } from '../data-set/AttachmentFile';
 import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
+import { BatchParaType } from '../stores/LookupCodeStore';
 
 export type TimeZone = string | ((moment: Moment) => string);
 
@@ -124,7 +125,7 @@ export interface Config {
     record?: Record;
     lookupCode?: string;
   }) => AxiosRequestConfig);
-  lookupBatchAxiosConfig?: (codes: string[]) => AxiosRequestConfig;
+  lookupBatchAxiosConfig?: (codes: string[], batchParaObj: BatchParaType) => AxiosRequestConfig;
   batchParaKey?: string[];
   useLookupBatch?: (code: string, field?: Field) => boolean;
   lovDefineUrl?: string | ((code: string) => string);
