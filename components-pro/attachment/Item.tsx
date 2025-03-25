@@ -26,6 +26,7 @@ import { formatFileSize } from './utils';
 import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import { TableButtonProps } from '../table/interface';
+import isOverflow from '../overflow-tip/util';
 
 export const ATTACHMENT_TARGET = 'attachment-preview';
 
@@ -56,21 +57,23 @@ export interface ItemProps {
   buttons?: AttachmentButtons[];
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
   removeConfirm?: boolean | PopconfirmProps;
+  getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
-    getPreviewUrl: getPreviewUrlProp,
+    getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
   const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
-  const { getPreviewUrl: getPreviewUrlConfig, getDownloadUrl } = attachmentConfig;
+  const { getPreviewUrl: getPreviewUrlConfig, getDownloadUrl: getDownloadUrlConfig } = attachmentConfig;
   const getPreviewUrl = getPreviewUrlProp || getPreviewUrlConfig;
+  const getDownloadUrl = getDownloadUrlProp || getDownloadUrlConfig;
   const previewUrl = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,
@@ -413,14 +416,20 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       );
     }
   };
-  const renderErrorMessage = (): ReactNode => {
+  const renderErrorMessage = (showTooltip?: boolean): ReactNode => {
     if (status === 'error') {
       const { errorMessage } = attachment;
       if (errorMessage) {
         return (
           <div className={`${prefixCls}-error-content`}>
             <Icon type="warning" />
-            <span className={`${prefixCls}-error-message`}>{errorMessage}</span>
+            <span
+              className={`${prefixCls}-error-message`}
+              onMouseEnter={showTooltip ? handleMouseEnter : undefined}
+              onMouseLeave={showTooltip ? handleMouseLeave : undefined}
+            >
+              {errorMessage}
+            </span>
           </div>
         );
       }
@@ -428,7 +437,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   };
   const errorMessageNode = renderErrorMessage();
   const handleMouseEnter = useCallback((e) => {
-    if (errorMessageNode) {
+    if (errorMessageNode && (isCard || isOverflow(e.currentTarget))) {
       show(e.currentTarget, {
         title: errorMessageNode,
         theme: getTooltipTheme('validation'),
@@ -436,7 +445,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       });
       tooltipRef.current = true;
     }
-  }, [errorMessageNode, getTooltipTheme, getTooltipPlacement, tooltipRef]);
+  }, [errorMessageNode, getTooltipTheme, getTooltipPlacement, tooltipRef, isCard]);
   const handleMouseLeave = useCallback(() => {
     if (tooltipRef.current) {
       hide();
@@ -479,7 +488,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           {!restCount && !isCard && renderTitle()}
           {!restCount && renderButtons()}
         </div>
-        {errorMessageNode}
+        {renderErrorMessage(!isCard)}
         {renderProgress()}
       </div>
       {!restCount && isCard && renderTitle(true)}

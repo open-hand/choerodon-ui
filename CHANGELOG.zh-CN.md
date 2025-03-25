@@ -34,6 +34,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: trueValue 和 falseValue 属性新增数组类型。
 - 🌟 `<pro>Table`: 新增 addNewButton 属性。
 - 🌟 `<pro>Table`: 个性化新增置底功能。
+- 🌟 `<pro>Attachment`: 新增 downloadAllMode, getDownloadAllUrl, getDownloadUrl 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -64,6 +65,7 @@ timeline: true
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。
 - 💄 `<pro>Picture`: 优化 loading 状态的判断。
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
+- 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -92,6 +94,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
 - 🐞 `<pro>Button`: 修复点击带图标的按钮异步打开 Modal 后按钮上的 Tooltip 不会消失的问题。
 - 🐞 `<pro>CheckBox`: 修复使用动态属性设置 trueValue 和 falseValue 会导致无法勾选的问题。
+- 🐞 `<pro>Tree`: 修复 dataSet 设置 treeCheckStrictly 属性时, 勾选的节点展开会被取消勾选的问题。
 
 ## 1.6.6
 

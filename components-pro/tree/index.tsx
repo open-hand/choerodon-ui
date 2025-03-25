@@ -451,7 +451,9 @@ export default class Tree extends Component<TreeProps> {
     return Promise.all(promises).then(action(() => {
       this.stateLoadedKeys.push(event.key);
 
-      this.handleAfterLoadData(event);
+      if (promises.length) {
+        this.handleAfterLoadData(event);
+      }
     }));
   }
 
@@ -459,7 +461,7 @@ export default class Tree extends Component<TreeProps> {
   handleAfterLoadData(event): void {
     const { dataSet, selectable } = this.props;
     if (dataSet && selectable === false) {
-      const { checkField, idField } = dataSet.props;
+      const { checkField, idField, treeCheckStrictly } = dataSet.props;
       const loadRootRecord = dataSet.find(record => getKey(record, idField) === String(event.key));
       if (!loadRootRecord) {
         return;
@@ -473,12 +475,14 @@ export default class Tree extends Component<TreeProps> {
             dataSet.select(record);
           }
         });
-        if (!loadRootRecord.isSelected && loadRecords.every(record => record.isSelected)) {
-          dataSet.select(loadRootRecord);
-        } else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
-          dataSet.unSelect(loadRootRecord);
+        if (!treeCheckStrictly) {
+          if (!loadRootRecord.isSelected && loadRecords.every(record => record.isSelected)) {
+            dataSet.select(loadRootRecord);
+          } else if (loadRootRecord.isSelected && loadRecords.some(record => !record.isSelected)) {
+            dataSet.unSelect(loadRootRecord);
+          }
         }
-      } else if (event.checked) {
+      } else if (!treeCheckStrictly && event.checked) {
         loadRecords.forEach(record => {
           dataSet.select(record);
         });

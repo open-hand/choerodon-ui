@@ -92,6 +92,9 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   Modal?: ModalContextValue;
   removeConfirm?: boolean | PopconfirmProps;
   templateDownloadButtonRenderer?: () => ReactNode;
+  downloadAllMode?: DownloadAllMode;
+  getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;
+  getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
 }
 
 export type Sort = {
@@ -1020,7 +1023,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, 
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, getDownloadUrl,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -1065,13 +1068,20 @@ export default class Attachment extends FormField<AttachmentProps> {
           getPreviewUrl={getPreviewUrl}
           fetchAttachmentsFlag={!this.uploadWithoutUuid}
           removeConfirm={this.removeConfirm}
+          getDownloadUrl={getDownloadUrl}
         />
       );
     }
   }
 
   renderHeader(uploadBtn?: ReactNode) {
-    const { prefixCls, count, props: { downloadAll, viewMode, __inGroup } } = this;
+    const { prefixCls, count, props: {
+      downloadAll,
+      viewMode,
+      __inGroup,
+      downloadAllMode: downloadAllModeProp,
+      getDownloadAllUrl: getDownloadAllUrlProp,
+    } } = this;
     const label = (!__inGroup || count) && this.renderHeaderLabel();
     const buttons: ReactNode[] = [];
     if (uploadBtn) {
@@ -1080,11 +1090,15 @@ export default class Attachment extends FormField<AttachmentProps> {
         this.renderTemplateDownloadButton(),
       );
     }
-    const { downloadAllMode = DownloadAllMode.readOnly } = this.getContextConfig('attachment');
+    const {
+      downloadAllMode: downloadAllModeConfig,
+      getDownloadAllUrl: getDownloadAllUrlConfig,
+    } = this.getContextConfig('attachment');
+    const downloadAllMode = downloadAllModeProp || downloadAllModeConfig || DownloadAllMode.readOnly;
     if ((downloadAllMode === DownloadAllMode.readOnly && this.readOnly) || (downloadAllMode === DownloadAllMode.always)) {
       if (this.count) {
         if (downloadAll) {
-          const { getDownloadAllUrl } = this.getContextConfig('attachment');
+          const getDownloadAllUrl = getDownloadAllUrlProp || getDownloadAllUrlConfig;
           if (getDownloadAllUrl) {
             const attachmentUUID = this.getValue();
             if (attachmentUUID) {

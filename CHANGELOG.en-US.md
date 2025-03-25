@@ -34,6 +34,7 @@ timeline: true
 - 🌟 `<pro>DataSet.Field`: The `trueValue` and `falseValue` attributes add array types.
 - 🌟 `<pro>Table`: Added `addNewButton` property.
 - 🌟 `<pro>Table`: Personalized new bottom function.
+- 🌟 `<pro>Attachment`: Added `downloadAllMode`, `getDownloadAllUrl`, `getDownloadUrl` properties.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -64,6 +65,7 @@ timeline: true
 - 💄 `<pro>Pagination`: Optimized the restriction of the number type input field for quick jumps.
 - 💄 `<pro>Picture`: Optimize the judgment of `loading` state.
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
+- 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -92,6 +94,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
 - 🐞 `<pro>Button`: Fixed an issue where the `Tooltip` on the button would not disappear after clicking the button with the icon to open `Modal` asynchronously.
 - 🐞 `<pro>CheckBox`: Fixed the issue that setting `trueValue` and `falseValue` with `dynamicProps` would cause `CheckBox` to fail to be checked.
+- 🐞 `<pro>Tree`: Fixed an issue where the checked node expansion would be unchecked when the `dataSet` set the `treeCheckStrictly` property.
 
 ## 1.6.6
 
