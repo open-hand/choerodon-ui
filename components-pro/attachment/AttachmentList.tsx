@@ -46,6 +46,7 @@ export interface AttachmentListProps {
    */
   fetchAttachmentsFlag: boolean;
   removeConfirm?: boolean | PopconfirmProps;
+  getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -78,6 +79,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     buttons,
     getPreviewUrl,
     removeConfirm,
+    getDownloadUrl,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -157,6 +159,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 buttons={buttons}
                 getPreviewUrl={getPreviewUrl}
                 removeConfirm={removeConfirm}
+                getDownloadUrl={getDownloadUrl}
               />
             )
           }
