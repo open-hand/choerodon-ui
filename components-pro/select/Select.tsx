@@ -882,10 +882,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   get showSelectLoading(): boolean | undefined {
     const { displayName } = this.constructor as any;
-    const { field, record, props: { isFlat } } = this;
+    const { field, record } = this;
     const showSelectLoading = field && field.getShowSelectLoading(record);
     const value = this.getValues();
-    if (displayName === 'Select' && !isFlat && value.length > 0 && showSelectLoading) {
+    if (displayName === 'Select' && value.length > 0 && showSelectLoading) {
       return true;
     }
     return false;
