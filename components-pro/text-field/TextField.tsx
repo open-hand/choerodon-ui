@@ -676,6 +676,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       wrapperProps.style = omit(wrapperProps.style, 'width');
     }
 
+    // Select isFlat loading
+    if (isFlat && this.showSelectLoading) {
+      wrapperProps.style = {
+        ...wrapperProps.style,
+        minWidth: '0.45rem',
+      };
+    }
+
     // 修复ie下出现多层model导致的输入框遮盖问题
     // fixed the input would shadow each other in ie brower
     const ZIndexOfIEProps: { style: CSSProperties } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
@@ -1361,7 +1369,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   renderRenderedValue(value: any | undefined, props: RenderedTextProps & { key?: Key }): ReactNode {
     const { prefixCls, range, multiple, showSelectLoading } = this;
-    const { rangeTarget } = props;
+    const { rangeTarget, isFlat } = props;
     const noRangeValue = rangeTarget === undefined;
     if ((!range && !multiple) || !noRangeValue || showSelectLoading) {
       const hidden = this.editable && this.isFocused;
@@ -1370,7 +1378,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         const placeholderDom = showSelectLoading ? (
           <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.45)' }}>
             <Progress style={{ marginRight: 2, lineHeight: '18px' }} type={ProgressType.loading} size={Size.small} />
-            {$l('Select', 'query_loading')}
+            <span>{!isFlat ? $l('Select', 'query_loading') : ' '}</span>
           </div>) : null;
         if (isReactChildren(placeholderDom || text)) {
           return (
