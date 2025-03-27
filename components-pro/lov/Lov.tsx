@@ -43,6 +43,7 @@ import { TextFieldProps } from '../text-field/TextField';
 import { ModalChildrenProps, ModalProxy } from '../modal/interface';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import mergeProps from '../_util/mergeProps';
+import { getRecords } from './SelectionList';
 
 export type Events = { [key: string]: Function };
 
@@ -729,9 +730,9 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   handleLovViewSelect(records: Record | Record[]) {
-    const { viewMode } = this;
+    const { viewMode, textField = '' } = this;
     if (isArrayLike(records)) {
-      this.setValue(records.map(record => this.processRecordToObject(record)));
+      this.setValue(getRecords(records, textField).map(record => this.processRecordToObject(record)));
     } else {
       this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
     }

@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
 - 💄 `<pro>Lov`: Optimized the effect of removing the effect of double-clicking on an unselectable row to close the Modal.
+- 💄 `<pro>Lov`: Optimize the sorting of multiple values according to the order in which they are checked.
 - 💄 `<pro>Select`: Optimize the single-value Select after selecting a search result, not showing all the options, then closing the drop-down box.
 - 💄 `<pro>Form`: Optimize the style and layout of the title help in grid layout.
 - 💄 `<pro>Modal`: optimization of the title is too long shade close button style.
