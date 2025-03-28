@@ -121,8 +121,10 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
         });
       }
       // 监听浏览器控制台强行移除节点
-      wrapperDom.addEventListener('DOMNodeRemoved', (e) => appendChild(e));
-      return wrapperDom.removeEventListener('DOMNodeRemoved', (e) => appendChild(e));
+      wrapperDom.addEventListener('DOMNodeRemoved', appendChild);
+      return () => {
+        wrapperDom.removeEventListener('DOMNodeRemoved', appendChild)
+      };
     }
   }, [wrapperRef, removeable, enable]);
 
