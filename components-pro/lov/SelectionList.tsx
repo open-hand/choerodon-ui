@@ -35,6 +35,20 @@ export interface SelectionListProps {
   selectionMode?: SelectionMode;
 }
 
+/**
+ * 按照选中时间和文本字段对多值排序
+ * @param records 选中值的记录
+ * @param textField 文本字段
+ * @returns 排序后的记录
+ */
+export function getRecords(records: Record[], textField: string): Record[] {
+  return sortBy(
+    records,
+    (item: Record) => defaultTo(item.selectedTimestamp, -1), 
+    (item: Record) => item.get(textField),
+  );
+}
+
 @observer
 export default class SelectionList extends Component<SelectionListProps> {
   get prefixCls() {
@@ -49,15 +63,6 @@ export default class SelectionList extends Component<SelectionListProps> {
   @autobind
   contentRef(node) {
     this.selectionNode = node;
-  }
-
-  getRecords(records: Record[]) {
-    const { textField } = this.props;
-    return sortBy(
-      records,
-      (item: Record) => defaultTo(item.selectedTimestamp, -1), 
-      (item: Record) => item.get(textField),
-    );
   }
 
   @action
@@ -84,7 +89,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     }
 
     const classString = `${this.prefixCls}-selection-list`;
-    const animateChildren = this.getRecords(records).map((record: Record) => {
+    const animateChildren = getRecords(records, textField).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
           {nodeRenderer ? toJS(nodeRenderer(record)) : <span>{record.get(textField)}</span>}
@@ -125,7 +130,7 @@ export default class SelectionList extends Component<SelectionListProps> {
     }
 
     const classString = `${this.prefixCls}-selection-list-below`;
-    const animateChildren = this.getRecords(records).map((record: Record) => {
+    const animateChildren = getRecords(records, textField).map((record: Record) => {
       return (
         <li key={record.get(valueField)} className={`${classString}-item`}>
           <Tag closable={record.selectable} onClose={() => {

@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
 - 💄 `<pro>Lov`: 优化去除双击不可选择行会关闭弹框的效果。
+- 💄 `<pro>Lov`: 优化多值根据勾选先后顺序排序。
 - 💄 `<pro>Select`: 优化 Select 单选搜索效果，选值后不会弹出所有选项后再收起下拉框。
 - 💄 `<pro>Form`: 优化栅格布局下标题 help 样式&布局。
 - 💄 `<pro>Modal`: 优化 title 过长遮挡关闭按钮样式问题。
