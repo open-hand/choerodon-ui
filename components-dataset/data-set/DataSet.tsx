@@ -2316,14 +2316,16 @@ export default class DataSet extends EventManager {
    * 取消全选
    */
   @action
-  unSelectAll(): void {
+  unSelectAll(filter?: (record: Record) => boolean): void {
     if (this.selection) {
       this.inBatchSelection = true;
       try {
         const records: Record[] = [];
         this.currentSelected.forEach(record => {
-          this.unSelect(record);
-          records.push(record);
+          if (!filter || filter(record) !== false) {
+            this.unSelect(record);
+            records.push(record);
+          }
         });
         this.fireEvent(DataSetEvents.unSelectAll, { dataSet: this, records });
         this.fireEvent(DataSetEvents.batchUnSelect, { dataSet: this, records });

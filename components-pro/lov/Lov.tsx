@@ -8,7 +8,7 @@ import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
-import { action, computed, isArrayLike, observable, runInAction, toJS } from 'mobx';
+import { action, computed, isArrayLike, observable, runInAction, toJS, IReactionDisposer, reaction } from 'mobx';
 import { pxToRem, scaleSize } from 'choerodon-ui/lib/_util/UnitConvertor';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -134,6 +134,8 @@ export default class Lov extends Select<LovProps> {
   fetched?: boolean;
 
   searching?: boolean;
+
+  fetchedReaction?: IReactionDisposer;
 
   @computed
   get searchMatcher(): SearchMatcher {
@@ -1004,10 +1006,24 @@ export default class Lov extends Select<LovProps> {
     });
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    if (this.viewMode === TriggerViewMode.popup) {
+      this.fetchedReaction = reaction(() => this.record, () => {
+        if (this.fetched) {
+          delete this.fetched;
+        }
+      });
+    }
+  }
+
   componentWillUnmount() {
     super.componentWillUnmount();
     if (this.modal) {
       this.modal.close();
+    }
+    if (this.fetchedReaction) {
+      this.fetchedReaction();
     }
   }
 

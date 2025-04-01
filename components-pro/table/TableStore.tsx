@@ -2487,8 +2487,8 @@ export default class TableStore {
   }
 
   unCheckAllCurrent() {
-    const { dataSet } = this.props;
-    dataSet.unSelectAll();
+    const { dataSet, filter } = this.props;
+    dataSet.unSelectAll(filter);
   }
 
   checkAllCached() {

@@ -67,6 +67,7 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize the judgment of `loading` state.
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
+- 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -96,6 +97,8 @@ timeline: true
 - 🐞 `<pro>Button`: Fixed an issue where the `Tooltip` on the button would not disappear after clicking the button with the icon to open `Modal` asynchronously.
 - 🐞 `<pro>CheckBox`: Fixed the issue that setting `trueValue` and `falseValue` with `dynamicProps` would cause `CheckBox` to fail to be checked.
 - 🐞 `<pro>Tree`: Fixed an issue where the checked node expansion would be unchecked when the `dataSet` set the `treeCheckStrictly` property.
+- 🐞 `<pro>Table`: Fixed an issue where the `filter` attribute was configured and the selection of all was cancelled incorrectly.
+- 🐞 `<pro>Table`: Fixed an issue where `Lov` field was configured with `editor` property and `popup` mode, and occasionally the dropdown data was empty when editing fields were opened between different lines.
 
 ## 1.6.6
 
