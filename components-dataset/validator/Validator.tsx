@@ -161,9 +161,10 @@ export default class Validator {
       validationResults.push(valueMiss);
     } else {
       const multiple = getProp('multiple');
+      const range = getProp('range');
       await flow(execute)(
         validationRules.slice(),
-        multiple && isArrayLike(value) ? value.slice() : [value],
+        (multiple || range) && isArrayLike(value) ? value.slice() : [value],
         props,
         getProp,
         validationResults,

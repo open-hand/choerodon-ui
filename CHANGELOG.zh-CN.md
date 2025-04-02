@@ -67,6 +67,7 @@ timeline: true
 - 💄 `<pro>Picture`: 优化 loading 状态的判断。
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
+- 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -96,6 +97,8 @@ timeline: true
 - 🐞 `<pro>Button`: 修复点击带图标的按钮异步打开 Modal 后按钮上的 Tooltip 不会消失的问题。
 - 🐞 `<pro>CheckBox`: 修复使用动态属性设置 trueValue 和 falseValue 会导致无法勾选的问题。
 - 🐞 `<pro>Tree`: 修复 dataSet 设置 treeCheckStrictly 属性时, 勾选的节点展开会被取消勾选的问题。
+- 🐞 `<pro>Table`: 修复配置 filter 属性, 导致取消全选不正确的问题。
+- 🐞 `<pro>Table`: 修复 Lov 字段配置 editor 属性且设置 popup 模式, 不同行间打开编辑字段时, 偶尔下拉数据为空的问题。
 
 ## 1.6.6
 
