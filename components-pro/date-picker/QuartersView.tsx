@@ -1,83 +1,64 @@
 import React, { ReactNode, CSSProperties } from 'react';
 import { Moment } from 'moment';
 import classNames from 'classnames';
-import autobind from '../_util/autobind';
 import Icon from '../icon';
-import { ViewMode } from './enum';
 import DaysView, { alwaysValidDate, DateViewProps } from './DaysView';
+import { ViewMode } from './enum';
 import { FieldType } from '../data-set/enum';
 import { stopEvent } from '../_util/EventManager';
 
-export default class YearsView<T extends DateViewProps> extends DaysView<T> {
-  static displayName = 'YearsView';
+export default class QuartersView<T extends DateViewProps> extends DaysView<T> {
+  static displayName = 'QuartersView';
 
-  static type = FieldType.year;
+  static type = FieldType.quarter;
 
   getTargetDate(target?: 0 | 1): Moment {
     const { comboRangeMode } = this;
     const { date, dateRangeValue, rangeTarget } = this.props;
     if (!comboRangeMode || !dateRangeValue || rangeTarget === undefined || target === undefined) return date;
 
-    if (dateRangeValue[0] && dateRangeValue[1] &&
-      Math.floor(dateRangeValue[0].year() / 10) === Math.floor(dateRangeValue[1].year() / 10)) {
-      return target === 1 ? date.clone().add(10, 'y') : date;
+    if (dateRangeValue[0] && dateRangeValue[1] && dateRangeValue[0].isSame(dateRangeValue[1], 'y')) {
+      return target === 1 ? date.clone().add(1, 'y') : date;
     }
     if (rangeTarget === 0) {
       if (!dateRangeValue[0] && dateRangeValue[1]) {
-        return target === 0 ? date.clone().add(-10, 'y') : date;
+        return target === 0 ? date.clone().add(-1, 'y') : date;
       }
-      return target === 1 ? date.clone().add(10, 'y') : date;
+      return target === 1 ? date.clone().add(1, 'y') : date;
     }
     if (rangeTarget === 1) {
       if (!dateRangeValue[1]) {
-        return target === 1 ? date.clone().add(10, 'y') : date;
+        return target === 1 ? date.clone().add(1, 'y') : date;
       }
-      return target === 0 ? date.clone().add(-10, 'y') : date;
+      return target === 0 ? date.clone().add(-1, 'y') : date;
     }
     return date;
   }
 
   getViewClassName(): string {
     const { prefixCls } = this;
-    return `${prefixCls}-year`;
-  }
-
-  @autobind
-  handlePrevYearClick() {
-    this.changeCursorDate(this.getCloneDate().subtract(10, 'y'), ViewMode.decade);
-  }
-
-  @autobind
-  handleYearSelect() {
-    this.changeViewMode(ViewMode.decade);
-  }
-
-  @autobind
-  handleNextYearClick() {
-    this.changeCursorDate(this.getCloneDate().add(10, 'y'), ViewMode.decade);
+    return `${prefixCls}-quarter`;
   }
 
   handleKeyDownHome(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    const date = this.getCloneDate();
-    this.changeCursorDate(date.subtract(date.year() % 10, 'y'));
+    this.changeCursorDate(this.getCloneDate().startOf('y'));
   }
 
   handleKeyDownEnd(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    const date = this.getCloneDate();
-    this.changeCursorDate(date.add(9 - (date.year() % 10), 'y'));
+    this.changeCursorDate(this.getCloneDate().endOf('y'));
   }
 
   handleKeyDownLeft(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
     if (e.altKey) {
-      this.changeViewMode(ViewMode.decade);
+      this.changeViewMode(ViewMode.year);
     } else {
-      this.changeCursorDate(this.getCloneDate().subtract(1, 'y'));
+      this.changeCursorDate(this.getCloneDate().subtract(1, 'Q'));
     }
   }
 
@@ -85,36 +66,37 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
     stopEvent(e);
     if (this.comboRangeMode) return;
     if (e.altKey) {
-      if (this.props.mode !== ViewMode.year) {
-        this.changeViewMode(ViewMode.month);
+      const { mode } = this.props;
+      if (mode !== ViewMode.quarter) {
+        this.changeViewMode(mode);
       }
     } else {
-      this.changeCursorDate(this.getCloneDate().add(1, 'y'));
+      this.changeCursorDate(this.getCloneDate().add(1, 'Q'));
     }
   }
 
   handleKeyDownUp(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    this.changeCursorDate(this.getCloneDate().subtract(3, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(1, 'y'));
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    this.changeCursorDate(this.getCloneDate().add(3, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(1, 'y'));
   }
 
   handleKeyDownPageUp(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    this.changeCursorDate(this.getCloneDate().subtract(e.altKey ? 100 : 10, 'y'));
+    this.changeCursorDate(this.getCloneDate().subtract(e.altKey ? 10 : 1, 'y'));
   }
 
   handleKeyDownPageDown(e) {
     stopEvent(e);
     if (this.comboRangeMode) return;
-    this.changeCursorDate(this.getCloneDate().add(e.altKey ? 100 : 10, 'y'));
+    this.changeCursorDate(this.getCloneDate().add(e.altKey ? 10 : 1, 'y'));
   }
 
   renderHeader(target?: 0 | 1): ReactNode {
@@ -125,16 +107,13 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
     const date = this.getTargetDate(target);
     const startStyle: CSSProperties = comboRangeMode && target === 0 ? { visibility: 'hidden' } : {};
     const endStyle: CSSProperties = comboRangeMode && target === 1 ? { visibility: 'hidden' } : {};
-    const year = date.year() % 10;
-    const from = date.clone().subtract(year, 'y');
-    const to = from.clone().add(9, 'y');
     return (
       <div className={`${prefixCls}-header`}>
         <a className={`${prefixCls}-prev-year`} onClick={this.handlePrevYearClick} style={endStyle}>
           <Icon type="first_page" />
         </a>
         <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
-          {from.year()} - {to.year()}
+          {date.year()}
         </a>
         <a className={`${prefixCls}-next-year`} style={startStyle}>
           <Icon type="last_page" onClick={this.handleNextYearClick} />
@@ -157,56 +136,45 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
     } = this;
     const date = this.getTargetDate(target);
     const selected = date.clone();
-    const from = date
-      .clone()
-      .startOf('y')
-      .subtract(date.year() % 10, 'y');
-    const to = from.clone().add(10, 'y');
-    const prevYear = from.clone().subtract(1, 'y');
-    const lastYear = to.clone().add(1, 'y');
+    const prevQuarter = date.clone().startOf('y');
+    const lastQuarter = prevQuarter.clone().add(9, 'M');
     const rows: ReactNode[] = [];
     let cells: ReactNode[] = [];
 
-    while (prevYear.isBefore(lastYear)) {
-      const currentYear = prevYear.clone();
-      const isDisabled = !isValidDate(currentYear, selected);
-      const isOld = currentYear.isBefore(from, 'y');
-      const isNew = currentYear.isSame(to, 'y');
-      const isStart = comboRangeMode && !isOld && !isNew && startDate && currentYear.isSame(startDate, 'y');
-      const isEnd = comboRangeMode && !isOld && !isNew && endDate && currentYear.isSame(endDate, 'y');
+    while (prevQuarter.isSameOrBefore(lastQuarter)) {
+      const currentQuarter = prevQuarter.clone();
+      const isDisabled = !isValidDate(currentQuarter, selected);
+      const isStart = comboRangeMode && startDate && prevQuarter.isSame(startDate, 'Q');
+      const isEnd = comboRangeMode && endDate && prevQuarter.isSame(endDate, 'Q');
       const className = classNames(`${prefixCls}-cell`, {
-        [`${prefixCls}-old`]: isOld,
-        [`${prefixCls}-new`]: isNew,
-        [`${prefixCls}-selected`]: (!comboRangeMode && prevYear.isSame(selected, 'y')) ||
+        [`${prefixCls}-selected`]: (!comboRangeMode && prevQuarter.isSame(selected, 'Q')) ||
         (comboRangeMode && (isStart || isEnd)),
         [`${prefixCls}-disabled`]: isDisabled,
-        [`${prefixCls}-in-range`]: comboRangeMode && !isOld && !isNew && this.isInRange(currentYear),
+        [`${prefixCls}-in-range`]: comboRangeMode && this.isInRange(prevQuarter),
         [`${prefixCls}-range-start`]: isStart,
         [`${prefixCls}-range-end`]: isEnd,
       });
+      const text = prevQuarter.format('[Q]Q');
 
-      const text = String(prevYear.year());
-
-      const yearProps: any = {
+      const quarterProps: any = {
         key: text,
         className,
         children: this.renderInner(text),
       };
-
       if (!isDisabled) {
-        yearProps.onClick = this.handleCellClick.bind(this, currentYear);
-        yearProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentYear);
-        yearProps.onMouseLeave = onDateMouseLeave;
+        quarterProps.onClick = this.handleCellClick.bind(this, currentQuarter);
+        quarterProps.onMouseEnter = this.handleDateMouseEnter.bind(this, currentQuarter);
+        quarterProps.onMouseLeave = onDateMouseLeave;
       }
 
-      cells.push(renderer(yearProps, text, currentYear, selected));
+      cells.push(renderer(quarterProps, text, currentQuarter, selected));
 
-      if (cells.length === 3) {
+      if (cells.length === 4) {
         rows.push(<tr key={text}>{cells}</tr>);
         cells = [];
       }
 
-      prevYear.add(1, 'y');
+      prevQuarter.add(3, 'M');
     }
 
     return rows;
@@ -217,14 +185,14 @@ export default class YearsView<T extends DateViewProps> extends DaysView<T> {
   }
 
   getPanelClass(): string {
-    return `${this.prefixCls}-year-panel`;
+    return `${this.prefixCls}-quarter-panel`;
   }
 
-  choose(date: Moment): void {
+  choose(date: Moment) {
     const { mode } = this.props;
-    if (mode !== ViewMode.year) {
+    if (mode !== ViewMode.quarter) {
       this.changeCursorDate(date);
-      this.changeViewMode(mode === ViewMode.quarter ? ViewMode.quarter : ViewMode.month);
+      this.changeViewMode(mode);
     } else {
       super.choose(date);
     }

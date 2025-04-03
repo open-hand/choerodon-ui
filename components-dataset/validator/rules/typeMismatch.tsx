@@ -49,6 +49,7 @@ const types: {
   [FieldType.dateTime]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
   [FieldType.week]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
   [FieldType.month]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
+  [FieldType.quarter]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
   [FieldType.year]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
   [FieldType.time]: [isNotDate, 'DatePicker', 'type_mismatch_date'],
   [FieldType.auto]: [isNotDateIf, 'DatePicker', 'type_mismatch_date'],

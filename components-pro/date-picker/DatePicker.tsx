@@ -20,6 +20,7 @@ import TimesView from './TimesView';
 import MonthsView from './MonthsView';
 import YearsView from './YearsView';
 import DecadeYearsView from './DecadeYearsView';
+import QuartersView from './QuartersView';
 import { ValidationMessages } from '../validator/Validator';
 import autobind from '../_util/autobind';
 import { ViewMode } from './enum';
@@ -52,6 +53,7 @@ const viewComponents: { [x: string]: typeof DaysView } = {
   [ViewMode.dateTime]: DateTimesView,
   [ViewMode.week]: WeeksView,
   [ViewMode.time]: TimesView,
+  [ViewMode.quarter]: QuartersView,
 };
 
 function createDefaultTime() {
@@ -114,7 +116,7 @@ function floorMillisecond(value?: Moment) : Moment | undefined {
 
 export interface DatePickerProps extends TriggerFieldProps {
   /**
-   * 显示模式date|dateTime|time|year|month|week
+   * 显示模式date|dateTime|time|year|month|week|quarter
    */
   mode?: ViewMode;
   /**
@@ -1164,6 +1166,10 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         case ViewMode.month:
           start = start.startOf('M');
           end = end.endOf('M');
+          break;
+        case ViewMode.quarter:
+          start = start.startOf('Q');
+          end = end.endOf('Q');
           break;
         case ViewMode.year:
           start = start.startOf('y');

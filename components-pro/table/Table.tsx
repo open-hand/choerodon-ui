@@ -113,6 +113,7 @@ import TableSibling from './TableSibling';
 import message from '../message';
 import ClipboardBar from './ClipboardBar';
 import { $l } from '../locale-context';
+import { getDateFormatByField } from '../field/utils';
 
 export type TableGroup = {
   name: string;
@@ -478,6 +479,7 @@ export interface TableProps extends DataSetComponentProps {
    * type:date => DatePicker
    * type:dateTime => DatePicker[mode=dateTime]
    * type:week => DatePicker[mode=week]
+   * type:quarter => DatePicker[mode=quarter]
    * default => TextField
    */
   queryFields?: { [key: string]: ReactElement<any> };
@@ -1665,6 +1667,15 @@ export default class Table extends DataSetComponent<TableProps> {
                   text = moment(text);
                 }
                 break;
+              case FieldType.quarter: {
+                const format = getDateFormatByField(field, fieldType, record);
+                if (isArrayLike(text)) {
+                  text = text.map(item => moment(item, format));
+                } else {
+                  text = moment(text, format);
+                }
+                break;
+              }
               case FieldType.week:
                 if (isArrayLike(text)) {
                   text = text.map(item => moment(getDateByISOWeek(item)));

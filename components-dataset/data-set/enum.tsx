@@ -80,6 +80,7 @@ export enum FieldType {
   month = 'month',
   year = 'year',
   time = 'time',
+  quarter = 'quarter',
   object = 'object',
   intl = 'intl',
   email = 'email',
@@ -151,6 +152,7 @@ export enum DateMode {
   week = 'week',
   date = 'date',
   month = 'month',
+  quarter = 'quarter',
   year = 'year',
   decade = 'decade',
 }

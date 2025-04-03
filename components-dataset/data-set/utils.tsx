@@ -195,6 +195,7 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
         case FieldType.time:
         case FieldType.week:
         case FieldType.month:
+        case FieldType.quarter:
         case FieldType.year: {
           const { jsonDate } = field.dataSet.getConfig('formatter');
           value = jsonDate ? moment(value, jsonDate) : moment(value);
@@ -534,6 +535,7 @@ export function getBaseType(type: FieldType): FieldType {
     case FieldType.time:
     case FieldType.week:
     case FieldType.month:
+    case FieldType.quarter:
     case FieldType.year:
       return FieldType.date;
     case FieldType.intl:

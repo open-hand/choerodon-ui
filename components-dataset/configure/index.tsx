@@ -39,6 +39,8 @@ export type Formatter = {
   year: string;
   month: string;
   week: string;
+  // 设置为可选是为了兼容已设置 formatter 的场景
+  quarter?: string;
   timeZone?: TimeZone;
 };
 
@@ -193,6 +195,7 @@ const defaultFormatter: Formatter = {
   year: 'YYYY',
   month: 'YYYY-MM',
   week: 'GGGG-Wo',
+  quarter: 'YYYY-[Q]Q',
 };
 const defaultAttachment: AttachmentConfig = {
   defaultFileKey: 'file',

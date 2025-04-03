@@ -89,6 +89,9 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
           case "month":
             row[key] = templateIsMutiple[key] ? '2023-01,2024-01' : '2023-01';
             break;
+          case "quarter":
+            row[key] = templateIsMutiple[key] ? '2023-Q1,2024-Q1' : '2023-Q1';
+            break;
           case "time":
             row[key] = templateIsMutiple[key] ? '05:05:00,16:14:15' : '16:14:15';
             break;
