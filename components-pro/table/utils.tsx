@@ -23,6 +23,7 @@ import DateTimePicker from '../date-time-picker/DateTimePicker';
 import TimePicker from '../time-picker/TimePicker';
 import WeekPicker from '../week-picker/WeekPicker';
 import MonthPicker from '../month-picker/MonthPicker';
+import QuarterPicker from '../quarter-picker/QuarterPicker';
 import YearPicker from '../year-picker/YearPicker';
 import ObserverTextField from '../text-field/TextField';
 import { ColumnLock, TablePaginationPosition } from './enum';
@@ -106,6 +107,8 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
       return <WeekPicker isFlat={isFlat} />;
     case FieldType.month:
       return <MonthPicker isFlat={isFlat} />;
+    case FieldType.quarter:
+      return <QuarterPicker isFlat={isFlat} />;
     case FieldType.year:
       return <YearPicker isFlat={isFlat} />;
     case FieldType.intl:

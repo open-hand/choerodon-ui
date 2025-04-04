@@ -150,6 +150,8 @@ export function getDateFormatByFieldType(type: FieldType, field?: Field) {
       return formatter.year;
     case FieldType.time:
       return formatter.time;
+    case FieldType.quarter:
+      return formatter.quarter || 'YYYY-[Q]Q';
     default:
       return formatter.date;
   }

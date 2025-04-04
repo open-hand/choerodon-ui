@@ -14,7 +14,7 @@ title:
 Date Picker.
 
 ````jsx
-import { DatePicker, MonthPicker, DateTimePicker, YearPicker, TimePicker, WeekPicker, Row, Col } from 'choerodon-ui/pro';
+import { QuarterPicker, DatePicker, MonthPicker, DateTimePicker, YearPicker, TimePicker, WeekPicker, Row, Col } from 'choerodon-ui/pro';
 
 function handleChange(value, oldValue) {
   console.log('[datepicker]', value && value.format(), '[oldValue]', oldValue && oldValue.format());
@@ -42,6 +42,9 @@ ReactDOM.render(
     </Col>
     <Col span={12}>
       <DatePicker placeholder="禁用" disabled />
+    </Col>
+    <Col span={12}>
+      <QuarterPicker placeholder="Select quarter" onChange={handleChange} />
     </Col>
   </Row>,
   mountNode

@@ -270,7 +270,7 @@ title: DataSet
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `year` `email` `url` `intl` `object` `attachment` `json` `bigNumber` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `quarter` `year` `email` `url` `intl` `object` `attachment` `json` `bigNumber` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string \| ReactNode |  |
 | labelWidth | 字段标签宽度 | number |  |
@@ -337,7 +337,7 @@ title: DataSet
 | chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](/components/configure/#AttachmentConfig) |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   |
 | help | 额外信息，常用于提示 | ReactNode |  |
-| dateMode | 显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  |
+| dateMode | 显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` `quarter` | string | date  |
 | accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  |
 | useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  |

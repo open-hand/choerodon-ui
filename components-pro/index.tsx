@@ -58,6 +58,8 @@ export { default as WeekPicker } from './week-picker';
 
 export { default as MonthPicker } from './month-picker';
 
+export { default as QuarterPicker } from './quarter-picker';
+
 export { default as YearPicker } from './year-picker';
 
 export { default as ColorPicker } from './color-picker';

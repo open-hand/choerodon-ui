@@ -340,6 +340,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   isOverflowMaxTagTextLength?: boolean;
 
+  isUpdatedValMes?: boolean;
+
   get name(): string | undefined {
     return this.observableProps.name;
   }
@@ -768,6 +770,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       hide();
       this.tooltipShown = false;
     }
+    if (!isNil(this.isUpdatedValMes)) {
+      delete this.isUpdatedValMes;
+    }
   }
 
   addToForm(props, context) {
@@ -839,8 +844,31 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     };
   }
 
+  @autobind
+  @action
+  updateValidationMessages() {
+    const { field, record, isUpdatedValMes } = this;
+    if (field && !isUpdatedValMes) {
+      if (!field.get('defaultValidationMessages', record)) {
+        field.set('defaultValidationMessages', { ...this.defaultValidationMessages, label: this.getProp('label') });
+
+        const validationResults = field.getValidationErrorValues(record);
+        const validationMessages = this.defaultValidationMessages;
+        if (validationResults.length && Object.keys(validationMessages).length) {
+          validationResults.forEach(result => {
+            if (Object.keys(validationMessages).includes(result.ruleName)) {
+              result.validationMessage = validationMessages[result.ruleName];
+            }
+          });
+        }
+      }
+      this.isUpdatedValMes = true;
+    }
+  }
+
   getValidationResults(): ValidationResult[] | undefined {
     const { field, record } = this;
+    this.updateValidationMessages();
     if (field) {
       return field.getValidationErrorValues(record);
     }
@@ -1295,6 +1323,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
             if (field && !field.get('defaultValidationMessages', record)) {
               field.set('defaultValidationMessages', { ...this.defaultValidationMessages, label: this.getProp('label') });
             }
+            this.isUpdatedValMes = true;
             record.set(name, value);
           }
         } else if (!noVaidate) {

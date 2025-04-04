@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 addNewButton 属性。
 - 🌟 `<pro>Table`: 个性化新增置底功能。
 - 🌟 `<pro>Attachment`: 新增 downloadAllMode, getDownloadAllUrl, getDownloadUrl 属性。
+- 🌟 `<pro>DatePicker`: 新增季度模式。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -99,6 +100,7 @@ timeline: true
 - 🐞 `<pro>Tree`: 修复 dataSet 设置 treeCheckStrictly 属性时, 勾选的节点展开会被取消勾选的问题。
 - 🐞 `<pro>Table`: 修复配置 filter 属性, 导致取消全选不正确的问题。
 - 🐞 `<pro>Table`: 修复 Lov 字段配置 editor 属性且设置 popup 模式, 不同行间打开编辑字段时, 偶尔下拉数据为空的问题。
+- 🐞 `<pro>Select`: 修复关联 dataSet 且校验失败时, 聚焦前后提示信息不一致的问题。
 
 ## 1.6.6
 

@@ -23,6 +23,7 @@ import {
   TimePicker,
   Row,
   Col,
+  QuarterPicker,
 } from 'choerodon-ui/pro';
 import moment from 'moment';
 
@@ -70,6 +71,12 @@ class App extends React.Component {
         type: 'time',
         range: true,
       },
+      {
+        name: 'quarter',
+        type: 'quarter',
+        range: ['start', 'end'],
+        defaultValue: { start: '1984-11-22', end: new Date() },
+      },
     ],
     events: {
       update: handleDataSetChange,
@@ -107,6 +114,9 @@ class App extends React.Component {
         </Col>
         <Col span={24}>
           <DatePicker dataSet={this.ds} name="multipleDate" placeholder="Choose Date" />
+        </Col>
+        <Col span={24}>
+          <QuarterPicker dataSet={this.ds} name="quarter" placeholder="Choose quarter" />
         </Col>
         <Col span={24}>
           <DatePicker

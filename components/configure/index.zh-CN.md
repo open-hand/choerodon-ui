@@ -231,6 +231,7 @@ const prefixCls = getConfig('prefixCls');
 | time     | HH:mm:ss            | string |
 | week     | YYYY-Wo             | string |
 | month    | YYYY-MM             | string |
+| month    | YYYY-\[Q\]Q           | string |
 | year     | YYYY                | string |
 | timeZone |                     | string \| (moment) => string |
 

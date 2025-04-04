@@ -14,7 +14,7 @@ title:
 Extra Footer
 
 ````jsx
-import { DatePicker, MonthPicker, DateTimePicker, YearPicker, TimePicker, WeekPicker, Row, Col } from 'choerodon-ui/pro';
+import { QuarterPicker, DatePicker, MonthPicker, DateTimePicker, YearPicker, TimePicker, WeekPicker, Row, Col } from 'choerodon-ui/pro';
 
 function handleChange(value, oldValue) {
   console.log('[datepicker]', value && value.format(), '[oldValue]', oldValue && oldValue.format());
@@ -25,7 +25,7 @@ ReactDOM.render(
     <Col span={12}>
       <DatePicker placeholder="Select date" renderExtraFooter={() => 'extra footer'} onChange={handleChange} />
     </Col>
-        <Col span={12}>
+    <Col span={12}>
       <MonthPicker placeholder="Select month" renderExtraFooter={() => 'extra footer'} onChange={handleChange} />
     </Col>
     <Col span={12}>
@@ -42,6 +42,9 @@ ReactDOM.render(
     </Col>
     <Col span={12}>
       <DatePicker placeholder="renderExtraFooter top" renderExtraFooter={() => 'extra footer'} extraFooterPlacement="top" />
+    </Col>
+    <Col span={12}>
+      <QuarterPicker placeholder="Select quarter" renderExtraFooter={() => 'extra footer'} onChange={handleChange} />
     </Col>
   </Row>,
   mountNode,

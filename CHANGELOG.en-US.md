@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `addNewButton` property.
 - 🌟 `<pro>Table`: Personalized new bottom function.
 - 🌟 `<pro>Attachment`: Added `downloadAllMode`, `getDownloadAllUrl`, `getDownloadUrl` properties.
+- 🌟 `<pro>DatePicker`: Added quarter mode.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -99,6 +100,7 @@ timeline: true
 - 🐞 `<pro>Tree`: Fixed an issue where the checked node expansion would be unchecked when the `dataSet` set the `treeCheckStrictly` property.
 - 🐞 `<pro>Table`: Fixed an issue where the `filter` attribute was configured and the selection of all was cancelled incorrectly.
 - 🐞 `<pro>Table`: Fixed an issue where `Lov` field was configured with `editor` property and `popup` mode, and occasionally the dropdown data was empty when editing fields were opened between different lines.
+- 🐞 `<pro>Select`: Fixed an issue where inconsistent information was displayed before and after the focus when the `dataSet` was associated and the verification failed.
 
 ## 1.6.6
 
