@@ -3260,6 +3260,7 @@ Then the query method will be auto invoke.`,
 
   private async read(page = 1, params?: object, more?: boolean, paging?: boolean, queryChildren?: boolean): Promise<any> {
     if (this.checkReadable(this.parent)) {
+      let canChangeStatus = true;
       try {
         if (!more) {
           this.changeStatus(DataSetStatus.loading);
@@ -3316,9 +3317,12 @@ Then the query method will be auto invoke.`,
         }
       } catch (e) {
         this.handleLoadFail(e);
+        if (e.code === 'ERR_CANCELED') {
+          canChangeStatus = false;
+        }
         throw new DataSetRequestError(e);
       } finally {
-        if (!more) {
+        if (!more && canChangeStatus) {
           this.changeStatus(DataSetStatus.ready);
         }
       }
