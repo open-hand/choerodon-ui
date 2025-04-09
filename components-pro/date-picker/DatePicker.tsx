@@ -735,7 +735,11 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   @autobind
   handleSelectedDateChange(selectedDate: Moment, mode?: ViewMode) {
+    const viewMode = this.getDefaultViewMode();
     if (this.isUnderRange(selectedDate, mode) && this.isDateOutOfFilter(selectedDate, selectedDate, mode)) {
+      if (viewMode === ViewMode.dateTime) {
+        selectedDate = this.getValidDate(selectedDate);
+      }
       this.setText(selectedDate.format(this.getDateFormat()));
     }
   }

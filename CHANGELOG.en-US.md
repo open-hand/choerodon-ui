@@ -101,6 +101,9 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where the `filter` attribute was configured and the selection of all was cancelled incorrectly.
 - 🐞 `<pro>Table`: Fixed an issue where `Lov` field was configured with `editor` property and `popup` mode, and occasionally the dropdown data was empty when editing fields were opened between different lines.
 - 🐞 `<pro>Select`: Fixed an issue where inconsistent information was displayed before and after the focus when the `dataSet` was associated and the verification failed.
+- 🐞 `<pro>Table`: Fixed an issue where the fuzzy search value was not cleared when the dynamic filter bar was switched.
+- 🐞 `<pro>DateSet`: Fixed an issue that resulted in incorrect `status` when cancelling the last request while launching a new request.
+- 🐞 `isOverflow`: Fixed inaccurate element overflow judgment.
 
 ## 1.6.6
 

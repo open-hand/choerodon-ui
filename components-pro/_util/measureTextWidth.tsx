@@ -63,6 +63,10 @@ function getCanvasTextStyle(style: CSSProperties | CSSStyleDeclaration = getComp
 }
 
 export default function measureTextWidth(text: string, style?: CSSProperties | CSSStyleDeclaration) {
+  if (isFirefox()) {
+    // firefox 使用 canvas 测量文本宽度不准确, 使用原始方法测量
+    return measureTextWidthFirefox(text, style);
+  }
   let width = 0;
   if (typeof window !== undefined) {
     const { tabSize = 8 } = style || getComputedStyle(document.body);
@@ -72,4 +76,29 @@ export default function measureTextWidth(text: string, style?: CSSProperties | C
     width = ctx.measureText(text.replace(/\t/g, tabSpace)).width;
   }
   return width;
+}
+
+function isFirefox() {
+  return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Firefox') !== -1;
+}
+
+function measureTextWidthFirefox(text: string, style?: CSSProperties | CSSStyleDeclaration) {
+  if (typeof window !== 'undefined') {
+    const span = document.createElement('span');
+    span.style.cssText = 'position: absolute;top: -9999px;display: inline-block';
+    span.innerHTML = text.replace(/\s/g, '&nbsp;');
+    if (style) {
+      ['font', 'fontSize', 'letterSpacing', 'wordSpacing', 'textTransform'].forEach((property) => {
+        if (property in style) {
+          span.style[property] = style[property];
+        }
+      });
+    }
+    document.body.appendChild(span);
+    const { width } = getComputedStyle(span);
+    const contentWidth = style && style.width && style.width !== 'auto' ? parseFloat(width) : span.offsetWidth;
+    document.body.removeChild(span);
+    return contentWidth;
+  }
+  return 0;
 }

@@ -101,6 +101,9 @@ timeline: true
 - 🐞 `<pro>Table`: 修复配置 filter 属性, 导致取消全选不正确的问题。
 - 🐞 `<pro>Table`: 修复 Lov 字段配置 editor 属性且设置 popup 模式, 不同行间打开编辑字段时, 偶尔下拉数据为空的问题。
 - 🐞 `<pro>Select`: 修复关联 dataSet 且校验失败时, 聚焦前后提示信息不一致的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条切换条件时, 模糊搜索值未清空的问题。
+- 🐞 `<pro>DateSet`: 修复取消上次请求同时发起新请求时, 导致 status 状态不正确的问题。
+- 🐞 `isOverflow`: 修复元素溢出判断不准确的问题。
 
 ## 1.6.6
 

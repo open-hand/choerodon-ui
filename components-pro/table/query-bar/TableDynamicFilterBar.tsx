@@ -840,6 +840,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData, fuzzy: searchTextValue });
 
       dataSet.setQueryParameter(searchText, searchTextValue);
+    } else if (dataSet.getState(SEARCHTEXT)) {
+      dataSet.setState(SEARCHTEXT, null);
+      dataSet.setState(ORIGINALVALUEOBJ, { ...newObj, advance: comparatorData, fuzzy: null });
+      dataSet.setQueryParameter(searchText, null);
     }
   }
 
