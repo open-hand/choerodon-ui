@@ -69,6 +69,7 @@ timeline: true
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
+- 💄 `Menu`: Optimizes the style of sublevel menu overlap.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

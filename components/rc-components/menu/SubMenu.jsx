@@ -50,6 +50,10 @@ export class SubMenu extends Component {
 
     this.isRootMenu = false;
 
+    this.state = {
+      mode: undefined,
+    };
+
     let value = false;
 
     if (defaultActiveFirst) {
@@ -61,6 +65,15 @@ export class SubMenu extends Component {
 
   componentDidMount() {
     this.componentDidUpdate();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    if (this.state.mode) {
+      this.setState({
+        mode: undefined,
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -79,6 +92,7 @@ export class SubMenu extends Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
     const { onDestroy, eventKey } = this.props;
     if (onDestroy) {
       onDestroy(eventKey);
@@ -306,10 +320,28 @@ export class SubMenu extends Component {
     this.subMenuTitle = subMenuTitle;
   };
 
+  handlePopupAlign = (popupDomNode) => {
+    // 根据渲染结果优化弹出方向
+    const props = this.props || {};
+    if (props.level > 1 && !this.state.mode && popupDomNode && popupDomNode.querySelector('div > ul')) {
+      const subMenuDom = popupDomNode;
+      const menuUlDom = popupDomNode.querySelector('div > ul');
+      if (subMenuDom.className.includes('placement-left') && !menuUlDom.className.includes('vertical-right')) {
+        this.setState({
+          mode: 'vertical-right',
+        });
+      } else if (subMenuDom.className.includes('placement-right') && menuUlDom.className.includes('vertical-right')) {
+        this.setState({
+          mode: 'vertical',
+        });
+      }
+    }
+  }
+
   renderChildren(children) {
     const props = this.props;
     const baseProps = {
-      mode: props.mode === 'horizontal' ? 'vertical' : props.mode,
+      mode: this.state.mode || (props.mode === 'horizontal' ? 'vertical' : props.mode),
       hidden: !this.props.isOpen,
       level: props.level + 1,
       inlineIndent: props.inlineIndent,
@@ -503,6 +535,7 @@ export class SubMenu extends Component {
             mouseLeaveDelay={subMenuCloseDelay}
             onPopupVisibleChange={this.onPopupVisibleChange}
             forceRender={forceSubMenuRender}
+            onPopupAlign={this.handlePopupAlign}
           >
             {title}
           </Trigger>

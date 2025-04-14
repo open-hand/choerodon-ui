@@ -379,6 +379,17 @@
     }
   }
 
+  &-submenu-vertical-right {
+    > .@{menu-prefix-cls}-submenu-title {
+      padding-right: 0.16rem;
+      padding-left: 0.34rem;
+      .@{menu-prefix-cls}-submenu-arrow {
+        left: 0.1rem;
+        transform: rotate(180deg) translateY(-0.01rem);
+      }
+    }
+  }
+
   &-inline-collapsed {
     width: @menu-collapsed-width;
     > .@{menu-prefix-cls}-item,
