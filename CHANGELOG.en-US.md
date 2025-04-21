@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `<pro>Table`: Personalized new bottom function.
 - 🌟 `<pro>Attachment`: Added `downloadAllMode`, `getDownloadAllUrl`, `getDownloadUrl` properties.
 - 🌟 `<pro>DatePicker`: Added quarter mode.
+- 🌟 `<pro>CodeArea`: Added `prettierOptions` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -70,6 +71,7 @@ timeline: true
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
+- 💄 `<pro>CodeArea`: Optimize `JSONFormatter`. When formatting `json`, it defaults to line breaks by default.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

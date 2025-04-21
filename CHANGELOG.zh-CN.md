@@ -36,6 +36,7 @@ timeline: true
 - 🌟 `<pro>Table`: 个性化新增置底功能。
 - 🌟 `<pro>Attachment`: 新增 downloadAllMode, getDownloadAllUrl, getDownloadUrl 属性。
 - 🌟 `<pro>DatePicker`: 新增季度模式。
+- 🌟 `<pro>CodeArea`: 新增 prettierOptions 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -70,6 +71,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
+- 💄 `<pro>CodeArea`: 优化 JSONFormatter, json 格式化时默认都换行。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

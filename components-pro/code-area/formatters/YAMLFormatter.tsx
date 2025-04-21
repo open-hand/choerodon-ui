@@ -8,10 +8,11 @@ import { CodeAreaFormatter } from '../CodeAreaFormatter';
 export class YAMLFormatter implements CodeAreaFormatter {
   static defaultOptions: Options = { parser: 'yaml', plugins: [plugins] };
 
-  getFormatted(rawText: string, options: Options = YAMLFormatter.defaultOptions): string {
+  getFormatted(rawText: string, options?: Options): string {
     let t = rawText
     try {
-      t = prettier.format(rawText, options)
+      const mergeOptions = { ...YAMLFormatter.defaultOptions, ...options };
+      t = prettier.format(rawText, mergeOptions);
     } catch (error) {
       // 
     }

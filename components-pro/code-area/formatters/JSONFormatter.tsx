@@ -5,12 +5,13 @@ import { CodeAreaFormatter } from '../CodeAreaFormatter';
 import { removeUnprintableChar } from '../utils';
 
 export class JSONFormatter implements CodeAreaFormatter {
-  static defaultOptions: Options = { parser: 'json', plugins: [plugins] };
+  static defaultOptions: Options = { parser: 'json', plugins: [plugins], printWidth: 1 };
 
-  getFormatted(rawText: string, options = JSONFormatter.defaultOptions): string {
+  getFormatted(rawText: string, options?: Options): string {
     let t = rawText
     try {
-      t = prettier.format(rawText, options)
+      const mergeOptions = { ...JSONFormatter.defaultOptions, ...options };
+      t = prettier.format(rawText, mergeOptions);
     } catch (error) {
       // 
     }

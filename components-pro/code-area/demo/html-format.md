@@ -3,7 +3,6 @@ order: 6
 title:
   zh-CN: HTML格式化
   en-US: HTML Format
-only: true
 ---
 
 ## zh-CN
