@@ -7,10 +7,11 @@ import { removeUnprintableChar } from '../utils';
 export class JSFormatter implements CodeAreaFormatter {
   static defaultOptions: Options = { parser: 'babel', plugins: [plugins] };
 
-  getFormatted(rawText: string, options = JSFormatter.defaultOptions): string {
+  getFormatted(rawText: string, options?: Options): string {
     let t = rawText
     try {
-      t = prettier.format(rawText, options)
+      const mergeOptions = { ...JSFormatter.defaultOptions, ...options };
+      t = prettier.format(rawText, mergeOptions);
     } catch (error) {
       // 
     }

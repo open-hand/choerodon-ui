@@ -13,6 +13,7 @@ import isString from 'lodash/isString';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
+import { Options } from 'prettier';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import Icon from 'choerodon-ui/lib/icon';
 import { WaitType } from '../core/enum';
@@ -62,6 +63,10 @@ export interface CodeAreaProps extends FormFieldProps {
    * @default throttle
    */
   waitType?: WaitType;
+  /**
+   * formatter 格式化的参数(prettier 的参数)
+   */
+  prettierOptions?: Options;
 }
 
 const defaultCodeMirrorOptions: any = {
@@ -121,9 +126,9 @@ export default class CodeArea extends FormField<CodeAreaProps> {
       // 原因在于 record 中的值为 raw的非格式化数据 blur后因为进行了一次record数据的修改 所以再次重新那数据必然导致
       // 当数据存在错误的时候  codeArea去格式化 因为格式化失败了
       // 当数据不存在存在错误的时候即使特地将其去格式化也依旧会被格式化
-      const { formatter } = props;
+      const { formatter, prettierOptions } = props;
       const recordValue = this.getValue();
-      const value = formatter ? formatter.getFormatted(recordValue) : recordValue;
+      const value = formatter ? formatter.getFormatted(recordValue, prettierOptions) : recordValue;
       // 分别监听 受控 及 DataSet 进行管理时值的变化
       if (recordValue !== this.midText || (this.dataSet && this.name)) {
         this.setText(value);
@@ -381,8 +386,8 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   processValue(value: any): ReactNode {
     const text = super.processValue(value);
-    const { formatter } = this.props;
-    return formatter && isString(text) ? formatter.getFormatted(text) : text;
+    const { formatter, prettierOptions } = this.props;
+    return formatter && isString(text) ? formatter.getFormatted(text, prettierOptions) : text;
   }
 
   getHandleChange(props: CodeAreaProps): DebouncedFunc<(codeMirrorInstance: IInstance, event?: Event, focus?: boolean) => void> {
@@ -406,12 +411,12 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    * @memberof CodeArea
    */
   handleCodeMirrorBlur = action((codeMirrorInstance: IInstance, _event?: Event, focus?: boolean) => {
-    const { formatter } = this.props;
+    const { formatter, prettierOptions } = this.props;
     // 更新DataSet的值之前，先去拿到原始的raw格式
     let value = codeMirrorInstance.getValue();
     if (formatter) {
       const { getFormatted } = formatter;
-      value = getFormatted(value);
+      value = getFormatted(value, prettierOptions);
     }
     this.midText = value;
     this.setValue(value);
@@ -427,7 +432,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
     const recordValue = this.getValue();
     if (recordValue !== this.midText) {
-      this.setText(formatter ? formatter.getFormatted(recordValue) : recordValue);
+      this.setText(formatter ? formatter.getFormatted(recordValue, prettierOptions) : recordValue);
     }
   });
 
@@ -438,7 +443,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    */
   handleCodeMirrorDidMount = (editor: IInstance, value: string, cb: () => void) => {
     this.editor = editor;
-    const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount } = this.props;
+    const { formatter, style, formatHotKey, unFormatHotKey, editorDidMount, prettierOptions } = this.props;
     const { width, height = 100 } = style || {};
     const options = {
       Tab(cm) {
@@ -454,7 +459,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
     if (formatter) {
       if (formatHotKey) {
         // default: 'Alt-F'
-        options[formatHotKey] = cm => cm.setValue(formatter.getFormatted(cm.getValue()));
+        options[formatHotKey] = cm => cm.setValue(formatter.getFormatted(cm.getValue(), prettierOptions));
       }
       if (unFormatHotKey) {
         // default: 'Alt-R'
