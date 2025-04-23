@@ -82,6 +82,9 @@ class App extends React.Component {
         type: 'dateTime',
         label: '开始执行时间',
         range: true,
+        computedProps: {
+          disabled: ({ record }) => record?.get('name') === '123',
+        },
       },
       {
         name: 'applicationDateRange',
@@ -104,7 +107,7 @@ class App extends React.Component {
       },
       { name: 'name', label: '姓名', type: 'string' },
       { name: 'empty', type: 'string', multiple: true },
-      { name: 'age', type: 'number', label: '年龄' },
+      { name: 'age', type: 'number', label: '年龄', disabled: true },
       { name: 'ageRange', defaultValue: [], type: 'number', label: '年龄范围', range: true },
       { name: 'code', type: 'object', ignore:'always', label: '代码描述', lovCode: 'LOV_CODE', multiple: true },
       {

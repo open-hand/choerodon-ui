@@ -95,6 +95,7 @@ const App = () => {
     <Form dataSet={ds}>
       <SecretField name="phone" />
       <SecretField name="bankCard" />
+      <SecretField name="bankCard" disabled />
       <SecretField name="idCard" />
     </Form>
   );

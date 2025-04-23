@@ -295,6 +295,10 @@ export default class IntlField extends TextArea<IntlFieldProps> {
   }
 
   getSuffix(): ReactNode {
+    const { showSuffix } = this;
+    if (!showSuffix) {
+      return undefined;
+    }
     const { suffix } = this.props;
     return this.wrapperSuffix(
       this.loading ? (
