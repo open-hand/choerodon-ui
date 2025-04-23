@@ -116,6 +116,26 @@ export interface Customized {
   Board?: BoardCustomized | BoardCustomized[] | any;
 }
 
+export enum InputSuffixCompName  {
+  TextField = 'TextField',
+  SecretField = 'SecretField',
+  UrlField = 'UrlField',
+  Password = 'Password',
+  TextArea = 'TextArea',
+  IntlField = 'IntlField',
+  EmailField = 'EmailField',
+  NumberField = 'NumberField',
+  Currency = 'Currency',
+  DatePicker = 'DatePicker',
+  Cascader = 'Cascader',
+  Select = 'Select',
+  AutoComplete = 'AutoComplete',
+  Lov = 'Lov',
+  TreeSelect = 'TreeSelect',
+  ColorPicker = 'ColorPicker',
+  IconPicker = 'IconPicker',
+}
+
 export type CustomizedRendererOtherInfo<T extends keyof Customized> = {
   /**
    * 加载个性化到表格中, 例如切换、删除个性化后, 需要重新加载
@@ -432,6 +452,10 @@ export interface Config extends DataSetConfig {
    * Tree 是否显示连接线
    */
   treeShowLine?: boolean | { showLeafIcon: boolean };
+  /**
+   * 输入组件禁用时, 是否显示后缀
+   */
+  inputDisabledShowSuffix?: boolean | ((compName: InputSuffixCompName) => boolean);
   /**
    * @deprecated
    */

@@ -270,6 +270,23 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return false;
   }
 
+  get showSuffix(): boolean {
+    const { disabled } = this;
+    if (disabled) {
+      const inputDisabledShowSuffix = this.getContextConfig('inputDisabledShowSuffix');
+      if (!inputDisabledShowSuffix) {
+        return false;
+      }
+      if (typeof inputDisabledShowSuffix === 'function') {
+        const { displayName } = this.constructor as any;
+        if (!inputDisabledShowSuffix(displayName)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
@@ -1193,6 +1210,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getSuffix(): ReactNode {
+    const { showSuffix } = this;
+    if (!showSuffix) {
+      return undefined;
+    }
     const { suffix = this.getDefaultSuffix() } = this.props;
     if (suffix) {
       return this.wrapperSuffix(suffix);

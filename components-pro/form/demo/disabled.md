@@ -14,9 +14,33 @@ title:
 Form.
 
 ````jsx
-import { DataSet, Form, TextField, Password, NumberField, EmailField, UrlField, Lov, Switch, DatePicker, Select, SelectBox, Button, Menu, Dropdown, Icon } from 'choerodon-ui/pro';
+import {
+  DataSet,
+  Form,
+  TextField,
+  Password,
+  NumberField,
+  EmailField,
+  UrlField,
+  Lov,
+  Switch,
+  DatePicker,
+  Select,
+  SelectBox,
+  Button,
+  Menu,
+  Dropdown,
+  Icon,
+  IntlField,
+  Currency,
+  Cascader,
+  TreeSelect,
+  ColorPicker,
+  IconPicker,
+} from 'choerodon-ui/pro';
 
 const { Option } = Select;
+const { TreeNode } = TreeSelect;
 
 function passwordValidator(value, name, form) {
   if (value !== form.getField('password').getValue()) {
@@ -48,6 +72,7 @@ const dropdown = (
 );
 
 const App = () => {
+  const [disabled, setDisabled] = React.useState(true);
   const ds = React.useMemo(() => new DataSet({
     autoCreate: true,
     fields: [
@@ -102,11 +127,14 @@ const App = () => {
   }), []);
   return (
     <>
-      <Form header="Basic" disabled style={{ width: '4rem' }}>
+      <Button onClick={() => setDisabled(!disabled)}>{disabled ? '启用' : '禁用'}</Button>
+      <Form header="Basic" disabled={disabled} style={{ width: '4rem' }}>
+        <IntlField label='多语言' />
         <TextField label="手机号" tooltip="overflow" defaultValue="1588888888822158888888882215888888888221588888888822" pattern="1[3-9]\d{9}" name="phone" required clearButton addonBefore="+86" addonAfter="中国大陆" />
         <Password label="密码" defaultValue="1588888888822158888888882215888888888221588888888822" name="password" required />
         <Password label="确认密码" name="confirmPassword" required validator={passwordValidator} help="请输入与上方相同的密码" showHelp="tooltip" />
         <NumberField label="年龄" name="age" min={18} step={1} required help="我们需要确定你的年龄" addonAfter="周岁" />
+        <Currency label='货币' step={1} />
         <SelectBox label="性别" name="sex" required>
           <Option value="M">男</Option>
           <Option value="F">女</Option>
@@ -116,9 +144,24 @@ const App = () => {
           <Option value="en-us">英语(美国)</Option>
           <Option value="ja-jp">日本語</Option>
         </Select>
+        <Cascader label='级联选择' options={[]} />
         <EmailField label="邮箱" name="email" required addonAfter={dropdown} />
         <UrlField label="个人主页" name="homepage" required addonBefore="Http://" />
         <DatePicker label="生日" name="birth" required />
+        <TreeSelect
+          label='树选择'
+          placeholder="请选择"
+          treeDefaultExpandAll
+        >
+          <TreeNode value="parent 1" title="parent 1">
+            <TreeNode value="parent 1-0" title="parent 1-0">
+              <TreeNode value="leaf1" title="my leaf" />
+              <TreeNode value="leaf2" title="your leaf" />
+            </TreeNode>
+          </TreeNode>
+        </TreeSelect>
+        <ColorPicker label='颜色选择' defaultValue="#f1c7f2" />
+        <IconPicker label='图标选择' value="person" />
         <Form>
           <div>
             <Button type="submit">注册</Button>

@@ -994,7 +994,10 @@ export default class Lov extends Select<LovProps> {
   }
 
   getSuffix(): ReactNode {
-    const { viewMode, showDetailWhenReadonly } = this;
+    const { viewMode, showDetailWhenReadonly, showSuffix } = this;
+    if (!showSuffix) {
+      return undefined;
+    }
     const { suffix } = this.props;
     if (viewMode === TriggerViewMode.popup) {
       return super.getSuffix();
