@@ -72,6 +72,7 @@ timeline: true
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
 - 💄 `<pro>CodeArea`: 优化 JSONFormatter, json 格式化时默认都换行。
+- 💄 `<pro>Picture`: 优化图片在移动端预览的样式。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

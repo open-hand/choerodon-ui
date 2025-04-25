@@ -1,15 +1,20 @@
 import React from 'react';
+import classNames from 'classnames';
 import ModalManager from '../modal-manager';
 import { getContainer, open } from '../modal-container/ModalContainer';
 import PictureViewer, { PictureViewerProps } from '../picture/PictureViewer';
 import { ModalProps } from './Modal';
+import isMobile from '../_util/isMobile';
 
 export default async function preview(props: PictureViewerProps, modalProps?: ModalProps) {
   const container = await getContainer();
   const customizedPrefixCls = container.context.getProPrefixCls('picture-viewer', props.prefixCls);
+  const classString = classNames(`${customizedPrefixCls}-modal`, {
+    [`${customizedPrefixCls}-modal-mobile`]: isMobile(),
+  });
   open({
     key: ModalManager.getKey(),
-    className: `${customizedPrefixCls}-modal`,
+    className: classString,
     border: false,
     header: null,
     footer: null,
