@@ -6,6 +6,7 @@ import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import Picture, { PictureRef } from './Picture';
 import { stopPropagation } from '../_util/EventManager';
+import isMobile from '../_util/isMobile';
 
 export interface NavbarProps {
   prefixCls?: string;
@@ -21,8 +22,6 @@ export interface NavItemProps {
   src?: string;
   active: boolean;
 }
-
-const MAX = 5;
 
 const SIZE = 60;
 const GUTTER = 8;
@@ -54,6 +53,8 @@ NavItem.displayName = 'NavItem';
 const MemoNavItem = memo(NavItem);
 
 const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
+  const MAX = isMobile() ? 3 : 5;
+
   const { prefixCls, value, list, onChange } = props;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex, setCurrentIndex] = useState(value);

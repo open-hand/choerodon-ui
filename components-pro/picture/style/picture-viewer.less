@@ -151,4 +151,34 @@
       background-color: rgba(0, 0, 0, 0);
     }
   }
+
+  // 手机端
+  &-modal&-modal-mobile {
+    .@{c7n-pro-prefix}-modal-body {
+      padding: 0.16rem 0.1rem !important;
+    }
+
+    .@{picture-viewer-prefix-cls}-picture {
+      margin: 0 0.1rem;
+    }
+
+    .@{picture-viewer-prefix-cls}-btn-nav.@{c7n-pro-prefix}-btn-lg {
+      // toolbar + navbar 高度的一半
+      top: -0.7rem;
+      width: @picture-viewer-nav-btn-size;
+      height: @picture-viewer-nav-btn-size;
+      .@{iconfont-css-prefix} {
+        font-size: @picture-viewer-nav-btn-size;
+      }
+    }
+
+    .@{picture-viewer-prefix-cls}-navbar-scroll-container {
+      margin: 0;
+    }
+
+    .@{picture-viewer-prefix-cls}-btn-close {
+      top: 0.15rem;
+      right: 0.15rem;
+    }
+  }
 }
