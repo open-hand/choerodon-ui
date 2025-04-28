@@ -1739,7 +1739,11 @@ export default class Table extends DataSetComponent<TableProps> {
                     })
                   } else {
                     const option = optionData.find(x => x[textField] === text || x[valueField] === text);
-                    text = option ? option[valueField] : null;
+                    if(option){
+                      text = option[valueField];
+                    } else if(fieldType !== FieldType.string) {
+                      text = '';
+                    }
                   }
                 }
                 break;

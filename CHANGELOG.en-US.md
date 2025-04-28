@@ -79,6 +79,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of pasting multiple blank columns after successful bidirectional copying.
 - 🐞 `<pro>Table`: Fixed the issue where bidirectional copying of lov calculation attribute changes resulted in no request for pasting.
 - 🐞 `<pro>Table`: Fixed the issue where there is blank data in the pasted data that cannot be skipped.
+- 🐞 `<pro>Table`: Fixed the issue where the pasted component cannot be pasted when selecting and setting the compose property.
 - 🐞 `<pro>PerformanceTable`: Fixes invalid rowSelection dynamic configuration.
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that after scrolling to the bottom with a horizontal scrollbar, checking the data would trigger scrolling.
