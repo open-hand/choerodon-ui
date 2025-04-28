@@ -110,6 +110,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where the fuzzy search value was not cleared when the dynamic filter bar was switched.
 - 🐞 `<pro>DateSet`: Fixed an issue that resulted in incorrect `status` when cancelling the last request while launching a new request.
 - 🐞 `isOverflow`: Fixed inaccurate element overflow judgment.
+- 🐞 `<pro>Table`: Fixed the issue of incorrect copying when customizing and rendering cells using `Form`.
 
 ## 1.6.6
 
