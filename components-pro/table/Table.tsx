@@ -1532,8 +1532,8 @@ export default class Table extends DataSetComponent<TableProps> {
                     }
                     if (columns[j] && columns[j].column.renderer) {
                       const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                      const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td')[j];
-                      recordData = td ? td.innerText : null;
+                      const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td[class*="-table-cell"]')[j];
+                      recordData = td ? (td as HTMLTableCellElement).innerText : null;
                     }
                   } else if (fieldType === FieldType.object) {
                     recordData = JSON.stringify(recordData);
@@ -1542,6 +1542,10 @@ export default class Table extends DataSetComponent<TableProps> {
                   if (isString(recordData)) {
                     recordData = recordData.replace(/[\r\n]/g, "")
                   }
+                } else if (columns[j] && columns[j].column.renderer) {
+                  const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
+                  const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td[class*="-table-cell"]')[j];
+                  recordData = td ? (td as HTMLTableCellElement).innerText : null;
                 }
               }
   

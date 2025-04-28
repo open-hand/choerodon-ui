@@ -44,7 +44,7 @@ function getRowSpan(group: Group, tableStore: TableStore): number {
 }
 
 export function getTdElementByTarget(target: HTMLElement): HTMLElement {
-  if (target.tagName.toLowerCase() !== "td") {
+  if (target.tagName.toLowerCase() !== "td" || !target.className.includes("-table-cell")) {
     return getTdElementByTarget(target.parentElement!);
   }
   return target;

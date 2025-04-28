@@ -455,7 +455,7 @@ export interface Config extends DataSetConfig {
   /**
    * 输入组件禁用时, 是否显示后缀
    */
-  inputDisabledShowSuffix?: boolean | ((compName: InputSuffixCompName) => boolean);
+  inputDisabledShowSuffix?: boolean | ((compName: InputSuffixCompName) => boolean | undefined);
   /**
    * @deprecated
    */
