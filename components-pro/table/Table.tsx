@@ -1622,7 +1622,7 @@ export default class Table extends DataSetComponent<TableProps> {
           if (editorRowIndex >= totalCount) {
             this.dataSet.create({}, editorRowIndex + 1);
           }
-          const cols = rows[i].split('\t').filter(Boolean);
+          const cols = rows[i].split('\t').map(x=>(x || ' ')).filter(Boolean);
 
           for (let j = 0; j < cols.length; j++) {
             let text: boolean | string | object | number = cols[j];
