@@ -1576,7 +1576,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const noCache = this.getProp('noCache');
     if (!hidden) {
       const { field } = this;
-      if (field) {
+      const { searchMatcher, searchText } = this;
+      const optionsProp = field && field.get('options', this.record) || this.observableProps.options;
+      if (noCache && optionsProp) {
+        optionsProp.query(undefined, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
+      } else if (field) {
         field.fetchLookup(noCache, this.record);
       }
       this.forcePopupAlign();

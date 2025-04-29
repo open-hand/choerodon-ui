@@ -111,6 +111,7 @@ timeline: true
 - 🐞 `<pro>DateSet`: Fixed an issue that resulted in incorrect `status` when cancelling the last request while launching a new request.
 - 🐞 `isOverflow`: Fixed inaccurate element overflow judgment.
 - 🐞 `<pro>Table`: Fixed the issue of incorrect copying when customizing and rendering cells using `Form`.
+- 🐞 `<pro>Select`: Fixed the issue where the `noCache` property did not take effect when the `field` set `options`.
 
 ## 1.6.6
 
