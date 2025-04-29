@@ -111,6 +111,7 @@ timeline: true
 - 🐞 `<pro>DateSet`: 修复取消上次请求同时发起新请求时, 导致 status 状态不正确的问题。
 - 🐞 `isOverflow`: 修复元素溢出判断不准确的问题。
 - 🐞 `<pro>Table`: 修复使用 Form 自定义渲染单元格时, 复制不正确的问题。
+- 🐞 `<pro>Select`: 修复当 field 设置 options 时, noCache 属性不生效的问题。
 
 ## 1.6.6
 
