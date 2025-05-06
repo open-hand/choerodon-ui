@@ -40,6 +40,9 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
 
   panel: HTMLDivElement | null;
 
+  // 触屏滑动时的起始位置
+  startY = 0;
+
   getViewClassName(): string {
     const { prefixCls } = this;
     return `${prefixCls}-time`;
@@ -111,6 +114,24 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
 
   throttleHandleWheel = throttle(this.handleWheel, 80);
 
+  handleTouchStart = (e) => {
+    this.startY = e.touches[0].clientY;
+    this.panel?.addEventListener('touchmove', this.handleTouchMove, { passive: false });
+  }
+
+  handleTouchMove = (e) => {
+    e.preventDefault();
+    const currentY = e.touches[0].clientY;
+    const deltaY = this.startY - currentY;
+    this.startY = currentY;
+    e.deltaY = deltaY;
+    this.throttleHandleWheel(e);
+  }
+
+  handleTouchEnd = () => {
+    this.panel?.removeEventListener('touchmove', this.handleTouchMove);
+  }
+
   @autobind
   savePanel(node) {
     this.panel = node;
@@ -128,12 +149,16 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
     if (this.panel) {
       // 兼容Firefox wheel为通用事件
       this.panel.addEventListener('wheel', this.throttleHandleWheel, { passive: false });
+      this.panel.addEventListener('touchstart', this.handleTouchStart);
+      this.panel.addEventListener('touchend', this.handleTouchEnd);
     }
   }
 
   componentWillUnmount(): void {
     if (this.panel) {
       this.panel.removeEventListener('wheel', this.throttleHandleWheel);
+      this.panel.removeEventListener('touchstart', this.handleTouchStart);
+      this.panel.removeEventListener('touchend', this.handleTouchEnd);
     }
   }
 
@@ -393,6 +418,7 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
       };
       if (!isDisabled) {
         props.onClick = this.handleTimeCellClick.bind(this, current, unit);
+        props.onTouchStart = this.changeUnit.bind(this, unit);
         props.onMouseEnter = this.handleDateMouseEnter.bind(this, current);
         props.onMouseLeave = onDateMouseLeave;
       }
