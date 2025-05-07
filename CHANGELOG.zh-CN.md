@@ -70,6 +70,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
+- 💄 `<pro>TextField`: 优化 range 模式校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
 - 💄 `<pro>CodeArea`: 优化 JSONFormatter, json 格式化时默认都换行。
 - 💄 `<pro>Picture`: 优化图片在移动端预览的样式。

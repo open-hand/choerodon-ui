@@ -194,6 +194,17 @@ export function toRangeValue(value: any, range?: boolean | [string, string]): [a
   return [undefined, undefined];
 }
 
+export function toMultipleValue(value: any, range?: boolean | [string, string]) {
+  if (!isNil(value)) {
+    const multipleValue = isArrayLike(value) ? value.slice() : [value];
+    if (range) {
+      return multipleValue.map(item => toRangeValue(item, range));
+    }
+    return multipleValue;
+  }
+  return [];
+}
+
 export function normalizeLanguage(language?: string): string | undefined {
   return language && language.replace('_', '-').toLowerCase();
 }
@@ -211,6 +222,7 @@ export default {
   getDateFormatByField,
   getNumberFormatOptions,
   toRangeValue,
+  toMultipleValue,
   normalizeLanguage,
   parseBigNumber,
   formatFileSize,
