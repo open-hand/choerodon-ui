@@ -70,6 +70,7 @@ timeline: true
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
+- 💄 `<pro>TextField`: Optimize the validation of the `range` mode.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
 - 💄 `<pro>CodeArea`: Optimize `JSONFormatter`. When formatting `json`, it defaults to line breaks by default.
 - 💄 `<pro>Picture`: Optimize the style of previewing images on mobile devices.

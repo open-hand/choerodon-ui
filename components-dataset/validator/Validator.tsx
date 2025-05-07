@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { action, flow, isArrayLike, toJS } from 'mobx';
+import { action, flow, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -9,7 +9,7 @@ import { Form } from '../interface';
 import validationRules, { methodReturn, validationRule, ValidatorBaseProps, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
 import { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
-import { getGlobalConfig } from '../utils';
+import { getGlobalConfig, toMultipleValue, toRangeValue } from '../utils';
 
 export type CustomValidator = (
   value: any,
@@ -162,9 +162,12 @@ export default class Validator {
     } else {
       const multiple = getProp('multiple');
       const range = getProp('range');
+      const valueArr = multiple
+        ? toMultipleValue(value, range)
+        : range ? toRangeValue(value, range) : [value];
       await flow(execute)(
         validationRules.slice(),
-        (multiple || range) && isArrayLike(value) ? value.slice() : [value],
+        valueArr,
         props,
         getProp,
         validationResults,
