@@ -16,7 +16,6 @@
   background-color: @tag-default-bg;
   border: @tag-border;
   border-radius: @border-radius-base;
-  cursor: pointer;
   opacity: 1;
   transition: all @animation-duration-slow @ease-out;
 
@@ -60,6 +59,7 @@
   &-checkable {
     background-color: @tag-checkable-bg;
     border-color: @tag-checkable-border-color;
+    cursor: pointer;
 
     &:not(&-checked):hover {
       color: @tag-checkable-not-checked-hover-color;
