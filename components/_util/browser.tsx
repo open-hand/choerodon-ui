@@ -42,3 +42,37 @@ export function getIeVersion(): number {
   }
   return -1;
 }
+
+let browserInfoCache: { browser?: string; majorVersion?: number } | null = null;
+
+/**
+ * 获取浏览器名称和主版本号
+ * @returns 
+ */
+export function getBrowserInfo(): { browser?: string; majorVersion?: number } {
+  if (typeof navigator === 'undefined') return {};
+  if (browserInfoCache) return browserInfoCache;
+  const ua = navigator.userAgent;
+  let browser;
+  let majorVersion;
+
+  const browsers = [
+    { name: 'Edge', regex: /Edg\/([\d.]+)/ },
+    { name: 'Chrome', regex: /Chrome\/([\d.]+)/ },
+    { name: 'Firefox', regex: /Firefox\/([\d.]+)/ },
+    { name: 'Safari', regex: /Version\/([\d.]+).*Safari/ },
+    { name: 'IE', regex: /MSIE ([\d.]+)/ },
+    { name: 'IE', regex: /Trident\/.*rv:(\d+\.\d+)/ },
+  ];
+
+  for (const { name, regex } of browsers) {
+    const match = ua.match(regex);
+    if (match) {
+      browser = name;
+      majorVersion = parseInt(match[1].split('.')[0], 10);
+      break;
+    }
+  }
+  browserInfoCache = { browser, majorVersion };
+  return browserInfoCache;
+}
