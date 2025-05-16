@@ -22,7 +22,6 @@ import { AxiosInstance } from 'axios';
 import { Form as IForm } from 'choerodon-ui/dataset/interface';
 import Responsive, { hasBreakPointMap, isBreakPointMap } from 'choerodon-ui/lib/responsive/Responsive';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
-import { getBrowserInfo } from 'choerodon-ui/lib/_util/browser';
 import isFunction from 'lodash/isFunction';
 import axios from '../axios';
 import autobind from '../_util/autobind';
@@ -59,17 +58,6 @@ import { ShowHelp } from '../field/enum';
 import Icon from '../icon';
 import { hide, show } from '../tooltip/singleton';
 import { TooltipProps } from '../tooltip/Tooltip';
-
-function isLazySetAutoWidth(): boolean {
-  // 低于 95 版本谷歌浏览器, table-layout: auto 和 col 中宽度设置百分比时, 占位不准确
-  // 延迟设置 .auto-width 样式会有效
-  // 示例Form设置: columns={4} labelWidth='auto' 且子元素少于4个
-  const { browser, majorVersion } = getBrowserInfo();
-  if (browser === 'Chrome' && majorVersion && majorVersion < 95) {
-    return true;
-  }
-  return false;
-}
 
 /**
  * 表单name生成器
@@ -254,8 +242,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
   prepareForReport: { result?: boolean; timeout?: number } = {};
 
   isTooltipShown?: boolean;
-
-  isAutoWidth?: boolean;
 
   constructor(props, context) {
     super(props, context);
@@ -649,19 +635,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
     this.bubbleValidationReport(false);
   }
 
-  @autobind
-  lazySetAutoWidth() {
-    // 低版本谷歌浏览器, 延迟设置 auto-width 样式, 否则会导致里面的元素宽度不正确
-    if (this.isAutoWidth && this.element) {
-      const table = (this.element as HTMLElement).querySelector('form > table');
-      if (table) {
-        setTimeout(() => {
-          table.classList.add('auto-width');
-        }, 0);
-      }
-    }
-  }
-
   handleFormFocus() {
     // 聚焦到form内第一个可编辑组件上
     const fields: FormField<FormFieldProps>[] = this.getFields();
@@ -690,8 +663,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         this.isUnderForm = isUnderForm;
       }
     }
-
-    this.lazySetAutoWidth();
   }
 
   processDataSetListener(flag: boolean) {
@@ -856,6 +827,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     });
 
+    let currentTrColSpan = 0;
     function completeLine() {
       if (cols.length) {
         const maxRowSpan = Math.max(...cols.map(x => x.props.rowSpan));
@@ -992,6 +964,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         fieldElementProps.colIndex = colIndex;
       }
       const currentColSpan = noLabel ? newColSpan : newColSpan * 2 - ((type as typeof Item).__PRO_FORM_ITEM ? 0 : 1);
+      currentTrColSpan += currentColSpan;
+      currentTrColSpan += (noLabel ? 0 : 1);
       cols.push(
         <td
           key={`row-${rowIndex}-col-${colIndex}-field`}
@@ -1012,6 +986,17 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         </td>,
       );
       if (index === len - 1) {
+        const restOfColSpan = columns
+          ? (noLabel ? columns - currentTrColSpan : columns * 2 - currentTrColSpan)
+          : 0;
+        if (restOfColSpan > 0) {
+          for (let c = 0; c < restOfColSpan; c++) {
+            // 低于 95 版本谷歌浏览器, table-layout: auto 和 col 中宽度设置百分比时, 占位不准确, 需要使用真实 td 占位
+            // 示例: Form设置 columns={4} labelWidth='auto' 且子元素少于4个
+            cols.push(<td key={`row-${rowIndex}-col-${c}-empty`} colSpan={1} />);
+          }
+        }
+        currentTrColSpan = 0;
         completeLine();
       } else {
         colIndex++;
@@ -1025,7 +1010,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         const key = `label-${i}`;
         const columnLabelWidth = labelWidth[i % columns];
         if (columnLabelWidth === 'auto') {
-          cols.push(<col key={key} style={labelWidthStyle} />);
+          const colStyle = labelWidthStyle.minWidth || labelWidthStyle.maxWidth ? labelWidthStyle : { width: 'min-content' };
+          cols.push(<col key={key} style={colStyle} />);
         } else {
           cols.push(
             <col
@@ -1047,10 +1033,8 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       }
     }
 
-    this.isAutoWidth = isLazySetAutoWidth() ? isAutoWidth : undefined;
-    const className = isAutoWidth && !isLazySetAutoWidth() ? 'auto-width' : '';
     return (
-      <table key="form-body" style={spacingProperties && spacingProperties.style} className={className}>
+      <table key="form-body" style={spacingProperties && spacingProperties.style} className={`${isAutoWidth ? 'auto-width' : ''}`}>
         {cols.length ? <colgroup>{cols}</colgroup> : undefined}
         <tbody>{rows}</tbody>
       </table>
@@ -1116,7 +1100,6 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       getTooltipTheme,
       getTooltipPlacement,
     };
-    this.isAutoWidth = undefined;
     const children: ReactNode = [
       this.getHeader(),
       props.layout === FormLayout.table ? this.rasterizedChildren() : props.children,
