@@ -1616,6 +1616,7 @@ export default class Table extends DataSetComponent<TableProps> {
       const rows = clipText.split('\n').filter(line => line.trim() !== '');
 
       const totalCount = paging ? length : noPagingTotoalCount;
+      let errorPasteColName='';
       try {
         for (let i = 0; i < rows.length; i++) {
           // 判断超出时自动新增行
@@ -1634,6 +1635,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const { column } = columns[colIndex + j];
             const fieldName = column.name;
             const field = this.dataSet.getField(fieldName);
+            errorPasteColName = field?.get('label');
             // 非编辑项则跳过赋值
             if (!column.editor || !field || field.get('disabled', record) || field.get('readOnly', record) || !this.dataSet) {
               continue;
@@ -1759,6 +1761,7 @@ export default class Table extends DataSetComponent<TableProps> {
             batchRecord.push({ record, name: fieldName, value: text });
           }
         }
+        errorPasteColName = '';
         if (inlineEdit) {
           this.focus();
         }
@@ -1773,8 +1776,10 @@ export default class Table extends DataSetComponent<TableProps> {
       } catch (error) {
         if (clipboard && clipboard.tipCallback && typeof clipboard.tipCallback === 'function') {
           clipboard.tipCallback('paste', false)
+        } else if(errorPasteColName){
+          console.error(`[${errorPasteColName}]粘贴格式错误：`, error.message)
         } else {
-          message.warning(error.message);
+          console.error(error.message)
         }
       }
       runInAction(() => {
