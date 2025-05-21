@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。
@@ -38,6 +38,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: 新增季度模式。
 - 🌟 `<pro>CodeArea`: 新增 prettierOptions 属性。
 - 🌟 `<pro>Table`: clipboard 新增 onlyTemplateHeader 属性。
+- 🌟 `Tag`: 新增 hoverShowPointer 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。

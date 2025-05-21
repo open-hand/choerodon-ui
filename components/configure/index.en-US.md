@@ -208,7 +208,8 @@ const prefixCls = getConfig('prefixCls');
 | valueChangeAction | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
 | tableSize | 设置 table 大小 | `small` \| `default` \| `large` | `default` |
 | showSelectLoading | 对应值集查询时，Select 组件显示 loading 效果 | boolean | false |
-| inputDisabledShowSuffix | 输入组件禁用时, 是否显示后缀, 默认不显示。 compName 是组件名 | boolean \| ((compName) => boolean) |  |
+| inputDisabledShowSuffix | 输入组件禁用时, 是否显示后缀, 默认不显示。 compName 是组件名 | boolean \| ((compName) => boolean) | (compName) => { if (compName === 'IntlField') { return true; } return false; } |
+| tagHoverShowPointer | Tag 组件 hover 时是否显示小手样式, 默认不显示 | boolean |  |
 
 ### Customizable
 

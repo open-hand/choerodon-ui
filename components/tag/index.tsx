@@ -2,6 +2,7 @@ import React, { Component, CSSProperties, HTMLAttributes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
+import isNil from 'lodash/isNil';
 import Icon from '../icon';
 import CheckableTag from './CheckableTag';
 import Animate from '../animate';
@@ -23,6 +24,7 @@ export interface TagProps extends HTMLAttributes<HTMLDivElement> {
   /** 动画关闭后的回调 */
   afterClose?: Function;
   style?: CSSProperties;
+  hoverShowPointer?: boolean;
 }
 
 export interface TagState {
@@ -55,6 +57,15 @@ export default class Tag extends Component<TagProps, TagState> {
     closed: false,
     visible: true,
   };
+
+  get hoverShowPointer(): boolean | undefined {
+    const { hoverShowPointer } = this.props;
+    const { getConfig } = this.context;
+    if (!isNil(hoverShowPointer)) {
+      return hoverShowPointer;
+    }
+    return getConfig('tagHoverShowPointer');
+  }
 
   componentDidUpdate(_prevProps: TagProps, prevState: TagState) {
     const { visible } = this.state;
@@ -136,6 +147,7 @@ export default class Tag extends Component<TagProps, TagState> {
         [`${prefixCls}-${color}`]: isPresetColor,
         [`${prefixCls}-has-color`]: color && !isPresetColor,
         [`${prefixCls}-close`]: closing,
+        [`${prefixCls}-hover-show-pointer`]: this.hoverShowPointer,
       },
       className,
     );

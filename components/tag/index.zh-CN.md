@@ -22,6 +22,7 @@ title: Tag
 | closable | 标签是否可以关闭 | boolean | false |
 | color | 标签色 | string | - |
 | onClose | 关闭时的回调 | (e) => void | - |
+| hoverShowPointer | Tag 组件 hover 时是否显示小手样式 | boolean | - |
 
 ### Tag.CheckableTag
 

@@ -457,6 +457,10 @@ export interface Config extends DataSetConfig {
    */
   inputDisabledShowSuffix?: boolean | ((compName: InputSuffixCompName) => boolean | undefined);
   /**
+   * Tag 组件 hover 时是否显示小手样式
+   */
+  tagHoverShowPointer?: boolean;
+  /**
    * @deprecated
    */
   validationTooltipTheme?: TooltipTheme;
