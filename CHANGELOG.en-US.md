@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix` properties.
+- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer` properties.
 - 🌟 `configure`: TooltipTarget Adds the text-field global object.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
@@ -38,6 +38,7 @@ timeline: true
 - 🌟 `<pro>DatePicker`: Added quarter mode.
 - 🌟 `<pro>CodeArea`: Added `prettierOptions` property.
 - 🌟 `<pro>Table`: Clipboard added `onlyTemplateHeader` property.
+- 🌟 `Tag`: Added `hoverShowPointer` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.

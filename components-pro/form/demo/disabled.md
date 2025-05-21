@@ -14,7 +14,6 @@ title:
 Form.
 
 ````jsx
-import { configure } from 'choerodon-ui';
 import {
   DataSet,
   Form,
@@ -39,14 +38,6 @@ import {
   ColorPicker,
   IconPicker,
 } from 'choerodon-ui/pro';
-
-configure({
-  inputDisabledShowSuffix: (compName) => {
-    if (compName === 'IntlField') {
-      return true;
-    }
-  },
-});
 
 const { Option } = Select;
 const { TreeNode } = TreeSelect;
