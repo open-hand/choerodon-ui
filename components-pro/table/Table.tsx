@@ -310,6 +310,7 @@ export interface Clipboard {
   description?: string | ReactNode;
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
   tipCallback?: (type: string, success: boolean) => void;
+  onlyTemplateHeader?: boolean;
 }
 
 export interface ArrangeValue {
@@ -1632,6 +1633,9 @@ export default class Table extends DataSetComponent<TableProps> {
           for (let j = 0; j < cols.length; j++) {
             let text: boolean | string | object | number = cols[j];
             const record = this.dataSet.get(editorRowIndex);
+            if(colIndex + j >= columns.length) {
+              break;
+            }
             const { column } = columns[colIndex + j];
             const fieldName = column.name;
             const field = this.dataSet.getField(fieldName);

@@ -57,58 +57,60 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
     }
     const data: any = [];
     // 模拟 5 条数据
-    for (let i = 0; i < 5; i++) {
-      const row = {};
-      Object.keys(templateHeader).forEach(key => {
-        switch (templateType[key]) {
-          case "string":
-          case "intl":
-            row[key] = templateIsMutiple[key] ? '文字1,文字2' : '文字';
-            break;
-          case "number":
-            row[key] = templateIsMutiple[key] ? "10, 20" : Math.floor(Math.random() * 100 + 1);
-            break;
-          case "boolean":
-            row[key] = Math.random() > 0.5 ? "是" : "否";
-            break;
-          case "object":
-            row[key] = templateIsMutiple[key] ? "LOV相关文字1,LOV相关文字2" : "LOV相关文字";
-            break;
-          case "date":
-            row[key] = templateIsMutiple[key] ? `2023-07-01,2023-07-02` : `2023-07-01`;
-            break;
-          case "dateTime":
-            row[key] = templateIsMutiple[key] ? `2023-07-01 12:12:12,2023-07-02 13:13:13` : `2023-07-01 12:12:12`;
-            break;
-          case "year":
-            row[key] = templateIsMutiple[key] ? '2023,2024' : '2023';
-            break;
-          case "week":
-            row[key] = templateIsMutiple[key] ? '2023-20周,2023-21周' : '2023-20周';
-            break;
-          case "month":
-            row[key] = templateIsMutiple[key] ? '2023-01,2024-01' : '2023-01';
-            break;
-          case "quarter":
-            row[key] = templateIsMutiple[key] ? '2023-Q1,2024-Q1' : '2023-Q1';
-            break;
-          case "time":
-            row[key] = templateIsMutiple[key] ? '05:05:00,16:14:15' : '16:14:15';
-            break;
-          case "email":
-            row[key] = templateIsMutiple[key] ? 'xxxxxx@xxx.com,zzzzz@zzz.com' : 'xxxxxx@xxx.com';
-            break;
-          case "url":
-            row[key] = templateIsMutiple[key] ? 'https:www.xxxxxx.com/,https:www.zzzzzz.com/' : 'https:www.xxxxxx.com/';
-            break;
-          case "bigNumber":
-            row[key] = templateIsMutiple[key] ? '123456789.123456789,1000000.000000001' : '123456789.123456789';
-            break;
-          default:
-            break;
-        }
-      });
-      data.push(row);
+    if(!clipboard.onlyTemplateHeader){
+      for (let i = 0; i < 5; i++) {
+        const row = {};
+        Object.keys(templateHeader).forEach(key => {
+          switch (templateType[key]) {
+            case "string":
+            case "intl":
+              row[key] = templateIsMutiple[key] ? '文字1,文字2' : '文字';
+              break;
+            case "number":
+              row[key] = templateIsMutiple[key] ? "10, 20" : Math.floor(Math.random() * 100 + 1);
+              break;
+            case "boolean":
+              row[key] = Math.random() > 0.5 ? "是" : "否";
+              break;
+            case "object":
+              row[key] = templateIsMutiple[key] ? "LOV相关文字1,LOV相关文字2" : "LOV相关文字";
+              break;
+            case "date":
+              row[key] = templateIsMutiple[key] ? `2023-07-01,2023-07-02` : `2023-07-01`;
+              break;
+            case "dateTime":
+              row[key] = templateIsMutiple[key] ? `2023-07-01 12:12:12,2023-07-02 13:13:13` : `2023-07-01 12:12:12`;
+              break;
+            case "year":
+              row[key] = templateIsMutiple[key] ? '2023,2024' : '2023';
+              break;
+            case "week":
+              row[key] = templateIsMutiple[key] ? '2023-20周,2023-21周' : '2023-20周';
+              break;
+            case "month":
+              row[key] = templateIsMutiple[key] ? '2023-01,2024-01' : '2023-01';
+              break;
+            case "quarter":
+              row[key] = templateIsMutiple[key] ? '2023-Q1,2024-Q1' : '2023-Q1';
+              break;
+            case "time":
+              row[key] = templateIsMutiple[key] ? '05:05:00,16:14:15' : '16:14:15';
+              break;
+            case "email":
+              row[key] = templateIsMutiple[key] ? 'xxxxxx@xxx.com,zzzzz@zzz.com' : 'xxxxxx@xxx.com';
+              break;
+            case "url":
+              row[key] = templateIsMutiple[key] ? 'https:www.xxxxxx.com/,https:www.zzzzzz.com/' : 'https:www.xxxxxx.com/';
+              break;
+            case "bigNumber":
+              row[key] = templateIsMutiple[key] ? '123456789.123456789,1000000.000000001' : '123456789.123456789';
+              break;
+            default:
+              break;
+          }
+        });
+        data.push(row);
+      }
     }
     data.unshift(templateHeader);
     exportExcel(data, $l('Table', 'paste_template'), getXlsxConfig);

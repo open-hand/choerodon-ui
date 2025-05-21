@@ -37,6 +37,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `downloadAllMode`, `getDownloadAllUrl`, `getDownloadUrl` properties.
 - 🌟 `<pro>DatePicker`: Added quarter mode.
 - 🌟 `<pro>CodeArea`: Added `prettierOptions` property.
+- 🌟 `<pro>Table`: Clipboard added `onlyTemplateHeader` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
