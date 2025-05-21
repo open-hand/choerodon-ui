@@ -37,6 +37,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 downloadAllMode, getDownloadAllUrl, getDownloadUrl 属性。
 - 🌟 `<pro>DatePicker`: 新增季度模式。
 - 🌟 `<pro>CodeArea`: 新增 prettierOptions 属性。
+- 🌟 `<pro>Table`: clipboard 新增 onlyTemplateHeader 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。

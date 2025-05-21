@@ -318,6 +318,7 @@ spin的配置项。
 | arrangeCalc | 开启范围计数 | boolean \| ReactNode | false |
 | hiddenTip | 关闭提示 | boolean | false |
 | tipCallback | 复制、粘贴成功或者失败的回调 | (type: 'copy' | 'paste', success: boolean) => void | - |
+| onlyTemplateHeader | 是否只导出模板头部 | boolean | false |
 
 ### instance methods
 
