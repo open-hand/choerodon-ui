@@ -119,6 +119,7 @@ timeline: true
 - 🐞 `isOverflow`: Fixed inaccurate element overflow judgment.
 - 🐞 `<pro>Table`: Fixed the issue of incorrect copying when customizing and rendering cells using `Form`.
 - 🐞 `<pro>Select`: Fixed the issue where the `noCache` property did not take effect when the `field` set `options`.
+- 🐞 `<pro>Board`: Fixed the issue where the addField field did not take effect for other views.
 
 ## 1.6.6
 

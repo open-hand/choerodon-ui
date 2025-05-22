@@ -13,7 +13,7 @@ import React, {
   Children,
   JSXElementConstructor,
 } from 'react';
-import { runInAction } from 'mobx';
+import { ObservableMap, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import classnames from 'classnames';
 import isString from 'lodash/isString';
@@ -45,7 +45,7 @@ import BoardContext, { BoardContextValue } from './BoardContext';
 import { getColumnKey, getEditorByField, getPlaceholderByField } from '../table/utils';
 import { $l } from '../locale-context';
 import { FieldType, RecordStatus } from '../data-set/enum';
-import Field from '../data-set/Field';
+import Field, { FieldProps } from '../data-set/Field';
 import { ButtonProps } from '../button/Button';
 import CardContent from './CardContent';
 import { ColumnLock, ColumnProps, TableQueryBarHookCustomProps } from '../table/interface';
@@ -54,6 +54,21 @@ import Column from '../table/Column';
 
 export const GROUPFIELD = '__GROUPFIELD__';
 
+
+function processFieldProps(fields: ObservableMap<string, any>): FieldProps[] {
+  const result: FieldProps[] = [];
+  
+  fields.forEach((field, fieldName) => {
+    // 过滤掉以 __tls. 开头的字段
+    if (!fieldName.startsWith('__tls.')) {
+      // 获取并转换属性
+      const props = field.props.toPOJO();
+      result.push(props);
+    }
+  });
+  
+  return result;
+}
 
 type ChildrenInfo = {
   hasAggregationColumn: boolean;
@@ -672,7 +687,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
   const tableDataSet = useMemo(() => {
     const isDefault = customizedDS.current ? customizedDS.current.get(ViewField.id) === '__DEFAULT__' : true;
     const defaultSortParams = (dataSet.combineSort && customizedDS.current) ? customizedDS.current.get(ViewField.combineSort) || [] : [];
-    const orgFields = dataSet.props.fields ? dataSet.props.fields : [];
+    const orgFields = dataSet.fields ? processFieldProps(dataSet.fields) : [];
     const orderFields = orgFields.map((field) => {
       const orderField = defaultSortParams.find(of => of.sortName === field.name);
       const newField = { ...field };

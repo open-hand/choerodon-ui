@@ -119,6 +119,7 @@ timeline: true
 - 🐞 `isOverflow`: 修复元素溢出判断不准确的问题。
 - 🐞 `<pro>Table`: 修复使用 Form 自定义渲染单元格时, 复制不正确的问题。
 - 🐞 `<pro>Select`: 修复当 field 设置 options 时, noCache 属性不生效的问题。
+- 🐞 `<pro>Board`: 修复 addField 字段针对其他视图不生效的问题。
 
 ## 1.6.6
 
