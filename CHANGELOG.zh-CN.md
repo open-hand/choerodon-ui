@@ -80,6 +80,7 @@ timeline: true
 - 💄 `Tag`: 优化 hover 时鼠标样式。
 - 💄 `<pro>Form`: 优化低版本浏览器下设置 labelWidth 属性为 auto 时的样式。
 - 💄 `<pro>Picture`: 优化低版本浏览器下预览图片的样式。
+- 💄 `<pro>DataSet`: 优化附件字段的校验时机。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
