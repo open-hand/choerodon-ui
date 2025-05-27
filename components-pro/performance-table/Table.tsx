@@ -812,10 +812,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentDidUpdate(prevProps: TableProps, prevState: TableState) {
-    const { rowHeight, data, autoHeight, height, virtualized, children, columns } = prevProps;
+    const { rowHeight, data, autoHeight, height, virtualized, children, columns, rowDraggable } = prevProps;
     const { props, state } = this;
     const rowSelection = getRowSelection(this.props);
-    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren } = props;
+    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren, rowDraggable: nextRowDraggable } = props;
     if (data !== nextData) {
       this.calculateRowMaxHeight();
       if (onDataUpdated) {
@@ -887,7 +887,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const tableBody = this.tableBodyRef.current;
 
-    if (!this.wheelListener && tableBody) {
+    if ((!this.wheelListener && tableBody) || (rowDraggable !== nextRowDraggable)) {
       const options = { passive: false };
       if (isMobile()) {
         this.initBScroll(tableBody);

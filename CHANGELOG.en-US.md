@@ -92,6 +92,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that after scrolling to the bottom with a horizontal scrollbar, checking the data would trigger scrolling.
 - 🐞 `<pro>PerformanceTable`: Fix the issue where the last row of data is obscured by the scrollbar.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
