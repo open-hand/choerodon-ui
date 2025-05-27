@@ -80,6 +80,7 @@ timeline: true
 - 💄 `Tag`: Optimize the mouse style when `hover`.
 - 💄 `<pro>Form`: Optimize the style when setting the `labelWidth` attribute to `auto` in low-version browsers.
 - 💄 `<pro>Picture`: Optimize the style of previewing images in low-version browsers.
+- 💄 `<pro>DataSet`: Optimized the timing of the validation of attachment fields.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -91,6 +92,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that after scrolling to the bottom with a horizontal scrollbar, checking the data would trigger scrolling.
 - 🐞 `<pro>PerformanceTable`: Fix the issue where the last row of data is obscured by the scrollbar.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
