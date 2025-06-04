@@ -70,6 +70,7 @@ timeline: true
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。
 - 💄 `<pro>Picture`: 优化 loading 状态的判断。
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
+- 💄 `<pro>Table`: 优化双向复制提示栏可以直接关闭。
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
 - 💄 `<pro>TextField`: 优化 range 模式校验。

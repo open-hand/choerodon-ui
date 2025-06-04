@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Optimized popup mode image preview not collapse problem.
 - 💄 `<pro>Table`: Built-in button to add class name.
 - 💄 `<pro>Table`: Optimize filter bar drop-down to close interaction.
+- 💄 `<pro>Table`: Optimization of the bidirectional replication prompt bar can be directly turned off.
 - 💄 `<pro>IntlField` : Optimizes multilingual value change logic.
 - 💄 `<pro>Table`: Optimizes the style when the table is set with `autoHeight` and a percentage of column width.
 - 💄 `<Tree>`: Optimized cable background color.
