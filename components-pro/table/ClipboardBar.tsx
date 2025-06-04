@@ -57,7 +57,7 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
     }
     const data: any = [];
     // 模拟 5 条数据
-    if(!clipboard.onlyTemplateHeader){
+    if (!clipboard.onlyTemplateHeader) {
       for (let i = 0; i < 5; i++) {
         const row = {};
         Object.keys(templateHeader).forEach(key => {
@@ -185,19 +185,25 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
 
   return (
     <div className={`${prefixCls}-clipboard`}>
-      <Alert message={
-        <div className={`${prefixCls}-clipboard-content`}>
-          <div
-            ref={refText}
-            className={`${prefixCls}-clipboard-content-text`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {clipboardDescription}
+      <Alert
+        closable
+        className={`${prefixCls}-clipboard-alert`}
+        message={
+          <div className={`${prefixCls}-clipboard-content`}>
+            <div
+              ref={refText}
+              className={`${prefixCls}-clipboard-content-text`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {clipboardDescription}
+            </div>
+            <div className={`${prefixCls}-clipboard-content-suffix`}>{suffixInfo}</div>
           </div>
-          <div className={`${prefixCls}-clipboard-content-suffix`}>{suffixInfo}</div>
-        </div>
-      } type="info" showIcon />
+        }
+        type="info"
+        showIcon
+      />
     </div>
   );
 };
