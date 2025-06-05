@@ -27,18 +27,6 @@
         overflow: hidden;
       }
     }
-
-    &::after {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 1.32rem;
-      background-image: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, #000 99%);
-      opacity: 0.5;
-      content: ' ';
-      pointer-events: none;
-    }
   }
 
   & &-btn.@{c7n-pro-prefix}-btn {
@@ -57,6 +45,11 @@
   & &-btn-nav.@{c7n-pro-prefix}-btn {
     width: @picture-viewer-nav-btn-size;
     height: @picture-viewer-nav-btn-size;
+    background-color: @picture-viewer-nav-btn-bg-color;
+
+    &:hover {
+      background-color: @picture-viewer-nav-btn-hover-bg-color;
+    }
   }
 
   & &-btn-nav.@{c7n-pro-prefix}-btn .@{iconfont-css-prefix} {
@@ -75,8 +68,11 @@
 
   & &-btn-close {
     position: absolute;
-    top: .4rem;
-    right: .4rem;
+    top: 0.1rem;
+    right: 0.1rem;
+    &:hover {
+      background-color: @picture-viewer-nav-btn-hover-bg-color;
+    }
   }
 
   &-picture {
@@ -84,7 +80,6 @@
     flex: 1;
     flex-direction: column;
     height: 100%;
-    margin: 0 .4rem;
     cursor: grab;
 
     &-main {
@@ -100,12 +95,16 @@
 
   &-toolbar {
     z-index: 1;
+    height: 0.5rem;
     margin-top: .4rem;
+    line-height: 0.5rem;
     white-space: nowrap;
     text-align: center;
 
-    &:last-child {
-      margin-bottom: 0.38rem;
+    .@{picture-viewer-prefix-cls}-btn-tool {
+      &:hover {
+        background-color: @picture-viewer-nav-btn-hover-bg-color;
+      }
     }
   }
 
@@ -113,15 +112,17 @@
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-top: .16rem;
+    justify-content: space-between;
+    height: 0.66rem;
+    margin-top: 0.04rem;
 
     &-scroll {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
 
       &-container {
+        display: flex;
+        width: calc(100vw - 2rem);
         margin: 0 .2rem;
         overflow: hidden;
       }
@@ -129,12 +130,12 @@
 
 
     &-item {
-      border: .02rem @border-style-base transparent;
+      margin: 0.05rem;
       cursor: pointer;
     }
 
     &-current {
-      border-color: @text-color-dark;
+      box-shadow: 0 0 0 0.02rem @text-color-dark;
     }
 
     &-item::after {
@@ -175,12 +176,14 @@
     }
 
     .@{picture-viewer-prefix-cls}-navbar-scroll-container {
+      width: 90vw;
       margin: 0;
+      overflow-x: auto;
     }
 
     .@{picture-viewer-prefix-cls}-btn-close {
-      top: 0.15rem;
-      right: 0.15rem;
+      top: 0.1rem;
+      right: 0.1rem;
     }
   }
 }

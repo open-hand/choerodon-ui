@@ -23,8 +23,8 @@ export interface NavItemProps {
   active: boolean;
 }
 
-const SIZE = 60;
-const GUTTER = 8;
+const SIZE = 66;
+const GUTTER = 10;
 
 const NavItem: FunctionComponent<NavItemProps> = function NavItem(props) {
   const { prefixCls, index, onClick, active, src } = props;
@@ -53,34 +53,66 @@ NavItem.displayName = 'NavItem';
 const MemoNavItem = memo(NavItem);
 
 const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
-  const MAX = isMobile() ? 3 : 5;
-
-  const { prefixCls, value, list, onChange } = props;
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(value);
-  const navBarPrefixCls = `${prefixCls}-navbar`;
-  const { length } = list;
-  const disabled = length <= MAX;
-  const handlePrev = useCallback(() => {
-    setCurrentIndex((prevCurrentIndex) => Math.max(prevCurrentIndex - MAX, 0));
-  }, []);
-  const handleNext = useCallback(() => {
-    setCurrentIndex((prevCurrentIndex) => Math.min(prevCurrentIndex + MAX, length - 1));
-  }, [length]);
+  const [MAX, setMAX] = useState(isMobile() ? 3 : 5);
+
   useEffect(() => {
     const { current } = containerRef;
     if (current) {
-      scrollTo(currentIndex * (SIZE + GUTTER), {
-        getContainer: () => current,
-        top: false,
-      });
+      const { clientWidth } = current;
+      const max = Math.floor(clientWidth / (SIZE + GUTTER));
+      setMAX(max);
+      if (!isMobile()) {
+        const width = max * (SIZE + GUTTER);
+        Object.assign(current.style, { width: `${width}px` });
+      }
     }
-  }, [currentIndex]);
+  }, []);
+
+  const { prefixCls, value, list, onChange } = props;
+  const navBarPrefixCls = `${prefixCls}-navbar`;
+  const { length } = list;
+  const disabled = length <= 1;
+  const handlePrev = useCallback(() => {
+    if (value === 0) {
+      const newIndex = list.length - 1;
+      onChange(newIndex);
+    } else {
+      const newIndex = value - 1;
+      onChange(newIndex);
+    }
+  }, [length, value]);
+  const handleNext = useCallback(() => {
+    if (value === length - 1) {
+      onChange(0);
+    } else {
+      const newIndex = value + 1;
+      onChange(newIndex);
+    }
+  }, [length, value]);
   useEffect(() => {
-    if (value < currentIndex || value >= currentIndex + MAX) {
-      setCurrentIndex(value);
+    const { current } = containerRef;
+    const currentLeft = current?.scrollLeft || 0;
+    const currentPosition = (value + 1) * (SIZE + GUTTER);
+    if (current) {
+      if (isMobile()) {
+        scrollTo(value * (SIZE + GUTTER), {
+          getContainer: () => current,
+          top: false,
+        });
+      } else if ((currentLeft + MAX * (SIZE + GUTTER) < currentPosition)) {
+        scrollTo(value * (SIZE + GUTTER), {
+          getContainer: () => current,
+          top: false,
+        });
+      } else if (currentPosition <= currentLeft) {
+        scrollTo((value - MAX + 1 >= 0 ? value - MAX + 1 : 0) * (SIZE + GUTTER), {
+          getContainer: () => current,
+          top: false,
+        });
+      }
     }
-  }, [value]);
+  }, [value, MAX]);
   const renderList = () => {
     return list.map((item, index) => (
       <MemoNavItem
@@ -95,32 +127,32 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
   };
   return (
     <div className={navBarPrefixCls}>
-      <Button
+      {!isMobile() && <Button
         icon="navigate_before"
-        disabled={disabled || currentIndex === 0}
+        disabled={disabled}
         funcType={FuncType.link}
         onClick={handlePrev}
         onMouseDown={stopPropagation}
         className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />
+      />}
       <div
         ref={containerRef}
         className={`${navBarPrefixCls}-scroll-container`}
-        style={disabled ? undefined : { width: SIZE * MAX + GUTTER * (MAX - 1) }}
+        style={{justifyContent: length > MAX ? 'flex-start' : 'center'}}
         onMouseDown={stopPropagation}
       >
-        <div className={`${navBarPrefixCls}-scroll`} style={disabled ? undefined : { width: SIZE * length + GUTTER * (length - 1) }}>
+        <div className={`${navBarPrefixCls}-scroll`}>
           {renderList()}
         </div>
       </div>
-      <Button
+      {!isMobile() && <Button
         icon="navigate_next"
-        disabled={disabled || currentIndex > length - MAX}
+        disabled={disabled}
         funcType={FuncType.link}
         onClick={handleNext}
         onMouseDown={stopPropagation}
         className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />
+      />}
     </div>
   );
 };

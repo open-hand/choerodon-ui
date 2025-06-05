@@ -2,7 +2,6 @@ import React, { FunctionComponent, useCallback, useContext, useEffect, useMemo, 
 import throttle from 'lodash/throttle';
 import isString from 'lodash/isString';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
-import { Size } from 'choerodon-ui/lib/_util/enum';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import Picture, { PictureForwardRef, PictureRef } from './Picture';
@@ -38,6 +37,10 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const { getProPrefixCls } = useContext(ConfigContext);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const transformTargetRef = useRef<HTMLDivElement | null>(null);
+  const touchStartClientRefP1 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
+  const touchEndClientRefP1 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
+  const touchStartClientRefP2 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
+  const touchEndClientRefP2 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
   const [index, setIndex] = useState<number>(defaultIndex);
   const [rotate, setRotate] = useState<number>(0);
   const [translate, setTranslate] = useState<[number, number]>([0, 0]);
@@ -45,10 +48,13 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const [isZoomMode, setIsZoomMode] = useState(false);
   const handleIndexChange = useCallback((newIndex) => {
     if (isZoomMode) setIsZoomMode(false);
-    if (newIndex < 0 || newIndex >= list.length) {
-      return;
+    if (newIndex < 0) {
+      setIndex(list.length - 1);
+    } else if (newIndex >= list.length) {
+      setIndex(0);
+    } else {
+      setIndex(newIndex); 
     }
-    setIndex(newIndex);
     setTranslate([0, 0]);
     setRotate(0);
     setScale(undefined);
@@ -85,18 +91,24 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const handleRotateRight = useCallback(() => setRotate((rotate + 90) % 360), [rotate]);
   const handleZoomIn = useCallback(() => {
     if(!isZoomMode) setIsZoomMode(true);
-    const currentScale = getCurrentScale();
-    if (currentScale < scaleSteps.length - 1) {
-      setScale(getCurrentScale() + 1);
-    }
-  }, [getCurrentScale]);
+    setScale(prev => {
+      const current = prev !== undefined ? prev : getImageNaturalScale();
+      if (current < scaleSteps.length - 1) {
+        return current + 1;
+      }
+      return current;
+    });
+  }, [getCurrentScale, setScale, isZoomMode]);
   const handleZoomOut = useCallback(() => {
     if(!isZoomMode) setIsZoomMode(true);
-    const currentScale = getCurrentScale();
-    if (currentScale > 0) {
-      setScale(currentScale - 1);
-    }
-  }, [getCurrentScale]);
+    setScale(prev => {
+      const current = prev !== undefined ? prev : getImageNaturalScale();
+      if (current > 0) {
+        return current - 1;
+      }
+      return current;
+    });
+  }, [getCurrentScale, setScale, isZoomMode]);
   const throttleWheel = useMemo(() => throttle((callback: Function) => callback(), 60), []);
   const handleWheel = useCallback((e: WheelEvent) => {
     if (e.deltaX > 0 || e.deltaY > 0) {
@@ -148,6 +160,59 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
       executeTransform(current, rotate, scale, translate);
     }
   }, [scale, rotate, translate]);
+  const getDistance = useCallback((p1: [number, number], p2: [number, number]): number => {
+    const [x1, y1] = p1;
+    const [x2, y2] = p2;
+    return Math.hypot(x2 - x1, y2 - y1);
+  }, []);
+  const handleTouchMove = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const { touches: [endP1, endP2] } = e;
+    touchEndClientRefP1.current = [endP1?.clientX, endP1?.clientY];
+    touchEndClientRefP2.current = [endP2?.clientX, endP2?.clientY];
+    if (endP2) {
+      const startDistance = getDistance(touchStartClientRefP1.current as [number, number], touchStartClientRefP2.current as [number, number]);
+      const endDistance = getDistance(touchEndClientRefP1.current as [number, number], touchEndClientRefP2.current as [number, number]);
+      if (endDistance - startDistance > 10) {
+        handleZoomIn();
+        touchStartClientRefP1.current = touchEndClientRefP1.current;
+        touchStartClientRefP2.current = touchEndClientRefP2.current;
+      } else if (startDistance - endDistance > 10) {
+        handleZoomOut();
+        touchStartClientRefP1.current = touchEndClientRefP1.current;
+        touchStartClientRefP2.current = touchEndClientRefP2.current;
+      }
+    }
+  }, [handleZoomIn, handleZoomOut, getDistance]);
+  const handleTouchStart = useCallback((e) => {
+    const { touches: [startP1, startP2] } = e;
+    touchStartClientRefP1.current = [startP1?.clientX, startP1?.clientY];
+    touchStartClientRefP2.current = [startP2?.clientX, startP2?.clientY];
+    const { current } = transformTargetRef;
+    if (current) {
+      current.addEventListener('touchmove', handleTouchMove, { passive: true });
+    }
+  }, []);
+  const handleTouchEnd = useCallback(() => {
+    const [ p1StartClientX ] = touchStartClientRefP1.current;
+    const [ p2StartClientX ] = touchStartClientRefP2.current;
+    const [ p1EndClientX ] = touchEndClientRefP1.current;
+    if ((p1StartClientX !== undefined) && (p1EndClientX !== undefined) && (p1StartClientX - p1EndClientX > 50) && (p2StartClientX === undefined)) {
+      handleNext();
+    }
+    if ((p1StartClientX !== undefined) && (p1EndClientX !== undefined) && (p1EndClientX - p1StartClientX > 50) && (p2StartClientX === undefined)) {
+      handlePrev();
+    }
+    const { current } = transformTargetRef;
+    if (current) {
+      current.removeEventListener('touchmove', handleTouchMove);
+    }
+    touchStartClientRefP1.current = [];
+    touchStartClientRefP2.current = [];
+    touchEndClientRefP1.current = [];
+    touchEndClientRefP2.current = [];
+  }, [handlePrev, handleNext]);
   useEffect(() => () => {
     translateEvent.clear();
   }, []);
@@ -156,20 +221,13 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     const { src, downloadUrl } = getPreviewItem(list[index]);
     return (
       <div className={customizedPrefixCls} onWheel={handleWheel}>
-        {
-          length > 1 && (
-            <Button
-              icon="navigate_before"
-              disabled={index === 0}
-              funcType={FuncType.link}
-              onClick={handlePrev}
-              className={`${customizedPrefixCls}-btn ${customizedPrefixCls}-btn-nav`}
-              size={Size.large}
-            />
-          )
-        }
         <div className={`${customizedPrefixCls}-picture`} onMouseDown={handleMouseDown}>
-          <div className={`${customizedPrefixCls}-picture-main`} ref={transformTargetRef}>
+          <div
+            className={`${customizedPrefixCls}-picture-main`}
+            ref={transformTargetRef}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <Picture
               src={src}
               ref={pictureRef}
@@ -201,18 +259,6 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
             )
           }
         </div>
-        {
-          length > 1 && (
-            <Button
-              icon="navigate_next"
-              disabled={index === length - 1}
-              funcType={FuncType.link}
-              onClick={handleNext}
-              className={`${customizedPrefixCls}-btn ${customizedPrefixCls}-btn-nav`}
-              size={Size.large}
-            />
-          )
-        }
         <Button
           icon="close"
           funcType={FuncType.link}

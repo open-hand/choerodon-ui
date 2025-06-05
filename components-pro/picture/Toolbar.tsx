@@ -4,6 +4,7 @@ import isFunction from 'lodash/isFunction';
 import Button from '../button/Button';
 import { FuncType } from '../button/enum';
 import { stopPropagation } from '../_util/EventManager';
+import isMobile from '../_util/isMobile';
 
 export interface ToolbarProps {
   prefixCls?: string;
@@ -20,22 +21,22 @@ const Toolbar: FunctionComponent<ToolbarProps> = function Toolbar(props) {
   const { prefixCls, downloadUrl, zoomInDisabled, zoomOutDisabled, onZoomIn, onZoomOut, onRotateLeft, onRotateRight } = props;
   return (
     <div className={`${prefixCls}-toolbar`}>
-      <Button
+      {!isMobile() && <Button
         icon="zoom_in"
         funcType={FuncType.link}
         className={`${prefixCls}-btn ${prefixCls}-btn-tool`}
         onClick={onZoomIn}
         onMouseDown={stopPropagation}
         disabled={zoomInDisabled}
-      />
-      <Button
+      />}
+      {!isMobile() && <Button
         icon="zoom_out"
         funcType={FuncType.link}
         className={`${prefixCls}-btn ${prefixCls}-btn-tool`}
         onClick={onZoomOut}
         onMouseDown={stopPropagation}
         disabled={zoomOutDisabled}
-      />
+      />}
       <Button
         icon="replay_90"
         funcType={FuncType.link}
