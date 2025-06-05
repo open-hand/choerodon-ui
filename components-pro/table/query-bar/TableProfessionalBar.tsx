@@ -5,7 +5,7 @@ import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
 import classNames from 'classnames';
 import Icon from 'choerodon-ui/lib/icon';
-import { getProPrefixCls as getProPrefixClsDefault, getConfig } from 'choerodon-ui/lib/configure/utils';
+import { getProPrefixCls as getProPrefixClsDefault, getConfig as getConfigDefault } from 'choerodon-ui/lib/configure/utils';
 import TableButtons from './TableButtons';
 import DataSet from '../../data-set';
 import Button from '../../button';
@@ -19,6 +19,8 @@ import { LabelLayout } from '../../form/enum';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import { Tooltip as LabelTooltip } from '../../core/enum';
+import { FieldType } from '../../data-set/enum';
+import { isFieldValueEmpty } from '../../field/utils';
 
 export interface TableProfessionalBarProps extends ElementProps {
   dataSet: DataSet;
@@ -60,9 +62,39 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
     return getProPrefixCls('table', prefixCls);
   }
 
+  getConfig: typeof getConfigDefault = (key) => {
+    const { tableStore } = this.context;
+    if (tableStore && tableStore.getConfig) {
+      return tableStore.getConfig(key);
+    }
+    return getConfigDefault(key);
+  }
+
+  hasValueDefaultExpanded(props: TableProfessionalBarProps): boolean {
+    const { queryFieldsLimit, queryFields, queryDataSet } = props;
+    const hasValueDefaultExpanded = this.getConfig('tableProfBarHasValueDefaultExpanded');
+    const needExpand = queryDataSet && queryDataSet.current && hasValueDefaultExpanded &&
+      queryFields
+        .filter(f => !f.props.hidden)
+        .slice(queryFieldsLimit)
+        .some(f => {
+          const name = f.props.name;
+          const field = queryDataSet.getField(name);
+          const record = queryDataSet.current;
+          return field && record && !isFieldValueEmpty(
+            record.get(name),
+            field.get('range', record),
+            field.get('multiple', record),
+            field.get('type', record) === FieldType.object ? field.get('valueField', record) : undefined,
+            field.get('type', record) === FieldType.object ? field.get('textField', record) : undefined,
+          );
+        });
+    return !!needExpand;
+  }
+
   componentDidMount(): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = this.props;
-    if (queryDataSet && queryFields.length && defaultExpanded) {
+    if (queryDataSet && queryFields.length && (defaultExpanded || this.hasValueDefaultExpanded(this.props))) {
       runInAction(() => {
         this.moreFields = this.createFields(queryFields.filter(f => !f.props.hidden).slice(queryFieldsLimit));
       });
@@ -73,7 +105,8 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   componentWillReceiveProps(nextProps, _): void {
     const { queryFieldsLimit, queryFields, queryDataSet, defaultExpanded } = nextProps;
     const showMoreFields = this.moreFields && this.moreFields.length;
-    if (queryDataSet && queryFields.length && ((defaultExpanded && showMoreFields) || showMoreFields)) {
+    if (queryDataSet && queryFields.length &&
+      (((defaultExpanded || this.hasValueDefaultExpanded(nextProps)) && showMoreFields) || showMoreFields)) {
       runInAction(() => {
         this.moreFields = this.createFields(queryFields.filter(f => !f.props.hidden).slice(queryFieldsLimit));
       });
@@ -200,7 +233,7 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
       const moreFields = this.createFields(this.queryFields.slice(queryFieldsLimit));
       const moreFieldsButton: ReactElement | undefined = this.getMoreFieldsButton(moreFields);
       let noVerticalFlag = false;
-      const labelLayout  = (formProps && formProps.labelLayout) || getConfig('labelLayout');
+      const labelLayout  = (formProps && formProps.labelLayout) || this.getConfig('labelLayout');
       if(labelLayout !== LabelLayout.vertical){
         noVerticalFlag = true;
       }

@@ -273,6 +273,10 @@ export interface Config extends DataSetConfig {
   tableButtonsLimit?: number;
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
   tableSize?: Size;
+  /**
+   * Table 专业搜索条隐藏的查询字段中有值时, 是否默认展开全部字段
+   */
+  tableProfBarHasValueDefaultExpanded?: boolean;
   pagination?: TablePaginationConfig | false;
   modalSectionBorder?: boolean;
   drawerSectionBorder?: boolean;
@@ -460,6 +464,10 @@ export interface Config extends DataSetConfig {
    * Tag 组件 hover 时是否显示小手样式
    */
   tagHoverShowPointer?: boolean;
+  /**
+   * 禁止时间组件循环滚动
+   */
+  disabledTimeLoopRoll?: boolean;
   /**
    * @deprecated
    */

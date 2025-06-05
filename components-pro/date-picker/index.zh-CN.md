@@ -33,6 +33,7 @@ title: DatePicker
 | comboRangeMode | 设置在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  |
 | inputReadOnly | 设置输入框为只读（避免在移动设备上打开虚拟键盘） | boolean | false |
 | yearFirst | 选择弹窗头部年份是否显示在前 | boolean \| undefined | [globalConfig.datePickerYearFirst](/components/configure#API) |
+| disabledTimeLoopRoll | 禁止时间组件循环滚动  | boolean |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

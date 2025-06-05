@@ -15,13 +15,13 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer` properties.
+- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer`, `disabledTimeLoopRoll`, `tableProfBarHasValueDefaultExpanded` properties.
 - 🌟 `configure`: TooltipTarget Adds the text-field global object.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
 - 🌟 `<pro>Table`: Added bidirectional copy operation prompt callback.
-- 🌟 `<pro>DatePicker`: Added `yearFirst` property.
+- 🌟 `<pro>DatePicker`: Added `yearFirst`, `disabledTimeLoopRoll` property.
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>Attachment`: Added `templateDownloadButtonRenderer` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
@@ -82,6 +82,7 @@ timeline: true
 - 💄 `<pro>Form`: Optimize the style when setting the `labelWidth` attribute to `auto` in low-version browsers.
 - 💄 `<pro>Picture`: Optimize the style of previewing images in low-version browsers.
 - 💄 `<pro>DataSet`: Optimized the timing of the validation of attachment fields.
+- 💄 `<pro>Spin`: Optimize the writing of static functions.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

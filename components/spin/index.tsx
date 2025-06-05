@@ -71,7 +71,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
     wrapperClassName: '',
   };
 
-  static setDefaultIndicator(indicator: ReactNode) {
+  static setDefaultIndicator = (indicator: ReactNode) => {
     global.DEFAULT_SPIN_INDICATOR = indicator;
   }
 

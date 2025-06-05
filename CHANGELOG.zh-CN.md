@@ -15,13 +15,13 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>PerformanceTable`: 新增 useMouseBatchChoose 属性，支持鼠标批量选择。
 - 🌟 `<pro>Pagination`: 新增输入超过最大分页数提示。
 - 🌟 `<pro>Table`: 新增双向复制操作提示回调。
-- 🌟 `<pro>DatePicker`: 新增 yearFirst 属性。
+- 🌟 `<pro>DatePicker`: 新增 yearFirst, disabledTimeLoopRoll 属性。
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
 - 🌟 `<pro>Attachment`: 新增 templateDownloadButtonRenderer 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
@@ -82,6 +82,7 @@ timeline: true
 - 💄 `<pro>Form`: 优化低版本浏览器下设置 labelWidth 属性为 auto 时的样式。
 - 💄 `<pro>Picture`: 优化低版本浏览器下预览图片的样式。
 - 💄 `<pro>DataSet`: 优化附件字段的校验时机。
+- 💄 `<pro>Spin`: 优化静态函数写法。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
