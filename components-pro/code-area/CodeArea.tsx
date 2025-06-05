@@ -411,7 +411,10 @@ export default class CodeArea extends FormField<CodeAreaProps> {
    * @memberof CodeArea
    */
   handleCodeMirrorBlur = action((codeMirrorInstance: IInstance, _event?: Event, focus?: boolean) => {
-    const { formatter, prettierOptions } = this.props;
+    const { formatter, prettierOptions, onBlur } = this.props;
+    if (_event && onBlur && typeof onBlur === 'function') {
+      onBlur(_event as any);
+    }
     // 更新DataSet的值之前，先去拿到原始的raw格式
     let value = codeMirrorInstance.getValue();
     if (formatter) {

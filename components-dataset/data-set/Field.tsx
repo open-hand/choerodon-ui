@@ -8,6 +8,7 @@ import isObject from 'lodash/isObject';
 import cloneDeep from 'lodash/cloneDeep';
 import merge from 'lodash/merge';
 import { AxiosRequestConfig } from 'axios';
+import isPromise from 'is-promise';
 import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
@@ -525,6 +526,10 @@ export default class Field {
   @observable dirtyProps?: Partial<FieldProps> | undefined;
 
   @observable searchPara?: object;
+
+  fetchingList?: Promise<any>;
+
+  fetchingCount?: Promise<any>;
 
   get attachments(): AttachmentFile[] | undefined {
     return this.getAttachments();
@@ -1276,7 +1281,15 @@ export default class Field {
   @action
   async checkValidity(record: Record | undefined = this.record): Promise<boolean> {
     if (record) {
-      const { name } = this;
+      const { name, type } = this;
+      if (type === FieldType.attachment) {
+        if (isPromise(this.fetchingList)) {
+          await this.fetchingList;
+        }
+        if (isPromise(this.fetchingCount)) {
+          await this.fetchingCount;
+        }
+      }
       const { valid, validationResults } = await Validator.checkValidity(record.get(name), {
         dataSet: record.dataSet,
         name,
@@ -1416,7 +1429,7 @@ export default class Field {
     const { bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic } = props;
     const { fetchList } = this.dataSet.getConfig('attachment');
     if (fetchList) {
-      fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results: FileLike[]) => {
+      this.fetchingList = fetchList({ bucketName, bucketDirectory, attachmentUUID, storageCode, isPublic }).then(action((results: FileLike[]) => {
         this.setAttachments(results.map(file => new AttachmentFile(file)), record, undefined);
       })).finally(() => {
         if (this.isDirty(record)) {
@@ -1429,7 +1442,7 @@ export default class Field {
   fetchAttachmentCount(uuid: string, isPublic?: boolean, record: Record | undefined = this.record) {
     const { batchFetchCount } = this.dataSet.getConfig('attachment');
     if (batchFetchCount && !this.attachments) {
-      attachmentStore.fetchCountInBatch({
+      this.fetchingCount = attachmentStore.fetchCountInBatch({
         attachmentUUID: uuid,
         bucketName: this.get('bucketName', record),
         bucketDirectory: this.get('bucketDirectory', record),

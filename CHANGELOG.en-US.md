@@ -50,6 +50,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Optimized popup mode image preview not collapse problem.
 - 💄 `<pro>Table`: Built-in button to add class name.
 - 💄 `<pro>Table`: Optimize filter bar drop-down to close interaction.
+- 💄 `<pro>Table`: Optimization of the bidirectional replication prompt bar can be directly turned off.
 - 💄 `<pro>IntlField` : Optimizes multilingual value change logic.
 - 💄 `<pro>Table`: Optimizes the style when the table is set with `autoHeight` and a percentage of column width.
 - 💄 `<Tree>`: Optimized cable background color.
@@ -80,6 +81,7 @@ timeline: true
 - 💄 `Tag`: Optimize the mouse style when `hover`.
 - 💄 `<pro>Form`: Optimize the style when setting the `labelWidth` attribute to `auto` in low-version browsers.
 - 💄 `<pro>Picture`: Optimize the style of previewing images in low-version browsers.
+- 💄 `<pro>DataSet`: Optimized the timing of the validation of attachment fields.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -91,6 +93,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed an issue where checking rows would trigger scrolling when `autoHeight` was enabled.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that after scrolling to the bottom with a horizontal scrollbar, checking the data would trigger scrolling.
 - 🐞 `<pro>PerformanceTable`: Fix the issue where the last row of data is obscured by the scrollbar.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
@@ -120,6 +123,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of incorrect copying when customizing and rendering cells using `Form`.
 - 🐞 `<pro>Select`: Fixed the issue where the `noCache` property did not take effect when the `field` set `options`.
 - 🐞 `<pro>Board`: Fixed the issue where the addField field did not take effect for other views.
+- 🐞 `<pro>CodeArea`: Fix the issue of invalid onBlur events in CodeArea.
 
 ## 1.6.6
 
