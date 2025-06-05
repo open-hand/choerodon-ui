@@ -200,6 +200,7 @@ const defaults = {
     }
     return false;
   },
+  tableProfBarHasValueDefaultExpanded: true,
 };
 
 export default defaults;

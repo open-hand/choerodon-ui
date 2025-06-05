@@ -210,6 +210,8 @@ const prefixCls = getConfig('prefixCls');
 | showSelectLoading | 对应值集查询时，Select 组件显示 loading 效果 | boolean | false |
 | inputDisabledShowSuffix | 输入组件禁用时, 是否显示后缀, 默认不显示。 compName 是组件名 | boolean \| ((compName) => boolean) | (compName) => { if (compName === 'IntlField') { return true; } return false; } |
 | tagHoverShowPointer | Tag 组件 hover 时是否显示小手样式, 默认不显示 | boolean |  |
+| disabledTimeLoopRoll | 禁止时间组件循环滚动  | boolean |  |
+| tableProfBarHasValueDefaultExpanded | Table 专业搜索条隐藏的查询字段中有值时, 是否默认展开全部字段  | boolean | true |
 
 ### Customizable
 

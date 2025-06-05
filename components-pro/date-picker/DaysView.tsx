@@ -40,6 +40,7 @@ export interface DateViewProps extends ViewComponentProps {
   rangeTarget?: 0 | 1;
   hoverValue?: Moment | undefined;
   yearFirst?: boolean;
+  disabledTimeLoopRoll?: boolean;
 }
 
 export default class DaysView<T extends DateViewProps> extends ViewComponent<T>

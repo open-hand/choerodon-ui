@@ -13,7 +13,7 @@ export default class Spin extends DataSetComponent<SpinProps> {
   static displayName = 'Spin';
 
 
-  static setDefaultIndicator(indicator: ReactNode) {
+  static setDefaultIndicator = (indicator: ReactNode) => {
     global.DEFAULT_SPIN_INDICATOR = indicator;
   }
 

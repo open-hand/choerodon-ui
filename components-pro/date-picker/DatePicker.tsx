@@ -159,6 +159,10 @@ export interface DatePickerProps extends TriggerFieldProps {
    * DatePicker 选择弹窗头部年份是否显示在前
    */
   yearFirst?: boolean;
+  /**
+   * 禁止时间组件循环滚动
+   */
+  disabledTimeLoopRoll?: boolean;
 }
 
 export interface DatePickerKeyboardEvent {
@@ -275,6 +279,13 @@ export default class DatePicker extends TriggerField<DatePickerProps>
    */
   get doEndRange(): boolean {
     return this.getViewMode() === ViewMode.week;
+  }
+
+  get disabledTimeLoopRoll(): boolean | undefined {
+    if ('disabledTimeLoopRoll' in this.props) {
+      return this.props.disabledTimeLoopRoll;
+    }
+    return this.getContextConfig('disabledTimeLoopRoll');
   }
 
   disposer: IReactionDisposer;
@@ -566,6 +577,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             rangeTarget,
             hoverValue,
             yearFirst,
+            disabledTimeLoopRoll: this.disabledTimeLoopRoll,
           } as DateViewProps)
         }
       </>

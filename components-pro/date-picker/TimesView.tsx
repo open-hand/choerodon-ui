@@ -196,8 +196,10 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
   handleKeyDownUp(e) {
     stopEvent(e);
     const unit = this.getCurrentUnit();
+    const { disabledTimeLoopRoll } = this.props;
+    let updateDate;
     if (unit === TimeUnit.a) {
-      this.changeCursorDate(this.getCloneDate().subtract(12, TimeUnit.hour));
+      updateDate = this.getCloneDate().subtract(12, TimeUnit.hour);
     } else {
       const { step } = this.props;
       const unitStep = step[stepMapping[unit]] || 1;
@@ -211,19 +213,25 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
           if (preValue !== date.get(parentUnit)) {
             date.subtract(parentStep - 1, parentUnit);
           }
-          this.changeCursorDate(date, ViewMode.time);
-          return;
+          updateDate = date;
         }
       }
-      this.changeCursorDate(date.subtract(unitStep, unit), ViewMode.time);
+      updateDate = updateDate ?? date.subtract(unitStep, unit);
     }
+    const startOfDay = this.getCloneDate().startOf('day');
+    if (disabledTimeLoopRoll && updateDate.isBefore(startOfDay)) {
+      updateDate = startOfDay.millisecond(updateDate.millisecond());
+    }
+    this.changeCursorDate(updateDate, ViewMode.time);
   }
 
   handleKeyDownDown(e) {
     stopEvent(e);
     const unit = this.getCurrentUnit();
+    const { disabledTimeLoopRoll } = this.props;
+    let updateDate;
     if (unit === TimeUnit.a) {
-      this.changeCursorDate(this.getCloneDate().add(12, TimeUnit.hour));
+      updateDate = this.getCloneDate().add(12, TimeUnit.hour);
     } else {
       const { step } = this.props;
       const unitStep = step[stepMapping[unit]] || 1;
@@ -237,12 +245,16 @@ export default class TimesView<T extends TimesViewProps> extends DaysView<T> {
           if (preValue !== date.get(parentUnit)) {
             date.add(parentStep - 1, parentUnit);
           }
-          this.changeCursorDate(date, ViewMode.time);
-          return;
+          updateDate = date;
         }
       }
-      this.changeCursorDate(date.add(unitStep, unit), ViewMode.time);
+      updateDate = updateDate ?? date.add(unitStep, unit);
     }
+    const endOfDay = this.getCloneDate().endOf('day');
+    if (disabledTimeLoopRoll && updateDate.isAfter(endOfDay)) {
+      updateDate = endOfDay.millisecond(updateDate.millisecond());
+    }
+    this.changeCursorDate(updateDate, ViewMode.time);
   }
 
   handleKeyDownPageUp(e) {
