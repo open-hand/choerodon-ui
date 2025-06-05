@@ -103,6 +103,9 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
     if (autoQuery) {
       await cardDS.query();
     }
+    if (customizedDS && customizedDS.current) {
+      cardDS.setState('__CUSTOMIZED__', customizedDS.current.toData());
+    }
   }, [dataSet, cardDS]);
 
   useEffect(() => {

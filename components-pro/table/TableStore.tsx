@@ -2714,9 +2714,10 @@ export default class TableStore {
 
   @action
   initColumns() {
-    const { customized, customizable, aggregation } = this;
+    const { customized, customizable, aggregation, dataSet } = this;
     const { columns, children } = this.props;
     const customizedColumns = customizable ? customized.columns : undefined;
+    dataSet.setState('__CUSCOLUMNS__', customized);
     const [leftOriginalColumns, originalColumns, rightOriginalColumns, hasAggregationColumn] =
       normalizeGroupColumns(this, columns, children, aggregation, customizedColumns);
     this.leftOriginalColumns = leftOriginalColumns;
@@ -3264,12 +3265,14 @@ export default class TableStore {
               // @ts-ignore
               this.customized = { columns: {}, ...omit(res, 'dataJson'), ...dataJson };
               currentRecord.set({ objectVersionNumber: res.objectVersionNumber, dataJson, viewName: res.viewName });
+              this.dataSet.setState('__CUSTOMIZED__', this.customized);
             } catch (error) {
               warning(false, error.message);
             }
           }
         } else {
           await tableCustomizedSave(customizedCode, this.customized, 'Table', otherInfo);
+          this.dataSet.setState('__CUSTOMIZED__', this.customized);
           if (otherInfo && otherInfo.params) {
             // 需要重新加载, 获取个性化记录的名称和id等等
             await this.loadCustomized();
@@ -3336,6 +3339,7 @@ export default class TableStore {
         runInAction(async () => {
           const newCustomized: TableCustomized = { columns: {}, ...customized };
           this.customized = newCustomized;
+          dataSet.setState('__CUSTOMIZED__', newCustomized);
           this.initColumns();
           // autoQuery：fasle 且分页参数与个性化不一致时进行修改
           if (newCustomized.pageSize && dataSet.pageSize !== Number(newCustomized.pageSize) && !dataSet.props.autoQuery) {

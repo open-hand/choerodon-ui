@@ -503,6 +503,7 @@ const KanbanCustomizationSettings: FunctionComponent<KanbanCustomizationSettings
             }
           });
           onConfigChange({ config: customizedDS.current.toData(), currentViewDS });
+          currentViewDS.setState('__CUSTOMIZED__', customizedDS.current.toData());
           if (autoQuery) {
             currentViewDS.query();
           }

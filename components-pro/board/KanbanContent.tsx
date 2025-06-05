@@ -134,6 +134,9 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
         setLoaded(true);
       }
     }
+    if (customizedDS && customizedDS.current) {
+      kanbanDS.setState('__CUSTOMIZED__', customizedDS.current.toData());
+    }
   }, [dsField, dataSet]);
 
   useEffect(() => {
