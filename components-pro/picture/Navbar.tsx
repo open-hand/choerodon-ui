@@ -126,7 +126,10 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
     ));
   };
   return (
-    <div className={navBarPrefixCls}>
+    <div
+      className={navBarPrefixCls}
+      onTouchStart={stopPropagation}
+    >
       {!isMobile() && <Button
         icon="navigate_before"
         disabled={disabled}

@@ -37,6 +37,7 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const { getProPrefixCls } = useContext(ConfigContext);
   const pictureRef = useRef<PictureForwardRef | null>(null);
   const transformTargetRef = useRef<HTMLDivElement | null>(null);
+  const touchRef = useRef<HTMLDivElement | null>(null);
   const touchStartClientRefP1 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
   const touchEndClientRefP1 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
   const touchStartClientRefP2 = useRef<(number | undefined)[]>([]); // [clientX, clientY]
@@ -112,9 +113,9 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
   const throttleWheel = useMemo(() => throttle((callback: Function) => callback(), 60), []);
   const handleWheel = useCallback((e: WheelEvent) => {
     if (e.deltaX > 0 || e.deltaY > 0) {
-      throttleWheel(isZoomMode ? handleZoomOut : handleNext);
+      throttleWheel((isZoomMode || list.length === 1) ? handleZoomOut : handleNext);
     } else {
-      throttleWheel(isZoomMode ? handleZoomIn : handlePrev);
+      throttleWheel((isZoomMode || list.length === 1) ? handleZoomIn : handlePrev);
     }
   }, [handlePrev, handleNext, handleIndexChange, handleZoomOut, handleZoomIn, isZoomMode]);
   const translateEvent: EventManager = useMemo(() => new EventManager(), []);
@@ -189,7 +190,7 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     const { touches: [startP1, startP2] } = e;
     touchStartClientRefP1.current = [startP1?.clientX, startP1?.clientY];
     touchStartClientRefP2.current = [startP2?.clientX, startP2?.clientY];
-    const { current } = transformTargetRef;
+    const { current } = touchRef;
     if (current) {
       current.addEventListener('touchmove', handleTouchMove, { passive: true });
     }
@@ -204,7 +205,7 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     if ((p1StartClientX !== undefined) && (p1EndClientX !== undefined) && (p1EndClientX - p1StartClientX > 50) && (p2StartClientX === undefined)) {
       handlePrev();
     }
-    const { current } = transformTargetRef;
+    const { current } = touchRef;
     if (current) {
       current.removeEventListener('touchmove', handleTouchMove);
     }
@@ -221,12 +222,16 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     const { src, downloadUrl } = getPreviewItem(list[index]);
     return (
       <div className={customizedPrefixCls} onWheel={handleWheel}>
-        <div className={`${customizedPrefixCls}-picture`} onMouseDown={handleMouseDown}>
+        <div
+          className={`${customizedPrefixCls}-picture`}
+          ref={touchRef}
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
             className={`${customizedPrefixCls}-picture-main`}
             ref={transformTargetRef}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
           >
             <Picture
               src={src}
