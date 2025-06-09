@@ -9,9 +9,10 @@ import isMobile from '../_util/isMobile';
 export default async function preview(props: PictureViewerProps, modalProps?: ModalProps) {
   const container = await getContainer();
   const customizedPrefixCls = container.context.getProPrefixCls('picture-viewer', props.prefixCls);
+  const { className, ...restModalProps } = modalProps as any;
   const classString = classNames(`${customizedPrefixCls}-modal`, {
     [`${customizedPrefixCls}-modal-mobile`]: isMobile(),
-  });
+  }, className);
   open({
     key: ModalManager.getKey(),
     className: classString,
@@ -27,6 +28,6 @@ export default async function preview(props: PictureViewerProps, modalProps?: Mo
     children: (
       <PictureViewer prefixCls={customizedPrefixCls} {...props} />
     ),
-    ...modalProps,
+    ...restModalProps,
   });
 }

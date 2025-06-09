@@ -126,6 +126,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the issue where the `noCache` property did not take effect when the `field` set `options`.
 - 🐞 `<pro>Board`: Fixed the issue where the addField field did not take effect for other views.
 - 🐞 `<pro>CodeArea`: Fix the issue of invalid onBlur events in CodeArea.
+- 🐞 `<pro>Picture`: Fixed the issue that the custom preview className would overwrite the original component className.
 
 ## 1.6.6
 
