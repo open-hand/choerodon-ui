@@ -90,7 +90,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制lov计算属性变化导致粘贴没有请求的问题。
 - 🐞 `<pro>Table`: 修复双向复制成功复制后粘贴多出空白列的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 字段粘贴数字不触发查询和粘贴多值只触发一次查询的问题。
-- 🐞 `<pro>Table`: 修复粘贴的数据中间存在空白数据无法跳过的问题。
+- 🐞 `<pro>Table`: 修复双向复制 lov 字段粘贴数字不触发查询和粘贴多值只触发一次查询的问题。
+- 🐞 `<pro>Table`: 修复查询字段通过动态属性配置必输，在动态筛选条上没有必输样式的问题。
 - 🐞 `<pro>Table`: 修复粘贴的组件为 Select 并设置 compo 属性时无法粘贴的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态配置 rowSelection 无效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启自动高度时勾选行会触发滚动的问题。

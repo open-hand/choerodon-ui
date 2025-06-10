@@ -1878,7 +1878,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 if (!queryField) return null;
-                const isRequired = queryField && queryField.get('required');
+                const isRequired = queryField && queryField.get('required', queryDataSet.current);
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = elLabel || this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
@@ -1957,7 +1957,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
                 if (hidden) return null;
                 const queryField = queryDataSet.getField(name);
                 if (!queryField) return null;
-                const isRequired = queryField && queryField.get('required');
+                const isRequired = queryField && queryField.get('required', queryDataSet.current);
                 const validationMessage = queryField && queryField.getValidationMessage(queryDataSet.current);
                 const hasValue = !this.isEmpty(queryDataSet.current && queryDataSet.current.get(name));
                 const label = elLabel || this.getLabel({field: queryField!, value: hasValue, placeholder, record: queryDataSet.current});
