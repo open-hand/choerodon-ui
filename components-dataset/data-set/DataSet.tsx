@@ -93,6 +93,8 @@ const TOTAL_KEY = '__TOTAL__';  // TODO:Symbol
 
 export const CHILDREN_PAGE_INFO = '__CHILDREN_PAGE_INFO__';
 
+export const QUERY_CANCELABLE = '__QUERY_CANCELABLE__';
+
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
@@ -3286,9 +3288,11 @@ Then the query method will be auto invoke.`,
             if (this.lastRequestSource) {
               this.lastRequestSource.cancel('New request started, cancelling the previous one.');
             }
-            this.lastRequestSource = axiosStatic.CancelToken.source();
+            if (this.getState(QUERY_CANCELABLE) !== false) {
+              this.lastRequestSource = axiosStatic.CancelToken.source();
+            }
             const result = await this.axios({
-              cancelToken: this.lastRequestSource.token,
+              cancelToken: this.lastRequestSource?.token,
               ...fixAxiosConfig(newConfig),
             });
             this.performance.timing.fetchEnd = Date.now();

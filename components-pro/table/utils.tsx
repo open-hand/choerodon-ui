@@ -4,6 +4,7 @@ import moment, { Moment } from 'moment';
 import isString from 'lodash/isString';
 import attempt from 'lodash/attempt';
 import isError from 'lodash/isError'
+import isNumber from 'lodash/isNumber';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import isStickySupport from 'choerodon-ui/lib/_util/isStickySupport';
@@ -494,6 +495,9 @@ export function getCount(dataSet: DataSet, type?: RecordCachedType): number {
  */
 export function isJsonString(str) {
   const result = attempt(JSON.parse, str);
+  if (isNumber(result)) {
+    return false;
+  }
   return !isError(result);
 }
 

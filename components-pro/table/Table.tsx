@@ -29,6 +29,7 @@ import {
   DragUpdate,
 } from 'react-beautiful-dnd';
 import Group from 'choerodon-ui/dataset/data-set/Group';
+import { QUERY_CANCELABLE } from 'choerodon-ui/dataset/data-set/DataSet';
 import { SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -1707,6 +1708,7 @@ export default class Table extends DataSetComponent<TableProps> {
                   const textField = field.get('textField', record);
                   const param = field.get('lovPara', record);
                   if (isArrayLike(text)) {
+                    optionDs.setState(QUERY_CANCELABLE, false);
                     const promises = text.map(async t => {
                       const obj = {
                         [textField]: t.trim(),
@@ -1722,7 +1724,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     // eslint-disable-next-line no-await-in-loop
                     const results = await Promise.all(promises);
                     text = results;
-
+                    optionDs.setState(QUERY_CANCELABLE, true);
                   } else if (isString(text)) {
                     const obj = {
                       [textField]: text.trim(),
