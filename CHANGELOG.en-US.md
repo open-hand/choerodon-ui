@@ -88,6 +88,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of pasting multiple blank columns after successful bidirectional copying.
+- 🐞 `<pro>Table`: Fixed the issue that pasting a number in the lov field did not trigger a query and pasting a multi-value query only triggered once.
 - 🐞 `<pro>Table`: Fixed the issue where bidirectional copying of lov calculation attribute changes resulted in no request for pasting.
 - 🐞 `<pro>Table`: Fixed the issue where there is blank data in the pasted data that cannot be skipped.
 - 🐞 `<pro>Table`: Fixed the issue where the pasted component cannot be pasted when selecting and setting the compose property.
