@@ -73,6 +73,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
 - 💄 `<pro>Table`: 优化双向复制提示栏可以直接关闭。
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
+- 💄 `<pro>Attachment`: 支持通过回调函数配置自定义按钮获取当前附件信息。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
 - 💄 `<pro>TextField`: 优化 range 模式校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
@@ -115,6 +116,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复粘贴带逗号的单值会被赋值成多值的问题。
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
+- 🐞 `<pro>Modal`: 修复 iframe 下拖拽不生效的问题。
 - 🐞 `<pro>Button`: 修复点击带图标的按钮异步打开 Modal 后按钮上的 Tooltip 不会消失的问题。
 - 🐞 `<pro>CheckBox`: 修复使用动态属性设置 trueValue 和 falseValue 会导致无法勾选的问题。
 - 🐞 `<pro>Tree`: 修复 dataSet 设置 treeCheckStrictly 属性时, 勾选的节点展开会被取消勾选的问题。

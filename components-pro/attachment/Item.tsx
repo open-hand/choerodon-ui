@@ -403,6 +403,11 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         }
       } else if (isValidElement<ButtonProps>(btn)) {
         buttons.push(cloneElement(btn, { ...btn.props }));
+      } else if (isFunction(btn)) {
+        const customButton = btn({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, readOnly, disabled });
+        if (isValidElement<ButtonProps>(customButton)) {
+          buttons.push(customButton);
+        }
       } else if (isObject(btn)) {
         buttons.push(<Button {...(btn as TableButtonProps)} />);
       }

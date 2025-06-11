@@ -73,6 +73,7 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize the interface and interaction.
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
+- 💄 `<pro>Attachment`: Added support for configuring custom buttons through callback functions to obtain information about the current attachment.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
 - 💄 `<pro>TextField`: Optimize the validation of the `range` mode.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
@@ -115,6 +116,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue that the query could not be triggered when the dynamic filter bar switching condition only fuzzed search value was changed.
 - 🐞 `<pro>Table`: Fixed the issue that pasting a single value with a comma would be assigned to multiple values.
 - 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
+- 🐞 `<pro>Modal`: Fixed the issue that dragging in an iframe does not take effect.
 - 🐞 `<pro>Button`: Fixed an issue where the `Tooltip` on the button would not disappear after clicking the button with the icon to open `Modal` asynchronously.
 - 🐞 `<pro>CheckBox`: Fixed the issue that setting `trueValue` and `falseValue` with `dynamicProps` would cause `CheckBox` to fail to be checked.
 - 🐞 `<pro>Tree`: Fixed an issue where the checked node expansion would be unchecked when the `dataSet` set the `treeCheckStrictly` property.
