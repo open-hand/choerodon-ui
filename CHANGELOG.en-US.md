@@ -73,6 +73,7 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize the interface and interaction.
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
+- 💄 `<pro>Attachment`: Added support for configuring custom buttons through callback functions to obtain information about the current attachment.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
 - 💄 `<pro>TextField`: Optimize the validation of the `range` mode.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
