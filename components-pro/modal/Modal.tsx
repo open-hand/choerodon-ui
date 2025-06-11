@@ -273,6 +273,11 @@ export default class Modal extends ViewComponent<ModalProps> {
     return getDocument(window);
   }
 
+  // 如果 modal 在 iframe 中却在顶层 document 触发拖拽会导致定位不准确
+  get selfDoc(): Document {
+    return window.self.document;
+  }
+
   get autoWidth(): boolean {
     const { contentStyle } = this.props;
     if (contentStyle && contentStyle.width) {
@@ -630,7 +635,7 @@ export default class Modal extends ViewComponent<ModalProps> {
             .removeEventListener('mousemove', mousemove)
             .removeEventListener('mouseup', handleMouseUp);
         };
-        this.resizeEvent.setTarget(this.doc)
+        this.resizeEvent.setTarget(this.selfDoc)
           .addEventListener('mousemove', mousemove)
           .addEventListener('mouseup', handleMouseUp);
       }
@@ -647,7 +652,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       prefixCls,
       props: { drawer, autoCenter = this.getContextConfig('modalAutoCenter') },
     } = this;
-    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
+    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.selfDoc.documentElement || this.selfDoc.body;
     const clientX = transformZoomData(e.clientX);
     const clientY = transformZoomData(e.clientY);
     const { offsetHeight: contentHeight, offsetWidth: contentWidth, offsetTop: contentTop } = contentNode;
@@ -688,7 +693,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       minWidth,
       minHeight,
     } = this;
-    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.doc.documentElement || this.doc.body;
+    const { clientWidth: docClientWidth, clientHeight: docClientHeight } = this.selfDoc.documentElement || this.selfDoc.body;
     const { offsetWidth: embeddedOffsetWidth, offsetHeight: embeddedOffsetHeight } = offsetParent || {};
     const drawerOffset = this.getDrawerOffset(drawerTransitionName);
     const maxWidth = (embeddedOffsetWidth || docClientWidth) - drawerOffset;
@@ -816,7 +821,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       const {
         clientWidth: docClientWidth,
         clientHeight: docClientHeight,
-      } = this.doc.documentElement || this.doc.body;
+      } = this.selfDoc.documentElement || this.selfDoc.body;
       const { currentTarget } = downEvent;
       const clientX = transformZoomData(downEvent.clientX);
       const clientY = transformZoomData(downEvent.clientY);
@@ -850,7 +855,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       const  { offsetLeft } = element;
       const  offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
       this.moveEvent
-        .setTarget(this.doc)
+        .setTarget(this.selfDoc)
         .addEventListener('mousemove', (moveEvent: MouseEvent) => {
           const moveX = transformZoomData(moveEvent.clientX);
           const moveY = transformZoomData(moveEvent.clientY);
