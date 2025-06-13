@@ -72,6 +72,7 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     tabBarGutter,
     onEdit,
     tabBarExtraContent,
+    tabBarStartExtraContent,
     hideOnlyGroup,
     customizedCode, customizable, children, defaultActiveKey: propDefaultActiveKey, setCustomized, customized,
     prefixCls: customizePrefixCls, activeKey: propActiveKey, onChange, onTabClick, keyboard,
@@ -302,9 +303,17 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     </div>
   ) : tabBarExtraContent;
 
+  const startExtraContent = !hideAdd && type === TabsType['editable-card'] ? (
+    // Add new tab handler
+    <div key="tabBarStartExtraContent" className={`${prefixCls}-start-extra-bar`}>
+      {tabBarStartExtraContent}
+    </div>
+  ) : tabBarStartExtraContent;
+
   const tabBarProps: TabBarWrapperProps = {
     inkBarAnimated,
     extraContent,
+    startExtraContent,
     style: tabBarStyle,
     tabBarGutter,
     type,

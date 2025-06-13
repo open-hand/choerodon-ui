@@ -69,6 +69,7 @@ export interface TabBarProps {
   onEdit?: (targetKey: Key | MouseEvent<HTMLElement>, action: 'add' | 'remove') => void;
   children?: (node: React.ReactElement) => React.ReactElement;
   showMorePopupClassName?: string;
+  startExtraContent?: ReactNode;
 }
 
 interface MenuKeyValue {
@@ -101,6 +102,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     style,
     inkBarStyle,
     extraContent,
+    startExtraContent,
     tabBarGutter,
     inkBarAnimated,
     type,
@@ -329,6 +331,9 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const classes = classnames(`${prefixCls}-extra-content`, {
       [`${prefixCls}-extra-vertical-content`]: vertical,
     });
+    const startClasses = classnames(`${prefixCls}-start-extra-content`, {
+      [`${prefixCls}-start-extra-vertical-content`]: vertical,
+    });
     const dropDownClass = classnames(`${prefixCls}-more-tab`, {
       [`${prefixCls}-more-vertical-tab`]: vertical,
     });
@@ -349,8 +354,18 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     // 这里是固定项
     const toolBar = [moreTool, addTool];
 
+    let startExtraContentWrapper;
+    if (startExtraContent) {
+      startExtraContentWrapper = (
+        <div key="startExtra" className={startClasses}>
+          {startExtraContent}
+        </div>
+      );
+    }
+
     if (extraContent || customizable) {
       return [
+        startExtraContentWrapper,
         contents,
         <div key="extra" className={classes}>
           {customizable && (
@@ -368,6 +383,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       ];
     }
     return [
+      startExtraContentWrapper,
       contents,
       <div key="extra" className={classes}>
         {toolBar}
