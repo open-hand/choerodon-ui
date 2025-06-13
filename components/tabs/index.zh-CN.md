@@ -52,6 +52,7 @@ Choerodon UI 依次提供了三级选项卡，分别用于不同的场景。
 | renderTabBar | 替换 TabBar，用于二次封装标签头。DefaultTabBar 为组件库默认 TabBar 组件，props 为组件默认参数 | (props: TabBarProps, DefaultTabBar: React.ComponentType<TabBarProps>) => React.ReactElement |  |
 | showMorePopupClassName | showMore 下拉 popup 的自定义类名 | string |  |
 | showInvalidTips | 是否开启 DataSet 校验  | boolean | [全局配置](/components/configure) tabsShowInvalidTips |
+| tabBarStartExtraContent | tab bar 左侧额外的元素 | React.ReactNode | 无 |
 
 ### Tabs.TabPane
 

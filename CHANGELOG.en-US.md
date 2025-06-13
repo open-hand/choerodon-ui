@@ -39,6 +39,7 @@ timeline: true
 - 🌟 `<pro>CodeArea`: Added `prettierOptions` property.
 - 🌟 `<pro>Table`: Clipboard added `onlyTemplateHeader` property.
 - 🌟 `Tag`: Added `hoverShowPointer` property.
+- 🌟 `Tabs`: Added `tabBarStartExtraContent` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.

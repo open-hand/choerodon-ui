@@ -70,6 +70,7 @@ export interface TabsProps {
    * 是否开启 DataSet 校验
    */
   showInvalidTips?: boolean;
+  tabBarStartExtraContent?: ReactNode | null;
 }
 
 export type GroupPanelMap = { group: TabGroupProps; panelsMap: Map<string, TabPaneProps & { type: string | JSXElementConstructor<any> }>; lastActiveKey?: string }
