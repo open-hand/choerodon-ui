@@ -32,6 +32,7 @@ import { DataSetStatus } from '../data-set/interface';
 import Menu from '../menu';
 import Dropdown from '../dropdown/Dropdown';
 import Typography from '../typography';
+import { processFieldProps } from './BoardWithContext';
 
 export interface CardContentProps {
   animated?: boolean | undefined;
@@ -71,7 +72,7 @@ const CardContent: FunctionComponent<CardContentProps> = function CardContent(pr
 
   const cardDS = useMemo(() => {
     const defaultSortParams = (dataSet!.combineSort && viewProps) ? viewProps[ViewField.combineSort] || [] : [];
-    const orgFields = dataSet!.props.fields ? dataSet!.props.fields : [];
+    const orgFields = dataSet!.fields ? processFieldProps(dataSet!.fields) : [];
     const orderFields = orgFields.map((field) => {
       const orderField = defaultSortParams.find(of => of.sortName === field.name);
       const newField = { ...field };

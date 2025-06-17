@@ -55,7 +55,7 @@ import Column from '../table/Column';
 export const GROUPFIELD = '__GROUPFIELD__';
 
 
-function processFieldProps(fields: ObservableMap<string, any>): FieldProps[] {
+export function processFieldProps(fields: ObservableMap<string, any>): FieldProps[] {
   const result: FieldProps[] = [];
   
   fields.forEach((field, fieldName) => {

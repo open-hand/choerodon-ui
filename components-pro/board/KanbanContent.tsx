@@ -30,6 +30,7 @@ import { Buttons, TableButtonProps, TableButtonType } from '../table/interface';
 import { DataSetStatus } from '../data-set/interface';
 import Dropdown, { DropDownProps } from '../dropdown/Dropdown';
 import Menu from '../menu';
+import { processFieldProps } from './BoardWithContext';
 
 export interface KanbanContentProps {
   animated?: boolean | undefined;
@@ -75,7 +76,7 @@ const KanbanContent: FunctionComponent<KanbanContentProps> = function KanbanCont
 
   const kanbanDS = useMemo(() => {
     const defaultSortParams = (dataSet!.combineSort && viewProps) ? viewProps[ViewField.combineSort] || [] : [];
-    const orgFields = dataSet.props.fields ? dataSet.props.fields : [];
+    const orgFields = dataSet!.fields ? processFieldProps(dataSet!.fields) : [];
     const orderFields = orgFields.map((field) => {
       const orderField = defaultSortParams.find(of => of.sortName === field.name);
       const newField = { ...field };
