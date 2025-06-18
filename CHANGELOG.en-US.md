@@ -67,6 +67,7 @@ timeline: true
 - 💄 `<pro>CheckBox`: Optimize the judgment of the selected state when the property changes.
 - 💄 `Tabs`: Optimize `tab` title to set height.
 - 💄 `<pro>Modal`: Optimized the modal level when customizing `getContainer` properties.
+- 💄 `<pro>Modal`: Optimized that when modal is mounted in an iframe, it can be displayed in the visual range when it is opened.
 - 💄 `<pro>TextField`: Optimizes a single `tag` to display a tooltip when the text exceeds `maxTagTextLength`.
 - 💄 `<pro>DatePicker`: If the `mode` is set to `dateTime` and the min value is set to the current time, the current time is displayed as the default time on the selection panel. And fix setting to the current time check error.
 - 💄 `<pro>Pagination`: Optimized the restriction of the number type input field for quick jumps.

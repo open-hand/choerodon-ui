@@ -66,6 +66,7 @@ timeline: true
 - 💄 `<pro>CheckBox`: 优化属性变化时选中状态的判断。
 - 💄 `Tabs`: 优化 tab 标题可设置高度。
 - 💄 `<pro>Modal`: 优化自定义 getContainer 属性时弹窗的层级。
+- 💄 `<pro>Modal`: 优化在 iframe 中打开时显示在可视范围。
 - 💄 `<pro>TextField`: 优化单个 tag 的文本超过 maxTagTextLength 时, 显示 tooltip。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 且最小值设置为当前时间时, 选择面板的默认时间显示为当前时间。以及修复设置为当前时间校验报错。
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。

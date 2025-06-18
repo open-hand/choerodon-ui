@@ -57,6 +57,7 @@ title: Modal
 | beforeOpen | 弹框打开前回调 | () => void |  |
 | afterOpenChange | 打开和关闭 Modal 时动画结束后的回调 | (open: boolean) => void |  |
 | modalOkAndCancelIcon | Modal 确认和取消按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置确认和取消icon | boolean \| { okIconType?: string \| boolean, cancelIconType?: string \| boolean } |  |
+| iframeTopDiff | 挂在到 iframe 里时，距离 iframe 可视区域顶部的距离，单位：px | number | 100 |
 
 <style>
 .code-box-demo .c7n-pro-btn {
