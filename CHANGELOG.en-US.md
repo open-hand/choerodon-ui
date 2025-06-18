@@ -132,6 +132,7 @@ timeline: true
 - 🐞 `<pro>Board`: Fixed the issue where the addField field did not take effect for other views.
 - 🐞 `<pro>CodeArea`: Fix the issue of invalid onBlur events in CodeArea.
 - 🐞 `<pro>Picture`: Fixed the issue that the custom preview className would overwrite the original component className.
+- 🐞 `Tabs`: Fixed the issue where the child component and `activeKey` were loaded asynchronously without scrolling to the currently activated `tab`.
 
 ## 1.6.6
 

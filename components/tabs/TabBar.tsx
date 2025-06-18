@@ -693,8 +693,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
     }
     setMenuList(menuList);
-    setOffset(vertical ? scrollTop : scrollLeft, setNextPrev);
-  }, [tabBarPosition]);
+    scrollToActiveTab();
+  }, [tabBarPosition, scrollToActiveTab, setMenuList]);
 
   const renderInkBar = () => {
     const inkBarNode = inkBarRef.current;
@@ -790,7 +790,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       debouncedScroll.cancel();
       debouncedWheel.cancel();
     };
-  }, [tabBarPosition]);
+  }, [tabBarPosition, handleScrollEvent]);
 
   useLayoutEffect(() => {
     const currentNextPrev = {
