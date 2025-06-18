@@ -1221,7 +1221,7 @@ export default class Field {
   @action
   setLovPara(name: string, value: any, record: Record | undefined = this.record) {
     const isComputedLovPara = this.get('computedProps')?.lovPara;
-    const p = isComputedLovPara ? cloneDeep(toJS(this.get('lovPara', record))) : toJS(this.get('lovPara', record)) || {};
+    const p = (isComputedLovPara ? cloneDeep(toJS(this.get('lovPara', record))) : toJS(this.get('lovPara', record))) || {};
     if (value === null) {
       delete p[name];
       this.searchPara = undefined;

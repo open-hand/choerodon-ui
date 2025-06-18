@@ -102,6 +102,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where fields with `computedProps` `lovPara` reported an error using the `setLovPara` method.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 - 🐞 `Progress`: Fixed an issue where animation styles overflowed.
 - 🐞 `<pro>Table`: Fixed an issue where column ordering did not take effect when the `DataSet` dynamically set fields.
