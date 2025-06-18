@@ -115,6 +115,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复未设置 dataSet 属性时, 设置 autoValidationLocate 属性不生效的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动表格内部高度计算错误。
 - 🐞 `<pro>Table`: 修复动态筛选条切换条件仅模糊搜索值变更时无法触发查询的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条保存条件接口报错的问题。
 - 🐞 `<pro>Table`: 修复粘贴带逗号的单值会被赋值成多值的问题。
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。
