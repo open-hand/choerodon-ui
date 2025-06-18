@@ -46,9 +46,19 @@ export interface ValidationMessages {
   label?: ReactNode;
 }
 
-function* execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): any {
+function* execute(
+  rules: validationRule[],
+  valueProp: any[],
+  props: ValidatorBaseProps,
+  getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
+  validationResults: ValidationResult[],
+  oriRangeValue?: any[] | null,
+): any {
   const method = rules.shift();
   if (method) {
+    // 兼容历史版本的 range 类型自定义校验器
+    // @ts-ignore
+    const value = method.displayName === 'customError' && oriRangeValue ? oriRangeValue : valueProp;
     const results: methodReturn[] = [];
     const promises: PromiseLike<methodReturn>[] = [];
     value.forEach(item => {
@@ -75,7 +85,7 @@ function* execute(rules: validationRule[], value: any[], props: ValidatorBasePro
       }
     });
     if (value.length) {
-      for (const result of execute(rules, value, props, getProp, validationResults)) {
+      for (const result of execute(rules, valueProp, props, getProp, validationResults, oriRangeValue)) {
         yield result;
       }
     }
@@ -165,12 +175,14 @@ export default class Validator {
       const valueArr = multiple
         ? toMultipleValue(value, range)
         : range ? toRangeValue(value, range) : [value];
+      const oriRangeValue = !multiple && range ? [value] : null;
       await flow(execute)(
         validationRules.slice(),
         valueArr,
         props,
         getProp,
         validationResults,
+        oriRangeValue,
       );
     }
     return {

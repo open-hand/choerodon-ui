@@ -1024,11 +1024,12 @@ export default class Field {
     const lookup = this.getLookup(record);
     const options = this.get('options', record);
     const lookupUrl = this.get('lookupUrl', record);
+    const type = this.get('type', record);
     const isSelect = this.get('lookupCode', record) ||
       (lookupUrl && isString(lookupUrl)) ||
       this.get('lookupAxiosConfig', record) ||
-      (this.type !== FieldType.object && this.type !== FieldType.auto && this.get('lovCode', record)) ||
-      (this.type !== FieldType.object && (lookup || options));
+      (type !== FieldType.object && type !== FieldType.auto && this.get('lovCode', record)) ||
+      (type !== FieldType.object && (lookup || options));
 
     const showSelectLoading = isSelect &&
       ((!lookup && !options) || (options && (options as DataSet).status !== DataSetStatus.ready));
