@@ -663,11 +663,13 @@ const QuickFilterMenu = function QuickFilterMenu() {
           menuRecord.set('conditionList', [...conditionDataSet.toJSONData(), ...putData, ...filterData]);
           // 保存模糊搜素值
           const fuzzySrearchValue = dataSet.getState(SEARCHTEXT);
+          const oldFuzzySrearchValue = menuRecord.get('queryList') && menuRecord.get('queryList')[0];
           const fuzzySrearchData = [{
+            ...oldFuzzySrearchValue, // Leave some necessary parameters to rest
             fieldName: SEARCHTEXT,
             comparator: 'EQUAL',
             value: fuzzySrearchValue,
-            [statusKey]: statusUpdate,
+            [statusKey]: oldFuzzySrearchValue ? statusUpdate : statusAdd,
           }];
           menuRecord.set('queryList', fuzzySrearchData);
         }

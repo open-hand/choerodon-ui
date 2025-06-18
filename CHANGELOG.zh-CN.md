@@ -66,6 +66,7 @@ timeline: true
 - 💄 `<pro>CheckBox`: 优化属性变化时选中状态的判断。
 - 💄 `Tabs`: 优化 tab 标题可设置高度。
 - 💄 `<pro>Modal`: 优化自定义 getContainer 属性时弹窗的层级。
+- 💄 `<pro>Modal`: 优化在 iframe 中打开时显示在可视范围。
 - 💄 `<pro>TextField`: 优化单个 tag 的文本超过 maxTagTextLength 时, 显示 tooltip。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 且最小值设置为当前时间时, 选择面板的默认时间显示为当前时间。以及修复设置为当前时间校验报错。
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。
@@ -102,6 +103,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复动态设置 rowDraggable 后表格无法滚动的问题。
 - 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。
+- 🐞 `<pro>DataSet.Field`: 修复存在计算属性 lovPara 的字段使用 setLovPara 方法报错的问题。
 - 🐞 `<pro>DataSet.Field`: 修复动态属性配置的 lookupAxiosConfig 中存在 FormData 参数会导致死循环的问题。
 - 🐞 `Progress`: 修复动画样式溢出的问题。
 - 🐞 `<pro>Table`: 修复 DataSet 动态设置字段时, 列排序不生效的问题。
@@ -114,6 +116,7 @@ timeline: true
 - 🐞 `<pro>Form`: 修复未设置 dataSet 属性时, 设置 autoValidationLocate 属性不生效的问题。
 - 🐞 `<pro>Table`: 修复虚拟滚动表格内部高度计算错误。
 - 🐞 `<pro>Table`: 修复动态筛选条切换条件仅模糊搜索值变更时无法触发查询的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条保存条件接口报错的问题。
 - 🐞 `<pro>Table`: 修复粘贴带逗号的单值会被赋值成多值的问题。
 - 🐞 `<pro>Modal`: 修复 key 设置为 string 之外的类型时, 第二次打开弹窗显示不正常的问题。
 - 🐞 `<pro>Modal`: 修复全局配置 modalResizable 不生效的问题。

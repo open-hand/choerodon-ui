@@ -67,6 +67,7 @@ timeline: true
 - 💄 `<pro>CheckBox`: Optimize the judgment of the selected state when the property changes.
 - 💄 `Tabs`: Optimize `tab` title to set height.
 - 💄 `<pro>Modal`: Optimized the modal level when customizing `getContainer` properties.
+- 💄 `<pro>Modal`: Optimized that when modal is mounted in an iframe, it can be displayed in the visual range when it is opened.
 - 💄 `<pro>TextField`: Optimizes a single `tag` to display a tooltip when the text exceeds `maxTagTextLength`.
 - 💄 `<pro>DatePicker`: If the `mode` is set to `dateTime` and the min value is set to the current time, the current time is displayed as the default time on the selection panel. And fix setting to the current time check error.
 - 💄 `<pro>Pagination`: Optimized the restriction of the number type input field for quick jumps.
@@ -102,6 +103,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
+- 🐞 `<pro>DataSet.Field`: Fixed an issue where fields with `computedProps` `lovPara` reported an error using the `setLovPara` method.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where the presence of the FormData parameter in the `lookupAxiosConfig` of `dynamicProps` configuration would cause an endless loop.
 - 🐞 `Progress`: Fixed an issue where animation styles overflowed.
 - 🐞 `<pro>Table`: Fixed an issue where column ordering did not take effect when the `DataSet` dynamically set fields.
@@ -115,6 +117,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an internal height calculation error in the virtual scroll table.
 - 🐞 `<pro>Modal`: Fixed an issue where the popup display was abnormal the second time when key was set to a type other than `string`.
 - 🐞 `<pro>Table`: Fixed an issue that the query could not be triggered when the dynamic filter bar switching condition only fuzzed search value was changed.
+- 🐞 `<pro>Table`: Fixed the issue that an error was reported in the interface for saving conditions for dynamic filter bars.
 - 🐞 `<pro>Table`: Fixed the issue that pasting a single value with a comma would be assigned to multiple values.
 - 🐞 `<pro>Modal`: Fix the global `modalResizable` configuration does not take effect.
 - 🐞 `<pro>Modal`: Fixed the issue that dragging in an iframe does not take effect.

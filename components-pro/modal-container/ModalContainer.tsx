@@ -187,6 +187,11 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     return is;
   }
 
+  get isInIframe(): boolean {
+    const offsetContainer = this.getContainer() || this.getOffsetContainer();
+    return offsetContainer?.ownerDocument !== window.top?.document;
+  }
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -295,6 +300,16 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     }
   }
 
+  getModalTopInIframe = (): number | undefined => {
+    if (this.isInIframe && window.frameElement) {
+      const iframe = window.frameElement as HTMLIFrameElement;
+      const rect = iframe.getBoundingClientRect();
+      const visibleTop = Math.max(0, rect.top);
+      const iframeVisibleTop = Math.ceil(visibleTop - rect.top);
+      return iframeVisibleTop;
+    }
+  };
+
   @action
   updateModals(modals: ModalProps[]) {
     this.top();
@@ -359,6 +374,10 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
       if (index !== -1) {
         modals.splice(index, 1);
       }
+    }
+    const top = this.getModalTopInIframe();
+    if (top !== undefined && !props.drawer) {
+      props.style = { ...props.style, top: pxToRem(top + (props.iframeTopDiff || 100)) };
     }
     modals.push({ ...props, hidden: false });
     this.updateModals(modals);

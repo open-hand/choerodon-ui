@@ -124,6 +124,10 @@ export interface ModalProps extends ViewComponentProps {
   beforeOpen?: () => void;
   afterOpenChange?: (open: boolean) => void;
   modalOkAndCancelIcon?: ModalOkAndCancelIcon;
+  /**
+   * 挂在到 iframe 里时，距离 iframe 可视区域顶部的距离，单位：px
+   */
+  iframeTopDiff?: number;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -275,7 +279,7 @@ export default class Modal extends ViewComponent<ModalProps> {
 
   // 如果 modal 在 iframe 中却在顶层 document 触发拖拽会导致定位不准确
   get selfDoc(): Document {
-    return window.self.document;
+    return this.element?.ownerDocument || window.self.document;
   }
 
   get autoWidth(): boolean {
@@ -312,6 +316,13 @@ export default class Modal extends ViewComponent<ModalProps> {
     this.initResizableRange(this.props);
     if (this.modalAutoFocus && this.sentinelStartRef) {
       this.focus();
+    }
+    if (this.element && (this.element.ownerDocument !== window.top?.document)) {
+      const { element, prefixCls } = this;
+      const clzz = classes(element);
+      if (clzz.has(`${prefixCls}-auto-center`)) {
+        clzz.remove(`${prefixCls}-auto-center`);
+      }
     }
   }
 
