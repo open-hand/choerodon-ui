@@ -40,6 +40,7 @@ timeline: true
 - 🌟 `<pro>Table`: clipboard 新增 onlyTemplateHeader 属性。
 - 🌟 `Tag`: 新增 hoverShowPointer 属性。
 - 🌟 `Tabs`: 新增 tabBarStartExtraContent 属性。
+- 🌟 `<pro>TextField`: 新增 forceShowRangeSeparator 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -87,6 +88,9 @@ timeline: true
 - 💄 `<pro>Picture`: 优化低版本浏览器下预览图片的样式。
 - 💄 `<pro>DataSet`: 优化附件字段的校验时机。
 - 💄 `<pro>Spin`: 优化静态函数写法。
+- 💄 固定 uuid 版本。
+- 💄 `<pro>Table`: 优化动态筛选条 range 字段无值时样式。
+- 💄 `<pro>Table`: 优化双向复制功能下载模板中增加自定义列。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

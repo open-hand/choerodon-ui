@@ -40,6 +40,7 @@ timeline: true
 - 🌟 `<pro>Table`: Clipboard added `onlyTemplateHeader` property.
 - 🌟 `Tag`: Added `hoverShowPointer` property.
 - 🌟 `Tabs`: Added `tabBarStartExtraContent` property.
+- 🌟 `<pro>TextField`: Added `forceShowRangeSeparator` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -87,6 +88,9 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize the style of previewing images in low-version browsers.
 - 💄 `<pro>DataSet`: Optimized the timing of the validation of attachment fields.
 - 💄 `<pro>Spin`: Optimize the writing of static functions.
+- 💄 Fixed uuid version.
+- 💄 `<pro>Table`: Optimize the style when the `range` field of the dynamic filter bar has no value.
+- 💄 `<pro>Table`: Optimize the two-way copy function and add custom columns to the download template.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

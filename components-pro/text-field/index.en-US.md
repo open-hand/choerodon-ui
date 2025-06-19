@@ -34,6 +34,7 @@ title: TextField
 | showLengthInfo | 是否显示长度信息 | boolean | |
 | border | 是否显示边框 | boolean | true |
 | isFlat | 自动宽度模式 | boolean | false |
+| forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

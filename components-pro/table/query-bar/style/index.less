@@ -797,6 +797,23 @@
       }
     }
 
+    .@{c7n-pro-prefix}-input-range .@{c7n-pro-prefix}-input,
+    .@{c7n-pro-prefix}-input-number-range .@{c7n-pro-prefix}-input-number,
+    .@{c7n-pro-prefix}-calendar-picker-range .@{c7n-pro-prefix}-calendar-picker,
+    .@{select-prefix-cls}-range .@{select-prefix-cls} {
+      max-width: 4rem;
+    }
+    .@{c7n-pro-prefix}-input-range.@{c7n-pro-prefix}-input-empty .@{c7n-pro-prefix}-input-range-start,
+    .@{c7n-pro-prefix}-input-range.@{c7n-pro-prefix}-input-empty .@{c7n-pro-prefix}-input-range-end,
+    .@{c7n-pro-prefix}-input-number-range.@{c7n-pro-prefix}-input-number-empty .@{c7n-pro-prefix}-input-number-range-start,
+    .@{c7n-pro-prefix}-input-number-range.@{c7n-pro-prefix}-input-number-empty .@{c7n-pro-prefix}-input-number-range-end,
+    .@{c7n-pro-prefix}-calendar-picker-range.@{c7n-pro-prefix}-calendar-picker-empty .@{c7n-pro-prefix}-calendar-picker-range-start,
+    .@{c7n-pro-prefix}-calendar-picker-range.@{c7n-pro-prefix}-calendar-picker-empty .@{c7n-pro-prefix}-calendar-picker-range-end,
+    .@{select-prefix-cls}-range.@{select-prefix-cls}-empty .@{select-prefix-cls}-range-start,
+    .@{select-prefix-cls}-range.@{select-prefix-cls}-empty .@{select-prefix-cls}-range-end {
+      width: 0.04rem !important;
+    }
+
     [class*="multiple-block"]>div:not(:last-child) {
       max-width: calc(100% - 0.2rem);
     }
