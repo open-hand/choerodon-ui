@@ -53,6 +53,15 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
           templateType[columnName] = type;
           templateIsMutiple[columnName] = isMutiple;
         }
+      } else if (item && item.column && item.column.key && !tableStore.isBuiltInColumn(item.column)
+        && tableStore.node && tableStore.node.element) {
+        const columnKey = item.column.key;
+        const columnDom = tableStore.node.element.querySelector(`th[class*="-table-cell"][data-index="${columnKey}"]`);
+        if (columnDom) {
+          templateHeader[columnKey] = (columnDom as HTMLTableCellElement).innerText;
+          templateType[columnKey] = null;
+          templateIsMutiple[columnKey] = false;
+        }
       }
     }
     const data: any = [];
@@ -106,6 +115,7 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
               row[key] = templateIsMutiple[key] ? '123456789.123456789,1000000.000000001' : '123456789.123456789';
               break;
             default:
+              row[key] = null;
               break;
           }
         });

@@ -156,6 +156,10 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * 配置自定义tooltip属性：tooltip={['always', { theme: 'light', ... }]}
    */
   tooltip?: TextTooltip | [TextTooltip, TooltipProps];
+  /**
+   * range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示
+   */
+  forceShowRangeSeparator?: boolean;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -833,7 +837,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderRangeEditor(props) {
-    const { isFlat } = this.props;
+    const { isFlat, forceShowRangeSeparator } = this.props;
     const { prefixCls, rangeTarget, isFocused, editable } = this;
     const [startValue = '', endValue = ''] = this.processRangeValue(this.isEditableLike() ? undefined : this.rangeValue);
     const startRenderedValue = this.renderRenderedValue(startValue, {
@@ -917,7 +921,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           style={startStyle}
           readOnly
         />
-        <span className={splitClassNames}>{(!isFlat || startPlaceholder || endPlaceholder || !this.isEmpty()) && this.rangeSeparator}</span>
+        <span className={splitClassNames}>
+          {(!isFlat || startPlaceholder || endPlaceholder || !this.isEmpty() || this.isFocus || forceShowRangeSeparator) && this.rangeSeparator}
+        </span>
         <input
           tabIndex={-1}
           className={`${prefixCls}-range-end`}
