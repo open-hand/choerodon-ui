@@ -140,6 +140,7 @@ timeline: true
 - 🐞 `<pro>CodeArea`: 修复CodeArea的onBlur事件无效的问题。
 - 🐞 `<pro>Picture`: 修复自定义预览类名会覆盖原有组件类名的问题。
 - 🐞 `Tabs`: 修复子组件和 activeKey 异步加载时, 未滚动到当前激活 tab 的问题。
+- 🐞 `<pro>Table`: 修复树形数据异步展开收起, 数据关联勾选错误的问题。
 
 ## 1.6.6
 
