@@ -2,7 +2,7 @@ import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, 
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import RcSelect, { OptGroup, Option } from '../rc-components/select';
 import { SelectMode } from './enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -204,7 +204,7 @@ export default class Select extends Component<SelectProps, {}> {
 
   render() {
     return (
-      <LocaleReceiver componentName="Select" defaultLocale={defaultLocale.Select}>
+      <LocaleReceiver componentName="Select" defaultLocale={getRuntimeLocale().Select || {}}>
         {this.renderSelect}
       </LocaleReceiver>
     );

@@ -4,7 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import isUndefined from 'lodash/isUndefined';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import Dragger from './Dragger';
 import UploadList from './UploadList';
 import { UploadChangeParam, UploadFile, UploadListType, UploadLocale, UploadProps, UploadState, UploadType } from './interface';
@@ -411,7 +411,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     delete rcUploadProps.className;
 
     const uploadList = showUploadList ? (
-      <LocaleReceiver componentName="Upload" defaultLocale={defaultLocale.Upload}>
+      <LocaleReceiver componentName="Upload" defaultLocale={getRuntimeLocale().Upload || {}}>
         {this.renderUploadList}
       </LocaleReceiver>
     ) : null;

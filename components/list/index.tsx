@@ -17,7 +17,7 @@ import { equalTrueValue } from 'choerodon-ui/pro/lib/data-set/utils';
 import { getKey } from 'choerodon-ui/pro/lib/tree/util';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import { Size } from '../_util/enum';
 import { Row } from '../grid';
 import Item from './Item';
@@ -447,7 +447,7 @@ export default class List extends Component<ListProps> {
       childrenContent = grid ? <Row prefixCls={rowPrefixCls} gutter={grid.gutter}>{childrenList}</Row> : childrenList;
     } else if (!children && !isLoading && !empty) {
       childrenContent = (
-        <LocaleReceiver componentName="Table" defaultLocale={defaultLocale.Table}>
+        <LocaleReceiver componentName="Table" defaultLocale={getRuntimeLocale().Table || {}}>
           {this.renderEmpty}
         </LocaleReceiver>
       );

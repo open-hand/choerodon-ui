@@ -3,7 +3,7 @@ import { LocaleContext } from './index';
 
 export interface LocaleReceiverProps {
   componentName: string;
-  defaultLocale: object | Function;
+  defaultLocale: object | Function | Record<string, any>;
   children: (locale: object, localeCode?: string) => ReactNode;
 }
 

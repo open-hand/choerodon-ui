@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Dialog, { ModalFuncProps } from './Modal';
 import Button from '../button';
-import { getConfirmLocale } from './locale';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface SidebarState {
@@ -76,7 +76,7 @@ export default class Sidebar extends Component<SidebarProps, {}> {
     const { onCancel, onOk, okType, funcType, confirmLoading, alwaysCanCancel } = props;
     const prefixCls = this.getPrefixCls();
     const okCancel = 'okCancel' in props ? props.okCancel! : true;
-    const runtimeLocale = getConfirmLocale();
+    const runtimeLocale = getRuntimeLocale().Modal!;
     const okText = props.okText || (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
     const cancelText = props.cancelText || runtimeLocale.cancelText;
 

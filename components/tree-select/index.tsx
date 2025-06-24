@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { TreeSelectProps } from './interface';
 import { SelectLocale } from '../select';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import warning from '../_util/warning';
 import RcTreeSelect, {
   SHOW_ALL,
@@ -102,7 +103,7 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
 
   render() {
     return (
-      <LocaleReceiver componentName="Select" defaultLocale={{}}>
+      <LocaleReceiver componentName="Select" defaultLocale={getRuntimeLocale().Select || {}}>
         {this.renderTreeSelect}
       </LocaleReceiver>
     );
