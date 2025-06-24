@@ -36,7 +36,7 @@ import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provi
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
-import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
+import { getRuntimeLocale } from 'choerodon-ui/lib/locale-provider/utils';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
@@ -3213,7 +3213,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     })
     
     const body = (
-      <LocaleReceiver componentName="PerformanceTable" defaultLocale={defaultLocale.PerformanceTable}>
+      <LocaleReceiver componentName="PerformanceTable" defaultLocale={getRuntimeLocale().PerformanceTable || {}}>
         {(locale: PerformanceTableLocal) => {
           const rowWrapperChildren = (
             <>

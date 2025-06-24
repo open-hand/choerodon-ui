@@ -2,7 +2,7 @@ import React, { Component, ComponentClass, FocusEventHandler } from 'react';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { generateShowHourMinuteSecond } from '../time-picker';
-import enUS from './locale/en_US';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import TimePickerPanel from '../rc-components/time-picker/Panel';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -92,7 +92,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
     getDefaultLocale = () => {
       const { locale } = this.props;
       const result = {
-        ...enUS,
+        ...getRuntimeLocale().DatePicker,
         ...locale,
       };
       result.lang = {

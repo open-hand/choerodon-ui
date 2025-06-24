@@ -4,7 +4,7 @@ import Icon from '../icon';
 import Button, { ButtonProps } from '../button';
 import { ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
@@ -127,7 +127,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
 
   renderLocale = () => {
     return (
-      <LocaleReceiver componentName="Popconfirm" defaultLocale={defaultLocale.Popconfirm}>
+      <LocaleReceiver componentName="Popconfirm" defaultLocale={getRuntimeLocale().Popconfirm || {}}>
         {this.renderOverlayWithLocale}
       </LocaleReceiver>
     );

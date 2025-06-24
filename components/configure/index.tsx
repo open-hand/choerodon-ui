@@ -53,9 +53,12 @@ import { PanelProps } from '../collapse';
 import { TabsCustomized } from '../tabs/Tabs';
 import defaults from './default';
 import { UploadListReUploadIconFunc } from '../upload/interface';
+import { InputSuffixCompName } from './interface';
 
 overwriteConfigMergeProps<Config>(['pagination']);
 overwriteDefaultConfig<Config>(defaults);
+
+export { InputSuffixCompName };
 
 export { Status, Formatter };
 
@@ -114,26 +117,6 @@ export interface Customized {
   Tabs?: TabsCustomized;
   Modal?: ModalCustomized;
   Board?: BoardCustomized | BoardCustomized[] | any;
-}
-
-export enum InputSuffixCompName  {
-  TextField = 'TextField',
-  SecretField = 'SecretField',
-  UrlField = 'UrlField',
-  Password = 'Password',
-  TextArea = 'TextArea',
-  IntlField = 'IntlField',
-  EmailField = 'EmailField',
-  NumberField = 'NumberField',
-  Currency = 'Currency',
-  DatePicker = 'DatePicker',
-  Cascader = 'Cascader',
-  Select = 'Select',
-  AutoComplete = 'AutoComplete',
-  Lov = 'Lov',
-  TreeSelect = 'TreeSelect',
-  ColorPicker = 'ColorPicker',
-  IconPicker = 'IconPicker',
 }
 
 export type CustomizedRendererOtherInfo<T extends keyof Customized> = {

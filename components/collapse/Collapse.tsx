@@ -7,7 +7,7 @@ import animation from '../_util/openAnimation';
 import CollapsePanel, { CollapsibleType } from './CollapsePanel';
 import RcCollapse from '../rc-components/collapse';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export type ExpandIconPosition = 'left' | 'right' | 'text-right';
@@ -147,7 +147,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     } else if (expandIconCof === 'text') {
       expandIconContent = (panelProps: PanelProps) => {
         return (
-          <LocaleReceiver componentName="Collapse" defaultLocale={defaultLocale.Collapse}>
+          <LocaleReceiver componentName="Collapse" defaultLocale={getRuntimeLocale().Collapse || {}}>
             {(locale, localeCode) => this.renderExpandTextContent(panelProps, locale, localeCode, expandIconPositionCof)}
           </LocaleReceiver>)
       };

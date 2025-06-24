@@ -12,7 +12,7 @@ import Modal, { ModalProps } from '../modal';
 import message from '../message';
 import Upload, { UploadProps } from '../upload';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import { imageCrop } from '../locale-provider';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '.';
@@ -62,7 +62,7 @@ export interface AvatarUploadProps {
   prefixCls?: string; // 自定义样式前缀
 }
 
-let Avatarlocale = defaultLocale.imageCrop;
+let Avatarlocale = getRuntimeLocale().imageCrop!;
 
 export default class AvatarUploader extends Component<AvatarUploadProps, any> {
   static get contextType(): typeof ConfigContext {
@@ -462,9 +462,9 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     const cancelButtonProps: ButtonProps = { disabled: submitting, funcType: 'raised' };
     const okButtonProps: ButtonProps = { funcType: 'raised', type: 'primary', disabled: !img, loading: submitting };
     return (
-      <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
+      <LocaleReceiver componentName="imageCrop" defaultLocale={getRuntimeLocale().imageCrop || {}}>
         {(locale: imageCrop) => {
-          Avatarlocale = locale || defaultLocale.imageCrop;
+          Avatarlocale = locale || getRuntimeLocale().imageCrop;
           return (
             <Modal
               title={title || <span>{Avatarlocale.changeAvatar}</span>}

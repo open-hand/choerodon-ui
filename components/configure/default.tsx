@@ -21,7 +21,8 @@ import { FieldFocusMode, Tooltip } from 'choerodon-ui/pro/lib/core/enum';
 import { ModalButtonTrigger } from 'choerodon-ui/pro/lib/modal/interface';
 import { ValueChangeAction } from 'choerodon-ui/pro/lib/text-field/enum';
 import { Size } from '../_util/enum';
-import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook, TreeCheckboxPosition, InputSuffixCompName } from './index';
+import { CustomizedLoad, CustomizedSave, renderEmptyHandler, TooltipThemeHook, LovShowSelectedInViewHook, TooltipHook, TreeCheckboxPosition } from './index';
+import { InputSuffixCompName } from './interface';
 import { Action } from '../trigger/enum';
 import Popover from '../popover';
 

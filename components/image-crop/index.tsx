@@ -4,7 +4,7 @@ import isFunction from 'lodash/isFunction';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Modal, { ModalProps } from '../modal';
 import { UploadFile, UploadProps } from '../upload/interface';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import Button, { ButtonProps } from '../button';
 import ButtonGroup from '../button/ButtonGroup';
 import Upload from '../upload';
@@ -486,7 +486,7 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const cancelButtonProps: ButtonProps = { funcType: 'raised' };
   const okButtonProps: ButtonProps = { funcType: 'raised', type: 'primary' };
   return (
-    <LocaleReceiver componentName="imageCrop" defaultLocale={defaultLocale.imageCrop}>
+    <LocaleReceiver componentName="imageCrop" defaultLocale={getRuntimeLocale().imageCrop || {}}>
       {(locale: imageCrop) => {
         return (
           <>

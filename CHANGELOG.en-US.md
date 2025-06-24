@@ -141,6 +141,7 @@ timeline: true
 - 🐞 `<pro>Picture`: Fixed the issue that the custom preview className would overwrite the original component className.
 - 🐞 `Tabs`: Fixed the issue where the child component and `activeKey` were loaded asynchronously without scrolling to the currently activated `tab`.
 - 🐞 `<pro>Table`: Fixed the issue of asynchronous expansion and collapse of tree data and incorrect selection of data association.
+- 🐞 `LocaleProvider`: Optimize the internationalization of basic components and fix the issue where the internationalization display of components in `Tooltip` is incorrect.
 
 ## 1.6.6
 
