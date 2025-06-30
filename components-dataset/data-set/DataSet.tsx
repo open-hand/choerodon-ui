@@ -1006,6 +1006,28 @@ export default class DataSet extends EventManager {
     return this.filter(record => !record.parent);
   }
 
+  flattenTreeData = (records: Record[]) => {
+    const result: Record[] = [];
+    function traverse (nodes: Record[]) {
+      nodes.forEach((node: Record) => {
+        result.push(node);
+        if (node.children && node.children.length > 0) {
+          traverse(node.children);
+        }
+      });
+    }
+    traverse(records);
+    return result;
+  }
+
+  get sortedTreeData(): Record[] {
+    const { treeData } = this;
+    if (treeData.length === 0) {
+      return [];
+    }
+    return this.flattenTreeData(treeData);
+  }
+
   get paging(): boolean | 'server' | 'noCount' {
     const { idField, parentField, childrenField, paging } = this.props;
     return ((paging === `server`) && ((parentField && idField) || childrenField) || paging === 'noCount')  ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;

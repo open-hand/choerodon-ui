@@ -27,7 +27,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 🌟 `<pro>PerformanceTable.Column`: Added footer attribute, supporting bottom rendering of tables.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
-- 🌟 `<pro>DataSet`: Added `customIntlFun` property.
+- 🌟 `<pro>DataSet`: Added `customIntlFun`, `sortedTreeData` property.
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
 - 🌟 `<pro>Table.Column`: Added `showDetail` property.
 - 🌟 `<pro>TreeSelect`: Added `showLine` property.
