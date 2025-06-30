@@ -1,5 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import isPromise from 'is-promise';
+import isFunction from 'lodash/isFunction';
 import { NotificationManager } from 'choerodon-ui/shared';
 import { ConfigProps as ConfigOptions, NotificationInterface, NotificationPlacement } from 'choerodon-ui/shared/notification-manager';
 import Icon from '../icon';
@@ -132,7 +133,11 @@ export interface ArgsProps {
 function notice(args: ArgsProps) {
   const outerPrefixCls = getPrefixCls('notification', args.prefixCls);
   const prefixCls = `${outerPrefixCls}-notice`;
-  const duration = args.duration === undefined ? config.duration : args.duration;
+  let duration = args.duration === undefined ? config.duration : args.duration;
+
+  if (isFunction(duration)) {
+    duration = duration(args.type);
+  }
 
   let iconNode: ReactNode = null;
   if (args.icon) {
