@@ -27,7 +27,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
 - 🌟 `<pro>PerformanceTable.Column`: 新增 footer 属性，支持表格底部渲染。
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
-- 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
+- 🌟 `<pro>DataSet`: 新增 customIntlFun, sortedTreeData 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
 - 🌟 `<pro>Table.Column`: 新增 showDetail 属性。
 - 🌟 `<pro>TreeSelect`: 新增 showLine 属性。
@@ -91,6 +91,7 @@ timeline: true
 - 💄 固定 uuid 版本。
 - 💄 `<pro>Table`: 优化动态筛选条 range 字段无值时样式。
 - 💄 `<pro>Table`: 优化双向复制功能下载模板中增加自定义列。
+- 💄 `Notification`: 全局配置支持根据不同类型提示设置不同的关闭延迟时间。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。

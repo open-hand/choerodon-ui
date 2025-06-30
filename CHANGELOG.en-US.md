@@ -27,7 +27,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
 - 🌟 `<pro>PerformanceTable.Column`: Added footer attribute, supporting bottom rendering of tables.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
-- 🌟 `<pro>DataSet`: Added `customIntlFun` property.
+- 🌟 `<pro>DataSet`: Added `customIntlFun`, `sortedTreeData` property.
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
 - 🌟 `<pro>Table.Column`: Added `showDetail` property.
 - 🌟 `<pro>TreeSelect`: Added `showLine` property.
@@ -91,6 +91,7 @@ timeline: true
 - 💄 Fixed uuid version.
 - 💄 `<pro>Table`: Optimize the style when the `range` field of the dynamic filter bar has no value.
 - 💄 `<pro>Table`: Optimize the two-way copy function and add custom columns to the download template.
+- 💄 `Notification`: The global configuration allows you to set different shutdown delay times based on different types of prompts.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

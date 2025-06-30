@@ -27,7 +27,11 @@ export function getDocuments(self: Window, list: Document[] = []): Document[] {
 }
 
 export function findIFrame(self: Window): HTMLIFrameElement | undefined {
-  return [...self.parent.document.querySelectorAll('iframe')].find(frame => frame.contentWindow === self);
+  try {
+    return [...self.parent.document.querySelectorAll('iframe')].find(frame => frame.contentWindow === self);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 export { MousePosition };

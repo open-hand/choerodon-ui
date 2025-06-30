@@ -5,7 +5,7 @@ export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bot
 export interface ConfigProps<P = NotificationPlacement> {
   top: number;
   bottom: number;
-  duration: number;
+  duration: number | ((type?: string) => number);
   placement: P;
   getContainer?: () => HTMLElement;
   maxCount?: number;
