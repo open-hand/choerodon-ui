@@ -221,6 +221,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   const [prev, setPrev] = useState<boolean>(false);
   const [prevActiveKey, setActiveKey] = useState<string | undefined>(activeKey);
   const [menuList, setMenuList] = useState<Array<MenuKeyValue>>([]);
+  const resizeTimeID = useRef<number | null>(null);
   const tabsRef = useRef<any>([]);
   const getTabs = useMemo((): ReactElement<RippleProps>[] => {
     const length = currentPanelMap.size;
@@ -693,8 +694,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       }
     }
     setMenuList(menuList);
-    scrollToActiveTab();
-  }, [tabBarPosition, scrollToActiveTab, setMenuList]);
+    setOffset(vertical ? scrollTop : scrollLeft, setNextPrev);
+  }, [tabBarPosition, setOffset, setMenuList]);
 
   const renderInkBar = () => {
     const inkBarNode = inkBarRef.current;
@@ -851,7 +852,14 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       onResize={debounce(() => {
         setNextPrev();
         scrollToActiveTab();
-        handleScrollEvent();
+        if (showMore) {
+          if (resizeTimeID.current) {
+            window.clearTimeout(resizeTimeID.current);
+          }
+          resizeTimeID.current = window.setTimeout(() => {
+            handleScrollEvent();
+          }, 500);
+        }
       }, 200)}>
       <div
         {...tabBarProps}
