@@ -106,10 +106,10 @@ const ClipboardBar: FunctionComponent<ClipboardBarProps> = function ClipboardBar
               row[key] = templateIsMutiple[key] ? '05:05:00,16:14:15' : '16:14:15';
               break;
             case "email":
-              row[key] = templateIsMutiple[key] ? 'xxxxxx@xxx.com,zzzzz@zzz.com' : 'xxxxxx@xxx.com';
+              row[key] = templateIsMutiple[key] ? '邮箱1@后缀.com,邮箱2@后缀.com' : '邮箱1@后缀.com';
               break;
             case "url":
-              row[key] = templateIsMutiple[key] ? 'https:www.xxxxxx.com/,https:www.zzzzzz.com/' : 'https:www.xxxxxx.com/';
+              row[key] = templateIsMutiple[key] ? 'https:www.网址1.com/,https:www.网址2.com/' : 'https:www.网址1.com/';
               break;
             case "bigNumber":
               row[key] = templateIsMutiple[key] ? '123456789.123456789,1000000.000000001' : '123456789.123456789';
