@@ -92,6 +92,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the style when the `range` field of the dynamic filter bar has no value.
 - 💄 `<pro>Table`: Optimize the two-way copy function and add custom columns to the download template.
 - 💄 `Notification`: The global configuration allows you to set different shutdown delay times based on different types of prompts.
+- 💄 `<pro>Table`: Optimize the `url` addresses in the bidirectional copy template to prevent issues such as injection.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
