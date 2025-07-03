@@ -29,7 +29,7 @@ import lookupStore, { BatchParaType } from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext from '../locale-context';
-import { defaultTextField, defaultValueField, getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps } from './utils';
+import { getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps } from './utils';
 import { isFormData } from '../axios/_helpers/utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -42,6 +42,7 @@ import { iteratorFind, iteratorSome } from '../iterator-helper';
 import { treeFind } from '../tree-helper';
 import LookupCache from './LookupCache';
 import { AttachmentValue } from '../configure';
+import { defaultTextField, defaultValueField } from './constant';
 
 function isEqualDynamicProps(oldProps, newProps) {
   if (newProps === oldProps) {

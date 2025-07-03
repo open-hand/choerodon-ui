@@ -145,6 +145,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of asynchronous expansion and collapse of tree data and incorrect selection of data association.
 - 🐞 `LocaleProvider`: Optimize the internationalization of basic components and fix the issue where the internationalization display of components in `Tooltip` is incorrect.
 - 🐞 `<pro>Tree`: Fixed the issue where the `selectable` property was invalid when no `DataSet` was associated.
+- 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
 
 ## 1.6.6
 

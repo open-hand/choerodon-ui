@@ -145,6 +145,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复树形数据异步展开收起, 数据关联勾选错误的问题。
 - 🐞 `LocaleProvider`: 优化基础组件国际化, 修复组件在 Tooltip 中国际化显示不正确的问题。
 - 🐞 `<pro>Tree`: 修复未关联 DataSet 时, selectable 属性无效的问题。
+- 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
 
 ## 1.6.6
 
