@@ -25,8 +25,16 @@ import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome
 import math from '../math';
 import { colorHexReg, colorRgbaReg } from '../validator/rules/typeMismatch';
 
-export const defaultTextField = 'meaning';
-export const defaultValueField = 'value';
+export {
+  /**
+   * 请直接引用 constant 文件下常量
+   */
+  defaultTextField,
+  /**
+   * 请直接引用 constant 文件下常量
+   */
+  defaultValueField,
+} from './constant';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
