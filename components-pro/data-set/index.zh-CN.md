@@ -342,6 +342,7 @@ title: DataSet
 | accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  |
 | useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  |
+| numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  |
 
 ### Field Values
 

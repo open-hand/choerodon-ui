@@ -13,7 +13,7 @@ import { BigNumber } from 'bignumber.js';
 import { math, Utils } from 'choerodon-ui/dataset';
 import { getConfig as getConfigDefault, getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
-import { FieldType, RecordStatus } from '../data-set/enum';
+import { FieldType, RecordStatus, NumberRoundMode } from '../data-set/enum';
 import { stopEvent } from '../_util/EventManager';
 import formatCurrency from '../formatter/formatCurrency';
 import formatNumber from '../formatter/formatNumber';
@@ -204,6 +204,7 @@ export type ProcessValueOptions = {
   isNumber?: boolean;
   precision?: number;
   useZeroFilledDecimal?: boolean;
+  numberRoundMode?: NumberRoundMode;
 }
 
 export function processValue(value: any, options: ProcessValueOptions = {}) {
@@ -223,7 +224,7 @@ export function processValue(value: any, options: ProcessValueOptions = {}) {
     }
     if (options.isNumber && math.isValidNumber(value)) {
       return options.precision && options.useZeroFilledDecimal
-        ? math.toFixed(value, options.precision)
+        ? math.toFixed(value, options.precision, options.numberRoundMode)
         : math.toString(value);
     }
     return value.toString();

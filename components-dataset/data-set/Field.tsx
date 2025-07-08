@@ -7,6 +7,7 @@ import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import cloneDeep from 'lodash/cloneDeep';
 import merge from 'lodash/merge';
+import noop from 'lodash/noop';
 import { AxiosRequestConfig } from 'axios';
 import isPromise from 'is-promise';
 import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
@@ -24,11 +25,12 @@ import {
   FieldTrim,
   FieldType,
   SortOrder,
+  NumberRoundMode,
 } from './enum';
 import lookupStore, { BatchParaType } from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
-import localeContext from '../locale-context';
+import localeContext, { $l } from '../locale-context';
 import { getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps } from './utils';
 import { isFormData } from '../axios/_helpers/utils';
 import ValidationResult from '../validator/ValidationResult';
@@ -489,6 +491,10 @@ export type FieldProps = {
   useLookupBatch?: (code: string, field?: Field) => boolean;
   useLovDefineBatch?: (code: string, field?: Field) => boolean;
   checkValueOnOptionsChange?: boolean,
+  /**
+   * 数字取整方式
+   */
+  numberRoundMode?: NumberRoundMode;
 };
 
 const defaultProps: FieldProps = {
@@ -1018,8 +1024,21 @@ export default class Field {
     }
   }
 
+  getIsLookupFetchError(record: Record | undefined = this.record): boolean {
+    const { name } = this;
+    if (name && record) {
+      const results = record.getValidationError(name) || [];
+      const isError = results.some(result => result.validationProps && result.validationProps.label === '__LOOKUP_FETCH_ERROR__');
+      return isError;
+    }
+    return false;
+  }
+
   getShowSelectLoading(record: Record | undefined = this.record): boolean {
     if (!this.dataSet.getConfig('showSelectLoading')) {
+      return false;
+    }
+    if (this.getIsLookupFetchError(record)) {
       return false;
     }
     const lookup = this.getLookup(record);
@@ -1393,6 +1412,16 @@ export default class Field {
     }
     if (promise) {
       return promise.then(action((result) => {
+        const { name, dataSet } = this;
+        const records = record ? [record] : dataSet.records;
+        records.forEach(action(record => {
+          const oriResults = record.getValidationError(name) || [];
+          const filterResults = oriResults.filter(result => !(result.validationProps && result.validationProps.label === '__LOOKUP_FETCH_ERROR__'));
+          if (oriResults.length !== filterResults.length) {
+            record.setValidationError(name, filterResults);
+          }
+        }));
+
         const lookup = oldToken ? lookupCaches.get(oldToken) : undefined;
         if (lookup) {
           const { items } = lookup;
@@ -1415,7 +1444,25 @@ export default class Field {
           }
         }
         return toJS(result);
-      }));
+      })).catch(() => {
+        const { name, dataSet } = this;
+        const records = record ? [record] : dataSet.records;
+        records.forEach(action(record => {
+          const oriResults = record.getValidationError(name) || [];
+          if (!oriResults.some(result => result.validationProps && result.validationProps.label === '__LOOKUP_FETCH_ERROR__')) {
+            const customResult = new ValidationResult({
+              validationProps: {
+                customValidator: noop,
+                label: '__LOOKUP_FETCH_ERROR__',
+              },
+              validationMessage: $l('DataSet', 'query_failure'),
+              ruleName: 'customError',
+            });
+            oriResults.push(customResult);
+            record.setValidationError(name, oriResults);
+          }
+        }));
+      });
     }
     return Promise.resolve(undefined);
   }

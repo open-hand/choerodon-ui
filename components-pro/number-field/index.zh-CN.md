@@ -28,6 +28,7 @@ title: NumberField
 | precision | 转换小数点位数 | number |  |
 | numberGrouping | 千分位分组显示 | boolean | true |
 | keyboard(1.5.0) | 是否启用UP DOWN键盘事件 | boolean | true |
+| numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  |
 
 
 更多属性请参考 [TextField](/components-pro/text-field/#TextField)。

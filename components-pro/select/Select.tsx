@@ -880,6 +880,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return this.options.status === DataSetStatus.loading;
   }
 
+  get customShowErrorTooltip(): boolean {
+    const { field, record } = this;
+    if (field && record) {
+      const isLookupFetchError = field.getIsLookupFetchError(record);
+      return isLookupFetchError;
+    }
+    return false;
+  }
+
   get showSelectLoading(): boolean | undefined {
     const { displayName } = this.constructor as any;
     const { field, record } = this;

@@ -41,6 +41,8 @@ timeline: true
 - 🌟 `Tag`: Added `hoverShowPointer` property.
 - 🌟 `Tabs`: Added `tabBarStartExtraContent` property.
 - 🌟 `<pro>TextField`: Added `forceShowRangeSeparator` property.
+- 🌟 `<pro>DataSet.Field`: Added `numberRoundMode` property.
+- 🌟 `<pro>NumberField`: Added `numberRoundMode` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -93,6 +95,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the two-way copy function and add custom columns to the download template.
 - 💄 `Notification`: The global configuration allows you to set different shutdown delay times based on different types of prompts.
 - 💄 `<pro>Table`: Optimize the `url` addresses in the bidirectional copy template to prevent issues such as injection.
+- 💄 `<pro>Select`: When the option query fails, a prompt is given.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.

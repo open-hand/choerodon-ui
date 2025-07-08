@@ -14,4 +14,5 @@ export {
   FieldFormat,
   DataToJSON,
   CheckedStrategy,
+  NumberRoundMode,
 } from 'choerodon-ui/dataset/data-set/enum';

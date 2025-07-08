@@ -7,6 +7,12 @@ export interface BigNumberOptions {
   strict?: boolean;
 }
 
+export enum NumberRoundMode {
+  round = 'round',
+  floor = 'floor',
+  ceil = 'ceil',
+}
+
 /**
  * 当 BigNumber 能转换为普通数字则返回普通数字
  * @param n1 BigNumber
@@ -103,10 +109,14 @@ function sqrt(n1: BigNumber.Value, options: BigNumberOptions = {}): BigNumber | 
  * 格式化小数精度
  * @param n1 string | number | BigNumber
  * @param decimalPlaces number
+ * @param numberRoundMode NumberRoundMode
  * @return string
  */
-function toFixed(n1: BigNumber.Value, decimalPlaces: number): string {
-  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toFixed(decimalPlaces);
+function toFixed(n1: BigNumber.Value, decimalPlaces: number, numberRoundMode?: NumberRoundMode): string {
+  const roundMode = numberRoundMode === NumberRoundMode.ceil
+    ? BigNumber.ROUND_CEIL
+    : numberRoundMode === NumberRoundMode.floor ? BigNumber.ROUND_FLOOR : BigNumber.ROUND_HALF_UP;
+  return (BigNumber.isBigNumber(n1) ? n1 : new BigNumber(n1)).toFixed(decimalPlaces, roundMode);
 }
 
 /**
