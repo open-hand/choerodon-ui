@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>Attachment`: Added `templateDownloadButtonRenderer` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
+- 🌟 `<pro>PerformanceTable`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 🌟 `<pro>PerformanceTable.Column`: Added footer attribute, supporting bottom rendering of tables.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
 - 🌟 `<pro>DataSet`: Added `customIntlFun`, `sortedTreeData` property.
