@@ -319,6 +319,9 @@ export default class Modal extends ViewComponent<ModalProps> {
     }
     try {
       if (this.element && (this.element.ownerDocument !== window.top?.document)) {
+        if (window.top && window.innerHeight <= window.top?.innerHeight) {
+          return;
+        }
         const { element, prefixCls } = this;
         const clzz = classes(element);
         if (clzz.has(`${prefixCls}-auto-center`)) {
