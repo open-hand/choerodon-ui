@@ -161,3 +161,9 @@ export enum DownloadAllMode {
   readOnly = 'readOnly',
   always = 'always',
 }
+
+export enum NumberRoundMode {
+  round = 'round',
+  floor = 'floor',
+  ceil = 'ceil',
+}

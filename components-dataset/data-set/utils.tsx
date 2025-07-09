@@ -184,13 +184,13 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
         case FieldType.number:
         case FieldType.currency:
           if (!isNaN(value)) {
-            value = parseNumber(value, field.get('precision', record));
+            value = parseNumber(value, field.get('precision', record), undefined, field.get('numberRoundMode', record));
           } else {
             value = undefined;
           }
           break;
         case FieldType.bigNumber:
-          value = parseBigNumber(value, field.get('precision', record));
+          value = parseBigNumber(value, field.get('precision', record), field.get('numberRoundMode', record));
           break;
         case FieldType.string:
         case FieldType.intl:

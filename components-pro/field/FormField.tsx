@@ -523,6 +523,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return false;
   }
 
+  get customShowErrorTooltip(): boolean {
+    return false;
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -1527,7 +1531,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   getTooltipValidationMessage(): ReactNode {
     const { _inTable } = this.props;
-    if (!_inTable && !(!!(this.multiple && this.getValues().length) && !this.getProp('validator') || this.multipleValidateMessageLength > 0)) {
+    if (!_inTable && (this.customShowErrorTooltip ||
+      !(!!(this.multiple && this.getValues().length) && !this.getProp('validator') || this.multipleValidateMessageLength > 0))
+    ) {
       const validationMessage = this.renderValidationResult();
       if (!this.isValidationMessageHidden(validationMessage)) {
         return validationMessage;

@@ -12,7 +12,7 @@ import { BigNumber } from 'bignumber.js';
 import { TimeStep } from '../interface';
 import { TimeUnit } from '../enum';
 import Field from '../data-set/Field';
-import { FieldType } from '../data-set/enum';
+import { FieldType, NumberRoundMode } from '../data-set/enum';
 import Record from '../data-set/Record';
 import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import { formatFileSize } from '../formatter';
@@ -49,17 +49,17 @@ export function isSameLike(newValue, oldValue) {
   return isSame(newValue, oldValue) || newValue == oldValue;
 }
 
-export function parseNumber(value: BigNumber.Value | boolean, precision?: number, strict?: boolean): number | BigNumber {
+export function parseNumber(value: BigNumber.Value | boolean, precision?: number, strict?: boolean, numberRoundMode?: NumberRoundMode): number | BigNumber {
   if (isBoolean(value)) {
     const result = Number(value);
     return strict ? new BigNumber(result) : result;
   }
-  const result = new BigNumber(isNumber(precision) ? math.toFixed(value, precision) : value);
+  const result = new BigNumber(isNumber(precision) ? math.toFixed(value, precision, numberRoundMode) : value);
   return strict ? result : math.fix(result);
 }
 
-export function parseBigNumber(value: BigNumber.Value, precision?: number): BigNumber {
-  return new BigNumber(isNumber(precision) ? math.toFixed(value, precision) : value);
+export function parseBigNumber(value: BigNumber.Value, precision?: number, numberRoundMode?: NumberRoundMode): BigNumber {
+  return new BigNumber(isNumber(precision) ? math.toFixed(value, precision, numberRoundMode) : value);
 }
 
 function getBeforeStepValue(value: BigNumber.Value, min: BigNumber.Value, step: BigNumber.Value, options?: BigNumberOptions): BigNumber | number {

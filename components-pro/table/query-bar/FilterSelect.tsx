@@ -216,6 +216,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
             precision: field && field.get('precision', current),
             useZeroFilledDecimal: this.getContextConfig('useZeroFilledDecimal'),
+            numberRoundMode: field && field.get('numberRoundMode', current),
           };
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {
