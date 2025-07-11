@@ -11,6 +11,8 @@ import EventManager from '../_util/EventManager';
 import { transformZoomData } from '../_util/DocumentUtils';
 import Toolbar from './Toolbar';
 import Navbar from './Navbar';
+import { Size } from '../core/enum';
+import isMobile from '../_util/isMobile';
 
 export interface PictureViewerProps {
   prefixCls?: string;
@@ -222,6 +224,17 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
     const { src, downloadUrl } = getPreviewItem(list[index]);
     return (
       <div className={customizedPrefixCls} onWheel={handleWheel}>
+        {
+          !isMobile() && (
+            <Button
+              icon="navigate_before"
+              funcType={FuncType.link}
+              onClick={handlePrev}
+              className={`${customizedPrefixCls}-btn ${customizedPrefixCls}-btn-nav`}
+              size={Size.large}
+            />
+          )
+        }
         <div
           className={`${customizedPrefixCls}-picture`}
           ref={touchRef}
@@ -264,6 +277,17 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
             )
           }
         </div>
+        {
+          !isMobile() && (
+            <Button
+              icon="navigate_next"
+              funcType={FuncType.link}
+              onClick={handleNext}
+              className={`${customizedPrefixCls}-btn ${customizedPrefixCls}-btn-nav`}
+              size={Size.large}
+            />
+          )
+        }
         <Button
           icon="close"
           funcType={FuncType.link}

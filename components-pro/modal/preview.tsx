@@ -13,6 +13,7 @@ export default async function preview(props: PictureViewerProps, modalProps?: Mo
   const classString = classNames(`${customizedPrefixCls}-modal`, {
     [`${customizedPrefixCls}-modal-mobile`]: isMobile(),
   }, className);
+  const maskClassString = classNames(`${customizedPrefixCls}-modal-mask`, { [`${customizedPrefixCls}-modal-mask-mobile`]: isMobile() });
   open({
     key: ModalManager.getKey(),
     className: classString,
@@ -24,7 +25,7 @@ export default async function preview(props: PictureViewerProps, modalProps?: Mo
     closable: true,
     style: { width: 'auto' },
     fullScreen: true,
-    maskClassName: `${customizedPrefixCls}-modal-mask`,
+    maskClassName: maskClassString,
     children: (
       <PictureViewer prefixCls={customizedPrefixCls} {...props} />
     ),

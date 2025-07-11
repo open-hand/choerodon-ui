@@ -129,14 +129,18 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
       className={navBarPrefixCls}
       onTouchStart={stopPropagation}
     >
-      <Button
-        icon="navigate_before"
-        disabled={disabled}
-        funcType={FuncType.link}
-        onClick={handlePrev}
-        onMouseDown={stopPropagation}
-        className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />
+      {
+        isMobile() && (
+          <Button
+            icon="navigate_before"
+            disabled={disabled}
+            funcType={FuncType.link}
+            onClick={handlePrev}
+            onMouseDown={stopPropagation}
+            className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
+          />
+        )
+      }
       <div
         ref={containerRef}
         className={`${navBarPrefixCls}-scroll-container`}
@@ -147,14 +151,18 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
           {renderList()}
         </div>
       </div>
-      <Button
-        icon="navigate_next"
-        disabled={disabled}
-        funcType={FuncType.link}
-        onClick={handleNext}
-        onMouseDown={stopPropagation}
-        className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />
+      {
+        isMobile() && (
+          <Button
+            icon="navigate_next"
+            disabled={disabled}
+            funcType={FuncType.link}
+            onClick={handleNext}
+            onMouseDown={stopPropagation}
+            className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
+          />
+        )
+      }
     </div>
   );
 };
