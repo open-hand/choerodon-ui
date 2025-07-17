@@ -32,6 +32,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   summaryBar?: ReactElement<any>;
   defaultExpanded?: boolean;
   autoQueryAfterReset?: boolean;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -148,7 +149,10 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
 
   @autobind
   async handleQuery(collapse?: boolean) {
-    const { dataSet, queryDataSet, onQuery = noop } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop, onBeforeQuery = noop } = this.props;
+    if (await onBeforeQuery() === false) {
+      return;
+    }
     if (queryDataSet && await queryDataSet.validate()) {
       await dataSet.query();
       if (!collapse) {

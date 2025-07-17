@@ -902,6 +902,7 @@ export default class Modal extends ViewComponent<ModalProps> {
           Object.assign(element.style, {
             left,
             top,
+            right: null,
           });
         })
         .addEventListener('mouseup', () => {

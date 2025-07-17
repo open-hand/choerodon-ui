@@ -44,6 +44,7 @@ timeline: true
 - 🌟 `<pro>TextField`: 新增 forceShowRangeSeparator 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 numberRoundMode 属性。
 - 🌟 `<pro>NumberField`: 新增 numberRoundMode 属性。
+- 🌟 `<pro>Table`: 筛选条新增 onBeforeQuery 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -97,6 +98,8 @@ timeline: true
 - 💄 `Notification`: 全局配置支持根据不同类型提示设置不同的关闭延迟时间。
 - 💄 `<pro>Table`: 优化双向复制模板中 url 地址, 防止注入等问题。
 - 💄 `<pro>Select`: 选项查询失败时, 进行提示。
+- 💄 `<pro>Modal`: confirm 不同类型增加类名区分。
+- 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -150,6 +153,7 @@ timeline: true
 - 🐞 `LocaleProvider`: 优化基础组件国际化, 修复组件在 Tooltip 中国际化显示不正确的问题。
 - 🐞 `<pro>Tree`: 修复未关联 DataSet 时, selectable 属性无效的问题。
 - 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
+- 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
 
 ## 1.6.6
 

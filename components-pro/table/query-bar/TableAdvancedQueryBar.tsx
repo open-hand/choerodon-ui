@@ -27,6 +27,7 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -188,7 +189,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   getFilterSelect() {
-    const { dataSet, queryDataSet, onQuery = noop } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop, onBeforeQuery = noop } = this.props;
     const { prefixCls } = this;
     return (
       <FilterSelect
@@ -202,6 +203,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
         filter={this.valueFilter}
         hiddenIfNone
         onQuery={onQuery}
+        onBeforeQuery={onBeforeQuery}
       />
     );
   }

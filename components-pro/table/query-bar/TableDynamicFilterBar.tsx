@@ -309,6 +309,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   buttons?: ReactElement<ButtonProps>[];
   summaryBar?: ReactElement<any>;
   dynamicFilterBar?: DynamicFilterBarConfig;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
   onFieldEnterDown?: ({ e, name }) => void;
@@ -618,7 +619,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @autobind
   async handleDataSetUpdate({ record, name, oldValue, value }) {
-    const { dataSet, queryDataSet, onQuery = noop, autoQuery } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop, autoQuery, onBeforeQuery = noop } = this.props;
     const field = queryDataSet && queryDataSet.getField(name);
     let shouldQuery = true;
     if (field && field.get('range', record)) {
@@ -660,6 +661,9 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     this.setConditionStatus(status);
     if (autoQuery && shouldQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
+        if (await onBeforeQuery() === false) {
+          return;
+        }
         if (queryDataSet && queryDataSet.current && await queryDataSet.current.validate()) {
           dataSet.query();
           onQuery();
@@ -2100,7 +2104,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @autobind
   async handleQuery(collapse?: boolean, value?: string, oldValue?: string) {
-    const { onQuery = noop, autoQuery } = this.props;
+    const { onQuery = noop, autoQuery, onBeforeQuery = noop } = this.props;
+    if (await onBeforeQuery() === false) {
+      return;
+    }
     if (autoQuery) {
       await this.modifiedCheckQuery(value, oldValue);
     }
