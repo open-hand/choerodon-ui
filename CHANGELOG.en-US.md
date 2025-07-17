@@ -150,6 +150,7 @@ timeline: true
 - 🐞 `<pro>Picture`: Fixed the issue that the custom preview className would overwrite the original component className.
 - 🐞 `Tabs`: Fixed the issue where the child component and `activeKey` were loaded asynchronously without scrolling to the currently activated `tab`.
 - 🐞 `<pro>Table`: Fixed the issue of asynchronous expansion and collapse of tree data and incorrect selection of data association.
+- 🐞 `<pro>Table`: Fixed the issue where the parent-child cascading checkmark was incorrect when asynchronously loading tree data and setting `cacheSelection`.
 - 🐞 `LocaleProvider`: Optimize the internationalization of basic components and fix the issue where the internationalization display of components in `Tooltip` is incorrect.
 - 🐞 `<pro>Tree`: Fixed the issue where the `selectable` property was invalid when no `DataSet` was associated.
 - 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.

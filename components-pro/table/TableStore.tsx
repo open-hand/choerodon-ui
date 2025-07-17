@@ -2893,7 +2893,7 @@ export default class TableStore {
       if (selectionMode === SelectionMode.treebox) {
         // 由父选子
         if (record.isSelected) {
-          if (!this.isRowLoaded(record)) {
+          if (!record.parentSelectToChildrenSynced) {
             defaultTo(record.children, []).forEach(child => {
               if (!child.isSelected) {
                 dataSet.select(child);
@@ -2904,6 +2904,7 @@ export default class TableStore {
         else {
           parentSelect(record);
         }
+        record.parentSelectToChildrenSynced = true;
       }
       this.setRowLoaded(record, true);
     } finally {
