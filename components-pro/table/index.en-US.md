@@ -227,6 +227,7 @@ subtitle: 表格
 | filterQueryCallback | 查询回调  | ({ dataSet })=> void |  |
 | autoQuery | 条件变更是否自动查询  | boolean | true |
 | refreshBtn | 刷新按钮  | boolean | true |
+| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 | onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
@@ -252,6 +253,7 @@ subtitle: 表格
 | autoQueryAfterReset | 重置后自动查询 | boolean | true |
 | defaultExpanded | 默认展开 | boolean | false |
 | formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } |
+| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 

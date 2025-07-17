@@ -164,6 +164,7 @@ export interface TableQueryBarCustomProps {
   summaryFieldsLimit: number;
   pagination?: ReactElement<PaginationProps>;
   summaryBar?: ReactElement<any>;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
