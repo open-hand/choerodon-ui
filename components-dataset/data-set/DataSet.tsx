@@ -3308,7 +3308,7 @@ Then the query method will be auto invoke.`,
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
             if (this.lastRequestSource) {
-              this.lastRequestSource.cancel('New request started, cancelling the previous one.');
+              this.lastRequestSource.cancel(`New request started, cancelling the previous one. Please check request, now request url: ${newConfig.url}`);
             }
             if (this.getState(QUERY_CANCELABLE) !== false) {
               this.lastRequestSource = axiosStatic.CancelToken.source();
@@ -3402,6 +3402,7 @@ Then the query method will be auto invoke.`,
         );
         if (index !== -1) {
           const cached = cachedRecords.splice(index, 1)[0];
+          record.parentSelectToChildrenSynced = cached.parentSelectToChildrenSynced;
           if (cacheSelectionKeys) {
             record.isSelected = cached.isSelected;
             if (!isNil(cached.selectedTimestamp) && cached.isSelected) {

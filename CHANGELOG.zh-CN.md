@@ -150,6 +150,7 @@ timeline: true
 - 🐞 `<pro>Picture`: 修复自定义预览类名会覆盖原有组件类名的问题。
 - 🐞 `Tabs`: 修复子组件和 activeKey 异步加载时, 未滚动到当前激活 tab 的问题。
 - 🐞 `<pro>Table`: 修复树形数据异步展开收起, 数据关联勾选错误的问题。
+- 🐞 `<pro>Table`: 修复树形数据异步加载且设置 cacheSelection 时, 父子级联勾选不正确的问题。
 - 🐞 `LocaleProvider`: 优化基础组件国际化, 修复组件在 Tooltip 中国际化显示不正确的问题。
 - 🐞 `<pro>Tree`: 修复未关联 DataSet 时, selectable 属性无效的问题。
 - 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
