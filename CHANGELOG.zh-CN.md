@@ -101,6 +101,7 @@ timeline: true
 - 💄 `<pro>Modal`: confirm 不同类型增加类名区分。
 - 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
+- 🐞 `<pro>Attachment`: 修复附件列表中图片会出现意料之外的刷新的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
 - 🐞 `<pro>Table`: 修复双向复制lov计算属性变化导致粘贴没有请求的问题。
