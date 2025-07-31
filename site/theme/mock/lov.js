@@ -16,7 +16,7 @@ const dataSetLovTempleSize10Page1 = {
       parentCodeDescription: null,
       homeUrl: 'https://open.hand-china.com/choerodon-ui/zh',
       selfie: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      percent: 0.55,
+      percent: 12345.556,
       numberDemo: 1234567,
     },
     {
@@ -413,7 +413,7 @@ const lovDefineTemple = {
       conditionFieldLovCode: null,
       conditionFieldSequence: 3,
       gridFieldSequence: 3,
-      gridFieldType: 'href',
+      gridFieldType: 'HREF',
     },
     {
       _token: '@guid()',
@@ -441,7 +441,7 @@ const lovDefineTemple = {
       conditionFieldLovCode: null,
       conditionFieldSequence: 4,
       gridFieldSequence: 4,
-      gridFieldType: 'picture',
+      gridFieldType: 'PICTURE',
     },
     {
       _token: '@guid()',
@@ -469,7 +469,7 @@ const lovDefineTemple = {
       conditionFieldLovCode: null,
       conditionFieldSequence: 4,
       gridFieldSequence: 4,
-      gridFieldType: 'percent',
+      gridFieldType: 'PERCENT',
     },
     {
       _token: '@guid()',

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { action, flow, toJS } from 'mobx';
+import { action, flow, isArrayLike, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import isString from 'lodash/isString';
 import noop from 'lodash/noop';
@@ -9,7 +9,7 @@ import { Form } from '../interface';
 import validationRules, { methodReturn, validationRule, ValidatorBaseProps, ValidatorProps } from './rules';
 import valueMissing from './rules/valueMissing';
 import { ValidationErrors, ValidationSelfErrors } from '../data-set/DataSet';
-import { getGlobalConfig, toMultipleValue, toRangeValue } from '../utils';
+import { getGlobalConfig } from '../utils';
 
 export type CustomValidator = (
   value: any,
@@ -46,19 +46,9 @@ export interface ValidationMessages {
   label?: ReactNode;
 }
 
-function* execute(
-  rules: validationRule[],
-  valueProp: any[],
-  props: ValidatorBaseProps,
-  getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
-  validationResults: ValidationResult[],
-  oriRangeValue?: any[] | null,
-): any {
+function* execute(rules: validationRule[], value: any[], props: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T], validationResults: ValidationResult[]): any {
   const method = rules.shift();
   if (method) {
-    // 兼容历史版本的 range 类型自定义校验器
-    // @ts-ignore
-    const value = method.displayName === 'customError' && oriRangeValue ? oriRangeValue : valueProp;
     const results: methodReturn[] = [];
     const promises: PromiseLike<methodReturn>[] = [];
     value.forEach(item => {
@@ -85,7 +75,7 @@ function* execute(
       }
     });
     if (value.length) {
-      for (const result of execute(rules, valueProp, props, getProp, validationResults, oriRangeValue)) {
+      for (const result of execute(rules, value, props, getProp, validationResults)) {
         yield result;
       }
     }
@@ -171,18 +161,12 @@ export default class Validator {
       validationResults.push(valueMiss);
     } else {
       const multiple = getProp('multiple');
-      const range = getProp('range');
-      const valueArr = multiple
-        ? toMultipleValue(value, range)
-        : range ? toRangeValue(value, range) : [value];
-      const oriRangeValue = !multiple && range ? [value] : null;
       await flow(execute)(
         validationRules.slice(),
-        valueArr,
+        multiple && isArrayLike(value) ? value.slice() : [value],
         props,
         getProp,
         validationResults,
-        oriRangeValue,
       );
     }
     return {

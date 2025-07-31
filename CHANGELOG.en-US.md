@@ -82,7 +82,7 @@ timeline: true
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 💄 `<pro>Attachment`: Added support for configuring custom buttons through callback functions to obtain information about the current attachment.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
-- 💄 `<pro>TextField`: Optimize the validation of the `range` mode.
+- 💄 `<pro>TextField`: Optimize the validation of the `maxLength` and `minLength` properties in the `range` mode.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
 - 💄 `<pro>CodeArea`: Optimize `JSONFormatter`. When formatting `json`, it defaults to line breaks by default.
 - 💄 `<pro>Picture`: Optimize the style of previewing images on mobile devices.
@@ -100,6 +100,7 @@ timeline: true
 - 💄 `<pro>Select`: When the option query fails, a prompt is given.
 - 💄 `<pro>Modal`: The `confirm` different types add className distinctions.
 - 💄 `<pro>DataSet`: Optimize the `type` setting of the fields in `lov` `options`.
+- 💄 `<pro>Lov`: Optimize the display of percentile symbols in the `PERCENT` type field.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
@@ -155,6 +156,7 @@ timeline: true
 - 🐞 `<pro>Tree`: Fixed the issue where the `selectable` property was invalid when no `DataSet` was associated.
 - 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
 - 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
+- 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
 
 ## 1.6.6
 

@@ -82,7 +82,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 💄 `<pro>Attachment`: 支持通过回调函数配置自定义按钮获取当前附件信息。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
-- 💄 `<pro>TextField`: 优化 range 模式校验。
+- 💄 `<pro>TextField`: 优化 range 模式下 maxLength minLength 属性校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
 - 💄 `<pro>CodeArea`: 优化 JSONFormatter, json 格式化时默认都换行。
 - 💄 `<pro>Picture`: 优化图片在移动端预览的样式。
@@ -100,6 +100,7 @@ timeline: true
 - 💄 `<pro>Select`: 选项查询失败时, 进行提示。
 - 💄 `<pro>Modal`: confirm 不同类型增加类名区分。
 - 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
+- 💄 `<pro>Lov`: 优化 PERCENT 类型字段百分位符显示。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
@@ -155,6 +156,7 @@ timeline: true
 - 🐞 `<pro>Tree`: 修复未关联 DataSet 时, selectable 属性无效的问题。
 - 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
 - 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
+- 🐞 `Popover`: 修复 Popover 组件包裹 CheckBox 且触发方式设置为 click 时, CheckBox 勾选状态显示不正确的问题。
 
 ## 1.6.6
 

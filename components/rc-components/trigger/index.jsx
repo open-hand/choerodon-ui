@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, Component } from 'react';
+import React, { Children, cloneElement, Component, isValidElement } from 'react';
 import { observer } from 'mobx-react';
 import { createPortal, findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
@@ -236,7 +236,14 @@ class Trigger extends Component {
     this.preClickTime = 0;
     this.preTouchTime = 0;
     if (event && event.preventDefault) {
-      event.preventDefault();
+      const { children } = this.props;
+      if (!(children && isValidElement(children) && children.type && (
+        children.type.__PRO_SWITCH ||
+        children.type.__PRO_CHECKBOX ||
+        children.type.__PRO_RADIO
+      ))) {
+        event.preventDefault();
+      }
     }
     const nextVisible = !this.state.popupVisible;
     if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
