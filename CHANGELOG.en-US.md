@@ -156,6 +156,7 @@ timeline: true
 - 🐞 `<pro>Tree`: Fixed the issue where the `selectable` property was invalid when no `DataSet` was associated.
 - 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
 - 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
+- 🐞 `<pro>Cascader`: Fixed an issue where an error was reported using `singleMenuItemRender`.
 - 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
 
 ## 1.6.6
