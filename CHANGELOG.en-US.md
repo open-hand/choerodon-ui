@@ -102,6 +102,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `type` setting of the fields in `lov` `options`.
 - 💄 `<pro>Lov`: Optimize the display of percentile symbols in the `PERCENT` type field.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
+- 🐞 `<pro>Attachment`: Fixed an issue where images in the attachment list would refresh unexpectedly.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of pasting multiple blank columns after successful bidirectional copying.

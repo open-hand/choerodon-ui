@@ -1,4 +1,4 @@
-import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef, CSSProperties } from 'react';
+import React, { cloneElement, FunctionComponent, isValidElement, MouseEventHandler, ReactNode, useCallback, useContext, useEffect, useRef, CSSProperties, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { isArrayLike } from 'mobx';
 import classnames from 'classnames';
@@ -74,7 +74,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const { getPreviewUrl: getPreviewUrlConfig, getDownloadUrl: getDownloadUrlConfig } = attachmentConfig;
   const getPreviewUrl = getPreviewUrlProp || getPreviewUrlConfig;
   const getDownloadUrl = getDownloadUrlProp || getDownloadUrlConfig;
-  const previewUrl = getPreviewUrl ? getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic }) : url;
+  const previewUrl = useMemo(() => {
+    if (getPreviewUrl) {
+      return getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+    }
+    return url;
+  }, [getPreviewUrl, attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, url]);
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,
     bucketName,
