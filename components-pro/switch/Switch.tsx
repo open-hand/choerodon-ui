@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { CheckBox, CheckBoxProps } from '../check-box/CheckBox';
@@ -8,6 +9,7 @@ import { Size } from '../core/enum';
 import autobind from '../_util/autobind';
 import isOverflow from '../overflow-tip/util';
 import { show } from '../tooltip/singleton';
+import { ShowHelp } from '../field/enum';
 
 interface SwitchProps extends CheckBoxProps {
   /**
@@ -93,10 +95,19 @@ export default class Switch extends CheckBox<SwitchProps> {
   renderSwitchFloatLabel() {
     const {
       prefixCls,
+      showHelp,
+      context: { getConfig },
     } = this;
+    const isLabelShowHelp = showHelp === ShowHelp.label;
     return (
-      <span className={`${prefixCls}-float-label`}>
+      <span className={classNames(
+        `${prefixCls}-float-label`,
+        `${getConfig('proPrefixCls')}-field-label`,
+        { [`${getConfig('proPrefixCls')}-field-label-help`]: isLabelShowHelp },
+        { [`${prefixCls}-label-help`]: isLabelShowHelp },
+      )}>
         {this.getLabelChildren()}
+        {isLabelShowHelp ? this.renderTooltipHelp() : null}
       </span>
     );
   }
