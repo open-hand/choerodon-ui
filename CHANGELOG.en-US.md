@@ -125,6 +125,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed an issue where the `restrict` attribute could not restrict Chinese characters.
 - 🐞 `<pro>PerformanceTable`: Fixed the class name error when using the `rowClassName` property to dynamically set the class name and switch the current row.
 - 🐞 `<pro>FormField`: Fixed an issue where input component `onCompositionStart` and `onCompositionEnd` events did not take effect.
+- 🐞 `<pro>FormField`: Fixed an issue where setting `showHelp` as `label` under the floating layout form did not take effect.
 - 🐞 `<pro>TextField`: Fix to copy error when `navigator.clipboard` does not exist.
 - 🐞 `<pro>DatePicker`: Fixed an issue where text was copied incorrectly.
 - 🐞 `<pro>Table`: Fixed an issue where the reset button was still displayed after the fuzzy filter value of the dynamic filter bar was cleared.

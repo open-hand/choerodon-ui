@@ -725,9 +725,15 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return toJS(this.getDisplayProp('label'));
   }
 
+  renderTooltipHelp(): ReactNode {
+    return null;
+  }
+
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
       const label = this.getLabel();
+      const { showHelp } = this;
+      const isLabelShowHelp = showHelp === ShowHelp.label;
       if (label) {
         const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
@@ -735,6 +741,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
+          [`${prefixCls}-label-help`]: isLabelShowHelp,
         });
         const style = floatLabelOffsetX ? {
           marginLeft: pxToRem(floatLabelOffsetX, true),
@@ -747,6 +754,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
               {label}
+              {isLabelShowHelp ? this.renderTooltipHelp() : null}
             </div>
           </div>
         );
