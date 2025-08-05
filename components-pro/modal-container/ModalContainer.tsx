@@ -305,8 +305,12 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
   }
 
   getModalTopInIframe = (): number | undefined => {
-    if (window.top && window.innerHeight <= window.top.innerHeight) {
-      return;
+    try {
+      if (window.top && window.innerHeight <= window.top.innerHeight) {
+        return;
+      }
+    } catch {
+      return; // 跨域 iframe 中 window.top.innerHeight 会报错
     }
     if (this.isInIframe && window.frameElement) {
       const iframe = window.frameElement as HTMLIFrameElement;
