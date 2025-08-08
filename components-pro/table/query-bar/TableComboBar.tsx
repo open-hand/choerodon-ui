@@ -621,6 +621,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   createFields(element, name, field): ReactElement {
     const { queryFieldsStyle } = this.props;
     const { prefixCls } = this;
+    const { clearButton = true } = element.props;
     const styleCss: CSSProperties | undefined = queryFieldsStyle && queryFieldsStyle[name];
     let fieldWidth;
     if (styleCss) {
@@ -631,13 +632,13 @@ export default class TableComboBar extends Component<TableComboBarProps> {
       placeholder: field.get('label'),
       maxTagCount: 2,
       border: true,
-      clearButton: true,
       isFlat: !fieldWidth,
       maxTagTextLength: 3,
     };
     if (fieldWidth) {
       props = {
         ...props,
+        clearButton,
         className: `${prefixCls}-combo-filter-item-overlay`,
         style: {
           width: fieldWidth,
