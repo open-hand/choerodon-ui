@@ -188,8 +188,12 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
   }
 
   get isInIframe(): boolean {
-    const offsetContainer = this.getContainer() || this.getOffsetContainer();
-    return offsetContainer?.ownerDocument !== window.top?.document;
+    try {
+      const offsetContainer = this.getContainer() || this.getOffsetContainer();
+      return offsetContainer?.ownerDocument !== window.top?.document;
+    } catch {
+      return false; // 跨域 iframe 中 window.top?.document 会报错
+    }
   }
 
   constructor(props, context) {
@@ -301,6 +305,13 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
   }
 
   getModalTopInIframe = (): number | undefined => {
+    try {
+      if (window.top && window.innerHeight <= window.top.innerHeight) {
+        return;
+      }
+    } catch {
+      return; // 跨域 iframe 中 window.top.innerHeight 会报错
+    }
     if (this.isInIframe && window.frameElement) {
       const iframe = window.frameElement as HTMLIFrameElement;
       const rect = iframe.getBoundingClientRect();

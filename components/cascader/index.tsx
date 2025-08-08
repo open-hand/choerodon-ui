@@ -10,7 +10,7 @@ import RcCascader from '../rc-components/cascader';
 import KeyCode from '../_util/KeyCode';
 import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import enUS from '../rc-components/cascader/locale/en_US';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
 export interface CascaderOptionType {
@@ -501,7 +501,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
      */
     const renderCascader = (locale: CascaderLocale) => {
       // 只配置部分语言其他英语即可
-      const cascaderLocal = isEmpty(locale) ? enUS.Cascader : locale;
+      const cascaderLocal = isEmpty(locale) ? getRuntimeLocale().Cascader : locale;
       return (
         <RcCascader
           {...props}
@@ -521,7 +521,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     };
 
     return (
-      <LocaleReceiver componentName="Cascader" defaultLocale={enUS}>
+      <LocaleReceiver componentName="Cascader" defaultLocale={getRuntimeLocale().Cascader || {}}>
         {renderCascader}
       </LocaleReceiver>
     );

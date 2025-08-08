@@ -12,7 +12,7 @@ import Pagination, { PaginationProps } from '../pagination';
 import Icon from '../icon';
 import Spin, { SpinProps } from '../spin';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import warning from '../_util/warning';
 import FilterDropdown from './filterDropdown';
 import createStore, { Store } from './createStore';
@@ -1677,7 +1677,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     }
 
     const table = (
-      <LocaleReceiver componentName="Table" defaultLocale={defaultLocale.Table}>
+      <LocaleReceiver componentName="Table" defaultLocale={getRuntimeLocale().Table || {}}>
         {locale => this.renderTable(locale, loading)}
       </LocaleReceiver>
     );

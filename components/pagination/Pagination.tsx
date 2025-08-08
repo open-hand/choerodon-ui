@@ -6,7 +6,7 @@ import Select, { SelectProps } from '../select';
 import MiniSelect from './MiniSelect';
 import LargeSelect from './LargeSelect';
 import RcPagination from '../rc-components/pagination';
-import enUS from '../rc-components/pagination/locale/en_US';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import Button from '../button/Button';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
@@ -138,7 +138,7 @@ export default class Pagination extends Component<PaginationProps, {}> {
 
   render() {
     return (
-      <LocaleReceiver componentName="Pagination" defaultLocale={enUS}>
+      <LocaleReceiver componentName="Pagination" defaultLocale={getRuntimeLocale().Pagination || {}}>
         {this.renderPagination}
       </LocaleReceiver>
     );

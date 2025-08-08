@@ -2,7 +2,7 @@ import React, { Component, CSSProperties, ReactElement } from 'react';
 import { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from './locale/en_US';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import RcTimePicker from '../rc-components/time-picker';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -171,7 +171,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
 
   render() {
     return (
-      <LocaleReceiver componentName="TimePicker" defaultLocale={defaultLocale}>
+      <LocaleReceiver componentName="TimePicker" defaultLocale={getRuntimeLocale().TimePicker || {}}>
         {this.renderTimePicker}
       </LocaleReceiver>
     );

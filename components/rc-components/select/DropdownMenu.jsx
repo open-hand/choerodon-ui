@@ -7,7 +7,7 @@ import Menu from '../menu';
 import { getSelectKeys, preventDefaultEvent, saveRef } from './util';
 import FilterInput from './FilterInput';
 import LocaleReceiver from '../../locale-provider/LocaleReceiver';
-import defaultLocale from '../../locale-provider/default';
+import { getRuntimeLocale } from '../../locale-provider/utils';
 
 export default class DropdownMenu extends Component {
   static defaultProps = {
@@ -198,7 +198,7 @@ export default class DropdownMenu extends Component {
       selectOpt = (
         <LocaleReceiver
           componentName="Select"
-          defaultLocale={defaultLocale.Select}
+          defaultLocale={getRuntimeLocale().Select || {}}
         >
           {this.renderCheckLabel}
         </LocaleReceiver>

@@ -25,9 +25,10 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `removeConfirm` property.
 - 🌟 `<pro>Attachment`: Added `templateDownloadButtonRenderer` property.
 - 🌟 `<pro>PerformanceTable`: Added the `onRowDoubleClick` attribute, which supports the row double-click event.
+- 🌟 `<pro>PerformanceTable`: Added `customDragDropContenxt` property can be customized to support DragDropContenxt for dragging and dropping between multiple tables.
 - 🌟 `<pro>PerformanceTable.Column`: Added footer attribute, supporting bottom rendering of tables.
 - 🌟 `<pro>Table`: Added `rowNumberColumnProps.rowNumberIndex` property, which supports modifying the order of the index column.
-- 🌟 `<pro>DataSet`: Added `customIntlFun` property.
+- 🌟 `<pro>DataSet`: Added `customIntlFun`, `sortedTreeData` property.
 - 🌟 `<pro>Lov`: Added a view configuration of whether the tree is expanded by default.
 - 🌟 `<pro>Table.Column`: Added `showDetail` property.
 - 🌟 `<pro>TreeSelect`: Added `showLine` property.
@@ -40,6 +41,10 @@ timeline: true
 - 🌟 `<pro>Table`: Clipboard added `onlyTemplateHeader` property.
 - 🌟 `Tag`: Added `hoverShowPointer` property.
 - 🌟 `Tabs`: Added `tabBarStartExtraContent` property.
+- 🌟 `<pro>TextField`: Added `forceShowRangeSeparator` property.
+- 🌟 `<pro>DataSet.Field`: Added `numberRoundMode` property.
+- 🌟 `<pro>NumberField`: Added `numberRoundMode` property.
+- 🌟 `<pro>Table`: The queryBar has added the `onBeforeQuery` property.
 - 💄 `<pro>Tree`: Optimizes the default value of `showLeafIcon` when `showLine` is true.
 - 💄 `<pro>Table`: Optimize sorting attributes, remove `showSortOption`, and add `currentDataSort` and `allDataSort` attributes.
 - 💄 `<pro>SelectBox`: Optimized the removal of focus styles in read-only mode.
@@ -77,7 +82,7 @@ timeline: true
 - 💄 `<pro>Attachment`: The upload failed and `Tooltip` is displayed if the error text is too long.
 - 💄 `<pro>Attachment`: Added support for configuring custom buttons through callback functions to obtain information about the current attachment.
 - 💄 `<pro>NumberField`: Optimized `range` mode supports regular check.
-- 💄 `<pro>TextField`: Optimize the validation of the `range` mode.
+- 💄 `<pro>TextField`: Optimize the validation of the `maxLength` and `minLength` properties in the `range` mode.
 - 💄 `Menu`: Optimizes the style of sublevel menu overlap.
 - 💄 `<pro>CodeArea`: Optimize `JSONFormatter`. When formatting `json`, it defaults to line breaks by default.
 - 💄 `<pro>Picture`: Optimize the style of previewing images on mobile devices.
@@ -87,7 +92,17 @@ timeline: true
 - 💄 `<pro>Picture`: Optimize the style of previewing images in low-version browsers.
 - 💄 `<pro>DataSet`: Optimized the timing of the validation of attachment fields.
 - 💄 `<pro>Spin`: Optimize the writing of static functions.
+- 💄 Fixed uuid version.
+- 💄 `<pro>Table`: Optimize the style when the `range` field of the dynamic filter bar has no value.
+- 💄 `<pro>Table`: Optimize the two-way copy function and add custom columns to the download template.
+- 💄 `Notification`: The global configuration allows you to set different shutdown delay times based on different types of prompts.
+- 💄 `<pro>Table`: Optimize the `url` addresses in the bidirectional copy template to prevent issues such as injection.
+- 💄 `<pro>Select`: When the option query fails, a prompt is given.
+- 💄 `<pro>Modal`: The `confirm` different types add className distinctions.
+- 💄 `<pro>DataSet`: Optimize the `type` setting of the fields in `lov` `options`.
+- 💄 `<pro>Lov`: Optimize the display of percentile symbols in the `PERCENT` type field.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
+- 🐞 `<pro>Attachment`: Fixed an issue where images in the attachment list would refresh unexpectedly.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
 - 🐞 `<pro>Table`: Fixed the issue of copying the lov single choice type as empty in bidirectional replication.
 - 🐞 `<pro>Table`: Fixed the issue of pasting multiple blank columns after successful bidirectional copying.
@@ -110,6 +125,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed an issue where the `restrict` attribute could not restrict Chinese characters.
 - 🐞 `<pro>PerformanceTable`: Fixed the class name error when using the `rowClassName` property to dynamically set the class name and switch the current row.
 - 🐞 `<pro>FormField`: Fixed an issue where input component `onCompositionStart` and `onCompositionEnd` events did not take effect.
+- 🐞 `<pro>FormField`: Fixed an issue where setting `showHelp` as `label` under the floating layout form did not take effect.
 - 🐞 `<pro>TextField`: Fix to copy error when `navigator.clipboard` does not exist.
 - 🐞 `<pro>DatePicker`: Fixed an issue where text was copied incorrectly.
 - 🐞 `<pro>Table`: Fixed an issue where the reset button was still displayed after the fuzzy filter value of the dynamic filter bar was cleared.
@@ -136,6 +152,14 @@ timeline: true
 - 🐞 `<pro>CodeArea`: Fix the issue of invalid onBlur events in CodeArea.
 - 🐞 `<pro>Picture`: Fixed the issue that the custom preview className would overwrite the original component className.
 - 🐞 `Tabs`: Fixed the issue where the child component and `activeKey` were loaded asynchronously without scrolling to the currently activated `tab`.
+- 🐞 `<pro>Table`: Fixed the issue of asynchronous expansion and collapse of tree data and incorrect selection of data association.
+- 🐞 `<pro>Table`: Fixed the issue where the parent-child cascading checkmark was incorrect when asynchronously loading tree data and setting `cacheSelection`.
+- 🐞 `LocaleProvider`: Optimize the internationalization of basic components and fix the issue where the internationalization display of components in `Tooltip` is incorrect.
+- 🐞 `<pro>Tree`: Fixed the issue where the `selectable` property was invalid when no `DataSet` was associated.
+- 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
+- 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
+- 🐞 `<pro>Cascader`: Fixed an issue where an error was reported using `singleMenuItemRender`.
+- 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
 
 ## 1.6.6
 

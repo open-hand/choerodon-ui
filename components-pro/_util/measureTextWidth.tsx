@@ -55,6 +55,10 @@ function getCanvasTextStyle(style: CSSProperties | CSSStyleDeclaration = getComp
       textStyle[k] = fontStretchValues[styleKey] || styleKey;
     } else if (k === 'textRendering') {
       textStyle[k] = textRenderingValues[styleKey] || styleKey;
+    } else if (k === 'letterSpacing' || k === 'wordSpacing') {
+      // canvas context 的 letterSpacing 默认值为 0px, 设置不了 normal 等, 需要具体值
+      // 下拉选项中的 letterSpacing 不为0
+      textStyle[k] = typeof styleKey === 'string' && styleKey.includes('px') ? styleKey : '0px';
     } else {
       textStyle[k] = styleKey;
     }

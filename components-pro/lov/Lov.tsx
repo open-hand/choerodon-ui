@@ -377,6 +377,7 @@ export default class Lov extends Select<LovProps> {
           values={this.getValues()}
           popupHidden={!this.popup}
           showDetailWhenReadonly={showDetailWhenReadonly}
+          lang={this.lang}
         />
       );
     }
@@ -626,6 +627,7 @@ export default class Lov extends Select<LovProps> {
             showSelectedInView: this.showSelectedInView,
             getSelectionProps: this.getSelectionProps,
             showDetailWhenReadonly,
+            lang: this.lang,
           }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),

@@ -67,6 +67,7 @@ export interface TableQueryBarProps {
   filterBarPlaceholder?: string;
   searchCode?: string;
   clientExportQuantity?: number;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
   treeQueryExpanded?: boolean;
@@ -806,10 +807,12 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           if (queryBar === TableQueryBarType.filterBar) {
             const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
             const clearButton = isValidElement(element) && element.props.clearButton !== undefined ? element.props.clearButton : true;
+            const forceShowRangeSeparator = isValidElement(element) && element.props.forceShowRangeSeparator !== undefined ? element.props.forceShowRangeSeparator : true;
             filterBarProps = {
               placeholder,
               border: false,
               clearButton,
+              forceShowRangeSeparator,
             };
           }
           const props: any = {
@@ -958,6 +961,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
       const onReset = typeof tableQueryBarProps.onReset === 'function' ? tableQueryBarProps.onReset : noop;
       const onQuery = typeof tableQueryBarProps.onQuery === 'function' ? tableQueryBarProps.onQuery : noop;
+      const onBeforeQuery = typeof tableQueryBarProps.onBeforeQuery === 'function' ? tableQueryBarProps.onBeforeQuery : noop;
       const queryFieldsLimits = queryFieldsLimit || tableQueryBarProps.queryFieldsLimit;
       const summaryFieldsLimits = summaryFieldsLimit || tableQueryBarProps.summaryFieldsLimit || 3;
       const props: TableQueryBarHookCustomProps & TableQueryBarHookProps = {
@@ -972,6 +976,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         summaryBar,
         onQuery: treeQueryExpanded && isTree ? this.expandTree : onQuery,
         onReset: treeQueryExpanded && isTree ? this.collapseTree : onReset,
+        onBeforeQuery,
       };
       if (typeof queryBar === 'function') {
         return (queryBar as TableQueryBarHook)(props);

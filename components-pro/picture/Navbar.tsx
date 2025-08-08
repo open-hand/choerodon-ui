@@ -62,10 +62,9 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
       const { clientWidth } = current;
       const max = Math.floor(clientWidth / (SIZE + GUTTER));
       setMAX(max);
-      if (!isMobile()) {
-        const width = max * (SIZE + GUTTER);
-        Object.assign(current.style, { width: `${width}px` });
-      }
+      const width = max * (SIZE + GUTTER);
+      Object.assign(current.style, { width: `${width}px` });
+
     }
   }, []);
 
@@ -130,14 +129,18 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
       className={navBarPrefixCls}
       onTouchStart={stopPropagation}
     >
-      {!isMobile() && <Button
-        icon="navigate_before"
-        disabled={disabled}
-        funcType={FuncType.link}
-        onClick={handlePrev}
-        onMouseDown={stopPropagation}
-        className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />}
+      {
+        isMobile() && (
+          <Button
+            icon="navigate_before"
+            disabled={disabled}
+            funcType={FuncType.link}
+            onClick={handlePrev}
+            onMouseDown={stopPropagation}
+            className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
+          />
+        )
+      }
       <div
         ref={containerRef}
         className={`${navBarPrefixCls}-scroll-container`}
@@ -148,14 +151,18 @@ const Navbar: FunctionComponent<NavbarProps> = function Navbar(props) {
           {renderList()}
         </div>
       </div>
-      {!isMobile() && <Button
-        icon="navigate_next"
-        disabled={disabled}
-        funcType={FuncType.link}
-        onClick={handleNext}
-        onMouseDown={stopPropagation}
-        className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
-      />}
+      {
+        isMobile() && (
+          <Button
+            icon="navigate_next"
+            disabled={disabled}
+            funcType={FuncType.link}
+            onClick={handleNext}
+            onMouseDown={stopPropagation}
+            className={`${prefixCls}-btn ${prefixCls}-btn-nav`}
+          />
+        )
+      }
     </div>
   );
 };

@@ -4,7 +4,7 @@ import ValidationResult from '../ValidationResult';
 import { $l } from '../../locale-context';
 import { methodReturn, ValidatorBaseProps, ValidatorProps } from '.';
 
-function customError(
+export default function customError(
   value: any,
   props: ValidatorBaseProps,
   getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T],
@@ -33,7 +33,3 @@ function customError(
   }
   return true;
 }
-
-customError.displayName = 'customError';
-
-export default customError;

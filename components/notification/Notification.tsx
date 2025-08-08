@@ -8,7 +8,7 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { NotificationInterface } from 'choerodon-ui/shared/notification-manager';
 import Animate from '../animate';
 import Notice, { NoticeProps } from './Notice';
-import { getNoticeLocale } from './locale';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import EventManager from '../_util/EventManager';
 import { getStyle } from '../rc-components/util/Dom/css';
 
@@ -242,7 +242,7 @@ export default class Notification extends PureComponent<NotificationProps, Notif
       [`${prefixCls}-scroll`]: !!foldCount && scrollHeight !== 'auto',
     });
 
-    const runtimeLocale = getNoticeLocale();
+    const runtimeLocale = getRuntimeLocale().Notification!;
 
     return (
       <div className={cls} style={style}>

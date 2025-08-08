@@ -303,17 +303,10 @@ const TabsWithContext: FunctionComponent<TabsWithContextProps> = function TabsWi
     </div>
   ) : tabBarExtraContent;
 
-  const startExtraContent = !hideAdd && type === TabsType['editable-card'] ? (
-    // Add new tab handler
-    <div key="tabBarStartExtraContent" className={`${prefixCls}-start-extra-bar`}>
-      {tabBarStartExtraContent}
-    </div>
-  ) : tabBarStartExtraContent;
-
   const tabBarProps: TabBarWrapperProps = {
     inkBarAnimated,
     extraContent,
-    startExtraContent,
+    startExtraContent: tabBarStartExtraContent,
     style: tabBarStyle,
     tabBarGutter,
     type,

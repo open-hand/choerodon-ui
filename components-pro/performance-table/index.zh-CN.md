@@ -69,6 +69,7 @@ cols: 1
 | customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | string |
 | rowSelection | object | 表格行是否可选择，[配置项](#rowSelection) |
 | rowDraggable | boolean `(false)` | 行拖拽，实现行的拖拽  |
+| customDragDropContenxt | boolean \| undefined |是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 |
 | onDragEnd |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |

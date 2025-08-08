@@ -35,6 +35,7 @@ export interface FilterSelectProps extends TextFieldProps {
   hiddenIfNone?: boolean;
   filter?: (string) => boolean;
   editorProps?: (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -155,9 +156,12 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
     this.reaction();
   }
 
-  doQuery = throttle(() => {
-    const { onQuery = noop } = this.props;
+  doQuery = throttle(async () => {
+    const { onQuery = noop, onBeforeQuery = noop } = this.props;
     const { optionDataSet } = this.observableProps;
+    if (await onBeforeQuery() === false) {
+      return;
+    }
     optionDataSet.query();
     onQuery();
   }, 500);
@@ -216,6 +220,7 @@ export default class FilterSelect extends TextField<FilterSelectProps> {
             isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(field.get('type', current)),
             precision: field && field.get('precision', current),
             useZeroFilledDecimal: this.getContextConfig('useZeroFilledDecimal'),
+            numberRoundMode: field && field.get('numberRoundMode', current),
           };
           if (range) {
             return `${this.getFieldLabel(field, current)}: ${toRangeValue(fieldValue, range).map(v => {

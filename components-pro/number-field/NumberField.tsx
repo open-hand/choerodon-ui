@@ -19,7 +19,7 @@ import { getNearStepValues, parseNumber } from './utils';
 import { ValidationMessages } from '../validator/Validator';
 import isEmpty from '../_util/isEmpty';
 import { $l } from '../locale-context';
-import { FieldType } from '../data-set/enum';
+import { FieldType, NumberRoundMode } from '../data-set/enum';
 import defaultFormatNumber from '../formatter/formatNumber';
 import { Lang } from '../locale-context/enum';
 import localeContext from '../locale-context/LocaleContext';
@@ -133,6 +133,10 @@ export interface NumberFieldProps<V = number> extends TextFieldProps<V> {
    * @deprecated
    */
   stringMode?: boolean;
+  /**
+   * 数字取整方式
+   */
+  numberRoundMode?: NumberRoundMode;
 }
 
 export class NumberField<T extends NumberFieldProps> extends TextField<T & NumberFieldProps> {
@@ -569,7 +573,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     if (isNaN(value) || isEmpty(value)) {
       super.prepareSetValue(null);
     } else {
-      super.prepareSetValue(parseNumber(value, this.getProp('precision'), this.strict));
+      super.prepareSetValue(parseNumber(value, this.getProp('precision'), this.strict, this.getProp('numberRoundMode')));
     }
   }
 
@@ -578,6 +582,7 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     options.isNumber = true;
     options.precision = this.getProp('precision');
     options.useZeroFilledDecimal = this.getContextConfig('useZeroFilledDecimal');
+    options.numberRoundMode = this.getProp('numberRoundMode');
     return options;
   }
 

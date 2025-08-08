@@ -459,6 +459,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
         precision: field && field.get('precision', record),
         useZeroFilledDecimal: tableStore.getConfig('useZeroFilledDecimal'),
+        numberRoundMode: field && field.get('numberRoundMode', record),
       });
       return processFieldValue(text, field, {
         getProp: (propName) => field && field.get(propName, record),
@@ -637,7 +638,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }), [rowDraggable, isDragDisabled, isTree, multiDragSelectMode, selectedDragRows, tableStore, record, previousCurrentRef, showRemovedRow]);
 
   const showTooltip = useCallback((e) => {
-    if (field && !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length))) {
+    if (field && (field.getIsLookupFetchError(record) ||
+      !(multipleValidateMessageLengthRef.current > 0 || (!field.get('validator', record) && field.get('multiple', record) && toMultipleValue(value, field.get('range', record)).length)))
+    ) {
       const validationResults = field.getValidationErrorValues(record);
       const message = validationResults && !!validationResults.length && renderValidationResult(validationResults[0]);
       if (!isValidationMessageHidden(message) &&(getTooltip('table-validation') !== TextTooltip.none)) {

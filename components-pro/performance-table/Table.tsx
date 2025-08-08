@@ -36,7 +36,7 @@ import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provi
 import { toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import LocaleReceiver from 'choerodon-ui/lib/locale-provider/LocaleReceiver';
 import { PerformanceTable as PerformanceTableLocal } from 'choerodon-ui/lib/locale-provider';
-import defaultLocale from 'choerodon-ui/lib/locale-provider/default';
+import { getRuntimeLocale } from 'choerodon-ui/lib/locale-provider/utils';
 import warning from 'choerodon-ui/lib/_util/warning';
 import { RadioChangeEvent } from 'choerodon-ui/lib/radio';
 import { CheckboxChangeEvent } from 'choerodon-ui/lib/checkbox';
@@ -305,6 +305,10 @@ export interface TableProps extends StandardProps {
   onDragStart?: (initial: DragStart, provided: ResponderProvided) => void;
   onDragEnd?: (result: DropResult, provided: ResponderProvided, data: object) => void;
   onDragEndBefore?: (result: DropResult, provided: ResponderProvided) => boolean;
+  /**
+   * 是否自定义 DragDropContenxt，配合 rowDraggable 属性一起使用。开启后，使用 react-beautiful-dnd 的 DragDropContenxt 可以实现表格与表格之间的拖拽
+   */
+  customDragDropContenxt?: boolean;
 }
 
 export type CustomizeComponent = React.Component<any>;
@@ -442,6 +446,7 @@ const propTypeKeys = [
   'onDragEndBefore',
   'onDragEnd',
   'onDragStart',
+  'customDragDropContenxt',
 ];
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
@@ -815,9 +820,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const { rowHeight, data, autoHeight, height, virtualized, children, columns, rowDraggable } = prevProps;
     const { props, state } = this;
     const rowSelection = getRowSelection(this.props);
-    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren, rowDraggable: nextRowDraggable } = props;
+    const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren, rowDraggable: nextRowDraggable, customDragDropContenxt } = props;
     if (data !== nextData) {
       this.calculateRowMaxHeight();
+      if (customDragDropContenxt) {
+        this.updatePosition();
+      }
       if (onDataUpdated) {
         onDataUpdated(nextData, this.scrollTo);
       }
@@ -2617,7 +2625,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
-    const { rowClassName, highLightRow, virtualized, rowDraggable } = this.props;
+    const { rowClassName, highLightRow, virtualized, rowDraggable, customDragDropContenxt } = this.props;
     const { shouldFixedColumn, width, contentWidth, dragRowIndex } = this.state;
     const { depth, rowIndex, isHeaderRow, style, ...restRowProps } = props;
 
@@ -2909,6 +2917,38 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           )
         }
       </React.Fragment>
+    );
+  }
+
+  renderDraggingRow = (rowData, provided, snapshot) => {
+    const {rowKey, wordWrap } = this.props;
+    const { bodyCells } = this.getCellDescriptor();
+    const cells = [];
+    for (let i = 0; i < bodyCells.length; i++) {
+      const cell = bodyCells[i];
+      cells.push(
+        // @ts-ignore
+        React.cloneElement<any>(cell, {
+          rowData,
+          wordWrap,
+          height: this.getRowHeight(),
+          rowIndex: -1,
+          depth: -1,
+          rowKey,
+        }),
+      );
+    }
+    const rowProps = {
+      height: this.getRowHeight(),
+      rowIndex: -1,
+      provided,
+      snapshot,
+      rowDraggable: false,
+    };
+    return (
+      <Row {...rowProps} isHeaderRow={false} data-depth={-1}>
+        <CellGroup rowDraggable={false}>{mergeCells(cells)}</CellGroup>
+      </Row>
     );
   }
 
@@ -3213,7 +3253,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     })
     
     const body = (
-      <LocaleReceiver componentName="PerformanceTable" defaultLocale={defaultLocale.PerformanceTable}>
+    <LocaleReceiver componentName="PerformanceTable" defaultLocale={getRuntimeLocale().PerformanceTable || {}}>
         {(locale: PerformanceTableLocal) => {
           const rowWrapperChildren = (
             <>
@@ -3254,24 +3294,62 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       </LocaleReceiver>
     );
 
-    return rowDraggable ? (
-      <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
-        <Droppable
-          droppableId="table"
-          key="table"
-        >
-          {(droppableProvided: DroppableProvided) => (
-            <div
-              ref={droppableProvided.innerRef}
-              {...droppableProvided.droppableProps}
-            >
-              {body}
-              {droppableProvided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    ) : body;
+    if (rowDraggable) {
+      const { customDragDropContenxt } = this.props;
+      const { width } = this.state;
+      if (customDragDropContenxt) {
+        return (
+          <Droppable
+            droppableId={this.tableStore.node.props.id || 'table'}
+            key="table"
+            renderClone={(provided: DraggableProvided, snapshot: DraggableStateSnapshot, rubric: DraggableRubric) => {
+              const { draggableId } = rubric;
+              const rowData = data.find((item: any) => String(item[rowKey!]) === draggableId);
+              const draggingRow = this.renderDraggingRow(rowData, provided, snapshot);
+              return (
+                <div
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  ref={provided.innerRef}
+                  style={{...provided.draggableProps.style, width, overflow: 'hidden'}}
+                >
+                  {draggingRow}
+                </div>
+              );
+            }}
+          >
+            {(droppableProvided: DroppableProvided) => (
+              <div
+                ref={droppableProvided.innerRef}
+                {...droppableProvided.droppableProps}
+              >
+                {body}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        );
+      }
+      return (
+        <DragDropContext onDragStart={this.handleDragStart} onDragEnd={this.handleDragEnd}>
+          <Droppable
+            droppableId="table"
+            key="table"
+          >
+            {(droppableProvided: DroppableProvided) => (
+              <div
+                ref={droppableProvided.innerRef}
+                {...droppableProvided.droppableProps}
+              >
+                {body}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      );
+    }
+    return body;
   }
 
   renderInfo(locale: PerformanceTableLocal) {

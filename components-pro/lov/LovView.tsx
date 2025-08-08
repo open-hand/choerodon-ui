@@ -4,6 +4,7 @@ import { action, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
+import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -25,6 +26,8 @@ import { TriggerViewMode } from '../trigger-field/TriggerField';
 import Picture from '../picture';
 import ObserverNumberField from '../number-field';
 import { $l } from '../locale-context';
+import { Lang } from '../locale-context/enum';
+import { processFieldValue } from '../field/utils';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -44,6 +47,7 @@ export interface LovViewProps {
   showSelectedInView?: boolean;
   getSelectionProps?: () => SelectionProps,
   showDetailWhenReadonly?: boolean;
+  lang?: Lang;
 }
 
 interface LovViewState {
@@ -140,7 +144,10 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       config: { lovItems },
       tableProps,
       viewMode,
+      context,
+      lang,
     } = this.props;
+    const { getConfig } = context;
     return lovItems
       ? lovItems
         .filter(({ gridField }) => gridField === 'Y')
@@ -171,9 +178,21 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
               value ? <Picture src={value} objectFit="contain" height={"inherit" as any} block={false} /> : undefined
             );
           } else if (gridFieldType && gridFieldType.toLowerCase() === 'percent') {
-            column.renderer = ({ value }) => (
-              value ? `${math.multipliedBy(value, 100)}%` : value
-            );
+            column.renderer = ({ value, name, record, dataSet }) => {
+              if (isNil(value)) {
+                return value;
+              }
+              const percentValue = math.multipliedBy(value, 100);
+              if (dataSet) {
+                const field = dataSet.getField(name);
+                const processValue = processFieldValue(percentValue, field, {
+                  getProp: (propName) => field && field.get(propName, record!),
+                  lang,
+                }, true, record!, getConfig);
+                return `${processValue}%`;
+              }
+              return `${percentValue}%`;
+            };
           }
           return {
             ...column,

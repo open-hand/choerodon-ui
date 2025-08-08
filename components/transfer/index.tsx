@@ -9,7 +9,7 @@ import Operation from './operation';
 import SortButton from './SortButton';
 import Search from './search';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import defaultLocale from '../locale-provider/default';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import { TransferDirection } from './enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { ButtonProps } from '../button/Button';
@@ -539,7 +539,7 @@ export default class Transfer extends Component<TransferProps, any> {
 
   render() {
     return (
-      <LocaleReceiver componentName="Transfer" defaultLocale={defaultLocale.Transfer}>
+      <LocaleReceiver componentName="Transfer" defaultLocale={getRuntimeLocale().Transfer || {}}>
         {this.renderTransfer}
       </LocaleReceiver>
     );

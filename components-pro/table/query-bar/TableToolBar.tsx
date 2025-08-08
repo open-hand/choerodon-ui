@@ -23,6 +23,7 @@ export interface TableToolBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
 }
@@ -74,7 +75,10 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
 
   @autobind
   async handleQuery(collapse?: boolean) {
-    const { dataSet, queryDataSet, onQuery = noop } = this.props;
+    const { dataSet, queryDataSet, onQuery = noop, onBeforeQuery = noop } = this.props;
+    if (await onBeforeQuery() === false) {
+      return;
+    }
     if (queryDataSet && await queryDataSet.validate()) {
       dataSet.query();
       if (!collapse) {

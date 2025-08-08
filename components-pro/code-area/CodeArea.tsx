@@ -25,6 +25,7 @@ import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
 import { hasAncestorWithClassName } from './utils';
+import { hide, show } from '../tooltip/singleton';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -336,6 +337,45 @@ export default class CodeArea extends FormField<CodeAreaProps> {
   elementReference(node) {
     if (node && node.ref) {
       this.element = node.ref;
+    }
+  }
+
+  @autobind
+  handleHelpMouseEnter(e) {
+    const { getTooltipTheme, getTooltipPlacement } = this.context;
+    const { helpTooltipProps } = this;
+    let helpTooltipCls = `${this.getContextConfig('proPrefixCls')}-tooltip-popup-help`;
+    if (helpTooltipProps && helpTooltipProps.popupClassName) {
+      helpTooltipCls = helpTooltipCls.concat(' ', helpTooltipProps.popupClassName)
+    }
+    show(e.currentTarget, {
+      theme: getTooltipTheme('help'),
+      placement: getTooltipPlacement('help'),
+      title: this.getDisplayProp('help'),
+      ...helpTooltipProps,
+      popupClassName: helpTooltipCls,
+    });
+    this.tooltipShown = true;
+  }
+
+  @autobind
+  handleHelpMouseLeave() {
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
+  }
+
+  renderTooltipHelp(): ReactNode {
+    const help = this.getDisplayProp('help');
+    if (help) {
+      return (
+        <Icon
+          type="help"
+          onMouseEnter={this.handleHelpMouseEnter}
+          onMouseLeave={this.handleHelpMouseLeave}
+        />
+      );
     }
   }
 

@@ -2893,15 +2893,18 @@ export default class TableStore {
       if (selectionMode === SelectionMode.treebox) {
         // 由父选子
         if (record.isSelected) {
-          defaultTo(record.children, []).forEach(child => {
-            if (!child.isSelected) {
-              dataSet.select(child);
-            }
-          });
+          if (!record.parentSelectToChildrenSynced) {
+            defaultTo(record.children, []).forEach(child => {
+              if (!child.isSelected) {
+                dataSet.select(child);
+              }
+            });
+          }
         }
         else {
           parentSelect(record);
         }
+        record.parentSelectToChildrenSynced = true;
       }
       this.setRowLoaded(record, true);
     } finally {

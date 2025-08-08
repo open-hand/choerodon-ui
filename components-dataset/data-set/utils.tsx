@@ -25,8 +25,16 @@ import { iteratorFilterToArray, iteratorFind, iteratorSliceToArray, iteratorSome
 import math from '../math';
 import { colorHexReg, colorRgbaReg } from '../validator/rules/typeMismatch';
 
-export const defaultTextField = 'meaning';
-export const defaultValueField = 'value';
+export {
+  /**
+   * 请直接引用 constant 文件下常量
+   */
+  defaultTextField,
+  /**
+   * 请直接引用 constant 文件下常量
+   */
+  defaultValueField,
+} from './constant';
 
 export function useNormal(dataToJSON: DataToJSON): boolean {
   return [DataToJSON.normal, DataToJSON['normal-self']].includes(dataToJSON);
@@ -176,13 +184,13 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
         case FieldType.number:
         case FieldType.currency:
           if (!isNaN(value)) {
-            value = parseNumber(value, field.get('precision', record));
+            value = parseNumber(value, field.get('precision', record), undefined, field.get('numberRoundMode', record));
           } else {
             value = undefined;
           }
           break;
         case FieldType.bigNumber:
-          value = parseBigNumber(value, field.get('precision', record));
+          value = parseBigNumber(value, field.get('precision', record), field.get('numberRoundMode', record));
           break;
         case FieldType.string:
         case FieldType.intl:

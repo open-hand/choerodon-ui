@@ -99,6 +99,7 @@ title: DataSet
 | children | 所有级联行数据源 | readonly \[key:string\]: DataSet} |
 | dirty | 含有状态不是 sync 的记录及 dirty 为 true 的记录 | readonly observable&lt;boolean&gt;} |
 | isAllPageSelection | 是否是跨页全选状态， 请配合 unSelected 一起做跨页选择数据提交， 需要接口支持 | readonly observable&lt;boolean&gt;} |
+| sortedTreeData | 排序后的扁平化树形数据 | Record[] |
 
 ### DataSet Methods
 
@@ -341,6 +342,7 @@ title: DataSet
 | accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  |
 | useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  |
+| numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  |
 
 ### Field Values
 

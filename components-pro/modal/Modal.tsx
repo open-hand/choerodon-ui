@@ -317,12 +317,19 @@ export default class Modal extends ViewComponent<ModalProps> {
     if (this.modalAutoFocus && this.sentinelStartRef) {
       this.focus();
     }
-    if (this.element && (this.element.ownerDocument !== window.top?.document)) {
-      const { element, prefixCls } = this;
-      const clzz = classes(element);
-      if (clzz.has(`${prefixCls}-auto-center`)) {
-        clzz.remove(`${prefixCls}-auto-center`);
+    try {
+      if (this.element && (this.element.ownerDocument !== window.top?.document)) {
+        if (window.top && window.innerHeight <= window.top?.innerHeight) {
+          return;
+        }
+        const { element, prefixCls } = this;
+        const clzz = classes(element);
+        if (clzz.has(`${prefixCls}-auto-center`)) {
+          clzz.remove(`${prefixCls}-auto-center`);
+        }
       }
+    } catch {
+      // 跨域 iframe 中 window.top?.document 会报错
     }
   }
 
@@ -895,6 +902,7 @@ export default class Modal extends ViewComponent<ModalProps> {
           Object.assign(element.style, {
             left,
             top,
+            right: null,
           });
         })
         .addEventListener('mouseup', () => {

@@ -262,6 +262,8 @@ export default class Record {
 
   @observable childrenLoaded?: boolean;
 
+  parentSelectToChildrenSynced?: boolean;
+
   @observable state?: ObservableMap<string, any> | undefined;
 
   @computed

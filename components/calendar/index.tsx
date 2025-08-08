@@ -2,8 +2,8 @@ import React, { Component, CSSProperties, ReactNode } from 'react';
 import moment, { Moment, isMoment } from 'moment';
 import noop from 'lodash/noop';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import Header from './Header';
-import enUS from './locale/en_US';
 import FullCalendar from '../rc-components/calendar/FullCalendar';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { RadioProps } from '../radio';
@@ -250,7 +250,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
   render() {
     return (
-      <LocaleReceiver componentName="Calendar" defaultLocale={enUS}>
+      <LocaleReceiver componentName="Calendar" defaultLocale={getRuntimeLocale().DatePicker || {}}>
         {this.renderCalendar}
       </LocaleReceiver>
     );

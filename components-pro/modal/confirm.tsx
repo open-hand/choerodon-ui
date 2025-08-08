@@ -32,7 +32,7 @@ export default async function confirm(props: ModalProps & confirmProps | ReactNo
   return new Promise(resolve => {
     Modal.open({
       key: ModalManager.getKey(),
-      className: `${prefixCls}-wrapper`,
+      className: `${prefixCls}-wrapper ${prefixCls}-wrapper-${type}`,
       border,
       destroyOnClose: true,
       okCancel,

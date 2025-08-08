@@ -17,8 +17,8 @@ import { getConfig as globalGetConfig } from '../configure';
 
 type callbackArgs = [(codes: string[]) => AxiosRequestConfig, Field | undefined];
 
-function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType {
-  switch (conditionFieldType) {
+function getFieldType(gridFieldType?: FieldType | LovFieldType, defaultType?: FieldType): FieldType {
+  switch (gridFieldType) {
     case LovFieldType.INT:
       return FieldType.number;
     case LovFieldType.TEXT:
@@ -29,8 +29,14 @@ function getFieldType(conditionFieldType?: FieldType | LovFieldType): FieldType 
       return FieldType.dateTime;
     case LovFieldType.POPUP:
       return FieldType.object;
+    case LovFieldType.HREF:
+    case LovFieldType.PICTURE:
+    case LovFieldType.IMG:
+      return FieldType.string;
+    case LovFieldType.PERCENT:
+      return FieldType.number;
     default:
-      return (conditionFieldType as FieldType) || FieldType.string;
+      return defaultType || (gridFieldType as FieldType) || FieldType.string;
   }
 }
 
@@ -79,11 +85,13 @@ function generateConditionField(
 
 function generateGridField(
   fields: FieldProps[],
-  { gridField, gridFieldName, display, fieldProps }: LovConfigItem,
+  { gridField, gridFieldName, display, fieldProps, gridFieldType }: LovConfigItem,
 ): void {
   if (gridField === 'Y') {
+    const type = getFieldType(gridFieldType, FieldType.auto);
     fields.push({
       name: gridFieldName,
+      type,
       label: display,
       ...fieldProps,
     });

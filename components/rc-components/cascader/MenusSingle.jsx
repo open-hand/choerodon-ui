@@ -173,7 +173,7 @@ export default class Menus extends Component {
     const valueField = this.getFieldName('value');
     let label = option[labelField];
     if (isFunction(singleMenuItemRender)) {
-      label = singleMenuItemItem(option[labelField]);
+      label = singleMenuItemRender(option[labelField]);
     }
     return (
       <span

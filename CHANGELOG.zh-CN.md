@@ -25,9 +25,10 @@ timeline: true
 - 🌟 `<pro>Attachment`: 新增 removeConfirm 属性。
 - 🌟 `<pro>Attachment`: 新增 templateDownloadButtonRenderer 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
+- 🌟 `<pro>PerformanceTable`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>PerformanceTable.Column`: 新增 footer 属性，支持表格底部渲染。
 - 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
-- 🌟 `<pro>DataSet`: 新增 customIntlFun 属性。
+- 🌟 `<pro>DataSet`: 新增 customIntlFun, sortedTreeData 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
 - 🌟 `<pro>Table.Column`: 新增 showDetail 属性。
 - 🌟 `<pro>TreeSelect`: 新增 showLine 属性。
@@ -40,6 +41,10 @@ timeline: true
 - 🌟 `<pro>Table`: clipboard 新增 onlyTemplateHeader 属性。
 - 🌟 `Tag`: 新增 hoverShowPointer 属性。
 - 🌟 `Tabs`: 新增 tabBarStartExtraContent 属性。
+- 🌟 `<pro>TextField`: 新增 forceShowRangeSeparator 属性。
+- 🌟 `<pro>DataSet.Field`: 新增 numberRoundMode 属性。
+- 🌟 `<pro>NumberField`: 新增 numberRoundMode 属性。
+- 🌟 `<pro>Table`: 筛选条新增 onBeforeQuery 属性。
 - 💄 `<pro>Tree`: 优化 showLine 属性为 true 时的 showLeafIcon 默认值。
 - 💄 `<pro>Table`: 优化排序属性，废弃 showSortOption，新增 currentDataSort、allDataSort 属性。
 - 💄 `<pro>SelectBox`: 优化去除只读状态下的聚焦样式。
@@ -77,7 +82,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 上传失败, 报错文本超长时显示 Tooltip。
 - 💄 `<pro>Attachment`: 支持通过回调函数配置自定义按钮获取当前附件信息。
 - 💄 `<pro>NumberField`: 优化 range 模式支持正则校验。
-- 💄 `<pro>TextField`: 优化 range 模式校验。
+- 💄 `<pro>TextField`: 优化 range 模式下 maxLength minLength 属性校验。
 - 💄 `Menu`: 优化子级菜单重叠的样式。
 - 💄 `<pro>CodeArea`: 优化 JSONFormatter, json 格式化时默认都换行。
 - 💄 `<pro>Picture`: 优化图片在移动端预览的样式。
@@ -87,7 +92,17 @@ timeline: true
 - 💄 `<pro>Picture`: 优化低版本浏览器下预览图片的样式。
 - 💄 `<pro>DataSet`: 优化附件字段的校验时机。
 - 💄 `<pro>Spin`: 优化静态函数写法。
+- 💄 固定 uuid 版本。
+- 💄 `<pro>Table`: 优化动态筛选条 range 字段无值时样式。
+- 💄 `<pro>Table`: 优化双向复制功能下载模板中增加自定义列。
+- 💄 `Notification`: 全局配置支持根据不同类型提示设置不同的关闭延迟时间。
+- 💄 `<pro>Table`: 优化双向复制模板中 url 地址, 防止注入等问题。
+- 💄 `<pro>Select`: 选项查询失败时, 进行提示。
+- 💄 `<pro>Modal`: confirm 不同类型增加类名区分。
+- 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
+- 💄 `<pro>Lov`: 优化 PERCENT 类型字段百分位符显示。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
+- 🐞 `<pro>Attachment`: 修复附件列表中图片会出现意料之外的刷新的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
 - 🐞 `<pro>Table`: 修复双向复制 lov 单选类型复制为空的问题。
 - 🐞 `<pro>Table`: 修复双向复制lov计算属性变化导致粘贴没有请求的问题。
@@ -110,6 +125,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复 restrict 属性限制不住中文的问题。
 - 🐞 `<pro>PerformanceTable`: 修复使用 rowClassName 属性动态设置类名, 切换当前行时, 类名错误问题。
 - 🐞 `<pro>FormField`: 修复输入组件 onCompositionStart 和 onCompositionEnd 事件不生效的问题。
+- 🐞 `<pro>FormField`: 修复浮动布局表单下设置 showHelp 为 label 不生效的问题。
 - 🐞 `<pro>TextField`: 修复 navigator.clipboard 不存在时, 复制报错的问题。
 - 🐞 `<pro>DatePicker`: 修复文本复制不正确的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选值清空后, 重置按钮依然显示的问题。
@@ -136,6 +152,14 @@ timeline: true
 - 🐞 `<pro>CodeArea`: 修复CodeArea的onBlur事件无效的问题。
 - 🐞 `<pro>Picture`: 修复自定义预览类名会覆盖原有组件类名的问题。
 - 🐞 `Tabs`: 修复子组件和 activeKey 异步加载时, 未滚动到当前激活 tab 的问题。
+- 🐞 `<pro>Table`: 修复树形数据异步展开收起, 数据关联勾选错误的问题。
+- 🐞 `<pro>Table`: 修复树形数据异步加载且设置 cacheSelection 时, 父子级联勾选不正确的问题。
+- 🐞 `LocaleProvider`: 优化基础组件国际化, 修复组件在 Tooltip 中国际化显示不正确的问题。
+- 🐞 `<pro>Tree`: 修复未关联 DataSet 时, selectable 属性无效的问题。
+- 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
+- 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
+- 🐞 `<pro>Cascader`: 修复使用 singleMenuItemRender 报错的问题。
+- 🐞 `Popover`: 修复 Popover 组件包裹 CheckBox 且触发方式设置为 click 时, CheckBox 勾选状态显示不正确的问题。
 
 ## 1.6.6
 

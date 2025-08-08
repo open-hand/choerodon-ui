@@ -18,4 +18,8 @@ export enum LovFieldType {
   DATETIME = 'DATETIME',
   POPUP = 'POPUP',
   SELECT = 'SELECT',
+  HREF = 'HREF',
+  PICTURE = 'PICTURE',
+  IMG = 'IMG',
+  PERCENT = 'PERCENT',
 }

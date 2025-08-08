@@ -523,6 +523,10 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return false;
   }
 
+  get customShowErrorTooltip(): boolean {
+    return false;
+  }
+
   getControlled(props): boolean {
     return props.value !== undefined;
   }
@@ -721,9 +725,15 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return toJS(this.getDisplayProp('label'));
   }
 
+  renderTooltipHelp(): ReactNode {
+    return null;
+  }
+
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
       const label = this.getLabel();
+      const { showHelp } = this;
+      const isLabelShowHelp = showHelp === ShowHelp.label;
       if (label) {
         const { floatLabelOffsetX } = this;
         const prefixCls = this.getContextProPrefixCls(FIELD_SUFFIX);
@@ -731,6 +741,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         const classString = classNames(`${prefixCls}-label`, {
           [`${prefixCls}-required`]: required,
           [`${prefixCls}-readonly`]: this.readOnly,
+          [`${prefixCls}-label-help`]: isLabelShowHelp,
         });
         const style = floatLabelOffsetX ? {
           marginLeft: pxToRem(floatLabelOffsetX, true),
@@ -743,6 +754,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
               onMouseLeave={this.handleFloatLabelMouseLeave}
             >
               {label}
+              {isLabelShowHelp ? this.renderTooltipHelp() : null}
             </div>
           </div>
         );
@@ -1527,7 +1539,9 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   @autobind
   getTooltipValidationMessage(): ReactNode {
     const { _inTable } = this.props;
-    if (!_inTable && !(!!(this.multiple && this.getValues().length) && !this.getProp('validator') || this.multipleValidateMessageLength > 0)) {
+    if (!_inTable && (this.customShowErrorTooltip ||
+      !(!!(this.multiple && this.getValues().length) && !this.getProp('validator') || this.multipleValidateMessageLength > 0))
+    ) {
       const validationMessage = this.renderValidationResult();
       if (!this.isValidationMessageHidden(validationMessage)) {
         return validationMessage;

@@ -3,7 +3,7 @@ import { ModalManager } from 'choerodon-ui/shared';
 import Button from '../button';
 import { ButtonFuncType, ButtonProps, ButtonType } from '../button/Button';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
-import { getConfirmLocale } from './locale';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import Dialog from '../rc-components/dialog';
 import Sidebar from './Sidebar';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -208,7 +208,7 @@ export default class Modal extends Component<ModalProps, {}> {
     } = this.props;
     const prefixCls = getPrefixCls('modal', customizePrefixCls);
     const defaultFooter = (
-      <LocaleReceiver componentName="Modal" defaultLocale={getConfirmLocale()}>
+      <LocaleReceiver componentName="Modal" defaultLocale={getRuntimeLocale().Modal || {}}>
         {this.renderFooter}
       </LocaleReceiver>
     );

@@ -1,9 +1,8 @@
 import React, { Component, ReactNode } from 'react';
 import moment from 'moment';
 import { getContext, Symbols } from 'choerodon-ui/shared';
-import { changeConfirmLocale, ModalLocale } from '../modal/locale';
-import { changeNoticeLocale, NoticeLocale } from '../notification/locale';
 import { LocaleReceiverContext } from './LocaleReceiver';
+import { changeRuntimeLocale } from './utils';
 
 export interface Locale {
   locale: string;
@@ -21,6 +20,19 @@ export interface Locale {
   imageCrop?: imageCrop;
   performanceTable?: PerformanceTable;
   Notification?: NoticeLocale;
+  Collapse?: Record<string, any>;
+}
+
+export interface ModalLocale {
+  okText: string;
+  cancelText: string;
+  justOkText: string;
+}
+
+export interface NoticeLocale {
+  total: string;
+  message: string;
+  closeAll: string;
 }
 
 export interface imageCrop {
@@ -93,13 +105,11 @@ export default class LocaleProvider extends Component<LocaleProviderProps, any> 
 
   componentDidUpdate() {
     const { locale } = this.props;
-    changeConfirmLocale(locale && locale.Modal);
-    changeNoticeLocale(locale && locale.Notification);
+    changeRuntimeLocale(locale);
   }
 
   componentWillUnmount() {
-    changeConfirmLocale();
-    changeNoticeLocale();
+    changeRuntimeLocale();
   }
 
   render() {

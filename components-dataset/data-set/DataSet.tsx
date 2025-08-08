@@ -1006,6 +1006,28 @@ export default class DataSet extends EventManager {
     return this.filter(record => !record.parent);
   }
 
+  flattenTreeData = (records: Record[]) => {
+    const result: Record[] = [];
+    function traverse (nodes: Record[]) {
+      nodes.forEach((node: Record) => {
+        result.push(node);
+        if (node.children && node.children.length > 0) {
+          traverse(node.children);
+        }
+      });
+    }
+    traverse(records);
+    return result;
+  }
+
+  get sortedTreeData(): Record[] {
+    const { treeData } = this;
+    if (treeData.length === 0) {
+      return [];
+    }
+    return this.flattenTreeData(treeData);
+  }
+
   get paging(): boolean | 'server' | 'noCount' {
     const { idField, parentField, childrenField, paging } = this.props;
     return ((paging === `server`) && ((parentField && idField) || childrenField) || paging === 'noCount')  ? paging : (parentField === undefined || idField === undefined) && childrenField === undefined && !!paging!;
@@ -3286,7 +3308,7 @@ Then the query method will be auto invoke.`,
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
             if (this.lastRequestSource) {
-              this.lastRequestSource.cancel('New request started, cancelling the previous one.');
+              this.lastRequestSource.cancel(`New request started, cancelling the previous one. Please check request, now request url: ${newConfig.url}`);
             }
             if (this.getState(QUERY_CANCELABLE) !== false) {
               this.lastRequestSource = axiosStatic.CancelToken.source();
@@ -3380,6 +3402,7 @@ Then the query method will be auto invoke.`,
         );
         if (index !== -1) {
           const cached = cachedRecords.splice(index, 1)[0];
+          record.parentSelectToChildrenSynced = cached.parentSelectToChildrenSynced;
           if (cacheSelectionKeys) {
             record.isSelected = cached.isSelected;
             if (!isNil(cached.selectedTimestamp) && cached.isSelected) {

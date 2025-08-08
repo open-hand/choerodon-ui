@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Icon from '../icon';
 import Dialog, { ModalFuncProps } from './Modal';
 import ActionButton, { ActionButtonProps } from './ActionButton';
-import { getConfirmLocale } from './locale';
+import { getRuntimeLocale } from '../locale-provider/utils';
 import ConfigContext from '../config-provider/ConfigContext';
 
 export interface ConfirmProps extends ModalFuncProps {
@@ -49,7 +49,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   const prefixCls = getPrefixCls('confirm', customizePrefixCls);
   const propWidth = width || 416;
   const propStyle = style || {};
-  const runtimeLocale = getConfirmLocale();
+  const runtimeLocale = getRuntimeLocale().Modal!;
   const propOkText = okText || (okCancel ? runtimeLocale.okText : runtimeLocale.justOkText);
   const propCancelText = cancelText || runtimeLocale.cancelText;
   const classString = classNames(prefixCls, `${prefixCls}-${type}`, className);

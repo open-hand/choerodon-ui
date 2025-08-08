@@ -528,6 +528,6 @@ export default class Tree extends Component<TreeProps> {
         </Spin>
       );
     }
-    return <C7NTree {...otherProps} />;
+    return <C7NTree selectable={selectable} {...otherProps} />;
   }
 }
