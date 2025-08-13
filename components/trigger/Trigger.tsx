@@ -117,6 +117,7 @@ export interface TriggerProps extends ElementProps {
   children?: ReactNode | ChildrenFunction;
   childrenProps?: any;
   getContextConfig?<T extends ConfigKeys>(key: T): T extends keyof DefaultConfig ? DefaultConfig[T] : Config[T];
+  onPopupSaveRef?: (popup: Popup | null) => void;
 }
 
 @observer
@@ -179,6 +180,10 @@ export default class Trigger extends Component<TriggerProps> {
   @autobind
   saveRef(node) {
     this.popup = node;
+    const { onPopupSaveRef } = this.props;
+    if (onPopupSaveRef) {
+      onPopupSaveRef(this.popup);
+    }
   }
 
   setActiveElement(activeElement: HTMLElement | null) {

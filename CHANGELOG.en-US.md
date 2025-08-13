@@ -15,10 +15,11 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer`, `disabledTimeLoopRoll`, `tableProfBarHasValueDefaultExpanded` properties.
+- 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer`, `disabledTimeLoopRoll`, `tableProfBarHasValueDefaultExpanded`, `selectScrollLoad` properties.
 - 🌟 `configure`: TooltipTarget Adds the text-field global object.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
 - 🌟 `<pro>Select`: Added the virtual attribute to support virtual scrolling.
+- 🌟 `<pro>Select`: Added `scrollLoad` property.
 - 🌟 `<pro>Pagination`: Added a prompt for entering more than the maximum number of pages.
 - 🌟 `<pro>Table`: Added bidirectional copy operation prompt callback.
 - 🌟 `<pro>DatePicker`: Added `yearFirst`, `disabledTimeLoopRoll` property.

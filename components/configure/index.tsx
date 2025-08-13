@@ -292,6 +292,7 @@ export interface Config extends DataSetConfig {
   selectBoxSearchable?: boolean;
   selectReserveParam?: boolean;
   selectTrigger?: Action[];
+  selectScrollLoad?: boolean;
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
   secretFieldFetchVerifyCode?: (type: string) => Promise<object>;

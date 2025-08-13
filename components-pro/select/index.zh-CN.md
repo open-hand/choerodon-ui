@@ -45,6 +45,7 @@ title: Select
 | popupContent | 下拉框的自定义内容, 注意函数参数 dataSet 为下拉列表的 options  | ReactNode \| ({ dataSet, field, record, textField, valueField, content, setValue(value), setPopup(popup) }) => ReactNode |  |
 | searchFieldInPopup | 搜索框显示在下拉框中  | boolean |  |
 | searchFieldProps | 搜索框显示在下拉框中时，可以设置输入框的属性  | TextFieldProps |  |
+| scrollLoad | 是否开启选项滚动加载  | boolean |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

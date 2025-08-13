@@ -223,6 +223,11 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     return [Action.focus, Action.click];
   }
 
+  @autobind
+  handlePopupSaveRef(_) {
+    // noop
+  }
+
   getWrappedEditor(renderedValue?: ReactNode) {
     const {
       prefixCls,
@@ -263,6 +268,7 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
         tabIntoPopupContent={tabIntoPopupContent}
         childrenProps={renderedValue}
         getContextConfig={this.getContextConfig}
+        onPopupSaveRef={this.handlePopupSaveRef}
       >
         {this.getEditor}
       </Trigger>
