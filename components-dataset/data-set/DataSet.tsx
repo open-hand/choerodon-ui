@@ -3342,11 +3342,13 @@ Then the query method will be auto invoke.`,
           }
         }
       } catch (e) {
-        this.handleLoadFail(e);
         if (e.code === 'ERR_CANCELED') {
           canChangeStatus = false;
+          console.warn(e.message);
+        } else {
+          this.handleLoadFail(e);
+          throw new DataSetRequestError(e);
         }
-        throw new DataSetRequestError(e);
       } finally {
         if (!more && canChangeStatus) {
           this.changeStatus(DataSetStatus.ready);

@@ -255,6 +255,10 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   defaultActiveFirstOption?: boolean;
   children?: ReactNode;
+  /**
+   * 是否开启选项滚动加载
+   */
+  scrollLoad?: boolean;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -405,6 +409,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return this.observableProps.primitiveValue !== false && this.getProp('type') !== FieldType.object;
   }
 
+  get scrollLoad(): boolean | undefined {
+    const { displayName } = this.constructor as any;
+    const { scrollLoad } = this.observableProps;
+    return displayName === 'Select' && (!isNil(scrollLoad) ? scrollLoad : this.getContextConfig('selectScrollLoad'));
+  }
+
   checkValueReaction?: IReactionDisposer;
 
   checkComboReaction?: IReactionDisposer;
@@ -412,6 +422,41 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   @autobind
   saveMenu(node) {
     this.menu = node;
+  }
+
+  @autobind
+  handlePopupSaveRef(popup) {
+    if (!popup || !popup.element || !this.scrollLoad) return;
+    let listDom = popup.element.querySelector(`.${this.getMenuPrefixCls()}`);
+    if (this.virtual && listDom) {
+      listDom = listDom.firstChild;
+    }
+    if (listDom && listDom.addEventListener) {
+      listDom.addEventListener("scroll", this.handleScroll);
+      this.handleScroll({ target: listDom });
+    }
+  }
+
+  handleScroll = ({ target }) => {
+    if (this.moreQuerying) {
+      return;
+    }
+    const {
+      options,
+    } = this;
+    const { strictPageSize = this.getContextConfig('strictPageSize') } = options.props;
+    const showQueryMore = (strictPageSize && options.paging && options.currentPage < options.totalPage) || (options.cacheAllData.length > options.originalData.length);
+    if (showQueryMore && target) {
+      const listDom = target;
+      if ((listDom.scrollTop + listDom.clientHeight + 32) >= listDom.scrollHeight) {
+        this.handleMenuClick({
+          key: MORE_KEY,
+          item: {
+            props: { value: null },
+          },
+        });
+      }
+    }
   }
 
   getSearchFieldProps(): TextFieldProps {
@@ -477,6 +522,16 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     super.componentWillUnmount();
     this.doSearch.cancel();
     this.clearReaction();
+
+    if (this.scrollLoad && this.trigger && this.trigger.popup && this.trigger.popup.element) {
+      let listDom = this.trigger.popup.element.querySelector(`.${this.getMenuPrefixCls()}`);
+      if (this.virtual && listDom) {
+        listDom = listDom.firstChild;
+      }
+      if (listDom && listDom.removeEventListener) {
+        listDom.removeEventListener("scroll", this.handleScroll);
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -537,6 +592,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'selectAllButton',
       'optionTooltip',
       'defaultActiveFirstOption',
+      'scrollLoad',
     ]);
   }
 
@@ -557,6 +613,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       defaultActiveFirstOption: props.defaultActiveFirstOption,
       selectReverse: props.reverse,
       optionsFilter: props.optionsFilter,
+      scrollLoad: props.scrollLoad,
     };
   }
 

@@ -215,6 +215,7 @@ const prefixCls = getConfig('prefixCls');
 | tagHoverShowPointer | Tag 组件 hover 时是否显示小手样式, 默认不显示 | boolean |  |
 | disabledTimeLoopRoll | 禁止时间组件循环滚动  | boolean |  |
 | tableProfBarHasValueDefaultExpanded | Table 专业搜索条隐藏的查询字段中有值时, 是否默认展开全部字段  | boolean | true |
+| selectScrollLoad | Select 组件是否开启选项滚动加载 | boolean |  |
 
 ### Customizable
 
