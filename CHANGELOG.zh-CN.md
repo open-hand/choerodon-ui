@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded, selectScrollLoad 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded, selectScrollLoad, richTextFontFamilies 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>Select`: 新增 scrollLoad 属性。

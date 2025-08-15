@@ -7,6 +7,7 @@ import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import omit from 'lodash/omit';
 import LightBox from 'react-image-lightbox';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import QuillImageDropAndPaste from './utils/imageDropAndPaste';
 import { DeltaOperation, DeltaStatic, Sources, StringMap } from './quill';
 import autobind from '../_util/autobind';
@@ -164,6 +165,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
   @autobind
   renderContent() {
     const { style, className, toolbarId, toolbar, dataSet, value, mode } = this.props;
+    const richTextFontFamilies = getConfig('richTextFontFamilies');
     let deltaOps;
     if (!isObject(value) && this.editor) {
       deltaOps = this.editor.getEditor().clipboard.convert(value).ops;
@@ -179,7 +181,7 @@ export default class BaseEditor extends Component<BaseEditorProps> {
     if (ReactQuill) {
       return (
         <>
-          <Toolbar id={toolbarId} dataSet={dataSet} toolbar={toolbar} prefixCls={className} />
+          <Toolbar id={toolbarId} dataSet={dataSet} toolbar={toolbar} prefixCls={className} fontFamilies={richTextFontFamilies} />
           <ReactQuill
             {...this.getOtherProps()}
             className={`${className}-quill`}

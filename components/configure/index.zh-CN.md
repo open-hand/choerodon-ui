@@ -216,6 +216,7 @@ const prefixCls = getConfig('prefixCls');
 | disabledTimeLoopRoll | 禁止时间组件循环滚动  | boolean |  |
 | tableProfBarHasValueDefaultExpanded | Table 专业搜索条隐藏的查询字段中有值时, 是否默认展开全部字段  | boolean | true |
 | selectScrollLoad | Select 组件是否开启选项滚动加载 | boolean |  |
+| richTextFontFamilies | RichText 组件工具栏字体选择列表，配置的字体需要通过 Quill 注册才能生效 | ({ name: string; family: string })\[\] |  | 
 
 ### Customizable
 
