@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded, selectScrollLoad 属性。
+- 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded, selectScrollLoad, richTextFontFamilies 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。
 - 🌟 `<pro>Select`: 新增 scrollLoad 属性。
@@ -112,6 +112,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复双向复制 lov 字段粘贴数字不触发查询和粘贴多值只触发一次查询的问题。
 - 🐞 `<pro>Table`: 修复查询字段通过动态属性配置必输，在动态筛选条上没有必输样式的问题。
 - 🐞 `<pro>Table`: 修复粘贴的组件为 Select 并设置 compo 属性时无法粘贴的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条多值 Lov 字段值变更后不会显示重置按钮的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态配置 rowSelection 无效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复开启自动高度时勾选行会触发滚动的问题。
 - 🐞 `<pro>PerformanceTable`: 修复存在横向滚动条的情况下滚动到底部后，勾选数据会触发滚动的问题。

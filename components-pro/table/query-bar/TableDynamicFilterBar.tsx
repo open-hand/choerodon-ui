@@ -110,6 +110,16 @@ export function isEqualDynamicProps(originalValue: any, newValue: any, dataSet?:
       if (field && field.get('lovCode') && oldValue && value) {
         const valueField = dataSet!.getField(key)!.get('valueField', record);
         const textField = dataSet!.getField(key)!.get('textField', record);
+        if (field.get('multiple', record)) {
+          if (isArray(oldValue) && isArray(value)) {
+            if (oldValue.length !== value.length) {
+              return false;
+            }
+            const oldValueArr = oldValue.map((v) => ({ [valueField]: v[valueField], [textField]: v[textField] }));
+            const valueArr = value.map((v) => ({ [valueField]: v[valueField], [textField]: v[textField] }));
+            return isEqual(oldValueArr, valueArr);
+          }
+        }
         return value[valueField] === oldValue[valueField] && value[textField] === oldValue[textField];
       }
       return isEqual(oldValue, value);

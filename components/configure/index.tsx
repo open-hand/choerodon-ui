@@ -514,6 +514,12 @@ export interface Config extends DataSetConfig {
    * @deprecated
    */
   bigNumberFormatter?: FormatBigNumberFunc;
+  /**
+   * RichText 组件工具栏字体列表配置。example: [{ name: '宋体', family: 'SimSun' }, { name: '仿宋', family: 'FangSong' }]
+   * @param name: 显示的字体名
+   * @param family: 实际的字体值
+   */
+  richTextFontFamilies?: ({ name: string; family: string })[];
 }
 
 export type ConfigKeys = keyof Config;
