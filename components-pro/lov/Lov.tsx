@@ -654,6 +654,8 @@ export default class Lov extends Select<LovProps> {
           }, modalProps) || {});
           this.afterOpen(options, fetchSingle);
         }
+        this.searchText = undefined;
+        this.setText(undefined);
       }
     }
   }
@@ -932,7 +934,10 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
-  handleOpenModal() {
+  handleOpenModal(e?: any) {
+    if (e && e.currentTarget && e.target && !e.currentTarget.contains(e.target)) {
+      return;
+    }
     if (this.showDetailWhenReadonly) {
       this.openModal();
     } else if (!this.disabled && !this.readOnly) {

@@ -102,6 +102,7 @@ timeline: true
 - 💄 `<pro>Modal`: The `confirm` different types add className distinctions.
 - 💄 `<pro>DataSet`: Optimize the `type` setting of the fields in `lov` `options`.
 - 💄 `<pro>Lov`: Optimize the display of percentile symbols in the `PERCENT` type field.
+- 💄 `<pro>Table`: Optimize the line break display style of the query fields in the `normal` filter bar.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Attachment`: Fixed an issue where images in the attachment list would refresh unexpectedly.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.
@@ -162,6 +163,9 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
 - 🐞 `<pro>Cascader`: Fixed an issue where an error was reported using `singleMenuItemRender`.
 - 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
+- 🐞 `<pro>Lov`: Fixed the issue where double-clicking a drop-down option would open modal.
+- 🐞 `<pro>Lov`: Fixed the issue where the filter values were displayed incorrectly after closing the pop-up window in the dynamic filter bar of the table.
+- 🐞 `<pro>Table`: Fixed the issue where `buttonsLimit` was not calculated correctly when the button had the `hidden` attribute.
 
 ## 1.6.6
 
