@@ -9,10 +9,11 @@ export interface RichTextToolbarProps {
   id?: string;
   toolbar?: RichTextToolbarType | RichTextToolbarHook;
   dataSet?: DataSet;
+  fontFamilies?: ({ name: string; family: string })[];
 }
 
 const Toolbar = (props) => {
-  const { id, prefixCls } = props;
+  const { id, prefixCls, fontFamilies } = props;
   return (
     <div id={id || 'toolbar'} className={`${prefixCls}-toolbar`}>
       <button type="button" className="ql-bold" />
@@ -25,6 +26,17 @@ const Toolbar = (props) => {
       <button type="button" className="ql-image" />
       <button type="button" className="ql-link" />
       <select className="ql-color" />
+      {
+        fontFamilies && (
+          <select className="ql-font">
+            {
+              fontFamilies.map(({ name, family }) => (
+                <option key={family} value={family}>{name}</option>
+              ))
+            }
+          </select>
+        )
+      }
     </div>
   );
 };
@@ -34,8 +46,8 @@ export default class RichTextToolbar extends Component<RichTextToolbarProps> {
   static displayName = 'RichTextToolbar';
 
   renderToolBar(props: RichTextToolbarHookProps) {
-    const { prefixCls } = this.props;
-    return <Toolbar key="toolbar" prefixCls={prefixCls} {...props} />;
+    const { prefixCls, fontFamilies } = this.props;
+    return <Toolbar key="toolbar" prefixCls={prefixCls} fontFamilies={fontFamilies} {...props} />;
   }
 
   render() {
