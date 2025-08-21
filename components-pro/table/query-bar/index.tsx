@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
 import isNumber from 'lodash/isNumber';
+import { isNil } from 'lodash';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
@@ -634,16 +635,15 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   /**
    * buttons 大于 buttonsLimits 放入下拉
-   * @param buttonsLimits
-   * @param hasCombineSort
+   * @param moreButtons 更多的按钮
    */
-  getMoreButton(buttonsLimits: number, hasCombineSort?: boolean): ReactElement {
-    const { buttons } = this.props;
+  getMoreButton(moreButtons: Buttons[]): ReactElement {
+    const buttons = moreButtons;
     const { prefixCls, tableStore } = this.context;
     const tableButtonProps = tableStore.getConfig('tableButtonProps');
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
-    if (buttons && buttons.length && buttonsLimits) {
-      buttons.slice(hasCombineSort ? buttonsLimits - 1 : buttonsLimits).forEach(button => {
+    if (buttons && buttons.length) {
+      buttons.forEach(button => {
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};
@@ -736,8 +736,15 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       // 汇总条存在下 buttons 大于 3 个放入下拉
       const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
       const tableButtonProps = tableStore.getConfig('tableButtonProps');
-      const buttonsArr = buttons.slice(0, buttonsLimits);
-      buttonsArr.forEach(button => {
+      let showButtonLength = 0;
+      const moreButtons: Buttons[] = [];
+      buttons.forEach(button => {
+        // 以实际显示的按钮计算 buttonsLimits
+        if (!isNil(buttonsLimits) && showButtonLength === buttonsLimits) {
+          moreButtons.push(button);
+          return;
+        }
+
         let props: TableButtonProps = {};
         if (isArrayLike(button)) {
           props = button[1] || {};
@@ -758,23 +765,37 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
                 }
               };
             }
+            const allButtons = {
+              ...tableButtonProps,
+              ...defaultButtonProps,
+              ...buttonProps,
+            }
+            if (!allButtons || !allButtons.hidden) {
+              showButtonLength++;
+            }
             children.push(
               <Button
                 key={button}
-                {...tableButtonProps}
-                {...defaultButtonProps}
-                {...buttonProps}
+                {...allButtons}
               />,
             );
           }
         } else if (isValidElement<ButtonProps>(button)) {
-          children.push(cloneElement(button, { ...tableButtonProps, ...button.props }));
+          const allButtons = { ...tableButtonProps, ...button.props };
+          if (!allButtons || !allButtons.hidden) {
+            showButtonLength++;
+          }
+          children.push(cloneElement(button, { ...allButtons }));
         } else if (isObject(button)) {
-          children.push(<Button {...tableButtonProps} {...button} />);
+          const allButtons = { ...tableButtonProps, ...(button as object) };
+          if (!allButtons || !allButtons.hidden) {
+            showButtonLength++;
+          }
+          children.push(<Button {...allButtons} />);
         }
       });
-      if (buttonsLimits && buttons.length > buttonsLimits) {
-        const moreButton: ReactElement = this.getMoreButton(buttonsLimits, hasCombineSort);
+      if (moreButtons && moreButtons.length > 0) {
+        const moreButton: ReactElement = this.getMoreButton(moreButtons);
         children.push(moreButton);
       }
     }

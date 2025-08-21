@@ -102,6 +102,7 @@ timeline: true
 - 💄 `<pro>Modal`: confirm 不同类型增加类名区分。
 - 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
 - 💄 `<pro>Lov`: 优化 PERCENT 类型字段百分位符显示。
+- 💄 `<pro>Table`: 优化默认筛选条的查询字段的换行显示样式。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Attachment`: 修复附件列表中图片会出现意料之外的刷新的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
@@ -162,6 +163,9 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
 - 🐞 `<pro>Cascader`: 修复使用 singleMenuItemRender 报错的问题。
 - 🐞 `Popover`: 修复 Popover 组件包裹 CheckBox 且触发方式设置为 click 时, CheckBox 勾选状态显示不正确的问题。
+- 🐞 `<pro>Lov`: 修复双击下拉选项会打开弹窗的问题。
+- 🐞 `<pro>Lov`: 修复在表格动态筛选条中, 关闭弹窗后筛选值显示不正确的问题。
+- 🐞 `<pro>Table`: 修复按钮有 hidden 属性时, buttonsLimit 计算不正确的问题。
 
 ## 1.6.6
 
