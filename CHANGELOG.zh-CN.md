@@ -166,6 +166,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复双击下拉选项会打开弹窗的问题。
 - 🐞 `<pro>Lov`: 修复在表格动态筛选条中, 关闭弹窗后筛选值显示不正确的问题。
 - 🐞 `<pro>Table`: 修复按钮有 hidden 属性时, buttonsLimit 计算不正确的问题。
+- 🐞 `<pro>TextField`: 修复空值输入框在有横向滚动条的表格中, 且有自定义 renderer, 聚焦输入框会引起表格滚动的问题。
 
 ## 1.6.6
 

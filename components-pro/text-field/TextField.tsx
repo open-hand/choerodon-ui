@@ -1115,12 +1115,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       );
     }
     const editorTextInfo = this.getEditorTextInfo();
+    let editorTextInfoText = editorTextInfo.text;
     if (renderedValue && (!this.editable || !this.isFocused)) {
       otherProps.style = {
         ...otherProps.style,
         textIndent: -100000,
         color: 'transparent',
       };
+      // 优化输入框在有横向滚动条的表格中, 且有自定义renderer, 且空值, 聚焦输入框会引起表格滚动的问题
+      editorTextInfoText = isEmpty(editorTextInfoText) ? ' ' : editorTextInfoText;
     }
     // 筛选条默认宽度处理
     if (isFlat) {
@@ -1148,7 +1151,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         placeholder={editorTextInfo.placeholder}
-        value={editorTextInfo.text}
+        value={editorTextInfoText}
         readOnly={!this.editable}
       />,
     ];
