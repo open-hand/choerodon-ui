@@ -166,6 +166,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue where double-clicking a drop-down option would open modal.
 - 🐞 `<pro>Lov`: Fixed the issue where the filter values were displayed incorrectly after closing the pop-up window in the dynamic filter bar of the table.
 - 🐞 `<pro>Table`: Fixed the issue where `buttonsLimit` was not calculated correctly when the button had the `hidden` attribute.
+- 🐞 `<pro>TextField`: Fixed the issue where an empty value input box in a table with a horizontal scroll bar and a custom `renderer` would cause the table to scroll when focused on the input box.
 
 ## 1.6.6
 
