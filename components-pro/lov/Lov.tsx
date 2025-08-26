@@ -856,7 +856,7 @@ export default class Lov extends Select<LovProps> {
             this.openModal(fetchSingle);
           }
         });
-      } else if (!this.multiple || (this.multiple && this.observableProps.combo)) {
+      } else if (!this.multiple || (this.multiple && this.observableProps.combo && !this.popupShowComboValue)) {
         super.syncValueOnBlur(value);
       } else if (this.getProp('required')) {
         const oldValues = this.getValues();
