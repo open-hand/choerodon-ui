@@ -58,6 +58,12 @@ export default class Menu extends Component {
         openKeys: this.props.openKeys || [],
       });
     }
+    // 强制清除 activeKey
+    if (this.props.forceClearActiveKey) {
+      this.store.setState({
+        activeKey: { '0-menu-': null },
+      });
+    }
   }
 
   componentDidMount() {

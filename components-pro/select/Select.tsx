@@ -259,6 +259,11 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 是否开启选项滚动加载
    */
   scrollLoad?: boolean;
+  /**
+   * popup 弹窗中的选项是否显示 combo 复合值;
+   * 当不展示复合值时, defaultActiveFirstOption 无效, enter 或者 失焦选中复合值;
+   */
+  popupShowComboValue?: boolean;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -271,6 +276,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     checkValueOnOptionsChange: true,
     onOption: defaultOnOption,
     selectAllButton: true,
+    popupShowComboValue: true,
   };
 
   static Option = Option;
@@ -343,8 +349,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   @computed
   get optionsWithCombo(): Record[] {
-    const { comboOptions } = this;
-    return comboOptions ? [...comboOptions.data, ...this.cascadeOptions] : this.cascadeOptions;
+    const { comboOptions, popupShowComboValue } = this;
+    return comboOptions && popupShowComboValue ? [...comboOptions.data, ...this.cascadeOptions] : this.cascadeOptions;
   }
 
   @computed
@@ -413,6 +419,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const { displayName } = this.constructor as any;
     const { scrollLoad } = this.observableProps;
     return displayName === 'Select' && (!isNil(scrollLoad) ? scrollLoad : this.getContextConfig('selectScrollLoad'));
+  }
+
+  get popupShowComboValue(): boolean {
+    const { popupShowComboValue } = this.observableProps;
+    return !!popupShowComboValue;
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -593,6 +604,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'optionTooltip',
       'defaultActiveFirstOption',
       'scrollLoad',
+      'popupShowComboValue',
     ]);
   }
 
@@ -614,6 +626,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       selectReverse: props.reverse,
       optionsFilter: props.optionsFilter,
       scrollLoad: props.scrollLoad,
+      popupShowComboValue: props.popupShowComboValue,
     };
   }
 
@@ -855,6 +868,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         ref={this.saveMenu}
         disabled={menuDisabled}
         defaultActiveFirst={this.defaultActiveFirstOption}
+        forceClearActiveKey={this.forceClearActiveKey}
         multiple={this.menuMultiple}
         selectedKeys={selectedKeys}
         prefixCls={menuPrefix}
@@ -918,7 +932,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return virtual;
   }
 
+  /**
+   * 每次刷新后清除 menu 的 activeKey
+   */
+  get forceClearActiveKey(): boolean {
+    const { popupShowComboValue, observableProps: { combo } } = this;
+    return combo && !popupShowComboValue;
+  }
+
   get defaultActiveFirstOption(): boolean | undefined {
+    if (this.forceClearActiveKey) {
+      return false;
+    }
     const { defaultActiveFirstOption = this.getContextConfig('defaultActiveFirstOption') } = this.observableProps;
     return defaultActiveFirstOption && this.options.currentPage === 1 && !this.moreQuerying;
   }
@@ -1143,7 +1168,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         this.choose(activeItem.props.value);
       }
       e.preventDefault();
-    } else if (e === KeyCode.DOWN) {
+    } else if (e.keyCode === KeyCode.DOWN) {
       this.expand();
       e.preventDefault();
     }
@@ -1183,7 +1208,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
+  @autobind
   syncValueOnBlur(text) {
+    const { popupShowComboValue, multiple, observableProps: { combo } } = this;
     const value = this.getValue();
     if (text) {
       if (value !== text) {
@@ -1194,6 +1221,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
             const record = this.findByTextWithValue(text, data);
             if (record) {
               this.choose(record);
+
+              if (multiple && combo && !popupShowComboValue) {
+                runInAction(() => {
+                  this.searchText = undefined;
+                  this.setText(undefined);
+                  this.collapse();
+                })
+              }
             }
           });
         }
@@ -1205,7 +1240,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   findByTextWithValue(text, data: Record[]): Record | undefined {
     const { textField } = this;
-    const records = [...data, ...this.filteredOptions].filter(record =>
+    const records = [
+      ...data.filter(comRecord => this.filteredOptions.every(record => record.get(textField) !== comRecord.get(textField))),
+      ...this.filteredOptions,
+    ].filter(record =>
       isSameLike(record.get(textField), text),
     );
     if (records.length > 1) {
@@ -1252,7 +1290,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const { currentComboOption, textField, valueField } = this;
     if (value) {
       if (isArrayLike(value)) {
-        value.forEach(v => !isNil(v) && this.generateComboOption(v));
+        const loopValue = [...value];
+        if (!isEmpty(this.text)) {
+          loopValue.push(this.text);
+        }
+        loopValue.forEach(v => !isNil(v) && this.generateComboOption(v));
       } else {
         if (isObservableObject(value)) {
           value = get(value, textField);
@@ -1286,7 +1328,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       [textField]: value,
       [valueField]: value,
     };
-    const findOption = comboOptions.find(record => record.get(valueField) === value.trim());
+    const findOption = comboOptions.find(record => record.get(valueField) === (isNil(value) ? value : value.trim()));
     if (findOption) return;
     const record = comboOptions.create(initData, 0);
     if (menu) {
