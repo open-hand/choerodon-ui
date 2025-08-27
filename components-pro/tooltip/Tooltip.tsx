@@ -8,6 +8,7 @@ import { Action } from 'choerodon-ui/lib/trigger/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
+import isFragment from '../_util/isFragment';
 
 export { TooltipPlacement, TooltipTheme };
 
@@ -75,6 +76,9 @@ function getDisabledCompatableChildren(element: React.ReactElement<any>) {
         {child}
       </span>
     );
+  }
+  if (isFragment(element)) {
+    return <span key={`text-${element}`}>{element}</span>;
   }
   return element;
 }

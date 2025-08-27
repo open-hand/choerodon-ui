@@ -162,6 +162,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
 - 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
 - 🐞 `<pro>Cascader`: 修复使用 singleMenuItemRender 报错的问题。
+- 🐞 `<pro>Tooltip`: 修复包裹空标签会失效的问题。
 - 🐞 `Popover`: 修复 Popover 组件包裹 CheckBox 且触发方式设置为 click 时, CheckBox 勾选状态显示不正确的问题。
 - 🐞 `<pro>Lov`: 修复双击下拉选项会打开弹窗的问题。
 - 🐞 `<pro>Lov`: 修复在表格动态筛选条中, 关闭弹窗后筛选值显示不正确的问题。

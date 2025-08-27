@@ -162,6 +162,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
 - 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
 - 🐞 `<pro>Cascader`: Fixed an issue where an error was reported using `singleMenuItemRender`.
+- 🐞 `<pro>Tooltip`: Fixed the issue where Tooltip would fail when wrapping a Fragment.
 - 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
 - 🐞 `<pro>Lov`: Fixed the issue where double-clicking a drop-down option would open modal.
 - 🐞 `<pro>Lov`: Fixed the issue where the filter values were displayed incorrectly after closing the pop-up window in the dynamic filter bar of the table.
