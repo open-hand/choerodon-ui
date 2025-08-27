@@ -1673,13 +1673,15 @@ export default class DataSet extends EventManager {
   /**
    * 定位到指定页码，如果paging为true或`server`，则做远程查询，约定当为Tree 状态的server时候 跳转到下一页也就是index为当前的index加上1
    * @param page 页码
+   * @param modifiedCheckResult 数据变更检查结果
    * @return Promise
    */
-  page(page: number): Promise<any> {
+  page(page: number, modifiedCheckResult?: boolean): Promise<any> {
     if (page > 0 && this.paging) {
       return this.locate(
         (page - 1) * this.pageSize + (page > this.currentPage ? this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length : 0),
         true,
+        modifiedCheckResult,
       );
     }
     warning(page > 0, 'Page number is incorrect.');
@@ -1706,9 +1708,10 @@ export default class DataSet extends EventManager {
    * 定位记录
    * @param index 索引
    * @param forceQuery 是否强制查询，仅内部使用
+   * @param modifiedCheckResult 数据变更检查结果，如果不存在，则会执行变更检查后再判断是否查询
    * @return Promise
    */
-  async locate(index: number, forceQuery?: boolean): Promise<Record | undefined> {
+  async locate(index: number, forceQuery?: boolean, modifiedCheckResult?: boolean): Promise<Record | undefined> {
     const { paging, pageSize, totalCount } = this;
     const { autoLocateFirst } = this.props;
     let currentRecord = this.findInAllPage(index);
@@ -1721,7 +1724,10 @@ export default class DataSet extends EventManager {
         index -= this.created.length - this.cachedCreated.length - this.destroyed.length + this.cachedDestroyed.length;
       }
       if (index >= 0 && (index < totalCount || paging === 'noCount')) {
-        if (await this.modifiedCheck()) {
+        if (modifiedCheckResult === undefined) {
+          modifiedCheckResult = await this.modifiedCheck();
+        }
+        if (modifiedCheckResult) {
           await this.pending.add(this.doQuery(Math.floor(index / pageSize) + 1, undefined, true, true));
           currentRecord = this.findInAllPage(index);
           if (currentRecord) {

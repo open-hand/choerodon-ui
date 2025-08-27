@@ -210,9 +210,16 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   async jumpPage(page) {
     const { dataSet, beforeChange = noop } = this.props;
+    let modifiedCheckResult;
+    if (dataSet) {
+      modifiedCheckResult = await dataSet.modifiedCheck();
+      if (modifiedCheckResult === false) {
+        return;
+      }
+    }
     if (await beforeChange(page, this.pageSize) !== false) {
       if (dataSet) {
-        dataSet.page(page);
+        dataSet.page(page, modifiedCheckResult);
       }
       this.handleChange(page, this.pageSize);
     }
