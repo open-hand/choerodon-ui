@@ -741,7 +741,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const tableBody = this.tableBodyRef.current;
     const wheelWrapper = this.wheelWrapperRef.current;
     if (tableBody) {
-      if (isMobile()) {
+      const isTouchSupported = navigator.maxTouchPoints > 0;
+      if (isMobile() || isTouchSupported) {
         this.initBScroll(tableBody);
         // 移动端适配缩放功能
         if (wheelWrapper) {
@@ -897,7 +898,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if ((!this.wheelListener && tableBody) || (rowDraggable !== nextRowDraggable)) {
       const options = { passive: false };
-      if (isMobile()) {
+      const isTouchSupported = navigator.maxTouchPoints > 0;
+      if (isMobile() || isTouchSupported) {
         this.initBScroll(tableBody);
       }
       this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);

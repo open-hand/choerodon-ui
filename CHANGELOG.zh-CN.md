@@ -76,6 +76,7 @@ timeline: true
 - 💄 `<pro>TextField`: 优化单个 tag 的文本超过 maxTagTextLength 时, 显示 tooltip。
 - 💄 `<pro>DatePicker`: 优化 mode 为 dateTime 且最小值设置为当前时间时, 选择面板的默认时间显示为当前时间。以及修复设置为当前时间校验报错。
 - 💄 `<pro>Pagination`: 优化快速跳转数字输入框限制。
+- 💄 `<pro>Pagination`: 优化 modifyCheck 的执行时机。
 - 💄 `<pro>Picture`: 优化 loading 状态的判断。
 - 💄 `<pro>Picture`: 优化界面和交互。
 - 💄 `<pro>Table`: 优化行号列支持自定义设置 onCell。
@@ -119,6 +120,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复存在横向滚动条的情况下滚动到底部后，勾选数据会触发滚动的问题。
 - 🐞 `<pro>PerformanceTable`: 修复最后一行数据被滚动条遮挡的问题。
 - 🐞 `<pro>PerformanceTable`: 修复动态设置 rowDraggable 后表格无法滚动的问题。
+- 🐞 `<pro>PerformanceTable`: 修复部分触屏设备上不能触摸滚动的问题。
 - 🐞 `<pro>Upload`: 修复使用 ModalProvider.injectModal 装饰器导致 reflect-metadata 报错的问题。
 - 🐞 `Tabs`: 修复横向和垂直模式嵌套使用滚动问题。
 - 🐞 `<pro>DataSet.Field`: 修复存在计算属性 lovPara 的字段使用 setLovPara 方法报错的问题。
@@ -162,6 +164,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: 修复 Field 和 utils 文件循环引用, 造成下拉选项不正确的问题。
 - 🐞 `<pro>Modal`: 修复自定义样式设置 right 属性, 拖动弹窗动画不正确的问题。
 - 🐞 `<pro>Cascader`: 修复使用 singleMenuItemRender 报错的问题。
+- 🐞 `<pro>Tooltip`: 修复包裹空标签会失效的问题。
 - 🐞 `Popover`: 修复 Popover 组件包裹 CheckBox 且触发方式设置为 click 时, CheckBox 勾选状态显示不正确的问题。
 - 🐞 `<pro>Lov`: 修复双击下拉选项会打开弹窗的问题。
 - 🐞 `<pro>Lov`: 修复在表格动态筛选条中, 关闭弹窗后筛选值显示不正确的问题。

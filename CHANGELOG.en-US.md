@@ -77,6 +77,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimizes a single `tag` to display a tooltip when the text exceeds `maxTagTextLength`.
 - 💄 `<pro>DatePicker`: If the `mode` is set to `dateTime` and the min value is set to the current time, the current time is displayed as the default time on the selection panel. And fix setting to the current time check error.
 - 💄 `<pro>Pagination`: Optimized the restriction of the number type input field for quick jumps.
+- 💄 `<pro>Pagination`: Optimize the execution timing of modifyCheck.
 - 💄 `<pro>Picture`: Optimize the judgment of `loading` state.
 - 💄 `<pro>Picture`: Optimize the interface and interaction.
 - 💄 `<pro>Table`: The optimized row number column supports custom `onCell` Settings.
@@ -119,6 +120,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that after scrolling to the bottom with a horizontal scrollbar, checking the data would trigger scrolling.
 - 🐞 `<pro>PerformanceTable`: Fix the issue where the last row of data is obscured by the scrollbar.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue that the table could not be scrolled after dynamically setting `rowDraggable`.
+- 🐞 `<pro>PerformanceTable`: Fixed an issue where scrolling could not be touched on some touch screen devices.
 - 🐞 `<pro>Upload`: Fixed an issue where using the ModalProvider.injectModal decorator caused reflect-metadata to report an error.
 - 🐞 `Tabs`: Fixed horizontal and vertical mode nesting using scrolling issues.
 - 🐞 `<pro>DataSet.Field`: Fixed an issue where fields with `computedProps` `lovPara` reported an error using the `setLovPara` method.
@@ -162,6 +164,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fixed the issue where circular references to `Field` and `utils` files caused incorrect drop-down options.
 - 🐞 `<pro>Modal`: Fixed the issue where the custom style setting `right` attribute led to incorrect dragging of the window animation.
 - 🐞 `<pro>Cascader`: Fixed an issue where an error was reported using `singleMenuItemRender`.
+- 🐞 `<pro>Tooltip`: Fixed the issue where Tooltip would fail when wrapping a Fragment.
 - 🐞 `Popover`: Fixed the issue where the `CheckBox` status was displayed incorrectly when the `Popover` component wrapped the `CheckBox` and the trigger property was set to `click`.
 - 🐞 `<pro>Lov`: Fixed the issue where double-clicking a drop-down option would open modal.
 - 🐞 `<pro>Lov`: Fixed the issue where the filter values were displayed incorrectly after closing the pop-up window in the dynamic filter bar of the table.
