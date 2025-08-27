@@ -317,7 +317,7 @@ Clipboard configuration item
 | description | Enable table copying or pasting, customize and modify description information | string \| ReactNode | - |
 | arrangeCalc | Enable range counting | boolean \| ReactNode | false |
 | hiddenTip | hidden tip | boolean | false |
-| tipCallback | copy and paste successful or failed callbacks | (type: 'copy' | 'paste', success: boolean) => void | - |
+| tipCallback | copy and paste successful or failed callbacks | (type: 'copy' \| 'paste', success: boolean) => void | - |
 | onlyTemplateHeader | only retain the template header | boolean | false |
 
 ### instance methods
