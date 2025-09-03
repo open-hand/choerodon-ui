@@ -835,7 +835,7 @@ export default class Lov extends Select<LovProps> {
     return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup });
   }
 
-  syncValueOnBlur(value) {
+  syncValueOnBlur(value, event?: any) {
     const { textField } = this;
     const { mode, searchAction, fetchSingle } = this.props;
     if (mode !== ViewMode.button) {
@@ -857,7 +857,7 @@ export default class Lov extends Select<LovProps> {
           }
         });
       } else if (!this.multiple || (this.multiple && this.observableProps.combo && !this.popupShowComboValue)) {
-        super.syncValueOnBlur(value);
+        super.syncValueOnBlur(value, event);
       } else if (this.getProp('required')) {
         const oldValues = this.getValues();
         this.validate(oldValues, false);

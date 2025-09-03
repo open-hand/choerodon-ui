@@ -104,6 +104,8 @@ timeline: true
 - 💄 `<pro>DataSet`: 优化 lov options 的字段的 type 设置。
 - 💄 `<pro>Lov`: 优化 PERCENT 类型字段百分位符显示。
 - 💄 `<pro>Table`: 优化默认筛选条的查询字段的换行显示样式。
+- 💄 `<pro>TextField`: 优化增加 isFlat 对应类名。
+- 💄 `<pro>Picture`: 优化 src 从有值到无值时的空态图显示。
 - 🐞 `<pro>Attachment`: 修复分片上传成功没有回显文件的问题。
 - 🐞 `<pro>Attachment`: 修复附件列表中图片会出现意料之外的刷新的问题。
 - 🐞 `<pro>Table`: 修复自动行高下复制到单元格的长文本没有换行的问题。
