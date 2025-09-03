@@ -104,6 +104,8 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `type` setting of the fields in `lov` `options`.
 - 💄 `<pro>Lov`: Optimize the display of percentile symbols in the `PERCENT` type field.
 - 💄 `<pro>Table`: Optimize the line break display style of the query fields in the `normal` filter bar.
+- 💄 `<pro>TextField`: Optimize and add the corresponding class name of `isFlat`.
+- 💄 `<pro>Picture`: Optimize the display of the empty state graph when `src` changes from having a value to having no value.
 - 🐞 `<pro>Attachment`: Fixed the issue that no file was echoed after a multipart upload was successful.
 - 🐞 `<pro>Attachment`: Fixed an issue where images in the attachment list would refresh unexpectedly.
 - 🐞 `<pro>Table`: Fixed the issue that there was no line break in the long text in the cell of auto rowHeight.

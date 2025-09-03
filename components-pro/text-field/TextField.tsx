@@ -611,7 +611,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, multiple, range, border } = this;
+    const { prefixCls, multiple, range, border, props: { isFlat } } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(
@@ -621,6 +621,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         [`${prefixCls}-range`]: range,
         [`${prefixCls}-border`]: border,
         [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
+        [`${prefixCls}-flat`]: isFlat,
       },
       ...args,
     );
@@ -1649,7 +1650,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
       if (this.editable || this.isEditableLike()) {
-        this.syncValueOnBlur(e.target.value);
+        this.syncValueOnBlur(e.target.value, e);
       } else if (!this.getValues().length) {
         this.setValue(null);
       }

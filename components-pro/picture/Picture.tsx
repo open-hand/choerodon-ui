@@ -24,6 +24,7 @@ import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from '../icon';
 import objectFitPolyfill, { isObjectFitSupport } from '../_util/objectFitPolyfill';
+import isEmpty from '../_util/isEmpty';
 import PictureContext, { PictureContextValue, PictureProvider } from './PictureContext';
 import modalPreview from '../modal/preview';
 import { ModalProps } from '../modal/interface';
@@ -120,6 +121,9 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     wrapperStyle.height = h;
   }
   useEffect(() => {
+    if (!propStatus && isEmpty(src)) {
+      setStatus('empty');
+    }
     if (!propStatus && inView && src) {
       if (src !== oldPropsRef.current.src) {
         setStatus('loading');

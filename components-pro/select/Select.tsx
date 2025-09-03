@@ -1209,9 +1209,21 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @autobind
-  syncValueOnBlur(text) {
-    const { popupShowComboValue, multiple, observableProps: { combo } } = this;
+  syncValueOnBlur(text, event?: any) {
+    const { popupShowComboValue, multiple, comboOptions, valueField, observableProps: { combo } } = this;
     const value = this.getValue();
+    if (event && event.type === 'blur' && multiple && combo && !popupShowComboValue && value && value.length > 0) {
+      // 聚合输入(popupShowComboValue为false时):
+      // 默认失焦会选中聚合值; 在下拉中选择有具体值后，需要按回车才能选中聚合值，失焦不默认选中;
+      if (!comboOptions || value.some(val => !comboOptions.find(com => com.get(valueField) === val[valueField]))) {
+        runInAction(() => {
+          this.searchText = undefined;
+          this.setText(undefined);
+        });
+        return;
+      }
+    }
+
     if (text) {
       if (value !== text) {
         if (!isObject(value) || value[this.textField] !== text) {
@@ -1227,7 +1239,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
                   this.searchText = undefined;
                   this.setText(undefined);
                   this.collapse();
-                })
+                });
               }
             }
           });

@@ -1033,7 +1033,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       } else {
         const { value } = e.target;
         if (value !== '') {
-          this.syncValueOnBlur(value);
+          this.syncValueOnBlur(value, e);
           e.preventDefault();
         }
       }
@@ -1042,7 +1042,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
-  syncValueOnBlur(value) {
+  syncValueOnBlur(value, _?: any) {
     this.prepareSetValue(value);
   }
 
