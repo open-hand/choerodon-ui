@@ -39,6 +39,7 @@ cols: 1
 | onDataUpdated            | (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void | 数据更新后的回调函数                                         |
 | onExpandChange           | (expanded:boolean, rowData:object) => void                                        | 树形表格，在展开节点的回调函数                               |
 | onRowClick               | (rowData:object) => void                                                          | 行点击后的回调函数， 返回 `rowData`                          |
+| onRowDoubleClick         | (rowData:object) => void                                                          | 行双击后的回调函数， 返回 `rowData`                          |
 | onScroll                 | (scrollX:object, scrollY:object) => void                                          | 滚动条滚动时候的回调函数                                     |
 | onSortColumn             | (dataKey:string, sortType:string) => void                                         | 点击排序列的回调函数，返回 `sortColumn`, `sortType` 这两个值 |
 | renderEmpty              | (info: React.Node) => React.Node                                                  | 自定义渲染数据为空的状态                                     |

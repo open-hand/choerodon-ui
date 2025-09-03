@@ -38,6 +38,7 @@ cols: 1
 | onDataUpdated            | (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void | Callback after table data update.                                                             |
 | onExpandChange           | (expanded:boolean, rowData:object) => void                                        | Tree table, the callback function in the expanded node                                        |
 | onRowClick               | (rowData:object) => void                                                          | Click the callback function after the row and return to `rowData`                             |
+| onRowDoubleClick         | (rowData:object) => void                                                          | DoubleClick the callback function after the row and return to `rowData`                             |
 | onScroll                 | (scrollX:object, scrollY:object) => void                                          | Callback function for scroll bar scrolling                                                    |
 | onSortColumn             | (dataKey:string, sortType:string) => void                                         | Click the callback function of the sort sequence to return the value `sortColumn`, `sortType` |
 | renderEmpty              | (info: React.Node) => React.Node                                                  | Customized data is empty display content                                                      |
