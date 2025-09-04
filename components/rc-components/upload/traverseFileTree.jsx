@@ -1,25 +1,34 @@
 const traverseFileTree = (files, callback, isAccepted) => {
-  const _traverseFileTree = (item, path) => {
-    path = path || '';
-    if (item.isFile) {
-      item.file((file) => {
-        if (isAccepted(file)) {
-          callback([file]);
-        }
-      });
-    } else if (item.isDirectory) {
-      const dirReader = item.createReader();
+  const dataTransfer = new DataTransfer();
 
-      dirReader.readEntries((entries) => {
-        for (const entrieItem of entries) {
-          _traverseFileTree(entrieItem, `${path}${item.name}/`);
-        }
-      });
-    }
+  const _traverseFileTree = (item, path = '') => {
+    return new Promise((resolve) => {
+      if (item.isFile) {
+        item.file((file) => {
+          if (isAccepted(file)) {
+            dataTransfer.items.add(file);
+          }
+          resolve();
+        });
+      } else if (item.isDirectory) {
+        const dirReader = item.createReader();
+        dirReader.readEntries((entries) => {
+          // 遍历所有子项，等待全部完成
+          Promise.all(entries.map(entrieItem =>
+            _traverseFileTree(entrieItem, `${path}${item.name}/`)
+          )).then(resolve);
+        });
+      } else {
+        resolve();
+      }
+    });
   };
-  for (const file of files) {
-    _traverseFileTree(file.webkitGetAsEntry());
-  }
+
+  Promise.all(
+    Array.from(files).map(file => _traverseFileTree(file.webkitGetAsEntry()))
+  ).then(() => {
+    callback(dataTransfer.files);
+  });
 };
 
 export default traverseFileTree;
