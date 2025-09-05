@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
+  QuarterPicker,
   DatePicker,
   MonthPicker,
   DateTimePicker,
@@ -46,6 +47,9 @@ ReactDOM.render(
     </Col>
     <Col style={{ marginBottom: 10 }} span={12}>
       <DatePicker placeholder="禁用" disabled />
+    </Col>
+    <Col span={12}>
+      <QuarterPicker placeholder="Select quarter" onChange={handleChange} />
     </Col>
   </Row>,
   document.getElementById('container'),

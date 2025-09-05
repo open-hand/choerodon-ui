@@ -78,6 +78,21 @@
       "height": 600,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "font-size.js",
+      "title": {
+        "zh": "设置字体大小",
+        "en": "Register fontSize"
+      },
+      "description": {
+        "zh": "设置字体大小。\n",
+        "en": "Register fontSize.\n"
+      },
+      "order": 6,
+      "height": 300,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

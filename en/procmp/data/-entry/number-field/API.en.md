@@ -16,6 +16,7 @@ title: API
 | precision | 转换小数点位数 | number |  | 1.3.0 |
 | numberGrouping | 千分位分组显示 | boolean | true | 1.3.0 |
 | keyboard | 是否启用UP DOWN键盘事件 | boolean | true | 1.5.0 |
+| numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  | 1.6.7 |
 
 更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField)。
 
@@ -26,9 +27,3 @@ title: API
 | format(value, lang, options) | 数字格式化 | `value` - number \| BigNumber `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
 
 组件库使用外部库`bignumber.js`实现大数字，具体使用参见文档[大数字支持](/zh/docs/other/big-number)。
-
-<style>
-.Pane.horizontal.Pane1 .c7n-pro-input-number-wrapper {
-  margin-bottom: .1rem;
-}
-</style>

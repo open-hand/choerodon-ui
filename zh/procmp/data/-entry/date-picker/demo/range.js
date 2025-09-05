@@ -7,6 +7,7 @@ import {
   TimePicker,
   Row,
   Col,
+  QuarterPicker,
 } from 'choerodon-ui/pro';
 import { Divider } from 'choerodon-ui';
 import moment from 'moment';
@@ -54,6 +55,12 @@ class App extends React.Component {
         name: 'time',
         type: 'time',
         range: true,
+      },
+      {
+        name: 'quarter',
+        type: 'quarter',
+        range: ['start', 'end'],
+        defaultValue: { start: '1984-11-22', end: new Date() },
       },
     ],
     events: {
@@ -118,6 +125,14 @@ class App extends React.Component {
             dataSet={this.ds}
             name="multipleDate"
             placeholder="Choose Date"
+          />
+        </Col>
+        <Divider orientation="left">季度模式：</Divider>
+        <Col span={24}>
+          <QuarterPicker
+            dataSet={this.ds}
+            name="quarter"
+            placeholder="Choose quarter"
           />
         </Col>
         <Divider orientation="left">range 模式，弹窗组合显示：</Divider>

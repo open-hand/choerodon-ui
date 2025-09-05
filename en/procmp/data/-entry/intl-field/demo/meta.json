@@ -46,6 +46,20 @@
       "order": 4,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "setTlsField.js",
+      "title": {
+        "zh": "自定义设置 __tls 字段",
+        "en": "Customize the __tls field"
+      },
+      "description": {
+        "zh": "通过 record.set('__tls', obj) 自定义多语言。\n",
+        "en": "Customize multilingual via record.set('__tls', obj).\n"
+      },
+      "order": 5,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

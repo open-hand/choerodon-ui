@@ -15,6 +15,7 @@ import moment from 'moment';
 function filterDate(currentDate, selected, mode) {
   // currentDate 配合 mode，限制只能选择每周二
   // 选择面板的mode会变化，需要根据mode变化设置是否过滤
+  // currentDate 为日期时间面板中的每个时间，会循环执行 filter，selected 为选中或者当前 hover 的时间。
   if (mode !== 'date') {
     // 设置日期之外的层级都可以点击，如月、年
     return true;

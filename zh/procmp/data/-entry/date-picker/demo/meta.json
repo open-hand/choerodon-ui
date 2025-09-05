@@ -154,6 +154,21 @@
       "height": 300,
       "category": "pro",
       "iframe": "/iframe/time-zone"
+    },
+    {
+      "filename": "show-ok-button.js",
+      "title": {
+        "zh": "确定按钮",
+        "en": "Ok button"
+      },
+      "description": {
+        "zh": "配置日期时间组件确定按钮。\n",
+        "en": "Configure ok button.\n"
+      },
+      "order": 10,
+      "screenshot": "",
+      "height": 133,
+      "category": "pro"
     }
   ]
 }
