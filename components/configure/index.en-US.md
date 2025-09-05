@@ -44,6 +44,7 @@ const prefixCls = getConfig('prefixCls');
 | lovQueryCachedSelected | lov 查询缓存已勾选记录 | (code: string, cachedSelected: Map<string, Record>) => Promise<object[]> | |
 | lookupBatchAxiosConfig | hook for batch lookup query, more info:[AxiosRequestConfig](#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field: Field) => boolean | noop |
+| batchParaKey | lookup 批量查询参数的键，如果查询参数的键全部在 batchParaKey 数组中，那么依然执行批量查询 | string\[\] | - |
 | selectReverse | Whether to enable the pull-down multi-select reverse function. | boolean | true |
 | selectOptionsFilter | 选项过滤。 | (record: Record) => boolean | |
 | selectSearchable | 是否开启下拉搜索功能。 | boolean | false |

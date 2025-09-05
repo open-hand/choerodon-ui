@@ -738,7 +738,13 @@ export default class Lov extends Select<LovProps> {
   handleLovViewSelect(records: Record | Record[]) {
     const { viewMode, textField = '' } = this;
     if (isArrayLike(records)) {
-      this.setValue(getRecords(records, textField).map(record => this.processRecordToObject(record)));
+      // 全选的情况下，所有记录 selectedTimestamp 都相同
+      const isSameSelectedTimestamp = new Set(records.map(record => (record.selectedTimestamp || -1))).size === 1;
+      if (isSameSelectedTimestamp) {
+        this.setValue(records.map(record => this.processRecordToObject(record)));
+      } else {
+        this.setValue(getRecords(records, textField).map(record => this.processRecordToObject(record)));
+      }
     } else {
       this.setValue(records && this.processRecordToObject(records) || this.emptyValue);
     }
