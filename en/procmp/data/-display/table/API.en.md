@@ -110,7 +110,8 @@ title: API
 | rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
 | combineColumnFilter | 是否开启前端组合过滤  | boolean  | true | 1.6.6 |
-| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); showSortOption: 是否显示排序选项 | { currentDataSort?: boolean \| ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: boolean; showSortOption?: boolean \| SortRangeOption; }  |  | 1.6.6 |
+| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
+| addNewButton | 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效 |	boolean |	 | 1.6.7 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -159,6 +160,7 @@ title: API
 | highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | 1.5.1 |
 | sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
+| showDetail | editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon | boolean \| `always` |  | 1.6.7 |
 
 ### TableGroup
 
@@ -213,6 +215,7 @@ title: API
 | filterQueryCallback | 筛选接口查询回调  | ({ dataSet })=> void |  | 1.6.6 |
 | autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5 |
 | refreshBtn | 刷新按钮  | boolean | true | 1.5.1 |
+| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | 查询回调 | () => void |  | 1.4.5 |
 | onReset | 重置回调 | () => void |  | 1.4.5 |
 | onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
@@ -239,6 +242,7 @@ title: API
 | autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
 | defaultExpanded | 默认展开 | boolean | false | 1.3.1 |
 | formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } | 1.4.4 |
+| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 
@@ -316,6 +320,9 @@ configure({
 | description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - | ｜
 | arrangeCalc | 开启范围计数 | boolean \| ReactNode | false | 1.6.5 ｜
 | hiddenTip | 关闭提示 | boolean | false | 1.6.5 ｜
+| tipCallback | copy and paste successful or failed callbacks | (type: 'copy' \| 'paste', success: boolean) => void | - | 1.6.7 |
+
+| onlyTemplateHeader | only retain the template header | boolean | false | 1.6.7 |
 
 ### 导出配置
 

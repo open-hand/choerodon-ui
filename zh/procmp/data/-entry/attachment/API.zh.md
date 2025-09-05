@@ -9,6 +9,7 @@ title: API
 | headers | 设置上传的请求头部，IE10 以上有效 | object |  | |
 | height | Attachment.Dragger的高度设置 | number |  | |
 | multiple | 是否支持多选，IE10 以上有效 | boolean | true | |
+| directory | 是否支持上传文件夹 | boolean | - | |
 | withCredentials | 上传请求时是否携带 cookie | boolean | false | |
 | listType | 上传列表的内建样式，支持三种基本样式 text \| picture 和 picture-card | string | text | |
 | viewMode | 上传列表的显示模式，支持三种基本样式 none, list 和 popup | string | list | |
@@ -46,6 +47,11 @@ title: API
 | onTempRemovedAttachmentsChange | 临时删除文件变化回调，`removeImmediately` 为 false 时生效 | (tempRemovedAttachments?: AttachmentFile[]) => void |  | 1.6.5 |
 | filesLengthLimitNotice | 上传文件时，数量超过限定数量的自定义提示 | (defaultInfo: string) => void | (defaultInfo) => Modal.error(defaultInfo) | 1.6.6 |
 | countTextRenderer | 上传按钮中数量显示 renderer | (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode |  | 1.6.6 |
+| removeConfirm | 删除前确认气泡框配置 | boolean \| PopconfirmProps | | 1.6.7 |
+| templateDownloadButtonRenderer | 自定义下载模板按钮，使用后需完全自定义下载模板相关逻辑 | () => ReactNode | | 1.6.7 |
+| downloadAllMode | 显示全部下载按钮模式 | readOnly \| always | 'readOnly' | 1.6.7 |
+| getDownloadAllUrl | 获取全部下载地址，返回值类型为函数时作为按钮的点击事件 | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function \| undefined |  | 1.6.7 |
+| getDownloadUrl | 获取下载地址，返回值类型为函数时作为按钮的点击事件，默认使用 AttachmentFile.url | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function \| undefined | [attachment.getDownloadUrl](/zh/procmp/configure/configure#attachmentconfig) | 1.6.7 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#formfield) 和 [Button](/zh/procmp/general/button#API)。
 

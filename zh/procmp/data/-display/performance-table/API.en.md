@@ -26,6 +26,7 @@ title: API
 | onDataUpdated            | (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void | Callback after table data update.                                                             |    |
 | onExpandChange           | (expanded:boolean, rowData:object) => void                                        | Tree table, the callback function in the expanded node                                        |    |
 | onRowClick               | (rowData:object) => void                                                          | Click the callback function after the row and return to `rowData`                             |    |
+| onRowDoubleClick`(1.6.7)`| (rowData:object) => void                                                          | DoubleClick the callback function after the row and return to `rowData`                       |    |
 | onScroll                 | (scrollX:object, scrollY:object) => void                                          | Callback function for scroll bar scrolling                                                    |    |
 | onSortColumn             | (dataKey:string, sortType:string) => void                                         | Click the callback function of the sort sequence to return the value `sortColumn`, `sortType` |    |
 | renderEmpty              | (info: React.Node) => React.Node                                                  | Customized data is empty display content                                                      |    |
@@ -56,10 +57,12 @@ title: API
 | customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | 1.4.3   |
 | rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  | 
 | rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
+| customDragDropContenxt`(1.6.7)` | boolean \| undefined |是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 |
 | onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
 | onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
 | onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
 | components |  [TableComponents](#tablecomponents) | 覆盖默认的 table 元素 | 1.6.5 ｜
+| useMouseBatchChoose`(1.6.7)` |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
 
 ### Form methods
 
@@ -99,6 +102,7 @@ scrollLeft: (left: number) => void;
 | titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
 | onCell`(1.4.4)` 	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
 | render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
+| footer`(1.6.7)`	| ({ data, dataIndex }) => ReactNode | 表格底部渲染内容	| 
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.

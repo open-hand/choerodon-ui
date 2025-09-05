@@ -17,6 +17,7 @@ title: API
 | valueChangeAction(1.6.6) | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
 | wait(1.6.6) | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | - |
 | waitType(1.6.6) | 设置值变更间隔类型，只有在 valueChangeAction 为 input 时起作用，可选值： `throttle` `debounce` | string | `debounce` |
+| prettierOptions(1.6.7) | formatter 格式化的参数(prettier 的参数) 详见[prettier Options](https://www.prettier.cn/docs/options.html) | object |  |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
 

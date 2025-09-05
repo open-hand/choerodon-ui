@@ -64,6 +64,7 @@ abstract: true
 | combineSort | 是否开启组件列排序传参; 前端排序和后端排序具体配置参考 Table API | boolean | false | 1.4.2 |
 | [forceValidate](/zh/datasetapi/dataset-props/force-validate) | 始终校验全部数据 | boolean | false | 1.4.5 |
 | [validationRules](/zh/datasetapi/dataset-props/validation-rules) | 针对 dataSet 主体的校验规则，详见[ValidationRule](#validationrule) | ValidationRule\[\] |  |  1.5.1  |
+| customIntlFun | 自定义多语言信息。lang 为当前语言, component 和 key 对应组件库多语言对象键值对, defaultIntl 为默认文本 | ({ component, key, lang, defaultIntl }) => string |  | 1.6.7 |
 
 ### DataSet Values
 
@@ -101,6 +102,7 @@ abstract: true
 | children | 所有级联行数据源 | readonly \[key:string\]: DataSet} | |
 | dirty | 含有状态不是 sync 的记录及 dirty 为 true 的记录 | readonly observable&lt;boolean&gt;} |   |
 | isAllPageSelection | 是否是跨页全选状态， 请配合 unSelected 一起做跨页选择数据提交， 需要接口支持 | readonly observable&lt;boolean&gt;} | 1.4.0 |
+| sortedTreeData | 排序后的扁平化树形数据 | Record[] | 1.6.7 |
 
 ### DataSet Methods
 
@@ -280,7 +282,7 @@ abstract: true
 | 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | name | 字段名 | string |  |   |
-| [type](/zh/datasetapi/field-props/type) | 字段类型，可选值：boolean \| number \| string \| date \| dateTime \| time \| week \| month \| year \| email \| url \| intl \| object \| attachment \| json \| bigNumber(1.5.1) | string | auto |  |
+| [type](/zh/datasetapi/field-props/type) | 字段类型，可选值：boolean \| number \| string \| date \| dateTime \| time \| week \| month \| quarter \| year \| email \| url \| intl \| object \| attachment \| json \| bigNumber(1.5.1) | string | auto |  |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值: asc \| desc | string |  |    |
 | label | 字段标签 | string \| ReactNode |  |    |
 | labelWidth | 字段标签宽度 | number |  |   |
@@ -303,8 +305,8 @@ abstract: true
 | disabled | 是否禁用 | boolean | false |   |
 | [textField](/zh/datasetapi/field-props/text-field) | 值列表的文本字段 | string | meaning | |
 | [valueField](/zh/datasetapi/field-props/text-field) | 值列表的值字段 | string | value |    |
-| [trueValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，true 对应的值 | boolean \|string \|number | true | |
-| [falseValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，false 对应的值 | boolean \|string \|number | false |   |
+| [trueValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，true 对应的值。当为数组时，默认使用数组第一个值，数组中的其他值会兼容显示 | boolean \|string \|number\|any[] | true | |
+| [falseValue](/zh/datasetapi/field-props/true-value) | 类型为 boolean 时，false 对应的值。当为数组时，默认使用数组第一个值，数组中的其他值会兼容显示 | boolean \|string \|number\|any[] | false |   |
 | options | 下拉框组件的菜单数据集 | DataSet |  |   |
 | [optionsProps](/zh/datasetapi/field-props/options-props) | 值集组件的数据集配置 | DataSetProps \| (DataSetProps) => DataSetProps |  | |
 | group | 是否分组，如果是 number，则为分组的顺序 | boolean \|number |  | |
@@ -347,10 +349,12 @@ abstract: true
 | chunkThreads | 附件分片上传并发数 | number | [AttachmentConfig.defaultChunkThreads](zh/procmp/configure/configure#attachmentconfig) | 1.5.2 |
 | processValue | 值变更时，拦截并返回一个新的值 | (value: any, range?: 0 \| 1) => any |   | 1.4.4 |
 | help | 额外信息，常用于提示 | ReactNode |  |
-| dateMode | 日期组件显示模式,可选值: `date` `dateTime` `time` `year` `month` `week` | string | date  | 1.5.6 |
+| dateMode | 日期组件显示模式,可选值: `date` `dateTime` `time` `year` `quarter` `month` `week` | string | date  | 1.5.6 |
 | accept | Attachment 接受上传的文件类型 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | string[] |  | 1.5.7 |
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  | 1.6.5 |
 | useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  | 1.6.5 |
+| numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  | 1.6.7  |
+
 
 ### Field Values
 

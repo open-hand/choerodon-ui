@@ -10,6 +10,7 @@ title: API
 | closable | Whether Tag can be closed | boolean | `false` |
 | color | Color of the Tag | string | - |
 | onClose | Callback executed when tag is closed | (e) => void | - |
+| hoverShowPointer | Tag 组件 hover 时是否显示小手样式 | boolean | - |
 
 ### Tag.CheckableTag
 

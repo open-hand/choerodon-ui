@@ -16,13 +16,14 @@ title: API
 | addonAfter   | 设置后置标签                              | string \| ReactNode |        |     |
 | addonBeforeStyle | 设置前置标签样式 | CSSProperties |  |      |
 | addonAfterStyle | 设置后置标签样式 | CSSProperties |  |       |
-| restrict | 限制可输入的字符 | string \| RegExp |  |       |
+| restrict | 限制可输入的字符，string 类型的效果为允许输入的字符规则，RegExp 类型的效果为不允许输入的字符规则 | string \| RegExp |  |       |
 | valueChangeAction | 触发值变更的动作, 可选值：blur \| input | blur |  | 1.1.0      |
 | wait | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | | 1.1.0     |
 | waitType | 设置值变更间隔类型，可选值：throttle \| debounce | string | debounce | 1.1.0    |
 | showLengthInfo | 是否显示长度信息 | boolean | | 1.4.0      |
 | border | 是否显示边框 | boolean | true | 1.4.4 |
 | isFlat | 自动宽度模式 | boolean | false | 1.4.5 |
+| forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  | 1.6.7 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
 

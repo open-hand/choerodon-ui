@@ -122,7 +122,7 @@ class App extends React.Component {
         <Column name="userid" />
         <Column name="age" />
         <Column name="enable" />
-        <Column name="name" />
+        <Column name="name" showDetail />
         <Column
           header="操作"
           align="center"
