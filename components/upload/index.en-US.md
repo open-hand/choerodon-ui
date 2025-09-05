@@ -32,6 +32,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | headers | Set request headers, valid above IE10. | object | - |
 | listType | Built-in stylesheets, support for three types: `text`, `picture` or `picture-card` | string | 'text' |
 | multiple | Whether to support selected multiple file. `IE10+` supported. You can select multiple files with CTRL holding down while multiple is set to be true | boolean | true |
+| directory | Whether to upload folders | boolean | - |
 | name | The name of uploading file | string | 'file' |
 | showUploadList | Whether to show default upload list, it is used to set whether to display preview button, remove button, download button, re-upload button, etc | boolean \| [ShowUploadListInterface](#ShowUploadListInterface) | true |
 | supportServerRender | Need to be turned on while the server side is rendering. | boolean | false |
