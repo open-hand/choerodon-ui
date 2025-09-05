@@ -28,7 +28,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 onRowDoubleClick 属性，支持行双击事件。
 - 🌟 `<pro>PerformanceTable`: 新增 customDragDropContenxt 属性可以自定义支持 DragDropContenxt 来实现多表之间的拖拽。
 - 🌟 `<pro>PerformanceTable.Column`: 新增 footer 属性，支持表格底部渲染。
-- 🌟 `<pro>Table`: 新增 rowNumberColumnProps.rowNumberIndex 属性，支持修改序号列顺序。
+- 🌟 `<pro>Table`: 新增 rowNumberColumn.rowNumberIndex 属性，支持修改序号列顺序。
 - 🌟 `<pro>DataSet`: 新增 customIntlFun, sortedTreeData 属性。
 - 🌟 `<pro>Lov`: 新增树形是否默认展开的视图配置。
 - 🌟 `<pro>Table.Column`: 新增 showDetail 属性。

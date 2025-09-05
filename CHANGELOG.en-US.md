@@ -290,7 +290,7 @@ timeline: true
 - 🌟 `<pro>Picture`: The `loading` state is added to the `status` attribute.
 - 🌟 `<pro>Table`: Bidirectional replication adds `hiddenTip` hidden prompt attribute.
 - 🌟 `<pro>DataSet.Field`: Added `useLookupBatch`, `useLovDefineBatch` property.
-- 🌟 `<pro>Table`: Added `rowNumberColumnProps` property.
+- 🌟 `<pro>Table`: Added `rowNumberColumn` property.
 - 💄 Optimize some warnings.
 - 💄 `Tabs`: Optimize the algorithm logic for calculating showMore.
 - 💄 `BarCode`: Optimize internal monitoring of value changes within components.
