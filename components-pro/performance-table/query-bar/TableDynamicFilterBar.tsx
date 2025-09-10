@@ -258,10 +258,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       document.addEventListener('click', this.handleClickOut);
       if (this.isSingleLineOpt() && this.refSingleWrapper) {
         const { height } = this.refSingleWrapper.getBoundingClientRect();
-        const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
-        runInAction(() => {
-          this.showExpandIcon = height > (childHeight + 18);
-        });
+        const childNode = this.refSingleWrapper.children[0].children[0];
+        if (childNode) {
+          const { height: childHeight } = childNode.getBoundingClientRect();
+          runInAction(() => {
+            this.showExpandIcon = height > (childHeight + 18);
+          });
+        }
       }
     }
     const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
@@ -296,10 +299,13 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         this.processDataSetListener(true, nextProps);
         if (this.isSingleLineOpt() && this.refSingleWrapper) {
           const { height } = this.refSingleWrapper.getBoundingClientRect();
-          const { height: childHeight } = this.refSingleWrapper.children[0].children[0].getBoundingClientRect();
-          runInAction(() => {
-            this.showExpandIcon = height > (childHeight + 18);
-          });
+          const childNode = this.refSingleWrapper.children[0].children[0];
+          if (childNode) {
+            const { height: childHeight } = childNode.getBoundingClientRect();
+            runInAction(() => {
+              this.showExpandIcon = height > (childHeight + 18);
+            });
+          }
         }
       }
       const shouldInit = dataSet.getState(ORIGINALVALUEOBJ) ? dataSet.getState(ORIGINALVALUEOBJ).query === undefined : true;
@@ -777,7 +783,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   handleExpandIconClick(hidden): void {
     const { refSingleWrapper } = this;
-    if (refSingleWrapper) {
+    if (refSingleWrapper && refSingleWrapper.children[0].children[0]) {
       const { height } = refSingleWrapper.getBoundingClientRect();
       const { height: childHeight } = refSingleWrapper.children[0].children[0].getBoundingClientRect();
       runInAction(() => {
