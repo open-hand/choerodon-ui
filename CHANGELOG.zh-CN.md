@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
+
+## 1.6.7
+
+`2025-09-05`
+
 - 🌟 `configure`: 新增 treeShowLine, performanceTableUseMouseBatchChoose, tableSize, datePickerYearFirst, attachment.removeConfirm, customizedRenderer, showSelectLoading, batchParaKey, inputDisabledShowSuffix, tagHoverShowPointer, disabledTimeLoopRoll, tableProfBarHasValueDefaultExpanded, selectScrollLoad, richTextFontFamilies 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field 全局对象。
 - 🌟 `<pro>Select`: 新增 virtual 属性，支持虚拟滚动。

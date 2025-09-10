@@ -1642,6 +1642,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleFocus(e) {
+    if (this.element) {
+      const elementRect = this.element.getBoundingClientRect();
+      // 不在可视区域, 则不聚焦
+      // 场景: 表格输入框聚焦, 切屏后会自动聚焦
+      if (elementRect.x < -1000) {
+        this.blur();
+        return;
+      }
+    }
     super.handleFocus(e);
     defer(() => this.isFocused && this.select());
   }

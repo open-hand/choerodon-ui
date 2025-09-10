@@ -15,6 +15,13 @@ timeline: true
 
 ---
 
+- 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
+- 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
+
+## 1.6.7
+
+`2025-09-05`
+
 - 🌟 `configure`: Added `treeShowLine`, `performanceTableUseMouseBatchChoose`, `tableSize`, `datePickerYearFirst`, `attachment.removeConfirm`, `customizedRenderer`, `showSelectLoading`, `batchParaKey`, `inputDisabledShowSuffix`, `tagHoverShowPointer`, `disabledTimeLoopRoll`, `tableProfBarHasValueDefaultExpanded`, `selectScrollLoad`, `richTextFontFamilies` properties.
 - 🌟 `configure`: TooltipTarget Adds the text-field global object.
 - 🌟 `<pro>PerformanceTable`: Added useMouseBatchChoose, which supports batch selection by mouse.
