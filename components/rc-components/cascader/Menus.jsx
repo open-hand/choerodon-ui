@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import Icon from '../../icon';
+import Checkbox from '../../checkbox/Checkbox';
 
 export default class Menus extends Component {
   static defaultProps = {
@@ -46,14 +47,20 @@ export default class Menus extends Component {
     return fieldNames[name] || defaultFieldNames[name];
   }
   getOption(option, menuIndex) {
-    const { prefixCls, expandTrigger, selectedValues } = this.props;
+    const { prefixCls, expandTrigger, selectedValues, checkable } = this.props;
     const { expandIcon } = this;
     const onSelect = this.props.onSelect.bind(this, option, menuIndex,false);
     let expandProps = {
-      onClick: () => {
+      onClick: (e) => {
+        if (checkable && e.target && e.target.className.includes('-checkbox')) {
+          return onSelect('check');;
+        }
         return onSelect('click');
       },
-      onDoubleClick: () => {
+      onDoubleClick: (e) => {
+        if (checkable && e.target && e.target.className.includes('-checkbox')) {
+          return;
+        }
         return onSelect('dblclick');
       },
     };
@@ -71,14 +78,33 @@ export default class Menus extends Component {
         </span>
       );
     }
-    if (selectedValues.findIndex((item) => item === option.value) > -1) {
+
+    const someLeafUnSelected = (childOptions) => {
+      return childOptions.some(child => {
+        if (child.disabled) return false;
+        if (!child[childrenField] && selectedValues.findIndex((item) => item === child.value) === -1) {
+          return true;
+        }
+        if (child[childrenField] && child[childrenField].length > 0) {
+          return someLeafUnSelected(child[childrenField]);
+        }
+        return false;
+      });
+    };
+
+    const isSelected = selectedValues.findIndex((item) => item === option.value) > -1;
+    const indeterminate = hasChildren && isSelected && someLeafUnSelected(option[childrenField]);
+    if (isSelected) {
       menuItemCls += ` ${prefixCls}-menu-item-selected`;
     }
     if (expandTrigger === 'hover' && (hasChildren || option.isLeaf === false)) {
       expandProps = {
         onMouseEnter: this.delayOnSelect.bind(this, onSelect),
         onMouseLeave: this.delayOnSelect.bind(this),
-        onClick: () => {
+        onClick: (e) => {
+          if (checkable && e.target && e.target.className.includes('-checkbox')) {
+            return onSelect('check');;
+          }
           return onSelect('click');
         },
       };
@@ -99,6 +125,13 @@ export default class Menus extends Component {
     } else if (typeof option[labelField] === 'string') {
       title = option[labelField];
     }
+    const checkbox = checkable ? (
+      <Checkbox
+        disabled={option.disabled}
+        checked={isSelected}
+        indeterminate={indeterminate}
+      />
+    ) : null;
     return (
       <li
         key={option.key || option[valueField]}
@@ -106,7 +139,8 @@ export default class Menus extends Component {
         title={title}
         {...expandProps}
       >
-        {option[labelField]}
+        {checkbox}
+        <span>{option[labelField]}</span>
         {expandIconNode}
       </li>
     );

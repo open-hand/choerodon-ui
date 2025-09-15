@@ -104,6 +104,10 @@ function defaultSearchMatcher({ record, text, textField }) {
   return record.get(textField) && record.get(textField).indexOf(text) !== -1;
 }
 
+function recordIsDisabled(record: Record): boolean {
+  return record.get(disabledField);
+}
+
 export type onOptionProps = { dataSet: DataSet; record: Record };
 
 export type RenderProps = {
@@ -189,6 +193,10 @@ export interface CascaderProps extends TriggerFieldProps {
   fieldNames?: FieldNamesType;
   /** 渲染Option文本的钩子 */
   optionRenderer?: Renderer;
+  /**
+   * 多选模式是否展示勾选框(异步不支持), 需要注意: 批量勾选时, onChoose/onUnChoose 参数为数组
+   */
+  checkable?: boolean;
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -395,6 +403,11 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return this.observableProps.primitiveValue !== false && this.getProp('type') !== FieldType.object;
   }
 
+  get checkable(): boolean {
+    const { checkable, multiple, async, loadData } = this.props;
+    return !!(checkable && multiple && !async && !loadData);
+  }
+
   checkValueReaction?: IReactionDisposer;
 
   checkComboReaction?: IReactionDisposer;
@@ -470,6 +483,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'async',
       'fieldNames',
       'optionRenderer',
+      'checkable',
     ]);
   }
 
@@ -592,6 +606,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       disabled: menuDisabled,
       textField,
       valueField,
+      checkable,
       props: {
         dropdownMenuStyle,
         expandTrigger,
@@ -771,6 +786,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           onSelect={this.handleMenuSelect}
           dropdownMenuColumnStyle={dropdownMenuStyleMerge}
           visible={this.popup}
+          checkable={checkable}
         />
       );
     }
@@ -1160,8 +1176,53 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       this.setPopup(false);
       return;
     }
+
+    if (ExpandTrigger.check === trigger && this.multiple && this.checkable) {
+      const record = targetOption.value;
+      const disabledChildRecords: Record[] = (record as Record).treeReduce((array, r) => {
+        if (recordIsDisabled(r)) {
+          array.push(r);
+        }
+        return array;
+      }, [] as Record[]);
+
+      const allLeafChildren: Record[] = [];
+      const selectedChildren: Record[] = [];
+      (record as Record).treeReduce((_, r) => {
+        if (!recordIsDisabled(r) &&
+          r.parents.every(parent => !disabledChildRecords.includes(parent)) &&
+          (!r.children || r.children.length === 0 || (r.children && r.children.every(recordChild => recordIsDisabled(recordChild))))) {
+          allLeafChildren.push(r);
+          if (this.isSelected(r)) {
+            selectedChildren.push(r);
+          }
+        }
+        return [];
+      }, [] as Record[]);
+      if (allLeafChildren.length === selectedChildren.length) {
+        this.unChoose(selectedChildren);
+        if (onUnChoose) {
+          onUnChoose(
+            selectedChildren.map(r => this.processRecordToObject(r)),
+            selectedChildren,
+          );
+        }
+      } else {
+        const chooseValue = allLeafChildren.filter(leaf => selectedChildren.length === 0 || !selectedChildren.includes(leaf));
+        if (chooseValue.length > 0) {
+          this.setActiveValue(chooseValue[chooseValue.length - 1]);
+          this.choose(chooseValue);
+          if (onChoose) {
+            onChoose(
+              chooseValue.map(r => this.processRecordToObject(r)),
+              chooseValue,
+            );
+          }
+        }
+      }
+    }
     // 单选模式
-    if (!this.isSelected(targetOption.value) || isClickTab || !this.multiple) {
+    else if (!this.isSelected(targetOption.value) || isClickTab || !this.multiple) {
       if (targetOption.children) {
         this.setPopup(true);
         this.setActiveValue(targetOption.value);
@@ -1226,13 +1287,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
   }
 
-  handleOptionSelect(record: Record) {
-    this.prepareSetValue(this.processRecordToObject(record));
+  handleOptionSelect(record: Record | Record[]) {
+    this.prepareSetValue(...(isArrayLike(record) ? record.map(this.processRecordToObject, this) : [this.processRecordToObject(record)]));
   }
 
-  handleOptionUnSelect(record: Record) {
-    const newValue = this.treeValueToArray(record);
-    this.removeValue(newValue, -1);
+  handleOptionUnSelect(record: Record | Record[]) {
+    const newValues = isArrayLike(record) ? record.map(r => this.treeValueToArray(r)) : [this.treeValueToArray(record)];
+    this.removeValues(newValues, -1);
   }
 
   // 移除所选值
@@ -1463,7 +1524,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     this.resetFilter();
   }
 
-  unChoose(record?: Record | null) {
+  unChoose(record?: Record | Record[] | null) {
     if (record) {
       this.handleOptionUnSelect(record);
     }
@@ -1474,7 +1535,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
    * @param record
    * @param visible
    */
-  choose(record?: Record | null, visible?: boolean) {
+  choose(record?: Record | Record[] | null, visible?: boolean) {
     if (!this.multiple && !visible) {
       this.collapse();
     }

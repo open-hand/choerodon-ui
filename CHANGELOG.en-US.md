@@ -15,8 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Cascader`: Added `checkable` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
+- 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 
 ## 1.6.7
 

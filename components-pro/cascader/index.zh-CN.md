@@ -33,14 +33,15 @@ subtitle: 级联选择
 | pagingOptionContent | 渲染分页 option | ReactNode | |
 | onOption | 设置选项属性，如 disabled | ({ dataSet, record })) => object \| ({ options, item })) => object |  |
 | menuMode | 单框弹出形式切换| `single` \| `multiple` | - |
-| onChoose | 选择一个值的时候触发| (value,record) => void | - |
-| onUnChoose | 取消选中一个值的时候触发多选时候生效|  (value,record) => void | - |
+| onChoose | 选择一个值的时候触发(批量勾选时, 参数为数组)| (value,record) => void | - |
+| onUnChoose | 取消选中一个值的时候触发多选时候生效(批量勾选时, 参数为数组)|  (value,record) => void | - |
 | changeOnSelect | 所选既所得 | boolean | - |
 | searchable | 是否可搜索 | boolean | false |
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
 | loadData |	用于动态加载选项，无法与 showSearch 一起使用 |	(selectedOptions) => void	|
 | async |	用于数据源异步加载选项，无法与 showSearch 一起使用 |	boolean |
 | optionRenderer(1.5.6) | 渲染 Option 本文的钩子。isFilterSearch 代表是否搜索过滤中 | ({ text, value, record, dataSet, isFilterSearch }) => ReactNode |  |
+| checkable | 多选模式是否展示勾选框(异步不支持), 需要注意: 批量勾选时, onChoose/onUnChoose 参数为数组 | boolean | - |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
