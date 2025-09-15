@@ -502,7 +502,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       let $next = next;
       let $prev = prev;
       // tabBarPosition 为 垂直方向时, -1 是为了兼容 tab 设置高度时, 避免短暂出现上下箭头
-      if (offset === 0 && containerWH < navNodeWH - (isVertical(tabBarPosition) ? 1 : 0)) {
+      // tabBarPosition 为 水平方向时, -1 是为了兼容偶尔 1px 误差问题, 出现不必要的左右箭头
+      if (offset === 0 && containerWH < navNodeWH - 1) {
         $prev = false;
         $next = true;
       } else if (minOffset > 0 && offset >= minOffset) {
@@ -527,7 +528,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         prev: $prev,
       };
     }
-  }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH, tabBarPosition]);
+  }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH]);
 
   const toPrev = useCallback(() => {
     const navWrapNode = navWrapRef.current;
