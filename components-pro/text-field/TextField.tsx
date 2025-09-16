@@ -965,7 +965,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       editorStyle.width = pxToRem(this.measureTextWidth(text), true)!;
     }
     return (
-      <li key="text">
+      <li key="text" className={`${props?.className}-wrap`}>
         <input {...(props as object)} value={text || ''} style={editorStyle} />
       </li>
     );

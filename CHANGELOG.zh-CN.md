@@ -17,6 +17,7 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: 新增 checkable 属性。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
+- 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 

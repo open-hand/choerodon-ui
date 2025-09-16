@@ -421,6 +421,13 @@
     padding-left: 0;
   }
 
+  &-multiple:not(&-focused) &-multiple-input-wrap {
+    width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
   &-multiple &:not(textarea) ul li:first-child &-multiple-input {
     margin-left: @input-multiple-empty-input-margin-left;
   }
