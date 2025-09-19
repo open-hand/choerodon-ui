@@ -42,7 +42,7 @@ import { ButtonColor } from '../../button/enum';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { ComboFilterBarConfig, Suffixes, TableCustomized } from '../Table';
+import { ComboFilterBarConfig, Suffixes, TableCustomized, SummaryBarConfigProps } from '../Table';
 import ComboFieldList from './ComboFieldList';
 import TableButtons from './TableButtons';
 import QuickFilterMenu from './combo-quick-filter/QuickFilterMenu';
@@ -88,6 +88,7 @@ export interface TableComboBarProps extends ElementProps {
   advancedFilter?: ReactNode;
   filerMenuAction?: ReactNode;
   queryFieldsStyle?: { [key: string]: CSSProperties };
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -1278,9 +1279,12 @@ export default class TableComboBar extends Component<TableComboBarProps> {
   }
 
   render() {
-    const { summaryBar, buttons } = this.props;
+    const { summaryBar, buttons, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topRight' } = summaryBarConfigProps;
     const { prefixCls } = this;
     const queryBar = this.getQueryBar();
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     if (queryBar) {
       return [queryBar, summaryBar];
     }
@@ -1289,6 +1293,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
         key="toolbar"
         prefixCls={`${prefixCls}-combo-filter-buttons`}
         buttons={buttons as ReactElement<ButtonProps>[]}
+        className={summaryBarCls}
       >
         {summaryBar}
       </TableButtons>

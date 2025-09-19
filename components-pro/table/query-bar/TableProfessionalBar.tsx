@@ -21,6 +21,7 @@ import autobind from '../../_util/autobind';
 import { Tooltip as LabelTooltip } from '../../core/enum';
 import { FieldType } from '../../data-set/enum';
 import { isFieldValueEmpty } from '../../field/utils';
+import { SummaryBarConfigProps } from '../Table';
 
 export interface TableProfessionalBarProps extends ElementProps {
   dataSet: DataSet;
@@ -35,6 +36,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: () => void;
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 @observer
@@ -277,17 +279,20 @@ export default class TableProfessionalBar extends Component<TableProfessionalBar
   }
 
   render() {
-    const { buttons, summaryBar } = this.props;
+    const { buttons, summaryBar, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topLeft' } = summaryBarConfigProps;
     const { prefixCls } = this;
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     const queryBar = this.getQueryBar();
     const tableButtons = buttons.length ? (
       <div key="professional_toolbar" className={`${prefixCls}-professional-toolbar`}>
-        <TableButtons key="table_buttons" prefixCls={prefixCls} buttons={buttons}>
+        <TableButtons key="table_buttons" prefixCls={prefixCls} buttons={buttons} className={summaryBarCls}>
           {summaryBar}
         </TableButtons>
       </div>
     ) : (
-      <div className={`${prefixCls}-toolbar`} key="professional_toolbar">
+      <div className={classNames(`${prefixCls}-toolbar`, summaryBarCls)} key="professional_toolbar">
         {summaryBar}
       </div>
     );

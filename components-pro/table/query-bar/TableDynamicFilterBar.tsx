@@ -41,7 +41,14 @@ import { ButtonProps } from '../../button/Button';
 import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import isEmpty from '../../_util/isEmpty';
-import { DynamicFilterBarConfig, Suffixes, TableFilterBarButtonIcon, TableFilterBarButtonIconItem, CombineSortConfig } from '../Table';
+import {
+  DynamicFilterBarConfig,
+  Suffixes,
+  TableFilterBarButtonIcon,
+  TableFilterBarButtonIconItem,
+  CombineSortConfig,
+  SummaryBarConfigProps,
+} from '../Table';
 import FieldList from './FieldList';
 import TableButtons from './TableButtons';
 import ColumnFilter from './ColumnFilter';
@@ -343,6 +350,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
    * 组合排序配置
    */
   combineSortConfig?: CombineSortConfig;
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 export const CONDITIONSTATUS = '__CONDITIONSTATUS__';
@@ -2133,13 +2141,21 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   }
 
   render() {
-    const { summaryBar, buttons } = this.props;
+    const { buttons, summaryBar, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topRight' } = summaryBarConfigProps;
     const { prefixCls } = this;
     const queryBar = this.getQueryBar();
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     if (queryBar) {
       return [queryBar, summaryBar];
     }
-    return <TableButtons key="toolbar" prefixCls={`${prefixCls}-dynamic-filter-buttons`} buttons={buttons as ReactElement<ButtonProps>[]}>
+    return <TableButtons
+      key="toolbar"
+      prefixCls={`${prefixCls}-dynamic-filter-buttons`}
+      buttons={buttons as ReactElement<ButtonProps>[]}
+      className={summaryBarCls}
+    >
       {summaryBar}
     </TableButtons>;
   }

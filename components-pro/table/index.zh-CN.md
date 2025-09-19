@@ -39,6 +39,7 @@ subtitle: 表格
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit, summaryBarFieldWidth }) => ReactNode |  |
 | summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |
+| summaryBarConfigProps | 汇总条配置 | { placement?: 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'; separator?: ReactNode; groupStyle?: CSSProperties; moreStyle?: CSSProperties; useColon?: boolean; labelStyle?: CSSProperties; } |  |
 | useMouseBatchChoose | 是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 | boolean | [globalConfig.tableUseMouseBatchChoose](/components/configure#API) |
 | rowHeight | 行高 | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/components/configure#API) |
 | headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight |
