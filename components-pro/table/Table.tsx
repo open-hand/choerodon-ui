@@ -115,6 +115,7 @@ import message from '../message';
 import ClipboardBar from './ClipboardBar';
 import { $l } from '../locale-context';
 import { getDateFormatByField } from '../field/utils';
+import TableSummaryBar from './TableSummaryBar';
 
 export type TableGroup = {
   name: string;
@@ -169,6 +170,7 @@ export interface TableQueryBarCustomProps {
   onReset?: () => void;
   autoQueryAfterReset?: boolean;
   editable: boolean;
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 export interface ScrollInfo {
@@ -344,6 +346,15 @@ export type CombineSortConfig = {
    * @deprecated
    */
   showSortOption?: boolean | SortRangeOption;
+};
+
+export type SummaryBarConfigProps = {
+  placement?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+  separator?: ReactNode;
+  groupStyle?: CSSProperties;
+  moreStyle?: CSSProperties;
+  useColon?: boolean;
+  labelStyle?: CSSProperties;
 };
 
 let _instance;
@@ -890,6 +901,10 @@ export interface TableProps extends DataSetComponentProps {
    * 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效
    */
   addNewButton?: boolean;
+  /**
+   * 汇总条配置
+   */
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 @observer
@@ -993,6 +1008,19 @@ export default class Table extends DataSetComponent<TableProps> {
     return element ? element.querySelector(
       `.${prefixCls}-row:last-child`,
     ) as HTMLTableRowElement | null : null;
+  }
+
+  get showBottomSummaryBar(): boolean {
+    const {
+      props: {
+        summaryBar,
+        summaryBarConfigProps = {},
+      },
+      tableStore: { queryBar },
+    } = this;
+    const defaultPlacement = queryBar === 'professionalBar' ? 'topLeft' : 'topRight';
+    const { placement = defaultPlacement } = summaryBarConfigProps;
+    return !!(summaryBar && ['bottomLeft', 'bottomRight'].includes(placement));
   }
 
   @autobind
@@ -1904,6 +1932,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'rowNumberColumnProps',
       'multiDragSelectMode',
       'tableFilterBarButtonIcon',
+      'summaryBarConfigProps',
     ]);
   }
 
@@ -2136,6 +2165,7 @@ export default class Table extends DataSetComponent<TableProps> {
         fullColumnWidth,
         clipboard,
         tableFilterBarButtonIcon,
+        summaryBarConfigProps,
       },
       tableStore,
       prefixCls,
@@ -2192,6 +2222,7 @@ export default class Table extends DataSetComponent<TableProps> {
                 treeQueryExpanded={treeQueryExpanded}
                 searchCode={searchCode}
                 tableFilterBarButtonIcon={tableFilterBarButtonIcon}
+                summaryBarConfigProps={summaryBarConfigProps}
               />
               <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             </TableSibling>
@@ -2218,6 +2249,7 @@ export default class Table extends DataSetComponent<TableProps> {
             </Spin>
             <TableSibling position="after" boxSizing={boxSizing}>
               {this.getFooter()}
+              {this.getBottomSummaryBar()}
               {this.getPagination(TablePaginationPosition.bottom)}
               {this.getArrangeValue()}
             </TableSibling>
@@ -2682,6 +2714,28 @@ export default class Table extends DataSetComponent<TableProps> {
         );
       }
     }
+  }
+
+  getBottomSummaryBar(): ReactNode | undefined {
+    const {
+      props: {
+        summaryFieldsLimit,
+        summaryBarFieldWidth,
+        summaryBar: summaryBarProp,
+        summaryBarConfigProps,
+      },
+      tableStore: { queryBar },
+    } = this;
+    const summaryBar = this.showBottomSummaryBar ? (
+      <TableSummaryBar
+        summaryFieldsLimit={summaryFieldsLimit}
+        summaryBarFieldWidth={summaryBarFieldWidth}
+        summaryBar={summaryBarProp}
+        summaryBarConfigProps={summaryBarConfigProps}
+        queryBar={queryBar}
+      />
+    ) : undefined;
+    return summaryBar;
   }
 
   getTable(lock?: ColumnLock): ReactNode {

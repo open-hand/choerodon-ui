@@ -101,14 +101,40 @@ class App extends React.Component {
       <Table
         buttons={['add', 'delete', 'remove', 'query', 'collapseAll', 'reset']}
         dataSet={this.ds}
-        queryBar="none"
+        queryBar="professionalBar"
         border={false}
         columns={this.columns}
         queryFieldsLimit={2}
+        summaryBarConfigProps={{
+          placement: 'topRight',
+          separator: <span>||</span>,
+          groupStyle: { background: '#fae0e0' },
+          moreStyle: { background: '#fae0e0' },
+          useColon: false,
+          labelStyle: { width: 90 },
+        }}
         summaryBar={[
           'age',
           ({ dataSet }) => {
-            return { label: '测试是', value: 123123 };
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+          },
+          ({ dataSet }) => {
+            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
           },
         ]}
       />

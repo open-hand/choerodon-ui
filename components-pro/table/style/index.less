@@ -1007,10 +1007,39 @@
     }
   }
 
+  &-summary-topLeft&-summary-topLeft&-summary-topLeft {
+    flex-direction: row-reverse;
+    .@{table-prefix-cls}-summary-group-wrapper:first-child:last-child {
+      flex: 1;
+    }
+  }
+  &-summary-topRight&-summary-topRight&-summary-topRight {
+    flex-direction: row;
+    .@{table-prefix-cls}-summary-group-wrapper:first-child:last-child {
+      flex: 1;
+    }
+  }
+  &-summary-topLeft&-summary-topLeft&-summary-topLeft,
+  &-summary-topRight&-summary-topRight&-summary-topRight {
+    > [class*='-toolbar-button-group'] {
+      align-content: flex-start;
+      min-width: 2.1rem;
+    }
+  }
+
   &-summary-group-wrapper {
     display: flex;
     justify-content: @table-summary-group-wrapper-justify-content;
     margin: @table-summary-group-wrapper-margin;
+
+    &-topLeft,
+    &-bottomLeft {
+      justify-content: flex-start;
+    }
+    &-topRight,
+    &-bottomRight {
+      justify-content: flex-end;
+    }
   }
 
   &-summary-group {
@@ -1031,9 +1060,11 @@
 
   &-summary-button-more {
     width: 0.7rem;
+    min-width: 0.7rem;
     font-size: 0.12rem;
     line-height: 0.3rem;
     letter-spacing: 0;
+    white-space: nowrap;
     text-align: center;
     background: #FFF6EA;
 
@@ -1068,7 +1099,7 @@
     }
 
     &-value {
-      width: calc(100% - 0.72rem);
+      flex: 1;
       overflow: hidden;
       color: #F7A835;
       white-space: nowrap;
@@ -1077,18 +1108,24 @@
     }
 
     &-separate {
-      display: inline-block;
-      width: 0.01rem;
+      display: inline-flex;
+      align-items: center;
       height: 0.3rem;
       vertical-align: top;
-      background-color: #fef6e9;
 
-      div {
-        display: inline-block;
-        width: 0.01rem;
+      > div {
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        min-width: 0.01rem;
         height: 0.12rem;
-        margin-top: 0.1rem;
         background: rgba(87, 102, 121, 0.40);
+      }
+      &-custom {
+        vertical-align: initial;
+        > div {
+          background: transparent;
+        }
       }
     }
   }
