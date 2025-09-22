@@ -1,16 +1,13 @@
 import React, { cloneElement, Component, isValidElement, MouseEventHandler, ReactElement, ReactNode, useState } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable } from 'mobx';
-import { BigNumber } from 'bignumber.js';
 import isObject from 'lodash/isObject';
 import isString from 'lodash/isString';
-import isNumber from 'lodash/isNumber';
-import { isNil } from 'lodash';
+import isNil from 'lodash/isNil';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import Icon from 'choerodon-ui/lib/icon';
 import { DropDownProps } from 'choerodon-ui/lib/dropdown';
 import { ProgressStatus } from 'choerodon-ui/lib/progress/enum';
-import { math } from 'choerodon-ui/dataset';
 import noop from 'lodash/noop';
 import { TableButtonType, TableQueryBarType } from '../enum';
 import TableButtons from './TableButtons';
@@ -19,12 +16,12 @@ import Table, {
   ComboFilterBarConfig,
   DynamicFilterBarConfig,
   SummaryBar,
-  SummaryBarHook,
   TableButtonProps,
   TableQueryBarHook,
   TableQueryBarHookCustomProps,
   TableQueryBarHookProps,
   TableFilterBarButtonIcon,
+  SummaryBarConfigProps,
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import Radio from '../../radio';
@@ -52,6 +49,7 @@ import Dropdown from '../../dropdown/Dropdown';
 import Menu from '../../menu';
 import TextField from '../../text-field';
 import Field from '../../data-set/Field';
+import TableSummaryBar from '../TableSummaryBar';
 
 export interface TableQueryBarProps {
   buttons?: Buttons[];
@@ -74,6 +72,7 @@ export interface TableQueryBarProps {
   treeQueryExpanded?: boolean;
   comboFilterBar?: ComboFilterBarConfig;
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;
+  summaryBarConfigProps?: SummaryBarConfigProps;
 }
 
 const ExportBody = observer((props) => {
@@ -211,6 +210,21 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       },
     } = this;
     return showQueryBar !== false && queryBar !== TableQueryBarType.none;
+  }
+
+  get showTopSummaryBar(): boolean {
+    const {
+      props: {
+        summaryBar,
+        summaryBarConfigProps = {},
+      },
+      context: {
+        tableStore: { queryBar },
+      },
+    } = this;
+    const defaultPlacement = queryBar === 'professionalBar' ? 'topLeft' : 'topRight';
+    const { placement = defaultPlacement } = summaryBarConfigProps;
+    return !!(summaryBar && ['topLeft', 'topRight'].includes(placement));
   }
 
   componentWillUnmount() {
@@ -490,147 +504,28 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     }
   }
 
-  /**
-   * 渲染表头汇总列
-   * @param summary
-   */
-  renderSummary(summary?: SummaryBar[]): ReactElement[] | undefined {
-    if (summary) {
-      const { length } = summary;
-      if (length) {
-        const { summaryBar } = this.props;
-        if (summaryBar) {
-          const { length: summaryLength } = summaryBar;
-          const {
-            props: { summaryFieldsLimit, summaryBarFieldWidth },
-            context: {
-              tableStore,
-              dataSet,
-              prefixCls,
-            },
-          } = this;
-          const { props: { queryBarProps } } = tableStore;
-          const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
-          const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
-          const fieldTypeArr = [FieldType.currency, FieldType.number];
-          return summary.reduce<ReactElement[]>((list, summaryCol, index) => {
-            const hasSeparate = length > summaryFieldsLimits || index !== (summaryLength - 1);
-            if (isString(summaryCol)) {
-              const field = dataSet.getField(summaryCol);
-              if (field && fieldTypeArr.includes(field.get('type'))) {
-                const summaryValue = dataSet.reduce<number | BigNumber>((sum, record) => {
-                  const n = record.get(summaryCol);
-                  if (isNumber(n) ||  math.isBigNumber(n)) {
-                    return math.plus(sum, n);
-                  }
-                  return sum;
-                }, 0);
-                const name = field.get('name');
-                const label = field.get('label');
-                const sumNode = math.isBigNumber(summaryValue) ? math.toString(summaryValue) : summaryValue;
-                list.push(
-                  <div key={name}>
-                    <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
-                      <div className={`${prefixCls}-summary-col-label`} title={String(label)}>{label}:</div>
-                      <div className={`${prefixCls}-summary-col-value`} title={String(sumNode)}>{sumNode}</div>
-                    </div>
-                    {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
-                      <div />
-                    </div>}
-                  </div>,
-                );
-              }
-            } else if (typeof summaryCol === 'function') {
-              const summaryObj = (summaryCol as SummaryBarHook)({ summaryFieldsLimit: summaryFieldsLimits, summaryBarFieldWidth, dataSet });
-              list.push(
-                <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
-                  <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
-                    <div
-                      className={`${prefixCls}-summary-col-label`}
-                      title={isString(summaryObj.label) ? summaryObj.label : ''}
-                    >
-                      {summaryObj.label}:
-                    </div>
-                    <div
-                      className={`${prefixCls}-summary-col-value`}
-                      title={isString(summaryObj.value) || isNumber(summaryObj.value) ? summaryObj.value.toString() : ''}
-                    >
-                      {summaryObj.value}
-                    </div>
-                  </div>
-                  {hasSeparate && <div className={`${prefixCls}-summary-col-separate`}>
-                    <div />
-                  </div>}
-                </div>,
-              );
-            }
-            return list;
-          }, []);
-        }
-      }
-    }
-  }
-
-  /**
-   * 点击汇总条展开收起
-   */
-  @action
-  toggleShowMoreSummary = () => {
-    this.showMoreSummary = !this.showMoreSummary;
-  };
-
-  /**
-   * 汇总条展开收起按钮
-   * @param summary
-   */
-  getMoreSummaryButton(summary) {
-    if (summary.length) {
-      const { prefixCls } = this.context;
-      return (
-        <div className={`${prefixCls}-summary-button-more`}>
-          <a
-            onClick={() => this.toggleShowMoreSummary()}
-          >
-            {$l('Table', 'more')}
-            {this.showMoreSummary ? <Icon type='expand_less' /> : <Icon type='expand_more' />}
-          </a>
-        </div>
-      );
-    }
-  }
-
-  /**
-   * 渲染汇总条
-   */
-  getSummaryBar(): ReactElement<any> | undefined {
+  getTopSummaryBar(): ReactElement | undefined {
     const {
       props: {
-        summaryBar,
         summaryFieldsLimit,
+        summaryBarFieldWidth,
+        summaryBar: summaryBarProp,
+        summaryBarConfigProps,
       },
       context: {
-        prefixCls,
-        tableStore,
+        tableStore: { queryBar },
       },
     } = this;
-    const { props: { queryBarProps } } = tableStore;
-    const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
-    const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
-    if (summaryBar) {
-      const currentSummaryBar = this.renderSummary(summaryBar.slice(0, summaryFieldsLimits));
-      const moreSummary = summaryBar.slice(summaryFieldsLimits);
-      const moreSummaryBar = this.renderSummary(moreSummary);
-      const moreSummaryButton: ReactElement | undefined = this.getMoreSummaryButton(moreSummary);
-      return (
-        <div className={`${prefixCls}-summary-group-wrapper`}>
-          <div className={`${prefixCls}-summary-group`}>
-            {currentSummaryBar}
-            {this.showMoreSummary && moreSummaryBar}
-          </div>
-          {moreSummaryButton}
-        </div>
-      );
-    }
+    const summaryBar = this.showTopSummaryBar ? (
+      <TableSummaryBar
+        summaryFieldsLimit={summaryFieldsLimit}
+        summaryBarFieldWidth={summaryBarFieldWidth}
+        summaryBar={summaryBarProp}
+        summaryBarConfigProps={summaryBarConfigProps}
+        queryBar={queryBar}
+      />
+    ) : undefined;
+    return summaryBar;
   }
 
   /**
@@ -708,7 +603,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   getButtons(): ReactElement<ButtonProps>[] {
     const { tableStore: { queryBar, prefixCls, dataSet, customizedBtn, customizable, customizedColumnHeader } } = this.context;
-    const { buttons: originalButtons, summaryBar, buttonsLimit } = this.props;
+    const { buttons: originalButtons, buttonsLimit } = this.props;
     const { tableStore } = this.context;
     const children: ReactElement<ButtonProps | DropDownProps>[] = [];
     let buttons = originalButtons;
@@ -734,7 +629,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     }
     if (buttons) {
       // 汇总条存在下 buttons 大于 3 个放入下拉
-      const buttonsLimits = summaryBar ? (buttonsLimit || 3) : buttonsLimit;
+      const buttonsLimits = this.showTopSummaryBar ? (buttonsLimit || 3) : buttonsLimit;
       const tableButtonProps = tableStore.getConfig('tableButtonProps');
       let showButtonLength = 0;
       const moreButtons: Buttons[] = [];
@@ -964,7 +859,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
 
   render() {
     const buttons = this.getButtons();
-    const summaryBar = this.getSummaryBar();
+    const summaryBar = this.getTopSummaryBar();
     const {
       context: {
         prefixCls,
@@ -973,9 +868,13 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         tableStore,
         tableStore: { queryBar, props: { queryBarProps } },
       },
-      props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded },
+      props: { queryFieldsLimit, summaryFieldsLimit, pagination, treeQueryExpanded, summaryBarConfigProps = {} },
       showQueryBar,
     } = this;
+    const defaultPlacement = queryBar === 'professionalBar' ? 'topLeft' : 'topRight';
+    const { placement = defaultPlacement } = summaryBarConfigProps;
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     if (showQueryBar) {
       const { queryDataSet } = dataSet;
       const queryFields = this.getQueryFields();
@@ -998,6 +897,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         onQuery: treeQueryExpanded && isTree ? this.expandTree : onQuery,
         onReset: treeQueryExpanded && isTree ? this.collapseTree : onReset,
         onBeforeQuery,
+        summaryBarConfigProps,
       };
       if (typeof queryBar === 'function') {
         return (queryBar as TableQueryBarHook)(props);
@@ -1019,7 +919,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       }
     }
     return [
-      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
+      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} className={summaryBarCls}>
         {summaryBar}
       </TableButtons>,
       pagination,

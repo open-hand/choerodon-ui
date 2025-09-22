@@ -40,6 +40,7 @@ export {
   Buttons,
   SummaryBar,
   SummaryBarProps,
+  SummaryBarConfigProps,
   TableQueryBarHookProps,
   TableQueryBarHookCustomProps,
   expandedRowRendererProps,
