@@ -23,6 +23,8 @@ timeline: true
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
 - 🐞 `<pro>Table`: Fixed the issue of missing borders in the data grouping table style.
+- 🐞 `<pro>Table`: Fixed the issue where multiple node asynchronous queries in tree tables are canceled.
+- 🐞 `<pro>Tree`: Fixed the issue where multiple tree node asynchronous queries are canceled.
 
 ## 1.6.7
 

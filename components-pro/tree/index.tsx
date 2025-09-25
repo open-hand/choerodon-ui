@@ -13,6 +13,7 @@ import C7NTree, {
   TreeProps as C7NTreeProps,
 } from 'choerodon-ui/lib/tree';
 import { CheckInfo } from 'choerodon-ui/lib/rc-components/tree/Tree';
+import { QUERY_CANCELABLE } from 'choerodon-ui/dataset/data-set/DataSet';
 import autobind from '../_util/autobind';
 import DataSet from '../data-set/DataSet';
 import Record from '../data-set/Record';
@@ -300,6 +301,10 @@ export default class Tree extends Component<TreeProps> {
       this.stateExpandedKeys = [];
       this.stateLoadedKeys = [];
     });
+    const { async, dataSet } = props;
+    if (async && dataSet) {
+      dataSet.setState(QUERY_CANCELABLE, false)
+    }
   }
 
   setExpand(eventObj: C7nTreeNodeExpandedEvent) {
