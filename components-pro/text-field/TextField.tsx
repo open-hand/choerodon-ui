@@ -1298,11 +1298,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         if (`on${evt}` === 'onMouseDown') {
           preventDefault(e);
         }
+        let isStopPropagation = false;
+        const originalStopPropagation = e.stopPropagation;
+        e.stopPropagation = () => {
+          isStopPropagation = true;
+          originalStopPropagation.call(e);
+        };
         if (props && props[`on${evt}`]) {
           props[`on${evt}`](e);
         }
         if (this.element) {
-          setTimeout(() => this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: true })));
+          setTimeout(() => this.element.dispatchEvent(new MouseEvent(`${evt === 'DoubleClick' ? 'dblclick' : evt.toLowerCase()}`, { bubbles: !isStopPropagation })));
         }
       };
     })
