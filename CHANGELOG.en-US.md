@@ -21,6 +21,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
+- 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
 
 ## 1.6.7
 
