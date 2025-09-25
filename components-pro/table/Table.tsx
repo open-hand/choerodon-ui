@@ -1975,15 +1975,23 @@ export default class Table extends DataSetComponent<TableProps> {
 
   getClassName(): string | undefined {
     const {
-      tableStore: { border, parityRow, aggregation, size, isCombinedColumn },
+      tableStore: { border, parityRow, aggregation, size, isCombinedColumn, groups },
       prefixCls,
     } = this;
+    let hasLockRightGroup;
+    if (groups && groups.length > 0) {
+      hasLockRightGroup = groups.some((group) => {
+        const { lock } = group.columnProps || {};
+        return lock === ColumnLock.right;
+      });
+    }
     return super.getClassName({
       [`${prefixCls}-${size}`]: size !== Size.default,
       [`${prefixCls}-bordered`]: border,
       [`${prefixCls}-parity-row`]: parityRow,
       [`${prefixCls}-aggregation`]: aggregation,
       [`${prefixCls}-combined-column`]: isCombinedColumn,
+      [`${prefixCls}-has-lock-right-group`]: hasLockRightGroup,
     });
   }
 

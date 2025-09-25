@@ -23,7 +23,7 @@ import omit from 'lodash/omit';
 import pick from 'lodash/pick';
 import noop from 'lodash/noop';
 import { isMoment } from 'moment';
-import { CHILDREN_PAGE_INFO } from 'choerodon-ui/dataset/data-set/DataSet';
+import { CHILDREN_PAGE_INFO, QUERY_CANCELABLE } from 'choerodon-ui/dataset/data-set/DataSet';
 import Column, { ColumnDefaultProps, ColumnProps, defaultAggregationRenderer } from './Column';
 import CustomizationSettings from './customization-settings/CustomizationSettings';
 import isFragment from '../_util/isFragment';
@@ -2550,6 +2550,10 @@ export default class TableStore {
       }
       this.selectedDragRows = [];
     });
+    const { mode, treeAsync, dataSet } = node.props;
+    if (mode === TableMode.tree && treeAsync && dataSet) {
+      dataSet.setState(QUERY_CANCELABLE, false);
+    }
   }
 
   isBuiltInColumn({ key }: ColumnProps) {
