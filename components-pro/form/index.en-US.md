@@ -96,6 +96,7 @@ title: Form
 | colSpan | 表单下控件跨越的列数 | number | 1 |
 | newLine | 另起新行 | boolean |  |
 | labelWordBreak | 设置标签是否换行显示  | boolean |  |
+| groupItemStyle | group item 自定义样式 | React.CSSProperties[] |  |
 
 ### Form Responsive
 

@@ -17,9 +17,12 @@ timeline: true
 
 - 🌟 `<pro>Cascader`: Added `checkable` property.
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps` property.
+- 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
+- 💄 `Spin`: Optimize the min-height when loading `children`.
+- 💄 `<pro>Form.ItemGroup`: Optimize the style during child lazy loading.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

@@ -74,8 +74,13 @@
 
     &-compact {
       & .@{form-prefix-cls}-item-group-item:not(:last-child) {
-        margin-right: -0.01rem;
+        margin-right: calc(-1 * @border-width-base);
       }
+    }
+
+    &-item-compact:not(:last-child) {
+      margin-right: calc(-1 * @border-width-base);
+      border-right-width: @border-width-base;
     }
   }
 }

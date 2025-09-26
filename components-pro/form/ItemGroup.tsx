@@ -27,6 +27,7 @@ export interface ItemGroupProps {
   colSpan?: number;
   rowSpan?: number;
   newLine?: boolean;
+  groupItemStyle?: CSSProperties[];
 }
 
 const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
@@ -34,6 +35,7 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     className,
     children,
     compact,
+    groupItemStyle = [],
     ...otherProps
   } = props;
   const { getProPrefixCls } = useContext(ConfigContext);
@@ -42,6 +44,7 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     [`${prefixCls}-compact`]: compact,
   });
 
+  let childIndex = -1;
   const mapChildren = (child: ReactNode): ReactNode => {
     if (!isValidElement(child)) {
       return undefined;
@@ -72,12 +75,13 @@ const ItemGroup: FunctionComponent<ItemGroupProps> = props => {
     let childCls = '';
     if (compact) {
       const { suffixCls } = child.props;
-      const prefixCls = getProPrefixCls(suffixCls);
-      childCls = `${prefixCls}-compact`;
+      const childPrefixCls = getProPrefixCls(suffixCls);
+      childCls = `${childPrefixCls}-compact ${prefixCls}-item-compact`;
     }
 
+    childIndex++;
     return (
-      <span className={`${prefixCls}-item ${childCls}`} style={{ ...itemStyle }}>
+      <span className={`${prefixCls}-item ${childCls}`} style={{ ...itemStyle, ...groupItemStyle[childIndex] }}>
         {child}
       </span>
     );
