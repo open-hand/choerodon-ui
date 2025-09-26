@@ -69,6 +69,13 @@
         margin-top: calc(-1 * @spin-dot-size-lg / 2 - 0.1rem);
       }
     }
+
+    > .@{spin-prefix-cls}-container:not(:first-child) {
+      min-height: @spin-dot-size;
+    }
+    > .@{spin-prefix-cls}-lg + .@{spin-prefix-cls}-container {
+      min-height: @spin-dot-size-lg;
+    }
   }
 
   &-container {

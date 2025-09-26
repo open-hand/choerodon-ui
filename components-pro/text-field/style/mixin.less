@@ -2,6 +2,8 @@
 @import '../../../components/style/mixins/index';
 @import '../../field/style/mixin';
 
+@form-item-group-prefix-cls: ~'@{c7n-pro-prefix}-form-item-group';
+
 // size mixins for input
 .input-lg() {
   &-lg & {
@@ -118,33 +120,28 @@
     text-overflow: ellipsis;
   }
 
-  &-compact:not(:last-child) {
-    margin-right: calc(-1 * @border-width-base);
-    border-right-width: @border-width-base;
-  }
-
-  &-compact:not(:first-child) &,
-  &-compact:not(:first-child) &-wrapper {
+  .@{form-item-group-prefix-cls}-item-compact:not(:first-child) &,
+  .@{form-item-group-prefix-cls}-item-compact:not(:first-child) &-wrapper {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
 
-  &-compact:not(:last-child) &,
-  &-compact:not(:last-child) &-wrapper {
+  .@{form-item-group-prefix-cls}-item-compact:not(:last-child) &,
+  .@{form-item-group-prefix-cls}-item-compact:not(:last-child) &-wrapper {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  &-compact:hover &-wrapper,
-  &-compact:focus &-wrapper {
+  .@{form-item-group-prefix-cls}-item-compact:hover &-wrapper,
+  .@{form-item-group-prefix-cls}-item-compact:focus &-wrapper {
     z-index: 3;
   }
 
-  &-compact &-focused {
+  .@{form-item-group-prefix-cls}-item-compact &-focused {
     z-index: 3;
   }
 
-  &-compact &-invalid {
+  .@{form-item-group-prefix-cls}-item-compact &-invalid {
     z-index: 2;
   }
 
