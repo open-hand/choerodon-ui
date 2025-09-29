@@ -14,7 +14,7 @@ title:
 Basic usage example.
 
 ```jsx
-import { Form, Switch, DataSet, Pagination, NumberField, Button } from 'choerodon-ui/pro';
+import { Form, Switch, DataSet, Pagination, NumberField, Button, Select } from 'choerodon-ui/pro';
 import { observer } from 'mobx-react';
 
 function handleChange(page, pageSize) {
@@ -28,7 +28,7 @@ class App extends React.Component {
     fields: [
       { name: 'showSizeChanger', type: 'boolean', label: 'showSizeChanger', defaultValue: true },
       { name: 'showTotal', type: 'boolean', label: 'showTotal', defaultValue: true },
-      { name: 'showPager', type: 'boolean', label: 'showPager', defaultValue: false },
+      { name: 'showPager', type: 'string', label: 'showPager', defaultValue: 'false' },
       { name: 'showQuickJumper', type: 'boolean', label: 'showQuickJumper', defaultValue: false },
       { name: 'hideOnSinglePage', type: 'boolean', label: 'hideOnSinglePage', defaultValue: false },
       { name: 'simple', type: 'boolean', label: 'simple', defaultValue: false },
@@ -46,7 +46,12 @@ class App extends React.Component {
         <Form columns={4} dataSet={ds} labelWidth={150}>
           <Switch name="showSizeChanger" />
           <Switch name="showTotal" />
-          <Switch name="showPager" />
+          <Select name='showPager'>
+            <Select.Option value='true'>true</Select.Option>
+            <Select.Option value='false'>false</Select.Option>
+            <Select.Option value='input'>input</Select.Option>
+            <Select.Option value='selectAndInput'>selectAndInput</Select.Option>
+          </Select>
           <Switch name="showQuickJumper" />
           <Switch name="hideOnSinglePage" />
           <Switch name="simple" />
@@ -55,7 +60,7 @@ class App extends React.Component {
         <Pagination
           showSizeChanger={current.get('showSizeChanger')}
           showTotal={current.get('showTotal')}
-          showPager={current.get('showPager')}
+          showPager={current.get('showPager') === 'true' ? true : current.get('showPager') === 'false' ? false : current.get('showPager')}
           showQuickJumper={current.get('showQuickJumper')}
           simple={current.get('simple')}
           total={current.get('total')}

@@ -30,15 +30,26 @@
     min-width: @pagination-pager-min-width;
     height: @pagination-pager-height;
 
-    &-input {
+    &-input,
+    &-selectAndInput {
       display: inline-block;
       height: 0.3rem;
       margin: 0 0.1rem;
       vertical-align: middle;
 
+      .@{c7n-pro-prefix}-input-number-wrapper {
+        top: -0.01rem;
+      }
       .@{c7n-pro-prefix}-input-number {
         width: 0.5rem;
         height: @pagination-pager-height;
+      }
+    }
+
+    &-selectAndInput {
+      margin-right: 0.04rem;
+      .@{c7n-pro-prefix}-pagination-pager-separator {
+        margin-left: 0.1rem;
       }
     }
   }

@@ -22,6 +22,7 @@ import { ValueChangeAction } from '../text-field/enum';
 import QuickJumper from './QuickJumper';
 import Tooltip from '../tooltip';
 import { ShowValidation } from '../form/enum';
+import { Tooltip as TextTooltip } from '../core/enum';
 
 export type PagerType = 'page' | 'prev' | 'next' | 'first' | 'last' | 'jump-prev' | 'jump-next';
 
@@ -41,7 +42,7 @@ export interface PaginationProps extends DataSetComponentProps {
   showQuickJumper?: boolean | { goButton?: React.ReactNode };
   showSizeChangerLabel?: boolean;
   showTotal?: boolean | ((total: number, range: [number, number], counting: boolean, page: number, pageSize: number) => React.ReactNode);
-  showPager?: boolean | 'input';
+  showPager?: boolean | 'input' | 'selectAndInput';
   hideOnSinglePage?: boolean;
   simple?: boolean;
   quickJumperPosition?: QuickJumperPosition;
@@ -227,7 +228,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
   @autobind
   handleJumpChange(value) {
-    const { page, totalPage, props: { showQuickJumper, simple } } = this;
+    const { page, totalPage, props: { showQuickJumper, simple, showPager } } = this;
     value = Number(value);
     if (isNaN(value) || value < 1) {
       value = page;
@@ -235,7 +236,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (value > totalPage) {
       value = totalPage;
     }
-    if (simple) {
+    if (simple || showPager === 'input' || showPager === 'selectAndInput') {
       this.jumpPage(value);
     } else if (showQuickJumper) {
       if (isObject(showQuickJumper) && showQuickJumper.goButton) {
@@ -291,6 +292,28 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     ));
   }
 
+  getInputNode(tooltip?: boolean): ReactNode {
+    const {
+      page,
+      props: { disabled },
+    } = this;
+    const otherProps: any = {};
+    if (tooltip) {
+      otherProps.tooltip = [TextTooltip.always, { title: $l('Pagination', 'jump_to'), placement: 'bottomLeft' }];
+    }
+    return (
+      <ObserverNumberField
+        value={page}
+        min={1}
+        onChange={this.handleJumpChange}
+        valueChangeAction={ValueChangeAction.input} wait={200}
+        disabled={disabled}
+        showValidation={ShowValidation.tooltip}
+        {...otherProps}
+      />
+    );
+  }
+
   getPager(page: number, type: PagerType, active = false, disabledSender?: boolean) {
     const {
       prefixCls,
@@ -313,7 +336,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   }
 
   renderPagers(page: number): ReactNode {
-    const { totalPage } = this;
+    const { totalPage, prefixCls, props: { showPager } } = this;
     const bufferSize = 1;
     const pagerList: any[] = [];
     if (totalPage <= 3 + bufferSize * 2) {
@@ -346,6 +369,15 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       if (totalPage > 1 && right !== totalPage) {
         pagerList.push(this.getPager(totalPage, 'page', page === totalPage));
       }
+    }
+    if (showPager === 'selectAndInput' && pagerList.length > 0) {
+      const inputNode = (
+        <span className={`${prefixCls}-pager ${prefixCls}-pager-selectAndInput`}>
+          {this.getInputNode(true)}
+          <span className={`${prefixCls}-pager-separator`}>／</span>
+        </span>
+      );
+      pagerList.splice(pagerList.length - 1, 0 , inputNode);
     }
     return pagerList;
   }
@@ -480,7 +512,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
     const {
       totalPage,
-      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition, disabled },
+      props: { children, sizeChangerPosition, showTotal, showPager, showQuickJumper, quickJumperPosition },
     } = this;
 
     const { dataSet } = this.observableProps;
@@ -490,14 +522,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
 
     const inputNode = (
       <>
-        <ObserverNumberField
-          value={page}
-          min={1}
-          onChange={this.handleJumpChange}
-          valueChangeAction={ValueChangeAction.input} wait={200}
-          disabled={disabled}
-          showValidation={ShowValidation.tooltip}
-        />
+        {this.getInputNode()}
         <span className={`${prefixCls}-pager-separator`}>／</span>
         {totalPage}
       </>
@@ -525,19 +550,21 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
       )
       : showPager ? this.renderPagers(page) : null;
 
+    const isShowQuickJumper = showQuickJumper && showPager !== 'input' && showPager !== 'selectAndInput';
+    const isShowFirstAndLast = showPager !== 'selectAndInput' && showPager !== true;
     return (
       <nav {...this.getMergedProps()}>
         {children}
         {sizeChangerPosition === SizeChangerPosition.left && sizeChanger}
-        {showQuickJumper && showPager !== 'input' && quickJumperPosition === QuickJumperPosition.left && this.renderQuickGo()}
+        {isShowQuickJumper && quickJumperPosition === QuickJumperPosition.left && this.renderQuickGo()}
         {showTotal && this.renderTotal(pageSize, page, total)}
-        {this.getPager(1, 'first', false, page === 1)}
+        {isShowFirstAndLast && this.getPager(1, 'first', false, page === 1)}
         {this.getPager(page - 1, 'prev', false, page === 1)}
         {pagersNode}
         {this.getPager(page + 1, 'next', false, !this.next)}
-        {!noCount && this.getPager(totalPage, 'last', false, !this.next)}
+        {isShowFirstAndLast && !noCount && this.getPager(totalPage, 'last', false, !this.next)}
         {sizeChangerPosition === SizeChangerPosition.right && sizeChanger}
-        {showQuickJumper && showPager !== 'input' && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
+        {isShowQuickJumper && quickJumperPosition === QuickJumperPosition.right && this.renderQuickGo()}
       </nav>
     );
   }
