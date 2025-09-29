@@ -31,7 +31,7 @@ title: Pagination
 | showSizeChanger | 是否显示分页大小选择器 | boolean | true |
 | showSizeChangerLabel | 是否显示分页大小选择器的标签 | boolean | true |
 | showTotal | 显示总数，当传入function时可自定义显示数据总量和当前数据顺序  | boolean \| Function(total, range, counting, page, pageSize) | true |
-| showPager | 显示数字按钮。设置为 input 时，显示为输入框 | boolean \| 'input' | false |
+| showPager | 显示数字按钮。设置为 input 时，仅显示为输入框。设置为 selectAndInput 时，显示按钮，以及在最后一页前显示输入框，同时 showQuickJumper 失效 | boolean \| 'input' \| 'selectAndInput' | false |
 | itemRender | 按钮渲染。`type` - 按钮类型，可选值：`first` `last` `prev` `next` `jump-prev` `jump-next` | (page, type) => ReactNode |  |
 | sizeChangerPosition | 分页大小选择器的位置，可选值: `left` `right` | string | left |
 | sizeChangerOptionRenderer | 分页大小选择器的选项渲染器 | ({ dataSet, record, text, value}) => ReactNode | ({ text }) => text |
