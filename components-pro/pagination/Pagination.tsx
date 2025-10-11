@@ -373,7 +373,7 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     if (showPager === 'selectAndInput' && pagerList.length > 0) {
       const inputNode = (
         <span className={`${prefixCls}-pager ${prefixCls}-pager-selectAndInput`}>
-          {this.getInputNode(true)}
+          {this.getInputNode(false)}
           <span className={`${prefixCls}-pager-separator`}>／</span>
         </span>
       );

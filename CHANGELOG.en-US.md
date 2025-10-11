@@ -24,6 +24,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
 - 💄 `Spin`: Optimize the min-height when loading `children`.
 - 💄 `<pro>Form.ItemGroup`: Optimize the style during child lazy loading.
+- 💄 `<pro>TextField`: When the `wait` attribute is not set, the debounce logic is not executed.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
