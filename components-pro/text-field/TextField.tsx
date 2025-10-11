@@ -1735,7 +1735,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target,
       target: { value },
     } = e;
-    const { valueChangeAction } = this;
+    const { valueChangeAction, props: { wait, waitType } } = this;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
       const selectionEnd = target.selectionEnd + restricted.length - value.length;
@@ -1744,7 +1744,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     this.setText(restricted);
     if (!this.isFocus || (!this.lock && valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
-      this.handleChangeWait(restricted);
+      if (!isNil(wait) && waitType) {
+        this.handleChangeWait(restricted);
+      } else {
+        this.prepareSetValue(restricted);
+      }
     }
   }
 
