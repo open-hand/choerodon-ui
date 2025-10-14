@@ -27,6 +27,7 @@ import Tooltip from '../tooltip/Tooltip';
 import { $l } from '../locale-context';
 import { TableButtonProps } from '../table/interface';
 import isOverflow from '../overflow-tip/util';
+import ObserverCheckBox from '../check-box';
 
 export const ATTACHMENT_TARGET = 'attachment-preview';
 
@@ -58,13 +59,16 @@ export interface ItemProps {
   getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
   removeConfirm?: boolean | PopconfirmProps;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
+  enableDeleteAll?: boolean;
+  handleCheckAttachment: (attachment: AttachmentFile) => void;
+  checkedAttachments?: AttachmentFile[];
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
   const {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
-    getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp,
+    getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp, enableDeleteAll, handleCheckAttachment, checkedAttachments = [],
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -108,6 +112,18 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       handleOpenPreview();
     }
   }, [pictureRef, previewUrl, handleOpenPreview]);
+  const renderCheckbox = (): ReactNode => {
+    if (enableDeleteAll) {
+      return (
+        <ObserverCheckBox
+          checked={checkedAttachments.some(a => attachment === a)}
+          onChange={() => handleCheckAttachment(attachment)}
+          className={`${prefixCls}-delete-checkbox`}
+          disabled={disabled}
+        />
+      );
+    }
+  };
   const renderDragger = (): ReactNode => {
     if (draggable && !isCard) {
       const iconProps = {
@@ -493,6 +509,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       >
         <div className={`${prefixCls}-content`}>
           {renderDragger()}
+          {renderCheckbox()}
           {renderImagePreview()}
           {renderPlaceholder()}
           {!restCount && !isCard && renderTitle()}

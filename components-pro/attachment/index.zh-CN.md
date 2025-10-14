@@ -64,6 +64,7 @@ title: Attachment
 | downloadAllMode | 显示全部下载按钮模式 | readOnly \| always | 'readOnly' |
 | getDownloadAllUrl | 获取全部下载地址，返回值类型为函数时作为按钮的点击事件 | ({ bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function \| undefined |  |
 | getDownloadUrl | 获取下载地址，返回值类型为函数时作为按钮的点击事件，默认使用 AttachmentFile.url | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => string \| Function \| undefined | [attachment.getDownloadUrl](/components/configure/#AttachmentConfig) |
+| enableDeleteAll | 开启全部删除功能 | boolean |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

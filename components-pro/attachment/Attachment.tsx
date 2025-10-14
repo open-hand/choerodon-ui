@@ -95,6 +95,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   downloadAllMode?: DownloadAllMode;
   getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
+  enableDeleteAll?: boolean;
 }
 
 export type Sort = {
@@ -163,6 +164,8 @@ export default class Attachment extends FormField<AttachmentProps> {
   @observable uploadWithoutUuid?: boolean;
 
   tempRemovedAttachments?: AttachmentFile[];
+
+  @observable checkedAttachments?: AttachmentFile[];
 
   secretLevelDataSet?: DataSet;
 
@@ -417,6 +420,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'countTextRenderer',
       'Modal',
       'templateDownloadButtonRenderer',
+      'enableDeleteAll',
     ]);
   }
 
@@ -599,7 +603,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   doRemove(attachment?: AttachmentFile, attachments: AttachmentFile[] = []): Promise<any> | undefined {
-    const { bucketName, bucketDirectory, storageCode, isPublic, multiple, props: { removeImmediately, onRemove: onAttachmentRemove = noop } } = this;
+    const { bucketName, bucketDirectory, storageCode, isPublic, multiple, props: { onRemove: onAttachmentRemove = noop } } = this;
     if (attachment) {
       return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
         if (ret !== false) {
@@ -628,7 +632,9 @@ export default class Attachment extends FormField<AttachmentProps> {
     }
     // 批量删除临时移除文件
     let validAttachments = attachments.filter(attachment => attachment.status !== 'error' && !attachment.invalid);
-    if (!removeImmediately && validAttachments.length > 0) {
+    const invalidAttachs = attachments.filter(attachment => attachment.status === 'error' || attachment.invalid);
+    this.removeCheckedAttachments(invalidAttachs);
+    if (validAttachments.length > 0) {
       return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
         if (ret !== false) {
           const { onRemove } = this.getContextConfig('attachment');
@@ -641,11 +647,16 @@ export default class Attachment extends FormField<AttachmentProps> {
               });
               return onRemove({ attachments: validAttachments, attachmentUUID, bucketName, bucketDirectory, storageCode, isPublic }, multiple)
                 .then(mobxAction((result) => {
+                  if (result !== false) {
+                    this.removeCheckedAttachments(validAttachments);
+                  }
+                  validAttachments.forEach(attachment => attachment.status = 'done');
                   if (result === false) {
                     this.handleFetchAttachment({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
                   }
                 }))
                 .catch(mobxAction(() => {
+                  validAttachments.forEach(attachment => attachment.status = 'done');
                   this.handleFetchAttachment({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
                 }));
             }
@@ -673,6 +684,42 @@ export default class Attachment extends FormField<AttachmentProps> {
         okText: $l('Modal', 'close'),
         drawer: true,
       });
+    }
+  }
+
+  @autobind
+  @mobxAction
+  handleCheckAttachment(attachment: AttachmentFile): void {
+    const { checkedAttachments = [] } = this;
+    if (checkedAttachments.find(a => a === attachment)) {
+      this.checkedAttachments = checkedAttachments.filter(a => a !== attachment);
+    } else {
+      this.checkedAttachments = [...checkedAttachments, attachment];
+    }
+  }
+
+  @autobind
+  @mobxAction
+  handleAllCheck(): void {
+    const { attachments = [], checkedAttachments = [] } = this;
+    if (attachments.length === checkedAttachments.length) {
+      this.checkedAttachments = [];
+    } else {
+      this.checkedAttachments = [...attachments];
+    }
+  }
+
+  @autobind
+  @mobxAction
+  handleDeleteCheckedAttachments(): void {
+    const { checkedAttachments = [], props: { onTempRemovedAttachmentsChange } } = this;
+    if (checkedAttachments.length > 0) {
+      this.checkedAttachments = undefined;
+      this.tempRemovedAttachments = undefined;
+      if (onTempRemovedAttachmentsChange) {
+        onTempRemovedAttachmentsChange(this.tempRemovedAttachments);
+      }
+      this.doRemove(undefined, checkedAttachments);
     }
   }
 
@@ -749,6 +796,19 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (index !== -1) {
         attachments.splice(index, 1);
         this.attachments = attachments;
+        this.checkValidity();
+        this.updateCacheCount();
+      }
+    }
+    return undefined;
+  }
+
+  @mobxAction
+  removeCheckedAttachments(checkedAttchs: AttachmentFile[]): undefined {
+    const { attachments } = this;
+    if (attachments) {
+      if (attachments.some(a => checkedAttchs.find(checked => checked === a))) {
+        this.attachments = attachments.filter(a => !checkedAttchs.find(checked => checked === a));
         this.checkValidity();
         this.updateCacheCount();
       }
@@ -1023,7 +1083,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, getDownloadUrl,
+      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -1069,6 +1129,9 @@ export default class Attachment extends FormField<AttachmentProps> {
           fetchAttachmentsFlag={!this.uploadWithoutUuid}
           removeConfirm={this.removeConfirm}
           getDownloadUrl={getDownloadUrl}
+          enableDeleteAll={enableDeleteAll}
+          handleCheckAttachment={this.handleCheckAttachment}
+          checkedAttachments={this.checkedAttachments}
         />
       );
     }
@@ -1225,6 +1288,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         {viewMode !== 'popup' && this.renderDragUploadArea()}
         {this.renderHeader(!isCard && uploadBtn)}
         {!__inGroup && viewMode !== 'popup' && this.renderHelp()}
+        {(__inGroup || viewMode === 'popup') && this.renderDeleteAll()}
         {!__inGroup && this.showValidation === ShowValidation.newLine && this.renderValidationResult()}
         {!__inGroup && this.renderEmpty()}
         {viewMode !== 'none' && this.renderUploadList(isCard && uploadBtn)}
@@ -1258,9 +1322,51 @@ export default class Attachment extends FormField<AttachmentProps> {
     hide();
   }
 
+  renderDeleteAll(): ReactNode {
+    const {
+      prefixCls,
+      attachments,
+      checkedAttachments,
+      props: {
+        disabled,
+        enableDeleteAll,
+      },
+    } = this;
+    if (enableDeleteAll) {
+      return (
+        <div className={`${prefixCls}-delete-all-buttons`}>
+          <Button
+            funcType={FuncType.link}
+            color={ButtonColor.primary}
+            onClick={this.handleAllCheck}
+            className={`${prefixCls}-check-all-btn`}
+            disabled={disabled || !attachments || attachments.length === 0}
+          >
+            {$l('Select', 'select_all')}
+          </Button>
+          <div className={`${prefixCls}-delete-all-divider`} />
+          <Button
+            funcType={FuncType.link}
+            color={ButtonColor.primary}
+            onClick={this.handleDeleteCheckedAttachments}
+            className={`${prefixCls}-delete-all-btn`}
+            disabled={disabled || !checkedAttachments || checkedAttachments.length === 0}
+          >
+            {$l('Attachment', 'delete')}
+          </Button>
+        </div>
+      );
+    }
+  }
+
   renderHelp(): ReactNode {
-    const { help, showAttachmentHelp } = this;
-    if (!help || showAttachmentHelp === ShowHelp.none) return;
+    const { help, showAttachmentHelp, prefixCls, props: { viewMode } } = this;
+    if (!help || showAttachmentHelp === ShowHelp.none) {
+      if (viewMode !== 'popup') {
+        return this.renderDeleteAll();
+      }
+      return;
+    }
     switch (showAttachmentHelp) {
       case ShowHelp.tooltip:
         return (
@@ -1273,8 +1379,11 @@ export default class Attachment extends FormField<AttachmentProps> {
         );
       default:
         return (
-          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {toJS(help)}
+          <div className={`${prefixCls}-help`}>
+            <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
+              {toJS(help)}
+            </div>
+            {this.renderDeleteAll()}
           </div>
         );
     }

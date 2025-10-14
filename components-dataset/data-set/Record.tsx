@@ -308,8 +308,14 @@ export default class Record {
       const { children } = this;
       if (children) {
         let checkedLength = 0;
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const _this = this;
         return (
           children.some(record => {
+            if (record === _this) {
+              console.error('Record cannot be its own parent.(Duplicate Record id)', record);
+              return false;
+            }
             if (record.isSelectionIndeterminate) {
               return true;
             }
