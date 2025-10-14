@@ -47,6 +47,9 @@ export interface AttachmentListProps {
   fetchAttachmentsFlag: boolean;
   removeConfirm?: boolean | PopconfirmProps;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
+  enableDeleteAll?: boolean;
+  handleCheckAttachment: (attachment: AttachmentFile) => void;
+  checkedAttachments?: AttachmentFile[];
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -80,6 +83,9 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     getPreviewUrl,
     removeConfirm,
     getDownloadUrl,
+    enableDeleteAll,
+    handleCheckAttachment,
+    checkedAttachments,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -160,6 +166,9 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 getPreviewUrl={getPreviewUrl}
                 removeConfirm={removeConfirm}
                 getDownloadUrl={getDownloadUrl}
+                enableDeleteAll={enableDeleteAll}
+                handleCheckAttachment={handleCheckAttachment}
+                checkedAttachments={checkedAttachments}
               />
             )
           }

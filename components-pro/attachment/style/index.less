@@ -473,6 +473,44 @@
   div&-list-item-remove-confirm-popover {
     z-index: 1050;
   }
+
+  &-help {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-delete-all-buttons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    > .@{c7n-pro-prefix}-btn {
+      height: @btn-height-sm;
+    }
+  }
+  &-delete-all-divider {
+    display: inline-block;
+    width: 0.01rem;
+    height: 0.13rem;
+    margin: 0.01rem 0.08rem 0;
+    background: #D3DAE5;
+  }
+  &-popup-inner &-delete-all-buttons {
+    margin-right: 0.1rem;
+  }
+
+  &-list-item-delete-checkbox {
+    margin-right: 0.08rem;
+  }
+
+  &-list-card &-list-item-content {
+    position: relative;
+    .@{pro-attachment-prefix-cls}-list-item-delete-checkbox {
+      position: absolute;
+      top: 0.08rem;
+      left: 0.08rem;
+      z-index: 2;
+    }
+  }
 }
 
 .@{c7n-pro-prefix}-tooltip-popup-inner {

@@ -126,7 +126,8 @@ const App = () => {
     // 上传文件时，数量超过限定数量的自定义提示
     filesLengthLimitNotice: (defaultInfo) => {
       message.error(defaultInfo);
-    }
+    },
+    enableDeleteAll: true,
   };
   
   const getPreviewUrl = (props) => {
@@ -142,7 +143,7 @@ const App = () => {
         <Button onClick={() => setValue()}>置空</Button>
       </Col>
       <Col span={12}>
-        <Attachment readOnly getPreviewUrl={getPreviewUrl} {...props} />
+        <Attachment readOnly getPreviewUrl={getPreviewUrl} {...props} help={undefined} />
       </Col>
     </Row>
   );
