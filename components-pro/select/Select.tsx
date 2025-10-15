@@ -1340,7 +1340,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       [textField]: value,
       [valueField]: value,
     };
-    const findOption = comboOptions.find(record => record.get(valueField) === (isNil(value) ? value : value.trim()));
+    const findOption = comboOptions.find(record => record.get(valueField) === ((isNil(value) || !isString(value)) ? value : value.trim()));
     if (findOption) return;
     const record = comboOptions.create(initData, 0);
     if (menu) {
