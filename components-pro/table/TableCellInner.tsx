@@ -124,8 +124,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   if (rowDragRender && rowDragRender.draggableProps && rowDragRender.draggableProps.isDragDisabled) {
     isDragDisabled = rowDragRender.draggableProps.isDragDisabled;
   }
+  let cellEditorPropsDisabled;
+  const cellEditor = getEditorByColumnAndRecord(column, record);
+  if (isValidElement(cellEditor)) {
+    const { disabled } = cellEditor.props || {};
+    cellEditorPropsDisabled = disabled;
+  }
   const field = dataSet.getField(name);
-  const fieldDisabled = disabled || (field && field.get('disabled', record));
+  const fieldDisabled = cellEditorPropsDisabled || disabled || (field && field.get('disabled', record));
   const innerRef = useRef<HTMLSpanElement | null>(null);
   const prefixRef = useRef<HTMLSpanElement | null>(null);
   const previousCurrentRef = useRef<Record | undefined>(dataSet.current);
@@ -137,7 +143,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return command;
   }, [record, command, dataSet, aggregation]);
   const canFocus = useMemo(() => !fieldDisabled && (!inlineEdit || record === currentEditRecord), [fieldDisabled, record, currentEditRecord, inlineEdit]);
-  const cellEditor = getEditorByColumnAndRecord(column, record);
   const cellEditorInCell = isInCellEditor(cellEditor);
   const hasEditor = !pristine && cellEditor && !cellEditorInCell;
   const showEditor = useCallback((cell) => {
@@ -374,7 +379,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
         record,
         name,
         pristine,
-        disabled: disabled || (inlineEdit && !record.editing),
+        disabled: cellEditorPropsDisabled || disabled || (inlineEdit && !record.editing),
         indeterminate: checkField && checkField === name && record.isIndeterminate,
         labelLayout: LabelLayout.none,
         showHelp: ShowHelp.none,

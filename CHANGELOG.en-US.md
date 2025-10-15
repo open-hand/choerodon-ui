@@ -31,7 +31,9 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
 - 🐞 `<pro>Table`: Fixed the issue of missing borders in the data grouping table style.
 - 🐞 `<pro>Table`: Fixed the issue where multiple node asynchronous queries in tree tables are canceled.
+- 🐞 `<pro>Table`: Fixed the issue where the `disabled` attribute of the cell editor was not taking effect.
 - 🐞 `<pro>Tree`: Fixed the issue where multiple tree node asynchronous queries are canceled.
+- 🐞 `<pro>Select`: Fixed the issue where an error occurs when the component's value is of numeric type while the `combo` property is enabled.
 
 ## 1.6.7
 
