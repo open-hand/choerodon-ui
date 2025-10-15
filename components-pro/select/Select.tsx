@@ -531,7 +531,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
 
   componentWillUnmount() {
     super.componentWillUnmount();
-    this.doSearch.cancel();
+    this.doSearchDebounce.cancel();
     this.clearReaction();
 
     if (this.scrollLoad && this.trigger && this.trigger.popup && this.trigger.popup.element) {
@@ -980,6 +980,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       return true;
     }
     return false;
+  }
+
+  get doSearchUseDebounce(): boolean {
+    return true;
   }
 
   @autobind
@@ -1465,12 +1469,22 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
-  doSearch = debounce((value?: string | string[] | undefined) => {
+  doSearch = (value?: string | string[] | undefined) => {
+    if (this.doSearchUseDebounce) {
+      this.doSearchDebounce(value);
+    } else {
+      this.doSearchFunc(value);
+    }
+  };
+
+  doSearchFunc = (value?: string | string[] | undefined) => {
     if (isString(this.searchMatcher)) {
       this.searchRemote(value);
     }
     this.handleSearch(value);
-  }, 500);
+  };
+
+  doSearchDebounce = debounce(this.doSearchFunc, 500);
 
   getSearchPara(searchMatcher: string, value?: string | string[] | undefined): object {
     const { paramMatcher } = this;

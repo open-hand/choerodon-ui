@@ -255,6 +255,14 @@ export default class Lov extends Select<LovProps> {
     return viewMode;
   }
 
+  get doSearchUseDebounce(): boolean {
+    const { searchAction } = this.props;
+    if (searchAction === SearchAction.blur) {
+      return false;
+    }
+    return super.doSearchUseDebounce;
+  }
+
   getSearchFieldProps(): TextFieldProps {
     const searchFieldProps = super.getSearchFieldProps();
     const { viewMode } = this;
