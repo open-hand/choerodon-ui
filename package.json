@@ -194,7 +194,7 @@
     "fetch-jsonp": "^1.1.3",
     "file-loader": "^4.2.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^5.0.0",
     "glob": "^7.1.4",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
