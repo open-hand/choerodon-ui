@@ -119,6 +119,11 @@ class Trigger extends Component {
         this.contextMenuOutsideHandler2 = addEventListener(window,
           'blur', this.onContextMenuClose);
       }
+
+      if (!this.docScrollHandler) {
+        this.docScrollHandler = addEventListener(typeof window === 'undefined' ? undefined : document,
+          'scroll', this.handleDocumentScroll, true);
+      }
       return;
     }
 
@@ -128,6 +133,14 @@ class Trigger extends Component {
   componentWillUnmount() {
     this.clearDelayTimer();
     this.clearOutsideHandler();
+  }
+
+  // 页面滚动时, 跟随显示
+  handleDocumentScroll = ({ target }) => {
+    const popupNode = this.getPopupDomNode();
+    if (popupNode && target !== document && !contains(popupNode, target)) {
+      this.forcePopupAlign();
+    }
   }
 
   onMouseEnter = (e) => {
@@ -445,6 +458,11 @@ class Trigger extends Component {
     if (this.touchOutsideHandler) {
       this.touchOutsideHandler.remove();
       this.touchOutsideHandler = null;
+    }
+
+    if (this.docScrollHandler) {
+      this.docScrollHandler.remove();
+      this.docScrollHandler = null;
     }
   }
 
