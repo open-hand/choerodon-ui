@@ -26,6 +26,7 @@ timeline: true
 - 💄 `Spin`: 优化 children 加载时的最小高度。
 - 💄 `<pro>Form.ItemGroup`: 优化子级懒加载时的样式。
 - 💄 `<pro>TextField`: wait 属性未设置时, 不执行防抖逻辑。
+- 💄 `Tooltip`: 优化支持 Tooltip\Popover\Popconfirm 的弹框在页面滚动时跟随显示。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

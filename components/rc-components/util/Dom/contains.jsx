@@ -1,11 +1,12 @@
 export default function contains(root, n) {
-  let node = n;
-  while (node) {
-    if (node === root) {
-      return true;
+  if (root) {
+    let node = n;
+    while (node) {
+      if (node === root || (root.contains && root.contains(node))) {
+        return true;
+      }
+      node = node.parentNode;
     }
-    node = node.parentNode;
   }
-
   return false;
 }
