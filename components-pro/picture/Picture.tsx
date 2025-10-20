@@ -17,6 +17,7 @@ import React, {
   useState,
 } from 'react';
 import classNames from 'classnames';
+import noop from 'lodash/noop';
 import { Property } from 'csstype';
 import ReactIntersectionObserver from 'react-intersection-observer';
 import isNumber from 'lodash/isNumber';
@@ -52,6 +53,11 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   onPreview?: () => void;
   children?: ReactNode;
   modalProps?: ModalProps;
+  /**
+   * 点击事件前(图片预览前)执行
+   * @returns 返回值为 true 时, 强制调用预览(即使图片状态不是加载成功)
+   */
+  onBeforeClick?: () => (Promise<boolean | void> | boolean | void);
 }
 
 export interface PictureRef {
@@ -65,17 +71,19 @@ export interface OldPropsRef {
 }
 
 export interface PictureForwardRef {
-  preview();
+  preview(forcePreview?: boolean);
 
   getImage(): HTMLImageElement | null;
+
+  updatePreviewUrl(previewUrl?: string | undefined): void;
 }
 
 function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const {
     src, downloadUrl, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true, modalProps,
-    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, ...rest
+    objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, onBeforeClick = noop, ...rest
   } = props;
-  const url = previewUrl || src;
+  const [url, setUrl] = useState(previewUrl || src);
   const pictureRef = useRef<PictureRef>({ src: url, downloadUrl });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
   const { getProPrefixCls } = useContext(ConfigContext);
@@ -85,8 +93,12 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
   const oldPropsRef = useRef<OldPropsRef>({});
 
-  const handlePreview = useCallback(() => {
-    if (preview && !previewTarget && status === 'loaded' && url) {
+  useEffect(() => {
+    setUrl(previewUrl || src);
+  }, [setUrl, previewUrl, src]);
+
+  const handlePreview = useCallback((forcePreview?: boolean) => {
+    if (preview && !previewTarget && url && (status === 'loaded' || forcePreview)) {
       if (context && isNumber(index)) {
         context.preview(index, modalProps);
       } else {
@@ -97,12 +109,13 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
       }
     }
   }, [context, index, preview, previewTarget, status, url, downloadUrl, onPreview]);
-  const handleClick = useCallback((e) => {
-    handlePreview();
+  const handleClick = useCallback(async (e) => {
+    const forcePreview = await onBeforeClick();
+    handlePreview(forcePreview);
     if (onClick) {
       onClick(e);
     }
-  }, [handlePreview, onClick]);
+  }, [handlePreview, onClick, onBeforeClick]);
   const wrapperStyle: CSSProperties = {
     ...style,
   };
@@ -174,10 +187,15 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     }
   }, [index, context, pictureRef, preview, previewTarget, url]);
 
+  const updatePreviewUrl = useCallback((previewUrl?: string | undefined): void => {
+    setUrl(previewUrl);
+  }, [setUrl]);
+
   useImperativeHandle(ref, () => ({
     preview: handlePreview,
     getImage: () => imgRef.current,
-  }), [handlePreview, imgRef]);
+    updatePreviewUrl,
+  }), [handlePreview, imgRef, updatePreviewUrl]);
 
   const renderSources = () => {
     if (sources) {
