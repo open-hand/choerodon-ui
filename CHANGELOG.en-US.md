@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of missing borders in the data grouping table style.
 - 🐞 `<pro>Table`: Fixed the issue where multiple node asynchronous queries in tree tables are canceled.
 - 🐞 `<pro>Table`: Fixed the issue where the `disabled` attribute of the cell editor was not taking effect.
+- 🐞 `<pro>Table`: Fixed an issue where the `tooltip` displayed abnormally after customizing the rendering content of multi-value cells.
 - 🐞 `<pro>Tree`: Fixed the issue where multiple tree node asynchronous queries are canceled.
 - 🐞 `<pro>Select`: Fixed the issue where an error occurs when the component's value is of numeric type while the `combo` property is enabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the query parameters were incorrect when the `searchAction` attribute was `blur` and quickly lost focus.
