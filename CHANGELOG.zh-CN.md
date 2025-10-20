@@ -33,6 +33,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复了数据分组表格样式缺少边框的问题。
 - 🐞 `<pro>Table`: 修复树形表格多个节点异步查询时会被阻止的问题。
 - 🐞 `<pro>Table`: 修复单元格编辑器设置 disabled 属性不生效的问题。
+- 🐞 `<pro>Table`: 修复多值单元格自定义渲染内容后 tooltip 显示异常。
 - 🐞 `<pro>Tree`: 修复多个树节点异步查询时会被阻止的问题。
 - 🐞 `<pro>Select`: 修复开启 combo 属性时组件的值为数字类型会报错的问题。
 - 🐞 `<pro>Lov`: 修复 searchAction 属性为 blur 且快速失焦时, 查询参数不正确的问题。

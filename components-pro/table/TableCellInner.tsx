@@ -673,6 +673,15 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             }
             return undefined;
           });
+          if (texts.every(t => isValidElement(t))) {
+            // renderer elements could not be joined as string, return array with separator instead
+            return texts.map((el, index) => {
+              if (index < texts.length - 1) {
+                return [el, '、'];
+              }
+              return el;
+            });
+          }
           return texts.join('、');
         };
         const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
