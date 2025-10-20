@@ -7,6 +7,7 @@ import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { AttachmentConfig } from 'choerodon-ui/lib/configure';
@@ -95,15 +96,27 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
   const preview = !!previewUrl && (status === 'success' || status === 'done');
-  const handleOpenPreview = useCallback(async () => {
+  const onPictureBeforeClick = useCallback(debounce(async () => {
     if (isFunction(previewUrl)) {
       const result = await previewUrl();
-      if (isString(result)) {
+      if (isString(result) && isPicture && pictureRef.current) {
+        pictureRef.current.updatePreviewUrl(result);
+        return true;
+      }
+    }
+  }, 500, { leading: true, trailing: false }), [previewUrl, isPicture, pictureRef]);
+  const handleOpenPreview = useCallback(debounce(async () => {
+    if (isFunction(previewUrl)) {
+      const result = await previewUrl();
+      if (isString(result) && isPicture && pictureRef.current) {
+        pictureRef.current.updatePreviewUrl(result);
+        pictureRef.current.preview(true);
+      } else if (isString(result)) {
         window.open(result, previewTarget);
       }
     }
-  }, [previewUrl, previewTarget]);
-  const handlePreview = useCallback(() => {
+  }, 500, { leading: true, trailing: false }), [previewUrl, previewTarget, isPicture, pictureRef]);
+  const handlePreview = useCallback(debounce(() => {
     const { current } = pictureRef;
     if (current && isString(previewUrl)) {
       current.preview();
@@ -111,7 +124,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     } else if (isFunction(previewUrl)) {
       handleOpenPreview();
     }
-  }, [pictureRef, previewUrl, handleOpenPreview]);
+  }, 500, { leading: true, trailing: false }), [pictureRef, previewUrl, handleOpenPreview]);
   const renderCheckbox = (): ReactNode => {
     if (enableDeleteAll) {
       return (
@@ -209,6 +222,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     }
     if (isCard || listType === 'picture') {
       if ((preview || status === 'deleting') && isPicture) {
+        const pictureProps: PictureProps = {};
+        if (isString(previewUrl)) {
+          pictureProps.previewUrl = previewUrl;
+        } else {
+          pictureProps.onBeforeClick = onPictureBeforeClick;
+        }
         return (
           <Picture
             onClick={() => onPreview()}
@@ -222,6 +241,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             index={index}
             preview={preview}
             ref={pictureRef}
+            {...pictureProps}
           />
         );
       }

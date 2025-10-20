@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。
 - 🌟 `<pro>Pagination`: showPager 属性新增 selectAndInput 类型, 并优化第一页和最后一页按钮显示。
 - 🌟 `<pro>Attachment`: 新增 enableDeleteAll 属性。
+- 🌟 `<pro>Picture`: 新增 onBeforeClick 属性, ref 新增 updatePreviewUrl 方法。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
 - 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 💄 `<pro>TextField`: 优化支持通过控制后缀元素事件的冒泡和默认行为从而达到不同的事件触发效果。
@@ -27,6 +28,8 @@ timeline: true
 - 💄 `<pro>Form.ItemGroup`: 优化子级懒加载时的样式。
 - 💄 `<pro>TextField`: wait 属性未设置时, 不执行防抖逻辑。
 - 💄 `Tooltip`: 优化支持 Tooltip\Popover\Popconfirm 的弹框在页面滚动时跟随显示。
+- 💄 `<pro>Attachment`: 点击图片缩略图时执行 getPreviewUrl 方法返回的函数, 并优化图片类型预览方式。
+- 💄 `<pro>Modal`: 优化自定义 header 中关闭按钮大小。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

@@ -20,6 +20,7 @@ timeline: true
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
 - 🌟 `<pro>Pagination`: The `showPager` property has added the `selectAndInput` type and optimized the display of buttons on the first and last pages.
 - 🌟 `<pro>Attachment`: Added `enableDeleteAll` property.
+- 🌟 `<pro>Picture`: Added `onBeforeClick` property, and the `updatePreviewUrl` method has been added to `ref`.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
@@ -27,6 +28,8 @@ timeline: true
 - 💄 `<pro>Form.ItemGroup`: Optimize the style during child lazy loading.
 - 💄 `<pro>TextField`: When the `wait` attribute is not set, the debounce logic is not executed.
 - 💄 `Tooltip`: Optimize the support for `Tooltip\Popover\Popconfirm` pop-up boxes to follow and display as the page scrolls.
+- 💄 `<pro>Attachment`: When clicking on the thumbnail of an image, execute the function returned by the `getPreviewUrl` method and optimize the preview method of the image type.
+- 💄 `<pro>Modal`: Optimize the size of the close button in the custom `header`.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
