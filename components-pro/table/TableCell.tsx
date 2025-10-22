@@ -82,7 +82,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       document.removeEventListener('mouseup', handleDocumentMouseUp);
     }
   }, [])
-  const getInnerNode = useCallback((col: ColumnProps, onCellStyle?: CSSProperties, inAggregation?: boolean, headerGroup?: Group) => record ? (
+  const getInnerNode = useCallback((
+    col: ColumnProps,
+    onCellStyle?: CSSProperties,
+    inAggregation?: boolean,
+    headerGroup?: Group,
+    tableCellFinalStyle?: CSSProperties,
+  ) => record ? (
     <TableCellInner
       column={col}
       record={record}
@@ -95,6 +101,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       rowGroup={rowGroup}
       columnGroup={columnGroup}
       isDragging={isDragging}
+      tableCellFinalStyle={tableCellFinalStyle}
     >
       {children}
     </TableCellInner>
@@ -401,7 +408,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   };
   const groupRowSpan = groupCell && group ? getRowSpan(group, tableStore) - indexInGroup : undefined;
   const rowSpan = groupRowSpan === 1 ? undefined : groupRowSpan;
-  const renderInnerNode = ($aggregation, onCellStyle?: CSSProperties) => {
+  const renderInnerNode = ($aggregation, onCellStyle?: CSSProperties, tableCellFinalStyle?: CSSProperties) => {
     if (expandIconAsCell && children) {
       return (
         <span
@@ -439,7 +446,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
         </span>
       );
     }
-    return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup);
+    return getInnerNode(column, onCellStyle, undefined, columnGroup.headerGroup, tableCellFinalStyle);
   };
   const scope = groupCell ? 'row' : undefined;
   const TCell = scope ? 'th' : 'td';
@@ -505,6 +512,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
   }
 
+  const tableCellFinalStyle = { ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style };
+
   return (
     <TCell
       colSpan={colSpan}
@@ -514,12 +523,12 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       data-index={key}
       {...(provided && provided.dragHandleProps)}
       {...intersectionProps}
-      style={{ ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style }}
+      style={tableCellFinalStyle}
       scope={scope}
       onClickCapture={handleClickCapture}
       {...clipboardCopyEvents}
     >
-      {renderInnerNode(aggregation, onCellStyle)}
+      {renderInnerNode(aggregation, onCellStyle, tableCellFinalStyle)}
     </TCell>
   );
 };

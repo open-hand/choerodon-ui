@@ -30,6 +30,7 @@ timeline: true
 - 💄 `Tooltip`: Optimize the support for `Tooltip\Popover\Popconfirm` pop-up boxes to follow and display as the page scrolls.
 - 💄 `<pro>Attachment`: When clicking on the thumbnail of an image, execute the function returned by the `getPreviewUrl` method and optimize the preview method of the image type.
 - 💄 `<pro>Modal`: Optimize the size of the close button in the custom `header`.
+- 💄 `<pro>Table.Column`: Optimize the column `style` setting to determine where the `textAlign` style takes effect.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
@@ -40,6 +41,7 @@ timeline: true
 - 🐞 `<pro>Tree`: Fixed the issue where multiple tree node asynchronous queries are canceled.
 - 🐞 `<pro>Select`: Fixed the issue where an error occurs when the component's value is of numeric type while the `combo` property is enabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the query parameters were incorrect when the `searchAction` attribute was `blur` and quickly lost focus.
+- 🐞 `<pro>Currency`: Fixed the issue where the `numberGrouping` setting in the currency field did not take effect.
 
 ## 1.6.7
 
