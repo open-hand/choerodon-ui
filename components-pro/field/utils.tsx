@@ -122,8 +122,8 @@ export function getCurrencyFormatOptions(
   if (currency) {
     options.currency = currency;
   }
-  if (numberGrouping === false) {
-    options.useGrouping = false;
+  if (!isNil(numberGrouping)) {
+    options.useGrouping = numberGrouping;
   }
   return {
     lang,

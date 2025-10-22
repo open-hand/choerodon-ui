@@ -91,11 +91,12 @@ export interface TableCellInnerProps {
   rowGroup?: Group;
   columnGroup?: ColumnGroup;
   isDragging?: boolean;
+  tableCellFinalStyle?: CSSProperties;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup,
-    columnGroup, isDragging } = props;
+    columnGroup, isDragging, tableCellFinalStyle } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -427,7 +428,12 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     }
     return style;
   }, [fieldType, key, rows, rowHeight, height, style, aggregation, hasEditor]);
-  const textAlign = useMemo(() => (align || (columnCommand ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, field, record))), [columnCommand, align, column, field, record]);
+  const textAlign = useMemo(() => {
+    if (tableCellFinalStyle && 'textAlign' in tableCellFinalStyle) {
+      return tableCellFinalStyle.textAlign;
+    }
+    return (align || (columnCommand ? ColumnAlign.center : tableStore.getConfig('tableColumnAlign')(column, field, record)));
+  }, [columnCommand, align, column, field, record, tableCellFinalStyle]);
   const colSpanStyle = useMemo(() => (colSpan && colSpan > 1 && (textAlign === ColumnAlign.right || textAlign === ColumnAlign.center)) ? { width: `calc(100% - ${pxToRem(30)})` } : {}, [colSpan, textAlign]);
   const innerStyle = useMemo(() => {
     if (inAggregation) {
