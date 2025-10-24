@@ -126,13 +126,13 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     }
   }, 500, { leading: true, trailing: false }), [pictureRef, previewUrl, handleOpenPreview]);
   const renderCheckbox = (): ReactNode => {
-    if (enableDeleteAll) {
+    if (enableDeleteAll && !readOnly && !disabled) {
       return (
         <ObserverCheckBox
           checked={checkedAttachments.some(a => attachment === a)}
           onChange={() => handleCheckAttachment(attachment)}
           className={`${prefixCls}-delete-checkbox`}
-          disabled={disabled}
+          disabled={readOnly || disabled}
         />
       );
     }
