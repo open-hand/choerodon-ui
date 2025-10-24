@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Attachment`: When clicking on the thumbnail of an image, execute the function returned by the `getPreviewUrl` method and optimize the preview method of the image type.
 - 💄 `<pro>Modal`: Optimize the size of the close button in the custom `header`.
 - 💄 `<pro>Table.Column`: Optimize the column `style` setting to determine where the `textAlign` style takes effect.
+- 💄 `<pro>Cascader`: After directly changing the value using the code, the optimization options are highlighted.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

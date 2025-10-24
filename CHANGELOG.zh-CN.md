@@ -31,6 +31,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 点击图片缩略图时执行 getPreviewUrl 方法返回的函数, 并优化图片类型预览方式。
 - 💄 `<pro>Modal`: 优化自定义 header 中关闭按钮大小。
 - 💄 `<pro>Table.Column`: 优化列 style 设置 textAlign 样式生效位置。
+- 💄 `<pro>Cascader`: 使用代码直接更改值后, 优化选项高亮显示。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

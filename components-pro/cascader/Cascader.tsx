@@ -706,7 +706,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       return activeValue;
     };
 
-    if (this.popup && !isEmpty(this.activeValue)) {
+    if (this.popup && !isEmpty(this.activeValue) && this.activeValue.children) {
       selectedValues = this.findParentRecordTree(this.activeValue);
     } else if (!this.multiple) {
       selectedValues = getActiveValue(this.getValues());

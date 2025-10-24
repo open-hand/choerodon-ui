@@ -1327,12 +1327,13 @@ export default class Attachment extends FormField<AttachmentProps> {
       prefixCls,
       attachments,
       checkedAttachments,
+      readOnly,
       props: {
         disabled,
         enableDeleteAll,
       },
     } = this;
-    if (enableDeleteAll) {
+    if (enableDeleteAll && !readOnly && !disabled) {
       return (
         <div className={`${prefixCls}-delete-all-buttons`}>
           <Button
@@ -1340,7 +1341,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             color={ButtonColor.primary}
             onClick={this.handleAllCheck}
             className={`${prefixCls}-check-all-btn`}
-            disabled={disabled || !attachments || attachments.length === 0}
+            disabled={readOnly || disabled || !attachments || attachments.length === 0}
           >
             {$l('Select', 'select_all')}
           </Button>
@@ -1350,7 +1351,7 @@ export default class Attachment extends FormField<AttachmentProps> {
             color={ButtonColor.primary}
             onClick={this.handleDeleteCheckedAttachments}
             className={`${prefixCls}-delete-all-btn`}
-            disabled={disabled || !checkedAttachments || checkedAttachments.length === 0}
+            disabled={readOnly || disabled || !checkedAttachments || checkedAttachments.length === 0}
           >
             {$l('Attachment', 'delete')}
           </Button>
