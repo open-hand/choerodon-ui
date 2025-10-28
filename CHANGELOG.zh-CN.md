@@ -32,6 +32,7 @@ timeline: true
 - 💄 `<pro>Modal`: 优化自定义 header 中关闭按钮大小。
 - 💄 `<pro>Table.Column`: 优化列 style 设置 textAlign 样式生效位置。
 - 💄 `<pro>Cascader`: 使用代码直接更改值后, 优化选项高亮显示。
+- 💄 `<pro>Attachment`: 优化 picture-card 模式下, 上传按钮文本溢出显示。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
@@ -43,6 +44,7 @@ timeline: true
 - 🐞 `<pro>Select`: 修复开启 combo 属性时组件的值为数字类型会报错的问题。
 - 🐞 `<pro>Lov`: 修复 searchAction 属性为 blur 且快速失焦时, 查询参数不正确的问题。
 - 🐞 `<pro>Currency`: 修复货币字段设置 numberGrouping 不生效的问题。
+- 🐞 `Popover`: 修复 Popover 组件包裹的子级有 SelectBox 且触发方式设置为 click 时, SelectBox 勾选状态显示不正确的问题。
 
 ## 1.6.7
 
