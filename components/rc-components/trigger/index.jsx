@@ -2,6 +2,7 @@ import React, { Children, cloneElement, Component, isValidElement } from 'react'
 import { observer } from 'mobx-react';
 import { createPortal, findDOMNode } from 'react-dom';
 import noop from 'lodash/noop';
+import debounce from 'lodash/debounce';
 import classNames from "classnames";
 import contains from '../util/Dom/contains';
 import addEventListener from '../../_util/addEventListener';
@@ -133,6 +134,10 @@ class Trigger extends Component {
   componentWillUnmount() {
     this.clearDelayTimer();
     this.clearOutsideHandler();
+
+    if (this.onClick && this.onClick.cancel) {
+      this.onClick.cancel();
+    }
   }
 
   // 页面滚动时, 跟随显示
@@ -229,7 +234,7 @@ class Trigger extends Component {
     }
   };
 
-  onClick = (event) => {
+  onClick = debounce((event) => {
     this.fireEvents('onClick', event);
     // focus will trigger click
     if (this.focusTime) {
@@ -250,11 +255,12 @@ class Trigger extends Component {
     this.preTouchTime = 0;
     if (event && event.preventDefault) {
       const { children } = this.props;
-      if (!(children && isValidElement(children) && children.type && (
-        children.type.__PRO_SWITCH ||
-        children.type.__PRO_CHECKBOX ||
-        children.type.__PRO_RADIO
-      ))) {
+      const { target, currentTarget } = event;
+      if (!((target && currentTarget && currentTarget.contains(target) && target.className &&
+        ['-switch', '-checkbox', '-radio'].some(val => target.className.includes(val))) ||
+        (children && isValidElement(children) && children.type &&
+        (children.type.__PRO_SWITCH || children.type.__PRO_CHECKBOX || children.type.__PRO_RADIO))
+      )) {
         event.preventDefault();
       }
     }
@@ -262,7 +268,7 @@ class Trigger extends Component {
     if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
       this.setPopupVisible(!this.state.popupVisible, event);
     }
-  };
+  }, 1, { leading: true, trailing: false });
 
   onDocumentClick = (event) => {
     if (event.isDefaultPrevented() || (this.props.mask && !this.props.maskClosable)) {

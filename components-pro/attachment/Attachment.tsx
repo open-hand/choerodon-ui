@@ -48,6 +48,7 @@ import TemplateDownloadButton from './TemplateDownloadButton';
 import { hide, show } from '../tooltip/singleton';
 import DataSet from '../data-set';
 import { ModalContextValue } from '../modal-provider/ModalContext';
+import OverflowTip from '../overflow-tip';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -936,6 +937,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (typeof countTextRenderer ==='function') {
       countText = countTextRenderer(count, max, countText);
     }
+    const cardButtonInner = children || $l('Attachment', 'upload_picture');
     return isCardButton ? (
       <Button
         funcType={FuncType.link}
@@ -945,7 +947,11 @@ export default class Attachment extends FormField<AttachmentProps> {
         className={classNames(`${prefixCls}-card-button`, this.getClassName())}
         style={{ ...style, width, height: width }}
       >
-        <div>{children || $l('Attachment', 'upload_picture')}</div>
+        <OverflowTip title={cardButtonInner}>
+          <div className={`${prefixCls}-card-button-inner`} >
+            {cardButtonInner}
+          </div>
+        </OverflowTip>
         {countText ? <div>{countText}</div> : undefined}
         <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }} />
       </Button>
