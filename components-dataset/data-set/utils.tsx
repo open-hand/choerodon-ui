@@ -389,31 +389,40 @@ export function sortData(data: object[], dataSet: DataSet): object[] {
   return data;
 }
 
-export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: Record) {
+export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: Record, dataIndex?: number) {
   if (appendData.length) {
     const { originalData, records, props: { childrenField, parentField, idField } } = dataSet;
     let appended = false;
     if (childrenField) {
       if (parent) {
-        appendData.forEach(record => {
+        appendData.forEach((record, index) => {
           const { key } = record;
           const { children } = parent;
           if (children) {
             if (!children.find(child => child.key === key)) {
-              children.push(record);
+              if (isNumber(dataIndex)) {
+                children.splice(dataIndex + index, 0, record);
+              } else {
+                children.push(record);
+              }
             }
           } else {
             parent.children = [record];
           }
           if (!records.find(r => r.key === key)) {
-            originalData.push(record);
-            records.push(record);
+            if (isNumber(dataIndex)) {
+              originalData.splice(parent.index + 1 + dataIndex + index, 0, record);
+              records.splice(parent.index + 1 + dataIndex + index, 0, record);
+            } else {
+              originalData.push(record);
+              records.push(record);
+            }
           }
         });
         appended = true;
       }
     } else if (parentField && idField) {
-      appendData.forEach(record => {
+      appendData.forEach((record, index) => {
         const parentId = record.get(parentField);
         const { key } = record;
         let found;
@@ -424,7 +433,11 @@ export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: R
             const { children } = r;
             if (children) {
               if (!children.find(child => child.key === key)) {
-                children.push(record);
+                if (isNumber(dataIndex)) {
+                  children.splice(dataIndex + index, 0, record);
+                } else {
+                  children.push(record);
+                }
               }
             } else {
               r.children = [record];
@@ -437,18 +450,31 @@ export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: R
           return found && foundParent;
         });
         if (!found) {
-          originalData.push(record);
-          records.push(record);
+          if (isNumber(dataIndex) && foundParent) {
+            originalData.splice(foundParent.index + 1 + dataIndex + index, 0, record);
+            records.splice(foundParent.index + 1 + dataIndex + index, 0, record);
+          } else if (isNumber(dataIndex)) {
+            originalData.splice(dataIndex + index, 0, record);
+            records.splice(dataIndex + index, 0, record);
+          } else {
+            originalData.push(record);
+            records.push(record);
+          }
         }
       });
       appended = true;
     }
     if (!appended) {
-      appendData.forEach(record => {
+      appendData.forEach((record, index) => {
         const { key } = record;
         if (!records.find(r => r.key === key)) {
-          originalData.push(record);
-          records.push(record);
+          if (isNumber(dataIndex)) {
+            originalData.splice(dataIndex + index, 0, record);
+            records.splice(dataIndex + index, 0, record);
+          } else {
+            originalData.push(record);
+            records.push(record);
+          }
         }
       });
     }

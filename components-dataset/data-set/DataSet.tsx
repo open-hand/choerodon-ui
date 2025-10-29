@@ -149,18 +149,24 @@ function processOneData(dataSet: DataSet, data: object | Record = {}, status: Re
   return self;
 }
 
-function processTreeData(dataSet: DataSet, allData: (object | Record)[], status: RecordStatus, parentField: string, idField: string): Record[] {
+function processTreeData(dataSet: DataSet, allData: (object | Record)[], status: RecordStatus, parentField: string, idField: string, dataIndex?: number): Record[] {
   const allMap = new Map<string, Record>();
   allData.forEach((data, index) => {
     const record = processOneData(dataSet, data, status);
     const id = !isNil(data[idField]) ? data[idField] : `__empty_${index}`;
     allMap.set(String(id), record);
   });
+  let index = -1;
   allMap.forEach((record) => {
+    index++;
     const parent = allMap.get(String(record.get(parentField)));
     if (parent) {
       if (parent.children) {
-        parent.children.push(record);
+        if (isNumber(dataIndex)) {
+          parent.children.splice(dataIndex + index, 0, record);
+        } else {
+          parent.children.push(record);
+        }
       } else {
         parent.children = [record];
       }
@@ -2999,10 +3005,10 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  appendData(allData: (object | Record)[] = [], parent?: Record): DataSet {
+  appendData(allData: (object | Record)[] = [], parent?: Record, dataIndex?: number): DataSet {
     const sortedData = sortData(allData, this);
     this.fireEvent(DataSetEvents.beforeAppend, { dataSet: this, data: sortedData });
-    appendRecords(this, this.processData(sortedData, undefined, parent), parent);
+    appendRecords(this, this.processData(sortedData, undefined, parent, dataIndex), parent, dataIndex);
     this.fireEvent(DataSetEvents.append, { dataSet: this });
     this.releaseCachedRecords();
     return this;
@@ -3082,10 +3088,10 @@ Then the query method will be auto invoke.`,
   }
 
   @action
-  processData(allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, parent?: Record): Record[] {
+  processData(allData: (object | Record)[], status: RecordStatus = RecordStatus.sync, parent?: Record, dataIndex?: number): Record[] {
     const { childrenField, parentField, idField } = this.props;
     if (parentField && idField && !childrenField) {
-      return processTreeData(this, allData, status, parentField, idField);
+      return processTreeData(this, allData, status, parentField, idField, dataIndex);
     }
     if (childrenField) {
       const all: Record[] = [];

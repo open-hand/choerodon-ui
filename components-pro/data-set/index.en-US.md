@@ -166,7 +166,7 @@ title: DataSet
 | setQueryParameter(para, value) | 设置查询参数 | `para` - 参数名 `value` - 参数值 |  |
 | getQueryParameter(para) | 获取查询参数 | `para` - 参数名 |  |
 | loadData(data, total, cache) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `cache` - 是否保留缓存的变更记录 |  |
-| appendData(data, parentRecord) | 附加数据 | `data` - 数据数组 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 |  |
+| appendData(data, parentRecord, index) | 附加数据。当设置 idField 和 parentField 时, index 为父级中的定位; 当设置 childrenField 且传入 parentRecord 时, index 为父级中的定位 | `data` - 数据数组 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 `index` - 数据插入位置，可选 |  |
 | setState(key, value) | 设置自定义状态值。 | `key` - 键名或者键值对对象；`value` - 值 |  |
 | getState(key) | 获取自定义状态值。 | `key` - 键名 |  |
 | modifiedCheck(message) | 变更检查。 | `message` - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage |  |
