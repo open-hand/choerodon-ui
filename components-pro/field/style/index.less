@@ -21,6 +21,13 @@
     vertical-align: middle;
   }
 
+  &-label-vertical {
+    max-width: 100%;
+    &.@{field-prefix-cls}-label-help-has {
+      max-width: calc(100% - 0.25rem);
+    }
+  }
+
   &-row &-label&-label-word-break,
   &-label&-label-word-break label > span,
   &-label-vertical&-label-word-break {

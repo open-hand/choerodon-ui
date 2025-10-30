@@ -207,6 +207,7 @@ const Item: IItem = observer((props: ItemProps): ReactElement<any> | null => {
       [`${prefixCls}-label-useColon`]: label && fieldUseColon,
       [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: labelLayout === LabelLayout.horizontal && required && !((child.type as any).displayName === 'Output' || intlFieldOutput) && getRequiredMarkAlign(fieldRequiredMarkAlign),
       [`${prefixCls}-label-help`]: isLabelShowHelp,
+      [`${prefixCls}-label-help-has`]: isLabelShowHelp && help,
       [`${prefixCls}-label-word-break`]: labelWordBreak,
     });
     const wrapperClassName = classNames(`${prefixCls}-wrapper`, {

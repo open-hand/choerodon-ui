@@ -34,6 +34,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: Optimize the column `style` setting to determine where the `textAlign` style takes effect.
 - 💄 `<pro>Cascader`: After directly changing the value using the code, the optimization options are highlighted.
 - 💄 `<pro>Attachment`: Optimize the text overflow display of the upload button in the `picture-card` mode.
+- 💄 `<pro>Form`: Optimize the position of the `help` `icon` when `labelLayout` is set to `vertical`.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
@@ -46,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue where the query parameters were incorrect when the `searchAction` attribute was `blur` and quickly lost focus.
 - 🐞 `<pro>Currency`: Fixed the issue where the `numberGrouping` setting in the currency field did not take effect.
 - 🐞 `Popover`: Fixed the issue where the `SelectBox` check status was displayed incorrectly when the child wrapped by the `Popover` component had a `SelectBox` and the trigger method was set to `click`.
+- 🐞 `<pro>Modal`: Fixed the issue where the previously `update` parameters would revert to the original ones after multiple parameter `update`.
 
 ## 1.6.7
 
