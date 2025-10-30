@@ -932,6 +932,7 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
         [`${prefixCls}-label-useColon`]: label && fieldUseColon && !excludeUseColonTagList.find(v => v === TagName),
         [`${prefixCls}-label-required-mark-${getRequiredMarkAlign(fieldRequiredMarkAlign)}`]: isLabelLayoutHorizontal && required && !isOutput && getRequiredMarkAlign(fieldRequiredMarkAlign),
         [`${prefixCls}-label-help`]: isLabelShowHelp,
+        [`${prefixCls}-label-help-has`]: isLabelShowHelp && help,
         [`${prefixCls}-label-word-break`]: labelWordBreak,
       });
       const wrapperClassName = classNames(`${prefixCls}-wrapper`, {

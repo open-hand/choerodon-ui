@@ -43,7 +43,9 @@ const ModalProvider = (props: ModalProviderProps) => {
       };
 
       const update = newProps => {
-        container.update({ ...modalProps, ...newProps });
+        // 多次 update 场景, 保留上次更新 props
+        modalProps = { ...modalProps, ...newProps };
+        container.update(modalProps);
       };
 
       modalProps = {
