@@ -280,7 +280,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
 
   const [searchText, setSearchText] = useState('');
   const modal = useModal();
-  const TableRef = useRef(null);
+  const TableRef = useRef<Table>(null);
   const DropdownRef = useRef(null);
   const SwitchBtnRef = useRef(null);
   const oldDSRef = useRef(null);
@@ -545,11 +545,19 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
                       // 切换的为前端内置视图，frontFlag 标记前端配置，后端将其他视图 defaultFlag 置为 0
                       saveCustomized({ ...record.toJSONData(), id: undefined, frontFlag: 1 });
                     } else {
-                      const res = await customizedLoad(customizedCode!, 'Board', {
-                        type: 'detail',
-                        [ViewField.id]: record.get(ViewField.id),
-                      });
-                      record.commit(res, customizedDS);
+                      // eslint-disable-next-line no-lonely-if
+                      if (viewMode === ViewMode.table && TableRef.current && TableRef.current.tableStore) {
+                        const { tableStore } = TableRef.current;
+                        // 表格内部重新加载视图
+                        // forceLoad 为 true 场景: 默认视图切换为其他视图
+                        await tableStore.loadCustomized(undefined, customizable);
+                      } else {
+                        const res = await customizedLoad(customizedCode!, 'Board', {
+                          type: 'detail',
+                          [ViewField.id]: record.get(ViewField.id),
+                        });
+                        record.commit(res, customizedDS);
+                      }
                     }
                   } catch (e) {
                     record.status = RecordStatus.sync;

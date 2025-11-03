@@ -3313,11 +3313,11 @@ export default class TableStore {
   }
 
   @autobind
-  async loadCustomized(customizedProps?: TableCustomized) {
+  async loadCustomized(customizedProps?: TableCustomized, forceLoad?: boolean) {
     const { customizedCode, boardCustomized, onCustomizedLoad = noop, dataSet } = this.props;
     const { props: { queryBarProps } } = this;
     const showSimpleMode = queryBarProps && queryBarProps.simpleMode;
-    if ((this.customizable && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
+    if (((forceLoad || this.customizable) && customizedCode) || (this.queryBar === TableQueryBarType.comboBar && !showSimpleMode)) {
       const tableCustomizedLoad = this.getConfig('tableCustomizedLoad') || this.getConfig('customizedLoad');
       runInAction(() => {
         delete this.customizedLoaded;
