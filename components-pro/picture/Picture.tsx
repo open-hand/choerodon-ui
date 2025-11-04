@@ -55,7 +55,7 @@ export interface PictureProps extends ImgHTMLAttributes<HTMLImageElement> {
   modalProps?: ModalProps;
   /**
    * 点击事件前(图片预览前)执行
-   * @returns 返回值为 true 时, 强制调用预览(即使图片状态不是加载成功)
+   * @returns 返回值为 false 时, 不执行默认预览
    */
   onBeforeClick?: () => (Promise<boolean | void> | boolean | void);
 }
@@ -71,11 +71,9 @@ export interface OldPropsRef {
 }
 
 export interface PictureForwardRef {
-  preview(forcePreview?: boolean);
+  preview();
 
   getImage(): HTMLImageElement | null;
-
-  updatePreviewUrl(previewUrl?: string | undefined): void;
 }
 
 function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
@@ -83,7 +81,7 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     src, downloadUrl, previewUrl, previewTarget, lazy, className, width, height, prefixCls, style, sources, alt, title, block = true, preview = true, modalProps,
     objectFit = 'fill', objectPosition = 'center', status: propStatus, border, index, onClick, children, onPreview, onBeforeClick = noop, ...rest
   } = props;
-  const [url, setUrl] = useState(previewUrl || src);
+  const url = previewUrl || src;
   const pictureRef = useRef<PictureRef>({ src: url, downloadUrl });
   const context = useContext<PictureContextValue | undefined>(PictureContext);
   const { getProPrefixCls } = useContext(ConfigContext);
@@ -93,12 +91,8 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
   const [inView, setInView] = useState<boolean>(!lazy || !!propStatus);
   const oldPropsRef = useRef<OldPropsRef>({});
 
-  useEffect(() => {
-    setUrl(previewUrl || src);
-  }, [setUrl, previewUrl, src]);
-
-  const handlePreview = useCallback((forcePreview?: boolean) => {
-    if (preview && !previewTarget && url && (status === 'loaded' || forcePreview)) {
+  const handlePreview = useCallback(() => {
+    if (preview && !previewTarget && status === 'loaded' && url) {
       if (context && isNumber(index)) {
         context.preview(index, modalProps);
       } else {
@@ -110,8 +104,10 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     }
   }, [context, index, preview, previewTarget, status, url, downloadUrl, onPreview]);
   const handleClick = useCallback(async (e) => {
-    const forcePreview = await onBeforeClick();
-    handlePreview(forcePreview);
+    const result = await onBeforeClick();
+    if (result !== false) {
+      handlePreview();
+    }
     if (onClick) {
       onClick(e);
     }
@@ -187,15 +183,10 @@ function Picture(props: PictureProps, ref: Ref<PictureForwardRef>) {
     }
   }, [index, context, pictureRef, preview, previewTarget, url]);
 
-  const updatePreviewUrl = useCallback((previewUrl?: string | undefined): void => {
-    setUrl(previewUrl);
-  }, [setUrl]);
-
   useImperativeHandle(ref, () => ({
     preview: handlePreview,
     getImage: () => imgRef.current,
-    updatePreviewUrl,
-  }), [handlePreview, imgRef, updatePreviewUrl]);
+  }), [handlePreview, imgRef]);
 
   const renderSources = () => {
     if (sources) {

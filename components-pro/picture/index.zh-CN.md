@@ -36,7 +36,7 @@ title: Picture
 | objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |
 | sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#Source) | Source[] |   |
 | children | 代替图片渲染 | ReactNode |   |
-| onBeforeClick | 点击事件前(图片预览前)执行, 返回值为 true 时, 强制调用预览(即使图片状态不是加载成功) | () => (Promise<boolean \| void> \| boolean \| void) |  |
+| onBeforeClick | 点击事件前(图片预览前)执行, 返回值为 false 时, 不执行默认预览 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 
 ### Picture.Provider
  

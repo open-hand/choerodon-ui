@@ -19,9 +19,10 @@ timeline: true
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
 - 🌟 `<pro>Pagination`: The `showPager` property has added the `selectAndInput` type and optimized the display of buttons on the first and last pages.
-- 🌟 `<pro>Attachment`: Added `enableDeleteAll` property.
-- 🌟 `<pro>Picture`: Added `onBeforeClick` property, and the `updatePreviewUrl` method has been added to `ref`.
+- 🌟 `<pro>Attachment`: Added `enableDeleteAll`, `onPreview` property.
+- 🌟 `<pro>Picture`: Added `onBeforeClick` property.
 - 🌟 `<pro>DataSet`: The `appendData` method has added an `index` parameter.
+- 🌟 `<pro>Attachment`: The `getPreviewUrl` property now supports asynchronous function types.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.

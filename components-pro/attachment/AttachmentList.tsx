@@ -25,7 +25,7 @@ export interface AttachmentListProps {
   onOrderChange: (props: { attachments: AttachmentFile[] }) => void;
   onFetchAttachments: (props: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) => void;
   onAttachmentsChange: (attachments: AttachmentFile[] | undefined) => void;
-  onPreview: () => void;
+  onPreview: (attachment: AttachmentFile) => void;
   previewTarget?: string;
   bucketName?: string;
   bucketDirectory?: string;
@@ -40,7 +40,7 @@ export interface AttachmentListProps {
   isPublic?: boolean;
   record?: Record;
   buttons?: AttachmentButtons[];
-  getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined | Promise<string | (() => string | Promise<string>) | undefined>;
   /**
    * 避免无 uuid 时，上传前通过接口获取更新 uuid 触发列表查询及后续的校验
    */

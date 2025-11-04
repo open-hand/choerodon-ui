@@ -112,6 +112,11 @@ const attachmentUUID2 = '88888888-fa37-4e92-be9d-5cf726fb1472';
 const App = () => {
 
   const [value, setValue] = React.useState(attachmentUUID1);
+
+  const handlePreview = (attachment) => {
+    console.log('handlePreview', attachment);
+  }
+
   const props = {
     label: '技术附件',
     labelLayout: 'float',
@@ -128,6 +133,7 @@ const App = () => {
       message.error(defaultInfo);
     },
     enableDeleteAll: true,
+    onPreview: handlePreview,
   };
   
   const getPreviewUrl = (props) => {
