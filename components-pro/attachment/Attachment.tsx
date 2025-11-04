@@ -85,7 +85,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   template?: AttachmentValue;
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
-  getPreviewUrl?: (props: AttachmentFileProps) => (string | (() => string | Promise<string>) | undefined);
+  getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined | Promise<string | (() => string | Promise<string>) | undefined>;
   removeImmediately?: boolean;
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
   filesLengthLimitNotice?: (defaultInfo: string) => void;
@@ -97,6 +97,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   getDownloadAllUrl?: (props: AttachmentValue) => string | Function | undefined;
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
   enableDeleteAll?: boolean;
+  onPreview?: (attachment: AttachmentFile) => void;
 }
 
 export type Sort = {
@@ -785,7 +786,11 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   @autobind
-  handlePreview() {
+  handlePreview(attachment: AttachmentFile) {
+    const { onPreview } = this.props;
+    if (onPreview) {
+      onPreview(attachment);
+    }
     this.setPopup(false);
   }
 
