@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Spin`: 优化 children 加载时的最小高度。
 - 💄 `<pro>Form.ItemGroup`: 优化子级懒加载时的样式。
 - 💄 `<pro>TextField`: wait 属性未设置时, 不执行防抖逻辑。
+- 💄 `<pro>TextField`: 优化禁用状态下鼠标移入移出事件的挂载位置。
 - 💄 `Tooltip`: 优化支持 Tooltip\Popover\Popconfirm 的弹框在页面滚动时跟随显示。
 - 💄 `<pro>Attachment`: 点击图片缩略图时执行 getPreviewUrl 方法返回的函数, 并优化图片类型预览方式。
 - 💄 `<pro>Modal`: 优化自定义 header 中关闭按钮大小。

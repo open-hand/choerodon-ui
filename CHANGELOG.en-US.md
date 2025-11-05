@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Spin`: Optimize the min-height when loading `children`.
 - 💄 `<pro>Form.ItemGroup`: Optimize the style during child lazy loading.
 - 💄 `<pro>TextField`: When the `wait` attribute is not set, the debounce logic is not executed.
+- 💄 `<pro>TextField`: Optimize the mounting location of mouse enter and leave events when `disabled`.
 - 💄 `Tooltip`: Optimize the support for `Tooltip\Popover\Popconfirm` pop-up boxes to follow and display as the page scrolls.
 - 💄 `<pro>Attachment`: When clicking on the thumbnail of an image, execute the function returned by the `getPreviewUrl` method and optimize the preview method of the image type.
 - 💄 `<pro>Modal`: Optimize the size of the close button in the custom `header`.
