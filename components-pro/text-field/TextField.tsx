@@ -709,6 +709,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     // 修复ie下出现多层model导致的输入框遮盖问题
     // fixed the input would shadow each other in ie brower
     const ZIndexOfIEProps: { style: CSSProperties } | {} = isIE() ? { style: { zIndex: 'auto' } } : {};
+    const { onMouseEnter, onMouseLeave } = this.getOtherProps();
+    const events = this.disabled ? { onMouseEnter, onMouseLeave } : undefined
 
     const element = (
       <span key="element" {...wrapperProps}>
@@ -720,6 +722,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {...ZIndexOfIEProps}
           onMouseDown={this.handleMouseDown}
           onClick={this.handleClick}
+          {...events}
         >
           {prefix}
           {input}
@@ -1143,14 +1146,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     otherProps.className = this.getInputClassString(otherProps.className);
 
     this.setInputStylePadding(otherProps);
+    const events = !this.disabled ? { onMouseEnter, onMouseLeave } : undefined;
     const childNodes: ReactNode[] = [
       <input
         key="text"
         {...otherProps}
         onFocus={onFocus}
         onBlur={onBlur}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        {...events}
         placeholder={editorTextInfo.placeholder}
         value={editorTextInfoText}
         readOnly={!this.editable}

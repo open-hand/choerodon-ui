@@ -3354,7 +3354,7 @@ Then the query method will be auto invoke.`,
           }
         }
       } catch (e) {
-        if (e.code === 'ERR_CANCELED') {
+        if (e.code === 'ERR_CANCELED' || (e.message && e.message.startsWith('New request started, cancelling the previous one.'))) {
           canChangeStatus = false;
           console.warn(e.message);
         } else {

@@ -484,7 +484,14 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
           }
         }
       } else if (isEmbeddedContainer && offsetContainer) {
-        style.top = pxToRem(offsetContainer.scrollTop + (getAutoCenterConfig ? 0 : toPx(style.top) || 100), true)!;
+        let calcTop: number | undefined = 0;
+        if (!getAutoCenterConfig) {
+          calcTop = toPx(style.top);
+        }
+        if (typeof calcTop === 'undefined') {
+          calcTop = 100;
+        }
+        style.top = pxToRem(offsetContainer.scrollTop + calcTop, true)!;
       }
       if (transitionAppear === false) {
         maskTransition = false;

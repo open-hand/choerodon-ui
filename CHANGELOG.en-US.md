@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Spin`: Optimize the min-height when loading `children`.
 - 💄 `<pro>Form.ItemGroup`: Optimize the style during child lazy loading.
 - 💄 `<pro>TextField`: When the `wait` attribute is not set, the debounce logic is not executed.
+- 💄 `<pro>TextField`: Optimize the mounting location of mouse enter and leave events when `disabled`.
 - 💄 `Tooltip`: Optimize the support for `Tooltip\Popover\Popconfirm` pop-up boxes to follow and display as the page scrolls.
 - 💄 `<pro>Attachment`: When clicking on the thumbnail of an image, execute the function returned by the `getPreviewUrl` method and optimize the preview method of the image type.
 - 💄 `<pro>Modal`: Optimize the size of the close button in the custom `header`.
@@ -36,9 +37,11 @@ timeline: true
 - 💄 `<pro>Cascader`: After directly changing the value using the code, the optimization options are highlighted.
 - 💄 `<pro>Attachment`: Optimize the text overflow display of the upload button in the `picture-card` mode.
 - 💄 `<pro>Form`: Optimize the position of the `help` `icon` when `labelLayout` is set to `vertical`.
+- 💄 `<pro>DataSet`: Optimize the check for canceling duplicate requests.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
+- 🐞 `<pro>Modal`: Fixed the issue where setting the top style to 0 did not work after specifying the container.
 - 🐞 `<pro>Table`: Fixed the issue of missing borders in the data grouping table style.
 - 🐞 `<pro>Table`: Fixed the issue where multiple node asynchronous queries in tree tables are canceled.
 - 🐞 `<pro>Table`: Fixed the issue where the `disabled` attribute of the cell editor was not taking effect.
@@ -50,6 +53,7 @@ timeline: true
 - 🐞 `Popover`: Fixed the issue where the `SelectBox` check status was displayed incorrectly when the child wrapped by the `Popover` component had a `SelectBox` and the trigger method was set to `click`.
 - 🐞 `<pro>Modal`: Fixed the issue where the previously `update` parameters would revert to the original ones after multiple parameter `update`.
 - 🐞 `<pro>Board`: Fixed the issue where personalized information was displayed incorrectly after switching views in `table` mode.
+- 🐞 `<pro>Attachment`: Fixed the issue where the `attachments` property was not taking effect.
 
 ## 1.6.7
 

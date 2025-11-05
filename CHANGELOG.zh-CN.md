@@ -29,6 +29,7 @@ timeline: true
 - 💄 `Spin`: 优化 children 加载时的最小高度。
 - 💄 `<pro>Form.ItemGroup`: 优化子级懒加载时的样式。
 - 💄 `<pro>TextField`: wait 属性未设置时, 不执行防抖逻辑。
+- 💄 `<pro>TextField`: 优化禁用状态下鼠标移入移出事件的挂载位置。
 - 💄 `Tooltip`: 优化支持 Tooltip\Popover\Popconfirm 的弹框在页面滚动时跟随显示。
 - 💄 `<pro>Attachment`: 点击图片缩略图时执行 getPreviewUrl 方法返回的函数, 并优化图片类型预览方式。
 - 💄 `<pro>Modal`: 优化自定义 header 中关闭按钮大小。
@@ -36,9 +37,11 @@ timeline: true
 - 💄 `<pro>Cascader`: 使用代码直接更改值后, 优化选项高亮显示。
 - 💄 `<pro>Attachment`: 优化 picture-card 模式下, 上传按钮文本溢出显示。
 - 💄 `<pro>Form`: 优化 labelLayout 设置为 vertical 时 help icon 位置。
+- 💄 `<pro>DataSet`: 优化取消重复请求的判断。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
+- 🐞 `<pro>Modal`: 修复指定容器后设置 top 样式为 0 不生效的问题。
 - 🐞 `<pro>Table`: 修复了数据分组表格样式缺少边框的问题。
 - 🐞 `<pro>Table`: 修复树形表格多个节点异步查询时会被阻止的问题。
 - 🐞 `<pro>Table`: 修复单元格编辑器设置 disabled 属性不生效的问题。
@@ -50,6 +53,7 @@ timeline: true
 - 🐞 `Popover`: 修复 Popover 组件包裹的子级有 SelectBox 且触发方式设置为 click 时, SelectBox 勾选状态显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复多次 update 参数, 之前 update 的参数会还原成原始参数的问题。
 - 🐞 `<pro>Board`: 修复 table 模式, 切换视图后, 个性化信息显示不正确的问题。
+- 🐞 `<pro>Attachment`: 修复 attachments 属性不生效的问题。
 
 ## 1.6.7
 
