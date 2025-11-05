@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Cascader`: After directly changing the value using the code, the optimization options are highlighted.
 - 💄 `<pro>Attachment`: Optimize the text overflow display of the upload button in the `picture-card` mode.
 - 💄 `<pro>Form`: Optimize the position of the `help` `icon` when `labelLayout` is set to `vertical`.
+- 💄 `<pro>DataSet`: Optimize the check for canceling duplicate requests.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
