@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `Popover`: 修复 Popover 组件包裹的子级有 SelectBox 且触发方式设置为 click 时, SelectBox 勾选状态显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复多次 update 参数, 之前 update 的参数会还原成原始参数的问题。
 - 🐞 `<pro>Board`: 修复 table 模式, 切换视图后, 个性化信息显示不正确的问题。
+- 🐞 `<pro>Attachment`: 修复 attachments 属性不生效的问题。
 
 ## 1.6.7
 

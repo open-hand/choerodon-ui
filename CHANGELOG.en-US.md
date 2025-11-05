@@ -51,6 +51,7 @@ timeline: true
 - 🐞 `Popover`: Fixed the issue where the `SelectBox` check status was displayed incorrectly when the child wrapped by the `Popover` component had a `SelectBox` and the trigger method was set to `click`.
 - 🐞 `<pro>Modal`: Fixed the issue where the previously `update` parameters would revert to the original ones after multiple parameter `update`.
 - 🐞 `<pro>Board`: Fixed the issue where personalized information was displayed incorrectly after switching views in `table` mode.
+- 🐞 `<pro>Attachment`: Fixed the issue where the `attachments` property was not taking effect.
 
 ## 1.6.7
 

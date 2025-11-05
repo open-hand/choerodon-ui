@@ -772,7 +772,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @autobind
   handleFetchAttachment(fetchProps: { bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string; isPublic?: boolean; }) {
-    const { field } = this;
+    const { field, props: { attachments } } = this;
+    if (attachments) {
+      this.attachments = attachments as AttachmentFile[];
+      return;
+    }
     if (field) {
       field.fetchAttachments(fetchProps, this.record);
     } else {
