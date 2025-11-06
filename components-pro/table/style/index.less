@@ -1257,6 +1257,16 @@
     }
   }
 
+  &-cell:not(&-sort-asc):not(&-sort-desc) {
+    &[style*=" color:"],
+    &[style*=";color:"],
+    &[style^="color:"] {
+      .@{table-prefix-cls}-sort-icon:not(:hover) {
+        color: inherit;
+      }
+    }
+  }
+
   &-column-resizing {
     user-select: none;
   }

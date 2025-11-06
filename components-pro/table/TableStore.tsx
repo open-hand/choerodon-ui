@@ -1943,7 +1943,8 @@ export default class TableStore {
   @computed
   get customizedColumn(): ColumnProps | undefined {
     if (this.customizable && !this.customizedBtn && (!this.rowDraggable || this.dragColumnAlign !== DragColumnAlign.right)) {
-      return {
+      const { customizedColumnProps = {} } = this.props;
+      const defaultProps = {
         key: CUSTOMIZED_KEY,
         resizable: false,
         titleEditable: false,
@@ -1953,6 +1954,9 @@ export default class TableStore {
         header: this.customizedColumnHeader,
         headerClassName: `${this.prefixCls}-customized-column`,
       };
+      return isFunction(customizedColumnProps)
+        ? { ...defaultProps, ...customizedColumnProps(defaultProps) }
+        : { ...defaultProps, ...customizedColumnProps };
     }
     return undefined;
   }

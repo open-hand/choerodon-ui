@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Cascader`: Added `checkable` property.
-- 🌟 `<pro>Table`: Added `summaryBarConfigProps` property.
+- 🌟 `<pro>Table`: Added `summaryBarConfigProps`, `customizedColumnProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
 - 🌟 `<pro>Pagination`: The `showPager` property has added the `selectAndInput` type and optimized the display of buttons on the first and last pages.
 - 🌟 `<pro>Attachment`: Added `enableDeleteAll`, `onPreview` property.
@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Optimize the text overflow display of the upload button in the `picture-card` mode.
 - 💄 `<pro>Form`: Optimize the position of the `help` `icon` when `labelLayout` is set to `vertical`.
 - 💄 `<pro>DataSet`: Optimize the check for canceling duplicate requests.
+- 💄 `<pro>Table`: When optimizing the `header` setting `color`, the sorting `icon` color follows the display.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
