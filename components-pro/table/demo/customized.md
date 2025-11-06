@@ -359,6 +359,7 @@ class App extends React.Component {
         columnsDragRender={this.columnsDragRender}
         style={this.style}
         buttons={['query']}
+        customizedColumnProps={{ headerStyle: { background: 'gray' } }}
       >
         <Column header="组合">
           <Column header="子组合">

@@ -16,7 +16,7 @@ timeline: true
 ---
 
 - 🌟 `<pro>Cascader`: 新增 checkable 属性。
-- 🌟 `<pro>Table`: 新增 summaryBarConfigProps 属性。
+- 🌟 `<pro>Table`: 新增 summaryBarConfigProps, customizedColumnProps 属性。
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。
 - 🌟 `<pro>Pagination`: showPager 属性新增 selectAndInput 类型, 并优化第一页和最后一页按钮显示。
 - 🌟 `<pro>Attachment`: 新增 enableDeleteAll, onPreview 属性。
@@ -38,6 +38,7 @@ timeline: true
 - 💄 `<pro>Attachment`: 优化 picture-card 模式下, 上传按钮文本溢出显示。
 - 💄 `<pro>Form`: 优化 labelLayout 设置为 vertical 时 help icon 位置。
 - 💄 `<pro>DataSet`: 优化取消重复请求的判断。
+- 💄 `<pro>Table`: 优化 header 设置 color 时, 排序 icon 颜色跟随显示。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

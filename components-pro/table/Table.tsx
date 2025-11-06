@@ -905,6 +905,10 @@ export interface TableProps extends DataSetComponentProps {
    * 汇总条配置
    */
   summaryBarConfigProps?: SummaryBarConfigProps;
+  /**
+   * 个性化列的自定义列属性, 设置时需要注意: 个性化列仅有header部分, 仅有部分属性生效
+   */
+  customizedColumnProps?: ColumnProps | ((defaultProps: ColumnProps) => ColumnProps);
 }
 
 @observer
@@ -1933,6 +1937,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'multiDragSelectMode',
       'tableFilterBarButtonIcon',
       'summaryBarConfigProps',
+      'customizedColumnProps',
     ]);
   }
 
