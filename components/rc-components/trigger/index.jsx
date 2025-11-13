@@ -256,7 +256,7 @@ class Trigger extends Component {
     if (event && event.preventDefault) {
       const { children } = this.props;
       const { target, currentTarget } = event;
-      if (!((target && currentTarget && currentTarget.contains(target) && target.className &&
+      if (!((target && currentTarget && currentTarget.contains(target) && target.className && target.className.includes &&
         ['-switch', '-checkbox', '-radio'].some(val => target.className.includes(val))) ||
         (children && isValidElement(children) && children.type &&
         (children.type.__PRO_SWITCH || children.type.__PRO_CHECKBOX || children.type.__PRO_RADIO))
