@@ -280,8 +280,8 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
           {date.localeData().monthsShort(date)}
         </a>
         {!yearFirst && yearItem}
-        <a className={`${prefixCls}-next-year`} style={startStyle}>
-          <Icon type="last_page" onClick={this.handleNextYearClick} />
+        <a className={`${prefixCls}-next-year`} onClick={this.handleNextYearClick} style={startStyle}>
+          <Icon type="last_page" />
         </a>
         <a className={`${prefixCls}-next-month`} onClick={this.handleNextMonthClick} style={startStyle}>
           <Icon type="navigate_next" />

@@ -93,8 +93,8 @@ export default class DecadeYearsView<T extends DateViewProps> extends DaysView<T
         <span className={`${prefixCls}-view-select`}>
           {from.year()} - {to.year()}
         </span>
-        <a className={`${prefixCls}-next-year`}>
-          <Icon type="last_page" onClick={this.handleNextYearClick} />
+        <a className={`${prefixCls}-next-year`} onClick={this.handleNextYearClick}>
+          <Icon type="last_page" />
         </a>
       </div>
     );
