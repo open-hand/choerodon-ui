@@ -115,8 +115,8 @@ export default class MonthsView<T extends DateViewProps> extends DaysView<T> {
         <a className={`${prefixCls}-view-select`} onClick={this.handleYearSelect}>
           {date.year()}
         </a>
-        <a className={`${prefixCls}-next-year`} style={startStyle}>
-          <Icon type="last_page" onClick={this.handleNextYearClick} />
+        <a className={`${prefixCls}-next-year`} onClick={this.handleNextYearClick} style={startStyle}>
+          <Icon type="last_page" />
         </a>
       </div>
     );
