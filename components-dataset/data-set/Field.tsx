@@ -10,6 +10,7 @@ import merge from 'lodash/merge';
 import noop from 'lodash/noop';
 import { AxiosRequestConfig } from 'axios';
 import isPromise from 'is-promise';
+import BigNumber from 'bignumber.js';
 import { getDateFormatByField, isSame, isSameLike, warning } from '../utils';
 import DataSet, { DataSetProps } from './DataSet';
 import Record from './Record';
@@ -217,19 +218,19 @@ export type FieldProps = {
   /**
    * 最大值
    */
-  max?: MomentInput | null;
+  max?: MomentInput | BigNumber.Value | null;
   /**
    * 最小值
    */
-  min?: MomentInput | null;
+  min?: MomentInput | BigNumber.Value | null;
   /**
    * 最大值，严格大于
    */
-  maxExcl?: MomentInput | null;
+  maxExcl?: MomentInput | BigNumber.Value | null;
   /**
    * 最小值，严格小于
    */
-  minExcl?: MomentInput | null;
+  minExcl?: MomentInput | BigNumber.Value | null;
   /**
    * 小数点精度， 提交时会截断
    */

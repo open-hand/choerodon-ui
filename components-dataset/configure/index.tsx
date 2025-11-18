@@ -3,6 +3,7 @@ import { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Method } f
 import { Moment, MomentInput } from 'moment';
 import noop from 'lodash/noop';
 import isObject from 'lodash/isObject';
+import BigNumber from 'bignumber.js';
 import { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import { LovConfig } from '../interface';
 import { ExportMode, RecordStatus, FieldType, DownloadAllMode } from '../data-set/enum';
@@ -174,8 +175,8 @@ export interface Config {
   attachment?: AttachmentConfig;
   numberFieldNonStrictStep?: boolean;
   confirm?: (message: any, dataSet?: DataSet, source?: string) => Promise<boolean>;
-  min?: (type: FieldType) => number | MomentInput | string | null;
-  max?: (type: FieldType) => number | MomentInput | string | null;
+  min?: (type: FieldType) => number | MomentInput | string | BigNumber.Value | null;
+  max?: (type: FieldType) => number | MomentInput | string | BigNumber.Value | null;
   xlsx?: () => Promise<any>;
   strictPageSize?: boolean;
   noPagingParams?: (config: AxiosRequestConfig) => object;
