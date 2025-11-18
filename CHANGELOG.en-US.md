@@ -40,6 +40,8 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the check for canceling duplicate requests.
 - 💄 `<pro>Table`: When optimizing the `header` setting `color`, the sorting `icon` color follows the display.
 - 💄 `<pro>DatePicker`: Optimize the clickable area of the header action buttons.
+- 💄 `<pro>DataSet.Field`: Optimize the ts type of the `max` `min` attribute.
+- 💄 `<pro>Tooltip`: Optimize the super-long scrolling display of the `Tooltip` `Popover` component.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

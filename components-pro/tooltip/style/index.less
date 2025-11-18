@@ -29,7 +29,9 @@
     min-width: @tooltip-min-width;
     max-width: @tooltip-max-width;
     min-height: @tooltip-min-height;
+    max-height: calc(100vh - 0.16rem);
     padding: @tooltip-padding;
+    overflow-y: auto;
     color: @tooltip-color;
     white-space: pre-wrap;
     text-align: left;
