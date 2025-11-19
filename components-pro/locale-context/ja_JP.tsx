@@ -265,6 +265,9 @@ const locale: Locale = {
     unselect_all: 'いや',
     common_item: '共通アイテム',
     query_loading: '読み込み中...',
+    input_prompt: '検索や入力値を直接入力でき、選択にも対応します。',
+    input_prompt_searchable: '直接入力して検索でき、選択にも対応します。',
+    input_prompt_combo: '入力値を直接入力でき、選択にも対応しています。',
   },
   SecretField: {
     edit: '{label}編集',

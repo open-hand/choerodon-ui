@@ -262,6 +262,9 @@ const locale: Locale = {
     unselect_all: 'None',
     common_item: 'Common Items',
     query_loading: 'Loading...',
+    input_prompt: 'You can directly input for search or value filling, and it also supports selection',
+    input_prompt_searchable: 'You can directly input for search and support selection',
+    input_prompt_combo: 'You can directly input and fill in the values, and it also supports selection',
   },
   SecretField: {
     edit: '{label} Edit',

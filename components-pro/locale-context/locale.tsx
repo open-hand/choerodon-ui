@@ -265,6 +265,9 @@ export interface Locale extends DataSetLocale {
     unselect_all: string;
     common_item: string;
     query_loading: string;
+    input_prompt: string;
+    input_prompt_searchable: string;
+    input_prompt_combo: string;
   };
   SecretField: {
     edit: string;

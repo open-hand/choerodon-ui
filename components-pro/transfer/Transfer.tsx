@@ -62,6 +62,10 @@ export default class Transfer extends Select<TransferProps> {
     return false;
   }
 
+  get showInputPrompt(): ReactNode | undefined {
+    return undefined;
+  }
+
   @autobind
   sourceFilter(record, index, array) {
     const {

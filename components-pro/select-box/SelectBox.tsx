@@ -62,6 +62,10 @@ export class SelectBox<T extends SelectBoxProps = SelectBoxProps> extends Select
     return this.props.mode;
   }
 
+  get showInputPrompt(): ReactNode | undefined {
+    return undefined;
+  }
+
   isSearchFieldInPopup(): boolean | undefined {
     return false;
   }
