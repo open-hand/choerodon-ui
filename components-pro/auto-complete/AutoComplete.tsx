@@ -42,6 +42,10 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
     return false;
   }
 
+  get showInputPrompt(): ReactNode | undefined {
+    return undefined;
+  }
+
   getTriggerIconFont() {
     return '';
   }

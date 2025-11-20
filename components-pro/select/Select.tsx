@@ -44,6 +44,7 @@ import { ValueChangeAction } from '../text-field/enum';
 import { LabelLayout } from '../form/enum';
 import { isFieldValueEmpty } from '../field/utils';
 import { Action } from '../trigger/enum';
+import OverflowTip from '../overflow-tip';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -264,6 +265,10 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 当不展示复合值时, defaultActiveFirstOption 无效, enter 或者 失焦选中复合值;
    */
   popupShowComboValue?: boolean;
+  /**
+   * 可输入时，下拉框中是否显示输入提示
+   */
+  showInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -424,6 +429,39 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   get popupShowComboValue(): boolean {
     const { popupShowComboValue } = this.observableProps;
     return !!popupShowComboValue;
+  }
+
+  get inputPromptText(): string | undefined {
+    const { searchable, observableProps: { combo } } = this;
+    if (searchable && combo) {
+      return $l('Select', 'input_prompt');
+    }
+    if (searchable) {
+      return $l('Select', 'input_prompt_searchable');
+    }
+    if (combo) {
+      return $l('Select', 'input_prompt_combo');
+    }
+  }
+
+  get showInputPrompt(): ReactNode | undefined {
+    const { searchable, observableProps: { combo, showInputPrompt: showInputPromptProp } } = this;
+    const showInputPrompt = !isNil(showInputPromptProp) ? showInputPromptProp : this.getContextConfig('selectShowInputPrompt');
+    if (!searchable && !combo) return;
+    if (showInputPrompt === true) {
+      return this.inputPromptText;
+    }
+    if (isFunction(showInputPrompt)) {
+      const result = showInputPrompt({ searchable, combo });
+      if (result === true) {
+        return this.inputPromptText;
+      }
+      if (!isNil(result) && result !== false) {
+        return result;
+      }
+    } else if (!isNil(showInputPrompt) && showInputPrompt !== false) {
+      return showInputPrompt;
+    }
   }
 
   checkValueReaction?: IReactionDisposer;
@@ -605,6 +643,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'defaultActiveFirstOption',
       'scrollLoad',
       'popupShowComboValue',
+      'showInputPrompt',
     ]);
   }
 
@@ -627,6 +666,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       optionsFilter: props.optionsFilter,
       scrollLoad: props.scrollLoad,
       popupShowComboValue: props.popupShowComboValue,
+      showInputPrompt: props.showInputPrompt,
     };
   }
 
@@ -1046,6 +1086,18 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     }
   }
 
+  renderInputPrompt(): ReactNode | void {
+    const { showInputPrompt  } = this;
+    if (isNil(showInputPrompt) || showInputPrompt === false) return;
+    return (
+      <OverflowTip title={showInputPrompt} key='select-notice'>
+        <div key='select-notice-inner' className={`${this.prefixCls}-select-prompt`}>
+          {showInputPrompt}
+        </div>
+      </OverflowTip>
+    );
+  }
+
   getPopupContent(): ReactNode {
     const menu = (
       <Spin key="menu" spinning={this.loading}>
@@ -1056,6 +1108,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.searchable && this.isSearchFieldInPopup() && this.renderSearchField(),
       this.renderSelectAll(),
       menu,
+      this.renderInputPrompt(),
     ];
   }
 
@@ -1131,6 +1184,17 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       }
     }
     super.handleKeyDown(e);
+  }
+
+  getPlaceholders(): string[] {
+    const superPlaceholders = super.getPlaceholders();
+    if (!superPlaceholders || superPlaceholders.length === 0) {
+      const { showInputPrompt } = this;
+      if (typeof showInputPrompt === 'string') {
+        return [showInputPrompt];
+      }
+    }
+    return superPlaceholders;
   }
 
   @autobind

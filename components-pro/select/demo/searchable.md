@@ -15,6 +15,11 @@ Searchable.
 
 ```jsx
 import { DataSet, Select, Row, Col } from 'choerodon-ui/pro';
+import { configure } from 'choerodon-ui';
+
+configure({
+  selectShowInputPrompt: true,
+});
 
 function handleDataSetChange({ record, name, value, oldValue }) {
   console.log(

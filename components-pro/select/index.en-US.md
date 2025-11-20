@@ -48,6 +48,7 @@ title: Select
 | scrollLoad | 是否开启选项滚动加载  | boolean |  |
 | popupShowComboValue | popup 弹窗中的选项是否显示 combo 复合值; 当不展示复合值时, defaultActiveFirstOption 无效, enter 或者 失焦选中复合值; | boolean | true |
 | virtual | 支持虚拟滚动 | boolean| false |
+| showInputPrompt | 可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

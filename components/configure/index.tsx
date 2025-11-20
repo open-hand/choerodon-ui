@@ -293,6 +293,7 @@ export interface Config extends DataSetConfig {
   selectReserveParam?: boolean;
   selectTrigger?: Action[];
   selectScrollLoad?: boolean;
+  selectShowInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
   secretFieldFetchVerifyCode?: (type: string) => Promise<object>;
