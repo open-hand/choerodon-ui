@@ -1073,6 +1073,7 @@
     }
 
     i {
+      font-size: 0.14rem;
       vertical-align: text-bottom;
     }
   }
@@ -1090,12 +1091,24 @@
     }
 
     &-label {
+      display: flex;
+      align-items: center;
+      justify-content: left;
       width: 0.72rem;
-      overflow: hidden;
       color: #5A6677;
-      white-space: nowrap;
       text-align: left;
-      text-overflow: ellipsis;
+
+      > span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      &-useColon {
+        &::after {
+          content: ':';
+        }
+      }
     }
 
     &-value {

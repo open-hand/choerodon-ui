@@ -19,6 +19,7 @@ import { FieldType } from '../data-set/enum';
 import { $l } from '../locale-context';
 import TableContext, { TableContextValue } from './TableContext';
 import isEmpty from '../_util/isEmpty';
+import OverflowTip from '../overflow-tip';
 
 export interface TableSummaryBarProps {
   queryBar?: TableQueryBarType | TableQueryBarHook | undefined;
@@ -57,7 +58,6 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
           useColon = true,
           labelStyle,
         } = summaryBarConfigProps;
-        const colon = useColon ? ':' : '';
         if (summaryBar) {
           const { length: summaryLength } = summaryBar;
           const {
@@ -74,6 +74,9 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
           const fieldTypeArr = [FieldType.currency, FieldType.number];
           return summary.reduce<ReactElement[]>((list, summaryCol, index) => {
             const hasSeparate = length > summaryFieldsLimits || index !== (summaryLength - 1);
+            const colLabelCls = classNames(`${prefixCls}-summary-col-label`, {
+              [`${prefixCls}-summary-col-label-useColon`]: useColon,
+            });
             if (isString(summaryCol)) {
               const field = dataSet.getField(summaryCol);
               if (field && fieldTypeArr.includes(field.get('type'))) {
@@ -90,7 +93,11 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
                 list.push(
                   <div key={name}>
                     <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
-                      <div className={`${prefixCls}-summary-col-label`} title={String(label)} style={labelStyle}>{label}{colon}</div>
+                      <div className={colLabelCls} style={labelStyle}>
+                        <OverflowTip title={label}>
+                          <span>{label}</span>
+                        </OverflowTip>
+                      </div>
                       <div className={`${prefixCls}-summary-col-value`} title={String(sumNode)}>{sumNode}</div>
                     </div>
                     {hasSeparate && <div className={classNames(`${prefixCls}-summary-col-separate`, {
@@ -107,11 +114,12 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
                 <div key={isString(summaryObj.label) ? summaryObj.label : ''}>
                   <div className={`${prefixCls}-summary-col`} style={{ width: summaryBarFieldWidth }}>
                     <div
-                      className={`${prefixCls}-summary-col-label`}
-                      title={isString(summaryObj.label) ? summaryObj.label : ''}
+                      className={colLabelCls}
                       style={labelStyle}
                     >
-                      {summaryObj.label}{colon}
+                      <OverflowTip title={summaryObj.label}>
+                        <span>{summaryObj.label}</span>
+                      </OverflowTip>
                     </div>
                     <div
                       className={`${prefixCls}-summary-col-value`}

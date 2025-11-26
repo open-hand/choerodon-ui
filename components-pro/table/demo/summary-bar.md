@@ -110,13 +110,13 @@ class App extends React.Component {
           separator: <span>||</span>,
           groupStyle: { background: '#fae0e0' },
           moreStyle: { background: '#fae0e0' },
-          useColon: false,
+          useColon: true,
           labelStyle: { width: 90 },
         }}
         summaryBar={[
           'age',
           ({ dataSet }) => {
-            return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
+            return { label: <span style={{ color: 'red' }}>测试测试测试测试测试测试测试</span>, value: <span style={{ color: 'red' }}>值</span>};
           },
           ({ dataSet }) => {
             return { label: <span style={{ color: 'red' }}>测试</span>, value: <span style={{ color: 'red' }}>值</span>};
