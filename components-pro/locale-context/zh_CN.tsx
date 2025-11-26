@@ -262,9 +262,9 @@ const locale: Locale = {
     unselect_all: '无',
     common_item: '常用项',
     query_loading: '正在查询...',
-    input_prompt: '可直接输入做搜索或填值，以及支持选择',
-    input_prompt_searchable: '可直接输入做搜索，以及支持选择',
-    input_prompt_combo: '可直接输入填值，以及支持选择',
+    input_prompt: '可填写值、搜索查找，或直接选择值',
+    input_prompt_searchable: '可搜索查找，或直接选择值',
+    input_prompt_combo: '可填写值，或直接选择值',
   },
   SecretField: {
     edit: '{label}编辑',
