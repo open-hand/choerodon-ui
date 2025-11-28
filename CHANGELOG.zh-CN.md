@@ -46,6 +46,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: 优化 Tooltip Popover 组件超长滚动显示。
 - 💄 `<pro>TextField`: 优化自定义渲染时, 渲染内容定位的样式。
 - 💄 `<pro>Table`: 优化动态筛选条中 Lov 字段的值为空对象时的宽度。
+- 💄 `<pro>Tooltip`: 优化触发弹窗显示的元素的位置变化时, 弹窗跟随变化。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

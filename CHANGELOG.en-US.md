@@ -46,6 +46,7 @@ timeline: true
 - 💄 `<pro>Tooltip`: Optimize the super-long scrolling display of the `Tooltip` `Popover` component.
 - 💄 `<pro>TextField`: Optimize the style of rendering content positioning when performing custom rendering.
 - 💄 `<pro>Table`: Optimize the width of the `Lov` field in the dynamic filter bar when the value is an empty object.
+- 💄 `<pro>Tooltip`: When the position of the element that triggers the pop-up display changes, the pop-up follows the change.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

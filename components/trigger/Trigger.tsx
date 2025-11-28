@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import debounce from 'lodash/debounce';
 import noop from 'lodash/noop';
 import isEqual from 'lodash/isEqual';
+import isNil from 'lodash/isNil';
 import isFragment from 'choerodon-ui/pro/lib/_util/isFragment';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
 import { ElementProps } from 'choerodon-ui/pro/lib/core/ViewComponent';
@@ -169,6 +170,10 @@ export default class Trigger extends Component<TriggerProps> {
 
   align?: object;
 
+  childLastRect?: DOMRect;
+
+  childTimer?: number;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -305,6 +310,8 @@ export default class Trigger extends Component<TriggerProps> {
         }
       });
     }
+
+    this.watchingChild();
   }
 
   componentDidUpdate() {
@@ -320,6 +327,8 @@ export default class Trigger extends Component<TriggerProps> {
         documentEvent.addEventListener('mousedown', this.handleDocumentMouseDown);
       }
     }
+
+    this.watchingChild();
   }
 
   componentWillUnmount() {
@@ -332,6 +341,46 @@ export default class Trigger extends Component<TriggerProps> {
     }
     if (this.mouseDownEvent) {
       this.mouseDownEvent.clear();
+    }
+
+    this.closeWatchingChild();
+  }
+
+  /**
+   * 监控触发弹窗显示元素位置变化
+   */
+  watchingChild = () => {
+    if (!this.popupHidden) {
+      if (isNil(this.childTimer)) {
+        this.childTimer = window.setInterval(() => {
+          const el = this.domNode;
+          if (!this.popupHidden && el && typeof (el as Element).getBoundingClientRect === 'function') {
+            const rect = (el as Element).getBoundingClientRect();
+            if (
+              isNil(this.childLastRect) ||
+              rect.top !== this.childLastRect.top ||
+              rect.left !== this.childLastRect.left ||
+              rect.width !== this.childLastRect.width ||
+              rect.height !== this.childLastRect.height
+            ) {
+              this.childLastRect = rect;
+              if (this.animateFrameId) {
+                raf.cancel(this.animateFrameId);
+              }
+              this.animateFrameId = raf(this.forcePopupAlign);
+            }
+          }
+        }, 500);
+      }
+    } else {
+      this.closeWatchingChild();
+    }
+  };
+
+  closeWatchingChild = () => {
+    if (!isNil(this.childTimer)) {
+      clearInterval(this.childTimer);
+      this.childTimer = undefined;
     }
   }
 
