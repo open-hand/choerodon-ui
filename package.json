@@ -275,6 +275,9 @@
     "xhr2": "^0.2.0",
     "xlsx": "^0.17.0"
   },
+  "resolutions": {
+    "underscore": "1.12.1"
+  },
   "scripts": {
     "test": "jest --config .jest.js --cache=false",
     "test:update": "jest --config .jest.js --cache=false -u",
