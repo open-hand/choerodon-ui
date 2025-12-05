@@ -64,6 +64,7 @@ export interface ItemProps {
   enableDeleteAll?: boolean;
   handleCheckAttachment: (attachment: AttachmentFile) => void;
   checkedAttachments?: AttachmentFile[];
+  pictureCardShowName?: boolean;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
@@ -71,6 +72,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
     getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp, enableDeleteAll, handleCheckAttachment, checkedAttachments = [],
+    pictureCardShowName,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -552,7 +554,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         {renderErrorMessage(!isCard)}
         {renderProgress()}
       </div>
-      {!restCount && isCard && renderTitle(true)}
+      {!restCount && isCard && pictureCardShowName !== false && renderTitle(true)}
     </div>
   );
 };

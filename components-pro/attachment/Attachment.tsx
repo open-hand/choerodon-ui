@@ -98,6 +98,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   getDownloadUrl?: (props: AttachmentFileProps) => string | Function | undefined;
   enableDeleteAll?: boolean;
   onPreview?: (attachment: AttachmentFile) => void;
+  pictureCardShowName?: boolean;
 }
 
 export type Sort = {
@@ -423,6 +424,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'Modal',
       'templateDownloadButtonRenderer',
       'enableDeleteAll',
+      'pictureCardShowName',
     ]);
   }
 
@@ -1099,6 +1101,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   renderUploadList(uploadButton?: ReactNode) {
     const {
       listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
+      pictureCardShowName,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -1147,6 +1150,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           enableDeleteAll={enableDeleteAll}
           handleCheckAttachment={this.handleCheckAttachment}
           checkedAttachments={this.checkedAttachments}
+          pictureCardShowName={pictureCardShowName}
         />
       );
     }
