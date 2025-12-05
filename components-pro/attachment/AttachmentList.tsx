@@ -50,6 +50,7 @@ export interface AttachmentListProps {
   enableDeleteAll?: boolean;
   handleCheckAttachment: (attachment: AttachmentFile) => void;
   checkedAttachments?: AttachmentFile[];
+  pictureCardShowName?: boolean;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -86,6 +87,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     enableDeleteAll,
     handleCheckAttachment,
     checkedAttachments,
+    pictureCardShowName,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -169,6 +171,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 enableDeleteAll={enableDeleteAll}
                 handleCheckAttachment={handleCheckAttachment}
                 checkedAttachments={checkedAttachments}
+                pictureCardShowName={pictureCardShowName}
               />
             )
           }

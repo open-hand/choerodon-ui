@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 summaryBarConfigProps, customizedColumnProps 属性。
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。
 - 🌟 `<pro>Pagination`: showPager 属性新增 selectAndInput 类型, 并优化第一页和最后一页按钮显示。
-- 🌟 `<pro>Attachment`: 新增 enableDeleteAll, onPreview 属性。
+- 🌟 `<pro>Attachment`: 新增 enableDeleteAll, onPreview, pictureCardShowName 属性。
 - 🌟 `<pro>Picture`: 新增 onBeforeClick 属性。
 - 🌟 `<pro>DataSet`: appendData 方法新增 index 参数。
 - 🌟 `<pro>Attachment`: getPreviewUrl 属性新增支持异步函数类型。
