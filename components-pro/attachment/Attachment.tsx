@@ -49,6 +49,9 @@ import { hide, show } from '../tooltip/singleton';
 import DataSet from '../data-set';
 import { ModalContextValue } from '../modal-provider/ModalContext';
 import OverflowTip from '../overflow-tip';
+import Dropdown from '../dropdown';
+import { DropdownButtonProps } from '../dropdown/interface';
+import Menu from '../menu';
 
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
@@ -99,6 +102,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   enableDeleteAll?: boolean;
   onPreview?: (attachment: AttachmentFile) => void;
   pictureCardShowName?: boolean;
+  directory?: boolean;
 }
 
 export type Sort = {
@@ -425,10 +429,12 @@ export default class Attachment extends FormField<AttachmentProps> {
       'templateDownloadButtonRenderer',
       'enableDeleteAll',
       'pictureCardShowName',
+      'directory',
     ]);
   }
 
   isAcceptFile(attachment: AttachmentFile, accept: string[]): boolean {
+    if (!accept || accept.length === 0) return true;
     const acceptTypes = accept.map(type => (
       new RegExp(type.replace(/\./g, '\\.').replace(/\*/g, '.*'))
     ));
@@ -596,10 +602,15 @@ export default class Attachment extends FormField<AttachmentProps> {
   @autobind
   @mobxAction
   handleChange(e) {
+    const { accept = [], props: { directory } } = this;
     const { target } = e;
     if (target.value) {
-      const files: File[] = [...target.files];
+      let files: File[] = [...target.files];
       target.value = '';
+      // @ts-ignore
+      if (directory && files.some(file => file && file.webkitRelativePath)) {
+        files = files.filter(file => this.isAcceptFile(file as any, accept));
+      }
       this.getAttachmentUUID().then((uuid) => {
         this.uploadAttachments(this.processFiles(files, uuid));
       });
@@ -830,6 +841,11 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   handleDragUpload = (file: File, files: File[]) => {
     if (files.indexOf(file) === files.length - 1) {
+      const { accept = [], props: { directory } } = this;
+      // @ts-ignore
+      if (directory && files.some(file => file && file.webkitRelativePath)) {
+        files = files.filter(file => this.isAcceptFile(file as any, accept));
+      }
       this.getAttachmentUUID().then((uuid) => {
         this.uploadAttachments(this.processFiles(files, uuid));
       });
@@ -838,8 +854,31 @@ export default class Attachment extends FormField<AttachmentProps> {
     return false;
   };
 
+  handleUploadClick = (setDirectory: boolean, triggerClick: boolean) => {
+    const { element, props: { directory } } = this;
+    if (directory && element) {
+      if (setDirectory && element.setAttribute) {
+        element.setAttribute('directory', 'directory');
+        element.setAttribute('webkitdirectory', 'webkitdirectory');
+      } else if (!setDirectory && element.removeAttribute) {
+        element.removeAttribute('directory');
+        element.removeAttribute('webkitdirectory');
+      }
+      if (triggerClick) {
+        element.click();
+      }
+    }
+  }
+
   @autobind
   handleClick(e) {
+    if (!e || !e.isTrusted) {
+      return;
+    }
+    const { props: { listType } } = this;
+    if (listType !== 'picture-card') {
+      this.handleUploadClick(false, false);
+    }
     const { element } = this;
     if (element) {
       element.click();
@@ -928,7 +967,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       prefixCls,
       accept,
       props: {
-        children, viewMode, countTextRenderer,
+        children, viewMode, countTextRenderer, directory,
       },
     } = this;
     const buttonProps = this.getOtherProps();
@@ -949,29 +988,67 @@ export default class Attachment extends FormField<AttachmentProps> {
       countText = countTextRenderer(count, max, countText);
     }
     const cardButtonInner = children || $l('Attachment', 'upload_picture');
-    return isCardButton ? (
-      <Button
-        funcType={FuncType.link}
-        key="upload-btn"
-        icon="add"
-        {...rest}
-        className={classNames(`${prefixCls}-card-button`, this.getClassName())}
-        style={{ ...style, width, height: width }}
-      >
-        <OverflowTip title={cardButtonInner}>
-          <div className={`${prefixCls}-card-button-inner`} >
-            {cardButtonInner}
-          </div>
-        </OverflowTip>
-        {countText ? <div>{countText}</div> : undefined}
-        <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }} />
-      </Button>
-    ) : (
-      <Button
+    if (isCardButton) {
+      return (
+        <Button
+          funcType={FuncType.link}
+          key="upload-btn"
+          icon="add"
+          {...rest}
+          className={classNames(`${prefixCls}-card-button`, this.getClassName())}
+          style={{ ...style, width, height: width }}
+        >
+          <OverflowTip title={cardButtonInner}>
+            <div className={`${prefixCls}-card-button-inner`} >
+              {cardButtonInner}
+            </div>
+          </OverflowTip>
+          {countText ? <div>{countText}</div> : undefined}
+          <input
+            key="upload"
+            {...uploadProps}
+            style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }}
+            // @ts-ignore
+            directory={directory ? 'directory' : null}
+            webkitdirectory={directory ? 'webkitdirectory' : null}
+          />
+        </Button>
+      );
+    }
+
+    const ButtonDir = directory ? Dropdown.Button : Button;
+    let buttonDirProp: DropdownButtonProps | ButtonProps = {};
+    if (directory) {
+      const menu = (
+        <Menu>
+          <Menu.Item key="file" onClick={() => this.handleUploadClick(false, true)}>
+            {$l('Attachment', 'file')}
+          </Menu.Item>
+          <Menu.Item key="directory" onClick={() => this.handleUploadClick(true, true)}>
+            {$l('Attachment', 'directory')}
+          </Menu.Item>
+        </Menu>
+      );
+      buttonDirProp = {
+        overlay: menu,
+        buttonProps: {
+          icon: "file_upload",
+        },
+      };
+      if (rest.disabled) {
+        buttonDirProp.hidden = true;
+      }
+    } else {
+      buttonDirProp = {
+        icon: "file_upload",
+      };
+    }
+    return (
+      <ButtonDir
         funcType={viewMode === 'popup' ? FuncType.flat : FuncType.link}
         key="upload-btn"
-        icon="file_upload"
         color={this.valid ? ButtonColor.primary : ButtonColor.red}
+        {...buttonDirProp}
         {...rest}
         className={viewMode === 'popup' ? this.getMergedClassNames() : this.getClassName()}
         onMouseEnter={this.handleMouseEnter}
@@ -979,7 +1056,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       >
         {children || $l('Attachment', 'upload_attachment')}{label && <>({label})</>} {countText}
         <input key="upload" {...uploadProps} style={{ width: 0, height: 0, display: 'block', position: 'absolute', visibility: 'hidden' }} />
-      </Button>
+      </ButtonDir>
     );
   }
 

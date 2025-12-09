@@ -20,7 +20,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps`, `customizedColumnProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
 - 🌟 `<pro>Pagination`: The `showPager` property has added the `selectAndInput` type and optimized the display of buttons on the first and last pages.
-- 🌟 `<pro>Attachment`: Added `enableDeleteAll`, `onPreview`, `pictureCardShowName` property.
+- 🌟 `<pro>Attachment`: Added `enableDeleteAll`, `onPreview`, `pictureCardShowName`, `directory` property.
 - 🌟 `<pro>Picture`: Added `onBeforeClick` property.
 - 🌟 `<pro>DataSet`: The `appendData` method has added an `index` parameter.
 - 🌟 `<pro>Attachment`: The `getPreviewUrl` property now supports asynchronous function types.

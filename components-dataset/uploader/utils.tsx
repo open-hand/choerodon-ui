@@ -16,6 +16,7 @@ function getAxios(context: DataSetContext): AxiosInstance {
 }
 
 export function isAcceptFile(attachment: AttachmentFile, accept: string[]): boolean {
+  if (!accept || accept.length === 0) return true;
   const acceptTypes = accept.map(type => (
     new RegExp(type.replace(/\./g, '\\.').replace(/\*/g, '.*'))
   ));

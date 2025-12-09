@@ -217,6 +217,8 @@ const locale: Locale = {
     download_template: 'テンプレートをダウンロード',
     secret_level_modal_title: 'シークレットレベルの選択',
     remove_confirm_title: 'レコードを削除するかどうか',
+    file: '書類です',
+    directory: 'フォルダです',
   },
   Modal: {
     ok: 'OK',
