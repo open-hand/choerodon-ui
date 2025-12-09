@@ -134,6 +134,7 @@ const App = () => {
     },
     enableDeleteAll: true,
     onPreview: handlePreview,
+    directory: true,
   };
   
   const getPreviewUrl = (props) => {

@@ -214,6 +214,8 @@ const locale: Locale = {
     download_template: 'Download template',
     secret_level_modal_title: 'Secret level selection',
     remove_confirm_title: 'Whether to delete the record',
+    file: 'File',
+    directory: 'Directory',
   },
   Modal: {
     ok: 'OK',

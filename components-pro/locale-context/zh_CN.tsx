@@ -214,6 +214,8 @@ const locale: Locale = {
     drag_info: '点击或将文件拖拽到这里上传',
     secret_level_modal_title: '密级选择',
     remove_confirm_title: '是否删除此条记录',
+    file: '文件',
+    directory: '文件夹',
   },
   Modal: {
     ok: '确定',

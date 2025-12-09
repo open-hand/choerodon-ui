@@ -1187,8 +1187,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getPlaceholders(): string[] {
+    const { disabled, readOnly } = this;
     const superPlaceholders = super.getPlaceholders();
-    if (!superPlaceholders || superPlaceholders.length === 0) {
+    if (!disabled && !readOnly && (!superPlaceholders || superPlaceholders.length === 0)) {
       const { showInputPrompt } = this;
       if (typeof showInputPrompt === 'string') {
         return [showInputPrompt];

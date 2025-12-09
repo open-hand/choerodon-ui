@@ -67,6 +67,7 @@ title: Attachment
 | enableDeleteAll | 开启全部删除功能 | boolean |  |
 | onPreview | 文件点击预览时的回调 | (attachment: AttachmentFile) => void |  |
 | pictureCardShowName | 设置 picture-card 类型图片是否显示文件名 | boolean |  |
+| directory | 开启上传文件夹 | boolean |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

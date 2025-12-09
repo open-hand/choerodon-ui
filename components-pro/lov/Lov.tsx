@@ -1016,7 +1016,7 @@ export default class Lov extends Select<LovProps> {
 
   getSuffix(): ReactNode {
     const { viewMode, showDetailWhenReadonly, showSuffix } = this;
-    if (!showSuffix) {
+    if (!showSuffix && !showDetailWhenReadonly) {
       return undefined;
     }
     const { suffix } = this.props;

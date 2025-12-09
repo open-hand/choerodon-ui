@@ -217,6 +217,8 @@ export interface Locale extends DataSetLocale {
     download_template: string;
     secret_level_modal_title: string;
     remove_confirm_title: string;
+    file: string;
+    directory: string;
   };
   Modal: {
     ok: string;
