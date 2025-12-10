@@ -167,6 +167,7 @@ const prefixCls = getConfig('prefixCls');
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
 | tooltipPlacement | Tooltip 位置 或 返回位置的钩子, 参数 placement 详见 [TooltipPlacement](#TooltipPlacement) | [placement](/components-pro/tooltip/#API) \| function(target) |  [TooltipPlacement](#TooltipPlacement) |
+| tooltipAutoPlacement | Automatically select the best tooltip position | boolean | false |
 | attachment | 附件上传配置 | [AttachmentConfig](#AttachmentConfig) |   |
 | tabsInkBarStyle | Tabs 墨条样式 | CSSProperties |  |
 | tabsDefaultChangeable | 默认 Tabs 个性化是否可配置默认页签 | boolean | true |

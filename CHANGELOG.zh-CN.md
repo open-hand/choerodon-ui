@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectShowInputPrompt 属性。
+- 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement 属性。
 - 🌟 `<pro>Cascader`: 新增 checkable 属性。
 - 🌟 `<pro>Table`: 新增 summaryBarConfigProps, customizedColumnProps 属性。
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。
@@ -25,6 +25,7 @@ timeline: true
 - 🌟 `<pro>DataSet`: appendData 方法新增 index 参数。
 - 🌟 `<pro>Attachment`: getPreviewUrl 属性新增支持异步函数类型。
 - 🌟 `<pro>Select`: 新增 showInputPrompt 属性。
+- 🌟 `<pro>Tooltip`: 新增 autoPlacement 属性。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
 - 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 💄 `<pro>TextField`: 优化支持通过控制后缀元素事件的冒泡和默认行为从而达到不同的事件触发效果。

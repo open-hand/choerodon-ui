@@ -355,6 +355,10 @@ export interface Config extends DataSetConfig {
    */
   tooltipPlacement?: TooltipPlacement | TooltipPlacementHook;
   /**
+   * tooltip 自动选择最佳方向弹出：top、bottom、left、right
+   */
+  tooltipAutoPlacement?: boolean;
+  /**
    * 附件相关配置
    */
   attachment?: AttachmentConfig;
