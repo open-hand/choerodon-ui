@@ -175,6 +175,7 @@ const defaults = {
   performanceEnabled: { Table: false },
   tooltip: defaultTooltip,
   tooltipTheme: defaultTooltipTheme,
+  tooltipAutoPlacement: false,
   showValidation: ShowValidation.tooltip,
   showHelp: ShowHelp.newLine,
   valueChangeAction: ValueChangeAction.blur,

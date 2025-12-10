@@ -2,6 +2,7 @@ import React, { Children, Component, CSSProperties, isValidElement } from 'react
 import isNil from 'lodash/isNil';
 import { toJS } from 'mobx';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
+import { getConfig } from 'choerodon-ui/lib/configure';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
@@ -9,6 +10,7 @@ import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import getPlacements, { AdjustOverflow } from './placements';
 import autobind from '../_util/autobind';
 import isFragment from '../_util/isFragment';
+import { calculateBestPlacement, getElementRect, getViewportRect } from './calculateBestPlacement';
 
 export { TooltipPlacement, TooltipTheme };
 
@@ -24,6 +26,7 @@ export interface TooltipProps extends TriggerProps {
   title?: React.ReactNode | RenderFunction;
   overlay?: React.ReactNode | RenderFunction;
   theme?: TooltipTheme;
+  autoPlacement?: boolean;
 }
 
 const splitObject = (obj: any, keys: string[]) => {
@@ -134,6 +137,8 @@ export default class Tooltip extends Component<TooltipProps, any> {
   state = {
     translate: { x: 0, y: 0 },
     arrowAdjustPosition: undefined,
+    autoCalculatedPlacement: null,
+    isCalculatingPlacement: false,
   };
 
   get prefixCls(): string {
@@ -154,6 +159,11 @@ export default class Tooltip extends Component<TooltipProps, any> {
     );
   }
 
+  get tooltipAutoPlacement() {
+    const { props: { autoPlacement } } = this;
+    return autoPlacement || getConfig('tooltipAutoPlacement');
+  }
+
   getContent(...props) {
     const { title, overlay } = this.props;
     if (typeof overlay === 'function') {
@@ -168,10 +178,74 @@ export default class Tooltip extends Component<TooltipProps, any> {
     return title;
   }
 
+  // 从 align.points 推导出当前 placement
+  getPlacementFromAlign = (points: string[], arrowPointAtCenter?: boolean): string | null => {
+    const placements = getPlacements({ arrowPointAtCenter });
+    // 查找匹配的 placement
+    for (const [placement, config] of Object.entries(placements)) {
+      if ((config as any).points[0] === points[0] && (config as any).points[1] === points[1]) {
+        return placement;
+      }
+    }
+    return null;
+  };
+
+  // 获取位置的基本方向（用于兼容比较）
+  getBasePlacement = (placement: string | null): string | null => {
+    if (!placement) return null;
+    // 提取基本方向：topLeft -> top, bottomRight -> bottom 等
+    if (placement.startsWith('top')) return 'top';
+    if (placement.startsWith('bottom')) return 'bottom';
+    if (placement.startsWith('left')) return 'left';
+    if (placement.startsWith('right')) return 'right';
+    return placement;
+  };
+
+  // 检查两个 placement 是否兼容
+  isPlacementCompatible = (bestPlacement: string, currentPlacement: string | null): boolean => {
+    if (!currentPlacement) return false;
+    // 如果完全相同，直接兼容
+    if (bestPlacement === currentPlacement) return true;
+    // 如果基本方向相同，认为兼容
+    const bestBase = this.getBasePlacement(bestPlacement);
+    const currentBase = this.getBasePlacement(currentPlacement);
+    return bestBase === currentBase;
+  };
+
   @autobind
   handlePopupAlign(source, align, target, translate) {
-    const { translate: { x, y } } = this.state;
+    const { translate: { x, y }, isCalculatingPlacement } = this.state;
     const { overflow: { adjustX, adjustY } } = align;
+    const { arrowPointAtCenter } = this.props;
+    // 如果正在计算中，直接返回避免死循环
+    if (isCalculatingPlacement) {
+      // 只处理 translate 相关的逻辑
+      if (x !== translate.x || y !== translate.y) {
+        this.setState({ translate });
+      }
+      return;
+    }
+    // 如果开启了自动最佳位置，重新计算最佳 placement
+    if (this.tooltipAutoPlacement) {
+      const targetRect = getElementRect(target);
+      const popupRect = getElementRect(source);
+      const viewportRect = getViewportRect();
+      const bestPlacement = calculateBestPlacement(targetRect, popupRect, viewportRect);
+      const currentPlacement = this.getPlacementFromAlign(align.points, arrowPointAtCenter);
+      // 使用兼容性检查而不是严格相等比较
+      if (!this.isPlacementCompatible(bestPlacement, currentPlacement)) {
+        // 设置计算标志，避免无限循环
+        this.setState({ 
+          isCalculatingPlacement: true,
+          autoCalculatedPlacement: bestPlacement,
+        });
+        // 重置计算标志
+        setTimeout(() => {
+          this.setState({ isCalculatingPlacement: false });
+        }, 0);
+      }
+    }
+    
     if (x !== translate.x || y !== translate.y) {
       this.setState({
         translate,
@@ -214,8 +288,18 @@ export default class Tooltip extends Component<TooltipProps, any> {
   render() {
     const {
       prefixCls,
+      state: { autoCalculatedPlacement },
       props: { children, placement, onHiddenChange, onHiddenBeforeChange, trigger, defaultHidden, hidden, getRootDomNode, ...restProps },
     } = this;
+    
+    // 确定最终使用的 placement
+    let finalPlacement = placement;
+    if (this.tooltipAutoPlacement && autoCalculatedPlacement) {
+      finalPlacement = autoCalculatedPlacement;
+    } else if (this.tooltipAutoPlacement) {
+      // 如果开启了自动定位但还没有计算结果，使用默认值
+      finalPlacement = 'top';
+    }
     // 修复特殊情况为0，以及 undefined 出现的报错情况
     const child = Children.count(children) ? Children.map(children, node => (
       !isNil(node) && (isValidElement(node) ? getDisabledCompatableChildren(node) : <span key={`text-${node}`}>{node}</span>)
@@ -233,7 +317,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
         prefixCls={prefixCls}
         action={trigger}
         builtinPlacements={this.placements}
-        popupPlacement={placement}
+        popupPlacement={finalPlacement}
         popupContent={this.renderPopupContent}
         onPopupHiddenBeforeChange={onHiddenBeforeChange}
         onPopupHiddenChange={onHiddenChange}
