@@ -311,14 +311,17 @@ export default class Button extends DataSetComponent<ButtonProps> {
 
   @autobind
   handleMouseLeave(e) {
-    const { getTooltip } = this.context;
-    const { tooltip = getTooltip('button') } = this.props;
-    if(isArrayLike(tooltip)) {
-      const buttonTooltipProps = tooltip[1] || {};
-      const duration: number = (buttonTooltipProps.mouseLeaveDelay || 0.1) * 1000;
-      hide(duration);
-    } else {
-      hide();
+    if (this.isTooltipShown) {
+      const { getTooltip } = this.context;
+      const { tooltip = getTooltip('button') } = this.props;
+      if(isArrayLike(tooltip)) {
+        const buttonTooltipProps = tooltip[1] || {};
+        const duration: number = (buttonTooltipProps.mouseLeaveDelay || 0.1) * 1000;
+        hide(duration);
+      } else {
+        hide();
+      }
+      delete this.isTooltipShown;
     }
     const { onMouseLeave = noop } = this.props;
     onMouseLeave(e);

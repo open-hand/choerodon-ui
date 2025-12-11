@@ -65,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 修复多次 update 参数, 之前 update 的参数会还原成原始参数的问题。
 - 🐞 `<pro>Board`: 修复 table 模式, 切换视图后, 个性化信息显示不正确的问题。
 - 🐞 `<pro>Attachment`: 修复 attachments 属性不生效的问题。
+- 🐞 `<pro>Button`: 修复表格列中的按钮影响单元格 Tooltip 显示的问题。
 
 ## 1.6.7
 
