@@ -65,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Modal`: Fixed the issue where the previously `update` parameters would revert to the original ones after multiple parameter `update`.
 - 🐞 `<pro>Board`: Fixed the issue where personalized information was displayed incorrectly after switching views in `table` mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where the `attachments` property was not taking effect.
+- 🐞 `<pro>Button`: Fixed the issue where buttons in the table columns affected the display of cell `Tooltip`.
 
 ## 1.6.7
 
