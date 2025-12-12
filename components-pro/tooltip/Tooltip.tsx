@@ -137,7 +137,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
   state = {
     translate: { x: 0, y: 0 },
     arrowAdjustPosition: undefined,
-    autoCalculatedPlacement: null,
+    autoCalculatedPlacement: undefined,
     isCalculatingPlacement: false,
   };
 
