@@ -993,6 +993,8 @@ export default class Table extends DataSetComponent<TableProps> {
 
   resizeObserver?: ResizeObserver;
 
+  wrapperResizeObserver?: ResizeObserver;
+
   get currentRow(): HTMLTableRowElement | null {
     const { prefixCls, element } = this;
     return element ? element.querySelector(
@@ -2094,6 +2096,15 @@ export default class Table extends DataSetComponent<TableProps> {
     this.syncParentSize(height, entry.target as HTMLDivElement);
   }
 
+  @autobind
+  handleWrapperResize(entries: ResizeObserverEntry[]) {
+    const [entry] = entries;
+    const { target } = entry;
+    if (target && target.parentNode && !isNil((target.parentNode as HTMLDivElement).offsetHeight)) {
+      this.syncParentSize((target.parentNode as HTMLDivElement).offsetHeight, target.parentNode as HTMLDivElement);
+    }
+  }
+
   connect() {
     this.processDataSetListener(true);
     const { styleMaxHeight, styleMinHeight, styleHeight, heightType } = this.tableStore;
@@ -2107,6 +2118,9 @@ export default class Table extends DataSetComponent<TableProps> {
           this.resizeObserver = resizeObserver;
           this.syncParentSize(parentNode.offsetHeight, parentNode);
         }
+        const wrapperResizeObserver = new ResizeObserver(this.handleWrapperResize);
+        wrapperResizeObserver.observe(wrapper);
+        this.wrapperResizeObserver = wrapperResizeObserver;
       }
     }
     if (heightType === TableHeightType.flex || (isString(styleMaxHeight) && isCalcSize(styleMaxHeight)) || (isString(styleMinHeight) && isCalcSize(styleMinHeight))) {
@@ -2115,10 +2129,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   disconnect() {
-    const { resizeObserver } = this;
+    const { resizeObserver, wrapperResizeObserver } = this;
     if (resizeObserver) {
       resizeObserver.disconnect();
       delete this.resizeObserver;
+    }
+    if (wrapperResizeObserver) {
+      wrapperResizeObserver.disconnect();
+      delete this.wrapperResizeObserver;
     }
     this.processDataSetListener(false);
     this.clearClipboard();

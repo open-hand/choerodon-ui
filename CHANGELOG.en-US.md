@@ -66,6 +66,7 @@ timeline: true
 - 🐞 `<pro>Board`: Fixed the issue where personalized information was displayed incorrectly after switching views in `table` mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where the `attachments` property was not taking effect.
 - 🐞 `<pro>Button`: Fixed the issue where buttons in the table columns affected the display of cell `Tooltip`.
+- 🐞 `<pro>Table`: Fixed the issue where the table height was not synchronously modified after the height of the filter field changed when the `autoHeight` was set.
 
 ## 1.6.7
 
