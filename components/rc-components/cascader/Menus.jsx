@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
+import OverflowTip from 'choerodon-ui/pro/lib/overflow-tip';
 import Icon from '../../icon';
 import Checkbox from '../../checkbox/Checkbox';
 
@@ -136,11 +137,12 @@ export default class Menus extends Component {
       <li
         key={option.key || option[valueField]}
         className={menuItemCls}
-        title={title}
         {...expandProps}
       >
         {checkbox}
-        <span>{option[labelField]}</span>
+        <OverflowTip title={title}>
+          <span>{option[labelField]}</span>
+        </OverflowTip>
         {expandIconNode}
       </li>
     );
