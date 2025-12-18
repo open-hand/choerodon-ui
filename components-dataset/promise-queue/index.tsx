@@ -84,6 +84,8 @@ export default class PromiseQueue {
 
   private queueing = false;
 
+  private aborted = false;
+
   constructor(threads = 1) {
     if (threads < 1) {
       throw new Error('The first argument of PromiseQueue constructor must be greater than 0.');
@@ -120,11 +122,21 @@ export default class PromiseQueue {
     this.queueing = false;
   }
 
+  abort() {
+    this.aborted = true;
+    this.queueing = false;
+    // 清空队列，防止新任务被处理
+    this.queue = [];
+  }
+
   private $nextTask = (): Promise<any> => {
+    if (this.aborted) {
+      return Promise.resolve();
+    }
     const task = this.queue.shift();
     if (task) {
       return task.run().then(() => {
-        if (this.queueing) {
+        if (this.queueing && !this.aborted) {
           return this.$nextTask();
         }
       }).catch(error => {

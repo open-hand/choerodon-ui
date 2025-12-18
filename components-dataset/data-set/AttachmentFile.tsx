@@ -1,7 +1,8 @@
 import { action as mobxAction, observable, runInAction } from 'mobx';
-import { AxiosError } from 'axios';
+import { AxiosError, CancelTokenSource } from 'axios';
 import isNil from 'lodash/isNil';
 import AttachmentFileChunk from './AttachmentFileChunk';
+import PromiseQueue from '../promise-queue';
 
 const extReg = /(.*)\.([^.]*)$/;
 
@@ -39,9 +40,15 @@ export default class AttachmentFile implements FileLike {
 
   originFileObj?: File | undefined;
 
-  @observable status?: 'error' | 'success' | 'uploading' | 'deleting' | 'done';
+  @observable status?: 'error' | 'success' | 'uploading' | 'deleting' | 'done' | 'aborted';
+
+  @observable aborted?: boolean;
 
   @observable private $percent?: number | undefined;
+
+  uploadQueue?: PromiseQueue;
+
+  cancelToken?: CancelTokenSource;
 
   md5?: string;
 

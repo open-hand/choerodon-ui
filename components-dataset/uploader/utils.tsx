@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { action as mobxAction, runInAction } from 'mobx';
 import { DataSetContext } from '../data-set/DataSet';
 import AttachmentFile from '../data-set/AttachmentFile';
@@ -107,14 +107,39 @@ async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chu
       headers: props.headers,
       attachmentUUID,
     }) !== false) {
+      // 在发起请求前检查中断状态
+      if (attachment.aborted || chunk.aborted) {
+        chunk.status = 'aborted';
+        runInAction(() => {
+          chunk.aborted = true;
+        });
+        return Promise.resolve();
+      }
+      
       const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
         chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
       }));
-      const resp = await getAxios(context)(config);
+      
+      const axiosInstance = getAxios(context);
+      const source = axiosStatic.CancelToken.source();
+      // 添加取消token到config
+      config.cancelToken = source.token;
+      // 将取消token存储到chunk中，以便后续取消
+      chunk.cancelToken = source;
+      
+      const resp = await axiosInstance(config);
       chunk.status = 'success';
       return resp;
     }
   } catch (e) {
+    // 优先检查中断状态，避免将中断错误误判为上传失败
+    if (attachment.aborted || chunk.aborted) {
+      chunk.status = 'aborted';
+      runInAction(() => {
+        chunk.aborted = true;
+      });
+      return Promise.resolve();
+    }
     chunk.status = 'error';
     throw new UploadError(e);
   }
@@ -134,6 +159,10 @@ function uploadChunks(
       attachment.status = 'uploading';
     });
     const queue = new PromiseQueue(threads);
+    
+    // 将queue存储到attachment中，以便后续中断
+    attachment.uploadQueue = queue;
+    
     chunks.forEach(chunk => {
       if (chunk.status !== 'success') {
         queue.add(() => uploadChunk(props, attachment, chunk, attachmentUUID, context));
@@ -146,6 +175,14 @@ function uploadChunks(
 
 async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile, attachmentUUID: string, context: DataSetContext) {
   try {
+    // 在开始上传前检查中断状态
+    if (attachment.aborted) {
+      runInAction(() => {
+        attachment.status = 'aborted';
+      });
+      return Promise.resolve();
+    }
+
     runInAction(() => {
       attachment.status = 'uploading';
     });
@@ -157,12 +194,35 @@ async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile
         handleProgress(percent, attachment);
       }
     }));
-    const resp = await getAxios(context)(config);
+    
+    // 在发起请求前再次检查中断状态
+    if (attachment.aborted) {
+      runInAction(() => {
+        attachment.status = 'aborted';
+      });
+      return Promise.resolve();
+    }
+    
+    const axiosInstance = getAxios(context);
+    const source = axiosStatic.CancelToken.source();
+    // 添加取消token到config
+    config.cancelToken = source.token;
+    // 将取消token存储到attachment中，以便后续取消
+    attachment.cancelToken = source;
+    
+    const resp = await axiosInstance(config);
     attachment.percent = 100;
     return new Promise<any>((resolve) => {
       setTimeout(() => resolve(resp), 0);
     });
   } catch (e) {
+    // 优先检查中断状态，避免将中断错误误判为上传失败
+    if (attachment.aborted) {
+      runInAction(() => {
+        attachment.status = 'aborted';
+      });
+      return Promise.resolve();
+    }
     throw new UploadError(e);
   }
 }

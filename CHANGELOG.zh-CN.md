@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Picture`: 新增 onBeforeClick 属性。
 - 🌟 `<pro>DataSet`: appendData 方法新增 index 参数。
 - 🌟 `<pro>Attachment`: getPreviewUrl 属性新增支持异步函数类型。
+- 🌟 `<pro>Attachment`: 新增 onUploadAbort 属性和 abortUpload 方法。
 - 🌟 `<pro>Select`: 新增 showInputPrompt 属性。
 - 🌟 `<pro>Tooltip`: 新增 autoPlacement 属性。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。

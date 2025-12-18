@@ -56,6 +56,54 @@ export default class Uploader {
     Object.assign(this.props, props);
   }
 
+  /**
+   * 中断上传任务
+   * @param attachment 要中断的附件
+   */
+  abortUpload(attachment?: AttachmentFile): void {
+    if (attachment) {
+      this.abortSingleUpload(attachment);
+    }
+  }
+
+  /**
+   * 中断单个附件的上传
+   */
+  private abortSingleUpload(attachment: AttachmentFile): void {
+    runInAction(() => {
+      attachment.aborted = true;
+      attachment.status = 'aborted';
+    });
+
+    // 取消普通上传的请求
+    const { cancelToken } = attachment;
+    if (cancelToken) {
+      cancelToken.cancel('Upload aborted by user');
+    }
+
+    // 取消分片上传的队列和所有分片
+    const { uploadQueue } = attachment;
+    if (uploadQueue) {
+      uploadQueue.abort();
+    }
+
+    // 取消所有分片的请求
+    const { chunks } = attachment;
+    if (chunks) {
+      chunks.forEach(chunk => {
+        runInAction(() => {
+          chunk.aborted = true;
+          chunk.status = 'aborted';
+        });
+        
+        const { cancelToken: chunkCancelToken } = chunk;
+        if (chunkCancelToken) {
+          chunkCancelToken.cancel('Chunk upload aborted by user');
+        }
+      });
+    }
+  }
+
   async upload(attachment: AttachmentFile, attachments?: AttachmentFile[], tempAttachmentUUID?: string | undefined): Promise<any> {
     const { attachmentUUID = tempAttachmentUUID } = attachment;
     if (attachment.status === 'success' || attachment.invalid || !attachmentUUID) {
@@ -69,6 +117,11 @@ export default class Uploader {
     if (result === true) {
       try {
         const resp = await uploadFile(props, attachment, attachmentUUID, context, chunkSize, useChunk);
+        const { aborted, chunks } = attachment;
+        if (aborted || (chunks && chunks.some(chunk => chunk.aborted))) {
+          console.warn('Upload aborted');
+          return Promise.resolve();
+        }
         let handleUploadSuccessResult;
         runInAction(() => {
           attachment.status = 'success';
@@ -118,6 +171,11 @@ export default class Uploader {
             }
           });
           return response;
+        }
+        const { aborted, chunks } = attachment;
+        if (aborted || (chunks && chunks.some(chunk => chunk.aborted))) {
+          console.warn('Upload aborted');
+          return Promise.resolve();
         }
         throw error;
       }
