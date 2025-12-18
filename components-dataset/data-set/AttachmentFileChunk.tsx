@@ -1,5 +1,6 @@
 import { observable } from 'mobx';
 import isNil from 'lodash/isNil';
+import { CancelTokenSource } from 'axios';
 import AttachmentFile from './AttachmentFile';
 
 export default class AttachmentFileChunk {
@@ -15,7 +16,11 @@ export default class AttachmentFileChunk {
 
   @observable percent?: number | undefined;
 
-  status?: 'error' | 'success' | 'uploading';
+  status?: 'error' | 'success' | 'uploading' | 'aborted';
+
+  @observable aborted?: boolean;
+  
+  cancelToken?: CancelTokenSource;
 
   constructor(chunk: AttachmentFileChunk) {
     Object.keys(chunk).forEach(key => {

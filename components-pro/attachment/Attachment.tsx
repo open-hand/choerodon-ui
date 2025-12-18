@@ -103,6 +103,12 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   onPreview?: (attachment: AttachmentFile) => void;
   pictureCardShowName?: boolean;
   directory?: boolean;
+  /**
+   * 中断上传的方法
+   * @param attachment 有 attachment 参数则中断指定附件上传，无 attachment 参数则是中断所有上传
+   * @returns void
+   */
+  onUploadAbort?: (attachment?: AttachmentFile) => void;
 }
 
 export type Sort = {
@@ -552,6 +558,10 @@ export default class Attachment extends FormField<AttachmentProps> {
         }
       }
       uploader.setProps(uploaderProps);
+      
+      // 将uploader实例保存到组件中，以便后续中断
+      this.uploader = uploader;
+      
       const result = await uploader.upload(attachment, this.attachments || [attachment], this.tempAttachmentUUID);
       if (result === false) {
         this.removeAttachment(attachment);
@@ -568,6 +578,9 @@ export default class Attachment extends FormField<AttachmentProps> {
             if (results && results.length) {
               this.checkValidity();
             }
+          } else if (attachment.status === 'aborted') {
+            this.removeAttachment(attachment);
+            this.checkValidity();
           } else {
             this.checkValidity();
           }
@@ -837,6 +850,70 @@ export default class Attachment extends FormField<AttachmentProps> {
       }
     }
     return undefined;
+  }
+
+  /**
+   * 中断上传任务
+   * @param attachment 要中断的附件，如果不提供则中断所有正在上传的附件
+   */
+  @autobind
+  abortUpload(attachment?: AttachmentFile): void {
+    if (attachment) {
+      this.abortSingleUpload(attachment);
+    } else {
+      this.abortAllUploads();
+    }
+  }
+
+  /**
+   * 中断单个附件的上传
+   */
+  private abortSingleUpload(attachment: AttachmentFile): void {
+    if (this.uploader) {
+      const { onUploadAbort } = this.props;
+      this.uploader.abortUpload(attachment);
+      
+      // 确保状态更新
+      runInAction(() => {
+        if (attachment.status === 'uploading' && attachment.aborted) {
+          attachment.status = 'aborted';
+        }
+      });
+      
+      if (onUploadAbort) {
+        onUploadAbort(attachment);
+      }
+    }
+  }
+
+  /**
+   * 中断所有正在上传的附件
+   */
+  private abortAllUploads(): void {
+    const { attachments, props: { onUploadAbort } } = this;
+    let hasUploadingAttachment = false;
+    if (attachments && this.uploader) {
+      attachments.forEach(attachment => {
+        if (attachment.status === 'uploading') {
+          if (!hasUploadingAttachment) {
+            hasUploadingAttachment = true;
+          }
+          this.uploader?.abortUpload(attachment);
+        }
+      });
+      
+      // 确保所有中断的附件状态同步
+      runInAction(() => {
+        attachments.forEach(attachment => {
+          if (attachment.status === 'uploading' && attachment.aborted) {
+            attachment.status = 'aborted';
+          }
+        });
+      });
+    }
+    if (hasUploadingAttachment && onUploadAbort) {
+      onUploadAbort();
+    }
   }
 
   handleDragUpload = (file: File, files: File[]) => {
@@ -1121,7 +1198,7 @@ export default class Attachment extends FormField<AttachmentProps> {
         const attachmentUUID = this.getValue();
         if (attachmentUUID) {
           const attachments = this.getValidAttachments();
-          if (attachments) {
+          if (attachments && attachments.length > 0) {
             const { bucketName, bucketDirectory, storageCode, isPublic } = this;
             onOrderChange({
               bucketName,

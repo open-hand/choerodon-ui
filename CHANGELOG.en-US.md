@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>Picture`: Added `onBeforeClick` property.
 - 🌟 `<pro>DataSet`: The `appendData` method has added an `index` parameter.
 - 🌟 `<pro>Attachment`: The `getPreviewUrl` property now supports asynchronous function types.
+- 🌟 `<pro>Attachment`: Added `onUploadAbort` property and `abortUpload` method.
 - 🌟 `<pro>Select`: Added `showInputPrompt` property.
 - 🌟 `<pro>Tooltip`: Added `autoPlacement` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
