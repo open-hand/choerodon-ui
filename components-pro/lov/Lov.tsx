@@ -99,8 +99,9 @@ export interface LovProps extends SelectProps, ButtonProps {
   fetchSingle?: boolean;
   /**
    * 点击查询仅存在一条数据时自动选中
+   * 按钮模式默认不支持, 设置 force 支持
    */
-  autoSelectSingle?: boolean;
+  autoSelectSingle?: boolean | 'force';
   showCheckedStrategy?: CheckedStrategy;
   onBeforeSelect?: (records: Record | Record[]) => boolean | Promise<boolean | undefined> | undefined;
   onSearchMatcherChange?: (searchMatcher?: string) => void;
@@ -197,12 +198,14 @@ export default class Lov extends Select<LovProps> {
     const { treeFlag } = this.getConfig() || {};
     const { mode: tableMode } = this.getTableProps();
     const { viewMode } = this;
-    const { mode } = this.props;
-    if (viewMode === TriggerViewMode.popup || mode === ViewMode.button || treeFlag === 'Y' || tableMode === TableMode.tree) {
+    const { mode, autoSelectSingle: autoSelectSingleProp } = this.props;
+    if (viewMode === TriggerViewMode.popup ||
+      (mode === ViewMode.button && autoSelectSingleProp !== 'force')
+      || treeFlag === 'Y' || tableMode === TableMode.tree) {
       return false;
     }
     if ('autoSelectSingle' in this.props) {
-      return this.props.autoSelectSingle;
+      return !!this.props.autoSelectSingle;
     }
     const autoSelectSingle = this.getContextConfig('lovAutoSelectSingle');
     if (typeof autoSelectSingle !== 'undefined') {
@@ -1059,9 +1062,9 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
-  handleButtonClick(e) {
+  async handleButtonClick(e) {
     const { onClick = noop } = this.props;
-    onClick(e);
+    await onClick(e);
     if (!e.isDefaultPrevented()) {
       return this.handleOpenModal();
     }
