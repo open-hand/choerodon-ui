@@ -192,6 +192,7 @@ const prefixCls = getConfig('prefixCls');
 | formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
 | labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |
 | useZeroFilledDecimal | `NumberField` 和 `Currency` 组件的值是否在输入和显示时开启根据 `precision` 补零，真实值不受影响 | boolean |  |
+| inputDecimalSeparatorFollowLang | 数字输入框输入时, 小数点分隔符是否跟随语言设置  | boolean |  |
 | rangeSeparator | 自定义组件 range 模式的分隔符 | string | ~ |
 | strictPageSize | 严格分页 | boolean | true |
 | noPagingParams | 不分页查询时需要携带的参数 | (config: AxiosRequestConfig) => object |  |

@@ -161,6 +161,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   minusElement?: HTMLDivElement | null;
 
+  cursorPos?: number | null;
+
   @computed
   get lang(): Lang {
     const { lang } = this.observableProps;
@@ -283,6 +285,29 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
       return this.props.keyboard!;
     }
     return this.getContextConfig('numberFieldKeyboard') !== false;
+  }
+
+  get inputDecimalSeparatorFollowLang(): boolean {
+    const isFollow = this.getContextConfig('inputDecimalSeparatorFollowLang');
+    return !!isFollow;
+  }
+
+  componentDidUpdate() {
+    if (!isNil(this.cursorPos)) {
+      if (this.element && this.element.setSelectionRange && this.isFocus) {
+        this.element.setSelectionRange(this.cursorPos, this.cursorPos);
+      }
+      this.cursorPos = null;
+    }
+  }
+
+  getDecimalSeparator = (): string => {
+    const formatOptions = this.getFormatOptions();
+    const locale = typeof formatOptions.lang === 'string' ? formatOptions.lang.replace('_', '-') : formatOptions.lang;
+    const numberWithDecimal = 1.1;
+    return new Intl.NumberFormat(locale || 'en-US')
+      .formatToParts(numberWithDecimal)
+      .find(p => p.type === 'decimal')?.value || '.';
   }
 
   getSuffixWidth() {
@@ -588,7 +613,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   restrictInput(value: string): string {
     if (value) {
-      const nextInputStr = value.replace(/。/, '.');
+      let nextInputStr = value.replace(/。/, '.');
+      if (this.inputDecimalSeparatorFollowLang) {
+        const decimalSeparator = this.getDecimalSeparator();
+        nextInputStr = nextInputStr.replace(decimalSeparator, '.');
+      }
       if (nextInputStr !== value) {
         this.lock = false;
         value = nextInputStr;
@@ -643,6 +672,27 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
 
   isValidInput(input: string): boolean {
     return !input.endsWith('.');
+  }
+
+  syncValueOnBlur(value, _?: any) {
+    if (this.inputDecimalSeparatorFollowLang && typeof value === 'string') {
+      const decimalSeparator = this.getDecimalSeparator();
+      value = value.replace(decimalSeparator, '.');
+    }
+    this.prepareSetValue(value);
+  }
+
+  getEditorTextInfo(rangeTarget?: 0 | 1): { text: string; width: number; placeholder?: string } {
+    const result = super.getEditorTextInfo(rangeTarget);
+    if (this.inputDecimalSeparatorFollowLang && result && typeof result.text === 'string' && this.isFocus) {
+      const decimalSeparator = this.getDecimalSeparator();
+      result.text = result.text.replace(/\./, decimalSeparator);
+
+      if (this.element && !isNil(this.element.selectionStart)) {
+        this.cursorPos = this.element.selectionStart;
+      }
+    }
+    return result;
   }
 }
 
