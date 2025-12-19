@@ -53,6 +53,7 @@ timeline: true
 - 💄 `<pro>Cascader`: 当设置 dropdownMatchSelectWidth 属性时, 优化文本溢出显示。
 - 💄 `<pro>Modal`: 优化 Modal 的 index 文件和 confirm 文件循环依赖。
 - 💄 `<pro>RichText`: 优化工具栏下拉框层级, 比输入框高。
+- 💄 `<pro>Lov`: autoSelectSingle 属性支持 force 值; onClick 支持异步。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
