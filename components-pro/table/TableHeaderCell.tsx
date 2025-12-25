@@ -346,7 +346,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
   }, [currentColumnGroup, setResizeGroup, autoMaxWidth, delayResizeStart, resizeStart]);
 
   const showSplitLine = useCallback((e, type) => {
-    const { columnResizing, xZoom } = tableStore;
+    const { columnResizing, xZoom, node: { resizeLine } } = tableStore;
     if (columnResizing) return;
     setSplitLineHidden(false);
     const { node: { element } } = tableStore;
@@ -356,6 +356,11 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const resizerLeft = Math.round(rect.left);
     const newLeft = resizerLeft + (type === 'pre' ? 0 : width);
     globalRef.current.bodyLeft = (border ? left + 1 : left) / xZoom;
+    if (resizeLine) {
+      const nowResizeLineLeft = resizeLine.getBoundingClientRect().left;
+      // 避免 1px 位置变化导致线跳动显示
+      if (Math.abs(nowResizeLineLeft - newLeft) <= 1) return;
+    }
     setSplitLinePosition(newLeft);
   }, []);
 
