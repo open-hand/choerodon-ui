@@ -7,7 +7,7 @@ import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 import omit from 'lodash/omit';
 import LightBox from 'react-image-lightbox';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig } from 'choerodon-ui/lib/configure/utils';
 import QuillImageDropAndPaste from './utils/imageDropAndPaste';
 import { DeltaOperation, DeltaStatic, Sources, StringMap } from './quill';
 import autobind from '../_util/autobind';
