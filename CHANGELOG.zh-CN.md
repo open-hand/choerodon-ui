@@ -72,6 +72,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复 attachments 属性不生效的问题。
 - 🐞 `<pro>Button`: 修复表格列中的按钮影响单元格 Tooltip 显示的问题。
 - 🐞 `<pro>Table`: 修复设置自动高度, 筛选域高度变化后未同步修改表格高度的问题。
+- 🐞 `<pro>Tooltip`: 修复引入 getConfig 的循环依赖问题。
 
 ## 1.6.7
 

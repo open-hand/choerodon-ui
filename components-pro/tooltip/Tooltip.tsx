@@ -2,7 +2,7 @@ import React, { Children, Component, CSSProperties, isValidElement } from 'react
 import isNil from 'lodash/isNil';
 import { toJS } from 'mobx';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig } from 'choerodon-ui/lib/configure/utils';
 import { TooltipPlacement, TooltipTheme } from 'choerodon-ui/lib/tooltip';
 import Trigger, { RenderFunction, TriggerProps } from 'choerodon-ui/lib/trigger/Trigger';
 import { Action } from 'choerodon-ui/lib/trigger/enum';

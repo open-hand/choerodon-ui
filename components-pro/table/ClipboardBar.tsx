@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode, useCallback, useContext, useMemo, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import Alert from 'choerodon-ui/lib/alert';
-import { getConfig } from 'choerodon-ui/lib/configure';
+import { getConfig } from 'choerodon-ui/lib/configure/utils';
 import Popover from 'choerodon-ui/lib/popover';
 import { action } from 'mobx';
 import { Clipboard } from './Table';
