@@ -54,6 +54,7 @@ timeline: true
 - 💄 `<pro>Modal`: Optimize the circular dependency between the `index` file and the `confirm` file of the `Modal`.
 - 💄 `<pro>RichText`: Optimize the drop-down box hierarchy of the toolbar to be higher than that of the input box.
 - 💄 `<pro>Lov`: The `autoSelectSingle` property supports the `force` value; `onClick` supports asynchronous operation.
+- 💄 `<pro>Table`: Optimize the issue of the column width dragging line jumping when `hover`.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
