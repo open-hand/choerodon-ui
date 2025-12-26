@@ -74,6 +74,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fixed the issue where buttons in the table columns affected the display of cell `Tooltip`.
 - 🐞 `<pro>Table`: Fixed the issue where the table height was not synchronously modified after the height of the filter field changed when the `autoHeight` was set.
 - 🐞 `<pro>Tooltip`: Fixed the circular dependency issue caused by introducing `getConfig`.
+- 🐞 `<pro>Tooltip`: Fixed the issue where the pop-up window did not disappear after the `dom` was removed from the `DOM` tree.
 
 ## 1.6.7
 
