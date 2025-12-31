@@ -296,8 +296,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
    * queryDS 筛选赋值并更新初始勾选项
    * @param init
    * @param oldOriginalValueObj 更新前的参数信息
+   * @param noChangeMenuDataSet 是否未切换menuDataSet
    */
-  const conditionAssign = async (init?: boolean, oldOriginalValueObj?: any) => {
+  const conditionAssign = async (init?: boolean, oldOriginalValueObj?: any, noChangeMenuDataSet?: boolean) => {
     onOriginalChange();
     const { current } = menuDataSet;
     let shouldQuery = false;
@@ -339,27 +340,35 @@ const QuickFilterMenu = function QuickFilterMenu() {
           }
         });
         onOriginalChange(Object.keys(initData));
-        const emptyRecord = new Record({ ...initData }, queryDataSet);
         dataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         queryDataSet.setState(SELECTFIELDS, isTenant ? tenantSelectFields : Object.keys(initData));
         shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
-        runInAction(() => {
-          queryDataSet.records.push(emptyRecord);
-          queryDataSet.current = emptyRecord;
-        });
+        if (noChangeMenuDataSet && currentQueryRecord) {
+          currentQueryRecord.reset();
+        } else {
+          const emptyRecord = new Record({ ...initData }, queryDataSet);
+          runInAction(() => {
+            queryDataSet.records.push(emptyRecord);
+            queryDataSet.current = emptyRecord;
+          });
+        }
         if (isTenant) {
           initConditionFields({ dataSet: queryDataSet, record: queryDataSet.current });
         }
-        onStatusChange(RecordStatus.sync, emptyRecord.toData());
+        onStatusChange(RecordStatus.sync, queryDataSet.current!.toData());
       } else {
         shouldQuery = shouldQuery || !isEqualDynamicProps(initData, currentQueryRecord ? omit(currentQueryRecord.toData(true), ['__dirty']) : {}, queryDataSet, currentQueryRecord);
-        const emptyRecord = new Record({}, queryDataSet);
         dataSet.setState(SELECTFIELDS, []);
         queryDataSet.setState(SELECTFIELDS, []);
-        runInAction(() => {
-          queryDataSet.records.push(emptyRecord);
-          queryDataSet.current = emptyRecord;
-        });
+        if (noChangeMenuDataSet && currentQueryRecord) {
+          currentQueryRecord.reset();
+        } else {
+          const emptyRecord = new Record({}, queryDataSet);
+          runInAction(() => {
+            queryDataSet.records.push(emptyRecord);
+            queryDataSet.current = emptyRecord;
+          });
+        }
         onStatusChange(RecordStatus.sync);
       }
       if (!init && shouldQuery && autoQuery) {
@@ -381,7 +390,8 @@ const QuickFilterMenu = function QuickFilterMenu() {
   const handleQueryReset = async () => {
     if (filterMenuDataSet && filterMenuDataSet.current && filterMenuDataSet.current.get('filterName')) {
       // 筛选项重置重新赋值
-      conditionAssign();
+      // menuDataSet current 没有变化
+      conditionAssign(undefined, undefined, true);
     } else {
       /**
        * 未选择或清除筛选项

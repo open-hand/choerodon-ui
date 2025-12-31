@@ -353,7 +353,7 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
       const res = await customizedLoad(customizedCode, 'Board', {
         type: 'list',
       });
-      const mergeRes = res.map(r => {
+      const mergeRes = (res || []).map(r => {
         if (r.id === detailRes[ViewField.id]) {
           return detailRes;
         }
