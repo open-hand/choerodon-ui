@@ -166,7 +166,7 @@ subtitle: 表格
 | command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 `afterClick` 钩子，用于执行除了默认行为外的动作，数组可选值：`edit` `delete` 或 \[`edit`\| `delete` , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] |  |
 | hidden | 隐藏 | boolean |  |
 | tooltip | 用 Tooltip 显示单元格内容。可选值 `none` `always` `overflow` | string | [globalConfig.tooltip](/components/configure#API) |
-| tooltipProps | 用于配置 Tooltip 相关参数 | [TooltipProps](/components-pro/tooltip#API) | |
+| tooltipProps | 用于配置 Tooltip 相关参数 | [TooltipProps](/components-pro/tooltip#API) \| ((type: 'header' \| 'cell', defaultTooltipProps: TooltipProps, field?: Field, record?: Record) => TooltipProps) | |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 |
 | aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | |

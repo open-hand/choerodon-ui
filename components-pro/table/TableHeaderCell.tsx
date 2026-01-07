@@ -22,6 +22,7 @@ import isString from 'lodash/isString';
 import debounce from 'lodash/debounce';
 import defaultTo from 'lodash/defaultTo';
 import isUndefined from 'lodash/isUndefined';
+import isFunction from 'lodash/isFunction';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import ReactResizeObserver from 'choerodon-ui/lib/_util/resizeObserver';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -293,16 +294,21 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     const { currentTarget } = e;
     const measureElement = currentTarget.getElementsByClassName(`${prefixCls}-cell-inner-right-has-other`)[0] || currentTarget;
     if (!tableStore.columnResizing && (tooltip === TableColumnTooltip.always || (tooltip === TableColumnTooltip.overflow && isOverflow(measureElement)))) {
-      const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
-      show(currentTarget, {
+      const defaultTooltipProps: TooltipProps = {
         title: header,
         placement: getTooltipPlacement('table-cell') || 'right',
         theme: getTooltipTheme('table-cell'),
+      };
+      const tooltipConfig: TooltipProps = isFunction(tooltipProps)
+        ? tooltipProps('header', defaultTooltipProps, field)
+        : isObject(tooltipProps) ? tooltipProps : {};
+      show(currentTarget, {
+        ...defaultTooltipProps,
         ...tooltipConfig,
       });
       globalRef.current.tooltipShown = true;
     }
-  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement, header]);
+  }, [tableStore, column, globalRef, getTooltipTheme, getTooltipPlacement, header, field, tooltipProps]);
 
   const handleMouseLeave = useCallback(() => {
     if (globalRef.current.tooltipShown) {
