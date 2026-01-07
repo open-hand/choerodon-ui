@@ -1651,7 +1651,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleFocus(e) {
-    if (this.element) {
+    if (this.element && isFunction(this.element.getBoundingClientRect)) {
       const elementRect = this.element.getBoundingClientRect();
       // 不在可视区域, 则不聚焦
       // 场景: 表格输入框聚焦, 切屏后会自动聚焦

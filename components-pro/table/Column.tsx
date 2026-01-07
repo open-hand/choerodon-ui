@@ -175,7 +175,7 @@ export interface ColumnPropsBase extends ElementProps {
   /**
    * tooltip 的属性配置
    */
-   tooltipProps?: TooltipProps;
+   tooltipProps?: TooltipProps | ((type: 'header' | 'cell', defaultTooltipProps: TooltipProps, field?: Field, record?: Record) => TooltipProps);
   /**
    * 设置单元格属性
    * @param {onCellProps} props

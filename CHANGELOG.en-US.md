@@ -56,6 +56,8 @@ timeline: true
 - 💄 `<pro>Lov`: The `autoSelectSingle` property supports the `force` value; `onClick` supports asynchronous operation.
 - 💄 `<pro>Table`: Optimize the issue of the column width dragging line jumping when `hover`.
 - 💄 `<pro>Table`: The `reset` event is triggered when the dynamic filter bar is reset.
+- 💄 `<pro>Table.Column`: The `tooltipProps` property supports hook functions.
+- 💄 `<pro>Table`: Unify the `font-weight` style of the buttons under the table.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

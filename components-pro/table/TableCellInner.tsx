@@ -665,7 +665,6 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     if (element && !multiLine && (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(element))) || isOverflowMaxTagCount) {
       const { current } = innerRef;
       if (text && current && current.contains(element)) {
-        const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
         const getMultipleText = () => {
           const values = field ? toMultipleValue(value, field.get('range', record)) : [];
           const repeats: Map<any, number> = new Map<any, number>();
@@ -690,18 +689,25 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           }
           return texts.join('、');
         };
-        const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
-        show(element, {
+        const defaultTooltipProps: TooltipProps = {
           title: isOverflowMaxTagCount ? getMultipleText() : text,
           placement: getTooltipPlacement('table-cell') || 'right',
           theme: getTooltipTheme('table-cell'),
+          mouseEnterDelay: 0.1,
+        };
+        const tooltipConfig: TooltipProps = isFunction(tooltipProps)
+          ? tooltipProps('cell', defaultTooltipProps, field, record)
+          : isObject(tooltipProps) ? tooltipProps : {};
+        const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
+        show(element, {
+          ...defaultTooltipProps,
           ...tooltipConfig,
         }, duration);
         return true;
       }
     }
     return false;
-  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef, tooltipProps]);
   const handleMouseEnter = useCallback((e) => {
     if (!tableStore.columnResizing && !tooltipShownRef.current &&
       (e.currentTarget && e.currentTarget.contains(e.target)) && showTooltip(e)) {
@@ -710,12 +716,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
   }, [tooltipShownRef, tableStore, showTooltip]);
   const handleMouseLeave = useCallback(() => {
     if (!tableStore.columnResizing && tooltipShownRef.current) {
-      const tooltipConfig: TooltipProps = isObject(tooltipProps) ? tooltipProps : {};
+      const tooltipConfig: TooltipProps = isFunction(tooltipProps)
+        ? tooltipProps('cell', { mouseLeaveDelay: 0.1 }, field, record)
+        : isObject(tooltipProps) ? tooltipProps : {};
       const duration: number = (tooltipConfig.mouseLeaveDelay || 0.1) * 1000;
       hide(duration);
       tooltipShownRef.current = false;
     }
-  }, [tooltipShownRef, tableStore]);
+  }, [tooltipShownRef, tableStore, tooltipProps, field, record]);
   useEffect(() => {
     if (name && inlineEdit && record === currentEditRecord) {
       const currentEditor = tableStore.editors.get(name);
