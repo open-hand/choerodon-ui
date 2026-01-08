@@ -59,6 +59,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: The `tooltipProps` property supports hook functions.
 - 💄 `<pro>Table`: Unify the `font-weight` style of the buttons under the table.
 - 💄 `<pro>DatePicker`: Extend the `renderExtraFooter` method parameters to provide the value selection function `choose`.
+- 💄 `WaterMark`: The watermark content supports configurable line breaks.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

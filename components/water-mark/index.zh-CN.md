@@ -21,7 +21,7 @@ subtitle: 水印组件
 | rotate | 水印绘制时，旋转的角度，单位 ° | number | -22 |
 | image | 图片源，建议导出 2 倍或 3 倍图，优先使用图片渲染水印 | string | - |
 | zIndex | 追加的水印元素的 z-index | number | 9 |
-| content | 水印文字内容 | string | - |
+| content | 水印文字内容，支持 \n 换行 | string | - |
 | markStyle | 水印文字样式 | { color: string; fontStyle: `none` \| `normal` \| `italic` \| `oblique`; fontFamily: string; fontWeight:  `normal` \| `light` \| `weight` \| number; fontSize: size \| number; opacity: number; } | { color: 'rgba(0,0,0,.15)', fontStyle: 'normal', fontWeight: 'normal', fontSize: 16, fontFamily: 'sans-serif', opacity: 0.8 } |
 | markClassName | 水印层的类名 | string | - |
 | gapX | 水印之间的水平间距 | number | 212 |

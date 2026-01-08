@@ -215,23 +215,28 @@ const WaterMark: React.FC<WaterMarkProps> = memo((props) => {
    * @param fontHeight 字体高度
    */
   const drawText = ({ content, ctx, canvasWidth, markHeight, fontHeight }) => {
-    let lastSubStrIndex = 0;
-    let lineWidth = 0;
+    const lines = content.replace(/\\n/g, '\n').split('\n');
     let initHeight = fontHeight;
 
-    for (let i = 0; i < content.length; i++) {
-      const { width } = ctx.measureText(content[i]);
-      lineWidth += width;
-      if (lineWidth > canvasWidth - width) {
-        ctx.fillText(content.substring(lastSubStrIndex, i), 0 - canvasWidth / 2, initHeight - markHeight / 2);
-        initHeight += fontHeight;
-        lineWidth = 0;
-        lastSubStrIndex = i;
+    lines.forEach(line => {
+      let lastSubStrIndex = 0;
+      let lineWidth = 0;
+
+      for (let i = 0; i < line.length; i++) {
+        const { width } = ctx.measureText(line[i]);
+        lineWidth += width;
+        if (lineWidth > canvasWidth - width) {
+          ctx.fillText(line.substring(lastSubStrIndex, i), 0 - canvasWidth / 2, initHeight - markHeight / 2);
+          initHeight += fontHeight;
+          lineWidth = 0;
+          lastSubStrIndex = i;
+        }
+        if (i === line.length - 1) {
+          ctx.fillText(line.substring(lastSubStrIndex, i + 1), 0 - canvasWidth / 2, initHeight - markHeight / 2);
+        }
       }
-      if (i === content.length - 1) {
-        ctx.fillText(content.substring(lastSubStrIndex, i + 1), 0 - canvasWidth / 2, initHeight - markHeight / 2);
-      }
-    }
+      initHeight += fontHeight;
+    });
   }
 
   const renderCanvas = useMemo(() => {

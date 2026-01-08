@@ -17,9 +17,11 @@ The basic usage of WaterMark.
 import React from 'react';
 import { WaterMark } from 'choerodon-ui';
 
+const content = "This is\nChoerodon-ui";
+
 ReactDOM.render(
   <>
-    <WaterMark content="Choerodon-ui" gapX={100} gapY={100} height={50}>
+    <WaterMark content={content} gapX={100} gapY={100} height={50}>
       <div style={{ height: 500 }} />
     </WaterMark>
   </>,
