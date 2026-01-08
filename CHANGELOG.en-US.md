@@ -58,6 +58,7 @@ timeline: true
 - 💄 `<pro>Table`: The `reset` event is triggered when the dynamic filter bar is reset.
 - 💄 `<pro>Table.Column`: The `tooltipProps` property supports hook functions.
 - 💄 `<pro>Table`: Unify the `font-weight` style of the buttons under the table.
+- 💄 `<pro>DatePicker`: Extend the `renderExtraFooter` method parameters to provide the value selection function `choose`.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.
@@ -78,6 +79,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where the table height was not synchronously modified after the height of the filter field changed when the `autoHeight` was set.
 - 🐞 `<pro>Tooltip`: Fixed the circular dependency issue caused by introducing `getConfig`.
 - 🐞 `<pro>Tooltip`: Fixed the issue where the pop-up window did not disappear after the `dom` was removed from the `DOM` tree.
+- 🐞 `<pro>Table`: Fixed the issue where pressing Enter from the second page onwards could not move to the next line for editing.
 
 ## 1.6.7
 

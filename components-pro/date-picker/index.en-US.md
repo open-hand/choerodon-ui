@@ -25,7 +25,7 @@ title: DatePicker
 | step | 时间步距 | { hour: number, minute: number, second: number } |  |
 | filter | 日期过滤, 选择面板的 mode 会变化, 需要根据 mode 变化设置是否过滤。当在 range 模式中时，rangeTarget 为 0 代表在 start，1 代表在 end，rangeValue 为值数组 | (currentDate, selected, mode, rangeTarget, rangeValue) => boolean |   |
 | cellRenderer | 单元格渲染, view可选值: `date` `dateTime` `time` `week` `month` `quarter` `year` `decade` | (view) => (props, text, currentDate, selected) => ReactNode |   |
-| renderExtraFooter | 在面板中添加额外的页脚 | () => React.ReactNode |   |
+| renderExtraFooter | 在面板中添加额外的页脚 | ({ choose }: { choose?: (date?: Moment \| \[Moment \| undefined, Moment \| undefined\]) => void }) => React.ReactNode |   |
 | extraFooterPlacement | 额外的页脚的位置 可选值: `top` `bottom` | string | `bottom`  |
 | editorInPopup | 编辑器在下拉框中  | boolean |  |
 | defaultTime | 设置用户选择日期时默认的时分秒  | moment \| \[moment, moment\] | moment('00:00:00', 'HH:mm:ss') |

@@ -29,7 +29,8 @@ export interface DateViewProps extends ViewComponentProps {
   onSelectedDateChange?: (selectedDate: Moment, mode?: ViewMode) => void;
   onCursorDateChange?: (cursorDate: Moment, selectedDate: Moment, mode?: ViewMode) => void;
   onViewModeChange?: (mode: ViewMode) => void;
-  renderExtraFooter?: () => ReactNode;
+  renderExtraFooter?: ({ choose }: { choose?: (value?: Moment | [Moment | undefined, Moment | undefined]) => void }) => ReactNode;
+  handleCustomChoose?: (value?: Moment | [Moment | undefined, Moment | undefined]) => void;
   extraFooterPlacement?: 'top' | 'bottom';
   disabledNow?: boolean;
   okButton?: boolean;
@@ -314,11 +315,11 @@ export default class DaysView<T extends DateViewProps> extends ViewComponent<T>
   get customFooter() {
     const {
       prefixCls,
-      props: { renderExtraFooter },
+      props: { renderExtraFooter, handleCustomChoose },
     } = this;
     return renderExtraFooter ? (
       <div className={`${prefixCls}-footer-extra`}>
-        {renderExtraFooter()}
+        {renderExtraFooter({ choose: handleCustomChoose })}
       </div>
     ) : null;
   }

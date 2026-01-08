@@ -58,6 +58,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条重置时触发 reset 事件。
 - 💄 `<pro>Table.Column`: tooltipProps 属性支持钩子函数。
 - 💄 `<pro>Table`: 统一表格下的按钮 font-weight 样式。
+- 💄 `<pro>DatePicker`: 扩展 renderExtraFooter 方法参数提供选值函数 choose。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
@@ -78,6 +79,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复设置自动高度, 筛选域高度变化后未同步修改表格高度的问题。
 - 🐞 `<pro>Tooltip`: 修复引入 getConfig 的循环依赖问题。
 - 🐞 `<pro>Tooltip`: 修复触发 dom 从 DOM 树中移除后, 弹窗不消失的问题。
+- 🐞 `<pro>Table`: 修复从第二页起无法通过回车跳转到下一行编辑的问题。
 
 ## 1.6.7
 

@@ -7,6 +7,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import isString from 'lodash/isString';
 import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
+import isArray from 'lodash/isArray';
 import { observer } from 'mobx-react';
 import { action, computed, isArrayLike, observable, runInAction, toJS, autorun, IReactionDisposer } from 'mobx';
 import { TimeStep } from 'choerodon-ui/dataset/interface';
@@ -129,7 +130,7 @@ export interface DatePickerProps extends TriggerFieldProps {
   minExcl?: MomentInput | null;
   maxExcl?: MomentInput | null;
   step?: TimeStep;
-  renderExtraFooter?: () => ReactNode;
+  renderExtraFooter?: ({ choose }: { choose?: (value?: Moment | [Moment | undefined, Moment | undefined]) => void }) => ReactNode;
   extraFooterPlacement?: 'top' | 'bottom';
   /**
    * 时区显示
@@ -543,6 +544,19 @@ export default class DatePicker extends TriggerField<DatePickerProps>
     return yearFirst;
   }
 
+  handleCustomChoose(value?: Moment | [Moment | undefined, Moment | undefined]) {
+    if (isArray(value)) {
+      value.forEach((date: Moment | undefined, index: number) => {
+        if (index < 2) {
+          this.setRangeTarget(index);
+          this.choose(date as Moment);
+        }
+      });
+    } else {
+      this.choose(value as Moment);
+    }
+  }
+
   getPopupContent() {
     const { comboRangeMode, rangeValue, rangeTarget, hoverValue, yearFirst } = this;
     const mode = this.getViewMode();
@@ -568,6 +582,7 @@ export default class DatePicker extends TriggerField<DatePickerProps>
             format: this.getDateFormat(),
             step: this.getProp('step') || {},
             renderExtraFooter: this.getProp('renderExtraFooter'),
+            handleCustomChoose: this.handleCustomChoose.bind(this),
             extraFooterPlacement: this.getProp('extraFooterPlacement') || 'bottom',
             onDateMouseEnter: this.handleDateMouseEnter,
             onDateMouseLeave: this.handleDateMouseLeave,

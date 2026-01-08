@@ -672,9 +672,10 @@ export default class Lov extends Select<LovProps> {
   }
 
   getModalClassName(): string {
-    const { viewMode } = this;
+    const { viewMode, props: { modalProps } } = this;
+    const isModalMode = viewMode === TriggerViewMode.modal && modalProps?.drawer !== true;
     return classNames({
-      [`${this.prefixCls}-lov-selection-wrapper`]: viewMode === TriggerViewMode.modal && this.showSelectedInView,
+      [`${this.prefixCls}-lov-selection-wrapper`]: isModalMode && this.showSelectedInView,
       [`${this.prefixCls}-lov-custom-drawer`]: viewMode === TriggerViewMode.drawer && this.multiple && this.showSelectedInView,
       [`${this.prefixCls}-lov-modal`]: viewMode === TriggerViewMode.modal,
       [`${this.prefixCls}-lov-modal-drawer`]: viewMode === TriggerViewMode.drawer,
