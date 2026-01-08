@@ -78,6 +78,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复设置自动高度, 筛选域高度变化后未同步修改表格高度的问题。
 - 🐞 `<pro>Tooltip`: 修复引入 getConfig 的循环依赖问题。
 - 🐞 `<pro>Tooltip`: 修复触发 dom 从 DOM 树中移除后, 弹窗不消失的问题。
+- 🐞 `<pro>Table`: 修复从第二页起无法通过回车跳转到下一行编辑的问题。
 
 ## 1.6.7
 

@@ -78,6 +78,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where the table height was not synchronously modified after the height of the filter field changed when the `autoHeight` was set.
 - 🐞 `<pro>Tooltip`: Fixed the circular dependency issue caused by introducing `getConfig`.
 - 🐞 `<pro>Tooltip`: Fixed the issue where the pop-up window did not disappear after the `dom` was removed from the `DOM` tree.
+- 🐞 `<pro>Table`: Fixed the issue where pressing Enter from the second page onwards could not move to the next line for editing.
 
 ## 1.6.7
 

@@ -2619,8 +2619,9 @@ export default class TableStore {
 
   showNextEditor(name: string, reserve: boolean): boolean {
     const { dataSet } = this;
-    const { currentIndex } = dataSet;
-    const record = dataSet.get(reserve ? currentIndex - 1 : currentIndex + 1);
+    const { currentIndex, pageSize, currentPage } = dataSet;
+    const indexOfCurrentPage = currentIndex - (currentPage - 1) * pageSize;
+    const record = dataSet.get(reserve ? indexOfCurrentPage - 1 : indexOfCurrentPage + 1);
     if (record && !isDisabledRow(record)) {
       dataSet.current = record;
       this.showEditor(name);
