@@ -59,6 +59,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: tooltipProps 属性支持钩子函数。
 - 💄 `<pro>Table`: 统一表格下的按钮 font-weight 样式。
 - 💄 `<pro>DatePicker`: 扩展 renderExtraFooter 方法参数提供选值函数 choose。
+- 💄 `WaterMark`: 水印内容支持配置换行符。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
