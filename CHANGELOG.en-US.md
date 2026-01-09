@@ -52,6 +52,7 @@ timeline: true
 - 💄 `Popover`: Optimize the repositioning after the size of the pop-up window changes.
 - 💄 `<pro>Cascader`: When setting the `dropdownMatchSelectWidth` property, optimize the display of text overflow.
 - 💄 `<pro>Modal`: Optimize the circular dependency between the `index` file and the `confirm` file of the `Modal`.
+- 💄 `<pro>Modal`: Supports adjusting the position by dragging through touch events.
 - 💄 `<pro>RichText`: Optimize the drop-down box hierarchy of the toolbar to be higher than that of the input box.
 - 💄 `<pro>Lov`: The `autoSelectSingle` property supports the `force` value; `onClick` supports asynchronous operation.
 - 💄 `<pro>Table`: Optimize the issue of the column width dragging line jumping when `hover`.
