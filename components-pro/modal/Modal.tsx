@@ -912,6 +912,88 @@ export default class Modal extends ViewComponent<ModalProps> {
   }
 
   @autobind
+  handleHeaderTouchStart(downEvent: React.TouchEvent<HTMLDivElement>) {
+    const { element, contentNode, props: { autoCenter = this.getContextConfig('modalAutoCenter') } } = this;
+    if (element && contentNode && downEvent.touches.length === 1) {
+      const { prefixCls } = this;
+      const {
+        clientWidth: docClientWidth,
+        clientHeight: docClientHeight,
+      } = this.selfDoc.documentElement || this.selfDoc.body;
+      const { currentTarget } = downEvent;
+      const touch = downEvent.touches[0];
+      const clientX = transformZoomData(touch.clientX);
+      const clientY = transformZoomData(touch.clientY);
+      const clzz = classes(element);
+      const { offsetParent } = element;
+      const {
+        scrollTop = 0,
+        scrollLeft = 0,
+        clientWidth = 0,
+        clientHeight = 0,
+      } = offsetParent || {};
+      const { offsetWidth: headerWidth, offsetHeight: headerHeight } = currentTarget;
+      if (clzz.has(`${prefixCls}-auto-center`)) {
+        clzz.remove(`${prefixCls}-auto-center`).remove(`${prefixCls}-center`);
+        const {
+          offsetWidth,
+          offsetHeight,
+        } = element;
+        const isEmbedded = !!(element && element.offsetParent);
+        const top = pxToRem(
+          isEmbedded ? (clientHeight - offsetHeight) / 2 + scrollTop : (docClientHeight - offsetHeight) / 2,
+          true,
+        );
+        const left = pxToRem(
+          isEmbedded ? (clientWidth - offsetWidth) / 2 + scrollLeft : (docClientWidth - offsetWidth) / 2,
+          true,
+        );
+        this.offset = [left, top];
+        Object.assign(element.style, { top, left });
+      }
+      const { offsetLeft } = element;
+      const offsetTop = autoCenter && clzz.has(`${prefixCls}-auto-center`) ? scrollTop + contentNode.offsetTop : element.offsetTop;
+      this.moveEvent
+        .setTarget(this.selfDoc)
+        .addEventListener('touchmove', (moveEvent: TouchEvent) => {
+          const touch = moveEvent.touches[0];
+          const moveX = transformZoomData(touch.clientX);
+          const moveY = transformZoomData(touch.clientY);
+          clzz.remove(`${prefixCls}-center`);
+          const left = pxToRem(
+            Math.min(
+              Math.max(
+                offsetLeft + moveX - clientX,
+                scrollLeft - headerWidth + HANDLE_MIN_SIZE,
+              ),
+              scrollLeft + docClientWidth - HANDLE_MIN_SIZE,
+            ),
+            true,
+          );
+          const top = pxToRem(
+            Math.min(
+              Math.max(
+                offsetTop + moveY - clientY,
+                scrollTop - headerHeight + HANDLE_MIN_SIZE,
+              ),
+              scrollTop + docClientHeight - HANDLE_MIN_SIZE,
+            ),
+            true,
+          );
+          this.offset = [left, top];
+          Object.assign(element.style, {
+            left,
+            top,
+            right: null,
+          });
+        })
+        .addEventListener('touchend', () => {
+          this.moveEvent.clear();
+        });
+    }
+  }
+
+  @autobind
   async handleOk() {
     const { onOk = noop, buttonTrigger = this.getContextConfig('modalButtonTrigger') } = this.props;
     if (buttonTrigger === ModalButtonTrigger.MOUSEDOWN) {
@@ -1017,6 +1099,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       };
       if (movable && !fullScreen && !drawer) {
         headerProps.onMouseDown = this.handleHeaderMouseDown;
+        headerProps.onTouchStart = this.handleHeaderTouchStart;
       }
       return (
         <div {...headerProps}>

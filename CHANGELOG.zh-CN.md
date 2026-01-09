@@ -52,6 +52,7 @@ timeline: true
 - 💄 `Popover`: 优化在弹窗大小变化后, 进行重新定位。
 - 💄 `<pro>Cascader`: 当设置 dropdownMatchSelectWidth 属性时, 优化文本溢出显示。
 - 💄 `<pro>Modal`: 优化 Modal 的 index 文件和 confirm 文件循环依赖。
+- 💄 `<pro>Modal`: 支持通过触摸事件拖动位置。
 - 💄 `<pro>RichText`: 优化工具栏下拉框层级, 比输入框高。
 - 💄 `<pro>Lov`: autoSelectSingle 属性支持 force 值; onClick 支持异步。
 - 💄 `<pro>Table`: 优化列宽拖动线在 hover 时跳动的问题。
