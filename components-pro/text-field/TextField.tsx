@@ -955,6 +955,23 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return className;
   }
 
+  handlePaste = e => {
+    const { onPaste = noop } = this.props;
+    onPaste(e);
+    if (!e.isDefaultPrevented()) {
+      if (this.multiple) {
+        const pastedText = e.clipboardData.getData('text');
+        if (pastedText && (pastedText.includes('\n') || pastedText.includes('\t'))) {
+          e.preventDefault();
+          const values = pastedText.split(/[\n\t]+/).filter(v => v.trim());
+          if (values.length > 0) {
+            this.addValue(...values);
+          }
+        }
+      }
+    }
+  };
+
   renderMultipleEditor(props: T) {
     const { text } = this;
     const editorStyle = {} as CSSProperties;
@@ -969,7 +986,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
     return (
       <li key="text" className={`${props?.className}-wrap`}>
-        <input {...(props as object)} value={text || ''} style={editorStyle} />
+        <input
+          {...(props as object)}
+          value={text || ''}
+          style={editorStyle}
+          onPaste={this.handlePaste}
+        />
       </li>
     );
   }
