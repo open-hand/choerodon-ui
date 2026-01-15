@@ -9,6 +9,7 @@ import addEventListener from '../../_util/addEventListener';
 import Popup from './Popup';
 import { getAlignFromPlacement, getAlignPopupClassName } from './utils';
 import Portal from '../util/Portal';
+import { getConfig as getConfigDefault } from '../../configure/utils';
 
 function returnEmptyString() {
   return '';
@@ -271,7 +272,9 @@ class Trigger extends Component {
   }, 1, { leading: true, trailing: false });
 
   onDocumentClick = (event) => {
-    if (event.isDefaultPrevented() || (this.props.mask && !this.props.maskClosable)) {
+    const isCodeAreaClick = event && event.target && typeof event.target.closest === 'function' &&
+      event.target.closest(`.${getConfigDefault('proPrefixCls')}-code-area-wrapper`);
+    if ((!isCodeAreaClick && event.isDefaultPrevented()) || (this.props.mask && !this.props.maskClosable)) {
       return;
     }
     const target = event.target;
