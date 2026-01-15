@@ -963,9 +963,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         const pastedText = e.clipboardData.getData('text');
         if (pastedText && (pastedText.includes('\n') || pastedText.includes('\t'))) {
           e.preventDefault();
-          const values = pastedText.split(/[\n\t]+/).filter(v => v.trim());
-          if (values.length > 0) {
-            this.addValue(...values);
+          const pastedValues = pastedText.split(/[\n\t]+/).map(v => v.trim()).filter(v => v);
+          if (pastedValues.length > 0) {
+            this.addValue(...pastedValues);
           }
         }
       }
