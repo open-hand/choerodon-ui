@@ -310,6 +310,10 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     this.setPopup(!hidden);
   }
 
+  handlePaste = () => {
+    // No need to do anything for now.
+  }
+
   forcePositionChanged() {
     this.forcePopupAlign();
   }
