@@ -450,6 +450,18 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  @autobind
+  loadEvents() {
+    const { options, modal } = this;
+    const { addNewOptionPrompt } = this.props;
+    if (addNewOptionPrompt && modal) {
+      modal.update({
+        footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt') : undefined,
+      });
+    }
+  }
+
+  @autobind
   @action
   beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
     const { multiple, primitive, valueField, viewMode } = this;
@@ -466,6 +478,7 @@ export default class Lov extends Select<LovProps> {
       if (lovEvents) {
         Object.keys(lovEvents).forEach(event => options.addEventListener(event, lovEvents[event]));
       }
+      options.addEventListener('load', this.loadEvents);
     }
     if (viewMode === TriggerViewMode.popup && multiple && selected && this.getValues().length !== selected.length) {
       // record reset 场景
@@ -603,7 +616,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode, showDetailWhenReadonly } = this;
-    const { onBeforeSelect, viewRenderer } = this.props;
+    const { onBeforeSelect, viewRenderer, addNewOptionPrompt } = this.props;
     const drawer = viewMode === TriggerViewMode.drawer;
     if (viewMode === TriggerViewMode.modal || drawer) {
       const config = this.getConfig();
@@ -639,6 +652,7 @@ export default class Lov extends Select<LovProps> {
             getSelectionProps: this.getSelectionProps,
             showDetailWhenReadonly,
             lang: this.lang,
+            renderAddNewOptionPrompt: addNewOptionPrompt ? this.renderAddNewOptionPrompt : undefined,
           }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
@@ -662,6 +676,7 @@ export default class Lov extends Select<LovProps> {
             },
             afterClose: this.handleLovViewAfterClose,
             footer: showDetailWhenReadonly ? null : undefined,
+            footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt') : undefined,
           }, modalProps) || {});
           this.afterOpen(options, fetchSingle);
         }
@@ -672,7 +687,7 @@ export default class Lov extends Select<LovProps> {
   }
 
   getModalClassName(): string {
-    const { viewMode, props: { modalProps } } = this;
+    const { viewMode, props: { modalProps, addNewOptionPrompt } } = this;
     const isModalMode = viewMode === TriggerViewMode.modal && modalProps?.drawer !== true;
     return classNames({
       [`${this.prefixCls}-lov-selection-wrapper`]: isModalMode && this.showSelectedInView,
@@ -680,6 +695,7 @@ export default class Lov extends Select<LovProps> {
       [`${this.prefixCls}-lov-modal`]: viewMode === TriggerViewMode.modal,
       [`${this.prefixCls}-lov-modal-drawer`]: viewMode === TriggerViewMode.drawer,
       [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup,
+      [`${this.prefixCls}-lov-modal-new-option-prompt`]: addNewOptionPrompt,
     });
   }
 
@@ -741,6 +757,7 @@ export default class Lov extends Select<LovProps> {
     if (lovEvents) {
       Object.keys(lovEvents).forEach(event => options.removeEventListener(event, lovEvents[event]));
     }
+    options.removeEventListener('load', this.loadEvents);
     this.setPopup(false);
     this.modal = undefined;
     this.focus();
@@ -1064,8 +1081,10 @@ export default class Lov extends Select<LovProps> {
 
   @autobind
   async handleButtonClick(e) {
-    const { onClick = noop } = this.props;
-    await onClick(e);
+    const { onClick } = this.props;
+    if (onClick) {
+      await onClick(e);
+    }
     if (!e.isDefaultPrevented()) {
       return this.handleOpenModal();
     }

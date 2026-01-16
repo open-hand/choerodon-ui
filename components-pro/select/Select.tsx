@@ -269,6 +269,17 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 可输入时，下拉框中是否显示输入提示
    */
   showInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
+  /**
+   * 自定义添加新选项提示
+   * type: prompt 有数据时底部提示, noDataPrompt 无数据时提示;
+   */
+  addNewOptionPrompt?: (props: {
+    type: 'prompt' | 'noDataPrompt';
+    component: 'Select' | 'Lov';
+    record?: Record;
+    field?: Field;
+    code?: string;
+  }) => ReactNode;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -644,6 +655,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'scrollLoad',
       'popupShowComboValue',
       'showInputPrompt',
+      'addNewOptionPrompt',
     ]);
   }
 
@@ -691,9 +703,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getNotFoundContent() {
-    const { notFoundContent } = this.props;
+    const { notFoundContent, addNewOptionPrompt } = this.props;
     if (notFoundContent !== undefined) {
       return notFoundContent;
+    }
+    if (addNewOptionPrompt) {
+      return this.renderAddNewOptionPrompt('noDataPrompt');
     }
     return this.getContextConfig('renderEmpty')('Select');
   }
@@ -1098,6 +1113,28 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     );
   }
 
+  @autobind
+  renderAddNewOptionPrompt(type: 'prompt' | 'noDataPrompt'): ReactNode | undefined {
+    const { record, field, props: { addNewOptionPrompt } } = this;
+    const { displayName } = this.constructor as any;
+    if (isFunction(addNewOptionPrompt)) {
+      return (
+        <div
+          key={`new-option-notice-inner-${type}`}
+          className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
+        >
+          {addNewOptionPrompt({
+            type,
+            component: displayName,
+            record,
+            field,
+            code: field ? field.get(displayName === 'Select' ? 'lookupCode' : 'lovCode') : undefined,
+          })}
+        </div>
+      );
+    }
+  }
+
   getPopupContent(): ReactNode {
     const menu = (
       <Spin key="menu" spinning={this.loading}>
@@ -1109,6 +1146,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.renderSelectAll(),
       menu,
       this.renderInputPrompt(),
+      (!this.loading && this.filteredOptions.length ? this.renderAddNewOptionPrompt('prompt') : undefined),
     ];
   }
 

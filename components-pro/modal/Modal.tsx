@@ -128,6 +128,7 @@ export interface ModalProps extends ViewComponentProps {
    * 挂在到 iframe 里时，距离 iframe 可视区域顶部的距离，单位：px
    */
   iframeTopDiff?: number;
+  footerExtra?: ReactNode;
 }
 
 export default class Modal extends ViewComponent<ModalProps> {
@@ -449,6 +450,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       'beforeOpen',
       'afterOpenChange',
       'buttonTrigger',
+      'footerExtra',
     ]);
   }
 
@@ -1150,7 +1152,7 @@ export default class Modal extends ViewComponent<ModalProps> {
   getWrappedFooter(footer: ReactNode) {
     const { prefixCls, drawerHeaderFooterCombined } = this;
 
-    const { drawer } = this.props;
+    const { drawer, footerExtra } = this.props;
 
     const className = classNames({
       [`${prefixCls}-footer`]: !drawerHeaderFooterCombined,
@@ -1158,7 +1160,7 @@ export default class Modal extends ViewComponent<ModalProps> {
       [`${prefixCls}-drawer-footer`]: drawer && !drawerHeaderFooterCombined,
       [`${prefixCls}-drawer-header-buttons-footer`]: drawerHeaderFooterCombined,
     });
-    return <div className={className}>{footer}</div>;
+    return <div className={className}>{footerExtra}{footer}</div>;
   }
 
   getDefaultHeader = (title, closeButton: ReactNode, _okBtn: ReactElement<ButtonProps>, _cancelBtn: ReactElement<ButtonProps>) => {
