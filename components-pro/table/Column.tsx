@@ -36,6 +36,7 @@ export interface ColumnRenderProps extends RenderProps {
   headerGroup?: Group;
   rowGroup?: Group;
   aggregationTree?: ReactElement<AggregationTreeProps>[];
+  rowIndex?: number;
 }
 
 export interface FooterHookOptions {

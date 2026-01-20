@@ -84,6 +84,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: 修复引入 getConfig 的循环依赖问题。
 - 🐞 `<pro>Tooltip`: 修复触发 dom 从 DOM 树中移除后, 弹窗不消失的问题。
 - 🐞 `<pro>Table`: 修复从第二页起无法通过回车跳转到下一行编辑的问题。
+- 🐞 `<pro>Table`: 修复数据分组模式下行号错乱，删除数据后单元格错位的问题。
 - 🐞 `<pro>Button`: 修复禁用状态下文字溢出省略的样式失效的问题。
 
 ## 1.6.7

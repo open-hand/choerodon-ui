@@ -12,7 +12,7 @@ export default class Group {
 
   parentValue?: any;
 
-  records: Record[];
+  @observable records: Record[];
 
   readonly totalRecords: Record[];
 
@@ -63,7 +63,7 @@ export default class Group {
         return newList;
       }, []);
     }
-    return this.records;
+    return this.records.filter(record => !record.isRemoved);
   }
 
   constructor(name: string | symbol, index: number, value?: any, parentGroup?: Group) {
@@ -71,7 +71,7 @@ export default class Group {
     this.name = name;
     this.value = value;
     this.parentGroup = parentGroup;
-    this.records = [];
+    this.records = observable.array([]);
     this.totalRecords = [];
     this.subGroups = [];
   }

@@ -92,11 +92,12 @@ export interface TableCellInnerProps {
   columnGroup?: ColumnGroup;
   isDragging?: boolean;
   tableCellFinalStyle?: CSSProperties;
+  rowIndex?: number;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup,
-    columnGroup, isDragging, tableCellFinalStyle } = props;
+    columnGroup, isDragging, tableCellFinalStyle, rowIndex } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -502,6 +503,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       headerGroup,
       rowGroup,
       showDetail,
+      rowIndex,
     } as ColumnRenderProps);
   };
   const getRenderedValue = (): any => {
