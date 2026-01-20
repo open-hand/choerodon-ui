@@ -85,6 +85,8 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fixed the circular dependency issue caused by introducing `getConfig`.
 - 🐞 `<pro>Tooltip`: Fixed the issue where the pop-up window did not disappear after the `dom` was removed from the `DOM` tree.
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter from the second page onwards could not move to the next line for editing.
+- 🐞 `<pro>Table`: Fixed the issue of row numbers being incorrect in data grouping mode and cells misaligning after deleting data.
+- 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
 
 ## 1.6.7
 

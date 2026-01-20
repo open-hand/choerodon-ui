@@ -2934,9 +2934,9 @@ export default class TableStore {
 
 
   @autobind
-  renderRowNumber({ record, dataSet }): ReactNode {
-    const { isTree, props: { rowNumber } } = this;
-    const numbers = getRowNumbers(record, dataSet, isTree);
+  renderRowNumber({ record, dataSet, rowIndex }: { record: Record; dataSet: DataSet; rowIndex?: number }): ReactNode {
+    const { isTree, props: { rowNumber }, groups } = this;
+    const numbers = groups.length > 0 && rowIndex !== undefined ? [rowIndex + 1] : getRowNumbers(record, dataSet, isTree);
     const number = numbers.join('-');
     if (typeof rowNumber === 'function') {
       return rowNumber({ record, dataSet, text: number, pathNumbers: numbers });

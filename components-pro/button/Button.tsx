@@ -398,6 +398,13 @@ export default class Button extends DataSetComponent<ButtonProps> {
     );
   }
 
+  hasEllipsisStyle(): boolean {
+    const { style = {} } = this.props;
+    const { width, maxWidth, overflow, whiteSpace, textOverflow } = style;
+    const result = !!(width || maxWidth) && overflow === 'hidden' && whiteSpace === 'nowrap' && textOverflow === 'ellipsis';
+    return result;
+  }
+
   render() {
     const { children, icon, href, funcType, hidden } = this.props;
     const { loading, disabled } = this;
@@ -433,9 +440,16 @@ export default class Button extends DataSetComponent<ButtonProps> {
       children || children === 0
         ? spaceChildren(children, this.isNeedInserted() && autoInsertSpace)
         : null;
+    const overflowStyle = tooltipWrapper && this.hasEllipsisStyle() ?
+      {
+        width: '100%',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap' as React.CSSProperties['whiteSpace'],
+        textOverflow: 'ellipsis',
+      } : undefined;
     const button = (
       <Ripple disabled={disabled || funcType === FuncType.link}>
-        <Cmp {...omit(props, omits)}>
+        <Cmp {...omit(props, omits)} style={overflowStyle}>
           {buttonIcon}
           {hasString ? <span>{kids}</span> : kids}
         </Cmp>

@@ -102,10 +102,11 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       columnGroup={columnGroup}
       isDragging={isDragging}
       tableCellFinalStyle={tableCellFinalStyle}
+      rowIndex={rowIndex}
     >
       {children}
     </TableCellInner>
-  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging]);
+  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging, rowIndex]);
   const isBuiltInColumn = tableStore.isBuiltInColumn(column);
 
   const columnOnCell = onCell || (!isBuiltInColumn && tableColumnOnCell);
@@ -441,6 +442,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
               headerGroup: columnGroup.headerGroup,
               rowGroup,
               aggregationTree: aggregationList,
+              rowIndex,
             })
           }
         </span>
