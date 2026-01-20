@@ -25,8 +25,9 @@ timeline: true
 - 🌟 `<pro>DataSet`: The `appendData` method has added an `index` parameter.
 - 🌟 `<pro>Attachment`: The `getPreviewUrl` property now supports asynchronous function types.
 - 🌟 `<pro>Attachment`: Added `onUploadAbort` property and `abortUpload` method.
-- 🌟 `<pro>Select`: Added `showInputPrompt` property.
+- 🌟 `<pro>Select`: Added `showInputPrompt`, `addNewOptionPrompt` property.
 - 🌟 `<pro>Tooltip`: Added `autoPlacement` property.
+- 🌟 `<pro>Modal`: Added `footerExtra` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
