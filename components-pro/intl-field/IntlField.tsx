@@ -38,6 +38,8 @@ export interface IntlFieldProps extends TextAreaProps {
 export default class IntlField extends TextArea<IntlFieldProps> {
   static displayName = 'IntlField';
 
+  static __PRO_INTLFIELD = true;
+
   static defaultProps = {
     ...TextArea.defaultProps,
     rows: 3,
