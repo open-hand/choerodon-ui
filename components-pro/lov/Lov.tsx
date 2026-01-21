@@ -652,7 +652,8 @@ export default class Lov extends Select<LovProps> {
             getSelectionProps: this.getSelectionProps,
             showDetailWhenReadonly,
             lang: this.lang,
-            renderAddNewOptionPrompt: addNewOptionPrompt ? this.renderAddNewOptionPrompt : undefined,
+            renderAddNewOptionPrompt: isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path)
+              ? this.renderAddNewOptionPrompt : undefined,
           }
           this.modal = Modal.open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
@@ -695,7 +696,7 @@ export default class Lov extends Select<LovProps> {
       [`${this.prefixCls}-lov-modal`]: viewMode === TriggerViewMode.modal,
       [`${this.prefixCls}-lov-modal-drawer`]: viewMode === TriggerViewMode.drawer,
       [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup,
-      [`${this.prefixCls}-lov-modal-new-option-prompt`]: addNewOptionPrompt,
+      [`${this.prefixCls}-lov-modal-new-option-prompt`]: isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path),
     });
   }
 

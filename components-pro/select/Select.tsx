@@ -270,16 +270,16 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   showInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
   /**
-   * 自定义添加新选项提示
+   * 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染
    * type: prompt 有数据时底部提示, noDataPrompt 无数据时提示;
    */
-  addNewOptionPrompt?: (props: {
+  addNewOptionPrompt?: { path: string; disabledTooltipTitle?: string; } | ((props: {
     type: 'prompt' | 'noDataPrompt';
     component: 'Select' | 'Lov';
     record?: Record;
     field?: Field;
     code?: string;
-  }) => ReactNode;
+  }) => ReactNode);
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -707,7 +707,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     if (notFoundContent !== undefined) {
       return notFoundContent;
     }
-    if (addNewOptionPrompt) {
+    if (isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path)) {
       return this.renderAddNewOptionPrompt('noDataPrompt');
     }
     return this.getContextConfig('renderEmpty')('Select');
@@ -1117,19 +1117,31 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   renderAddNewOptionPrompt(type: 'prompt' | 'noDataPrompt'): ReactNode | undefined {
     const { record, field, props: { addNewOptionPrompt } } = this;
     const { displayName } = this.constructor as any;
+    const addNewOptionPromptRender = this.getContextConfig('addNewOptionPromptRender');
+    const renderProps = {
+      type,
+      component: displayName,
+      record,
+      field,
+      code: field ? field.get(displayName === 'Select' ? 'lookupCode' : 'lovCode') : undefined,
+    };
     if (isFunction(addNewOptionPrompt)) {
       return (
         <div
           key={`new-option-notice-inner-${type}`}
           className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
         >
-          {addNewOptionPrompt({
-            type,
-            component: displayName,
-            record,
-            field,
-            code: field ? field.get(displayName === 'Select' ? 'lookupCode' : 'lovCode') : undefined,
-          })}
+          {addNewOptionPrompt(renderProps)}
+        </div>
+      );
+    }
+    if (addNewOptionPrompt && addNewOptionPrompt.path && addNewOptionPromptRender) {
+      return (
+        <div
+          key={`new-option-notice-inner-${type}`}
+          className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
+        >
+          {addNewOptionPromptRender({ ...renderProps, ...(addNewOptionPrompt as any) })}
         </div>
       );
     }
