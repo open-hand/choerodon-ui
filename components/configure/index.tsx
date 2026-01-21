@@ -171,6 +171,16 @@ export interface AttachmentConfig extends DataSetAttachmentConfig {
 
 export type TreeCheckboxPosition = undefined | 'default' | 'left';
 
+export type AddNewOptionPromptRenderType = (props: {
+  type: 'prompt' | 'noDataPrompt';
+  component: 'Select' | 'Lov';
+  record?: Record;
+  field?: Field;
+  code?: string;
+  path: string;
+  disabledTooltipTitle?: string;
+}) => ReactNode;
+
 export interface Config extends DataSetConfig {
   prefixCls?: string;
   proPrefixCls?: string;
@@ -294,6 +304,8 @@ export interface Config extends DataSetConfig {
   selectTrigger?: Action[];
   selectScrollLoad?: boolean;
   selectShowInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
+  /** Select Lov 新增选项功能渲染函数 */
+  addNewOptionPromptRender?: AddNewOptionPromptRenderType;
   secretFieldEnable?: () => boolean;
   secretFieldTypes?: () => object[];
   secretFieldFetchVerifyCode?: (type: string) => Promise<object>;
