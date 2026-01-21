@@ -27,6 +27,7 @@ import { ShowHelp } from '../field/enum';
 import autobind from '../_util/autobind';
 import { TextAreaProps } from '../text-area/TextArea';
 import { ResizeType } from '../text-area/enum';
+import { IntlType } from '../intl-field/enum';
 import { ColumnLock } from './enum';
 import transform from '../_util/transform';
 import { LabelLayout, ShowValidation } from '../form/enum';
@@ -37,6 +38,10 @@ export interface TableEditorProps extends ElementProps {
 
 function isTextArea(editor: ReactElement<FormFieldProps>): editor is ReactElement<TextAreaProps> {
   return (editor.type as any).__PRO_TEXTAREA;
+}
+
+function isIntlField(editor: ReactElement<FormFieldProps>): boolean {
+  return (editor.type as any).__PRO_INTLFIELD;
 }
 
 function isHTMLElement(el): el is HTMLElement {
@@ -553,6 +558,8 @@ export default class TableEditor extends Component<TableEditorProps> {
         if (height !== undefined) {
           style.height = pxToRem(height, true);
         }
+        const isMultipleLineIntlField = isIntlField(cellEditor) && this.editorProps.type === IntlType.multipleLine;
+        const isTextAreaEditor = isTextArea(cellEditor) && (!isIntlField(cellEditor) || isMultipleLineIntlField);
         const newEditorProps = {
           ...otherProps,
           style,
@@ -561,7 +568,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           name,
           tagRenderer,
           onKeyDown: this.handleEditorKeyDown,
-          onEnterDown: isTextArea(cellEditor) ? undefined : this.handleEditorKeyEnterDown,
+          onEnterDown: isTextAreaEditor ? undefined : this.handleEditorKeyEnterDown,
           onBlur: this.handleEditorBlur,
           tabIndex: currentEditorName ? 0 : -1,
           showHelp: ShowHelp.none,
