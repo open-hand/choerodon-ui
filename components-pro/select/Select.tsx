@@ -276,6 +276,7 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
   addNewOptionPrompt?: { path: string; disabledTooltipTitle?: string; } | ((props: {
     type: 'prompt' | 'noDataPrompt';
     component: 'Select' | 'Lov';
+    renderEmptyComponent: string;
     record?: Record;
     field?: Field;
     code?: string;
@@ -708,7 +709,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       return notFoundContent;
     }
     if (isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path)) {
-      return this.renderAddNewOptionPrompt('noDataPrompt');
+      return this.renderAddNewOptionPrompt('noDataPrompt', 'Select');
     }
     return this.getContextConfig('renderEmpty')('Select');
   }
@@ -970,10 +971,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
-    const { multiple, prefixCls } = this;
+    const { multiple, prefixCls, props: { addNewOptionPrompt } } = this;
     return classNames(defaultClassName, {
       [`${prefixCls}-popup-multiple`]: multiple,
       [`${prefixCls}-popup-single`]: !multiple,
+      [`${prefixCls}-popup-new-option-prompt`]: isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path),
     });
   }
 
@@ -1114,13 +1116,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   @autobind
-  renderAddNewOptionPrompt(type: 'prompt' | 'noDataPrompt'): ReactNode | undefined {
+  renderAddNewOptionPrompt(type: 'prompt' | 'noDataPrompt', renderEmptyComponent: string): ReactNode | undefined {
     const { record, field, props: { addNewOptionPrompt } } = this;
     const { displayName } = this.constructor as any;
     const addNewOptionPromptRender = this.getContextConfig('addNewOptionPromptRender');
     const renderProps = {
       type,
       component: displayName,
+      renderEmptyComponent,
       record,
       field,
       code: field ? field.get(displayName === 'Select' ? 'lookupCode' : 'lovCode') : undefined,
@@ -1158,7 +1161,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.renderSelectAll(),
       menu,
       this.renderInputPrompt(),
-      (!this.loading && this.filteredOptions.length ? this.renderAddNewOptionPrompt('prompt') : undefined),
+      (!this.loading && this.filteredOptions.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),
     ];
   }
 

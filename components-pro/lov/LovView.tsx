@@ -48,7 +48,7 @@ export interface LovViewProps {
   getSelectionProps?: () => SelectionProps,
   showDetailWhenReadonly?: boolean;
   lang?: Lang;
-  renderAddNewOptionPrompt?: (type: 'prompt' | 'noDataPrompt') => ReactNode;
+  renderAddNewOptionPrompt?: (type: 'prompt' | 'noDataPrompt', renderEmptyComponent: string) => ReactNode;
 }
 
 interface LovViewState {
@@ -379,7 +379,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       } as TableQueryBarHookCustomProps,
     };
     if (renderAddNewOptionPrompt && dataSet.status !== DataSetStatus.loading && !dataSet.length && !(tableProps || {}).renderEmpty) {
-      lovTableProps.renderEmpty = () => renderAddNewOptionPrompt('noDataPrompt');
+      lovTableProps.renderEmpty = () => renderAddNewOptionPrompt('noDataPrompt', 'Table');
     }
     if (multiple) {
       if (popup || !tableProps || !tableProps.selectionMode) {

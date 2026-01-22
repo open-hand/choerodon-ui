@@ -21,6 +21,7 @@ import { configure, Spin } from 'choerodon-ui';
 const C7NAddNewOptionPromptRender = ({
   type,
   component,
+  renderEmptyComponent,
   record,
   field,
   code,
@@ -86,10 +87,20 @@ const C7NAddNewOptionPromptRender = ({
       </>
     );
   }
-  if (component === 'Lov' && type === 'noDataPrompt') {
+  if (component === 'Lov' && type === 'noDataPrompt' && renderEmptyComponent === 'Table') {
     return (
       <>
         <div>图片占位</div>
+        <span className={`c7n-pro-select-new-option-prompt-tip`}>暂无数据</span>
+        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
+          立即添加{isDisabled ? <Icon type="help" /> : undefined}
+        </Button>
+      </>
+    );
+  }
+  if (component === 'Lov' && type === 'noDataPrompt') {
+    return (
+      <>
         <span className={`c7n-pro-select-new-option-prompt-tip`}>暂无数据</span>
         <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
           立即添加{isDisabled ? <Icon type="help" /> : undefined}
