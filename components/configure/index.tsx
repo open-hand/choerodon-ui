@@ -174,6 +174,7 @@ export type TreeCheckboxPosition = undefined | 'default' | 'left';
 export type AddNewOptionPromptRenderType = (props: {
   type: 'prompt' | 'noDataPrompt';
   component: 'Select' | 'Lov';
+  renderEmptyComponent: string;
   record?: Record;
   field?: Field;
   code?: string;

@@ -352,7 +352,7 @@ export default class Lov extends Select<LovProps> {
     const config = this.getConfig();
     this.autoCreate();
     const { options, viewMode, showDetailWhenReadonly } = this;
-    const { popupSearchMode, onBeforeSelect } = this.props;
+    const { popupSearchMode, onBeforeSelect, addNewOptionPrompt } = this.props;
     if (config && options) {
       let lovViewProps;
       if (!this.popup) delete this.fetched;
@@ -389,6 +389,8 @@ export default class Lov extends Select<LovProps> {
           popupHidden={!this.popup}
           showDetailWhenReadonly={showDetailWhenReadonly}
           lang={this.lang}
+          renderAddNewOptionPrompt={isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path)
+            ? this.renderAddNewOptionPrompt : undefined}
         />
       );
     }
@@ -397,9 +399,12 @@ export default class Lov extends Select<LovProps> {
   @autobind
   getPopupContent(): ReactNode {
     const { searchAction } = this.props;
-    const { viewMode } = this;
+    const { viewMode, options } = this;
     if (viewMode === TriggerViewMode.popup) {
-      return this.getPopupLovView();
+      return [
+        this.getPopupLovView(),
+        (!this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),
+      ];
     }
     if (searchAction === SearchAction.input) {
       return super.getPopupContent();
@@ -456,7 +461,7 @@ export default class Lov extends Select<LovProps> {
     const { addNewOptionPrompt } = this.props;
     if (addNewOptionPrompt && modal) {
       modal.update({
-        footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt') : undefined,
+        footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Lov') : undefined,
       });
     }
   }
@@ -677,7 +682,7 @@ export default class Lov extends Select<LovProps> {
             },
             afterClose: this.handleLovViewAfterClose,
             footer: showDetailWhenReadonly ? null : undefined,
-            footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt') : undefined,
+            footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Lov') : undefined,
           }, modalProps) || {});
           this.afterOpen(options, fetchSingle);
         }
@@ -867,8 +872,11 @@ export default class Lov extends Select<LovProps> {
   }
 
   getPopupClassName(defaultClassName: string | undefined): string | undefined {
-    const { viewMode } = this;
-    return classNames(defaultClassName, { [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup });
+    const { viewMode, props: { addNewOptionPrompt } } = this;
+    return classNames(defaultClassName, {
+      [`${this.prefixCls}-lov-popup`]: viewMode === TriggerViewMode.popup,
+      [`${this.prefixCls}-lov-popup-new-option-prompt`]: isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path),
+    });
   }
 
   syncValueOnBlur(value, event?: any) {
