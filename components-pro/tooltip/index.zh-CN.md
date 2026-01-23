@@ -27,7 +27,7 @@ title: Tooltip
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | `false` |
-| autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | `true` |
+| autoAdjustOverflow | 气泡被遮挡时自动调整位置; 可单独设置水平和垂直方向自动调整位置 | boolean \| { adjustX?: 0 \| 1; adjustY?: 0 \| 1; } | `true` |
 | defaultHidden | 默认是否显隐 | boolean | true |
 | mouseEnterDelay | 鼠标移入后延时多少才显示 Tooltip，单位：秒 | number | 0 |
 | mouseLeaveDelay | 鼠标移出后延时多少才隐藏 Tooltip，单位：秒 | number | 0.1 |
