@@ -65,6 +65,7 @@ timeline: true
 - 💄 `Trigger`: 优化 codemirror 影响点击事件判断问题。
 - 💄 `<pro>TextField`: 优化多值下的粘贴功能，粘贴内容中存在 \t 或 \n 时会被拆分成多值。
 - 💄 `<pro>Table`: 优化单元格下单个 Tag 溢出显示。
+- 💄 `<pro>Table`: 优化 selectionColumnProps 属性, 支持自定义全选框。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
