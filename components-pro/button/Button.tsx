@@ -449,7 +449,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       } : undefined;
     const button = (
       <Ripple disabled={disabled || funcType === FuncType.link}>
-        <Cmp {...omit(props, omits)} style={overflowStyle}>
+        <Cmp style={overflowStyle} {...omit(props, omits)}>
           {buttonIcon}
           {hasString ? <span>{kids}</span> : kids}
         </Cmp>
