@@ -27,7 +27,7 @@ title: Tooltip
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | `false` |
-| autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | `true` |
+| autoAdjustOverflow | 气泡被遮挡时自动调整位置; 可单独设置水平和垂直方向自动调整位置 | boolean \| { adjustX?: 0 \| 1; adjustY?: 0 \| 1; } | `true` |
 | defaultVisible | 默认是否显隐 | boolean | false |
 | getPopupContainer | 浮层渲染父节点，默认渲染到 body 上。`2.5.2` 之前请使用 `getTooltipContainer` | Function(triggerNode) | () => document.body |
 | mouseEnterDelay | 鼠标移入后延时多少才显示 Tooltip，单位：秒 | number | 0 |
