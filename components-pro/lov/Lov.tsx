@@ -590,8 +590,15 @@ export default class Lov extends Select<LovProps> {
             options.paging = paging;
           });
         }
-      } else if (this.resetOptions(noCache) && fetchSingle !== true && !this.multiple) {
-        options.query(1, undefined, true);
+      } else if (!this.multiple) {
+        if (this.resetOptions(noCache) && fetchSingle !== true) {
+          options.query(1, undefined, true);
+        }
+        const { selectionMode } = this.getTableProps();
+        if (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick) {
+          // 存在单选框的情况下，同步 record 的勾选状态
+          options.releaseCachedSelected();
+        }
       } else if (this.multiple) {
         if (this.resetOptions(noCache)) {
           options.query(1, undefined, true);

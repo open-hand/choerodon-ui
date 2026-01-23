@@ -89,6 +89,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue of row numbers being incorrect in data grouping mode and cells misaligning after deleting data.
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter could not move to the next line when the cell editor was set as a IntlField.
 - 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
+- 🐞 `<pro>Lov`: Fixed the issue where the initial selection state was not synchronized in single-selection mode.
 
 ## 1.6.7
 
