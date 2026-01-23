@@ -2029,8 +2029,8 @@ export default class TableStore {
         ...rest,
       };
       if (dataSet && dataSet.selection === DataSetSelection.multiple) {
-        selectionColumn.header = this.multipleSelectionRenderer;
-        selectionColumn.footer = this.multipleSelectionRenderer;
+        selectionColumn.header = 'header' in rest ? rest.header : this.multipleSelectionRenderer;
+        selectionColumn.footer = 'footer' in rest ? rest.footer : this.multipleSelectionRenderer;
       }
       return selectionColumn;
     }
