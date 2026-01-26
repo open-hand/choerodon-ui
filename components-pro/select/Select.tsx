@@ -45,6 +45,7 @@ import { LabelLayout } from '../form/enum';
 import { isFieldValueEmpty } from '../field/utils';
 import { Action } from '../trigger/enum';
 import OverflowTip from '../overflow-tip';
+import { TooltipProps } from '../tooltip/Tooltip';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -109,6 +110,23 @@ export interface ParamMatcherProps {
   text: string | string[] | undefined;
   textField: string;
   valueField: string;
+}
+
+export interface AddNewOptionPromptRenderProps {
+  type: 'prompt' | 'noDataPrompt';
+  component: 'Select' | 'Lov';
+  renderEmptyComponent: string;
+  record?: Record;
+  field?: Field;
+  code?: string;
+}
+
+export interface AddNewOptionPromptResultProps {
+  /** 校验权限, 以及跳转页面 */
+  path: string;
+  disabledTooltip?: TooltipProps;
+  /** 设置后不再跳转 path */
+  onClick?: (path: string, record?: Record, field?: Field) => void;
 }
 
 export interface SelectPopupContentProps extends TriggerFieldPopupContentProps {
@@ -273,14 +291,8 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染
    * type: prompt 有数据时底部提示, noDataPrompt 无数据时提示;
    */
-  addNewOptionPrompt?: { path: string; disabledTooltipTitle?: string; } | ((props: {
-    type: 'prompt' | 'noDataPrompt';
-    component: 'Select' | 'Lov';
-    renderEmptyComponent: string;
-    record?: Record;
-    field?: Field;
-    code?: string;
-  }) => ReactNode);
+  addNewOptionPrompt?: AddNewOptionPromptResultProps |
+    ((props: AddNewOptionPromptRenderProps) => (ReactNode | AddNewOptionPromptResultProps));
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -1120,7 +1132,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const { record, field, props: { addNewOptionPrompt } } = this;
     const { displayName } = this.constructor as any;
     const addNewOptionPromptRender = this.getContextConfig('addNewOptionPromptRender');
-    const renderProps = {
+    const renderProps: AddNewOptionPromptRenderProps = {
       type,
       component: displayName,
       renderEmptyComponent,
@@ -1129,12 +1141,20 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       code: field ? field.get(displayName === 'Select' ? 'lookupCode' : 'lovCode') : undefined,
     };
     if (isFunction(addNewOptionPrompt)) {
+      const renderResult = addNewOptionPrompt(renderProps);
+      let renderResultNode: ReactNode = renderResult;
+      if (renderResult && (renderResult as AddNewOptionPromptResultProps).path) {
+        if (!addNewOptionPromptRender) return null;
+        renderResultNode = addNewOptionPromptRender({ ...renderProps, ...(renderResult as AddNewOptionPromptResultProps) });
+      } else if (!isValidElement(renderResult)) {
+        return null;
+      }
       return (
         <div
           key={`new-option-notice-inner-${type}`}
           className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
         >
-          {addNewOptionPrompt(renderProps)}
+          {renderResultNode}
         </div>
       );
     }
@@ -1144,7 +1164,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           key={`new-option-notice-inner-${type}`}
           className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
         >
-          {addNewOptionPromptRender({ ...renderProps, ...(addNewOptionPrompt as any) })}
+          {addNewOptionPromptRender({ ...renderProps, ...(addNewOptionPrompt as AddNewOptionPromptResultProps) })}
         </div>
       );
     }

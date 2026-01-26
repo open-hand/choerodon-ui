@@ -26,10 +26,10 @@ const C7NAddNewOptionPromptRender = ({
   field,
   code,
   path,
-  disabledTooltipTitle,
+  disabledTooltip = {},
+  onClick,
 }) => {
   url = path;
-  disabledTooltipTitle = disabledTooltipTitle || `当前账号无该字段对应功能的菜单权限，请联系管理员`;
 
   // TODO: 按钮根据用户是否有 url 权限, 判断是否禁用
   const [isDisabled, setIsDisabled] = useState(false);
@@ -38,18 +38,28 @@ const C7NAddNewOptionPromptRender = ({
     // TODO: 模拟异步请求权限
     setTimeout(() => {
       setIsLoading(false);
-      setIsDisabled(true);
-    }, 1000);
+      setIsDisabled(false);
+    }, 500);
   }, []);
 
   const tooltip = isDisabled ? [
     'always',
     {
-      title: disabledTooltipTitle,
+      title: `当前账号无该字段对应功能的菜单权限，请联系管理员`,
+      ...disabledTooltip,
     },
   ] : undefined;
 
-  if (!path) {
+  const buttonClick = () => {
+    if (!url) return null;
+    if (onClick) {
+      onClick(url, record, field);
+      return;
+    }
+    window.location.href = url;
+  }
+
+  if (!url) {
     return undefined;
   }
 
@@ -57,31 +67,11 @@ const C7NAddNewOptionPromptRender = ({
     return <Spin />;
   }
 
-  if (component === 'Select' && type === 'prompt') {
+  if ((component === 'Select' && type === 'prompt') || (component === 'Lov' && type === 'prompt')) {
     return (
       <>
         <span className={`c7n-pro-select-new-option-prompt-tip`}>没有找到数据?</span>
-        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
-          立即添加{isDisabled ? <Icon type="help" /> : undefined}
-        </Button>
-      </>
-    );
-  }
-  if (component === 'Select' && type === 'noDataPrompt') {
-    return (
-      <>
-        <span className={`c7n-pro-select-new-option-prompt-tip`}>暂无数据</span>
-        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
-          立即添加{isDisabled ? <Icon type="help" /> : undefined}
-        </Button>
-      </>
-    );
-  }
-  if (component === 'Lov' && type === 'prompt') {
-    return (
-      <>
-        <span className={`c7n-pro-select-new-option-prompt-tip`}>没有找到数据?</span>
-        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
+        <Button funcType="flat" color="primary" onClick={buttonClick} disabled={isDisabled} tooltip={tooltip}>
           立即添加{isDisabled ? <Icon type="help" /> : undefined}
         </Button>
       </>
@@ -92,17 +82,17 @@ const C7NAddNewOptionPromptRender = ({
       <>
         <div>图片占位</div>
         <span className={`c7n-pro-select-new-option-prompt-tip`}>暂无数据</span>
-        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
+        <Button funcType="flat" color="primary" onClick={buttonClick} disabled={isDisabled} tooltip={tooltip}>
           立即添加{isDisabled ? <Icon type="help" /> : undefined}
         </Button>
       </>
     );
   }
-  if (component === 'Lov' && type === 'noDataPrompt') {
+  if ((component === 'Select' && type === 'noDataPrompt') || (component === 'Lov' && type === 'noDataPrompt')) {
     return (
       <>
         <span className={`c7n-pro-select-new-option-prompt-tip`}>暂无数据</span>
-        <Button funcType="flat" color="primary" href={url} disabled={isDisabled} tooltip={tooltip}>
+        <Button funcType="flat" color="primary" onClick={buttonClick} disabled={isDisabled} tooltip={tooltip}>
           立即添加{isDisabled ? <Icon type="help" /> : undefined}
         </Button>
       </>
@@ -146,22 +136,49 @@ class App extends React.Component {
 
   render() {
     return (
-      <Row>
-        <Col span={12}>
-          <Select dataSet={this.ds} searchable name="user" addNewOptionPrompt={{ path: "/components-pro/button-cn/" }}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="wu">Wu</Option>
-          </Select>
-        </Col>
-        <Col span={12}>
-          <Select dataSet={this.ds} name="user2" addNewOptionPrompt={{ path: "/components-pro/button-cn/", disabledTooltipTitle: '自定义提示' }}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="wu">Wu</Option>
-          </Select>
-        </Col>
-      </Row>
+      <div>
+        <Row>
+          <Col span={12}>
+            <Select dataSet={this.ds} searchable name="user" addNewOptionPrompt={{ path: "/components-pro/button-cn/" }}>
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="wu">Wu</Option>
+            </Select>
+          </Col>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="user2" addNewOptionPrompt={{ path: "/components-pro/button-cn/", disabledTooltip: { title: '自定义提示' } }}>
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="wu">Wu</Option>
+            </Select>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <Select dataSet={this.ds} searchable name="user" addNewOptionPrompt={{ path: "/components-pro/button-cn/", onClick: (path, record, field) => {
+              console.log('clickProps', path, record, field);
+              window.location.href = "/components-pro/button-cn/";
+            } }}>
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="wu">Wu</Option>
+            </Select>
+          </Col>
+          <Col span={12}>
+            <Select dataSet={this.ds} name="user2" addNewOptionPrompt={(props) => {
+              console.log('renderProps', props);
+              return { path: "/components-pro/button-cn/", onClick: (path, record, field) => {
+                console.log('clickProps', path, record, field);
+                window.location.href = "/components-pro/button-cn/";
+              }, disabledTooltip: { title: '自定义提示' } };
+            }}>
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="wu">Wu</Option>
+            </Select>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
