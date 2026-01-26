@@ -1164,7 +1164,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           key={`new-option-notice-inner-${type}`}
           className={`${this.prefixCls}-new-option-prompt ${this.prefixCls}-new-option-prompt-${type}`}
         >
-          {addNewOptionPromptRender({ ...renderProps, ...addNewOptionPrompt })}
+          {addNewOptionPromptRender({ ...renderProps, ...(addNewOptionPrompt as AddNewOptionPromptResultProps) })}
         </div>
       );
     }
