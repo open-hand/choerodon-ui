@@ -49,7 +49,7 @@ title: Select
 | popupShowComboValue | popup 弹窗中的选项是否显示 combo 复合值; 当不展示复合值时, defaultActiveFirstOption 无效, enter 或者 失焦选中复合值; | boolean | true |
 | virtual | 支持虚拟滚动 | boolean| false |
 | showInputPrompt | 可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
-| addNewOptionPrompt | 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染; type: prompt 有数据时底部提示, noDataPrompt 无数据时提示; component: Select Lov | { path: string; disabledTooltipTitle?: string; } \| ((props: { type: 'prompt' \| 'noDataPrompt'; component: 'Select' \| 'Lov'; renderEmptyComponent: string; record?: Record; field?: Field; code?: string; }) => ReactNode) |  |
+| addNewOptionPrompt | 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染; | [AddNewOptionPromptResultProps](#AddNewOptionPromptResultProps) \| ((props: [AddNewOptionPromptRenderProps](#AddNewOptionPromptRenderProps)) => (ReactNode \| AddNewOptionPromptResultProps)) |  |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
@@ -65,6 +65,25 @@ title: Select
 | -------- | ------ | ------- | ------ |
 | value    | 选项值 | any     |
 | disabled | 禁用   | boolean |        |  |
+
+### Select.AddNewOptionPromptRenderProps
+
+| 参数     | 说明   | 类型    | 默认值 |
+| -------- | ------ | ------- | ------ |
+| type    | 渲染类型: prompt 有数据时渲染, noDataPrompt 无数据时渲染 | 'prompt' \| 'noDataPrompt'     |        |
+| component | 渲染组件名   | 'Select' \| 'Lov' |        |
+| renderEmptyComponent | 空状态渲染组件名   | string |        |
+| record | Record   | Record |        |
+| field | Field   | Field |        |
+| code | lookupCode 或 lovCode   | string |        |
+
+### Select.AddNewOptionPromptResultProps
+
+| 参数     | 说明   | 类型    | 默认值 |
+| -------- | ------ | ------- | ------ |
+| path    | 校验权限, 以及跳转页面 | string     |        |
+| disabledTooltip | 禁用时 TooltipProps   | TooltipProps |        |
+| onClick | 按钮点击事件, 使用 path 校验权限, 设置后不再跳转 path   | (path: string, record?: Record, field?: Field) => void |        |
 
 <style>
 .code-box-demo .c7n-pro-select-wrapper {

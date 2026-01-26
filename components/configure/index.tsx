@@ -21,6 +21,10 @@ import {
   TableFilterBarButtonIcon,
 } from 'choerodon-ui/pro/lib/table/Table';
 import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
+import {
+  AddNewOptionPromptRenderProps,
+  AddNewOptionPromptResultProps,
+} from 'choerodon-ui/pro/lib/select/Select';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
 import {
@@ -171,16 +175,7 @@ export interface AttachmentConfig extends DataSetAttachmentConfig {
 
 export type TreeCheckboxPosition = undefined | 'default' | 'left';
 
-export type AddNewOptionPromptRenderType = (props: {
-  type: 'prompt' | 'noDataPrompt';
-  component: 'Select' | 'Lov';
-  renderEmptyComponent: string;
-  record?: Record;
-  field?: Field;
-  code?: string;
-  path: string;
-  disabledTooltipTitle?: string;
-}) => ReactNode;
+export type AddNewOptionPromptRenderType = (props: AddNewOptionPromptRenderProps & AddNewOptionPromptResultProps) => ReactNode;
 
 export interface Config extends DataSetConfig {
   prefixCls?: string;

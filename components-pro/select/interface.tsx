@@ -5,4 +5,6 @@ export {
   ParamMatcher,
   ParamMatcherProps,
   SelectProps,
+  AddNewOptionPromptRenderProps,
+  AddNewOptionPromptResultProps,
 } from './Select';

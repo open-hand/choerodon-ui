@@ -221,7 +221,7 @@ const prefixCls = getConfig('prefixCls');
 | selectScrollLoad | Select 组件是否开启选项滚动加载 | boolean |  |
 | richTextFontFamilies | RichText 组件工具栏字体选择列表，配置的字体需要通过 Quill 注册才能生效 | ({ name: string; family: string })\[\] |  | 
 | selectShowInputPrompt | Select、Lov、TreeSelect可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
-| addNewOptionPromptRender | Select Lov 新增选项功能渲染函数 | (props: { type: 'prompt' \| 'noDataPrompt'; component: 'Select' \| 'Lov'; renderEmptyComponent: string; record?: Record; field?: Field; code?: string; path: string; disabledTooltipTitle?: string; }) => ReactNode |  |
+| addNewOptionPromptRender | Select Lov 新增选项功能渲染函数 | (props: { type: 'prompt' \| 'noDataPrompt'; component: 'Select' \| 'Lov'; renderEmptyComponent: string; record?: Record; field?: Field; code?: string; path: string; disabledTooltip?: TooltipProps; onClick?: (path: string, record?: Record, field?: Field) => void; }) => ReactNode |  |
 
 ### Customizable
 
