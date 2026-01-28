@@ -91,6 +91,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter could not move to the next line when the cell editor was set as a IntlField.
 - 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the initial selection state was not synchronized in single-selection mode.
+- 🐞 `<pro>Switch`: Fixed an issue where the tooltip would appear even when the text did not overflow.
 
 ## 1.6.7
 
