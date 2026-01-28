@@ -93,6 +93,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复禁用状态下文字溢出省略的样式失效的问题。
 - 🐞 `<pro>Lov`: 修复单选模式下没有同步初始值勾选状态的问题。
 - 🐞 `<pro>Switch`: 修复文字未溢出也会触发 tooltip 的问题。
+- 🐞 `<pro>Tooltip`: 修复开启 autoPlacement 后在临界情况下气泡弹出的位置会反复切换的问题。
 
 ## 1.6.7
 

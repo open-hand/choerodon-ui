@@ -93,6 +93,7 @@ timeline: true
 - 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the initial selection state was not synchronized in single-selection mode.
 - 🐞 `<pro>Switch`: Fixed an issue where the tooltip would appear even when the text did not overflow.
+- 🐞 `<pro>Tooltip`: Fixed the issue where the popup position may switch back and forth after enabling `autoPlacement`.
 
 ## 1.6.7
 

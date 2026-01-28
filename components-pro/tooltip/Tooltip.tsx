@@ -141,6 +141,12 @@ export default class Tooltip extends Component<TooltipProps, any> {
     isCalculatingPlacement: false,
   };
 
+  // 实例属性用于缓存 placements
+  private placementsCache: { [key: string]: any } = {};
+
+  // 用于存储重置标志的 requestAnimationFrame ID
+  private resetPlacementFrameId: number | null = null;
+
   get prefixCls(): string {
     const { suffixCls, prefixCls } = this.props;
     const { context } = this;
@@ -180,7 +186,13 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   // 从 align.points 推导出当前 placement
   getPlacementFromAlign = (points: string[], arrowPointAtCenter?: boolean): string | null => {
-    const placements = getPlacements({ arrowPointAtCenter });
+    const cacheKey = arrowPointAtCenter ? 'true' : 'false';
+    // 使用缓存的 placements，如果不存在则生成并缓存
+    let placements = this.placementsCache[cacheKey];
+    if (!placements) {
+      placements = getPlacements({ arrowPointAtCenter });
+      this.placementsCache[cacheKey] = placements;
+    }
     // 查找匹配的 placement
     for (const [placement, config] of Object.entries(placements)) {
       if ((config as any).points[0] === points[0] && (config as any).points[1] === points[1]) {
@@ -230,8 +242,15 @@ export default class Tooltip extends Component<TooltipProps, any> {
       const targetRect = getElementRect(target);
       const popupRect = getElementRect(source);
       const viewportRect = getViewportRect();
-      const bestPlacement = calculateBestPlacement(targetRect, popupRect, viewportRect);
+
       const currentPlacement = this.getPlacementFromAlign(align.points, arrowPointAtCenter);
+      const currentBaseStr = this.getBasePlacement(currentPlacement);
+      const currentBase = (currentBaseStr && ['top', 'bottom', 'left', 'right'].includes(currentBaseStr)) 
+        ? currentBaseStr as TooltipPlacement 
+        : undefined;
+
+      const bestPlacement = calculateBestPlacement(targetRect, popupRect, viewportRect, currentBase);
+
       // 使用兼容性检查而不是严格相等比较
       if (!this.isPlacementCompatible(bestPlacement, currentPlacement)) {
         // 设置计算标志，避免无限循环
@@ -239,29 +258,36 @@ export default class Tooltip extends Component<TooltipProps, any> {
           isCalculatingPlacement: true,
           autoCalculatedPlacement: bestPlacement,
         });
-        // 重置计算标志
-        setTimeout(() => {
+        // 使用 requestAnimationFrame 重置计算标志，比 setTimeout 更可靠
+        if (this.resetPlacementFrameId) {
+          cancelAnimationFrame(this.resetPlacementFrameId);
+        }
+        this.resetPlacementFrameId = requestAnimationFrame(() => {
           this.setState({ isCalculatingPlacement: false });
-        }, 0);
+          this.resetPlacementFrameId = null;
+        });
       }
     }
-    
+    // 合并状态更新，减少 setState 调用
+    const stateUpdates: any = {};
     if (x !== translate.x || y !== translate.y) {
-      this.setState({
-        translate,
-      });
+      stateUpdates.translate = translate;
     }
-    if (adjustX || adjustY) {
-      const { top: popupTop, left: popupLeft } = source.getBoundingClientRect();
-      const { width, height, top: targetTop, left: targetLeft } = target.getBoundingClientRect();
-      if (adjustX) {
-        this.setState({ arrowAdjustPosition: { left: pxToRem(targetLeft - popupLeft + width / 2) } });
-      }
-      if (adjustY) {
-        this.setState({ arrowAdjustPosition: { top: pxToRem(targetTop - popupTop + height / 2) } });
-      }
-    } else {
-      this.setState({ arrowAdjustPosition: undefined })
+    const { arrowAdjustPosition } = this.state;
+    if (adjustX) {
+      const { left: popupLeft } = source.getBoundingClientRect();
+      const { width, left: targetLeft } = target.getBoundingClientRect();
+      stateUpdates.arrowAdjustPosition = { left: pxToRem(targetLeft - popupLeft + width / 2) };
+    } else if (adjustY) {
+      const { top: popupTop } = source.getBoundingClientRect();
+      const { height, top: targetTop } = target.getBoundingClientRect();
+      stateUpdates.arrowAdjustPosition = { top: pxToRem(targetTop - popupTop + height / 2) };
+    } else if (arrowAdjustPosition !== undefined) {
+      // 当不需要调整时，重置 arrowAdjustPosition
+      stateUpdates.arrowAdjustPosition = undefined;
+    }
+    if (Object.keys(stateUpdates).length > 0) {
+      this.setState(stateUpdates);
     }
   }
 
@@ -285,6 +311,14 @@ export default class Tooltip extends Component<TooltipProps, any> {
     }
   }
 
+  componentWillUnmount() {
+    // 清理 requestAnimationFrame
+    if (this.resetPlacementFrameId) {
+      cancelAnimationFrame(this.resetPlacementFrameId);
+      this.resetPlacementFrameId = null;
+    }
+  }
+
   render() {
     const {
       prefixCls,
@@ -294,11 +328,16 @@ export default class Tooltip extends Component<TooltipProps, any> {
     
     // 确定最终使用的 placement
     let finalPlacement = placement;
-    if (this.tooltipAutoPlacement && autoCalculatedPlacement) {
-      finalPlacement = autoCalculatedPlacement;
-    } else if (this.tooltipAutoPlacement) {
-      // 如果开启了自动定位但还没有计算结果，使用默认值
-      finalPlacement = 'top';
+    if (this.tooltipAutoPlacement) {
+      // 如果有计算结果，使用计算的最佳位置
+      if (autoCalculatedPlacement) {
+        finalPlacement = autoCalculatedPlacement;
+      }
+      // 否则保持用户指定的 placement，避免闪烁
+      // 如果用户没有指定 placement，则使用默认值 'top'
+      else if (!placement) {
+        finalPlacement = 'top';
+      }
     }
     // 修复特殊情况为0，以及 undefined 出现的报错情况
     const child = Children.count(children) ? Children.map(children, node => (
