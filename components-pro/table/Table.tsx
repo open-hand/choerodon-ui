@@ -315,6 +315,7 @@ export interface Clipboard {
   arrangeCalc?: boolean | ((arrangeValue: ArrangeValue) => ReactNode);
   tipCallback?: (type: string, success: boolean) => void;
   onlyTemplateHeader?: boolean;
+  keepEmptyLines?: boolean;
 }
 
 export interface ArrangeValue {
@@ -1650,7 +1651,8 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       const { current, totalCount: noPagingTotoalCount, length, paging } = this.dataSet;
       const batchRecord: any = [];
-      const rows = clipText.split('\n').filter(line => line.trim() !== '');
+      // 统一换行符并去掉最后一行末尾的换行符
+      const rows = clipText.replace(/\r\n/g, '\n').replace(/\n$/, '').split('\n').filter(line => (clipboard && clipboard.keepEmptyLines) || line.trim() !== '');
 
       const totalCount = paging ? length : noPagingTotoalCount;
       let errorPasteColName='';
@@ -1667,7 +1669,7 @@ export default class Table extends DataSetComponent<TableProps> {
           const cols = rows[i].split('\t').map(x=>(x || ' ')).filter(Boolean);
 
           for (let j = 0; j < cols.length; j++) {
-            let text: boolean | string | object | number = cols[j];
+            let text: boolean | string | object | number | null = cols[j];
             const record = this.dataSet.get(editorRowIndex);
             if(colIndex + j >= columns.length) {
               break;
@@ -1745,31 +1747,38 @@ export default class Table extends DataSetComponent<TableProps> {
                   if (isArrayLike(text)) {
                     optionDs.setState(QUERY_CANCELABLE, false);
                     const promises = text.map(async t => {
+                      const trimmedText = t.trim();
+                      if (trimmedText === '') {
+                        return null;
+                      }
                       const obj = {
-                        [textField]: t.trim(),
+                        [textField]: trimmedText,
                         ...param,
                       }
                       const data = await optionDs.query(1, obj);
                       if (this.dataSet && data) {
-                        const current = data[optionDs.dataKey][0];
-                        text = current || null;
+                        return data[optionDs.dataKey][0] || null;
                       }
-                      return text;
+                      return null;
                     })
                     // eslint-disable-next-line no-await-in-loop
                     const results = await Promise.all(promises);
                     text = results;
                     optionDs.setState(QUERY_CANCELABLE, true);
                   } else if (isString(text)) {
-                    const obj = {
-                      [textField]: text.trim(),
-                      ...param,
-                    }
-                    // eslint-disable-next-line no-await-in-loop
-                    const data = await optionDs.query(1, obj);
-                    if (this.dataSet && data) {
-                      const current = data[optionDs.dataKey][0];
-                      text = current || null;
+                    if (text === '') {
+                      text = null;
+                    } else {
+                      const obj = {
+                        [textField]: text,
+                        ...param,
+                      }
+                      // eslint-disable-next-line no-await-in-loop
+                      const data = await optionDs.query(1, obj);
+                      if (this.dataSet && data) {
+                        const current = data[optionDs.dataKey][0];
+                        text = current || null;
+                      }
                     }
                   }
                 }
