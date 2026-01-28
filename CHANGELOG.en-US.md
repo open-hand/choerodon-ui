@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added `showInputPrompt`, `addNewOptionPrompt` property.
 - 🌟 `<pro>Tooltip`: Added `autoPlacement` property.
 - 🌟 `<pro>Modal`: Added `footerExtra` property.
+- 🌟 `<pro>Table`: Added `clipboard.keepEmptyLines` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
@@ -91,6 +92,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter could not move to the next line when the cell editor was set as a IntlField.
 - 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the initial selection state was not synchronized in single-selection mode.
+- 🐞 `<pro>Switch`: Fixed an issue where the tooltip would appear even when the text did not overflow.
+- 🐞 `<pro>Tooltip`: Fixed the issue where the popup position may switch back and forth after enabling `autoPlacement`.
 
 ## 1.6.7
 

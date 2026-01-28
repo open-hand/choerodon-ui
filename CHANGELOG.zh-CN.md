@@ -28,6 +28,7 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 showInputPrompt, addNewOptionPrompt 属性。
 - 🌟 `<pro>Tooltip`: 新增 autoPlacement 属性。
 - 🌟 `<pro>Modal`: 新增 footerExtra 属性。
+- 🌟 `<pro>Table`: 新增 clipboard.keepEmptyLines 属性。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
 - 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 💄 `<pro>TextField`: 优化支持通过控制后缀元素事件的冒泡和默认行为从而达到不同的事件触发效果。
@@ -91,6 +92,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复编辑器为多语言输入框时，无法通过回车跳转到下一行。
 - 🐞 `<pro>Button`: 修复禁用状态下文字溢出省略的样式失效的问题。
 - 🐞 `<pro>Lov`: 修复单选模式下没有同步初始值勾选状态的问题。
+- 🐞 `<pro>Switch`: 修复文字未溢出也会触发 tooltip 的问题。
+- 🐞 `<pro>Tooltip`: 修复开启 autoPlacement 后在临界情况下气泡弹出的位置会反复切换的问题。
 
 ## 1.6.7
 

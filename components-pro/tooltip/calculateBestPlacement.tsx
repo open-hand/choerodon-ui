@@ -19,12 +19,14 @@ interface PlacementScore {
  * @param targetRect 目标元素的矩形区域
  * @param popupRect 弹出层的矩形区域
  * @param viewportRect 视口矩形区域
+ * @param currentPlacement 当前的 placement (用于迟滞判断)
  * @returns 最佳的 placement
  */
 export function calculateBestPlacement(
   targetRect: ElementRect,
   popupRect: ElementRect,
   viewportRect: ElementRect,
+  currentPlacement?: TooltipPlacement,
 ): TooltipPlacement {
   const placements: TooltipPlacement[] = ['top', 'bottom', 'left', 'right'];
   const scores: PlacementScore[] = [];
@@ -95,6 +97,13 @@ export function calculateBestPlacement(
       right: 4,
     };
     score += priorityScores[placement];
+
+    // 迟滞（Hysteresis）机制：
+    // 如果当前位置就是这个 placement，给予额外的加分，防止在临界状态下反复切换。
+    // 10分相当于一个优先级层级的差异，或者10%的可见区域差异。
+    if (currentPlacement && placement === currentPlacement) {
+      score += 10;
+    }
 
     scores.push({ placement, score });
   });

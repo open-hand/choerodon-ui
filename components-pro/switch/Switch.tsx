@@ -52,7 +52,7 @@ export default class Switch extends CheckBox<SwitchProps> {
     } = this;
     const switchLabel = currentTarget.nextElementSibling;
     const text = this.isChecked() ? children : unCheckedChildren || children;
-    if (text && isOverflow(switchLabel)){
+    if (text && isOverflow(switchLabel, 0.1)){
       show(currentTarget, {
         title: text,
       })
