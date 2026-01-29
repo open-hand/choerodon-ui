@@ -25,7 +25,7 @@ import autobind from '../_util/autobind';
 import { LabelLayout } from '../form/enum';
 import Switch from '../switch';
 import { hasAncestorWithClassName } from './utils';
-import { hide, show } from '../tooltip/singleton';
+import { show } from '../tooltip/singleton';
 
 let CodeMirror: ComponentClass<CodeMirrorProps>;
 
@@ -360,10 +360,7 @@ export default class CodeArea extends FormField<CodeAreaProps> {
 
   @autobind
   handleHelpMouseLeave() {
-    if (this.tooltipShown) {
-      hide();
-      this.tooltipShown = false;
-    }
+    this.hideTooltip();
   }
 
   renderTooltipHelp(): ReactNode {

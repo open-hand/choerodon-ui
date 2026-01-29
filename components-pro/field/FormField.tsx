@@ -476,7 +476,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     if (field) {
       return field && field.get('range', record);
     }
-    return 'range' in observableProps ? observableProps('range') : this.props.range;
+    return 'range' in observableProps ? observableProps('range') : this.props.range!;
   }
 
   @computed
@@ -762,6 +762,14 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     }
   }
 
+  @autobind
+  hideTooltip() {
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
+  }
+
   componentDidMount() {
     super.componentDidMount();
     this.addToForm(this.props, this.context);
@@ -778,10 +786,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   componentWillUnmount() {
     this.removeFromForm(this.props, this.context);
-    if (this.tooltipShown) {
-      hide();
-      this.tooltipShown = false;
-    }
+    this.hideTooltip();
     if (!isNil(this.isUpdatedValMes)) {
       delete this.isUpdatedValMes;
     }
@@ -930,10 +935,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   @autobind
   handleMouseLeave(e) {
-    if (this.tooltipShown) {
-      hide();
-      this.tooltipShown = false;
-    }
+    this.hideTooltip();
     const { onMouseLeave = noop } = this.props;
     onMouseLeave(e);
   }
