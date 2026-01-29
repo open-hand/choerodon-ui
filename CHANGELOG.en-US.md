@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender` property.
+- 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender`, `textFieldPasteMaxLengthWarning` property.
 - 🌟 `<pro>Cascader`: Added `checkable` property.
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps`, `customizedColumnProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.

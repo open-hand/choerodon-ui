@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement, inputDecimalSeparatorFollowLang, addNewOptionPromptRender 属性。
+- 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement, inputDecimalSeparatorFollowLang, addNewOptionPromptRender, textFieldPasteMaxLengthWarning 属性。
 - 🌟 `<pro>Cascader`: 新增 checkable 属性。
 - 🌟 `<pro>Table`: 新增 summaryBarConfigProps, customizedColumnProps 属性。
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。

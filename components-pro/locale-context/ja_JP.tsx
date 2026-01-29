@@ -246,6 +246,9 @@ const locale: Locale = {
     modal_title: '多言語情報を入力してください',
     output_modal_title: '多言語メッセージです',
   },
+  TextField: {
+    pasted_exceeding_max_length: '貼り付けた内容が最大文字数（{maxLength}）を超えたため、自動的に切り取られました。内容を確認してください。',
+  },
   NumberField: {
     value_missing_no_label: '数字を入力してください',
     value_missing: '{label}を入力してください。',

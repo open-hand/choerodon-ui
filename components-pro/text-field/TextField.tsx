@@ -27,6 +27,7 @@ import { observer } from 'mobx-react';
 import { global } from 'choerodon-ui/shared';
 import Progress from 'choerodon-ui/lib/progress';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
+import Notification from 'choerodon-ui/lib/notification';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Tooltip as TextTooltip, WaitType, FieldFocusMode, Size } from '../core/enum';
@@ -184,6 +185,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
 
+  handlePasteMaxLengthWarning: DebouncedFunc<(...value: any[]) => void>;
+
   addonAfterRef?: HTMLDivElement | null;
 
   addonBeforeRef?: HTMLDivElement | null;
@@ -294,6 +297,25 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
+    this.handlePasteMaxLengthWarning = debounce(this.showPasteMaxLengthWarning, 1000, { leading: true, trailing: false });
+  }
+
+  @autobind
+  showPasteMaxLengthWarning(textFieldPasteMaxLengthWarning, maxLength) {
+    if (isFunction(textFieldPasteMaxLengthWarning)) {
+      textFieldPasteMaxLengthWarning({
+        dataSet: this.dataSet,
+        field: this.field,
+        name: this.name,
+        record: this.record,
+        maxLength,
+      });
+    } else {
+      Notification.warning({
+        message: $l('TextField', 'pasted_exceeding_max_length', { maxLength }),
+        description: null,
+      });
+    }
   }
 
   @autobind
@@ -365,6 +387,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   componentWillUnmount() {
     super.componentWillUnmount();
     this.handleChangeWait.cancel();
+    this.handlePasteMaxLengthWarning.cancel();
   }
 
   @autobind
@@ -530,6 +553,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     otherProps.type = this.type;
     otherProps.maxLength = this.getProp('maxLength');
     otherProps.onKeyDown = this.handleKeyDown;
+    otherProps.onPaste = this.handlePaste;
     otherProps.autoComplete = this.props.autoComplete || this.getContextConfig('textFieldAutoComplete') || 'off';
     return otherProps;
   }
@@ -959,13 +983,26 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const { onPaste = noop } = this.props;
     onPaste(e);
     if (!e.isDefaultPrevented()) {
+      const pastedText = e.clipboardData.getData('text');
       if (this.multiple) {
-        const pastedText = e.clipboardData.getData('text');
         if (pastedText && (pastedText.includes('\n') || pastedText.includes('\t'))) {
           e.preventDefault();
           const pastedValues = pastedText.split(/[\n\t]+/).map(v => v.trim()).filter(v => v);
           if (pastedValues.length > 0) {
             this.addValue(...pastedValues);
+          }
+        }
+      } else {
+        const textFieldPasteMaxLengthWarning = this.getContextConfig('textFieldPasteMaxLengthWarning');
+        if (textFieldPasteMaxLengthWarning) {
+          const maxLength = this.getProp('maxLength');
+          if (maxLength > 0 && pastedText) {
+            const { value } = e.target;
+            const { selectionStart, selectionEnd } = e.target;
+            const currentLength = value.length - (selectionEnd - selectionStart);
+            if (currentLength + pastedText.length > maxLength) {
+              this.handlePasteMaxLengthWarning(textFieldPasteMaxLengthWarning, maxLength);
+            }
           }
         }
       }
@@ -990,7 +1027,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           {...(props as object)}
           value={text || ''}
           style={editorStyle}
-          onPaste={this.handlePaste}
         />
       </li>
     );
