@@ -243,6 +243,9 @@ const locale: Locale = {
     modal_title: '输入多语言信息',
     output_modal_title: '多语言信息',
   },
+  TextField: {
+    pasted_exceeding_max_length: '粘贴内容已超过最大字符数（{maxLength}），已自动截断，请检查内容。',
+  },
   NumberField: {
     value_missing_no_label: '请输入数字。',
     value_missing: '请输入{label}。',

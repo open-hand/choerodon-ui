@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement, inputDecimalSeparatorFollowLang, addNewOptionPromptRender 属性。
+- 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement, inputDecimalSeparatorFollowLang, addNewOptionPromptRender, textFieldPasteMaxLengthWarning 属性。
 - 🌟 `<pro>Cascader`: 新增 checkable 属性。
 - 🌟 `<pro>Table`: 新增 summaryBarConfigProps, customizedColumnProps 属性。
 - 🌟 `<pro>Form.ItemGroup`: 新增 groupItemStyle 属性。
@@ -93,6 +93,7 @@ timeline: true
 - 🐞 `<pro>Button`: 修复禁用状态下文字溢出省略的样式失效的问题。
 - 🐞 `<pro>Lov`: 修复单选模式下没有同步初始值勾选状态的问题。
 - 🐞 `<pro>Switch`: 修复文字未溢出也会触发 tooltip 的问题。
+- 🐞 `<pro>Switch`: 修复 tooltip 显示的同时点击切换开关，tooltip 中的内容没有更新的问题。
 - 🐞 `<pro>Tooltip`: 修复开启 autoPlacement 后在临界情况下气泡弹出的位置会反复切换的问题。
 
 ## 1.6.7

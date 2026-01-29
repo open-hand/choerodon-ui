@@ -246,6 +246,9 @@ export interface Locale extends DataSetLocale {
     modal_title: string;
     output_modal_title: string;
   };
+  TextField: {
+    pasted_exceeding_max_length: string;
+  };
   NumberField: {
     value_missing: string;
     value_missing_no_label: string;

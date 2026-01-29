@@ -243,6 +243,9 @@ const locale: Locale = {
     modal_title: 'Input multi-language information.',
     output_modal_title: 'multi-language information.',
   },
+  TextField: {
+    pasted_exceeding_max_length: 'The pasted content has exceeded the maximum number of characters ({maxLength}) and has been automatically truncated. Please check the content.',
+  },
   NumberField: {
     value_missing_no_label: 'Please input a number.',
     value_missing: 'Please input {label}.',
