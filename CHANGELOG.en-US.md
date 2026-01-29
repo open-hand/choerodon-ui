@@ -69,6 +69,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimized the paste function for multiple values: when the pasted content contains `\t` or `\n`, it will be split into multiple values.
 - 💄 `<pro>Table`: Optimize the overflow display of one `Tag` in cells.
 - 💄 `<pro>Table`: Optimize the `selectionColumnProps` attribute to support the customization of the checkbox for full selection.
+- 💄 `Alert`: Optimize the line-breaking style of English words.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

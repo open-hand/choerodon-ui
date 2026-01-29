@@ -171,7 +171,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
         transitionName={`${prefixCls}-slide-up`}
         onEnd={this.animationEnd}
       >
-        <div hidden={!closing} className={alertCls} style={style} {...dataOrAriaProps}>
+        <div hidden={!closing} className={alertCls} style={style} {...dataOrAriaProps} lang="en">
           {showIcon ? <Icon className={`${prefixCls}-icon`} type={iconType} /> : null}
           <div className={`${prefixCls}-content`}>
             <span className={`${prefixCls}-message`}>{message}</span>
