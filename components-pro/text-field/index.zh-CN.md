@@ -37,6 +37,8 @@ title: TextField
 | border | 是否显示边框 | boolean | true |
 | isFlat | 自动宽度模式 | boolean | false |
 | forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  |
+| tooltip | 输入框 tooltip 配置 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
+| placeholderTooltip | 输入框 placeholder tooltip 配置, 空值有效 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

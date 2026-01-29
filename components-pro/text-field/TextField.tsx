@@ -50,7 +50,7 @@ import RenderedText, { RenderedTextProps } from './RenderedText';
 import isReactChildren from '../_util/isReactChildren';
 import TextFieldGroup from './TextFieldGroup';
 import { findFirstFocusableElement } from '../_util/focusable';
-import { hide, show } from '../tooltip/singleton';
+import { show } from '../tooltip/singleton';
 import isOverflow from '../overflow-tip/util';
 import { toRangeValue } from '../field/utils';
 import { TooltipProps } from '../tooltip/Tooltip';
@@ -157,6 +157,7 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * 配置自定义tooltip属性：tooltip={['always', { theme: 'light', ... }]}
    */
   tooltip?: TextTooltip | [TextTooltip, TooltipProps];
+  placeholderTooltip?: TextTooltip | [TextTooltip, TooltipProps];
   /**
    * range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示
    */
@@ -270,6 +271,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const disabledTooltip = getTooltip('text-field-disabled');
     const configTooltip = getTooltip('text-field');
     const tooltip = this.disabled ? (inputTooltip || disabledTooltip) : (inputTooltip || configTooltip);
+    return tooltip;
+  }
+
+  get placeholderTooltip(): TextTooltip | [TextTooltip, TooltipProps] | undefined {
+    const { getTooltip } = this.context;
+    const { placeholderTooltip } = this.props;
+    const configPlaceholderTooltip = getTooltip('text-field-placeholder');
+    const tooltip = placeholderTooltip || configPlaceholderTooltip;
     return tooltip;
   }
 
@@ -545,6 +554,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'groupClassName',
       'showLengthInfo',
       'border',
+      'forceShowRangeSeparator',
+      'placeholderTooltip',
     ]);
   }
 
@@ -628,10 +639,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   @autobind
   handleHelpMouseLeave() {
-    if (this.tooltipShown) {
-      hide();
-      this.tooltipShown = false;
-    }
+    this.hideTooltip();
   }
 
   getWrapperClassNames(...args): string {
@@ -660,6 +668,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return this.renderRangeValue(toRangeValue(this.getValue(), this.range));
     }
     return this.processRenderer(this.getValue());
+  }
+
+  getRenderedPlaceholder(): ReactNode {
+    const placeholders = this.getPlaceholders() || [];
+    if (this.range && placeholders.length > 1) {
+      return this.renderRangeValue(toRangeValue(placeholders, this.range));
+    }
+    return placeholders[0];
   }
 
   showTooltip(e): boolean {
@@ -693,6 +709,51 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
             ...TextTooltipProps,
           }, mouseEnterDelay);
           return true;
+        }
+      }
+    }
+    const placeholderTooltip = this.showPlaceholderTooltip(e);
+    if (placeholderTooltip) return placeholderTooltip;
+    return false;
+  }
+
+  showPlaceholderTooltip(_): boolean {
+    if (this.isEmpty() && !this.disabled && !this.readOnly && (this.getPlaceholders() || []).some(holder => holder)) {
+      const { getTooltipTheme, getTooltipPlacement } = this.context;
+      const { wrapper, element, prefixCls, placeholderTooltip: tooltip } = this;
+      const title = this.getRenderedPlaceholder();
+      const tooltipPlacement = getTooltipPlacement('text-field-placeholder') || getTooltipPlacement('text-field');
+      const tooltipTheme = getTooltipTheme('text-field-placeholder') || getTooltipTheme('text-field');
+      const isPlaceholderOverflow = () => {
+        const holderNode = this.multiple && wrapper && typeof wrapper.querySelector === 'function' &&
+          wrapper.querySelector(`.${prefixCls}-placeholder-inner`);
+        if (holderNode && holderNode.scrollWidth > holderNode.clientWidth) return true;
+        return false;
+      };
+      if (element && title) {
+        if (tooltip === TextTooltip.always ||
+          (tooltip === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && isOverflow(element, undefined, true))))) {
+          show(this.multiple || this.range ? wrapper : element, {
+            title,
+            placement: tooltipPlacement || 'right',
+            theme: tooltipTheme,
+          });
+          return true;
+        }
+        if (isArrayLike(tooltip)) {
+          const tooltipType = tooltip[0];
+          const TextTooltipProps = tooltip[1] || {};
+          const { mouseEnterDelay } = TextTooltipProps;
+          if (tooltipType === TextTooltip.always ||
+            (tooltipType === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && isOverflow(element, undefined, true))))) {
+            show(this.multiple || this.range ? wrapper : element, {
+              title: TextTooltipProps.title ? TextTooltipProps.title : title,
+              placement: tooltipPlacement || 'right',
+              theme: tooltipTheme,
+              ...TextTooltipProps,
+            }, mouseEnterDelay);
+            return true;
+          }
         }
       }
     }
@@ -1752,10 +1813,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         this.setText(undefined);
       }
     }
-    if (this.tooltipShown) {
-      hide();
-      this.tooltipShown = false;
-    }
+    this.hideTooltip();
   }
 
   getTextNode(value?: any) {
@@ -1796,6 +1854,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target,
       target: { value },
     } = e;
+    this.hideTooltip();
     const { valueChangeAction, props: { wait, waitType } } = this;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {

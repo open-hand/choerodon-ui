@@ -14,10 +14,10 @@ function getContentWidth(element: HTMLElement, computedStyle: CSSStyleDeclaratio
   return contentWidth - pl - pr - bl - br;
 }
 
-export default function isOverflow(element: HTMLElement | HTMLInputElement, textOverflowThreshold?: number) {
+export default function isOverflow(element: HTMLElement | HTMLInputElement, textOverflowThreshold?: number, measurePlaceholder?: boolean) {
   const { textContent, ownerDocument } = element;
-  const { value } = element as HTMLInputElement;
-  if ((value || textContent) && ownerDocument) {
+  const { value, placeholder } = element as HTMLInputElement;
+  if (((!measurePlaceholder && (value || textContent)) || (measurePlaceholder && placeholder)) && ownerDocument) {
     const { clientWidth, scrollWidth } = element;
     if (scrollWidth > clientWidth) {
       if (textOverflowThreshold !== undefined) {
@@ -29,7 +29,8 @@ export default function isOverflow(element: HTMLElement | HTMLInputElement, text
     if (defaultView) {
       const computedStyle = defaultView.getComputedStyle(element);
       const contentWidth = getContentWidth(element, computedStyle);
-      const textWidth = measureTextWidth(textContent || value, computedStyle);
+      const measureText = measurePlaceholder ? placeholder : (textContent || value);
+      const textWidth = measureTextWidth(measureText || '', computedStyle);
       if (textOverflowThreshold !== undefined) {
         return textWidth - contentWidth > textOverflowThreshold;
       }

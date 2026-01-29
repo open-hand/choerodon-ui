@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender`, `textFieldPasteMaxLengthWarning` property.
+- 🌟 `configure`: the `TooltipTarget` has added the `text-field-placeholder` type.
 - 🌟 `<pro>Cascader`: Added `checkable` property.
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps`, `customizedColumnProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.
@@ -29,6 +30,7 @@ timeline: true
 - 🌟 `<pro>Tooltip`: Added `autoPlacement` property.
 - 🌟 `<pro>Modal`: Added `footerExtra` property.
 - 🌟 `<pro>Table`: Added `clipboard.keepEmptyLines` property.
+- 🌟 `<pro>TextField`: Added `placeholderTooltip` property.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.
