@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
+import defer from 'lodash/defer';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { ProgressType } from 'choerodon-ui/lib/progress/enum';
 import { CheckBox, CheckBoxProps } from '../check-box/CheckBox';
@@ -52,7 +53,7 @@ export default class Switch extends CheckBox<SwitchProps> {
     } = this;
     const switchLabel = currentTarget.nextElementSibling;
     const text = this.isChecked() ? children : unCheckedChildren || children;
-    if (text && isOverflow(switchLabel, 0.1)){
+    if (text && isOverflow(switchLabel, 0.1)) {
       show(currentTarget, {
         title: text,
       })
@@ -124,6 +125,17 @@ export default class Switch extends CheckBox<SwitchProps> {
         [`${prefixCls}-loading`]: loading,
       },
     );
+  }
+
+  afterSetValue() {
+    super.afterSetValue();
+    if (this.tooltipShown && this.element) {
+      defer(() => {
+        if (this.tooltipShown && this.element) {
+          this.showTooltip({ currentTarget: this.element });
+        }
+      });
+    }
   }
 
   renderInner(): ReactNode {
