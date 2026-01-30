@@ -233,6 +233,7 @@ subtitle: 表格
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调 | () => void |  |
 | onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
+| onFieldEnterDown | 字段回车回调 | ({ e, name, dataSet }) => void |  |
 | showSingleLine | 筛选条是否单行显示 | boolean |  |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  |
 

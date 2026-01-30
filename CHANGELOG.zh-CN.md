@@ -70,6 +70,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化单元格下单个 Tag 溢出显示。
 - 💄 `<pro>Table`: 优化 selectionColumnProps 属性, 支持自定义全选框。
 - 💄 `Alert`: 优化英文单词换行样式。
+- 💄 `<pro>Table`: 优化筛选条 onFieldEnterDown 配置可以获取当前的 dataSet。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
