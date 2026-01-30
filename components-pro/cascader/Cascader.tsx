@@ -1332,9 +1332,15 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   }, 500);
 
   searchRemote(value) {
-    const { field, searchMatcher } = this;
-    if (field && isString(searchMatcher)) {
-      field.setLovPara(searchMatcher, value === '' ? undefined : value);
+    const { field, searchMatcher, record } = this;
+    if (isString(searchMatcher)) {
+      const options = field && field.get('options', record) || this.observableProps.options;
+      const lovPara = value === '' ? undefined : value;
+      if (options) {
+        options.query(undefined, { [searchMatcher]: lovPara });
+      } else if (field) {
+        field.setLovPara(searchMatcher, lovPara);
+      }
     }
   }
 
