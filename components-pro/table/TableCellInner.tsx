@@ -535,6 +535,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
             showValidationMessage: (e, message?: ReactNode) => showValidationMessage(e, message, getTooltipTheme('validation'), getTooltipPlacement('validation'), tableStore.getConfig),
             validationResults: field.getValidationErrorValues(record),
             rangeSeparator: tableStore.getConfig('rangeSeparator'),
+            record,
+            field,
           });
           multipleValidateMessageLengthRef.current = multipleValidateMessageLength;
           return { result: tags, isOverflowMaxTagCount };

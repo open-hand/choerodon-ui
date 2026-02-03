@@ -286,6 +286,8 @@ export type MultipleRenderOption = {
   getKey?(v: any): string;
   rangeSeparator?: string;
   inputBoxIsFocus?: boolean;
+  record?: Record;
+  field?: Field;
 }
 
 export type RangeRenderOption = {
@@ -346,6 +348,8 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     tooltipTheme,
     rangeSeparator = getConfigDefault('rangeSeparator'),
     inputBoxIsFocus,
+    record,
+    field,
   } = option;
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
@@ -393,6 +397,8 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
             className,
             onClose,
             inputBoxIsFocus,
+            record,
+            field,
           });
         } else {
           inner = readOnly ? (
@@ -443,6 +449,8 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
         readOnly,
         className: blockClassName,
         inputBoxIsFocus,
+        record,
+        field,
       });
     } else {
       moreBlock = (

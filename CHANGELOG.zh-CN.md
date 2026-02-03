@@ -31,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Modal`: 新增 footerExtra 属性。
 - 🌟 `<pro>Table`: 新增 clipboard.keepEmptyLines 属性。
 - 🌟 `<pro>TextField`: 新增 placeholderTooltip 属性。
+- 🌟 `<pro>FormField`: tagRenderer 回调函数增加 record 和 field 参数。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
 - 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 💄 `<pro>TextField`: 优化支持通过控制后缀元素事件的冒泡和默认行为从而达到不同的事件触发效果。
