@@ -84,6 +84,7 @@ title: Select
 | path    | 校验权限, 以及跳转页面 | string     |        |
 | disabledTooltip | 禁用时 TooltipProps   | TooltipProps |        |
 | onClick | 按钮点击事件, 使用 path 校验权限, 设置后不再跳转 path   | (path: string, record?: Record, field?: Field) => void |        |
+| \[key: string\]    | 其他配置属性, 可在全局配置 addNewOptionPromptRender 的参数中使用 | any     |        |
 
 <style>
 .code-box-demo .c7n-pro-select-wrapper,
