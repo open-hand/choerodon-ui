@@ -322,7 +322,7 @@ Clipboard configuration item
 | hiddenTip | hidden tip | boolean | false |
 | tipCallback | copy and paste successful or failed callbacks | (type: 'copy' \| 'paste', success: boolean) => void | - |
 | onlyTemplateHeader | only retain the template header | boolean | false |
-| keepEmptyLines | Keep empty lines when pasting | boolean | - |
+| keepEmptyLines | Keep empty lines when pasting | boolean | true |
 
 ### instance methods
 

@@ -324,7 +324,7 @@ spin的配置项。
 | hiddenTip | 关闭提示 | boolean | false |
 | tipCallback | 复制、粘贴成功或者失败的回调 | (type: 'copy' \| 'paste', success: boolean) => void | - |
 | onlyTemplateHeader | 是否只导出模板头部 | boolean | false |
-| keepEmptyLines | 粘贴时是否保留空行 | boolean | - |
+| keepEmptyLines | 粘贴时是否保留空行 | boolean | true |
 
 ### instance methods
 

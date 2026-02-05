@@ -1652,7 +1652,7 @@ export default class Table extends DataSetComponent<TableProps> {
       const { current, totalCount: noPagingTotoalCount, length, paging } = this.dataSet;
       const batchRecord: any = [];
       // 统一换行符并去掉最后一行末尾的换行符
-      const rows = clipText.replace(/\r\n/g, '\n').replace(/\n$/, '').split('\n').filter(line => (clipboard && clipboard.keepEmptyLines) || line.trim() !== '');
+      const rows = clipText.replace(/\r\n/g, '\n').replace(/\n$/, '').split('\n').filter(line => (clipboard?.keepEmptyLines !== false) || line.trim() !== '');
 
       const totalCount = paging ? length : noPagingTotoalCount;
       let errorPasteColName='';
