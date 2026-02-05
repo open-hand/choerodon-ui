@@ -127,6 +127,8 @@ export interface AddNewOptionPromptResultProps {
   disabledTooltip?: TooltipProps;
   /** 设置后不再跳转 path */
   onClick?: (path: string, record?: Record, field?: Field) => void;
+  /** 其他配置属性, 可在全局配置 addNewOptionPromptRender 的参数中使用 */
+  [key: string]: any;
 }
 
 export interface SelectPopupContentProps extends TriggerFieldPopupContentProps {
