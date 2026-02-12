@@ -154,14 +154,15 @@ const prefixCls = getConfig('prefixCls');
 | collapseExpandIcon | 全局配置 collapse 自定义切换图标| (panelProps) => ReactNode \| `text`(预置icon + 展开收起文字) | 无 |
 | collapseTrigger | 全局配置切换面板的触发位置 | `header` \| `icon` | `header` |
 | textFieldAutoComplete | 全局配置textField的autoComplete属性 | 可选值: `on` `off` |  |
-| textFieldPasteMaxLengthWarning | 在粘贴内容超过输入框最大长度时进行警告，可以自定义警告函数 | boolean \| (props: { dataSet?: DataSet, field?: Field, name?: string, record?: Record, maxLength: number }) => void | - |
+| textFieldPasteMaxLengthWarning | 在粘贴内容超过输入框最大长度时进行警告，可以自定义警告函数, 优先级高于 inputLengthExceedWarning | boolean \| (props: { dataSet?: DataSet, field?: Field, name?: string, record?: Record, maxLength: number }) => void | - |
+| inputLengthExceedWarning | 输入框文本超过 maxLength 进行提示，可以自定义警告函数 | boolean \| (props: { dataSet?: DataSet, field?: Field, name?: string, record?: Record, maxLength: number }) => void | - |
 | resultStatusRenderer | 自定义状态展示,可以覆盖现有状态展示，也可以增加状态展示，支持全局配置 | object -> {string:react.ReactNode} | - |
 | numberFieldNonStrictStep | 全局配置 NumberField 的 nonStrictStep 属性 | boolean | false |
 | numberFieldFormatter | NumberField格式器 | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
 | numberFieldFormatterOptions | NumberField格式器参数,可以与组件值进行合并 | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
 | currencyFormatter | Currency格式器 | FormatNumberFunc: (value: string, lang: string, options: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)) => string |        |
 | currencyFormatterOptions | Currency格式器参数,可以与组件值进行合并 | FormatNumberFuncOptions: { lang?: string, options?: [Intl.NumberFormatOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) } |        |
-| showLengthInfo | 全局配置是否展示长度信息 | boolean |  |
+| showLengthInfo | 全局配置是否展示长度信息; 为 auto 时, 输入内容达 maxLength 80%, 自动显示长度信息 | boolean \| 'auto' | 'auto' |
 | showInvalidDate | 显示无效日期 | boolean |  |
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | `tooltip` |

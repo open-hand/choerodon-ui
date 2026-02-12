@@ -203,6 +203,8 @@ const defaults = {
     return false;
   },
   tableProfBarHasValueDefaultExpanded: true,
+  showLengthInfo: 'auto' as (boolean | 'auto' | undefined),
+  inputLengthExceedWarning: true,
 };
 
 export default defaults;

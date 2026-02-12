@@ -15,8 +15,9 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender`, `textFieldPasteMaxLengthWarning` property.
+- 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender`, `textFieldPasteMaxLengthWarning`, `inputLengthExceedWarning` property.
 - 🌟 `configure`: the `TooltipTarget` has added the `text-field-placeholder` type.
+- 🌟 `configure`: The `showLengthInfo` attribute has been updated to include an `auto` type.
 - 🌟 `<pro>Cascader`: Added `checkable` property.
 - 🌟 `<pro>Table`: Added `summaryBarConfigProps`, `customizedColumnProps` property.
 - 🌟 `<pro>Form.ItemGroup`: Added `groupItemStyle` property.

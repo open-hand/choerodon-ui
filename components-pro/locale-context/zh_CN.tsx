@@ -245,6 +245,7 @@ const locale: Locale = {
   },
   TextField: {
     pasted_exceeding_max_length: '粘贴内容已超过最大字符数（{maxLength}），已自动截断，请检查内容。',
+    input_exceeding_max_length: '已超出最大字符数，无法继续输入。',
   },
   NumberField: {
     value_missing_no_label: '请输入数字。',

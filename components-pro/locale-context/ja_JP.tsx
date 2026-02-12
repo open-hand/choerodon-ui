@@ -248,6 +248,7 @@ const locale: Locale = {
   },
   TextField: {
     pasted_exceeding_max_length: '貼り付けた内容が最大文字数（{maxLength}）を超えたため、自動的に切り取られました。内容を確認してください。',
+    input_exceeding_max_length: '最大文字数を超えていますので、入力を続けることはできません。',
   },
   NumberField: {
     value_missing_no_label: '数字を入力してください',

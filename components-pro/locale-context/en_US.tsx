@@ -245,6 +245,7 @@ const locale: Locale = {
   },
   TextField: {
     pasted_exceeding_max_length: 'The pasted content has exceeded the maximum number of characters ({maxLength}) and has been automatically truncated. Please check the content.',
+    input_exceeding_max_length: 'The maximum character limit has been exceeded and further input is not possible.',
   },
   NumberField: {
     value_missing_no_label: 'Please input a number.',
