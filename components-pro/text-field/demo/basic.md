@@ -23,10 +23,10 @@ function log(value) {
 ReactDOM.render(
   <Row gutter={10}>
     <Col span={8}>
-      <TextField placeholder="请输入" onChange={log} />
+      <TextField placeholder="请输入" onChange={log} showLengthInfo />
     </Col>
     <Col span={8}>
-      <TextField placeholder="清除按钮" defaultValue="点击清除" clearButton onChange={log} />
+      <TextField placeholder="清除按钮" defaultValue="点击清除" clearButton onChange={log} maxLength={10} />
     </Col>
     <Col span={8}>
       <Tooltip title="disabled">

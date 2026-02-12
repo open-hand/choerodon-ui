@@ -145,7 +145,7 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
   /**
    * 是否显示长度信息
    */
-  showLengthInfo?: boolean;
+  showLengthInfo?: boolean | 'auto';
   /**
    * 是否显示边框
    * @default true
@@ -186,7 +186,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
 
-  handlePasteMaxLengthWarning: DebouncedFunc<(...value: any[]) => void>;
+  showLengthExceedWarningDeb: DebouncedFunc<(...value: any[]) => void>;
 
   addonAfterRef?: HTMLDivElement | null;
 
@@ -221,6 +221,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   lastAnimationRecord?: Record;
 
+  selectionInfo?: { selectionStart?: number; selectionEnd?: number };
+
+  preCompositionValue?: string;
+
   get clearButton(): boolean {
     const { clearButton } = this.props;
     return !!clearButton && !this.readOnly && !this.disabled;
@@ -245,7 +249,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @computed
-  get showLengthInfo(): boolean | undefined {
+  get showLengthInfo(): boolean | 'auto' | undefined {
     if ('showLengthInfo' in this.props) {
       return this.props.showLengthInfo;
     }
@@ -306,13 +310,25 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   constructor(props, context) {
     super(props, context);
     this.handleChangeWait = this.getHandleChange(props);
-    this.handlePasteMaxLengthWarning = debounce(this.showPasteMaxLengthWarning, 1000, { leading: true, trailing: false });
+    this.showLengthExceedWarningDeb = debounce(this.showLengthExceedWarning, 1000, { leading: true, trailing: false });
   }
 
   @autobind
-  showPasteMaxLengthWarning(textFieldPasteMaxLengthWarning, maxLength) {
-    if (isFunction(textFieldPasteMaxLengthWarning)) {
-      textFieldPasteMaxLengthWarning({
+  getInputLengthExceedWarning(type?: 'input' | 'paste') {
+    const inputLengthExceedWarning = this.getContextConfig('inputLengthExceedWarning');
+    if (type === 'paste') {
+      const textFieldPasteMaxLengthWarning = this.getContextConfig('textFieldPasteMaxLengthWarning');
+      return !isNil(textFieldPasteMaxLengthWarning) ? textFieldPasteMaxLengthWarning : inputLengthExceedWarning;
+    }
+    return inputLengthExceedWarning;
+  }
+
+  @autobind
+  showLengthExceedWarning(type?: 'input' | 'paste') {
+    const inputLengthExceedWarning = this.getInputLengthExceedWarning(type);
+    const maxLength = this.getProp('maxLength');
+    if (isFunction(inputLengthExceedWarning)) {
+      inputLengthExceedWarning({
         dataSet: this.dataSet,
         field: this.field,
         name: this.name,
@@ -320,8 +336,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         maxLength,
       });
     } else {
+      const message = type === 'paste'
+        ? $l('TextField', 'pasted_exceeding_max_length', { maxLength })
+        : $l('TextField', 'input_exceeding_max_length', { maxLength });
       Notification.warning({
-        message: $l('TextField', 'pasted_exceeding_max_length', { maxLength }),
+        message,
         description: null,
       });
     }
@@ -396,7 +415,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   componentWillUnmount() {
     super.componentWillUnmount();
     this.handleChangeWait.cancel();
-    this.handlePasteMaxLengthWarning.cancel();
+    this.showLengthExceedWarningDeb.cancel();
   }
 
   @autobind
@@ -883,9 +902,17 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
-    const { prefixCls } = this;
-    return maxLength && maxLength > 0 ? (
-      <div key="length-info" className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
+    const { prefixCls, showLengthInfo } = this;
+    let children: string | undefined;
+    if (showLengthInfo === true) {
+      children = isNil(maxLength)
+        ? `${inputLength}`
+        : maxLength > 0 ? `${inputLength}/${maxLength}` : undefined;
+    } else if (showLengthInfo === 'auto' && !isNil(maxLength) && maxLength > 0 && inputLength && (inputLength / maxLength >= 0.8)) {
+      children = `${inputLength}/${maxLength}`;
+    }
+    return children ? (
+      <div key="length-info" className={`${prefixCls}-length-info`}>{children}</div>
     ) : null;
   }
 
@@ -1054,15 +1081,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           }
         }
       } else {
-        const textFieldPasteMaxLengthWarning = this.getContextConfig('textFieldPasteMaxLengthWarning');
-        if (textFieldPasteMaxLengthWarning) {
+        const inputLengthExceedWarning = this.getInputLengthExceedWarning('paste');
+        if (inputLengthExceedWarning) {
           const maxLength = this.getProp('maxLength');
           if (maxLength > 0 && pastedText) {
             const { value } = e.target;
             const { selectionStart, selectionEnd } = e.target;
             const currentLength = value.length - (selectionEnd - selectionStart);
             if (currentLength + pastedText.length > maxLength) {
-              this.handlePasteMaxLengthWarning(textFieldPasteMaxLengthWarning, maxLength);
+              this.showLengthExceedWarningDeb('paste');
             }
           }
         }
@@ -1331,7 +1358,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       this.lengthElement = this.renderLengthInfo(maxLength, inputLength);
 
       if (this.lengthElement) {
-        this.lengthInfoWidth = this.measureTextWidth(`${inputLength} / ${maxLength}`);
+        this.lengthInfoWidth = this.measureTextWidth(!isNil(maxLength) ? `${inputLength} / ${maxLength}` : ` ${inputLength}`);
       } else {
         this.lengthInfoWidth = undefined;
       }
@@ -1655,8 +1682,54 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  handleCompositionStart(e) {
+    this.preCompositionValue = e.target && e.target.value;
+    super.handleCompositionStart(e);
+  }
+
+  @autobind
+  handleCompositionEnd(e) {
+    const inputLengthExceedWarning = this.getInputLengthExceedWarning('input');
+    if (!this.multiple && !this.range && inputLengthExceedWarning) {
+      const insertedText = e.data;
+      const { selectionStart, selectionEnd } = this.selectionInfo || {};
+      const selectionLength = (selectionEnd || 0) - (selectionStart || 0);
+      const expectedTotalLength = (this.preCompositionValue || '').length + (insertedText || '').length - selectionLength;
+      if (expectedTotalLength > this.getProp('maxLength')) {
+        this.showLengthExceedWarningDeb('input');
+      }
+    }
+    delete this.selectionInfo;
+    delete this.preCompositionValue;
+
+    super.handleCompositionEnd(e);
+  }
+
+  @autobind
   handleKeyDown(e) {
     if (!this.disabled && !this.readOnly) {
+      // keydown 事件早于 composition 事件
+      if (!this.selectionInfo && !this.lock) {
+        this.selectionInfo = e.target ? {
+          selectionStart: e.target.selectionStart,
+          selectionEnd: e.target.selectionEnd,
+        } : undefined;
+      }
+
+      const inputLengthExceedWarning = this.getInputLengthExceedWarning('input');
+      if (!this.multiple && !this.range && inputLengthExceedWarning &&
+        !this.lock && !(e.ctrlKey || e.altKey || e.metaKey)
+      ) {
+        const { value } = e.target || {};
+        const { selectionStart, selectionEnd } = this.selectionInfo || {};
+        const selectionLength = (selectionEnd || 0) - (selectionStart || 0);
+        if (selectionLength === 0 && e.key && (e.key === 'Spacebar' || e.key.length === 1) &&
+          (value || '').length === this.getProp('maxLength')
+        ) {
+          this.showLengthExceedWarningDeb('input');
+        }
+      }
+
       if ((e.ctrlKey || e.metaKey) && e.keyCode === KeyCode.C &&
         [FieldFormat.uppercase, FieldFormat.lowercase, FieldFormat.capitalize].includes(this.format as FieldFormat)) {
         e.preventDefault();
@@ -1739,6 +1812,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     super.handleKeyDown(e);
+    // 处理 IME (输入法) 状态
+    // 当用户正在使用输入法时，IE11 可能返回 "Process" 或 "Unidentified"; 现代浏览器可能返回 "Process"
+    if (!this.lock && e.key !== 'Process' && e.key !== 'Unidentified') {
+      delete this.selectionInfo;
+    }
   }
 
   @autobind
@@ -1792,6 +1870,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         this.setValue(null);
       }
     }
+    delete this.selectionInfo;
     super.handleBlur(e);
   }
 

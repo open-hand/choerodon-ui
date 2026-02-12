@@ -33,7 +33,7 @@ title: TextField
 | valueChangeAction | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
 | wait | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | - |
 | waitType | 设置值变更间隔类型，可选值： `throttle` `debounce` | string | `debounce` |
-| showLengthInfo | 是否显示长度信息 | boolean | |
+| showLengthInfo | 是否显示长度信息; 为 auto 时, 输入内容达 maxLength 80%, 自动显示长度信息 | boolean \| 'auto' | |
 | border | 是否显示边框 | boolean | true |
 | isFlat | 自动宽度模式 | boolean | false |
 | forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  |

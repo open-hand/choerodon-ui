@@ -178,7 +178,7 @@ export type TreeCheckboxPosition = undefined | 'default' | 'left';
 
 export type AddNewOptionPromptRenderType = (props: AddNewOptionPromptRenderProps & AddNewOptionPromptResultProps) => ReactNode;
 
-export type TextFieldPasteMaxLengthWarningHook = (props: { dataSet?: DataSet, field?: Field, name?: string, record?: Record, maxLength: number }) => void;
+export type InputLengthExceedWarningHook = (props: { dataSet?: DataSet, field?: Field, name?: string, record?: Record, maxLength: number }) => void;
 
 export interface Config extends DataSetConfig {
   prefixCls?: string;
@@ -329,7 +329,7 @@ export interface Config extends DataSetConfig {
   /**
    * 是否显示长度信息
    */
-  showLengthInfo?: boolean;
+  showLengthInfo?: boolean | 'auto';
   /**
    * moment非法时显示Invalid date
    */
@@ -464,7 +464,9 @@ export interface Config extends DataSetConfig {
   /**
    * 粘贴内容超过最大长度时的警告提示
    */
-  textFieldPasteMaxLengthWarning?: boolean | TextFieldPasteMaxLengthWarningHook;
+  textFieldPasteMaxLengthWarning?: boolean | InputLengthExceedWarningHook;
+  /** 输入框文本超过 maxLength 进行提示 */
+  inputLengthExceedWarning?: boolean | InputLengthExceedWarningHook;
   /**
    * Tag 组件 hover 时是否显示小手样式
    */

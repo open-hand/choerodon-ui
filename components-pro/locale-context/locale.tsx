@@ -248,6 +248,7 @@ export interface Locale extends DataSetLocale {
   };
   TextField: {
     pasted_exceeding_max_length: string;
+    input_exceeding_max_length: string;
   };
   NumberField: {
     value_missing: string;
