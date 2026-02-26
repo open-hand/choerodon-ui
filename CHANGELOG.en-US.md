@@ -102,6 +102,7 @@ timeline: true
 - 🐞 `<pro>Switch`: Fixed an issue where the tooltip would appear even when the text did not overflow.
 - 🐞 `<pro>Switch`: Fixed the issue where the content in the tooltip did not update when clicking to toggle the switch while the tooltip was displayed.
 - 🐞 `<pro>Tooltip`: Fixed the issue where the popup position may switch back and forth after enabling `autoPlacement`.
+- 🐞 `<pro>TextField`: Fix the issue where modifying the input value in the `onChange` event does not take effect when the `valueChangeAction` attribute is set to `input`.
 
 ## 1.6.7
 

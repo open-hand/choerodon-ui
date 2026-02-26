@@ -102,6 +102,7 @@ timeline: true
 - 🐞 `<pro>Switch`: 修复文字未溢出也会触发 tooltip 的问题。
 - 🐞 `<pro>Switch`: 修复 tooltip 显示的同时点击切换开关，tooltip 中的内容没有更新的问题。
 - 🐞 `<pro>Tooltip`: 修复开启 autoPlacement 后在临界情况下气泡弹出的位置会反复切换的问题。
+- 🐞 `<pro>TextField`: 修复 valueChangeAction 属性为 input 时, 在 onChange 中修改输入值不生效的问题。
 
 ## 1.6.7
 
