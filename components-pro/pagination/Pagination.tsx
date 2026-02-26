@@ -18,7 +18,6 @@ import Pager from './Pager';
 import Icon from '../icon';
 import { QuickJumperPosition, SizeChangerPosition } from './enum';
 import { Renderer } from '../field/FormField';
-import { ValueChangeAction } from '../text-field/enum';
 import QuickJumper from './QuickJumper';
 import Tooltip from '../tooltip';
 import { ShowValidation } from '../form/enum';
@@ -230,14 +229,21 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
   handleJumpChange(value) {
     const { page, totalPage, props: { showQuickJumper, simple, showPager } } = this;
     value = Number(value);
+    let forceUpdate = false;
     if (isNaN(value) || value < 1) {
       value = page;
+      forceUpdate = true;
     }
     if (value > totalPage) {
       value = totalPage;
+      forceUpdate = true;
     }
     if (simple || showPager === 'input' || showPager === 'selectAndInput') {
-      this.jumpPage(value);
+      this.jumpPage(value).then(() => {
+        if (forceUpdate) {
+          this.forceUpdate();
+        }
+      });
     } else if (showQuickJumper) {
       if (isObject(showQuickJumper) && showQuickJumper.goButton) {
         this.pageInput = value;
@@ -304,11 +310,11 @@ export default class Pagination extends DataSetComponent<PaginationProps> {
     return (
       <ObserverNumberField
         value={page}
+        disabled={disabled}
         min={1}
         onChange={this.handleJumpChange}
-        valueChangeAction={ValueChangeAction.input} wait={200}
-        disabled={disabled}
         showValidation={ShowValidation.tooltip}
+        restrict={new RegExp('[.]|^0*', 'g')}
         {...otherProps}
       />
     );
