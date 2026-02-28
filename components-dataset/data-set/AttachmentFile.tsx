@@ -40,7 +40,7 @@ export default class AttachmentFile implements FileLike {
 
   originFileObj?: File | undefined;
 
-  @observable status?: 'error' | 'success' | 'uploading' | 'deleting' | 'done' | 'aborted';
+  @observable status?: 'error' | 'success' | 'uploading' | 'deleting' | 'done' | 'aborted' | 'deferred';
 
   @observable aborted?: boolean;
 

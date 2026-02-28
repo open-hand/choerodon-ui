@@ -56,7 +56,8 @@ title: Attachment
 | onUploadError | 上传出错的回调 | (error: Error, attachment: AttachmentFile) => void | 无 |
 | onUploadAbort | 上传取消的回调，入参存在时是取消单个文件上传，不存在时是取消所有文件上传 | (attachment?: AttachmentFile) => void | 无 |
 | getPreviewUrl | 获取预览地址，默认使用 AttachmentFile.url，返回空则不可预览。其中函数的返回值为 (() => string \| Promise< string>) 时，仅支持 listType 为 text 的情况 | ({ attachment: AttachmentFile, bucketName?: string, bucketDirectory?: string, storageCode?:string, attachmentUUID: string, isPublic?: boolean }) => (string \| (() => string \| Promise< string>) \| undefined) \| Promise<(string \| (() => string \| Promise< string>) \| undefined)> |  |
-| removeImmediately | 是否立即删除 | boolean | true |
+| uploadImmediately | Whether to upload immediately. If turned off, you need to manually call the component instance method `upload` to upload | boolean | true |
+| removeImmediately | Whether to remove immediately. If turned off, you need to manually call the component instance method `remove` to remove | boolean | true |
 | onTempRemovedAttachmentsChange | 临时删除文件变化回调，`removeImmediately` 为 false 时生效 | (tempRemovedAttachments?: AttachmentFile[]) => void |  |
 | filesLengthLimitNotice | 上传文件时，数量超过限定数量的自定义提示 | (defaultInfo: string) => void | (defaultInfo) => Modal.error(defaultInfo) |
 | countTextRenderer | 上传按钮中数量显示 renderer | (count?: number, max?: number, defaultCountText?: ReactNode) => ReactNode |  |
@@ -76,24 +77,25 @@ title: Attachment
 
 ### Attachment.Group
 
-附件组, 属性如下:
+Attachment Group, attributes are as follows:
 
-| 属性 | 说明 | 类型 | 默认值 |
+| Attribute | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| viewMode | 上传列表的显示模式，支持两种基本样式  `list` 和 `popup` | string | 'popup' |
-| text | 按钮文字 | ReactNode |  |
-| count | 自定义附件数量, 未设置时会自动获取组内的附件数量 | number |  |
+| viewMode | Display mode of the upload list, supports two basic styles `list` and `popup` | string | 'popup' |
+| text | Button text | ReactNode |  |
+| count | Custom number of attachments. If not set, it will automatically get the number of attachments in the group | number |  |
 
-更多属性请参考 [Button](/components-pro/button/#Button)。
+For more attributes, please refer to [Button](/components-pro/button/#Button).
 
 ### Attachment.Dragger
-| 属性 | 说明 | 类型 | 默认值 |
+| Attribute | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| attachmentChildren | 上传组件 children | ReactNode | $l('Attachment', 'upload_attachment') |
+| attachmentChildren | Children of the upload component | ReactNode | $l('Attachment', 'upload_attachment') |
 
 ### Attachment Instance Methods
-| 属性 | 说明 | 参数 | 返回值类型 | 版本 |
+| Attribute | Description | Parameters | Return Type | Version |
 | --- | --- | --- | --- | --- |
-| remove | 删除临时移除文件 |  | void | 1.6.5 |
-| reset | 还原临时移除文件 |  | void | 1.6.5 |
-| abortUpload | 取消上传，参数为附件对象时取消单个文件上传，不传参时取消所有文件上传 | AttachmentFile \| undefined | void | 1.6.8 |
+| remove | Delete temporarily removed file |  | void | 1.6.5 |
+| reset | Restore temporarily removed file |  | void | 1.6.5 |
+| abortUpload | Cancel upload. When the parameter is an attachment object, it cancels the upload of a single file; without parameters, it cancels the upload of all files | AttachmentFile \| undefined | void | 1.6.8 |
+| upload | Upload temporarily stored files to the backend. Pass attachment parameters to specify files to upload, otherwise all temporarily stored files will be uploaded | AttachmentFile \| undefined | void | 1.6.8 |

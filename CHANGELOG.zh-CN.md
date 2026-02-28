@@ -33,6 +33,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 clipboard.keepEmptyLines 属性。
 - 🌟 `<pro>TextField`: 新增 placeholderTooltip 属性。
 - 🌟 `<pro>FormField`: tagRenderer 回调函数增加 record 和 field 参数。
+- 🌟 `<pro>Attachment`: 新增 uploadImmediately 属性和 upload 实例方法用于手动上传。
 - 💄 `<pro>Table`: 优化聚焦表格的编辑字段后, 切屏回来会自动聚焦的问题。
 - 💄 `<pro>TextField`: 优化多值输入框光标样式，仅在聚焦状态下占据宽度。
 - 💄 `<pro>TextField`: 优化支持通过控制后缀元素事件的冒泡和默认行为从而达到不同的事件触发效果。
@@ -74,6 +75,7 @@ timeline: true
 - 💄 `Alert`: 优化英文单词换行样式。
 - 💄 `<pro>Table`: 优化筛选条 onFieldEnterDown 配置可以获取当前的 dataSet。
 - 💄 `<pro>Cascader`: 优化关联 options 且 searchMatcher 属性设置字符串时, 异步查询的逻辑。
+- 💄 `<pro>Lov`: 优化下拉搜索时会先显示缓存数据再显示最新数据的情况。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。
