@@ -134,7 +134,7 @@ export default class Lov extends Select<LovProps> {
 
   fetched?: boolean;
 
-  searching?: boolean;
+  @observable searching = false;
 
   fetchedReaction?: IReactionDisposer;
 
@@ -715,7 +715,7 @@ export default class Lov extends Select<LovProps> {
   @action
   setText(text?: string): void {
     if (text === undefined || text === '') {
-      delete this.searching;
+      this.searching = false;
     } else {
       this.searching = true;
     }
@@ -737,7 +737,9 @@ export default class Lov extends Select<LovProps> {
         options.setQueryParameter(key, value === '' ? undefined : value);
       });
       if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
-        options.query(1, undefined, true).then(() => delete this.searching);
+        options.query(1, undefined, true).finally(() => runInAction(() => {
+          this.searching = false;
+        }));
       }
     }
   }
@@ -1041,8 +1043,15 @@ export default class Lov extends Select<LovProps> {
 
   @computed
   get loading(): boolean {
-    const { options } = this;
-    return options.status === DataSetStatus.loading;
+    const { options, searching } = this;
+    return searching || options.status === DataSetStatus.loading;
+  }
+
+  searchData(data: Record[]): Record[] {
+    if (this.searching) {
+      return [];
+    }
+    return super.searchData(data);
   }
 
   @autobind
