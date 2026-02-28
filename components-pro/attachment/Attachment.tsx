@@ -109,6 +109,11 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
    * @returns void
    */
   onUploadAbort?: (attachment?: AttachmentFile) => void;
+  /**
+   * 是否立即上传
+   * @default true
+   */
+  uploadImmediately?: boolean;
 }
 
 export type Sort = {
@@ -140,6 +145,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     viewMode: 'list',
     dragUpload: false,
     removeImmediately: true,
+    uploadImmediately: true,
   };
 
   constructor(props, context) {
@@ -332,7 +338,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   getValidAttachments(): AttachmentFile[] | undefined {
     const { attachments } = this;
     if (attachments) {
-      return attachments.filter(({ status }) => !status || ['success', 'done'].includes(status));
+      return attachments.filter(({ status }) => !status || ['success', 'done', 'deferred'].includes(status));
     }
   }
 
@@ -436,6 +442,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'enableDeleteAll',
       'pictureCardShowName',
       'directory',
+      'uploadImmediately',
     ]);
   }
 
@@ -474,7 +481,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   @mobxAction
   async uploadAttachments(attachments: AttachmentFile[]): Promise<void> {
     const max = this.getProp('max');
-    const { filesLengthLimitNotice } = this.props;
+    const { filesLengthLimitNotice, uploadImmediately } = this.props;
     if (max > 0 && (this.count || 0) + attachments.length > max) {
       const defaultInfo = $l('Attachment', 'file_list_max_length', { count: max });
       if (typeof filesLengthLimitNotice === 'function') {
@@ -488,7 +495,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
     const { Modal: modalInProps } = this.props;
     let secretLevelHeadersInfo = {};
-    if (secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
+    if (uploadImmediately && secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
       const { formProps, modalProps } = secretLevelOptions;
       secretLevelHeadersInfo = await getSecretLevelModal({
         dataSet: this.secretLevelDataSet,
@@ -507,11 +514,15 @@ export default class Attachment extends FormField<AttachmentProps> {
       oldAttachments.forEach(attachment => this.doRemove(attachment));
       this.attachments = [...attachments];
     }
-    try {
-      await Promise.all(attachments.map((attachment) => this.upload(attachment, secretLevelHeadersInfo)));
-    } finally {
+    if (uploadImmediately) {
+      try {
+        await Promise.all(attachments.map((attachment) => this.upload(attachment, secretLevelHeadersInfo)));
+      } finally {
+        runInAction(() => this.uploadWithoutUuid = false);
+        this.changeOrder();
+      }
+    } else {
       runInAction(() => this.uploadWithoutUuid = false);
-      this.changeOrder();
     }
   }
 
@@ -539,7 +550,43 @@ export default class Attachment extends FormField<AttachmentProps> {
     };
   }
 
-  async upload(attachment: AttachmentFile, extraHeaders?: object) {
+  @autobind
+  async uploadAll(): Promise<void> {
+    const { attachments } = this;
+    if (!attachments) {
+      return;
+    }
+    const uploadAttachments = attachments.filter(attachment => !attachment.status || attachment.status === 'error' || attachment.status === 'deferred');
+    if (uploadAttachments.length > 0) {
+      const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
+      const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
+      const { Modal: modalInProps } = this.props;
+      let secretLevelHeadersInfo = {};
+      if (secretLevelFlag && secretLevelOptions && this.secretLevelDataSet && modalInProps) {
+        const { formProps, modalProps } = secretLevelOptions;
+        secretLevelHeadersInfo = await getSecretLevelModal({
+          dataSet: this.secretLevelDataSet,
+          Modal: modalInProps,
+          formProps,
+          modalProps,
+        });
+        if (secretLevelHeadersInfo === false) {
+          return;
+        }
+      }
+      try {
+        await Promise.all(uploadAttachments.map((attachment) => this.upload(attachment, secretLevelHeadersInfo)));
+      } finally {
+        runInAction(() => this.uploadWithoutUuid = false);
+        this.changeOrder();
+      }
+    }
+  }
+
+  async upload(attachment?: AttachmentFile, extraHeaders?: object) {
+    if (!attachment) {
+      return this.uploadAll();
+    }
     try {
       const uploader = getIf(this, 'uploader', () => {
         return new Uploader(
@@ -599,6 +646,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   }
 
   processFiles(files: File[], attachmentUUID: string): AttachmentFile[] {
+    const { uploadImmediately } = this.props;
     return files.map((file, index: number) => new AttachmentFile({
       uid: this.getUid(index),
       url: URL.createObjectURL(file),
@@ -609,6 +657,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       originFileObj: file,
       creationDate: new Date(),
       attachmentUUID,
+      status: uploadImmediately ? undefined : 'deferred',
     }));
   }
 
@@ -638,6 +687,10 @@ export default class Attachment extends FormField<AttachmentProps> {
           const { onRemove } = this.getContextConfig('attachment');
           if (onRemove) {
             if (attachment.status === 'error' || attachment.invalid) {
+              return this.removeAttachment(attachment);
+            }
+            // 未上传的文件直接删除，不调用接口
+            if (!attachment.status || attachment.status === 'deferred') {
               return this.removeAttachment(attachment);
             }
             const attachmentUUID = this.getValue();

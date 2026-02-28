@@ -33,6 +33,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `clipboard.keepEmptyLines` property.
 - 🌟 `<pro>TextField`: Added `placeholderTooltip` property.
 - 🌟 `<pro>FormField`: The `tagRenderer` callback function now includes the `record` and `field` parameters.
+- 🌟 `<pro>Attachment`: Added the `uploadImmediately` property and the `upload` instance method for manual uploading.
 - 💄 `<pro>Table`: The issue that after optimizing the editing fields of the focus table, the screen would automatically focus when switched back.
 - 💄 `<pro>TextField`: Optimize the cursor style of the multi-value input box so that it only occupies width in the focused state.
 - 💄 `<pro>TextField`: Optimization support achieves different event trigger effects by controlling the bubbling and default behavior of suffix element events.

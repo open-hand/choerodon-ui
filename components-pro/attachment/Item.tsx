@@ -84,11 +84,18 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const getDownloadUrl = getDownloadUrlProp || getDownloadUrlConfig;
 
   const [previewUrl, setPreviewUrl] = useState<string | (() => string | Promise<string>) | undefined>(() => {
+    if (status === 'deferred') {
+      return url;
+    }
     if (!getPreviewUrl) {
       return url;
     }
   });
   useEffect(() => {
+    if (status === 'deferred') {
+      setPreviewUrl(() => url);
+      return;
+    }
     let isMounted = true;
     if (getPreviewUrl) {
       const result = getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
@@ -107,7 +114,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     return () => {
       isMounted = false;
     }
-  }, [getPreviewUrl, attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, url, setPreviewUrl]);
+  }, [getPreviewUrl, attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, url, setPreviewUrl, status]);
 
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,
@@ -119,7 +126,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
-  const preview = !!previewUrl && (status === 'success' || status === 'done');
+  const preview = !!previewUrl && (!status || status === 'success' || status === 'done' || status === 'deferred');
 
   const handleOpenPreview = useCallback(debounce(async () => {
     if (isFunction(previewUrl)) {
@@ -527,6 +534,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     className: classnames(prefixCls, {
       [`${prefixCls}-error`]: status === 'error',
       [`${prefixCls}-success`]: status === 'success',
+      [`${prefixCls}-pending`]: !status || status === 'deferred',
     }),
     ...provided.draggableProps,
     style: {
