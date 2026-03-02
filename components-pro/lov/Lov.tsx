@@ -134,9 +134,16 @@ export default class Lov extends Select<LovProps> {
 
   fetched?: boolean;
 
-  @observable searching = false;
+  @observable searching;
 
   fetchedReaction?: IReactionDisposer;
+
+  constructor(props, context) {
+    super(props, context);
+    runInAction(() => {
+      this.searching = false;
+    });
+  }
 
   @computed
   get searchMatcher(): SearchMatcher {
