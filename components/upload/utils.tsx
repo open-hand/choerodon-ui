@@ -136,6 +136,8 @@ export function getFileType(filename: string): string {
     case 'xls':
     case 'xlsx':
       return 'xls';
+    case 'md':
+      return 'markdown';
     default:
       return 'other';
   }
