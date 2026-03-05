@@ -18,7 +18,7 @@ import { QuarterPicker, DatePicker, MonthPicker, DateTimePicker, YearPicker, Tim
 import moment from 'moment';
 
 function handleChange(value, oldValue) {
-  if (value.length) {
+  if (value?.length) {
     console.log('[datepicker]', value, '[oldValue]', oldValue);
     return;
   }
