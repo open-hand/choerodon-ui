@@ -76,6 +76,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化筛选条 onFieldEnterDown 配置可以获取当前的 dataSet。
 - 💄 `<pro>Cascader`: 优化关联 options 且 searchMatcher 属性设置字符串时, 异步查询的逻辑。
 - 💄 `<pro>Lov`: 优化下拉搜索时会先显示缓存数据再显示最新数据的情况。
+- 💄 `Upload`: 优化 markdown 类型文件的 icon 图标。
 - 🐞 `<pro>Table`: 修复动态筛选条的模糊筛选和筛选字段全部隐藏时报错的问题。
 - 🐞 `Tabs`: 修复动态新增 Tab, 左右箭头偶尔显示不正确的问题。
 - 🐞 `<pro>Modal`: 修复了 Modal 自定义坐标后使用更新方法开启全屏属性后样式不正确的问题。

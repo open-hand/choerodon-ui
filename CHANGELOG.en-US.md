@@ -76,6 +76,7 @@ timeline: true
 - 💄 `<pro>Table`: The onFieldEnterDown configuration of the optimization filter bar can obtain the current dataSet.
 - 💄 `<pro>Cascader`: Optimize the logic for asynchronous query when setting the `searchMatcher` attribute as a string for the associated `options`.
 - 💄 `<pro>Lov`: Optimize the situation where cached data is displayed first and then the latest data is shown when performing a dropdown search.
+- 💄 `Upload`: Optimize the `icon` images for `markdown` type files.
 - 🐞 `<pro>Table`: Fixed the issue where errors occurred when the dynamic filter bar's fuzzy filter and all filter fields were hidden.
 - 🐞 `Tabs`: Fixed the issue where the left and right arrows occasionally displayed incorrectly when dynamically adding new `Tab`.
 - 🐞 `<pro>Modal`: Fixed the issue where the style was incorrect after using the update method to enable the fullscreen attribute after customizing the Modal coordinates.

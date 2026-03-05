@@ -16,6 +16,7 @@ import FileuploadIcon from './icon-svg/fileuploadIcon';
 import ImageIcon from './icon-svg/imageIcon';
 import PdfIcon from './icon-svg/pdfIcon';
 import XlsIcon from './icon-svg/xlsIcon';
+import MdIcon from './icon-svg/mdIcon';
 import { Size } from '../_util/enum';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
@@ -47,6 +48,8 @@ function defaultRenderIcon(file: UploadFile, listType: UploadListType, prefixCls
       return <PdfIcon className={`${prefixCls}-icon-file`} />;
     case 'xls':
       return <XlsIcon className={`${prefixCls}-icon-file`} />;
+    case 'markdown':
+      return <MdIcon className={`${prefixCls}-icon-file`} />;
     default:
       return <FileuploadIcon className={`${prefixCls}-icon-file`} />;
   }

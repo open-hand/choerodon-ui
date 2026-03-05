@@ -301,6 +301,11 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
   }
 
+  @autobind
+  getInputLengthExceedWarning(_?: 'input' | 'paste') {
+    return false;
+  }
+
   getDecimalSeparator = (): string => {
     const formatOptions = this.getFormatOptions();
     const locale = typeof formatOptions.lang === 'string' ? formatOptions.lang.replace('_', '-') : formatOptions.lang;

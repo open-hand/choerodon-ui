@@ -6,6 +6,7 @@ import DocIcon from 'choerodon-ui/lib/upload/icon-svg/docIcon';
 import FileuploadIcon from 'choerodon-ui/lib/upload/icon-svg/fileuploadIcon';
 import PdfIcon from 'choerodon-ui/lib/upload/icon-svg/pdfIcon';
 import XlsIcon from 'choerodon-ui/lib/upload/icon-svg/xlsIcon';
+import MdIcon from 'choerodon-ui/lib/upload/icon-svg/mdIcon';
 import { FormField, FormFieldProps } from '../field/FormField';
 import Icon from '../icon';
 import Progress from '../progress';
@@ -53,6 +54,9 @@ export default class UploadList extends FormField<UploadListProps> {
           break;
         case 'xls':
           previewImg = <XlsIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
+          break;
+        case 'markdown':
+          previewImg = <MdIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
           break;
         default:
           previewImg = <FileuploadIcon style={{width: fileIconSize}} className={`${prefixCls}-icon-file`} />;
