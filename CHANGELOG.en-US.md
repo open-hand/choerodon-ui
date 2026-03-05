@@ -99,6 +99,8 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fixed the issue where the pop-up window did not disappear after the `dom` was removed from the `DOM` tree.
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter from the second page onwards could not move to the next line for editing.
 - 🐞 `<pro>Table`: Fixed the issue of row numbers being incorrect in data grouping mode and cells misaligning after deleting data.
+- 🐞 `<pro>Table`: Fixed the issue of cell misalignment after deleting data when the `showRemovedRow` property is enabled in data grouping mode.
+- 🐞 `<pro>Table`: Fixed the issue where pasting empty characters into numeric cells would be converted to 0.
 - 🐞 `<pro>Table`: Fixed the issue where pressing Enter could not move to the next line when the cell editor was set as a IntlField.
 - 🐞 `<pro>Button`: Fixed the issue where text overflow ellipsis style would fail when disabled.
 - 🐞 `<pro>Lov`: Fixed the issue where the initial selection state was not synchronized in single-selection mode.
