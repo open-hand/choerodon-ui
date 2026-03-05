@@ -1700,9 +1700,12 @@ export default class Table extends DataSetComponent<TableProps> {
                 break;
               case FieldType.number:
                 if (isArrayLike(text)) {
-                  text = text.map(item => Number(item));
+                  text = text.map(item => {
+                    const s = String(item).trim();
+                    return s === '' ? null : Number(s);
+                  });
                 } else {
-                  text = Number(text);
+                  text = text === '' || isNil(text) ? null : Number(text);
                 }
                 break;
               case FieldType.date:
