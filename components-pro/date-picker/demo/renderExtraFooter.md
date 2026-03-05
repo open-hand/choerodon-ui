@@ -18,11 +18,7 @@ import { QuarterPicker, DatePicker, MonthPicker, DateTimePicker, YearPicker, Tim
 import moment from 'moment';
 
 function handleChange(value, oldValue) {
-  if (value?.length) {
-    console.log('[datepicker]', value, '[oldValue]', oldValue);
-    return;
-  }
-  console.log('[datepicker]', value && value.format(), '[oldValue]', oldValue && oldValue.format());
+  console.log('[datepicker]', value, '[oldValue]', oldValue);
 }
 
 const renderExtraFooter = ({ choose, type }) => {
