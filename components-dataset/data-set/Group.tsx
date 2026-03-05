@@ -1,6 +1,7 @@
 import { action, computed, observable, ObservableMap } from 'mobx';
 import Record, { EXPANDED_KEY } from './Record';
 import { getIf } from './utils';
+import { TABLE_SHOW_REMOVED_ROW } from './DataSet';
 
 export default class Group {
 
@@ -63,7 +64,7 @@ export default class Group {
         return newList;
       }, []);
     }
-    return this.records.filter(record => !record.isRemoved);
+    return this.records.filter(record => !record.isRemoved || record.dataSet?.getState(TABLE_SHOW_REMOVED_ROW));
   }
 
   constructor(name: string | symbol, index: number, value?: any, parentGroup?: Group) {

@@ -95,6 +95,8 @@ export const CHILDREN_PAGE_INFO = '__CHILDREN_PAGE_INFO__';
 
 export const QUERY_CANCELABLE = '__QUERY_CANCELABLE__';
 
+export const TABLE_SHOW_REMOVED_ROW = '__TABLE_SHOW_REMOVED_ROW__';
+
 export type DataSetChildren = { [key: string]: DataSet };
 
 export type Events = { [key: string]: Function };
