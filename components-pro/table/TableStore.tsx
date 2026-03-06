@@ -326,7 +326,7 @@ export function getIdList(store: TableStore) {
   return idList;
 }
 
-function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?: boolean): number[] {
+function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?: boolean, showRemovedRow?: boolean): number[] {
   if (record && dataSet) {
     if (record.isCached) {
       return [];
@@ -336,7 +336,8 @@ function getRowNumbers(record?: Record | null, dataSet?: DataSet | null, isTree?
     if (isTree) {
       return record.path.map((r, index) => r.indexInParent + 1 + (index === 0 ? pageIndex : 0));
     }
-    return [record.index + 1 + pageIndex];
+    const index = showRemovedRow ? dataSet.records.indexOf(record) : record.index;
+    return [index + 1 + pageIndex];
   }
   return [0];
 }
@@ -2940,7 +2941,7 @@ export default class TableStore {
   @autobind
   renderRowNumber({ record, dataSet, rowIndex }: { record: Record; dataSet: DataSet; rowIndex?: number }): ReactNode {
     const { isTree, props: { rowNumber }, groups } = this;
-    const numbers = groups.length > 0 && rowIndex !== undefined ? [rowIndex + 1] : getRowNumbers(record, dataSet, isTree);
+    const numbers = groups.length > 0 && rowIndex !== undefined ? [rowIndex + 1] : getRowNumbers(record, dataSet, isTree, this.showRemovedRow);
     const number = numbers.join('-');
     if (typeof rowNumber === 'function') {
       return rowNumber({ record, dataSet, text: number, pathNumbers: numbers });
