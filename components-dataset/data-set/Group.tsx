@@ -1,7 +1,7 @@
 import { action, computed, observable, ObservableMap } from 'mobx';
 import Record, { EXPANDED_KEY } from './Record';
 import { getIf } from './utils';
-import { TABLE_SHOW_REMOVED_ROW } from './DataSet';
+import { TABLE_SHOW_REMOVED_ROW } from './constant';
 
 export default class Group {
 
