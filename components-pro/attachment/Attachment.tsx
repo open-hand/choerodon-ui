@@ -879,7 +879,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   @mobxAction
   removeAttachment(attachment: AttachmentFile): undefined {
-    const { attachments } = this;
+    const { attachments, checkedAttachments } = this;
     if (attachments) {
       const index = attachments.indexOf(attachment);
       if (index !== -1) {
@@ -887,6 +887,13 @@ export default class Attachment extends FormField<AttachmentProps> {
         this.attachments = attachments;
         this.checkValidity();
         this.updateCacheCount();
+      }
+    }
+    if (checkedAttachments) {
+      const index = checkedAttachments.indexOf(attachment);
+      if (index !== -1) {
+        checkedAttachments.splice(index, 1);
+        this.checkedAttachments = checkedAttachments;
       }
     }
     return undefined;
