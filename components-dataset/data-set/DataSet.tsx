@@ -84,6 +84,7 @@ import { iteratorReduce, iteratorSliceToArray } from '../iterator-helper';
 import Validator from '../validator/Validator';
 import LookupCache from './LookupCache';
 import { treeReduce } from '../tree-helper';
+import { TABLE_SHOW_REMOVED_ROW } from './constant';
 
 const ALL_PAGE_SELECTION = '__ALL_PAGE_SELECTION__';  // TODO:Symbol
 
@@ -95,7 +96,7 @@ export const CHILDREN_PAGE_INFO = '__CHILDREN_PAGE_INFO__';
 
 export const QUERY_CANCELABLE = '__QUERY_CANCELABLE__';
 
-export const TABLE_SHOW_REMOVED_ROW = '__TABLE_SHOW_REMOVED_ROW__';
+export { TABLE_SHOW_REMOVED_ROW };
 
 export type DataSetChildren = { [key: string]: DataSet };
 
