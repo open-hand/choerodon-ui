@@ -699,6 +699,32 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     }
     return result;
   }
+
+  getRangeInputValue(startText: string, endText: string): string {
+    let result = super.getRangeInputValue(startText, endText);
+    if (this.inputDecimalSeparatorFollowLang && typeof result === 'string' && result && this.isFocus) {
+      const decimalSeparator = this.getDecimalSeparator();
+      result = result.replace(/\./, decimalSeparator);
+
+      if (this.element && !isNil(this.element.selectionStart)) {
+        this.cursorPos = this.element.selectionStart;
+      }
+    }
+    return result;
+  }
+
+  getMultipleInputValue(text?: string): string | undefined {
+    let result = super.getMultipleInputValue(text);
+    if (this.inputDecimalSeparatorFollowLang && typeof result === 'string' && result && this.isFocus) {
+      const decimalSeparator = this.getDecimalSeparator();
+      result = result.replace(/\./, decimalSeparator);
+
+      if (this.element && !isNil(this.element.selectionStart)) {
+        this.cursorPos = this.element.selectionStart;
+      }
+    }
+    return result;
+  }
 }
 
 @observer

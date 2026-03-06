@@ -1101,8 +1101,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   };
 
+  getMultipleInputValue(text?: string): string | undefined {
+    return text;
+  }
+
   renderMultipleEditor(props: T) {
-    const { text } = this;
+    const text = this.getMultipleInputValue(this.text);
     const editorStyle = {} as CSSProperties;
     if (!this.editable) {
       editorStyle.position = 'absolute';
