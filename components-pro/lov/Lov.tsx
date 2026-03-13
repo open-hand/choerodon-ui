@@ -510,15 +510,17 @@ export default class Lov extends Select<LovProps> {
     if (multiple || needSingleSelected) {
       const needToFetch = new Map();
       options.setCachedSelected(
-        this.getValues().map(value => {
+        this.getValues().map((value, index) => {
           const primitiveValue = primitive ? value : value[valueField];
           const oldSelected = selected.find(r => r.get(valueField) === primitiveValue);
           if (oldSelected) {
             oldSelected.isSelected = true;
+            oldSelected.selectedTimestamp = index;
             return oldSelected;
           }
           const newSelected = new Record(primitive ? { [valueField]: value } : toJS(value), options, RecordStatus.sync);
           newSelected.isSelected = true;
+          newSelected.selectedTimestamp = index;
           newSelected.isCached = true;
           needToFetch.set(primitiveValue, newSelected);
           return newSelected;

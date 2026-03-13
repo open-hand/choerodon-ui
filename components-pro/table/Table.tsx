@@ -167,7 +167,7 @@ export interface TableQueryBarCustomProps {
   summaryBar?: ReactElement<any>;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   autoQueryAfterReset?: boolean;
   editable: boolean;
   summaryBarConfigProps?: SummaryBarConfigProps;

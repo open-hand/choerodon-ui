@@ -35,7 +35,7 @@ export interface TableProfessionalBarProps extends ElementProps {
   autoQueryAfterReset?: boolean;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   summaryBarConfigProps?: SummaryBarConfigProps;
 }
 

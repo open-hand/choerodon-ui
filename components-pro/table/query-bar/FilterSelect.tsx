@@ -37,7 +37,7 @@ export interface FilterSelectProps extends TextFieldProps {
   editorProps?: (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
 }
 
 @observer

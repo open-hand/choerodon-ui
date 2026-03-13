@@ -72,7 +72,7 @@ export interface TableComboBarProps extends ElementProps {
   summaryBar?: ReactElement<any>;
   comboFilterBar?: ComboFilterBarConfig;
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
   fuzzyQueryPlaceholder?: string;
@@ -870,7 +870,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
             runInAction(() => {
               dataSet.setState(SEARCHTEXT, '');
             });
-            onReset();
+            onReset('clear');
           }}
         />
       </div>

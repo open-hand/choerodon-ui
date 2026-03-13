@@ -23,7 +23,7 @@ export interface FilterBarProps {
   editable?: boolean;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   editorProps?: (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object;
 }
 
