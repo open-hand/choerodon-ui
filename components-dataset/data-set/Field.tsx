@@ -1549,7 +1549,8 @@ export default class Field {
   @action
   setAttachments(attachments: AttachmentFile[] | undefined, record: Record | undefined = this.record, uuid?: string | undefined) {
     if (record) {
-      const value = uuid || record.get(this.name);
+      const recordValue = record.get(this.name);
+      const value = uuid || recordValue;
       if (value) {
         const attachmentCaches = getIf<Record, ObservableMap<string, AttachmentCache>>(record, 'attachmentCaches', () => observable.map());
         const cache = attachmentCaches.get(value);
@@ -1557,6 +1558,12 @@ export default class Field {
           set(cache, 'attachments', attachments);
         } else {
           attachmentCaches.set(value, { attachments });
+        }
+        const pendingAttachmentUUIDs = getIf<Record, ObservableMap<string, string>>(record, 'pendingAttachmentUUIDs', () => observable.map());
+        if (uuid && uuid !== recordValue) {
+          pendingAttachmentUUIDs.set(this.name, uuid);
+        } else if (recordValue && pendingAttachmentUUIDs.has(this.name)) {
+          pendingAttachmentUUIDs.delete(this.name);
         }
       }
     } else {
@@ -1566,7 +1573,11 @@ export default class Field {
 
   getAttachments(record: Record | undefined = this.record, uuid?: string | undefined) {
     if (record) {
-      const value = uuid || record.get(this.name);
+      let value = uuid || record.get(this.name);
+      if (!value) {
+        const pendingAttachmentUUIDs = getIf<Record, ObservableMap<string, string>>(record, 'pendingAttachmentUUIDs', () => observable.map());
+        value = pendingAttachmentUUIDs.get(this.name);
+      }
       if (value) {
         const { attachmentCaches } = record;
         if (attachmentCaches) {
@@ -1606,7 +1617,11 @@ export default class Field {
       return attachments.length;
     }
     if (record) {
-      const uuid = record.get(this.name);
+      let uuid = record.get(this.name);
+      if (!uuid) {
+        const pendingAttachmentUUIDs = getIf<Record, ObservableMap<string, string>>(record, 'pendingAttachmentUUIDs', () => observable.map());
+        uuid = pendingAttachmentUUIDs.get(this.name);
+      }
       if (uuid) {
         const { attachmentCaches } = record;
         if (attachmentCaches) {
