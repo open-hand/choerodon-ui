@@ -328,7 +328,7 @@ export interface TableDynamicFilterBarProps extends ElementProps {
   dynamicFilterBar?: DynamicFilterBarConfig;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   onFieldEnterDown?: ({ e, name, dataSet }) => void;
   autoQueryAfterReset?: boolean;
   fuzzyQuery?: boolean;
@@ -1639,13 +1639,14 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           this.handleQuery(undefined, value, oldValue);
           dataSet.setState(SEARCHTEXT, value);
           dataSet.setQueryParameter(this.searchText, value);
-          this.setConditionStatus(value === (isNil(fuzzyValue) ? null : fuzzyValue) ? RecordStatus.sync : RecordStatus.update);
+          const isQueryDataSetCurrentDirty = dataSet.queryDataSet?.current?.dirty;
+          this.setConditionStatus(value === (isNil(fuzzyValue) ? null : fuzzyValue) && !isQueryDataSetCurrentDirty ? RecordStatus.sync : RecordStatus.update);
         }}
         onClear={() => {
           runInAction(() => {
             dataSet.setState(SEARCHTEXT, null);
           });
-          onReset();
+          onReset('clear');
         }}
       />
     </div>);

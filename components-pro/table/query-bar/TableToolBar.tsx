@@ -25,7 +25,7 @@ export interface TableToolBarProps extends ElementProps {
   pagination?: ReactElement<PaginationProps>;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
 }
 
 @observer

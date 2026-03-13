@@ -231,7 +231,7 @@ subtitle: 表格
 | refreshBtn | 刷新按钮  | boolean | true |
 | onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 | onQuery | 查询回调 | () => void |  |
-| onReset | 重置回调 | () => void |  |
+| onReset | 重置回调，type 参数为 'clear' 表示是在清空模糊搜索框时被调用，为 undefined 表示是在重置查询条件时被调用 | (type?: 'clear') => void |  |
 | onRefresh | 刷新按钮回调，返回false | Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; |  |
 | onFieldEnterDown | 字段回车回调 | ({ e, name, dataSet }) => void |  |
 | showSingleLine | 筛选条是否单行显示 | boolean |  |
@@ -259,7 +259,7 @@ subtitle: 表格
 | formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } |
 | onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 | onQuery | 查询回调 | () => void |  |
-| onReset | 重置回调 | () => void |  |
+| onReset | 重置回调，type 参数为 'clear' 表示是在清空模糊搜索框时被调用，为 undefined 表示是在重置查询条件时被调用 | (type?: 'clear') => void |  |
 
 更多属性请参考 `Table` `queryBar` 属性的钩子参数。
 

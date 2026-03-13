@@ -68,7 +68,7 @@ export interface TableQueryBarProps {
   clientExportQuantity?: number;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   treeQueryExpanded?: boolean;
   comboFilterBar?: ComboFilterBarConfig;
   tableFilterBarButtonIcon?: TableFilterBarButtonIcon;

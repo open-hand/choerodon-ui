@@ -24,7 +24,7 @@ export interface QuickFilterProps {
   filterSave?: boolean;
   filterSaveCallback?: (object) => void;
   filterOptionRenderer?: (searchId, searchIcon, text) => ReactNode;
-  onReset?: () => void;
+  onReset?: (type?: 'clear') => void;
   tableStore?: TableStore;
 }
 

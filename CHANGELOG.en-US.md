@@ -15,6 +15,7 @@ timeline: true
 
 ---
 
+- 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
