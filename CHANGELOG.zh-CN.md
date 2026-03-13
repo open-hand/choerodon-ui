@@ -17,6 +17,7 @@ timeline: true
 
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
+- 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
 
 
 ## 1.6.8
