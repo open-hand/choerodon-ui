@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+- 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
+
+## 1.6.8
+
+`2026-03-06`
+
 - 🌟 `configure`: Added `selectShowInputPrompt`, `tooltipAutoPlacement`, `inputDecimalSeparatorFollowLang`, `addNewOptionPromptRender`, `textFieldPasteMaxLengthWarning`, `inputLengthExceedWarning` property.
 - 🌟 `configure`: the `TooltipTarget` has added the `text-field-placeholder` type.
 - 🌟 `configure`: The `showLengthInfo` attribute has been updated to include an `auto` type.

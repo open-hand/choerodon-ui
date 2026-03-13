@@ -1614,9 +1614,11 @@ export default class Attachment extends FormField<AttachmentProps> {
       default:
         return (
           <div className={`${prefixCls}-help`}>
-            <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-              {toJS(help)}
-            </div>
+            <OverflowTip title={help} key='help-tooltip'>
+              <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
+                {toJS(help)}
+              </div>
+            </OverflowTip>
             {this.renderDeleteAll()}
           </div>
         );
