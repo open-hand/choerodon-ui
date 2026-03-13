@@ -14,6 +14,7 @@ import autobind from '../_util/autobind';
 import { hide, show } from '../tooltip/singleton';
 import ValidationResult from '../validator/ValidationResult';
 import { ShowHelp } from '../field/enum';
+import OverflowTip from '../overflow-tip';
 
 export interface RateProps extends C7NRateProps, FormFieldProps {
   defaultValue?: number;
@@ -150,9 +151,11 @@ export default class Rate<T extends RateProps> extends FormField<T> {
       const help = this.getDisplayProp('help');
       if (help) {
         return (
-          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {toJS(help)}
-          </div>
+          <OverflowTip title={help} key='help-tooltip' placement='bottom'>
+            <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
+              {toJS(help)}
+            </div>
+          </OverflowTip>
         );
       }
     }

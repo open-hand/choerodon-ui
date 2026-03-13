@@ -55,6 +55,7 @@ import formatString from '../formatter/formatString';
 import { hide, show } from '../tooltip/singleton';
 import { TooltipProps } from '../tooltip/Tooltip';
 import isOverflow from '../overflow-tip/util';
+import OverflowTip from '../overflow-tip';
 
 const map: { [key: string]: FormField<FormFieldProps>[] } = {};
 
@@ -715,9 +716,11 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       const help = this.getDisplayProp('help');
       if (help) {
         return (
-          <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
-            {help}
-          </div>
+          <OverflowTip title={help} key='help-tooltip' placement='bottom'>
+            <div key="help" className={`${this.getContextProPrefixCls(FIELD_SUFFIX)}-help`}>
+              {help}
+            </div>
+          </OverflowTip>
         );
       }
     }

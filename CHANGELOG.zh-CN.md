@@ -15,6 +15,12 @@ timeline: true
 
 ---
 
+- 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
+
+## 1.6.8
+
+`2026-03-06`
+
 - 🌟 `configure`: 新增 selectShowInputPrompt, tooltipAutoPlacement, inputDecimalSeparatorFollowLang, addNewOptionPromptRender, textFieldPasteMaxLengthWarning, inputLengthExceedWarning 属性。
 - 🌟 `configure`: TooltipTarget 新增 text-field-placeholder 类型。
 - 🌟 `configure`: showLengthInfo 属性新增 auto 类型。
