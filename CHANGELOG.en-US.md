@@ -19,6 +19,7 @@ timeline: true
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
+- 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
 - 🐞 `<pro>Table`: Fixed the issue where, when both the query fields of the dynamic filter bar and the fuzzy search values changed, restoring one of the values would reset the query bar to its initial state.
 

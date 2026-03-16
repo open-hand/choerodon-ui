@@ -79,9 +79,11 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   const attachmentConfig: AttachmentConfig = getConfig('attachment');
   const tooltipRef = useRef<boolean>(false);
   const pictureRef = useRef<PictureForwardRef | null>(null);
+  const fileNameRef = useRef<HTMLSpanElement | null>(null);
   const { getPreviewUrl: getPreviewUrlConfig, getDownloadUrl: getDownloadUrlConfig } = attachmentConfig;
   const getPreviewUrl = getPreviewUrlProp || getPreviewUrlConfig;
   const getDownloadUrl = getDownloadUrlProp || getDownloadUrlConfig;
+  const getPreviewUrlRef = useRef(getPreviewUrl);
 
   const [previewUrl, setPreviewUrl] = useState<string | (() => string | Promise<string>) | undefined>(() => {
     if (status === 'deferred') {
@@ -92,13 +94,18 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     }
   });
   useEffect(() => {
+    getPreviewUrlRef.current = getPreviewUrl;
+  }, [getPreviewUrl]);
+
+  useEffect(() => {
     if (status === 'deferred') {
       setPreviewUrl(() => url);
       return;
     }
     let isMounted = true;
-    if (getPreviewUrl) {
-      const result = getPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+    const currentGetPreviewUrl = getPreviewUrlRef.current;
+    if (currentGetPreviewUrl) {
+      const result = currentGetPreviewUrl({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
       if (isPromise(result)) {
         result.then(res => {
           if (isMounted)  {
@@ -114,7 +121,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     return () => {
       isMounted = false;
     }
-  }, [getPreviewUrl, attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, url, setPreviewUrl, status]);
+  }, [attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic, url, status]);
 
   const downloadUrl: string | Function | undefined = getDownloadUrl && getDownloadUrl({
     attachment,
