@@ -295,10 +295,33 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       );
     }
   };
+
+  const handleTitleMouseEnter = useCallback((e) => {
+    const fullName = ext ? `${filename}.${ext}` : filename;
+    if (fileNameRef.current && isOverflow(fileNameRef.current)) {
+      show(e.currentTarget, {
+        title: fullName,
+      });
+      tooltipRef.current = true;
+    }
+  }, [tooltipRef, fileNameRef, filename, ext]);
+
+  const handleTitleMouseLeave = useCallback(() => {
+    if (tooltipRef.current) {
+      hide();
+      tooltipRef.current = false;
+    }
+  }, [tooltipRef]);
+
   const renderTitle = (isCardTitle?: boolean): ReactNode => {
     const fileName = (
       <>
-        <span className={`${prefixCls}-name`}>{filename}</span>
+        <span
+          className={`${prefixCls}-name`}
+          ref={fileNameRef}
+        >
+          {filename}
+        </span>
         {ext && <span className={`${prefixCls}-ext`}>.{ext}</span>}
       </>
     );
@@ -317,7 +340,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       </a>
     ) : fileName;
     return (
-      <span className={`${prefixCls}-title`} style={isCardTitle ? { width: pxToRem(width) } : undefined}>
+      <span
+        className={`${prefixCls}-title`}
+        style={isCardTitle ? { width: pxToRem(width) } : undefined}
+        onMouseEnter={handleTitleMouseEnter}
+        onMouseLeave={handleTitleMouseLeave}
+      >
         {nameNode}
         {!isCardTitle && showSize && <span className={`${prefixCls}-size`}> ({formatFileSize(size)})</span>}
       </span>
