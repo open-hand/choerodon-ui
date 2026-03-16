@@ -20,6 +20,7 @@ timeline: true
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
+- 🐞 `<pro>Table`: Fixed the issue where, when both the query fields of the dynamic filter bar and the fuzzy search values changed, restoring one of the values would reset the query bar to its initial state.
 
 ## 1.6.8
 

@@ -20,6 +20,7 @@ timeline: true
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
+- 🐞 `<pro>Table`: 修复动态筛选条查询字段和模糊搜索值都有变化时，还原其中一个值就会让查询栏恢复到初始状态的问题。
 
 
 ## 1.6.8
