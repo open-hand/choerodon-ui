@@ -682,6 +682,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
         status = isEqualDynamicProps(omit(dataSet.getState(ORIGINALVALUEOBJ).query, ['__dirty']), omit(record.toData(), ['__dirty']), queryDataSet, record, name) ? RecordStatus.sync : RecordStatus.update;
       }
     }
+    const fuzzyValue = dataSet.getState(ORIGINALVALUEOBJ)?.fuzzy;
+    const searchText = dataSet.getState(SEARCHTEXT);
+    if (status === RecordStatus.sync && searchText !== (isNil(fuzzyValue) ? null : fuzzyValue)) {
+      status = RecordStatus.update;
+    }
     this.setConditionStatus(status);
     if (autoQuery && shouldQuery) {
       if (await dataSet.modifiedCheck(undefined, dataSet, 'query')) {
