@@ -569,14 +569,22 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     let offset = navScrollRef.current ? (vertical ? navScrollRef.current.scrollTop : navScrollRef.current.scrollLeft) : 0;
     const wrapOffset = getOffsetLT(navWrap);
     const activeTabOffset = getOffsetLT(activeTab);
-    if (wrapOffset > activeTabOffset) {
+    // 漏出前一个、后一个 tab 部分
+    const extraLeftOffset = isVertical(tabBarPosition) ? 40 : 80;
+    const extraRightOffset = isVertical(tabBarPosition) ? 40 : 60;
+    if (wrapOffset > activeTabOffset - extraLeftOffset) {
       offset -= (wrapOffset - activeTabOffset);
+      offset -= extraLeftOffset;
+      offset = offset < 0 ? 0 : offset;
       setOffset(offset, setNextPrev);
-    } else if ((wrapOffset + navWrapNodeWH) < (activeTabOffset + activeTabWH)) {
+    } else if ((wrapOffset + navWrapNodeWH) < (activeTabOffset + activeTabWH) + extraRightOffset) {
       offset += (activeTabOffset + activeTabWH) - (navWrapNodeWH + wrapOffset);
+      offset += extraRightOffset;
       setOffset(offset, setNextPrev);
     }
-  }, [activeTabRef, navWrapRef, lastNextPrevShownRef, getScrollWH, getOffsetWH, getOffsetLT, setOffset, setNextPrev, isNextPrevShown]);
+  }, [activeTabRef, navWrapRef, lastNextPrevShownRef, getScrollWH, getOffsetWH, getOffsetLT, setOffset, setNextPrev, isNextPrevShown,
+    tabBarPosition,
+  ]);
   const prevTransitionEnd = useCallback(e => {
     if (e.propertyName !== 'opacity') {
       return;
