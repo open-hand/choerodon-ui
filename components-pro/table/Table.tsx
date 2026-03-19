@@ -1114,6 +1114,10 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore.performanceOn = true;
     }
     this.setScrollTop(0);
+    raf(() => {
+      const { tableBodyWrap } = this;
+      this.setScrollLeft(tableBodyWrap ? tableBodyWrap.scrollLeft : 0);
+    });
     this.initDefaultExpandedRows();
     this.clearClipboard();
   }
