@@ -236,6 +236,9 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       dataSet,
       tableProps,
     } = this.props;
+    if (selectionMode === SelectionMode.none) {
+      return;
+    }
     let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
@@ -325,7 +328,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   renderTable() {
     const {
       dataSet,
-      config: { queryBar, height, treeFlag, delayLoad, expandFlag, queryColumns, tableProps: configTableProps = {}, lovItems },
+      config: { queryBar, height, treeFlag, delayLoad, expandFlag, queryColumns, tableProps: configTableProps = {}, lovItems, ...restConfig },
       multiple,
       tableProps,
       viewMode,
@@ -432,6 +435,10 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
           showIcon
         />
       );
+    }
+    // @ts-ignore
+    if (restConfig && restConfig.originData && restConfig.originData.failed) {
+      lovTableProps.selectionMode = SelectionMode.none;
     }
     this.selectionMode = lovTableProps.selectionMode;
     return (

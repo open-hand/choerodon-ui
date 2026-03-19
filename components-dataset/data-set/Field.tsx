@@ -8,6 +8,7 @@ import isObject from 'lodash/isObject';
 import cloneDeep from 'lodash/cloneDeep';
 import merge from 'lodash/merge';
 import noop from 'lodash/noop';
+import isNil from 'lodash/isNil';
 import { AxiosRequestConfig } from 'axios';
 import isPromise from 'is-promise';
 import BigNumber from 'bignumber.js';
@@ -720,7 +721,9 @@ export default class Field {
    */
   get(propsName: string, record: Record | undefined = this.record): any {
     const prop = this.getProp(propsName, record);
-    if (prop !== undefined) {
+    const specialPropNames = ['textField', 'valueField'];
+    if ((!specialPropNames.includes(propsName) && prop !== undefined) ||
+      (specialPropNames.includes(propsName) && !isNil(prop))) {
       return prop;
     }
     return defaultProps[propsName];
