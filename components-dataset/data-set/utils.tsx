@@ -1,6 +1,6 @@
 import queryString from 'querystringify';
 import moment, { isDate, isMoment } from 'moment';
-import { isArrayLike, ObservableMap } from 'mobx';
+import { isArrayLike, ObservableMap, runInAction } from 'mobx';
 import { AxiosRequestConfig } from 'axios';
 import isPromise from 'is-promise';
 import isBoolean from 'lodash/isBoolean';
@@ -1155,7 +1155,9 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
     }
     if (previousGroup) {
       const { records: groupRecords } = previousGroup;
-      groupRecords.push(record);
+      runInAction(() => {
+        groupRecords.push(record);
+      });
       let parent: Group | undefined = previousGroup;
       while (parent) {
         parent.totalRecords.push(record);
@@ -1170,7 +1172,9 @@ export function normalizeGroups(groups: string[], hGroups: string[], records: Re
     if (hGroups.length) {
       emptyGroup.subGroups = optGroups;
     } else {
-      emptyGroup.records = records.slice();
+      runInAction(() => {
+        emptyGroup.records = records.slice();
+      });
     }
     return [
       emptyGroup,

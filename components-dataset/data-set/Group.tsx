@@ -1,4 +1,4 @@
-import { action, computed, observable, ObservableMap } from 'mobx';
+import { action, computed, observable, ObservableMap, runInAction } from 'mobx';
 import Record, { EXPANDED_KEY } from './Record';
 import { getIf } from './utils';
 import { TABLE_SHOW_REMOVED_ROW } from './constant';
@@ -72,9 +72,11 @@ export default class Group {
     this.name = name;
     this.value = value;
     this.parentGroup = parentGroup;
-    this.records = observable.array([]);
     this.totalRecords = [];
     this.subGroups = [];
+    runInAction(() => {
+      this.records = observable.array([]);
+    });
   }
 
   getState(key: string): any {
