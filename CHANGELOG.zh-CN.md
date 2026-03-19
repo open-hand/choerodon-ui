@@ -22,6 +22,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
+- 🐞 `<pro>Lov`: 修复全选时已勾选数据顺序与值顺序不一致的问题。
 - 🐞 `<pro>Table`: 修复动态筛选条查询字段和模糊搜索值都有变化时，还原其中一个值就会让查询栏恢复到初始状态的问题。
 - 🐞 `<pro>Lov`: 修复问题: 值集视图查询失败, 关闭弹窗会造成死循环。
 
