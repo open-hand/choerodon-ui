@@ -42,6 +42,11 @@ export interface SelectionListProps {
  * @returns 排序后的记录
  */
 export function getRecords(records: Record[], textField: string): Record[] {
+  // 全选的情况下 record.selectedTimestamp 相同
+  const isSameSelectedTimestamp = new Set(records.map(record => defaultTo(record.selectedTimestamp, -1))).size === 1;
+  if (isSameSelectedTimestamp) {
+    return records;
+  }
   return sortBy(
     records,
     (item: Record) => defaultTo(item.selectedTimestamp, -1), 
