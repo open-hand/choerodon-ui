@@ -14,7 +14,7 @@ import Icon from '../icon';
 import FormContext from '../form/FormContext';
 import Progress from '../progress';
 import Ripple from '../ripple';
-import { ButtonColor, ButtonTooltip, ButtonType, FuncType } from './enum';
+import { ButtonColor, ButtonTooltip, ButtonType, FuncType, IconPlacementType } from './enum';
 import { DataSetStatus } from '../data-set/enum';
 import { Size, WaitType } from '../core/enum';
 import DataSetComponent, { DataSetComponentProps } from '../data-set/DataSetComponent';
@@ -82,6 +82,7 @@ export interface ButtonProps extends DataSetComponentProps {
   formNoValidate?: boolean;
   formTarget?: string;
   children?: ReactNode;
+  iconPlacement?: IconPlacementType;
 }
 
 const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
@@ -152,6 +153,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
     suffixCls: 'btn',
     type: ButtonType.button,
     waitType: WaitType.throttle,
+    iconPlacement: IconPlacementType.start,
   };
 
   @observable hasTwoCNChar: boolean;
@@ -338,6 +340,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
       'tooltip',
       'block',
       'onClick',
+      'iconPlacement',
     ]);
   }
 
@@ -379,20 +382,23 @@ export default class Button extends DataSetComponent<ButtonProps> {
         children,
         icon,
         block,
+        iconPlacement,
       },
     } = this;
     const childrenCount = Children.count(children);
     const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
+    const iconOnly = icon
+      ? childrenCount === 0 || children === false
+      : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON;
     return super.getClassName(
       {
         [`${prefixCls}-${funcType}`]: funcType,
         [`${prefixCls}-${color}`]: color,
-        [`${prefixCls}-icon-only`]: icon
-          ? childrenCount === 0 || children === false
-          : childrenCount === 1 && (children as any).type && (children as any).type.__C7N_ICON,
+        [`${prefixCls}-icon-only`]: iconOnly,
         [`${prefixCls}-block`]: block,
         [`${prefixCls}-loading`]: this.loading,
         [`${prefixCls}-two-chinese-chars`]: this.hasTwoCNChar && autoInsertSpace,
+        [`${prefixCls}-icon-end`]: !iconOnly && icon && iconPlacement === IconPlacementType.end,
       },
       ...props,
     );
@@ -406,7 +412,7 @@ export default class Button extends DataSetComponent<ButtonProps> {
   }
 
   render() {
-    const { children, icon, href, funcType, hidden } = this.props;
+    const { children, icon, href, funcType, hidden, iconPlacement } = this.props;
     const { loading, disabled } = this;
     const autoInsertSpace = this.getContextConfig('autoInsertSpaceInButton') !== false;
     const iconHiddenStyle: CSSProperties = {
@@ -450,8 +456,9 @@ export default class Button extends DataSetComponent<ButtonProps> {
     const button = (
       <Ripple disabled={disabled || funcType === FuncType.link}>
         <Cmp style={overflowStyle} {...omit(props, omits)}>
-          {buttonIcon}
+          {iconPlacement !== IconPlacementType.end && buttonIcon}
           {hasString ? <span>{kids}</span> : kids}
+          {iconPlacement === IconPlacementType.end && buttonIcon}
         </Cmp>
       </Ripple>
     );

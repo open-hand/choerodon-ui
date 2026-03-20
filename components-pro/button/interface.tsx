@@ -6,4 +6,5 @@ export {
   FuncType,
   ButtonType,
   ButtonTooltip,
+  IconPlacementType,
 } from './enum';
