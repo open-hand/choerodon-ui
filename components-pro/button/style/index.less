@@ -388,6 +388,32 @@
     }
   }
 
+  &-icon-end > button,
+  &-icon-end {
+    > :first-child:not(button) {
+      display: inline-block;
+      max-width: calc(100% - (@btn-icon-size + @btn-icon-margin-single));
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      ~ .@{iconfont-css-prefix} {
+        margin: @btn-icon-end-margin;
+      }
+    }
+  }
+
+  &-icon-end&-loading > button,
+  &-icon-end&-loading {
+    > :first-child:not(button) {
+      max-width: calc(100% - (0.15rem + @btn-icon-margin-single));
+
+      ~ .@{progress-cls}.@{progress-cls}-loading {
+        margin: @btn-icon-end-margin;
+      }
+    }
+  }
+
   & + &:not(&-block) {
     margin-left: @btn-group-spacing;
   }

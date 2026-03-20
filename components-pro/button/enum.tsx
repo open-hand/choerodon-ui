@@ -24,3 +24,8 @@ export enum ButtonType {
   submit = 'submit',
   reset = 'reset',
 }
+
+export enum IconPlacementType {
+  start = 'start',
+  end = 'end',
+}
