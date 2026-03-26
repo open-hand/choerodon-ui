@@ -208,7 +208,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     return node.getBoundingClientRect()[isVertical(tabBarPosition) ? 'top' : 'left'];
   }, [tabBarPosition]);
   const resizeEvent = useMemo(() => new EventManager(typeof window === 'undefined' ? undefined : window), []);
-  const lastNextPrevShownRef = useRef<boolean | undefined>();
+  const lastNextPrevShownRef = useRef<boolean>(false);
   const offsetRef = useRef<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navWrapRef = useRef<HTMLDivElement | null>(null);
@@ -497,13 +497,20 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
       const containerWH = getOffsetWH(container);
       const navWrapNodeWH = getOffsetWH(navWrap);
       const offset = Math.round(offsetRef.current);
+      const currentShown = lastNextPrevShownRef.current;
       // 当容器小于tab的时候使用最小值才可以防止回弹问题。
       const minOffset = Math.round(navNodeWH - navWrapNodeWH);
-      let $next = next;
-      let $prev = prev;
+      let $next = false;
+      let $prev = false;
       // tabBarPosition 为 垂直方向时, -1 是为了兼容 tab 设置高度时, 避免短暂出现上下箭头
       // tabBarPosition 为 水平方向时, -1 是为了兼容偶尔 1px 误差问题, 出现不必要的左右箭头
-      if (offset === 0 && containerWH < navNodeWH - 1) {
+      if (minOffset <= 0) {
+        if (offset > 0) {
+          setOffset(0);
+        }
+        $prev = false;
+        $next = false;
+      } else if (offset === 0 && (containerWH < navNodeWH - 1 || (currentShown && containerWH < navNodeWH))) {
         $prev = false;
         $next = true;
       } else if (minOffset > 0 && offset >= minOffset) {
@@ -517,18 +524,15 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         $next = false;
       }
 
-      if (next !== $next) {
-        setNext($next);
-      }
-      if (prev !== $prev) {
-        setPrev($prev);
-      }
+      setNext(current => (current === $next ? current : $next));
+      setPrev(current => (current === $prev ? current : $prev));
+      lastNextPrevShownRef.current = $next || $prev;
       return {
         next: $next,
         prev: $prev,
       };
     }
-  }, [next, prev, navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH]);
+  }, [navRef, containerRef, navWrapRef, offsetRef, getScrollWH, getOffsetWH, setOffset]);
 
   const toPrev = useCallback(() => {
     const navWrapNode = navWrapRef.current;
@@ -803,21 +807,18 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   }, [tabBarPosition, handleScrollEvent]);
 
   useLayoutEffect(() => {
-    const currentNextPrev = {
-      prev,
-      next,
-    };
+    const currentShown = lastNextPrevShownRef.current;
     const nextPrev = setNextPrev();
     // wait next, prev show hide
     /* eslint react/no-did-update-set-state:0 */
-    if (isNextPrevShown(currentNextPrev) !== isNextPrevShown(nextPrev)) {
+    if (currentShown !== isNextPrevShown(nextPrev)) {
       scrollToActiveTab();
     } else if (activeKey !== prevActiveKey) {
       setActiveKey(activeKey);
       // can not use props.activeKey
       scrollToActiveTab();
     }
-  }, [setNextPrev, isNextPrevShown, prev, next, activeKey, prevActiveKey]);
+  }, [setNextPrev, isNextPrevShown, activeKey, prevActiveKey, scrollToActiveTab]);
 
   useEffect(() => {
     const debouncedResize = debounce(() => {
@@ -834,7 +835,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
   // 内容变化判断是否显示更多
   useEffect(() => {
     setNextPrev();
-  }, [getContent]);
+  }, [getTabs, extraContent, startExtraContent, customizable, showMore, hideAdd, type, tabBarPosition, setNextPrev]);
 
   const inkBarNode = getInkBarNode();
   const tabs = getTabs;
