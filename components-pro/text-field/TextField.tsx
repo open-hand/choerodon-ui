@@ -225,6 +225,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   preCompositionValue?: string;
 
+  @observable showMaxLengthWarningFlag?: 'input' | 'paste';
+
   get clearButton(): boolean {
     const { clearButton } = this.props;
     return !!clearButton && !this.readOnly && !this.disabled;
@@ -324,6 +326,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  @action
   showLengthExceedWarning(type?: 'input' | 'paste') {
     const inputLengthExceedWarning = this.getInputLengthExceedWarning(type);
     const maxLength = this.getProp('maxLength');
@@ -336,13 +339,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         maxLength,
       });
     } else {
-      const message = type === 'paste'
-        ? $l('TextField', 'pasted_exceeding_max_length', { maxLength })
-        : $l('TextField', 'input_exceeding_max_length', { maxLength });
-      Notification.warning({
-        message,
-        description: null,
-      });
+      if (type === 'paste') {
+        const message = $l('TextField', 'pasted_exceeding_max_length', { maxLength });
+        Notification.warning({
+          message,
+          description: null,
+        });
+      }
+      this.showMaxLengthWarningFlag = type;
     }
   }
 
@@ -666,7 +670,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   getWrapperClassNames(...args): string {
-    const { prefixCls, multiple, range, border, props: { isFlat } } = this;
+    const { prefixCls, multiple, range, border, showMaxLengthWarningFlag, isFocus, props: { isFlat } } = this;
     const suffix = this.getSuffix();
     const prefix = this.getPrefix();
     return super.getWrapperClassNames(
@@ -677,6 +681,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         [`${prefixCls}-border`]: border,
         [`${prefixCls}-prefix-button`]: isValidElement<{ onClick }>(prefix),
         [`${prefixCls}-flat`]: isFlat,
+        [`${prefixCls}-maxlength-warning`]: showMaxLengthWarningFlag && isFocus,
       },
       ...args,
     );
@@ -1870,6 +1875,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  @action
   handleBlur(e) {
     if (!e.isDefaultPrevented()) {
       if (this.editable || this.isEditableLike()) {
@@ -1879,6 +1885,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     delete this.selectionInfo;
+    this.showMaxLengthWarningFlag = undefined;
     super.handleBlur(e);
   }
 
@@ -1936,13 +1943,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  @action
   handleChange(e) {
     const {
       target,
       target: { value },
     } = e;
     this.hideTooltip();
-    const { valueChangeAction, props: { wait, waitType } } = this;
+    const { valueChangeAction, showMaxLengthWarningFlag, props: { wait, waitType } } = this;
     const restricted = this.restrictInput(value);
     if (restricted !== value) {
       const selectionEnd = target.selectionEnd + restricted.length - value.length;
@@ -1950,6 +1958,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       target.setSelectionRange(selectionEnd, selectionEnd);
     }
     this.setText(restricted);
+    if (showMaxLengthWarningFlag) {
+      const maxLength = this.getProp('maxLength');
+      if (maxLength > 0 && restricted && restricted.length < maxLength) {
+        this.showMaxLengthWarningFlag = undefined;
+      }
+    }
     if (!this.isFocus || (!this.lock && valueChangeAction === ValueChangeAction.input && this.isValidInput(restricted))) {
       if (!isNil(wait) && waitType) {
         this.handleChangeWait(restricted);
