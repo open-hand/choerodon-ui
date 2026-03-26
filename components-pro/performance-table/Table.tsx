@@ -729,6 +729,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return height + (scrollLength > length ? scrollBarXHeight : 0);
   }
 
+  // 仅在纯触摸使用场景启用 BScroll，避免影响鼠标原生能力
+  get shouldUseTouchScroll() {
+    if (isMobile()) {
+      return true;
+    }
+    if (window.matchMedia) {
+      return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    }
+    return false;
+  }
+
   componentDidMount() {
     this.calculateTableWidth();
     this.calculateTableContextHeight();
@@ -741,8 +752,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const tableBody = this.tableBodyRef.current;
     const wheelWrapper = this.wheelWrapperRef.current;
     if (tableBody) {
-      const isTouchSupported = navigator.maxTouchPoints > 0;
-      if (isMobile() || isTouchSupported) {
+      if (this.shouldUseTouchScroll) {
         this.initBScroll(tableBody);
         // 移动端适配缩放功能
         if (wheelWrapper) {
@@ -898,8 +908,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     if ((!this.wheelListener && tableBody) || (rowDraggable !== nextRowDraggable)) {
       const options = { passive: false };
-      const isTouchSupported = navigator.maxTouchPoints > 0;
-      if (isMobile() || isTouchSupported) {
+      if (this.shouldUseTouchScroll) {
         this.initBScroll(tableBody);
       }
       this.wheelListener = on(tableBody, 'wheel', this.wheelHandler.onWheel, options);
