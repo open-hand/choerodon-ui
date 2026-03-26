@@ -29,6 +29,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where, when virtual scrolling is enabled and there is a large horizontal scroll distance, blank columns are rendered after re-querying data.
 - 🐞 `<pro>Lov`: Fix issue: Query of lov define view failed and closing the modal would cause an infinite loop.
 - 🐞 `Tabs`: Fixed the issue where the TabBar would repeatedly calculate at the critical width, causing errors.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue where table content could not be selected.
 
 ## 1.6.8
 
