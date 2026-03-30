@@ -235,8 +235,10 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       multiple,
       dataSet,
       tableProps,
+      config,
     } = this.props;
-    if (selectionMode === SelectionMode.none) {
+    // @ts-ignore
+    if (config && config.originData && config.originData.failed) {
       return;
     }
     let records: Record[] = selectionMode === SelectionMode.treebox ?
