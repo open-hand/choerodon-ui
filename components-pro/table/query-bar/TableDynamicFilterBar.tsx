@@ -846,7 +846,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     let searchTextValue = null;
     menuRecord.get('conditionList').forEach(condition => {
       if (condition.conditionType !== 'comparator') {
-        regularData.push(condition);
+        // conditionList 中可能配置 options, 此处使用解构方式将 mobx 对象转为普通对象(避免 toJS 将 dataSet 转换为普通对象)
+        regularData.push({ ...condition });
       } else {
         const { fieldName, value, conditionType, comparator, ...rest } = condition;
         comparatorData.push({
