@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fix issue: Query of lov define view failed and closing the modal would cause an infinite loop.
 - 🐞 `Tabs`: Fixed the issue where the TabBar would repeatedly calculate at the critical width, causing errors.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue where table content could not be selected.
+- 🐞 `<pro>Table`: Fix the issue where, when the `rowBoxPlacement` property is set to `end`, the collapse `icon` in the tree view mode is displayed in the second column.
 
 ## 1.6.8
 

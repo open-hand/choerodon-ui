@@ -30,6 +30,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复问题: 值集视图查询失败, 关闭弹窗会造成死循环。
 - 🐞 `Tabs`: 修复临界宽度下 TabBar 会循环计算导致报错的问题。
 - 🐞 `<pro>PerformanceTable`: 修复无法选中表格内容的问题。
+- 🐞 `<pro>Table`: 修复当 rowBoxPlacement 属性设置为 end 时, 树形模式的折叠 icon 显示到了第二列的问题。
 
 ## 1.6.8
 

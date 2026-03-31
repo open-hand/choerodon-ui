@@ -2418,12 +2418,13 @@ export default class TableStore {
     const {
       dragColumnAlign,
       rowDraggable,
-      props: { expandIconColumnIndex = 0, rowNumber },
+      props: { expandIconColumnIndex = 0, rowNumber, rowBoxPlacement },
     } = this;
     if ((!expandIconColumnIndex || typeof expandIconColumnIndex !== 'number') && !this.isTree) {
       return 0;
     }
-    return expandIconColumnIndex + [this.hasRowBox, rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
+    const index = expandIconColumnIndex + [rowNumber, dragColumnAlign && rowDraggable, !!this.comboQueryColumn].filter(Boolean).length;
+    return this.hasRowBox && !isNumber(rowBoxPlacement) && rowBoxPlacement !== RowBoxPlacement.end ? index + 1 : index;
   }
 
   get inlineEdit() {
