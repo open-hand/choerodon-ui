@@ -21,6 +21,7 @@ timeline: true
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
 - 💄 `<pro>TextField`: Optimize the prompt method for ultra-long inputs, remove the `Notification` prompt, and change it to display length information in red.
+- 💄 `<pro>Table`: The dynamic filtering bar's personalized `conditionList` field supports the configuration of the `options` attribute.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

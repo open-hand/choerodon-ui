@@ -21,6 +21,7 @@ timeline: true
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
 - 💄 `<pro>TextField`: 优化超长输入的提示方式, 去除 Notification 提示, 改为长度信息爆红。
+- 💄 `<pro>Table`: 动态筛选条个性化的 conditionList 字段支持配置 options 属性.
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
