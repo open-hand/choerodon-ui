@@ -28,6 +28,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue where the order of checked data is inconsistent with the value order when selecting all.
 - 🐞 `<pro>Table`: Fixed the issue where, when both the query fields of the dynamic filter bar and the fuzzy search values changed, restoring one of the values would reset the query bar to its initial state.
 - 🐞 `<pro>Table`: Fixed the issue where, when virtual scrolling is enabled and there is a large horizontal scroll distance, blank columns are rendered after re-querying data.
+- 🐞 `<pro>Table`: Fixed an issue where deselecting the parent node could not unselect all child nodes in tree mode when some child nodes were uncheckable.
 - 🐞 `<pro>Lov`: Fix issue: Query of lov define view failed and closing the modal would cause an infinite loop.
 - 🐞 `Tabs`: Fixed the issue where the TabBar would repeatedly calculate at the critical width, causing errors.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue where table content could not be selected.
