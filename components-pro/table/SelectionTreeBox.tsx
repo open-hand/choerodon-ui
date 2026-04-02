@@ -11,13 +11,13 @@ export interface SelectionTreeBoxProps {
 
 const SelectionTreeBox: FunctionComponent<SelectionTreeBoxProps> = function SelectionTreeBox(props) {
   const { record } = props;
-  const handleChange = useCallback((value) => {
+  const handleChange = useCallback(() => {
     const { dataSet } = record;
     if (dataSet) {
-      if (value) {
-        dataSet.treeSelect(record);
-      } else {
+      if (record.isSelected) {
         dataSet.treeUnSelect(record);
+      } else {
+        dataSet.treeSelect(record);
       }
     }
   }, [record]);
