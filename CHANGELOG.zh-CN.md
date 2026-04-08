@@ -35,6 +35,7 @@ timeline: true
 - 🐞 `Tabs`: 修复临界宽度下 TabBar 会循环计算导致报错的问题。
 - 🐞 `<pro>PerformanceTable`: 修复无法选中表格内容的问题。
 - 🐞 `<pro>Table`: 修复当 rowBoxPlacement 属性设置为 end 时, 树形模式的折叠 icon 显示到了第二列的问题。
+- 🐞 `<pro>Table`: 修复通过 renderer 渲染的输入框无法通过方向键控制光标移动的问题。
 
 ## 1.6.8
 
