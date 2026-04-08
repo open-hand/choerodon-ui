@@ -24,6 +24,7 @@ import { SelectionProps } from 'choerodon-ui/pro/lib/lov/Lov';
 import {
   AddNewOptionPromptRenderProps,
   AddNewOptionPromptResultProps,
+  BeforeCreateComboOptionProps,
 } from 'choerodon-ui/pro/lib/select/Select';
 import { PerformanceTableCustomized } from 'choerodon-ui/pro/lib/performance-table/Table';
 import { ButtonProps } from 'choerodon-ui/pro/lib/button/Button';
@@ -295,13 +296,17 @@ export interface Config extends DataSetConfig {
   dropdownMatchSelectWidth?: boolean;
   defaultActiveFirstOption?: boolean;
   selectReverse?: boolean;
-  selectOptionsFilter?:  (record: Record, index: number, records: Record[]) => boolean;
+  selectOptionsFilter?: (record: Record, index: number, records: Record[]) => boolean;
   selectPagingOptionContent?: string | ReactNode;
   selectSearchable?: boolean;
   selectBoxSearchable?: boolean;
   selectReserveParam?: boolean;
   selectTrigger?: Action[];
   selectScrollLoad?: boolean;
+  /**
+   * 判断是否需要根据当前文本创建 combo 选项
+   */
+  selectBeforeCreateComboOption?: (props: BeforeCreateComboOptionProps) => boolean;
   selectShowInputPrompt?: boolean | ReactNode | (({ searchable, combo }) => boolean | ReactNode);
   /** Select Lov 新增选项功能渲染函数 */
   addNewOptionPromptRender?: AddNewOptionPromptRenderType;

@@ -746,11 +746,14 @@ export default class Lov extends Select<LovProps> {
         options.setQueryParameter(key, value === '' ? undefined : value);
       });
       if (this.isSearchFieldInPopup() || this.props.searchAction === SearchAction.input) {
-        options.query(1, undefined, true).finally(() => runInAction(() => {
-          this.searching = false;
-        }));
+        return options.query(1, undefined, true)
+          .then(noop)
+          .finally(() => runInAction(() => {
+            this.searching = false;
+          }));
       }
     }
+    return Promise.resolve();
   }
 
   @autobind

@@ -15,8 +15,10 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `selectBeforeCreateComboOption` property.
 - 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 🌟 `<pro>Button`: Added `iconPlacement` property.
+- 🌟 `<pro>Select`: Added `beforeCreateComboOption` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
