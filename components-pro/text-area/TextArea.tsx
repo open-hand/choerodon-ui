@@ -31,6 +31,7 @@ export interface TextAreaProps extends TextFieldProps {
   resize?: ResizeType;
   autoSize?: boolean | AutoSizeType;
   onResize?: (width: number, height: number, target: Element | null) => void;
+  shouldStickLengthInfoOnTop?: boolean;
 }
 
 @observer
@@ -141,6 +142,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
       'resize',
       'autoSize',
       'onResize',
+      'shouldStickLengthInfoOnTop',
     ]);
   }
 
@@ -190,6 +192,11 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     const inputLength = editorTextInfo.text.length;
     const maxLength = this.getProp('maxLength');
     const lengthElement = this.renderLengthInfo(maxLength, inputLength);
+    if (this.props._inTable && this.props.shouldStickLengthInfoOnTop && React.isValidElement(lengthElement)) {
+      return React.cloneElement(lengthElement, {
+        style: { top: '-0.2rem', right: 0, left: 'auto' },
+      });
+    }
     return lengthElement;
   }
 
@@ -218,7 +225,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
         width: 'auto',
       };
     }
-    if (lengthElement) {
+    if (lengthElement && !this.props._inTable) {
       const { style: wrapperStyle } = wrapperProps;
       wrapperProps.style = {
         ...wrapperStyle,
