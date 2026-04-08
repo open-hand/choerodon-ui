@@ -1218,26 +1218,34 @@ export default class Table extends DataSetComponent<TableProps> {
         const { dataSet } = this.props;
         const altKey = e.altKey;
         const shiftKey = e.shiftKey;
+        const target = e.target as HTMLElement | null;
+        const isTextEditingTarget =
+          !!target &&
+          e.currentTarget.contains(target) &&
+          (
+            target.closest('input, textarea, [contenteditable="true"]') ||
+            target.getAttribute('role') === 'textbox'
+          );
         switch (e.keyCode) {
           case KeyCode.UP:
             if (shiftKey && keyboard) {
               this.handleKeyDownUpShift(e);
             } else {
-              this.handleKeyDownUp(e);
+              this.handleKeyDownUp(e, isTextEditingTarget);
             }
             break;
           case KeyCode.DOWN:
             if (shiftKey && keyboard) {
               this.handleKeyDownDownShift(e);
             } else {
-              this.handleKeyDownDown(e);
+              this.handleKeyDownDown(e, isTextEditingTarget);
             }
             break;
           case KeyCode.RIGHT:
-            this.handleKeyDownRight(e);
+            this.handleKeyDownRight(e, isTextEditingTarget);
             break;
           case KeyCode.LEFT:
-            this.handleKeyDownLeft(e);
+            this.handleKeyDownLeft(e, isTextEditingTarget);
             break;
           case KeyCode.PAGE_UP:
             e.preventDefault();
@@ -1415,7 +1423,8 @@ export default class Table extends DataSetComponent<TableProps> {
     dataSet.delete(dataSet.selected);
   }
 
-  async handleKeyDownUp(e): Promise<void | Record> {
+  async handleKeyDownUp(e, isTextEditingTarget?: boolean | Element): Promise<void | Record> {
+    if (isTextEditingTarget) return;
     e.preventDefault();
     const { currentRow } = this;
     let returnRecod: void | Record;
@@ -1435,7 +1444,8 @@ export default class Table extends DataSetComponent<TableProps> {
     return Promise.reject();
   }
 
-  async handleKeyDownDown(e): Promise<void | Record> {
+  async handleKeyDownDown(e, isTextEditingTarget?: boolean | Element): Promise<void | Record> {
+    if (isTextEditingTarget) return;
     e.preventDefault();
     const { currentRow } = this;
     let returnRecod: void | Record;
@@ -1507,12 +1517,12 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  handleKeyDownRight(e) {
+  handleKeyDownRight(e, isTextEditingTarget?: boolean | Element) {
     const {
       tableStore,
       props: { expandedRowRenderer, dataSet },
     } = this;
-    if (tableStore.isTree || expandedRowRenderer) {
+    if ((tableStore.isTree || expandedRowRenderer) && !isTextEditingTarget) {
       const { current } = dataSet;
       if (current) {
         e.preventDefault();
@@ -1521,12 +1531,12 @@ export default class Table extends DataSetComponent<TableProps> {
     }
   }
 
-  handleKeyDownLeft(e) {
+  handleKeyDownLeft(e, isTextEditingTarget?: boolean | Element) {
     const {
       tableStore,
       props: { expandedRowRenderer, dataSet },
     } = this;
-    if (tableStore.isTree || expandedRowRenderer) {
+    if ((tableStore.isTree || expandedRowRenderer) && !isTextEditingTarget) {
       const { current } = dataSet;
       if (current) {
         e.preventDefault();

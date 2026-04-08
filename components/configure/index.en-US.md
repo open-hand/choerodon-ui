@@ -219,6 +219,7 @@ const prefixCls = getConfig('prefixCls');
 | tableProfBarHasValueDefaultExpanded | Table 专业搜索条隐藏的查询字段中有值时, 是否默认展开全部字段  | boolean | true |
 | selectScrollLoad | Select 组件是否开启选项滚动加载 | boolean |  |
 | richTextFontFamilies | RichText 组件工具栏字体选择列表，配置的字体需要通过 Quill 注册才能生效 | ({ name: string; family: string })\[\] |  | 
+| selectBeforeCreateComboOption | Callback before creating combo options, returning `true` allows creation, returning `false` prevents creation | (props: { text: string; options: DataSet; textField: string; valueField: string; }) => boolean | - |
 | selectShowInputPrompt | Select、Lov、TreeSelect可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
 | addNewOptionPromptRender | Select Lov 新增选项功能渲染函数 | (props: { type: 'prompt' \| 'noDataPrompt'; component: 'Select' \| 'Lov'; renderEmptyComponent: string; record?: Record; field?: Field; code?: string; path: string; disabledTooltip?: TooltipProps; onClick?: (path: string, record?: Record, field?: Field) => void; \[key: string\]: any; }) => ReactNode |  |
 

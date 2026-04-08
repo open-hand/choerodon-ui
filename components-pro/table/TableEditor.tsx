@@ -61,6 +61,8 @@ function offset(node: HTMLElement, topNode: HTMLElement | null, initialize: [num
   return initialize;
 }
 
+const LAST_ROW_LENGTH_INFO_THRESHOLD = 10;
+
 @observer
 export default class TableEditor extends Component<TableEditorProps> {
   static displayName = 'TableEditor';
@@ -78,6 +80,8 @@ export default class TableEditor extends Component<TableEditorProps> {
   @observable height?: number;
 
   @observable rendered?: boolean;
+
+  @observable shouldStickLengthInfoOnTop?: boolean;
 
   inTab = false;
 
@@ -388,6 +392,46 @@ export default class TableEditor extends Component<TableEditorProps> {
     }
   }
 
+  getTableBody(): HTMLDivElement | undefined {
+    const { tableStore } = this.context;
+    const { node } = tableStore;
+    const lock = this.lock;
+    if (lock === ColumnLock.right) {
+      return node.fixedColumnsBodyRight || node.tableBodyWrap || undefined;
+    }
+    if (lock === true || lock === ColumnLock.left) {
+      return node.fixedColumnsBodyLeft || node.tableBodyWrap || undefined;
+    }
+    return node.tableBodyWrap || undefined;
+  }
+
+  getLastRenderedDataRow(tdNode: HTMLTableDataCellElement | null | undefined = this.tdNode): HTMLTableRowElement | undefined {
+    if (tdNode) {
+      const trNode = tdNode.parentElement;
+      const tbodyNode = trNode && trNode.parentElement;
+      if (trNode && tbodyNode) {
+        const rows = tbodyNode.querySelectorAll('tr[data-index]');
+        return rows[rows.length - 1] as HTMLTableRowElement | undefined;
+      }
+    }
+  }
+
+  shouldStickLastRowLengthInfoOnTop(
+    lastRow?: HTMLTableRowElement,
+  ): boolean {
+    const tableBody = this.getTableBody();
+    if (!tableBody || !lastRow) {
+      return true;
+    }
+    const { scrollHeight, clientHeight } = tableBody;
+    if (scrollHeight - clientHeight > 1) {
+      return true;
+    }
+    const bodyRect = tableBody.getBoundingClientRect();
+    const rowRect = lastRow.getBoundingClientRect();
+    return bodyRect.bottom - rowRect.bottom < LAST_ROW_LENGTH_INFO_THRESHOLD;
+  }
+
   @action
   alignEditor(cellNode?: HTMLSpanElement | undefined, height?: number) {
     const { wrap, editor } = this;
@@ -403,6 +447,9 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (cellNode) {
       const { parentElement } = cellNode;
       this.tdNode = parentElement as HTMLTableDataCellElement | null;
+      const lastRow = this.getLastRenderedDataRow(this.tdNode);
+      const currentRow = this.tdNode ? this.tdNode.parentElement : undefined;
+      this.shouldStickLengthInfoOnTop = !!lastRow && lastRow === currentRow && this.shouldStickLastRowLengthInfoOnTop(lastRow);
       if (parentElement) {
         this.cellNode = cellNode;
         if (height === undefined) {
@@ -451,6 +498,7 @@ export default class TableEditor extends Component<TableEditorProps> {
         }
       }
       this.cellNode = undefined;
+      this.shouldStickLengthInfoOnTop = false;
       if (!keep && !tableStore.inlineEdit) {
         this.disconnect();
       }
@@ -576,6 +624,7 @@ export default class TableEditor extends Component<TableEditorProps> {
           labelLayout: LabelLayout.none,
           // 目前测试inline时候需要放开限制
           _inTable: !inlineEdit,
+          shouldStickLengthInfoOnTop: this.shouldStickLengthInfoOnTop,
           preventRenderer: true,
         };
         if (isTextArea(cellEditor)) {

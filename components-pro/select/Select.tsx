@@ -112,6 +112,13 @@ export interface ParamMatcherProps {
   valueField: string;
 }
 
+export interface BeforeCreateComboOptionProps {
+  text: string;
+  options: DataSet;
+  textField: string;
+  valueField: string;
+}
+
 export interface AddNewOptionPromptRenderProps {
   type: 'prompt' | 'noDataPrompt';
   component: 'Select' | 'Lov';
@@ -295,6 +302,10 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    */
   addNewOptionPrompt?: AddNewOptionPromptResultProps |
     ((props: AddNewOptionPromptRenderProps) => (ReactNode | AddNewOptionPromptResultProps));
+  /**
+   * 判断是否需要根据当前文本创建 combo 选项
+   */
+  beforeCreateComboOption?: (props: BeforeCreateComboOptionProps) => boolean;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -671,6 +682,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'popupShowComboValue',
       'showInputPrompt',
       'addNewOptionPrompt',
+      'beforeCreateComboOption',
     ]);
   }
 
@@ -1443,7 +1455,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   generateComboOption(value: string | object | any[], callback?: (text: string) => void): void {
-    const { currentComboOption, textField, valueField } = this;
+    const { textField, valueField, props: { beforeCreateComboOption = this.getContextConfig('selectBeforeCreateComboOption') } } = this;
     if (value) {
       if (isArrayLike(value)) {
         const loopValue = [...value];
@@ -1464,16 +1476,55 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
             callback(text);
           }
           this.removeComboOption();
-        } else if (currentComboOption) {
-          currentComboOption.set(textField, value);
-          currentComboOption.set(valueField, value);
         } else {
-          this.createComboOption(value);
+          const textValue = value;
+          const text = ((isNil(textValue) || !isString(textValue)) ? textValue : (textValue as string).trim()) as string;
+          
+          if (isFunction(beforeCreateComboOption)) {
+            this.ensureOptionsForComboOption(text).then(currentOptions => {
+              if (callback && !isSameLike(this.searchText, text)) {
+                return;
+              }
+              if (!beforeCreateComboOption({
+                text,
+                options: currentOptions,
+                textField,
+                valueField,
+              })) {
+                this.removeComboOption();
+                return;
+              }
+              this.doCreateOrUpdateComboOption(text, value);
+            });
+          } else {
+            this.doCreateOrUpdateComboOption(text, value);
+          }
         }
       }
     } else {
       this.removeComboOption();
     }
+  }
+
+  @action
+  doCreateOrUpdateComboOption(text: string, value: any): void {
+    const { currentComboOption, textField, valueField } = this;
+    if (currentComboOption) {
+      currentComboOption.set(textField, text);
+      currentComboOption.set(valueField, value);
+    } else {
+      this.createComboOption(value);
+    }
+  }
+
+  ensureOptionsForComboOption(text: string): Promise<DataSet> {
+    const { searchMatcher } = this;
+    const currentOptions = this.options;
+    if (this.searchable && isString(searchMatcher) && this.doSearchUseDebounce) {
+      this.doSearchDebounce.cancel();
+      return this.searchRemote(text).then(() => currentOptions.ready().then(() => currentOptions));
+    }
+    return currentOptions.ready().then(() => currentOptions);
   }
 
   @action
@@ -1653,16 +1704,19 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       const searchPara = this.getSearchPara(searchMatcher, text);
       const { field, record } = this;
       const options = field && field.get('options', record) || this.observableProps.options;
+      const promises: Promise<any>[] = [];
       Object.keys(searchPara).forEach(key => {
         const value = searchPara[key];
         const lovPara = value === '' ? undefined : value;
         if (options) {
-          options.query(undefined, { [key]: lovPara });
+          promises.push(Promise.resolve(options.query(undefined, { [key]: lovPara })));
         } else if (field) {
           field.setLovPara(key, lovPara);
         }
       });
+      return Promise.all(promises).then(noop);
     }
+    return Promise.resolve();
   }
 
   /**

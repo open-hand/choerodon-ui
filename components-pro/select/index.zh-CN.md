@@ -19,6 +19,7 @@ title: Select
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | combo | 复合输入值 | boolean | false |
+| beforeCreateComboOption | 创建复合输入值前的回调，返回 `true` 允许创建，返回 `false` 阻止创建 | (props: { text: string; options: DataSet; textField: string; valueField: string; }) => boolean | - |
 | searchable | 是否可搜索 | boolean | false |
 | searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField) && record.get(textField).indexOf(text) !== -1 |
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | |

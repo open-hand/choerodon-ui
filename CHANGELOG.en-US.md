@@ -15,13 +15,16 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: Added `selectBeforeCreateComboOption` property.
 - 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 🌟 `<pro>Button`: Added `iconPlacement` property.
+- 🌟 `<pro>Select`: Added `beforeCreateComboOption` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
 - 💄 `<pro>TextField`: Optimize the prompt method for ultra-long inputs, remove the `Notification` prompt, and change it to display length information in red.
 - 💄 `<pro>Table`: The dynamic filtering bar's personalized `conditionList` field supports the configuration of the `options` attribute.
+- 💄 `<pro>Table`: Optimize the display position of length information when the TextArea is on the last line.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
@@ -33,6 +36,7 @@ timeline: true
 - 🐞 `Tabs`: Fixed the issue where the TabBar would repeatedly calculate at the critical width, causing errors.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue where table content could not be selected.
 - 🐞 `<pro>Table`: Fix the issue where, when the `rowBoxPlacement` property is set to `end`, the collapse `icon` in the tree view mode is displayed in the second column.
+- 🐞 `<pro>Table`: Fixed the issue where input boxes rendered through the `renderer` could not move the cursor using the arrow keys.
 
 ## 1.6.8
 

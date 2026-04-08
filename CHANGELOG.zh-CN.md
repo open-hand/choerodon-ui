@@ -15,13 +15,16 @@ timeline: true
 
 ---
 
+- 🌟 `configure`: 新增 selectBeforeCreateComboOption 属性。
 - 🌟 `<pro>Table`: 查询栏 onReset 事件新增 type 参数用于区分触发的场景。
 - 🌟 `<pro>Button`: 新增 iconPlacement 属性。
+- 🌟 `<pro>Select`: 新增 beforeCreateComboOption 属性。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
 - 💄 `<pro>TextField`: 优化超长输入的提示方式, 去除 Notification 提示, 改为长度信息爆红。
 - 💄 `<pro>Table`: 动态筛选条个性化的 conditionList 字段支持配置 options 属性.
+- 💄 `<pro>Table`: 优化文本域在最后一行时的长度信息显示位置.
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
@@ -33,6 +36,7 @@ timeline: true
 - 🐞 `Tabs`: 修复临界宽度下 TabBar 会循环计算导致报错的问题。
 - 🐞 `<pro>PerformanceTable`: 修复无法选中表格内容的问题。
 - 🐞 `<pro>Table`: 修复当 rowBoxPlacement 属性设置为 end 时, 树形模式的折叠 icon 显示到了第二列的问题。
+- 🐞 `<pro>Table`: 修复通过 renderer 渲染的输入框无法通过方向键控制光标移动的问题。
 
 ## 1.6.8
 
