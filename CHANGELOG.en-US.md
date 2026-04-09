@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed the issue where table content could not be selected.
 - 🐞 `<pro>Table`: Fix the issue where, when the `rowBoxPlacement` property is set to `end`, the collapse `icon` in the tree view mode is displayed in the second column.
 - 🐞 `<pro>Table`: Fixed the issue where input boxes rendered through the `renderer` could not move the cursor using the arrow keys.
+- 🐞 `<pro>Table`: Fix the style issue where the icon in the `range` mode Select of the `filterBar` type filter bar overlaps.
 
 ## 1.6.8
 

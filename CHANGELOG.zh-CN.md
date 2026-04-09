@@ -37,6 +37,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: 修复无法选中表格内容的问题。
 - 🐞 `<pro>Table`: 修复当 rowBoxPlacement 属性设置为 end 时, 树形模式的折叠 icon 显示到了第二列的问题。
 - 🐞 `<pro>Table`: 修复通过 renderer 渲染的输入框无法通过方向键控制光标移动的问题。
+- 🐞 `<pro>Table`: 修复 filterBar 类型筛选条中 range 模式下拉框的图标重叠的样式问题。
 
 ## 1.6.8
 
