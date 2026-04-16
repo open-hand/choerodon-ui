@@ -817,6 +817,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         isFlat
         placeholder={$l('Table', 'fast_filter')}
         className={`${prefixCls}-filterName-select`}
+        popupCls={`${prefixCls}-filterName-select-content`}
         dataSet={filterMenuDataSet}
         name="filterName"
         dropdownMatchSelectWidth={false}
