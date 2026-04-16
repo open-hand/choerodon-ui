@@ -25,6 +25,7 @@ timeline: true
 - 💄 `<pro>TextField`: Optimize the prompt method for ultra-long inputs, remove the `Notification` prompt, and change it to display length information in red.
 - 💄 `<pro>Table`: The dynamic filtering bar's personalized `conditionList` field supports the configuration of the `options` attribute.
 - 💄 `<pro>Table`: Optimize the display position of length information when the TextArea is on the last line.
+- 💄 `<pro>Table`: Optimize the group names of the filtering conditions for the dynamic filtering bar.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
