@@ -40,6 +40,7 @@ export interface Locale {
   Attachment: {
     file_max_size: string;
     file_type_mismatch: string;
+    file_not_readable: string;
   };
 }
 

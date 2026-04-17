@@ -39,6 +39,7 @@ const locale: Locale = {
   Attachment: {
     file_max_size: '文件大小不能超过：{size}',
     file_type_mismatch: '文件类型不匹配，正确的类型：{types}',
+    file_not_readable: '文件不可访问, 请检查',
   },
 };
 
