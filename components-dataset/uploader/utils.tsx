@@ -314,3 +314,20 @@ export async function uploadFile(props: UploaderProps, attachment: AttachmentFil
   }
   return uploadNormalFile(props, attachment, attachmentUUID, context);
 }
+
+/**
+ * 检查文件是否可访问
+ * @param file 
+ * @returns 
+ */
+export const checkFileReadable = (file: File) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+
+    reader.onload = () => resolve(true);
+    reader.onerror = () => resolve(false);
+
+    reader.readAsArrayBuffer(file.slice(0, 1));
+    setTimeout(() => resolve(false), 10 * 1000);
+  });
+};

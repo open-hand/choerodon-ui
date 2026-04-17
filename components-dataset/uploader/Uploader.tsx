@@ -2,11 +2,12 @@ import { AxiosError } from 'axios';
 import { runInAction } from 'mobx';
 import isPromise from 'is-promise';
 import AttachmentFile from '../data-set/AttachmentFile';
-import { beforeUploadFile, uploadFile } from './utils';
+import { beforeUploadFile, uploadFile, checkFileReadable } from './utils';
 import { getConfig } from '../configure';
 import { DataSetContext } from '../data-set/DataSet';
 import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 import UploadError from './UploadError';
+import { $l } from '../locale-context';
 
 export interface UploaderProps {
   /**
@@ -108,6 +109,17 @@ export default class Uploader {
     const { attachmentUUID = tempAttachmentUUID } = attachment;
     if (attachment.status === 'success' || attachment.invalid || !attachmentUUID) {
       return;
+    }
+    if (attachment.originFileObj) {
+      const isReadable = await checkFileReadable(attachment.originFileObj);
+      if (!isReadable) {
+        runInAction(() => {
+          attachment.status = 'error';
+          attachment.invalid = true;
+          attachment.errorMessage = $l('Attachment', 'file_not_readable');
+        });
+        return;
+      }
     }
     const { context, props } = this;
     const globalConfig = context.getConfig('attachment');
