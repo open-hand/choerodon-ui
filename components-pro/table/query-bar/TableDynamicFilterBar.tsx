@@ -26,6 +26,7 @@ import Icon from 'choerodon-ui/lib/icon';
 import { Action } from 'choerodon-ui/lib/trigger/enum';
 import Popover from 'choerodon-ui/lib/popover';
 import Tag from 'choerodon-ui/lib/tag';
+import { QUERY_PREPARE_PROMISE } from 'choerodon-ui/dataset/data-set/DataSet';
 import Field, { DynamicProps, FieldProps, Fields } from '../../data-set/Field';
 import DataSet, { DataSetProps } from '../../data-set/DataSet';
 import Record from '../../data-set/Record';
@@ -367,6 +368,7 @@ export const SEARCHEXP = '__SEARCHEXP__';
 export const NEWFILTERDATASET = '__NEWFILTERDATASET__';
 export const ORIGINALVALUEOBJ = '__ORIGINALVALUEOBJ__';
 export const HASINIT = '__HASINIT__';
+export const DYNAMIC_FILTER_QUERY_PREPARE_PROMISE = QUERY_PREPARE_PROMISE;
 
 @observer
 export default class TableDynamicFilterBar extends Component<TableDynamicFilterBarProps> {
@@ -449,6 +451,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
   tempFields: Fields;
 
   isTooltipShown?: boolean;
+
+  menuInitPromise?: Promise<boolean>;
 
   constructor(props, context) {
     super(props, context);
@@ -886,84 +890,101 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   @autobind
   async initMenuDataSet(): Promise<boolean> {
+    if (this.menuInitPromise) {
+      return this.menuInitPromise;
+    }
     const { queryDataSet, dataSet, dynamicFilterBar, searchCode } = this.props;
-    const { getConfig } = this.context;
-    const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
-    if (this.tableFilterAdapter) {
-      const menuDataSet = new DataSet(QuickFilterDataSet({
-        searchCode: searchCodes,
-        queryDataSet,
-        tableFilterAdapter: this.tableFilterAdapter,
-      }) as DataSetProps, { getConfig: getConfig as any });
-      const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
-      const newFilterDataSet = new DataSet(NewFilterDataSet({
-        propFields: this.advancedSearchFieldProps,
-      }) as DataSetProps, { getConfig: getConfig as any });
-      const optionDataSet = new DataSet({
-        paging: false,
-        selection: DataSetSelection.single,
-        fields: [
-          {
-            // 是否租户默认配置
-            name: 'isTenant',
-            type: FieldType.string,
-            transformResponse: value => value ? $l('Table', 'preset') : $l('Table', 'user'),
-            group: true,
-          },
-        ],
-      }, { getConfig: getConfig as any });
-      const filterMenuDataSet = new DataSet({
-        autoCreate: true,
-        fields: [
-          {
-            name: 'filterName',
-            type: FieldType.string,
-            textField: 'searchName',
-            valueField: 'searchId',
-            options: optionDataSet,
-            ignore: FieldIgnore.always,
-          },
-        ],
-      }, { getConfig: getConfig as any });
-      let status = RecordStatus.update;
-      if (queryDataSet && queryDataSet.current && dataSet.getState(ORIGINALVALUEOBJ)) {
-        status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
-      } else {
-        status = RecordStatus.sync;
-      }
-      // 初始化状态
-      dataSet.setState(MENUDATASET, menuDataSet);
-      dataSet.setState(CONDITIONDATASET, conditionDataSet);
-      dataSet.setState(NEWFILTERDATASET, newFilterDataSet);
-      dataSet.setState(OPTIONDATASET, optionDataSet);
-      dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
-      dataSet.setState(CONDITIONSTATUS, status);
-      // dataSet.setState(SEARCHTEXT, null);
-      const result = await menuDataSet.query();
-      dataSet.setState(MENURESULT, result);
-      if (optionDataSet) {
-        optionDataSet.loadData(result);
-      }
-      const menuRecord = menuDataSet.current;
-      if (menuRecord) {
-        this.loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText: this.searchText });
-      }
-      if (result && result.length) {
-        runInAction(() => {
-          this.shouldLocateData = true;
-        });
-        if (queryDataSet && queryDataSet.fields && !this.tempFields) {
-          this.tempFields = queryDataSet.snapshot().dataSet.fields;
+    const initPromise = (async () => {
+      const { getConfig } = this.context;
+      const searchCodes = dynamicFilterBar && dynamicFilterBar.searchCode || searchCode;
+      if (this.tableFilterAdapter) {
+        const menuDataSet = new DataSet(QuickFilterDataSet({
+          searchCode: searchCodes,
+          queryDataSet,
+          tableFilterAdapter: this.tableFilterAdapter,
+        }) as DataSetProps, { getConfig: getConfig as any });
+        const conditionDataSet = new DataSet(ConditionDataSet(), { getConfig: getConfig as any });
+        const newFilterDataSet = new DataSet(NewFilterDataSet({
+          propFields: this.advancedSearchFieldProps,
+        }) as DataSetProps, { getConfig: getConfig as any });
+        const optionDataSet = new DataSet({
+          paging: false,
+          selection: DataSetSelection.single,
+          fields: [
+            {
+              // 是否租户默认配置
+              name: 'isTenant',
+              type: FieldType.string,
+              transformResponse: value => value ? $l('Table', 'preset') : $l('Table', 'user'),
+              group: true,
+            },
+          ],
+        }, { getConfig: getConfig as any });
+        const filterMenuDataSet = new DataSet({
+          autoCreate: true,
+          fields: [
+            {
+              name: 'filterName',
+              type: FieldType.string,
+              textField: 'searchName',
+              valueField: 'searchId',
+              options: optionDataSet,
+              ignore: FieldIgnore.always,
+            },
+          ],
+        }, { getConfig: getConfig as any });
+        let status = RecordStatus.update;
+        if (queryDataSet && queryDataSet.current && dataSet.getState(ORIGINALVALUEOBJ)) {
+          status = isEqualDynamicProps(dataSet.getState(ORIGINALVALUEOBJ).query, omit(queryDataSet.current.toData(), ['__dirty']), queryDataSet, queryDataSet.current) ? RecordStatus.sync : RecordStatus.update;
+        } else {
+          status = RecordStatus.sync;
         }
-      } else {
-        const { current } = filterMenuDataSet;
-        if (current) current.set('filterName', undefined);
-        runInAction(() => {
-          this.shouldLocateData = true;
-        });
+        // 初始化状态
+        dataSet.setState(MENUDATASET, menuDataSet);
+        dataSet.setState(CONDITIONDATASET, conditionDataSet);
+        dataSet.setState(NEWFILTERDATASET, newFilterDataSet);
+        dataSet.setState(OPTIONDATASET, optionDataSet);
+        dataSet.setState(FILTERMENUDATASET, filterMenuDataSet);
+        dataSet.setState(CONDITIONSTATUS, status);
+        // dataSet.setState(SEARCHTEXT, null);
+        const result = await menuDataSet.query();
+        dataSet.setState(MENURESULT, result);
+        if (optionDataSet) {
+          optionDataSet.loadData(result);
+        }
+        const menuRecord = menuDataSet.current;
+        if (menuRecord) {
+          this.loadConditionData({ menuRecord, conditionDataSet, newFilterDataSet, dataSet, searchText: this.searchText });
+        }
+        if (result && result.length) {
+          runInAction(() => {
+            this.shouldLocateData = true;
+          });
+          if (queryDataSet && queryDataSet.fields && !this.tempFields) {
+            this.tempFields = queryDataSet.snapshot().dataSet.fields;
+          }
+        } else {
+          const { current } = filterMenuDataSet;
+          if (current) current.set('filterName', undefined);
+          runInAction(() => {
+            this.shouldLocateData = true;
+          });
+        }
+      }
+      return true;
+    })();
+    this.menuInitPromise = initPromise;
+    dataSet.setState(DYNAMIC_FILTER_QUERY_PREPARE_PROMISE, initPromise);
+    try {
+      return await initPromise;
+    } finally {
+      if (this.menuInitPromise === initPromise) {
+        this.menuInitPromise = undefined;
+      }
+      if (dataSet.getState(DYNAMIC_FILTER_QUERY_PREPARE_PROMISE) === initPromise) {
+        dataSet.setState(DYNAMIC_FILTER_QUERY_PREPARE_PROMISE, undefined);
       }
     }
-    return true;
   }
 
   /**
@@ -1646,7 +1667,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
           dataSet.setState(SEARCHTEXT, value);
           dataSet.setQueryParameter(this.searchText, value);
           const isQueryDataSetCurrentDirty = dataSet.queryDataSet?.current?.dirty;
-          this.setConditionStatus(value === (isNil(fuzzyValue) ? null : fuzzyValue) && !isQueryDataSetCurrentDirty ? RecordStatus.sync : RecordStatus.update);
+          const isSelectFieldsCountChanged = (dataSet.getState(SELECTFIELDS) || []).length !== this.originalConditionFields.length;
+          this.setConditionStatus(value === (isNil(fuzzyValue) ? null : fuzzyValue) && !isQueryDataSetCurrentDirty && !isSelectFieldsCountChanged ? RecordStatus.sync : RecordStatus.update);
         }}
         onClear={() => {
           runInAction(() => {

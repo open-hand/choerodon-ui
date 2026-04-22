@@ -96,6 +96,8 @@ export const CHILDREN_PAGE_INFO = '__CHILDREN_PAGE_INFO__';
 
 export const QUERY_CANCELABLE = '__QUERY_CANCELABLE__';
 
+export const QUERY_PREPARE_PROMISE = '__DYNAMIC_FILTER_QUERY_PREPARE_PROMISE__';
+
 export { TABLE_SHOW_REMOVED_ROW };
 
 export type DataSetChildren = { [key: string]: DataSet };
@@ -3301,6 +3303,10 @@ Then the query method will be auto invoke.`,
     if (this.checkReadable(this.parent)) {
       let canChangeStatus = true;
       try {
+        const queryPreparePromise = this.getState(QUERY_PREPARE_PROMISE);
+        if (queryPreparePromise && isFunction(queryPreparePromise.then)) {
+          await queryPreparePromise;
+        }
         if (!more) {
           this.changeStatus(DataSetStatus.loading);
         }

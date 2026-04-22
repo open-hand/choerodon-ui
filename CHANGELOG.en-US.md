@@ -27,6 +27,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display position of length information when the TextArea is on the last line.
 - 💄 `<pro>Table`: Optimize the group names of the filtering conditions for the dynamic filtering bar.
 - 💄 `<pro>Attachment`: Check if access is available before uploading the file.
+- 💄 `<pro>Table`: Execute the query upon completion of initialization for default conditions of the dynamic filter bar.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
