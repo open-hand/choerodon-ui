@@ -981,15 +981,17 @@ export default class Lov extends Select<LovProps> {
     const { options } = this;
     this.resetOptions(options.length === 1);
     await options.query(1, undefined, true);
-    if (options.length === 1) {
-      const values = this.getValues();
-      const record = options.get(0);
-      if (!this.optionIsSelected(record as Record, values)) {
-        this.choose(record);
+    options.ready().then(() => {
+      if (options.length === 1) {
+        const values = this.getValues();
+        const record = options.get(0);
+        if (!this.optionIsSelected(record as Record, values)) {
+          this.choose(record);
+        }
+      } else {
+        this.openModal();
       }
-    } else {
-      this.openModal();
-    }
+    });
   }
 
   @autobind

@@ -92,7 +92,7 @@ function getRoot() {
 
 async function getContainer(): Promise<RefObject<TooltipContainerRef>> {
   const { container } = TooltipManager;
-  if (container) {
+  if (container && container.current) {
     return container;
   }
   return new Promise(resolve => {
