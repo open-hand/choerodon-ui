@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the group names of the filtering conditions for the dynamic filtering bar.
 - 💄 `<pro>Attachment`: Check if access is available before uploading the file.
 - 💄 `<pro>Table`: Execute the query upon completion of initialization for default conditions of the dynamic filter bar.
+- 💄 `<pro>Select`: When setting the `disabled` attribute for the `options.record` setting, disable the option.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
@@ -41,6 +42,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fix the issue where, when the `rowBoxPlacement` property is set to `end`, the collapse `icon` in the tree view mode is displayed in the second column.
 - 🐞 `<pro>Table`: Fixed the issue where input boxes rendered through the `renderer` could not move the cursor using the arrow keys.
 - 🐞 `<pro>Table`: Fix the style issue where the icon in the `range` mode Select of the `filterBar` type filter bar overlaps.
+- 🐞 `<pro>Lov`: When closing the pop-up window, there is only one piece of data on the last page. When reopening the pop-up window, the problem recorded will be automatically selected.
+- 🐞 `<pro>Tooltip`: Fix the issue where the occasional prompt window does not display in the singleton mode.
 
 ## 1.6.8
 

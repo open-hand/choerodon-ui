@@ -28,6 +28,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条的筛选条件的分组名。
 - 💄 `<pro>Attachment`: 文件上传前检查是否可访问。
 - 💄 `<pro>Table`: 优化动态筛选条默认查询条件就绪后再执行查询。
+- 💄 `<pro>Select`: 优化 options.record 设置 disabled 属性时, 禁用选项。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
@@ -41,6 +42,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复当 rowBoxPlacement 属性设置为 end 时, 树形模式的折叠 icon 显示到了第二列的问题。
 - 🐞 `<pro>Table`: 修复通过 renderer 渲染的输入框无法通过方向键控制光标移动的问题。
 - 🐞 `<pro>Table`: 修复 filterBar 类型筛选条中 range 模式下拉框的图标重叠的样式问题。
+- 🐞 `<pro>Lov`: 在关闭弹窗时最后一页只有一条数据, 再次打开弹窗时, 会自动选中记录的问题。
+- 🐞 `<pro>Tooltip`: 修复单例模式下偶现提示弹窗不显示的问题。
 
 ## 1.6.8
 

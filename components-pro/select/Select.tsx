@@ -910,6 +910,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         tooltipTheme: getTooltipTheme('select-option'),
         tooltipPlacement: getTooltipPlacement('select-option'),
       };
+      const itemDisabled = optionProps
+        ? (optionProps.disabled === false
+          ? (itemProps.disabled || optionProps.disabled)
+          : (itemProps.disabled || optionProps.disabled || record.disabled || record.selectable === false))
+        : (itemProps.disabled || record.disabled || record.selectable === false);
       const mergedProps = optionProps ? {
         ...optionProps,
         ...itemProps,
@@ -920,8 +925,11 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           ...optionProps.style,
           ...itemProps.style,
         },
-        disabled: itemProps.disabled || optionProps.disabled,
-      } : itemProps;
+        disabled: itemDisabled,
+      } : {
+        ...itemProps,
+        disabled: itemDisabled,
+      };
       const option: ReactElement = (
         <Item {...mergedProps}>
           {toJS(itemContent)}
