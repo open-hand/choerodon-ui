@@ -2171,9 +2171,10 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
 
   render() {
     const { buttons, summaryBar, summaryBarConfigProps = {} } = this.props;
-    const { placement = 'topRight' } = summaryBarConfigProps;
+    let { placement } = summaryBarConfigProps;
     const { prefixCls } = this;
     const queryBar = this.getQueryBar();
+    placement = placement || (queryBar ? 'topRight' : 'topLeft');
     const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
       ? `${prefixCls}-summary-${placement}` : '';
     if (queryBar) {
