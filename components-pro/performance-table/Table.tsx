@@ -2635,6 +2635,59 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return { fixedLeftCells, fixedRightCells, scrollCells, fixedLeftCellGroupWidth, fixedRightCellGroupWidth };
   }
 
+  getCellGroupInfo(cells: any[], rowData: any, rowIndex: number, extraWidth: number = 0, rowBaseHeight: number = 1) {
+    let maxRowSpan = 1;
+    let hasVisibleCell = false;
+    let left = 0;
+    const backgroundSegments: Array<{ left: number; width: number; height: number }> = [];
+
+    for (let i = 0; i < cells.length; i++) {
+      const cell = cells[i];
+      const { onCell, dataIndex, rowSpan, width = 0 } = cell.props;
+      const cellExternalProps = onCell && typeof onCell === 'function' ? onCell({
+        rowData,
+        dataIndex,
+        rowIndex,
+      }) || {} : {};
+      const cellRowSpan = !isNil(cellExternalProps.rowSpan) ? cellExternalProps.rowSpan : rowSpan;
+      const normalizedRowSpan = isNil(cellRowSpan) ? 1 : cellRowSpan;
+      const isHiddenCell = cellExternalProps.hidden || normalizedRowSpan === 0;
+      const segmentWidth = i === cells.length - 1 ? width + extraWidth : width;
+
+      if (!isHiddenCell) {
+        hasVisibleCell = true;
+        backgroundSegments.push({
+          left,
+          width: segmentWidth,
+          height: rowBaseHeight * normalizedRowSpan,
+        });
+      }
+
+      if (normalizedRowSpan > maxRowSpan) {
+        maxRowSpan = normalizedRowSpan;
+      }
+      left += width;
+    }
+    return {
+      maxRowSpan,
+      hasVisibleCell,
+      backgroundSegments,
+    };
+  }
+
+  getCellGroupHeight(cells: any[], rowData: any, rowIndex: number, defaultHeight?: number, cellGroupInfo?: {
+    maxRowSpan: number;
+    hasVisibleCell: boolean;
+  }) {
+    const info = cellGroupInfo || this.getCellGroupInfo(cells, rowData, rowIndex);
+    const { maxRowSpan, hasVisibleCell } = info;
+    if (!hasVisibleCell) {
+      // 占位行也需要保留一行高度，避免非固定大 rowSpan 在该行透出
+      return defaultHeight || 1;
+    }
+    return (defaultHeight || 1) * maxRowSpan;
+  }
+
   renderRow(props: TableRowProps, cells: any[], shouldRenderExpandedRow?: boolean, rowData?: any) {
     const { rowClassName, highLightRow, virtualized, rowDraggable, customDragDropContenxt } = this.props;
     const { shouldFixedColumn, width, contentWidth, dragRowIndex } = this.state;
@@ -2655,27 +2708,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       rowRight = width - contentWidth;
       rowStyles.right = rowRight;
     }
-    let currnetRowIndex: string = '';
-    // 修复合并行的最后一行没有borderBottom 和 合并行后的单元格被遮挡的问题
-    for (let i = 0; i < cells.length; i++) {
-      const cellUnit = cells[i];
-      const { onCell, dataIndex, fixed } = cellUnit.props;
-      if (onCell && typeof onCell === 'function') {
-        const cellExternalProps = onCell({
-          rowData,
-          dataIndex,
-          rowIndex,
-        }) || {};
-        const { rowSpan = 1 } = cellExternalProps;
-        if (rowSpan > 1 && !currnetRowIndex) {
-          currnetRowIndex = `${rowIndex}`;
-          rowStyles.zIndex = fixed ? cells.length - i : 0;
-        }
-      }
-    }
     // 优化拖拽行被 rowSpan 合并行覆盖的问题
     if (dragRowIndex === `${rowIndex}`) {
-      rowStyles.zIndex = 1;
+      rowStyles.zIndex = 200000;
     }
     // IF there are fixed columns, add a fixed group
     if (shouldFixedColumn && contentWidth > width) {
@@ -2689,6 +2724,54 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         fixedLeftCellGroupWidth = 0,
         fixedRightCellGroupWidth = 0,
       } = this.calculateFixedAndScrollColumn(cells);
+      const cellGroupBaseHeight = props.isHeaderRow
+        ? props.headerHeight
+        : (props.height || this.getRowHeight(rowData));
+      const fixedLeftCellGroupInfo = this.getCellGroupInfo(
+        fixedLeftCells,
+        rowData,
+        rowIndex,
+        0,
+        cellGroupBaseHeight,
+      );
+      const fixedRightCellGroupInfo = this.getCellGroupInfo(
+        fixedRightCells,
+        rowData,
+        rowIndex,
+        this.getScrollBarYWidth,
+        cellGroupBaseHeight,
+      );
+      const fixedLeftCellGroupHeight = this.getCellGroupHeight(
+        fixedLeftCells,
+        rowData,
+        rowIndex,
+        cellGroupBaseHeight,
+        fixedLeftCellGroupInfo,
+      );
+      const fixedRightCellGroupHeight = this.getCellGroupHeight(
+        fixedRightCells,
+        rowData,
+        rowIndex,
+        cellGroupBaseHeight,
+        fixedRightCellGroupInfo,
+      );
+      const leftCellGroupClassName = classNames({
+        [this.addPrefix('cell-group-placeholder')]: !fixedLeftCellGroupInfo.hasVisibleCell,
+      });
+      const rightCellGroupClassName = classNames({
+        [this.addPrefix('cell-group-placeholder')]: !fixedRightCellGroupInfo.hasVisibleCell,
+      });
+      // 固定列 cell-group 层级每行递减，避免前面跨行的单元格被后面的行遮挡
+      const leftCellGroupStyle = {
+        ...(this.isRTL() ? { right: width - fixedLeftCellGroupWidth - rowRight } : null),
+        zIndex: 100000 - (rowIndex || 0),
+      };
+      const rightCellGroupStyle = {
+        ...(this.isRTL()
+          ? { right: 0 - rowRight }
+          : { left: width - fixedRightCellGroupWidth - this.getScrollBarYWidth }),
+        zIndex: 100000 - (rowIndex || 0),
+      };
 
       if (rowDraggable && !isHeaderRow && !restRowProps.isFooterRow) {
         return (
@@ -2704,7 +2787,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               <Row
                 {...restRowProps}
                 data-depth={depth}
-                style={{ ...rowStyles, ...style }}
+                style={{ ...style, ...rowStyles }}
                 rowDraggable={rowDraggable}
                 isHeaderRow={isHeaderRow}
                 provided={provided}
@@ -2717,10 +2800,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                     snapshot={snapshot}
                     rowDraggable={rowDraggable}
                     fixed="left"
-                    height={props.isHeaderRow ? props.headerHeight : props.height}
+                    className={leftCellGroupClassName}
+                    height={fixedLeftCellGroupHeight}
                     width={fixedLeftCellGroupWidth}
-                    // @ts-ignore
-                    style={this.isRTL() ? { right: width - fixedLeftCellGroupWidth - rowRight } : null}
+                    style={leftCellGroupStyle}
+                    backgroundSegments={fixedLeftCellGroupInfo.backgroundSegments}
                   >
                     {mergeCells(resetLeftForCells(fixedLeftCells))}
                   </CellGroup>
@@ -2740,13 +2824,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                     snapshot={snapshot}
                     rowDraggable={rowDraggable}
                     fixed="right"
-                    style={
-                      this.isRTL()
-                        ? { right: 0 - rowRight }
-                        : { left: width - fixedRightCellGroupWidth - this.getScrollBarYWidth }
-                    }
-                    height={props.isHeaderRow ? props.headerHeight : props.height}
+                    className={rightCellGroupClassName}
+                    style={rightCellGroupStyle}
+                    height={fixedRightCellGroupHeight}
                     width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
+                    backgroundSegments={fixedRightCellGroupInfo.backgroundSegments}
                   >
                     {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
                   </CellGroup>
@@ -2760,14 +2842,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       }
 
       return (
-        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...rowStyles, ...style }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
+        <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...style, ...rowStyles }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
           {fixedLeftCellGroupWidth ? (
             <CellGroup
               fixed="left"
-              height={props.isHeaderRow ? props.headerHeight : props.height}
+              className={leftCellGroupClassName}
+              height={fixedLeftCellGroupHeight}
               width={fixedLeftCellGroupWidth}
-              // @ts-ignore
-              style={this.isRTL() ? { right: width - fixedLeftCellGroupWidth - rowRight } : null}
+              style={leftCellGroupStyle}
+              backgroundSegments={fixedLeftCellGroupInfo.backgroundSegments}
             >
               {mergeCells(resetLeftForCells(fixedLeftCells))}
             </CellGroup>
@@ -2778,13 +2861,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           {fixedRightCellGroupWidth || fixedRightCells.length ? (
             <CellGroup
               fixed="right"
-              style={
-                this.isRTL()
-                  ? { right: 0 - rowRight }
-                  : { left: width - fixedRightCellGroupWidth - this.getScrollBarYWidth }
-              }
-              height={props.isHeaderRow ? props.headerHeight : props.height}
+              className={rightCellGroupClassName}
+              style={rightCellGroupStyle}
+              height={fixedRightCellGroupHeight}
               width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
+              backgroundSegments={fixedRightCellGroupInfo.backgroundSegments}
             >
               {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
             </CellGroup>
@@ -2809,7 +2890,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
             <Row
               {...restRowProps}
               data-depth={depth}
-              style={{ ...rowStyles, ...style }}
+              style={{ ...style, ...rowStyles }}
               rowDraggable={rowDraggable}
               provided={provided}
               snapshot={snapshot}
@@ -2832,7 +2913,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     return (
-      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...rowStyles, ...style }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
+      <Row {...restRowProps} isHeaderRow={isHeaderRow} data-depth={depth} style={{ ...style, ...rowStyles }} rowRef={this.bindTableRowsRef(props.key!, rowData)}>
         <CellGroup>{mergeCells(cells)}</CellGroup>
         {shouldRenderExpandedRow && this.renderRowExpanded(rowData)}
       </Row>

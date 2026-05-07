@@ -47,6 +47,7 @@ timeline: true
 - 🐞 `<pro>Lov`: When closing the pop-up window, there is only one piece of data on the last page. When reopening the pop-up window, the problem recorded will be automatically selected.
 - 🐞 `<pro>Tooltip`: Fix the issue where the occasional prompt window does not display in the singleton mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where dragging to sort stopped working after setting the sorting field.
+- 🐞 `<pro>PerformanceTable`: Fixed the issue of abnormal fixed column styles after row merging.
 
 ## 1.6.8
 

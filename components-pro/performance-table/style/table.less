@@ -97,8 +97,7 @@
     z-index: 5;
   }
 
-  &-hover &-row:not(&-row-header):hover &-cell:first-child,
-  &-hover &-row:not(&-row-header):hover &-cell:first-child~&-cell {
+  &-hover &-row:not(&-row-header):hover &-cell {
     background: @table-row-hover-bg;
   }
 
@@ -232,16 +231,37 @@
   }
 
   &-cell-group {
+    &-background-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    &-background-segment {
+      position: absolute;
+      top: 0;
+      background: @body-background;
+    }
+
     &-fixed-left {
       position: absolute;
       z-index: 4;
-      background: @body-background;
+      pointer-events: none; // 避免固定列 cell-group 遮挡住单元格
     }
 
     &-fixed-right {
       position: absolute;
       z-index: 4;
-      background: @body-background;
+      pointer-events: none; // 避免固定列 cell-group 遮挡住单元格
+    }
+
+    &-fixed-left > &-cell,
+    &-fixed-right > &-cell {
+      pointer-events: auto;
     }
 
     &-left-shadow {
@@ -251,6 +271,11 @@
     &-shadow,
     &-right-shadow {
       .box-shadow(-3px, 0px, 5px, rgba(9, 9, 9, 0.08));
+    }
+
+    &-placeholder {
+      box-shadow: none;
+      background: transparent;
     }
   }
 

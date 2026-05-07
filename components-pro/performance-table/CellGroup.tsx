@@ -10,6 +10,7 @@ export interface CellGroupProps {
   width?: number;
   height?: number;
   left?: number;
+  backgroundSegments?: Array<{ left: number; width: number; height: number }>;
   style?: React.CSSProperties;
   className?: string;
   classPrefix?: string;
@@ -23,6 +24,7 @@ const propTypeKeys = [
   'width',
   'height',
   'left',
+  'backgroundSegments',
   'style',
   'className',
   'classPrefix',
@@ -44,6 +46,7 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
       width,
       left,
       height,
+      backgroundSegments,
       style,
       classPrefix,
       className,
@@ -84,6 +87,17 @@ class CellGroup extends React.PureComponent<CellGroupProps> {
           }
           return (
             <div {...unhandledProps} className={classes} style={styles}>
+              {fixed && backgroundSegments && backgroundSegments.length ? (
+                <div className={this.addPrefix('background-layer')}>
+                  {backgroundSegments.map((segment, index) => (
+                    <span
+                      key={`background-segment-${index}`}
+                      className={this.addPrefix('background-segment')}
+                      style={{ left: segment.left, width: segment.width, height: segment.height }}
+                    />
+                  ))}
+                </div>
+              ) : null}
               {cloneChildren}
             </div>
           );
