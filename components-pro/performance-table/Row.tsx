@@ -79,7 +79,9 @@ class Row extends React.PureComponent<RowProps> {
     return (
       <TableContext.Consumer>
         {({ translateDOMPositionXY }) => {
-          if (translateDOMPositionXY) {
+          if (top !== undefined && !rowDraggable) {
+            styles.top = top;
+          } else if (translateDOMPositionXY) {
             translateDOMPositionXY(styles, 0, top);
           }
           const providedProps = {};
