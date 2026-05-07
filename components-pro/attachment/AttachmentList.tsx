@@ -51,6 +51,7 @@ export interface AttachmentListProps {
   handleCheckAttachment: (attachment: AttachmentFile) => void;
   checkedAttachments?: AttachmentFile[];
   pictureCardShowName?: boolean;
+  orderField?: string;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -88,6 +89,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     handleCheckAttachment,
     checkedAttachments,
     pictureCardShowName,
+    orderField,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -98,15 +100,23 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
   const handleDragEnd = useCallback((result: DropResult) => {
     const { destination, source } = result;
     if (destination && attachments) {
+      if (destination.index === source.index) {
+        return;
+      }
       const newAttachments = attachments.slice();
       arrayMove<AttachmentFile>(
         newAttachments,
         source.index,
         destination.index,
       );
+      if (orderField) {
+        newAttachments.forEach((attachment, index) => {
+          Object.assign(attachment, { [orderField]: index });
+        });
+      }
       onOrderChange({ attachments: newAttachments });
     }
-  }, [attachments, onOrderChange]);
+  }, [attachments, onOrderChange, orderField]);
   useEffect(() => {
     if (attachmentUUID && fetchAttachmentsFlag) {
       const { current } = oldValues;
