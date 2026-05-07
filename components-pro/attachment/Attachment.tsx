@@ -1365,6 +1365,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           handleCheckAttachment={this.handleCheckAttachment}
           checkedAttachments={this.checkedAttachments}
           pictureCardShowName={pictureCardShowName}
+          orderField={orderField}
         />
       );
     }
