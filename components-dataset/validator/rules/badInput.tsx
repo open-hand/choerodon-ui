@@ -15,7 +15,7 @@ const isBadInput = (value, range) => {
 export default function badInput(value: any, _: ValidatorBaseProps, getProp: <T extends keyof ValidatorProps>(key: T) => ValidatorProps[T]): methodReturn {
   if (!isEmpty(value)) {
     const type = getProp('type');
-    if (type === FieldType.number || type === FieldType.currency) {
+    if (type === FieldType.number || type === FieldType.currency || type === FieldType.percentage) {
       const range = getProp('range');
       if (isBadInput(value, range)) {
         const ruleName = 'badInput';

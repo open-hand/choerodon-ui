@@ -91,6 +91,7 @@ export enum FieldType {
   secret = 'secret',
   reactNode = 'reactNode',
   bigNumber = 'bigNumber',
+  percentage = 'percentage',
 }
 
 export enum SortOrder {

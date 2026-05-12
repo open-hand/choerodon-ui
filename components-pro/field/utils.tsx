@@ -142,7 +142,12 @@ export function getNumberFormatOptions(
   const precision = getProp('precision');
   const useZeroFilledDecimal = precision > 0 && getConfig('useZeroFilledDecimal');
   const v: number | BigNumber | undefined = isNil(value) ? getValue && getValue() : value;
-  const precisionInValue = isNumber(precision) ? precision : math.dp(v || 0);
+  let precisionInValue = isNumber(precision) ? precision : math.dp(v || 0);
+  const type = getProp('type');
+  if (type === FieldType.percentage && isNumber(precision)) {
+    // precision 为真实小数位数, 百分数显示时小数位数需要减2
+    precisionInValue = precisionInValue - 2 < 0 ? 0 : precisionInValue - 2;
+  }
   const formatterOptions: FormatNumberFuncOptions = getDisplayProp('formatterOptions') || {};
   const numberFieldFormatterOptions: FormatNumberFuncOptions = getConfig('numberFieldFormatterOptions') || { options: {} };
   const lang = formatterOptions.lang || numberFieldFormatterOptions.lang || controlLang;
@@ -187,9 +192,14 @@ export function processFieldValue(
     const formatter = getProp('formatter');
     return (formatter || getCurrencyFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
-  if (type === FieldType.number || type === FieldType.bigNumber) {
+  if (type === FieldType.number || type === FieldType.bigNumber || type === FieldType.percentage) {
     const formatOptions = getNumberFormatOptions(getProp, getDisplayProp, getValue, value, lang, getConfig);
     const formatter = getProp('formatter');
+    if (type === FieldType.percentage && !isNil(value) && (value as any) !== '') {
+      const value100 = math.multipliedBy(value, 100);
+      value = math.isValidNumber(value100) ? String(value100) : value;
+      return `${(formatter || getNumberFormatter(getConfig))(value, formatOptions.lang, formatOptions.options)}%`;
+    }
     return (formatter || getNumberFormatter(getConfig))(value, formatOptions.lang, formatOptions.options);
   }
   if (field) {
@@ -205,6 +215,7 @@ export type ProcessValueOptions = {
   precision?: number;
   useZeroFilledDecimal?: boolean;
   numberRoundMode?: NumberRoundMode;
+  isPercentage?: boolean;
 }
 
 export function processValue(value: any, options: ProcessValueOptions = {}) {
@@ -223,8 +234,13 @@ export function processValue(value: any, options: ProcessValueOptions = {}) {
       return value;
     }
     if (options.isNumber && math.isValidNumber(value)) {
+      let newPrecision = options.precision;
+      if (options.isPercentage) {
+        // precision 为真实小数位数, 百分数显示时小数位数需要减2
+        newPrecision = isNumber(newPrecision) ? (newPrecision - 2 < 0 ? 0 : newPrecision - 2) : newPrecision;
+      }
       return options.precision && options.useZeroFilledDecimal
-        ? math.toFixed(value, options.precision, options.numberRoundMode)
+        ? math.toFixed(value, newPrecision!, options.numberRoundMode)
         : math.toString(value);
     }
     return value.toString();

@@ -67,6 +67,7 @@ const defaultTableColumnAlign = (_column: ColumnProps, field?: Field, record?: R
       case FieldType.number:
       case FieldType.currency:
       case FieldType.bigNumber:
+      case FieldType.percentage:
         return ColumnAlign.right;
       case FieldType.boolean:
         return ColumnAlign.center;

@@ -468,10 +468,11 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
       const text = isPlainObject(v) ? v : utilProcessValue(v, {
         dateFormat: getDateFormatByField(field, undefined, record),
         showInvalidDate: tableStore.getConfig('showInvalidDate'),
-        isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber].includes(fieldType),
+        isNumber: [FieldType.number, FieldType.currency, FieldType.bigNumber, FieldType.percentage].includes(fieldType),
         precision: field && field.get('precision', record),
         useZeroFilledDecimal: tableStore.getConfig('useZeroFilledDecimal'),
         numberRoundMode: field && field.get('numberRoundMode', record),
+        isPercentage: (field && field.get('type', record)) === FieldType.percentage,
       });
       return processFieldValue(text, field, {
         getProp: (propName) => field && field.get(propName, record),

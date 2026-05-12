@@ -271,7 +271,7 @@ title: DataSet
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | name | 字段名 | string |  |
-| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `quarter` `year` `email` `url` `intl` `object` `attachment` `json` `bigNumber` | string | string |
+| type | 字段类型，可选值：`boolean` `number` `string` `date` `dateTime` `time` `week` `month` `quarter` `year` `email` `url` `intl` `object` `attachment` `json` `bigNumber` `percentage` | string | string |
 | order | 排序类型，只支持单 field 排序， 如果多个 field 设置了 order，取第一个有 order 的 field，可选值：`asc` `desc` | string |  |
 | label | 字段标签 | string \| ReactNode |  |
 | labelWidth | 字段标签宽度 | number |  |

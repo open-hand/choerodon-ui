@@ -71,7 +71,7 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
           const { props: { queryBarProps } } = tableStore;
           const tableQueryBarProps = { ...tableStore.getConfig('queryBarProps'), ...queryBarProps } as TableQueryBarHookCustomProps;
           const summaryFieldsLimits: number = summaryFieldsLimit || (tableQueryBarProps && tableQueryBarProps.summaryFieldsLimit) || 3;
-          const fieldTypeArr = [FieldType.currency, FieldType.number];
+          const fieldTypeArr = [FieldType.currency, FieldType.number, FieldType.percentage];
           return summary.reduce<ReactElement[]>((list, summaryCol, index) => {
             const hasSeparate = length > summaryFieldsLimits || index !== (summaryLength - 1);
             const colLabelCls = classNames(`${prefixCls}-summary-col-label`, {

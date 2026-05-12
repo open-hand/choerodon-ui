@@ -32,6 +32,7 @@ class App extends React.Component {
       { name: 'birth', defaultValue: '2018-12-26', type: 'date', label: '生日' },
       { name: 'currency', defaultValue: 12, type: 'currency', label: '金额' },
       { name: 'description', defaultValue: '描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述', type: 'string', label: '描述' },
+      { name: 'percentage', defaultValue: 1.2, type: 'percentage', label: '百分数' },
     ],
   });
 
@@ -49,6 +50,7 @@ class App extends React.Component {
         <Output name="birth" />
         <Output name="currency" currency="CNY" />
         <Output name="description" />
+        <Output name="percentage" />
       </Form>
     );
   }

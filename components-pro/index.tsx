@@ -159,3 +159,5 @@ export { default as Mentions } from './mentions';
 export { default as Segmented } from './segmented';
 
 export { default as Board } from './board';
+
+export { default as PercentField } from './percent-field';

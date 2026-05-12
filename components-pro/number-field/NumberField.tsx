@@ -26,7 +26,7 @@ import localeContext from '../locale-context/LocaleContext';
 import { getNumberFormatOptions, getNumberFormatter, ProcessValueOptions } from '../field/utils';
 import isMobile from '../_util/isMobile';
 
-function getCurrentValidValue(value: string, options: BigNumberOptions): BigNumber.Value {
+export function getCurrentValidValue(value: string, options: BigNumberOptions): BigNumber.Value {
   const valueBig = new BigNumber(value.replace(/\.$/, ''));
   return math.isValidBigNumber(valueBig) ? options.strict ? valueBig : math.fix(valueBig) : 0;
 }
@@ -40,10 +40,7 @@ function getStepDownGenerator() {
 }
 
 function run(value: number) {
-  const { element } = this;
-  if (element) {
-    element.value = String(value);
-  }
+  this.doRun(value);
 }
 
 function enabled() {
@@ -588,6 +585,14 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return value;
   }
 
+  @autobind
+  doRun(value: number) {
+    const { element } = this;
+    if (element) {
+      element.value = String(value);
+    }
+  }
+
   step(isPlus: boolean) {
     this.afterStep(this.stepGenerator(isPlus).next().value);
   }
@@ -652,8 +657,13 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return value;
   }
 
+  @autobind
+  getPropToFormatOptions(name: string) {
+    return this.getProp(name);
+  }
+
   getFormatOptions(value?: number | BigNumber): FormatNumberFuncOptions {
-    return getNumberFormatOptions((name) => this.getProp(name), (name) => this.getDisplayProp(name), () => this.getValue(), value, this.lang, this.getContextConfig);
+    return getNumberFormatOptions(this.getPropToFormatOptions, (name) => this.getDisplayProp(name), () => this.getValue(), value, this.lang, this.getContextConfig);
   }
 
   getFormatter() {
