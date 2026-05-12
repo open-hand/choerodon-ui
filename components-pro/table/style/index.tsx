@@ -15,6 +15,7 @@ import '../../text-field/style';
 import '../../secret-field/style';
 import '../../color-picker/style';
 import '../../currency/style';
+import '../../percent-field/style';
 import '../../number-field/style';
 import '../../intl-field/style';
 import '../../url-field/style';

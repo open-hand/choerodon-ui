@@ -19,6 +19,7 @@ import Option from '../option/Option';
 import Lov from '../lov/Lov';
 import ObserverNumberField from '../number-field/NumberField';
 import Currency from '../currency/Currency';
+import PercentField from '../percent-field/PercentField';
 import DatePicker from '../date-picker/DatePicker';
 import DateTimePicker from '../date-time-picker/DateTimePicker';
 import TimePicker from '../time-picker/TimePicker';
@@ -98,6 +99,8 @@ export function getEditorByField(field: Field, record?: Record, isQueryField?: b
       return <ObserverNumberField {...flatProps} />;
     case FieldType.currency:
       return <Currency isFlat={isFlat} />;
+    case FieldType.percentage:
+      return <PercentField isFlat={isFlat} />;
     case FieldType.date:
       return <DatePicker isFlat={isFlat} />;
     case FieldType.dateTime:
@@ -149,6 +152,7 @@ export function getPlaceholderByField(field?: Field, record?: Record): string | 
       case FieldType.number:
       case FieldType.bigNumber:
       case FieldType.currency:
+      case FieldType.percentage:
       case FieldType.string:
       case FieldType.intl:
       case FieldType.email:

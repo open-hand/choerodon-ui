@@ -183,6 +183,7 @@ function processOne(value: any, field: Field, record?: Record, checkRange = true
         }
         case FieldType.number:
         case FieldType.currency:
+        case FieldType.percentage:
           if (!isNaN(value)) {
             value = parseNumber(value, field.get('precision', record), undefined, field.get('numberRoundMode', record));
           } else {
@@ -564,6 +565,7 @@ export function getBaseType(type: FieldType): FieldType {
   switch (type) {
     case FieldType.number:
     case FieldType.currency:
+    case FieldType.percentage:
       return FieldType.number;
     case FieldType.dateTime:
     case FieldType.time:
