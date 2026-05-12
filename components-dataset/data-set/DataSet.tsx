@@ -3226,13 +3226,15 @@ Then the query method will be auto invoke.`,
   }
 
   private loadDataFromResponse(resp: any, cache?: boolean): DataSet {
-    if (resp && !(resp && resp.request && resp.status === 204 && resp.statusText === 'No Content')) {
+    if (resp) {
+      if (resp.request && resp.status === 204 && resp.statusText === 'No Content' && !resp.data) {
+        this.loadData([], 0, cache);
+        return this;
+      }
       const { dataKey, totalKey } = this;
       const data: object[] = generateResponseData(resp, dataKey);
       const total: number | undefined = ObjectChainValue.get(resp, totalKey);
       this.loadData(data, total, cache);
-    } else {
-      this.loadData([], 0, cache);
     }
     return this;
   }

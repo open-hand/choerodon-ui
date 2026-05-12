@@ -31,7 +31,7 @@ timeline: true
 - 💄 `<pro>Attachment`: Check if access is available before uploading the file.
 - 💄 `<pro>Table`: Execute the query upon completion of initialization for default conditions of the dynamic filter bar.
 - 💄 `<pro>Select`: When setting the `disabled` attribute for the `options.record` setting, disable the option.
-- 💄 `<pro>DataSet`: Optimize the scenario where the query interface returns an empty result and the data does not cover the previous query result.
+- 💄 `<pro>DataSet`: Optimize the scenario where the query interface returns 204 and the data does not cover the previous query result.
 - 💄 `<pro>Table`: Optimize the default position of the summary items in the scenario where there are no query fields for the dynamic filtering bar.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
