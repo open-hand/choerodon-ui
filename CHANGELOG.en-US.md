@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: Fix the issue where the occasional prompt window does not display in the singleton mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where dragging to sort stopped working after setting the sorting field.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of abnormal fixed column styles after row merging.
+- 🐞 `<pro>Table`: Fixed the issue where the editor's size and position were not updated synchronously when the column width changed in the Table inline editing scenario.
 
 ## 1.6.8
 

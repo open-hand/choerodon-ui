@@ -3,6 +3,7 @@ import { action, IReactionDisposer, observable, reaction, runInAction } from 'mo
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import raf from 'raf';
+import ResizeObserver from 'resize-observer-polyfill';
 import noop from 'lodash/noop';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
@@ -101,6 +102,12 @@ export default class TableEditor extends Component<TableEditorProps> {
 
   tdNode: HTMLTableDataCellElement | null | undefined;
 
+  resizeObserver?: ResizeObserver;
+
+  observedCell?: HTMLTableDataCellElement;
+
+  resizeFrameId?: number;
+
   get lock(): ColumnLock | boolean | undefined {
     const { column } = this.props;
     return column.lock;
@@ -196,6 +203,12 @@ export default class TableEditor extends Component<TableEditorProps> {
       if (cellNode) {
         this.alignEditor(cellNode, height);
       }
+    } else if (editor && cellNode) {
+      raf(() => {
+        if (this.cellNode) {
+          this.alignEditor(this.cellNode);
+        }
+      });
     }
   }
 
@@ -208,6 +221,52 @@ export default class TableEditor extends Component<TableEditorProps> {
       window.removeEventListener('click', this.handleWindowClick);
       this.disconnect();
     }
+    this.unobserveCell();
+    if (this.resizeFrameId !== undefined) {
+      raf.cancel(this.resizeFrameId);
+      delete this.resizeFrameId;
+    }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      delete this.resizeObserver;
+    }
+  }
+
+  @autobind
+  handleCellResize() {
+    const { tableStore } = this.context;
+    if (this.resizeFrameId !== undefined) {
+      raf.cancel(this.resizeFrameId);
+    }
+    this.resizeFrameId = raf(() => {
+      delete this.resizeFrameId;
+      if (tableStore.inlineEdit && tableStore.currentEditRecord) {
+        tableStore.editors.forEach((editor) => {
+          editor.alignEditor(editor.cellNode);
+        });
+      } else if (this.cellNode) {
+        this.alignEditor(this.cellNode);
+      }
+    });
+  }
+
+  private observeCell(node?: HTMLTableDataCellElement | null) {
+    if (this.observedCell === node || !node) {
+      return;
+    }
+    this.unobserveCell();
+    if (!this.resizeObserver) {
+      this.resizeObserver = new ResizeObserver(this.handleCellResize);
+    }
+    this.resizeObserver.observe(node);
+    this.observedCell = node;
+  }
+
+  private unobserveCell() {
+    if (this.resizeObserver && this.observedCell) {
+      this.resizeObserver.unobserve(this.observedCell);
+    }
+    this.observedCell = undefined;
   }
 
   @autobind
@@ -447,6 +506,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (cellNode) {
       const { parentElement } = cellNode;
       this.tdNode = parentElement as HTMLTableDataCellElement | null;
+      this.observeCell(this.tdNode);
       const lastRow = this.getLastRenderedDataRow(this.tdNode);
       const currentRow = this.tdNode ? this.tdNode.parentElement : undefined;
       this.shouldStickLengthInfoOnTop = !!lastRow && lastRow === currentRow && this.shouldStickLastRowLengthInfoOnTop(lastRow);
@@ -482,6 +542,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   }
 
   @autobind
+  @action
   hideEditor(keep?: boolean) {
     this.inTab = false;
     if (keep) {
@@ -490,6 +551,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     if (this.cellNode) {
       const { tableStore } = this.context;
       tableStore.hideEditor();
+      this.unobserveCell();
       const { wrap } = this;
       if (wrap) {
         if (this.originalCssText !== undefined) {
