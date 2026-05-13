@@ -50,6 +50,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: 修复单例模式下偶现提示弹窗不显示的问题。
 - 🐞 `<pro>Attachment`: 修复设置排序字段后拖拽排序失效的问题。
 - 🐞 `<pro>PerformanceTable`: 修复行合并后固定列样式异常的问题。
+- 🐞 `<pro>Table`: 修复 Table 行内编辑场景下列宽变化时编辑器尺寸与位置未同步更新的问题。
 
 ## 1.6.8
 
