@@ -717,13 +717,15 @@ export default class DatePicker extends TriggerField<DatePickerProps>
           return undefined;
         }
       }
-      return this.getLimitWithType(moment(limit), minOrMax);
+      const viewMode = this.getDefaultViewMode();
+      const momentLimit = viewMode === ViewMode.time && typeof limit === 'string' ? moment(limit, 'HH:mm:ss') : moment(limit);
+      return this.getLimitWithType(momentLimit, minOrMax);
     }
   }
 
   getLimitWithType(limit: Moment, minOrMax: any): Moment {
     const viewMode = this.getDefaultViewMode();
-    if (viewMode === ViewMode.dateTime || viewMode === viewMode.time) {
+    if (viewMode === ViewMode.dateTime || viewMode === ViewMode.time) {
       return limit;
     }
     if (minOrMax === 'min' || minOrMax === 'minExcl' || minOrMax === 'maxExcl') {
