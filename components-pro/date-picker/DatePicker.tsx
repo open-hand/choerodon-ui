@@ -718,7 +718,8 @@ export default class DatePicker extends TriggerField<DatePickerProps>
         }
       }
       const viewMode = this.getDefaultViewMode();
-      const momentLimit = viewMode === ViewMode.time && typeof limit === 'string' ? moment(limit, 'HH:mm:ss') : moment(limit);
+      const momentLimit = viewMode === ViewMode.time && typeof limit === 'string' && limit.length < 10
+        ? moment(limit, 'HH:mm:ss') : moment(limit);
       return this.getLimitWithType(momentLimit, minOrMax);
     }
   }
