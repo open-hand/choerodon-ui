@@ -114,6 +114,7 @@ scrollLeft: (left: number) => void;
 | width         | number                                           | Column width                                                                                                |
 | hidden         | boolean                                           | 隐藏                                                                                  |
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
+| customizable | boolean, 'left', 'right', The default value is `true` | Whether this column is subject to personalization control. When set to `false`, `left`, or `right`, this column will not be displayed in the personalization configuration panel and will always be at the edge of the column group, for example: at the far left of all left-fixed columns or the far right. |
 | onCell	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
 | render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
 | footer	| ({ data, dataIndex }) => ReactNode | Rendering content at the bottom of the table	| 

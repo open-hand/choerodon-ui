@@ -113,6 +113,7 @@ scrollLeft: (left: number) => void;
 | hidden         | boolean                                           | 隐藏                                                                                  |
 | hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
 | titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
+| customizable | boolean, 'left', 'right', 默认值为 `true` | 该列是否受到个性化控制，设为 `false` `left` `right` 时，该列不展示在个性化配置面板中，并始终处于列分组的边缘位置，如：所有左固定列的最左边或最右边 |
 | onCell	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
 | render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
 | footer	| ({ data, dataIndex }) => ReactNode | 表格底部渲染内容	| 

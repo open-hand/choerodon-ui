@@ -38,7 +38,21 @@ function normalizeColumnsToTreeData(columns: ColumnProps[]) {
     sort: column.sort,
     titleEditable: column.titleEditable,
     hideable: column.hideable,
+    customizable: column.customizable,
   }), []);
+}
+
+function filterCustomizationColumns(columns: ColumnProps[]): ColumnProps[] {
+  return columns.reduce<ColumnProps[]>((list, column) => {
+    if (column.customizable !== true) {
+      return list;
+    }
+    const nextColumn = { ...column };
+    if (nextColumn.children) {
+      nextColumn.children = filterCustomizationColumns(nextColumn.children as ColumnProps[]);
+    }
+    return list.concat(nextColumn);
+  }, []);
 }
 
 function diff(height = 0): number {
@@ -60,7 +74,7 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const { tableStore } = useContext(TableContext);
   const { originalColumns, customized, proPrefixCls: prefixCls } = tableStore;
 
-  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(originalColumns);
+  const [customizedColumns, setCustomizedColumns] = useState<ColumnProps[]>(filterCustomizationColumns(originalColumns));
 
   const tableRecord: Record = useMemo(() => new DataSet({
     data: [
@@ -142,11 +156,11 @@ const CustomizationSettings: FunctionComponent<CustomizationSettingsProps> = fun
   const handleRestoreColumns = useCallback(action((e: MouseEvent<any>) => {
     e.stopPropagation();
     const { columns = [] } = tableStore.node.props;
-    setCustomizedColumns(mergeDefaultProps(columns).map((column) => {
+    setCustomizedColumns(filterCustomizationColumns(mergeDefaultProps(columns).map((column) => {
       const fixed = getColumnFixed(column.fixed);
       const hidden = column.hidden || false;
       return { ...column, fixed, hidden };
-    }));
+    })));
     tableStore.tempCustomized.columns = {};
   }), [tableRecord, tableStore]);
 
