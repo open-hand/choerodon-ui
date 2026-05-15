@@ -51,6 +51,8 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the issue where dragging to sort stopped working after setting the sorting field.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue of abnormal fixed column styles after row merging.
 - 🐞 `<pro>Table`: Fixed the issue where the editor's size and position were not updated synchronously when the column width changed in the Table inline editing scenario.
+- 🐞 `<pro>DatePicker`: Fix the issue where the `min` attribute becomes invalid when the `mode` is set to `time`.
+- 🐞 `<pro>DatePicker`: Fix the issue where the value limit is ineffective when the `mode` is set to `time` and the `min` value is of the `string` type.
 
 ## 1.6.8
 
