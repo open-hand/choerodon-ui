@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where the editor's size and position were not updated synchronously when the column width changed in the Table inline editing scenario.
 - 🐞 `<pro>DatePicker`: Fix the issue where the `min` attribute becomes invalid when the `mode` is set to `time`.
 - 🐞 `<pro>DatePicker`: Fix the issue where the value limit is ineffective when the `mode` is set to `time` and the `min` value is of the `string` type.
+- 🐞 `<pro>Table`: Fixed an issue where validation error tooltips in Table cells stopped appearing on subsequent validations because the tooltip state was not reset after auto focus on validation failure.
 
 ## 1.6.8
 

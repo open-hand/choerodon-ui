@@ -54,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 Table 行内编辑场景下列宽变化时编辑器尺寸与位置未同步更新的问题。
 - 🐞 `<pro>DatePicker`: 修复 mode 设置为 time 时, min 属性无效的问题。
 - 🐞 `<pro>DatePicker`: 修复 mode 为 time 且 min 设置为 string 类型时, 大小限制无效的问题。
+- 🐞 `<pro>Table`: 修复 Table 单元格因校验失败自动聚焦后未重置提示状态，导致后续校验失败提示不再显示的问题。
 
 ## 1.6.8
 
