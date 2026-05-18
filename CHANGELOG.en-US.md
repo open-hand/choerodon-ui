@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Select`: Added `beforeCreateComboOption` property.
 - 🌟 `<pro>PercentField`: Added the `PercentField` component.
 - 🌟 `<pro>DataSet.Field`: Add the `percentage` type.
+- 🌟 `<pro>PerformanceTable`: Added column attribute `customizable`.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -53,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where the editor's size and position were not updated synchronously when the column width changed in the Table inline editing scenario.
 - 🐞 `<pro>DatePicker`: Fix the issue where the `min` attribute becomes invalid when the `mode` is set to `time`.
 - 🐞 `<pro>DatePicker`: Fix the issue where the value limit is ineffective when the `mode` is set to `time` and the `min` value is of the `string` type.
+- 🐞 `<pro>Table`: Fixed an issue where validation error tooltips in Table cells stopped appearing on subsequent validations because the tooltip state was not reset after auto focus on validation failure.
 
 ## 1.6.8
 

@@ -21,6 +21,7 @@ timeline: true
 - 🌟 `<pro>Select`: 新增 beforeCreateComboOption 属性。
 - 🌟 `<pro>PercentField`: 新增 PercentField 组件。
 - 🌟 `<pro>DataSet.Field`: type 新增 percentage 类型。
+- 🌟 `<pro>PerformanceTable`: 新增列属性 customizable。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
@@ -53,6 +54,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复 Table 行内编辑场景下列宽变化时编辑器尺寸与位置未同步更新的问题。
 - 🐞 `<pro>DatePicker`: 修复 mode 设置为 time 时, min 属性无效的问题。
 - 🐞 `<pro>DatePicker`: 修复 mode 为 time 且 min 设置为 string 类型时, 大小限制无效的问题。
+- 🐞 `<pro>Table`: 修复 Table 单元格因校验失败自动聚焦后未重置提示状态，导致后续校验失败提示不再显示的问题。
 
 ## 1.6.8
 

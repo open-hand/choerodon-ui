@@ -27,6 +27,40 @@ export function getRowSelection(props: TableProps): TableRowSelection {
   return props.rowSelection || {};
 }
 
+function isColumnCustomizationLocked(column: ColumnProps): boolean {
+  return column.customizable === false || column.customizable === 'left' || column.customizable === 'right';
+}
+
+function getColumnCustomizationPosition(column: ColumnProps): 'left' | 'right' | undefined {
+  if (column.customizable === 'right') {
+    return 'right';
+  }
+  if (column.customizable === false || column.customizable === 'left') {
+    return 'left';
+  }
+  return undefined;
+}
+
+function sortColumnsByCustomizable(columns: ColumnProps[]): ColumnProps[] {
+  const leftColumns: ColumnProps[] = [];
+  const centerColumns: ColumnProps[] = [];
+  const rightColumns: ColumnProps[] = [];
+  sortBy(columns, ({ sort }) => sort).forEach((column) => {
+    const customizationPosition = getColumnCustomizationPosition(column);
+    if (customizationPosition === 'left') {
+      leftColumns.push(column);
+    } else if (customizationPosition === 'right') {
+      rightColumns.push(column);
+    } else {
+      centerColumns.push(column);
+    }
+  });
+  return [...leftColumns, ...centerColumns, ...rightColumns].map((column, index) => {
+    column.sort = index;
+    return column;
+  });
+}
+
 export function mergeDefaultProps(
   originalColumns: ColumnProps[],
   customizedColumns?: object,
@@ -55,7 +89,14 @@ export function mergeDefaultProps(
           if (width && math.isBigNumber(width)) {
             customized.width = width.toNumber();
           }
-          Object.assign(newColumn, customized);
+          const mergedCustomized = { ...customized };
+          if (isColumnCustomizationLocked(newColumn)) {
+            delete mergedCustomized.fixed;
+            delete mergedCustomized.hidden;
+            delete mergedCustomized.sort;
+            delete mergedCustomized.title;
+          }
+          Object.assign(newColumn, mergedCustomized);
         }
       }
       if (parent) {
@@ -89,12 +130,12 @@ export function mergeDefaultProps(
     }
   }, []);
   if (parent) {
-    return sortBy(columns, ({ sort }) => sort);
+    return sortColumnsByCustomizable(columns);
   }
   return [
-    ...sortBy(leftColumns, ({ sort }) => sort),
-    ...sortBy(columns, ({ sort }) => sort),
-    ...sortBy(rightColumns, ({ sort }) => sort),
+    ...sortColumnsByCustomizable(leftColumns),
+    ...sortColumnsByCustomizable(columns),
+    ...sortColumnsByCustomizable(rightColumns),
   ];
 }
 

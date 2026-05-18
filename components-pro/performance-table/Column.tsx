@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
 
+export type ColumnCustomizable = boolean | 'left' | 'right';
+
 export interface ColumnProps {
   align?: 'left' | 'center' | 'right';
   verticalAlign?: 'top' | 'middle' | 'bottom';
@@ -31,6 +33,12 @@ export interface ColumnProps {
   header?: ReactNode;
   children?: React.ReactElement<ColumnProps>[] | ColumnProps[];
   type?: 'ColumnGroup';
+  /**
+   * true: 受个性化配置控制
+   * false: 不受个性化配置控制，并固定在当前列分组的左侧
+   * left/right: 不受个性化配置控制，并固定在当前列分组的对应边缘
+   */
+  customizable?: ColumnCustomizable;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -40,6 +48,7 @@ function Column(_props: ColumnProps) {
 
 Column.defaultProps = {
   width: 100,
+  customizable: true,
   hideable: true,
   hidden: false,
   fixed: false,
@@ -64,6 +73,7 @@ export const ColumnPropTypeKeys = [
   'onResize',
   'render',
   'dataIndex',
+  'customizable',
 ];
 
 Column.__PFM_TABLE_COLUMN = true;

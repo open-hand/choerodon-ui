@@ -714,6 +714,9 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     return false;
   }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef, tooltipProps]);
   const handleMouseEnter = useCallback((e) => {
+    if (e.type === 'focus' && tooltipShownRef.current) {
+      tooltipShownRef.current = false;
+    }
     if (!tableStore.columnResizing && !tooltipShownRef.current &&
       (e.currentTarget && e.currentTarget.contains(e.target)) && showTooltip(e)) {
       tooltipShownRef.current = true;
