@@ -646,7 +646,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
             putData.push({
               comparator: 'EQUAL',
               fieldName,
-              value,
+              value: stringifyValue(value),
               ...status,
             });
           }
