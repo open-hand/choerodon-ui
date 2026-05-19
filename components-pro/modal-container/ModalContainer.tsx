@@ -150,6 +150,8 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
 
   delayToActive?: boolean;
 
+  timeID?: number;
+
   @computed
   get baseOffsets() {
     const offsets = {
@@ -208,6 +210,11 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
   }
 
   handleAnimationEnd = (modalKey, isEnter) => {
+    if (this.timeID) {
+      clearTimeout(this.timeID);
+      delete this.timeID;
+    }
+
     const { modals } = this.state;
     // modalKey 为 Modal 的 key, React 默认转化为 string 类型
     const index = this.findIndex(modalKey, true);
@@ -287,6 +294,11 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
   }
 
   componentWillUnmount() {
+    if (this.timeID) {
+      clearTimeout(this.timeID);
+      delete this.timeID;
+    }
+
     const { modals, mount } = this.state;
     this.isUnMount = true;
     ModalManager.removeInstance(this);
@@ -403,6 +415,10 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
         const activeModalIndex: number = isTop ? findLastIndex<ModalProps>(modals, ({ mask, hidden }) => Boolean(!hidden && mask)) : -1;
         if (modals[activeModalIndex] === target) {
           this.delayToActive = true;
+          // 存在打开 modal 又立马关闭的场景, Animate onEnd 无法保证执行, 导致 delayToActive 未清空, setTimeout 兜底
+          this.timeID = window.setTimeout(() => {
+            this.handleAnimationEnd(props.key, false);
+          }, 500);
         }
       }
       Object.assign(target, props, { hidden: true });

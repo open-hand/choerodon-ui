@@ -56,6 +56,7 @@ timeline: true
 - 🐞 `<pro>DatePicker`: Fix the issue where the value limit is ineffective when the `mode` is set to `time` and the `min` value is of the `string` type.
 - 🐞 `<pro>Table`: Fixed an issue where validation error tooltips in Table cells stopped appearing on subsequent validations because the tooltip state was not reset after auto focus on validation failure.
 - 🐞 `<pro>Table`: Fixed the issue where saving query conditions would fail due to object-type values in the parameters of the dynamic filter bar.
+- 🐞 `<pro>Modal`: In the scenario where a `modal` is opened and then immediately closed, when opening other `modal` subsequently, fix the issue of incorrect display of the hierarchy.
 
 ## 1.6.8
 
