@@ -174,6 +174,7 @@ const locale: Locale = {
     columns_visibility_control: 'Batch display',
     hide_all_columns: 'Hide all columns',
     show_all_columns: 'Show all columns',
+    btn_select0_disabled_tips: 'You must first select the data before you can proceed with the operation.',
   },
   Pagination: {
     page: 'Page',

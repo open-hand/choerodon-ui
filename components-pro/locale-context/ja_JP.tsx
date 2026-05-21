@@ -177,6 +177,7 @@ const locale: Locale = {
     columns_visibility_control: 'バッチの表示と隠蔽',
     hide_all_columns: '列を非表示',
     show_all_columns: '列を表示',
+    btn_select0_disabled_tips: 'データを選択してから操作できます。',
   },
   Pagination: {
     page: 'ページ',

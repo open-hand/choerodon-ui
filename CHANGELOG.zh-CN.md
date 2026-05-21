@@ -34,6 +34,8 @@ timeline: true
 - 💄 `<pro>Select`: 优化 options.record 设置 disabled 属性时, 禁用选项。
 - 💄 `<pro>DataSet`: 优化当查询接口返回 204 时, 数据未覆盖上一次查询结果的场景。
 - 💄 `<pro>Table`: 优化动态筛选条无查询字段场景中汇总条的默认位置。
+- 💄 `<pro>Table`: 未勾选数据, 按钮禁用时, 按钮新增提示。
+- 💄 `<pro>Table`: 优化动态筛选条的筛选列表的默认 tag 显示逻辑。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
