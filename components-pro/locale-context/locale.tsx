@@ -176,6 +176,7 @@ export interface Locale extends DataSetLocale {
     columns_visibility_control: string,
     hide_all_columns: string,
     show_all_columns: string,
+    btn_select0_disabled_tips: string,
   };
   Pagination: {
     page: string;

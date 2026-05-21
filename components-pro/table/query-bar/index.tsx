@@ -25,7 +25,7 @@ import Table, {
 } from '../Table';
 import Button, { ButtonProps } from '../../button/Button';
 import Radio from '../../radio';
-import { ButtonColor, ButtonType, FuncType } from '../../button/enum';
+import { ButtonColor, ButtonType, FuncType, ButtonTooltip } from '../../button/enum';
 import { DataSetExportStatus, DataSetStatus, FieldType } from '../../data-set/enum';
 import { $l } from '../../locale-context';
 import TableContext, { TableContextValue } from '../TableContext';
@@ -431,6 +431,17 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
       isTree, dataSet, prefixCls,
     } = this.context;
     const disabled = dataSet.status !== DataSetStatus.ready;
+    const buttonTooltip: ButtonProps = {};
+    if (dataSet.selected.length === 0) {
+      buttonTooltip.tooltip = [ButtonTooltip.always, {
+        title: (
+          <div className={`${prefixCls}-btn-select0-disabled-tips`}>
+            <Icon type="info" />
+            <span>{$l('Table', 'btn_select0_disabled_tips')}</span>
+          </div>
+        ),
+      }];
+    }
     switch (type) {
       case TableButtonType.add:
         return {
@@ -456,6 +467,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           children: $l('Table', 'delete_button'),
           disabled: disabled || dataSet.selected.length === 0,
           className: `${prefixCls}-btn-built-in`,
+          ...buttonTooltip,
         };
       case TableButtonType.remove:
         return {
@@ -464,6 +476,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           children: $l('Table', 'remove_button'),
           disabled: disabled || dataSet.selected.length === 0,
           className: `${prefixCls}-btn-built-in`,
+          ...buttonTooltip,
         };
       case TableButtonType.reset:
         return {

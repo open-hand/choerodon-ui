@@ -174,6 +174,7 @@ const locale: Locale = {
     columns_visibility_control: '批量显隐',
     hide_all_columns: '隐藏全部列',
     show_all_columns: '显示全部列',
+    btn_select0_disabled_tips: '先勾选数据才能操作',
   },
   Pagination: {
     page: '页',

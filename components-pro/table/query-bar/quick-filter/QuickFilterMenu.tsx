@@ -752,6 +752,9 @@ const QuickFilterMenu = function QuickFilterMenu() {
     const isSelected = String(filterMenuRecord && filterMenuRecord.get('filterName')) === String(record.get('searchId'));
     const isDefault = record.get('defaultFlag') === 1;
     const isTenant = record.get('isTenant') === $l('Table', 'preset');
+    // 存在设置预置默认筛选, 又设置用户筛选为默认, 但未将预置筛选取消默认的场景
+    const showDefaultTag = (isDefault && !isTenant) || (isDefault && isTenant &&
+      !(record as Record).dataSet.records.some(r => r.get('defaultFlag') === 1 && r.get('isTenant') !== $l('Table', 'preset')));
     const menu = (
       <Menu onClick={({ key, domEvent }) => {
         domEvent.preventDefault();
@@ -791,7 +794,7 @@ const QuickFilterMenu = function QuickFilterMenu() {
         >
           {text}
         </span>
-        {isDefault && <Tag>{$l('Table', 'default_flag')}</Tag>}
+        {showDefaultTag && <Tag>{$l('Table', 'default_flag')}</Tag>}
         {isSelected && <div className={`${prefixCls}-filter-menu-option-selected`}>
           <Icon type="check" />
         </div>}
