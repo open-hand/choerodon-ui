@@ -70,6 +70,7 @@ title: Attachment
 | onPreview | 文件点击预览时的回调 | (attachment: AttachmentFile) => void |  |
 | pictureCardShowName | 设置 picture-card 类型图片是否显示文件名 | boolean |  |
 | directory | 开启上传文件夹 | boolean |  |
+| progressThrottle | 是否对 onUploadProgress 进行节流触发。设置为大于 0 的数字时，则按时间间隔进行节流；设置为对象类型时，step 字段为按进度步长进行节流；interval 字段为按时间间隔进行节流；两个字段都设置时，满足任一条件时都会触发 onUploadProgress。 | number \| { step?: number; interval?: number; } \| false | - |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

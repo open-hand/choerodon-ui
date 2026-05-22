@@ -6,10 +6,17 @@ import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 import { appendFormData } from '../data-set/utils';
 import axios from '../axios';
 import PromiseQueue from '../promise-queue';
-import { UploaderProps } from './Uploader';
+import { UploaderProps, ProgressThrottle } from './Uploader';
 import { $l } from '../locale-context';
 import { formatFileSize } from '../formatter';
 import UploadError from './UploadError';
+
+type ProgressNotifyState = {
+  lastProgress?: number;
+  lastNotifyTime?: number;
+};
+
+const progressNotifyStateMap = new WeakMap<AttachmentFile, ProgressNotifyState>();
 
 function getAxios(context: DataSetContext): AxiosInstance {
   return context.getConfig('axios') || axios;
@@ -94,6 +101,111 @@ function getUploadAxiosConfig(
   throw new Error('AttachmentFile can be uploaded only from input.files or DragEvent.dataTransfer.files');
 }
 
+function getChunkUploadPercent(attachment: AttachmentFile): number {
+  const { chunks, size } = attachment;
+  if (!chunks || !chunks.length || size <= 0) {
+    return 0;
+  }
+  const loaded = chunks.reduce((sum, currentChunk) => {
+    const {
+      status,
+      percent = status === 'success' ? 100 : 0,
+      start,
+      end,
+    } = currentChunk;
+    return sum + (end - start) * (percent / 100);
+  }, 0);
+  return (loaded / size) * 100;
+}
+
+function getProgressThrottleConfig(progressThrottle?: ProgressThrottle): {
+  interval?: number;
+  step?: number;
+} | undefined {
+  if (progressThrottle === false || progressThrottle === undefined) {
+    return undefined;
+  }
+  if (typeof progressThrottle === 'number') {
+    return Number.isFinite(progressThrottle) && progressThrottle > 0
+      ? { interval: progressThrottle }
+      : undefined;
+  }
+  const { interval, step } = progressThrottle;
+  const normalizedInterval = typeof interval === 'number' && Number.isFinite(interval) && interval > 0 ? interval : undefined;
+  const normalizedStep = typeof step === 'number' && Number.isFinite(step) && step > 0 ? step : undefined;
+  if (normalizedInterval === undefined && normalizedStep === undefined) {
+    return undefined;
+  }
+  return {
+    interval: normalizedInterval,
+    step: normalizedStep,
+  };
+}
+
+function shouldNotifyProgress(
+  percent: number,
+  state: ProgressNotifyState,
+  progressThrottle?: ProgressThrottle,
+): boolean {
+  const { lastProgress, lastNotifyTime } = state;
+  if (lastProgress === percent) {
+    return false;
+  }
+  if (percent === 100) {
+    return true;
+  }
+  const throttleConfig = getProgressThrottleConfig(progressThrottle);
+  if (!throttleConfig) {
+    return true;
+  }
+  const { interval, step } = throttleConfig;
+  if (lastProgress === undefined || lastNotifyTime === undefined) {
+    return true;
+  }
+  const now = Date.now();
+  const reachStep = step !== undefined && percent - lastProgress >= step;
+  const reachInterval = interval !== undefined && now - lastNotifyTime >= interval;
+  return reachStep || reachInterval;
+}
+
+function updateProgressNotifyState(attachment: AttachmentFile, percent: number): void {
+  progressNotifyStateMap.set(attachment, {
+    lastProgress: percent,
+    lastNotifyTime: Date.now(),
+  });
+}
+
+function resetProgressNotifyState(attachment: AttachmentFile): void {
+  progressNotifyStateMap.delete(attachment);
+}
+
+function handleChunkUploadProgress(props: UploaderProps, attachment: AttachmentFile): void {
+  const { onUploadProgress: handleProgress } = props;
+  if (handleProgress) {
+    const percent = getChunkUploadPercent(attachment);
+    const state = progressNotifyStateMap.get(attachment) || {};
+    if (shouldNotifyProgress(percent, state, props.progressThrottle)) {
+      updateProgressNotifyState(attachment, percent);
+      handleProgress(percent, attachment);
+    }
+  }
+}
+
+function handleUploadProgress(
+  props: UploaderProps,
+  attachment: AttachmentFile,
+  percent: number,
+): void {
+  const { onUploadProgress: handleProgress } = props;
+  if (handleProgress) {
+    const state = progressNotifyStateMap.get(attachment) || {};
+    if (shouldNotifyProgress(percent, state, props.progressThrottle)) {
+      updateProgressNotifyState(attachment, percent);
+      handleProgress(percent, attachment);
+    }
+  }
+}
+
 async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chunk: AttachmentFileChunk, attachmentUUID: string, context: DataSetContext): Promise<any> {
   try {
     const { onBeforeUploadChunk } = context.getConfig('attachment');
@@ -118,6 +230,7 @@ async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chu
       
       const config = getUploadAxiosConfig(props, attachment, chunk, attachmentUUID, context, mobxAction((e) => {
         chunk.percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
+        handleChunkUploadProgress(props, attachment);
       }));
       
       const axiosInstance = getAxios(context);
@@ -128,7 +241,11 @@ async function uploadChunk(props: UploaderProps, attachment: AttachmentFile, chu
       chunk.cancelToken = source;
       
       const resp = await axiosInstance(config);
-      chunk.status = 'success';
+      runInAction(() => {
+        chunk.percent = 100;
+        chunk.status = 'success';
+      });
+      handleChunkUploadProgress(props, attachment);
       return resp;
     }
   } catch (e) {
@@ -158,6 +275,7 @@ function uploadChunks(
     runInAction(() => {
       attachment.status = 'uploading';
     });
+    resetProgressNotifyState(attachment);
     const queue = new PromiseQueue(threads);
     
     // 将queue存储到attachment中，以便后续中断
@@ -186,13 +304,11 @@ async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile
     runInAction(() => {
       attachment.status = 'uploading';
     });
+    resetProgressNotifyState(attachment);
     const config = getUploadAxiosConfig(props, attachment, undefined, attachmentUUID, context, mobxAction((e) => {
       const percent = e.total > 0 ? (e.loaded / e.total) * 100 : 0;
       attachment.percent = percent;
-      const { onUploadProgress: handleProgress } = props;
-      if (handleProgress) {
-        handleProgress(percent, attachment);
-      }
+      handleUploadProgress(props, attachment, percent);
     }));
     
     // 在发起请求前再次检查中断状态
@@ -212,6 +328,7 @@ async function uploadNormalFile(props: UploaderProps, attachment: AttachmentFile
     
     const resp = await axiosInstance(config);
     attachment.percent = 100;
+    handleUploadProgress(props, attachment, 100);
     return new Promise<any>((resolve) => {
       setTimeout(() => resolve(resp), 0);
     });

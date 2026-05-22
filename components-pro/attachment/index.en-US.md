@@ -70,6 +70,7 @@ title: Attachment
 | onPreview | 文件点击预览时的回调 | (attachment: AttachmentFile) => void |  |
 | pictureCardShowName | 设置 picture-card 类型图片是否显示文件名 | boolean |  |
 | directory | 开启上传文件夹 | boolean |  |
+| progressThrottle | Whether to throttle the triggering of onUploadProgress. When set to a number greater than 0, throttling is applied based on the time interval; when set to an object type, the step field throttles based on progress steps, and the interval field throttles based on the time interval; when both fields are set, onUploadProgress will be triggered when either condition is met. | number \| { step?: number; interval?: number; } \| false | - |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField) 和 [Button](/components-pro/button/#Button)。
 附件对象参考 [AttachmentFile](/components-pro/data-set/#AttachmentFile)

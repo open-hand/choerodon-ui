@@ -36,6 +36,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the default position of the summary items in the scenario where there are no query fields for the dynamic filtering bar.
 - 💄 `<pro>Table`: When data is not selected, a new tooltip appears on the disabled button.
 - 💄 `<pro>Table`: Optimize the default `tag` display logic of the filter list for the dynamic filtering bar.
+- 💄 `<pro>Attachment`: Optimized chunked upload to support triggering onUploadProgress, and added the `progressThrottle` property to support throttling control for it.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
@@ -59,6 +60,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed an issue where validation error tooltips in Table cells stopped appearing on subsequent validations because the tooltip state was not reset after auto focus on validation failure.
 - 🐞 `<pro>Table`: Fixed the issue where saving query conditions would fail due to object-type values in the parameters of the dynamic filter bar.
 - 🐞 `<pro>Modal`: In the scenario where a `modal` is opened and then immediately closed, when opening other `modal` subsequently, fix the issue of incorrect display of the hierarchy.
+- 🐞 `<pro>Attachment`: Fixed the issue where `onRemove` could not retrieve attachment information during batch deletion.
 
 ## 1.6.8
 

@@ -79,7 +79,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   showValidation?: ShowValidation;
   attachments?: (AttachmentFile | FileLike)[];
   onAttachmentsChange?: (attachments: AttachmentFile[]) => void;
-  onRemove?: (attachment: AttachmentFile) => boolean | void;
+  onRemove?: (attachment: AttachmentFile | AttachmentFile[]) => boolean | void;
   getUUID?: () => Promise<string> | string;
   downloadAll?: ButtonProps | boolean;
   previewTarget?: string;
@@ -411,6 +411,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'fileKey',
       'fileSize',
       'useChunk',
+      'progressThrottle',
       'chunkSize',
       'chunkThreads',
       'bucketName',
@@ -540,13 +541,14 @@ export default class Attachment extends FormField<AttachmentProps> {
     const chunkSize = this.getProp('chunkSize');
     const chunkThreads = this.getProp('chunkThreads');
     const useChunk = this.getProp('useChunk');
+    const progressThrottle = this.getProp('progressThrottle');
     const {
       action, data, headers, withCredentials,
       beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
     } = this.props;
     return {
       accept, action, data, headers, fileKey, withCredentials, bucketName, bucketDirectory, storageCode, isPublic,
-      fileSize, chunkSize, chunkThreads, useChunk, beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
+      fileSize, chunkSize, chunkThreads, useChunk, progressThrottle, beforeUpload, onUploadProgress, onUploadSuccess, onUploadError,
     };
   }
 
@@ -716,7 +718,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     const invalidAttachs = attachments.filter(attachment => attachment.status === 'error' || attachment.invalid);
     this.removeCheckedAttachments(invalidAttachs);
     if (validAttachments.length > 0) {
-      return Promise.resolve(onAttachmentRemove(attachment)).then(mobxAction(ret => {
+      return Promise.resolve(onAttachmentRemove(validAttachments)).then(mobxAction(ret => {
         if (ret !== false) {
           const { onRemove } = this.getContextConfig('attachment');
           if (onRemove) {

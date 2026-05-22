@@ -53,13 +53,21 @@ export default class AttachmentFile implements FileLike {
   md5?: string;
 
   get percent(): number | undefined {
-    const { chunks } = this;
+    const { chunks, size } = this;
     if (chunks) {
-      const { length } = chunks;
-      return chunks.reduce((sum, chunk) => {
-        const { status, percent = status === 'success' ? 100 : 0 } = chunk;
-        return sum + percent / length;
+      if (!chunks.length || size <= 0) {
+        return 0;
+      }
+      const loaded = chunks.reduce((sum, chunk) => {
+        const {
+          status,
+          percent = status === 'success' ? 100 : 0,
+          start,
+          end,
+        } = chunk;
+        return sum + (end - start) * (percent / 100);
       }, 0);
+      return (loaded / size) * 100;
     }
     return this.$percent;
   }
