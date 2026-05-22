@@ -9,6 +9,14 @@ import AttachmentFileChunk from '../data-set/AttachmentFileChunk';
 import UploadError from './UploadError';
 import { $l } from '../locale-context';
 
+export type ProgressThrottle =
+  | false
+  | number
+  | {
+    interval?: number;
+    step?: number;
+  };
+
 export interface UploaderProps {
   /**
    *  可接受的上传文件类型
@@ -32,6 +40,10 @@ export interface UploaderProps {
   chunkSize?: number | undefined;
   chunkThreads?: number | undefined;
   useChunk?: boolean | undefined;
+  /**
+   * onUploadProgress 的节流频率控制
+   */
+  progressThrottle?: ProgressThrottle;
   bucketName?: string | undefined;
   bucketDirectory?: string | undefined;
   storageCode?: string | undefined;
