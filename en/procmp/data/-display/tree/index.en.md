@@ -1,6 +1,6 @@
 ---
 title: Tree
-subtitle: 树形控件
+subtitle: Tree
 order: 0
 ---
 

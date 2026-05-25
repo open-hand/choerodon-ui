@@ -1,16 +1,16 @@
 ---
 title: Table
-subtitle: 表格
+subtitle: Table
 order: 0
 ---
 
 Display row and column data, see the bottom for export and paging configuration.
 
-## When to use
+## When To Use
 
 When complex behaviors such as sorting, searching, paging, and custom operations on data are required.
 
-> Related tutorial: [Table](/zh/tutorials/table-advance)
+> Related tutorial: [Table](/en/tutorials/table-advance)
 
 **Precautions**
 
@@ -23,4 +23,4 @@ Refer to [Sum of functions demo](#ALL), 1000 items (2w+ cells) are displayed on 
 
 **Processing plan**
 
-> According to the specific scenarios and requirements, it is recommended that it takes more than 10s to load and use the big data table [PerformanceTable](/zh/procmp/data-display/performance-table) or refer to [virtual scrolling demo](#Virtual%20Scroll) for processing.
+> According to the specific scenarios and requirements, it is recommended that it takes more than 10s to load and use the big data table [PerformanceTable](/en/procmp/data-display/performance-table) or refer to [virtual scrolling demo](#Virtual%20Scroll) for processing.

@@ -14,7 +14,7 @@ The following APIs are shared by Tooltip, Popconfirm, Popover.
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | arrowPointAtCenter | Whether the arrow is pointed at the center of target | boolean | `false` |
-| autoAdjustOverflow | Whether to adjust popup placement automatically when popup is off screen | boolean | `true` |
+| autoAdjustOverflow | Automatically adjust the position when the tooltip is blocked; you can set automatic position adjustment separately for horizontal and vertical directions. | boolean \| { adjustX?: 0 \| 1; adjustY?: 0 \| 1; } | `true` |
 | defaultVisible | Whether the floating tooltip card is visible by default | boolean | `false` |
 | getPopupContainer | The DOM container of the tip, the default behavior is to create a `div` element in `body` | Function(triggerNode) | () => document.body |
 | mouseEnterDelay | Delay in seconds, before tooltip is shown on mouse enter | number | 0 |

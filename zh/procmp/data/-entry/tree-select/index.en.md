@@ -1,11 +1,11 @@
 ---
 title: TreeSelect
-subtitle: 树选择
+subtitle: Tree Select
 order: 0
 ---
 
-树型选择控件。
+Tree selection control.
 
-## 何时使用
+## When To Use
 
-类似 Select 的选择控件，可选择的数据结构是一个树形结构时，可以使用 TreeSelect，例如公司层级、学科系统、分类目录等等。
+Use TreeSelect when the selectable data structure is a tree, similar to Select. Examples include company hierarchies, subject systems, and category directories.

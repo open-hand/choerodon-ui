@@ -1,12 +1,12 @@
 ---
 title: Upload
-subtitle: 上传
+subtitle: Upload
 order: 0
 ---
 
 Upload file by selecting or dragging.
 
-- ### 附件上传组件区别与选用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/attachment-upload
+- ### Attachment Upload Component: Differences and Selection Guide：https://open.hand-china.com/choerodon-ui/en/tutorials/attachment-upload
 
 ## When To Use
 

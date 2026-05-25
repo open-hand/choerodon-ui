@@ -51,11 +51,11 @@ title: API
 
 #### Form.Item
 
-| 属性名 | 说明 | 类型  | 版本 |
-| --- | --- | --- |  --- |
-| label | 标签 | string \| ReactNode   | 1.4.2  |
-| name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string   | 1.4.2 |
-| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number  | 1.4.2 |
+| 属性名 | 说明 | 类型  | 默认值 | 版本 |
+| --- | --- | --- |  --- |  --- |
+| label | 标签 | string \| ReactNode   | | 1.4.2  |
+| name | 字段名。可获取 DataSet 的字段属性，如 label，require 等，一般用于控件外需要嵌套其他元素时使用。 | string   | | 1.4.2 |
+| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。子元素的 labelWidth 无法响应式。 | number  | | 1.4.2 |
 | labelTooltip | 用 Tooltip 显示标签内容。可选值 'none'\|'always'\|'overflow' | string | 'none' | |
 | useColon | 是否使用冒号当开启时会在所有的label后面加上冒号, 在没有label时不显示。 | boolean | false | |
 | requiredMarkAlign | 控制必输星号位置 | left \| right | left | 1.6.3 |
@@ -66,22 +66,23 @@ title: API
 
 > 1.5.3 新增组件。
 
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| className | 自定义类名 | string |  |
-| style | 自定义样式 | React.CSSProperties |  |
-| label | 标签 | string \| ReactNode |  |
-| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number |  |
-| labelTooltip | 用 Tooltip 显示标签内容。可选值 none \| always \| overflow | string |  |
-| help | 帮助信息(显示在label旁) | string |  |
-| required | 是否显示必填样式(不做校验) | boolean |  |
-| useColon | 是否使用冒号, 当开启时会在所有的 label 后面加上冒号, 并且必填的 * 号会被移到最前方, 无 label 时不显示。未设置时沿用Form的useColon属性 | boolean | |
-| compact | 是否用紧凑模式 | boolean |  |
-| hidden | 是否隐藏字段（依然会校验字段）|	boolean	| |
-| rowSpan | 表单下控件跨越的行数 | number | 1 |
-| colSpan | 表单下控件跨越的列数 | number | 1 |
-| newLine | 另起新行 | boolean |  |
+| 属性名 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| className | 自定义类名 | string |  | |
+| style | 自定义样式 | React.CSSProperties |  | |
+| label | 标签 | string \| ReactNode |  | |
+| labelWidth | 标签宽度。同列控件中标签宽度取最大设定值。 | number |  | |
+| labelTooltip | 用 Tooltip 显示标签内容。可选值 none \| always \| overflow | string |  | |
+| help | 帮助信息(显示在label旁) | string |  | |
+| required | 是否显示必填样式(不做校验) | boolean |  | |
+| useColon | 是否使用冒号, 当开启时会在所有的 label 后面加上冒号, 并且必填的 * 号会被移到最前方, 无 label 时不显示。未设置时沿用Form的useColon属性 | boolean | | |
+| compact | 是否用紧凑模式 | boolean |  | |
+| hidden | 是否隐藏字段（依然会校验字段）|	boolean	| | |
+| rowSpan | 表单下控件跨越的行数 | number | 1 | |
+| colSpan | 表单下控件跨越的列数 | number | 1 | |
+| newLine | 另起新行 | boolean |  | |
 | labelWordBreak | 设置标签是否换行显示 (仅支持 labelWidth 为固定宽度)  | boolean |  | 1.6.5 |
+| groupItemStyle | group item 自定义样式 | React.CSSProperties[] |  | 1.6.8 |
 
 ### Form.FormVirtualGroup
 

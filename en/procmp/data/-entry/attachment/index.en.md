@@ -1,15 +1,15 @@
 ---
 title: Attachment
-subtitle: 附件
+subtitle: Attachment
 order: 0
 ---
 
-附件上传和展示。
+Attachment upload and display.
 
-- ### 附件上传组件区别与选用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/attachment-upload
+- ### Attachment upload component distinction and selection guide: https://open.hand-china.com/choerodon-ui/en/tutorials/attachment-upload
 
-## 何时使用
+## When to use
 
-需要上传文件时。
+When you need to upload files.
 
-> 1.4.4 版本新增组件。
+> New component in version 1.4.4.

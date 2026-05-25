@@ -94,6 +94,21 @@
       "screenshot": "",
       "height": 131,
       "category": "pro"
+    },
+    {
+      "filename": "auto-placement.js",
+      "title": {
+        "zh": "自动选择位置",
+        "en": "Auto Placement"
+      },
+      "description": {
+        "zh": "自动选择最佳位置弹出。\n",
+        "en": "Automatically pop up at the optimal position.\n"
+      },
+      "order": 7,
+      "screenshot": "",
+      "height": 160,
+      "category": "pro"
     }
   ]
 }

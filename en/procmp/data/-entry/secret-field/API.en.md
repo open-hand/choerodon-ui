@@ -2,12 +2,12 @@
 title: API
 ---
 
-| 属性 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| modalProps | 该属性可以覆盖脱敏组件弹窗的部分属性 | 属性详情请参考[ModalProps](/en/procmp/feedback/modal#API) |  |
+| modalProps | Override some properties of the desensitization component modal | See [ModalProps](/en/procmp/feedback/modal#API) for details |  |
 
 ### SecretField
 
-属性说明如下：
+Property descriptions are as follows:
 
-更多属性请参考 [TextField](/en/procmp/data-entry/text-field#API)。
+For more properties, please refer to [TextField](/en/procmp/data-entry/text-field#API).

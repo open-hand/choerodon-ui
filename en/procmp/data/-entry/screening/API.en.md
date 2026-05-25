@@ -4,31 +4,31 @@ title: API
 
 ### Screening
 
-| 属性名 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| tagRender | 顶部的tag位置的渲染可以自定义已选值的展示 | ({ labelTitle, TagsProps }) => ReactElement<any> | - |
-| onChange | 当值改变触发的回调方法 | `(value: any, oldValue: any) => void` | - |
+| tagRender | Render tags at the top; customize the display of selected values | ({ labelTitle, TagsProps }) => ReactElement<any> | - |
+| onChange | Callback triggered when value changes | `(value: any, oldValue: any) => void` | - |
 
 ### ScreeningItem
 
-| 属性名 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| multiple | 初始打开多选 | string | - |
-| name | 绑定指定field（必填） | string | - |
-| primitiveValue | 原始值效果和使用filed object类似 | boolean | false |
-| onChange | 修改值触发的回调 | string | - |
-| renderer | 整个选择框的渲染 | (props: RenderProps) => ReactNode | - |
-| colProps | 栅格布局配置（详见基础组件） | ColProps | - |
-| rowProps | 栅格布局配置 详见基础组件） | RowProps | - |
-| optionRenderer | 自定义控制选项的展示 | ({text,value,record}) => ReactElement<any>; | - |
+| multiple | Initially open multiple selection | string | - |
+| name | Bind to specified field (required) | string | - |
+| primitiveValue | Primitive value; similar effect to using field object | boolean | false |
+| onChange | Callback triggered when modifying value | string | - |
+| renderer | Renderer for the entire selection box | (props: RenderProps) => ReactNode | - |
+| colProps | Grid layout configuration (see base components) | ColProps | - |
+| rowProps | Grid layout configuration (see base components) | RowProps | - |
+| optionRenderer | Customize option display | ({text,value,record}) => ReactElement<any>; | - |
 
 ### PropsTab 
 
-| 属性名 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| text | 每个小tag展示的内容文本 | string | - |
-| label | tag的小标题 | string | - |
-| handleClose | 点击关闭按钮需要触发的方法来删除值 | (key) => void | - |
-| key | 当前字段的标记配合handleClose以及定义为唯一值 | string | - |
+| text | Text content of each small tag | string | - |
+| label | Tag subtitle | string | - |
+| handleClose | Method triggered by clicking close button to remove value | (key) => void | - |
+| key | Identifier of current field; used with handleClose and defined as unique value | string | - |
 
-更多属性请参考 [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent)。
+For more properties, please refer to [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent).

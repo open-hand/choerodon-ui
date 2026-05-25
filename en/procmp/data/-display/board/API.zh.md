@@ -11,7 +11,7 @@ title: API
 | onConfigChange | 配置切换事件 | (props) => void |  | 1.6.1 |
 | cardProps | 卡片配置 |  |  | 1.6.1 |
 | tableProps | 表格配置 |  |  | 1.6.1 |
-| kanbanProps | 看板配置 |  |  | 1.6.1 |
+| kanbanProps | 看板配置 | { isDragDropDisabled: boolean; allDsProps: DataSetProps; columnDsProps: DataSetProps; droppableProps: DroppableProps; draggableProps: DraggableProps; dragDropContext: DragDropContextProps; cardWidth?: 4 \| 6 \| 8 \| 12; } |  | 1.6.1 |
 
 更多属性请参考 [Table](/zh/procmp/data-display/table#API)。
 更多个性化存储实例请参考 [Table#用户个性化](/zh/procmp/data-display/table#用户个性化)。

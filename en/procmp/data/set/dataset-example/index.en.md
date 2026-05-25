@@ -1,7 +1,7 @@
 ---
 title: DataSet Example
-subtitle: 数据源示例
+subtitle: Data Source Example
 order: 0
 ---
 
-针对 DataSet 关键属性做示例说明。
+Examples illustrating key DataSet properties.

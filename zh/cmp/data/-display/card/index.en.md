@@ -1,6 +1,6 @@
 ---
 title: Card
-subtitle: 卡片
+subtitle: Card
 order: 0
 ---
 

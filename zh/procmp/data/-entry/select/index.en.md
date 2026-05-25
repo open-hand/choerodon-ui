@@ -1,12 +1,12 @@
 ---
 title: Select
-subtitle: 下拉选择框
+subtitle: Dropdown Select
 order: 0
 ---
 
-表单控件。
+Form Control.
 
-## 何时使用
+## When To Use
 
-- 弹出一个下拉菜单给用户选择操作，用于代替原生的选择器，或者需要一个更优雅的多选器时。
-- 当选项少时（少于 5 项），建议直接将选项平铺，使用 [SelectBox](/zh/procmp/data-entry/select-box) 是更好的选择。
+- Pop up a dropdown menu for users to choose actions; use it to replace the native selector or when a more elegant multiple selector is needed.
+- When options are few (fewer than 5), consider laying out options directly; using [SelectBox](/en/procmp/data-entry/select-box) is a better choice.

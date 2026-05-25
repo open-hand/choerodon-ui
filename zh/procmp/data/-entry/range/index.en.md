@@ -1,12 +1,12 @@
 ---
 title: Range
-subtitle: 滑块
+subtitle: Slider
 order: 0
 ---
 
-Range。
+Range.
 
-## 何时使用
+## When To Use
 
 
 

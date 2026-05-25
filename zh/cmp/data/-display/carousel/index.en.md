@@ -1,6 +1,6 @@
 ---
 title: Carousel
-subtitle: 走马灯
+subtitle: revolving lantern
 order: 0
 ---
 

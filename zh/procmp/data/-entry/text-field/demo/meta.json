@@ -49,8 +49,8 @@
     {
       "filename": "format.js",
       "title": {
-        "zh": "Format",
-        "en": "格式化"
+        "zh": "格式化",
+        "en": "Format"
       },
       "description": {
         "zh": "格式化。\n",

@@ -1,13 +1,13 @@
 ---
 title: NumberField
-subtitle: 数字输入框
+subtitle: Number Input Field
 order: 0
 ---
 
-数字输入框。
+Number input field.
 
-## 何时使用
+## When To Use
 
-需要输入普通数字的时候使用。
+Use when you need to enter general numeric values.
 
-如果要输入保留两位小数格式的金额，请使用 [Currency](/zh/procmp/data-entry/currency/#Currency) 组件
+If you need to enter amounts with two decimal places, use the [Currency](/en/procmp/data-entry/currency/#Currency) component.

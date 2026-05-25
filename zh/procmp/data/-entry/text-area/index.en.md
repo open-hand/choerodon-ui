@@ -1,12 +1,12 @@
 ---
 title: TextArea
-subtitle: 文本域
+subtitle: Text Area
 order: 0
 ---
 
-文本域用于输入一段文字。
+Text area used to enter a block of text.
 
-## 何时使用
+## When To Use
 
 
 

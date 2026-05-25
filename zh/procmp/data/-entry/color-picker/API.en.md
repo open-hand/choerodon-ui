@@ -2,13 +2,12 @@
 title: API
 ---
 
-属性 | 说明 | 类型 | 默认值 | 版本 |
------|-----|-----|------ | ------  |
-defaultValue | 默认值 | string | #ff0000 | |
-mode            | 显示模式，可选值: default \| button  | string | default | 1.5.5 |
-preset          | 是否开启备选色板                     | boolean | false | 1.5.5 |
+| Property | Description | Type | Default | Version |
+|-----|-----|-----|------ | ------  |
+| defaultValue | Default value | string | #ff0000 | |
+| mode | Display mode; options: default \| button | string | default | 1.5.5 |
+| preset | Whether to enable preset color palette | boolean | false | 1.5.5 |
 
-注意：**ColorPicker 组件设置 multiple 属性为 true 无效, DataSet 的字段属性 multiple 同理**
+Note: **Setting the ColorPicker component multiple property to true is ineffective; likewise for the DataSet field property multiple.**
 
-更多属性请参考 [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField)。
-
+For more properties, please refer to [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField).

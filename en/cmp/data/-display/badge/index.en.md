@@ -1,6 +1,6 @@
 ---
 title: Badge
-subtitle: 徽标数
+subtitle: Badge
 order: 0
 ---
 

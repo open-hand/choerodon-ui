@@ -169,7 +169,7 @@ abstract: true
 | [setQueryParameter(para, value)](/zh/datasetapi/dataset-methods/set-query-parameter) | 设置查询参数 | para - 参数名 value - 参数值 |  | |
 | [getQueryParameter(para)](/zh/datasetapi/dataset-methods/set-query-parameter) | 获取查询参数 | para - 参数名 |  | 1.4.0 |
 | [loadData(data, total, cache)](/zh/datasetapi/dataset-methods/load-data) | 加载数据 | `data` - 数据数组 `total` - 总数，可选，用于分页 `cache`(1.5.0-beat.0) - 是否保留缓存的变更记录 | | |
-| [appendData(data, parentRecord)](/zh/datasetapi/dataset-methods/load-data) | 附加数据 | `data` - 数据数组 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 | |
+| [appendData(data, parentRecord, index)](/zh/datasetapi/dataset-methods/load-data) | 附加数据。当设置 idField 和 parentField 时, index 为父级中的定位; 当设置 childrenField 且传入 parentRecord 时, index 为父级中的定位 | `data` - 数据数组 `parentRecord` - 父节点，可选， 用于 childrenField 模式的树形数据 `index` - 数据插入位置，可选(1.6.8) | | |
 | [setState(key, value)](/zh/datasetapi/other/state) | 设置自定义状态值。 | key - 键名或者键值对对象；value - 值 |  | 1.3.1 |
 | [getState(key)](/zh/datasetapi/other/state) | 获取自定义状态值。 | key - 键名 |  |  1.3.1  |
 | modifiedCheck(message) | 变更检查 | message - 同 modifiedCheckMessage， 优先级高于 modifiedCheckMessage | | 1.3.1 |
@@ -325,7 +325,7 @@ abstract: true
 | lovDefineBatchAxiosConfig | 返回 lov 配置批量查询配置的钩子，优先级高于全局配置的 lovDefineBatchAxiosConfig ，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/components/configure/#AxiosRequestConfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.6.3 |
 | lovQueryAxiosConfig | lov 查询的请求配置或返回配置的钩子，详见[AxiosRequestConfig](/zh/procmp/configure/configure#axiosrequestconfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig\| (code, config, { dataSet, params, data, lovQueryDetail }) => AxiosRequestConfig |  | |
 | lookupBatchAxiosConfig | 返回 lookup 批量查询配置的钩子，优先级高于全局配置的lookupBatchAxiosConfig，根据返回配置的url的不同分别做批量查询，详见[AxiosRequestConfig](/zh/procmp/configure/configure#axiosrequestconfig)。 | (codes: string[]) => AxiosRequestConfig | - | 1.0.0 |
-| bind | 内部字段别名绑定 | string |  | |
+| bind | 内部字段别名绑定。 绑定字段的 type 需要设置, 用于数据格式化、校验等 | string |  | |
 | [dynamicProps](/zh/datasetapi/other/dynamic-props) | [动态属性对象](/zh/tutorials/dataSet-more#dynamicprops)。对象为字段属性和返回该字段值的钩子的键值对。| { fieldProp: ({ dataSet, record, name }) => value } |  |  |
 | [computedProps](/zh/datasetapi/other/dynamic-props) | 计算属性对象。功能和用法同 dynamicProps，具有 mobx computed 的缓存功能，一般用于计算量大的场景，避免重复计算，提高性能。请确保计算依赖的值是可观察的。  | { fieldProp: ({ dataSet, record, name }) => value } |  | 1.4.0 |
 | cascadeMap | 快码和 LOV 查询时的级联参数映射，详见[级联](/zh/tutorials/select#级联)。 | object |  |   |

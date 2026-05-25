@@ -1,12 +1,12 @@
 ---
 title: CodeArea
-subtitle: 代码域
+subtitle: Code Area
 order: 0
 ---
 
-代码编辑器。
+Code editor.
 
-## 何时使用
+## When To Use
 
-用于输入表单域代码内容，实现对应语言高亮时。
+Use when entering code in form fields to achieve syntax highlighting for the corresponding language.
 

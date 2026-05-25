@@ -4,10 +4,10 @@ title: API
 
 ### Input\[type=radio\]
 
-| 属性名          | 说明                             | 类型    | 默认值 |
+| Property | Description | Type | Default |
 | -------------- | -------------------------------- | ------- | ------ |
-| checked        | <受控>是否选中                   | boolean |        |
-| defaultChecked | 初始是否选中                     | boolean | false  |
-| mode           | 显示模式，可选值：box \| button | string  | box    |
+| checked        | <Controlled> Whether Selected                   | boolean |        |
+| defaultChecked | Whether Selected Initially                     | boolean | false  |
+| mode           | Display mode; options: box \| button | string  | box    |
 
-更多属性请参考 [Field](/zh/procmp/abstract/field#Field)。
+For more properties, please refer to [Field](/en/procmp/abstract/field#Field).

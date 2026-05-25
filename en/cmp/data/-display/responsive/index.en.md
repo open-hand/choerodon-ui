@@ -1,6 +1,6 @@
 ---
 title: Responsive
-subtitle: 响应式组件
+subtitle: Responsive component
 order: 0
 ---
 

@@ -14,7 +14,7 @@ title: API
 | defaultCheckedKeys  | 默认选中复选框的树节点当 dataSet 绑定 checkField 时候忽略 | string[]                                                                                  | []       |
 | defaultSelectKeys   | 默认选择节点当，默认绑定 dataSet 的 idField               | string[]                                                                                  | []       |
 | onTreeNode(1.1.0) | 对于 TreeNode 结点的属性覆盖 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
-| async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
+| async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |  |
 | selectable(1.4.4) | 是否可选中 | boolean | true |
 | filter(1.5.0) | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean | |
 | autoExpandParent | 是否自动展开父节点 | boolean | true |
@@ -28,7 +28,7 @@ title: API
 | draggable | 设置节点可拖拽（IE>8） | boolean \| ((node?: DataNode) => boolean) \| {nodeDraggable: boolean \| ((node?: DataNode) => boolean), icon: boolean \| ReactNode} | false |
 | expandedKeys | （受控）展开指定的树节点 | string\[] | \[] |
 | filterTreeNode | 按需筛选树节点,配置后返回 true 的会新增类名上去（高亮） | function(node) | - |
-| loadData | 异步加载数据 | function(node) | - |
+| loadData | 异步加载数据 | function(node) | - |  |
 | loadedKeys | （受控）已经加载的节点，需要配合 `loadData` 使用 | string\[] | \[] |
 | multiple | 支持点选多个节点（节点本身） | boolean | false |
 | selectedKeys | （受控）设置选中的树节点 | string\[] | - |

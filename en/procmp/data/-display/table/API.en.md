@@ -4,300 +4,302 @@ title: API
 
 ### Table
 
-| 属性名 | 说明                                                                                                                                                                                                                           | 类型                                                                                                   | 默认值   | 版本   |
+| Property | Description                                                                                                                                                                                                                           | Type                                                                                                   | Default   | Version   |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | -------- | ----- |
-| columns | 列组， 优先级和性能高于children | ColumnProps[] |  ||
-| groups | 分组 | [TableGroup](#tablegroup)[] |  | 1.5.1 |
-| header                | 表头                                                                                                                                                                                                                           | ReactNode \| (records) => ReactNode                                                                    |          |    |
-| footer                | 表脚                                                                                                                                                                                                                           | ReactNode \| (records) => ReactNode                                                                    |          |    |
-| border                | 是否显示边框                                                                                                                                                                                                                   | boolean                                                                                                | [globalConfig.tableBorder](/en/procmp/configure/configure)      |    |
-| columnEditorBorder | 是否显示编辑器边框 | boolean | [globalConfig.tableBorder](/zh/procmp/configure/configure) | 1.4.0 |
-| [selectionMode](/en/tutorials/table-select-record)         | 选择记录的模式, 可选值: rowbox \| treebox \| click \| dblclick \| mousedown \| none                                                                                                                                                         | string                                                                                                 | rowbox |    |
-| selectionBoxRenderer | 勾选框渲染器  | ({ record, element }) => ReactNode | | 1.5.4 |
-| [alwaysShowRowBox](/en/tutorials/table-select-record)      | 是否一直显示 rowbox, 开启后在其他模式下也会显示 rowbox。selectionMode 为 rowbox 和 dblclick 时，勾选框常显 | boolean | false    |    |
-| onRow                 | 设置行属性                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
-| buttons               | 功能按钮，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，可选值：add \| delete \| remove \| save \| query \| reset \| expandAll \| collapseAll \| export 或 数组 或 自定义按钮，数组为可选值字符串+按钮配置属性对象 | string \| \[string, object\] \| ReactNode \| object                                                    |          |    |
-| buttonsLimit | 头部显示功能按钮的数量，超出限制放入更多下拉 | number |  | 1.4.5 |
-| queryFields           | 自定义查询字段组件或默认组件属性，默认会根据 queryDataSet 中定义的 field 类型自动匹配组件                                                                                                                                      | ReactNode[] \| object                                                                                  |          |    |
-| queryFieldsLimit      | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口                                                                                                                                                                       | number                                                                                                 |          |    |
-| queryBar              | 查询条, 可选值为钩子或者内置类型：filterBar \| professionalBar \| advancedBar \| normal \| bar \| comboBar | none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/en/procmp/configure/configure) |   |
-| queryBarProps | 查询条参数，不同查询条参数配置应对应。当查询条是全局配置的自定义查询条，需要传递自定义参数时可以用此属性。 | object | | 1.4.1  |
-| summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |    |
-| summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 | |
-| summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |   |
-| useMouseBatchChoose   | 是否使用鼠标批量选择,开启后在 rowbox 的情况下可以进行鼠标拖动批量选择,在起始的 rowbox 处按下,在结束位置松开                                                                                                                    | boolean                                                                                                | [globalConfig.tableUseMouseBatchChoose](/zh/procmp/configure/configure)    |    |
-| rowHeight             | 行高，设置为 auto 时，若单元格中内容超长则会换行显示  | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/zh/procmp/configure/configure)       |  1.5.2(支持钩子)  |
-| headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
-| footerRowHeight | 脚行高 | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
-| defaultRowExpanded    | 默认行是否展开，当 dataSet 没有设置 expandField 时才有效                                                                                                                                                                       | boolean                                                                                                | false    |    |
-| expandRowByClick      | 通过点击行来展开子行                                                                                                                                                                                                           | boolean                                                                                                | false    |    |
-| expandedRowRenderer   | 展开行渲染器                                                                                                                                                                                                                   | ({ dataSet, record }) => ReactNode                                                                     |          |    |
-| expandIcon            | 自定义展开图标                                                                                                                                                                                                                 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode                 |          |    |
-| expandIconColumnIndex | 展开图标所在列索引                                                                                                                                                                                                             | number                                                                                                 |          |    |
-| expandIconAsCell | 展开图标是否单独单元格展示 | boolean | true \| false(tree mode) |    |
-| indentSize            | 展示树形数据时，每层缩进的宽度                                                                                                                                                                                                 | number                                                                                                 | 15       |    |
-| filter                | 数据过滤， 返回值 true - 显示 false - 不显示                                                                                                                                                                                   | (record) => boolean                                                                                    |          |    |
-| treeFilter | 树形数据过滤, 优先级高于 filter, 返回值 true - 显示 false - 不显示 | (record) => boolean |  | 1.5.4 |
-| mode                  | 表格展示的模式，tree 需要配合 dataSet 的 idField 和 parentField 来展示，可选值: list \| tree                                                                                                                                  | string                                                                                                 | list   |   |
-| editMode              | 表格编辑的模式，可选值: cell \| inline                                                                                                                                                                                        | string                                                                                                 | cell   |   |
-| filterBarFieldName    | queryBar为bar时，直接输入的过滤条件的字段名                                                                                                                                                                                | string                                                                                                 | params |    |
-| filterBarPlaceholder  | queryBar为bar时输入框的占位符                                                                                                                                                                                              | string                                                                                                 |          |    |
-| pagination            | 分页器，参考[配置项](#pagination)或 [pagination](/zh/procmp/navigation/pagination/)，设为 false 时不展示分页                                                                                                                             | object \| false                                                                                        |          |    |
-| highLightRow | 当前行高亮, 可选值: boolean \| focus \| click, true - 始终显示高亮行, 'click' - 点击行后始终显示高亮行， 'focus' - 表格获焦时显示高亮行 | boolean \| string | [globalConfig.tableHighLightRow](/zh/procmp/configure/configure) |   |
-| selectedHighLightRow  | 勾选行高亮                                                                                                                                                                                                                     | boolean                                                                                                | [globalConfig.tableSelectedHighLightRow](/zh/procmp/configure/configure)    |    |
-| columnResizable | 可调整列宽, 可以传入 xZoom 矫正横向缩放引起的计算误差 | boolean \| { xZoom: number } | [globalConfig.tableColumnResizable](/zh/procmp/configure/configure)    |   |
-| columnHideable | 可调整列显示, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure) | 1.2.0  |
-| columnTitleEditable | 可编辑列标题, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnTitleEditable](/zh/procmp/configure/configure) | 1.2.0   |
-| columnDraggable | 列拖拽, customizable 为 true 才起作用 | boolean | [globalConfig.tableColumnDraggable](/zh/procmp/configure/configure) | 1.2.0  |
-| rowDraggable | 行拖拽，实现行的拖拽；multiDrag 支持多行拖拽选中记录(树形不支持多拖) | boolean \| 'multiDrag' | [globalConfig.tableRowDraggable](/zh/procmp/configure/configure) | 1.2.0   |
-| multiDragSelectMode | 多行拖拽时，多选记录的方式: keyboard: ctrl + 点击; checkbox: 使用表格勾选框勾选 | 'keyboard' \| 'checkbox' | 'keyboard' | 1.6.6  |
-| dragColumnAlign | 增加一个可拖拽列，实现行拖拽 | left\|right |  |   |
-| pristine              | 显示原始值                                                                                                                                                                                                                     | boolean                                                                                                | false    |    |
-| onExpand              | 点击展开图标时触发                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |    |
-| virtual               | 是否开启虚拟滚动，当设置表格高度时有效                                                                                                                                                               | boolean                                                                                                | [globalConfig.tableVirtual](/zh/procmp/configure/configure)    |    |
-| virtualCell | 虚拟单元格 | boolean | [globalConfig.tableVirtualCell](/zh/procmp/configure/configure) | 1.3.0  |
-| columnBuffer | 列的缓冲区。开启虚拟滚动后，在可见区域之前/之后要呈现的额外列数。且 columnBuffer 的值大于或等于 columnThreshold 的值| number | [globalConfig.tableVirtualBuffer](/zh/procmp/configure/configure) | 1.6.2 |
-| columnThreshold | 列的阈值。开启虚拟滚动后，在呈现新列之前可见的列数。且 columnThreshold 的值小于或等于 columnBuffer 的值 | number | [globalConfig.tableVirtualBuffer](/zh/procmp/configure/configure) | 1.6.2 |
-| virtualSpin           | 是否开启虚拟滚动 Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |    |
-| autoHeight            | 是否开启高度自适应                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |    |
-| autoWidth | 是否开启宽度自适应， 功能同 width: 'min-content' | boolean | false | 1.4.5 |
-| autoFootHeight | 是否开启是否单独处理 column footer | boolean | false |   |
-| autoFocus | 是否新增行自动获焦至第一个可编辑字段 | boolean | false |    |
-| editorNextKeyEnterDown            | 是否开启回车跳转下一行编辑                                                                                                                                                                                                             | boolean                                     | true    |    |
-| onDragEnd | 完成拖拽后的触发事件 | (dataSet, columns, resultDrag, provided) => void |  |    |
-| columnsDragRender | 控制列的拖拽渲染 | 请查看DragRender[配置项](#dragrender)  |  |    |
-| rowDragRender | 控制行的拖拽渲染| 请查看DragRender[配置项](#dragrender) |  |    |
-| onDragEndBefore | 完成拖拽后,切换位置之前的触发事件，可以通过 resultDrag.destination.droppableId === 'table' or ‘tableHeader’ 来判断是行拖拽还是列拖拽,返回false阻止拖拽换位置。树形拖拽可通过 recordIndexFromTo 获取到正确的记录索引: \[sourceRecordIndex, destinationRecordIndex\] | (dataSet, columns, resultDrag, provided, recordIndexFromTo: \[number?, number?\]) => false \| void \|resultDrag   |  |    |
+| columns | Column group, priority and performance are higher than children | ColumnProps[] |  ||
+| groups | Grouping | [TableGroup](#tablegroup)[] |  | 1.5.1 |
+| header                | Table header                                                                                                                                                                                                                           | ReactNode \| (records) => ReactNode                                                                    |          |    |
+| footer                | Table footer                                                                                                                                                                                                                           | ReactNode \| (records) => ReactNode                                                                    |          |    |
+| border                | Whether to show border                                                                                                                                                                                                                   | boolean                                                                                                | [globalConfig.tableBorder](/en/procmp/configure/configure)      |    |
+| columnEditorBorder | Whether to show editor border | boolean | [globalConfig.tableBorder](/en/procmp/configure/configure) | 1.4.0 |
+| [selectionMode](/en/tutorials/table-select-record)         | Record selection mode, optional values: rowbox \| treebox \| click \| dblclick \| mousedown \| none                                                                                                                                                         | string                                                                                                 | rowbox |    |
+| selectionBoxRenderer | Checkbox renderer  | ({ record, element }) => ReactNode | | 1.5.4 |
+| [alwaysShowRowBox](/en/tutorials/table-select-record)      | Whether to always show rowbox, if enabled, rowbox will also be displayed in other modes. When selectionMode is rowbox and dblclick, the checkbox is always displayed | boolean | false    |    |
+| onRow                 | Set row properties                                                                                                                                                                                                                     | ({ dataSet, record, index, expandedRow }) => object                                                    |          |    |
+| buttons               | Function buttons, built-in buttons can add afterClick hooks to perform actions other than default behaviors, optional values: add \| delete \| remove \| save \| query \| reset \| expandAll \| collapseAll \| export or array or custom button, array optional value string + button configuration property object | string \| \[string, object\] \| ReactNode \| object                                                    |          |    |
+| buttonsLimit | Number of function buttons displayed in the header, exceeding the limit will be put into the more dropdown | number |  | 1.4.5 |
+| queryFields           | Custom query field component or default component properties, by default it will automatically match the component according to the field type defined in queryDataSet                                                                                                                                      | ReactNode[] \| object                                                                                  |          |    |
+| queryFieldsLimit      | Number of query fields displayed in the header, exceeding the limit will be put into the popup window                                                                                                                                                                       | number                                                                                                 |          |    |
+| queryBar              | Query bar, optional values are hooks or built-in types: filterBar \| professionalBar \| advancedBar \| normal \| bar \| comboBar | none                                                                                                                                                          | string \| ({ dataSet, queryDataSet, buttons, pagination, queryFields, queryFieldsLimit }) => ReactNode | [globalConfig.queryBar](/en/procmp/configure/configure) |   |
+| queryBarProps | Query bar parameters, different query bar parameter configurations should correspond. When the query bar is a globally configured custom query bar and custom parameters need to be passed, this property can be used. | object | | 1.4.1  |
+| summaryBar | Summary bar, optional values are hooks or field name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |    |
+| summaryBarFieldWidth | Summary bar single field width | number | 170 | |
+| summaryFieldsLimit | Number of summary fields displayed in the header, exceeding the limit will be collapsed | number |  |   |
+| summaryBarConfigProps | Summary bar configuration | { placement?: 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'; separator?: ReactNode; groupStyle?: CSSProperties; moreStyle?: CSSProperties; useColon?: boolean; labelStyle?: CSSProperties; } |  | 1.6.8 |
+| useMouseBatchChoose   | Whether to use mouse batch selection. When enabled, mouse drag batch selection can be performed in the case of rowbox. Press at the starting rowbox and release at the ending position                                                                                                                    | boolean                                                                                                | [globalConfig.tableUseMouseBatchChoose](/en/procmp/configure/configure)    |    |
+| rowHeight             | Row height, when set to auto, if the content in the cell is too long, it will be wrapped  | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/en/procmp/configure/configure)       |  1.5.2(Hooks support)  |
+| headerRowHeight | Header row height | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
+| footerRowHeight | Footer row height | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
+| defaultRowExpanded    | Whether the default row is expanded, valid only when dataSet does not set expandField                                                                                                                                                                       | boolean                                                                                                | false    |    |
+| expandRowByClick      | Expand sub-rows by clicking on the row                                                                                                                                                                                                           | boolean                                                                                                | false    |    |
+| expandedRowRenderer   | Expanded row renderer                                                                                                                                                                                                                   | ({ dataSet, record }) => ReactNode                                                                     |          |    |
+| expandIcon            | Custom expand icon                                                                                                                                                                                                                 | ({ prefixCls, expanded, expandable, needIndentSpaced, record, onExpand }) => ReactNode                 |          |    |
+| expandIconColumnIndex | Expand icon column index                                                                                                                                                                                                             | number                                                                                                 |          |    |
+| expandIconAsCell | Whether the expand icon is displayed as a separate cell | boolean | true \| false(tree mode) |    |
+| indentSize            | Width of each indentation level when displaying tree data                                                                                                                                                                                                 | number                                                                                                 | 15       |    |
+| filter                | Data filtering, return value true - display false - do not display                                                                                                                                                                                   | (record) => boolean                                                                                    |          |    |
+| treeFilter | Tree data filtering, priority is higher than filter, return value true - display false - do not display | (record) => boolean |  | 1.5.4 |
+| mode                  | Table display mode, tree needs to cooperate with dataSet's idField and parentField to display, optional values: list \| tree                                                                                                                                  | string                                                                                                 | list   |   |
+| editMode              | Table editing mode, optional values: cell \| inline                                                                                                                                                                                        | string                                                                                                 | cell   |   |
+| filterBarFieldName    | Field name of the filter condition directly input when queryBar is bar                                                                                                                                                                                | string                                                                                                 | params |    |
+| filterBarPlaceholder  | Placeholder of the input box when queryBar is bar                                                                                                                                                                                              | string                                                                                                 |          |    |
+| pagination            | Paginator, refer to [Configuration](#pagination) or [pagination](/en/procmp/navigation/pagination/), not displayed when set to false                                                                                                                             | object \| false                                                                                        |          |    |
+| highLightRow | Current row highlight, optional values: boolean \| focus \| click, true - always show highlighted row, 'click' - always show highlighted row after clicking row, 'focus' - show highlighted row when table gets focus | boolean \| string | [globalConfig.tableHighLightRow](/en/procmp/configure/configure) |   |
+| selectedHighLightRow  | Selected row highlight                                                                                                                                                                                                                     | boolean                                                                                                | [globalConfig.tableSelectedHighLightRow](/en/procmp/configure/configure)    |    |
+| columnResizable | Adjustable column width, xZoom can be passed in to correct the calculation error caused by horizontal scaling | boolean \| { xZoom: number } | [globalConfig.tableColumnResizable](/en/procmp/configure/configure)    |   |
+| columnHideable | Adjustable column display, only works when customizable is true | boolean | [globalConfig.tableColumnHideable](/en/procmp/configure/configure) | 1.2.0  |
+| columnTitleEditable | Editable column title, only works when customizable is true | boolean | [globalConfig.tableColumnTitleEditable](/en/procmp/configure/configure) | 1.2.0   |
+| columnDraggable | Column draggable, only works when customizable is true | boolean | [globalConfig.tableColumnDraggable](/en/procmp/configure/configure) | 1.2.0  |
+| rowDraggable | Row draggable, implement row dragging; multiDrag supports multi-row dragging selected records (tree does not support multi-drag) | boolean \| 'multiDrag' | [globalConfig.tableRowDraggable](/en/procmp/configure/configure) | 1.2.0   |
+| multiDragSelectMode | Multi-row dragging, multi-select record method: keyboard: ctrl + click; checkbox: use table checkbox to select | 'keyboard' \| 'checkbox' | 'keyboard' | 1.6.6  |
+| dragColumnAlign | Add a draggable column to implement row dragging | left\|right |  |   |
+| pristine              | Display original value                                                                                                                                                                                                                     | boolean                                                                                                | false    |    |
+| onExpand              | Triggered when clicking the expand icon                                                                                                                                                                                                             | (expanded, record) => void                                                                             |          |    |
+| virtual               | Whether to enable virtual scrolling, valid when table height is set                                                                                                                                                               | boolean                                                                                                | [globalConfig.tableVirtual](/en/procmp/configure/configure)    |    |
+| virtualCell | Virtual cell | boolean | [globalConfig.tableVirtualCell](/en/procmp/configure/configure) | 1.3.0  |
+| columnBuffer | Column buffer. The number of extra columns to render before/after the visible area after virtual scrolling is enabled. And the value of columnBuffer is greater than or equal to the value of columnThreshold| number | [globalConfig.tableVirtualBuffer](/en/procmp/configure/configure) | 1.6.2 |
+| columnThreshold | Column threshold. The number of columns visible before rendering new columns after virtual scrolling is enabled. And the value of columnThreshold is less than or equal to the value of columnBuffer | number | [globalConfig.tableVirtualBuffer](/en/procmp/configure/configure) | 1.6.2 |
+| virtualSpin           | Whether to enable virtual scrolling Spin                                                                                                                                                                                                          | boolean                                                                                                | false    |    |
+| autoHeight            | Whether to enable height adaptation                                                                                                                                                                                                             | boolean \| { type: 'minHeight' \| 'maxHeight', diff: number(80) }                                      | false    |    |
+| autoWidth | Whether to enable width adaptation, function same as width: 'min-content' | boolean | false | 1.4.5 |
+| autoFootHeight | Whether to enable separate processing of column footer | boolean | false |   |
+| autoFocus | Whether the new row automatically gets focus to the first editable field | boolean | false |    |
+| editorNextKeyEnterDown            | Whether to enable Enter to jump to the next line of editing                                                                                                                                                                                                             | boolean                                     | true    |    |
+| onDragEnd | Trigger event after dragging is completed | (dataSet, columns, resultDrag, provided) => void |  |    |
+| columnsDragRender | Control column drag rendering | Please check DragRender [Configuration](#dragrender)  |  |    |
+| rowDragRender | Control row drag rendering| Please check DragRender [Configuration](#dragrender) |  |    |
+| onDragEndBefore | Trigger event before switching position after dragging is completed, can judge whether it is row dragging or column dragging by resultDrag.destination.droppableId === 'table' or 'tableHeader', return false to prevent dragging position change. Tree dragging can get the correct record index through recordIndexFromTo: \[sourceRecordIndex, destinationRecordIndex\] | (dataSet, columns, resultDrag, provided, recordIndexFromTo: \[number?, number?\]) => false \| void \|resultDrag   |  |    |
 | dragDropContextProps | react-beautiful-dnd DragDropContextProps | [DragDropContextProps](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md) | | 1.5.1 |
-| keyboard | 开启关闭新增的快捷按钮事件 | boolean | [globalConfig.tableKeyboard](/zh/procmp/configure/configure) |   |
-| treeLoadData | 树形异步加载数据 | ({ record, dataSet }) => Promise | | 1.1.0   |
-| treeAsync | 树形异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} | 1.1.0  |
-| parityRow | 奇偶行 | boolean | [globalConfig.tableParityRow](/zh/procmp/configure/configure)  | 1.1.0  |
-| rowNumber | 显示行号 | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | | 1.1.0  |
-| clientExportQuantity | 导出一次轮询数量 | number | 100 | 1.3.0   |
-| showSelectionTips | 是否显示选中记录提示  | boolean | [globalConfig.tableShowSelectionTips](/zh/procmp/configure/configure) | 1.3.0  |
-| showCachedTips | 是否显示缓存记录提示， 优先级高于 showSelectionTips | boolean | [globalConfig.tableShowCachedTipsTips](/zh/procmp/configure/configure) | 1.5.6 |
-| showCachedSelection | 是否显示缓存选中记录  | boolean | | 1.4.4 |
-| onShowCachedSelectionChange | 缓存选中记录显示回调  | (boolean) => void | |1.4.4 |
-| showSelectionCachedButton | 是否显示缓存选中记录按钮 | boolean | true | 1.4.1   |
-| showAllPageSelectionButton | 是否显示切换跨页全选按钮 | boolean | | 1.4.0  |
-| customizable | 是否显示个性化设置入口按钮  | boolean | [globalConfig.customizable](/zh/procmp/configure/configure) | 1.3.0   |
-| customizedCode | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写[全局配置](/zh/procmp/configure/configure)中的表格个性化钩子： customizedSave \| customizedLoad | string | | 1.2.0   |
-| onCustomizedLoad | 表格个性化接口请求回调函数 | (TableCustomized) => Promise<any> | | 1.6.3 |
-| treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | | 1.3.1   |
-| aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | | 1.4.0   |
-| onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | | 1.4.0   |
-| cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
-| showHeader |	是否显示表头 |	boolean |	true | 1.4.2 |
-| showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean | true | 1.4.4 |
-| onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | | 1.4.4 |
-| searchCode | 动态筛选条后端接口唯一编码 | string | | 1.4.5 |
-| rowBoxPlacement | 行选择框位置  | 可选值: start, end \| number | start | 1.4.5 |
-| heightChangeable | 高度设置, customizable 为 true 才起作用 | boolean | [globalConfig.tableHeightChangeable](/en/procmp/configure/configure) | 1.5.1 |
-| bodyExpandable | 表格体是否可展开 | boolean | | 1.5.1 |
-| defaultBodyExpanded | 默认表格体是否展开 | boolean | true | 1.5.1 |
-| bodyExpanded | 表格体是否展开 | boolean |  | 1.5.1 |
-| onScrollTop | 纵向滚动事件(getScrollInfo - 1.5.6) | (scrollTop, getScrollInfo) => void | | 1.5.1 |
-| onScrollLeft | 横向滚动事件(getScrollInfo - 1.5.6) | (scrollLeft, getScrollInfo) => void | | 1.5.1 |
-| onBodyExpand | 点击表格体展开图标时触发 | (expanded) => void | | 1.5.1 |
-| renderEmpty | 自定义渲染数据为空的状态  | () => ReactNode |  | 1.5.2 |
-| autoValidationLocate | 校验失败自动定位。如果多个组件的定位有冲突， 可以关闭自动定位， 通过手动调用 focus 方法来定位 | boolean | true | 1.5.3 |
-| boxSizing | 样式高度影响的范围，默认 content， 如果指定为 wrapper, 样式的高度会包括表格前后内容的高度， 且该高度发生变化会自动调整表格高度 | 'content' \| 'wrapper' | 'content' | 1.5.6 |
-| fullColumnWidth | 所有列都设置列宽且没有超出表格宽度时最后一列宽度是否自动填满表格  | boolean | true | 1.5.6 |
-| clipboard | 配置 Table 是否可复制粘贴，仅支持普通列表下使用，数据分组、虚拟滚动等特殊场景暂不支持。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
-| customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 | boolean | false | 1.6.4 |
-| selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  | 1.6.4 |
-| rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
-| tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
-| combineColumnFilter | 是否开启前端组合过滤  | boolean  | true | 1.6.6 |
-| combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
-| addNewButton | 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效 |	boolean |	 | 1.6.7 |
+| keyboard | Enable/disable new shortcut button events | boolean | [globalConfig.tableKeyboard](/en/procmp/configure/configure) |   |
+| treeLoadData | Tree asynchronous loading data | ({ record, dataSet }) => Promise | | 1.1.0   |
+| treeAsync | Tree asynchronous loading, needs backend interface cooperation, the corresponding data source will automatically call the query interface, the interface parameters will carry the parameter name corresponding to parentField and the parameter value corresponding to idField, and the data returned by the interface will be appended to the existing data | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} | 1.1.0  |
+| parityRow | Odd and even rows | boolean | [globalConfig.tableParityRow](/en/procmp/configure/configure)  | 1.1.0  |
+| rowNumber | Display row number | boolean \| ({ record, dataSet, text, pathNumbers }) => ReactNode | | 1.1.0  |
+| clientExportQuantity | Export one polling quantity | number | 100 | 1.3.0   |
+| showSelectionTips | Whether to display selected record tips  | boolean | [globalConfig.tableShowSelectionTips](/en/procmp/configure/configure) | 1.3.0  |
+| showCachedTips | Whether to display cached record tips, priority is higher than showSelectionTips | boolean | [globalConfig.tableShowCachedTipsTips](/en/procmp/configure/configure) | 1.5.6 |
+| showCachedSelection | Whether to display cached selected records  | boolean | | 1.4.4 |
+| onShowCachedSelectionChange | Cached selected record display callback  | (boolean) => void | |1.4.4 |
+| showSelectionCachedButton | Whether to display cached selected record button | boolean | true | 1.4.1   |
+| showAllPageSelectionButton | Whether to display switch cross-page select all button | boolean | | 1.4.0  |
+| customizable | Whether to display personalized setting entry button  | boolean | [globalConfig.customizable](/en/procmp/configure/configure) | 1.3.0   |
+| customizedCode | Personalized code, after setting, the personalized settings such as column dragging will be stored in localStorage by default. If you want to store it in the backend, please rewrite the table personalized hooks in the [Global Configuration](/en/procmp/configure/configure): customizedSave \| customizedLoad | string | | 1.2.0   |
+| onCustomizedLoad | Table personalized interface request callback function | (TableCustomized) => Promise<any> | | 1.6.3 |
+| treeQueryExpanded | Under the tree structure, queryBar triggers query, automatically expands the tree structure  | boolean | | 1.3.1   |
+| aggregation | Whether it is an aggregation view, if there is personalization, the personalization configuration shall prevail  | boolean | | 1.4.0   |
+| onAggregationChange | Aggregation view change hook, triggered when personalized configuration changes  | (aggregation) => void | | 1.4.0   |
+| cellHighlightRenderer | Cell highlight renderer  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | | 1.4.0  |
+| showHeader |	Whether to display table header |	boolean |	true | 1.4.2 |
+| showRemovedRow |	Whether to display temporarily removed rows, grayed out by default |	boolean | true | 1.4.4 |
+| onColumnResize | Column width change callback event  | ({ column, width, index }) => void | | 1.4.4 |
+| searchCode | Dynamic filter bar backend interface unique code | string | | 1.4.5 |
+| rowBoxPlacement | Row selection box position  | Optional values: start, end \| number | start | 1.4.5 |
+| heightChangeable | Height setting, only works when customizable is true | boolean | [globalConfig.tableHeightChangeable](/en/procmp/configure/configure) | 1.5.1 |
+| bodyExpandable | Whether the table body is expandable | boolean | | 1.5.1 |
+| defaultBodyExpanded | Whether the table body is expanded by default | boolean | true | 1.5.1 |
+| bodyExpanded | Whether the table body is expanded | boolean |  | 1.5.1 |
+| onScrollTop | Vertical scroll event (getScrollInfo - 1.5.6) | (scrollTop, getScrollInfo) => void | | 1.5.1 |
+| onScrollLeft | Horizontal scroll event (getScrollInfo - 1.5.6) | (scrollLeft, getScrollInfo) => void | | 1.5.1 |
+| onBodyExpand | Triggered when clicking the table body expand icon | (expanded) => void | | 1.5.1 |
+| renderEmpty | Custom rendering data empty status  | () => ReactNode |  | 1.5.2 |
+| autoValidationLocate | Validation failure automatic positioning. If the positioning of multiple components conflicts, you can turn off automatic positioning and manually call the focus method to position | boolean | true | 1.5.3 |
+| boxSizing | The scope of style height impact, default content, if specified as wrapper, the style height will include the height of the content before and after the table, and the table height will be automatically adjusted when the height changes | 'content' \| 'wrapper' | 'content' | 1.5.6 |
+| fullColumnWidth | Whether the last column width automatically fills the table when all columns have column widths and do not exceed the table width  | boolean | true | 1.5.6 |
+| clipboard | Configure whether the Table can copy and paste, only supported in common lists, data grouping, virtual scrolling and other special scenarios are not supported temporarily. Refer to [Configuration](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
+| customDragDropContenxt | Whether to enable custom DragDropContenxt, generally used for custom react-beautiful-dnd DragDropContenxt to implement multi-table dragging | boolean | false | 1.6.4 |
+| selectionColumnProps | Row selection column property extension  | ColumnProps  |  | 1.6.4 |
+| rowNumberColumn | Row number column properties |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
+| tableFilterBarButtonIcon | Whether the Table dynamic filter bar button displays an icon. true displays the default icon, false does not display, object type can set specific icons separately | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
+| combineColumnFilter | Whether to enable front-end combined filtering  | boolean  | true | 1.6.6 |
+| combineSortConfig | Combined sorting configuration, default front-end and back-end sorting are enabled, showing sorting options; built-in front-end combined sorting function, if there is complex field sorting, please implement the sorting function yourself. currentDataSort: current page sorting (front-end sorting); allDataSort: all page sorting (back-end sorting); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
+| addNewButton | Add input row button in table body, replace renderEmpty when data is empty; invalid when pristine is set |	boolean |	 | 1.6.7 |
+| customizedColumnProps | Custom column attributes of personalized columns, please note when setting: Personalized columns only have the header part, and only some attributes are effective |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.8 |
 
-更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
+For more properties, please refer to [DataSetComponent](/en/procmp/abstract/ViewComponent#datasetcomponent).
 
 ### Table.Column
 
-| 属性名            | 说明                                                                                                                                                                                              | 类型                                                                                                                               | 默认值    | 版本 |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------- | --- |
-| children | 子列组， JSX模式下请对应 ReactElement<ColumnProps>[] | ColumnProps[] \| ReactElement<ColumnProps>[] | | 1.5.1 |
-| name            | 列对照的字段名                                                                                                                                                                                    | string                                                                                                                             |           |  |
-| width           | 列宽，不推荐给所有列设置宽度，而是给某一列不设置宽度达到自动宽度的效果                                                                                                                            | number                                                                                                                             |           |  |
-| defaultWidth | 列的默认宽度  | number | [globalConfig.tableColumnDefaultWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultWidth](/zh/procmp/configure/configure)  | 1.5.1 |
-| minWidth        | 最小列宽                                                                                                                                                                                          | number                                                                                                                             | [globalConfig.tableColumnDefaultMinWidth](/zh/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/zh/procmp/configure/configure)       |  |
-| title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
-| footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                           |           |  |
-| renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[]  }) => ReactNode                                                                              |           |  |
-| tagRenderer        | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  | 1.6.2 |
-| editor          | 编辑器, 设为 true 时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 false 值，而不是在控件上加 disabled。如果有对输入框组件二次封装的需求，需要使用 React.forwardRef 转发 ref。                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |  |
-| lock            | 是否锁定， 可选值 false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
-| align           | 文字对齐方式，可选值： left \| center \| right                                                                                                                                                    | string                                                                                                                             |      [globalConfig.tableColumnAlign](/zh/procmp/configure/configure)     |  |
-| resizable       | 是否可调整宽度                                                                                                                                                                                    | boolean                                                                                                                            | [globalConfig.tableColumnResizable](/zh/procmp/configure/configure)      |  |
-| sortable | 是否可排序，前端排序(1.6.0)请定义 [CompareFn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#comparefn): (v1, v2, order) => number | boolean \| CompareFn  | false | |
-| filter | 是否可前端过滤 | boolean \| ((props: { record: Record, filterText?: string }) => boolean)  | false | 1.6.0 |
-| filterPopover | 前端过滤自定义筛选，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  | 1.6.0 |
-| hideable | 是否可隐藏 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure)  |  |
-| titleEditable | 是否可编辑标题 | boolean | [globalConfig.tableColumnTitleEditable](/zh/procmp/configure/configure) | 1.2.0 |
-| style           | 列单元格内链样式                                                                                                                                                                                  | object                                                                                                                             |           |  |
-| className       | 列单元格样式名                                                                                                                                                                                    | string                                                                                                                             |           |  |
-| headerStyle     | 列头内链样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
-| headerClassName | 列头样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
-| footerStyle     | 列脚内链样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
-| footerClassName | 列脚样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
-| help            | 额外信息，常用于提示                                                                                                                                                                              | ReactNode                                                                                                                           |           |  |
-| showHelp        | 展示提示信息的方式。可选值 tooltip \| newLine \| none                                                                                                                                             | string                                                                                                                             | tooltip |  |
-| onCell          | 设置单元格属性                                                                                                                                                                                    | ({ dataSet, record, column }) => object                                                                                            |    [globalConfig.tableColumnOnCell](/zh/procmp/configure/configure)       |  |
-| command | 行操作按钮集，该值为数组 或 返回数组的钩子，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，数组可选值：edit delete 或 \[edit\| delete , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
-| hidden          | 隐藏                                                                                                                                                                                              | boolean                                                                                                                            |           |  |
-| tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             |  [globalConfig.tooltip](/zh/procmp/configure/configure)    |  |
-| tooltipProps | 用于配置 Tooltip 相关参数  | [TooltipProps](/en/procmp/data-display/tooltip/#API) | | 1.5.6 |
-| aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |  |
-| aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 | |
-| aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |  |
-| aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |  |
-| aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 | 1.5.2 |
-| hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  | |
-| highlightRenderer | 单元格高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
-| aggregationLimitDefaultExpanded | 聚合超过限制的条目默认是否展开显示  | boolean \| (record) => boolean | 1.5.1 |
-| sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
-| showDetail | editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon | boolean \| `always` |  | 1.6.7 |
+| Property        | Description                                                                                                                                                                                                                           | Type                                                                                                   | Default   | Version   |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | --------- | --- |
+| children | Sub-column group, please correspond to ReactElement<ColumnProps>[] in JSX mode | ColumnProps[] \| ReactElement<ColumnProps>[] | | 1.5.1 |
+| name            | Field name corresponding to the column                                                                                                                                                                                    | string                                                                                                                             |           |  |
+| width           | Column width, it is not recommended to set the width for all columns, but to leave one column unset to achieve the automatic width effect                                                                                                                            | number                                                                                                                             |           |  |
+| defaultWidth | Column default width  | number | [globalConfig.tableColumnDefaultWidth](/en/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultWidth](/en/procmp/configure/configure)  | 1.5.1 |
+| minWidth        | Minimum column width                                                                                                                                                                                          | number                                                                                                                             | [globalConfig.tableColumnDefaultMinWidth](/en/procmp/configure/configure) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/en/procmp/configure/configure)       |  |
+| title | Column header text, priority is higher than header, easy to edit when column header text is rendered by header hook | string |  |  |
+| header | Column header | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/en/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
+| footer          | Column footer                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                           |           |  |
+| renderer        | Cell rendering callback                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/en/procmp/dataset/dataset#group-values), headerGroup: [Group](/en/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[]  }) => ReactNode                                                                              |           |  |
+| tagRenderer        | Multi-value Tag renderer | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus, record(1.6.8), field(1.6.8) }: TagRendererProps) => ReactNode |  | 1.6.2 |
+| editor          | Editor, when set to true, it will automatically match the editor according to the field type. Please use false value for non-editable instead of adding disabled on the control. If you need to re-encapsulate the input box component, you need to use React.forwardRef to forward ref.                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |  |
+| lock            | Whether to lock, optional values false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
+| align           | Text alignment, optional values: left \| center \| right                                                                                                                                                    | string                                                                                                                             |      [globalConfig.tableColumnAlign](/en/procmp/configure/configure)     |  |
+| resizable       | Whether the width can be adjusted                                                                                                                                                                                    | boolean                                                                                                                            | [globalConfig.tableColumnResizable](/en/procmp/configure/configure)      |  |
+| sortable | Whether it is sortable, front-end sorting (1.6.0) please define [CompareFn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#comparefn): (v1, v2, order) => number | boolean \| CompareFn  | false | |
+| filter | Whether front-end filtering is possible | boolean \| ((props: { record: Record, filterText?: string }) => boolean)  | false | 1.6.0 |
+| filterPopover | Front-end filtering custom screening, this function is only responsible for rendering the layer, you need to write various interactions yourself | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  | 1.6.0 |
+| hideable | Whether it can be hidden | boolean | [globalConfig.tableColumnHideable](/en/procmp/configure/configure)  |  |
+| titleEditable | Whether the title is editable | boolean | [globalConfig.tableColumnTitleEditable](/en/procmp/configure/configure) | 1.2.0 |
+| style           | Column cell inline style                                                                                                                                                                                  | object                                                                                                                             |           |  |
+| className       | Column cell class name                                                                                                                                                                                    | string                                                                                                                             |           |  |
+| headerStyle     | Column header inline style                                                                                                                                                                                      | object                                                                                                                             |           |  |
+| headerClassName | Column header class name                                                                                                                                                                                        | string                                                                                                                             |           |  |
+| footerStyle     | Column footer inline style                                                                                                                                                                                      | object                                                                                                                             |           |  |
+| footerClassName | Column footer class name                                                                                                                                                                                        | string                                                                                                                             |           |  |
+| help            | Extra information, often used for prompts                                                                                                                                                                              | ReactNode                                                                                                                           |           |  |
+| showHelp        | The way to display prompt information. Optional values tooltip \| newLine \| none                                                                                                                                             | string                                                                                                                             | tooltip |  |
+| onCell          | Set cell properties                                                                                                                                                                                    | ({ dataSet, record, column }) => object                                                                                            |    [globalConfig.tableColumnOnCell](/en/procmp/configure/configure)       |  |
+| command | Row operation button set, the value is an array or a hook that returns an array, built-in buttons can add afterClick hooks to perform actions other than default behaviors, array optional values: edit delete or \[edit\| delete , button configuration property object\] or custom button | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
+| hidden          | Hidden                                                                                                                                                                                              | boolean                                                                                                                            |           |  |
+| tooltip         | Use Tooltip to display cell content. Optional values none \| always \| overflow                                                                                                                                      | string                                                                                                                             |  [globalConfig.tooltip](/en/procmp/configure/configure)    |  |
+| tooltipProps | Used to configure Tooltip related parameters  | [TooltipProps](/en/procmp/data-display/tooltip/#API) \| ((type: 'header' \| 'cell', defaultTooltipProps: TooltipProps, field?: Field, record?: Record) => TooltipProps)(1.6.8) | | 1.5.6 |
+| aggregation | Whether it is an aggregation column, not displayed in tile view  | boolean | |  |
+| aggregationLimit | Aggregation display item quantity limit, items exceeding the limit can be displayed through the expand button  | number | 4 | |
+| aggregationDefaultExpandedKeys | Default expand tree nodes under the specified aggregation column  | (string \| number)[] |  |  |
+| aggregationDefaultExpandAll | Default expand all tree nodes under the aggregation column  | boolean |  |  |
+| aggregationTreeIndex | Column index in aggregation cell  | number | 0 | 1.5.2 |
+| hiddenInAggregation | Whether to hide under aggregation column  | boolean \| (record) => boolean |  | |
+| highlightRenderer | Cell highlight renderer | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |  |
+| aggregationLimitDefaultExpanded | Whether items exceeding the aggregation limit are expanded by default  | boolean \| (record) => boolean | 1.5.1 |
+| sortableCallback | Callback function after sorting ends  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  | 1.6.6 |
+| showDetail | When editor is false, whether to view multi-language details. true displays icon when hovering; always displays icon always | boolean \| `always` |  | 1.6.7 |
 
 ### TableGroup
 
-> 1.5.1 版本新增方法。
+> New method in version 1.5.1.
 
-| 属性名 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| type | 分组类型， 可选值 `column` `row` `header` `none` | string | 'none' |
-| name | 分组对照的字段名 | string |  |
-| parentField | 树形分组对照的父字段名 | string |  |
-| hidden | 隐藏组, 只适用于类型为 header 的分组 | boolean |  |
-| columnProps | 列属性 | ColumnProps |  |
+| type | Group type, optional values `column` `row` `header` `none` | string | 'none' |
+| name | Field name corresponding to the group | string |  |
+| parentField | Parent field name corresponding to the tree group | string |  |
+| hidden | Hide group, only applicable to groups of type header | boolean |  |
+| columnProps | Column properties | ColumnProps |  |
 
 ### Table.FilterBar
 
-| 属性名       | 说明                   | 类型   | 默认值   |
+| Property | Description | Type | Default |
 | ----------- | ---------------------- | ------ | -------- |
-| paramName   | 输入的过滤条件的字段名 | string | params |
-| placeholder | 输入框的占位符         | string | 过滤表 |
-| queryBarProps.editorProps(1.6.4) | 扩展弹出编辑器属性         | (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object; |  |
+| paramName   | Field name of the input filter condition | string | params |
+| placeholder | Placeholder of the input box         | string | Filter Table |
+| queryBarProps.editorProps(1.6.4) | Extended popup editor properties         | (props: { name: string, record?: Record, editor: ReactElement<FormFieldProps> }) => object; |  |
 
-更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+For more properties, please refer to the hook parameters of `Table` `queryBar` property.
 
 ### Table.AdvancedQueryBar
 
-| 属性名             | 说明                                                     | 类型   | 默认值 |
+| Property | Description | Type | Default |
 | ---------------- | -------------------------------------------------------- | ------ | ------ |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 1      |
+| queryFieldsLimit | Number of query fields displayed in the header, exceeding the limit will be put into the popup window | number | 1      |
 
-更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+For more properties, please refer to the hook parameters of `Table` `queryBar` property.
 
 ### Table.ToolBar
 
-| 属性名             | 说明                                                     | 类型                | 默认值 |
+| Property | Description | Type | Default |
 | ---------------- | -------------------------------------------------------- | ------------------- | ------ |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number              | 1      |
-| pagination       | 分页器，参考[pagination](/zh/procmp/navigation/pagination/)    | PaginationComponent |   |
+| queryFieldsLimit | Number of query fields displayed in the header, exceeding the limit will be put into the popup window | number              | 1      |
+| pagination       | Paginator, refer to [pagination](/en/procmp/navigation/pagination/)    | PaginationComponent |   |
 
-更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+For more properties, please refer to the hook parameters of `Table` `queryBar` property.
 
 ### Table.DynamicFilterBar
 
-| 属性名       | 说明                   | 类型   | 默认值   | 版本 |
+| Property | Description | Type | Default | Version |
 | ----------- | ---------------------- | ------ | -------- | --- |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3 | |
-| autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
-| dynamicFilterBar | 筛选条属性配置 | DynamicFilterBarConfig | | 1.4.5 |
-| fuzzyQuery | 是否开启模糊查询 | boolean | true | 1.4.5 |
-| fuzzyQueryOnly | 是否仅使用模糊查询 | boolean | false | 1.5.1 |
-| fuzzyQueryPlaceholder | 模糊查询 placeholder  | string |  | 1.4.5 |
-| fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  | 1.6.6 |
-| filterQueryCallback | 筛选接口查询回调  | ({ dataSet })=> void |  | 1.6.6 |
-| autoQuery | 条件变更是否自动查询  | boolean | true |1.4.5 |
-| refreshBtn | 刷新按钮  | boolean | true | 1.5.1 |
-| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
-| onQuery | 查询回调 | () => void |  | 1.4.5 |
-| onReset | 重置回调 | () => void |  | 1.4.5 |
-| onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
-| onFieldEnterDown | 字段回车回调 | () => void  | | 1.6.4 |
-| showSingleLine | 筛选条是否单行显示 | boolean |  | 1.6.5 |
-| tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
+| queryFieldsLimit | Number of query fields displayed in the header, exceeding the limit will be put into the popup window | number | 3 | |
+| autoQueryAfterReset | Auto query after reset | boolean | true | 1.4.4 |
+| dynamicFilterBar | Filter bar property configuration | DynamicFilterBarConfig | | 1.4.5 |
+| fuzzyQuery | Whether to enable fuzzy query | boolean | true | 1.4.5 |
+| fuzzyQueryOnly | Whether to use only fuzzy query | boolean | false | 1.5.1 |
+| fuzzyQueryPlaceholder | Fuzzy query placeholder  | string |  | 1.4.5 |
+| fuzzyQueryProps | Fuzzy query input box properties  | TextFieldProps |  | 1.6.6 |
+| filterQueryCallback | Filter interface query callback  | ({ dataSet })=> void |  | 1.6.6 |
+| autoQuery | Whether to auto query when condition changes  | boolean | true |1.4.5 |
+| refreshBtn | Refresh button  | boolean | true | 1.5.1 |
+| onBeforeQuery | Callback before query, return false to not query | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
+| onQuery | Query callback | () => void |  | 1.4.5 |
+| onReset | Reset callback | () => void |  | 1.4.5 |
+| onRefresh | Refresh button callback, return false \| Promise.resolve(false) or Promise.reject() will not refresh query, otherwise auto query | () => Promise&lt;boolean&gt; | | 1.5.7 |
+| onFieldEnterDown | Field Enter callback | ({ e, name, dataSet(1.6.8) }) => void  | | 1.6.4 |
+| showSingleLine | Whether the filter bar is displayed in a single line | boolean |  | 1.6.5 |
+| tableFilterBarButtonIcon | Whether the Table dynamic filter bar button displays an icon. true displays the default icon, false does not display, object type can set specific icons separately | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
 
 #### DynamicFilterBarConfig
 
-| 属性名       | 说明                   | 类型   | 默认值   |
+| Property | Description | Type | Default |
 | ----------- | ---------------------- | ------ | -------- |
-| searchText | 模糊查询参数名，参数值可通过 dataSet.getState('\_\_SEARCHTEXT\_\_') 获取 | string | params |
-| suffixes | 过滤条后缀渲染区 | React.ReactElement<any>[]，数组元素支持 'filter' |  |
-| prefixes | 过滤条前缀渲染区 | React.ReactElement<any>[]，数组元素支持 'filter' |  |
-| tableFilterAdapter | 过滤条请求适配器 | TransportProps |  |
+| searchText | Fuzzy query parameter name, parameter value can be obtained through dataSet.getState('\_\_SEARCHTEXT\_\_') | string | params |
+| suffixes | Filter bar suffix rendering area | React.ReactElement<any>[]，array elements support 'filter' |  |
+| prefixes | Filter bar prefix rendering area | React.ReactElement<any>[]，array elements support 'filter' |  |
+| tableFilterAdapter | Filter bar request adapter | TransportProps |  |
 
-更多属性请参考 `Table` `queryBar` 属性的钩子参数。
+For more properties, please refer to the hook parameters of `Table` `queryBar` property.
 
 ### Table.ProfessionalBar
 
-| 属性名             | 说明                                                     | 类型   | 默认值 | 版本 |
+| Property | Description | Type | Default | Version |
 | ---------------- | -------------------------------------------------------- | ------ | ------ | --- |
-| queryFieldsLimit | 头部显示的查询字段的数量，超出限制的查询字段放入弹出窗口 | number | 3      | |
-| autoQueryAfterReset | 重置后自动查询 | boolean | true | 1.4.4 |
-| defaultExpanded | 默认展开 | boolean | false | 1.3.1 |
-| formProps | 查询条表单属性 | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } | 1.4.4 |
-| onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
-| onQuery | 查询回调 | () => void |  |
-| onReset | 重置回调 | () => void |  |
+| queryFieldsLimit | Number of query fields displayed in the header, exceeding the limit will be put into the popup window | number | 3      | |
+| autoQueryAfterReset | Auto query after reset | boolean | true | 1.4.4 |
+| defaultExpanded | Default expanded | boolean | false | 1.3.1 |
+| formProps | Query bar form properties | FormProps | { labelTooltip: 'overflow', labelWidth: 80  } | 1.4.4 |
+| onBeforeQuery | Callback before query, return false to not query | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.7 |
+| onQuery | Query callback | () => void |  |
+| onReset | Reset callback | () => void |  |
 
 
 ### pagination
 
-分页的配置项。
+Pagination configuration items.
 
-| 属性名 | 说明               | 类型                        | 默认值   |
+| Property | Description | Type | Default |
 | -------- | ------------------ | --------------------------- | -------- |
-| position | 指定分页显示的位置 | top \| bottom \| both | bottom |
+| position | Specify the position where pagination is displayed | top \| bottom \| both | bottom |
 
 ### dragRender
 
-> 可以满足自定义更多的渲染需求，注意会覆盖默认值，建议阅读中文地址[react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh) 以及当前[代码示例](https://github.com/open-hand/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx)。
-控制 renderClone 拖拽起来的时候会在 body 下面新增加一个 table 会在这个 table 注入元素比如下面的示例可以实现在类名为 c7n-pro-table-drag-container 的 table 里面渲染对应的元素，这里你可以增加样式覆盖完成你想要的拖拽样式，由于拖拽使用的 Fixed 定位所以会导致 table 长度变化，可以根据业务修改合适的 columns 的宽度来让表现更加自然。renderIcon 来渲染拖拽的自定义 Icon。
-在 1.5.7 版本扩展 draggableProps.isDragDisabled 属性支持回调函数：(record?: Record) => boolean，可以更灵活地对每一行进行拖拽控制。
+> Can meet more custom rendering requirements, note that it will overwrite the default value, it is recommended to read the Chinese address [react-beautiful-dnd](https://github.com/chinanf-boy/react-beautiful-dnd-zh) and the current [code example](https://github.com/open-hand/choerodon-ui/blob/master/components-pro/table/TableTBody.tsx).
+Control renderClone when dragging, a new table will be added under the body, elements will be injected into this table, for example, the following example can implement rendering corresponding elements in the table with the class name c7n-pro-table-drag-container, here you can add style overrides to complete the drag style you want. Since dragging uses Fixed positioning, it will cause the table length to change, you can modify the appropriate columns width according to the business to make the performance more natural. renderIcon to render the drag custom Icon.
+In version 1.5.7 extended draggableProps.isDragDisabled property supports callback function: (record?: Record) => boolean, can control dragging of each row more flexibly.
 
-可以注意一下设置
-新增拖拽例的key值 DRAG_KEY = '__drag-column__';
-防止拖拽在dom结构外报错的table 类名 c7n-pro-table-drag-container
+Please note the settings
+New drag column key value DRAG_KEY = '__drag-column__';
+Prevent table class name c7n-pro-table-drag-container from reporting errors outside the dom structure
 
 
-| 属性名 | 说明               | 类型                        |
+| Property | Description | Type |
 | -------- | ------------------ | --------------------------- |
-| droppableProps | droppableProps 参考文档 | object |
-| draggableProps | DraggableProps 参考文档 | object |
-| renderClone | 拖拽起来的时候会在 body 下面新增加一个 table 会在这个 table 注入元素 | (DragTableRowProps \| DragTableHeaderCellProps) => ReactElement<any> |
-| renderIcon | 可以自定义图标 | 当为 row 时候（{record}）=> ReactElement<any> 为column 时候 （{column，dataSet, snapshot}）=> ReactElement<any> |
+| droppableProps | droppableProps reference document | object |
+| draggableProps | DraggableProps reference document | object |
+| renderClone | When dragging, a new table will be added under the body, and elements will be injected into this table | (DragTableRowProps \| DragTableHeaderCellProps) => ReactElement<any> |
+| renderIcon | Can customize icon | When row ({record}) => ReactElement<any> When column ({column，dataSet, snapshot}) => ReactElement<any> |
 
 
 ### spin
 
-spin 的配置项。
+Spin configuration items.
 
-| 属性名 | 说明       | 类型         |
+| Property | Description | Type |
 | --------- | ---------- | ------------ |
-| indicator | 加载指示符 | ReactElement |
-| spinning  | 是否旋转   | boolean      |
+| indicator | Loading indicator | ReactElement |
+| spinning  | Whether to rotate   | boolean      |
 
-更多案列和属性请参考 [Spin](/zh/procmp/feedback/spin/)。
+For more cases and properties, please refer to [Spin](/en/procmp/feedback/spin/).
 
 ### instance methods
 
-| 名称 | 说明 | 属性名 | 返回值类型 | 版本 |
+| Name | Description | Property | Return Type | Version |
 | --- | --- | --- | --- | --- |
-| setScrollLeft(scrollLeft) | 设置横向滚动值。 | `scrollLeft` - 横向滚动值 |  | 1.5.1 |
-| setScrollTop(scrollTop) | 设置纵向滚动值。 | `scrollTop` - 纵向滚动值 |  | 1.5.1 |
-| setColumnWidth(width, indexOrKeyOrName, saveToCustomization) | 设置列宽。 | `width` - 宽度 `indexOrKeyOrName` - 索引或key或name `saveToCustomization`(1.5.6) - 是否保存到个性化，默认true | | 1.5.2 |
-| getHeaderGroups() | 获取所有头分组 |  | Group[] | 1.5.6 |
-| getGroups() | 获取所有列分组 |  | Group[] | 1.5.6 |
+| setScrollLeft(scrollLeft) | Set horizontal scroll value. | `scrollLeft` - horizontal scroll value |  | 1.5.1 |
+| setScrollTop(scrollTop) | Set vertical scroll value. | `scrollTop` - vertical scroll value |  | 1.5.1 |
+| setColumnWidth(width, indexOrKeyOrName, saveToCustomization) | Set column width. | `width` - width `indexOrKeyOrName` - index or key or name `saveToCustomization`(1.5.6) - whether to save to personalization, default true | | 1.5.2 |
+| getHeaderGroups() | Get all header groups |  | Group[] | 1.5.6 |
+| getGroups() | Get all column groups |  | Group[] | 1.5.6 |
 
-### 分页配置
+### Pagination Configuration
 
-分页功能配置可以按照如下配置进行全局配置
+Pagination function configuration can be configured globally as follows
 
 ```js
 import { configure } from 'choerodon-ui';
@@ -307,32 +309,32 @@ configure({
 });
 ```
 
-全局配置操作，建议在初始化的时候进行。更多的配置参考[pagination](/zh/procmp/navigation/pagination/);
+Global configuration operation, recommended to be performed during initialization. For more configurations, refer to [pagination](/en/procmp/navigation/pagination/);
 
 ### clipboard
 
-剪贴板配置项
+Clipboard configuration items
 
-| 属性名 | 说明       | 类型         | 默认值 | 版本 |
+| Property | Description | Type | Default | Version |
 | --------- | ---------- | ------------ | ------ | ------ |
-| copy | 是否开启表格复制 | boolean | false | ｜
-| paste | 是否开启表格粘贴，开启后只有可编辑的单元格才能被粘贴数据。 | boolean | false | ｜
-| description | 开启表格复制或粘贴，自定义修改描述信息 | string \| ReactNode | - | ｜
-| arrangeCalc | 开启范围计数 | boolean \| ReactNode | false | 1.6.5 ｜
-| hiddenTip | 关闭提示 | boolean | false | 1.6.5 ｜
+| copy | Whether to enable table copy | boolean | false | ｜
+| paste | Whether to enable table paste, only editable cells can be pasted with data after enabling. | boolean | false | ｜
+| description | Enable table copy or paste, customize modification description information | string \| ReactNode | - | ｜
+| arrangeCalc | Enable range counting | boolean \| ReactNode | false | 1.6.5 ｜
+| hiddenTip | Close tip | boolean | false | 1.6.5 ｜
 | tipCallback | copy and paste successful or failed callbacks | (type: 'copy' \| 'paste', success: boolean) => void | - | 1.6.7 |
-
 | onlyTemplateHeader | only retain the template header | boolean | false | 1.6.7 |
+| keepEmptyLines | Whether to keep blank lines when pasting | boolean | true | 1.6.8 |
 
-### 导出配置
+### Export Configuration
 
-可以根据需求进行全局配置，和局部配置
+Can be globally configured and locally configured according to requirements
 
 ```js
 import { configure } from 'choerodon-ui';
 import { DataSet } from 'choerodon-ui/pro';
 
-// 全局配置
+// Global configuration
 
 const basicUrl = ``;
 
@@ -363,7 +365,7 @@ configure({
   },
 });
 
-// 局部使用
+// Local usage
 // eslint-disable-next-line no-unused-vars
 const tableDs = new DataSet({
   primaryKey: 'userid',
@@ -383,17 +385,17 @@ const tableDs = new DataSet({
 });
 ```
 
-### 新增快捷键
+### New Shortcut Keys
 
-> keyboard 控制是否开启
+> keyboard controls whether to enable
 
-- Alt + n，焦点在 table 单元格内（非 querybar 区）时，新增行（代码可配置是首行还是末行新建）
-- Ctrl + s，焦点在table单元格，则保存当前 table 
-- Ctrl + d（或 Command + d）：
-- 焦点在 table 单元格，则复制上一行的单元格内容
-- 焦点在 table 某行， 则复制上一行的所有单元格内容
-- Delete，当前焦点元素内时，删除 1 个字符
-- Alt + delete，焦点在 table 单元格内，删除当前行，弹出二次提示框 
-- Shift + 方向键，焦点在 table 某行，当前 table 可多选的情况，可选择多行
+- Alt + n, when focus is in table cell (non-querybar area), add a new row (code can configure whether to create new at the first row or the last row)
+- Ctrl + s, focus is in table cell, save current table
+- Ctrl + d (or Command + d):
+- Focus is in table cell, copy the cell content of the previous row
+- Focus is in a row of table, copy all cell contents of the previous row
+- Delete, when inside the current focus element, delete 1 character
+- Alt + delete, focus is in table cell, delete current row, pop up secondary prompt box
+- Shift + arrow keys, focus is in a row of table, current table can be multi-selected, can select multiple rows
 
-局部的使用 demo 方法参见[Table](/zh/procmp/data-display/table#基础);
+For local usage demo method, see [Table](/en/procmp/data-display/table#Basic);

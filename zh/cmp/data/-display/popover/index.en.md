@@ -1,6 +1,6 @@
 ---
 title: Popover
-subtitle: 气泡卡片
+subtitle: Popover
 order: 0
 ---
 

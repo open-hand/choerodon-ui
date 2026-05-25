@@ -1,6 +1,6 @@
 ---
 title: Avatar
-subtitle: 头像
+subtitle: Profile Picture
 order: 0
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: BarCode
-subtitle: 条码
+subtitle: Barcode
 order: 0
 ---
 

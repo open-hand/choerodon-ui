@@ -25,6 +25,7 @@ title: API
 | summaryBar | 汇总条, 可选值为钩子或者字段 name | string \| ({ dataSet, summaryFieldsLimit }) => ReactNode |  |    |
 | summaryBarFieldWidth | 汇总条单字段宽度 | number | 170 | |
 | summaryFieldsLimit | 头部显示的汇总字段的数量，超出限制的查询字段收起 | number |  |   |
+| summaryBarConfigProps | 汇总条配置 | { placement?: 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'; separator?: ReactNode; groupStyle?: CSSProperties; moreStyle?: CSSProperties; useColon?: boolean; labelStyle?: CSSProperties; } |  | 1.6.8 |
 | useMouseBatchChoose   | 是否使用鼠标批量选择,开启后在 rowbox 的情况下可以进行鼠标拖动批量选择,在起始的 rowbox 处按下,在结束位置松开                                                                                                                    | boolean                                                                                                | [globalConfig.tableUseMouseBatchChoose](/zh/procmp/configure/configure)    |    |
 | rowHeight             | 行高，设置为 auto 时，若单元格中内容超长则会换行显示  | number \| auto \| ({ size }) => number \| auto | [globalConfig.tableRowHeight](/zh/procmp/configure/configure)       |  1.5.2(支持钩子)  |
 | headerRowHeight | 头行高 | number \| auto \| ({ size }) => number \| auto | rowHeight | 1.5.1 |
@@ -107,11 +108,12 @@ title: API
 | clipboard | 配置 Table 是否可复制粘贴，仅支持普通列表下使用，数据分组、虚拟滚动等特殊场景暂不支持。参考[配置项](#clipboard)  | Clipboard | { copy: false, paste: false } | 1.6.4 |
 | customDragDropContenxt | 是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 | boolean | false | 1.6.4 |
 | selectionColumnProps | 行选择列属性扩展  | ColumnProps  |  | 1.6.4 |
-| rowNumberColumnProps | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
+| rowNumberColumn | 行号列属性 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.5 |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
 | combineColumnFilter | 是否开启前端组合过滤  | boolean  | true | 1.6.6 |
 | combineSortConfig | 组合排序配置, 默认开启前端、后端排序, 显示排序选项; 内置了前端组合排序函数, 如有复杂字段排序请自行实现排序函数。currentDataSort: 当前页排序(前端排序); allDataSort: 所有页排序(后端排序); | { currentDataSort?: { show?: boolean; enable?: boolean; customFn?: ((props: { dataSet: DataSet, sortInfo: Map<string, SortOrder> }) => void); allDataSort?: { show?: boolean; enable?: boolean} }  |  | 1.6.7 |
 | addNewButton | 表格体内新增输入行按钮, 数据为空时代替 renderEmpty; 设置 pristine 时, 此属性无效 |	boolean |	 | 1.6.7 |
+| customizedColumnProps | 个性化列的自定义列属性, 设置时需要注意: 个性化列仅有header部分, 仅有部分属性生效 |	ColumnProps \| ((defaultProps: ColumnProps) => ColumnProps) |	 | 1.6.8 |
 
 更多属性请参考 [DataSetComponent](/zh/procmp/abstract/ViewComponent#datasetcomponent)。
 
@@ -128,7 +130,7 @@ title: API
 | header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/zh/procmp/dataset/dataset#group-values), aggregationTree: ReactElement[] }) => ReactNode |  |  |
 | footer          | 列脚                                                                                                                                                                                              | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode                                                                                          |           |  |
 | renderer        | 单元格渲染回调                                                                                                                                                                                    | ({ value, text, name, record, dataSet, rowGroup: [Group](/zh/procmp/dataset/dataset#group-values), headerGroup: [Group](/zh/procmp/dataset/dataset#group-values),  aggregationTree: ReactElement[] }) => ReactNode                                                                             |           |  |
-| tagRenderer        | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className }: TagRendererProps) => ReactNode |  | 1.6.2 |
+| tagRenderer        | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus, record(1.6.8), field(1.6.8) }: TagRendererProps) => ReactNode |  | 1.6.2 |
 | editor          | 编辑器, 设为 true 时会根据 field 的 type 自动匹配编辑器。不可编辑请使用 false 值，而不是在控件上加 disabled。如果有对输入框组件二次封装的需求，需要使用 React.forwardRef 转发 ref。                                                                                   | FormField \| ((record, name) => FormField \| boolean) \| boolean                                                                   |           |  |
 | lock            | 是否锁定列（固定列）， 可选值 false \| true \| 'left' \| 'right'                                                                                                                                                   | boolean\| string                                                                                                                   | false     | |
 | align           | 文字对齐方式，可选值： left \| center \| right                                                                                                                                                    | string                                                                                                                             |  [globalConfig.tableColumnAlign](/zh/procmp/configure/configure)  |  |
@@ -138,11 +140,11 @@ title: API
 | filterPopover | 前端过滤自定义筛选，此函数只负责渲染图层，需要自行编写各种交互 | ReactNode \| ((props: FilterPopoverProps) => ReactNode)  |  | 1.6.0 |
 | hideable | 是否可隐藏 | boolean | [globalConfig.tableColumnHideable](/zh/procmp/configure/configure) |  |
 | titleEditable | 是否可编辑标题 | boolean | [globalConfig.tableColumnTitleEditable](/zh/procmp/configure/configure) | 1.2.0 |
-| style           | 列单元格内链样式                                                                                                                                                                                  | object                                                                                                                             |           |  |
+| style           | 列单元格内联样式                                                                                                                                                                                  | object                                                                                                                             |           |  |
 | className       | 列单元格样式名                                                                                                                                                                                    | string                                                                                                                             |           |  |
-| headerStyle     | 列头内链样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
+| headerStyle     | 列头内联样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
 | headerClassName | 列头样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
-| footerStyle     | 列脚内链样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
+| footerStyle     | 列脚内联样式                                                                                                                                                                                      | object                                                                                                                             |           |  |
 | footerClassName | 列脚样式名                                                                                                                                                                                        | string                                                                                                                             |           |  |
 | help            | 额外信息，常用于提示                                                                                                                                                                              | ReactNode                                                                                                                           |           |  |
 | showHelp        | 展示提示信息的方式。可选值 tooltip \| newLine \| none                                                                                                                                             | string                                                                                                                             | tooltip |  |
@@ -150,7 +152,7 @@ title: API
 | command | 行操作按钮集（操作列），该值为数组 或 返回数组的钩子，内置按钮可添加 afterClick 钩子，用于执行除了默认行为外的动作，数组可选值：edit \| delete 或 \[edit\| delete , 按钮配置属性对象\] 或 自定义按钮 | (string \| \[string, object\] \| ReactNode)[] \| ({ dataSet, record, aggregation }) => (string \| \[string, object\] \| ReactNode \| object )[] | | |
 | hidden          | 隐藏列                                                                                                                                                                                              | boolean                                                                                                                            |           |  |
 | tooltip         | 用 Tooltip 显示单元格内容。可选值 none \| always \| overflow                                                                                                                                      | string                                                                                                                             | [globalConfig.tooltip](/zh/procmp/configure/configure) |  |
-| tooltipProps | 用于配置 Tooltip 相关参数  | [TooltipProps](/zh/procmp/data-display/tooltip/#API) | | 1.5.6 |
+| tooltipProps | 用于配置 Tooltip 相关参数  | [TooltipProps](/zh/procmp/data-display/tooltip/#API) \| ((type: 'header' \| 'cell', defaultTooltipProps: TooltipProps, field?: Field, record?: Record) => TooltipProps)(1.6.8) | | 1.5.6 |
 | aggregation | 是否是聚合列， 平铺视图下不显示  | boolean | |  |
 | aggregationLimit | 聚合显示条目数量上限，超过限制的条目可通过展开按钮来显示  | number | 4 | |
 | aggregationDefaultExpandedKeys | 默认展开指定的聚合列下的树节点  | (string \| number)[] |  |  |
@@ -219,7 +221,7 @@ title: API
 | onQuery | 查询回调 | () => void |  | 1.4.5 |
 | onReset | 重置回调 | () => void |  | 1.4.5 |
 | onRefresh | 刷新按钮回调，返回false \| Promise.resolve(false)或Promise.reject()不会刷新查询， 其他自动查询 | () => Promise&lt;boolean&gt; | | 1.5.7 |
-| onFieldEnterDown | 字段回车回调 | () => void  | | 1.6.4 |
+| onFieldEnterDown | 字段回车回调 | ({ e, name, dataSet(1.6.8) }) => void  | | 1.6.4 |
 | showSingleLine | 筛选条是否单行显示 | boolean |  | 1.6.5 |
 | tableFilterBarButtonIcon | Table 动态筛选条按钮是否展示icon。true 展示默认icon，false不展示，对象类型可以分别设置具体icon | boolean \| { saveIconType?: string \| boolean; saveAsIconType?: string \| boolean; resetIconType?: string \| boolean; } |  | 1.6.6 |
 
@@ -323,6 +325,7 @@ configure({
 | hiddenTip | 关闭提示 | boolean | false | 1.6.5 ｜
 | tipCallback | 复制、粘贴成功或者失败的回调 | (type: 'copy' \| 'paste', success: boolean) => void | - | 1.6.7 |
 | onlyTemplateHeader | 是否只导出模板头部 | boolean | false | 1.6.7 |
+| keepEmptyLines | 粘贴时是否保留空行 | boolean | true | 1.6.8 |
 
 ### 导出配置
 

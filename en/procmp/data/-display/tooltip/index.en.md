@@ -1,6 +1,6 @@
 ---
 title: Tooltip
-subtitle: 文字提示
+subtitle: Tooltip
 order: 0
 ---
 

@@ -1,13 +1,13 @@
 ---
 title: SelectBox
-subtitle: 平铺选择框
+subtitle: Tiled Selection Box
 order: 0
 ---
 
-表单控件。
+Form Control.
 
-## 何时使用
+## When To Use
 
-- 平铺选项便于用户选择操作，作用同[Select](/zh/procmp/data-entry/select/)。
+- Tiled options make user selection easier; same purpose as [Select](/en/procmp/data-entry/select/).
 
 Button View Mode. When disabled in this mode and the sub-element in the option is a flex element, in some cases the option cannot be displayed. You can set the z-index to increase the level of the sub-element in the option.

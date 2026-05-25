@@ -2,9 +2,9 @@
 title: API
 ---
 
-| 属性 | 说明 | 类型 |
+| Property | Description | Type |
 | --- | --- | --- |
-| options | 自动完成的数据源 | DataSet |
-| optionRenderer | 渲染 Option 文本的钩子 | ({ record, text, value }) => ReactNode |
+| options | Data source for auto-complete | DataSet |
+| optionRenderer | Hook to render Option text | ({ record, text, value }) => ReactNode |
 
-更多属性请参考 [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField)。
+For more properties, please refer to [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField).

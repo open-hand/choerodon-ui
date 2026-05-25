@@ -1,6 +1,6 @@
 ---
 title: ImageCrop
-subtitle: 图片裁剪
+subtitle: Image Cropping
 order: 0
 ---
 

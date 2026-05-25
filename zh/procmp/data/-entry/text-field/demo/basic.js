@@ -17,6 +17,7 @@ ReactDOM.render(
         defaultValue="点击清除"
         clearButton
         onChange={log}
+        maxLength={10}
       />
     </Col>
     <Col span={8}>

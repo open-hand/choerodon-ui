@@ -1,12 +1,12 @@
 ---
 title: DatePicker
-subtitle: 日期选择框
+subtitle: Date Picker
 order: 0
 ---
 
-输入或选择日期的控件。
+Control for entering or selecting dates.
 
-## 何时使用
+## When To Use
 
-当用户需要输入一个日期，可以点击标准输入框，弹出日期面板进行选择。
+When users need to input a date, click the standard input box to open the date panel and make a selection.
 

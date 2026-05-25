@@ -1,21 +1,21 @@
 ---
 title: AutoComplete
-subtitle: 自动补全
+subtitle: Auto Complete
 order: 0
 ---
 
-输入框自动完成功能。
+Input Box Auto-Complete Functionality.
 
-## 何时使用
+## When To Use
 
-- 需要一个输入框而不是选择器。
+- Use an input field instead of a selector.
 
-- 需要输入建议/辅助提示。
+- Need input suggestions or helper prompts.
 
-和 Select 的区别是：
+Difference From Select:
 
-- AutoComplete 是一个带提示的文本输入框，用户可以自由输入，关键词是辅助输入。
+- AutoComplete is a text input with suggestions; users can freely type, keywords assist input.
 
-- Select 是在限定的可选项中进行选择，关键词是选择。
+- Select chooses from limited options; keywords are for selection.
 
 

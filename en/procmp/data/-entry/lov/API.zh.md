@@ -12,7 +12,7 @@ title: API
 | paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | ||
 | searchAction | 搜索触发变更的动作, 可选值：blur \| input， | string | input || 1.1.1 |
 | fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false | 1.1.1 |
-| autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false | 1.3.2 |
+| autoSelectSingle | 点击查询仅存在一条数据时自动选中; 按钮模式默认不支持, 设置 force 支持 | boolean \| 'force'(1.6.8) | false | 1.3.2 |
 | showCheckedStrategy | 定义选中项回填的方式。SHOW_CHILD: 只显示子节点. SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL | 1.4.2 |
 | onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭。支持返回一个 Promise 对象(1.5.6)，Promise 对象 resolve(false) 或 reject 时弹窗不关闭。 | (records: Record \| Record[]) => boolean \| undefined |  | 1.4.4 |
 | onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined | | 1.5.0-beta.0 |
