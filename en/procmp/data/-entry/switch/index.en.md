@@ -1,13 +1,13 @@
 ---
 title: Switch
-subtitle: 开关
+subtitle: Switch
 order: 0
 ---
 
-开关选择器。
+Switch selector.
 
-## 何时使用
+## When To Use
 
-- 需要表示开关状态/两种状态之间的切换时；
-- 和 `checkbox`的区别是，切换 `switch` 会直接触发状态改变，而 `checkbox` 一般用于状态标记，需要和提交操作配合。
+- Use to represent switch state or toggle between two states.
+- Different from a checkbox: toggling a switch directly triggers a state change, while a checkbox typically indicates state and is used together with a submit action.
 

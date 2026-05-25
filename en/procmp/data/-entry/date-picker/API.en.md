@@ -4,24 +4,24 @@ title: API
 
 ### DatePicker
 
-| 属性名        | 说明                                                                             | 类型                                                        | 默认值 | 版本 |
+| Property | Description | Type | Default | Version |
 | ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------ | --- |
-| mode | 显示模式,可选值: date \| dateTime \| time \| year \| quarter \| month \| week | string | date  |  |
-| min          | 最小日期                                                                         | MomentInput                                                 |        |  |
-| max          | 最大日期                                                                         | MomentInput                                                 |        |  |
-| format       | 日期格式，如 YYYY-MM-DD HH:mm:ss`                                               | string                                                      |        |  |
-| timeZone | 时区显示 | string \| (moment) => string |   | 1.4.2 |
-| step         | 时间步距                                                                         | { hour: number, minute: number, second: number }            |        |  |
-| filter | 日期过滤, 选择面板的 mode 会变化, 需要根据 mode 变化设置是否过滤。currentDate 为日期时间面板中的每个时间，会循环执行 filter，selected 为选中或者当前 hover 的时间。当在 range 模式中时（1.6.3 支持），rangeTarget 为 0 代表在 start，1 代表在 end，rangeValue 为值数组 | (currentDate, selected, mode, rangeTarget, rangeValue) => boolean | |
-| cellRenderer | 单元格渲染, view 可选值：date \| dateTime \| time \| week \| month \| quarter \| year \| decade | (view) => (props, text, currentDate, selected) => ReactNode |        |  |
-| renderExtraFooter	| 在面板中添加额外的页脚 |	() => React.ReactNode	||  |
-| extraFooterPlacement	| 额外的页脚的位置 可选值: top bottom |	string |	bottom| |
-| editorInPopup | 编辑器在下拉框中  | boolean |  | 1.4.5 |
-| defaultTime | 设置用户选择日期时默认的时分秒，仅应用于 dateTime mode，DateTimePicker 组件  | moment \| \[moment, moment\] | 1.4.5 |
-| useInvalidDate | 允许使用非法日期, 但校验依旧无法通过  | boolean | true | 1.5.4 |
-| comboRangeMode | 设置在 `range` 模式时，选择弹窗是否组合显示（`time` 和 `dateTime` 模式不支持） | boolean |  | 1.6.5 |
-| inputReadOnly | 设置输入框为只读（避免在移动设备上打开虚拟键盘） | boolean | false | 1.6.6 |
-| yearFirst | 选择弹窗头部年份是否显示在前 | boolean \| undefined | [globalConfig.datePickerYearFirst](/components/configure#API) | 1.6.7 |
-| disabledTimeLoopRoll | 禁止时间组件循环滚动  | boolean |  | 1.6.7 |
+| mode | Display mode; options: date \| dateTime \| time \| year \| quarter \| month \| week | string | date  |  |
+| min | Minimum date | MomentInput |  |  |
+| max | Maximum date | MomentInput |  |  |
+| format | Date format, e.g., YYYY-MM-DD HH:mm:ss | string |  |  |
+| timeZone | Time zone display | string \| (moment) => string |  | 1.4.2 |
+| step | Time step | { hour: number, minute: number, second: number } |  |  |
+| filter | Date filter. The selection panel mode changes; set filtering based on the mode. currentDate is each time cell in the date-time panel; filter runs in a loop. selected is the selected or currently hovered time. In range mode (supported since 1.6.3), rangeTarget is 0 for start and 1 for end; rangeValue is the value array. | (currentDate, selected, mode, rangeTarget, rangeValue) => boolean |  |  |
+| cellRenderer | Cell renderer; view options: date \| dateTime \| time \| week \| month \| quarter \| year \| decade | (view) => (props, text, currentDate, selected) => ReactNode |  |  |
+| renderExtraFooter | Add an extra footer in the panel | ({ choose }: { choose?: (date?: Moment \| \[Moment \| undefined, Moment \| undefined\]) => void }) => React.ReactNode |  |  |
+| extraFooterPlacement | Position of the extra footer; options: top bottom | string | bottom |  |
+| editorInPopup | Editor inside the dropdown | boolean |  | 1.4.5 |
+| defaultTime | Set default time when choosing a date; applies only to dateTime mode; DateTimePicker component | moment \| \[moment, moment] |  | 1.4.5 |
+| useInvalidDate | Allow invalid dates; validation still fails | boolean | true | 1.5.4 |
+| comboRangeMode | Whether to combine the selection popup in `range` mode (not supported in `time` and `dateTime` modes) | boolean |  | 1.6.5 |
+| inputReadOnly | Set input to read-only (avoid opening virtual keyboard on mobile devices) | boolean | false | 1.6.6 |
+| yearFirst | Whether the year is displayed first in the popup header | boolean \| undefined | [globalConfig.datePickerYearFirst](/components/configure#API) | 1.6.7 |
+| disabledTimeLoopRoll | Disable cyclic scrolling for the time component | boolean |  | 1.6.7 |
 
-更多属性请参考 [TriggerField](/zh/procmp/abstract/trigger-field/#TriggerField)。
+For more properties, please refer to [TriggerField](/en/procmp/abstract/trigger-field/#TriggerField).

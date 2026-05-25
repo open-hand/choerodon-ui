@@ -1,11 +1,11 @@
 ---
 title: Screening
-subtitle: 筛选控件
+subtitle: Screening Control
 order: 0
 ---
 
-筛选控件。
+Screening control.
 
-## 何时使用
-用于商城或者大型分类的进行想要的组件的筛选和配置，能够实现快捷的分类信息满足对于品类筛选的需求
+## When To Use
+Used for filtering and configuring desired components in malls or large classifications, enabling quick categorization information to meet category filtering needs.
 

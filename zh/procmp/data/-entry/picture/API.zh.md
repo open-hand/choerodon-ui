@@ -21,6 +21,7 @@ title: API
 | objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |  |
 | sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#source) | Source[] |   |  |
 | children | 代替图片渲染 | ReactNode |   |  |
+| onBeforeClick | 点击事件前(图片预览前)执行, 返回值为 false 时, 不执行默认预览 | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.8 |
 
 ### Picture.Provider
 

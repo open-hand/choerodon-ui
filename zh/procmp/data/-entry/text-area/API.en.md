@@ -4,18 +4,18 @@ title: API
 
 ### TextArea
 
-| 属性     | 说明                                                                     | 类型             | 默认值 | 版本    |
+| Property | Description | Type | Default | Version |
 | -------- | ------------------------------------------------------------------------ | ---------------- | ------ | ----- |
-| cols     | 文本域宽                                                                 | number           |      ||
-| rows     | 文本域高                                                                 | number           |      ||
-| resize   | 是否能够拖拽调整大小，可选值： none \| both \| vertical \| horizontal     | string           | none   ||
-| autoSize | 自适应内容高度，可设置为 true\| false 或对象：{ minRows: 2, maxRows: 6 } | boolean\| object | false  ||
-| onResize | 大小调整回调 | (width, height) => void |  | |
-| clearButton | 是否显示清除按钮 | boolean  | false | 1.5.1 |
-| maxLength | 最大长度 | number |   | 1.5.1 |
-| showLengthInfo | 是否显示长度信息 | boolean | | 1.5.1 |
+| cols     | Text area width | number           |      ||
+| rows     | Text area height | number           |      ||
+| resize   | Whether resizable by drag; options: none \| both \| vertical \| horizontal     | string           | none   ||
+| autoSize | Auto fit content height; set to true \| false or object: { minRows: 2, maxRows: 6 } | boolean\| object | false  ||
+| onResize | Resize callback | (width, height) => void |  | |
+| clearButton | Whether to show clear button | boolean  | false | 1.5.1 |
+| maxLength | Maximum length | number |   | 1.5.1 |
+| showLengthInfo | Whether to show length info | boolean | | 1.5.1 |
 
-更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
+For more properties, please refer to [FormField](/en/procmp/abstract/field#FormField).
 
 <style>
 [id^="components-button-demo-"] .c7n-pro-btn, [id^="components-button-demo-"] .c7n-pro-button {

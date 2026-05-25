@@ -4,45 +4,45 @@ title: API
 
 ### Transfer
 
-> 1.5.0 版本及以上新增属性。
+> Added properties since version 1.5.0.
 
-| 属性名 | 说明                                     | 类型        |默认值 |
+| Property | Description | Type | Default |
 |-----------|------------------------------------------|------------|--------|
-| operations | 操作文案集合，顺序从下至上 | string\[] \| ReactNode[] | ['>', '<'] |
-| sortable | 是否显示排序按钮 | boolean | false |
-| sortOperations | 排序文案集合 | string\[] \| ReactNode[] | ['∧', '∨'] |
-| placeholderOperations(1.6.6) | 搜索文案集合 | string\[]\| string | Please enter your search |
+| operations | Operation text set; order from bottom to top | string\[] \| ReactNode[] | ['>', '<'] |
+| sortable | Whether to show sort buttons | boolean | false |
+| sortOperations | Sort text set | string\[] \| ReactNode[] | ['∧', '∨'] |
+| placeholderOperations(1.6.6) | Search text set | string\[]\| string | Please enter your search |
 | oneWay(1.5.1) | One way shuttle | boolean | false |
 
-更多属性请参考 [Select](/zh/procmp/data-entry/select/#Select)。
+For more properties, please refer to [Select](/en/procmp/data-entry/select/#Select).
 
 
 ### Transfer.OptGroup 
 
-| 属性名 | 说明                                     | 类型        |
+| Property | Description | Type |
 |-----------|------------------------------------------|------------|
-| label | 选项组标题 | string |
+| label | Option group title | string |
 
 ### Transfer.Option
 
-| 属性名 | 说明                                     | 类型        |
+| Property | Description | Type |
 |-----------|------------------------------------------|------------|
-| value | 选项值 | any |
+| value | Option value | any |
 
 ### Render Props
 
-> 1.5.3 版本新增组件。
+> Component added in version 1.5.3.
 
-- Transfer 支持接收 children 自定义渲染列表，并返回以下参数：
+- Transfer supports receiving children to customize the rendered list and returns the following parameters:
 
-| 属性名 | 说明                                     | 类型        |
+| Property | Description | Type |
 |-----------|------------------------------------------|------------|
-| direction | 渲染列表的方向 | `left` \| `right`  |
-| targetOption | 目标数据源 | Record[]  |
-| setTargetOption(1.5.5) | 设置目标数据源 | (values: any[]) => void  |  |
-| onItemSelect | 勾选条目 | (Records: Record[])  |
+| direction | Direction of the rendered list | `left` \| `right`  |
+| targetOption | Target data source | Record[]  |
+| setTargetOption(1.5.5) | Set target data source | (values: any[]) => void  |  |
+| onItemSelect | Select items | (Records: Record[])  |
 
-#### 参考示例
+#### Reference Example
 
 ```
 <Transfer {...props}>{({ direction, targetOption, onItemSelect}) => <YourComponent {...listProps} />}</Transfer>

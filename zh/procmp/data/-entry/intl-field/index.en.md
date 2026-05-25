@@ -1,13 +1,13 @@
 ---
 title: IntlField
-subtitle: 多语言输入框
+subtitle: Multi-Language Input Field
 order: 0
 ---
 
-多语言表单控件。
+Multi-language form control.
 
-## 何时使用
+## When To Use
 
-当用户需要输入多语言说明，可以点击图标，弹出对应多语言输入列表进行输入。
+When users need to enter multi-language descriptions, click the icon to open the corresponding multi-language input list and enter content.
 
 

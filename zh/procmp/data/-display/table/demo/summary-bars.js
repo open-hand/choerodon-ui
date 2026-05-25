@@ -90,7 +90,21 @@ class App extends React.Component {
           ({ dataSet }) => {
             return { label: '测试', value: '值' };
           },
+          ({ dataSet }) => {
+            return {
+              label: <span style={{ color: 'red' }}>测试</span>,
+              value: <span style={{ color: 'red' }}>值</span>,
+            };
+          },
         ]}
+        summaryBarConfigProps={{
+          placement: 'topRight',
+          separator: <span>||</span>,
+          groupStyle: { background: '#fae0e0' },
+          moreStyle: { background: '#fae0e0' },
+          useColon: true,
+          labelStyle: { width: 90 },
+        }}
       />
     );
   }

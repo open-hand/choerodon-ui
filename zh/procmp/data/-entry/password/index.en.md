@@ -1,12 +1,12 @@
 ---
 title: Password
-subtitle: 密码输入框
+subtitle: Password Input Field
 order: 0
 ---
 
-表单控件。
+Form Control.
 
-## 何时使用
+## When To Use
 
 
 

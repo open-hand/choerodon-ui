@@ -9,7 +9,7 @@ title: API
 | accept              | File types that can be accepted. See [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)                                           | string                                                             | -       |
 | action              | Required. Uploading URL                                                                                                                                                              | string                                                             | -       |
 | beforeUpload        | Hook function which will be executed before uploading. Uploading will be stopped with `false` or a rejected Promise returned. **Warning：this function is not supported in IE9**。   | (file, fileList) => `boolean \| Promise`                            | -       |
-| beforeUploadFiles(1.5.6)        | 上传文件 List 之前的钩子，若返回 `false` 则停止上传。支持返回一个 Promise 对象，Promise 对象 reject 时则停止上传，resolve 时开始上传。**注意：IE9 不支持该方法**。 | (fileList) => `boolean \| Promise`                            | 无     |
+| beforeUploadFiles(1.5.6)        | A hook before uploading the file list. If it returns `false`, the upload is stopped. Returning a Promise object is also supported; if the Promise is rejected, the upload stops, and if it is resolved, the upload begins.**Note: IE9 does not support this method**. | (fileList) => `boolean \| Promise`                            | -     |
 | customRequest       | override for the default xhr behavior allowing for additional customization and ability to implement your own XMLHttpRequest                                                         | Function                                                           | -       |
 | data                | Uploading params or function which can return uploading params.                                                                                                                      | object\|function(file)                                             | -       |
 | defaultFileList     | Default list of files that have been uploaded.                                                                                                                                       | object\[]                                                          | -       |
@@ -26,30 +26,30 @@ title: API
 | onChange            | A callback function, can be executed when uploading state is changing. See [onChange](#onchange)                                                                                     | Function                                                           | -       |
 | onPreview           | A callback function, will be executed when file link or preview icon is clicked.                                                                                                     | Function(file)                                                     | -       |
 | onRemove            | A callback function, will be executed when removing file button is clicked, remove event will be prevented when return value is `false` or a Promise which resolve(false) or reject. | Function(file): `boolean \| Promise`                                | -       |
-| onSuccess           | A callback function, will be executed when upload success.                                                                                                                           | Function(response, file)                                           | 无      |
-| onProgress          | A callback function, will be executed when upload in progress.                                                                                                                       | Function({ percent }, file)                                        | 无      |
-| onError             | A callback function, will be executed when upload error.                                                                                                                             | Function(error, response, file)                                    | 无      |
+| onSuccess           | A callback function, will be executed when upload success.                                                                                                                           | Function(response, file)                                           | -      |
+| onProgress          | A callback function, will be executed when upload in progress.                                                                                                                       | Function({ percent }, file)                                        | -      |
+| onError             | A callback function, will be executed when upload error.                                                                                                                             | Function(error, response, file)                                    | -      |
 | onDragEnd   | A callback function, will drag `picture-card`   | Function(fileList) | -   |
-| requestFileKeys   | can upload the file props to the server   | string,string[] | 无   |
+| requestFileKeys   | can upload the file props to the server   | string,string[] | -   |
 | showFileSize`(1.5.0-beta.0)` | Whether file sizes are displayed when `listType` is `text`   | boolean | false |
 | onStart | File upload starts   | (file: UploadFile) => void |  |
 | onReUpload | File re-upload implementation   | (file: UploadFile) => void \| boolean |  |
 | renderIcon | Render ICONS in file list   | (file: UploadFile, listType: UploadListType, prefixCls?: string) => ReactElement |  |
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
-| pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  | 1.6.5 |
+| pictureCardShowName | Set whether the `picture-card` type image displays the file name | boolean |  | 1.6.5 |
 
 
 ### ShowUploadListInterface
-| 属性名 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| showRemoveIcon | 是否显示删除按钮  | boolean\| ((file: UploadFile) => boolean) | true |
-| showPreviewIcon | 是否显示预览按钮，当非图片类型文件需要显示预览按钮时可以通过回调函数写法实现 | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
-| showDownloadIcon | 是否显示下载按钮   | boolean \| ((file: UploadFile) => boolean) | picture-card 模式下为 true，其他模式下为 false |
-| showReUploadIcon | 是否显示重新上传按钮（上传成功状态则重新选择文件上传，上传失败状态则重新上传该文件；当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式）   | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon](/en/procmp/configure/configure) |
-| removePopConfirmTitle | 删除弹框确认信息   | string |  |
-| reUploadText | 重新上传按钮 title 信息   | string |  |
-| reUploadPopConfirmTitle | 重新上传弹框确认信息   | string |  |
-| getCustomFilenameTitle | 文件名 title 信息   | (file: UploadFile) => string | 文件名 |
+| showRemoveIcon | Whether the delete button is displayed | boolean\| ((file: UploadFile) => boolean) | true |
+| showPreviewIcon | Whether to display the preview button can be achieved by writing the callback function when the preview button needs to be displayed for non-image type files boolean \| ((file: UploadFile) => boolean) | True in picture-card mode and false | in other modes
+| showDownloadIcon | Whether the download button is displayed | boolean \| ((file: UploadFile) => boolean) | True in picture-card mode and false | in other modes
+| showReUploadIcon | Whether the re-upload button is displayed (if the upload is successful, the file is re-uploaded, and if the upload is failed, the file is re-uploaded; When listType is picture-card: true is icon, text is text; All other listTypes are in text) | boolean \| 'text' \| ((file: UploadFile, listType: UploadListType) => (boolean \| 'text')) | [uploadShowReUploadIcon] (/en/procmp/configure/configure) |
+| removePopConfirmTitle | Delete pop-up confirmation | string |  |
+| reUploadText | Re-upload button title info | string |  |
+| reUploadPopConfirmTitle | Re-upload pop-up confirmation | string |  |
+| getCustomFilenameTitle | filename title info | (file: UploadFile) => string | File name |
 
 ### onChange
 

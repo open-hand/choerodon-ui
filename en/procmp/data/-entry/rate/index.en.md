@@ -1,13 +1,13 @@
 ---
 title: Rate
-subtitle: 评分
+subtitle: Rating
 order: 0
 ---
 
-评分组件。
+Rating component.
 
-## 何时使用
+## When To Use
 
-- 对评价进行展示
+- Display evaluations
 
-- 对事物进行快速的评级操作
+- Quickly rate items

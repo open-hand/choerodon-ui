@@ -14,9 +14,9 @@ title: API
 | defaultCheckedKeys  | defalut check these node when dataSet bind checkField ignore it                                        | string[]                                                                                  | []       |
 | defaultSelectKeys   | defalut select these node when dataSet bind idField ignore it                                          | string[]                                                                                  | []       |
 | onTreeNode(1.1.0)    | customize cover Tree node props                                                                        | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps ) | () => {} |
-| async | Asynchronous loading requires the cooperation of the back-end interface. The corresponding data source will automatically call the query interface. The interface parameters will contain the parameter name corresponding to parentField and the parameter value corresponding to idField. The data returned by the interface will be appended to the existing data. | ((props: {record?: Record \| null;dataSet?: DataSet \| null;}) => TreeNodeRendererProps )|() => {} |
-| selectable(1.4.4) | 是否可选中 | boolean | true |
-| filter(1.5.0) | 数据过滤， 返回值 true - 显示 false - 不显示 | (record) => boolean | |
+| async | Asynchronous loading requires the cooperation of the back-end interface. The corresponding data source will automatically call the query interface. The interface parameters will contain the parameter name corresponding to parentField and the parameter value corresponding to idField. The data returned by the interface will be appended to the existing data. | boolean |  |  |
+| selectable(1.4.4) | Whether it is selectable | boolean | true |
+| filter(1.5.0) | Data filtering, return value true - display false - do not display | (record) => boolean | |
 | autoExpandParent | Whether to automatically expand a parent treeNode | boolean | true |
 | blockNode | Whether treeNode fill remaining horizontal space | boolean | false |
 | checkable | Adds a `Checkbox` before the treeNodes | boolean | false |
@@ -28,20 +28,20 @@ title: API
 | draggable | Specifies whether this Tree is draggable (IE > 8) | boolean \| ((node?: DataNode) => boolean) \| {nodeDraggable: boolean \| ((node?: DataNode) => boolean), icon: boolean \| ReactNode} | false |
 | expandedKeys | (Controlled) Specifies the keys of the expanded treeNodes | string\[] | \[] |
 | filterTreeNode | Defines a function to filter (highlight) treeNodes. When the function returns `true`, the corresponding treeNode will be highlighted | function(node) | - |
-| loadData | Load data asynchronously | function(node) | - |
+| loadData | Load data asynchronously | function(node) | - |  |
 | loadedKeys | (Controlled) Set loaded tree nodes. Need work with `loadData` | string\[] | \[] |
 | multiple | Allows selecting multiple treeNodes | boolean | false |
 | selectedKeys | (Controlled) Specifies the keys of the selected treeNodes | string\[] | - |
 | showIcon | Shows the icon before a TreeNode's title. There is no default style; you must set a custom style for it if set to `true` | boolean | false |
 | switcherIcon | customize collapse/expand icon of tree node | React.ReactElement | - |
 | showLine | Shows a connecting line | boolean \| {showLeafIcon: boolean} | false |
-| onCheck | 点击复选框触发`(oldCheckedKeys 1.4.4新增)` | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys}, oldCheckedKeys) | - |
+| onCheck | Click the checkbox to trigger `(oldCheckedKeys added in 1.4.4)` | function(checkedKeys, e:{checked: bool, checkedNodes, node, event, halfCheckedKeys}, oldCheckedKeys) | - |
 | onDragEnd | Callback function for when the onDragEnd event occurs | function({event, node}) | - |
 | onDragEnter | Callback function for when the onDragEnter event occurs | function({event, node, expandedKeys}) | - |
-| onDragEnterBefore | dragenter 触发完成前调用。可用于处理是否允许拖到节点上方，拖入节点或者拖入到下方。参数中的 dragNode 是拖拽的节点信息，node 是拖入的节点信息，其中 node 中的 dragOver 代表是否拖入，dragOverGapTop 是否拖入到节点上方，dragOverGapBottom 是否拖入节点下方 | function({event, node, dragNode, dragNodesKeys}) => boolean | - | 1.6.6 |
+| onDragEnterBefore | Called before dragenter is completed. Can be used to handle whether it is allowed to drag over the node, drag into the node or drag below. dragNode in the parameter is the dragged node information, node is the dragged-in node information, where dragOver in node represents whether it is dragged in, dragOverGapTop whether it is dragged above the node, dragOverGapBottom whether it is dragged below the node | function({event, node, dragNode, dragNodesKeys}) => boolean | - | 1.6.6 |
 | onDragLeave | Callback function for when the onDragLeave event occurs | function({event, node}) | - |
 | onDragOver | Callback function for when the onDragOver event occurs | function({event, node}) | - |
-| onDragOverBefore | dragover 触发完成前调用。可用于处理是否允许拖到节点上方，拖入节点或者拖入到下方。参数中的 dragNode 是拖拽的节点信息，node 是拖入的节点信息，其中 node 中的 dragOver 代表是否拖入，dragOverGapTop 是否拖入到节点上方，dragOverGapBottom 是否拖入节点下方 | function({event, node, dragNode, dragNodesKeys}) => boolean | - | 1.6.6 |
+| onDragOverBefore | Called before dragover is completed. Can be used to handle whether it is allowed to drag over the node, drag into the node or drag below. dragNode in the parameter is the dragged node information, node is the dragged-in node information, where dragOver in node represents whether it is dragged in, dragOverGapTop whether it is dragged above the node, dragOverGapBottom whether it is dragged below the node | function({event, node, dragNode, dragNodesKeys}) => boolean | - | 1.6.6 |
 | onDragStart | Callback function for when the onDragStart event occurs | function({event, node}) | - |
 | onDrop | Callback function for when the onDrop event occurs | function({event, node, dragNode, dragNodesKeys}) | - |
 | onDropBefore(1.5.0) | Callback function for when the onDrop before event occurs | ({event, node, dragNode, dragNodesKeys}) => boolean | - |
@@ -50,7 +50,7 @@ title: API
 | onRightClick | Callback function for when the user right clicks a treeNode | function({event, node}) | - |
 | onSelect | Callback function for when the user clicks a treeNode | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | - |
 | treeData | treeNodes data Array, if set it then you need not to construct children TreeNode. (key should be unique across the whole array) | array\<{ key, title, children, \[disabled, selectable] }> | - |
-| checkboxPosition | checkbox 显示位置：默认显示在折叠 icon 后面；设置 left 显示在最前面左对齐 | 'default' \| 'left' | [全局配置](/en/procmp/configure/configure) treeCheckboxPosition | 1.6.5 |
+| checkboxPosition | checkbox display position: default displayed after the collapse icon; set left to display at the front left alignment | 'default' \| 'left' | [Global Configuration](/en/procmp/configure/configure) treeCheckboxPosition | 1.6.5 |
 
 ### TreeNodeRenderer props
 
@@ -70,8 +70,8 @@ title: API
 
 ### DataSet related
 
-| 属性名       | 说明                                                                                                   | 类型              | 
-| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- |         
+| Property | Description                                                                                            | Type              |
+| ---------- | ------------------------------------------------------------------------------------------------------ | ----------------- |
 | selection  | selection is false Tree checkable is true ,You can implement the whole treenode click to trigger check | string\|\|boolean |       
 
 dataSet The data format adopts a flat structure, and there is a structure of Id and parentId

@@ -1,6 +1,6 @@
 ---
 title: Collapse
-subtitle: 折叠面板
+subtitle: Foldable panel
 order: 0
 ---
 

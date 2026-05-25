@@ -2,10 +2,10 @@
 title: API
 ---
 
-| 属性名 | 说明           | 类型              | 默认值 |
+| Property | Description | Type | Default |
 | ----------------- | -------------- | ----------------- | ------ |
-| unCheckedValue    | 未选中时的值   | any               |        |
-| unCheckedChildren | 非选中时的内容 | string\|ReactNode |        |
-| indeterminate     | 中间状态       | boolean           | false  |
+| unCheckedValue    | Value when unchecked | any |        |
+| unCheckedChildren | Content when unchecked | string\|ReactNode |        |
+| indeterminate     | Indeterminate state | boolean | false  |
 
-更多属性请参考 [Radio](/zh/procmp/data-entry/radio/)。
+For more properties, please refer to [Radio](/en/procmp/data-entry/radio/).

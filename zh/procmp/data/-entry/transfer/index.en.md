@@ -1,11 +1,11 @@
 ---
 title: Transfer
-subtitle: 穿梭框
+subtitle: Transfer Box
 order: 0
 ---
 
-表单控件。
+Form Control.
 
-## 何时使用
+## When To Use
 
-- 平铺选项便于用户选择操作，作用同[Select.multiple](/zh/procmp/data-entry/select/)。
+- Tiled options facilitate user selection; same purpose as [Select.multiple](/en/procmp/data-entry/select/).

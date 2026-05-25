@@ -4,7 +4,7 @@ title: API
 
 ### UrlField
 
-更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField)。
+For more properties, please refer to [TextField](/en/procmp/data-entry/text-field/#TextField).
 
 <style>
 .code-box .c7n-row {

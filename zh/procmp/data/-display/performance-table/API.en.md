@@ -42,33 +42,33 @@ title: API
 | showScrollArrow          | boolean `(false)`                                                                 | Display ScrollBar arrow                                             |  |
 | sortColumn               | string                                                                            | Sort column name                                                                              |    |
 | sortType                 | enum: 'desc', 'asc'                                                               | Sort type (Controlled)                                                                        |    |
-| clickScrollLength        | object `({horizontal?: 100;vertical?: 33;})`                                      | 滚动条箭头点击滚动距离                                        |    |
+| clickScrollLength        | object `({horizontal?: 100;vertical?: 33;})`                                      | Scroll distance of scrollbar arrow click                                        |    |
 | virtualized              | boolean                                                                           | Effectively render large tabular data                                                         |    |
 | width                    | number                                                                            | Table width                                                                                   |    |
 | wordWrap                 | boolean                                                                           | The cell wraps automatically                                                                  |    |
 | highLightRow             | boolean`(true)`                                                                   | Click on the row to display the highlighted row, rowkey needs to be specified when virtual scrolling is enabled                                       | 1.4.1   |
-| queryBar             | queryBarProps                                                                | 查询条                                  |   |
-| toolbar             | toolbarProps                                                                | 工具栏                                  | |
-| toolBarRender            | (props: object) => React.ReactNode[]                                             | 工具栏渲染                                                  |   |
-| columnHideable | boolean`(true)` | 可调整列显示, customizable 为 true 才起作用 |  |
-| columnTitleEditable | boolean | 可编辑列标题, customizable 为 true 才起作用 | 1.4.3  |
-| columnDraggable| boolean `(false)`  | 列拖拽, customizable 为 true 才起作用 | 1.4.3  |
-| customizable | boolean | 是否显示个性化设置入口按钮  |  | 1.4.3  |
-| customizedCode |string | 个性化编码，设置后默认将会存储列拖拽等个性化设置更改到 localStorage，如果要存储到后端, 请重写全局配置中的表格个性化钩子： `customizedSave` `customizedLoad` | 1.4.3   |
-| rowSelection`(1.4.4)` | object | 表格行是否可选择，[配置项](#rowselection)  | 
-| rowDraggable`(1.4.4)` | boolean `(false)` | 行拖拽，实现行的拖拽  |
-| customDragDropContenxt`(1.6.7)` | boolean \| undefined |是否开启自定义 DragDropContenxt, 一般用于自定义 react-beautiful-dnd 的 DragDropContenxt 实现多表拖拽 |
-| onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | 完成拖拽后的触发事件 |
-| onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | 完成拖拽前的触发事件 |
-| onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | 拖拽前触发事件 |
-| components |  [TableComponents](#tablecomponents) | 覆盖默认的 table 元素 | 1.6.5 ｜
-| useMouseBatchChoose`(1.6.7)` |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
+| queryBar             | queryBarProps                                                                | Query bar                                  |   |
+| toolbar             | toolbarProps                                                                | Toolbar                                  | |
+| toolBarRender            | (props: object) => React.ReactNode[]                                             | Toolbar render                                                  |   |
+| columnHideable | boolean`(true)` | Adjustable column display, only works when customizable is true |  |
+| columnTitleEditable | boolean | Editable column title, only works when customizable is true | 1.4.3  |
+| columnDraggable| boolean `(false)`  | Column draggable, only works when customizable is true | 1.4.3  |
+| customizable | boolean | Whether to display the personalized setting entry button  |  | 1.4.3  |
+| customizedCode |string | Personalized code. After setting, the personalized settings such as column dragging will be stored in localStorage by default. If you want to store it in the backend, please rewrite the table personalized hooks in the global configuration: `customizedSave` `customizedLoad` | 1.4.3   |
+| rowSelection`(1.4.4)` | object | Whether table rows are selectable, [Configuration](#rowselection)  | 
+| rowDraggable`(1.4.4)` | boolean `(false)` | Row draggable, implement row dragging  |
+| customDragDropContenxt`(1.6.7)` | boolean \| undefined | Whether to enable custom DragDropContext, generally used for custom react-beautiful-dnd DragDropContext to implement multi-table dragging |
+| onDragEnd`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided, data) => void | Trigger event after dragging is completed |
+| onDragEndBefore`(1.4.4)` |  (resultDrag: DropResult, provided: ResponderProvided) => void | Trigger event before dragging is completed |
+| onDragStart`(1.5.0-beta.0)` |  (initial: DragStart, provided: ResponderProvided) => void | Trigger event before dragging |
+| components |  [TableComponents](#tablecomponents) | Override default table elements | 1.6.5 ｜
+| useMouseBatchChoose`(1.6.7)` |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` | Whether to use mouse batch selection. When enabled, mouse drag batch selection can be performed in the case of rowbox. Press at the starting rowbox and release at the ending position |
 
 ### Form methods
 
 - scrollTop
 
-垂直滚动条滚动到指定位置
+Scroll the vertical scrollbar to the specified position
 
 ```ts
 scrollTop: (top: number) => void;
@@ -76,7 +76,7 @@ scrollTop: (top: number) => void;
 
 - scrollLeft
 
-横向滚动条滚动到指定位置
+Scroll the horizontal scrollbar to the specified position
 
 ```ts
 scrollLeft: (left: number) => void;
@@ -97,12 +97,12 @@ scrollLeft: (left: number) => void;
 | treeCol       | boolean                                          | A column of a tree.                                                                                         |
 | verticalAlign | enum: 'top', 'middle', 'bottom'                  | Vertical alignment                                                                                          |
 | width         | number                                           | Column width                                                                                                |
-| hidden         | boolean                                           | 隐藏                                                                                  |
-| hideable         | boolean`(true)`                                       | 是否可隐藏                                                                                  |
-| titleEditable         | boolean`(true)`                                       | 个性化是否可编辑列头                                                                                |
-| onCell`(1.4.4)` 	| ({ rowData, dataIndex, rowIndex }) => object | 设置单元格属性	| 
-| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | 覆盖渲染单元格内容	| 
-| footer`(1.6.7)`	| ({ data, dataIndex }) => ReactNode | 表格底部渲染内容	| 
+| hidden         | boolean                                           | Hidden                                                                                  |
+| hideable         | boolean`(true)`                                       | Whether it is hideable                                                                                  |
+| titleEditable         | boolean`(true)`                                       | Whether the column header is editable in personalization                                                                                |
+| onCell`(1.4.4)` 	| ({ rowData, dataIndex, rowIndex }) => object | Set cell properties	| 
+| render	| ({ rowData, dataIndex, rowIndex }) => ReactNode | Override render cell content	| 
+| footer`(1.6.7)`	| ({ data, dataIndex }) => ReactNode | Table footer render content	| 
 
 > `sortable` is used to define whether the column is sortable, but depending on what `key` sort needs to set a `dataKey` in `Cell`.
 > The sort here is the service-side sort, so you need to handle the logic in the ' Onsortcolumn ' callback function of `<Table>`, and the callback function returns `sortColumn`, `sortType` values.
@@ -123,66 +123,66 @@ scrollLeft: (left: number) => void;
 | dataKey  | string           | Data binding `key`, but also a sort of `key` |
 | rowData  | object           | Row data                                     |
 | rowIndex | number           | Row number                                   |
-| rowSpan`(1.4.4)` | number          | 行合并,设置为 0 时，不渲染     |
+| rowSpan`(1.4.4)` | number          | Row merge, not rendered when set to 0     |
 
 ### toolBarProps
 
-| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| Property | Type `(Default)` | Description                                    |
 | -------- | --------------- | --------------------------------------- |
-| header  | React.ReactNode          | 表格标题 |
-| hideToolbar  | boolean          | 是否显示工具栏                                  |
-| buttons | React.ReactNode[]          | 工具栏右侧操作区                                     |
-| settings | (ReactNode \| Setting)[]         | 工作栏右侧设置区                                    |
+| header  | React.ReactNode          | Table title |
+| hideToolbar  | boolean          | Whether to display toolbar                                  |
+| buttons | React.ReactNode[]          | Toolbar right operation area                                     |
+| settings | (ReactNode \| Setting)[]         | Toolbar right setting area                                    |
 
 ### queryBarProps
 
-| 属性名称 | 类型 `(默认值)` | 描述                                    |
+| Property | Type `(Default)` | Description                                    |
 | -------- | --------------- | --------------------------------------- |
-| type  | TableQueryBarType: filter, professionalBar   | 查询条类型 |
-| renderer  | (props: TableQueryBarHookProps) => React.ReactNode          | 渲染覆盖                                  |
-| dataSet | DataSet          | 数据源                                     |
-| queryFormProps | FormProps         | 查询条表单属性                                    |
-| defaultExpanded | Boolean         | 是否默认展开                                    |
-| queryDataSet | DataSet         | 查询数据源                                   |
-| queryFields | React.ReactElement<any>[]         | 自定义查询字段组件或默认组件属性                                    |
-| queryFieldsLimit | ReactElement         | 显示的查询字段的数量                                    |
-| onQuery | (props: object) => void         | 查询回调                                    |
-| onReset | () => void         | 重置回调                                    |
+| type  | TableQueryBarType: filter, professionalBar   | Query bar type |
+| renderer  | (props: TableQueryBarHookProps) => React.ReactNode          | Render override                                  |
+| dataSet | DataSet          | DataSet                                     |
+| queryFormProps | FormProps         | Query bar form properties                                    |
+| defaultExpanded | Boolean         | Whether to expand by default                                    |
+| queryDataSet | DataSet         | Query DataSet                                   |
+| queryFields | React.ReactElement<any>[]         | Custom query field component or default component properties                                    |
+| queryFieldsLimit | ReactElement         | Number of displayed query fields                                    |
+| onQuery | (props: object) => void         | Query callback                                    |
+| onReset | () => void         | Reset callback                                    |
 
 ### rowSelection
 
-选择功能的配置，使用请指明 rowKey。
+Configuration of selection function, please specify rowKey when using.
 
-| 属性名 | 说明 | 类型 | 默认值 | 
+| Property | Description | Type | Default | 
 | --- | --- | --- | --- | 
-| columnWidth | 自定义列表选择框宽度 | string\|number | `60px` | 
-| columnTitle | 自定义列表选择框标题 | string\|React.ReactNode |  | 
-| columnIndex | 自定义列表选择框列顺序 | number | |
-| fixed | 把选择框列固定在左边 | boolean | left |  
-| getCheckboxProps | 选择框的默认属性配置 | Function(record) |  |
-| hideDefaultSelections | 自定义选择项时去掉『全选』『反选』两个默认选项 | boolean | false |
-| selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string\[]\|number[] | \[] |
-| selections | 自定义选择项 [配置项](#selection), 设为 `true` 时使用默认选择项 | object\[]\|boolean | true |
-| type | 多选/单选，`checkbox` or `radio` | string | `checkbox` |  |
-| onChange | 选中项发生变化时的回调 | Function(selectedRowKeys, selectedRows) |  |  |
-| onSelect | 用户手动选择/取消选择某行的回调 | Function(record, selected, selectedRows, nativeEvent) |  |
-| onSelectAll | 用户手动选择/取消选择所有行的回调 | Function(selected, selectedRows, changeRows) |  |
-| onSelectInvert | 用户手动选择反选的回调 | Function(selectedRows) |  |  |
+| columnWidth | Custom list selection box width | string\|number | `60px` | 
+| columnTitle | Custom list selection box title | string\|React.ReactNode |  | 
+| columnIndex | Custom list selection box column order | number | |
+| fixed | Fix the selection box column to the left | boolean | left |  
+| getCheckboxProps | Default property configuration of selection box | Function(record) |  |
+| hideDefaultSelections | Remove the two default options of "Select All" and "Invert Selection" when customizing selection items | boolean | false |
+| selectedRowKeys | Specify the key array of the selected item, which needs to be used with onChange | string\[]\|number[] | \[] |
+| selections | Custom selection items [Configuration](#selection), use default selection items when set to true | object\[]\|boolean | true |
+| type | Multiple/Single selection, checkbox or radio | string | `checkbox` |  |
+| onChange | Callback when selected items change | Function(selectedRowKeys, selectedRows) |  |  |
+| onSelect | Callback for user manually selecting/deselecting a row | Function(record, selected, selectedRows, nativeEvent) |  |
+| onSelectAll | Callback for user manually selecting/deselecting all rows | Function(selected, selectedRows, changeRows) |  |
+| onSelectInvert | Callback for user manually selecting invert selection | Function(selectedRows) |  |  |
 
-> 使用请指明 rowKey。
+> Please specify rowKey when using.
 
 ### selection
 
-| 属性名 | 说明                       | 类型                        |
+| Property | Description                       | Type                        |
 | -------- | -------------------------- | --------------------------- |
-| key      | React 需要的 key，建议设置 | string                      |
-| text     | 选择项显示的文字           | string\|React.ReactNode     |
-| onSelect | 选择项点击回调             | Function(changeableRowKeys) |
+| key      | Key required by React, recommended to set | string                      |
+| text     | Text displayed for selection item           | string\|React.ReactNode     |
+| onSelect | Selection item click callback             | Function(changeableRowKeys) |
 
 ### tablecomponents
 
-| 属性名称 | 类型  | 描述 |
+| Property | Type  | Description |
 | -------- | ----- | ---- |
-| table |  ReactNode          | 覆盖表格组件 |
-| header | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }          | 覆盖表格 header 组件  |
-| body | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }         | 覆盖表格 body 组件 |
+| table |  ReactNode          | Override table component |
+| header | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }          | Override table header component  |
+| body | { wrapper: ReactNode; row: ReactNode; cell: ReactNode; }         | Override table body component |

@@ -4,21 +4,21 @@ title: API
 
 ### SelectBox
 
-| 属性名 | 说明                                    | 类型    | 默认值 |
+| Property | Description | Type | Default |
 | -------- | --------------------------------------- | ------- | ------ |
-| mode     | 选择器的展现形式，可选值 box \| button | string  |        |
-| vertical | 是否垂直显示                            | boolean | false  |
-| checkValueOnOptionsChange | 关联 DataSet, 且 field 设置 cascadeMap 属性, 当选项改变时，检查并清除不在选项中的值  | boolean | false |
+| mode     | Display form of selector; options: box \| button | string  |        |
+| vertical | Whether to display vertically | boolean | false  |
+| checkValueOnOptionsChange | When associated with DataSet and field set cascadeMap, check and clear values not in options when options change | boolean | false |
 
-更多属性请参考 [Select](/zh/procmp/data-entry/select/#Select)。
+For more properties, please refer to [Select](/en/procmp/data-entry/select/#Select).
 
 ### SelectBox.OptGroup
 
-该属性未实装。
+This property is not implemented.
 
 ### SelectBox.Option
 
-该属性请参考 [Select.Option](/zh/procmp/data-entry/select/#Select.Option)。
+Refer to [Select.Option](/en/procmp/data-entry/select/#Select.Option).
 
 <style>
 .code-box-demo .c7n-pro-select-box {

@@ -4,45 +4,45 @@ title: API
 
 ### CodeArea
 
-| 属性           | 说明                                                                                | 类型              | 默认值                |
+| Property | Description | Type | Default |
 | -------------- | ----------------------------------------------------------------------------------- | ----------------- | --------------------- |
-| options        | 编辑器配置，详见[CodeMirror Options](https://codemirror.net/doc/manual.html#config) | object            |                       |
-| formatHotKey   | 格式化快捷键                                                                        | string            | Alt+F               |
-| unFormatHotKey | 清除格式化快捷键                                                                    | string            | Alt+R               |
-| formatter      | CodeAreaFormatter类的实例，用于格式化                                             | CodeAreaFormatter | new JSONFormatter() |
-| editorDidMount | 在实例挂载前回调函数 | (editor: IInstance, value: string, cb: () => void) => void; |  |
-| themeSwitch(1.5.0) | 默认主题切换设置( options 中设置 theme 或者不设置 themeSwitch，则不显示主题切换按钮)。不设置，默认 idea 主题，可选值 `idea` \| `material` | string |  |
-| title(1.5.0) | 标题 | ReactNode |  |
-| placeholder(1.6.4) | 占位词 | string |  |
-| valueChangeAction(1.6.6) | 触发值变更的动作, 可选值：`blur` `input` | `blur` |  |
-| wait(1.6.6) | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | - |
-| waitType(1.6.6) | 设置值变更间隔类型，只有在 valueChangeAction 为 input 时起作用，可选值： `throttle` `debounce` | string | `debounce` |
-| prettierOptions(1.6.7) | formatter 格式化的参数(prettier 的参数) 详见[prettier Options](https://www.prettier.cn/docs/options.html) | object |  |
+| options | Editor configuration, see [CodeMirror Options](https://codemirror.net/doc/manual.html#config) | object |  |
+| formatHotKey | Formatting shortcut key | string | Alt+F |
+| unFormatHotKey | Clear formatting shortcut key | string | Alt+R |
+| formatter | Instance of CodeAreaFormatter used for formatting | CodeAreaFormatter | new JSONFormatter() |
+| editorDidMount | Callback before the instance is mounted | (editor: IInstance, value: string, cb: () => void) => void; |  |
+| themeSwitch(1.5.0) | Default theme switch settings (if theme is set in options or themeSwitch is not set, the theme switch button is hidden). Default theme is 'idea'. Options: `idea` \| `material` | string |  |
+| title(1.5.0) | Title | ReactNode |  |
+| placeholder(1.6.4) | Placeholder | string |  |
+| valueChangeAction(1.6.6) | Action that triggers value change; options: `blur` `input` | `blur` |  |
+| wait(1.6.6) | Set value change interval; effective only when valueChangeAction is `input` | number | - |
+| waitType(1.6.6) | Set value change interval type; effective only when valueChangeAction is `input`; options: `throttle` `debounce` | string | `debounce` |
+| prettierOptions(1.6.7) | Formatter options (Prettier parameters), see [Prettier Options](https://www.prettier.cn/docs/options.html) | object |  |
 
-更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
+For more properties, please refer to [FormField](/en/procmp/abstract/field#FormField).
 
-### 自定义主题
+### Custom Theme
 
-组件内置`'neat'` `'idea'` `'material'`三个主题，默认 `'idea'`，使用更多主题需要引入对应的样式文件，如下：
+The component has built-in themes `'neat'`, `'idea'`, and `'material'`; the default is `'idea'`. To use more themes, import the corresponding styles as follows:
 
 ```less
 // style.less
 @import '~codemirror/theme/eclipse.css';
 ```
 
-或在`*.js`文件中引用
+Or import in a `*.js` file
 
 ```js
 import 'codemirror/theme/eclipse.css';
 ```
 
-所有可用主题请参考 [CodeMirror Themes](https://codemirror.net/demo/theme.html)。
+Refer to [CodeMirror Themes](https://codemirror.net/demo/theme.html) for all available themes.
 
-关于 CodeArea 引入主题资源教程请参考 [CodeArea 引入主题资源](/en/tutorials/codearea-theme)。
+For the tutorial on importing theme resources for CodeArea, see [CodeArea Theme Resources](/en/tutorials/codearea-theme).
 
-### 更多编辑器配置项
+### More Editor Configuration
 
-更多编辑器配置可以直接作为输入属性传递给组件，如下：
+More editor configurations can be passed directly as input props to the component, as follows:
 
 ```ts
 const options = { tabSize: 4, viewportMargin: Infinity };
@@ -55,4 +55,4 @@ const options = { tabSize: 4, viewportMargin: Infinity };
 }
 </style>
 
-所有可用的配置项请参考 [CodeMirror Options](https://codemirror.net/doc/manual.html#config)。
+Refer to [CodeMirror Options](https://codemirror.net/doc/manual.html#config) for all available configuration options.

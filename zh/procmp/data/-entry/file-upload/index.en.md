@@ -1,21 +1,21 @@
 ---
 title: Upload<pro>
-subtitle: 上传
+subtitle: Upload
 order: 0
 ---
 
-文件选择上传控件。
+File selection and upload control.
 
-上传回调及渲染交互与基础 Upload 组件有差别，注意根据需求选择使用，建议直接使用功能集成完善的 Attchment 组件。
+Upload callbacks and rendering interactions differ from the basic Upload component. Choose based on requirements; it is recommended to use the fully featured Attachment component.
 
-- ### 附件上传组件区别与选用指南：https://open.hand-china.com/choerodon-ui/zh/tutorials/attachment-upload
+- ### Attachment Upload Component Distinction And Selection Guide: https://open.hand-china.com/choerodon-ui/en/tutorials/attachment-upload
 
-## 何时使用
+## When To Use
 
-上传是将信息（网页、文字、图片、视频等）通过网页或者上传工具发布到远程服务器上的过程。
+Uploading is the process of publishing information (web pages, text, images, videos, etc.) to a remote server via a web page or upload tool.
 
-- 当需要上传一个或一些文件时。
+- When you need to upload one or multiple files.
 
-- 当需要展现上传的进度时。
+- When you need to display upload progress.
 
-- 当需要使用拖拽交互时。
+- When you need drag-and-drop interactions.

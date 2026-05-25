@@ -4,18 +4,18 @@ title: API
 
 ### Currency
 
-| 属性名 | 说明                                                                                                           | 类型   | 默认值 |
+| Property | Description | Type | Default |
 | -------- | -------------------------------------------------------------------------------------------------------------- | ------ | ------ |
-| currency | 货币代码，详见[Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |
+| currency | Currency code, see [Current currency & funds code list.](https://www.currency-iso.org/en/home/tables/table-a1.html) | string |
 
-更多属性请参考 [NumberField](/zh/procmp/data-entry/number-field/#NumberField)。
+For more properties, please refer to [NumberField](/en/procmp/data-entry/number-field/#NumberField).
 
-### Static method
+### Static Methods
 
-| 名称                         | 说明       | 属性名                                                                                                                                                                       |
+| Name | Description | Properties |
 | ---------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| format(value, lang, options) | 货币格式化 | value - 数值 lang - 语言代码 options - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
-| bigNumberFormat(value, lang, options, bigNumberTarget) | stringMode 字符串格式化(组件为 `Currency` 时, `bigNumberTarget` 传入 `currency`) | `value` - 字符串 `lang` - 语言代码 `options` - 详见[Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) - `BigNumberTarget` 可选值：`currency` \| `number-field` |
+| format(value, lang, options) | Currency formatting | value - number; lang - language code; options - see [Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) |
+| bigNumberFormat(value, lang, options, bigNumberTarget) | stringMode string formatting (when component is `Currency`, set `bigNumberTarget` to `currency`) | `value` - string; `lang` - language code; `options` - see [Intl.NumberFormatOptions](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat); `BigNumberTarget` options: `currency` \| `number-field` |
 
 
 <style>

@@ -1,12 +1,12 @@
 ---
 title: Output
-subtitle: 文本展示
+subtitle: Text Display
 order: 0
 ---
 
-展示文本。
+Display text.
 
-## 何时使用
+## When To Use
 
-单纯用于展示文本，常用在表单中。
+Used purely for displaying text, commonly used in forms.
 

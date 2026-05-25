@@ -1,15 +1,15 @@
 ---
 title: Cascader
-subtitle: 级联选择
+subtitle: Cascading Selection
 order: 0
 ---
 
-级联选择框。
+Cascading selection box.
 
-## 何时使用
+## When To Use
 
-- 需要从一组相关联的数据集合进行选择，例如省市区，公司层级，事物分类等。
-- 从一个较大的数据集合中进行选择时，用多级分类进行分隔，方便选择。
-- 比起 Select 组件，可以在同一个浮层中完成选择，有较好的体验。
+- Select from a set of related data, such as province/city/district, company hierarchy, or category.
+- When selecting from a large dataset, use multi-level categories to separate options for easier selection.
+- Compared with Select, choices can be completed within the same overlay for a better experience.
 
-> 注意: 组件支持多选，单选时候返回 value 为 `[a,b,c,d]`，多选返回值为`[[a,b,c,d],[a,b,c,d]]`
+> Note: The component supports multiple selection. In single selection, value returns `[a,b,c,d]`; in multiple selection, it returns `[[a,b,c,d],[a,b,c,d]]`.

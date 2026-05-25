@@ -4,15 +4,15 @@ title: API
 
 ### Board
 
-| 属性名 | 说明                                                                                                                                                                                                                           | 类型                                                                                                   | 默认值   | 版本   |
+| Property | Description | Type | Default | Version |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | -------- | ----- |
-| viewVisible | 控制组件视图渲染, 对应视图 false 视图新建和切换被隐藏 | \{ card: boolean, kanban: boolean, table: boolean\} \| boolean | true | 1.6.1 |
-| renderCommand | 渲染操作按钮 | ({ command, viewMode, record, dataSet }) => command |  | 1.6.1 |
-| onConfigChange | 配置切换事件 | (props) => void |  | 1.6.1 |
-| cardProps | 卡片配置 |  |  | 1.6.1 |
-| tableProps | 表格配置 |  |  | 1.6.1 |
-| kanbanProps | 看板配置 |  |  | 1.6.1 |
+| viewVisible | Controls view rendering. When the corresponding view is false, creating and switching views are hidden. | \{ card: boolean, kanban: boolean, table: boolean\} \| boolean | true | 1.6.1 |
+| renderCommand | Render action buttons. | ({ command, viewMode, record, dataSet }) => command |  | 1.6.1 |
+| onConfigChange | Configuration switch event. | (props) => void |  | 1.6.1 |
+| cardProps | Card configuration. |  |  | 1.6.1 |
+| tableProps | Table configuration. |  |  | 1.6.1 |
+| kanbanProps | Kanban configuration. | { isDragDropDisabled: boolean; allDsProps: DataSetProps; columnDsProps: DataSetProps; droppableProps: DroppableProps; draggableProps: DraggableProps; dragDropContext: DragDropContextProps; cardWidth?: 4 \| 6 \| 8 \| 12; } |  | 1.6.1 |
 
-更多属性请参考 [Table](/zh/procmp/data-display/table#API)。
-更多个性化存储实例请参考 [Table#用户个性化](/zh/procmp/data-display/table#用户个性化)。
+For more properties, please refer to [Table](/en/procmp/data-display/table#API).
+For more personalized storage examples, please refer to [Table#User Personalization](/en/procmp/data-display/table#user-personalization).
 

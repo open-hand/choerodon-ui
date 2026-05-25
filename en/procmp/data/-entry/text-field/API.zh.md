@@ -20,10 +20,12 @@ title: API
 | valueChangeAction | 触发值变更的动作, 可选值：blur \| input | blur |  | 1.1.0      |
 | wait | 设置值变更间隔时间，只有在 valueChangeAction 为 input 时起作用 | number | | 1.1.0     |
 | waitType | 设置值变更间隔类型，可选值：throttle \| debounce | string | debounce | 1.1.0    |
-| showLengthInfo | 是否显示长度信息 | boolean | | 1.4.0      |
+| showLengthInfo | 是否显示长度信息; 为 auto 时, 输入内容达 maxLength 80%, 自动显示长度信息 | boolean \| 'auto'(1.6.8) | | 1.4.0      |
 | border | 是否显示边框 | boolean | true | 1.4.4 |
 | isFlat | 自动宽度模式 | boolean | false | 1.4.5 |
 | forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  | 1.6.7 |
+| tooltip | 输入框 tooltip 配置 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
+| placeholderTooltip | 输入框 placeholder tooltip 配置, 空值有效 | TextTooltip \| \[TextTooltip, TooltipProps\] |  | 1.6.8 |
 
 更多属性请参考 [FormField](/zh/procmp/abstract/field#FormField)。
 

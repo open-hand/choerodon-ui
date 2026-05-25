@@ -2,27 +2,27 @@
 title: API
 ---
 
-| 属性 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| items | 响应对象队列，与children的renderProps参数及onChange的参数一一对应 | object[] | - |
-| disabled | 是否禁用响应 | boolean | - |
-| children | 子元素 | ReactNode \| (responsiveItems: any[]) => ReactNode | - |
-| onChange | 响应值变更钩子 | (responsiveItems: any[]) => void | - |
+| items | The response object queue corresponds to the renderProps parameter of children and the parameters of onChange one by one object[] | - |
+| disabled | Whether to disable the response | boolean | - |
+| children | Child Element | ReactNode \| (responsiveItems: any[]) => ReactNode | - |
+| onChange | Response value change hook | (responsiveItems: any[]) => void | - |
 
-## 方法
+## Method
 
-| 名称 | 描述 |
+| Name | Description |
 | --- | --- |
-| blur() | 移除焦点 |
-| focus() | 获取焦点 |
+| blur() | Remove Focus |
+| focus() | Get Focus |
 
 ### BreakPoints
 
-| 键值      | 响应视宽                                     |
+| Key-value | Response ViewWidth |
 |-----------|------------------------------------------|
 | xs  |  < 576px | 
 | sm  | >= 576px |
 | md  | >= 768px |
 | lg  | >= 992px | 
 | xl  | >= 1200px | 
-| xxl | >= 1600px | 
+| xxl | >= 1600px |

@@ -1,12 +1,12 @@
 ---
 title: ColorPicker
-subtitle: 颜色选择器
+subtitle: Color Picker
 order: 0
 ---
 
-取色器。
+Color picker.
 
-## 何时使用
+## When To Use
 
-需要获取颜色色值时。
+When you need to obtain color values.
 

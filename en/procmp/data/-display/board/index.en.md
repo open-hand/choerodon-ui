@@ -1,11 +1,11 @@
 ---
 title: Board
-subtitle: 看板
+subtitle: Board
 order: 0
 ---
 
-多视图切换查看。
+Switch between multiple views.
 
-## 何时使用
+## When To Use
 
-基于表格默认视图，结合后端接口实现多视图切换查看。(当前 demo 接口为本地 mock，存在新增视图重复、切换视图异常的情况，实际项目中使用无此问题。)
+Based on the Table default view, combined with backend APIs to switch between multiple views. (The current demo API is mocked locally, so you may see duplicate views when creating new ones or abnormal behavior when switching views. This does not occur in real projects.)

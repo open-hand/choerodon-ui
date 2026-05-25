@@ -1,11 +1,11 @@
 ---
 title: Currency
-subtitle: 货币输入框
+subtitle: Currency Input Field
 order: 0
 ---
 
-货币输入框。
+Currency input field.
 
-## 何时使用
+## When To Use
 
-当用户需要输入货币类型值时。
+When users need to enter currency values.

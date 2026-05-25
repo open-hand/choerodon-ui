@@ -1,12 +1,12 @@
 ---
 title: IconPicker
-subtitle: 图标选择框
+subtitle: Icon Picker
 order: 0
 ---
 
-图标选择框。
+Icon selection field.
 
-## 何时使用
+## When To Use
 
-当用户需要输入一个图标，可以点击标准输入框，弹出图标面板进行选择。
+When users need to enter an icon, click the standard input box to open the icon panel and make a selection.
 

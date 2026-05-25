@@ -2,8 +2,8 @@
 title: API
 ---
 
-| 属性名 | 说明           | 类型   | 默认值  | 版本 |
+| Property | Description | Type | Default | Version |
 | ----- | ------------- | ------ | ------- | ------- | 
-| loading | 加载中的开关 | boolean | false  | 1.5.4 |
+| loading | Loading state switch | boolean | false  | 1.5.4 |
 
-更多属性请参考 [CheckBox](/zh/procmp/data-entry/check-box/)。
+For more properties, please refer to [CheckBox](/en/procmp/data-entry/check-box/).

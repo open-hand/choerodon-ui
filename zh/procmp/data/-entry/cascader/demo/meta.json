@@ -171,6 +171,20 @@
       "order": 11,
       "screenshot": "",
       "category": "pro"
+    },
+    {
+      "filename": "checkable.js",
+      "title": {
+        "zh": "勾选框",
+        "en": "checkable"
+      },
+      "description": {
+        "zh": "可以设置勾选框, 批量勾选。\n",
+        "en": "You can set check boxes and batch check.\n"
+      },
+      "order": 12,
+      "screenshot": "",
+      "category": "pro"
     }
   ]
 }

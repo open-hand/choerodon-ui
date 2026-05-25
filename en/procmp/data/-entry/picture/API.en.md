@@ -2,55 +2,56 @@
 title: API
 ---
 
-| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| width | 宽度 | number |  |  |
-| height | 高度 | number |  |  |
-| src | 路径 | string |  |  |
-| border | 边框 | boolean |  |  |
-| block | 块级图片 | boolean | true |  |
-| lazy | 懒加载 | boolean |  |  |
-| modalProps | 图片预览弹窗属性，详情见[ModalProps](/en/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
-| preview | 可预览 | boolean | true |  |
-| previewUrl | 预览时的路径， 默认为src | string |  |  |
-| downloadUrl | 预览时的下载路径 | string \| Function |  | 1.5.1 |
-| previewTarget | 预览方式，若设置则通过 a 标签来预览， 默认是弹窗预览 | string |  |  |
-| index | 序号, 配合[Picture.Provider](#pictureprovider)进行组预览 | number |  |  |
-| status | 状态 | 'empty' \| 'loaded' \| 'error' \| 'loading' |  |  |
-| objectFit | 填充方式, [ObjectFit](#objectfit) | ObjectFit | 'fill' |  |
-| objectPosition | 指定图片在容器中的位置。 | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |  |
-| sources | 根据媒体查询显示不同的图片，IE 不支持，[Source](#source) | Source[] |   |  |
-| children | 代替图片渲染 | ReactNode |   |  |
+| width | Width | number |  |  |
+| height | Height | number |  |  |
+| src | Source URL | string |  |  |
+| border | Border | boolean |  |  |
+| block | Block-level image | boolean | true |  |
+| lazy | Lazy load | boolean |  |  |
+| modalProps | Image preview modal properties; see [ModalProps](/en/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
+| preview | Previewable | boolean | true |  |
+| previewUrl | Preview URL; defaults to src | string |  |  |
+| downloadUrl | Download URL in preview | string \| Function |  | 1.5.1 |
+| previewTarget | Preview method; if set, preview via anchor tag; default is modal preview | string |  |  |
+| index | Index; used with [Picture.Provider](#pictureprovider) for group preview | number |  |  |
+| status | Status | 'empty' \| 'loaded' \| 'error' \| 'loading' |  |  |
+| objectFit | Fill mode, see [ObjectFit](#objectfit) | ObjectFit | 'fill' |  |
+| objectPosition | Position of the image within its container | 'top' \| 'right' \| 'bottom' \| 'left' \| 'center' \| string | 'center' |  |
+| sources | Display different images based on media queries; IE not supported; see [Source](#source) | Source[] |   |  |
+| children | Render in place of image | ReactNode |   |  |
+| onBeforeClick | Executed before the click event (before image preview). When the return value is false, the default preview will not be executed. | () => (Promise<boolean \| void> \| boolean \| void) |  | 1.6.8 |
 
 ### Picture.Provider
 
-图片组预览提供者
+Provider for grouped image preview
 
-| 属性 | 说明 | 类型 | 默认值 | 版本 |
+| Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| modalProps | 图片预览弹窗属性，详情见[ModalProps](/en/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
+| modalProps | Image preview modal properties; see [ModalProps](/en/procmp/feedback/modal) | ModalProps |  | 1.6.2 |
 
 ### Picture.Context
 
-图片组预览上下文
+Context for grouped image preview
 
-| 属性 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| preview(index) | 打开预览 | Function |  |
+| preview(index) | Open preview | Function |  |
 
 ### ObjectFit
 
-| 属性 | 说明  | 
+| Property | Description  | 
 | --- | --- | 
-| fill | 不保证保持原有的比例，内容拉伸填充整个内容容器。 | 
-| contain | 保持原有尺寸比例。内容被缩放。 | 
-| cover | 保持原有尺寸比例。但部分内容可能被剪切。 | 
-| none | 保留原有元素内容的长度和宽度，也就是说内容不会被重置。 | 
-| scale-down | 保持原有尺寸比例。内容的尺寸与 none 或 contain 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些。 | 
+| fill | Does not ensure original aspect ratio; content stretches to fill the entire container. | 
+| contain | Preserves original aspect ratio; content is scaled. | 
+| cover | Preserves original aspect ratio; some content may be clipped. | 
+| none | Retains original content width and height; content is not reset. | 
+| scale-down | Preserves original aspect ratio; content size is the same as either none or contain, depending on which yields a smaller object size. | 
 
 ### Source
 
-| 属性 | 说明 | 类型 | 默认值 |
+| Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| media | 媒体查询， 如`(min-width: 800)` | string |  |
-| srcset | 图片路径， 当媒体查询匹配时显示 | string |  |
+| media | Media query, e.g., `(min-width: 800)` | string |  |
+| srcset | Image source displayed when media query matches | string |  |

@@ -87,6 +87,11 @@ const App = () => {
   const [value, setValue] = React.useState(
     '4c74a34a-fa37-4e92-be9d-5cf726fb1472',
   );
+
+  const handlePreview = (attachment) => {
+    console.log('handlePreview', attachment);
+  };
+
   const props = {
     label: '技术附件',
     labelLayout: 'float',
@@ -102,6 +107,9 @@ const App = () => {
     filesLengthLimitNotice: (defaultInfo) => {
       message.error(defaultInfo);
     },
+    enableDeleteAll: true,
+    onPreview: handlePreview,
+    directory: true,
   };
 
   const getPreviewUrl = (props) => {

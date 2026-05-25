@@ -1,13 +1,13 @@
 ---
 title: Lov
-subtitle: 弹出选择输入框
+subtitle: Popup Selection Input Field
 order: 0
 ---
 
-大数据值集取值表单控件。
+Form control for retrieving values from large data sets.
 
-## 何时使用
+## When To Use
 
-当用户需要从大数据列表中取值。
+When users need to select values from large data lists.
 
-> 需结合后端值集接口，配置对应字段属性。相关教程: [Lov](/zh/tutorials/lov)，优先级高于视图配置的属性开发者慎重修改，避免配置修改造成不一致。
+> Integrate with backend value set interfaces and configure corresponding field properties. Tutorial: [Lov](/en/tutorials/lov). Properties here take precedence over view configuration; modify cautiously to avoid inconsistencies.

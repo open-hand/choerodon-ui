@@ -14,7 +14,7 @@ title: API
 | 属性名 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
 | arrowPointAtCenter | 箭头是否指向目标元素中心 | boolean | false | |
-| autoAdjustOverflow | 气泡被遮挡时自动调整位置 | boolean | true | |
+| autoAdjustOverflow | 气泡被遮挡时自动调整位置; 可单独设置水平和垂直方向自动调整位置 | boolean \| { adjustX?: 0 \| 1; adjustY?: 0 \| 1; } | `true` | |
 | defaultHidden | 默认是否显隐 | boolean | true | |
 | mouseEnterDelay | 鼠标移入后延时多少才显示 Tooltip，单位：秒 | number | 0 | |
 | mouseLeaveDelay | 鼠标移出后延时多少才隐藏 Tooltip，单位：秒 | number | 0.1 | |
@@ -22,7 +22,8 @@ title: API
 | popupStyle | 卡片样式 | object |  | |
 | popupInnerStyle | 卡片内容样式 | object | | 1.6.0 |
 | placement | 气泡框位置，可选 top \| left \| right \| bottom \| topLeft \| topRight \| bottomLeft \| bottomRight \| leftTop \| leftBottom \| rightTop \| rightBottom | string | top | |
-| trigger | 触发行为，可选 hover/focus/click/contextMenu | string | hover | |
+| autoPlacement | 自动选择最佳气泡框位置 | boolean | [tooltipAutoPlacement](/zh/procmp/configure/configure) | 1.6.8 |
+| trigger | 触发行为，可选 hover/focus/click/contextMenu | Action\[\] | \['hover'\] | |
 | hidden | 用于手动控制浮层显隐 | boolean | true | |
 | onHiddenBeforeChange | 显示隐藏状态改变前的回调， 返回false将阻止该改变 | (hidden) => boolean | | |
 | onHiddenChange | 显示隐藏的回调 | (hidden) => void | | |

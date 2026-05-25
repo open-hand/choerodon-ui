@@ -1,13 +1,13 @@
 ---
 title: Picture
-subtitle: 图片
+subtitle: Picture
 order: 0
 ---
 
-图片组件。
+Picture component.
 
-## 何时使用
+## When To Use
 
-当用户需要图片展示时。
+When users need to display images.
 
-> 1.4.4 版本新增组件。
+> Added in version 1.4.4.

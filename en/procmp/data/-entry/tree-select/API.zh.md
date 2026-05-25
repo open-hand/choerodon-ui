@@ -13,6 +13,8 @@ title: API
 | treeDefaultExpandedKeys | 默认展开的树节点, 对应TreeNode的key或value | string\[] | - | 1.0.0  |
 | checkStrictly | checkable 状态下节点选择完全受控（父子节点选中状态不再关联）。此属性设置后 showCheckedStrategy 属性无效 | boolean |  | 1.6.4 |
 | showLine | 是否展示连接线 | boolean \| {showLeafIcon: boolean} | false | 1.6.7 |
+| async | 异步加载，需要后端接口配合，对应的数据源会自动调用查询接口，接口参数中会带有 parentField 对应的参数名和 idField 对应的参数值，接口返回的数据会附加到已有的数据之中 | boolean |  |  |
+| loadData | 异步加载数据 | function(node) | - |  |
 
 更多属性请参考  [Select](/zh/procmp/data-entry/select/#Select)。
 

@@ -2,6 +2,6 @@
 title: API
 ---
 
-> 内置邮件格式校验的输入框。
+> Input field with built-in email format validation.
 
-更多属性请参考 [TextField](/zh/procmp/data-entry/text-field/#TextField)。
+For more properties, please refer to [TextField](/en/procmp/data-entry/text-field/#TextField).

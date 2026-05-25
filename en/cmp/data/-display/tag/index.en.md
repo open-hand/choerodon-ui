@@ -1,6 +1,6 @@
 ---
 title: Tag
-subtitle: 标签
+subtitle: Tag
 order: 0
 ---
 

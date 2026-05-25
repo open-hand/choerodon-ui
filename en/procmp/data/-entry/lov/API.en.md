@@ -2,48 +2,48 @@
 title: API
 ---
 
-| 属性名       | 说明                                                 | 类型             | 默认值  | 版本 |
+| Property | Description | Type | Default | Version |
 | ---------- | ---------------------------------------------------- | ---------------- | ------- | --- |
-| modalProps | 弹窗属性，详见[ModalProps](/zh/procmp/feedback/modal/#Modal)，优先级高于视图配置  | object           |         ||
-| tableProps | 表格属性，详见[TableProps](/zh/procmp/data-display/table/#Table)，优先级高于视图配置（modal 参数仅在模态框模式下存在）  | object \| (lovTablePropsConfig, modal) => object |       |  |
-| noCache    | 弹窗时自动重新查询                                   | string\| boolean | false   ||
-| mode       | 显示模式，可选值: default \| button                 | string           | default ||
-| searchMatcher | 搜索器。当为字符串时，作为 lookup 的参数名来重新请求值列表。 | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 ||
-| paramMatcher | 参数匹配器。当为字符串时，进行参数拼接。 | string \| ({ record, text, textField, valueField }) => string | ||
-| searchAction | 搜索触发变更的动作, 可选值：blur \| input， | string | input || 1.1.1 |
-| fetchSingle | searchAction 为 blur 时生效，获取记录有重复时弹出选择窗口 | boolean | false | 1.1.1 |
-| autoSelectSingle | 点击查询仅存在一条数据时自动选中 | boolean | false | 1.3.2 |
-| showCheckedStrategy | 定义选中项回填的方式。SHOW_CHILD: 只显示子节点. SHOW_PARENT: 只显示父节点(当父节点下所有子节点都选中时). 默认显示所有选中节点(包括父节点). | string | SHOW_ALL | 1.4.2 |
-| onBeforeSelect | 确认勾选前回调，返回 false 弹窗不关闭。支持返回一个 Promise 对象(1.5.6)，Promise 对象 resolve(false) 或 reject 时弹窗不关闭。 | (records: Record \| Record[]) => boolean \| undefined |  | 1.4.4 |
-| onSearchMatcherChange | viewMode 为 popup 时，查询条选项值变更事件 | (searchMatcher?:string) => void \| undefined | | 1.5.0-beta.0 |
-| nodeRenderer | 树形展示节点渲染器 | (record: Record) => ReactNode |  | 1.5.0 |
-| viewRenderer | 自定义弹窗视图渲染器 | ({ dataSet }) => ReactNode |  | 1.5.0 |
-| viewMode | 弹窗视图渲染模式，可选值：modal \| drawer \| popup | string | modal | |
-| showSelectedInView | 多选时，viewMode 为 modal 或 drawer，在对话框中显示已选记录(TableProps 的 showSelectionTips会被设置为 false) | boolean |  | 1.5.0 |
-| selectionProps | 显示已选记录时的参数，详情见[selectionProps](#selectionprops) | object |  |  1.5.1  |
-| popupSearchMode | viewMode 为 popup 时，查询条件显示位置 | PopupSearchMode: 'single', 'multiple' | multiple | 1.5.7 |
-| showDetailWhenReadonly | 组件为 readOnly 或 disabled 时，可点击后缀查看选中项详情(需值集支持详情查询) | boolean |  | 1.6.6 |
+| modalProps | Popup properties; see [ModalProps](/en/procmp/feedback/modal/#Modal). Takes precedence over view configuration | object |  |  |
+| tableProps | Table properties; see [TableProps](/en/procmp/data-display/table/#Table). Takes precedence over view configuration (modal parameter exists only in modal mode) | object \| (lovTablePropsConfig, modal) => object |  |  |
+| noCache | Automatically re-query on popup | string\| boolean | false |  |
+| mode | Display mode; options: default \| button | string | default |  |
+| searchMatcher | Search matcher. When a string, used as lookup parameter name to re-fetch value list. | string \| ({ record, text, textField, valueField }) => boolean | ({ record, text, textField }) => record.get(textField).indexOf(text) !== -1 |  |
+| paramMatcher | Parameter matcher. When a string, performs parameter concatenation. | string \| ({ record, text, textField, valueField }) => string |  |  |
+| searchAction | Action that triggers search change; options: blur \| input | string | input | 1.1.1 |
+| fetchSingle | Effective when searchAction is blur; if multiple duplicate records found, popup selection window | boolean | false | 1.1.1 |
+| autoSelectSingle | Auto-select when only one data record exists after query; Button mode is not supported by default. Set `force` to support it. | boolean \| 'force'(1.6.8) | false | 1.3.2 |
+| showCheckedStrategy | Define how selected items are displayed. SHOW_CHILD: only show child nodes. SHOW_PARENT: only show parent nodes (when all children under parent are selected). Default shows all selected nodes (including parent nodes). | string | SHOW_ALL | 1.4.2 |
+| onBeforeSelect | Callback before confirming selection; return false keeps popup open. Supports returning a Promise (1.5.6); if Promise resolves(false) or rejects, popup stays open. | (records: Record \| Record[]) => boolean \| undefined |  | 1.4.4 |
+| onSearchMatcherChange | When viewMode is popup, event for changes in search bar option value | (searchMatcher?:string) => void \| undefined |  | 1.5.0-beta.0 |
+| nodeRenderer | Tree node renderer | (record: Record) => ReactNode |  | 1.5.0 |
+| viewRenderer | Custom popup view renderer | ({ dataSet }) => ReactNode |  | 1.5.0 |
+| viewMode | Popup view render mode; options: modal \| drawer \| popup | string | modal |  |
+| showSelectedInView | In multiple selection, when viewMode is modal or drawer, display selected records in dialog (TableProps showSelectionTips is set to false) | boolean |  | 1.5.0 |
+| selectionProps | Parameters when displaying selected records; see [selectionProps](#selectionprops) | object |  | 1.5.1 |
+| popupSearchMode | When viewMode is popup, position of search conditions | PopupSearchMode: 'single', 'multiple' | multiple | 1.5.7 |
+| showDetailWhenReadonly | When the component is readOnly or disabled, click suffix to view selected item details (value set must support detail query) | boolean |  | 1.6.6 |
 
-## selectionProps
+## SelectionProps
 
-> 1.5.1 版本新增属性。
+> Added in version 1.5.1.
 
-| 属性名       | 说明                   | 类型   | 默认值   |
+| Property | Description | Type | Default |
 | ----------- | ---------------------- | ------ | -------- |
-| nodeRenderer | 节点渲染器 | (record: Record) => ReactNode | |
-| placeholder | 已选记录为空时的默认文案 | string \| ReactNode  | |
+| nodeRenderer | Node renderer | (record: Record) => ReactNode | |
+| placeholder | Default text when selected records are empty | string \| ReactNode  | |
 
-更多属性请参考[Select](/zh/procmp/data-entry/select/#API), [TextField](/zh/procmp/data-entry/text-field/#TextField), [Button](/zh/procmp/general/button/#Button)。
+For more properties, please refer to [Select](/en/procmp/data-entry/select/#API), [TextField](/en/procmp/data-entry/text-field/#TextField), [Button](/en/procmp/general/button/#Button).
 
 ## Q & A
-### Lov多选时输入框显示过长
+### Lov Input Too Long In Multiple Selection
 
-参考 [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long) 说明，Lov 相同。
+Refer to [Select maxTagCount](/en/tutorials/select#when-set-multiple-then-input-field-too-long); Lov behaves the same.
 
-### 如何配置一个树形 Lov
+### How To Configure A Tree Lov
 
-参考 [Lov 树形教程示例](/en/tutorials/lov#树形-lov)。
+Refer to [Lov Tree Tutorial Example](/en/tutorials/lov#树形-lov).
 
 
-### Lov 搜索下拉弹出规则
-参考 [Lov 搜索下拉菜单弹出规则](/en/tutorials/lov#搜索下拉菜单)。
+### Lov Search Dropdown Popup Rules
+Refer to [Lov Search Dropdown Popup Rules](/en/tutorials/lov#搜索下拉菜单).

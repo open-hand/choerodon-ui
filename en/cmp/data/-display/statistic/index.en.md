@@ -1,6 +1,6 @@
 ---
 title: Statistic
-subtitle: 数值统计
+subtitle: Numerical statistics
 order: 0
 ---
 

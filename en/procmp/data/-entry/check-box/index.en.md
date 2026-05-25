@@ -1,14 +1,14 @@
 ---
 title: CheckBox
-subtitle: 多选框
+subtitle: Checkbox
 order: 0
 ---
 
-多选框。
+A checkbox.
 
-## 何时使用
+## When To Use
 
-- 在一组可选项中进行多项选择时；
-- 单独使用可以表示两种状态之间的切换，和 `Switch` 类似。
+- Select multiple items from a set of options.
+- Used alone to toggle between two states, similar to `Switch`.
 
 
