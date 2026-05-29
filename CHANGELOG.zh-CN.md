@@ -62,6 +62,8 @@ timeline: true
 - 🐞 `<pro>Table`: 修复动态筛选条因参数中存在对象类型的值导致保存查询条件报错的问题。
 - 🐞 `<pro>Modal`: 在打开 modal 又立马关闭的场景, 后续打开其他 modal, 修复层级显示不正确的问题。
 - 🐞 `<pro>Attachment`: 修复批量删除时 onRemove 获取不到附件信息。
+- 🐞 `<pro>DatePicker`: 修复 renderExtraFooter 自定义快捷区间选择受旧范围值干扰导致起始日期异常的问题。
+
 
 ## 1.6.8
 
