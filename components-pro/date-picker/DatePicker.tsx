@@ -546,10 +546,25 @@ export default class DatePicker extends TriggerField<DatePickerProps>
 
   handleCustomChoose(value?: Moment | [Moment | undefined, Moment | undefined]) {
     if (isArray(value)) {
+      const [start, end] = value;
+      // 传入完整 range 值时，清除旧的临时范围值再重新选择
+      if (this.range && start && end) {
+        runInAction(() => {
+          this.hoverValue = undefined;
+          this.rangeValue = [undefined, undefined];
+        });
+        this.setRangeTarget(0);
+        this.choose(start);
+        if (this.rangeTarget === 1 && this.rangeValue?.[0]) {
+          this.choose(end);
+        }
+        return;
+      }
+      // 传入不完整 range 值时，单独选择
       value.forEach((date: Moment | undefined, index: number) => {
-        if (index < 2) {
+        if (index < 2 && date) {
           this.setRangeTarget(index);
-          this.choose(date as Moment);
+          this.choose(date);
         }
       });
     } else {

@@ -62,6 +62,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where saving query conditions would fail due to object-type values in the parameters of the dynamic filter bar.
 - 🐞 `<pro>Modal`: In the scenario where a `modal` is opened and then immediately closed, when opening other `modal` subsequently, fix the issue of incorrect display of the hierarchy.
 - 🐞 `<pro>Attachment`: Fixed the issue where `onRemove` could not retrieve attachment information during batch deletion.
+- 🐞 `<pro>DatePicker`: Fixed the issue where the custom quick range selection in renderExtraFooter was affected by old range values, causing the start date to be abnormal.
 
 ## 1.6.8
 
