@@ -45,7 +45,8 @@ const Demo = () => {
                 rotate
                 zoom
                 grid
-                aspect={12 / 13}
+                aspect="12 / 13"
+                showAspectInput
             />
         </>
     )

@@ -50,6 +50,10 @@ export default {
     fold: '折る',
     unfold: '展開する',
   },
+  imageCrop: {
+    displayInActualSize: '実際のサイズで表示',
+    aspectInputTitle: '裁断領域の幅高さ比、幅／高さ',
+  },
   Notification: {
     total: '合計',
     message: 'つのメッセージ',

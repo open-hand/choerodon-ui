@@ -71,6 +71,8 @@ export default {
     cancelButton:'Cancel',
     saveButton:'Save',
     changeAvatar:'Modify avatar',
+    displayInActualSize: 'Display in actual size',
+    aspectInputTitle: 'Crop area aspect ratio, width / height',
   },
   PerformanceTable: {
     emptyMessage: 'No data found',

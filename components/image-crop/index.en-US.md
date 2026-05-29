@@ -15,7 +15,7 @@ crop the image.
 
 | Property | Description | Type | Default |
 | ----------- | -------------------- | -------------- | ----------------------------------------------------------- |
-| aspect      | Aspect of crop area ,  width / height                       |  number              |  1 / 1         | 
+| aspect      | Aspect of crop area ,  width / height. When set to a format with '/' string, it will be displayed in the aspect ratio input box (for example: '1/1')                       |  number \| string              |  1 / 1         | 
 | shape       | Shape of crop area,  'rect'  or  'round'                    |  string              |  'rect'        |
 | grid        | Show grid of crop area (third-lines)                        |  boolean             |  false         |
 | zoom        | Enable zoom for image                                       |  boolean             |  true          |
@@ -28,6 +28,7 @@ crop the image.
 | onCropComplete   | crop complete callback|({ url: string, blob: Blob, area: Area }) => void        |            |
 | cropContent   | crop area render | (crop: ReactElement&lt;EasyCropProps&gt;) => React.ReactElement&lt;any&gt;      |            |
 | modalProps   | modal props can't change the  onOk ， onCancel  | ModalProps     |            |
+| showAspectInput   | Display the aspect ratio input box, which allows for customizable adjustment of the width and height ratio of the cropping area. | boolean     |            |
 
 
 ## ImgCrop.AvatarUploader 

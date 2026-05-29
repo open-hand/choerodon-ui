@@ -70,6 +70,8 @@ export default {
     cancelButton:'取消',
     saveButton:'保存',
     changeAvatar:'修改头像',
+    displayInActualSize: '按实际大小显示',
+    aspectInputTitle: '裁切区域宽高比, 宽 / 高',
   },
   PerformanceTable: {
     emptyMessage: '暂无数据',

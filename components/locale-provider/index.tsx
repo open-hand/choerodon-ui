@@ -52,6 +52,8 @@ export interface imageCrop {
   cancelButton: string;
   saveButton: string;
   changeAvatar: string;
+  displayInActualSize: string;
+  aspectInputTitle: string;
 }
 
 export interface PerformanceTable {

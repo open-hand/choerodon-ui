@@ -16,6 +16,7 @@ import { getRuntimeLocale } from '../locale-provider/utils';
 import { imageCrop } from '../locale-provider';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from '.';
+import Tooltip from '../tooltip';
 
 const Dragger = Upload.Dragger;
 const { round } = Math;
@@ -341,60 +342,75 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     };
 
     return (
-      <div>
-        <div className={`${prefixCls}-wraper`}>
-          <div className={`${prefixCls}-edit`} style={style}>
-            <Cropper
-              image={src}
-              crop={crop}
-              showGrid={false}
-              cropSize={{ width: cropSize, height: cropSize }}
-              zoom={zoom}
-              minZoom={MIN_ZOOM}
-              maxZoom={MAX_ZOOM}
-              restrictPosition={false}
-              rotation={rotate}
-              aspect={1 / 1}
-              onCropChange={(crop): void => this.setState({ crop })}
-              onCropComplete={({ x, y }): void => this.onComplete({ x, y, cropSize })}
-              onZoomChange={(zoom): void => {
-                this.setState({ zoom });
-              }}
-            />
-          </div>
-          <div className={`${prefixCls}-preview`}>
-            {renderPreviewTitle()}
-            {this.renderPreviewItem(previewList)}
-          </div>
-        </div>
-        <div className={`${prefixCls}-button`} style={{ width: editorWidth }}>
-          <ButtonGroup>
-            <Button
-              funcType="raised"
-              icon="zoom_in"
-              disabled={isMaxZoom}
-              onClick={(): void => this.zoomImage('add')}
-            />
-            <Button
-              funcType="raised"
-              icon="zoom_out"
-              disabled={isMinZoom}
-              onClick={(): void => this.zoomImage('sub')}
-            />
-          </ButtonGroup>
-          <Button
-            funcType="raised"
-            icon="play_90"
-            onClick={(): void => this.setState({ rotate: (rotate + 90) >= 360 ? 0 : (rotate + 90) })}
-          />
-          <Button funcType="raised" onClick={(): void => this.zoomImage('init')}>1:1</Button>
-          <Upload {...props}>
-            <Button funcType="raised" icon="file_upload">
-              <span>{reloadTitle || Avatarlocale.reUpload}</span>
-            </Button>
-          </Upload>
-        </div>
-      </div>
+      <LocaleReceiver componentName="imageCrop" defaultLocale={getRuntimeLocale().imageCrop || {}}>
+        {(localeProp: object) => {
+          const locale: imageCrop = localeProp as imageCrop;
+          return (
+            <div>
+              <div className={`${prefixCls}-wraper`}>
+                <div className={`${prefixCls}-edit`} style={style}>
+                  <Cropper
+                    image={src}
+                    crop={crop}
+                    showGrid={false}
+                    cropSize={{ width: cropSize, height: cropSize }}
+                    zoom={zoom}
+                    minZoom={MIN_ZOOM}
+                    maxZoom={MAX_ZOOM}
+                    restrictPosition={false}
+                    rotation={rotate}
+                    aspect={1 / 1}
+                    onCropChange={(crop): void => this.setState({ crop })}
+                    onCropComplete={({ x, y }): void => this.onComplete({ x, y, cropSize })}
+                    onZoomChange={(zoom): void => {
+                      this.setState({ zoom });
+                    }}
+                  />
+                </div>
+                <div className={`${prefixCls}-preview`}>
+                  {renderPreviewTitle()}
+                  {this.renderPreviewItem(previewList)}
+                </div>
+              </div>
+              <div className={`${prefixCls}-button`} style={{ width: editorWidth }}>
+                <ButtonGroup>
+                  <Button
+                    funcType="raised"
+                    icon="zoom_in"
+                    disabled={isMaxZoom}
+                    onClick={(): void => this.zoomImage('add')}
+                  />
+                  <Button
+                    funcType="raised"
+                    icon="zoom_out"
+                    disabled={isMinZoom}
+                    onClick={(): void => this.zoomImage('sub')}
+                  />
+                </ButtonGroup>
+                <Button
+                  funcType="raised"
+                  icon="play_90"
+                  onClick={(): void => this.setState({ rotate: (rotate + 90) >= 360 ? 0 : (rotate + 90) })}
+                />
+                <Tooltip placement='bottom' title={locale && locale.displayInActualSize ? locale.displayInActualSize : 'Display in actual size'}>
+                  <Button
+                    funcType="raised"
+                    onClick={(): void => this.zoomImage('init')}
+                    className={`${prefixCls}-btn-actual-size`}
+                    icon='1:1'
+                    renderIcon={() => (<span className={`${prefixCls}-icon-actual-size`}>1:1</span>)}
+                  />
+                </Tooltip>
+                <Upload {...props}>
+                  <Button funcType="raised" icon="file_upload">
+                    <span>{reloadTitle || Avatarlocale.reUpload}</span>
+                  </Button>
+                </Upload>
+              </div>
+            </div>
+          );
+        }}
+      </LocaleReceiver>
     );
   }
 
