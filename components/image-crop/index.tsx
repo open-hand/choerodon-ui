@@ -1,6 +1,7 @@
-import React, { forwardRef, ReactElement, Ref, useCallback, useContext, useRef, useState } from 'react';
+import React, { forwardRef, ReactElement, Ref, useCallback, useContext, useRef, useState, useEffect, useMemo } from 'react';
 import Cropper from 'react-easy-crop';
 import isFunction from 'lodash/isFunction';
+import ObserverNumberField from 'choerodon-ui/pro/lib/number-field/NumberField';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import Modal, { ModalProps } from '../modal';
 import { UploadFile, UploadProps } from '../upload/interface';
@@ -12,6 +13,7 @@ import AvatarUploader from './avatarUpload';
 import { ShapeCroper } from './enum';
 import { imageCrop } from '../locale-provider';
 import ConfigContext from '../config-provider/ConfigContext';
+import Tooltip from '../tooltip';
 
 // ssr
 if (typeof window !== 'undefined') {
@@ -100,7 +102,7 @@ export interface EasyCropProps {
 }
 
 export interface ImgCropProps {
-  aspect?: number;
+  aspect?: number | string;
   shape?: ShapeCroper;
   zoom?: boolean;
   grid?: boolean;
@@ -133,6 +135,7 @@ export interface ImgCropProps {
   prefixCls?: string;
   serverCrop?: boolean;
   rotateStep?: number;
+  showAspectInput?: boolean;
 }
 
 const EasyCrop = forwardRef<unknown, EasyCropProps>((props, ref: Ref<Cropper>) => {
@@ -199,7 +202,7 @@ const imageToCanvas = (image) => {
 
 const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const {
-    aspect,
+    aspect: aspectProp = 1,
     shape,
     grid,
     zoom,
@@ -220,6 +223,7 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
     cropContent,
     onCropComplete,
     prefixCls: customizePrefixCls,
+    showAspectInput,
   } = props;
   const { getPrefixCls } = useContext(ConfigContext);
 
@@ -233,6 +237,22 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const [src, setSrc] = useState('');
   const [zoomVal, setZoomVal] = useState(1);
   const [rotateVal, setRotateVal] = useState(0);
+
+  const [aspectWidth, setAspectWidth] = useState<number>();
+  const [aspectHeight, setAspectHeight] = useState<number>();
+  useEffect(() => {
+    if (typeof aspectProp === 'string' && aspectProp.includes('/')) {
+      const [aspectWidth, aspectHeight] = aspectProp.replace(' ', '').split('/').map((item) => Number(item));
+      setAspectWidth(aspectWidth);
+      setAspectHeight(aspectHeight);
+    }
+  }, [aspectProp, setAspectWidth, setAspectHeight]);
+  const aspect = useMemo(() => {
+    if (aspectWidth && aspectHeight) {
+      return aspectWidth / aspectHeight;
+    }
+    return Number(aspectProp) || 1;
+  }, [aspectWidth, aspectHeight, aspectProp]);
 
   const beforeUploadRef = React.useRef<(file: UploadFile, FileList: UploadFile[]) => boolean | PromiseLike<any | Blob>>(); // 返回上传组件的上传之前的钩子函数
   const fileRef = React.useRef<UploadFile>(); // 记录文件的参数
@@ -487,7 +507,8 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
   const okButtonProps: ButtonProps = { funcType: 'raised', type: 'primary' };
   return (
     <LocaleReceiver componentName="imageCrop" defaultLocale={getRuntimeLocale().imageCrop || {}}>
-      {(locale: imageCrop) => {
+      {(localeProp: object) => {
+        const locale: imageCrop = localeProp as imageCrop;
         return (
           <>
             {renderUpload()}
@@ -524,7 +545,34 @@ const ImgCrop = forwardRef(function ImgCrop(props: ImgCropProps, ref) {
                       onClick={addRotateVal}
                     />
                   }
-                  {hasZoom && <Button funcType="raised" onClick={initVal}>1:1</Button>}
+                  {hasZoom && (
+                    <Tooltip placement='bottom' title={locale && locale.displayInActualSize ? locale.displayInActualSize : 'Display in actual size'}>
+                      <Button
+                        funcType="raised"
+                        onClick={initVal}
+                        className={`${prefixCls}-btn-actual-size`}
+                        icon='1:1'
+                        renderIcon={() => (<span className={`${prefixCls}-icon-actual-size`}>1:1</span>)}
+                      />
+                    </Tooltip>
+                  )}
+                  {showAspectInput && (
+                    <Tooltip placement='bottom' title={locale && locale.aspectInputTitle ? locale.aspectInputTitle : 'Crop area aspect ratio, width / height'}>
+                      <div className={`${prefixCls}-aspect-input`}>
+                        <ObserverNumberField
+                          className={`${prefixCls}-aspect-input-width`}
+                          value={aspectWidth}
+                          onChange={setAspectWidth}
+                        />
+                        <span className={`${prefixCls}-aspect-input-divider`}>/</span>
+                        <ObserverNumberField
+                          className={`${prefixCls}-aspect-input-height`}
+                          value={aspectHeight}
+                          onChange={setAspectHeight}
+                        />
+                      </div>
+                    </Tooltip>
+                  )}
                 </div>
               </Modal>
             )}

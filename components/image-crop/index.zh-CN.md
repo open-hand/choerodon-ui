@@ -16,7 +16,7 @@ subtitle: 图片裁剪
 
 | 参数 | 说明 | 类型 | 默认值 |
 | ----------- | -------------------- | ------------ | ---------------------------------------------- |
-| aspect      | 裁切区域宽高比， width / height                |  number              |  1 / 1       |
+| aspect      | 裁切区域宽高比， width / height。 当设置为带'/'字符串格式时, 将回显到宽高比输入框中(例如: '1/1')                |  number \| string              |  1 / 1       |
 | shape       | 裁切区域形状， 'rect'  或  'round'             |  string              |  'rect'      |
 | grid        | 显示裁切区域网格（九宫格）                     |  boolean             |  false       |
 | zoom        | 启用图片缩放                                   |  boolean             |  true        |
@@ -30,6 +30,7 @@ subtitle: 图片裁剪
 | onCropComplete   | 裁剪完毕触发方法 |({ url: string, blob: Blob, area: Area }) => void        |            |
 | cropContent   | 修改裁剪编辑位置的渲染 | (crop: ReactElement&lt;EasyCropProps&gt;) => React.ReactElement&lt;any&gt;      |            |
 | modalProps   | modal 的属性配置不可以更改onOk，onCancel | ModalProps     |            |
+| showAspectInput   | 显示宽高比输入框, 可自定义调整裁切区域宽高比 | boolean     |            |
 
 ## ImgCrop.AvatarUploader 
 
