@@ -1,3 +1,4 @@
 import Lov from './Lov';
+import ModalProvider from '../modal-provider';
 
-export default Lov;
+export default ModalProvider.injectModal(Lov);

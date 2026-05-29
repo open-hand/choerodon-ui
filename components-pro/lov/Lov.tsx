@@ -41,6 +41,7 @@ import { TableProps, TableQueryBarHook, TableQueryBarHookProps } from '../table/
 import isIE from '../_util/isIE';
 import { TextFieldProps } from '../text-field/TextField';
 import { ModalChildrenProps, ModalProxy } from '../modal/interface';
+import { ModalContextValue } from '../modal-provider/ModalContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import mergeProps from '../_util/mergeProps';
 import { getRecords } from './SelectionList';
@@ -111,6 +112,7 @@ export interface LovProps extends SelectProps, ButtonProps {
   selectionProps?: SelectionProps;
   popupSearchMode?: PopupSearchMode;
   showDetailWhenReadonly?: boolean;
+  Modal?: ModalContextValue;
 }
 
 @observer
@@ -637,7 +639,7 @@ export default class Lov extends Select<LovProps> {
   private openModal(fetchSingle?: boolean) {
     this.collapse();
     const { viewMode, showDetailWhenReadonly } = this;
-    const { onBeforeSelect, viewRenderer, addNewOptionPrompt } = this.props;
+    const { onBeforeSelect, viewRenderer, addNewOptionPrompt, Modal: modalContext } = this.props;
     const drawer = viewMode === TriggerViewMode.drawer;
     if (viewMode === TriggerViewMode.modal || drawer) {
       const config = this.getConfig();
@@ -676,7 +678,7 @@ export default class Lov extends Select<LovProps> {
             renderAddNewOptionPrompt: isFunction(addNewOptionPrompt) || (addNewOptionPrompt && addNewOptionPrompt.path)
               ? this.renderAddNewOptionPrompt : undefined,
           }
-          this.modal = Modal.open(mergeProps<ModalProps>({
+          this.modal = (modalContext || Modal).open(mergeProps<ModalProps>({
             title: title || this.getLabel(),
             children: isFunction(originalTableProps) ? null : (
               <LovView
