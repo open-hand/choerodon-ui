@@ -1,9 +1,10 @@
 import { getContext, Symbols } from 'choerodon-ui/shared';
 import { ModalProps } from '../modal/Modal';
+import { ModalProxy } from '../modal/interface';
 import { open } from '../modal-container/ModalContainer';
 
 export interface ModalContextValue {
-  open: (props: ModalProps) => void;
+  open: (props: ModalProps) => ModalProxy | void;
   location?: { pathname: string };
 }
 
