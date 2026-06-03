@@ -90,7 +90,9 @@ function measureTextWidthFirefox(text: string, style?: CSSProperties | CSSStyleD
   if (typeof window !== 'undefined') {
     const span = document.createElement('span');
     span.style.cssText = 'position: absolute;top: -9999px;display: inline-block';
-    span.innerHTML = text.replace(/\s/g, '&nbsp;');
+    // 使用 textContent 而非 innerHTML，避免将用户输入的字符串解析为 HTML 触发 XSS, 例: <details/open/ontoggle=alert(100+3+5)>
+    // 空格字符使用 Unicode 不间断空格 \u00A0 代替 HTML 实体 &nbsp;
+    span.textContent = text.replace(/\s/g, '\u00A0');
     if (style) {
       ['font', 'fontSize', 'letterSpacing', 'wordSpacing', 'textTransform'].forEach((property) => {
         if (property in style) {
