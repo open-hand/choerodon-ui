@@ -1,10 +1,48 @@
-import React, { ReactNode } from 'react';
+import React, { cloneElement, isValidElement, ReactNode } from 'react';
 import noop from 'lodash/noop';
 import ModalManager from '../modal-manager';
 import { ModalProps } from './Modal';
 import { getContainer, open } from '../modal-container/ModalContainer';
 import Icon from '../icon';
+import { ModalChildrenProps } from './interface';
 import { confirmProps, normalizeProps } from './utils';
+
+type ConfirmChildrenProps = {
+  prefixCls: string;
+  children?: ReactNode;
+  iconNode?: ReactNode;
+  titleNode?: ReactNode;
+  type?: string;
+  modal?: ModalChildrenProps;
+};
+
+function ConfirmChildren({
+  prefixCls,
+  children,
+  iconNode,
+  titleNode,
+  modal,
+}: ConfirmChildrenProps) {
+  const contentNode = children && (
+    <div className={`${prefixCls}-content`}>
+      {isValidElement(children) ? cloneElement<any>(children, { modal }) : children}
+    </div>
+  );
+
+  return (
+    <table className={prefixCls}>
+      <tbody>
+        <tr>
+          {iconNode}
+          <td>
+            {titleNode}
+            {contentNode}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
 
 export default async function confirm(props: ModalProps & confirmProps | ReactNode) {
   const container = await getContainer();
@@ -22,7 +60,6 @@ export default async function confirm(props: ModalProps & confirmProps | ReactNo
   } = normalizeProps(props);
   const prefixCls = container.context.getProPrefixCls('confirm');
   const titleNode = title && <div className={`${prefixCls}-title`}>{title}</div>;
-  const contentNode = children && <div className={`${prefixCls}-content`}>{children}</div>;
   const iconNode = iconType && (
     <td className={`${prefixCls}-icon ${prefixCls}-${type}`}>
       <Icon type={iconType} />
@@ -39,17 +76,9 @@ export default async function confirm(props: ModalProps & confirmProps | ReactNo
       movable: false,
       style: { width: '4.16rem' },
       children: (
-        <table className={prefixCls}>
-          <tbody>
-            <tr>
-              {iconNode}
-              <td>
-                {titleNode}
-                {contentNode}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ConfirmChildren prefixCls={prefixCls} iconNode={iconNode} titleNode={titleNode}>
+          {children}
+        </ConfirmChildren>
       ),
       onOk: async () => {
         const result = await onOk();

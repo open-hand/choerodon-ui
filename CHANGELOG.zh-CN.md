@@ -39,6 +39,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化动态筛选条的筛选列表的默认 tag 显示逻辑。
 - 💄 `<pro>Attachment`: 优化分片上传支持触发 onUploadProgress，并新增 progressThrottle 属性支持对其进行节流控制。
 - 💄 `<pro>Lov`: 优化弹窗在 ModalProvider 下的显示位置。
+- 💄 `<pro>Modal`: 优化 Modal.confirm，支持 children 组件从 props 中获取 modal 对象。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
