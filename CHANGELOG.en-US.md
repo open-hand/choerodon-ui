@@ -65,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Modal`: In the scenario where a `modal` is opened and then immediately closed, when opening other `modal` subsequently, fix the issue of incorrect display of the hierarchy.
 - 🐞 `<pro>Attachment`: Fixed the issue where `onRemove` could not retrieve attachment information during batch deletion.
 - 🐞 `<pro>DatePicker`: Fixed the issue where the custom quick range selection in renderExtraFooter was affected by old range values, causing the start date to be abnormal.
+- 🐞 `<pro>TextField`: Fix the issue where, in the controlled mode, after modifying the `value` during input, the input box does not display the latest value.
 
 ## 1.6.8
 

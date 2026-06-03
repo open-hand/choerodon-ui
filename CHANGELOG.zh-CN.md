@@ -65,6 +65,7 @@ timeline: true
 - 🐞 `<pro>Modal`: 在打开 modal 又立马关闭的场景, 后续打开其他 modal, 修复层级显示不正确的问题。
 - 🐞 `<pro>Attachment`: 修复批量删除时 onRemove 获取不到附件信息。
 - 🐞 `<pro>DatePicker`: 修复 renderExtraFooter 自定义快捷区间选择受旧范围值干扰导致起始日期异常的问题。
+- 🐞 `<pro>TextField`: 修复受控模式下, 输入过程中修改 value 后, 输入框未显示最新值的问题。
 
 
 ## 1.6.8
