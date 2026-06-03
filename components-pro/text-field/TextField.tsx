@@ -414,8 +414,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (wait !== nextProps.wait || waitType !== nextProps.waitType) {
       this.handleChangeWait = this.getHandleChange(nextProps);
     }
-    if (this.valueChangeAction === ValueChangeAction.input && this.isFocus &&
-      !this.multiple && !this.range && !this.record && this.text !== nextProps.value) {
+    if (this.isFocus && !this.multiple && !this.range && !this.record &&
+      this.text && this.props.value !== nextProps.value) {
       this.setText(undefined);
     }
   }
