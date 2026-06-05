@@ -2232,6 +2232,12 @@ export default class Table extends DataSetComponent<TableProps> {
     const globalTableSpinProps = this.getContextConfig('tableSpinProps');
     const localTableSpinProps = this.getSpinProps();
     const tableSpinProps: SpinProps | undefined = globalTableSpinProps ? mergeProps<SpinProps>(mergeProps<SpinProps>({}, globalTableSpinProps), localTableSpinProps) : localTableSpinProps;
+    // 关掉 进入和退出 动画, 表格高度变化时, 避免loading上下移动, 导致闪烁的问题
+    const spinAnimateProps = {
+      transitionEnter: false,
+      transitionLeave: false,
+      transitionAppear: false,
+    };
     const tableButtonsLimit = isNil(buttonsLimit) ? this.getContextConfig('tableButtonsLimit') : buttonsLimit;
     return (
       <ReactResizeObserver resizeProp="width" onResize={this.handleResize}>
@@ -2283,7 +2289,7 @@ export default class Table extends DataSetComponent<TableProps> {
               />
               <ErrorBar dataSet={dataSet} prefixCls={prefixCls} />
             </TableSibling>
-            <Spin animateProps={{ transitionLeave: false }} {...tableSpinProps} key="content">
+            <Spin animateProps={spinAnimateProps} {...tableSpinProps} key="content">
               <div {...this.getOtherProps()}>
                 <div
                   className={classNames(`${prefixCls}-content`, {
