@@ -1559,6 +1559,7 @@ export default class Table extends DataSetComponent<TableProps> {
           const copyData: string[] = [];
           for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
             const record = this.dataSet.records[i];
+            const rowDataIndex = record.id;
             for (let j = minColIndex; j <= maxColIndex; j++) {
               let recordData;
               const fieldName = columns[j].column.name || String(columns[j].column.key || '');
@@ -1584,7 +1585,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     }
                     if (columns[j] && columns[j].column.renderer) {
                       const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                      const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td[class*="-table-cell"]')[j];
+                      const td = getTBodyElement?.querySelector(`tr[data-index="${rowDataIndex}"]`)?.querySelectorAll('td[class*="-table-cell"]')[j];
                       recordData = td ? (td as HTMLTableCellElement).innerText : null;
                     }
                   } else if (fieldType === FieldType.object) {
@@ -1596,7 +1597,7 @@ export default class Table extends DataSetComponent<TableProps> {
                   }
                 } else if (columns[j] && columns[j].column.renderer) {
                   const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                  const td = getTBodyElement?.querySelectorAll('tr')[i].querySelectorAll('td[class*="-table-cell"]')[j];
+                  const td = getTBodyElement?.querySelector(`tr[data-index="${rowDataIndex}"]`)?.querySelectorAll('td[class*="-table-cell"]')[j];
                   recordData = td ? (td as HTMLTableCellElement).innerText : null;
                 }
               }

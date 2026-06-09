@@ -3530,8 +3530,12 @@ export default class TableStore {
   @action
   calcArrangeValue() {
     this.dragCorner = false;
-    const { colIndex: startColIndex, rowIndex: startRowIndex } = this.startChooseCell!;
-    const { colIndex: endColIndex, rowIndex: endRowIndex } = this.endChooseCell!;
+    // 选择过程中触发滚动导致取消选择后，startChooseCell 和 endChooseCell 为 null
+    if (!this.startChooseCell || !this.endChooseCell) {
+      return;
+    }
+    const { colIndex: startColIndex, rowIndex: startRowIndex } = this.startChooseCell;
+    const { colIndex: endColIndex, rowIndex: endRowIndex } = this.endChooseCell;
 
     const data = this.currentData.map(x => x.toData());
     const cols = this.columns.filter(x => !x.hidden);
