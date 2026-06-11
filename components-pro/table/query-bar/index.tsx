@@ -183,7 +183,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
     return TableContext;
   }
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   exportModal;
 
@@ -593,7 +593,7 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
         } else if (isObject(button)) {
           children.push(
             <Menu.Item hidden={props.hidden} key={(button as ButtonProps).key}> 
-              <Button {...tableButtonProps} {...button} funcType={FuncType.link}/>
+              <Button {...tableButtonProps} {...(button as ButtonProps)} funcType={FuncType.link}/>
             </Menu.Item>,
           );
         }
@@ -734,9 +734,9 @@ export default class TableQueryBar extends Component<TableQueryBarProps> {
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           if (queryBar === TableQueryBarType.filterBar) {
-            const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
-            const clearButton = isValidElement(element) && element.props.clearButton !== undefined ? element.props.clearButton : true;
-            const forceShowRangeSeparator = isValidElement(element) && element.props.forceShowRangeSeparator !== undefined ? element.props.forceShowRangeSeparator : true;
+            const placeholder = isValidElement(element) && (element as React.ReactElement<any>).props.placeholder ? (element as React.ReactElement<any>).props.placeholder : getPlaceholderByField(field, current);
+            const clearButton = isValidElement(element) && (element as React.ReactElement<any>).props.clearButton !== undefined ? (element as React.ReactElement<any>).props.clearButton : true;
+            const forceShowRangeSeparator = isValidElement(element) && (element as React.ReactElement<any>).props.forceShowRangeSeparator !== undefined ? (element as React.ReactElement<any>).props.forceShowRangeSeparator : true;
             filterBarProps = {
               placeholder,
               border: false,

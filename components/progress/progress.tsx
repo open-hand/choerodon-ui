@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import Icon from '../icon';
 import { Circle } from '../rc-components/progress';
@@ -59,7 +59,7 @@ export default class Progress extends Component<ProgressProps, {}> {
     size: Size.default,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   renderPointer = () => {
     const props = this.props;

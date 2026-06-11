@@ -1,4 +1,4 @@
-import React, {
+﻿import React, {
   cloneElement,
   Component,
   CSSProperties,
@@ -120,7 +120,7 @@ export default class TableComboBar extends Component<TableComboBarProps> {
     singleLineMode: true,
   };
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   get prefixCls() {
     const { prefixCls } = this.props;

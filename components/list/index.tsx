@@ -104,7 +104,7 @@ export default class List extends Component<ListProps> {
     pagination: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   @observable stateCheckedKeys: ReactText[];
 

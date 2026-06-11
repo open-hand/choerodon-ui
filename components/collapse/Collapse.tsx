@@ -1,4 +1,4 @@
-import React, { isValidElement, cloneElement, Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { isValidElement, cloneElement, Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import toArray from 'lodash/toArray';
@@ -62,7 +62,7 @@ export default class Collapse extends Component<CollapseProps, any> {
     },
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   renderExpandTextContent = (panelProps: PanelProps = {}, locale, localeCode, expandIconPositionCof) => {
     const {

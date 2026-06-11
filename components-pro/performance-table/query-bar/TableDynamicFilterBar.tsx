@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
+﻿import React, { cloneElement, Component, isValidElement, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import { action, isArrayLike, observable, runInAction, toJS } from 'mobx';
 import uniq from 'lodash/uniq';
@@ -173,7 +173,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     buttons: [],
   };
 
-  context: Props;
+  declare context: Props;
 
   get prefixCls(): string {
     if ('prefixCls' in this.props) {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import classNames from 'classnames';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
 
@@ -16,7 +16,7 @@ export default class CheckableTag extends Component<CheckableTagProps> {
 
   static displayName = 'CheckableTag';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   handleClick = () => {
     const { checked, onChange } = this.props;

@@ -123,8 +123,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     onMouseEnterHandler(columnWidth, left + resizeLeft, !!fixed);
   };
 
-  // @ts-ignore
-  addPrefix = (name: string) => prefix(this.props.classPrefix)(name);
+  addPrefix = (name: string): string => prefix(this.props.classPrefix || '')(name) as string;
 
   renderResizeSpanner() {
     const { resizable, left = 0, onMouseLeaveHandler, fixed, headerHeight, minWidth, groupCount, children, style } = this.props;

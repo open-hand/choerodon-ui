@@ -37,8 +37,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
     paramName: 'params',
   };
 
-  // @ts-ignore
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   get prefixCls(): string {
     const { prefixCls } = this.props;

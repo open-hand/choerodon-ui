@@ -25,7 +25,7 @@ export default class Row extends PureComponent<RowProps> {
     gutter: defaultGutter,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   renderRow = ([gutter = defaultGutter]) => {
     const {
@@ -64,9 +64,9 @@ export default class Row extends PureComponent<RowProps> {
       if (col.props && (gutter as number) > 0) {
         return cloneElement(col, {
           style: {
-            paddingLeft: (gutter as number) / 2,
-            paddingRight: (gutter as number) / 2,
             ...col.props.style,
+            paddingLeft: col.props.style?.paddingLeft ?? (gutter as number) / 2,
+            paddingRight: col.props.style?.paddingRight ?? (gutter as number) / 2,
           },
         });
       }

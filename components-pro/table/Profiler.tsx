@@ -1,4 +1,4 @@
-import { PureComponent, ReactNode } from 'react';
+﻿import { PureComponent, ReactNode } from 'react';
 import TableContext, { TableContextValue } from './TableContext';
 import { DataSetStatus } from '../data-set/enum';
 
@@ -13,7 +13,7 @@ export default class Profiler extends PureComponent<ProfilerProps> {
     return TableContext;
   }
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   constructor(props, context) {
     super(props, context);

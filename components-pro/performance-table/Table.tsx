@@ -521,7 +521,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return ConfigContext;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   translateDOMPositionXY = null;
   scrollListener: any = null;

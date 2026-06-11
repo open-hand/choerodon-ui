@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, PureComponent, ReactNode } from 'react';
+﻿import React, { HTMLAttributes, PureComponent, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import isNumber from 'lodash/isNumber';
@@ -86,7 +86,7 @@ export default class Sider extends PureComponent<SiderProps, SiderState> {
     theme: 'dark' as SiderTheme,
   };
 
-  context: LayoutContextValue;
+  declare context: LayoutContextValue;
 
   private mql: MediaQueryList;
 

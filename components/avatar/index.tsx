@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactElement } from 'react';
+﻿import React, { Component, CSSProperties, ReactElement } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import isNumber from 'lodash/isNumber';
@@ -49,7 +49,7 @@ export default class Avatar extends Component<AvatarProps, AvatarState> {
 
   static Group = Group;
 
-  context: AvatarContextValue;
+  declare context: AvatarContextValue;
 
   private avatarChildren: any;
 

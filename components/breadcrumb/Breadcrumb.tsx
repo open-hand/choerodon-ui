@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { Children, cloneElement, Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import warning from '../_util/warning';
 import BreadcrumbItem, { BreadcrumbItemProps } from './BreadcrumbItem';
@@ -54,7 +54,7 @@ export default class Breadcrumb extends Component<BreadcrumbProps, any> {
     separator: '/',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   componentDidMount() {
     const props = this.props;

@@ -1,4 +1,4 @@
-import React, { ComponentClass, FunctionComponent, HTMLAttributes, PureComponent } from 'react';
+﻿import React, { ComponentClass, FunctionComponent, HTMLAttributes, PureComponent } from 'react';
 import classNames from 'classnames';
 import { SiderProps } from './Sider';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -32,7 +32,7 @@ function generator({ displayName, suffixCls }: GeneratorProps) {
 
       static Sider: any;
 
-      context: ConfigContextValue;
+      declare context: ConfigContextValue;
 
       render() {
         const { prefixCls: customizePrefixCls } = this.props;
@@ -64,7 +64,7 @@ class BasicLayout extends PureComponent<BasicProps, any> {
 
   state = { siders: [] };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   getContextValue() {
     const { siders } = this.state;

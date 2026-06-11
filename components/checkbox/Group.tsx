@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, ReactNode } from 'react';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import Checkbox from './Checkbox';
@@ -54,7 +54,7 @@ export default class CheckboxGroup extends Component<CheckboxGroupProps, Checkbo
     options: [],
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: CheckboxGroupProps, context: ConfigContextValue) {
     super(props, context);

@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+﻿import React, { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { BigNumber } from 'bignumber.js';
@@ -37,7 +37,7 @@ export default class TableSummaryBar extends Component<TableSummaryBarProps> {
     return TableContext;
   }
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   /**
    * 多行汇总

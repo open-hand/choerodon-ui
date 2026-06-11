@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, MouseEvent, ReactInstance, ReactNode } from 'react';
 import { ModalManager } from 'choerodon-ui/shared';
 import Button from '../button';
 import { ButtonFuncType, ButtonProps, ButtonType } from '../button/Button';
@@ -139,7 +139,7 @@ export default class Modal extends Component<ModalProps, {}> {
     center: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   handleCancel = (e: any) => {
     const { onCancel } = this.props;

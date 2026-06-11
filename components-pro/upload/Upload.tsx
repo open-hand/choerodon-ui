@@ -445,7 +445,7 @@ export default class Upload extends FormField<UploadProps> {
     const fileBuffer: UploadFile[] = [];
     files.forEach((file: UploadFile, index: number) => {
       file.uid = this.getUid(index);
-      file.url = URL.createObjectURL(file);
+      file.url = URL.createObjectURL(file as any);
       const res = this.beforeUpload(file, files);
       if (!res) {
         return;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
 import Popover from '../popover';
@@ -33,7 +33,7 @@ export default class Group extends React.Component<GroupProps> {
     className: '',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   render() {
     const { prefixCls: customizePrefixCls, className, maxCount, maxStyle, size, style, children, maxPopoverPlacement, maxPopoverTrigger } = this.props;

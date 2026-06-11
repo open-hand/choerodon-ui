@@ -127,11 +127,11 @@ export interface ImgCropProps {
   modalCancel?: string;
   modalProps?: ModalProps;
   onCancel?: () => void;
-  onOk?: ({ url: string, blob: Blob, area: Area }) => void;
+  onOk?: ({ url, blob, area }: { url: string; blob: Blob; area: Area }) => void;
   modalVisible?: boolean;
   children?: React.ReactElement<UploadProps> | React.ReactElement<any>;
   cropContent?: (crop: ReactElement<EasyCropProps>) => React.ReactElement<any>;
-  onCropComplete?: ({ url: string, blob: Blob, area: Area }) => void;
+  onCropComplete?: ({ url, blob, area }: { url: string; blob: Blob; area: Area }) => void;
   prefixCls?: string;
   serverCrop?: boolean;
   rotateStep?: number;

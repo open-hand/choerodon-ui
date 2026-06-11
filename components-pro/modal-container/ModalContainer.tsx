@@ -122,7 +122,7 @@ export class ModalContainerClass extends Component<ModalContainerProps> implemen
     getContainer: getRoot,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   openTime?: number;
 
@@ -687,7 +687,7 @@ export async function getContainer(): Promise<IModalContainer> {
     }) || containerInstances[0];
   }
   await new Promise(resolve => {
-    render(<ModalContainer />, getRoot(), resolve);
+    render(<ModalContainer />, getRoot(), resolve as (() => void) | undefined);
   });
   return getContainer();
 }

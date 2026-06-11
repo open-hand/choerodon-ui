@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, ReactNode } from 'react';
 import moment, { Moment, isMoment } from 'moment';
 import noop from 'lodash/noop';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -69,7 +69,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     onPanelChange: noop,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: CalendarProps) {
     super(props);

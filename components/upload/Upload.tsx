@@ -1,4 +1,4 @@
-import React, { Component, DragEvent } from 'react';
+﻿import React, { Component, DragEvent } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import isUndefined from 'lodash/isUndefined';
@@ -38,7 +38,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     showFileSize: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   recentUploadStatus: boolean | PromiseLike<any>;
 

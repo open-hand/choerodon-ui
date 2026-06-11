@@ -81,7 +81,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
     rectSize: 280,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props, context: ConfigContextValue) {
     super(props, context);
@@ -435,7 +435,7 @@ export default class AvatarUploader extends Component<AvatarUploadProps, any> {
         this.setState({ file });
         const windowURL = window.URL || window.webkitURL;
         if (windowURL && windowURL.createObjectURL) {
-          this.loadImage(windowURL.createObjectURL(file));
+          this.loadImage(windowURL.createObjectURL(file as any));
           return false;
         }
         return false;

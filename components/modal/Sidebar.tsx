@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import classNames from 'classnames';
 import Dialog, { ModalFuncProps } from './Modal';
 import Button from '../button';
@@ -46,7 +46,7 @@ export default class Sidebar extends Component<SidebarProps, {}> {
     funcType: 'raised',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state: SidebarState;
 

@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
+﻿import React, { Children, cloneElement, Component, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import DropdownButton from './dropdown-button';
 import warning from '../_util/warning';
@@ -38,7 +38,7 @@ export default class Dropdown extends Component<DropDownProps, any> {
     placement: 'bottomLeft',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   getTransitionName() {
     const { placement = '', transitionName } = this.props;

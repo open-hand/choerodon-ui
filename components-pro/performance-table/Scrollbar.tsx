@@ -247,8 +247,7 @@ class Scrollbar extends React.PureComponent<ScrollbarProps, State> {
   render() {
     const { vertical, length, scrollLength, classPrefix, className, tableId, style, showScrollArrow, scrollBarOffset, ...rest } = this.props;
     const { handlePressed } = this.state;
-    // @ts-ignore
-    const addPrefix = prefix(classPrefix);
+    const addPrefix = (name: string): string => prefix(classPrefix || '')(name) as string;
 
     const classes = classNames(classPrefix, className, {
       [addPrefix('vertical')]: vertical,

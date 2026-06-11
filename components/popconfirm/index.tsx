@@ -1,4 +1,4 @@
-import React, { Component, MouseEventHandler, ReactNode } from 'react';
+﻿import React, { Component, MouseEventHandler, ReactNode } from 'react';
 import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import Icon from '../icon';
 import Button, { ButtonProps } from '../button';
@@ -44,7 +44,7 @@ export default class Popconfirm extends Component<PopconfirmProps, PopconfirmSta
     iconType: 'warning',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private tooltip: any;
 

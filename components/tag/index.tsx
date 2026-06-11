@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes } from 'react';
+﻿import React, { Component, CSSProperties, HTMLAttributes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -50,7 +50,7 @@ export default class Tag extends Component<TagProps, TagState> {
     return ('visible' in nextProps) ? { visible: nextProps.visible } : null;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state = {
     closing: false,

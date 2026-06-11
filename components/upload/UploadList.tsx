@@ -1,4 +1,4 @@
-import React, { Component, createElement, CSSProperties, SyntheticEvent } from 'react';
+﻿import React, { Component, createElement, CSSProperties, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import isFunction from 'lodash/isFunction';
@@ -78,7 +78,7 @@ export default class UploadList extends Component<UploadListProps, any> {
     downloadPropsIntercept: o => o,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   handleClose = (file: UploadFile) => {
     const { onRemove } = this.props;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, CSSProperties, ReactNode, SyntheticEvent } from 'react';
+﻿import React, { ChangeEvent, Component, CSSProperties, ReactNode, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 import { computed } from 'mobx';
 import noop from 'lodash/noop';
@@ -85,7 +85,7 @@ export default class Transfer extends Component<TransferProps, any> {
     showSearch: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   splitedDataSource: {
     leftDataSource: TransferItem[];

@@ -1,4 +1,4 @@
-import React, { Children, Component, CSSProperties, isValidElement } from 'react';
+﻿import React, { Children, Component, CSSProperties, isValidElement } from 'react';
 import isNil from 'lodash/isNil';
 import { toJS } from 'mobx';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
@@ -132,7 +132,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   static hide;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state = {
     translate: { x: 0, y: 0 },

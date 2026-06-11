@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { $l } from '../locale-context';
 import Icon from '../icon';
@@ -19,7 +19,7 @@ export default class VerifySlider extends Component<VerifySliderProps> {
 
   static displayName = 'VerifySlider';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   get prefixCls() {
     const { context } = this;

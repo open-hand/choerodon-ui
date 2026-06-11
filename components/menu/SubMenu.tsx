@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, PureComponent } from 'react';
+﻿import React, { MouseEventHandler, PureComponent } from 'react';
 import classNames from 'classnames';
 import { SubMenu as RcSubMenu } from '../rc-components/menu';
 import MenuContext, { MenuContextValue } from './MenuContext';
@@ -10,7 +10,7 @@ class SubMenu extends PureComponent<any, any> {
 
   static isSubMenu = 1;
 
-  context: MenuContextValue;
+  declare context: MenuContextValue;
 
   private subMenu: any;
 

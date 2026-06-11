@@ -1,4 +1,4 @@
-import React, { CSSProperties, MouseEventHandler, PureComponent, ReactNode } from 'react';
+﻿import React, { CSSProperties, MouseEventHandler, PureComponent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import Icon from '../icon';
@@ -40,7 +40,7 @@ export default class Alert extends PureComponent<AlertProps, any> {
     return ConfigContext;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state = {
     closing: true,

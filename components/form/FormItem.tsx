@@ -1,4 +1,4 @@
-import React, { isValidElement, cloneElement, Children, Component, CSSProperties, ReactElement, ReactNode } from 'react';
+﻿import React, { isValidElement, cloneElement, Children, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import flatMap from 'lodash/flatMap';
 import classNames from 'classnames';
@@ -50,7 +50,7 @@ export default class FormItem extends Component<FormItemProps, any> {
     return FormContext;
   }
 
-  context: FormContextValue;
+  declare context: FormContextValue;
 
   helpShow = false;
 

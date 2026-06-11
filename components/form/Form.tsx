@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
+﻿import React, { Component, ComponentClass, CSSProperties, FormEvent, FormEventHandler, ReactNode, SFC } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import warning from '../_util/warning';
@@ -170,7 +170,7 @@ export default class Form extends Component<FormProps, any> {
 
   static create = create;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: FormProps) {
     super(props);

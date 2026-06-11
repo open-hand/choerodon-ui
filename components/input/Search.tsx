@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
+﻿import React, { cloneElement, Component, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from './Input';
 import Button, { ButtonProps } from '../button';
@@ -27,7 +27,7 @@ export default class Search extends Component<SearchProps, any> {
     size: Size.small,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private input: Input;
 

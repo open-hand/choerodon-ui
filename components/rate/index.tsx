@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, ReactNode } from 'react';
 import Icon from '../icon';
 import RcRate from '../rc-components/rate';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -31,7 +31,7 @@ export default class Rate extends Component<RateProps, any> {
     character: <Icon type="star" />,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private rcRate: any;
 

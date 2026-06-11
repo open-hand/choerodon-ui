@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+﻿import React, { Component, ReactNode } from 'react';
 import Tooltip, { AbstractTooltipProps, RenderFunction } from '../tooltip';
 import warning from '../_util/warning';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
@@ -24,7 +24,7 @@ export default class Popover extends Component<PopoverProps, {}> {
     overlayStyle: {},
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private tooltip: Tooltip;
 

@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+﻿import { Component, ReactNode } from 'react';
 import { LocaleContext } from './index';
 
 export interface LocaleReceiverProps {
@@ -16,7 +16,7 @@ export default class LocaleReceiver extends Component<LocaleReceiverProps> {
     return LocaleContext;
   }
 
-  context: LocaleReceiverContext;
+  declare context: LocaleReceiverContext;
 
   getLocale() {
     const { componentName, defaultLocale } = this.props;

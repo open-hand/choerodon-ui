@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+﻿import React, { Component, ReactElement } from 'react';
 import { Moment } from 'moment';
 import { Size } from '../_util/enum';
 import Select, { SelectProps } from '../select';
@@ -34,7 +34,7 @@ export default class Header extends Component<HeaderProps, any> {
     yearSelectTotal: 20,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private calenderHeaderNode: HTMLDivElement;
 

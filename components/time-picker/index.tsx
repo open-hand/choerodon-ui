@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactElement } from 'react';
+﻿import React, { Component, CSSProperties, ReactElement } from 'react';
 import { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -74,7 +74,7 @@ export default class TimePicker extends Component<TimePickerProps, any> {
     focusOnOpen: true,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private timePickerRef: any;
 

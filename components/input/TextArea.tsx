@@ -1,4 +1,4 @@
-import React, {
+﻿import React, {
   ChangeEvent,
   Component,
   CSSProperties,
@@ -63,7 +63,7 @@ export default class TextArea extends Component<TextAreaProps & HTMLTextareaProp
     labelLayout: 'float',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   nextFrameActionId: number;
 

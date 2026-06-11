@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import classNames from 'classnames';
 import Title, { SkeletonTitleProps } from './Title';
 import Grid, { SkeletonGridProps } from './Grid';
@@ -87,7 +87,7 @@ class Skeleton extends React.Component<SkeletonProps, any> {
     paragraph: true,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   renderSkeleton = () => {
     const {

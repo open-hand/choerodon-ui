@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass, MouseEvent } from 'react';
+﻿import React, { Component, ComponentClass, MouseEvent } from 'react';
 import moment, { isMoment, Moment } from 'moment';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -34,7 +34,7 @@ export default function createPicker(TheCalendar: ComponentClass): any {
 
     private picker: any;
 
-    context: ConfigContextValue;
+    declare context: ConfigContextValue;
 
     constructor(props: any, context: ConfigContextValue) {
       super(props, context);

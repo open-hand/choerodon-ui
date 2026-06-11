@@ -1,4 +1,4 @@
-import React, { CSSProperties, PureComponent } from 'react';
+﻿import React, { CSSProperties, PureComponent } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import Animate from '../animate';
@@ -32,7 +32,7 @@ export default class BackTop extends PureComponent<BackTopProps, any> {
     visibilityHeight: 400,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   scrollEvent: any;
 
