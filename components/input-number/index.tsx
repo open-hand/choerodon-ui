@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, FormEventHandler, ReactElement } from 'react';
+﻿import React, { Component, CSSProperties, FormEventHandler, ReactElement } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import BigNumber from 'bignumber.js';
@@ -65,7 +65,7 @@ export default class InputNumber extends Component<InputNumberProps, any> {
     step: 1,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private inputNumberRef: any;
 

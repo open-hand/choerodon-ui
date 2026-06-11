@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
+﻿import React, { Children, cloneElement, Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import TimelineItem from './TimelineItem';
 import Spin from '../spin';
@@ -26,7 +26,7 @@ export default class Timeline extends Component<TimelineProps, any> {
 
   static Item = TimelineItem;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   render() {
     const {

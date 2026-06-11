@@ -1,4 +1,4 @@
-import React, { Children, ClassicComponentClass, cloneElement, Component, FormEventHandler, isValidElement, ReactElement } from 'react';
+﻿import React, { Children, ClassicComponentClass, cloneElement, Component, FormEventHandler, isValidElement, ReactElement } from 'react';
 import classNames from 'classnames';
 import Select, { AbstractSelectProps, OptGroupProps, OptionProps, SelectValue } from '../select';
 import Input, { InputProps } from '../input';
@@ -60,7 +60,7 @@ export default class AutoComplete extends Component<AutoCompleteProps, {}> {
     filterOption: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private select: any;
 

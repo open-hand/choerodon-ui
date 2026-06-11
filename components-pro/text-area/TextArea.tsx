@@ -195,7 +195,7 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     if (this.props._inTable && this.props.shouldStickLengthInfoOnTop && React.isValidElement(lengthElement)) {
       return React.cloneElement(lengthElement, {
         style: { top: '-0.2rem', right: 0, left: 'auto' },
-      });
+      } as any);
     }
     return lengthElement;
   }

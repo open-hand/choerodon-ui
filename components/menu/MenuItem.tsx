@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, PureComponent } from 'react';
+﻿import React, { MouseEventHandler, PureComponent } from 'react';
 import Tooltip from '../tooltip';
 import { Item } from '../rc-components/menu';
 import MenuContext, { MenuContextValue } from './MenuContext';
@@ -10,7 +10,7 @@ class MenuItem extends PureComponent<any, any> {
 
   static isMenuItem = 1;
 
-  context: MenuContextValue;
+  declare context: MenuContextValue;
 
   private menuItem: any;
 

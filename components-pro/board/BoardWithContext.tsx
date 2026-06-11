@@ -405,14 +405,14 @@ const BoardWithContext: FunctionComponent<BoardWithContextProps> = function Boar
           const element: ReactNode = queryFields![name];
           let filterBarProps = {};
           const inValidElement = getEditorByField(field, current, true);
-          const placeholder = isValidElement(element) && element.props.placeholder ? element.props.placeholder : getPlaceholderByField(field, current);
+          const placeholder = isValidElement(element) && (element as React.ReactElement<any>).props.placeholder ? (element as React.ReactElement<any>).props.placeholder : getPlaceholderByField(field, current);
           filterBarProps = {
             placeholder,
             border: false,
             clearButton: true,
           };
           const elementType = inValidElement.type as JSXElementConstructor<any>;
-          if ((!isValidElement(element) || element.props.suffix === undefined) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].indexOf(elementType.name) !== -1) {
+          if ((!isValidElement(element) || (element as React.ReactElement<any>).props.suffix === undefined) && ['Currency', 'ObserverNumberField', 'EmailField', 'UrlField', 'ObserverTextField'].indexOf(elementType.name) !== -1) {
             Object.assign(filterBarProps, { suffix: <Icon type="search" /> });
           }
           const props: any = {

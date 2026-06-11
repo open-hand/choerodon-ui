@@ -1,4 +1,4 @@
-import React, {
+﻿import React, {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   Children,
@@ -108,7 +108,7 @@ export default class Button extends PureComponent<ButtonProps, any> {
     funcType: 'flat',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   timeout: number;
 

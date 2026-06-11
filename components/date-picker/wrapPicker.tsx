@@ -1,4 +1,4 @@
-import React, { Component, ComponentClass, FocusEventHandler } from 'react';
+﻿import React, { Component, ComponentClass, FocusEventHandler } from 'react';
 import classNames from 'classnames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { generateShowHourMinuteSecond } from '../time-picker';
@@ -47,7 +47,7 @@ export default function wrapPicker(Picker: ComponentClass<any>, defaultFormat?: 
       layoutLayout: 'float',
     };
 
-    context: ConfigContextValue;
+    declare context: ConfigContextValue;
 
     private picker: any;
 

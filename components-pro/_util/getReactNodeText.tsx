@@ -12,7 +12,7 @@ export default async function getReactNodeText(node: ReactNode): Promise<string>
     if (typeof window !== 'undefined' && isValidElement(node)) {
       const textDiv = document.createElement('div');
       document.body.appendChild(textDiv);
-      await new Promise(resolve => render(node, textDiv, resolve));
+      await new Promise(resolve => render(node, textDiv, resolve as (() => void) | undefined));
       const { textContent } = textDiv;
       unmountComponentAtNode(textDiv);
       if (textDiv.parentNode) {

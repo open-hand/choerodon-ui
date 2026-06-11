@@ -1,4 +1,4 @@
-import React, { Children, Component, ReactNode } from 'react';
+﻿import React, { Children, Component, ReactNode } from 'react';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import Radio from './radio';
@@ -30,7 +30,7 @@ export default class RadioGroup extends Component<RadioGroupProps, RadioGroupSta
     buttonStyle: 'outline' as RadioGroupButtonStyle,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: RadioGroupProps, context: ConfigContextValue) {
     super(props, context);

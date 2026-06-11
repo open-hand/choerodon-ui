@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactElement, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -104,7 +104,7 @@ export default class Pagination extends Component<PaginationProps, {}> {
     itemRender,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   renderPagination = (contextLocale: PaginationLocale) => {
     const {

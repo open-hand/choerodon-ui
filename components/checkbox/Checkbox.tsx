@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, KeyboardEventHandler, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import CheckboxGroup, { CheckboxGroupContext } from './Group';
@@ -51,7 +51,7 @@ export default class Checkbox extends Component<CheckboxProps, {}> {
     return CheckboxContext;
   }
 
-  context: CheckboxGroupContext;
+  declare context: CheckboxGroupContext;
 
   private rcCheckbox: any;
 

@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+﻿import React, { Component, CSSProperties } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import shallowequal from 'shallowequal';
@@ -68,7 +68,7 @@ export default class Affix extends Component<AffixProps, AffixState> {
     return ConfigContext;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state: AffixState = {
     affixStyle: undefined,

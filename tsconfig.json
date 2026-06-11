@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
     "baseUrl": ".",
     "strictNullChecks": true,
     "moduleResolution": "node",
@@ -12,6 +13,7 @@
     "noEmitHelpers": true,
     "importHelpers": true,
     "target": "esnext",
+    "skipLibCheck": true,
     "lib": [
       "dom",
       "dom.iterable",

@@ -832,7 +832,7 @@ export interface TableProps extends DataSetComponentProps {
   /**
    * 勾选框渲染器
    */
-  selectionBoxRenderer?: ({ record: Record, element: ReactNode }) => ReactNode;
+  selectionBoxRenderer?: ({ record, element }: { record: Record; element: ReactNode }) => ReactNode;
   /**
    * 是否显示临时移除的行
    */

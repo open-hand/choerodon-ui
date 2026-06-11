@@ -1,4 +1,4 @@
-/* tslint:disable jsx-no-multiline-js */
+﻿/* tslint:disable jsx-no-multiline-js */
 import React, { Component, MouseEventHandler } from 'react';
 import moment, { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
@@ -78,7 +78,7 @@ export default class RangePicker extends Component<any, RangePickerState> {
 
   private picker: HTMLSpanElement;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: any, context: ConfigContextValue) {
     super(props, context);

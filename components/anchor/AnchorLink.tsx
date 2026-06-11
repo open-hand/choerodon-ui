@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+﻿import React, { Component, ReactNode } from 'react';
 import classNames from 'classnames';
 import AnchorContext, { AnchorContextValue } from './AnchorContext';
 
@@ -21,7 +21,7 @@ export default class AnchorLink extends Component<AnchorLinkProps, any> {
     return AnchorContext;
   }
 
-  context: AnchorContextValue;
+  declare context: AnchorContextValue;
 
   componentDidMount() {
     const { c7nAnchor } = this.context;

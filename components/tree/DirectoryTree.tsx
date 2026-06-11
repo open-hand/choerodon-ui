@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -61,7 +61,7 @@ class DirectoryTree extends React.Component<DirectoryTreeProps, DirectoryTreeSta
     return newState;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state: DirectoryTreeState;
 

@@ -54,7 +54,7 @@ export interface FilterSelectState<T> {
 }
 
 function removeDoubleOr(filters: LabeledValue[]): LabeledValue[] {
-  return filters.filter(({ label }, index) => label !== VALUE_OR || label !== filters[index + 1]);
+  return filters.filter(({ label }, index) => label !== VALUE_OR || label !== filters[index + 1]?.label);
 }
 
 export default class FilterSelect<T> extends Component<FilterSelectProps<T>, FilterSelectState<T>> {
@@ -64,7 +64,7 @@ export default class FilterSelect<T> extends Component<FilterSelectProps<T>, Fil
 
   static displayName = 'FilterSelect';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props) {
     super(props);

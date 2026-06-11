@@ -1420,7 +1420,7 @@ export default class Attachment extends FormField<AttachmentProps> {
                   color: ButtonColor.primary,
                   children: $l('Attachment', 'download_all'),
                 };
-                buttons.push(<Button {...downProps} {...downloadAll} />);
+                buttons.push(<Button {...downProps} {...(downloadAll as ButtonProps)} />);
               }
             }
           }

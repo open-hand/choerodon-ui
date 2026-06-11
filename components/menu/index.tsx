@@ -1,4 +1,4 @@
-import React, { CSSProperties, PureComponent, FocusEventHandler, ReactNode } from 'react';
+﻿import React, { CSSProperties, PureComponent, FocusEventHandler, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import animation from '../_util/openAnimation';
@@ -85,7 +85,7 @@ export default class Menu extends PureComponent<MenuProps, MenuState> {
     focusable: false,
   };
 
-  context: LayoutSiderContextValue;
+  declare context: LayoutSiderContextValue;
 
   switchModeFromInline: boolean;
 

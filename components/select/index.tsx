@@ -1,4 +1,4 @@
-import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
+﻿import React, { ClassicComponentClass, Component, CSSProperties, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import { Size } from '../_util/enum';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -133,7 +133,7 @@ export default class Select extends Component<SelectProps, {}> {
     border: true,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private rcSelect: any;
 

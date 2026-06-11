@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import Button from '../button/Button';
 import { ColumnProps } from './interface';
 import SelectTrigger from '../rc-components/select/SelectTrigger';
@@ -26,7 +26,7 @@ export default class ColumnFilter<T> extends Component<ColumnFilterProps<T>, Col
 
   static displayName = 'ColumnFilter';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state = {
     open: false,

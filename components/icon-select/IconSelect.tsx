@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
+﻿import React, { Component, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import { icons } from 'choerodon-ui-font';
@@ -37,7 +37,7 @@ export default class IconSelect extends Component<IconSelectProps, IconSelectSta
     showAll: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   icons: any;
 

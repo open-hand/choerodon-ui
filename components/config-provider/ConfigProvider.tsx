@@ -18,7 +18,7 @@ const ConfigProvider: FunctionComponent<ConfigProviderProps> = function ConfigPr
   const configStore = useLocalStore((config) => ({
     config,
   }), observable.map(localConfig));
-  const getLocalConfig = useCallback<typeof getConfig>((key) => {
+  const getLocalConfig = useCallback<typeof getConfig>((key): any => {
     const localValue = configStore.config.get(key);
     if (configStore.config.has(key)) {
       return localValue;

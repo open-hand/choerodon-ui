@@ -1,5 +1,5 @@
 export default class TaskRunner {
-  id: NodeJS.Timeout;
+  id?: NodeJS.Timeout;
 
   fn: Function;
 

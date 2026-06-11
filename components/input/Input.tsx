@@ -1,4 +1,4 @@
-import React, {
+﻿import React, {
   ChangeEventHandler,
   cloneElement,
   Component,
@@ -149,7 +149,7 @@ export default class Input extends Component<InputProps, any> {
     labelLayout: 'float',
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state: InputState;
 

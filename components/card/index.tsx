@@ -1,4 +1,4 @@
-import React, { Children, Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
+﻿import React, { Children, Component, CSSProperties, MouseEventHandler, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import noop from 'lodash/noop';
@@ -71,7 +71,7 @@ export default class Card extends Component<CardProps, CardState> {
     cornerPlacement: 'bottomRight',
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private resizeEvent: any;
 

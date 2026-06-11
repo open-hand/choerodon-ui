@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react';
+﻿import React, { Component, CSSProperties } from 'react';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import { matchMediaPolifill } from '../_util/mediaQueryListPolyfill';
@@ -97,7 +97,7 @@ export default class Carousel extends Component<CarouselProps> {
     dotsActionType: ["click"],
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   innerSlider: any;
 

@@ -41,8 +41,7 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
     pagination: null,
   };
 
-  // @ts-ignore
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   modal;
 

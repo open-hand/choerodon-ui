@@ -42,8 +42,7 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
     queryFieldsLimit: 1,
   };
 
-  // @ts-ignore
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   moreFields: Field[];
 

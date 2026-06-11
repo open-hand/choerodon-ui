@@ -1,4 +1,4 @@
-import {
+﻿import {
   AriaAttributes,
   ClipboardEventHandler,
   Component,
@@ -270,7 +270,7 @@ export default class ViewComponent<P extends ViewComponentProps, C extends Confi
 
   prefixCls?: string;
 
-  context: C;
+  declare context: C;
 
   @computed
   get lang(): Lang {

@@ -94,7 +94,7 @@ function notice(
     <Progress type={ProgressType.loading} size={Size.small} /> :
     <Icon type={iconType} />;
   let promise: Promise<NotificationInterface>;
-  const closePromise = new Promise(resolve => {
+  const closePromise = new Promise<void>(resolve => {
     promise = getMessageInstance(placement || config.placement, instance => {
       instance.notice({
         key: target,

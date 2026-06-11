@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
+﻿import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
 import { action, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -72,7 +72,7 @@ export default class TableEditor extends Component<TableEditorProps> {
     return TableContext;
   }
 
-  context: TableContextValue;
+  declare context: TableContextValue;
 
   editorProps?: any;
 

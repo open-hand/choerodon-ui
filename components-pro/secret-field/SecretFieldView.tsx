@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import ConfigContext, { ConfigContextValue } from 'choerodon-ui/lib/config-provider/ConfigContext';
 import { observer } from 'mobx-react';
 import { action, observable, runInAction } from 'mobx';
@@ -49,7 +49,7 @@ export default class SecretFieldView extends Component<SecretFieldViewProps> {
 
   static displayName = 'SecretFieldView';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   get prefixCls() {
     const { context } = this;

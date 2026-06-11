@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, MouseEventHandler, ReactElement, ReactNode } from 'react';
+﻿import React, { ChangeEvent, Component, CSSProperties, KeyboardEvent, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -187,7 +187,7 @@ export default class Cascader extends Component<CascaderProps, CascaderState> {
     menuMode: MenuMode.multiple,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   cachedOptions: CascaderOptionType[];
 

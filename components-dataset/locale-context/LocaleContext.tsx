@@ -50,7 +50,7 @@ export class LocaleContext {
     const componentString = String(component);
     const cmp: object | undefined = mobxGet(this.locale, componentString) || (defaults && mobxGet(defaults, componentString));
     if (key) {
-      return defaultTo(cmp && mobxGet(cmp, String(key)), `${componentString}.${key}`);
+      return defaultTo(cmp && mobxGet(cmp, String(key)), `${componentString}.${String(key)}`);
     }
     return componentString;
   }

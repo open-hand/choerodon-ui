@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import classNames from 'classnames';
 import { TreeSelectProps } from './interface';
 import { SelectLocale } from '../select';
@@ -37,7 +37,7 @@ export default class TreeSelect extends Component<TreeSelectProps, any> {
     showSearch: false,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private rcTreeSelect: any;
 

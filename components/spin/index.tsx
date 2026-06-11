@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
+﻿import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
@@ -75,7 +75,7 @@ export default class Spin extends Component<SpinProps, SpinState> {
     global.DEFAULT_SPIN_INDICATOR = indicator;
   }
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   debounceTimeout: number;
 

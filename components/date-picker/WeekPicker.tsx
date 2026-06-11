@@ -1,4 +1,4 @@
-import React, { Component, MouseEventHandler } from 'react';
+﻿import React, { Component, MouseEventHandler } from 'react';
 import { Moment, isMoment } from 'moment';
 import classNames from 'classnames';
 import Icon from '../icon';
@@ -27,7 +27,7 @@ export default class WeekPicker extends Component<any, any> {
 
   private picker: any;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   constructor(props: any, context: ConfigContextValue) {
     super(props, context);

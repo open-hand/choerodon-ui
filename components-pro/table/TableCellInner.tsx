@@ -359,7 +359,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           commands.push(
             <Button
               {...tableCommandProps}
-              {...button}
+              {...(button as ButtonProps)}
               className={classNames(classString, (button as ButtonProps).className)}
             />,
           );

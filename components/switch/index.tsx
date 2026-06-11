@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+﻿import React, { Component, ReactNode } from 'react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
 import RcSwitch from '../rc-components/switch';
@@ -25,7 +25,7 @@ export default class Switch extends Component<SwitchProps, {}> {
 
   static displayName = 'Switch';
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private rcSwitch: any;
 

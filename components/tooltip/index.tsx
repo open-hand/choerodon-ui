@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
+﻿import React, { cloneElement, Component, CSSProperties, isValidElement, ReactElement, ReactNode } from 'react';
 import classNames from 'classnames';
 import getPlacements, { AdjustOverflow, PlacementsConfig } from './placements';
 import RcTooltip from '../rc-components/tooltip';
@@ -86,7 +86,7 @@ export default class Tooltip extends Component<TooltipProps, any> {
 
   private tooltip: RcTooltip | null;
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state: { visible: boolean };
 

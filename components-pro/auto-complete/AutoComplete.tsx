@@ -21,7 +21,7 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
 
   static displayName = 'AutoComplete';
 
-  menu?: Menu | null;
+  declare menu?: Menu | null;
 
   isChoose?: boolean = false;
 

@@ -58,7 +58,7 @@ const TreeNode: FunctionComponent<TreeNodeProps> = function TreeNode(props) {
   function renderChildren() {
     return Children.map(children, child => isValidElement(child) ? cloneElement(child, {
       hidden: hidden || !isExpanded,
-    }) : child);
+    } as any) : child);
   }
 
   function getIcon() {

@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, MouseEvent, ReactNode } from 'react';
+﻿import React, { Component, CSSProperties, MouseEvent, ReactNode } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 import addEventListener from '../_util/addEventListener';
@@ -97,7 +97,7 @@ export default class Anchor extends Component<AnchorProps, AnchorState> {
     getContainer: getDefaultContainer,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   state = {
     activeLink: null,

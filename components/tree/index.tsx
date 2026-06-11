@@ -162,7 +162,7 @@ export default class Tree extends Component<TreeProps, any> {
     openAnimation: animation,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   get checkboxPosition(): undefined | 'default' | 'left' {
     const { props: { checkboxPosition }, context } = this;
@@ -209,7 +209,7 @@ export default class Tree extends Component<TreeProps, any> {
       return null;
     }
     if (isValidElement(switcherIcon)) {
-      const switcherOriginCls = switcherIcon.props.className || '';
+      const switcherOriginCls = (switcherIcon as React.ReactElement<any>).props.className || '';
       return cloneElement(switcherIcon, {
         className: [switcherOriginCls, switcherCls],
       });

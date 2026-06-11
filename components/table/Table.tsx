@@ -180,7 +180,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
     renderSorter: defaultRenderSorter,
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   CheckboxPropsCache: {
     [key: string]: any;
@@ -387,7 +387,7 @@ export default class Table<T> extends Component<TableProps<T>, TableState<T>> {
       rowSelection.onChange(selectedRowKeys, selectedRows);
     }
     if (selectWay === 'onSelect' && rowSelection.onSelect) {
-      rowSelection.onSelect(record!, checked!, selectedRows, nativeEvent!);
+      rowSelection.onSelect(record!, checked!, selectedRows as any, nativeEvent!);
     } else if (selectWay === 'onSelectAll' && rowSelection.onSelectAll) {
       const changeRows = data.filter(
         (row, i) => changeRowKeys!.indexOf(this.getRecordKey(row, i)) >= 0,

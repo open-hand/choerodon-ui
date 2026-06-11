@@ -61,7 +61,7 @@ export default class Slider extends Component<SliderProps, SliderState> {
     },
   };
 
-  context: ConfigContextValue;
+  declare context: ConfigContextValue;
 
   private rcSlider: any;
 
