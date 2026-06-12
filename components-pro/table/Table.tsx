@@ -1998,11 +1998,16 @@ export default class Table extends DataSetComponent<TableProps> {
     const otherProps = super.getOtherProps();
     otherProps.onKeyDown = this.handleKeyDown;
     otherProps.onMouseDown = this.handleMouseDown;
-    const { rowHeight } = this.tableStore;
+    const { rowHeight, headerHeight, footerHeight } = this.tableStore;
+    const spinProps = this.getSpinProps();
     if (rowHeight === 'auto') {
       delete otherProps.style;
     } else {
       otherProps.style = { lineHeight: pxToRem(rowHeight) };
+    }
+    const loading = spinProps.dataSet ? spinProps.dataSet.status !== DataSetStatus.ready : spinProps.spinning;
+    if (loading) {
+      otherProps.style = { ...otherProps.style, minHeight: pxToRem((headerHeight || 0) + (footerHeight || 0) + 30) };
     }
     return otherProps;
   }
@@ -2035,17 +2040,29 @@ export default class Table extends DataSetComponent<TableProps> {
   getSpinProps(): SpinProps {
     const { spin, dataSet } = this.props;
     const spinProps: SpinProps = { ...spin };
-    if (spinProps && !isUndefined(spinProps.spinning)) return { ...spinProps };
-    const { loading } = this.tableStore;
+    const { loading, headerHeight, footerHeight, overflowX, height } = this.tableStore;
+    const footerTotalHeight = isStickySupport() && overflowX && height === undefined ? measureScrollbar() + (footerHeight || 0) : footerHeight;
+    const hasHeadOrFoot = !!(headerHeight || footerTotalHeight);
+    const headerHeightToRem = (headerHeight || 0) ? pxToRem(headerHeight || 0) : '0px';
+    const footerTotalHeightToRem = (footerTotalHeight || 0) ? pxToRem(footerTotalHeight || 0) : '0px';
+    const spinStyle: React.CSSProperties = {
+      top: headerHeight ? pxToRem(headerHeight) : undefined,
+      height: hasHeadOrFoot ? `calc(100% - ${headerHeightToRem} - ${footerTotalHeightToRem})` : undefined,
+      minHeight: '0.3rem',
+      ...spinProps.style,
+    };
+    if (spinProps && !isUndefined(spinProps.spinning)) return { ...spinProps, style: spinStyle };
     if (loading) {
       return {
         ...spinProps,
         spinning: true,
+        style: spinStyle,
       };
     }
     return {
       ...spinProps,
       dataSet,
+      style: spinStyle,
     };
   }
 
