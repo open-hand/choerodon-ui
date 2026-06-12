@@ -42,6 +42,7 @@ timeline: true
 - 💄 `<pro>Modal`: Optimize `Modal.confirm` to support children component obtaining the modal object from props.
 - 💄 `<pro>Table`: Disable the table `Spin` animation and optimize the `loading` flickering issue caused by the change in table height.
 - 💄 Upgrade the `typescript` version to `v4` and fix the `ts` errors.
+- 💄 Upgrade the `axios` version to address security issues.
 - 💄 `<pro>Table`: Optimize the `loading` of the table to center it within the content area (excluding the `header`).
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
