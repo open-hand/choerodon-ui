@@ -264,7 +264,7 @@ export class LovCodeStore {
     return lovDefineUrl as string;
   }
 
-  getQueryAxiosConfig(code: string, field?: Field, config?: LovConfig, record?: Record | undefined) {
+  getQueryAxiosConfig(code: string, field?: Field, config?: LovConfig, record?: Record | undefined): (props: TransportHookProps) => AxiosRequestConfig {
     return (props: TransportHookProps) => {
       const lovQueryAxiosConfig =
         (field && field.get('lovQueryAxiosConfig', record)) || getGlobalConfig('lovQueryAxiosConfig', field);
