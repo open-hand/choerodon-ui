@@ -44,6 +44,7 @@ timeline: true
 - 💄 Upgrade the `typescript` version to `v4` and fix the `ts` errors.
 - 💄 Upgrade the `axios` version to address security issues.
 - 💄 `<pro>Table`: Optimize the `loading` of the table to center it within the content area (excluding the `header`).
+- 💄 `Tabs`: Optimize the disabled `tab` style.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

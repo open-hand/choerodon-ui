@@ -342,11 +342,15 @@
       font-weight: @tab-highlight-font-weight;
     }
 
-    .@{tab-prefix-cls}-tab-disabled, .@{tab-prefix-cls}-second-tab-disabled,
+    .@{tab-prefix-cls}-tab-disabled,
+    .@{tab-prefix-cls}-second-tab-disabled,
     .@{tab-prefix-cls}-tab-disabled .@{tab-prefix-cls}-tab-count {
       color: @disabled-color;
-      cursor: default;
-      pointer-events: none;
+      outline: none;
+      cursor: not-allowed;
+      * {
+        pointer-events: none;
+      }
     }
 
     .@{tab-prefix-cls}-tab:hover,
@@ -357,6 +361,15 @@
     .@{tab-prefix-cls}-tab:active,
     .@{tab-prefix-cls}-tab:active .@{tab-prefix-cls}-tab-count {
       color: @tab-active-color;
+    }
+
+    .@{tab-prefix-cls}-tab-disabled:hover,
+    .@{tab-prefix-cls}-tab-disabled:active,
+    .@{tab-prefix-cls}-second-tab-disabled:hover,
+    .@{tab-prefix-cls}-second-tab-disabled:active,
+    .@{tab-prefix-cls}-tab-disabled:hover .@{tab-prefix-cls}-tab-count,
+    .@{tab-prefix-cls}-tab-disabled:active .@{tab-prefix-cls}-tab-count {
+      color: @disabled-color;
     }
   }
 
