@@ -230,7 +230,8 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
     const isSecond = type === TabsType['second-level'];
     return iteratorReduce<[string, TabPaneProps & { type: string | JSXElementConstructor<any> }], ReactElement<RippleProps>[]>(currentPanelMap.entries(), (rst, [key, child], index) => {
       const { disabled, closable = true, showCount, count, overflowCount, countRenderer } = child;
-      const classes = isSecond ? [`${prefixCls}-second-tab`] : [`${prefixCls}-tab`];
+      const tabPrefixCls = isSecond ? `${prefixCls}-second-tab` : `${prefixCls}-tab`;
+      const classes = [tabPrefixCls];
       const tabProps: PropsWithoutRef<TabBarInnerProps> & RefAttributes<HTMLDivElement> = {
         tabKey: key,
         role: 'tab',
@@ -241,13 +242,13 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
         },
       };
       if (disabled) {
-        classes.push(`${classes}-disabled`);
+        classes.push(`${tabPrefixCls}-disabled`);
         tabProps['aria-disabled'] = 'true';
       } else {
         tabProps.onTabClick = handleTabClick;
       }
       if (activeKey === key) {
-        classes.push(isSecond ? `${classes}-active` : `${classes}-active`);
+        classes.push(`${tabPrefixCls}-active`);
         tabBarRef[index].ref = activeTabRef;
         tabProps['aria-selected'] = 'true';
       }
@@ -275,7 +276,7 @@ const TabBar: FunctionComponent<TabBarProps> = function TabBar(props) {
               type === TabsType['editable-card'] ? (
                 <div className={closable ? undefined : `${prefixCls}-tab-unclosable`}>
                   {title}
-                  {closable && <Icon type="close" onClick={e => onRemoveTab(key, e)} />}
+                  {closable && <Icon type="close" onClick={e => (!disabled && onRemoveTab(key, e)) } />}
                 </div>
               ) : title
             }
