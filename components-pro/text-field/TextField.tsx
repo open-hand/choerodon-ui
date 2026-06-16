@@ -162,6 +162,10 @@ export interface TextFieldProps<V = any> extends FormFieldProps<V> {
    * range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示
    */
   forceShowRangeSeparator?: boolean;
+  /**
+   * 输入框聚焦模式: checked 默认聚焦选中文本，focus 聚焦显示光标
+   */
+  fieldFocusMode?: FieldFocusMode;
 }
 
 export class TextField<T extends TextFieldProps> extends FormField<T> {
@@ -307,6 +311,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       }
     }
     return true;
+  }
+
+  get fieldFocusMode(): FieldFocusMode | undefined {
+    if ('fieldFocusMode' in this.props) {
+      return this.props.fieldFocusMode;
+    }
+    return this.getContextConfig('fieldFocusMode');
   }
 
   constructor(props, context) {
@@ -583,6 +594,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'border',
       'forceShowRangeSeparator',
       'placeholderTooltip',
+      'fieldFocusMode',
     ]);
   }
 
@@ -1920,8 +1932,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   select() {
-    const { element } = this;
-    const fieldFocusMode = this.getContextConfig('fieldFocusMode');
+    const { element, fieldFocusMode } = this;
     if (element && this.editable && fieldFocusMode === FieldFocusMode.checked) {
       element.select();
     }

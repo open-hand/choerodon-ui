@@ -190,7 +190,7 @@ const prefixCls = getConfig('prefixCls');
 | uploadSecretLevelOptions | 上传密级配置项, fields: 密级数据源字段配置, 必传; formProps: 密级表单配置; modalProps: 密级弹框配置; | options: { fields: FieldProps[], formProps?: FormProps, modalProps?: ModalProps } |  |
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
-| fieldFocusMode | 字段聚焦模式 | `checked` \| `focus` | `checked` |
+| fieldFocusMode | Input box focus mode: checked - By default, it focuses on the selected text; focus - It displays the cursor when focused. | `checked` \| `focus` | `checked` |
 | formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
 | labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |
 | useZeroFilledDecimal | `NumberField` 和 `Currency` 组件的值是否在输入和显示时开启根据 `precision` 补零，真实值不受影响 | boolean |  |

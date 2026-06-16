@@ -39,6 +39,7 @@ title: TextField
 | forceShowRangeSeparator | range 字段是否强制显示分隔符, isFlat 模式下默认有 placeholder 或有值时才显示 | boolean |  |
 | tooltip | 输入框 tooltip 配置 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | placeholderTooltip | 输入框 placeholder tooltip 配置, 空值有效 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
+| fieldFocusMode | 输入框聚焦模式: checked 默认聚焦选中文本，focus 聚焦显示光标 | `checked` \| `focus` | [globalConfig.fieldFocusMode](/components/configure#API) |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 
