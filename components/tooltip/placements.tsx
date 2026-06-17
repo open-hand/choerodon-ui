@@ -15,6 +15,10 @@ const targetOffset = [0, 0];
 export interface AdjustOverflow {
   adjustX?: 0 | 1;
   adjustY?: 0 | 1;
+  marginLeft?: number;
+  marginRight?: number;
+  marginTop?: number;
+  marginBottom?: number;
 }
 
 export interface PlacementsConfig {

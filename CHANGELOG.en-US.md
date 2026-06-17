@@ -24,6 +24,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added column attribute `customizable`.
 - 🌟 `ImageCrop`: The new `showAspectInput` attribute has been added, and the `aspect` attribute has been expanded to include a `string` type.
 - 🌟 `<pro>TextField`: Added `fieldFocusMode` property.
+- 🌟 `Tooltip`: The `autoAdjustOverflow` property now includes margin configuration.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 

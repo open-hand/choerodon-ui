@@ -3,9 +3,23 @@ import isString from 'lodash/isString';
 import { pxToRem } from '../_util/UnitConvertor';
 import { AlignPoint } from './Align';
 
-type overflowType = { adjustX?: boolean; adjustY?: boolean };
+type overflowType = { adjustX?: boolean; adjustY?: boolean; marginLeft?: number; marginRight?: number; marginTop?: number; marginBottom?: number };
 type regionType = { left: number; top: number; width: number; height: number };
 type positionType = { left: number; top: number };
+type visibleRectType = { left: number; right: number; top: number; bottom: number };
+
+function getAdjustedVisibleRect(visibleRect: visibleRectType, overflow: overflowType): visibleRectType {
+  const marginLeft = overflow.marginLeft ?? 0;
+  const marginRight = overflow.marginRight ?? 0;
+  const marginTop = overflow.marginTop ?? 0;
+  const marginBottom = overflow.marginBottom ?? 0;
+  return {
+    left: visibleRect.left + marginLeft,
+    right: visibleRect.right - marginRight,
+    top: visibleRect.top + marginTop,
+    bottom: visibleRect.bottom - marginBottom,
+  };
+}
 
 function isFailX(elFuturePos, elRegion, visibleRect) {
   return (
@@ -256,13 +270,14 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
   const newOverflowCfg: overflowType = {};
   let fail = 0;
   const visibleRect = getVisibleRectForElement(el);
+  const adjustedVisibleRect = visibleRect ? getAdjustedVisibleRect(visibleRect, overflow) : visibleRect;
   const elRegion = getRegion(source);
   let elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset, targetOffset);
   let newElRegion = Object.assign(elRegion, elFuturePos);
 
   if (visibleRect && (overflow.adjustX || overflow.adjustY) && isTargetNotOutOfVisible) {
     if (overflow.adjustX) {
-      if (isFailX(elFuturePos, elRegion, visibleRect)) {
+      if (isFailX(elFuturePos, elRegion, adjustedVisibleRect)) {
         const newPoints = flip(points, /[lr]/gi, {
           l: 'r',
           r: 'l',
@@ -277,7 +292,7 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
           newTargetOffset,
         );
 
-        if (!isCompleteFailX(newElFuturePos, elRegion, visibleRect)) {
+        if (!isCompleteFailX(newElFuturePos, elRegion, adjustedVisibleRect)) {
           fail = 1;
           points = newPoints;
           offset = newOffset;
@@ -287,7 +302,7 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
     }
 
     if (overflow.adjustY) {
-      if (isFailY(elFuturePos, elRegion, visibleRect)) {
+      if (isFailY(elFuturePos, elRegion, adjustedVisibleRect)) {
         const _newPoints = flip(points, /[tb]/gi, {
           t: 'b',
           b: 't',
@@ -302,7 +317,7 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
           _newTargetOffset,
         );
 
-        if (!isCompleteFailY(_newElFuturePos, elRegion, visibleRect)) {
+        if (!isCompleteFailY(_newElFuturePos, elRegion, adjustedVisibleRect)) {
           fail = 1;
           points = _newPoints;
           offset = _newOffset;
@@ -316,12 +331,12 @@ function doAlign(el: HTMLElement, refNodeRegion: regionType, align, isTargetNotO
       Object.assign(newElRegion, elFuturePos);
     }
 
-    newOverflowCfg.adjustX = overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect);
+    newOverflowCfg.adjustX = overflow.adjustX && isFailX(elFuturePos, elRegion, adjustedVisibleRect);
 
-    newOverflowCfg.adjustY = overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect);
+    newOverflowCfg.adjustY = overflow.adjustY && isFailY(elFuturePos, elRegion, adjustedVisibleRect);
 
     if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
-      newElRegion = adjustForViewport(elFuturePos, elRegion, visibleRect, newOverflowCfg);
+      newElRegion = adjustForViewport(elFuturePos, elRegion, adjustedVisibleRect, newOverflowCfg);
     }
   }
   const { width, height } = newElRegion;
