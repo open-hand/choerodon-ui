@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix the issue where, in the controlled mode, after modifying the `value` during input, the input box does not display the latest value.
 - 🐞 `<pro>TextField`: Fix the issue in the `measureTextWidth` method that might cause `XSS` attacks when used in the `Firefox` browser.
 - 🐞 `<pro>Table`: Fixed the issue where enabling virtual scrolling would trigger errors when copying bidirectionally.
+- 🐞 `<pro>Tooltip`: Fix the issue where the `Tooltip` does not hide properly after the element that triggered its display is hidden.
 
 ## 1.6.8
 

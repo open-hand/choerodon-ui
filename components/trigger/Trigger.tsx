@@ -354,7 +354,7 @@ export default class Trigger extends Component<TriggerProps> {
       if (isNil(this.childTimer)) {
         this.childTimer = window.setInterval(() => {
           const el = this.domNode;
-          if (el && el.isConnected === false) {
+          if (el && (el.isConnected === false || ((el as HTMLElement).offsetWidth === 0 && (el as HTMLElement).offsetHeight === 0))) {
             this.setPopupHidden(true);
             this.closeWatchingChild();
           }

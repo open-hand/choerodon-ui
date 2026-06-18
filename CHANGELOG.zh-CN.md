@@ -75,6 +75,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复受控模式下, 输入过程中修改 value 后, 输入框未显示最新值的问题。
 - 🐞 `<pro>TextField`: 修复 measureTextWidth 方法在 Firefox 浏览器下可能引起 XSS 攻击的问题。
 - 🐞 `<pro>Table`: 修复开启虚拟滚动时双向复制会触发报错的问题。
+- 🐞 `<pro>Tooltip`: 修复触发 Tooltip 显示的元素隐藏后, Tooltip 未隐藏的问题。
 
 ## 1.6.8
 
