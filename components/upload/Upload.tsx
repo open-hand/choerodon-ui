@@ -1,4 +1,4 @@
-﻿import React, { Component, DragEvent } from 'react';
+﻿import React, { Component, DragEvent, ReactNode } from 'react';
 import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import isUndefined from 'lodash/isUndefined';
@@ -11,6 +11,44 @@ import { UploadChangeParam, UploadFile, UploadListType, UploadLocale, UploadProp
 import { fileToObject, genPercentAdd, getFileItem, removeFileItem, T } from './utils';
 import RcUpload from '../rc-components/upload';
 import ConfigContext, { ConfigContextValue } from '../config-provider/ConfigContext';
+import Trigger from '../trigger/Trigger';
+import { Action } from '../trigger/enum';
+import { PopconfirmProps } from '../popconfirm';
+
+const BUILT_IN_PLACEMENTS = {
+  bottomLeft: {
+    points: ['tl', 'bl'],
+    offset: [0, 4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1,
+    },
+  },
+  bottomRight: {
+    points: ['tr', 'br'],
+    offset: [0, 4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1,
+    },
+  },
+  topLeft: {
+    points: ['bl', 'tl'],
+    offset: [0, -4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1,
+    },
+  },
+  topRight: {
+    points: ['br', 'tr'],
+    offset: [0, -4],
+    overflow: {
+      adjustX: 1,
+      adjustY: 1,
+    },
+  },
+};
 
 export { UploadProps };
 
@@ -36,6 +74,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     disabled: false,
     supportServerRender: true,
     showFileSize: false,
+    viewMode: 'list',
   };
 
   declare context: ConfigContextValue;
@@ -53,6 +92,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       fileList: props.fileList || props.defaultFileList || [],
       dragState: 'drop',
       originReuploadItem: null,
+      popupHidden: true,
     };
   }
 
@@ -305,11 +345,28 @@ export default class Upload extends Component<UploadProps, UploadState> {
     return getPrefixCls('upload', customizePrefixCls);
   }
 
+  handlePopupHiddenChange = (popupHidden: boolean) => {
+    this.setState({ popupHidden });
+  };
+
+  closePopup = () => {
+    this.setState({ popupHidden: true });
+  };
+
+  handlePreview = (file: UploadFile) => {
+    this.closePopup();
+    const { onPreview } = this.props;
+    if (onPreview) {
+      onPreview(file);
+    }
+  };
+
   renderUploadList = (uploadLocale: UploadLocale) => {
     const { getConfig } = this.context;
     const {
       showUploadList,
       listType,
+      viewMode,
       onPreview,
       onReUpload = this.defaultReUpload,
       downloadPropsIntercept,
@@ -343,12 +400,19 @@ export default class Upload extends Component<UploadProps, UploadState> {
       defaultShowPreviewIcon = isUndefined(showPreviewIcon) ? true : showPreviewIcon;
       defaultShowDownloadIcon = isUndefined(showDownloadIcon) ? true : showDownloadIcon;
     }
+    const mergedPopconfirmProps = viewMode === 'popup' ? {
+      ...(popconfirmProps || {}),
+      overlayStyle: {
+        zIndex: 1051,
+        ...((popconfirmProps && popconfirmProps.overlayStyle) || {}),
+      },
+    } as PopconfirmProps : popconfirmProps;
     return (
       <UploadList
         prefixCls={prefixCls}
         listType={listType}
         items={fileList}
-        onPreview={onPreview}
+        onPreview={viewMode === 'popup' ? this.handlePreview : onPreview}
         dragUploadList={dragUploadList}
         onDragEnd={this.onDragEnd}
         previewFile={previewFile}
@@ -367,13 +431,43 @@ export default class Upload extends Component<UploadProps, UploadState> {
         showFileSize={showFileSize}
         renderIcon={renderIcon}
         tooltipPrefixCls={tooltipPrefixCls}
-        popconfirmProps={popconfirmProps}
+        popconfirmProps={mergedPopconfirmProps}
         getUploadRef={this.getUpload}
         setReplaceReuploadItem={this.setReplaceReuploadItem}
         pictureCardShowName={pictureCardShowName}
       />
     );
   };
+
+  renderPopupContent(uploadList: ReactNode) {
+    const { listType } = this.props;
+    const prefixCls = this.getPrefixCls();
+    return (
+      <div className={`${prefixCls}-popup-inner`}>
+        <div className={classNames(`${prefixCls}-popup-list-wrapper`, `${prefixCls}-popup-list-wrapper-${listType}`)}>
+          {uploadList}
+        </div>
+      </div>
+    );
+  }
+
+  renderPopup(uploadButton: ReactNode, uploadList: ReactNode) {
+    const prefixCls = this.getPrefixCls();
+    const { popupHidden } = this.state;
+    return (
+      <Trigger
+        prefixCls={prefixCls}
+        popupContent={() => this.renderPopupContent(uploadList)}
+        action={[Action.hover, Action.focus]}
+        builtinPlacements={BUILT_IN_PLACEMENTS}
+        popupPlacement="bottomLeft"
+        popupHidden={popupHidden}
+        onPopupHiddenChange={this.handlePopupHiddenChange}
+      >
+        {uploadButton}
+      </Trigger>
+    );
+  }
 
   render() {
     const {
@@ -387,6 +481,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       overwriteDefaultEvent,
       beforeUploadFiles,
       onReUpload = this.defaultReUpload,
+      viewMode,
     } = this.props;
     const { fileList, dragState, originReuploadItem } = this.state;
 
@@ -409,6 +504,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
     };
 
     delete rcUploadProps.className;
+    delete rcUploadProps.viewMode;
 
     const uploadList = showUploadList ? (
       <LocaleReceiver componentName="Upload" defaultLocale={getRuntimeLocale().Upload || {}}>
@@ -423,28 +519,36 @@ export default class Upload extends Component<UploadProps, UploadState> {
         [`${prefixCls}-drag-hover`]: dragState === 'dragover',
         [`${prefixCls}-disabled`]: disabled,
       });
+      const uploadButton = (
+        <div
+          className={dragCls}
+          onDrop={this.onFileDrop}
+          onDragOver={this.onFileDrop}
+          onDragLeave={this.onFileDrop}
+        >
+          <RcUpload {...rcUploadProps} ref={this.saveUpload} className={`${prefixCls}-btn`}>
+            <div className={`${prefixCls}-drag-container`}>{children}</div>
+          </RcUpload>
+        </div>
+      );
       return (
         <span className={className}>
-          <div
-            className={dragCls}
-            onDrop={this.onFileDrop}
-            onDragOver={this.onFileDrop}
-            onDragLeave={this.onFileDrop}
-          >
-            <RcUpload {...rcUploadProps} ref={this.saveUpload} className={`${prefixCls}-btn`}>
-              <div className={`${prefixCls}-drag-container`}>{children}</div>
-            </RcUpload>
-          </div>
-          {uploadList}
+          {viewMode === 'popup' ? this.renderPopup(uploadButton, uploadList) : (
+            <>
+              {uploadButton}
+              {uploadList}
+            </>
+          )}
         </span>
       );
     }
 
     const uploadButtonCls = classNames(prefixCls, {
       [`${prefixCls}-select`]: true,
-      [`${prefixCls}-select-${listType}`]: true,
+      [`${prefixCls}-select-${listType}`]: viewMode !== 'popup',
       [`${prefixCls}-disabled`]: disabled,
       [`${prefixCls}-drag-btn`]: dragUploadList,
+      [`${prefixCls}-select-popup-${listType}`]: viewMode === 'popup',
     });
 
     const uploadButton = (
@@ -452,6 +556,14 @@ export default class Upload extends Component<UploadProps, UploadState> {
         <RcUpload {...rcUploadProps} ref={this.saveUpload} />
       </div>
     );
+
+    if (viewMode === 'popup') {
+      return (
+        <span className={className}>
+          {this.renderPopup(uploadButton, uploadList)}
+        </span>
+      );
+    }
 
     if (listType === 'picture-card') {
       return (
