@@ -57,6 +57,7 @@ export interface UploadLocale {
 
 export type UploadType = 'drag' | 'select';
 export type UploadListType = 'text' | 'picture' | 'picture-card';
+export type UploadViewMode = 'list' | 'popup';
 export type ShowReUploadIconType = 'icon' | 'text';
 
 export interface UploadProps {
@@ -76,6 +77,7 @@ export interface UploadProps {
   beforeUploadFiles?: (FileList: UploadFile[]) => boolean;
   onChange?: (info: UploadChangeParam) => void;
   listType?: UploadListType;
+  viewMode?: UploadViewMode;
   className?: string;
   onStart?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
@@ -108,6 +110,7 @@ export interface UploadState {
   fileList: UploadFile[];
   dragState: string;
   originReuploadItem: UploadFile | null;
+  popupHidden: boolean;
 }
 
 export type UploadListIconFunc = (file: UploadFile) => boolean;

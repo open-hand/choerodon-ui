@@ -1,5 +1,6 @@
 @import '../../style/themes/default';
 @import '../../style/mixins/index';
+@import '../../trigger/style/mixin';
 
 @upload-prefix-cls: ~'@{c7n-prefix}-upload';
 @upload-item: ~'@{c7n-prefix}-upload-list-item';
@@ -137,6 +138,27 @@
     &:hover .@{iconfont-css-prefix}-plus {
       color: @text-color-secondary;
     }
+  }
+
+  .trigger;
+
+  &-popup-inner {
+    display: flex;
+    min-width: 3rem;
+    max-width: @dropdown-menu-max-width;
+    max-height: @dropdown-menu-max-height;
+    overflow: auto;
+  }
+
+  &-popup-list-wrapper {
+    flex: 1;
+    padding: 0.04rem 0.08rem;
+    overflow: auto;
+  }
+
+  &-popup &-list-picture-card {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 
