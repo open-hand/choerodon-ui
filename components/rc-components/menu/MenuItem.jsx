@@ -181,10 +181,10 @@ export class MenuItem extends React.Component {
     if (['overflow', 'always'].includes(props.tooltip)) {
       if (!isMobile()) {
         rippleProps.onMouseEnter = this.handleRippleMouseEnter;
-        rippleProps.onMouseLeave = hide;
+        rippleProps.onMouseLeave = () => hide();
       } else {
         rippleProps.onTouchStart = this.handleRippleMouseEnter;
-        rippleProps.onTouchEnd = hide;
+        rippleProps.onTouchEnd = () => hide();
       }
     }
     menuAllProps.forEach(key => delete props[key]);
