@@ -1517,3 +1517,19 @@ export function isObjectEmptyByIgnore(obj, ignoreKeys: string[] = []) {
   // 判断过滤后的键数量是否为 0
   return filteredKeys.length === 0;
 }
+
+/**
+ * 是否渲染为 Select 类型组件
+ */
+export function isSelectCom(field: Field, record?: Record): boolean {
+  const lookup = field.getLookup(record);
+  const options = field.get('options', record);
+  const lookupUrl = field.get('lookupUrl', record);
+  const type = field.get('type', record);
+  const isSelect = field.get('lookupCode', record) ||
+    (lookupUrl && isString(lookupUrl)) ||
+    field.get('lookupAxiosConfig', record) ||
+    (type !== FieldType.object && type !== FieldType.auto && field.get('lovCode', record)) ||
+    (type !== FieldType.object && (lookup || options));
+  return isSelect;
+}
