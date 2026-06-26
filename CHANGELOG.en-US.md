@@ -77,6 +77,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fix the issue in the `measureTextWidth` method that might cause `XSS` attacks when used in the `Firefox` browser.
 - 🐞 `<pro>Table`: Fixed the issue where enabling virtual scrolling would trigger errors when copying bidirectionally.
 - 🐞 `<pro>Tooltip`: Fix the issue where the `Tooltip` does not hide properly after the element that triggered its display is hidden.
+- 🐞 `<pro>Table`: Fix the issue where, when pasting values into a `Select` type input box and no `combo` is configured, values other than the selected options can be pasted.
 
 ## 1.6.8
 

@@ -33,7 +33,7 @@ import lookupStore, { BatchParaType } from '../stores/LookupCodeStore';
 import lovCodeStore from '../stores/LovCodeStore';
 import attachmentStore, { AttachmentCache } from '../stores/AttachmentStore';
 import localeContext, { $l } from '../locale-context';
-import { getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps } from './utils';
+import { getBaseType, getChainFieldName, getIf, getIfForMap, getLimit, isFormDataEqual, isObjectEmptyByIgnore, mergeDataSetProps, isSelectCom } from './utils';
 import { isFormData } from '../axios/_helpers/utils';
 import ValidationResult from '../validator/ValidationResult';
 import { ValidatorProps } from '../validator/rules';
@@ -1047,13 +1047,7 @@ export default class Field {
     }
     const lookup = this.getLookup(record);
     const options = this.get('options', record);
-    const lookupUrl = this.get('lookupUrl', record);
-    const type = this.get('type', record);
-    const isSelect = this.get('lookupCode', record) ||
-      (lookupUrl && isString(lookupUrl)) ||
-      this.get('lookupAxiosConfig', record) ||
-      (type !== FieldType.object && type !== FieldType.auto && this.get('lovCode', record)) ||
-      (type !== FieldType.object && (lookup || options));
+    const isSelect = isSelectCom(this, record);
 
     const showSelectLoading = isSelect &&
       ((!lookup && !options) || (options && (options as DataSet).status !== DataSetStatus.ready));

@@ -77,6 +77,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复 measureTextWidth 方法在 Firefox 浏览器下可能引起 XSS 攻击的问题。
 - 🐞 `<pro>Table`: 修复开启虚拟滚动时双向复制会触发报错的问题。
 - 🐞 `<pro>Tooltip`: 修复触发 Tooltip 显示的元素隐藏后, Tooltip 未隐藏的问题。
+- 🐞 `<pro>Table`: 修复粘贴 Select 类型输入框时, 未配置 combo 时能粘贴选项外的值的问题。
 
 ## 1.6.8
 

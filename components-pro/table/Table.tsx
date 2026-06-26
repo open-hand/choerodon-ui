@@ -107,7 +107,7 @@ import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
-import { getUniqueFieldNames } from '../data-set/utils';
+import { getUniqueFieldNames, isSelectCom } from '../data-set/utils';
 import mergeProps from '../_util/mergeProps';
 import ErrorBar from './ErrorBar';
 import TableSibling from './TableSibling';
@@ -1709,6 +1709,9 @@ export default class Table extends DataSetComponent<TableProps> {
                 text = text.split('，');
               }
             }
+            const tableEditor = editors && fieldName && editors.get(fieldName);
+            // @ts-ignore
+            const hasCombo = tableEditor && tableEditor.cellEditor && tableEditor.cellEditor.props && tableEditor.cellEditor.props.combo;
             switch (fieldType) {
               case FieldType.boolean:
                 text = String(text).toLowerCase() === 'true' || String(text) === "1" || String(text) === "是";
@@ -1761,8 +1764,21 @@ export default class Table extends DataSetComponent<TableProps> {
                   text = attempt(JSON.parse, text);
                 } else if (optionDs) {
                   const textField = field.get('textField', record);
+                  const valueField = field.get('valueField', record);
                   const param = field.get('lovPara', record);
-                  if (isArrayLike(text)) {
+                  const isSelect = isSelectCom(field, record);
+                  if (isSelect) {
+                    const optionData = optionDs.toData();
+                    if (isArrayLike(text)) {
+                      text = text.map(v => {
+                        const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
+                        return option ? option[valueField] : (hasCombo ? text : null);
+                      })
+                    } else {
+                      const option = optionData.find(x => x[textField] === text || x[valueField] === text);
+                      text = option ? option[valueField] : (hasCombo ? text : null);
+                    }
+                  } else if (isArrayLike(text)) {
                     optionDs.setState(QUERY_CANCELABLE, false);
                     const promises = text.map(async t => {
                       const trimmedText = t.trim();
@@ -1796,6 +1812,8 @@ export default class Table extends DataSetComponent<TableProps> {
                       if (this.dataSet && data) {
                         const current = data[optionDs.dataKey][0];
                         text = current || null;
+                      } else {
+                        text = null;
                       }
                     }
                   }
@@ -1809,15 +1827,11 @@ export default class Table extends DataSetComponent<TableProps> {
                   if (isArrayLike(text)) {
                     text = text.map(v => {
                       const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
-                      return option ? option[valueField] : null;
+                      return option ? option[valueField] : (hasCombo ? text : null);
                     })
                   } else {
                     const option = optionData.find(x => x[textField] === text || x[valueField] === text);
-                    if(option){
-                      text = option[valueField];
-                    } else if(fieldType !== FieldType.string) {
-                      text = '';
-                    }
+                    text = option ? option[valueField] : (hasCombo ? text : null);
                   }
                 }
                 break;
