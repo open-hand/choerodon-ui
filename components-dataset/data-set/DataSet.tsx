@@ -929,7 +929,8 @@ export default class DataSet extends EventManager {
    */
   @computed
   get selected(): Record[] {
-    return this.currentSelected.concat(this.cachedSelected.filter(record => record.isSelected));
+    const selected = this.currentSelected.concat(this.cachedSelected.filter(record => record.isSelected));
+    return Array.from(new Set(selected));
   }
 
   /**
@@ -938,7 +939,8 @@ export default class DataSet extends EventManager {
    */
   @computed
   get unSelected(): Record[] {
-    return this.currentUnSelected.concat(this.cachedSelected.filter(record => !record.isSelected));
+    const unSelected = this.currentUnSelected.concat(this.cachedSelected.filter(record => !record.isSelected));
+    return Array.from(new Set(unSelected));
   }
 
   @computed
@@ -1158,7 +1160,8 @@ export default class DataSet extends EventManager {
    */
   @computed
   get all(): Record[] {
-    return this.records.concat(this.cachedRecords);
+    const all = this.records.concat(this.cachedRecords);
+    return Array.from(new Set(all));
   }
 
   get dirty(): boolean {
