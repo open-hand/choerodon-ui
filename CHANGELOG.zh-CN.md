@@ -81,6 +81,7 @@ timeline: true
 - 🐞 `<pro>Tooltip`: 修复触发 Tooltip 显示的元素隐藏后, Tooltip 未隐藏的问题。
 - 🐞 `<pro>Table`: 修复粘贴 Select 类型输入框时, 未配置 combo 时能粘贴选项外的值的问题。
 - 🐞 `<pro>DataSet`: 修复 selected 对象中有重复数据, 导致 Lov 弹窗中已选 tag 渲染重复的问题。
+- 🐞 `<pro>Table`: 修复设置 autoHeight 属性但父容器未设置高度时, 表格会缓慢增加高度的问题。
 
 ## 1.6.8
 
