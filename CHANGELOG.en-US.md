@@ -26,6 +26,7 @@ timeline: true
 - 🌟 `<pro>TextField`: Added `fieldFocusMode` property.
 - 🌟 `Tooltip`: The `autoAdjustOverflow` property now includes margin configuration.
 - 🌟 `Upload`: Added `viewMode` property.
+- 🌟 `<pro>DataSet.Field`: A new property named `lovQueryBatchAxiosConfig` has been added, enabling custom batch queries for `Lov` fields when pasting tables.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 

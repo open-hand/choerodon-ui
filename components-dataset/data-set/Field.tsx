@@ -170,6 +170,18 @@ export type HighlightProps = {
   hidden?: boolean;
 };
 
+/**
+ * Lov批量查询显示值的钩子函数类型
+ */
+export type LovQueryBatchHook = (props: {
+  dataSet: DataSet;
+  field: Field;
+  texts: string[];
+  textField?: string;
+  valueField?: string;
+  lovPara?: object;
+}) => AxiosRequestConfig;
+
 export type FieldProps = {
   /**
    * 字段名
@@ -380,6 +392,15 @@ export type FieldProps = {
    * 批量值列表请求的axiosConfig
    */
   lookupBatchAxiosConfig?: (codes: string[], batchParaObj: BatchParaType) => AxiosRequestConfig;
+  /**
+   * Lov 字段自定义批量查询的钩子
+   * 钩子需返回一个 AxiosRequestConfig，其中 url 为批量查询地址，texts 会作为请求参数传入。
+   * 请求响应格式应为以显示值为 key、对应记录对象为 value 的对象，例如：
+   * { 'text1': { xxx: 'yyy' }, 'text2': { mmm: 'nnn' }, ... }
+   *
+   * @returns 批量查询的 AxiosRequestConfig
+   */
+  lovQueryBatchAxiosConfig?: LovQueryBatchHook;
   /**
    * 内部字段别名绑定
    */
