@@ -2278,11 +2278,19 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @autobind
+  @action
   handleWrapperResize(entries: ResizeObserverEntry[]) {
     const [entry] = entries;
     const { target } = entry;
     if (target && target.parentNode && !isNil((target.parentNode as HTMLDivElement).offsetHeight)) {
-      this.syncParentSize((target.parentNode as HTMLDivElement).offsetHeight, target.parentNode as HTMLDivElement);
+      const parentNode = target.parentNode as HTMLDivElement;
+      const { tableStore, element } = this;
+      if (element) {
+        // 仅同步 parentPaddingTop, parentHeight 由 handleParentResize 在父容器高度变化时负责更新。
+        // 避免在父容器无固定高度时, wrapper 高度反向驱动 parentHeight 形成循环依赖。
+        tableStore.parentPaddingTop =
+          Math.round((element as HTMLDivElement).getBoundingClientRect().top) - Math.round(parentNode.getBoundingClientRect().top);
+      }
     }
   }
 
