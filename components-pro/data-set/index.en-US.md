@@ -343,6 +343,7 @@ title: DataSet
 | useLookupBatch | 是否使用批量查询快码 | (code: string, field?: Field) => boolean |  |
 | useLovDefineBatch | 是否使用批量查询 lov 配置 | (code: string, field?: Field) => boolean |  |
 | numberRoundMode | 数字取整方式, 默认四舍五入 | round \| ceil \| floor |  |
+| lovQueryBatchAxiosConfig | Lov 字段自定义批量查询的钩子。钩子需返回一个 AxiosRequestConfig，其中 url 为批量查询地址，texts 会作为请求参数传入。请求响应格式应为以显示值为 key、对应记录对象为 value 的对象，例如：{ 'text1': { xxx: 'yyy' }, 'text2': { mmm: 'nnn' }, ... } | (props: { dataSet: DataSet; field: Field; texts: string[]; textField?: string; valueField?: string; lovPara?: object; }) => AxiosRequestConfig |  |
 
 ### Field Values
 

@@ -30,6 +30,7 @@ export {
   DynamicPropsArguments,
   FieldProps,
   HighlightProps,
+  LovQueryBatchHook,
 } from './Field';
 export {
   SubmitTypes,

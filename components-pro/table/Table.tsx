@@ -105,9 +105,11 @@ import SelectionTips from './SelectionTips';
 import { DataSetEvents, DataSetSelection, DataSetStatus, FieldType } from '../data-set/enum';
 import { Size } from '../core/enum';
 import { HighlightRenderer } from '../field/FormField';
+import Field, { LovQueryBatchHook } from '../data-set/Field';
 import StickyShadow from './StickyShadow';
 import ColumnGroups from './ColumnGroups';
 import { getUniqueFieldNames, isSelectCom } from '../data-set/utils';
+import lovStore from '../stores/LovCodeStore';
 import mergeProps from '../_util/mergeProps';
 import ErrorBar from './ErrorBar';
 import TableSibling from './TableSibling';
@@ -912,6 +914,22 @@ export interface TableProps extends DataSetComponentProps {
   customizedColumnProps?: ColumnProps | ((defaultProps: ColumnProps) => ColumnProps);
 }
 
+/**
+ * Lov批量查询任务
+ */
+interface LovBatchTask {
+  record: Record;
+  name: string;
+  field: Field;
+  textField: string | undefined;
+  valueField: string | undefined;
+  param: object | undefined;
+  isMultiple: boolean;
+  texts: string[];
+  hook: LovQueryBatchHook;
+  columnRenderer?: any;
+}
+
 @observer
 export default class Table extends DataSetComponent<TableProps> {
   static displayName = 'Table';
@@ -1666,6 +1684,8 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       const { current, totalCount: noPagingTotoalCount, length, paging } = this.dataSet;
       const batchRecord: any = [];
+      // 收集需要批量查询的Lov任务，循环结束后统一合并查询
+      const lovBatchTasks: LovBatchTask[] = [];
       // 统一换行符并去掉最后一行末尾的换行符
       const rows = clipText.replace(/\r\n/g, '\n').replace(/\n$/, '').split('\n').filter(line => (clipboard?.keepEmptyLines !== false) || line.trim() !== '');
 
@@ -1694,7 +1714,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const field = this.dataSet.getField(fieldName);
             errorPasteColName = field?.get('label');
             // 非编辑项则跳过赋值
-            if (!column.editor || !field || field.get('disabled', record) || field.get('readOnly', record) || !this.dataSet) {
+            if (!column.editor || !field || field.get('disabled', record) || field.get('readOnly', record) || !this.dataSet || !record || !fieldName) {
               continue;
             }
             const fieldType = field.get('type', record);
@@ -1712,6 +1732,7 @@ export default class Table extends DataSetComponent<TableProps> {
             const tableEditor = editors && fieldName && editors.get(fieldName);
             // @ts-ignore
             const hasCombo = tableEditor && tableEditor.cellEditor && tableEditor.cellEditor.props && tableEditor.cellEditor.props.combo;
+            let skipInlinePush = false;
             switch (fieldType) {
               case FieldType.boolean:
                 text = String(text).toLowerCase() === 'true' || String(text) === "1" || String(text) === "是";
@@ -1778,42 +1799,66 @@ export default class Table extends DataSetComponent<TableProps> {
                       const option = optionData.find(x => x[textField] === text || x[valueField] === text);
                       text = option ? option[valueField] : (hasCombo ? text : null);
                     }
-                  } else if (isArrayLike(text)) {
-                    optionDs.setState(QUERY_CANCELABLE, false);
-                    const promises = text.map(async t => {
-                      const trimmedText = t.trim();
-                      if (trimmedText === '') {
-                        return null;
-                      }
-                      const obj = {
-                        [textField]: trimmedText,
-                        ...param,
-                      }
-                      const data = await optionDs.query(1, obj);
-                      if (this.dataSet && data) {
-                        return data[optionDs.dataKey][0] || null;
-                      }
-                      return null;
-                    })
-                    // eslint-disable-next-line no-await-in-loop
-                    const results = await Promise.all(promises);
-                    text = results;
-                    optionDs.setState(QUERY_CANCELABLE, true);
-                  } else if (isString(text)) {
-                    if (text === '') {
-                      text = null;
-                    } else {
-                      const obj = {
-                        [textField]: text,
-                        ...param,
-                      }
-                      // eslint-disable-next-line no-await-in-loop
-                      const data = await optionDs.query(1, obj);
-                      if (this.dataSet && data) {
-                        const current = data[optionDs.dataKey][0];
-                        text = current || null;
-                      } else {
+                  } else {
+                    const lovQueryBatchAxiosConfig = field.get('lovQueryBatchAxiosConfig', record);
+                    if (lovQueryBatchAxiosConfig) {
+                      const textList = isArrayLike(text)
+                        ? text.map((t: any) => t ? String(t).trim() : '')
+                        : (isString(text) ? [text as string] : []);
+                      if (textList.length === 0 || textList.every(t => !t)) {
                         text = null;
+                      } else {
+                        lovBatchTasks.push({
+                          record,
+                          name: fieldName,
+                          field,
+                          textField,
+                          valueField,
+                          param,
+                          isMultiple: isArrayLike(text),
+                          texts: textList,
+                          hook: lovQueryBatchAxiosConfig,
+                          columnRenderer: columns[colIndex + j].column.renderer,
+                        });
+                        skipInlinePush = true;
+                      }
+                    } else if (isArrayLike(text)) {
+                      optionDs.setState(QUERY_CANCELABLE, false);
+                      const promises = text.map(async t => {
+                        const trimmedText = t.trim();
+                        if (trimmedText === '') {
+                          return null;
+                        }
+                        const obj = {
+                          [textField]: trimmedText,
+                          ...param,
+                        }
+                        const data = await optionDs.query(1, obj);
+                        if (this.dataSet && data) {
+                          return data[optionDs.dataKey][0] || null;
+                        }
+                        return null;
+                      })
+                      // eslint-disable-next-line no-await-in-loop
+                      const results = await Promise.all(promises);
+                      text = results;
+                      optionDs.setState(QUERY_CANCELABLE, true);
+                    } else if (isString(text)) {
+                      if (text === '') {
+                        text = null;
+                      } else {
+                        const obj = {
+                          [textField]: text,
+                          ...param,
+                        }
+                        // eslint-disable-next-line no-await-in-loop
+                        const data = await optionDs.query(1, obj);
+                        if (this.dataSet && data) {
+                          const current = data[optionDs.dataKey][0];
+                          text = current || null;
+                        } else {
+                          text = null;
+                        }
                       }
                     }
                   }
@@ -1836,16 +1881,22 @@ export default class Table extends DataSetComponent<TableProps> {
                 }
                 break;
             }
-            const columnRenderer = columns[colIndex + j].column.renderer;
-            if (columnRenderer) {
-              columnRenderer({ record, text, value: text, name: fieldName, dataSet: this.dataSet });
+            if (!skipInlinePush) {
+              const columnRenderer = columns[colIndex + j].column.renderer;
+              if (columnRenderer) {
+                columnRenderer({ record, text, value: text, name: fieldName, dataSet: this.dataSet });
+              }
+              batchRecord.push({ record, name: fieldName, value: text });
             }
-            batchRecord.push({ record, name: fieldName, value: text });
           }
         }
         errorPasteColName = '';
         if (inlineEdit) {
           this.focus();
+        }
+        // 批量查询Lov显示值并赋值
+        if (lovBatchTasks.length) {
+          await this.processLovBatchTasks(lovBatchTasks);
         }
         // 再批量赋值
         batchRecord.forEach(item => {
@@ -1871,6 +1922,78 @@ export default class Table extends DataSetComponent<TableProps> {
         }
       })
     }
+  }
+
+  /**
+   * 批量查询Lov显示值并赋值
+   */
+  async processLovBatchTasks(tasks: LovBatchTask[]) {
+    // 按字段分组：相同请求地址 + 相同 lovPara 的任务归为一组，合并为一次查询
+    const groups = new Map<string, {
+      hook: LovBatchTask['hook'];
+      field: Field;
+      textField: string | undefined;
+      valueField: string | undefined;
+      param: object | undefined;
+      tasks: LovBatchTask[];
+    }>();
+    // 按字段缓存探测到的批量查询地址，避免同一字段重复调用 hook
+    const urlCache = new Map<Field, string>();
+    tasks.forEach((task) => {
+      const { hook, field, textField, valueField, param } = task;
+      let batchUrl = urlCache.get(field);
+      if (batchUrl === undefined) {
+        // 通过钩子探测批量查询地址（url 不应依赖于 texts，仅用于分组键）
+        const probeConfig = hook({ dataSet: this.dataSet!, field, texts: [''], textField, valueField, lovPara: param });
+        batchUrl = probeConfig.url ? probeConfig.url.split('?')[0] : '';
+        urlCache.set(field, batchUrl!);
+      }
+      const groupKey = `${batchUrl}-${param ? JSON.stringify(param) : ''}-${field.name || ''}`;
+      let group = groups.get(groupKey);
+      if (!group) {
+        group = {
+          hook,
+          field,
+          textField,
+          valueField,
+          param,
+          tasks: [],
+        };
+        groups.set(groupKey, group);
+      }
+      group.tasks.push(task);
+    });
+
+    // 每组发起一次批量查询，并行执行
+    await Promise.all(Array.from(groups.values()).map(async (group) => {
+      const { hook, field, textField, valueField, param, tasks } = group;
+      // 收集该组所有非空显示值并去重
+      const allTexts = new Set<string>();
+      tasks.forEach(t => t.texts.forEach((text: string) => {
+        if (text !== '') allTexts.add(text);
+      }));
+      const texts = Array.from(allTexts);
+      // 调用 lovStore 批量查询，返回 显示值 -> 记录 的映射
+      const textMap = await lovStore.batchQueryLovTexts({
+        hook, field, dataSet: this.dataSet!, texts, textField, valueField, lovPara: param,
+      });
+      // 按任务赋值
+      tasks.forEach((task) => {
+        const { record, name, isMultiple, texts: taskTexts, columnRenderer } = task;
+        let value;
+        if (isMultiple) {
+          value = taskTexts.map((t: string) => (t === '' ? null : (textMap.get(t) || null))).filter(item => item);
+        } else {
+          value = (taskTexts.length === 0 || taskTexts[0] === '') ? null : (textMap.get(taskTexts[0]) || null);
+        }
+        if (columnRenderer) {
+          columnRenderer({ record, text: value, value, name, dataSet: this.dataSet });
+        }
+        if (isMultiple ? value.length > 0 : value) {
+          record.set(name, value);
+        }
+      });
+    }));
   }
 
   getOmitPropsKeys(): string[] {

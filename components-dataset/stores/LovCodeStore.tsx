@@ -4,7 +4,7 @@ import { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { warning } from '../utils';
 import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
-import Field, { FieldProps } from '../data-set/Field';
+import Field, { FieldProps, LovQueryBatchHook } from '../data-set/Field';
 import Record from '../data-set/Record';
 import { FieldType } from '../data-set/enum';
 import { LovFieldType } from '../enum';
@@ -119,6 +119,39 @@ export class LovCodeStore {
 
   getAxios(field?: Field): AxiosInstance {
     return getGlobalConfig('axios', field) || axios;
+  }
+
+  /**
+   * 批量查询Lov显示值对应的记录
+   * 钩子返回的请求响应格式应为以显示值为 key、对应记录对象为 value 的对象，例如：
+   * { 'text1': { xxx: 'yyy' }, 'text2': { mmm: 'nnn' }, ... }
+   *
+   */
+  async batchQueryLovTexts(props: {
+    hook: LovQueryBatchHook;
+    field: Field;
+    dataSet: DataSet;
+    texts: string[];
+    textField?: string;
+    valueField?: string;
+    lovPara?: object;
+  }): Promise<Map<string, object>> {
+    const { hook, field, dataSet, texts, textField, valueField, lovPara } = props;
+    const map = new Map<string, object>();
+    if (!texts.length) {
+      return map;
+    }
+    const config = hook({ dataSet, field, texts, textField, valueField, lovPara });
+    const res = await this.getAxios(field)(config);
+    if (res && typeof res === 'object') {
+      Object.keys(res).forEach((key) => {
+        const value = (res as any)[key];
+        if (value) {
+          map.set(key, value);
+        }
+      });
+    }
+    return map;
   }
 
   @action
