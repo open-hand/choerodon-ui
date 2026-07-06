@@ -234,7 +234,7 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (field) {
       return field.getAttachments(this.record, this.tempAttachmentUUID);
     }
-    if (this.getValue()) {
+    if (this.getValue() || this.tempAttachmentUUID) {
       return this.observableProps.attachments;
     }
   }

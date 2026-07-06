@@ -73,7 +73,6 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     disabled,
     fetchAttachmentsFlag,
     onFetchAttachments,
-    onAttachmentsChange,
     limit,
     onHistory,
     onPreview,
@@ -121,9 +120,6 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     if (attachmentUUID && fetchAttachmentsFlag) {
       const { current } = oldValues;
       if (!current || current.attachmentUUID !== attachmentUUID || current.record !== record) {
-        if (attachments) {
-          onAttachmentsChange(undefined);
-        }
         oldValues.current = { attachmentUUID, record };
         onFetchAttachments({ bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
       }
