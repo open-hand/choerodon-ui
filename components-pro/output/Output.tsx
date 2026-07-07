@@ -175,7 +175,7 @@ export default class Output extends FormField<OutputProps> {
     const theme = getTooltipTheme('output');
     if (element && !(field && field.get('multiLine', this.record)) &&
       (tooltip === TextTooltip.always ||
-        (tooltip === TextTooltip.overflow && ((!this.multiple && isOverflow(element)) || (this.multiple && (isOverflowMaxTagCount || this.isOverflowMaxTagTextLength))))) &&
+        (tooltip === TextTooltip.overflow && ((!this.multiple && isOverflow(element)) || (this.multiple && (isOverflowMaxTagCount || this.isOverflowMaxTagTextLength || this.isMultipleTagOverflow()))))) &&
       (!e.currentTarget || e.currentTarget.contains(e.target))) {
       if (title) {
         show(element, { title, placement, theme });

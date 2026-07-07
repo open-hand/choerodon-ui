@@ -164,7 +164,7 @@ const prefixCls = getConfig('prefixCls');
 | showRequiredColorsOnlyEmpty | 只有在空值时显示必填背景色和边框色 | boolean |  |
 | showValidation | 校验信息提示方式 | `tooltip` \| `newLine` | `tooltip` |
 | showHelp| 显示提示信息的方式 | `tooltip` \| `newLine`\| `label`\| `none`| `newline` |
-| highlightRenderer | 高亮渲染器 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
+| highlightRenderer | 高亮渲染器, 需要配置 highlight 属性。表格中为非行内编辑的 可编辑单元格 渲染; 还可为表单组件高亮渲染。 | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode |  |
 | performanceEnabled | 开启性能监控 | { Table: boolean } | { Table: false }  |
 | tooltip | 是否开启提示, 参数 target 详见 [TooltipTarget](#TooltipTarget) | Tooltip.always \| Tooltip.overflow \| Tooltip.none \| function(target) | |
 | tooltipTheme | Tooltip 主题 或 返回主题的钩子, 参数 target 详见 [TooltipTarget](#TooltipTarget) | dark \| light \| function(target) |  (target) => target === 'validation' ? 'light' : 'dark' |
