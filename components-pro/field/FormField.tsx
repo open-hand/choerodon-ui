@@ -343,6 +343,8 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
 
   isOverflowMaxTagTextLength?: boolean;
 
+  isOverflowMaxTagCount?: boolean;
+
   isUpdatedValMes?: boolean;
 
   get name(): string | undefined {
@@ -1392,6 +1394,25 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return this.disabled;
   }
 
+  /**
+   * 检查多值场景下是否有标签文本溢出（CSS 截断）
+   */
+  isMultipleTagOverflow(): boolean {
+    const { wrapper, prefixCls } = this;
+    if (wrapper && typeof wrapper.querySelectorAll === 'function') {
+      const blocks = wrapper.querySelectorAll(`.${prefixCls}-multiple-block`);
+      for (let i = 0; i < blocks.length; i++) {
+        const block = blocks[i] as HTMLElement;
+        // TextField 标签结构为 li > div，检查 div；Output 标签为 span，检查自身
+        const target = block.className && block.className.includes('-output') ? block : block.querySelector('div') || block;
+        if (isOverflow(target as HTMLElement)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   renderMultipleValues(readOnly?: boolean) {
     const {
       prefixCls,
@@ -1426,6 +1447,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       field: this.field,
     });
     this.multipleValidateMessageLength = values.multipleValidateMessageLength;
+    this.isOverflowMaxTagCount = values.isOverflowMaxTagCount;
     return values;
   }
 

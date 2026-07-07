@@ -109,7 +109,7 @@ subtitle: 表格
 | treeQueryExpanded | 树形结构下queryBar触发查询,自动展开树形结构  | boolean | |
 | aggregation | 是否是聚合视图， 若有个性化则以个性化配置为主  | boolean | |
 | onAggregationChange | 聚合视图变更钩子， 在个性化配置变更时触发  | (aggregation) => void | |
-| cellHighlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+| cellHighlightRenderer | 单元格高亮渲染器, 需要配置 highlight 属性。表格中为非行内编辑的 可编辑单元格 渲染  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | showHeader |	是否显示表头 |	boolean |	true |
 | showRemovedRow |	是否显示临时移除的行，默认置灰显示 |	boolean |	 |
 | onColumnResize | 列宽改变的回调事件  | ({ column, width, index }) => void | |
@@ -174,7 +174,7 @@ subtitle: 表格
 | aggregationDefaultExpandAll | 默认展开所有聚合列下的树节点  | boolean |  |
 | aggregationTreeIndex | 聚合单元格中的列索引  | number | 0 |
 | hiddenInAggregation | 在聚合列下是否隐藏  | boolean \| (record) => boolean |  |
-| highlightRenderer | 单元格高亮渲染器  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
+| highlightRenderer | 单元格高亮渲染器, 需要配置 highlight 属性。表格中为非行内编辑的 可编辑单元格 渲染  | ({ title, content, dataSet, record, name, className, style }, element) => ReactNode | |
 | sortableCallback | 排序结束的回调函数  | (props: { dataSet: DataSet, field: Field, order?: string }) => void  |  |
 | showDetail | editor 为 false 时, 是否可查看多语言详情。 true 为 hover 时显示icon; always 为一直显示icon | boolean \| `always` |  |
 

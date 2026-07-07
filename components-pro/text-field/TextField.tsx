@@ -634,12 +634,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @autobind
   handleMultipleMouseEnter(e) {
     const { onMouseEnter } = this.getOtherProps();
-    const { overMaxTagCountTooltip } = this.props;
+    const { overMaxTagCountTooltip, isFlat } = this.props;
     // 禁用时 ViewComponent 会在 wrapper 层触发 mouseEnter
     if (!this.disabled && onMouseEnter) {
       onMouseEnter(e);
     }
-    if (overMaxTagCountTooltip) {
+    // 仅在非加载状态且存在溢出时显示 Tooltip：超出 maxTagCount、超出 maxTagTextLength、flat 模式、或标签文本被 CSS 截断
+    if (overMaxTagCountTooltip && !this.showSelectLoading && (this.isOverflowMaxTagCount || isFlat || this.isOverflowMaxTagTextLength || this.isMultipleTagOverflow())) {
       const title = isFunction(overMaxTagCountTooltip) ? overMaxTagCountTooltip({ title: this.getMultipleText(), record: this.record }) : this.getMultipleText();
       show(e.currentTarget, {
         title,
@@ -1188,13 +1189,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       prefixCls,
       range,
       showSelectLoading,
-      props: { isFlat },
     } = this;
     const {
       onFocus,
       onBlur,
-      onMouseEnter: propsOnMouseEnter,
-      onMouseLeave: propsOnMouseLeave,
       onMouseDown,
       onMouseUp,
       onClick,
@@ -1202,12 +1200,12 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       onContextMenu,
       ...otherProps
     } = this.getOtherProps();
-    // 禁用时 ViewComponent 会在 wrapper 层触发 mouseEnter & mouseLeave
-    const onMouseEnter = this.disabled ? noop : propsOnMouseEnter;
-    const onMouseLeave = this.disabled ? noop : propsOnMouseLeave;
+    // handleMultipleMouseEnter/handleMultipleMouseLeave 已内部处理 mouse 事件
+    // 从 otherProps 中移除以避免传递到 input 元素
+    delete otherProps.onMouseEnter;
+    delete otherProps.onMouseLeave;
     const { record } = this;
-    const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues();
-    const isOverflow = !showSelectLoading && (isOverflowMaxTagCount || isFlat || this.isOverflowMaxTagTextLength);
+    const { tags: multipleTags } = this.renderMultipleValues();
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,
@@ -1248,8 +1246,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         style={otherProps.style}
         onFocus={onFocus}
         onBlur={onBlur}
-        onMouseEnter={isOverflow ? this.handleMultipleMouseEnter : onMouseEnter}
-        onMouseLeave={isOverflow ? this.handleMultipleMouseLeave : onMouseLeave}
+        onMouseEnter={this.handleMultipleMouseEnter}
+        onMouseLeave={this.handleMultipleMouseLeave}
         {...eventsProps}
       >
         {tags}
