@@ -49,7 +49,7 @@ import Scrollbar from './Scrollbar';
 import SelectionBox from './SelectionBox';
 import SelectionCheckboxAll from './SelectionCheckboxAll';
 import TableContext from './TableContext';
-import { CELL_PADDING_HEIGHT, SCROLLBAR_LARGE_WIDTH, SCROLLBAR_WIDTH } from './constants';
+import { CELL_PADDING_HEIGHT, SCROLLBAR_LARGE_WIDTH, SCROLLBAR_MIN_WIDTH, SCROLLBAR_WIDTH } from './constants';
 import { TableQueryBarType } from './enum';
 import {
   cancelAnimationTimeout,
@@ -1590,10 +1590,14 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const columns = this.getTableColumns();
 
-    const { width: tableWidth } = this.state;
+    const { width: tableWidth, contentHeight } = this.state;
     const { sortColumn, rowHeight, showHeader } = this.props;
     const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state);
     const headerHeight = this.getTableHeaderHeight();
+    const bodyHeight = this.getTableHeight() - headerHeight;
+    const scrollBarYWidth = contentHeight > bodyHeight
+      ? (this.props.showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_WIDTH)
+      : 0;
     const hasFooter = columns && columns.some(x => x.props.footer);
     React.Children.forEach(columns, (column, index) => {
       if (React.isValidElement(column)) {
@@ -1619,7 +1623,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
         if (tableWidth && flexGrow && totalFlexGrow) {
           nextWidth = Math.max(
-            ((tableWidth - totalWidth) / totalFlexGrow) * flexGrow,
+            ((Math.max(tableWidth - scrollBarYWidth, 0) - totalWidth) / totalFlexGrow) * flexGrow,
             minWidth || 60,
           );
         }
@@ -1705,7 +1709,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         left: left - 30,
         headerHeight,
         key: CUSTOMIZED_KEY,
-        width: 14,
+        width: this.props.showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_MIN_WIDTH,
         height: rowHeight,
         fixed: 'right',
         className: this.addPrefix('customization-header'),
@@ -2387,8 +2391,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     // 当设置 affixHeader 属性后要减掉两个 header 的高度
     const nextContentHeight = contentHeight - (affixHeader ? headerHeight * 2 : headerHeight);
 
-    if (nextContentHeight !== this.state.contentHeight) {
-      this.setState({ contentHeight: this.getContentHeightWithScrollBarX(nextContentHeight) });
+    const nextContentHeightWithScrollBarX = this.getContentHeightWithScrollBarX(nextContentHeight);
+    const bodyHeight = height - headerHeight;
+    const prevHasVerticalScrollbar = this.state.contentHeight > bodyHeight;
+    const nextHasVerticalScrollbar = nextContentHeightWithScrollBarX > bodyHeight;
+
+    if (prevHasVerticalScrollbar !== nextHasVerticalScrollbar) {
+      this._cacheCells = null;
+    }
+
+    if (nextContentHeightWithScrollBarX !== this.state.contentHeight) {
+      this.setState({ contentHeight: nextContentHeightWithScrollBarX });
     }
 
     if (
@@ -2830,7 +2843,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                     width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
                     backgroundSegments={fixedRightCellGroupInfo.backgroundSegments}
                   >
-                    {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
+                    {mergeCells(resetLeftForCells(fixedRightCells))}
                   </CellGroup>
                 ) : null}
 
@@ -2867,7 +2880,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
               width={fixedRightCellGroupWidth + this.getScrollBarYWidth}
               backgroundSegments={fixedRightCellGroupInfo.backgroundSegments}
             >
-              {mergeCells(resetLeftForCells(fixedRightCells, this.getScrollBarYWidth))}
+              {mergeCells(resetLeftForCells(fixedRightCells))}
             </CellGroup>
           ) : null}
 
