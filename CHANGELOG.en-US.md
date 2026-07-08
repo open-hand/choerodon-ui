@@ -84,6 +84,7 @@ timeline: true
 - 🐞 `<pro>DataSet`: Fix the issue where duplicate data exists in the `selected` object, causing the problem of repeated rendering of the selected `tag` in the `Lov` dialog box.
 - 🐞 `<pro>Table`: Fix the issue where the table will slowly increase its height when the `autoHeight` property is set but the parent container does not have a defined height.
 - 🐞 `<pro>Attachment`: Fix the issue where, in the controlled mode, the list of files being uploaded does not display when uploading files for the first time.
+- 🐞 `<pro>PerformanceTable`: Fixed vertical scrollbar overlapping right-side column content in PerformanceTable.
 
 ## 1.6.8
 
