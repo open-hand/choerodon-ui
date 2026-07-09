@@ -85,6 +85,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复设置 autoHeight 属性但父容器未设置高度时, 表格会缓慢增加高度的问题。
 - 🐞 `<pro>Attachment`: 修复在受控模式下，初次上传文件时，上传中文件列表不显示的问题。
 - 🐞 `<pro>PerformanceTable`: 修复垂直滚动条遮挡右侧列内容的问题。
+- 🐞 `<pro>Select`: 修复设置 virtual 属性时，且选项高度变化，导致选项看不全的问题。
 
 ## 1.6.8
 

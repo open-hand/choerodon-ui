@@ -26,6 +26,7 @@ export default class DOMWrap extends Component {
 
   state = {
     lastVisibleIndex: undefined,
+    measuredItemHeight: undefined,
   };
 
   componentDidMount() {
@@ -64,6 +65,15 @@ export default class DOMWrap extends Component {
         });
       }
     }
+    if (this.props.virtual) {
+      this.measureItemHeight();
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.virtual && !this.state.measuredItemHeight) {
+      this.measureItemHeight();
+    }
   }
 
   componentWillUnmount() {
@@ -74,6 +84,22 @@ export default class DOMWrap extends Component {
       this.resizeObserver.disconnect();
     }
   }
+
+  // 动态测量菜单项实际高度
+  measureItemHeight = () => {
+    requestAnimationFrame(() => {
+      const menuUl = ReactDOM.findDOMNode(this);
+      if (!menuUl) return;
+      const { prefixCls } = this.props;
+      const firstItem = menuUl.querySelector(`li.${prefixCls}-item`);
+      if (firstItem) {
+        const { offsetHeight } = firstItem;
+        if (offsetHeight > 0 && offsetHeight !== this.state.measuredItemHeight) {
+          this.setState({ measuredItemHeight: offsetHeight });
+        }
+      }
+    });
+  };
 
   // get all valid menuItem nodes
   getMenuItemNodes = () => {
@@ -303,12 +329,13 @@ export default class DOMWrap extends Component {
 
     // virtual height/itemHeight 暂用默认值
     if (virtual) {
+      const itemHeight = this.state.measuredItemHeight || 28;
       return (
         <List
           component={Tag}
           data={this.renderChildren(this.props.children)}
           height={234}
-          itemHeight={28}
+          itemHeight={itemHeight}
           fullHeight={false}
           virtual
           {...rest}
