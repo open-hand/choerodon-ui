@@ -15,6 +15,7 @@ import { $l } from '../../locale-context';
 import autobind from '../../_util/autobind';
 import TableButtons from './TableButtons';
 import TableContext, { TableContextValue } from '../TableContext';
+import { SummaryBarConfigProps } from '../Table';
 
 export interface TableToolBarProps extends ElementProps {
   dataSet: DataSet;
@@ -23,6 +24,8 @@ export interface TableToolBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  summaryBar?: ReactElement<any>;
+  summaryBarConfigProps?: SummaryBarConfigProps;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: (type?: 'clear') => void;
@@ -190,11 +193,15 @@ export default class TableToolBar extends Component<TableToolBarProps, any> {
   }
 
   render() {
-    const { pagination, buttons } = this.props;
+    const { pagination, buttons, summaryBar, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topRight' } = summaryBarConfigProps;
     const { prefixCls } = this;
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     return [
-      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons}>
+      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} className={summaryBarCls}>
         {this.getQueryBar()}
+        {summaryBar}
       </TableButtons>,
       pagination,
     ];

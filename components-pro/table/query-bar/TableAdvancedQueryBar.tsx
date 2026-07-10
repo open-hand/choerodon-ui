@@ -2,6 +2,7 @@ import React, { cloneElement, Component, CSSProperties, ReactElement, ReactNode 
 import { observer } from 'mobx-react';
 import isFunction from 'lodash/isFunction';
 import noop from 'lodash/noop';
+import classNames from 'classnames';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import Field from '../../data-set/Field';
@@ -19,6 +20,7 @@ import Modal from '../../modal';
 import Form from '../../form/Form';
 import { LabelLayout } from '../../form/enum';
 import TableContext, { TableContextValue } from '../TableContext';
+import { SummaryBarConfigProps } from '../Table';
 
 export interface TableAdvancedQueryBarProps extends ElementProps {
   dataSet: DataSet;
@@ -27,6 +29,8 @@ export interface TableAdvancedQueryBarProps extends ElementProps {
   queryFieldsLimit?: number;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  summaryBar?: ReactElement<any>;
+  summaryBarConfigProps?: SummaryBarConfigProps;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
   onReset?: (type?: 'clear') => void;
@@ -208,14 +212,29 @@ export default class TableAdvancedQueryBar extends Component<TableAdvancedQueryB
   }
 
   render() {
-    const { buttons } = this.props;
+    const { buttons, summaryBar, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topRight' } = summaryBarConfigProps;
     const { prefixCls } = this;
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
     const queryBar = this.getQueryBar();
 
     if (queryBar) {
-      return [queryBar, this.getFilterSelect()];
+      return [
+        queryBar,
+        this.getFilterSelect(),
+        summaryBar && (
+          <div className={classNames(`${prefixCls}-toolbar`, summaryBarCls)} key="summary_bar">
+            {summaryBar}
+          </div>
+        ),
+      ];
     }
 
-    return <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} />;
+    return (
+      <TableButtons key="toolbar" prefixCls={prefixCls} buttons={buttons} className={summaryBarCls}>
+        {summaryBar}
+      </TableButtons>
+    );
   }
 }
