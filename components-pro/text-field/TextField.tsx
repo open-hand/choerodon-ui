@@ -452,7 +452,13 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     this.addonBeforeRef = node;
   }
 
+  @autobind
+  @action
   saveSuffixRef(node) {
+    const { suffix = this.getDefaultSuffix() } = this.props;
+    if (suffix && isValidElement<any>(suffix) && (!suffix.props || !suffix.props.style || !suffix.props.style.width)) {
+      this.suffixRef = node;
+    }
     return node;
   }
 
@@ -1273,6 +1279,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       return this.getMultipleWrap(wrap);
     }
     if (range) {
+      this.setInputStylePadding(otherProps);
       return wrap(
         <span
           key="text"
@@ -1424,11 +1431,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     let divStyle = {};
     if (isValidElement<any>(children)) {
       this.suffixWidth = toPx('0.21rem');
-      if (children.props && children.props.style) {
+      if (children.props && children.props.style && children.props.style.width) {
         divStyle = {
           width: children.props.style.width,
         };
         this.suffixWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
+      } else {
+        // 未显式设置宽度时, 使用 auto 让 suffix 自适应内容宽度, 避免长内容溢出
+        divStyle = {
+          width: 'auto',
+        };
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
