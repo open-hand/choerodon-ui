@@ -52,6 +52,7 @@ timeline: true
 - 💄 `<pro>Select`: Optimize the `tooltip` for dropdown options to delay their disappearance.
 - 💄 `<pro>TextField`: When the input box length is insufficient and multiple values of the Tag overflow, display a `Tooltip`.
 - 💄 `<pro>Table`: Under normal\bar\advancedBar type queryBars, show the summaryBar.
+- 💄 `<pro>TextField`: Optimize the placeholder width of the `suffix` in `range` mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
