@@ -1046,6 +1046,17 @@
       min-width: 2.1rem;
     }
   }
+  // normal + summaryBar
+  &-toolbar&-summary-topLeft &-query-bar:first-child + &-summary-group-wrapper,
+  &-toolbar&-summary-topRight &-query-bar:first-child + &-summary-group-wrapper {
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0.08rem;
+  }
+  // advancedBar + summaryBar
+  &-advanced-query-bar + &-toolbar > &-summary-group-wrapper {
+    margin-top: 0;
+  }
 
   &-summary-group-wrapper {
     display: flex;

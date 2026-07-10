@@ -1,6 +1,7 @@
 import React, { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import noop from 'lodash/noop';
+import classNames from 'classnames';
 import { getProPrefixCls as getProPrefixClsDefault } from 'choerodon-ui/lib/configure/utils';
 import FilterSelect from './FilterSelect';
 import ColumnFilter from './ColumnFilter';
@@ -11,6 +12,7 @@ import { $l } from '../../locale-context';
 import { ButtonProps } from '../../button/Button';
 import { PaginationProps } from '../../pagination/Pagination';
 import { FormFieldProps } from '../../field/interface';
+import { SummaryBarConfigProps } from '../Table';
 
 export interface FilterBarProps {
   prefixCls?: string;
@@ -20,6 +22,8 @@ export interface FilterBarProps {
   paramName: string;
   buttons: ReactElement<ButtonProps>[];
   pagination?: ReactElement<PaginationProps>;
+  summaryBar?: ReactElement<any>;
+  summaryBarConfigProps?: SummaryBarConfigProps;
   editable?: boolean;
   onBeforeQuery?: () => (Promise<boolean | void> | boolean | void);
   onQuery?: () => void;
@@ -62,6 +66,21 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
     }
   }
 
+  getSummaryBar(): ReactNode {
+    const { summaryBar, summaryBarConfigProps = {} } = this.props;
+    const { placement = 'topRight' } = summaryBarConfigProps;
+    const { prefixCls } = this;
+    const summaryBarCls = summaryBar && ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'].includes(placement)
+      ? `${prefixCls}-summary-${placement}` : '';
+    if (summaryBar) {
+      return (
+        <div key="summary_bar" className={classNames(`${prefixCls}-toolbar`, summaryBarCls)}>
+          {summaryBar}
+        </div>
+      );
+    }
+  }
+
   render() {
     const { dataSet, queryDataSet, paramName, placeholder = $l('Table', 'filter_bar_placeholder'), pagination, onQuery = noop, onReset = noop, editable, editorProps, onBeforeQuery = noop } = this.props;
     const { prefixCls } = this;
@@ -83,6 +102,7 @@ export default class TableFilterBar extends Component<FilterBarProps, any> {
         editable={editable}
         editorProps={editorProps}
       />,
+      this.getSummaryBar(),
     ];
   }
 }
