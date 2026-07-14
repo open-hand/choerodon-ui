@@ -104,7 +104,7 @@ scrollLeft: (left: number) => void;
 | align         | enum: 'left','center','right'                    | Alignment                                                                                                   |
 | colSpan       | number                                           | Merges column cells to merge when the `dataKey` value for the merged column is `null` or `undefined`.       |
 | fixed         | boolean, 'left', 'right'                         | Fixed column                                                                                                |
-| flexGrow      | number                                           | Set the column width automatically adjusts, when set `flexGrow` cannot set `resizable` and `width` property |
+| flexGrow      | number                                           | Set the column width automatically adjusts, when set `flexGrow` cannot set `width` property |
 | minWidth      | number`(200)`                                    | When you use `flexGrow`, you can set a minimum width by `minwidth`                                          |
 | onResize      | (columnWidth?: number, dataKey?: string) => void | Callback after column width change                                                                          |
 | resizable     | boolean                                          | Customizable Resize Column width                                                                            |

@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import noop from 'lodash/noop';
 import ColumnResizeHandler from './ColumnResizeHandler';
-import { defaultClassPrefix, getUnhandledProps, isNullOrUndefined, prefix } from './utils';
+import { defaultClassPrefix, getUnhandledProps, prefix } from './utils';
 import Cell, { CellProps } from './Cell';
 import TableContext from './TableContext';
 
@@ -72,7 +72,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
       return {
         width: nextProps.width,
         flexGrow: nextProps.flexGrow,
-        columnWidth: isNullOrUndefined(nextProps.flexGrow) ? nextProps.width : 0,
+        columnWidth: nextProps.width,
       };
     }
 
@@ -84,7 +84,7 @@ class HeaderCell extends React.PureComponent<HeaderCellProps, HeaderCelltate> {
     this.state = {
       width: props.width,
       flexGrow: props.flexGrow,
-      columnWidth: isNullOrUndefined(props.flexGrow) ? props.width : 0,
+      columnWidth: props.width,
     };
   }
 
