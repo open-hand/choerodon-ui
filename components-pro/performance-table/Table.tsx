@@ -55,6 +55,7 @@ import {
   cancelAnimationTimeout,
   defaultClassPrefix,
   findAllParents,
+  getColumnKey,
   findRowKeys,
   flattenData,
   getTotalByColumns,
@@ -1592,7 +1593,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     const { width: tableWidth, contentHeight } = this.state;
     const { sortColumn, rowHeight, showHeader } = this.props;
-    const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state);
+    const customizedColumns = this.tableStore.customized && this.tableStore.customized.columns;
+    const { totalFlexGrow, totalWidth } = getTotalByColumns(columns, this.state, customizedColumns);
     const headerHeight = this.getTableHeaderHeight();
     const bodyHeight = this.getTableHeight() - headerHeight;
     const scrollBarYWidth = contentHeight > bodyHeight
@@ -1608,20 +1610,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           hasCustomTreeCol = true;
         }
 
-        if (resizable && flexGrow) {
-          console.warn(
-            `Cannot set 'resizable' and 'flexGrow' together in <Column>, column index: ${index}`,
-          );
-        }
-
         if (columnChildren.length !== 2) {
           throw new Error(`Component <HeaderCell> and <Cell> is required, column index: ${index} `);
         }
 
-        let nextWidth =
-          this.state[`${columnChildren[1].props.dataKey}_${index}_width`] || width || 0;
+        const dataKey = columnChildren[1].props.dataKey;
+        const columnKey = getColumnKey({ dataIndex: dataKey, key: column.key });
+        const resizedWidth = this.state[`${dataKey}_${index}_width`];
+        const customizedWidth = columnKey && customizedColumns
+          ? customizedColumns[columnKey]?.width
+          : undefined;
+        const hasManualWidth = !isNil(resizedWidth) || !isNil(customizedWidth);
+        let nextWidth = !isNil(resizedWidth) ? resizedWidth : width || 0;
 
-        if (tableWidth && flexGrow && totalFlexGrow) {
+        if (tableWidth && flexGrow && totalFlexGrow && !hasManualWidth) {
           nextWidth = Math.max(
             ((Math.max(tableWidth - scrollBarYWidth, 0) - totalWidth) / totalFlexGrow) * flexGrow,
             minWidth || 60,
@@ -1652,7 +1654,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           }
         }
 
-        const dataKey = columnChildren[1].props.dataKey
         if (showHeader && headerHeight) {
           const headerCellProps = {
             // index 用于拖拽列宽时候（Resizable column），定义的序号
