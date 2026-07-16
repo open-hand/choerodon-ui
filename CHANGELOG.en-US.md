@@ -90,6 +90,7 @@ timeline: true
 - 🐞 `<pro>PerformanceTable`: Fixed vertical scrollbar overlapping right-side column content in PerformanceTable.
 - 🐞 `<pro>Select`: Fixed the issue where options could not be fully seen when setting the `virtual` property and the option height changed.
 - 🐞 `Tooltip`: Fixed the issue where changing custom styles altered the popup height and caused inaccurate positioning after the popup position changed.
+- 🐞 `<pro>TriggerField`: Fixed the issue where setting the `popupPlacement` attribute to `top` or other values caused errors.
 
 ## 1.6.8
 

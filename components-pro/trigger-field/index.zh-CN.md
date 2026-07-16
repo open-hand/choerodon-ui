@@ -16,7 +16,7 @@ title: TriggerField
 | popupContent | 下拉框的自定义内容 | ReactNode \| (props) => ReactNode |  |
 | popupCls | 下拉框的自定义样式名 | string |  |
 | popupStyle | 下拉框的内链样式 | CSSProperties |  |
-| popupPlacement | 气泡框位置，可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom` | string | top |
+| popupPlacement | 气泡框位置，可选 `top` `left` `right` `bottom` `topLeft` `topRight` `bottomLeft` `bottomRight` `leftTop` `leftBottom` `rightTop` `rightBottom` | string | bottomLeft |
 | trigger | 触发下拉框的方式组, 可选值：`click` `focus` `hover` `contextMenu` | string\[\] |  |
 | triggerShowDelay | 下拉框显示延迟 | number | 150 |
 | triggerHiddenDelay | 下拉框隐藏延迟 | number | 50 |
