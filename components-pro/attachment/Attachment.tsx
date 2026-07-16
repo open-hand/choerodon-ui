@@ -450,7 +450,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   isAcceptFile(attachment: AttachmentFile, accept: string[]): boolean {
     if (!accept || accept.length === 0) return true;
     const acceptTypes = accept.map(type => (
-      new RegExp(type.replace(/\./g, '\\.').replace(/\*/g, '.*'))
+      new RegExp(type.replace(/\./g, '\\.').replace(/\*/g, '.*'), 'i')
     ));
     const { name, type } = attachment;
     return acceptTypes.some(acceptType => acceptType.test(name) || acceptType.test(type));
