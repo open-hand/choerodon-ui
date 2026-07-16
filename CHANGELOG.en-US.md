@@ -89,6 +89,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fix the issue where, in the controlled mode, the list of files being uploaded does not display when uploading files for the first time.
 - 🐞 `<pro>PerformanceTable`: Fixed vertical scrollbar overlapping right-side column content in PerformanceTable.
 - 🐞 `<pro>Select`: Fixed the issue where options could not be fully seen when setting the `virtual` property and the option height changed.
+- 🐞 `Tooltip`: Fixed the issue where changing custom styles altered the popup height and caused inaccurate positioning after the popup position changed.
 
 ## 1.6.8
 

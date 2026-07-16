@@ -119,6 +119,7 @@ function getVisibleRectForElement(element: HTMLElement) {
 }
 
 function getRegion(node: HTMLElement): regionType {
+  // 注意: getBoundingClientRect 获取宽高会受动画的缩放影响
   const rect = node.getBoundingClientRect();
   const { ownerDocument } = node;
   const defaultView = ownerDocument ? ownerDocument.defaultView : null;

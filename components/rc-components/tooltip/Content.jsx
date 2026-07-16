@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
 export default class Content extends Component {
   innerRef = createRef();
