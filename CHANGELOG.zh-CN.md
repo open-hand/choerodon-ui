@@ -89,6 +89,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复在受控模式下，初次上传文件时，上传中文件列表不显示的问题。
 - 🐞 `<pro>PerformanceTable`: 修复垂直滚动条遮挡右侧列内容的问题。
 - 🐞 `<pro>Select`: 修复设置 virtual 属性时，且选项高度变化，导致选项看不全的问题。
+- 🐞 `Tooltip`: 修复自定义样式改变弹窗高度, 弹窗位置变化后定位不准的问题。
 
 ## 1.6.8
 

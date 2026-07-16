@@ -32,6 +32,7 @@ class Popup extends Component {
 
   onAlign = (popupDomNode, align) => {
     const props = this.props;
+    const { offsetHeight, offsetWidth } = popupDomNode || {};
     const currentAlignClassName = props.getClassNameFromAlign(align);
     // FIX: https://github.com/react-component/trigger/issues/56
     // FIX: https://github.com/react-component/tooltip/issues/79
@@ -40,6 +41,16 @@ class Popup extends Component {
       popupDomNode.className = this.getClassName(currentAlignClassName);
     }
     props.onAlign(popupDomNode, align);
+    // 过程: 先执行 forceAlign 定位, 再执行 onAlign 改变 className;
+    // 场景: forceAlign 中定位可能从向上变为向下, 然后 onAlign 中 className 才从 top 变为 bottom;
+    // 开发自定义样式 向上\向下高度不同, 导致定位不准, 需重新定位;
+    if (popupDomNode && (popupDomNode.offsetHeight !== offsetHeight || popupDomNode.offsetWidth !== offsetWidth)) {
+      setTimeout(() => {
+        if (this.alignInstance) {
+          this.alignInstance.forceAlign();
+        }
+      }, 0);
+    }
   };
 
   // Record size if stretch needed

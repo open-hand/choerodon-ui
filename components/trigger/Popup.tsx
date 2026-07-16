@@ -216,6 +216,7 @@ export default class Popup extends ViewComponent<PopupProps> {
     const { getClassNameFromAlign = noop, getStyleFromAlign = noop, onAlign = noop } = this.props;
     const currentAlignClassName = getClassNameFromAlign(align);
     const differentTarget = target !== this.target;
+    const { offsetHeight, offsetWidth } = source || {};
     if (differentTarget || this.currentAlignClassName !== currentAlignClassName) {
       this.currentAlignClassName = currentAlignClassName;
       source.className = this.getMergedClassNames(currentAlignClassName);
@@ -227,6 +228,14 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
     onAlign(source, align, target, translate);
     this.target = source;
+    // 过程: 先执行 forceAlign 定位, 再执行 onAlign 改变 className;
+    // 场景: forceAlign 中定位可能从向上变为向下, 然后 onAlign 中 className 才从 top 变为 bottom;
+    // 开发自定义样式 向上\向下高度不同, 导致定位不准, 需重新定位;
+    if (source && (source.offsetHeight !== offsetHeight || source.offsetWidth !== offsetWidth)) {
+      setTimeout(() => {
+        this.forceAlign();
+      }, 0);
+    }
   }
 
   @autobind
@@ -240,6 +249,7 @@ export default class Popup extends ViewComponent<PopupProps> {
     }
   }
 
+  @autobind
   forceAlign() {
     if (this.align) {
       this.align.forceAlign();
