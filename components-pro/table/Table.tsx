@@ -1085,6 +1085,14 @@ export default class Table extends DataSetComponent<TableProps> {
   @action
   handleResize(width?: number) {
     const { element, tableStore, wrapperWidth } = this;
+    if (element && !element.offsetParent) {
+      tableStore.styledHidden = true;
+      return;
+    }
+    const wasStyledHidden = tableStore.styledHidden;
+    if (wasStyledHidden) {
+      tableStore.styledHidden = false;
+    }
     if (width !== undefined) {
       const duplicate = wrapperWidth.includes(width);
       wrapperWidth.unshift(width);
@@ -1095,16 +1103,12 @@ export default class Table extends DataSetComponent<TableProps> {
       if (wrapperWidth.length > 2) {
         wrapperWidth.pop();
       }
-      if (duplicate) {
+      if (duplicate && !wasStyledHidden) {
         return;
       }
     }
-    if (element && !element.offsetParent) {
-      tableStore.styledHidden = true;
-    } else if (!tableStore.hidden) {
+    if (!tableStore.hidden) {
       this.syncSizeInFrame(width);
-    } else {
-      tableStore.styledHidden = false;
     }
   }
 
