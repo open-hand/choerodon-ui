@@ -53,6 +53,7 @@ title: Upload
 | popconfirmProps | 删除和重新上传确认弹框的属性   | PopconfirmProps |  |
 | pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | viewMode | 上传列表的显示模式，支持两种基本样式 list 和 popup | string | list |
+| directoryMaxFileCount | 上传文件夹时的最大文件数量限制，超出会提示用户是否继续上传，继续则会截取最大数量上传 | number | [globalConfig.uploadDirectoryMaxFileCount](/components/configure) |
 
 ### ShowUploadListInterface
 | 参数 | 说明 | 类型 | 默认值 |

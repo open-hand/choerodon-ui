@@ -217,6 +217,7 @@ const locale: Locale = {
     remove_confirm_title: '是否删除此条记录',
     file: '文件',
     directory: '文件夹',
+    directory_max_file_count: '文件夹中包含 {count} 个文件，超过最大限制 {max} 个，建议压缩或分批上传。继续上传将只上传前 {max} 个文件。',
   },
   Modal: {
     ok: '确定',

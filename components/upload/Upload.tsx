@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import isUndefined from 'lodash/isUndefined';
 import autobind from 'choerodon-ui/pro/lib/_util/autobind';
+import Modal from 'choerodon-ui/pro/lib/modal';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import { getRuntimeLocale } from '../locale-provider/utils';
 import Dragger from './Dragger';
@@ -321,6 +322,20 @@ export default class Upload extends Component<UploadProps, UploadState> {
     return true;
   };
 
+  confirmDirectoryUpload = async (files: File[]): Promise<File[] | false> => {
+    const { getConfig } = this.context;
+    const { directoryMaxFileCount = getConfig('uploadDirectoryMaxFileCount'), locale } = this.props;
+    if (!directoryMaxFileCount || directoryMaxFileCount <= 0 || files.length <= directoryMaxFileCount) {
+      return files;
+    }
+    const uploadLocale = { ...(getRuntimeLocale().Upload || {}), ...locale };
+    const content = (uploadLocale.directoryMaxFileCount || '')
+      .replace(/\{count\}/g, String(files.length))
+      .replace(/\{max\}/g, String(directoryMaxFileCount));
+    const result = await Modal.confirm({ children: content });
+    return result === 'ok' ? files.slice(0, directoryMaxFileCount) : false;
+  };
+
   clearProgressTimer() {
     clearInterval(this.progressTimer);
   }
@@ -497,6 +512,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
       beforeUploadFiles,
+      confirmDirectoryUpload: this.confirmDirectoryUpload,
       prefixCls,
       fileList,
       originReuploadItem,

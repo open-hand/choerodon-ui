@@ -35,6 +35,7 @@ title: Attachment
 | pictureWidth | 图片尺寸， 只适用于 listType 为 picture 和 picture-card | number |  |
 | count | 自定义附件数量 | number |  |
 | max | 同时上传文件的最大数量, `0` 表示无限制 | number |  |
+| directoryMaxFileCount | 上传文件夹时的最大文件数量限制，超出会提示用户是否继续上传，继续则会截取最大数量上传 | number | [globalConfig.uploadDirectoryMaxFileCount](/components/configure) |
 | listLimit | 上传列表最大显示数量，只适用于只读模式 | number |  |
 | showHistory | 可显示操作历史记录 | boolean |  |
 | showSize | 显示文件大小信息 | boolean | true |

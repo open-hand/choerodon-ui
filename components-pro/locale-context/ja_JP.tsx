@@ -220,6 +220,7 @@ const locale: Locale = {
     remove_confirm_title: 'レコードを削除するかどうか',
     file: '書類です',
     directory: 'フォルダです',
+    directory_max_file_count: 'フォルダには {count} 個のファイルが含まれており、上限の {max} 個を超えています。圧縮するか、分割してアップロードすることをお勧めします。続行すると、先頭の {max} 個のファイルのみアップロードされます。',
   },
   Modal: {
     ok: 'OK',

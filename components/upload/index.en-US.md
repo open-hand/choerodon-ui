@@ -52,6 +52,7 @@ Uploading is the process of publishing information (web pages, text, pictures, v
 | popconfirmProps | Delete and re-upload confirm dialog box properties   | PopconfirmProps |  |
 | pictureCardShowName | 设置 `picture-card` 类型图片是否显示文件名 | boolean |  |
 | viewMode | The display mode of the upload list supports two basic styles: list and popup. | string | list |
+| directoryMaxFileCount | The maximum number of files when uploading a folder is limited. If exceeded, the user will be prompted whether to continue uploading. If they choose to continue, only the maximum number of files will be uploaded. | number | [globalConfig.uploadDirectoryMaxFileCount](/components/configure) |
 
 ### ShowUploadListInterface
 | 参数 | 说明 | 类型 | 默认值 |

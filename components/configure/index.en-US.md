@@ -188,6 +188,7 @@ const prefixCls = getConfig('prefixCls');
 | uploadShowReUploadIcon | 基础 Upload 组件文件上传失败后是否显示重新上传按钮。当 listType 为 picture-card: true 为 icon, text 为文字形式; 其他 listType 都为文字形式 | boolean \| 'text' \| (file: UploadFile, listType: UploadListType) => (boolean \| 'text') |  |
 | uploadSecretLevelFlag | 是否开启上传密级 | boolean |  |
 | uploadSecretLevelOptions | 上传密级配置项, fields: 密级数据源字段配置, 必传; formProps: 密级表单配置; modalProps: 密级弹框配置; | options: { fields: FieldProps[], formProps?: FormProps, modalProps?: ModalProps } |  |
+| uploadDirectoryMaxFileCount | The default maximum file number limit when uploading folders; if exceeded, the user will be prompted whether to continue uploading. If they choose to continue, only the maximum number of files will be uploaded. | number | 100 |
 | fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | Input box focus mode: checked - By default, it focuses on the selected text; focus - It displays the cursor when focused. | `checked` \| `focus` | `checked` |

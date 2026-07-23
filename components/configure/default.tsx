@@ -206,6 +206,7 @@ const defaults = {
   tableProfBarHasValueDefaultExpanded: true,
   showLengthInfo: 'auto' as (boolean | 'auto' | undefined),
   inputLengthExceedWarning: true,
+  uploadDirectoryMaxFileCount: 100,
 };
 
 export default defaults;

@@ -103,6 +103,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   onPreview?: (attachment: AttachmentFile) => void;
   pictureCardShowName?: boolean;
   directory?: boolean;
+  directoryMaxFileCount?: number;
   /**
    * 中断上传的方法
    * @param attachment 有 attachment 参数则中断指定附件上传，无 attachment 参数则是中断所有上传
@@ -443,6 +444,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'enableDeleteAll',
       'pictureCardShowName',
       'directory',
+      'directoryMaxFileCount',
       'uploadImmediately',
     ]);
   }
@@ -647,6 +649,29 @@ export default class Attachment extends FormField<AttachmentProps> {
     return otherProps;
   }
 
+  async confirmDirectoryUpload(files: File[], isDirectory: boolean): Promise<File[] | false> {
+    const { directoryMaxFileCount = getConfigDefault('uploadDirectoryMaxFileCount') } = this.props;
+    if (!isDirectory || !directoryMaxFileCount || directoryMaxFileCount <= 0 || files.length <= directoryMaxFileCount) {
+      return files;
+    }
+    const result = await Modal.confirm({
+      children: $l('Attachment', 'directory_max_file_count', {
+        count: files.length,
+        max: directoryMaxFileCount,
+      }),
+    });
+    return result === 'ok' ? files.slice(0, directoryMaxFileCount) : false;
+  }
+
+  async processUploadFiles(files: File[], isDirectory: boolean): Promise<void> {
+    const confirmedFiles = await this.confirmDirectoryUpload(files, isDirectory);
+    if (confirmedFiles === false) {
+      return;
+    }
+    const uuid = await this.getAttachmentUUID();
+    await this.uploadAttachments(this.processFiles(confirmedFiles, uuid));
+  }
+
   processFiles(files: File[], attachmentUUID: string): AttachmentFile[] {
     const { uploadImmediately } = this.props;
     return files.map((file, index: number) => new AttachmentFile({
@@ -672,12 +697,11 @@ export default class Attachment extends FormField<AttachmentProps> {
       let files: File[] = [...target.files];
       target.value = '';
       // @ts-ignore
-      if (directory && files.some(file => file && file.webkitRelativePath)) {
+      const isDirectory = files.some(file => file && file.webkitRelativePath);
+      if (directory && isDirectory) {
         files = files.filter(file => this.isAcceptFile(file as any, accept));
       }
-      this.getAttachmentUUID().then((uuid) => {
-        this.uploadAttachments(this.processFiles(files, uuid));
-      });
+      this.processUploadFiles(files, isDirectory);
     }
   }
 
@@ -982,12 +1006,11 @@ export default class Attachment extends FormField<AttachmentProps> {
     if (files.indexOf(file) === files.length - 1) {
       const { accept = [], props: { directory } } = this;
       // @ts-ignore
-      if (directory && files.some(file => file && file.webkitRelativePath)) {
+      const isDirectory = Boolean(directory);
+      if (isDirectory) {
         files = files.filter(file => this.isAcceptFile(file as any, accept));
       }
-      this.getAttachmentUUID().then((uuid) => {
-        this.uploadAttachments(this.processFiles(files, uuid));
-      });
+      this.processUploadFiles(files, isDirectory);
     }
 
     return false;

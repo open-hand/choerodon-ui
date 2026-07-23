@@ -220,6 +220,7 @@ export interface Locale extends DataSetLocale {
     remove_confirm_title: string;
     file: string;
     directory: string;
+    directory_max_file_count: string;
     file_not_exist: string;
   };
   Modal: {
