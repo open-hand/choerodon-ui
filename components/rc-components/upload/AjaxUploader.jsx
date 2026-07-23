@@ -38,7 +38,8 @@ class AjaxUploader extends Component {
       targetFile ? onReUpload(targetFile) : null;
       this.reset();
     } else {
-      this.uploadFiles(files);
+      const isDirectory = Array.prototype.some.call(files, file => file && file.webkitRelativePath);
+      this.uploadFiles(files, isDirectory);
       this.reset();
     }
   };
@@ -75,7 +76,7 @@ class AjaxUploader extends Component {
         (files) => {
           uploadCount++;
           if (this.props.multiple || uploadCount <= 1) {
-            this.uploadFiles(files);
+            this.uploadFiles(files, true);
           }
         },
         _file => attrAccept(_file, this.props.accept),
@@ -85,7 +86,7 @@ class AjaxUploader extends Component {
         file => attrAccept(file, this.props.accept),
       );
       const filesResult = this.props.multiple || (files.length <= 1) ? files : [files[0]];
-      this.uploadFiles(filesResult);
+      this.uploadFiles(filesResult, false);
     }
   };
 
@@ -98,8 +99,15 @@ class AjaxUploader extends Component {
     this.abort();
   }
 
-  uploadFiles = async (files) => {
-    const { beforeUploadFiles = noop, Modal: modalInProps } = this.props;
+  uploadFiles = async (files, isDirectory = false) => {
+    const { beforeUploadFiles = noop, confirmDirectoryUpload, Modal: modalInProps } = this.props;
+    let filesToUpload = Array.prototype.slice.call(files);
+    if (isDirectory && confirmDirectoryUpload) {
+      filesToUpload = await confirmDirectoryUpload(filesToUpload);
+      if (filesToUpload === false) {
+        return;
+      }
+    }
     const secretLevelFlag = getConfigDefault('uploadSecretLevelFlag');
     const secretLevelOptions = getConfigDefault('uploadSecretLevelOptions');
     let secretLevelHeadersInfo = {};
@@ -115,11 +123,11 @@ class AjaxUploader extends Component {
         return;
       }
     }
-    const postFiles = Array.prototype.slice.call(files).map((file) => {
+    const postFiles = filesToUpload.map((file) => {
       file.uid = getUid();
       return file;
     });
-    Promise.resolve(beforeUploadFiles(files)).then((res) => {
+    Promise.resolve(beforeUploadFiles(filesToUpload)).then((res) => {
       if (res !== false) {
         postFiles.forEach((file) => {
           this.upload(file, postFiles, secretLevelHeadersInfo);

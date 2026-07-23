@@ -48,6 +48,7 @@ export default {
     confirmRemove: '确认删除？',
     confirmReUpload: '确认重新上传？',
     reUpload: '重新上传',
+    directoryMaxFileCount: '文件夹中包含 {count} 个文件，超过最大限制 {max} 个，建议压缩或分批上传。继续上传将只上传前 {max} 个文件。',
   },
   Collapse: {
     fold: '收起',

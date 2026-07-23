@@ -217,6 +217,7 @@ const locale: Locale = {
     remove_confirm_title: 'Whether to delete the record',
     file: 'File',
     directory: 'Directory',
+    directory_max_file_count: 'The folder contains {count} files, exceeding the maximum limit of {max}. We recommend compressing the folder or uploading in batches. If you continue, only the first {max} files will be uploaded.',
   },
   Modal: {
     ok: 'OK',

@@ -12,12 +12,20 @@ const traverseFileTree = (files, callback, isAccepted) => {
         });
       } else if (item.isDirectory) {
         const dirReader = item.createReader();
-        dirReader.readEntries((entries) => {
-          // 遍历所有子项，等待全部完成
-          Promise.all(entries.map(entrieItem =>
-            _traverseFileTree(entrieItem, `${path}${item.name}/`)
-          )).then(resolve);
-        });
+        const entries = [];
+        const readAllEntries = () => {
+          dirReader.readEntries((currentEntries) => {
+            if (!currentEntries.length) {
+              Promise.all(entries.map(entrieItem =>
+                _traverseFileTree(entrieItem, `${path}${item.name}/`)
+              )).then(resolve);
+              return;
+            }
+            entries.push(...currentEntries);
+            readAllEntries();
+          });
+        };
+        readAllEntries();
       } else {
         resolve();
       }
