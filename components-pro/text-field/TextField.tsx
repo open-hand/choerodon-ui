@@ -456,7 +456,8 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   @action
   saveSuffixRef(node) {
     const { suffix = this.getDefaultSuffix() } = this.props;
-    if (suffix && isValidElement<any>(suffix) && (!suffix.props || !suffix.props.style || !suffix.props.style.width)) {
+    if (suffix && isValidElement<any>(suffix) &&
+      (!suffix.props || !suffix.props.style || !suffix.props.style.width || !toPx(suffix.props.style.width))) {
       this.suffixRef = node;
     }
     return node;
@@ -1350,8 +1351,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     let wrapperWidth = 0;
     if (this.suffixRef) {
       wrapperWidth = this.suffixRef.getBoundingClientRect().width;
+      return Math.max(this.suffixWidth || 0, wrapperWidth);
     }
-    return this.suffixWidth ? Math.max(this.suffixWidth, wrapperWidth): this.suffixWidth;
+    return this.suffixWidth;
   }
 
   setInputStylePadding(otherProps: any): void {
@@ -1436,11 +1438,6 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           width: children.props.style.width,
         };
         this.suffixWidth = defaultTo(toPx(children.props.style.width), toPx('0.21rem'));
-      } else {
-        // 未显式设置宽度时, 使用 auto 让 suffix 自适应内容宽度, 避免长内容溢出
-        divStyle = {
-          width: 'auto',
-        };
       }
       const { type } = children;
       const { onClick, ...otherProps } = children.props;
