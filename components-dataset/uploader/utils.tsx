@@ -437,14 +437,34 @@ export async function uploadFile(props: UploaderProps, attachment: AttachmentFil
  * @param file 
  * @returns 
  */
-export const checkFileReadable = (file: File) => {
+export const checkFileReadable = (file: File): Promise<boolean> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
+    let settled = false;
 
-    reader.onload = () => resolve(true);
-    reader.onerror = () => resolve(false);
+    const timeoutId = setTimeout(() => {
+      if (reader.readyState === FileReader.LOADING) {
+        reader.abort();
+      }
+      finish(false);
+    }, 10 * 1000);
+    const finish = (readable: boolean) => {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeoutId);
+        resolve(readable);
+      }
+    };
 
-    reader.readAsArrayBuffer(file.slice(0, 1));
-    setTimeout(() => resolve(false), 10 * 1000);
+    reader.onload = () => finish(true);
+    reader.onerror = () => finish(false);
+    reader.onabort = () => finish(false);
+
+    try {
+      // 空文件切片后只是一个无需访问原文件的空 Blob，必须直接读取 File 才能检测原文件是否仍可访问。
+      reader.readAsArrayBuffer(file.size === 0 ? file : file.slice(0, 1));
+    } catch (error) {
+      finish(false);
+    }
   });
 };
