@@ -51,6 +51,7 @@ title: Select
 | virtual | 支持虚拟滚动 | boolean| false |
 | showInputPrompt | 可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
 | addNewOptionPrompt | 自定义新增选项功能: 传入 path(根据addNewOptionPromptRender渲染) 或者 完全自定义渲染; | [AddNewOptionPromptResultProps](#AddNewOptionPromptResultProps) \| ((props: [AddNewOptionPromptRenderProps](#AddNewOptionPromptRenderProps)) => (ReactNode \| AddNewOptionPromptResultProps)) |  |
+| autoScrollToSelected | 自动滚动到选中位置 | boolean | true |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

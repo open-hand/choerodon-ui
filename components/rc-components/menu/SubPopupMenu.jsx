@@ -116,6 +116,16 @@ export class SubPopupMenu extends Component {
     }
   }
 
+  setDOMWrap = node => {
+    this.domWrap = node;
+  };
+
+  scrollToKey = key => {
+    if (this.domWrap && this.domWrap.scrollToKey) {
+      this.domWrap.scrollToKey(key);
+    }
+  };
+
   // all keyboard events callbacks run from here at first
   onKeyDown = (e, callback) => {
     const keyCode = e.keyCode;
@@ -332,6 +342,7 @@ export class SubPopupMenu extends Component {
         theme={theme}
         hiddenClassName={`${prefixCls}-hidden`}
         hidden={hidden}
+        ref={this.setDOMWrap}
         overflowedIndicator={overflowedIndicator}
         {...domProps}
       >

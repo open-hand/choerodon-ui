@@ -187,12 +187,14 @@ export class MenuItem extends React.Component {
         rippleProps.onTouchEnd = () => hide();
       }
     }
+    const { eventKey } = props;
     menuAllProps.forEach(key => delete props[key]);
     return (
       <Ripple {...rippleProps}>
         <li
           {...omit(props, ['tooltipPlacement', 'tooltipTheme'])}
           {...attrs}
+          data-menu-key={eventKey}
           {...mouseEvent}
           style={style}
         >

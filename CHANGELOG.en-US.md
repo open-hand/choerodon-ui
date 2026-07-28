@@ -18,7 +18,7 @@ timeline: true
 - 🌟 `configure`: Added `selectBeforeCreateComboOption`, `uploadDirectoryMaxFileCount` property.
 - 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 🌟 `<pro>Button`: Added `iconPlacement` property.
-- 🌟 `<pro>Select`: Added `beforeCreateComboOption` property.
+- 🌟 `<pro>Select`: Added `beforeCreateComboOption`, `autoScrollToSelected` properties.
 - 🌟 `<pro>PercentField`: Added the `PercentField` component.
 - 🌟 `<pro>DataSet.Field`: Add the `percentage` type.
 - 🌟 `<pro>PerformanceTable`: Added column attribute `customizable`.

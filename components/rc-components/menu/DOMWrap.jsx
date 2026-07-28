@@ -1,6 +1,7 @@
 import React, { cloneElement, Component } from 'react';
 import ReactDOM from 'react-dom';
 import ResizeObserver from 'resize-observer-polyfill';
+import scrollIntoView from 'dom-scroll-into-view';
 import List from 'rc-virtual-list';
 import SubMenu from './SubMenu';
 import { getWidth, menuAllProps, setStyle } from './util';
@@ -27,6 +28,54 @@ export default class DOMWrap extends Component {
   state = {
     lastVisibleIndex: undefined,
     measuredItemHeight: undefined,
+  };
+
+  setVirtualListRef = node => {
+    // 虚拟列表
+    this.virtualList = node;
+  };
+
+  scrollTo = config => {
+    if (this.virtualList && this.virtualList.scrollTo) {
+      this.virtualList.scrollTo(config);
+    }
+  };
+
+  scrollToKey = key => {
+    const { children, virtual } = this.props;
+    const menu = ReactDOM.findDOMNode(this);
+    const scrollItemIntoView = () => {
+      const item = menu && [].slice.call(menu.querySelectorAll('[data-menu-key]'))
+        .find(node => node.getAttribute('data-menu-key') === key);
+      if (item && menu) {
+        scrollIntoView(item, menu, { onlyScrollIfNeeded: true });
+      }
+    };
+    if (!virtual) {
+      scrollItemIntoView();
+      return;
+    }
+    const menuChildren = this.renderChildren(children);
+    const containsKey = item => {
+      if (!React.isValidElement(item)) {
+        return false;
+      }
+      if (item.props.eventKey === key || item.key === key) {
+        return true;
+      }
+      let found = false;
+      React.Children.forEach(item.props.children, child => {
+        if (!found && containsKey(child)) {
+          found = true;
+        }
+      });
+      return found;
+    };
+    const index = menuChildren.findIndex(containsKey);
+    if (index !== -1) {
+      this.scrollTo({ index, align: 'auto' });
+      requestAnimationFrame(scrollItemIntoView);
+    }
   };
 
   componentDidMount() {
@@ -332,6 +381,7 @@ export default class DOMWrap extends Component {
       const itemHeight = this.state.measuredItemHeight || 28;
       return (
         <List
+          ref={this.setVirtualListRef}
           component={Tag}
           data={this.renderChildren(this.props.children)}
           height={234}

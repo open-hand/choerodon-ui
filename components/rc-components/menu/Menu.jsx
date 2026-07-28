@@ -113,6 +113,10 @@ export default class Menu extends Component {
     return this.innerMenu.getWrappedInstance().getFlatInstanceArray();
   }
 
+  scrollToKey(key) {
+    return this.innerMenu.getWrappedInstance().scrollToKey(key);
+  }
+
   onOpenChange = event => {
     const props = this.props;
     const openKeys = this.store.getState().openKeys.concat();
