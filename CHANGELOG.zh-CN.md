@@ -18,7 +18,7 @@ timeline: true
 - 🌟 `configure`: 新增 selectBeforeCreateComboOption, uploadDirectoryMaxFileCount 属性。
 - 🌟 `<pro>Table`: 查询栏 onReset 事件新增 type 参数用于区分触发的场景。
 - 🌟 `<pro>Button`: 新增 iconPlacement 属性。
-- 🌟 `<pro>Select`: 新增 beforeCreateComboOption 属性。
+- 🌟 `<pro>Select`: 新增 beforeCreateComboOption, autoScrollToSelected 属性。
 - 🌟 `<pro>PercentField`: 新增 PercentField 组件。
 - 🌟 `<pro>DataSet.Field`: type 新增 percentage 类型。
 - 🌟 `<pro>PerformanceTable`: 新增列属性 customizable。

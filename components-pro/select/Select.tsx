@@ -306,6 +306,10 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 判断是否需要根据当前文本创建 combo 选项
    */
   beforeCreateComboOption?: (props: BeforeCreateComboOptionProps) => boolean;
+  /**
+   * 自动滚动到选中位置
+   */
+  autoScrollToSelected?: boolean;
 }
 
 export class Select<T extends SelectProps = SelectProps> extends TriggerField<T> {
@@ -319,6 +323,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     onOption: defaultOnOption,
     selectAllButton: true,
     popupShowComboValue: true,
+    autoScrollToSelected: true,
   };
 
   static Option = Option;
@@ -646,6 +651,35 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     this.forcePopupAlign();
   }
 
+  @autobind
+  scrollToSelectedOption() {
+    defer(() => {
+      const { autoScrollToSelected } = this.props;
+      if (!autoScrollToSelected || !this.popup || !this.menu) {
+        return;
+      }
+      const { valueField, textField } = this;
+      const autoType = this.getProp('type') === FieldType.auto;
+      const values = this.getValues();
+      let target: Record | undefined;
+      for (let index = values.length - 1; index >= 0 && !target; index -= 1) {
+        const value = getSimpleValue(values[index], valueField);
+        target = this.filteredOptions.find(record => {
+          const recordValue = record.get(valueField);
+          return autoType ? isSameLike(recordValue, value) : isSame(recordValue, value);
+        });
+      }
+      if (!target) {
+        return;
+      }
+      const text = target.get(textField);
+      const key = getItemKey(target, text, target.get(valueField));
+      if (this.menu.scrollToKey) {
+        this.menu.scrollToKey(key);
+      }
+    });
+  }
+
   getOmitPropsKeys(): string[] {
     return super.getOmitPropsKeys().concat([
       'searchable',
@@ -683,6 +717,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'showInputPrompt',
       'addNewOptionPrompt',
       'beforeCreateComboOption',
+      'autoScrollToSelected',
     ]);
   }
 
@@ -1915,11 +1950,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       const { searchMatcher, searchText } = this;
       const optionsProp = field && field.get('options', this.record) || this.observableProps.options;
       if (noCache && optionsProp) {
-        optionsProp.query(undefined, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined);
+        optionsProp.query(undefined, isString(searchMatcher) ? this.getSearchPara(searchMatcher, searchText) : undefined)
+          .then(this.scrollToSelectedOption);
       } else if (field) {
-        field.fetchLookup(noCache, this.record);
+        field.fetchLookup(noCache, this.record).then(this.scrollToSelectedOption);
       }
       this.forcePopupAlign();
+      this.scrollToSelectedOption();
     }
     super.handlePopupHiddenChange(hidden);
   }
