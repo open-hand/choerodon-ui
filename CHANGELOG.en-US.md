@@ -95,6 +95,7 @@ timeline: true
 - 🐞 `<pro>Select`: Fixed the issue where options could not be fully seen when setting the `virtual` property and the option height changed.
 - 🐞 `Tooltip`: Fixed the issue where changing custom styles altered the popup height and caused inaccurate positioning after the popup position changed.
 - 🐞 `<pro>TriggerField`: Fixed the issue where setting the `popupPlacement` attribute to `top` or other values caused errors.
+- 🐞 `<pro>DataSet`: Fixed the issue where subsequent queries were canceled due to asynchronous tree table reusing already canceled request tokens.
 
 ## 1.6.8
 
