@@ -3335,14 +3335,18 @@ Then the query method will be auto invoke.`,
           if (queryEventResult) {
             this.performance.timing.fetchStart = Date.now();
             this.performance.url = newConfig.url;
-            if (this.lastRequestSource) {
-              this.lastRequestSource.cancel(`New request started, cancelling the previous one. Please check request, now request url: ${newConfig.url}`);
-            }
+            let cancelToken;
             if (this.getState(QUERY_CANCELABLE) !== false) {
+              if (this.lastRequestSource) {
+                this.lastRequestSource.cancel(`New request started, cancelling the previous one. Please check request, now request url: ${newConfig.url}`);
+              }
               this.lastRequestSource = axiosStatic.CancelToken.source();
+              cancelToken = this.lastRequestSource.token;
+            } else {
+              this.lastRequestSource = undefined;
             }
             const result = await this.axios({
-              cancelToken: this.lastRequestSource?.token,
+              cancelToken,
               ...fixAxiosConfig(newConfig),
             });
             this.performance.timing.fetchEnd = Date.now();
