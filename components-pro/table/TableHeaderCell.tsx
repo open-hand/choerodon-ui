@@ -459,7 +459,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   const handleResize = useCallback(() => {
     const { clipboard, startChooseCell, endChooseCell, drawCopyBorder } = tableStore;
-    if (clipboard && startChooseCell && endChooseCell) {
+    if (clipboard && clipboard.copy && startChooseCell && endChooseCell) {
       drawCopyBorder();
     }
   }, [column.width])
@@ -742,7 +742,7 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
 
   
   return (
-    <ReactResizeObserver onResize={handleResize}>
+    <ReactResizeObserver disabled={!tableStore.clipboard || !tableStore.clipboard.copy} onResize={handleResize}>
       <th {...thProps}>
         <div
           {...innerProps}
