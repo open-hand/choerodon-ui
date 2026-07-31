@@ -1055,6 +1055,12 @@ export default class TableStore {
 
   @observable autoScrollRAF: number | null;
 
+  copyChooseCleanup?: () => void;
+
+  renderedCellText: WeakMap<Record, Map<Key, string>> = new WeakMap();
+
+  renderedCellNode: WeakMap<Record, Map<Key, HTMLTableCellElement>> = new WeakMap();
+
   @observable arrangeValue: ArrangeValue;
 
   @observable dragCorner: boolean;
@@ -2648,7 +2654,22 @@ export default class TableStore {
   @action
   updateProps(props) {
     const { customizedCode, aggregation: oldAggregation } = this.props;
+    const copyEnabled = Boolean(this.clipboard && this.clipboard.copy);
     this.setProps(props);
+    if (copyEnabled && !(this.clipboard && this.clipboard.copy)) {
+      if (this.copyChooseCleanup) {
+        this.copyChooseCleanup();
+      } else if (this.autoScrollRAF) {
+        cancelAnimationFrame(this.autoScrollRAF);
+        this.autoScrollRAF = null;
+      }
+      this.startChooseCell = null;
+      this.endChooseCell = null;
+      this.isFinishChooseCell = true;
+      this.shiftKey = false;
+      this.dragCorner = false;
+      this.clearArrangeValue();
+    }
     if (this.customizable) {
       if (customizedCode !== props.customizedCode) {
         this.loadCustomized();
@@ -2678,6 +2699,12 @@ export default class TableStore {
 
   dispose() {
     this.disposeGroupReaction();
+    if (this.copyChooseCleanup) {
+      this.copyChooseCleanup();
+    } else if (this.autoScrollRAF) {
+      cancelAnimationFrame(this.autoScrollRAF);
+      this.autoScrollRAF = null;
+    }
   }
 
   @action
@@ -3008,12 +3035,81 @@ export default class TableStore {
 
   @autobind
   drawCopyBorder(sTarget?: HTMLElement, eTarget?: HTMLElement) {
-    const { node: { rangeBorder, tableContentWrap, tableBodyWrap }, startChooseCell, endChooseCell, lastScrollLeft, columnGroups, leftColumnGroups, customizable } = this;
+    const {
+      node: {
+        rangeBorder,
+        tableContentWrap,
+        tableBodyWrap,
+        fixedColumnsBodyLeft,
+        fixedColumnsBodyRight,
+      },
+      startChooseCell,
+      endChooseCell,
+      lastScrollLeft,
+      columnGroups,
+      leftColumnGroups,
+      customizable,
+    } = this;
 
-    const startTarget = sTarget || (startChooseCell && startChooseCell.target);
-    const endTarget = eTarget || (endChooseCell && endChooseCell.target);
+    let startTarget = sTarget || (startChooseCell && startChooseCell.target);
+    let endTarget = eTarget || (endChooseCell && endChooseCell.target);
     const positionWrapper = tableBodyWrap || tableContentWrap;
     const maxScrollLeft = positionWrapper!.scrollWidth - positionWrapper!.clientWidth;
+
+    if (positionWrapper && startChooseCell && endChooseCell) {
+      const minRowIndex = Math.min(startChooseCell.rowIndex, endChooseCell.rowIndex);
+      const maxRowIndex = Math.max(startChooseCell.rowIndex, endChooseCell.rowIndex);
+      const resolveVisibleTarget = (target: HTMLElement | null | undefined, rowIndex: number, colIndex: number): HTMLElement | null => {
+        const column = columnGroups.leafs[colIndex];
+        if (!column) {
+          return target || null;
+        }
+        const columnKey = String(column.key);
+        if (
+          target &&
+          target.isConnected &&
+          Number(target.dataset.rowIndex) === rowIndex &&
+          target.dataset.index === columnKey
+        ) {
+          return target;
+        }
+
+        const lock = column.column.lock;
+        const wrappers = [
+          lock === ColumnLock.left || lock === true ? fixedColumnsBodyLeft : undefined,
+          !lock ? positionWrapper : undefined,
+          lock === ColumnLock.right ? fixedColumnsBodyRight : undefined,
+          positionWrapper,
+        ].filter((wrapper): wrapper is HTMLDivElement => Boolean(wrapper));
+
+        return wrappers.reduce<HTMLElement | null>((result, wrapper) => {
+          if (result) {
+            return result;
+          }
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const footerTop = wrapper.querySelector('tfoot')?.getBoundingClientRect().top;
+          const visibleBottom = footerTop === undefined
+            ? wrapperRect.bottom
+            : Math.min(wrapperRect.bottom, footerTop);
+          return Array.from(wrapper.querySelectorAll<HTMLElement>('td[data-row-index]'))
+            .filter((cell) => {
+              const cellRowIndex = Number(cell.dataset.rowIndex);
+              const { top, bottom } = cell.getBoundingClientRect();
+              return cell.dataset.index === columnKey &&
+                cellRowIndex >= minRowIndex &&
+                cellRowIndex <= maxRowIndex &&
+                top < visibleBottom &&
+                bottom > wrapperRect.top;
+            })
+            .reduce<HTMLElement | null>(
+              (nearest, cell) => (!nearest || Math.abs(Number(cell.dataset.rowIndex) - rowIndex) < Math.abs(Number(nearest.dataset.rowIndex) - rowIndex) ? cell : nearest),
+              null,
+            );
+        }, null);
+      };
+      startTarget = resolveVisibleTarget(startTarget, startChooseCell.rowIndex, startChooseCell.colIndex);
+      endTarget = resolveVisibleTarget(endTarget, endChooseCell.rowIndex, endChooseCell.colIndex);
+    }
 
     if (rangeBorder && startTarget && endTarget) {
       const { fixLeftClassname, fixRightClassname, fixLeftLength, fixRightLength } = this.calcDrawBorderFixColumn(startTarget, endTarget);
@@ -3062,7 +3158,9 @@ export default class TableStore {
               if (col.column.lock === ColumnLock.left || col.column.lock === true) {
                 fixChoosedWidth += col.width || 0;
                 if (i === firstColIndex) {
-                  fixChoosedLeft = (startChooseCell.colIndex === firstColIndex ? startChooseCell.target.offsetLeft : endChooseCell.target.offsetLeft);
+                  const fixedLeftTarget = [startTarget, endTarget]
+                    .find(target => target.classList.contains(fixLeftClassname));
+                  fixChoosedLeft = fixedLeftTarget ? fixedLeftTarget.offsetLeft : 0;
                 }
               }
             }

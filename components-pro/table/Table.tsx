@@ -1578,10 +1578,13 @@ export default class Table extends DataSetComponent<TableProps> {
           const minColIndex = Math.min(startChooseCell.colIndex, endChooseCell.colIndex);
           const maxColIndex = Math.max(startChooseCell.colIndex, endChooseCell.colIndex);
   
+          const getRenderedCellText = (record: Record, columnKey: React.Key) => {
+            const renderedCell = this.tableStore.renderedCellNode.get(record)?.get(columnKey);
+            return renderedCell?.isConnected ? renderedCell.innerText : this.tableStore.renderedCellText.get(record)?.get(columnKey);
+          };
           const copyData: string[] = [];
           for (let i = minRowIndex; i < maxRowIndex + 1; i++) {
             const record = this.dataSet.records[i];
-            const rowDataIndex = record.id;
             for (let j = minColIndex; j <= maxColIndex; j++) {
               let recordData;
               const fieldName = columns[j].column.name || String(columns[j].column.key || '');
@@ -1606,9 +1609,7 @@ export default class Table extends DataSetComponent<TableProps> {
                       recordData = recordData.format(field.get('format', record) || 'YYYY-MM-DD');
                     }
                     if (columns[j] && columns[j].column.renderer) {
-                      const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                      const td = getTBodyElement?.querySelector(`tr[data-index="${rowDataIndex}"]`)?.querySelectorAll('td[class*="-table-cell"]')[j];
-                      recordData = td ? (td as HTMLTableCellElement).innerText : null;
+                      recordData = getRenderedCellText(record, columns[j].key) ?? recordData;
                     }
                   } else if (fieldType === FieldType.object) {
                     recordData = JSON.stringify(recordData);
@@ -1618,9 +1619,7 @@ export default class Table extends DataSetComponent<TableProps> {
                     recordData = recordData.replace(/[\r\n]/g, "")
                   }
                 } else if (columns[j] && columns[j].column.renderer) {
-                  const getTBodyElement = startChooseCell.target.parentElement!.parentElement;
-                  const td = getTBodyElement?.querySelector(`tr[data-index="${rowDataIndex}"]`)?.querySelectorAll('td[class*="-table-cell"]')[j];
-                  recordData = td ? (td as HTMLTableCellElement).innerText : null;
+                  recordData = this.tableStore.renderedCellText.get(record)?.get(columns[j].key);
                 }
               }
   
@@ -2731,16 +2730,12 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   handleBodyScroll(e: React.SyntheticEvent) {
     const { currentTarget } = e;
-    const { tableStore } = this;
     const handle = () => {
       this.handleBodyScrollTop(e, currentTarget);
       this.handleBodyScrollLeft(e, currentTarget);
-      if (tableStore.virtual && this.rangeBorder && tableStore.startChooseCell && tableStore.endChooseCell) {
+      const { tableStore } = this;
+      if (tableStore.virtual && tableStore.isFinishChooseCell && this.rangeBorder) {
         this.rangeBorder.style.display = 'none';
-        runInAction(() => {
-          tableStore.startChooseCell = null;
-          tableStore.endChooseCell = null;
-        })
       }
     };
     if (isStickySupport()) {

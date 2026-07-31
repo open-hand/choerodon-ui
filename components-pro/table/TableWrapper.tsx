@@ -101,7 +101,7 @@ const TableWrapper: FunctionComponent<TableWrapperProps> = function TableWrapper
         {colGroup}
         {children}
       </table>
-      {clipboard &&
+      {clipboard && clipboard.copy && hasBody &&
         [
           <div key="rangBorder" ref={getCopyBodyRef} className={`${prefixCls}-range-border`} hidden={!!tableStore.currentEditorName}>
             {clipboard.paste &&

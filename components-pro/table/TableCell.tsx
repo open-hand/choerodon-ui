@@ -10,6 +10,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
 } from 'react';
 import { action, runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -66,11 +67,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, isRenderCell,
   } = props;
   const mousePosition = React.useRef<{ x: number; y: number } | null>(null);
+  const renderedTextObserver = useRef<MutationObserver>();
 
   const dragDisabled = isFunction(isDragDisabled) ? isDragDisabled(record) : isDragDisabled;
   const { column, key } = columnGroup;
   const { tableStore, prefixCls, dataSet, expandIconAsCell, aggregation: tableAggregation, rowHeight } = useContext(TableContext);
   const { clipboard, startChooseCell, endChooseCell, isFinishChooseCell, currentEditorName, drawCopyBorder, dragColumnAlign, rowDraggable, dragCorner, drawExpandArea, node: { rangeBorder, element } } = tableStore;
+  const clipboardCopyEnabled = Boolean(clipboard && clipboard.copy);
   const cellPrefix = `${prefixCls}-cell`;
   const tableColumnOnCell = tableStore.getConfig('tableColumnOnCell');
   const { __tableGroup, style, lock, onCell, aggregation } = column;
@@ -78,8 +81,9 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const [rowGroup]: [Group | undefined, boolean] = group || !groupPath || !groupPath.length ? [undefined, false] : groupPath[groupPath.length - 1];
   useEffect(() => {
     return () => {
-      stopAutoScroll();
-      document.removeEventListener('mouseup', handleDocumentMouseUp);
+      if (tableStore.isFinishChooseCell) {
+        document.removeEventListener('mouseup', handleDocumentMouseUp);
+      }
     }
   }, [])
   const getInnerNode = useCallback((
@@ -132,6 +136,16 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
   }), [record, dataSet, cellExternalProps]);
 
+  const handleDocumentMouseMove = (event: MouseEvent) => {
+    if (tableStore.isFinishChooseCell) {
+      if (tableStore.copyChooseCleanup) {
+        tableStore.copyChooseCleanup();
+      }
+      return;
+    }
+    autoScroll(event);
+  };
+
   const handleMouseDown = useCallback(action<(e) => void>((event) => {
     const { target } = event;
     if (element && !element.contains(target)) return;
@@ -161,17 +175,37 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
       drawCopyBorder(tableStore.startChooseCell.target, startTarget);
       tableStore.isFinishChooseCell = false;
+      if (tableStore.copyChooseCleanup) {
+        tableStore.copyChooseCleanup();
+      }
+      const cleanup = () => {
+        document.removeEventListener('mousemove', handleDocumentMouseMove);
+        document.removeEventListener('mouseup', handleDocumentMouseUp);
+        stopAutoScroll();
+        if (tableStore.copyChooseCleanup === cleanup) {
+          tableStore.copyChooseCleanup = undefined;
+        }
+      };
+      tableStore.copyChooseCleanup = cleanup;
+      document.addEventListener('mousemove', handleDocumentMouseMove);
       document.addEventListener('mouseup', handleDocumentMouseUp, { once: true });
     }
   }), [endChooseCell]);
 
   const handleDocumentMouseUp = useCallback(action<(e) => void>((event) => {
     tableStore.isFinishChooseCell = true;
+    document.removeEventListener('mousemove', handleDocumentMouseMove);
     const { target } = event;
+    if (tableStore.copyChooseCleanup) {
+      tableStore.copyChooseCleanup();
+    }
     // 开始计数求和、求平均、个数、最小、最大
     tableStore.calcArrangeValue();
-    if (key === DRAG_KEY || key === ROW_NUMBER_KEY || target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`)) return;
-    stopAutoScroll();
+    if (key === DRAG_KEY || key === ROW_NUMBER_KEY) return;
+    const isEditableTarget = target.tagName.toLowerCase() === 'input' || target.classList.contains(`${cellPrefix}-inner-editable`);
+    if (!isEditableTarget || !tableStore.currentEditorName) {
+      tableStore.node.focus();
+    }
   }), [dragCorner]);
 
   const handleMouseOver = useCallback(action<(e) => void>((event) => {
@@ -238,14 +272,70 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     const execScroll = action(() => {
       const { rightColumnGroups, leftColumnGroups, overflowX, overflowY, lastScrollLeft, lastScrollTop } = tableStore;
       const { x: mouseX, y: mouseY } = mousePosition.current!;
-      const { height, width } = overflowWrapper.getBoundingClientRect()
+      const overflowRect = overflowWrapper.getBoundingClientRect();
+      const { height, width } = overflowRect;
+      const scrollVerticalWidth = overflowY ? measureScrollbar() : 0;
+      const scrollHorizontalWidth = overflowX ? measureScrollbar('horizontal') : 0;
+      const mouseClientX = overflowRect.left + mouseX;
+      const mouseClientY = overflowRect.top + mouseY;
+      const getPointCell = (clientX: number, clientY: number) => document.elementsFromPoint(clientX, clientY)
+        .map(pointElement => pointElement.closest(`td.${cellPrefix}`) as HTMLElement | null)
+        .find(cell => cell && overflowWrapper.contains(cell));
+      const pointCell = getPointCell(mouseClientX, mouseClientY);
+      const clampedPointCell = !pointCell ? getPointCell(
+        Math.min(
+          Math.max(mouseClientX, overflowRect.left + leftColumnGroups.width + 1),
+          overflowRect.right - rightColumnGroups.width - scrollVerticalWidth - 1,
+        ),
+        Math.min(
+          Math.max(mouseClientY, overflowRect.top + 1),
+          overflowRect.bottom - scrollHorizontalWidth - 1,
+        ),
+      ) : undefined;
+      // 鼠标位于视口空白区域时，pointCell 为空。
+      // 从已渲染且视口相交的单元格中筛选鼠标所在列，作为边界候选节点。
+      const renderedCells = pointCell || clampedPointCell ? [] : Array.from(overflowWrapper.querySelectorAll<HTMLElement>(`td.${cellPrefix}[data-row-index]`))
+        .filter((cell) => {
+          const { left, right, top, bottom } = cell.getBoundingClientRect();
+          return left <= mouseClientX && right >= mouseClientX && top < overflowRect.bottom && bottom > overflowRect.top;
+        });
+      // 鼠标位于视口空白区域时，pointCell 为空。
+      // 从已渲染且视口相交的单元格中筛选鼠标所在列，作为边界候选节点。
+      const boundaryCell = renderedCells.reduce<HTMLElement | undefined>((result, cell) => {
+        if (!result) return cell;
+        const cellRect = cell.getBoundingClientRect();
+        const resultRect = result.getBoundingClientRect();
+        // 计算垂直距离：鼠标在单元格顶部时距离为顶部坐标差，在底部时为底部坐标差，
+        // 中间时为 0。选择距离最小的节点，即为垂直方向上离鼠标最近的可见行。
+        const cellDistance = Math.max(cellRect.top - mouseClientY, mouseClientY - cellRect.bottom, 0);
+        const resultDistance = Math.max(resultRect.top - mouseClientY, mouseClientY - resultRect.bottom, 0);
+        return cellDistance < resultDistance ? cell : result;
+      }, undefined);
+      // 实际命中 td 优先使用；否则使用可见边界节点兜底。
+      const currentPointCell = pointCell || clampedPointCell || boundaryCell;
+      if (currentPointCell) {
+        const pointRowIndex = Number(currentPointCell.dataset.rowIndex);
+        const pointColIndex = tableStore.columnGroups.leafs.findIndex(({ key: columnKey }) => String(columnKey) === currentPointCell.dataset.index);
+        const endCellChanged = !tableStore.endChooseCell ||
+          tableStore.endChooseCell.rowIndex !== pointRowIndex ||
+          tableStore.endChooseCell.colIndex !== pointColIndex ||
+          tableStore.endChooseCell.target !== currentPointCell;
+        if (!Number.isNaN(pointRowIndex) && pointColIndex >= 0 && endCellChanged) {
+          tableStore.endChooseCell = {
+            rowIndex: pointRowIndex,
+            colIndex: pointColIndex,
+            target: currentPointCell,
+          };
+          if (startChooseCell) {
+            drawCopyBorder(startChooseCell.target, currentPointCell);
+          }
+        }
+      }
 
       let deltaX = 0;
       let deltaY = 0;
       let factor = 0;
-
-      const scrollVerticalWidth = overflowY ? measureScrollbar() : 0;
-      const scrollHorizontalWidth = overflowX ? measureScrollbar('horizontal') : 0;
+      let appliedFactor = 0;
 
       const maxScrollLeft = overflowWrapper.scrollWidth - overflowWrapper.clientWidth;
       const maxScrollHeight = overflowWrapper.scrollHeight - overflowWrapper.clientHeight;
@@ -269,9 +359,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       }
 
       if (deltaX !== 0 || deltaY !== 0) {
+        const useBlankAreaSpeedBoost = !pointCell && !clampedPointCell && Boolean(currentPointCell);
+        appliedFactor = useBlankAreaSpeedBoost
+          ? Math.sign(factor || 1) * Math.max(Math.abs(factor), 1)
+          : factor;
         overflowWrapper.scrollTo({
-          left: lastScrollLeft + deltaX * factor,
-          top: lastScrollTop + deltaY * factor,
+          left: lastScrollLeft + deltaX * appliedFactor,
+          top: lastScrollTop + deltaY * appliedFactor,
         })
       }
       tableStore.autoScrollRAF = requestAnimationFrame(execScroll);
@@ -301,7 +395,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   }), [dragCorner]);
 
   const isChoose = useMemo(() => {
-    if (!startChooseCell) return;
+    if (!clipboardCopyEnabled || !startChooseCell) return undefined;
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
     if (startChooseCell && startChooseCell.colIndex === colIndex && startChooseCell.rowIndex === rowIndex) {
       return true;
@@ -333,12 +427,13 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     }
 
     return false;
-  }, [startChooseCell, endChooseCell])
+  }, [clipboardCopyEnabled, startChooseCell, endChooseCell])
 
   const isFirstChoosed = useMemo(() => {
+    if (!clipboardCopyEnabled || !startChooseCell) return;
     const colIndex = tableStore.columnGroups.leafs.findIndex(x => x.column.name === key || x.column.key === key);
-    return startChooseCell && startChooseCell.rowIndex === rowIndex && startChooseCell.colIndex === colIndex;
-  }, [startChooseCell]);
+    return startChooseCell.rowIndex === rowIndex && startChooseCell.colIndex === colIndex;
+  }, [clipboardCopyEnabled, startChooseCell]);
 
   const aggregationTreeRenderer = useCallback(({ colGroup, style }) => {
     return getInnerNode(colGroup.column, style, true, colGroup.headerGroup);
@@ -485,8 +580,8 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     {
       [`${cellPrefix}-aggregation`]: aggregation,
       [`${cellPrefix}-last-group`]: groupCell && isLast,
-      [`${cellPrefix}-choosed`]: clipboard && clipboard.copy && isChoose,
-      [`${cellPrefix}-first-choosed`]: clipboard && clipboard.copy && isFirstChoosed,
+      [`${cellPrefix}-choosed`]: clipboardCopyEnabled && isChoose,
+      [`${cellPrefix}-first-choosed`]: clipboardCopyEnabled && isFirstChoosed,
     },
     column.className,
     className,
@@ -506,7 +601,7 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   // 只有全局属性时候的样式可以继承给下级满足对td的样式能够一致表现
   const onCellStyle = !isBuiltInColumn && tableColumnOnCell === columnOnCell && typeof tableColumnOnCell === 'function' ? omit(cellExternalProps.style, ['width', 'height']) : undefined;
   let clipboardCopyEvents = {};
-  if (clipboard && clipboard.copy) {
+  if (clipboardCopyEnabled) {
     clipboardCopyEvents = {
       onMouseDown: handleMouseDown,
       onMouseOver: handleMouseOver,
@@ -516,6 +611,39 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
 
   const tableCellFinalStyle = { ...omit(cellStyle, ['width', 'height']), ...widthDraggingStyle(), ...intersectionProps.style };
 
+  const cacheRenderedCellText = clipboardCopyEnabled && column.renderer ? (node: HTMLTableCellElement | null) => {
+    renderedTextObserver.current?.disconnect();
+    renderedTextObserver.current = undefined;
+    let recordCellNode = tableStore.renderedCellNode.get(record);
+    if (!recordCellNode) {
+      recordCellNode = new Map();
+      tableStore.renderedCellNode.set(record, recordCellNode);
+    }
+    if (node) {
+      recordCellNode.set(key, node);
+      let recordCellText = tableStore.renderedCellText.get(record);
+      if (!recordCellText) {
+        recordCellText = new Map();
+        tableStore.renderedCellText.set(record, recordCellText);
+      }
+      const updateText = () => recordCellText!.set(key, node.innerText);
+      updateText();
+      renderedTextObserver.current = new MutationObserver(updateText);
+      renderedTextObserver.current.observe(node, { childList: true, characterData: true, subtree: true });
+    } else {
+      recordCellNode.delete(key);
+    }
+  } : undefined;
+  const cellRef = (node: HTMLTableCellElement | null) => {
+    if (typeof cellExternalProps.ref === 'function') {
+      cellExternalProps.ref(node);
+    } else if (cellExternalProps.ref && typeof cellExternalProps.ref !== 'string') {
+      (cellExternalProps.ref as React.MutableRefObject<HTMLTableCellElement | null>).current = node;
+    }
+    intersectionRef?.(node);
+    cacheRenderedCellText?.(node);
+  };
+
   return (
     <TCell
       colSpan={colSpan}
@@ -523,8 +651,10 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       {...cellExternalProps}
       className={classString}
       data-index={key}
+      data-row-index={clipboardCopyEnabled ? rowIndex : undefined}
       {...(provided && provided.dragHandleProps)}
       {...intersectionProps}
+      {...(cacheRenderedCellText ? { ref: cellRef } : {})}
       style={tableCellFinalStyle}
       scope={scope}
       onClickCapture={handleClickCapture}
