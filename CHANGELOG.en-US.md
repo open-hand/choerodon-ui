@@ -97,6 +97,7 @@ timeline: true
 - 🐞 `Tooltip`: Fixed the issue where changing custom styles altered the popup height and caused inaccurate positioning after the popup position changed.
 - 🐞 `<pro>TriggerField`: Fixed the issue where setting the `popupPlacement` attribute to `top` or other values caused errors.
 - 🐞 `<pro>DataSet`: Fixed the issue where subsequent queries were canceled due to asynchronous tree table reusing already canceled request tokens.
+- 🐞 `<pro>Table`: In the filter list of the dynamic filter bar, fixed the issue where the pop-up does not appear when hovering over the icon of a selected condition.
 
 ## 1.6.8
 

@@ -415,15 +415,6 @@
       margin: 0 0.04rem;
     }
 
-    &:hover &-icons {
-      display: inline-flex;
-      margin-left: auto;
-    }
-
-    &:hover &-selected {
-      display: none;
-    }
-
     &-icons {
       display: none;
       height: 0.2rem;
@@ -437,6 +428,14 @@
       margin-left: auto;
       font-size: 0.16rem;
     }
+  }
+  
+  .@{select-prefix-cls}-dropdown-menu-item:hover &-filter-menu-option-icons {
+    display: inline-flex;
+    margin-left: auto;
+  }
+  .@{select-prefix-cls}-dropdown-menu-item:hover &-filter-menu-option-selected {
+    display: none;
   }
 
   &-filter-label {

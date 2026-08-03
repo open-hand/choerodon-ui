@@ -174,6 +174,8 @@ export default class Trigger extends Component<TriggerProps> {
 
   childTimer?: number;
 
+  popupMouseEntered = false;
+
   constructor(props, context) {
     super(props, context);
     runInAction(() => {
@@ -354,7 +356,11 @@ export default class Trigger extends Component<TriggerProps> {
       if (isNil(this.childTimer)) {
         this.childTimer = window.setInterval(() => {
           const el = this.domNode;
-          if (el && (el.isConnected === false || ((el as HTMLElement).offsetWidth === 0 && (el as HTMLElement).offsetHeight === 0))) {
+          if (
+            !this.popupMouseEntered &&
+            el &&
+            (el.isConnected === false || ((el as HTMLElement).offsetWidth === 0 && (el as HTMLElement).offsetHeight === 0))
+          ) {
             this.setPopupHidden(true);
             this.closeWatchingChild();
           }
@@ -586,6 +592,7 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseEnter(e) {
+    this.popupMouseEntered = true;
     this.cancelPopupTask();
     const { onPopupMouseEnter } = this.props;
     if (onPopupMouseEnter) {
@@ -595,8 +602,11 @@ export default class Trigger extends Component<TriggerProps> {
 
   @autobind
   handlePopupMouseLeave(e) {
+    this.popupMouseEntered = false;
     const { mouseLeaveDelay, onPopupMouseLeave } = this.props;
-    this.delaySetPopupHidden(true, mouseLeaveDelay);
+    if (this.isMouseLeaveToHide()) {
+      this.delaySetPopupHidden(true, mouseLeaveDelay);
+    }
     if (onPopupMouseLeave) {
       onPopupMouseLeave(e);
     }
@@ -627,8 +637,6 @@ export default class Trigger extends Component<TriggerProps> {
       onPopupAnimateLeave,
       onPopupAnimateEnd,
       onPopupAlign,
-      onPopupMouseEnter,
-      onPopupMouseLeave,
       getPopupStyleFromAlign,
       getRootDomNode = this.getRootDomNode,
       transitionName,
@@ -639,8 +647,8 @@ export default class Trigger extends Component<TriggerProps> {
       const hidden = this.popupHidden;
       if (!hidden || this.popup || forceRender) {
         const mouseProps: any = {
-          onMouseEnter: this.isMouseEnterToShow() ? this.handlePopupMouseEnter : onPopupMouseEnter,
-          onMouseLeave: this.isMouseLeaveToHide() ? this.handlePopupMouseLeave : onPopupMouseLeave,
+          onMouseEnter: this.handlePopupMouseEnter,
+          onMouseLeave: this.handlePopupMouseLeave,
         };
         return (
           <Popup
@@ -740,6 +748,9 @@ export default class Trigger extends Component<TriggerProps> {
       if (this.popupHiddenBeforeChange(hidden) !== false) {
         if (popupHidden === undefined) {
           this.popupHidden = hidden;
+        }
+        if (hidden) {
+          this.popupMouseEntered = false;
         }
         onPopupHiddenChange(hidden);
       }
