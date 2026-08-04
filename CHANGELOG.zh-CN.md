@@ -98,6 +98,7 @@ timeline: true
 - 🐞 `<pro>TriggerField`: 修复 popupPlacement 属性设置 top 等其他值报错的问题。
 - 🐞 `<pro>DataSet`: 修复异步树形表格因复用已取消的请求令牌导致后续查询被取消的问题。
 - 🐞 `<pro>Table`: 动态筛选条的筛选列表中，修复 hover 已选中条件的 icon 时，弹框不出现的问题。
+- 🐞 `<pro>Lov`: 修复清空选中值且不失焦，继续输入内容后，下拉框不打开的问题。
 
 ## 1.6.8
 

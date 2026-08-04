@@ -1401,8 +1401,8 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   expand() {
-    const { filteredOptions } = this;
-    if (filteredOptions && filteredOptions.length) {
+    const { filteredOptions, loading } = this;
+    if ((filteredOptions && filteredOptions.length) || loading) {
       super.expand();
     }
   }
