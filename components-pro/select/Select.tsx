@@ -13,6 +13,7 @@ import { action, computed, get, IReactionDisposer, isArrayLike, isObservableObje
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
+import Alert from 'choerodon-ui/lib/alert';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -79,7 +80,9 @@ function defaultOnOption({ record }) {
 }
 
 export function getItemKey(record: Record, text: ReactNode, value: any) {
-  return `item-${value || record.id}-${(isValidElement(text) ? text.key : text) || record.id}`;
+  const itemValue = isNil(value) ? record.id : value;
+  const itemText = isValidElement(text) ? text.key : text;
+  return `item-${itemValue}-${isNil(itemText) ? record.id : itemText}-${record.id}`;
 }
 
 function getSimpleValue(value, valueField) {
@@ -392,6 +395,38 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   get filteredOptions(): Record[] {
     const { optionsWithCombo, optionsFilter } = this;
     return this.searchData(optionsFilter ? optionsWithCombo.filter(optionsFilter) : optionsWithCombo);
+  }
+
+  @computed
+  get duplicateOptionInfo(): { duplicateKeys: string[]; duplicateRecords: Set<Record> } {
+    const { optionsWithCombo, valueField } = this;
+    const compare = this.getProp('type') === FieldType.auto ? isSameLike : isSame;
+    const groups: { value: any; records: Record[] }[] = [];
+    optionsWithCombo.forEach(record => {
+      const value = record.get(valueField);
+      const group = groups.find(item => compare(item.value, value));
+      if (group) {
+        group.records.push(record);
+      } else {
+        groups.push({ value, records: [record] });
+      }
+    });
+    const duplicateKeys: string[] = [];
+    const duplicateRecords = new Set<Record>();
+    groups.forEach(({ value, records }) => {
+      if (records.length > 1) {
+        const key = String(value);
+        if (!duplicateKeys.includes(key)) {
+          duplicateKeys.push(key);
+        }
+        records.forEach(record => duplicateRecords.add(record));
+      }
+    });
+    if (duplicateKeys.length) {
+      const { displayName } = this.constructor as any;
+      console.warn(`The ${displayName} component has duplicate keys: ${duplicateKeys.join(', ')}.`);
+    }
+    return { duplicateKeys, duplicateRecords };
   }
 
   @computed
@@ -881,6 +916,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     const IeMenuStyle = !this.dropdownMatchSelectWidth && isIE() ? { padding: '.08rem' } : {};
     const IeItemStyle = !this.dropdownMatchSelectWidth && isIE() ? { overflow: 'visible' } : {};
     const optGroupKeyMap: Map<ReactNode, string> = new Map();
+    const { duplicateRecords } = this.duplicateOptionInfo;
     this.filteredOptions.forEach(record => {
       let previousGroup: ReactElement<any> | undefined;
       groups.every(field => {
@@ -944,6 +980,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         tooltip: optionTooltip,
         tooltipTheme: getTooltipTheme('select-option'),
         tooltipPlacement: getTooltipPlacement('select-option'),
+        className: classNames(recordValues.className, {
+          [`${this.prefixCls}-option-duplicate`]: duplicateRecords.has(record),
+        }),
       };
       const itemDisabled = optionProps
         ? (optionProps.disabled === false
@@ -1228,6 +1267,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getPopupContent(): ReactNode {
+    const { duplicateKeys } = this.duplicateOptionInfo;
     const menu = (
       <Spin key="menu" spinning={this.loading}>
         {this.getMenu()}
@@ -1236,6 +1276,21 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return [
       this.searchable && this.isSearchFieldInPopup() && this.renderSearchField(),
       this.renderSelectAll(),
+      duplicateKeys.length ? (
+        <Alert
+          key="duplicate-option-alert"
+          className={`${this.prefixCls}-duplicate-alert`}
+          type="error"
+          message={
+            <OverflowTip title={$l('Select', 'duplicate_key_warning')}>
+              <span className={`${this.prefixCls}-duplicate-alert-message`}>
+                {$l('Select', 'duplicate_key_warning')}
+              </span>
+            </OverflowTip>
+          }
+          showIcon
+        />
+      ) : undefined,
       menu,
       this.renderInputPrompt(),
       (!this.loading && this.filteredOptions.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),

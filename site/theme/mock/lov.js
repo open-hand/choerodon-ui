@@ -603,6 +603,81 @@ const lovMockDefineTemple = {
   detailUrl: undefined,
   detailField: 'code',
 };
+const lovDuplicateValueDefineTemple = {
+  _token: '@guid()',
+  objectVersionNumber: 1,
+  code: 'LOV_DUPLICATE_VALUE',
+  description: '重复值复现',
+  height: null,
+  lovId: 10016,
+  lovItems: [
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10039,
+      lovId: 10016,
+      display: '代码',
+      gridFieldName: 'code',
+      gridFieldWidth: 200,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldSequence: 1,
+      gridFieldSequence: 1,
+    },
+    {
+      _token: '@guid()',
+      objectVersionNumber: 1,
+      lovItemId: 10040,
+      lovId: 10016,
+      display: '描述',
+      gridFieldName: 'description',
+      gridFieldWidth: 300,
+      gridFieldAlign: 'left',
+      autocompleteField: 'Y',
+      conditionField: 'Y',
+      isAutocomplete: 'N',
+      gridField: 'Y',
+      conditionFieldSequence: 2,
+      gridFieldSequence: 2,
+    },
+  ],
+  placeholder: '请选择记录',
+  queryColumns: 2,
+  textField: 'description',
+  title: '重复值复现',
+  valueField: 'code',
+  width: 560,
+  delayLoad: 'N',
+  needQueryParam: 'N',
+  editableFlag: 'Y',
+  canPopup: 'Y',
+  lovPageSize: '2',
+  treeFlag: 'N',
+  idField: null,
+  parentIdField: null,
+};
+
+const lovDuplicateValueTemplePage1 = {
+  rows: [
+    { code: 'DUPLICATE', description: '第一页重复值记录 1' },
+    { code: 'DUPLICATE', description: '第一页重复值记录 2' },
+  ],
+  success: true,
+  total: 4,
+};
+
+const lovDuplicateValueTemplePage2 = {
+  rows: [
+    { code: 'DUPLICATE', description: '第二页重复值记录 1' },
+    { code: 'UNIQUE_PAGE_2', description: '第二页唯一记录' },
+  ],
+  success: true,
+  total: 4,
+};
+
 const lovTreeDefineTemple = {
   _token: '@guid()',
   objectVersionNumber: 1,
@@ -701,7 +776,10 @@ const dataSetLovDetailData = Mock.mock(dataSetLovDetailTemple);
 
 const lovDefineData = Mock.mock(lovDefineTemple);
 const lovDefineMockData = Mock.mock(lovMockDefineTemple);
+const lovDefineDuplicateValueData = Mock.mock(lovDuplicateValueDefineTemple);
 const lovDefineTreeData = Mock.mock(lovTreeDefineTemple);
+const lovDuplicateValueDataPage1 = Mock.mock(lovDuplicateValueTemplePage1);
+const lovDuplicateValueDataPage2 = Mock.mock(lovDuplicateValueTemplePage2);
 
 const dataSetLovRuleSize10Page1 = /\/common\/lov\/dataset\/LOV_CODE\/10\/1/;
 const dataSetLovRuleSize10Page2 = /\/common\/lov\/dataset\/LOV_CODE\/10\/2/;
@@ -712,7 +790,10 @@ const dataSetLovRule = /\/common\/lov\/dataset\/LOV_CODE/;
 const dataSetLovMockRule = /\/common\/lov\/dataset\/LOV_MOCK_CODE/;
 const dataSetLovTreeRule = /\/common\/lov\/dataset\/LOV_TREE_CODE/;
 const dataSetLovDetailRule = /\/common\/lov\/dataset\/detail\/LOV_CODE/;
+const lovDuplicateValueRulePage1 = /\/common\/lov\/dataset\/LOV_DUPLICATE_VALUE\/2\/1/;
+const lovDuplicateValueRulePage2 = /\/common\/lov\/dataset\/LOV_DUPLICATE_VALUE\/2\/2/;
 
+const lovDuplicateValueDefineRule = /\/sys\/lov\/lov_define\?code=LOV_DUPLICATE_VALUE/;
 const lovDefineRule = /\/sys\/lov\/lov_define\?code=LOV_CODE/;
 const lovDefineMockRule = /\/sys\/lov\/lov_define\?code=LOV_MOCK_CODE/;
 const lovTreeDefineRule = /\/sys\/lov\/lov_define\?code=LOV_TREE_CODE/;
@@ -720,6 +801,12 @@ const lovTreeDefineRule = /\/sys\/lov\/lov_define\?code=LOV_TREE_CODE/;
 export default function () {
   if (typeof window !== 'undefined') {
     Mock.setup({ timeout: 0 });
+
+    Mock.mock(lovDuplicateValueRulePage1, lovDuplicateValueTemplePage1);
+
+    Mock.mock(lovDuplicateValueRulePage2, lovDuplicateValueTemplePage2);
+
+    Mock.mock(lovDuplicateValueDefineRule, lovDuplicateValueDefineTemple);
 
     Mock.mock(dataSetLovRuleSize10Page1, dataSetLovData10Page1);
 
@@ -748,6 +835,9 @@ export default function () {
 }
 
 export const lovTempleList = [
+  { rule: lovDuplicateValueRulePage1, data: lovDuplicateValueDataPage1 },
+  { rule: lovDuplicateValueRulePage2, data: lovDuplicateValueDataPage2 },
+  { rule: lovDuplicateValueDefineRule, data: lovDefineDuplicateValueData },
   { rule: dataSetLovRuleSize10Page1, data: dataSetLovData10Page1 },
   { rule: dataSetLovRuleSize10Page2, data: dataSetLovData10Page2 },
   { rule: dataSetLovRuleSize20Page1, data: dataSetLovData },

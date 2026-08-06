@@ -32,6 +32,7 @@ import Group from 'choerodon-ui/dataset/data-set/Group';
 import { QUERY_CANCELABLE } from 'choerodon-ui/dataset/data-set/DataSet';
 import { SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
 import warning from 'choerodon-ui/lib/_util/warning';
+import Alert from 'choerodon-ui/lib/alert';
 import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -2107,6 +2108,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'tableFilterBarButtonIcon',
       'summaryBarConfigProps',
       'customizedColumnProps',
+      'combineColumnFilter',
     ]);
   }
 
@@ -2393,6 +2395,10 @@ export default class Table extends DataSetComponent<TableProps> {
       tableStore,
       prefixCls,
     } = this;
+    const { duplicateKeys } = tableStore.duplicatePrimaryKeyInfo;
+    if (duplicateKeys.length) {
+      console.warn(`The Table component has duplicate keys: ${duplicateKeys.join(', ')}.`);
+    }
     const content = this.getTable();
     const pagination = this.getPagination(TablePaginationPosition.top);
     const globalTableSpinProps = this.getContextConfig('tableSpinProps');
@@ -2435,6 +2441,14 @@ export default class Table extends DataSetComponent<TableProps> {
             <TableSibling position="before" boxSizing={boxSizing}>
               {this.getHeader()}
               {clipboard && !clipboard.hiddenTip && <ClipboardBar clipboard={clipboard} />}
+              {duplicateKeys.length ? (
+                <Alert
+                  className={`${prefixCls}-duplicate-alert`}
+                  type="error"
+                  message={$l('Table', 'duplicate_key_warning')}
+                  showIcon
+                />
+              ) : undefined}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}

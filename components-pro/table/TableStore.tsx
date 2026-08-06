@@ -1183,6 +1183,36 @@ export default class TableStore {
     return this.props.dataSet;
   }
 
+  @computed
+  get duplicatePrimaryKeyInfo(): { duplicateKeys: string[]; duplicateRecords: Set<Record> } {
+    const { dataSet } = this;
+    const { primaryKey } = dataSet.props;
+    const recordsByKey = new Map<string, Record[]>();
+    if (primaryKey) {
+      dataSet.records.forEach(record => {
+        const value = record.get(primaryKey);
+        if (typeof value === 'string' || typeof value === 'number') {
+          const key = String(value);
+          const records = recordsByKey.get(key);
+          if (records) {
+            records.push(record);
+          } else {
+            recordsByKey.set(key, [record]);
+          }
+        }
+      });
+    }
+    const duplicateKeys: string[] = [];
+    const duplicateRecords = new Set<Record>();
+    recordsByKey.forEach((records, key) => {
+      if (records.length > 1) {
+        duplicateKeys.push(key);
+        records.forEach(record => duplicateRecords.add(record));
+      }
+    });
+    return { duplicateKeys, duplicateRecords };
+  }
+
   get prefixCls() {
     return this.node.prefixCls;
   }
