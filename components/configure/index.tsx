@@ -171,6 +171,7 @@ export type CustomizedRenderer = <T extends keyof Customized>(code: string, cust
 };
 
 export interface AttachmentConfig extends DataSetAttachmentConfig {
+  previewTarget?: string;
   renderIcon?: (attachment: AttachmentFile, listType: AttachmentListType, defaultIcon: ReactNode) => ReactNode;
   renderHistory?: (props: { attachment: AttachmentFile; bucketName?: string; bucketDirectory?: string; storageCode?: string; attachmentUUID: string }) => ReactNode;
 }

@@ -289,6 +289,12 @@ export default class Attachment extends FormField<AttachmentProps> {
     return removeConfirm;
   }
 
+  get previewTarget(): string {
+    const { previewTarget: globalPreviewTarget = ATTACHMENT_TARGET } = this.getContextConfig('attachment') as AttachmentConfig;
+    const { previewTarget = globalPreviewTarget } = this.props;
+    return previewTarget;
+  }
+
   private reaction?: IReactionDisposer;
 
   componentDidMount() {
@@ -1104,7 +1110,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (template) {
         const { bucketName, bucketDirectory, storageCode, isPublic, attachmentUUID } = template;
         if (attachmentUUID) {
-          const { previewTarget = ATTACHMENT_TARGET, viewMode, color, funcType = viewMode === 'popup' ? FuncType.flat : FuncType.link } = this.props;
+          const { viewMode, color, funcType = viewMode === 'popup' ? FuncType.flat : FuncType.link } = this.props;
           return (
             <TemplateDownloadButton
               attachmentUUID={attachmentUUID}
@@ -1112,7 +1118,7 @@ export default class Attachment extends FormField<AttachmentProps> {
               bucketDirectory={bucketDirectory}
               storageCode={storageCode}
               isPublic={isPublic}
-              target={previewTarget}
+              target={this.previewTarget}
               funcType={funcType}
               color={color}
             />
@@ -1339,7 +1345,7 @@ export default class Attachment extends FormField<AttachmentProps> {
 
   renderUploadList(uploadButton?: ReactNode) {
     const {
-      listType, sortable, listLimit, showHistory, showSize, previewTarget, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
+      listType, sortable, listLimit, showHistory, showSize, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
       pictureCardShowName,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
@@ -1372,7 +1378,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           disabled={disabled}
           isPublic={isPublic}
           limit={readOnly ? listLimit : undefined}
-          previewTarget={previewTarget}
+          previewTarget={this.previewTarget}
           onHistory={showHistory ? this.handleHistory : undefined}
           onRemove={this.handleRemove}
           onUpload={this.uploadAttachment}
