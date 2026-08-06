@@ -6,7 +6,7 @@ import DataSet, { DataSetProps } from '../data-set/DataSet';
 import axios from '../axios';
 import Field, { FieldProps, LovQueryBatchHook } from '../data-set/Field';
 import Record from '../data-set/Record';
-import { FieldType } from '../data-set/enum';
+import { FieldIgnore, FieldType } from '../data-set/enum';
 import { LovFieldType } from '../enum';
 import { LovConfig, LovConfigItem } from '../interface';
 import { getGlobalConfig, processAxiosConfig } from './utils';
@@ -56,6 +56,7 @@ function generateConditionField(
     conditionFieldRequired,
     fieldProps,
   }: LovConfigItem,
+  getConfig?: (code: string) => LovConfig | undefined,
 ): void {
   if (conditionField === 'Y') {
     const name = conditionFieldName || gridFieldName;
@@ -72,12 +73,15 @@ function generateConditionField(
       ...fieldProps,
     };
     fields.push(field);
-    if (conditionFieldType === LovFieldType.POPUP) {
+    if (conditionFieldType === LovFieldType.POPUP || field.type === FieldType.object) {
       const aliasName = `__lov__${name}`;
       field.name = aliasName;
+      field.ignore = FieldIgnore.always;
+      const lovCode = field.lovCode;
+      const valueField = field.valueField || (getConfig && lovCode && getConfig(lovCode)?.valueField) || 'value';
       fields.push({
         name,
-        bind: `${aliasName}.${conditionFieldSelectVf}`,
+        bind: `${aliasName}.${valueField}`,
       });
     }
   }
@@ -239,6 +243,7 @@ export class LovCodeStore {
   // lovCode 作为key 缓存了 ds
   getLovDataSet(code: string, field?: Field, dataSetProps?: DataSetProps | ((p: DataSetProps) => DataSetProps), record?: Record): DataSet | undefined {
     const config = this.getConfig(code);
+    const getConfig = this.getConfig.bind(this);
     if (config) {
       const { lovPageSize, lovItems, parentIdField, idField, treeFlag, dataSetProps: configDataSetProps } = config;
       const valueField = field ? field.get('valueField', record) : config.valueField;
@@ -270,7 +275,7 @@ export class LovCodeStore {
           )
           .reduce(
             (obj, configItem) => {
-              generateConditionField(obj.querys, configItem);
+              generateConditionField(obj.querys, configItem, getConfig);
               generateGridField(obj.fields, configItem);
               return obj;
             },
