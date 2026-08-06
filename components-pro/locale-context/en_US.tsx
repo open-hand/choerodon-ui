@@ -163,6 +163,7 @@ const locale: Locale = {
     copy_display: 'Copy display values',
     copy_display_success: 'Successfully copied display values',
     copy_pristine_success: 'Successfully copied the original value',
+    duplicate_key_warning: 'Duplicate identifier data detected. Please contact the administrator to confirm.',
     paste_template: 'Paste Template',
     no_xlsx: 'Missing xlsx configuration, please configure xlsx configuration before exporting',
     arrange_count: 'count',
@@ -272,6 +273,7 @@ const locale: Locale = {
     input_prompt: 'You can fill in the value, search for it, or directly select the value',
     input_prompt_searchable: 'You can search and find, or directly select the value',
     input_prompt_combo: 'You can fill in the value or directly select the value',
+    duplicate_key_warning: 'Duplicate identifier data detected. Please contact the administrator to confirm.',
   },
   SecretField: {
     edit: '{label} Edit',

@@ -240,6 +240,7 @@ export default class Menu extends Component {
 
     // delete props.openAnimation;
     // delete props.openTransitionName;
+    delete props.forceClearActiveKey;
     return (
       <Provider store={this.store}>
         <SubPopupMenu {...props} ref={this.setInnerMenu}>

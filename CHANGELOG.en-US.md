@@ -59,6 +59,8 @@ timeline: true
 - 💄 `<pro>Attachment`: Optimize `accept` to ignore case.
 - 💄 `<pro>Table`: Optimize the width synchronization from hidden to visible.
 - 💄 `<pro>Table`: Optimize the user experience of the copy function in virtual scrolling scenarios.
+- 💄 `<pro>Table`: Add a prompt for duplicate data keys.
+- 💄 `<pro>Select`: Add a prompt for duplicate data keys.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
