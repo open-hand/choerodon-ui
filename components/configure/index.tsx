@@ -435,9 +435,9 @@ export interface Config extends DataSetConfig {
    */
   uploadShowReUploadIcon?: boolean | 'text' | UploadListReUploadIconFunc;
   /**
-   * 文件夹单次上传的最大文件数，非正数表示不限制
+   * 单次批量上传的最大文件数，非正数表示不限制
    */
-  uploadDirectoryMaxFileCount?: number;
+  uploadBatchMaxFileCount?: number;
   /**
    * 是否开启上传密级配置
    */

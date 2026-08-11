@@ -45,6 +45,7 @@ export default {
     confirmRemove: '削除を確認しますか？',
     confirmReUpload: '再アップロードしてもよろしいですか？',
     reUpload: '再アップロード',
+    batchMaxFileCount: '今回は {count} 個のファイルが選択され、1 回のアップロードの上限である {max} 個を超えています。圧縮するか、分割してアップロードすることをお勧めします。続行すると、先頭の {max} 個のファイルのみアップロードされます。',
   },
   Collapse: {
     fold: '折る',

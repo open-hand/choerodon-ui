@@ -322,18 +322,18 @@ export default class Upload extends Component<UploadProps, UploadState> {
     return true;
   };
 
-  confirmDirectoryUpload = async (files: File[]): Promise<File[] | false> => {
+  confirmBatchUpload = async (files: File[]): Promise<File[] | false> => {
     const { getConfig } = this.context;
-    const { directoryMaxFileCount = getConfig('uploadDirectoryMaxFileCount'), locale } = this.props;
-    if (!directoryMaxFileCount || directoryMaxFileCount <= 0 || files.length <= directoryMaxFileCount) {
+    const { batchMaxFileCount = getConfig('uploadBatchMaxFileCount'), locale } = this.props;
+    if (!batchMaxFileCount || batchMaxFileCount <= 0 || files.length <= batchMaxFileCount) {
       return files;
     }
     const uploadLocale = { ...(getRuntimeLocale().Upload || {}), ...locale };
-    const content = (uploadLocale.directoryMaxFileCount || '')
+    const content = (uploadLocale.batchMaxFileCount || '')
       .replace(/\{count\}/g, String(files.length))
-      .replace(/\{max\}/g, String(directoryMaxFileCount));
+      .replace(/\{max\}/g, String(batchMaxFileCount));
     const result = await Modal.confirm({ children: content });
-    return result === 'ok' ? files.slice(0, directoryMaxFileCount) : false;
+    return result === 'ok' ? files.slice(0, batchMaxFileCount) : false;
   };
 
   clearProgressTimer() {
@@ -512,7 +512,7 @@ export default class Upload extends Component<UploadProps, UploadState> {
       ...(overwriteDefaultEvent ? this.props : undefined),
       beforeUpload: this.beforeUpload,
       beforeUploadFiles,
-      confirmDirectoryUpload: this.confirmDirectoryUpload,
+      confirmBatchUpload: this.confirmBatchUpload,
       prefixCls,
       fileList,
       originReuploadItem,
