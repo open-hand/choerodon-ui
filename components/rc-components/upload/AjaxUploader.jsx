@@ -38,8 +38,7 @@ class AjaxUploader extends Component {
       targetFile ? onReUpload(targetFile) : null;
       this.reset();
     } else {
-      const isDirectory = Array.prototype.some.call(files, file => file && file.webkitRelativePath);
-      this.uploadFiles(files, isDirectory);
+      this.uploadFiles(files);
       this.reset();
     }
   };
@@ -76,7 +75,7 @@ class AjaxUploader extends Component {
         (files) => {
           uploadCount++;
           if (this.props.multiple || uploadCount <= 1) {
-            this.uploadFiles(files, true);
+            this.uploadFiles(files);
           }
         },
         _file => attrAccept(_file, this.props.accept),
@@ -86,7 +85,7 @@ class AjaxUploader extends Component {
         file => attrAccept(file, this.props.accept),
       );
       const filesResult = this.props.multiple || (files.length <= 1) ? files : [files[0]];
-      this.uploadFiles(filesResult, false);
+      this.uploadFiles(filesResult);
     }
   };
 
@@ -99,11 +98,11 @@ class AjaxUploader extends Component {
     this.abort();
   }
 
-  uploadFiles = async (files, isDirectory = false) => {
-    const { beforeUploadFiles = noop, confirmDirectoryUpload, Modal: modalInProps } = this.props;
+  uploadFiles = async (files) => {
+    const { beforeUploadFiles = noop, confirmBatchUpload, Modal: modalInProps } = this.props;
     let filesToUpload = Array.prototype.slice.call(files);
-    if (isDirectory && confirmDirectoryUpload) {
-      filesToUpload = await confirmDirectoryUpload(filesToUpload);
+    if (confirmBatchUpload) {
+      filesToUpload = await confirmBatchUpload(filesToUpload);
       if (filesToUpload === false) {
         return;
       }

@@ -103,7 +103,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   onPreview?: (attachment: AttachmentFile) => void;
   pictureCardShowName?: boolean;
   directory?: boolean;
-  directoryMaxFileCount?: number;
+  batchMaxFileCount?: number;
   /**
    * 中断上传的方法
    * @param attachment 有 attachment 参数则中断指定附件上传，无 attachment 参数则是中断所有上传
@@ -450,7 +450,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'enableDeleteAll',
       'pictureCardShowName',
       'directory',
-      'directoryMaxFileCount',
+      'batchMaxFileCount',
       'uploadImmediately',
     ]);
   }
@@ -655,22 +655,22 @@ export default class Attachment extends FormField<AttachmentProps> {
     return otherProps;
   }
 
-  async confirmDirectoryUpload(files: File[], isDirectory: boolean): Promise<File[] | false> {
-    const { directoryMaxFileCount = getConfigDefault('uploadDirectoryMaxFileCount') } = this.props;
-    if (!isDirectory || !directoryMaxFileCount || directoryMaxFileCount <= 0 || files.length <= directoryMaxFileCount) {
+  async confirmBatchUpload(files: File[]): Promise<File[] | false> {
+    const { batchMaxFileCount = getConfigDefault('uploadBatchMaxFileCount') } = this.props;
+    if (!batchMaxFileCount || batchMaxFileCount <= 0 || files.length <= batchMaxFileCount) {
       return files;
     }
     const result = await Modal.confirm({
-      children: $l('Attachment', 'directory_max_file_count', {
+      children: $l('Attachment', 'batch_max_file_count', {
         count: files.length,
-        max: directoryMaxFileCount,
+        max: batchMaxFileCount,
       }),
     });
-    return result === 'ok' ? files.slice(0, directoryMaxFileCount) : false;
+    return result === 'ok' ? files.slice(0, batchMaxFileCount) : false;
   }
 
-  async processUploadFiles(files: File[], isDirectory: boolean): Promise<void> {
-    const confirmedFiles = await this.confirmDirectoryUpload(files, isDirectory);
+  async processUploadFiles(files: File[]): Promise<void> {
+    const confirmedFiles = await this.confirmBatchUpload(files);
     if (confirmedFiles === false) {
       return;
     }
@@ -707,7 +707,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (directory && isDirectory) {
         files = files.filter(file => this.isAcceptFile(file as any, accept));
       }
-      this.processUploadFiles(files, isDirectory);
+      this.processUploadFiles(files);
     }
   }
 
@@ -1016,7 +1016,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       if (isDirectory) {
         files = files.filter(file => this.isAcceptFile(file as any, accept));
       }
-      this.processUploadFiles(files, isDirectory);
+      this.processUploadFiles(files);
     }
 
     return false;

@@ -53,7 +53,7 @@ export interface UploadLocale {
   confirmRemove?: string;
   confirmReUpload?: string;
   reUpload?: string;
-  directoryMaxFileCount?: string;
+  batchMaxFileCount?: string;
 }
 
 export type UploadType = 'drag' | 'select';
@@ -68,7 +68,7 @@ export interface UploadProps {
   fileList?: Array<UploadFile>;
   action?: string | ((file: UploadFile) => PromiseLike<any>);
   directory?: boolean;
-  directoryMaxFileCount?: number;
+  batchMaxFileCount?: number;
   data?: Record<string, any> | ((file: UploadFile) => any);
   headers?: HttpRequestHeader;
   showUploadList?: boolean | ShowUploadListInterface;
