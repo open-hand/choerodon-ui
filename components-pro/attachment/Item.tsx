@@ -65,6 +65,7 @@ export interface ItemProps {
   handleCheckAttachment: (attachment: AttachmentFile) => void;
   checkedAttachments?: AttachmentFile[];
   pictureCardShowName?: boolean;
+  alwaysShowActions?: boolean;
 }
 
 const Item: FunctionComponent<ItemProps> = function Item(props) {
@@ -72,7 +73,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
     getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp, enableDeleteAll, handleCheckAttachment, checkedAttachments = [],
-    pictureCardShowName,
+    pictureCardShowName, alwaysShowActions,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -513,8 +514,12 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     });
 
     if (buttons.length) {
+      const buttonsCls = classnames(`${prefixCls}-buttons`, {
+        [`${prefixCls}-buttons-visible`]: status === 'deleting',
+        [`${prefixCls}-buttons-always-show`]: alwaysShowActions,
+      });
       return (
-        <div className={classnames(`${prefixCls}-buttons`, { [`${prefixCls}-buttons-visible`]: status === 'deleting' })}>
+        <div className={buttonsCls}>
           {buttons}
         </div>
       );

@@ -19,7 +19,7 @@ import { Attachment, Table, DataSet, Row, Col } from 'choerodon-ui/pro';
 const App = () => {
   const ds = React.useMemo(() => new DataSet({
     fields: [
-      { help: '支持文件类型： .deb .txt .pdf image/*1', name: 'attachment', type: 'attachment', label: '技术附件', max: 9, accept: ['.deb', '.txt', '.pdf', 'image/*'] },
+      { help: '支持文件类型： .deb .txt .pdf image/*1', name: 'attachment', type: 'attachment', label: '技术附件', max: 9, accept: ['.deb', '.txt', '.pdf', 'image/*'], required: true },
       { help: '支持文件类型： .deb .txt .pdf image/*2', name: 'attachment2', type: 'attachment', label: '管理附件' },
       { help: '支持文件类型： .deb .txt .pdf image/*3', name: 'attachment3', type: 'attachment', label: '项目附件' },
     ],

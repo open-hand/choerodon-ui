@@ -27,8 +27,8 @@ timeline: true
 - 🌟 `Tooltip`: autoAdjustOverflow 属性新增边距配置。
 - 🌟 `Upload`: 新增 viewMode 属性。
 - 🌟 `<pro>DataSet.Field`: 新增 lovQueryBatchAxiosConfig 属性, 支持表格粘贴时 Lov 字段自定义批量查询。
-- 🌟 `Upload`: 新增 `batchMaxFileCount` 属性。
-- 🌟 `<pro>Attachment`: 新增 `batchMaxFileCount` 属性。
+- 🌟 `Upload`: 新增 batchMaxFileCount, alwaysShowActions 属性。
+- 🌟 `<pro>Attachment`: 新增 batchMaxFileCount, alwaysShowActions 属性。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
@@ -61,6 +61,7 @@ timeline: true
 - 💄 `<pro>Table`: 优化虚拟滚动场景下的复制功能使用体验。
 - 💄 `<pro>Table`: 增加数据重复 key 提示。
 - 💄 `<pro>Select`: 增加数据重复 key 提示。
+- 💄 `<pro>Attachment`: 优化 Table 中必填显示样式。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。

@@ -115,6 +115,7 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
    * @default true
    */
   uploadImmediately?: boolean;
+  alwaysShowActions?: boolean;
 }
 
 export type Sort = {
@@ -452,6 +453,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'directory',
       'batchMaxFileCount',
       'uploadImmediately',
+      'alwaysShowActions',
     ]);
   }
 
@@ -1346,7 +1348,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   renderUploadList(uploadButton?: ReactNode) {
     const {
       listType, sortable, listLimit, showHistory, showSize, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
-      pictureCardShowName,
+      pictureCardShowName, alwaysShowActions,
     } = this.props;
     let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (buttons) {
@@ -1397,6 +1399,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           checkedAttachments={this.checkedAttachments}
           pictureCardShowName={pictureCardShowName}
           orderField={orderField}
+          alwaysShowActions={alwaysShowActions}
         />
       );
     }
@@ -1528,12 +1531,14 @@ export default class Attachment extends FormField<AttachmentProps> {
       prefixCls,
       props: { className, size },
     } = this;
+    const required = this.getProp('required');
     return classNames(
       `${prefixCls}-wrapper`,
       className,
       {
         [`${prefixCls}-sm`]: size === Size.small,
         [`${prefixCls}-lg`]: size === Size.large,
+        [`${prefixCls}-wrapper-required`]: required,
       },
     );
   }
