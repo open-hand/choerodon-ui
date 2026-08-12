@@ -106,6 +106,7 @@ export interface UploadProps {
   tooltipPrefixCls?: string;
   popconfirmProps?: PopconfirmProps;
   pictureCardShowName?: boolean;
+  alwaysShowActions?: boolean;
 }
 
 export interface UploadState {
@@ -149,4 +150,5 @@ export interface UploadListProps {
   getUploadRef: () => any;
   setReplaceReuploadItem: (file: UploadFile) => void;
   pictureCardShowName?: boolean;
+  alwaysShowActions?: boolean;
 }

@@ -27,8 +27,8 @@ timeline: true
 - 🌟 `Tooltip`: The `autoAdjustOverflow` property now includes margin configuration.
 - 🌟 `Upload`: Added `viewMode` property.
 - 🌟 `<pro>DataSet.Field`: A new property named `lovQueryBatchAxiosConfig` has been added, enabling custom batch queries for `Lov` fields when pasting tables.
-- 🌟 `Upload`: Added `batchMaxFileCount` property.
-- 🌟 `<pro>Attachment`: Added `batchMaxFileCount` property.
+- 🌟 `Upload`: Added `batchMaxFileCount`, `alwaysShowActions` property.
+- 🌟 `<pro>Attachment`: Added `batchMaxFileCount`, `alwaysShowActions` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -61,6 +61,7 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the user experience of the copy function in virtual scrolling scenarios.
 - 💄 `<pro>Table`: Add a prompt for duplicate data keys.
 - 💄 `<pro>Select`: Add a prompt for duplicate data keys.
+- 💄 `<pro>Attachment`: Optimize the display style of required fields in the `Table`.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

@@ -52,6 +52,7 @@ export interface AttachmentListProps {
   checkedAttachments?: AttachmentFile[];
   pictureCardShowName?: boolean;
   orderField?: string;
+  alwaysShowActions?: boolean;
 }
 
 const AttachmentList: FunctionComponent<AttachmentListProps> = function AttachmentList(props) {
@@ -89,6 +90,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     checkedAttachments,
     pictureCardShowName,
     orderField,
+    alwaysShowActions,
   } = props;
   const isCard = listType === 'picture-card';
   const classString = classNames(prefixCls, isCard ? `${prefixCls}-card` : `${prefixCls}-no-card`);
@@ -178,6 +180,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 handleCheckAttachment={handleCheckAttachment}
                 checkedAttachments={checkedAttachments}
                 pictureCardShowName={pictureCardShowName}
+                alwaysShowActions={alwaysShowActions}
               />
             )
           }

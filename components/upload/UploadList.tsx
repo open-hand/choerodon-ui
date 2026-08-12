@@ -192,6 +192,7 @@ export default class UploadList extends Component<UploadListProps, any> {
       popconfirmProps,
       renderIcon = defaultRenderIcon,
       pictureCardShowName,
+      alwaysShowActions,
     } = this.props;
     const { getPrefixCls } = this.context;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
@@ -353,6 +354,7 @@ export default class UploadList extends Component<UploadListProps, any> {
         && <a {...downloadPropsIntercept!(downloadLinkProps)} style={style}><Icon type="get_app" /></a>;
       const actionsClass = classNames(`${prefixCls}-list-item-actions`, {
         [`${prefixCls}-list-item-actions-reupload-text`]: showReUploadIconType === 'text' && stat.isError,
+        [`${prefixCls}-list-item-actions-always-show`]: alwaysShowActions,
       });
 
       const fileName = (stat.isPictureCard && !stat.isUploading) ? (
@@ -401,6 +403,9 @@ export default class UploadList extends Component<UploadListProps, any> {
       ) : null;
 
       const getActions = ()=>{
+        const defaultCls = classNames(`${prefixCls}-actions`, {
+          [`${prefixCls}-actions-always-show`]: alwaysShowActions,
+        });
         if(!stat.isUploading) {
           if(stat.isPictureCard) {
             return (
@@ -411,10 +416,10 @@ export default class UploadList extends Component<UploadListProps, any> {
             )
           }
           return (
-            <div className={`${prefixCls}-actions`}>{reUpload}{stat.isError || previewIcon}{downloadIcon}{removeIcon}</div>
+            <div className={defaultCls}>{reUpload}{stat.isError || previewIcon}{downloadIcon}{removeIcon}</div>
           )
         }
-        return  <div className={`${prefixCls}-actions`}>{removeIcon}</div>;
+        return  <div className={defaultCls}>{removeIcon}</div>;
       }
 
       const listItemInfo = (
