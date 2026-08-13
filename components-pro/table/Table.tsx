@@ -3132,6 +3132,7 @@ export default class Table extends DataSetComponent<TableProps> {
     tableStore.headerHeight = tableHeader ? getHeight(tableHeader) : 0;
     tableStore.footerHeight = tableFooter ? getHeight(tableFooter) : 0;
     this.setScrollPositionClassName();
+    tableStore.editors.forEach(editor => editor.collapsePopupIfCellInvisible());
   }
 
   @action
@@ -3198,6 +3199,7 @@ export default class Table extends DataSetComponent<TableProps> {
       if (tableContentWrap && target !== tableContentWrap) {
         tableContentWrap.scrollTop = scrollTop;
       }
+      tableStore.editors.forEach(editor => editor.collapsePopupIfCellInvisible());
       // 修复行内编辑开启虚拟滚动，编辑框会跟着滚动条移动的问题。
       if (isStickySupport() && tableStore.virtual && tableStore.inlineEdit) {
         tableStore.editors.forEach((editor) => {
@@ -3285,6 +3287,7 @@ export default class Table extends DataSetComponent<TableProps> {
       if (tableContentWrap && target !== tableContentWrap) {
         tableContentWrap.scrollLeft = scrollLeft;
       }
+      tableStore.editors.forEach(editor => editor.collapsePopupIfCellInvisible());
       this.setScrollPositionClassName(target);
       this.lastScrollLeft = scrollLeft;
       tableStore.setLastScrollLeft(scrollLeft);
