@@ -1,4 +1,4 @@
-﻿import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
+import React, { cloneElement, Component, isValidElement, ReactElement } from 'react';
 import { action, IReactionDisposer, observable, reaction, runInAction } from 'mobx';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
@@ -47,6 +47,44 @@ function isIntlField(editor: ReactElement<FormFieldProps>): boolean {
 
 function isHTMLElement(el): el is HTMLElement {
   return el;
+}
+
+interface Rect {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+interface PopupCollapsible {
+  popup: boolean;
+  collapse: () => void;
+}
+
+function hasPopupAndCollapsible(editor: any): editor is PopupCollapsible {
+  return editor &&
+    editor.popup === true &&
+    typeof editor.collapse === 'function';
+}
+
+export function isRectFullyVisible(rect: Rect, viewport: Rect): boolean {
+  const tolerance = 0.5;
+  return rect.top >= viewport.top - tolerance &&
+    rect.right <= viewport.right + tolerance &&
+    rect.bottom <= viewport.bottom + tolerance &&
+    rect.left >= viewport.left - tolerance;
+}
+
+function getElementClientRect(element: HTMLElement): Rect {
+  const rect = element.getBoundingClientRect();
+  const left = rect.left + element.clientLeft;
+  const top = rect.top + element.clientTop;
+  return {
+    top,
+    right: left + element.clientWidth,
+    bottom: top + element.clientHeight,
+    left,
+  };
 }
 
 function offset(node: HTMLElement, topNode: HTMLElement | null, initialize: [number, number] = [node.offsetLeft, node.offsetTop]): [number, number] {
@@ -117,6 +155,7 @@ export default class TableEditor extends Component<TableEditorProps> {
   handleWindowResize() {
     if (this.cellNode) {
       this.alignEditor();
+      this.collapsePopupIfCellInvisible();
     }
   }
 
@@ -247,6 +286,7 @@ export default class TableEditor extends Component<TableEditorProps> {
       } else if (this.cellNode) {
         this.alignEditor(this.cellNode);
       }
+      tableStore.editors.forEach(editor => editor.collapsePopupIfCellInvisible());
     });
   }
 
@@ -448,6 +488,57 @@ export default class TableEditor extends Component<TableEditorProps> {
     const { editor } = this;
     if (editor && editor.focus) {
       editor.focus();
+    }
+  }
+
+  @autobind
+  getVisibleViewport(): Rect | undefined {
+    const { tableStore } = this.context;
+    const { node } = tableStore;
+    const tableBody = this.getTableBody() || node.tableContentWrap || undefined;
+    if (!tableBody) {
+      return;
+    }
+    const viewport = getElementClientRect(tableBody);
+    const lock = this.lock;
+    if (isStickySupport()) {
+      const { leftColumnGroups, rightColumnGroups } = tableStore;
+      if (lock !== true && lock !== ColumnLock.left) {
+        viewport.left += leftColumnGroups.width;
+      }
+      if (lock !== ColumnLock.right) {
+        viewport.right -= rightColumnGroups.width;
+      }
+    } else if (!lock) {
+      const { fixedColumnsBodyLeft, fixedColumnsBodyRight } = node;
+      if (fixedColumnsBodyLeft) {
+        viewport.left = Math.max(viewport.left, fixedColumnsBodyLeft.getBoundingClientRect().right);
+      }
+      if (fixedColumnsBodyRight) {
+        viewport.right = Math.min(viewport.right, fixedColumnsBodyRight.getBoundingClientRect().left);
+      }
+    }
+    return viewport;
+  }
+
+  @autobind
+  collapsePopupIfCellInvisible() {
+    const { editor, tdNode, cellNode } = this;
+    if (!hasPopupAndCollapsible(editor)) {
+      return;
+    }
+    const cell = tdNode || (cellNode && cellNode.parentElement);
+    const viewport = this.getVisibleViewport();
+    if (cell && viewport && !isRectFullyVisible(cell.getBoundingClientRect(), viewport)) {
+      this.collapsePopup();
+    }
+  }
+
+  @autobind
+  collapsePopup() {
+    const { editor } = this;
+    if (hasPopupAndCollapsible(editor)) {
+      editor.collapse();
     }
   }
 
