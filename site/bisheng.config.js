@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default;
 const babelOptions = require('bisheng/lib/config/getBabelCommonConfig').default();
+const NpmImportPlugin = require('less-plugin-npm-import');
 const replaceLib = require('../tools/replaceLib');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -77,6 +78,7 @@ module.exports = {
   },
   lessConfig: {
     javascriptEnabled: true,
+    plugins: [new NpmImportPlugin({ prefix: '~' })],
     // modifyVars: {
     //   // 'c7n-root-entry-name': 'variables',
     // },

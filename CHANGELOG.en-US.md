@@ -63,6 +63,7 @@ timeline: true
 - 💄 `<pro>Select`: Add a prompt for duplicate data keys.
 - 💄 `<pro>Attachment`: Optimize the display style of required fields in the `Table`.
 - 💄 `<pro>Table`: When an editable cell scrolls out of the visible area, the drop-down box will be hidden.
+- 💄 The local site is compatible with Node 16+ and can be started.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

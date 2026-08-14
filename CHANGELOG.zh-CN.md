@@ -63,6 +63,7 @@ timeline: true
 - 💄 `<pro>Select`: 增加数据重复 key 提示。
 - 💄 `<pro>Attachment`: 优化 Table 中必填显示样式。
 - 💄 `<pro>Table`: 可编辑单元格滚动到非可视区域时, 收起下拉框。
+- 💄 本地站点兼容 Node 16+ 启动。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。
