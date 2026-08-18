@@ -59,12 +59,13 @@ export interface TableCellProps extends TableVirtualCellProps {
   inView?: boolean;
   virtualHeight?: string;
   isRenderCell?: boolean;
+  showDuplicateHelp?: boolean;
 }
 
 const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const {
     columnGroup, record, isDragging, provided, isDragDisabled, colSpan, className, children, disabled,
-    groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, isRenderCell,
+    groupPath, rowIndex, virtualHeight, intersectionRef, isFixedRowHeight, isRenderCell, showDuplicateHelp,
   } = props;
   const mousePosition = React.useRef<{ x: number; y: number } | null>(null);
   const renderedTextObserver = useRef<MutationObserver>();
@@ -107,10 +108,11 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
       isDragging={isDragging}
       tableCellFinalStyle={tableCellFinalStyle}
       rowIndex={rowIndex}
+      showDuplicateHelp={showDuplicateHelp}
     >
       {children}
     </TableCellInner>
-  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging, rowIndex]);
+  ) : undefined, [record, disabled, children, cellPrefix, colSpan, rowGroup, columnGroup, isDragging, rowIndex, showDuplicateHelp]);
   const isBuiltInColumn = tableStore.isBuiltInColumn(column);
 
   const columnOnCell = onCell || (!isBuiltInColumn && tableColumnOnCell);
@@ -127,14 +129,14 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
     if (tableStore.currentEditorName && key === DRAG_KEY) {
       tableStore.blurEditor();
     }
-    if (record && !isDisabledRow(record) && e.target.dataset.selectionKey !== SELECTION_KEY) {
+    if (record && !isDisabledRow(record, tableStore) && e.target.dataset.selectionKey !== SELECTION_KEY) {
       dataSet.current = record;
     }
     const { onClickCapture } = cellExternalProps;
     if (typeof onClickCapture === 'function') {
       onClickCapture(e);
     }
-  }), [record, dataSet, cellExternalProps]);
+  }), [record, dataSet, cellExternalProps, tableStore]);
 
   const handleDocumentMouseMove = (event: MouseEvent) => {
     if (tableStore.isFinishChooseCell) {

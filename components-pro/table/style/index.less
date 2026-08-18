@@ -87,10 +87,6 @@
     pointer-events: none;
   }
   
-  &-duplicate-alert {
-    margin-bottom: 0.08rem;
-  }
-
   &-clipboard {
     margin-bottom: 0.1rem;
     .@{c7n-prefix}-alert-content {
@@ -834,10 +830,6 @@
     outline: none;
   }
 
-  &-row-duplicate-primary-key > &-cell:first-child {
-    box-shadow: inset 0.03rem 0 @error-color;
-  }
-
   &-empty-row &-empty-text-wrapper {
     display: inline-block;
     line-height: .3rem;
@@ -970,6 +962,23 @@
     .@{c7n-pro-prefix}-btn {
       color: @disabled-color !important;
     }
+  }
+
+  &-cell-duplicate-content {
+    display: inline-flex;
+    gap: 0.08rem;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  &-cell-duplicate-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &-cell-duplicate-help {
+    cursor: default;
   }
 
   &-row-drag-over,

@@ -350,6 +350,7 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
   const { dataSet } = record;
   if (dataSet) {
     const { selection } = dataSet;
+    const selectionDisabled = !record.selectable || store.isDuplicatePrimaryKeyRecord(record);
     const handleChange = value => {
       if (store.props.selectionMode === SelectionMode.mousedown) {
         // 将处理逻辑交给 mousedown 的处理逻辑 不然会两次触发导致不被勾选上
@@ -386,7 +387,8 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
           }
           if (endIndex !== -1 && startIndex !== endIndex) {
             // Batch update selections
-            const rangeRecords = dataSet.slice(startIndex, endIndex + 1);
+            const rangeRecords = dataSet.slice(startIndex, endIndex + 1)
+              .filter(rangeRecord => !store.isDuplicatePrimaryKeyRecord(rangeRecord));
             const changedRecords: Record[] = [];
             const selectedKeys = new Set(dataSet.selected.map(selected => selected.key));
             if (record.isSelected) {
@@ -464,7 +466,7 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
           checked={record.isSelected}
           onChange={handleChange}
           onClick={handleClick}
-          disabled={!record.selectable}
+          disabled={selectionDisabled}
           data-selection-key={SELECTION_KEY}
           labelLayout={LabelLayout.none}
           value
@@ -477,7 +479,7 @@ function renderSelectionBox({ record, store }: { record: any; store: TableStore 
           checked={record.isSelected}
           onChange={handleChange}
           onClick={handleClick}
-          disabled={!record.selectable}
+          disabled={selectionDisabled}
           data-selection-key={SELECTION_KEY}
           value
         />
@@ -2365,12 +2367,18 @@ export default class TableStore {
     return [...this.cachedData, ...this.currentData];
   }
 
+  get selectionFilter(): (record: Record) => boolean {
+    const { filter } = this.props;
+    const { duplicateRecords } = this.duplicatePrimaryKeyInfo;
+    return record => (!filter || filter(record)) && !duplicateRecords.has(record);
+  }
+
   @computed
   get cachedIndeterminate(): boolean {
-    const { dataSet, showCachedSelection } = this;
+    const { dataSet, showCachedSelection, selectionFilter } = this;
     if (dataSet) {
       const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
-        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter) : [0, 0];
       if (cachedSelectedLength) {
         return cachedSelectedLength !== cachedRecordsLength;
       }
@@ -2380,10 +2388,10 @@ export default class TableStore {
 
   @computed
   get allCachedChecked(): boolean {
-    const { dataSet, showCachedSelection } = this;
+    const { dataSet, showCachedSelection, selectionFilter } = this;
     if (dataSet) {
       const [cachedSelectedLength, cachedRecordsLength] = showCachedSelection ?
-        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips) : [0, 0];
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter) : [0, 0];
       if (cachedSelectedLength) {
         return cachedSelectedLength === cachedRecordsLength;
       }
@@ -2393,9 +2401,9 @@ export default class TableStore {
 
   @computed
   get currentIndeterminate(): boolean {
-    const { dataSet, filter } = this.props;
+    const { dataSet, selectionFilter } = this;
     if (dataSet) {
-      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, selectionFilter);
       if (selectedLength) {
         return selectedLength !== currentLength;
       }
@@ -2406,9 +2414,9 @@ export default class TableStore {
 
   @computed
   get allCurrentChecked(): boolean {
-    const { dataSet, filter } = this.props;
+    const { dataSet, selectionFilter } = this;
     if (dataSet) {
-      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, filter);
+      const [selectedLength, currentLength] = getCurrentSelectableCounts(dataSet, selectionFilter);
       if (selectedLength) {
         return selectedLength === currentLength;
       }
@@ -2420,11 +2428,12 @@ export default class TableStore {
   get indeterminate(): boolean {
     const { showCachedSelection } = this;
     if (showCachedSelection) {
-      const { dataSet } = this;
+      const { dataSet, selectionFilter } = this;
       const [cachedSelectedLength, cachedRecordsLength] =
-        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
-      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength !== (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter);
+      const [currentSelectedLength, currentRecordsLength] = getCurrentSelectableCounts(dataSet, selectionFilter);
+      const allLength = cachedSelectedLength + currentSelectedLength;
+      return !!allLength && allLength !== (cachedRecordsLength + currentRecordsLength);
     }
     return this.currentIndeterminate;
   }
@@ -2433,11 +2442,12 @@ export default class TableStore {
   get allChecked(): boolean {
     const { showCachedSelection } = this;
     if (showCachedSelection) {
-      const { dataSet } = this;
+      const { dataSet, selectionFilter } = this;
       const [cachedSelectedLength, cachedRecordsLength] =
-        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips);
-      const allLength = cachedSelectedLength + dataSet.currentSelected.length;
-      return !!allLength && allLength === (cachedRecordsLength + dataSet.records.filter(r => r.selectable).length);
+        getCachedSelectableCounts(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter);
+      const [currentSelectedLength, currentRecordsLength] = getCurrentSelectableCounts(dataSet, selectionFilter);
+      const allLength = cachedSelectedLength + currentSelectedLength;
+      return !!allLength && allLength === (cachedRecordsLength + currentRecordsLength);
     }
     return this.allCurrentChecked;
   }
@@ -2524,29 +2534,29 @@ export default class TableStore {
   }
 
   checkAllCurrent() {
-    const { dataSet, filter } = this.props;
-    dataSet.selectAll(filter);
+    const { dataSet, selectionFilter } = this;
+    dataSet.selectAll(selectionFilter);
   }
 
   unCheckAllCurrent() {
-    const { dataSet, filter } = this.props;
-    dataSet.unSelectAll(filter);
+    const { dataSet, selectionFilter } = this;
+    dataSet.unSelectAll(selectionFilter);
   }
 
   checkAllCached() {
     if (this.showCachedSelection) {
-      const { dataSet, filter } = this.props;
+      const { dataSet, selectionFilter } = this;
       dataSet.batchSelect(
-        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter),
       );
     }
   }
 
   unCheckAllCached() {
     if (this.showCachedSelection) {
-      const { dataSet, filter } = this.props;
+      const { dataSet, selectionFilter } = this;
       dataSet.batchUnSelect(
-        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, filter),
+        getCachedSelectableRecords(dataSet, this.computedRecordCachedType, this.showCachedTips, selectionFilter),
       );
     }
   }
@@ -2599,6 +2609,10 @@ export default class TableStore {
     if (this.showRemovedRow) {
       dataSet.setState(TABLE_SHOW_REMOVED_ROW, true);
     }
+  }
+
+  isDuplicatePrimaryKeyRecord(record: Record): boolean {
+    return this.duplicatePrimaryKeyInfo.duplicateRecords.has(record);
   }
 
   isBuiltInColumn({ key }: ColumnProps) {
@@ -2655,7 +2669,10 @@ export default class TableStore {
 
   @action
   changeMouseBatchChooseIdList(idList: number[]) {
-    this.mouseBatchChooseIdList = idList;
+    this.mouseBatchChooseIdList = idList.filter(id => {
+      const record = this.dataSet.findRecordById(id);
+      return !record || !this.isDuplicatePrimaryKeyRecord(record);
+    });
   }
 
   showNextEditor(name: string, reserve: boolean): boolean {
@@ -2663,7 +2680,7 @@ export default class TableStore {
     const { currentIndex, pageSize, currentPage } = dataSet;
     const indexOfCurrentPage = currentIndex - (currentPage - 1) * pageSize;
     const record = dataSet.get(reserve ? indexOfCurrentPage - 1 : indexOfCurrentPage + 1);
-    if (record && !isDisabledRow(record)) {
+    if (record && !isDisabledRow(record, this)) {
       dataSet.current = record;
       this.showEditor(name);
       return true;

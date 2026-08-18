@@ -105,7 +105,8 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   const mounted = useRef<boolean>(false);
   const dragRef = useRef<boolean>(false);
   const needIntersection = intersectionRef;
-  const disabled = isDisabledRow(record);
+  const duplicatePrimaryKey = tableStore.isDuplicatePrimaryKeyRecord(record);
+  const disabled = isDisabledRow(record, tableStore);
   const rowRef = useRef<HTMLTableRowElement | null>(null);
   const childrenRenderedRef = useRef<boolean | undefined>();
   const needSaveRowHeight = isStickySupport() ? !isFixedRowHeight || propVirtual || needIntersection : (!lock && (!isFixedRowHeight || iteratorSome(dataSet.fields.values(), field => field.get('multiLine', record))));
@@ -183,8 +184,11 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
   }, [highLightRow, tableStore, record]);
 
   const handleSelection = useCallback(() => {
+    if (tableStore.isDuplicatePrimaryKeyRecord(record)) {
+      return;
+    }
     dataSet[record.isSelected ? 'unSelect' : 'select'](record);
-  }, [record, dataSet]);
+  }, [record, dataSet, tableStore]);
 
   const handleExpandChange = useCallback(() => {
     if (expandable) {
@@ -433,6 +437,9 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     const sliceLeafs = !propVirtual ? leafs : (left ? leafs.slice(...left) : []).concat(leafs.slice(...center)).concat(right ? leafs.slice(...right) : []);
     const columnLength = sliceLeafs.length;
     const hasBlankCell = leafs.length > sliceLeafs.length;
+    const duplicateHelpColumn = duplicatePrimaryKey
+      ? tableStore.columnGroups.leafs.find(({ column }) => !tableStore.isBuiltInColumn(column))
+      : undefined;
     return sliceLeafs.reduce<[ReactNode[], { isCurrent?: boolean }]>((result, columnGroup, columnIndex) => {
       const { key } = columnGroup;
       const colIndex = propVirtual && hasBlankCell ? leafs.findIndex(x => x.key === key) : columnIndex;
@@ -441,6 +448,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         const rest: Partial<TableCellProps> = {
           key,
           disabled,
+          showDuplicateHelp: duplicateHelpColumn && columnGroup.key === duplicateHelpColumn.key,
         };
         if (colSpan > 1) {
           rest.colSpan = colSpan;
@@ -465,10 +473,6 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
     dragUpdateState.combine.draggableId === String(record.key);
 
   const rowPrefixCls = `${prefixCls}-row`;
-  const duplicatePrimaryKey = tableStore.duplicatePrimaryKeyInfo.duplicateRecords.has(record);
-  const showDuplicatePrimaryKey = duplicatePrimaryKey && (
-    isStickySupport() || lock === ColumnLock.left || (!lock && !tableStore.isAnyColumnsLeftLock)
-  );
   const classString = classNames(
     rowPrefixCls,
     {
@@ -481,7 +485,7 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
       [`${rowPrefixCls}-expanded`]: expandable && isExpanded,
       [`${rowPrefixCls}-has-next`]: metaData && metaData.next,
       [`${rowPrefixCls}-drag-over`]: isDragOver,
-      [`${rowPrefixCls}-duplicate-primary-key`]: showDuplicatePrimaryKey,
+      [`${rowPrefixCls}-duplicate-primary-key`]: duplicatePrimaryKey,
     },
     className, // 增加可以自定义类名满足拖拽功能
     rowExternalProps.className,

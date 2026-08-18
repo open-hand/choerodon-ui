@@ -75,6 +75,8 @@ import { Group } from '../data-set/DataSet';
 import { TooltipProps } from '../tooltip/Tooltip';
 import ChildrenQueryButton from './ChildrenQueryButton';
 import ColumnGroup from './ColumnGroup';
+import Icon from '../icon';
+import Tooltip from '../tooltip';
 
 
 let inTab = false;
@@ -93,11 +95,12 @@ export interface TableCellInnerProps {
   isDragging?: boolean;
   tableCellFinalStyle?: CSSProperties;
   rowIndex?: number;
+  showDuplicateHelp?: boolean;
 }
 
 const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCellInner(props) {
   const { column, record, children, style, disabled, inAggregation, prefixCls, colSpan, headerGroup, rowGroup,
-    columnGroup, isDragging, tableCellFinalStyle, rowIndex } = props;
+    columnGroup, isDragging, tableCellFinalStyle, rowIndex, showDuplicateHelp } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
   const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -251,7 +254,7 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     if (children) {
       if (selectionMode === SelectionMode.treebox) {
         return (
-          <SelectionTreeBox record={record} />
+          <SelectionTreeBox record={record} tableStore={tableStore} />
         );
       }
       if (checkField && !tableStore.hasCheckFieldColumn) {
@@ -770,7 +773,14 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     tabIndex: hasEditor && canFocus ? 0 : -1,
     onFocus: handleFocus,
     onClick: handleClick,
-    children: text,
+    children: showDuplicateHelp ? (
+      <span className={`${prefixCls}-duplicate-content`}>
+        <span className={`${prefixCls}-duplicate-text`}>{text}</span>
+        <Tooltip title={$l('Table', 'duplicate_key_warning')}>
+          <Icon type="error_outline" className={`${prefixCls}-duplicate-help`} />
+        </Tooltip>
+      </span>
+    ) : text,
     ref: innerRef,
   };
 
