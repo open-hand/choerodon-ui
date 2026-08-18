@@ -32,7 +32,6 @@ import Group from 'choerodon-ui/dataset/data-set/Group';
 import { QUERY_CANCELABLE } from 'choerodon-ui/dataset/data-set/DataSet';
 import { SortOrder } from 'choerodon-ui/pro/lib/data-set/enum';
 import warning from 'choerodon-ui/lib/_util/warning';
-import Alert from 'choerodon-ui/lib/alert';
 import { isCalcSize, isPercentSize, pxToRem, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
@@ -1523,7 +1522,7 @@ export default class Table extends DataSetComponent<TableProps> {
       if (index) {
         const record = dataSet.findRecordById(index);
         if (record) {
-          if (!record.selectable) {
+          if (!record.selectable || this.tableStore.isDuplicatePrimaryKeyRecord(record)) {
             this.handleKeyDownUp(e);
           } else if (!record.isSelected) {
             dataSet.select(record);
@@ -2441,14 +2440,6 @@ export default class Table extends DataSetComponent<TableProps> {
             <TableSibling position="before" boxSizing={boxSizing}>
               {this.getHeader()}
               {clipboard && !clipboard.hiddenTip && <ClipboardBar clipboard={clipboard} />}
-              {duplicateKeys.length ? (
-                <Alert
-                  className={`${prefixCls}-duplicate-alert`}
-                  type="error"
-                  message={$l('Table', 'duplicate_key_warning')}
-                  showIcon
-                />
-              ) : undefined}
               <TableQueryBar
                 buttons={buttons}
                 buttonsLimit={tableButtonsLimit}

@@ -13,7 +13,6 @@ import { action, computed, get, IReactionDisposer, isArrayLike, isObservableObje
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
-import Alert from 'choerodon-ui/lib/alert';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -46,7 +45,7 @@ import { LabelLayout } from '../form/enum';
 import { isFieldValueEmpty } from '../field/utils';
 import { Action } from '../trigger/enum';
 import OverflowTip from '../overflow-tip';
-import { TooltipProps } from '../tooltip/Tooltip';
+import Tooltip, { TooltipProps } from '../tooltip/Tooltip';
 
 function updateActiveKey(menu: Menu, activeKey: string) {
   const store = menu.getStore();
@@ -400,28 +399,21 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   @computed
   get duplicateOptionInfo(): { duplicateKeys: string[]; duplicateRecords: Set<Record> } {
     const { optionsWithCombo, valueField } = this;
-    const compare = this.getProp('type') === FieldType.auto ? isSameLike : isSame;
-    const groups: { value: any; records: Record[] }[] = [];
+    const firstRecordByValue = new Map<unknown, Record>();
+    const duplicateKeySet = new Set<string>();
+    const duplicateRecords = new Set<Record>();
     optionsWithCombo.forEach(record => {
       const value = record.get(valueField);
-      const group = groups.find(item => compare(item.value, value));
-      if (group) {
-        group.records.push(record);
+      const firstRecord = firstRecordByValue.get(value);
+      if (firstRecord) {
+        duplicateKeySet.add(String(value));
+        duplicateRecords.add(firstRecord);
+        duplicateRecords.add(record);
       } else {
-        groups.push({ value, records: [record] });
+        firstRecordByValue.set(value, record);
       }
     });
-    const duplicateKeys: string[] = [];
-    const duplicateRecords = new Set<Record>();
-    groups.forEach(({ value, records }) => {
-      if (records.length > 1) {
-        const key = String(value);
-        if (!duplicateKeys.includes(key)) {
-          duplicateKeys.push(key);
-        }
-        records.forEach(record => duplicateRecords.add(record));
-      }
-    });
+    const duplicateKeys = Array.from(duplicateKeySet);
     if (duplicateKeys.length) {
       const { displayName } = this.constructor as any;
       console.warn(`The ${displayName} component has duplicate keys: ${duplicateKeys.join(', ')}.`);
@@ -967,6 +959,15 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         selectedKeys.push(key);
       }
       const itemContent = this.getMenuItem({ record, text, value });
+      const duplicate = duplicateRecords.has(record);
+      const renderedItemContent = duplicate ? (
+        <span className={`${this.prefixCls}-option-duplicate-inner`}>
+          <span className={`${this.prefixCls}-option-duplicate-text`}>{toJS(itemContent)}</span>
+          <Tooltip title={$l('Select', 'duplicate_key_warning')}>
+            <Icon type="error_outline" className={`${this.prefixCls}-option-duplicate-help`} />
+          </Tooltip>
+        </span>
+      ) : toJS(itemContent);
       const recordValues = record.get(OTHER_OPTION_PROPS) || {};
       const itemProps = {
         ...recordValues,
@@ -981,7 +982,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         tooltipTheme: getTooltipTheme('select-option'),
         tooltipPlacement: getTooltipPlacement('select-option'),
         className: classNames(recordValues.className, {
-          [`${this.prefixCls}-option-duplicate`]: duplicateRecords.has(record),
+          [`${this.prefixCls}-option-duplicate`]: duplicate,
         }),
       };
       const itemDisabled = optionProps
@@ -999,14 +1000,14 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
           ...optionProps.style,
           ...itemProps.style,
         },
-        disabled: itemDisabled,
+        disabled: itemDisabled || duplicate,
       } : {
         ...itemProps,
-        disabled: itemDisabled,
+        disabled: itemDisabled || duplicate,
       };
       const option: ReactElement = (
         <Item {...mergedProps}>
-          {toJS(itemContent)}
+          {renderedItemContent}
         </Item>
       );
       if (previousGroup) {
@@ -1267,7 +1268,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   }
 
   getPopupContent(): ReactNode {
-    const { duplicateKeys } = this.duplicateOptionInfo;
     const menu = (
       <Spin key="menu" spinning={this.loading}>
         {this.getMenu()}
@@ -1276,21 +1276,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     return [
       this.searchable && this.isSearchFieldInPopup() && this.renderSearchField(),
       this.renderSelectAll(),
-      duplicateKeys.length ? (
-        <Alert
-          key="duplicate-option-alert"
-          className={`${this.prefixCls}-duplicate-alert`}
-          type="error"
-          message={
-            <OverflowTip title={$l('Select', 'duplicate_key_warning')}>
-              <span className={`${this.prefixCls}-duplicate-alert-message`}>
-                {$l('Select', 'duplicate_key_warning')}
-              </span>
-            </OverflowTip>
-          }
-          showIcon
-        />
-      ) : undefined,
       menu,
       this.renderInputPrompt(),
       (!this.loading && this.filteredOptions.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),
@@ -1891,11 +1876,12 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
     } = this;
     this.setText(undefined);
     if (this.multiple) {
+      const { duplicateRecords } = this.duplicateOptionInfo;
       const valuesDisabled = values.slice(0, maxTagCount).filter(v => {
         const recordItem = this.findByValue(v);
         const findRecord = this.findByValue(v);
         const optionProps = findRecord ? onOption({ dataSet: options, record: findRecord }) : undefined;
-        const optionDisabled = (optionProps && optionProps.disabled);
+        const optionDisabled = (optionProps && optionProps.disabled) || (findRecord && duplicateRecords.has(findRecord));
         return (recordItem && recordItem.get(DISABLED_FIELD) === true) || optionDisabled;
       });
       const multipleValue = valuesDisabled.length > 0 ? valuesDisabled : this.emptyValue;
@@ -1943,7 +1929,13 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       this.collapse();
     }
     if (record) {
-      this.handleOptionSelect(record);
+      const { duplicateRecords } = this.duplicateOptionInfo;
+      const selectableRecord = isArrayLike(record)
+        ? record.filter(item => !duplicateRecords.has(item))
+        : duplicateRecords.has(record) ? undefined : record;
+      if (selectableRecord && (!isArrayLike(selectableRecord) || selectableRecord.length)) {
+        this.handleOptionSelect(selectableRecord);
+      }
     }
   }
 
@@ -1965,9 +1957,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { onOption },
     } = this;
     const values = this.getValues();
+    const { duplicateRecords } = this.duplicateOptionInfo;
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
-      const optionDisabled = (optionProps && optionProps.disabled);
+      const optionDisabled = (optionProps && optionProps.disabled) || duplicateRecords.has(record);
       return !optionDisabled && !this.optionIsSelected(record, values);
     });
     this.choose(selectedOptions);
@@ -1983,9 +1976,10 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       props: { onOption },
     } = this;
     const values = this.getValues();
+    const { duplicateRecords } = this.duplicateOptionInfo;
     const selectedOptions = this.filteredOptions.filter((record) => {
       const optionProps = onOption({ dataSet: options, record });
-      const optionDisabled = (optionProps && optionProps.disabled);
+      const optionDisabled = (optionProps && optionProps.disabled) || duplicateRecords.has(record);
       const optionIsSelect = this.optionIsSelected(record, values);
       return (!optionDisabled && !optionIsSelect) || (optionDisabled && optionIsSelect);
     });

@@ -1,6 +1,6 @@
 import React, { Component, Key, ReactNode } from 'react';
 import classNames from 'classnames';
-import { action, toJS } from 'mobx';
+import { action, computed, toJS } from 'mobx';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
@@ -217,6 +217,30 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
     }
   }
 
+  @computed
+  get duplicateRecords(): Set<Record> {
+    const { dataSet: { records }, valueField } = this.props;
+    const firstRecordByValue = new Map<unknown, Record>();
+    const duplicateRecords = new Set<Record>();
+    if (valueField) {
+      records.forEach(record => {
+        const value = record.get(valueField);
+        const firstRecord = firstRecordByValue.get(value);
+        if (firstRecord) {
+          duplicateRecords.add(firstRecord);
+          duplicateRecords.add(record);
+        } else {
+          firstRecordByValue.set(value, record);
+        }
+      });
+    }
+    return duplicateRecords;
+  }
+
+  isDuplicateRecord(record: Record): boolean {
+    return this.duplicateRecords.has(record);
+  }
+
   closeModal(record: Record | Record[] | undefined, closeModal?: boolean) {
     if (record) {
       const { onSelect, modal } = this.props;
@@ -244,11 +268,15 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
     let records: Record[] = selectionMode === SelectionMode.treebox ?
       dataSet.treeSelected : (selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick || multiple) ?
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
+    records = records.filter(record => !this.isDuplicateRecord(record));
     // 满足单选模式下，双击和勾选框选中均支持
     if (tableProps && tableProps.alwaysShowRowBox && !event) {
-      records = dataSet.selected;
+      records = dataSet.selected.filter(record => !this.isDuplicateRecord(record));
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
+    if (!record || (multiple && !records.length)) {
+      return;
+    }
     const beforeSelect = onBeforeSelect(record);
     if (isPromise(beforeSelect)) {
       return beforeSelect.then(result => {
@@ -288,7 +316,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   handleRow(props) {
     const { tableProps } = this.props;
     const { record: { disabled, selectable } } = props;
-    const isDisabled = disabled || !selectable;
+    const isDisabled = disabled || !selectable || this.isDuplicateRecord(props.record);
     if (tableProps) {
       const { onRow } = tableProps;
       if (onRow) {
@@ -299,14 +327,15 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       }
     }
     return {
-      onDoubleClick: !isDisabled ? this.handleDoubleClickSelect : noop ,
+      onDoubleClick: !isDisabled ? this.handleDoubleClickSelect : noop,
     };
   }
 
   @autobind
   handleSingleRow(props) {
     const { tableProps } = this.props;
-    const isDisabled = (props.record as Record).disabled;
+    const { record: { disabled, selectable } } = props;
+    const isDisabled = disabled || !selectable || this.isDuplicateRecord(props.record);
     if (tableProps) {
       const { onRow } = tableProps;
       if (onRow) {

@@ -865,7 +865,7 @@ export default class Lov extends Select<LovProps> {
     }
     if (e.keyCode === KeyCode.ENTER && this.props.popupSearchMode === PopupSearchMode.single) {
       const record = this.options.current;
-      if(record) {
+      if (record && !this.duplicateOptionInfo.duplicateRecords.has(record)) {
         this.handleLovViewSelect(record);
       }
     }
