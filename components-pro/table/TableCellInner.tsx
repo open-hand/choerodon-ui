@@ -103,7 +103,8 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
     columnGroup, isDragging, tableCellFinalStyle, rowIndex, showDuplicateHelp } = props;
   const multipleValidateMessageLengthRef = useRef<number>(0);
   const tooltipShownRef = useRef<boolean | undefined>();
-  const { getTooltip, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
+  const configContext = useContext(ConfigContext);
+  const { getTooltip, getTooltipTheme, getTooltipPlacement } = configContext;
   const {
     pristine,
     aggregation,
@@ -707,15 +708,23 @@ const TableCellInner: FunctionComponent<TableCellInnerProps> = function TableCel
           ? tooltipProps('cell', defaultTooltipProps, field, record)
           : isObject(tooltipProps) ? tooltipProps : {};
         const duration: number = (tooltipConfig.mouseEnterDelay || 0.1) * 1000;
-        show(element, {
+        const mergedTooltipProps: TooltipProps = {
           ...defaultTooltipProps,
           ...tooltipConfig,
+        };
+        show(element, {
+          ...mergedTooltipProps,
+          title: (
+            <ConfigContext.Provider value={configContext}>
+              {mergedTooltipProps.title}
+            </ConfigContext.Provider>
+          ),
         }, duration);
         return true;
       }
     }
     return false;
-  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef, tooltipProps]);
+  }, [getTooltipTheme, getTooltipPlacement, renderValidationResult, isValidationMessageHidden, field, record, tooltip, multiLine, text, innerRef, tooltipProps, configContext]);
   const handleMouseEnter = useCallback((e) => {
     if (e.type === 'focus' && tooltipShownRef.current) {
       tooltipShownRef.current = false;

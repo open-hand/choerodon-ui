@@ -106,6 +106,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复清空选中值且不失焦，继续输入内容后，下拉框不打开的问题。
 - 🐞 `<pro>Lov`: 修复对象类型查询条件参数序列化异常的问题，确保查询时正确提交值字段。
 - 🐞 `<pro>PerformanceTable`: 修复表格数据更新后滚动条位置不同步问题。
+- 🐞 `<pro>Table`: 修复单元格 tooltip 中的组件无法继承 ConfigProvider 配置的问题。
 
 ## 1.6.8
 

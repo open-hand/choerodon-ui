@@ -106,6 +106,7 @@ timeline: true
 - 🐞 `<pro>Lov`: Fixed the issue where clearing the selected value without losing focus would cause the dropdown not to open when continuing to input content.
 - 🐞 `<pro>Lov`: Fixed incorrect parameter serialization for object-type query conditions, ensuring the value field is submitted correctly.
 - 🐞 `<pro>PerformanceTable`: Fixed the issue where the scrollbar position does not sync after the table data is updated.
+- 🐞 `<pro>Table`: Fixed the issue where components in the cell tooltip could not inherit ConfigProvider configuration.
 
 ## 1.6.8
 
