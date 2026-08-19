@@ -2401,18 +2401,24 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this._cacheCells = null;
     }
 
-    if (nextContentHeightWithScrollBarX !== this.state.contentHeight) {
-      this.setState({ contentHeight: nextContentHeightWithScrollBarX });
-    }
-
-    if (
+    const shouldUpdateScrollPosition =
       prevProps &&
       // 当 data 更新，或者表格高度更新，则更新滚动条
       (prevProps.height !== height || prevProps.data !== this.props.data) &&
-      this.scrollY !== 0
-    ) {
+      this.scrollY !== 0;
+    const updateScrollPosition = () => {
       this.scrollTop(Math.abs(this.scrollY));
       this.updatePosition();
+    };
+
+    if (nextContentHeightWithScrollBarX !== this.state.contentHeight) {
+      this.setState({ contentHeight: nextContentHeightWithScrollBarX }, () => {
+        if (shouldUpdateScrollPosition) {
+          updateScrollPosition();
+        }
+      });
+    } else if (shouldUpdateScrollPosition) {
+      updateScrollPosition();
     }
 
     this.minScrollY = -(contentHeight - height) - this.getScrollBarYWidth;
