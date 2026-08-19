@@ -529,6 +529,10 @@
     }
 
     .@{c7n-pro-prefix}-input-number-step-suffix {
+      .@{c7n-pro-prefix}-input-number-inner-button:not(.@{c7n-pro-prefix}-input-number-clear-button) {
+        right: -0.01rem !important;
+      }
+
       &:focus-within,
       &:not(.@{c7n-pro-prefix}-input-number-empty):hover {
         .icon-search {
@@ -536,7 +540,7 @@
         }
       }
       &.@{c7n-pro-prefix}-input-number-wrapper .@{c7n-pro-prefix}-input-number {
-        padding-right: @input-suffix-width-base; // 避免 NumberField 默认样式的影响
+        padding-right: @input-suffix-width-base !important; // 避免 NumberField 默认样式的影响
       }
     }
 
