@@ -193,6 +193,7 @@ export interface Config extends DataSetConfig {
   lovQueryCachedSelected?: (code: string, cachedSelected: Map<string, Record>) => Promise<object[]>;
   lovTableProps?: Partial<TableProps> | LovTablePropsHook;
   lovModalProps?: Partial<ModalProps>;
+  lovModalAutoWidth?: boolean;
   lovAutoSelectSingle?: boolean;
   lovQueryBar?: TableQueryBarType | TableQueryBarHook;
   lovQueryBarProps?: Partial<TableQueryBarHookCustomProps>;

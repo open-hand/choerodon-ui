@@ -40,6 +40,7 @@ const prefixCls = getConfig('prefixCls');
 | lovQueryAxiosConfig | Lov 查询数据请求的配置或钩子，详见[AxiosRequestConfig](#AxiosRequestConfig)。 配置中默认 url 为 lovQueryUrl， method 为 post。 | AxiosRequestConfig \| (code: string, lovConfig?: LovConfig, { dataSet, params, data, lovQueryDetail }) => AxiosRequestConfig | - |
 | lovTableProps | 全局配置lov的tableProps,当同时存在lovTableProps以及的时候会进行一层合并 | [TableProps](/components-pro/table/) \| (multiple?: boolean) => [TableProps](/components-pro/table/) | {} |
 | lovModalProps | Lov 弹窗属性，详见[ModalProps](/components/modal/#Modal) | ModalProps |  |
+| lovModalAutoWidth  | Lov modal 弹窗宽度是否自动计算宽度: Table 所有列宽 + 竖向滚动条 + 边框 + modal 左右边距; 设置为 false 时, 使用 lov define 中的宽度 | boolean | false |
 | lovAutoSelectSingle | Lov 点击查询仅存在一条数据时自动选中且不弹窗 | boolean | false |
 | lovNoCache  | 默认 Lov noCache | boolean |  |
 | lovQueryBar | 默认 Lov Table 的 queryBar | string | normal |
