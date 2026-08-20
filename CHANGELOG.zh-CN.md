@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: 新增 selectBeforeCreateComboOption, uploadBatchMaxFileCount, attachment.previewTarget 属性。
+- 🌟 `configure`: 新增 selectBeforeCreateComboOption, uploadBatchMaxFileCount, attachment.previewTarget, lovModalAutoWidth 属性。
 - 🌟 `<pro>Table`: 查询栏 onReset 事件新增 type 参数用于区分触发的场景。
 - 🌟 `<pro>Button`: 新增 iconPlacement 属性。
 - 🌟 `<pro>Select`: 新增 beforeCreateComboOption, autoScrollToSelected 属性。

@@ -9,7 +9,8 @@ import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
 import { action, computed, isArrayLike, observable, runInAction, toJS, IReactionDisposer, reaction } from 'mobx';
-import { pxToRem, scaleSize } from 'choerodon-ui/lib/_util/UnitConvertor';
+import { pxToRem, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
+import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { Size } from 'choerodon-ui/lib/_util/enum';
 import { LovConfig as DataSetLovConfig, LovConfigItem } from 'choerodon-ui/dataset/interface';
@@ -620,6 +621,57 @@ export default class Lov extends Select<LovProps> {
   }
 
   @autobind
+  private getModalStyle(config: LovConfig, tableProps: Partial<TableProps>): React.CSSProperties {
+    const { width, lovItems, tableProps: configTableProps = {} } = config;
+    if (!this.getContextConfig('lovModalAutoWidth')) {
+      return { width: pxToRem(width) };
+    }
+    const finalTableProps = { ...configTableProps, ...tableProps };
+
+    const { columns } = finalTableProps;
+    const defaultColumnWidth = this.getContextConfig('tableColumnDefaultWidth');
+    const getColumnsWidth = (currentColumns: NonNullable<TableProps['columns']>): number => currentColumns
+      .reduce((total, column) => {
+        if (column.hidden) {
+          return total;
+        }
+        if (column.children && column.children.length) {
+          return total + getColumnsWidth(column.children);
+        }
+        return total + scaleSize(column.width === undefined ? defaultColumnWidth : toPx(column.width) || defaultColumnWidth);
+      }, 0);
+    const columnsWidth = columns
+      ? getColumnsWidth(columns)
+      : (lovItems || [])
+        .filter(({ gridField }) => gridField === 'Y')
+        .reduce((total, { gridFieldWidth }) => (
+          total + scaleSize(gridFieldWidth === undefined ? defaultColumnWidth : gridFieldWidth)
+        ), 0);
+
+    const { selectionMode, selectionColumnProps } = finalTableProps;
+    const alwaysShowRowBox = finalTableProps.alwaysShowRowBox === undefined
+      ? this.getContextConfig('tableAlwaysShowRowBox')
+      : finalTableProps.alwaysShowRowBox;
+    const hasSelectionColumn = alwaysShowRowBox || (this.multiple && !selectionMode) ||
+      selectionMode === SelectionMode.rowbox || selectionMode === SelectionMode.dblclick;
+    const selectionColumnWidth = selectionColumnProps && selectionColumnProps.width;
+    const selectionWidth = hasSelectionColumn
+      ? scaleSize(selectionColumnWidth === undefined ? 50 : toPx(selectionColumnWidth) || 50)
+      : 0;
+    const borderWidth = finalTableProps.border === undefined
+      ? this.getContextConfig('tableBorder') ? 2 : 0
+      : finalTableProps.border ? 2 : 0;
+    const modalWidth = Math.max(
+      scaleSize(width || 0),
+      columnsWidth + selectionWidth + measureScrollbar() + scaleSize(48 + borderWidth),
+    );
+    return {
+      width: pxToRem(modalWidth, true),
+      maxWidth: 'calc(100% - 0.24rem)',
+    };
+  }
+
+  @autobind
   private getSelectionProps() {
     const { nodeRenderer, selectionProps } = this.props;
     const lovSelectionProps = this.getContextConfig('lovSelectionProps');
@@ -650,7 +702,7 @@ export default class Lov extends Select<LovProps> {
         if (modal) {
           modal.open();
         } else {
-          const { width, title } = config;
+          const { title } = config;
           const lovViewProps = this.beforeOpen(options);
           const modalProps = this.getModalProps();
           const tableProps = this.getTableProps(lovViewProps && lovViewProps.tableProps);
@@ -695,9 +747,7 @@ export default class Lov extends Select<LovProps> {
             },
             drawer,
             drawerBorder: !drawer,
-            style: {
-              width: pxToRem(width),
-            },
+            style: this.getModalStyle(config, tableProps),
             afterClose: this.handleLovViewAfterClose,
             footer: showDetailWhenReadonly ? null : undefined,
             footerExtra: !this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Lov') : undefined,

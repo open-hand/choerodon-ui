@@ -101,6 +101,7 @@ const defaults = {
   collapseTrigger: 'header',
   lovTableProps: {},
   lovModalProps: {},
+  lovModalAutoWidth: false,
   lovAutoSelectSingle: false,
   lovShowSelectedInView: defaultLovShowSelectedInView,
   labelLayout: LabelLayout.horizontal,

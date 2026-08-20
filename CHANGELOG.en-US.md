@@ -15,7 +15,7 @@ timeline: true
 
 ---
 
-- 🌟 `configure`: Added `selectBeforeCreateComboOption`, `uploadBatchMaxFileCount`, `attachment.previewTarget` property.
+- 🌟 `configure`: Added `selectBeforeCreateComboOption`, `uploadBatchMaxFileCount`, `attachment.previewTarget`, `lovModalAutoWidth` property.
 - 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 🌟 `<pro>Button`: Added `iconPlacement` property.
 - 🌟 `<pro>Select`: Added `beforeCreateComboOption`, `autoScrollToSelected` properties.
