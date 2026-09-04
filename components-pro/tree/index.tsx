@@ -499,15 +499,17 @@ export default class Tree extends Component<TreeProps> {
     const { dataSet, renderer = defaultRenderer, titleField, treeNodeRenderer, onTreeNode, loadData, async, selectable, filter: optionsFilter, ...otherProps } = this.props;
     if (dataSet) {
       const props: TreeProps = {};
-      props.treeData = getTreeNodes(
-        dataSet,
-        dataSet.treeData,
-        renderer,
-        onTreeNode || treeNodeRenderer || defaultNodeCover,
-        async || !!loadData,
-        titleField,
-        optionsFilter,
-      ) || [];
+      if (otherProps.treeData === undefined) {
+        props.treeData = getTreeNodes(
+          dataSet,
+          dataSet.treeData,
+          renderer,
+          onTreeNode || treeNodeRenderer || defaultNodeCover,
+          async || !!loadData,
+          titleField,
+          optionsFilter,
+        ) || [];
+      }
       props.onExpand = this.handleExpand;
       props.onCheck = this.handleCheck;
       props.onSelect = this.handleSelect;

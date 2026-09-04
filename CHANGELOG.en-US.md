@@ -69,6 +69,7 @@ timeline: true
 - 💄 `Upload`: Supports validating the type of files to be uploaded according to `accept`, and files that do not meet the type requirements will be intercepted.
 - 💄 `<pro>Select`: Optimize the disabling of options such as rendering, single selection, multiple selection, inverse selection, and none.
 - 💄 `Upload`: Optimize the style of right alignment in the table.
+- 💄 `<pro>Lov`: Dropdown mode supports tree options.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { Key, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import classNames from 'classnames';
 import omit from 'lodash/omit';
@@ -8,6 +8,7 @@ import defaultTo from 'lodash/defaultTo';
 import noop from 'lodash/noop';
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
+import isPromise from 'is-promise';
 import { action, computed, isArrayLike, observable, runInAction, toJS, IReactionDisposer, reaction } from 'mobx';
 import { pxToRem, scaleSize, toPx } from 'choerodon-ui/lib/_util/UnitConvertor';
 import measureScrollbar from 'choerodon-ui/lib/_util/measureScrollbar';
@@ -23,16 +24,17 @@ import Record from '../data-set/Record';
 import Spin from '../spin';
 import lovStore from '../stores/LovCodeStore';
 import autobind from '../_util/autobind';
-import { stopEvent } from '../_util/EventManager';
+import { preventDefault, stopEvent } from '../_util/EventManager';
 import ObserverSelect, {
   isSearchTextEmpty,
   SearchMatcher,
   Select,
   SelectProps,
+  MORE_KEY,
 } from '../select/Select';
 import Option from '../option/Option';
 import { SelectionMode, TableMode, TableQueryBarType } from '../table/enum';
-import { CheckedStrategy, DataSetStatus, RecordStatus } from '../data-set/enum';
+import { CheckedStrategy, DataSetSelection, DataSetStatus, RecordStatus } from '../data-set/enum';
 import { PopupSearchMode, SearchAction, ViewMode } from './enum';
 import Button, { ButtonProps } from '../button/Button';
 import { ButtonColor, FuncType } from '../button/enum';
@@ -46,6 +48,8 @@ import { ModalContextValue } from '../modal-provider/ModalContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import mergeProps from '../_util/mergeProps';
 import { getRecords } from './SelectionList';
+import Tree, { defaultRenderer } from '../tree';
+import { getTreeNodes } from '../tree/util';
 
 export type Events = { [key: string]: Function };
 
@@ -407,18 +411,150 @@ export default class Lov extends Select<LovProps> {
     }
   }
 
+  get tree(): boolean {
+    const config = this.getConfig() as LovConfig | undefined;
+    const { options } = this;
+    const { idField, parentField, childrenField } = options.props;
+    const tableProps = this.getTableProps(config && config.tableProps);
+    return tableProps.mode === TableMode.tree || !!(childrenField || (idField && parentField));
+  }
+
+  @autobind
+  handleTreeSelect(_selectedKeys: Key[], { node }: any) {
+    const { options } = this;
+    const { record } = node;
+    if (!record || node.key === MORE_KEY) {
+      if (node.key === MORE_KEY) {
+        options.queryMore(options.currentPage + 1);
+      }
+      return;
+    }
+    const selectedRecords = this.multiple ? options.treeSelected : record;
+    const { onBeforeSelect = noop } = this.props;
+    const beforeSelect = onBeforeSelect(selectedRecords);
+    const select = () => {
+      if (this.multiple) {
+        this.setValue((selectedRecords as Record[]).map(selectedRecord => this.processRecordToObject(selectedRecord)));
+      } else {
+        this.setValue(this.processRecordToObject(selectedRecords as Record));
+        this.collapse();
+      }
+    };
+    if (isPromise(beforeSelect)) {
+      beforeSelect.then(result => {
+        if (result !== false) select();
+      });
+    } else if (beforeSelect !== false) {
+      select();
+    }
+  }
+
+  initPopupTree() {
+    const { options } = this;
+    this.autoCreate();
+    if (!this.popup) delete this.fetched;
+    if (this.popup && !this.fetched) {
+      runInAction(() => {
+        this.beforeOpen(options);
+        this.afterOpen(options);
+        this.fetched = true;
+      });
+    }
+  }
+
+  getTreeMenu(): ReactNode {
+    const {
+      options,
+      textField,
+      valueField,
+      props: { dropdownMenuStyle, onOption, optionRenderer },
+    } = this;
+    const menuPrefixCls = this.getMenuPrefixCls();
+    const config = this.getConfig() as LovConfig | undefined;
+    const tableProps = this.getTableProps(config && config.tableProps);
+    const { treeAsync = config && config.delayLoad === 'Y', treeLoadData } = tableProps;
+    const { expandFlag } = config || {};
+    const { idField } = options.props;
+    const selectedKeys = options.reduce<Key[]>((keys, record) => (
+      this.isSelected(record) ? keys.concat(String(idField ? record.get(idField) : record.key)) : keys
+    ), []);
+    if (!options.treeData.length) {
+      return (
+        <div className={menuPrefixCls}>
+          <div className={`${menuPrefixCls}-item ${menuPrefixCls}-item-disabled`}>
+            {this.loading ? ' ' : this.getNotFoundContent()}
+          </div>
+        </div>
+      );
+    }
+    const treeData = getTreeNodes(
+      options,
+      options.treeData,
+      defaultRenderer,
+      ({ record }) => {
+        if (record) {
+          const text = record.get(textField);
+          const value = record.get(valueField);
+          return {
+            ...onOption({ dataSet: options, record }),
+            title: optionRenderer ? optionRenderer({ dataSet: options, record, text, value }) : text,
+          };
+        }
+        return {};
+      },
+      treeAsync || !!treeLoadData,
+      textField,
+    ) || [];
+    if (options.paging && options.currentPage < options.totalPage) {
+      treeData.push({
+        key: MORE_KEY,
+        eventKey: MORE_KEY,
+        title: <Spin style={{ left: 0 }} size={Size.small}>{this.getPagingOptionContent()}</Spin>,
+        className: `${menuPrefixCls}-item ${menuPrefixCls}-item-more`,
+        isLeaf: true,
+      });
+    }
+    return (
+      <Tree
+        ref={this.saveMenu}
+        dataSet={options}
+        treeData={treeData}
+        ripple
+        onMouseDown={preventDefault}
+        onSelect={this.handleTreeSelect}
+        style={dropdownMenuStyle}
+        selectable
+        focusable={false}
+        defaultExpandAll={expandFlag === 'Y'}
+        selectedKeys={selectedKeys}
+        className={menuPrefixCls}
+        multiple={this.multiple}
+        async={treeAsync}
+        loadData={treeLoadData && ((event: any) => treeLoadData({ record: event.props.record, dataSet: options }))}
+      />
+    );
+  }
+
   @autobind
   getPopupContent(): ReactNode {
     const { searchAction } = this.props;
-    const { viewMode, options } = this;
+    const { viewMode, options, tree } = this;
     if (viewMode === TriggerViewMode.popup) {
+      if (tree) {
+        this.initPopupTree();
+        return [
+          this.searchable && this.isSearchFieldInPopup() && this.renderSearchField(),
+          this.getTreeMenu(),
+          (!this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),
+        ];
+      }
       return [
         this.getPopupLovView(),
         (!this.loading && options.length ? this.renderAddNewOptionPrompt('prompt', 'Select') : undefined),
       ];
     }
     if (searchAction === SearchAction.input) {
-      return super.getPopupContent();
+      return this.tree ? this.getTreeMenu() : super.getPopupContent();
     }
     return null;
   }
@@ -481,6 +617,7 @@ export default class Lov extends Select<LovProps> {
   @action
   beforeOpen(options: DataSet): Partial<LovViewProps> | undefined {
     const { multiple, primitive, valueField, viewMode } = this;
+    options.selection = multiple ? DataSetSelection.multiple : DataSetSelection.single;
     const { selectionMode, alwaysShowRowBox } = this.getTableProps();
     if (multiple) {
       options.selectionStrategy = this.getProp('showCheckedStrategy') || CheckedStrategy.SHOW_ALL;

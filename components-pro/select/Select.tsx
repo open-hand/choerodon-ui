@@ -1334,7 +1334,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       }
     }
     if (!this.disabled && !this.readOnly && menu) {
-      if (this.popup && menu.onKeyDown(e)) {
+      if (this.popup && menu.onKeyDown && menu.onKeyDown(e)) {
         stopEvent(e);
       } else {
         switch (e.keyCode) {
