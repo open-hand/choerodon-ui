@@ -72,6 +72,7 @@ timeline: true
 - 💄 `Upload`: Optimize the style of right alignment in the table.
 - 💄 `<pro>Lov`: Dropdown mode supports tree options.
 - 💄 `<pro>Radio`: Optimize the style of the label in `Radio` `CheckBox` `Switch` components float layout.
+- 💄 `<pro>DataSet`: Optimize the `create` method. After setting the `childrenField`, it will recursively create child records.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

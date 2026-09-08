@@ -1823,18 +1823,7 @@ export default class DataSet extends EventManager {
     return this.page(this.totalPage);
   }
 
-  /**
-   * 创建一条记录
-   * @param data 数据对象
-   * @param dataIndex 记录所在的索引
-   * @return 新建的记录
-   */
-  @action
-  create(data: object = {}, dataIndex?: number): Record {
-    if (data === null) {
-      data = {};
-    }
-    const record = new Record(data, this);
+  private initRecordDefaultValues(record: Record): void {
     const objectFieldsList: [string, any][][] = [];
     const normalFields: [string, any][] = [];
     this.fields.forEach((field, name) => {
@@ -1856,7 +1845,23 @@ export default class DataSet extends EventManager {
         items.forEach(([name, defaultValue]) => record.init(name, toJS(defaultValue)));
       }
     });
+  }
+
+  /**
+   * 创建一条记录
+   * @param data 数据对象
+   * @param dataIndex 记录所在的索引
+   * @return 新建的记录
+   */
+  @action
+  create(data: object = {}, dataIndex?: number): Record {
+    if (data === null) {
+      data = {};
+    }
     const { parentField, idField, childrenField, validationRules } = this.props;
+    const records = childrenField ? this.processData([data], RecordStatus.add) : [new Record(data, this)];
+    const [record] = records;
+    records.forEach(item => this.initRecordDefaultValues(item));
     if (!childrenField && parentField && idField) {
       const parentId = record.get(parentField);
       if (parentId) {
@@ -1880,9 +1885,9 @@ export default class DataSet extends EventManager {
       }
     }
     if (isNumber(dataIndex)) {
-      this.splice(dataIndex, 0, record);
+      this.splice(dataIndex, 0, ...records);
     } else {
-      this.push(record);
+      this.push(...records);
     }
     if (this.props.autoLocateAfterCreate) {
       this.current = record;

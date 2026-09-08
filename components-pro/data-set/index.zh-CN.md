@@ -122,7 +122,7 @@ title: DataSet
 | lastPage() | 定位到最后一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
 | prePage() | 定位到上一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
 | nextPage() | 定位到下一页，如果`paging` 为 `true`和`server`，则做远程查询 |  | Promise&lt;any&gt; |
-| create(data, index) | 创建一条记录 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
+| create(data, index) | 创建一条记录。设置 childrenField 后，会递归创建子记录，可通过 Record.treeReduce() 遍历所有子级 | `data` - 记录数据对象；`index`&lt;optional,default:0&gt; - 记录所在的索引 | Record |
 | delete(records, confirmMessage: ReactNode \| ModalProps) | 立即删除记录 | `records` - 删除的记录或记录组 `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
 | remove(records, forceRemove) | 临时删除记录 | `records` - 删除的记录或记录组; `forceRemove` - 是否强制删除 |  |
 | deleteAll(confirmMessage: ReactNode \| ModalProps) | 立即删除所有记录 | `confirmMessage` - 自定义提示信息或弹窗的属性, 设为false时不弹确认直接删除 |  |
@@ -199,7 +199,7 @@ title: DataSet
 | unSelectAllPage | 取消跨页全选事件 | ({ dataSet }) =&gt; void | `dataSet` - 数据集 | 是 |
 | indexChange | 当前记录变更事件 | ({ dataSet, record, previous }) =&gt; void | `dataSet` - 数据集 `record` - 新当前记录 `previous` - 旧当前记录 | 是 |
 | fieldChange | 字段属性变更事件 | ({ dataSet, record, name, propsName, value, oldValue }) =&gt; void | `dataSet` - 数据集 `record` - 字段所属记录，dataSet 的字段无 record `name` - 字段名 `propsName` - 属性名 `value` - 新值 `oldValue` - 旧值 | 是 |
-| create | 记录创建事件 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |
+| create | 记录创建事件。设置 childrenField 后，会递归创建子记录，可通过 Record.treeReduce() 遍历所有子级 | ({ dataSet, record }) =&gt; void | `dataSet` - 数据集 `record` - 创建的记录 | 是 |
 | remove | 记录移除事件 | ({ dataSet, records }) =&gt; void | `dataSet` - 数据集 `records` - 移除的记录 | 是 |
 | export | 导出事件，返回值为 false 将阻止导出 | ({ dataSet, params, data }) =&gt; boolean | `dataSet` - 数据集 `params` - 查询参数 `data` - 查询参数 | 是 |
 | beforeRemove | 数据临时删除前的事件， 返回值为 false 将阻止临时删除 | ({ dataSet, records }) =&gt; boolean | `dataSet` - 数据集 `records` - 记录集 | 否 |

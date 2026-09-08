@@ -1152,6 +1152,7 @@ export default class Table extends DataSetComponent<TableProps> {
   @autobind
   handleDataSetCreate({ record, dataSet }) {
     const { tableStore } = this;
+    this.initDefaultExpandedRows(record);
     if (tableStore.inlineEdit) {
       if (tableStore.currentEditRecord) {
         tableStore.currentEditRecord.reset();
@@ -2347,7 +2348,7 @@ export default class Table extends DataSetComponent<TableProps> {
     if (dataSet) {
       const handler = flag ? dataSet.addEventListener : dataSet.removeEventListener;
       handler.call(dataSet, DataSetEvents.load, this.handleDataSetLoad);
-      if (inlineEdit || (clipboard && clipboard.copy)) {
+      if (inlineEdit || (clipboard && clipboard.copy) || this.props.defaultRowExpanded) {
         handler.call(dataSet, DataSetEvents.create, this.handleDataSetCreate);
       }
       handler.call(dataSet, DataSetEvents.validate, this.handleDataSetValidate);
@@ -3133,13 +3134,14 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @action
-  initDefaultExpandedRows() {
+  initDefaultExpandedRows(root?: Record) {
     const {
       tableStore,
       props: { dataSet, defaultRowExpanded },
     } = this;
     if (tableStore.isTree && defaultRowExpanded) {
-      dataSet.forEach((record) => {
+      const records = root ? root.treeReduce<Record[]>((all, record) => all.concat(record), []) : dataSet;
+      records.forEach((record) => {
         if (record.children) {
           record.isExpanded = true;
         }
