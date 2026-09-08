@@ -70,6 +70,7 @@ timeline: true
 - 💄 `<pro>Select`: 优化选项渲染、单选、多选、反选、无 等地方的禁用统一。
 - 💄 `Upload`: 优化表格中右对齐时的样式。
 - 💄 `<pro>Lov`: 下拉模式支持树形选项。
+- 💄 `<pro>Radio`: 优化 Radio CheckBox Switch 组件 float 布局的 label 样式。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。

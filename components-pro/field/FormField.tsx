@@ -739,7 +739,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
   renderFloatLabel(): ReactNode {
     if (this.hasFloatLabel) {
       const label = this.getLabel();
-      const { showHelp } = this;
+      const { showHelp, prefixCls: comPrefixCls } = this;
       const isLabelShowHelp = showHelp === ShowHelp.label;
       if (label) {
         const { floatLabelOffsetX } = this;
@@ -754,7 +754,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
           marginLeft: pxToRem(floatLabelOffsetX, true),
         } : undefined;
         return (
-          <div className={`${prefixCls}-label-wrapper`} style={style}>
+          <div className={classNames(`${prefixCls}-label-wrapper`, `${comPrefixCls}-float-label-wrapper`)} style={style}>
             <div
               className={classString}
               onMouseEnter={this.handleFloatLabelMouseEnter}
