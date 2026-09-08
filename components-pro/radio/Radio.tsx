@@ -114,28 +114,19 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   renderWrapper(): ReactNode {
     const checked = this.isChecked();
-    const floatLabel = super.hasFloatLabel ? this.renderSwitchFloatLabel() : undefined;
+    const floatLabel = this.hasFloatLabel ? this.renderFloatLabel() : undefined;
     const tooltipHelp = this.showHelp === ShowHelp.tooltip ? this.renderTooltipHelp() : undefined;
     return (
       <>
+        {floatLabel}
         <label key="wrapper" {...this.getWrapperProps()}>
           <input {...this.getOtherProps()} checked={checked} value={this.checkedValue} />
           {this.renderInner()}
           {this.getTextNode(!!tooltipHelp)}
           {tooltipHelp}
-          {this.renderFloatLabel()}
         </label>
-        {floatLabel}
       </>
     );
-  }
-
-  /**
-   * 解决form 在float的时候没有表头的问题
-   * 也可以在需要不在组件内部展现label的时候使用
-   */
-  renderSwitchFloatLabel(): ReactNode | undefined {
-    return undefined;
   }
 
   renderInner(): ReactNode {
@@ -144,16 +135,6 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
 
   renderTooltipHelp(): ReactNode {
     return undefined;
-  }
-
-  /**
-   * 当使用label代替children时，不需要展示float label
-   *
-   * @readonly
-   * @memberof Radio
-   */
-  get hasFloatLabel() {
-    return this.getLabelChildren() ? false : super.hasFloatLabel;
   }
 
   /**
@@ -166,7 +147,7 @@ export class Radio<T extends RadioProps> extends FormField<T & RadioProps> {
     const { labelLayout } = this;
     return (
       labelLayout &&
-      ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.none].includes(labelLayout) &&
+      ![LabelLayout.horizontal, LabelLayout.vertical, LabelLayout.float, LabelLayout.none].includes(labelLayout) &&
       this.getLabel()
     );
   }

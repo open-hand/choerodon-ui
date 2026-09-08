@@ -227,7 +227,7 @@ const prefixCls = getConfig('prefixCls');
 | selectBeforeCreateComboOption | 创建复合输入值前的回调，返回 `true` 允许创建，返回 `false` 阻止创建 | (props: { text: string; options: DataSet; textField: string; valueField: string; }) => boolean | - |
 | selectShowInputPrompt | Select、Lov、TreeSelect可输入时，下拉框中是否显示输入提示。返回 true 或字符串时, 会同时显示到 placeholder 中 | boolean \| ReactNode \| (({ searchable, combo }) => boolean \| ReactNode) \| undefined |  |
 | addNewOptionPromptRender | Select Lov 新增选项功能渲染函数 | (props: { type: 'prompt' \| 'noDataPrompt'; component: 'Select' \| 'Lov'; renderEmptyComponent: string; record?: Record; field?: Field; code?: string; path: string; disabledTooltip?: TooltipProps; onClick?: (path: string, record?: Record, field?: Field) => void; \[key: string\]: any; }) => ReactNode |  |
-| duplicateKey | 重复 key 处理的配置: 对象或者钩子。`disable` 控制是否禁用重复项，`showWarning` 是否显示重复项提示，两者默认均为 `true`。`componentName` 包含 Select Lov Table | { disable?: boolean; showWarning?: boolean } \| (componentName: string) => { disable?: boolean; showWarning?: boolean } | { disable: true, showWarning: true } |
+| duplicateKey | 重复 key 处理的配置: 对象或者钩子。`disable` 控制是否禁用重复项，`showWarning` 是否显示重复项提示，两者默认均为 `true`。`componentName` 包含 Select Lov Table | { disable?: boolean; showWarning?: boolean } \| (componentName: string) => { disable?: boolean; showWarning?: boolean } | { disable: false, showWarning: true } |
 | uploadAlwaysShowActions | Upload\Attachment 组件设置操作按钮是否常显 | boolean |  |
 
 ### Customizable

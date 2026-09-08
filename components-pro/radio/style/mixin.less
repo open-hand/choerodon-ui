@@ -35,11 +35,49 @@
     cursor: not-allowed;
   }
 
-  .float-label;
-  &-float-label {
-    padding-top: 0.07rem;
+  &-float-label-wrapper {
+    position: relative;
+    z-index: 1;
+
+    > .@{field-label-prefix-cls} {
+      position: absolute;
+      max-width: 100%;
+      padding: 0;
+      overflow: hidden;
+      color: @float-label-color;
+      font-weight: @float-label-font-weight;
+      font-size: @float-label-font-size;
+      line-height: 1.5;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      transform: scale(0.8);
+      transform-origin: @float-label-transform-origin-high;
+
+      &.@{field-prefix-cls}-required::after {
+        display: inline-block;
+        width: 0.08rem;
+        margin-left: 0.04rem;
+        color: @label-required-color;
+        font-family: @font-family-required-symbol;
+        line-height: 1;
+        vertical-align: middle;
+        content: '*';
+      }
+
+      .@{iconfont-css-prefix}-help {
+        vertical-align: baseline;
+        pointer-events: auto;
+      }
+    }
   }
 
+  &-float-label-wrapper + &-wrapper {
+    min-height: @float-label-height-base;
+  }
+  &-float-label-wrapper + &-button {
+    top: 0.03rem;
+    min-height: 0;
+  }
 }
 
 .radio-invalid() {

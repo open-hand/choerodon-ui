@@ -116,12 +116,6 @@
     box-shadow: none;
   }
 
-  &-float-label {
-    padding-right: .08rem;
-    padding-left: .08rem;
-    vertical-align: middle;
-  }
-
   &:checked + .@{c7n-prefix}-progress-loading {
     right: @switch-loading-inner-distance;
     left: auto;
@@ -224,11 +218,6 @@
 
   &-lg &:active + &-label::after {
     width: @switch-lg-button-active-width;
-  }
-
-  &-float-label .@{field-label-prefix-cls}-wrapper {
-    left: 0;
-    transform-origin: @float-label-transform-origin-high;
   }
 }
 
