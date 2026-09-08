@@ -2335,14 +2335,14 @@ export default class DataSet extends EventManager {
         if (selection === DataSetSelection.single) {
           if (!this.currentSelected.length) {
             const record = filter ? this.filter(filter)[0] : this.get(0);
-            if (record) {
+            if (record && record.selectable && !record.isSelected) {
               this.select(record);
               records.push(record);
             }
           }
         } else {
           this.records.forEach(record => {
-            if (!filter || filter(record) !== false) {
+            if ((!filter || filter(record) !== false) && record.selectable && !record.isSelected) {
               this.select(record);
               records.push(record);
             }
@@ -2366,7 +2366,7 @@ export default class DataSet extends EventManager {
       try {
         const records: Record[] = [];
         this.currentSelected.forEach(record => {
-          if (!filter || filter(record) !== false) {
+          if ((!filter || filter(record) !== false) && record.selectable && record.isSelected) {
             this.unSelect(record);
             records.push(record);
           }
