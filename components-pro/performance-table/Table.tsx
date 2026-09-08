@@ -298,6 +298,7 @@ export interface TableProps extends StandardProps {
   onTouchMove?: (event: React.TouchEvent) => void; // for tests
   onDataUpdated?: (nextData: object[], scrollTo: (coord: { x: number; y: number }) => void) => void;
   customizedCode?: string;
+  customizedColumnProps?: Partial<HeaderCellProps>;
   customizable?: boolean;
   columnDraggable?: boolean;
   columnTitleEditable?: boolean;
@@ -438,6 +439,7 @@ const propTypeKeys = [
   'highLightRow',
   'queryBar',
   'customizedCode',
+  'customizedColumnProps',
   'customizable',
   'columnDraggable',
   'columnTitleEditable',
@@ -451,6 +453,7 @@ const propTypeKeys = [
 ];
 
 export const CUSTOMIZED_KEY = '__customized-column__'; // TODO:Symbol
+const CUSTOMIZATION_HEADER_WIDTH = 28;
 
 function getRowSelection(props: TableProps): TableRowSelection {
   return props.rowSelection || {};
@@ -792,7 +795,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       this.props.children !== nextProps.children ||
       this.props.columns !== nextProps.columns ||
       this.props.sortColumn !== nextProps.sortColumn ||
-      this.props.sortType !== nextProps.sortType
+      this.props.sortType !== nextProps.sortType ||
+      this.props.customizedColumnProps !== nextProps.customizedColumnProps
     ) {
       this._cacheCells = null;
       this.tableStore.updateProps(nextProps, this);
@@ -1655,11 +1659,15 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         }
 
         if (showHeader && headerHeight) {
+          const hasCustomizationPadding = this.tableStore.customizable && index === columns.length - 1;
           const headerCellProps = {
             // index 用于拖拽列宽时候（Resizable column），定义的序号
             index,
             dataKey,
             isHeaderCell: true,
+            className: classNames(columnChildren[0].props.className, {
+              [this.addPrefix('last-header-with-customization')]: hasCustomizationPadding,
+            }),
             minWidth: column.props.minWidth,
             sortable: column.props.sortable,
             onSortColumn: this.handleSortColumn,
@@ -1710,9 +1718,10 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         left: left - 30,
         headerHeight,
         key: CUSTOMIZED_KEY,
-        width: this.props.showScrollArrow ? SCROLLBAR_LARGE_WIDTH : SCROLLBAR_MIN_WIDTH,
+        width: CUSTOMIZATION_HEADER_WIDTH,
         height: rowHeight,
         fixed: 'right',
+        ...this.props.customizedColumnProps,
         className: this.addPrefix('customization-header'),
         isHeaderCell: true,
       };
@@ -2202,7 +2211,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     /**
      * 当存在锁定列情况处理
      */
-    if (this.state.shouldFixedColumn) {
+    if (this.state.shouldFixedColumn || this.tableStore.customizable) {
       this.updatePositionByFixedCell();
     } else {
       const wheelStyle = {};
@@ -2734,8 +2743,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     if (dragRowIndex === `${rowIndex}`) {
       rowStyles.zIndex = 200000;
     }
-    // IF there are fixed columns, add a fixed group
-    if (shouldFixedColumn && contentWidth > width) {
+    // IF there are fixed columns, or the header contains the fixed customization entry, add a fixed group
+    if ((shouldFixedColumn || (isHeaderRow && this.tableStore.customizable)) && contentWidth > width) {
       // if (rowData && uniq(this.tableStore.rowZIndex!.slice()).includes(rowIndex)) {
       //   rowStyles.zIndex = 1;
       // }
