@@ -423,7 +423,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       buttons.push(<Button {...upProps} />);
     }
 
-    fileButtons!.forEach(btn => {
+    fileButtons!.forEach((btn, index) => {
       let btnProps: TableButtonProps = {};
       if (isArrayLike(btn)) {
         btnProps = (btn[1] as TableButtonProps) || {};
@@ -432,7 +432,6 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       if (isString(btn) && btn in AttachmentButtonType) {
         const defaultButtonProps = getButtonProps(btn);
         if (defaultButtonProps) {
-          const index = fileButtons!.indexOf(btn);
           switch (btn) {
             case AttachmentButtonType.history:
               if (attachmentUUID && onHistory && (!status || status === 'success' || status === 'done')) {

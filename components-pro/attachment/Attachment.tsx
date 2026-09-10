@@ -1366,12 +1366,22 @@ export default class Attachment extends FormField<AttachmentProps> {
       pictureCardShowName,
       alwaysShowActions = this.getContextConfig('uploadAlwaysShowActions'),
     } = this.props;
-    let mergeButtons:AttachmentButtons[]  = [AttachmentButtonType.download, AttachmentButtonType.remove];
-    if (buttons) {
-      mergeButtons = [...mergeButtons, ...buttons];
-    }
+    const mergeButtons: AttachmentButtons[] = [AttachmentButtonType.download, AttachmentButtonType.remove];
     if (showHistory) {
       mergeButtons.unshift(AttachmentButtonType.history);
+    }
+    if (buttons) {
+      buttons.forEach(button => {
+        const buttonType = Array.isArray(button) ? button[0] : button;
+        if (isString(buttonType)) {
+          const index = mergeButtons.findIndex(item => (Array.isArray(item) ? item[0] : item) === buttonType);
+          if (index !== -1) {
+            mergeButtons[index] = button;
+            return;
+          }
+        }
+        mergeButtons.push(button);
+      });
     }
     const { attachments } = this;
     const attachmentUUID = this.tempAttachmentUUID || this.getValue();
