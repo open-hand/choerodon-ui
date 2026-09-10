@@ -592,7 +592,11 @@ const TableCell: FunctionComponent<TableCellProps> = function TableCell(props) {
   const widthDraggingStyle = (): React.CSSProperties => {
     const draggingStyle: React.CSSProperties = {};
     if (isDragging) {
-      const dom = tableStore.node.element.querySelector(`.${prefixCls}-tbody .${prefixCls}-cell[data-index="${key}"]`);
+      const dom = tableStore.node.element.querySelector(
+        `.${prefixCls}-tbody .${prefixCls}-cell[data-index="${key}"]`,
+      ) || tableStore.node.element.querySelector(
+        `.${prefixCls}-thead .${prefixCls}-cell[data-index="${key}"]`,
+      );
       if (dom) {
         draggingStyle.width = dom.clientWidth;
         draggingStyle.whiteSpace = 'nowrap';
