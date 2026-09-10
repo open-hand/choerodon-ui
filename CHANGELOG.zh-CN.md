@@ -120,6 +120,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复虚拟滚动固定列拖宽后出现空白列的问题。
 - 🐞 `<pro>Select`: 修复 isFlat 自动宽度模式下，选项内容包含加粗文本时切换选项导致输入框宽度逐渐增加的问题。
 - 🐞 `<pro>DataSet`: 部分 record 设置 selectable 为 false 时, 修复 selectAll 和 unSelectAll 的回调参数不准确的问题。
+- 🐞 `<pro>Attachment`: 修复同时隐藏附件列表下载、删除按钮及预览弹窗下载按钮时，列表删除按钮仍然显示的问题。
 
 ## 1.6.8
 

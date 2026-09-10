@@ -120,6 +120,7 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where blank columns appear after resizing fixed columns in virtual scrolling.
 - 🐞 `<pro>Select`: Fix an issue where the input width gradually increased when switching options containing bold text in `isFlat` auto-width mode.
 - 🐞 `<pro>DataSet`: When some records have `selectable` set to `false`, the issue of inaccurate callback parameters for the `selectAll` and `unSelectAll` functions has been fixed.
+- 🐞 `<pro>Attachment`: Fixed the issue where the remove button in the attachment list remained visible when hiding the list download and remove buttons along with the download button in the preview modal.
 
 ## 1.6.8
 
