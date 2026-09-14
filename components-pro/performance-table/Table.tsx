@@ -76,7 +76,7 @@ import { RowDataType, SortType, StandardProps } from './common';
 import ColumnGroup from './ColumnGroup';
 import Column, { ColumnProps } from './Column';
 import Cell from './Cell';
-import HeaderCell from './HeaderCell';
+import HeaderCell, { HeaderCellProps } from './HeaderCell';
 import Spin from '../spin';
 import PerformanceTableQueryBar from './query-bar';
 import ProfessionalBar from './query-bar/TableProfessionalBar';
