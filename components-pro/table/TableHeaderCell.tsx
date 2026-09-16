@@ -189,8 +189,19 @@ const TableHeaderCell: FunctionComponent<TableHeaderCellProps> = function TableH
     }
     const { resizePosition, resizeColumnGroup } = globalRef.current;
     if (resizePosition !== undefined && resizeColumnGroup) {
-      const { column: resizeColumn } = resizeColumnGroup;
-      const newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minColumnWidth(resizeColumn, tableStore)));
+      const { column: resizeColumn, lock: resizeColumnLock } = resizeColumnGroup;
+      const minWidth = minColumnWidth(resizeColumn, tableStore);
+      let newWidth = Math.round(Math.max(resizePosition - globalRef.current.resizeBoundary, minWidth));
+      if (resizeColumnLock === ColumnLock.left) {
+        const { rightColumnGroups, xZoom } = tableStore;
+        const { element } = tableStore.node;
+        if (rightColumnGroups.width) {
+          const scrollbarWidth = tableStore.overflowY ? measureScrollbar() : 0;
+          const rightFixedStart = element.getBoundingClientRect().right / xZoom - rightColumnGroups.width - scrollbarWidth;
+          const maxWidth = Math.max(Math.floor(rightFixedStart - globalRef.current.resizeBoundary), minWidth);
+          newWidth = Math.min(newWidth, maxWidth);
+        }
+      }
       if (newWidth !== resizeColumn.width) {
         const { width } = resizeColumn;
         let group: ColumnGroup | undefined = resizeColumnGroup;
