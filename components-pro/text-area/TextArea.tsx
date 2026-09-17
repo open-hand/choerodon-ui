@@ -96,6 +96,14 @@ export default class TextArea<T extends TextAreaProps> extends TextField<T> {
     return tooltip || TextTooltip.none;
   }
 
+  isTooltipOverflow(element: HTMLElement): boolean {
+    return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
+  }
+
+  isPlaceholderTooltipOverflow(element: HTMLElement): boolean {
+    return this.isTooltipOverflow(element);
+  }
+
   componentDidMount() {
     super.componentDidMount();
     if (this.element && this.autoSize) {
