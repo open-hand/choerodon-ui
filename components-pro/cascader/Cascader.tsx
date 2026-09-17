@@ -10,6 +10,7 @@ import { observer } from 'mobx-react';
 import { action, computed, IReactionDisposer, isArrayLike, observable, reaction, runInAction, toJS } from 'mobx';
 import { Menus, SingleMenu } from 'choerodon-ui/lib/rc-components/cascader';
 import { defaultFieldNames } from 'choerodon-ui/lib/rc-components/cascader/Cascader';
+import { CHILDREN_PAGE_INFO } from 'choerodon-ui/dataset/data-set/DataSet';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -36,6 +37,8 @@ import { ExpandTrigger } from './enum';
 import { Action } from '../trigger/enum';
 
 export const MORE_KEY = '__more__';
+
+const CHILDREN_PAGE_QUERYING = '__CASCADER_CHILDREN_PAGE_QUERYING__';
 
 export interface OptionObject {
   value: any;
@@ -197,6 +200,10 @@ export interface CascaderProps extends TriggerFieldProps {
    * 多选模式是否展示勾选框(异步不支持), 需要注意: 批量勾选时, onChoose/onUnChoose 参数为数组
    */
   checkable?: boolean;
+  /**
+   * 是否启用异步子节点分页
+   */
+  childrenPaging?: boolean;
 }
 
 export class Cascader<T extends CascaderProps> extends TriggerField<T> {
@@ -481,6 +488,7 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
       'pagingOptionContent',
       'loadData',
       'async',
+      'childrenPaging',
       'fieldNames',
       'optionRenderer',
       'checkable',
@@ -557,17 +565,33 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     return recordTree;
   }
 
+  queryMoreChild(parent: Record, page: number): Promise<any> {
+    const { options } = this;
+    if (parent.getState(CHILDREN_PAGE_QUERYING)) {
+      return Promise.resolve();
+    }
+    parent.setState(CHILDREN_PAGE_QUERYING, true);
+    return options.queryMoreChild(parent, page)
+      .finally(() => {
+        runInAction(() => parent.setState(CHILDREN_PAGE_QUERYING, false));
+      });
+  }
+
   @autobind
   handleLoadData(event): Promise<any> {
-    const { loadData } = this.props;
+    const { loadData, childrenPaging, async } = this.props;
     const dataSet = this.options;
     const promises: Promise<any>[] = [];
     if (dataSet) {
       const { idField, parentField } = dataSet.props;
       const { value: record } = event;
       if (idField && parentField && record && !record.children) {
-        const id = record.get(idField);
-        promises.push(dataSet.queryMore(-1, { [parentField]: id }));
+        if (childrenPaging && async && dataSet.paging) {
+          promises.push(this.queryMoreChild(record, 1));
+        } else {
+          const id = record.get(idField);
+          promises.push(dataSet.queryMore(-1, { [parentField]: id }));
+        }
       }
     }
     if (loadData) {
@@ -619,11 +643,13 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
         singleMenuItemRender,
         async,
         loadData,
+        childrenPaging,
         fieldNames,
       },
     } = this;
     let optGroups: any[] = [];
     let selectedValues: any[] = [];
+    const menuPrefixCls = this.getMenuPrefixCls();
 
     // 过滤后的数据不用进行子集遍历
     const treePropsChange = (treeRecord: Record[], isFilterSearch = false) => {
@@ -641,6 +667,22 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
           }
           if (recordItem.children && !isFilterSearch) {
             children = treePropsChange(recordItem.children);
+            if (childrenPaging && async && options.paging) {
+              const { total = 0 } = recordItem.getState(CHILDREN_PAGE_INFO) || {};
+              if (total > recordItem.children.length) {
+                const querying = recordItem.getState(CHILDREN_PAGE_QUERYING) === true;
+                children.push({
+                  key: `${MORE_KEY}-children-${recordItem.id}`,
+                  eventKey: `${MORE_KEY}-children-${recordItem.id}`,
+                  label: <Spin style={{ left: 0 }} size={Size.small} spinning={querying}>{this.getPagingOptionContent()}</Spin>,
+                  className: `${menuPrefixCls}-item ${menuPrefixCls}-item-more`,
+                  isLeaf: true,
+                  disabled: querying,
+                  loading: querying,
+                  childrenPagingParent: recordItem,
+                });
+              }
+            }
           }
           const isLeaf = (async || !!loadData) ? undefined : (this.text ? (!children || !children.length) : !recordItem.children || !recordItem.children.length);
           const itemContent = this.getMenuItem({ record: recordItem, text, value, isFilterSearch });
@@ -737,7 +779,6 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
     }
 
     if (options.paging && options.currentPage < options.totalPage && menuMode !== MenuMode.single) {
-      const menuPrefixCls = this.getMenuPrefixCls();
       optGroups.push({
         key: MORE_KEY,
         eventKey: MORE_KEY,
@@ -1159,6 +1200,12 @@ export class Cascader<T extends CascaderProps> extends TriggerField<T> {
   handleMenuSelect(targetOption, _menuIndex, isClickTab, trigger) {
     const { onChoose, onUnChoose, changeOnSelect, async, loadData } = this.props;
     if (!targetOption || targetOption.disabled) {
+      return;
+    }
+    if (targetOption.childrenPagingParent) {
+      const parent = targetOption.childrenPagingParent;
+      const { currentPage = 1 } = parent.getState(CHILDREN_PAGE_INFO) || {};
+      this.queryMoreChild(parent, currentPage + 1);
       return;
     }
     if (targetOption.key === MORE_KEY) {

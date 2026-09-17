@@ -42,6 +42,7 @@ subtitle: 级联选择
 | async |	用于数据源异步加载选项，无法与 showSearch 一起使用 |	boolean |
 | optionRenderer(1.5.6) | 渲染 Option 本文的钩子。isFilterSearch 代表是否搜索过滤中 | ({ text, value, record, dataSet, isFilterSearch }) => ReactNode |  |
 | checkable | 多选模式是否展示勾选框(异步不支持), 需要注意: 批量勾选时, onChoose/onUnChoose 参数为数组 | boolean | - |
+| childrenPaging | 是否启用异步子节点分页，需同时设置 async。关联 DataSet 时, 选项数据源 paging 需设置为 'server' | boolean | - |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 
