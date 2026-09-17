@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
-import OverflowTip from 'choerodon-ui/pro/lib/overflow-tip';
+import isOverflow from 'choerodon-ui/pro/lib/overflow-tip/util';
+import { hide, show } from 'choerodon-ui/pro/lib/tooltip/singleton';
+import ConfigContext from '../../config-provider/ConfigContext';
 import Icon from '../../icon';
 import Checkbox from '../../checkbox/Checkbox';
 
 export default class Menus extends Component {
+  static contextType = ConfigContext;
+
   static defaultProps = {
     options: [],
     value: [],
@@ -31,8 +35,38 @@ export default class Menus extends Component {
   componentDidUpdate(prevProps) {
     if (!prevProps.visible && this.props.visible) {
       this.scrollActiveItemToView();
+    } else if (prevProps.visible && !this.props.visible) {
+      this.hideTooltip();
     }
   }
+
+  componentWillUnmount() {
+    this.hideTooltip();
+  }
+
+  handleLabelMouseEnter = (e, title) => {
+    const { currentTarget } = e;
+    if (title && isOverflow(currentTarget)) {
+      const { getTooltipTheme, getTooltipPlacement } = this.context;
+      show(currentTarget, {
+        title,
+        theme: getTooltipTheme('select-option'),
+        placement: getTooltipPlacement('select-option'),
+      });
+      this.tooltipShown = true;
+    }
+  };
+
+  hideTooltip = () => {
+    if (this.tooltipShown) {
+      hide();
+      this.tooltipShown = false;
+    }
+  };
+
+  handleLabelMouseLeave = () => {
+    this.hideTooltip();
+  };
 
   get expandIcon() {
     const { expandIcon } = this.props;
@@ -140,9 +174,12 @@ export default class Menus extends Component {
         {...expandProps}
       >
         {checkbox}
-        <OverflowTip title={title}>
-          <span>{option[labelField]}</span>
-        </OverflowTip>
+        <span
+          onMouseEnter={title ? e => this.handleLabelMouseEnter(e, title) : undefined}
+          onMouseLeave={title ? this.handleLabelMouseLeave : undefined}
+        >
+          {option[labelField]}
+        </span>
         {expandIconNode}
       </li>
     );

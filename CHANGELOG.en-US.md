@@ -31,6 +31,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `batchMaxFileCount`, `alwaysShowActions` property.
 - 🌟 `<pro>Table`: Added `duplicateKey` property.
 - 🌟 `<pro>PerformanceTable`: Added `customizedColumnProps` property and optimized the customized button style.
+- 🌟 `<pro>Cascader`: Added `childrenPaging` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -75,6 +76,7 @@ timeline: true
 - 💄 `<pro>DataSet`: Optimize the `create` method. After setting the `childrenField`, it will recursively create child records.
 - 💄 `<pro>Table`: Optimize the display of the refresh button in the `filterBar`.
 - 💄 `<pro>Table`: Optimized column resizing by preventing left fixed columns from being resized beyond the start of the right fixed columns.
+- 💄 `<pro>Cascader`: Optimize the asynchronous loading of large data at the quantum level to solve the rendering lag problem.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.

@@ -423,33 +423,48 @@ export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: R
         appended = true;
       }
     } else if (parentField && idField) {
+      const recordsById = new Map<any, Record>();
+      const recordKeys = new Set<any>();
+      const childrenKeys = new WeakMap<Record, Set<any>>();
+      records.forEach((record) => {
+        const id = record.get(idField);
+        const { key } = record;
+        if (!Number.isNaN(id)) {
+          recordsById.set(id, record);
+        }
+        if (!Number.isNaN(key)) {
+          recordKeys.add(key);
+        }
+      });
       appendData.forEach((record, index) => {
         const parentId = record.get(parentField);
         const { key } = record;
-        let found;
-        let foundParent;
-        records.some(r => {
-          if (r.get(idField) === parentId) {
-            record.parent = r;
-            const { children } = r;
-            if (children) {
-              if (!children.find(child => child.key === key)) {
-                if (isNumber(dataIndex)) {
-                  children.splice(dataIndex + index, 0, record);
-                } else {
-                  children.push(record);
-                }
-              }
-            } else {
-              r.children = [record];
+        const foundParent = !Number.isNaN(parentId) ? recordsById.get(parentId) : undefined;
+        const found = !Number.isNaN(key) && recordKeys.has(key);
+        if (foundParent) {
+          record.parent = foundParent;
+          const { children } = foundParent;
+          if (children) {
+            let keys = childrenKeys.get(foundParent);
+            if (!keys) {
+              keys = new Set(children.map(child => child.key));
+              childrenKeys.set(foundParent, keys);
             }
-            foundParent = r;
+            if (Number.isNaN(key) || !keys.has(key)) {
+              if (isNumber(dataIndex)) {
+                children.splice(dataIndex + index, 0, record);
+              } else {
+                children.push(record);
+              }
+              if (!Number.isNaN(key)) {
+                keys.add(key);
+              }
+            }
+          } else {
+            foundParent.children = [record];
+            childrenKeys.set(foundParent, new Set([key]));
           }
-          if (r.key === key) {
-            found = r;
-          }
-          return found && foundParent;
-        });
+        }
         if (!found) {
           if (isNumber(dataIndex) && foundParent) {
             originalData.splice(foundParent.index + 1 + dataIndex + index, 0, record);
@@ -460,6 +475,13 @@ export function appendRecords(dataSet: DataSet, appendData: Record[], parent?: R
           } else {
             originalData.push(record);
             records.push(record);
+          }
+          const id = record.get(idField);
+          if (!Number.isNaN(id)) {
+            recordsById.set(id, record);
+          }
+          if (!Number.isNaN(key)) {
+            recordKeys.add(key);
           }
         }
       });
