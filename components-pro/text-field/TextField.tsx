@@ -726,6 +726,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     return placeholders[0];
   }
 
+  isTooltipOverflow(element: HTMLElement): boolean {
+    return isOverflow(element);
+  }
+
   showTooltip(e): boolean {
     if (super.showTooltip(e)) {
       return true;
@@ -737,7 +741,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const tooltipPlacement = this.disabled ? getTooltipPlacement('text-field-disabled') : getTooltipPlacement('text-field');
     const tooltipTheme = this.disabled ? getTooltipTheme('text-field-disabled') : getTooltipTheme('text-field');
     if (judgeOverflowElement && !this.multiple && title) {
-      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+      if (tooltip === TextTooltip.always || (tooltip === TextTooltip.overflow && this.isTooltipOverflow(judgeOverflowElement))) {
         show(judgeOverflowElement, {
           title,
           placement: tooltipPlacement || 'right',
@@ -749,7 +753,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         const tooltipType = tooltip[0];
         const TextTooltipProps = tooltip[1] || {};
         const { mouseEnterDelay } = TextTooltipProps;
-        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && isOverflow(judgeOverflowElement))) {
+        if (tooltipType === TextTooltip.always || (tooltipType === TextTooltip.overflow && this.isTooltipOverflow(judgeOverflowElement))) {
           show(judgeOverflowElement, {
             title: TextTooltipProps.title ? TextTooltipProps.title : title,
             placement: tooltipPlacement || 'right',
@@ -763,6 +767,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const placeholderTooltip = this.showPlaceholderTooltip(e);
     if (placeholderTooltip) return placeholderTooltip;
     return false;
+  }
+
+  isPlaceholderTooltipOverflow(element: HTMLElement): boolean {
+    return isOverflow(element, undefined, true);
   }
 
   showPlaceholderTooltip(_): boolean {
@@ -780,7 +788,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       };
       if (element && title) {
         if (tooltip === TextTooltip.always ||
-          (tooltip === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && isOverflow(element, undefined, true))))) {
+          (tooltip === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && this.isPlaceholderTooltipOverflow(element))))) {
           show(this.multiple || this.range ? wrapper : element, {
             title,
             placement: tooltipPlacement || 'right',
@@ -793,7 +801,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
           const TextTooltipProps = tooltip[1] || {};
           const { mouseEnterDelay } = TextTooltipProps;
           if (tooltipType === TextTooltip.always ||
-            (tooltipType === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && isOverflow(element, undefined, true))))) {
+            (tooltipType === TextTooltip.overflow && (isPlaceholderOverflow() || (!this.multiple && this.isPlaceholderTooltipOverflow(element))))) {
             show(this.multiple || this.range ? wrapper : element, {
               title: TextTooltipProps.title ? TextTooltipProps.title : title,
               placement: tooltipPlacement || 'right',
