@@ -66,10 +66,8 @@ export default class AutoComplete<T extends AutoCompleteProps> extends Select<T>
   }
 
   renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
-    const { prefixCls } = this;
-    return maxLength && maxLength > 0 ? (
-      <div key="length-info" className={`${prefixCls}-length-info`}>{`${inputLength}/${maxLength}`}</div>
-    ) : null;
+    return maxLength && maxLength > 0
+      ? this.renderMeasuredLengthInfo(`${inputLength}/${maxLength}`) : null;
   }
 
   @autobind

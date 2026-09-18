@@ -127,6 +127,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: Fixed the issue where the remove button in the attachment list remained visible when hiding the list download and remove buttons along with the download button in the preview modal.
 - 🐞 `<pro>Table`: Fixed the issue where the dragged row width shrank when `rowDraggable` and `virtual` were enabled with only one row of data.
 - 🐞 `<pro>TextArea`: Fixed the issue where the Tooltip was displayed when `tooltip` was set to `overflow`, even though the wrapped content was fully visible.
+- 🐞 `<pro>TextField`: Fixed the issue where the length info width calculation was inaccurate.
 
 ## 1.6.8
 

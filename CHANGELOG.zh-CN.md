@@ -127,6 +127,7 @@ timeline: true
 - 🐞 `<pro>Attachment`: 修复同时隐藏附件列表下载、删除按钮及预览弹窗下载按钮时，列表删除按钮仍然显示的问题。
 - 🐞 `<pro>Table`: 修复仅有一行数据时，同时开启 rowDraggable 和 virtual 属性后拖拽行宽度收缩的问题。
 - 🐞 `<pro>TextArea`: 修复配置 tooltip 为 overflow 时，内容换行且完整显示仍会展示 Tooltip 的问题。
+- 🐞 `<pro>TextField`: 修复长度信息的宽度计算不准确的问题。
 
 ## 1.6.8
 

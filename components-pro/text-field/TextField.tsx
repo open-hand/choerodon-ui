@@ -56,6 +56,7 @@ import { toRangeValue } from '../field/utils';
 import { TooltipProps } from '../tooltip/Tooltip';
 import { copyToClipboard } from '../_util/clipboardUtils';
 import { $l } from '../locale-context';
+import LengthInfo from './LengthInfo';
 
 const defaultWrap: (node: ReactElement) => ReactElement = node => node;
 
@@ -217,7 +218,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   lengthElement?: ReactNode;
 
-  lengthInfoWidth?: number;
+  @observable lengthInfoWidth?: number;
 
   suffixWidth?: number;
 
@@ -938,8 +939,24 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
+  @autobind
+  @action
+  handleLengthInfoWidthChange(width?: number) {
+    if (this.lengthInfoWidth !== width) {
+      this.lengthInfoWidth = width;
+    }
+  }
+
+  renderMeasuredLengthInfo(children: ReactNode): ReactNode {
+    return (
+      <LengthInfo key="length-info" className={`${this.prefixCls}-length-info`} onWidthChange={this.handleLengthInfoWidthChange}>
+        {children}
+      </LengthInfo>
+    );
+  }
+
   renderLengthInfo(maxLength?: number, inputLength?: number): ReactNode {
-    const { prefixCls, showLengthInfo } = this;
+    const { showLengthInfo } = this;
     let children: string | undefined;
     if (showLengthInfo === true) {
       children = isNil(maxLength)
@@ -948,9 +965,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } else if (showLengthInfo === 'auto' && !isNil(maxLength) && maxLength > 0 && inputLength && (inputLength / maxLength >= 0.8)) {
       children = `${inputLength}/${maxLength}`;
     }
-    return children ? (
-      <div key="length-info" className={`${prefixCls}-length-info`}>{children}</div>
-    ) : null;
+    return children ? this.renderMeasuredLengthInfo(children) : null;
   }
 
   // 处理 form 中的 labelLayout 为 placeholder 情况避免以前 placeholder 和 label 无法区分彼此。
@@ -1358,7 +1373,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   getSuffixWidth() {
     let wrapperWidth = 0;
     if (this.suffixRef) {
-      wrapperWidth = this.suffixRef.getBoundingClientRect().width;
+      wrapperWidth = this.suffixRef.offsetWidth;
       return Math.max(this.suffixWidth || 0, wrapperWidth);
     }
     return this.suffixWidth;
@@ -1366,11 +1381,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
 
   setInputStylePadding(otherProps: any): void {
     // 存在lengthInfo, 或suffix, 或clearButton, 计算paddingRight
-    if (this.lengthInfoWidth || this.getSuffixWidth() || this.innerButtonWidth) {
+    const lengthInfoWidth = this.lengthElement ? this.lengthInfoWidth : undefined;
+    const innerButtonWidth = lengthInfoWidth && this.clearButton && this.innerButtonWidth
+      ? Math.max(this.innerButtonWidth, toPx('0.24rem')!) : this.innerButtonWidth;
+    if (lengthInfoWidth || this.getSuffixWidth() || innerButtonWidth) {
       let paddingRight = this.isSuffixClick
-        ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + this.innerButtonWidth
-        : defaultTo(this.lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), this.innerButtonWidth);
-      if (this.lengthInfoWidth && !this.getSuffixWidth() && !this.innerButtonWidth) {
+        ? defaultTo(lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0) + innerButtonWidth
+        : defaultTo(lengthInfoWidth, 0) + Math.max(defaultTo(this.getSuffixWidth(), 0), innerButtonWidth);
+      if (lengthInfoWidth) {
         paddingRight += toPx('0.03rem')!;
       }
       if (paddingRight >= toPx('0.25rem')!) {
@@ -1396,15 +1414,11 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       const inputLength = editorTextInfo.text.length;
       const maxLength = this.getProp('maxLength');
       this.lengthElement = this.renderLengthInfo(maxLength, inputLength);
-
-      if (this.lengthElement) {
-        this.lengthInfoWidth = this.measureTextWidth(!isNil(maxLength) ? `${inputLength} / ${maxLength}` : ` ${inputLength}`);
-      } else {
-        this.lengthInfoWidth = undefined;
-      }
     } else {
       this.lengthElement = undefined;
-      this.lengthInfoWidth = undefined;
+    }
+    if (!this.lengthElement) {
+      this.handleLengthInfoWidthChange(undefined);
     }
   }
 
@@ -1474,7 +1488,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     const classString = classNames(`${prefixCls}-suffix`, {
       [`${prefixCls}-allow-clear`]: clearButton && !isSuffixClick,
     });
-    const right = pxToRem(this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
+    const right = pxToRem(this.lengthElement && this.lengthInfoWidth ? this.lengthInfoWidth + toPx('0.03rem')! : undefined, true);
     const eventsProps = {
       onMouseDown,
       onMouseUp,
@@ -1650,10 +1664,14 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     } = this;
     if (clearButton) {
       let right: number | undefined;
-      if (this.lengthInfoWidth || this.getSuffixWidth()) {
+      const lengthInfoWidth = this.lengthElement ? this.lengthInfoWidth : undefined;
+      if (lengthInfoWidth || this.getSuffixWidth()) {
         right = this.isSuffixClick
-          ? defaultTo(this.lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0)
-          : this.lengthInfoWidth;
+          ? defaultTo(lengthInfoWidth, 0) + defaultTo(this.getSuffixWidth(), 0)
+          : lengthInfoWidth;
+        if (lengthInfoWidth) {
+          right = defaultTo(right, 0) + toPx('0.03rem')!;
+        }
       }
       return this.wrapperInnerSpanButton(
         isMobile() && !this.isFocused
