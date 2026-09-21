@@ -916,7 +916,7 @@ export default class Lov extends Select<LovProps> {
   setText(text?: string): void {
     if (text === undefined || text === '') {
       this.searching = false;
-    } else {
+    } else if (this.searchText !== text) {
       this.searching = true;
     }
     super.setText(text);

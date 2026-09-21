@@ -128,6 +128,8 @@ timeline: true
 - 🐞 `<pro>Table`: Fixed the issue where the dragged row width shrank when `rowDraggable` and `virtual` were enabled with only one row of data.
 - 🐞 `<pro>TextArea`: Fixed the issue where the Tooltip was displayed when `tooltip` was set to `overflow`, even though the wrapped content was fully visible.
 - 🐞 `<pro>TextField`: Fixed the issue where the length info width calculation was inaccurate.
+- 🐞 `<pro>Lov`: Fixed an issue where the Lov component could remain stuck in the loading state after entering text with a Chinese IME and pressing Enter.
+
 
 ## 1.6.8
 

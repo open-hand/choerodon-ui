@@ -128,6 +128,7 @@ timeline: true
 - 🐞 `<pro>Table`: 修复仅有一行数据时，同时开启 rowDraggable 和 virtual 属性后拖拽行宽度收缩的问题。
 - 🐞 `<pro>TextArea`: 修复配置 tooltip 为 overflow 时，内容换行且完整显示仍会展示 Tooltip 的问题。
 - 🐞 `<pro>TextField`: 修复长度信息的宽度计算不准确的问题。
+- 🐞 `<pro>Lov`: 修复使用中文输入法输入后按回车，可能持续处于 loading 状态的问题。
 
 ## 1.6.8
 
