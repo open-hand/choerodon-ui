@@ -250,7 +250,6 @@ const PictureViewer: FunctionComponent<PictureViewerProps & { modal?: ModalChild
               src={src}
               ref={pictureRef}
               objectFit="scale-down"
-              status="loaded"
               preview={false}
               lazy={false}
               draggable={false}
