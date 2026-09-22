@@ -91,6 +91,16 @@
     .@{c7n-pro-prefix}-picture {
       width: 100%;
       height: 100%;
+
+      .@{c7n-prefix}-progress-loading.@{c7n-prefix}-progress-loading .@{c7n-prefix}-progress-inner circle {
+        stroke: #fff;
+      }
+
+      &-loading {
+        width: calc(100% - 0.2rem);
+        margin: 0 0.1rem;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
     }
   }
 

@@ -77,6 +77,8 @@ timeline: true
 - 💄 `<pro>Table`: Optimize the display of the refresh button in the `filterBar`.
 - 💄 `<pro>Table`: Optimized column resizing by preventing left fixed columns from being resized beyond the start of the right fixed columns.
 - 💄 `<pro>Cascader`: Optimize the asynchronous loading of large data at the quantum level to solve the rendering lag problem.
+- 💄 `<pro>Picture`: Optimize the `loading` style of the picture preview.
+- 💄 `Notification`: Optimize the maximum width to display better on narrow screens.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
