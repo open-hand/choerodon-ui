@@ -354,18 +354,50 @@ const TableRow: FunctionComponent<TableRowProps> = function TableRow(props) {
         }
         const Element = isExpanded || !parityRow ? 'tr' : 'div';
         const hasExpandTd = expandIconAsCell && !tableStore.expandIconColumnIndex;
+        const sticky = isStickySupport();
+        const { leafs, leftLeafs, rightLeafs } = columnGroups;
+        const leftCount = !lock ? leftLeafs.length : 0;
+        const rightCount = !lock ? rightLeafs.length : 0;
+        const centerCount = leafs.length - leftCount - rightCount;
+        const splitExpandedRow = !lock && tableStore.overflowX && centerCount > 0 && (leftCount > 0 || rightCount > 0);
+        const leftStyle: CSSProperties | undefined = sticky && leftCount ? { left: 0 } : undefined;
+        const rightStyle: CSSProperties | undefined = sticky && rightCount ? { right: 0 } : undefined;
         expandRows.push(
           <Element {...expandRowExternalProps} {...rowProps}>
-            {hasExpandTd && <td className={`${prefixCls}-cell`} key={EXPAND_KEY} />}
+            {hasExpandTd && (
+              <td
+                className={classNames(`${prefixCls}-cell`, {
+                  [`${prefixCls}-cell-fix-left`]: splitExpandedRow && sticky && leftCount > 0,
+                })}
+                style={splitExpandedRow ? leftStyle : undefined}
+                key={EXPAND_KEY}
+              />
+            )}
+            {splitExpandedRow && leftCount > (hasExpandTd ? 1 : 0) && (
+              <td
+                key={`${EXPAND_KEY}-left`}
+                className={classNames(`${prefixCls}-cell`, { [`${prefixCls}-cell-fix-left`]: sticky })}
+                style={sticky && hasExpandTd ? { left: pxToRem(leafs[0].width, true) } : leftStyle}
+                colSpan={leftCount - (hasExpandTd ? 1 : 0)}
+              />
+            )}
             <td
               key={`${EXPAND_KEY}-rest`}
               className={`${prefixCls}-cell`}
-              colSpan={columnGroups.leafs.length - (hasExpandTd ? 1 : 0)}
+              colSpan={splitExpandedRow ? centerCount : leafs.length - (hasExpandTd ? 1 : 0)}
             >
-              <div className={`${prefixCls}-cell-inner`}>
+              <div className={`${prefixCls}-cell-inner`} style={lock && !sticky ? { visibility: 'hidden' } : undefined}>
                 {expandedRowRenderer({ dataSet, record })}
               </div>
             </td>
+            {splitExpandedRow && rightCount > 0 && (
+              <td
+                key={`${EXPAND_KEY}-right`}
+                className={classNames(`${prefixCls}-cell`, { [`${prefixCls}-cell-fix-right`]: sticky })}
+                style={rightStyle}
+                colSpan={rightCount}
+              />
+            )}
           </Element>,
         );
       }

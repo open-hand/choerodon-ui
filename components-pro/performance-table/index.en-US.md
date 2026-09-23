@@ -105,7 +105,7 @@ scrollLeft: (left: number) => void;
 | Property      | Type `(Default)`                                 | Description                                                                                                 |
 | ------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | align         | enum: 'left','center','right'                    | Alignment                                                                                                   |
-| colSpan       | number                                           | Merges column cells when the `dataKey` value for the merged column is `null` or `undefined`; can also be returned from `onCell` for row-specific configuration. |
+| colSpan       | number                                           | Merges column cells when the `dataKey` value for the merged column is `null` or `undefined`; can also be returned from `onCell` for row-specific configuration. When using dynamic `colSpan` with virtual scrolling, configure a column-level `colSpan` as well to disable horizontal column virtualization. |
 | fixed         | boolean, 'left', 'right'                         | Fixed column                                                                                                |
 | flexGrow      | number                                           | Set the column width automatically adjusts, when set `flexGrow` cannot set `width` property |
 | minWidth      | number`(200)`                                    | When you use `flexGrow`, you can set a minimum width by `minwidth`                                          |

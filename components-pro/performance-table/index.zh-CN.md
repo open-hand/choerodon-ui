@@ -101,7 +101,7 @@ scrollLeft: (left: number) => void;
 | 属性名称      | 类型 `(默认值)`                                  | 描述                                                                                  |
 | ------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
 | align         | enum: 'left','center','right'                    | 对齐方式                                                                              |
-| colSpan       | number                                           | 合并列单元格，当被合并列的 `dataKey` 对应的值为 `null` 或者 `undefined`时，才会合并；也可通过 `onCell` 返回 `colSpan` 按行配置。 |
+| colSpan       | number                                           | 合并列单元格，当被合并列的 `dataKey` 对应的值为 `null` 或者 `undefined`时，才会合并；也可通过 `onCell` 返回 `colSpan` 按行配置。虚拟滚动下使用动态 `colSpan` 时，必须同时配置列级 `colSpan`，以关闭横向列虚拟化。 |
 | fixed         | boolean, 'left', 'right'                         | 固定列                                                                                |
 | flexGrow      | number                                           | 设置列宽自动调节，当设置了 `flexGrow` 就不能设置 `width` 属性          |
 | minWidth      | number`(200)`                                    | 当使用了 `flexGrow` 以后，可以通过 `minWidth` 设置一个最小宽度                        |

@@ -3114,12 +3114,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       const maxTop = minTop + height + rowExpandedHeight!;
       const isCustomRowHeight = isFunction(rowHeight);
       const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree);
+      const hasColSpan = bodyCells.some(cell => cell.props.colSpan);
 
       /**
-       * 如果开启了虚拟滚动 则计算列显示
-       * 判断是否有缓存，如果minLeft 没有变化，就取缓存的值，有变化就重新计算
+       * 如果开启了虚拟滚动且没有跨列配置，则计算列显示。
+       * 跨列配置需要完整列集合，以保证合并起始列和目标列不会被裁剪。
        */
-      if (virtualized && contentWidth > width && (this._cacheScrollX !== minLeft || !this._cacheRenderCols.length)) {
+      if (!hasColSpan && virtualized && contentWidth > width && (this._cacheScrollX !== minLeft || !this._cacheRenderCols.length)) {
         // 计算渲染列数量
         let colIndex: number = 0; // 列索引
         let displayColWidth: number = 0; // 显示列的宽度
@@ -3190,6 +3191,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         }
         this._cacheScrollX = minLeft;
         this._cacheRenderCols = renderCols;
+      } else if (hasColSpan) {
+        renderCols = bodyCells;
+        this._cacheRenderCols = [];
       } else {
         renderCols = this._cacheRenderCols.length ? this._cacheRenderCols : bodyCells;
       }
