@@ -1724,7 +1724,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getFilterMenu(): ReactNode {
     const { onReset = noop, defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery,
-      fuzzyQueryOnly, tableFilterBarButtonIcon } = this.props;
+      fuzzyQueryOnly, tableFilterBarButtonIcon, refreshBtn } = this.props;
     const { prefixCls } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
@@ -1735,9 +1735,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
       return (
         <div className={`${prefixCls}-filter-menu`}>
           {prefix}
+          {fuzzyQuery}
           {advancedFilter}
           {combineSort}
-          {fuzzyQuery}
+          {refreshBtn && <span className={`${prefixCls}-filter-search-divide`} />}
+          {this.getExpandNode(false)}
           {suffix}
         </div>
       );
@@ -1898,6 +1900,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const selectFields = dataSet.getState(SELECTFIELDS) || [];
     const filterBarCls = classNames(`${prefixCls}-dynamic-filter-bar`, {
       [`${prefixCls}-dynamic-filter-bar-single-line`]: showSingleLine,
+      [`${prefixCls}-dynamic-filter-bar-fuzzy-query-only`]: fuzzyQueryOnly,
     });
     if (fuzzyQueryOnly) {
       return (
