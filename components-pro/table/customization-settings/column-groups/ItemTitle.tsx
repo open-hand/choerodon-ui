@@ -16,7 +16,7 @@ export interface ItemTitleProps {
 const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
   const { record, provided } = props;
   const { dataSet, tableStore, aggregation } = useContext(TableContext);
-  const { columnTitleEditable } = tableStore;
+  const { columnTitleEditable, customizedUseHeader } = tableStore;
   const editing = record.getState('editing');
   const handleEditBlur = useCallback(() => {
     record.setState('editing', false);
@@ -25,10 +25,12 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
     record.set('title', value);
   }, [record]);
   const title = record.get('title');
+  // 个性化面板仅用于展示列名：customizedUseHeader 为 false 时不消费列 header
+  // （函数式 header 可能返回查询组件等重节点，渲染进列设置列表会异常），回退到 title / 字段 label
   const header = getHeader({
     name: record.get('name'),
     title,
-    header: record.get('header'),
+    header: customizedUseHeader ? record.get('header') : undefined,
     dataSet,
     aggregation,
   });

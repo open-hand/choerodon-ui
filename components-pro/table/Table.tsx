@@ -790,6 +790,11 @@ export interface TableProps extends DataSetComponentProps {
    */
   customizable?: boolean | undefined;
   /**
+   * 个性化面板是否使用列 header 的渲染结果
+   * @default true
+   */
+  customizedUseHeader?: boolean;
+  /**
    * 个性化加载回调函数
    */
   onCustomizedLoad?: (TableCustomized) => Promise<any>;
@@ -2086,6 +2091,7 @@ export default class Table extends DataSetComponent<TableProps> {
       'treeAsync',
       'treeLoadData',
       'customizable',
+      'customizedUseHeader',
       'customizedBtn',
       'customizedCode',
       'dragColumn',

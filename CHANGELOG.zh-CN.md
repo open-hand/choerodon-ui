@@ -32,6 +32,7 @@ timeline: true
 - 🌟 `<pro>Table`: 新增 duplicateKey 属性。
 - 🌟 `<pro>PerformanceTable`: 新增 customizedColumnProps 属性并优化个性化按钮样式。
 - 🌟 `<pro>Cascader`: 新增 childrenPaging 属性。
+- 🌟 `<pro>Table`: 新增 customizedUseHeader 属性, 用于配置个性化面板是否使用列 header 的渲染结果。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
