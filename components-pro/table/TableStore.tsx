@@ -1638,6 +1638,14 @@ export default class TableStore {
     return this.getConfig('tableColumnTitleEditable') === true;
   }
 
+  /**
+   * 个性化面板是否使用列 header 的渲染结果
+   * @default true
+   */
+  get customizedUseHeader(): boolean {
+    return this.props.customizedUseHeader !== false;
+  }
+
   get heightChangeable(): boolean {
     if ('heightChangeable' in this.props) {
       return this.props.heightChangeable!;
