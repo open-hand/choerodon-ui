@@ -28,6 +28,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
       isHeaderCell,
       headerHeight,
       verticalAlign,
+      wordWrap,
       parent,
       left: cellLeft,
       fixed,
@@ -104,6 +105,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
             sortType={sortType}
             onSortColumn={onSortColumn}
             verticalAlign={verticalAlign}
+            wordWrap={wordWrap}
             headerHeight={headerHeight / 2}
             {...otherHeaderProps}
           >
@@ -127,6 +129,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
               width={nextWidth}
               header={groupHeader}
               verticalAlign={verticalAlign}
+              wordWrap={wordWrap}
               headerHeight={(headerHeight / 3) * 2}
               headerLeft={cellLeft}
               fixed={fixed}
@@ -165,6 +168,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
                 headerHeight={headerHeight}
                 header={groupHeader}
                 verticalAlign={verticalAlign}
+                wordWrap={wordWrap}
                 headerLeft={cellLeft}
                 fixed={fixed}
               >
@@ -236,6 +240,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
       const firstMerge = mapGroup[0]
       const width = mapGroup.reduce((total, col) => total += col.width, 0)
       const { align, verticalAlign, headerHeight, header, fixed, index } = firstMerge
+      const wordWrap = cells[index].props.wordWrap;
       nextCells.push(
         cloneCell(cells[index], {
           width,
@@ -248,6 +253,7 @@ function mergeCells(cells, leftFixedLength: number = 0) {
               headerHeight={headerHeight / 3 * 2}
               header={header}
               verticalAlign={verticalAlign}
+              wordWrap={wordWrap}
               headerLeft={cells[index].props.left}
               fixed={fixed}
             >

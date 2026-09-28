@@ -237,7 +237,7 @@ class Cell extends React.PureComponent<CellProps> {
     // for example, check box are not showing in the middle of the cell anymore.
     const contentStyles: React.CSSProperties = {
       width,
-      height: nextHeight,
+      height: wordWrap && !verticalAlign ? undefined : nextHeight,
       textAlign: align,
       [rtl ? 'paddingRight' : 'paddingLeft']: this.isTreeCol() ? depth! * LAYER_WIDTH + (hasChildren ? 8 : 36) : null,
     };
@@ -279,7 +279,7 @@ class Cell extends React.PureComponent<CellProps> {
       ) : <span>{cell}</span>;
     }
     const content = wordWrap ? (
-      <div className={this.addPrefix('wrap')}>
+      <div className={classNames(this.addPrefix('wrap'), defaultClassPrefix('performance-table-cell-wrap'))}>
         {this.renderTreeNodeExpandIcon()}
         {cell}
       </div>

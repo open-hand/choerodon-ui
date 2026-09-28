@@ -79,6 +79,7 @@ cols: 1
 | components |  [TableComponents](#TableComponents) | 覆盖默认的 table 元素 |
 | useMouseBatchChoose |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
 | customizedColumnProps |  ColumnProps | The column properties where the customized button is located can be used to customize the column's properties. Note: customized column only have a header part. |
+| headWordWrap                 | boolean                                                                           | Whether the header cell wraps automatically, default is `wordWrap`                                               |
 
 
 

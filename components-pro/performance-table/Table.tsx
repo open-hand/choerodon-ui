@@ -14,6 +14,7 @@ import isNil from 'lodash/isNil';
 import uniq from 'lodash/uniq';
 import BScroll from '@better-scroll/core';
 import bindElementResize, { unbind as unbindElementResize } from 'element-resize-event';
+import ResizeObserver from 'resize-observer-polyfill';
 import { getTranslateDOMPositionXY } from 'dom-lib/lib/transition/translateDOMPositionXY';
 import { addStyle, getHeight, getOffset, getWidth, on, scrollLeft, scrollTop, WheelHandler } from 'dom-lib';
 import {
@@ -279,6 +280,7 @@ export interface TableProps extends StandardProps {
   rtl?: boolean;
   width?: number;
   wordWrap?: boolean;
+  headWordWrap?: boolean;
   virtualized?: boolean;
   renderTreeToggle?: (
     expandButton: React.ReactNode,
@@ -366,6 +368,7 @@ interface TableState {
   contentHeight: number;
   contentWidth: number;
   tableRowsMaxHeight: number[];
+  headerWrapHeight: number;
   isColumnResizing?: boolean;
   expandedRowKeys: string[] | number[];
   searchText: string;
@@ -425,6 +428,7 @@ const propTypeKeys = [
   'shouldUpdateScroll',
   'translate3d',
   'wordWrap',
+  'headWordWrap',
   'width',
   'virtualized',
   'isTree',
@@ -542,6 +546,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   wheelWrapperRef: React.RefObject<any>;
 
   tableRows: { [key: string]: [HTMLElement, any] } = {};
+  wrapResizeObserver = new ResizeObserver(() => this.calculateRowMaxHeight());
+  observedWraps = new Set<Element>();
   mounted = false;
   disableEventsTimeoutId = null;
   scrollY = 0;
@@ -623,6 +629,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       contentHeight: 0,
       contentWidth: 0,
       tableRowsMaxHeight: [],
+      headerWrapHeight: 0,
       sortType: defaultSortType,
       scrollY: 0,
       isScrolling: false,
@@ -838,7 +845,6 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const rowSelection = getRowSelection(this.props);
     const { data: nextData, autoHeight: nextAutoHeight, onDataUpdated, shouldUpdateScroll, columns: nextColumns, children: nextChildren, rowDraggable: nextRowDraggable, customDragDropContenxt } = props;
     if (data !== nextData) {
-      this.calculateRowMaxHeight();
       if (customDragDropContenxt) {
         this.updatePosition();
       }
@@ -899,12 +905,20 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       prevState.contentHeight !== state.contentHeight ||
       // 当 expandedRowKeys 发生变化，需要重新计算 Table 高度，如果重算会导致滚动条不显示。
       prevState.expandedRowKeys !== state.expandedRowKeys ||
-      prevProps.expandedRowKeys !== props.expandedRowKeys
+      prevProps.expandedRowKeys !== props.expandedRowKeys ||
+      prevState.tableRowsMaxHeight !== state.tableRowsMaxHeight ||
+      prevState.headerWrapHeight !== state.headerWrapHeight
     ) {
-      this.calculateTableContextHeight(prevProps);
+      this.calculateTableContextHeight(prevProps, prevState);
     }
 
     this.calculateTableContentWidth(prevProps);
+    if (
+      this.props.wordWrap || prevProps.wordWrap
+      || this.props.headWordWrap !== undefined || prevProps.headWordWrap !== undefined
+    ) {
+      this.calculateRowMaxHeight(data !== nextData);
+    }
     if (virtualized) {
       this.calculateTableWidth();
     }
@@ -921,6 +935,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   componentWillUnmount() {
+    this.wrapResizeObserver.disconnect();
     this.wheelHandler = null;
     const { current } = this.tableRef;
     if (current) {
@@ -996,8 +1011,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
    * 获取表头高度
    */
   getTableHeaderHeight() {
-    const { headerHeight, showHeader } = this.props;
-    return showHeader ? headerHeight! : 0;
+    const { headerHeight, showHeader, wordWrap, headWordWrap } = this.props;
+    const shouldWrapHeader = headWordWrap === undefined ? wordWrap : headWordWrap;
+    return showHeader ? (shouldWrapHeader ? Math.max(headerHeight!, this.state.headerWrapHeight) : headerHeight!) : 0;
   }
 
   /**
@@ -1854,7 +1870,11 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         width: columnWidth,
       });
     }
-    this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth });
+    this.setState({ isColumnResizing: false, [`${dataKey}_${index}_width`]: columnWidth }, () => {
+      if (this.props.wordWrap) {
+        this.calculateRowMaxHeight(true);
+      }
+    });
 
     addStyle(this.mouseAreaRef.current, { display: 'none' });
     this.scrollLeft(-this.scrollX);
@@ -2311,31 +2331,82 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
   addPrefix = (name: string): string => prefix(this.props.classPrefix!)(name);
 
-  calculateRowMaxHeight() {
-    const { wordWrap } = this.props;
-    if (wordWrap) {
-      const tableRowsMaxHeight = [];
-      const tableRows = Object.values(this.tableRows);
-
-      for (let i = 0; i < tableRows.length; i++) {
-        const [row] = tableRows[i];
-        if (row) {
-          const cells = row.querySelectorAll(`.${this.addPrefix('cell-wrap')}`) || [];
-          const cellArray = Array.from(cells);
-          let maxHeight = 0;
-
-          for (let j = 0; j < cellArray.length; j++) {
-            const cell = cellArray[j];
-            const h = getHeight(cell);
-            maxHeight = Math.max(maxHeight, h);
-          }
-
-          // @ts-ignore
-          tableRowsMaxHeight.push(maxHeight);
-        }
+  calculateRowMaxHeight(resetBodyCache = false) {
+    const { wordWrap, headWordWrap, showHeader, headerHeight } = this.props;
+    const shouldWrapHeader = showHeader && (headWordWrap === undefined ? wordWrap : headWordWrap);
+    if (!wordWrap && !shouldWrapHeader) {
+      this.wrapResizeObserver.disconnect();
+      this.observedWraps.clear();
+      if (this.state.tableRowsMaxHeight.length || this.state.headerWrapHeight) {
+        this.setState({ tableRowsMaxHeight: [], headerWrapHeight: 0 });
       }
+      return;
+    }
 
-      this.setState({ tableRowsMaxHeight });
+    const tableRowsMaxHeight: number[] = wordWrap
+      ? Array.from({ length: this.state.data.length }, (_, index) => resetBodyCache ? 0 : this.state.tableRowsMaxHeight[index] || 0)
+      : [];
+    const nextWraps = new Set<Element>();
+    const measure = (row: HTMLElement) => {
+      let maxHeight = 0;
+      row.querySelectorAll(`.${defaultClassPrefix('performance-table-cell-wrap')}`).forEach((wrap: HTMLElement) => {
+        nextWraps.add(wrap);
+        const content = wrap.parentElement;
+        const cell = content && content.parentElement;
+        const padding = content ? parseFloat(getComputedStyle(content).paddingTop) + parseFloat(getComputedStyle(content).paddingBottom) : 0;
+        const border = cell ? parseFloat(getComputedStyle(cell).borderTopWidth) + parseFloat(getComputedStyle(cell).borderBottomWidth) : 0;
+        maxHeight = Math.max(maxHeight, Math.ceil(wrap.getBoundingClientRect().height + padding + border));
+      });
+      return maxHeight;
+    };
+
+    const body = this.tableBodyRef.current;
+    if (wordWrap && body) {
+      body.querySelectorAll('[data-wrap-container] [data-rowindex]').forEach((row: HTMLElement) => {
+        tableRowsMaxHeight[Number(row.dataset.rowindex)] = measure(row);
+      });
+    }
+
+    const header = this.headerWrapperRef.current;
+    let headerWrapHeight = 0;
+    if (shouldWrapHeader && header) {
+      const currentHeaderHeight = this.getTableHeaderHeight();
+      header.querySelectorAll(`.${defaultClassPrefix('performance-table-row-header')} .${defaultClassPrefix('performance-table-cell-wrap')}`).forEach((wrap: HTMLElement) => {
+        nextWraps.add(wrap);
+        const content = wrap.parentElement;
+        const cell = content && content.parentElement;
+        if (content && cell) {
+          const padding = parseFloat(getComputedStyle(content).paddingTop) + parseFloat(getComputedStyle(content).paddingBottom);
+          const border = parseFloat(getComputedStyle(cell).borderTopWidth) + parseFloat(getComputedStyle(cell).borderBottomWidth);
+          const allocatedHeight = cell.getBoundingClientRect().height;
+          if (allocatedHeight) {
+            headerWrapHeight = Math.max(headerWrapHeight, Math.ceil((wrap.getBoundingClientRect().height + padding + border) * currentHeaderHeight / allocatedHeight));
+          }
+        }
+      });
+      header.querySelectorAll(`.${defaultClassPrefix('performance-table-column-group-header-content')} span`).forEach((title: HTMLElement) => {
+        nextWraps.add(title);
+        const groupHeader = title.parentElement && title.parentElement.parentElement;
+        const groupHeight = groupHeader ? groupHeader.getBoundingClientRect().height : 0;
+        const titleHeight = title.getBoundingClientRect().height;
+        if (groupHeight) {
+          headerWrapHeight = Math.max(
+            headerWrapHeight,
+            Math.ceil(titleHeight * currentHeaderHeight / groupHeight),
+          );
+        }
+      });
+    }
+    this.observedWraps.forEach((wrap) => {
+      if (!nextWraps.has(wrap)) this.wrapResizeObserver.unobserve(wrap);
+    });
+    nextWraps.forEach((wrap) => {
+      if (!this.observedWraps.has(wrap)) this.wrapResizeObserver.observe(wrap);
+    });
+    this.observedWraps = nextWraps;
+
+    if (!isEqual(this.state.tableRowsMaxHeight, tableRowsMaxHeight) || this.state.headerWrapHeight !== headerWrapHeight) {
+      this.setState({ tableRowsMaxHeight, headerWrapHeight });
     }
   }
 
@@ -2383,20 +2454,23 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
   }
 
-  calculateTableContextHeight(prevProps?: TableProps) {
+  calculateTableContextHeight(prevProps?: TableProps, prevState?: TableState) {
     const table = this.tableRef.current;
     const rows = table.querySelectorAll(`.${this.addPrefix('row')}`) || [];
     const { affixHeader } = this.props;
     const height = this.getTableHeight();
 
     const headerHeight = this.getTableHeaderHeight();
-    const contentHeight = rows.length
-      ? Array.from(rows)
-        .map((row: HTMLElement) => {
-          return Math.max(getHeight(row), Number(toPx(row.style.height)), this.getRowHeight()) || this.getRowHeight();
-        })
-        .reduce((x, y) => x + y)
-      : 0;
+    const contentHeight = this.props.virtualized && this.props.wordWrap && this.wheelWrapperRef.current
+      ? Number(toPx(this.wheelWrapperRef.current.style.height)) + headerHeight
+        + (affixHeader ? headerHeight : 0)
+      : rows.length
+        ? Array.from(rows)
+          .map((row: HTMLElement) => {
+            return Math.max(getHeight(row), Number(toPx(row.style.height)), this.getRowHeight()) || this.getRowHeight();
+          })
+          .reduce((x, y) => x + y)
+        : 0;
 
     // 当设置 affixHeader 属性后要减掉两个 header 的高度
     const nextContentHeight = contentHeight - (affixHeader ? headerHeight * 2 : headerHeight);
@@ -2411,9 +2485,13 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     }
 
     const shouldUpdateScrollPosition =
-      prevProps &&
-      // 当 data 更新，或者表格高度更新，则更新滚动条
-      (prevProps.height !== height || prevProps.data !== this.props.data) &&
+      (
+        (prevProps && (prevProps.height !== height || prevProps.data !== this.props.data)) ||
+        prevState && (
+          prevState.tableRowsMaxHeight !== this.state.tableRowsMaxHeight ||
+          prevState.headerWrapHeight !== this.state.headerWrapHeight
+        )
+      ) &&
       this.scrollY !== 0;
     const updateScrollPosition = () => {
       this.scrollTop(Math.abs(this.scrollY));
@@ -2587,6 +2665,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       key: nextRowKey,
       'aria-rowindex': (props.key as number) + 2,
       rowRef: this.bindTableRowsRef(props.key!, rowData),
+      'data-rowindex': props.rowIndex,
       onClick: this.bindRowClick(props.rowIndex, props.key!, rowData),
       onDoubleClick: this.bindRowDblClick(props.rowIndex, props.key!, rowData),
       onContextMenu: this.bindRowContextMenu(rowData),
@@ -2978,10 +3057,16 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   renderTableHeader(headerCells: any[], rowWidth: number) {
-    const { affixHeader, components } = this.props;
+    const { affixHeader, components, wordWrap, headWordWrap } = this.props;
     const { width: tableWidth } = this.state;
-    const top = typeof affixHeader === 'number' ? affixHeader : 0;
     const headerHeight = this.getTableHeaderHeight();
+    const shouldWrapHeader = headWordWrap === undefined ? wordWrap : headWordWrap;
+    const wrappedHeaderCells = shouldWrapHeader
+      ? headerCells.map(cell => React.cloneElement(cell, { wordWrap: true, headerHeight }))
+      : headWordWrap === false
+        ? headerCells.map(cell => React.cloneElement(cell, { wordWrap: false }))
+        : headerCells;
+    const top = typeof affixHeader === 'number' ? affixHeader : 0;
     const rowProps: TableRowProps = {
       'aria-rowindex': 1,
       rowRef: this.tableHeaderRef,
@@ -3007,7 +3092,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         style={fixedStyle}
         ref={this.affixHeaderWrapperRef}
       >
-        {this.renderRow(rowProps, headerCells)}
+        {this.renderRow(rowProps, wrappedHeaderCells)}
       </div>
     );
 
@@ -3016,8 +3101,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       components.header &&
       components.header.row &&
       React.isValidElement(components.header.row) ?
-      (React.cloneElement(components.header.row, { rowProps, headerCells })) :
-      this.renderRow(rowProps, headerCells);
+      (React.cloneElement(components.header.row, { rowProps, headerCells: wrappedHeaderCells })) :
+      this.renderRow(rowProps, wrappedHeaderCells);
 
     return (
       <React.Fragment>
@@ -3113,7 +3198,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       // @ts-ignore
       const maxTop = minTop + height + rowExpandedHeight!;
       const isCustomRowHeight = isFunction(rowHeight);
-      const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree);
+      const isUncertainHeight = !!(renderRowExpanded || isCustomRowHeight || isTree || wordWrap);
       const hasColSpan = bodyCells.some(cell => cell.props.colSpan);
 
       /**
@@ -3207,18 +3292,18 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         let keyIndex = 0;
         for (let index = 0; index < data.length; index++) {
           const rowData = data[index];
-          const maxHeight = tableRowsMaxHeight[index];
+          const maxHeight = wordWrap ? tableRowsMaxHeight[index] : undefined;
           const shouldRenderExpandedRow = this.shouldRenderExpandedRow(rowData);
 
           let nextRowHeight = 0;
           let depth = 0;
 
           if (typeof rowHeight === 'function') {
-            nextRowHeight = rowHeight(rowData);
+            nextRowHeight = wordWrap ? Math.max(maxHeight || 0, rowHeight(rowData)) : rowHeight(rowData);
           } else {
-            nextRowHeight = maxHeight
-              ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight!)
-              : rowHeight!;
+            nextRowHeight = wordWrap
+              ? Math.max(maxHeight || 0, rowHeight!)
+              : maxHeight ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight!) : rowHeight!;
             if (shouldRenderExpandedRow) {
               // @ts-ignore
               nextRowHeight += rowExpandedHeight!;
@@ -3251,7 +3336,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
           top += nextRowHeight;
 
-          if (virtualized && !wordWrap) {
+          if (virtualized) {
             if (top + nextRowHeight < minTop) {
               topHideHeight += nextRowHeight;
               continue;
@@ -3388,6 +3473,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
                 style={wheelStyles}
                 className={this.addPrefix('body-wheel-area')}
                 ref={this.wheelWrapperRef}
+                data-wrap-container="true"
               >
                 {topHideHeight ? <Row style={topRowStyles} className="virtualized" /> : null}
                 {this._visibleRows}
@@ -3600,6 +3686,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
       bordered,
       cellBordered,
       wordWrap,
+      headWordWrap,
       classPrefix,
       loading,
       showHeader,
@@ -3612,6 +3699,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     const rowWidth = allColumnsWidth > width ? allColumnsWidth : width;
     const clesses = classNames(classPrefix, className, {
       [this.addPrefix('word-wrap')]: wordWrap,
+      [this.addPrefix('head-word-wrap')]: headWordWrap === undefined ? wordWrap : headWordWrap,
       [this.addPrefix('treetable')]: isTree,
       [this.addPrefix('bordered')]: bordered,
       [this.addPrefix('cell-bordered')]: cellBordered,
