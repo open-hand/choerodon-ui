@@ -97,7 +97,6 @@ import {
   onlyCustomizedColumn,
   isJsonString,
   copyToClipboard,
-  pasteFromClipboard,
 } from './utils';
 import { ButtonProps } from '../button/Button';
 import TableBody from './TableBody';
@@ -1310,11 +1309,28 @@ export default class Table extends DataSetComponent<TableProps> {
     if (clipboard && clipboard.copy && ctrlKey && e.keyCode === KeyCode.C) {
       this.handleCopyChoose();
     }
-    if (clipboard && clipboard.paste && ctrlKey && e.keyCode === KeyCode.V) {
-      this.handlePasteChoose();
-    }
     const { onKeyDown = noop } = this.props;
     onKeyDown(e);
+  }
+
+  @autobind
+  handlePasteCapture(e: React.ClipboardEvent<HTMLElement>) {
+    const { clipboard, currentEditorName, currentEditRecord } = this.tableStore;
+    if (!clipboard?.paste || (!currentEditorName && !currentEditRecord)) return;
+
+    const text = e.clipboardData.getData('text/plain');
+    const target = e.target;
+    if (!text.includes('\t') && !/[\r\n]/.test(text) &&
+      (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) {
+      const { selectionStart, selectionEnd, value } = target;
+      if (selectionStart !== null && selectionEnd !== null &&
+        !(selectionStart === 0 && selectionEnd === value.length && value.length > 0)) {
+        return;
+      }
+    }
+
+    e.preventDefault();
+    this.handlePasteChoose(text);
   }
 
   @autobind
@@ -1662,8 +1678,8 @@ export default class Table extends DataSetComponent<TableProps> {
   }
 
   @action
-  async handlePasteChoose() {
-    const { node, columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit, clipboard } = this.tableStore;
+  async handlePasteChoose(clipText: string) {
+    const { columnGroups, currentEditorName, currentEditRecord, editors, inlineEdit, clipboard } = this.tableStore;
     if (!currentEditorName && !currentEditRecord) return;
     let colIndex;
     const columns = columnGroups.leafs;
@@ -1689,7 +1705,6 @@ export default class Table extends DataSetComponent<TableProps> {
     if (this.dataSet) {
       this.dataSet.status = DataSetStatus.loading;
     }
-    const clipText = await pasteFromClipboard(node.element);
     if (this.dataSet) {
       const { current, totalCount: noPagingTotoalCount, length, paging } = this.dataSet;
       const batchRecord: any = [];
@@ -2145,6 +2160,7 @@ export default class Table extends DataSetComponent<TableProps> {
   getOtherProps() {
     const otherProps = super.getOtherProps();
     otherProps.onKeyDown = this.handleKeyDown;
+    otherProps.onPasteCapture = this.handlePasteCapture;
     otherProps.onMouseDown = this.handleMouseDown;
     const { rowHeight, headerHeight, footerHeight } = this.tableStore;
     const spinProps = this.getSpinProps();
