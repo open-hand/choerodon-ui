@@ -77,6 +77,7 @@ cols: 1
 | components |  [TableComponents](#TableComponents) | 覆盖默认的 table 元素 |
 | useMouseBatchChoose |  boolean`[globalConfig.performanceTableUseMouseBatchChoose](/components/configure#API)` |是否使用鼠标批量选择,开启后在rowbox的情况下可以进行鼠标拖动批量选择,在起始的rowbox处按下,在结束位置松开 |
 | customizedColumnProps | ColumnProps | 个性化按钮所在列属性, 可用于自定义列的属性。需要注意：个性化列仅有header部分 |
+| headWordWrap                 | boolean                                                                           | 表头单元格自动换行，不设置时跟随 wordWrap                                               |
 
 ### Form methods
 

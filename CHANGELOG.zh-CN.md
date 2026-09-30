@@ -33,6 +33,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 customizedColumnProps 属性并优化个性化按钮样式。
 - 🌟 `<pro>Cascader`: 新增 childrenPaging 属性。
 - 🌟 `<pro>Table`: 新增 customizedUseHeader 属性, 用于配置个性化面板是否使用列 header 的渲染结果。
+- 🌟 `<pro>PerformanceTable`: 新增 headWordWrap 属性，并优化 wordWrap 的效果。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
@@ -82,6 +83,7 @@ timeline: true
 - 💄 `Notification`: 优化最大宽度，在窄屏幕中显示更好。
 - 💄 `<pro>Table`: 优化展开行在固定列场景下的展示效果。
 - 💄 `<pro>Table`: fuzzyQueryOnly 为 true 时, 根据 refreshBtn 配置显示刷新按钮。
+- 💄 `<pro>Table`: 优化粘贴逻辑，单个单元格粘贴时可追加值。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。

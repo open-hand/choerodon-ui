@@ -15,6 +15,7 @@ export interface ColumnGroupProps {
   children?: React.ReactNode;
   className?: string;
   headerHeight?: number;
+  wordWrap?: boolean;
   classPrefix?: string; // Fixed ColumnGroup does not support `classPrefix`
 }
 
@@ -30,6 +31,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     classPrefix,
     headerHeight = 80,
     verticalAlign,
+    wordWrap,
     width,
     left,
     headerLeft = 0,
@@ -47,7 +49,7 @@ const ColumnGroup: IColumnGroup = React.forwardRef<HTMLDivElement, ColumnGroupPr
     width,
     left,
   };
-  const contentStyles = { ...styles, verticalAlign };
+  const contentStyles = { ...styles, verticalAlign, overflow: wordWrap ? 'visible' as const : undefined };
 
   const addPrefix = (name: string) => prefix(classPrefix!)(name);
   

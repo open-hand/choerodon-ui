@@ -33,6 +33,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `customizedColumnProps` property and optimized the customized button style.
 - 🌟 `<pro>Cascader`: Added `childrenPaging` property.
 - 🌟 `<pro>Table`: Added the `customizedUseHeader` property to configure whether the column `header` render result is used in the customization panel.
+- 🌟 `<pro>PerformanceTable`: Added `headWordWrap` property and optimized the effect of `wordWrap`.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -82,6 +83,7 @@ timeline: true
 - 💄 `Notification`: Optimize the maximum width to display better on narrow screens.
 - 💄 `<pro>Table`: Optimize the display of expanded rows in fixed column scenarios.
 - 💄 `<pro>Table`: When `fuzzyQueryOnly` is true, display the refresh button based on the `refreshBtn` configuration.
+- 💄 `<pro>Table`: Optimize the paste logic to support appending values to a single cell.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
