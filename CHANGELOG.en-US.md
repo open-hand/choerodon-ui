@@ -32,6 +32,7 @@ timeline: true
 - 🌟 `<pro>Table`: Added `duplicateKey` property.
 - 🌟 `<pro>PerformanceTable`: Added `customizedColumnProps` property and optimized the customized button style.
 - 🌟 `<pro>Cascader`: Added `childrenPaging` property.
+- 🌟 `<pro>Table`: Added the `customizedUseHeader` property to configure whether the column `header` render result is used in the customization panel.
 - 🌟 `<pro>PerformanceTable`: Added `headWordWrap` property and optimized the effect of `wordWrap`.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
