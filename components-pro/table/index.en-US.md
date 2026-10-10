@@ -142,7 +142,7 @@ subtitle: 表格
 | defaultWidth | 默认列宽, 只在出横向滚动条时起作用 | number | [globalConfig.tableColumnDefaultWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultWidth](/components/configure#API) |
 | minWidth | 最小列宽 | number | [globalConfig.tableColumnDefaultMinWidth](/components/configure#API) \| [globalConfig.tableAggregationColumnDefaultMinWidth](/components/configure#API) |
 | title | 列头文字，优先级高于 header， 便于列头文字通过 header 钩子渲染的情况下可编辑 | string |  |
-| header | 列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
+| header | 列头。可根据 renderPlacement 参数返回不同的元素。customizable - 个性化面板中渲染的列头; filter - 过滤条拉下列表中渲染的列头; default 或 空 - 表头等默认位置渲染的列头 | ReactNode \| ({ dataSet, name, title, aggregation, group: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[], renderPlacement?: HeaderRenderPlacement }) => ReactNode |  |
 | footer | 列脚 | ReactNode \| ({ dataSet, name, aggregationTree: ReactElement[] }) => ReactNode |  |
 | renderer | 单元格渲染回调 | ({ value, text, name, record, dataSet, rowGroup: [Group](/components-pro/data-set#Group-Values), headerGroup: [Group](/components-pro/data-set#Group-Values), aggregationTree: ReactElement[] }) => ReactNode |  |
 | tagRenderer | 多值 Tag 渲染器 | ({ value, text, key, readOnly, invalid, disabled, onClose, className, inputBoxIsFocus, record, field }: TagRendererProps) => ReactNode |  |

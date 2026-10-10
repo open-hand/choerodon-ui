@@ -7,6 +7,7 @@ import { getHeader } from '../../utils';
 import TableContext from '../../TableContext';
 import Record from '../../../data-set/Record';
 import { Size } from '../../../core/enum';
+import { HeaderRenderPlacement } from '../../enum';
 
 export interface ItemTitleProps {
   record: Record;
@@ -31,6 +32,7 @@ const ItemTitle: FunctionComponent<ItemTitleProps> = function ItemTitle(props) {
     header: record.get('header'),
     dataSet,
     aggregation,
+    renderPlacement: HeaderRenderPlacement.customizable,
   });
   const titleEditable = columnTitleEditable && record.get('titleEditable') !== false;
 

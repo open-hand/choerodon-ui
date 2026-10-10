@@ -6,7 +6,7 @@ import Record from '../data-set/Record';
 import Field from '../data-set/Field';
 import { FormFieldProps, HighlightRenderer, Renderer, RenderProps, TagRendererProps } from '../field/FormField';
 import { ElementProps } from '../core/ViewComponent';
-import { ColumnAlign, ColumnLock, TableColumnTooltip } from './enum';
+import { ColumnAlign, ColumnLock, TableColumnTooltip, HeaderRenderPlacement } from './enum';
 import { ShowHelp } from '../field/enum';
 import { Commands, TableGroup } from './Table';
 import TableStore from './TableStore';
@@ -50,6 +50,7 @@ export interface HeaderHookOptions extends FooterHookOptions {
   aggregation?: boolean | undefined;
   group?: Group | undefined;
   groups?: Group[] | undefined;
+  renderPlacement?: HeaderRenderPlacement;
 }
 
 export interface ColumnPropsBase extends ElementProps {

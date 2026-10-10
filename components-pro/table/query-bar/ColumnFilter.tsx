@@ -12,6 +12,7 @@ import { Placements } from '../../dropdown/enum';
 import { ColumnProps } from '../Column';
 import { stopEvent, stopPropagation } from '../../_util/EventManager';
 import autobind from '../../_util/autobind';
+import { HeaderRenderPlacement } from '../enum';
 
 function handleMenuClick({ domEvent }) {
   domEvent.preventDefault();
@@ -121,7 +122,7 @@ export default class ColumnFilter extends Component<ColumnFilterProps> {
     const columns: [ColumnProps, ReactNode, Key][] = [];
     allLeafs.forEach(({ column, key, headerGroup, headerGroups }) => {
       if (column.hideable) {
-        const header = getHeader({ ...column, dataSet, aggregation, group: headerGroup, groups: headerGroups });
+        const header = getHeader({ ...column, dataSet, aggregation, group: headerGroup, groups: headerGroups, renderPlacement: HeaderRenderPlacement.filter });
         if (header) {
           if (!column.hidden) {
             selectedKeys.push(key);
