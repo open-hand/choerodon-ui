@@ -134,3 +134,18 @@ export enum SortRangeOption {
    */
   allDataSort = 'allDataSort',
 }
+
+export enum HeaderRenderPlacement {
+  /**
+   * 个性化面板中渲染的列头
+   */
+  customizable = 'customizable',
+  /**
+   * 过滤条拉下列表中渲染的列头
+   */
+  filter = 'filter',
+  /**
+   * 表头等默认位置渲染的列头
+   */
+  default = 'default',
+}

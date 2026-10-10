@@ -28,7 +28,7 @@ import MonthPicker from '../month-picker/MonthPicker';
 import QuarterPicker from '../quarter-picker/QuarterPicker';
 import YearPicker from '../year-picker/YearPicker';
 import ObserverTextField from '../text-field/TextField';
-import { ColumnLock, TablePaginationPosition } from './enum';
+import { ColumnLock, TablePaginationPosition, HeaderRenderPlacement } from './enum';
 import { FormFieldProps } from '../field/FormField';
 import IntlField from '../intl-field/IntlField';
 import UrlField from '../url-field/UrlField';
@@ -282,10 +282,11 @@ export interface HeaderOptions extends ColumnProps {
   group?: Group | undefined;
   groups?: Group[] | undefined;
   aggregationTree?: ReactElement<AggregationTreeProps>[];
+  renderPlacement?: HeaderRenderPlacement;
 }
 
 export function getHeader(column: HeaderOptions): ReactNode {
-  const { header, name, title, dataSet, aggregation, group, groups, aggregationTree } = column;
+  const { header, name, title, dataSet, aggregation, group, groups, aggregationTree, renderPlacement } = column;
   if (typeof header === 'function') {
     const $title = title === undefined ? getLabel(dataSet, name) : title;
     const options: HeaderHookOptions = {
@@ -296,6 +297,7 @@ export function getHeader(column: HeaderOptions): ReactNode {
       group,
       groups,
       aggregationTree,
+      renderPlacement,
     };
     try {
       return header(options, name, $title, aggregation);
