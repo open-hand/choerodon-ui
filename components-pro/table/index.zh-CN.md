@@ -229,7 +229,7 @@ subtitle: 表格
 | fuzzyQueryProps | 模糊查询输入框属性  | TextFieldProps |  |
 | filterQueryCallback | 查询回调  | ({ dataSet })=> void |  |
 | autoQuery | 条件变更是否自动查询  | boolean | true |
-| refreshBtn | 刷新按钮  | boolean | true |
+| refreshBtn | 刷新按钮。fuzzyQueryOnly 为 true 时，默认不展示刷新按钮，可配置开启。  | boolean | true |
 | onBeforeQuery | 查询前回调, 返回 false 则不查询 | () => (Promise<boolean \| void> \| boolean \| void) |  |
 | onQuery | 查询回调 | () => void |  |
 | onReset | 重置回调，type 参数为 'clear' 表示是在清空模糊搜索框时被调用，为 undefined 表示是在重置查询条件时被调用 | (type?: 'clear') => void |  |
