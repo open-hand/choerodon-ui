@@ -381,7 +381,6 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     fuzzyQuery: true,
     fuzzyQueryOnly: false,
     autoQuery: true,
-    refreshBtn: true,
     buttons: [],
   };
 
@@ -391,6 +390,11 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
     const { prefixCls } = this.props;
     const { getProPrefixCls = getProPrefixClsDefault } = this.context;
     return getProPrefixCls('table', prefixCls);
+  }
+
+  get refreshBtn(): boolean {
+    const { fuzzyQueryOnly, refreshBtn = !fuzzyQueryOnly } = this.props;
+    return refreshBtn;
   }
 
   get queryFields(): React.ReactElement<any>[] {
@@ -1223,7 +1227,7 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    * @param hidden 是否隐藏全部
    */
   getExpandNode(hidden): ReactNode {
-    const { prefixCls, props: { refreshBtn } } = this;
+    const { prefixCls, refreshBtn } = this;
     if (!this.showExpandIcon && !hidden) return refreshBtn ? this.renderRefreshBtn() : null;
     return (
       <span
@@ -1724,8 +1728,8 @@ export default class TableDynamicFilterBar extends Component<TableDynamicFilterB
    */
   getFilterMenu(): ReactNode {
     const { onReset = noop, defaultActiveKey, queryFields, queryDataSet, dataSet, dynamicFilterBar, searchCode, autoQuery,
-      fuzzyQueryOnly, tableFilterBarButtonIcon, refreshBtn } = this.props;
-    const { prefixCls } = this;
+      fuzzyQueryOnly, tableFilterBarButtonIcon } = this.props;
+    const { prefixCls, refreshBtn } = this;
     const prefix = this.getPrefix();
     const suffix = this.renderSuffix();
     const fuzzyQuery = this.getFuzzyQuery();
