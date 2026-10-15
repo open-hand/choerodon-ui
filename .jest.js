@@ -10,7 +10,11 @@ module.exports = {
   setupFiles: ['./tests/setup.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'md'],
   modulePathIgnorePatterns: ['/_site/'],
-  moduleNameMapper: { '\\.(css|scss|less)$': 'identity-obj-proxy' },
+  moduleNameMapper: {
+    '\\.(css|scss|less)$': 'identity-obj-proxy',
+    '^choerodon-ui/dataset$': '<rootDir>/components-dataset/index.ts',
+    '^choerodon-ui/dataset/(.*)$': '<rootDir>/components-dataset/$1',
+  },
   testPathIgnorePatterns: ['/node_modules/', 'dekko', 'node'],
   transform: {
     '\\.tsx?$': './tools/jest/codePreprocessor',

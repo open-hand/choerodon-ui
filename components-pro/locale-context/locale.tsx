@@ -318,6 +318,15 @@ export interface Locale extends DataSetLocale {
     used_view: string;
     custom_view: string;
     pick_color_view: string;
+    no_fill: string;
+    mode_single: string;
+    mode_gradient: string;
+    opacity: string;
+    stop: string;
+    gradient_direction: string;
+    radial: string;
+    gradient_style_value: string;
+    invalid_gradient: string;
   };
   Icon: {
     icons: string;

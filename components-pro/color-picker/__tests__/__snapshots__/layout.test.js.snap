@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorPicker layout styles snapshots the stop columns and the merged track styles 1`] = `
+Object {
+  "alpha": Object {
+    "flex": "none",
+    "width": "0.52rem",
+  },
+  "input": Object {
+    "background-color": "transparent",
+    "background-image": "none",
+    "border": "0.01rem solid #e0e0e0",
+    "border-radius": "0.02rem",
+    "box-sizing": "border-box",
+    "color": "#000000",
+    "cursor": "text",
+    "display": "inline-block",
+    "font-size": "0.12rem",
+    "font-weight": "unset",
+    "height": "0.26rem",
+    "line-height": "1.5",
+    "min-width": "0",
+    "padding": "0.02rem 0.08rem",
+    "position": "relative",
+    "transition-duration": "0.3s",
+    "transition-property": "opacity, color, background-color, border",
+    "width": "100%",
+  },
+  "position": Object {
+    "padding-right": "0.24rem",
+    "width": "100%",
+  },
+  "row": Object {
+    "align-items": "center",
+    "display": "grid",
+    "gap": "0.08rem",
+    "grid-template-columns": "0.54rem minmax(1.56rem, 1fr) 0.28rem",
+    "margin": "0.06rem 0",
+  },
+  "track": Object {
+    "background-color": "#fff",
+    "background-image": "linear-gradient(45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.04) 75%), linear-gradient(45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.04) 75%)",
+    "background-position": "0 0, 4px 4px",
+    "background-size": "8px 8px",
+    "border-radius": "0.05rem",
+    "cursor": "crosshair",
+    "height": "0.08rem",
+    "margin": "0.16rem 0.08rem",
+    "position": "relative",
+  },
+}
+`;
