@@ -18,6 +18,8 @@ import { Config, ConfigKeys, DefaultConfig, getConfig } from '../configure';
 import { formatFileSize } from '../formatter';
 import math, { BigNumberOptions } from '../math';
 
+export { Color, Gradient, GradientStop, parseColor, parseGradient, serializeGradient, mixWithWhite, isColorValue } from './color';
+
 export const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 2 ** 53 - 1;
 export const MIN_SAFE_INTEGER = Number.MIN_SAFE_INTEGER || 1 - 2 ** 53;
 

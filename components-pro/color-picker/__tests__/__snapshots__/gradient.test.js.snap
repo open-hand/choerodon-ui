@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorPicker gradient editing keeps the picker title above native second-level tabs with preset false: gradient 1`] = `
+Array [
+  "c7n-pro-color-picker-popup-view-picker-name",
+  "c7n-tabs c7n-tabs-top c7n-tabs-second-level c7n-tabs-horizontal c7n-tabs-no-animation c7n-pro-color-picker-mode-tabs",
+]
+`;
+
+exports[`ColorPicker gradient editing keeps the picker title above native second-level tabs with preset false: single 1`] = `
+Array [
+  "c7n-pro-color-picker-popup-view-picker-name",
+  "c7n-tabs c7n-tabs-top c7n-tabs-second-level c7n-tabs-horizontal c7n-tabs-no-animation c7n-pro-color-picker-mode-tabs",
+]
+`;
+
+exports[`ColorPicker gradient editing keeps the picker title above native second-level tabs with preset true: gradient 1`] = `
+Array [
+  "c7n-pro-color-picker-popup-view-picker-name",
+  "c7n-tabs c7n-tabs-top c7n-tabs-second-level c7n-tabs-horizontal c7n-tabs-no-animation c7n-pro-color-picker-mode-tabs",
+]
+`;
+
+exports[`ColorPicker gradient editing keeps the picker title above native second-level tabs with preset true: single 1`] = `
+Array [
+  "c7n-pro-color-picker-popup-view-picker-name",
+  "c7n-tabs c7n-tabs-top c7n-tabs-second-level c7n-tabs-horizontal c7n-tabs-no-animation c7n-pro-color-picker-mode-tabs",
+]
+`;

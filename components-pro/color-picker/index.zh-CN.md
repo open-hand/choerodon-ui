@@ -21,5 +21,6 @@ subtitle: 颜色选择器
 defaultValue    | 默认值                             | string | `#ff0000`
 mode            | 显示模式，可选值: default \| button  | string | `default`
 preset          | 是否开启备选色板                     | boolean | `false`
+gradientMode    | 颜色模式：`single` 为单色，`gradient` 为渐变色（支持线性和径向渐变）；传入 `['single', 'gradient']` 可在两种模式间切换 | 'single' \| 'gradient' \| ('single' \| 'gradient')[] | `single`
 
 注意：**ColorPicker 组件设置 multiple 属性为 true 无效, DataSet 的字段属性 multiple 同理**

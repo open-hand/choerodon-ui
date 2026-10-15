@@ -75,29 +75,24 @@ describe('color-picker-pro', () => {
   });
   it('should trigger dataset default value correctly', () => {
     const wrapper = mount(<ColorPicker />);
-    expect(
-      wrapper
-        .find('.c7n-pro-color-picker-popup')
-        .at(0)
-        .prop('hidden'),
-    ).toEqual(true);
+    expect(wrapper.instance().popup).toBeFalsy();
+    expect(wrapper.find('.c7n-pro-color-picker-popup')).toHaveLength(0);
     wrapper.find('input').simulate('click');
-    jest.runAllTimers();
+    jest.advanceTimersByTime(150);
     wrapper.update();
-    expect(
-      wrapper
-        .find('.c7n-pro-color-picker-popup')
-        .at(0)
-        .prop('hidden'),
-    ).toEqual(false);
+    expect(wrapper.instance().popup).toBe(true);
+    expect(wrapper.find('.c7n-pro-color-picker-popup-body-gradient')).toHaveLength(1);
   });
 
   it('footer-slider click event render correctly', () => {
     const wrapper = mount(<ColorPicker />);
     wrapper.find('input').simulate('click');
     jest.runAllTimers();
-    wrapper.find('.hue').simulate('click');
+    wrapper.instance().hue.getBoundingClientRect = () => ({ left: 10, width: 200 });
+    wrapper.find('.hue').simulate('click', { clientX: 110 });
     jest.runAllTimers();
+    expect(wrapper.instance().getValue()).toBe('#00ffff');
+    expect(wrapper.instance().HSV.h).toBe(180);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -106,9 +101,11 @@ describe('color-picker-pro', () => {
     const wrapper = mount(<ColorPicker onChange={handleChange} />);
     wrapper.find('input').simulate('click');
     jest.runAllTimers();
-    wrapper.find('.c7n-pro-color-picker-popup-body-gradient').simulate('click');
+    wrapper.instance().gradient.getBoundingClientRect = () => ({ left: 10, top: 20, width: 200, height: 100 });
+    wrapper.find('.c7n-pro-color-picker-popup-body-gradient').simulate('click', { clientX: 110, clientY: 70 });
     jest.runAllTimers();
-    expect(handleChange).toHaveBeenCalled();
+    expect(wrapper.instance().getValue()).toBe('#7f3f3f');
+    expect(handleChange).toHaveBeenCalledWith('#7f3f3f', undefined, undefined);
   });
 
   it('the panel body click event render correctly', () => {

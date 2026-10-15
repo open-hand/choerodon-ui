@@ -1,5 +1,6 @@
 import { isMoment } from 'moment';
 import { isEmpty, toRangeValue } from '../../utils';
+import { isColorValue } from '../../utils/color';
 import ValidationResult from '../ValidationResult';
 import localeContext, { $l } from '../../locale-context';
 import { FieldType } from '../../data-set/enum';
@@ -41,7 +42,7 @@ const types: {
   [FieldType.email]: [value => !emailReg.test(value), 'EmailField', 'type_mismatch_email'],
   [FieldType.url]: [value => !urlReg.test(value), 'UrlField', 'type_mismatch_url'],
   [FieldType.color]: [
-    value => !(colorRgbaReg.test(value) || colorHexReg.test(value)),
+    value => !isColorValue(value),
     'ColorPicker',
     'type_mismatch_color',
   ],

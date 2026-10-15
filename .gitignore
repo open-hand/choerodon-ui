@@ -45,6 +45,8 @@ components-dataset/**/*.jsx
 components-dataset/**/*.js
 components-dataset/**/*.d.ts
 !components-dataset/data-set/__tests__/**/*.js
+!components-dataset/utils/__tests__/color.test.js
+!components-dataset/validator/__tests__/color.test.js
 !components-dataset/axios/_helpers/*
 components-shared/**/*.jsx
 components-shared/**/*.js

@@ -1,75 +1,300 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ./components-pro/color-picker/demo/basic.md correctly 1`] = `
-Array [
-  <span
-    class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background:#f1c7f2"
+      />
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      type="text"
+      value="#f1c7f2"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/color-picker/demo/button-mode.md correctly 1`] = `
+<div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
   >
-    <label>
-      <div
-        class="c7n-pro-color-picker-prefix"
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button c7n-pro-color-picker-button"
+        style="margin-right:30px"
+      >
+        <label>
+          <div
+            class="c7n-pro-color-picker-prefix"
+          >
+            <span
+              class="c7n-pro-color-picker-button-color"
+              style="background:#e88b3463"
+            />
+          </div>
+          <input
+            autocomplete="off"
+            class="c7n-pro-color-picker"
+            type="text"
+            value="#e88b3463"
+          />
+          <div
+            class="c7n-pro-color-picker-suffix"
+          >
+            <i
+              class="icon icon- c7n-pro-color-picker-trigger"
+            />
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button c7n-pro-color-picker-button"
       >
         <span
-          class="c7n-pro-color-picker-color"
-          style="background-color:#f1c7f2"
-        />
-      </div>
-      <input
-        autocomplete="off"
-        class="c7n-pro-color-picker"
-        type="text"
-        value="#f1c7f2"
-      />
-      <div
-        class="c7n-pro-color-picker-suffix"
+          class="c7n-pro-color-picker-rendered-value"
+        >
+          <span
+            class="c7n-pro-color-picker-rendered-value-inner"
+          >
+            <i
+              class="icon icon-color_lens-o"
+              style="color:#e88b34"
+            />
+          </span>
+        </span>
+        <label>
+          <i
+            class="icon icon-color_lens-o"
+            style="color:#e88b34"
+          />
+          <input
+            autocomplete="off"
+            class="c7n-pro-color-picker"
+            style="text-indent:-100000px;color:transparent"
+            type="text"
+            value=" "
+          />
+          <div
+            class="c7n-pro-color-picker-suffix"
+          >
+            <i
+              class="icon icon- c7n-pro-color-picker-trigger"
+            />
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
       >
-        <i
-          class="icon icon-palette c7n-pro-color-picker-trigger"
-        />
-      </div>
-    </label>
-  </span>,
-  <span />,
-]
+        <label>
+          <div
+            class="c7n-pro-color-picker-prefix"
+          >
+            <span
+              class="c7n-pro-color-picker-color"
+              style="background:#e88b34"
+            />
+          </div>
+          <input
+            autocomplete="off"
+            class="c7n-pro-color-picker"
+            type="text"
+            value="#e88b34"
+          />
+          <div
+            class="c7n-pro-color-picker-suffix"
+          >
+            <i
+              class="icon icon-palette c7n-pro-color-picker-trigger"
+            />
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+      >
+        <label>
+          <div
+            class="c7n-pro-color-picker-prefix"
+          >
+            <span
+              class="c7n-pro-color-picker-color"
+              style="background:#e88b34"
+            />
+          </div>
+          <input
+            autocomplete="off"
+            class="c7n-pro-color-picker"
+            type="text"
+            value="#e88b34"
+          />
+          <div
+            class="c7n-pro-color-picker-suffix"
+          >
+            <i
+              class="icon icon-palette c7n-pro-color-picker-trigger"
+            />
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+  <div
+    class="c7n-row"
+    style="margin-left:-5px;margin-right:-5px"
+  >
+    <div
+      class="c7n-col-12"
+      style="padding-left:5px;padding-right:5px"
+    >
+      <span
+        class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+      >
+        <label>
+          <div
+            class="c7n-pro-color-picker-prefix"
+          >
+            <span
+              class="c7n-pro-color-picker-color"
+              style="background:#e88b34"
+            />
+          </div>
+          <input
+            autocomplete="off"
+            class="c7n-pro-color-picker"
+            type="text"
+            value="#e88b34"
+          />
+          <div
+            class="c7n-pro-color-picker-suffix"
+          >
+            <i
+              class="icon icon-palette c7n-pro-color-picker-trigger"
+            />
+          </div>
+        </label>
+      </span>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`renders ./components-pro/color-picker/demo/controlled.md correctly 1`] = `
-Array [
-  <span
-    class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
-  >
-    <label>
-      <div
-        class="c7n-pro-color-picker-prefix"
-      >
-        <span
-          class="c7n-pro-color-picker-color"
-          style="background-color:#0000ff"
-        />
-      </div>
-      <input
-        autocomplete="off"
-        class="c7n-pro-color-picker"
-        type="text"
-        value="#0000ff"
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background:#0000ff"
       />
-      <div
-        class="c7n-pro-color-picker-suffix"
-      >
-        <i
-          class="icon icon-palette c7n-pro-color-picker-trigger"
-        />
-      </div>
-    </label>
-  </span>,
-  <span />,
-]
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      type="text"
+      value="#0000ff"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
 `;
 
 exports[`renders ./components-pro/color-picker/demo/dataset.md correctly 1`] = `
-Array [
+<span
+  class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-required c7n-pro-color-picker-required-colors c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+>
+  <label>
+    <div
+      class="c7n-pro-color-picker-prefix"
+    >
+      <span
+        class="c7n-pro-color-picker-color"
+        style="background:#00ff00"
+      />
+    </div>
+    <input
+      autocomplete="off"
+      class="c7n-pro-color-picker"
+      name="color"
+      type="text"
+      value="#00ff00"
+    />
+    <div
+      class="c7n-pro-color-picker-suffix"
+    >
+      <i
+        class="icon icon-palette c7n-pro-color-picker-trigger"
+      />
+    </div>
+  </label>
+</span>
+`;
+
+exports[`renders ./components-pro/color-picker/demo/gradient-mode.md correctly 1`] = `
+<div>
   <span
-    class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-required c7n-pro-color-picker-suffix-button c7n-pro-color-picker-prefix-button"
+    class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
   >
     <label>
       <div
@@ -77,15 +302,14 @@ Array [
       >
         <span
           class="c7n-pro-color-picker-color"
-          style="background-color:#00ff00"
+          style="background:linear-gradient(90deg, #ff0000 0%, #0000ff 100%)"
         />
       </div>
       <input
         autocomplete="off"
         class="c7n-pro-color-picker"
-        name="color"
         type="text"
-        value="#00ff00"
+        value="linear-gradient(90deg, #ff0000 0%, #0000ff 100%)"
       />
       <div
         class="c7n-pro-color-picker-suffix"
@@ -95,7 +319,34 @@ Array [
         />
       </div>
     </label>
-  </span>,
-  <span />,
-]
+  </span>
+  <span
+    class="c7n-pro-color-picker-wrapper c7n-pro-color-picker-suffix-button c7n-pro-color-picker-border c7n-pro-color-picker-prefix-button"
+    style="margin-left:16px"
+  >
+    <label>
+      <div
+        class="c7n-pro-color-picker-prefix"
+      >
+        <span
+          class="c7n-pro-color-picker-color"
+          style="background:#00a854"
+        />
+      </div>
+      <input
+        autocomplete="off"
+        class="c7n-pro-color-picker"
+        type="text"
+        value="#00a854"
+      />
+      <div
+        class="c7n-pro-color-picker-suffix"
+      >
+        <i
+          class="icon icon-palette c7n-pro-color-picker-trigger"
+        />
+      </div>
+    </label>
+  </span>
+</div>
 `;
