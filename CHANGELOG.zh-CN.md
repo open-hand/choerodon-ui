@@ -137,6 +137,7 @@ timeline: true
 - 🐞 `<pro>TextArea`: 修复配置 tooltip 为 overflow 时，内容换行且完整显示仍会展示 Tooltip 的问题。
 - 🐞 `<pro>TextField`: 修复长度信息的宽度计算不准确的问题。
 - 🐞 `<pro>Lov`: 修复使用中文输入法输入后按回车，可能持续处于 loading 状态的问题。
+- 🐞 `<pro>Form`: 修复 Form 动态校验失败时未按表单字段顺序聚焦首个错误输入框的问题。
 
 ## 1.6.8
 

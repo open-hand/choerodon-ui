@@ -716,14 +716,12 @@ export default class Form extends DataSetComponent<FormProps, FormContextValue> 
       const [firstInvalidRecord] = validationErrors;
       if (firstInvalidRecord) {
         const { errors } = firstInvalidRecord;
-        if (errors.length) {
-          const [{ field: { name } }] = errors;
-          const field = this.getFields().find(item => item.props.name === name);
-          if (field) {
-            raf(() => {
-              field.focus();
-            });
-          }
+        const fields = this.getFields();
+        const field = fields.find(item => errors.some(({ field: errorField }) => errorField.name === item.props.name));
+        if (field) {
+          raf(() => {
+            field.focus();
+          });
         }
       }
     }
