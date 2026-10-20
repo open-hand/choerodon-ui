@@ -137,6 +137,8 @@ timeline: true
 - 🐞 `<pro>TextArea`: Fixed the issue where the Tooltip was displayed when `tooltip` was set to `overflow`, even though the wrapped content was fully visible.
 - 🐞 `<pro>TextField`: Fixed the issue where the length info width calculation was inaccurate.
 - 🐞 `<pro>Lov`: Fixed an issue where the Lov component could remain stuck in the loading state after entering text with a Chinese IME and pressing Enter.
+- 🐞 `<pro>Form`: Fixed the issue where the first error input box was not focused when the Form component validated dynamically.
+
 
 
 ## 1.6.8
