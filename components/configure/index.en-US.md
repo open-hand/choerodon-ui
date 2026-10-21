@@ -190,8 +190,8 @@ const prefixCls = getConfig('prefixCls');
 | uploadSecretLevelFlag | 是否开启上传密级 | boolean |  |
 | uploadSecretLevelOptions | 上传密级配置项, fields: 密级数据源字段配置, 必传; formProps: 密级表单配置; modalProps: 密级弹框配置; | options: { fields: FieldProps[], formProps?: FormProps, modalProps?: ModalProps } |  |
 | uploadBatchMaxFileCount | The default maximum number of files in a single batch upload. If exceeded, the user will be prompted whether to continue; continuing uploads only the maximum number of files. Unconfigured or non-positive values impose no limit. | number |  |
-| fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
-| fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
+| fieldMaxTagCount | Default maxTagCount for FormField components. Supports responsive configuration. | number \| `responsive` |  |
+| fieldMaxTagPlaceholder | Default maxTagPlaceholder for FormField components. | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | Input box focus mode: checked - By default, it focuses on the selected text; focus - It displays the cursor when focused. | `checked` \| `focus` | `checked` |
 | formAutoFocus | The first editable component is automatically focused in the form. If the form is in the Modal pop-up window, you need to manually set the autoFocus of Modal to false | boolean | false |
 | labelAlign | Form 标签文字对齐方式, 只在 labelLayout 为`horizontal`时起作用，可选值： `left` `center` `right` | string | right |

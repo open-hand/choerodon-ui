@@ -389,6 +389,41 @@
     }
   }
 
+  > ul&-responsive-tags {
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+
+    > li, > span {
+      flex-shrink: 0;
+    }
+  }
+
+  &-responsive-measure {
+    position: absolute;
+    width: max-content;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    pointer-events: none;
+
+    > ul {
+      display: flex;
+      width: max-content;
+      margin: @input-multiple-margin;
+      padding: @input-multiple-padding;
+
+      > li, > span {
+        display: inline-block;
+        flex-shrink: 0;
+        max-width: none;
+        height: @input-tag-height-base;
+        margin-top: @input-tag-margin-vertical;
+        margin-bottom: @input-tag-margin-vertical;
+        line-height: @input-tag-line-height-base;
+      }
+    }
+  }
+
   &-multiple {
     &-value {
       display: block;

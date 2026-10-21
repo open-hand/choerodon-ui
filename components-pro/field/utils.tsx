@@ -285,7 +285,9 @@ export function isFieldValueEmpty(value: any, range?: boolean | [string, string]
 
 export type MultipleRenderOption = {
   range?: boolean | [string, string] | undefined;
-  maxTagCount?: number | undefined;
+  maxTagCount?: number | 'responsive' | undefined;
+  responsiveTagCount?: number;
+  placeholderOnly?: boolean;
   maxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
   prefixCls?: string | undefined;
   disabled?: boolean | undefined;
@@ -370,10 +372,13 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
   const values = toMultipleValue(value, range);
   const valueLength = values.length;
   const { maxTagCount = getConfigDefault('fieldMaxTagCount') } = option;
+  const visibleCount = maxTagCount === 'responsive'
+    ? (option.responsiveTagCount === undefined ? valueLength : option.responsiveTagCount)
+    : (maxTagCount === undefined ? valueLength : maxTagCount);
   const repeats: Map<any, number> = new Map<any, number>();
 
   let multipleValidateMessageLength = 0;
-  const tags = values.slice(0, maxTagCount).map((v, index) => {
+  const tags = (option.placeholderOnly ? [] : values.slice(0, visibleCount)).map((v, index) => {
     const key = getKey(v);
     const repeat = repeats.get(key) || 0;
     const text = range ? renderRangeValue(v, { repeat, processRenderer, rangeSeparator }) : processRenderer(v, repeat);
@@ -438,8 +443,8 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
     }
     return undefined;
   });
-  const isOverflowMaxTagCount: boolean = !!maxTagCount && valueLength > maxTagCount;
-  if (maxTagCount && isOverflowMaxTagCount) {
+  const isOverflowMaxTagCount: boolean = (maxTagCount === 'responsive' || !!visibleCount) && valueLength > visibleCount;
+  if (isOverflowMaxTagCount) {
     const blockClassName = classNames(
       {
         [`${prefixCls}-multiple-block-disabled`]: disabled,
@@ -447,9 +452,9 @@ export function renderMultipleValues(value, option: MultipleRenderOption): { tag
       `${prefixCls}-multiple-block`,
       `${prefixCls}-multiple-block-more`,
     );
-    let content: ReactNode = `+ ${valueLength - maxTagCount} ...`;
+    let content: ReactNode = `+ ${valueLength - visibleCount} ...`;
     if (maxTagPlaceholder) {
-      const omittedValues = values.slice(maxTagCount, valueLength);
+      const omittedValues = values.slice(visibleCount, valueLength);
       content =
         typeof maxTagPlaceholder === 'function'
           ? maxTagPlaceholder(omittedValues)

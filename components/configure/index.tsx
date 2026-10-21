@@ -425,7 +425,7 @@ export interface Config extends DataSetConfig {
    */
   dateTimePickerOkButton?: boolean;
   fieldMaxTagPlaceholder?: ReactNode | ((omittedValues: any[]) => ReactNode);
-  fieldMaxTagCount?: number;
+  fieldMaxTagCount?: number | 'responsive';
   /**
    * 是否开启备选色板
    */
