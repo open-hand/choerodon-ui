@@ -236,7 +236,7 @@ export interface FormFieldProps<V = any> extends DataSetComponentProps {
   /**
    * 多值标签最大数量
    */
-  maxTagCount?: number;
+  maxTagCount?: number | 'responsive';
   /**
    * 多值标签文案最大长度
    */
@@ -1413,7 +1413,7 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
     return false;
   }
 
-  renderMultipleValues(readOnly?: boolean) {
+  renderMultipleValues(readOnly?: boolean, responsiveTagCount?: number, measurement?: { placeholderOnly?: boolean }) {
     const {
       prefixCls,
       range,
@@ -1424,10 +1424,15 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
         tagRenderer,
       },
     } = this;
-    delete this.isOverflowMaxTagTextLength;
+    const isOverflowMaxTagTextLength = this.isOverflowMaxTagTextLength;
+    if (!measurement) {
+      delete this.isOverflowMaxTagTextLength;
+    }
     const values = renderMultipleValues(this.getValue(), {
       range,
       maxTagCount,
+      responsiveTagCount,
+      placeholderOnly: measurement?.placeholderOnly,
       maxTagPlaceholder,
       prefixCls,
       disabled,
@@ -1446,8 +1451,12 @@ export class FormField<T extends FormFieldProps = FormFieldProps> extends DataSe
       record: this.record,
       field: this.field,
     });
-    this.multipleValidateMessageLength = values.multipleValidateMessageLength;
-    this.isOverflowMaxTagCount = values.isOverflowMaxTagCount;
+    if (measurement) {
+      this.isOverflowMaxTagTextLength = isOverflowMaxTagTextLength;
+    } else {
+      this.multipleValidateMessageLength = values.multipleValidateMessageLength;
+      this.isOverflowMaxTagCount = values.isOverflowMaxTagCount;
+    }
     return values;
   }
 

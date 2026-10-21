@@ -193,7 +193,7 @@ const prefixCls = getConfig('prefixCls');
 | uploadSecretLevelFlag | 是否开启上传密级 | boolean |  |
 | uploadSecretLevelOptions | 上传密级配置项, fields: 密级数据源字段配置, 必传; formProps: 密级表单配置; modalProps: 密级弹框配置; | options: { fields: FieldProps[], formProps?: FormProps, modalProps?: ModalProps } |  |
 | uploadBatchMaxFileCount | 单次批量上传的默认最大文件数量限制，超出会提示用户是否继续上传，继续则会截取最大数量上传；未配置或非正数时不限制 | number |  |
-| fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性 | boolean |  |
+| fieldMaxTagCount | 默认 FormField 的 maxTagCount 属性，支持响应式配置 | number \| `responsive` |  |
 | fieldMaxTagPlaceholder | 默认 FormField 的 maxTagPlaceholder 属性 | ReactNode \| (omittedValues: any[]) => ReactNode |  |
 | fieldFocusMode | 输入框聚焦模式: checked 默认聚焦选中文本，focus 聚焦显示光标 | `checked` \| `focus` | `checked` |
 | formAutoFocus | Form 表单内自动聚焦第一个可编辑组件，若表单在 Modal 弹窗内需要手动将 Modal 的 autoFocus 设置为 false | boolean | false |

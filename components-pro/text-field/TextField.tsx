@@ -21,6 +21,7 @@ import isNil from 'lodash/isNil';
 import noop from 'lodash/noop';
 import defaultTo from 'lodash/defaultTo';
 import debounce from 'lodash/debounce';
+import ResizeObserver from 'resize-observer-polyfill';
 import classNames from 'classnames';
 import { action, computed, observable, runInAction, toJS, isArrayLike } from 'mobx';
 import { observer } from 'mobx-react';
@@ -188,6 +189,19 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   renderedValue: ReactNode;
 
   tagContainer: HTMLUListElement | null;
+
+  responsiveMeasurement: HTMLDivElement | null = null;
+
+  responsiveResizeObserver?: ResizeObserver;
+
+  responsiveObservedElements: Set<Element> = new Set();
+
+  @observable responsiveTagCount?: number;
+
+  get responsiveTags(): boolean {
+    const { maxTagCount = this.getContextConfig('fieldMaxTagCount') } = this.props;
+    return !!this.multiple && maxTagCount === 'responsive';
+  }
 
   handleChangeWait: DebouncedFunc<(...value: any[]) => void>;
 
@@ -432,15 +446,97 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     }
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    this.observeResponsiveTags();
+    this.measureResponsiveTags();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    super.componentDidUpdate?.(prevProps, prevState, snapshot);
+    this.observeResponsiveTags();
+    this.measureResponsiveTags();
+  }
+
   componentWillUnmount() {
+    this.responsiveResizeObserver?.disconnect();
     super.componentWillUnmount();
     this.handleChangeWait.cancel();
     this.showLengthExceedWarningDeb.cancel();
   }
 
   @autobind
+  observeResponsiveTags() {
+    const elements: Set<Element> = new Set();
+    if (this.responsiveTags && this.tagContainer) {
+      elements.add(this.tagContainer);
+      if (this.responsiveMeasurement) {
+        Array.from(this.responsiveMeasurement.children).forEach(list => {
+          elements.add(list);
+          Array.from(list.children).forEach(element => elements.add(element));
+        });
+      }
+    }
+    if (elements.size && !this.responsiveResizeObserver) {
+      this.responsiveResizeObserver = new ResizeObserver(this.measureResponsiveTags);
+    }
+    this.responsiveObservedElements.forEach(element => {
+      if (!elements.has(element)) {
+        this.responsiveResizeObserver?.unobserve(element);
+      }
+    });
+    elements.forEach(element => {
+      if (!this.responsiveObservedElements.has(element)) {
+        this.responsiveResizeObserver!.observe(element);
+      }
+    });
+    this.responsiveObservedElements = elements;
+  }
+
+  @autobind
+  @action
+  measureResponsiveTags() {
+    const container = this.tagContainer;
+    const measurement = this.responsiveMeasurement;
+    if (!this.responsiveTags || !container || !measurement) {
+      return;
+    }
+    const tags = measurement.querySelectorAll(`.${this.prefixCls}-responsive-tag-measure > *`) as NodeListOf<HTMLElement>;
+    const placeholders = measurement.querySelectorAll(`.${this.prefixCls}-responsive-placeholder-measure > *`) as NodeListOf<HTMLElement>;
+    const editor = container.lastElementChild as HTMLElement | null;
+    const style = window.getComputedStyle(container);
+    const measureWidth = (element?: HTMLElement) => {
+      if (!element) {
+        return 0;
+      }
+      const computed = window.getComputedStyle(element);
+      return element.getBoundingClientRect().width + parseFloat(computed.marginLeft) + parseFloat(computed.marginRight);
+    };
+    const width = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - (editor ? measureWidth(editor) : 0);
+    let used = 0;
+    let count = 0;
+    for (let i = 0; i < tags.length; i++) {
+      used += measureWidth(tags[i]);
+      if (used > width) {
+        break;
+      }
+      if (i === tags.length - 1 || used + measureWidth(placeholders[i + 1]) <= width) {
+        count = i + 1;
+      }
+    }
+    if (this.responsiveTagCount !== count) {
+      this.responsiveTagCount = count;
+    }
+  }
+
+  @autobind
   saveTagContainer(node) {
     this.tagContainer = node;
+  }
+
+  @autobind
+  saveResponsiveMeasurement(node) {
+    this.responsiveMeasurement = node;
   }
 
   @autobind
@@ -1235,7 +1331,15 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     delete otherProps.onMouseEnter;
     delete otherProps.onMouseLeave;
     const { record } = this;
-    const { tags: multipleTags } = this.renderMultipleValues();
+    const responsive = this.responsiveTags && !showSelectLoading;
+    const valuesLength = responsive ? this.getValues().length : 0;
+    const fullTags = responsive ? this.renderMultipleValues(false, valuesLength, {}).tags as ReactNode[] : [];
+    const placeholders = responsive ? fullTags.map((_, index) => {
+      const { tags: limitedTags } = this.renderMultipleValues(false, index, { placeholderOnly: true });
+      const placeholder = (limitedTags as ReactNode[])[0];
+      return isValidElement(placeholder) ? cloneElement(placeholder, { key: String(index) }) : placeholder;
+    }) : [];
+    const { tags: multipleTags } = this.renderMultipleValues(false, responsive ? this.responsiveTagCount : undefined);
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,
@@ -1250,8 +1354,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         componentProps={{
           ref: this.saveTagContainer,
           onScroll: stopPropagation,
+          className: responsive ? `${prefixCls}-responsive-tags` : undefined,
         }}
-        transitionName={!record || record === this.lastAnimationRecord ? 'zoom' : ''}
+        transitionName={!responsive && (!record || record === this.lastAnimationRecord) ? 'zoom' : ''}
         exclusive
         onEnd={this.handleTagAnimateEnd}
         onEnter={this.handleTagAnimateEnter}
@@ -1281,6 +1386,16 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {...eventsProps}
       >
         {tags}
+        {responsive && (
+          <div ref={this.saveResponsiveMeasurement} className={`${prefixCls}-responsive-measure`} aria-hidden="true">
+            <ul className={`${prefixCls}-responsive-tag-measure`}>
+              {fullTags.map((tag, index) => tag || (
+                <li key={String(index)} style={{ width: 0, margin: 0, padding: 0, border: 0 }} />
+              ))}
+            </ul>
+            <ul className={`${prefixCls}-responsive-placeholder-measure`}>{placeholders}</ul>
+          </div>
+        )}
       </div>,
     );
   }

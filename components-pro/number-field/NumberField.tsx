@@ -289,7 +289,8 @@ export class NumberField<T extends NumberFieldProps> extends TextField<T & Numbe
     return !!isFollow;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps?, prevState?, snapshot?) {
+    super.componentDidUpdate(prevProps, prevState, snapshot);
     if (!isNil(this.cursorPos)) {
       if (this.element && this.element.setSelectionRange && this.isFocus) {
         this.element.setSelectionRange(this.cursorPos, this.cursorPos);

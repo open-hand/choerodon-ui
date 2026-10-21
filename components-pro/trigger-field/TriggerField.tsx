@@ -113,8 +113,9 @@ export default abstract class TriggerField<T extends TriggerFieldProps = Trigger
     super.componentDidMount();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps?, prevState?, snapshot?) {
     this.domNode = findDOMNode(this);
+    super.componentDidUpdate(prevProps, prevState, snapshot);
   }
 
   @autobind
