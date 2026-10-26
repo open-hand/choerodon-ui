@@ -17,6 +17,27 @@
     }
   }
 
+  &-color,
+  &-button-color {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: @component-background;
+    background-image: repeating-conic-gradient(@border-color-base 0 25%, transparent 0 50%);
+    background-size: 8px 8px;
+
+    .@{color-prefix}-empty & {
+      background: transparent;
+    }
+
+    .@{color-prefix}-prefix-value {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+  }
+
   &-color {
     display: block;
     width: 100%;
@@ -146,7 +167,7 @@
 
   &-stop-row {
     display: grid;
-    grid-template-columns: 0.54rem minmax(1.56rem, 1fr) 0.28rem;
+    grid-template-columns: 0.64rem minmax(1.56rem, 1fr) 0.28rem;
     gap: 0.08rem;
     align-items: center;
     margin: 0.06rem 0;
@@ -179,11 +200,25 @@
     }
 
     .@{color-prefix}-stop-color-alpha {
+      position: relative;
       display: flex;
       min-width: 0;
 
-      .@{color-prefix}-stop-color {
+      .@{color-prefix}-stop-color-preview {
+        position: absolute;
+        top: 50%;
+        left: 0.08rem;
+        width: 0.14rem;
+        height: 0.14rem;
+        border: @border-width-base @border-style-base @border-color-base;
+        border-radius: @border-radius-base;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      input.@{color-prefix}-stop-color {
         flex: 1;
+        padding-left: 0.28rem;
         border-radius: @border-radius-base 0 0 @border-radius-base;
       }
 
@@ -369,6 +404,11 @@
         &:first-of-type {
           padding-top: 0.16rem;
           border-top: @border-width-base @border-style-base @border-color-base;
+        }
+
+        &:first-child {
+          padding-top: 0.08rem;
+          border-top: none;
         }
 
         &-block {

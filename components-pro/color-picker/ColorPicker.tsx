@@ -49,6 +49,7 @@ function getNodeRect(node): ClientRect {
 export interface ColorPickerProps extends TriggerFieldProps {
   mode?: ViewMode;
   preset?: boolean;
+  showNoFill?: boolean;
   gradientMode?: ColorMode | ColorMode[];
 }
 
@@ -60,6 +61,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     ...TriggerField.defaultProps,
     suffixCls: 'color-picker',
     clearButton: false,
+    showNoFill: true,
     mode: ViewMode.default,
   };
 
@@ -243,7 +245,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (presetOpacity && presetOpacityPointer) {
       const { width } = getNodeRect(presetOpacity);
       if (Number.isFinite(width) && width > 0) {
-        this.setSliderPointer(width * this.RGBA.a, presetOpacityPointer, presetOpacity, false);
+        const alpha = parseColor(this.editingGradient ? this.currentStopColor : this.getValue())?.a ?? 1;
+        this.setSliderPointer(width * alpha, presetOpacityPointer, presetOpacity, false);
       }
     }
     if (this.preset && this.gradientHidden) {
@@ -273,6 +276,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     return super.getOmitPropsKeys().concat([
       'mode',
       'preset',
+      'showNoFill',
       'gradientMode',
     ]);
   }
@@ -386,7 +390,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       });
     return (
       <div className={`${prefixCls}-prefix`}>
-        <span className={className} style={{ background: backgroundColor }} />
+        <span className={className}>
+          <span className={`${prefixCls}-prefix-value`} style={{ background: backgroundColor }} />
+        </span>
       </div>
     );
   }
@@ -516,13 +522,25 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     )
   }
 
+  @autobind
+  handlePanelMouseDownCapture(e: React.MouseEvent<HTMLDivElement>) {
+    const { currentTarget, target } = e;
+    const { activeElement } = currentTarget.ownerDocument;
+    if (activeElement && currentTarget.contains(activeElement)
+      && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')
+      && (target as HTMLElement).tagName !== 'INPUT' && (target as HTMLElement).tagName !== 'TEXTAREA') {
+      currentTarget.focus();
+    }
+  }
+
   getPopupContent() {
     const { prefixCls, preset } = this;
+    const { showNoFill } = this.props;
     if (preset) {
       const value = this.editingGradient ? this.currentStopColor : this.getValue();
-      return <div className={`${prefixCls}-popup-view-preset`}>
+      return <div className={`${prefixCls}-popup-view-preset`} tabIndex={-1} onMouseDownCapture={this.handlePanelMouseDownCapture}>
         <div>
-          <button type="button" className={`${prefixCls}-no-fill`} onClick={this.handleNoFill}><NoFillColor />{$l('ColorPicker', 'no_fill')}</button>
+          {showNoFill && <button type="button" className={`${prefixCls}-no-fill`} onClick={this.handleNoFill}><NoFillColor />{$l('ColorPicker', 'no_fill')}</button>}
           {this.getPresetData(commonColorMap, value)}
           {this.getPresetData(defaultColorMap, value)}
           <div className={`${prefixCls}-popup-picker-name`}>{$l('ColorPicker', 'used_view')}</div>
@@ -543,7 +561,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   getCustomContent() {
     const { prefixCls } = this;
-    return <div ref={node => { this.popupView = node; }} className={`${prefixCls}-custom-panel`} style={{ display: this.preset && this.gradientHidden ? 'none' : 'block', left: this.gradienLeft, top: 'unset', bottom: -4 }}>
+    return <div ref={node => { this.popupView = node; }} className={`${prefixCls}-custom-panel`} tabIndex={-1} onMouseDownCapture={this.handlePanelMouseDownCapture} style={{ display: this.preset && this.gradientHidden ? 'none' : 'block', left: this.gradienLeft, top: 'unset', bottom: -4 }}>
       {this.getModeTabs()}
     </div>;
   }
@@ -666,12 +684,13 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
           {sortedStops.map((stop, index) => (
             <div key={stop.id} className={classNames(`${prefixCls}-stop-row`, { [`${prefixCls}-stop-row-active`]: stop.id === this.selectedStop })}>
               <div className={`${prefixCls}-stop-position`}>
-                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={100} step="any" value={stop.position} onFocus={this.handleFooterFocus} onChange={e => this.updateStopPosition(Number(e.target.value), stop.id)} />
+                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={100} step="any" value={stop.position} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopPosition(Number(e.target.value), stop.id)} />
                 <span aria-hidden="true">%</span>
               </div>
               <div className={`${prefixCls}-stop-color-alpha`}>
-                <input className={`${prefixCls}-stop-color`} aria-label={`Color stop ${index + 1} color`} value={this.getStopColorDisplay(stop)} onFocus={this.handleFooterFocus} onChange={e => this.updateStopColor(stop.id, e.target.value)} onBlur={() => this.handleStopColorBlur(stop.id)} />
-                <input className={`${prefixCls}-stop-alpha`} aria-label={`Color stop ${index + 1} alpha`} inputMode="decimal" value={this.stopAlphaDrafts[stop.id] ?? this.formatAlpha(parseColor(stop.color)?.a)} onFocus={this.handleFooterFocus} onChange={e => this.handleStopAlphaInput(stop.id, e.target.value)} onBlur={() => this.handleStopAlphaBlur(stop.id)} />
+                {this.getStopColorDisplay(stop) && <span className={`${prefixCls}-stop-color-preview`} aria-hidden="true" style={{ background: stop.color }} />}
+                <input className={`${prefixCls}-stop-color`} aria-label={`Color stop ${index + 1} color`} value={this.getStopColorDisplay(stop)} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopColor(stop.id, e.target.value)} onBlur={() => this.handleStopColorBlur(stop.id)} />
+                <input className={`${prefixCls}-stop-alpha`} aria-label={`Color stop ${index + 1} alpha`} inputMode="decimal" value={this.stopAlphaDrafts[stop.id] ?? this.formatAlpha(parseColor(stop.color)?.a)} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.handleStopAlphaInput(stop.id, e.target.value)} onBlur={() => this.handleStopAlphaBlur(stop.id)} />
               </div>
               <button type="button" aria-label={`Remove color stop ${index + 1}`} aria-disabled={this.stops.length <= 2} onMouseDown={e => { if (this.stops.length <= 2) e.preventDefault(); }} onClick={() => this.removeStop(stop.id)}><Icon type="remove" /></button>
             </div>
@@ -741,8 +760,15 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @action
   loadGradient(gradient: Gradient) {
+    this.handleStopMouseUp();
+    this.endColorDrag(this.handleGPClick, this.onGPMouseUp);
+    this.endColorDrag(this.handleHueClick, this.onHPMouseUp);
+    this.endColorDrag(this.handleOpacityClick, this.onOpacityMouseUp);
+    this.endColorDrag(this.handlePresetOpacityClick, this.handlePresetOpacityMouseUp);
     this.gradientType = gradient.type;
     this.gradientAngle = gradient.angle;
+    this.footerHex = undefined;
+    this.footerAlphaDraft = undefined;
     this.stopColorDrafts = {};
     this.stopAlphaDrafts = {};
     this.stops = gradient.stops.map(stop => ({ ...stop, id: ++this.stopId }));
@@ -1069,7 +1095,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
         return;
       }
       const { r, g, b } = color;
-      this.setColor(`rgba(${r}, ${g}, ${b}, ${opacity})`);
+      this.setColor(this.rgbToHEX(r, g, b, opacity));
     }
   }
 

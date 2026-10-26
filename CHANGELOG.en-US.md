@@ -34,6 +34,7 @@ timeline: true
 - 🌟 `<pro>Cascader`: Added `childrenPaging` property.
 - 🌟 `<pro>PerformanceTable`: Added `headWordWrap` property and optimized the effect of `wordWrap`.
 - 🌟 `<pro>ColorPicker`: Added `gradientMode` to support solid colors, linear and radial gradients, and switching between solid and gradient modes; supports editing gradient stops and CSS gradient values.
+- 🌟 `<pro>ColorPicker`: Added `showNoFill` property to show the no-fill option.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
