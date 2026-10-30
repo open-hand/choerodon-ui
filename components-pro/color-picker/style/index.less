@@ -170,7 +170,8 @@
     grid-template-columns: 0.64rem minmax(1.56rem, 1fr) 0.28rem;
     gap: 0.08rem;
     align-items: center;
-    margin: 0.06rem 0;
+    margin: 0 -0.16rem;
+    padding: 0.06rem 0.16rem;
 
     .@{color-prefix}-stop-position {
       position: relative;
@@ -247,15 +248,32 @@
       }
     }
 
-    &-active .@{color-prefix}-stop-position input {
-      border-color: @primary-color;
+    &-active {
+      background-color: @primary-1;
+
+      input:not(:focus) {
+        border-color: @border-color-base;
+      }
+
+      button {
+        background-color: transparent;
+      }
     }
   }
 
   &-stop-list-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: 0.64rem minmax(1.56rem, 1fr) 0.28rem;
+    gap: 0.08rem;
     align-items: center;
-    justify-content: space-between;
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+  }
+
+  &-stop-color-alpha-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 0.52rem;
+    align-items: center;
   }
 
   &-stop-add {

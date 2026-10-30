@@ -323,6 +323,9 @@ export interface Locale extends DataSetLocale {
     mode_gradient: string;
     opacity: string;
     stop: string;
+    stop_position: string;
+    color_value: string;
+    stop_opacity: string;
     gradient_direction: string;
     radial: string;
     gradient_style_value: string;
