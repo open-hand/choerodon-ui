@@ -436,6 +436,43 @@ describe('ColorPicker gradient editing', () => {
     expect(parseGradient(picker.getValue())).toBeDefined();
   });
 
+  it('preserves pixel stops through loading, editing and mode changes', () => {
+    const value = 'repeating-linear-gradient(to top left, lightpink, lightpink 5px, white 5px, white 10px)';
+    const picker = open({ defaultValue: value });
+    expect(picker.gradientStopUnit).toBe('px');
+    expect(picker.gradientValue).toBe('repeating-linear-gradient(315deg, #ffb6c1 0px, #ffb6c1 5px, #ffffff 5px, #ffffff 10px)');
+    expect(wrapper.find('.c7n-pro-color-picker-stop-position > span').map(node => node.text())).toEqual(['px', 'px', 'px', 'px']);
+    expect(wrapper.find('input[aria-label="Color stop 4 position"]').prop('max')).toBeUndefined();
+    expect(wrapper.find('.c7n-pro-color-picker-stop-track button').map(node => node.prop('style').left)).toEqual(['0%', '50%', '50%', '100%']);
+    expect(wrapper.find('.c7n-pro-color-picker-stop-track-color').prop('style').background).toBe('linear-gradient(90deg, #ffb6c1 0%, #ffb6c1 50%, #ffffff 50%, #ffffff 100%)');
+    picker.stopTrack.getBoundingClientRect = () => ({ left: 10, width: 200 });
+    expect(picker.getStopPosition({ clientX: 110 })).toBe(5);
+    picker.updateStopPosition(250, picker.sortedStops[3].id);
+    expect(parseGradient(picker.getValue()).stops[3].position).toBe(250);
+    expect(picker.getStopPosition({ clientX: 110 })).toBe(125);
+    picker.addStop(500);
+    expect(picker.sortedStops[4].position).toBe(250);
+    picker.handleModeChange('single');
+    picker.handleModeChange('gradient');
+    expect(parseGradient(picker.getValue()).stopUnit).toBe('px');
+    picker.handleDirectionChange({ target: { value: 'radial' } });
+    expect(parseGradient(picker.getValue())).toMatchObject({ type: 'radial', stopUnit: 'px' });
+    wrapper.update();
+    wrapper.find('.c7n-pro-color-picker-direction-options button').forEach(button => {
+      expect(button.prop('style').background).toContain('250px');
+    });
+    picker.loadGradient(parseGradient('linear-gradient(#000 0px, #fff 0px)'));
+    expect(picker.stopPositionRange).toBe(1);
+    expect(picker.getStopPosition({ clientX: 110 })).toBe(0.5);
+    picker.handleNoFill();
+    expect(picker.gradientStopUnit).toBeUndefined();
+    picker.loadGradient(parseGradient(value));
+    picker.loadGradient(parseGradient('linear-gradient(#000, #fff)'));
+    expect(picker.gradientStopUnit).toBeUndefined();
+    picker.updateStopPosition(250, picker.sortedStops[1].id);
+    expect(picker.sortedStops[1].position).toBe(100);
+  });
+
   it('supports radial and linear directions', () => {
     const picker = open({ gradientMode: 'gradient' });
     picker.handleDirectionChange({ target: { value: 'radial' } });

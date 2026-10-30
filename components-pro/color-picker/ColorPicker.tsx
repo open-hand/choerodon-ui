@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { colorHexReg } from 'choerodon-ui/dataset/validator/rules/typeMismatch';
-import { Gradient, parseColor, parseGradient, serializeGradient, mixWithWhite } from 'choerodon-ui/dataset/utils/color';
+import { Gradient, parseColor, parseGradient, serializeGradient, mixWithWhite, isColorExpression } from 'choerodon-ui/dataset/utils/color';
 import Icon from 'choerodon-ui/lib/icon';
 import Tabs from 'choerodon-ui/lib/tabs';
 import { TabsType } from 'choerodon-ui/lib/tabs/enum';
@@ -37,6 +37,7 @@ const FILL_COLOR = '#FFFFFF';
 const COLOR_LINE_LENGTH = 9;
 const COLOR_STORAGE_ITEM = 'color.picker.customized.used';
 const CUSTOM_PANEL_GAP = 4;
+const CUSTOM_PANEL_VIEWPORT_GAP = 8;
 
 // 相对亮度计算公式：L = 0.2126 * R + 0.7152 * G + 0.0722 * B
 // 最高亮度：L = (0.2126 * 255 + 0.7152 * 255 + 0.0722 * 255) - 1.05
@@ -113,6 +114,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable gradientAngle: number;
 
+  @observable gradientRepeating?: boolean;
+
+  @observable gradientPosition?: string;
+
+  @observable gradientStopUnit?: string;
+
   @observable gradientText: string;
 
   @observable gradientError: boolean;
@@ -158,11 +165,17 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   get gradientValue(): string {
-    return serializeGradient({ type: this.gradientType, angle: this.gradientAngle, stops: this.sortedStops }) || '';
+    return serializeGradient({ type: this.gradientType, angle: this.gradientAngle, repeating: this.gradientRepeating, position: this.gradientPosition, stopUnit: this.gradientStopUnit, stops: this.sortedStops }) || '';
   }
 
   get sortedStops(): PickerStop[] {
     return this.stops.slice().sort((first, second) => first.position - second.position || first.id - second.id);
+  }
+
+  get stopPositionRange(): number {
+    return this.gradientStopUnit && this.gradientStopUnit !== '%'
+      ? this.stops.reduce((maximum, stop) => Math.max(maximum, stop.position), 0) || 1
+      : 100;
   }
 
   get multiple(): boolean {
@@ -220,10 +233,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (node) this.schedulePointerSync();
   };
 
+  @autobind
   schedulePointerSync() {
     if (!this.pointerSyncDisposed && this.popup && this.pointerSyncFrame === undefined) {
       this.pointerSyncFrame = requestAnimationFrame(() => {
         this.pointerSyncFrame = undefined;
+        this.syncCustomPanelPosition();
         this.syncPointers();
       });
     }
@@ -312,6 +327,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.syncPointers();
       this.schedulePointerSync();
     }
+    this.syncCustomPanelPosition();
     if (!this.gradientHidden && this.popupView) {
       const { left, width } = this.popupView.getBoundingClientRect();
       const { innerWidth } = window;
@@ -324,7 +340,21 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     }
   }
 
+  syncCustomPanelPosition() {
+    const { popupView, popup, preset, gradientHidden } = this;
+    if (!popup || !preset || gradientHidden || !popupView) {
+      return;
+    }
+    popupView.style.bottom = `${-CUSTOM_PANEL_GAP}px`;
+    const { top, height } = popupView.getBoundingClientRect();
+    const viewportHeight = popupView.ownerDocument.documentElement.clientHeight;
+    const nextTop = Math.max(0, Math.min(top, viewportHeight - CUSTOM_PANEL_VIEWPORT_GAP - height));
+    popupView.style.bottom = `${-CUSTOM_PANEL_GAP + top - nextTop}px`;
+  }
+
   componentWillUnmount() {
+    window.removeEventListener('resize', this.schedulePointerSync);
+    window.removeEventListener('scroll', this.schedulePointerSync, true);
     this.pointerSyncDisposed = true;
     this.cancelPointerSync();
     this.eventManager.clear();
@@ -420,7 +450,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     const value = this.footerHex !== undefined
       ? this.footerHex
       : this.editingGradient
-        ? this.currentStopColor ? this.rgbToHEX(r, g, b, a).replace('#', '') : ''
+        ? this.currentStopColor && parseColor(this.currentStopColor) ? this.rgbToHEX(r, g, b, a).replace('#', '') : this.currentStopColor
         : (singleValue && parseColor(singleValue) ? this.rgbToHEX(r, g, b, a) : singleValue).replace('#', '');
     return (
       <div className={`${prefixCls}-popup-footer`}>
@@ -561,7 +591,17 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   getCustomContent() {
     const { prefixCls } = this;
-    return <div ref={node => { this.popupView = node; }} className={`${prefixCls}-custom-panel`} tabIndex={-1} onMouseDownCapture={this.handlePanelMouseDownCapture} style={{ display: this.preset && this.gradientHidden ? 'none' : 'block', left: this.gradienLeft, top: 'unset', bottom: -4 }}>
+    const style: CSSProperties = {
+      display: this.preset && this.gradientHidden ? 'none' : 'block',
+      left: this.gradienLeft,
+      top: 'unset',
+      bottom: -CUSTOM_PANEL_GAP,
+      ...(this.preset ? {
+        maxHeight: `calc(100vh - ${CUSTOM_PANEL_VIEWPORT_GAP * 2}px)`,
+        overflowY: 'auto' as const,
+      } : {}),
+    };
+    return <div ref={node => { this.popupView = node; }} className={`${prefixCls}-custom-panel`} tabIndex={-1} onMouseDownCapture={this.handlePanelMouseDownCapture} style={style}>
       {this.getModeTabs()}
     </div>;
   }
@@ -666,26 +706,32 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   getGradientEditor() {
-    const { prefixCls, gradientType, gradientAngle, sortedStops } = this;
+    const { prefixCls, gradientType, gradientAngle, sortedStops, gradientStopUnit, stopPositionRange } = this;
+    const stopUnit = gradientStopUnit || '%';
+    const trackStops = sortedStops.map(stop => ({ ...stop, position: stop.position / stopPositionRange * 100 }));
     return (
       <div className={`${prefixCls}-gradient-editor`}>
         {this.getGradientPopupContent()}
         <div className={`${prefixCls}-stop-track`} ref={node => { this.stopTrack = node; }} onClick={this.handleStopTrackClick}>
-          <div className={`${prefixCls}-stop-track-color`} style={{ background: serializeGradient({ type: 'linear', angle: 90, stops: sortedStops }) }} />
+          <div className={`${prefixCls}-stop-track-color`} style={{ background: serializeGradient({ type: 'linear', angle: 90, stops: trackStops }) }} />
           {sortedStops.map(stop => (
-            <button type="button" key={stop.id} aria-label={`Color stop ${stop.position}%`} aria-pressed={stop.id === this.selectedStop} className={classNames(`${prefixCls}-stop`, { [`${prefixCls}-stop-active`]: stop.id === this.selectedStop })} style={{ left: `${stop.position}%`, background: stop.color }} onClick={e => { e.stopPropagation(); this.selectStop(stop.id); }} onMouseDown={e => this.handleStopMouseDown(e, stop.id)} />
+            <button type="button" key={stop.id} aria-label={`Color stop ${stop.position}${stopUnit}`} aria-pressed={stop.id === this.selectedStop} className={classNames(`${prefixCls}-stop`, { [`${prefixCls}-stop-active`]: stop.id === this.selectedStop })} style={{ left: `${stop.position / stopPositionRange * 100}%`, background: stop.color }} onClick={e => { e.stopPropagation(); this.selectStop(stop.id); }} onMouseDown={e => this.handleStopMouseDown(e, stop.id)} />
           ))}
         </div>
         <div className={`${prefixCls}-stop-list-header`}>
-          <span>{$l('ColorPicker', 'stop')}</span>
+          <span>{$l('ColorPicker', 'stop_position')}</span>
+          <div className={`${prefixCls}-stop-color-alpha-header`}>
+            <span>{$l('ColorPicker', 'color_value')}</span>
+            <span>{$l('ColorPicker', 'stop_opacity')}</span>
+          </div>
           <button type="button" aria-label="Add color stop" className={`${prefixCls}-stop-add`} onClick={() => this.addStop()}><Icon type="add" /></button>
         </div>
         <div className={`${prefixCls}-stop-list`}>
           {sortedStops.map((stop, index) => (
             <div key={stop.id} className={classNames(`${prefixCls}-stop-row`, { [`${prefixCls}-stop-row-active`]: stop.id === this.selectedStop })}>
               <div className={`${prefixCls}-stop-position`}>
-                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={100} step="any" value={stop.position} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopPosition(Number(e.target.value), stop.id)} />
-                <span aria-hidden="true">%</span>
+                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={stopUnit === '%' ? 100 : undefined} step="any" value={stop.position} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopPosition(Number(e.target.value), stop.id)} />
+                <span aria-hidden="true">{stopUnit}</span>
               </div>
               <div className={`${prefixCls}-stop-color-alpha`}>
                 {this.getStopColorDisplay(stop) && <span className={`${prefixCls}-stop-color-preview`} aria-hidden="true" style={{ background: stop.color }} />}
@@ -701,14 +747,14 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
           <div className={`${prefixCls}-direction-options`}>
             {[135, 90, 225, 315, 180, 45].map(angle => (
               <div className={`${prefixCls}-direction-option`} key={angle}>
-                <button type="button" aria-label={`Gradient direction ${angle} degrees`} aria-pressed={gradientType === 'linear' && gradientAngle === angle} style={{ background: serializeGradient({ type: 'linear', angle, stops: sortedStops }) }} onClick={() => this.handleDirectionChange({ target: { value: String(angle) } })}>
+                <button type="button" aria-label={`Gradient direction ${angle} degrees`} aria-pressed={gradientType === 'linear' && gradientAngle === angle} style={{ background: serializeGradient({ type: 'linear', angle, stopUnit: gradientStopUnit, stops: sortedStops }) }} onClick={() => this.handleDirectionChange({ target: { value: String(angle) } })}>
                   {gradientType === 'linear' && gradientAngle === angle && <Icon type="check" />}
                 </button>
                 <span>{angle >= 180 ? angle - 360 : angle}°</span>
               </div>
             ))}
             <div className={`${prefixCls}-direction-option`}>
-              <button type="button" aria-label="Gradient direction radial" aria-pressed={gradientType === 'radial'} style={{ background: serializeGradient({ type: 'radial', angle: 0, stops: sortedStops }) }} onClick={() => this.handleDirectionChange({ target: { value: 'radial' } })}>
+              <button type="button" aria-label="Gradient direction radial" aria-pressed={gradientType === 'radial'} style={{ background: serializeGradient({ type: 'radial', angle: 0, stopUnit: gradientStopUnit, stops: sortedStops }) }} onClick={() => this.handleDirectionChange({ target: { value: 'radial' } })}>
                 {gradientType === 'radial' && <Icon type="check" />}
               </button>
               <span>{$l('ColorPicker', 'radial')}</span>
@@ -767,6 +813,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.endColorDrag(this.handlePresetOpacityClick, this.handlePresetOpacityMouseUp);
     this.gradientType = gradient.type;
     this.gradientAngle = gradient.angle;
+    this.gradientRepeating = gradient.repeating;
+    this.gradientPosition = gradient.position;
+    this.gradientStopUnit = gradient.stopUnit;
     this.footerHex = undefined;
     this.footerAlphaDraft = undefined;
     this.stopColorDrafts = {};
@@ -785,6 +834,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @action
   resetEmptyState() {
+    this.gradientStopUnit = undefined;
     this.footerHex = undefined;
     this.footerAlphaDraft = undefined;
     this.stopAlphaDrafts = {};
@@ -871,7 +921,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (!Number.isFinite(position)) {
       return;
     }
-    const stopPosition = round(Math.max(0, Math.min(100, position as number)), 2);
+    const stopPosition = round(Math.max(0, Math.min(this.stopPositionRange, position as number)), 2);
     const rightIndex = stops.findIndex(stop => stop.position > stopPosition);
     const left = stops[rightIndex === -1 ? stops.length - 1 : Math.max(0, rightIndex - 1)];
     const right = stops[rightIndex === -1 ? stops.length - 1 : rightIndex];
@@ -909,7 +959,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (!Number.isFinite(position)) {
       return;
     }
-    this.stops = this.stops.map(stop => stop.id === id ? { ...stop, position: round(Math.max(0, Math.min(100, position)), 2) } : stop);
+    const maximum = this.gradientStopUnit && this.gradientStopUnit !== '%' ? Infinity : 100;
+    this.stops = this.stops.map(stop => stop.id === id ? { ...stop, position: round(Math.max(0, Math.min(maximum, position)), 2) } : stop);
     this.commitGradient();
   }
 
@@ -919,9 +970,9 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.stopColorDrafts = { ...this.stopColorDrafts, [id]: color };
     const parsed = parseColor(color);
     const stop = this.stops.find(item => item.id === id);
-    if (parsed && stop) {
-      const alpha = parseColor(stop.color)?.a ?? parsed.a;
-      if (alpha !== parsed.a) {
+    if (isColorExpression(color) && stop) {
+      const alpha = parsed && (parseColor(stop.color)?.a ?? parsed.a);
+      if (parsed && alpha !== parsed.a) {
         color = `rgba(${parsed.r}, ${parsed.g}, ${parsed.b}, ${alpha})`;
       }
       this.stops = this.stops.map(stop => stop.id === id ? { ...stop, color } : stop);
@@ -966,7 +1017,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (this.stopTrack) {
       const { left, width } = getNodeRect(this.stopTrack);
       if (width > 0) {
-        return (transformZoomData(e.clientX) - left) / width * 100;
+        return (transformZoomData(e.clientX) - left) / width * this.stopPositionRange;
       }
     }
     return undefined;
@@ -1013,6 +1064,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       return;
     }
     this.gradientType = value === 'radial' ? 'radial' : 'linear';
+    this.gradientPosition = undefined;
     if (value !== 'radial') {
       this.gradientAngle = Number(value);
     }
@@ -1384,6 +1436,10 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     if (name === ColorUnit.hex) {
       this.footerAlphaDraft = undefined;
       this.footerHex = value;
+      if (this.editingGradient && isColorExpression(value) && !parseColor(value)) {
+        this.updateStopColor(this.selectedStop, value);
+        return;
+      }
       if (value) {
         value = `#${value}`;
       }
@@ -1548,7 +1604,12 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       return;
     }
     super.setPopup(statePopup);
-    if (!statePopup) {
+    if (statePopup) {
+      window.addEventListener('resize', this.schedulePointerSync);
+      window.addEventListener('scroll', this.schedulePointerSync, true);
+    } else {
+      window.removeEventListener('resize', this.schedulePointerSync);
+      window.removeEventListener('scroll', this.schedulePointerSync, true);
       this.cancelPointerSync();
     }
     const value = this.getValue();

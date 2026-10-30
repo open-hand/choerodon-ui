@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: Added `headWordWrap` property and optimized the effect of `wordWrap`.
 - 🌟 `<pro>ColorPicker`: Added `gradientMode` to support solid colors, linear and radial gradients, and switching between solid and gradient modes; supports editing gradient stops and CSS gradient values.
 - 🌟 `<pro>ColorPicker`: Added `showNoFill` property to show the no-fill option.
+- 🌟 `<pro>Attachment`: Added `preview` button.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -141,8 +142,7 @@ timeline: true
 - 🐞 `<pro>TextField`: Fixed the issue where the length info width calculation was inaccurate.
 - 🐞 `<pro>Lov`: Fixed an issue where the Lov component could remain stuck in the loading state after entering text with a Chinese IME and pressing Enter.
 - 🐞 `<pro>Form`: Fixed the issue where the first error input box was not focused when the Form component validated dynamically.
-
-
+- 🐞 `Trigger`: Fixed the issue where the Trigger component would focus on the element that triggered it after the popup was closed.
 
 ## 1.6.8
 

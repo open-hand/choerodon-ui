@@ -35,6 +35,7 @@ timeline: true
 - 🌟 `<pro>PerformanceTable`: 新增 headWordWrap 属性，并优化 wordWrap 的效果。
 - 🌟 `<pro>ColorPicker`: 新增 gradientMode 属性，支持单色、线性渐变、径向渐变及单色与渐变模式切换，支持编辑渐变色标和 CSS 渐变值。
 - 🌟 `<pro>ColorPicker`: 新增 showNoFill 属性。
+- 🌟 `<pro>Attachment`: 新增内置预览按钮。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
@@ -141,6 +142,7 @@ timeline: true
 - 🐞 `<pro>TextField`: 修复长度信息的宽度计算不准确的问题。
 - 🐞 `<pro>Lov`: 修复使用中文输入法输入后按回车，可能持续处于 loading 状态的问题。
 - 🐞 `<pro>Form`: 修复 Form 动态校验失败时未按表单字段顺序聚焦首个错误输入框的问题。
+- 🐞 `Trigger`: 修复 Trigger 弹层内元素失焦时异常回焦，导致点击外部区域无法收起弹层的问题。
 
 ## 1.6.8
 
