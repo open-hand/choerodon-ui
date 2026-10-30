@@ -56,6 +56,7 @@ import Menu from '../menu';
 export type AttachmentListType = 'text' | 'picture' | 'picture-card';
 
 export enum AttachmentButtonType {
+  preview = 'preview',
   download = 'download',
   remove = 'remove',
   history = 'history',
@@ -1366,7 +1367,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       pictureCardShowName,
       alwaysShowActions = this.getContextConfig('uploadAlwaysShowActions'),
     } = this.props;
-    const mergeButtons: AttachmentButtons[] = [AttachmentButtonType.download, AttachmentButtonType.remove];
+    const mergeButtons: AttachmentButtons[] = [AttachmentButtonType.preview, AttachmentButtonType.download, AttachmentButtonType.remove];
     if (showHistory) {
       mergeButtons.unshift(AttachmentButtonType.history);
     }

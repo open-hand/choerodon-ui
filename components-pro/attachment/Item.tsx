@@ -376,6 +376,16 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       block: isCard,
     }
     switch (type) {
+      case AttachmentButtonType.preview:
+        return {
+          ...commonProps,
+          icon: 'visibility',
+          ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
+            href: previewUrl,
+            target: previewTarget,
+            onClick: () => onPreview(attachment),
+          } : { onClick: handleOpenPreview },
+        }
       case AttachmentButtonType.download:
         return {
           ...commonProps,
@@ -433,6 +443,19 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         const defaultButtonProps = getButtonProps(btn);
         if (defaultButtonProps) {
           switch (btn) {
+            case AttachmentButtonType.preview:
+              if (preview) {
+                buttons.splice(
+                  index,
+                  1,
+                  <Button
+                    key={btn}
+                    {...defaultButtonProps}
+                    {...btnProps}
+                  />,
+                );
+              }
+              break;
             case AttachmentButtonType.history:
               if (attachmentUUID && onHistory && (!status || status === 'success' || status === 'done')) {
                 buttons.splice(
