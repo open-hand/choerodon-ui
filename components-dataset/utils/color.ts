@@ -1,4 +1,4 @@
-import { TinyColor } from '@ctrl/tinycolor';
+import { TinyColor, names } from '@ctrl/tinycolor';
 
 export interface Color {
   r: number;
@@ -13,12 +13,16 @@ export interface GradientStop {
 }
 
 export interface Gradient {
-  type: 'linear' | 'radial';
+  type: 'linear' | 'radial' | 'conic';
   angle: number;
   stops: GradientStop[];
+  repeating?: boolean;
+  position?: string;
+  stopUnit?: string;
 }
 
 const numberPattern = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/;
+const lengthUnitPattern = /^(?:px|em|rem|ex|ch|vw|vh|vmin|vmax|cm|mm|q|in|pt|pc)$/i;
 
 function parseChannel(value: string, maximum: number): number | undefined {
   const percentage = value.endsWith('%');
@@ -109,15 +113,100 @@ function splitGradient(value: string): string[] | undefined {
   return depth === 0 && parts.every(part => part.length > 0) ? parts : undefined;
 }
 
+export function isColorExpression(value: unknown): value is string {
+  if (typeof value !== 'string') {
+    return false;
+  }
+  const input = value.trim();
+  if (parseColor(input) || input.toLowerCase() === 'transparent' ||
+    Object.prototype.hasOwnProperty.call(names, input.toLowerCase())) {
+    return true;
+  }
+  const oklch = /^oklch\(([^()]*)\)$/i.exec(input);
+  if (oklch) {
+    const parts = oklch[1].split('/');
+    const channels = parts[0].trim().split(/\s+/);
+    const validChannel = (channel: string) => channel.toLowerCase() === 'none' ||
+      (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?%?$/i.test(channel) &&
+        Number.isFinite(Number(channel.replace(/%$/, ''))));
+    const hue = channels[2];
+    return parts.length <= 2 && channels.length === 3 && channels.slice(0, 2).every(validChannel) &&
+      (hue.toLowerCase() === 'none' ||
+        (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?(?:deg|grad|rad|turn)?$/i.test(hue) &&
+          Number.isFinite(Number(hue.replace(/(?:deg|grad|rad|turn)$/i, ''))))) &&
+      (parts.length === 1 || validChannel(parts[1].trim()));
+  }
+  const p3 = /^color\(\s*display-p3\s+([^()]*)\)$/i.exec(input);
+  if (p3) {
+    const parts = p3[1].split('/');
+    const channels = parts[0].trim().split(/\s+/);
+    const validChannel = (channel: string) =>
+      /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?%?$/i.test(channel) &&
+      Number.isFinite(Number(channel.replace(/%$/, '')));
+    return parts.length <= 2 && channels.length === 3 && channels.every(validChannel) &&
+      (parts.length === 1 || validChannel(parts[1].trim()));
+  }
+  const variable = /^var\(([\s\S]*)\)$/i.exec(input);
+  if (variable) {
+    const parts = splitGradient(variable[1]);
+    return !!parts && parts.length <= 2 && /^--[\w\u0080-\uFFFF-]+$/.test(parts[0]) &&
+      (parts.length === 1 || isColorExpression(parts[1]));
+  }
+  return false;
+}
+
+function splitGradientStop(value: string): [string, string] | undefined {
+  let depth = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    if (char === '(') {
+      depth += 1;
+    } else if (char === ')') {
+      depth -= 1;
+      if (depth < 0) {
+        return undefined;
+      }
+    } else if (/\s/.test(char) && depth === 0) {
+      return [value.slice(0, index), value.slice(index).trim()];
+    }
+  }
+  return depth === 0 ? [value, ''] : undefined;
+}
+
 function normalizeAngle(angle: number): number {
   return ((angle % 360) + 360) % 360;
 }
 
+function parseAngleValue(value: string): number | undefined {
+  const match = /^(.*?)(deg|grad|rad|turn)$/i.exec(value);
+  if (!match || !numberPattern.test(match[1])) {
+    return undefined;
+  }
+  const factors = { deg: 1, grad: 0.9, rad: 180 / Math.PI, turn: 360 };
+  const angle = Number(match[1]) * factors[match[2].toLowerCase()];
+  return Number.isFinite(angle) ? angle : undefined;
+}
+
+function parseGradientPosition(value: string): string | undefined {
+  const parts = value.toLowerCase().trim().split(/\s+/);
+  if (parts.length < 1 || parts.length > 2 || !parts.every(part =>
+    /^(?:center|left|right|top|bottom)$/.test(part) ||
+    (/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:%|px|em|rem|vh|vw)$/.test(part) && Number.isFinite(parseFloat(part))) || part === '0')) {
+    return undefined;
+  }
+  if (parts.length === 2 && (/^(?:left|right)$/.test(parts[0]) && /^(?:left|right)$/.test(parts[1]) ||
+    /^(?:top|bottom)$/.test(parts[0]) && /^(?:top|bottom)$/.test(parts[1]) ||
+    /^(?:top|bottom)$/.test(parts[0]) && !/^(?:left|right|center)$/.test(parts[1]) ||
+    !/^(?:top|bottom|center)$/.test(parts[0]) && /^(?:left|right)$/.test(parts[1]))) {
+    return undefined;
+  }
+  return parts.join(' ');
+}
+
 function parseAngle(value: string): number | undefined {
-  const degrees = /^(.*)deg$/i.exec(value);
-  if (degrees && numberPattern.test(degrees[1])) {
-    const angle = Number(degrees[1]);
-    return Number.isFinite(angle) ? normalizeAngle(angle) : undefined;
+  const angle = parseAngleValue(value);
+  if (angle !== undefined) {
+    return normalizeAngle(angle);
   }
   const direction = /^to\s+(top|bottom|left|right)(?:\s+(top|bottom|left|right))?$/i.exec(value);
   if (!direction) {
@@ -141,20 +230,40 @@ export function parseGradient(value: unknown): Gradient | undefined {
   if (typeof value !== 'string') {
     return undefined;
   }
-  const match = /^(linear|radial)-gradient\(([\s\S]*)\)$/i.exec(value.trim());
+  const match = /^(repeating-)?(linear|radial|conic)-gradient\(([\s\S]*)\)$/i.exec(value.trim());
   if (!match) {
     return undefined;
   }
-  const parts = splitGradient(match[2]);
+  const parts = splitGradient(match[3]);
   if (!parts) {
     return undefined;
   }
-  const type = match[1].toLowerCase() as Gradient['type'];
+  const type = match[2].toLowerCase() as Gradient['type'];
   let angle = type === 'linear' ? 180 : 0;
+  let position: string | undefined;
   if (type === 'linear') {
     const parsedAngle = parseAngle(parts[0]);
     if (parsedAngle !== undefined) {
       angle = parsedAngle;
+      parts.shift();
+    }
+  } else if (type === 'conic') {
+    const direction = /^(?:from\s+(\S+)(?:\s+at\s+([\s\S]+))?|at\s+([\s\S]+))$/i.exec(parts[0]);
+    if (direction) {
+      if (direction[1]) {
+        const parsedAngle = parseAngleValue(direction[1]);
+        if (parsedAngle === undefined) {
+          return undefined;
+        }
+        angle = normalizeAngle(parsedAngle);
+      }
+      const center = direction[2] || direction[3];
+      if (center) {
+        position = parseGradientPosition(center);
+        if (position === undefined) {
+          return undefined;
+        }
+      }
       parts.shift();
     }
   } else if (/^(?:(?:circle|ellipse)(?:\s+at\s+(?:center|center\s+center|50%\s+50%))?|at\s+(?:center|center\s+center|50%\s+50%))$/i.test(parts[0])) {
@@ -164,19 +273,53 @@ export function parseGradient(value: unknown): Gradient | undefined {
     return undefined;
   }
   const stops: { color: string; position?: number }[] = [];
+  let stopUnit: string | undefined;
   for (const part of parts) {
-    const positionMatch = /\s+([^\s]+)%$/.exec(part);
-    const color = positionMatch ? part.slice(0, positionMatch.index).trim() : part;
-    const position = positionMatch ? parseChannel(`${positionMatch[1]}%`, 100) : undefined;
-    if (!parseColor(color) || (positionMatch && position === undefined)) {
+    const stopMatch = splitGradientStop(part);
+    if (!stopMatch) {
       return undefined;
     }
-    stops.push({ color, position });
+    const inputColor = stopMatch[0];
+    const colorName = inputColor.toLowerCase();
+    const color = colorName === 'transparent' ? '#00000000' :
+      Object.prototype.hasOwnProperty.call(names, colorName) ? new TinyColor(inputColor).toHexString() : inputColor;
+    const positions = stopMatch[1] ? stopMatch[1].split(/\s+/) : [];
+    if (positions.length > (type === 'conic' ? 2 : 1)) {
+      return undefined;
+    }
+    if (!isColorExpression(color)) {
+      return undefined;
+    }
+    if (positions.length) {
+      for (const token of positions) {
+        const length = type !== 'conic' && /^([+-]?(?:\d+(?:\.\d*)?|\.\d+))([a-z]+)$/i.exec(token);
+        const degrees = type === 'conic' && !token.endsWith('%') ? parseAngleValue(token) : undefined;
+        const unit = length ? length[2].toLowerCase() : '%';
+        const stopPosition = length ? Number(length[1]) : degrees === undefined ? parseChannel(token, 100) : degrees / 360 * 100;
+        if (stopPosition === undefined || !Number.isFinite(stopPosition) || stopPosition < 0 ||
+          (length ? !lengthUnitPattern.test(unit) : stopPosition > 100 ||
+            (!token.endsWith('%') && degrees === undefined && token !== '0'))) {
+          return undefined;
+        }
+        if (token !== '0') {
+          if (stopUnit !== undefined && stopUnit !== unit) {
+            return undefined;
+          }
+          stopUnit = unit;
+        }
+        stops.push({ color, position: stopPosition });
+      }
+    } else {
+      stops.push({ color });
+    }
   }
   if (stops[0].position === undefined) {
     stops[0].position = 0;
   }
   if (stops[stops.length - 1].position === undefined) {
+    if (stopUnit && stopUnit !== '%') {
+      return undefined;
+    }
     stops[stops.length - 1].position = 100;
   }
   let anchor = 0;
@@ -192,26 +335,60 @@ export function parseGradient(value: unknown): Gradient | undefined {
       anchor = index;
     }
   }
-  return { type, angle, stops: stops as GradientStop[] };
+  const gradient: Gradient = { type, angle, stops: stops as GradientStop[] };
+  if (stopUnit && stopUnit !== '%') {
+    gradient.stopUnit = stopUnit;
+  }
+  if (match[1]) {
+    gradient.repeating = true;
+  }
+  if (position !== undefined) {
+    gradient.position = position;
+  }
+  return gradient;
 }
 
 export function serializeGradient(value: Gradient): string | undefined {
-  if (!value || (value.type !== 'linear' && value.type !== 'radial') || !Number.isFinite(value.angle) ||
-    !Array.isArray(value.stops) || value.stops.length < 2) {
+  if (!value || (value.type !== 'linear' && value.type !== 'radial' && value.type !== 'conic') ||
+    !Number.isFinite(value.angle) || !Array.isArray(value.stops) || value.stops.length < 2 ||
+    (value.repeating !== undefined && typeof value.repeating !== 'boolean')) {
+    return undefined;
+  }
+  let position: string | undefined;
+  if (value.position !== undefined) {
+    if (value.type !== 'conic' || typeof value.position !== 'string') {
+      return undefined;
+    }
+    position = parseGradientPosition(value.position);
+    if (position === undefined) {
+      return undefined;
+    }
+  }
+  const stopUnit = value.stopUnit === undefined ? '%' : value.stopUnit;
+  if (typeof stopUnit !== 'string' || (stopUnit !== '%' &&
+    (value.type === 'conic' || !lengthUnitPattern.test(stopUnit)))) {
     return undefined;
   }
   let previous = 0;
   const stops: string[] = [];
   for (const stop of value.stops) {
     const color = stop && parseColor(stop.color);
-    if (!color || !Number.isFinite(stop.position) || stop.position < previous || stop.position > 100) {
+    if (!stop || (!color && !isColorExpression(stop.color)) || !Number.isFinite(stop.position) || stop.position < previous ||
+      (stopUnit === '%' && stop.position > 100)) {
       return undefined;
     }
     previous = stop.position;
-    stops.push(`${formatColor(color)} ${stop.position}%`);
+    const outputColor = color ? formatColor(color) : /^(?:color|var)\(/i.test(stop.color.trim())
+      ? stop.color.trim() : formatColor(new TinyColor(stop.color).toRgb());
+    stops.push(`${outputColor} ${Number(stop.position.toFixed(2))}${stopUnit.toLowerCase()}`);
   }
-  const direction = value.type === 'linear' ? `${normalizeAngle(value.angle)}deg` : 'at center';
-  return `${value.type}-gradient(${direction}, ${stops.join(', ')})`;
+  let direction = 'at center';
+  if (value.type === 'linear') {
+    direction = `${normalizeAngle(value.angle)}deg`;
+  } else if (value.type === 'conic') {
+    direction = `from ${normalizeAngle(value.angle)}deg${position ? ` at ${position}` : ''}`;
+  }
+  return `${value.repeating ? 'repeating-' : ''}${value.type}-gradient(${direction}, ${stops.join(', ')})`;
 }
 
 export function mixWithWhite(value: unknown, amount = 0.5): string | undefined {
