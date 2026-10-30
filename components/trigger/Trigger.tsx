@@ -156,8 +156,6 @@ export default class Trigger extends Component<TriggerProps> {
 
   relatedTarget?: HTMLButtonElement | null;
 
-  activeElementEvent?: EventManager;
-
   mouseDownEvent?: EventManager;
 
   currentTriggerChild?: ReactElement | null;
@@ -195,26 +193,13 @@ export default class Trigger extends Component<TriggerProps> {
 
   setActiveElement(activeElement: HTMLElement | null) {
     this.activeElement = activeElement;
-    const activeElementEvent = getIf<Trigger, EventManager>(this, 'activeElementEvent', () => new EventManager());
-    if (activeElement) {
-      if (this.relatedTarget) {
-        const { target } = this;
-        if (target && document.activeElement === document.body) {
-          this.activeElement = null;
-          target.focus();
-        }
-        this.relatedTarget = null;
-      } else {
-        activeElementEvent.clear().setTarget(activeElement).addEventListener('blur', () => {
-          const { target } = this;
-          if (target && document.activeElement === document.body) {
-            this.setActiveElement(null);
-            target.focus();
-          }
-        }, { once: true });
+    if (activeElement && this.relatedTarget) {
+      const { target } = this;
+      if (target && document.activeElement === document.body) {
+        this.activeElement = null;
+        target.focus();
       }
-    } else {
-      activeElementEvent.clear();
+      this.relatedTarget = null;
     }
   }
 
@@ -337,9 +322,6 @@ export default class Trigger extends Component<TriggerProps> {
     this.cancelPopupTask();
     if (this.documentEvent) {
       this.documentEvent.clear();
-    }
-    if (this.activeElementEvent) {
-      this.activeElementEvent.clear();
     }
     if (this.mouseDownEvent) {
       this.mouseDownEvent.clear();
