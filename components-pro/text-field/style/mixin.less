@@ -389,11 +389,11 @@
     }
   }
 
-  > ul&-responsive-tags {
+  & > ul&-responsive-tags {
     flex-wrap: nowrap;
     overflow-y: hidden;
 
-    > li, > span {
+    & > li, & > span {
       flex-shrink: 0;
     }
   }
@@ -406,13 +406,13 @@
     visibility: hidden;
     pointer-events: none;
 
-    > ul {
+    & > ul {
       display: flex;
       width: max-content;
       margin: @input-multiple-margin;
       padding: @input-multiple-padding;
 
-      > li, > span {
+      & > li, & > span {
         display: inline-block;
         flex-shrink: 0;
         max-width: none;
