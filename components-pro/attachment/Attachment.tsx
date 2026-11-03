@@ -90,6 +90,8 @@ export interface AttachmentProps extends FormFieldProps, ButtonProps, UploaderPr
   buttons?: AttachmentButtons[];
   __inGroup?: boolean;
   getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined | Promise<string | (() => string | Promise<string>) | undefined>;
+  /** 自定义手动触发的预览行为，不影响缩略图预览地址的获取。 */
+  onCustomPreview?: (props: AttachmentFileProps) => void | Promise<void>;
   removeImmediately?: boolean;
   onTempRemovedAttachmentsChange?: (tempRemovedAttachments?: AttachmentFile[]) => void;
   filesLengthLimitNotice?: (defaultInfo: string) => void;
@@ -444,6 +446,7 @@ export default class Attachment extends FormField<AttachmentProps> {
       'onUploadError',
       'onRemove',
       'getPreviewUrl',
+      'onCustomPreview',
       'removeImmediately',
       'onTempRemovedAttachmentsChange',
       'filesLengthLimitNotice',
@@ -1364,7 +1367,7 @@ export default class Attachment extends FormField<AttachmentProps> {
   renderUploadList(uploadButton?: ReactNode) {
     const {
       listType, sortable, listLimit, showHistory, showSize, buttons, getPreviewUrl, disabled, getDownloadUrl, enableDeleteAll,
-      pictureCardShowName,
+      pictureCardShowName, onCustomPreview,
       alwaysShowActions = this.getContextConfig('uploadAlwaysShowActions'),
     } = this.props;
     const mergeButtons: AttachmentButtons[] = [AttachmentButtonType.preview, AttachmentButtonType.download, AttachmentButtonType.remove];
@@ -1418,6 +1421,7 @@ export default class Attachment extends FormField<AttachmentProps> {
           record={this.record}
           buttons={mergeButtons}
           getPreviewUrl={getPreviewUrl}
+          onCustomPreview={onCustomPreview}
           fetchAttachmentsFlag={!this.uploadWithoutUuid}
           removeConfirm={this.removeConfirm}
           getDownloadUrl={getDownloadUrl}

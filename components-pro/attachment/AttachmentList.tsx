@@ -8,7 +8,7 @@ import { AttachmentFileProps } from 'choerodon-ui/dataset/configure';
 import Item from './Item';
 import AttachmentFile from '../data-set/AttachmentFile';
 import Record from '../data-set/Record';
-import { AttachmentButtons, AttachmentListType } from './Attachment';
+import { AttachmentButtons, AttachmentListType, AttachmentProps } from './Attachment';
 import Animate from '../animate';
 import { arrayMove } from '../data-set/utils';
 import { PictureProvider } from '../picture/PictureContext';
@@ -27,6 +27,7 @@ export interface AttachmentListProps {
   onAttachmentsChange: (attachments: AttachmentFile[] | undefined) => void;
   onPreview: (attachment: AttachmentFile) => void;
   previewTarget?: string;
+  onCustomPreview?: AttachmentProps['onCustomPreview'];
   bucketName?: string;
   bucketDirectory?: string;
   storageCode?: string;
@@ -78,6 +79,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
     onHistory,
     onPreview,
     previewTarget,
+    onCustomPreview,
     isPublic,
     record,
     showSize,
@@ -171,6 +173,7 @@ const AttachmentList: FunctionComponent<AttachmentListProps> = function Attachme
                 onHistory={onHistory}
                 onPreview={onPreview}
                 previewTarget={previewTarget}
+                onCustomPreview={onCustomPreview}
                 isPublic={isPublic}
                 buttons={buttons}
                 getPreviewUrl={getPreviewUrl}
