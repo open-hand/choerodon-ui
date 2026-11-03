@@ -37,6 +37,7 @@ timeline: true
 - 🌟 `<pro>ColorPicker`: 新增 showNoFill 属性。
 - 🌟 `<pro>Attachment`: 新增内置预览按钮。
 - 🌟 `<pro>Attachment`: 新增 onCustomPreview 属性。
+- 🌟 `<pro>Select`: 新增 popupMainField, popupShowAvatar和 popupAvatarColorful 属性。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。
 - 💄 `<pro>Attachment`: 优化文件名显示不全时通过 tooltip 展示完整文件名。
@@ -90,6 +91,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: header 钩子函数新增 renderPlacement 参数，可根据渲染位置返回元素。
 - 💄 `configure`: fieldMaxTagCount 支持响应式配置。
 - 💄 `<pro>FormField`: maxTagCount 支持响应式配置。
+- 💄 `<pro>Lov`: 优化下拉模式展示效果。
 - 🐞 `<pro>Attachment`: 修复首次上传文件在 onAttachmentsChange 中通过字段属性 attachmentCount 获取不到附件数量的问题。
 - 🐞 `<pro>Attachment`: 修复配置组件属性 getPreviewUrl 可能会导致附件列表中的缩略图异常刷新的问题。
 - 🐞 `<pro>Lov`: 修复再次打开弹框时已勾选数据顺序与初次勾选顺序不一致的问题。

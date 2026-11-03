@@ -13,6 +13,8 @@ import { action, computed, get, IReactionDisposer, isArrayLike, isObservableObje
 import classNames from 'classnames';
 import Menu, { Item, ItemGroup } from 'choerodon-ui/lib/rc-components/menu';
 import Tag from 'choerodon-ui/lib/tag';
+import Avatar from 'choerodon-ui/lib/avatar';
+import { PresetColorTypes, PresetColorType } from 'choerodon-ui/lib/_util/colors';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
 import { pxToRem } from 'choerodon-ui/lib/_util/UnitConvertor';
 import { Size } from 'choerodon-ui/lib/_util/enum';
@@ -295,6 +297,12 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
    * 当不展示复合值时, defaultActiveFirstOption 无效, enter 或者 失焦选中复合值;
    */
   popupShowComboValue?: boolean;
+  /** 下拉列表的主字段，默认使用 textField */
+  popupMainField?: string;
+  /** 下拉列表是否显示主字段首字符头像 */
+  popupShowAvatar?: boolean;
+  /** 下拉列表头像是否使用多彩配色，默认关闭 */
+  popupAvatarColorful?: boolean;
   /**
    * 可输入时，下拉框中是否显示输入提示
    */
@@ -757,6 +765,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'defaultActiveFirstOption',
       'scrollLoad',
       'popupShowComboValue',
+      'popupMainField',
+      'popupShowAvatar',
+      'popupAvatarColorful',
       'showInputPrompt',
       'addNewOptionPrompt',
       'beforeCreateComboOption',
@@ -893,11 +904,40 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getMenuItem({ record, text, value }): string | ReactNode {
     const {
       options,
-      props: { optionRenderer },
+      props: { optionRenderer, popupShowAvatar, popupAvatarColorful, popupMainField },
     } = this;
-    return optionRenderer
+    const content = optionRenderer
       ? optionRenderer({ dataSet: options, record, text, value })
       : text;
+    if (!popupShowAvatar) {
+      return content;
+    }
+    const mainField = popupMainField || this.textField;
+    const { valueField } = this;
+    const avatarText = Array.from(String(isNil(record.get(mainField)) ? '' : record.get(mainField)))[0];
+    let avatarColor: PresetColorType | undefined;
+    if (popupAvatarColorful) {
+      const avatarKey = String(!isNil(record.get(valueField)) ? record.get(valueField) : record.get(mainField) || '');
+      let hash = 0;
+      for (let i = 0; i < avatarKey.length; i += 1) {
+        // eslint-disable-next-line no-bitwise
+        hash = (hash * 31 + avatarKey.charCodeAt(i)) | 0;
+      }
+      const avatarColors = PresetColorTypes.filter(color => color !== 'dark' && color !== 'gray');
+      avatarColor = avatarColors[Math.abs(hash) % avatarColors.length];
+    }
+    return (
+      <span className={`${this.prefixCls}-search-item`}>
+        <Avatar
+          size={Size.small}
+          shape="square"
+          className={avatarColor === undefined ? undefined : `${this.prefixCls}-search-item-avatar-color-${avatarColor}`}
+        >
+          {avatarText}
+        </Avatar>
+        <span className={`${this.prefixCls}-search-item-text`}>{content}</span>
+      </span>
+    );
   }
 
   @autobind
@@ -1056,6 +1096,9 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         style={{ ...IeMenuStyle, ...dropdownMenuStyle }}
         focusable={false}
         {...menuProps}
+        className={classNames((menuProps as { className?: string }).className, {
+          [`${menuPrefix}-with-avatar`]: this.props.popupShowAvatar,
+        })}
       >
         {optGroups}
         {

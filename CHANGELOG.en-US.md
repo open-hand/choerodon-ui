@@ -37,6 +37,7 @@ timeline: true
 - 🌟 `<pro>ColorPicker`: Added `showNoFill` property to show the no-fill option.
 - 🌟 `<pro>Attachment`: Added `preview` button.
 - 🌟 `<pro>Attachment`: Added `onCustomPreview` property.
+- 🌟 `<pro>Select`: Added `popupMainField`, `popupShowAvatar`, and `popupAvatarColorful` properties.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 
@@ -90,6 +91,7 @@ timeline: true
 - 💄 `<pro>Table.Column`: Add the `renderPlacement` parameter to the `header` hook function, which can return elements based on the rendering position.
 - 💄 `configure`: `fieldMaxTagCount` supports responsive configuration.
 - 💄 `<pro>FormField`: `maxTagCount` supports responsive configuration.
+- 💄 `<pro>Lov`: Optimize the display effect of dropdown mode.
 - 🐞 `<pro>Attachment`: Fixed the issue where the count of attachments could not be obtained through the field property `attachmentCount` in `onAttachmentsChange` when uploading a file for the first time.
 - 🐞 `<pro>Attachment`: Fixed an issue where the `getPreviewUrl` property of the configuration component could cause abnormal refreshing of thumbnails in the attachment list.
 - 🐞 `<pro>Lov`: Fixed the issue where the order of selected data was inconsistent with the initial selection order when reopening the modal.
