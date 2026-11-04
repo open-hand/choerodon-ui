@@ -35,6 +35,77 @@
     }
   }
 
+  &-dropdown-menu-with-avatar {
+    padding: 0.04rem 0;
+    border-radius: 0.06rem;
+
+    .@{select-prefix-cls}-dropdown-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 0.06rem 0.16rem;
+      font-weight: 400;
+      font-size: 0.14rem;
+      line-height: 0.22rem;
+
+      & > .@{checkbox-prefix-cls}-wrapper {
+        display: flex;
+        flex: none;
+        align-items: center;
+        width: 0.16rem;
+        height: 0.16rem;
+        margin-right: 0.08rem;
+
+        .@{checkbox-prefix-cls} {
+          top: 0;
+
+          &-inner {
+            width: 0.16rem;
+            height: 0.16rem;
+          }
+        }
+      }
+
+      &-more {
+        display: block;
+        height: 0.28rem;
+        padding: 0 0.16rem;
+        line-height: 0.28rem;
+
+        .icon {
+          font-size: 0.14rem;
+        }
+
+        .@{c7n-prefix}-spin-nested-loading > .@{c7n-prefix}-spin-container:not(:first-child) {
+          min-height: 0.28rem;
+        }
+      }
+    }
+
+    .@{select-prefix-cls}-search-item {
+      gap: 0.08rem;
+      min-width: 0;
+      padding: 0;
+
+      .@{c7n-prefix}-avatar {
+        width: 0.24rem;
+        height: 0.24rem;
+        margin-right: 0;
+        font-weight: 500;
+        font-size: 0.12rem;
+        line-height: 0.22rem;
+        border-radius: 0.06rem;
+
+        & > .@{c7n-prefix}-avatar-string {
+          top: 50%;
+          margin-top: -0.1rem;
+          padding: 0;
+          line-height: 0.2rem;
+          transform: translateX(-50%);
+        }
+      }
+    }
+  }
+
   .select-all;
 
   .common-item;
@@ -43,6 +114,45 @@
 
   &-popup {
     min-width: 0.5rem;
+  }
+
+  &-search-item {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    vertical-align: middle;
+
+    .@{c7n-prefix}-avatar {
+      flex: none;
+      margin-right: 0.1rem;
+      color: @primary-color;
+      background: @primary-1;
+      border: 1px solid @primary-2;
+      border-radius: @border-radius-base;
+
+      .make-avatar-color-classes(@i: length(@preset-colors)) when (@i > 0) {
+        .make-avatar-color-classes(@i - 1);
+        @color: extract(@preset-colors, @i);
+        @textColor: '@{color}-6';
+        @backgroundColor: '@{color}-1';
+        @borderColor: '@{color}-2';
+
+        &.@{select-prefix-cls}-search-item-avatar-color-@{color} {
+          color: @@textColor;
+          background: @@backgroundColor;
+          border-color: @@borderColor;
+        }
+      }
+
+      .make-avatar-color-classes();
+    }
+
+    &-text {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   &-option-duplicate {

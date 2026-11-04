@@ -19,7 +19,7 @@ import Popconfirm, { PopconfirmProps } from 'choerodon-ui/lib/popconfirm';
 import Progress from '../progress/Progress';
 import Icon from '../icon';
 import AttachmentFile from '../data-set/AttachmentFile';
-import { AttachmentButtons, AttachmentButtonType, AttachmentListType } from './Attachment';
+import { AttachmentButtons, AttachmentButtonType, AttachmentListType, AttachmentProps } from './Attachment';
 import Picture, { PictureForwardRef, PictureProps } from '../picture/Picture';
 import Button, { ButtonProps } from '../button/Button';
 import { FuncType } from '../button/enum';
@@ -57,6 +57,7 @@ export interface ItemProps {
   hidden?: boolean;
   isPublic?: boolean;
   previewTarget?: string;
+  onCustomPreview?: AttachmentProps['onCustomPreview'];
   buttons?: AttachmentButtons[];
   getPreviewUrl?: (props: AttachmentFileProps) => string | (() => string | Promise<string>) | undefined | Promise<string | (() => string | Promise<string>) | undefined>;
   removeConfirm?: boolean | PopconfirmProps;
@@ -73,7 +74,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     attachment, listType, prefixCls, onUpload, onRemove, pictureWidth: width, bucketName, onHistory, onPreview = noop, previewTarget = ATTACHMENT_TARGET,
     bucketDirectory, storageCode, attachmentUUID, isCard, provided, readOnly, disabled, restCount, draggable, index, hidden, isPublic, showSize, buttons: fileButtons,
     getPreviewUrl: getPreviewUrlProp, getDownloadUrl: getDownloadUrlProp, enableDeleteAll, handleCheckAttachment, checkedAttachments = [],
-    pictureCardShowName, alwaysShowActions,
+    pictureCardShowName, alwaysShowActions, onCustomPreview,
   } = props;
   const { status, name, filename, ext, url, size, type } = attachment;
   const { getConfig, getTooltipTheme, getTooltipPlacement } = useContext(ConfigContext);
@@ -134,9 +135,16 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
   });
   const dragProps = { ...provided.dragHandleProps };
   const isPicture = type.startsWith('image') || ['png', 'gif', 'jpg', 'webp', 'jpeg', 'bmp', 'tif', 'pic', 'svg'].includes(ext);
-  const preview = !!previewUrl && (!status || status === 'success' || status === 'done' || status === 'deferred');
+  const preview = !!(onCustomPreview || previewUrl) && (!status || status === 'success' || status === 'done' || status === 'deferred');
 
   const handleOpenPreview = useCallback(debounce(async () => {
+    if (onCustomPreview) {
+      if (preview) {
+        onCustomPreview({ attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic });
+        onPreview(attachment);
+      }
+      return false;
+    }
     if (isFunction(previewUrl)) {
       const result = await previewUrl();
       if (isString(result)) {
@@ -145,7 +153,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
       onPreview(attachment);
       return false;
     }
-  }, 500, { leading: true, trailing: false }), [previewUrl, previewTarget, onPreview, attachment]);
+  }, 500, { leading: true, trailing: false }), [onCustomPreview, preview, previewUrl, previewTarget, onPreview, attachment, bucketName, bucketDirectory, storageCode, attachmentUUID, isPublic]);
   const handlePreview = useCallback(debounce(() => {
     const { current } = pictureRef;
     if (current && isString(previewUrl)) {
@@ -190,7 +198,10 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     if (listType === 'text' || ((isCard || listType === 'picture') && !isPicture)) {
       if (isPicture || isSrcIcon) {
         const pictureProps: PictureProps = {};
-        if (isString(previewUrl)) {
+        if (onCustomPreview) {
+          pictureProps.preview = false;
+          pictureProps.onClick = handleOpenPreview;
+        } else if (isString(previewUrl)) {
           pictureProps.previewUrl = previewUrl;
           pictureProps.onPreview = () => onPreview(attachment);
         } else {
@@ -207,7 +218,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
             status="loaded"
             index={index}
             className={`${prefixCls}-icon`}
-            previewTarget={isSrcIcon && !isPicture ? previewTarget : undefined}
+            previewTarget={!onCustomPreview && isSrcIcon && !isPicture ? previewTarget : undefined}
             preview={preview}
             ref={pictureRef}
             {...pictureProps}
@@ -231,7 +242,9 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
           funcType: FuncType.link,
           className: `${prefixCls}-icon`,
         };
-        if (isString(previewUrl)) {
+        if (onCustomPreview) {
+          previewButtonProps.onClick = handleOpenPreview;
+        } else if (isString(previewUrl)) {
           previewButtonProps.href = previewUrl;
           previewButtonProps.target = previewTarget;
           previewButtonProps.onClick = () => onPreview(attachment);
@@ -253,7 +266,10 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     if (isCard || listType === 'picture') {
       if ((preview || status === 'deleting') && isPicture) {
         const pictureProps: PictureProps = {};
-        if (isString(previewUrl)) {
+        if (onCustomPreview) {
+          pictureProps.preview = false;
+          pictureProps.onClick = handleOpenPreview;
+        } else if (isString(previewUrl)) {
           pictureProps.previewUrl = previewUrl;
         } else {
           pictureProps.onBeforeClick = handleOpenPreview;
@@ -329,7 +345,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
     const nameNode = preview && (listType === 'text' || listType === 'picture') ? (
       <a
         {
-          ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
+          ...onCustomPreview ? { onClick: handleOpenPreview } : isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
             href: previewUrl,
             target: previewTarget,
             onClick: () => onPreview(attachment),
@@ -380,7 +396,7 @@ const Item: FunctionComponent<ItemProps> = function Item(props) {
         return {
           ...commonProps,
           icon: 'visibility',
-          ...isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
+          ...onCustomPreview ? { onClick: handleOpenPreview } : isPicture ? { onClick: handlePreview } : isString(previewUrl) ? {
             href: previewUrl,
             target: previewTarget,
             onClick: () => onPreview(attachment),

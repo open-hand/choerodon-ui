@@ -1,11 +1,14 @@
 import React, { Component, Key, ReactNode } from 'react';
 import classNames from 'classnames';
 import { action, computed, toJS } from 'mobx';
+import { Observer } from 'mobx-react';
 import isPromise from 'is-promise';
 import noop from 'lodash/noop';
 import debounce from 'lodash/debounce';
 import isNil from 'lodash/isNil';
 import KeyCode from 'choerodon-ui/lib/_util/KeyCode';
+import Avatar from 'choerodon-ui/lib/avatar';
+import { PresetColorTypes, PresetColorType } from 'choerodon-ui/lib/_util/colors';
 import { math } from 'choerodon-ui/dataset';
 import ConfigContext from 'choerodon-ui/lib/config-provider/ConfigContext';
 import Alert from 'choerodon-ui/lib/alert';
@@ -26,6 +29,11 @@ import { FormContextValue } from '../form/FormContext';
 import { TriggerViewMode } from '../trigger-field/TriggerField';
 import Picture from '../picture';
 import ObserverNumberField from '../number-field';
+import Output from '../output';
+import Pagination from '../pagination';
+import Spin from '../spin';
+import CheckBox from '../check-box';
+import { Size, Tooltip as TextTooltip } from '../core/enum';
 import { $l } from '../locale-context';
 import { Lang } from '../locale-context/enum';
 import { processFieldValue } from '../field/utils';
@@ -51,6 +59,12 @@ export interface LovViewProps {
   lang?: Lang;
   renderAddNewOptionPrompt?: (type: 'prompt' | 'noDataPrompt', renderEmptyComponent: string) => ReactNode;
   duplicateKey?: DuplicateKeyConfig;
+  popupMainField?: string;
+  popupShowAvatar?: boolean;
+  popupAvatarColorful?: boolean;
+  popupSearchField?: ReactNode;
+  popupEmptyContent?: ReactNode;
+  popupOptionDisabled?: (record: Record) => boolean;
 }
 
 interface LovViewState {
@@ -67,6 +81,8 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   selectionMode: SelectionMode | undefined;
 
   resizedColumns: Map<Key, number> = new Map<Key, number>();
+
+  popupList: HTMLDivElement | null;
 
   constructor(props: LovViewProps) {
     super(props);
@@ -143,13 +159,20 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
 
   /* istanbul ignore next */
   getColumns(): ColumnProps[] | undefined {
+    return LovView.getLovColumns(this.props, this.resizedColumns);
+  }
+
+  static getLovColumns(
+    props: Pick<LovViewProps, 'config' | 'tableProps' | 'viewMode' | 'context' | 'lang'>,
+    resizedColumns: Map<Key, number> = new Map<Key, number>(),
+  ): ColumnProps[] | undefined {
     const {
       config: { lovItems },
       tableProps,
       viewMode,
       context,
       lang,
-    } = this.props;
+    } = props;
     const { getConfig } = context;
     return lovItems
       ? lovItems
@@ -202,7 +225,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
             key: gridFieldName,
             header: display,
             name: gridFieldName,
-            width: viewMode === TriggerViewMode.popup ? gridFieldName ? this.resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
+            width: viewMode === TriggerViewMode.popup ? gridFieldName ? resizedColumns.get(gridFieldName) : undefined : gridFieldWidth,
             align: gridFieldAlign,
             editor: false,
           };
@@ -263,6 +286,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
       dataSet,
       tableProps,
       config,
+      viewMode,
     } = this.props;
     // @ts-ignore
     if (config && config.originData && config.originData.failed) {
@@ -273,11 +297,11 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
         dataSet.selected : dataSet.current ? [dataSet.current] : [];
     records = records.filter(record => !this.isDuplicateRecord(record));
     // 满足单选模式下，双击和勾选框选中均支持
-    if (tableProps && tableProps.alwaysShowRowBox && !event) {
+    if (tableProps && tableProps.alwaysShowRowBox && !event && !(viewMode === TriggerViewMode.popup && !multiple)) {
       records = dataSet.selected.filter(record => !this.isDuplicateRecord(record));
     }
     const record: Record | Record[] | undefined = multiple ? records : records[0];
-    if (!record || (multiple && !records.length)) {
+    if (!record || (multiple && !records.length && viewMode !== TriggerViewMode.popup)) {
       return;
     }
     const beforeSelect = onBeforeSelect(record);
@@ -357,6 +381,237 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   handleColumnResize(props: onColumnResizeProps) {
     const { width, column } = props;
     this.resizedColumns.set(getColumnKey(column), width);
+  }
+
+  isPopupOptionDisabled(record: Record): boolean {
+    const { popupOptionDisabled, config } = this.props;
+    const { originData } = config as LovConfig & { originData?: { failed?: boolean } };
+    return !!(record.disabled || !record.selectable || this.isDuplicateRecord(record) ||
+      (popupOptionDisabled && popupOptionDisabled(record)) || (originData && originData.failed));
+  }
+
+  @action
+  selectPopupRecord(record: Record, event?: React.MouseEvent) {
+    if (this.isPopupOptionDisabled(record)) {
+      return;
+    }
+    const { dataSet, multiple } = this.props;
+    if (multiple) {
+      if (record.isSelected) {
+        dataSet.unSelect(record);
+      } else {
+        dataSet.select(record);
+      }
+      return;
+    }
+    this.selectionMode = SelectionMode.none;
+    dataSet.current = record;
+    return this.handleSelect(event);
+  }
+
+  handlePopupListKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { dataSet } = this.props;
+    const { keyCode } = event;
+    const target = event.target as HTMLElement;
+    if (keyCode === KeyCode.ENTER && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
+      event.stopPropagation();
+      return;
+    }
+    const records = dataSet.records.filter(record => !this.isPopupOptionDisabled(record));
+    if (![KeyCode.UP, KeyCode.DOWN, KeyCode.HOME, KeyCode.END, KeyCode.ENTER].includes(keyCode) || !records.length) {
+      return;
+    }
+    if ((target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') &&
+      (keyCode === KeyCode.HOME || keyCode === KeyCode.END)) {
+      return;
+    }
+    if (target.closest('[data-lov-pagination]')) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    if (keyCode === KeyCode.ENTER) {
+      const record = dataSet.current;
+      if (record && !this.isPopupOptionDisabled(record)) {
+        const option = this.popupList && this.popupList.querySelector<HTMLElement>(`[data-record-id="${record.id}"]`);
+        if (option) {
+          option.click();
+        }
+      }
+      return;
+    }
+    const currentIndex = records.indexOf(dataSet.current!);
+    const index = keyCode === KeyCode.HOME ? 0 : keyCode === KeyCode.END ? records.length - 1 :
+      keyCode === KeyCode.UP ? Math.max(currentIndex - 1, 0) : Math.min(currentIndex + 1, records.length - 1);
+    this.focusPopupRecord(records[index]);
+  }
+
+  @action
+  focusPopupRecord(record: Record) {
+    const { dataSet } = this.props;
+    dataSet.current = record;
+    const option = this.popupList && this.popupList.querySelector<HTMLElement>(`[data-record-id="${record.id}"]`);
+    if (option) {
+      option.scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  renderPopupList() {
+    const {
+      dataSet, config, tableProps = {}, popupMainField, textField, popupShowAvatar, popupAvatarColorful, multiple,
+      popupSearchField, popupEmptyContent, renderAddNewOptionPrompt, context, values, valueField: propValueField, lang,
+    } = this.props;
+    const configTableProps = config.tableProps || {};
+    const mergedTableProps = { ...configTableProps, ...tableProps };
+    const mainField = popupMainField || textField || config.textField || '';
+    const columns = (this.getColumns() || []).map(column => ({
+      ...column,
+      ...((configTableProps.columns || []).find(item => item.name === column.name)),
+      ...((tableProps.columns || []).find(item => item.name === column.name)),
+    }));
+    const secondaryColumns = columns.filter(column => column.name && !column.hidden && column.name !== mainField);
+    const prefix = `${context.getProPrefixCls('select')}-lov-popup-list`;
+    const { pagination: configPagination } = configTableProps;
+    const { pagination: tablePagination } = tableProps;
+    const pagination = tablePagination === undefined ? configPagination : tablePagination;
+    const paginationProps = { ...(configPagination || {}), ...(tablePagination || {}) };
+    const valueField = propValueField || config.valueField;
+    this.selectionMode = SelectionMode.none;
+    let emptyContent: ReactNode = popupEmptyContent;
+    if (emptyContent === undefined) {
+      emptyContent = mergedTableProps.renderEmpty ? mergedTableProps.renderEmpty() :
+        renderAddNewOptionPrompt && dataSet.status !== DataSetStatus.loading ? renderAddNewOptionPrompt('noDataPrompt', 'Table') :
+          context.getConfig('renderEmpty')('Table');
+    }
+    const renderField = (record: Record, name: string, rowIndex: number) => {
+      const column = columns.find(item => item.name === name);
+      return (
+        <Output
+          record={record}
+          name={name}
+          lang={lang}
+          tooltip={TextTooltip.overflow}
+          renderer={column && column.renderer ? props => column.renderer!({ ...props, rowIndex }) : undefined}
+        />
+      );
+    };
+    return (
+      <div className={prefix} onKeyDown={this.handlePopupListKeyDown}>
+        {popupSearchField}
+        <Spin dataSet={dataSet}>
+          <div className={`${prefix}-options`} role="listbox" aria-multiselectable={multiple} tabIndex={0} ref={node => { this.popupList = node; }}>
+            {dataSet.length ? dataSet.records.map((record, index) => {
+              const rowProps: React.HTMLAttributes<HTMLDivElement> = mergedTableProps.onRow ? mergedTableProps.onRow({ dataSet, record, expandedRow: false, index }) : {};
+              const disabled = this.isPopupOptionDisabled(record);
+              const visibleSecondaryColumns = secondaryColumns.filter(column => {
+                const value = record.get(column.name!);
+                return !isNil(value) && !(typeof value === 'string' && value.trim() === '') &&
+                  !(Array.isArray(value) && value.length === 0);
+              });
+              const selected = multiple ? record.isSelected : record.isSelected || values.some(value => valueField && (
+                value && typeof value === 'object' ? value[valueField] === record.get(valueField) : value === record.get(valueField)
+              ));
+              const avatarText = Array.from(String(isNil(record.get(mainField)) ? '' : record.get(mainField)))[0];
+              let avatarColor: PresetColorType | undefined;
+              if (popupShowAvatar && popupAvatarColorful) {
+                const avatarKey = String(valueField && !isNil(record.get(valueField)) ? record.get(valueField) : record.get(mainField) || '');
+                let hash = 0;
+                for (let i = 0; i < avatarKey.length; i += 1) {
+                  // 保留哈希计算的 32 位有符号整数截断。
+                  // eslint-disable-next-line no-bitwise
+                  hash = (hash * 31 + avatarKey.charCodeAt(i)) | 0;
+                }
+                const avatarColors = PresetColorTypes.filter(color => color !== 'dark' && color !== 'gray');
+                avatarColor = avatarColors[Math.abs(hash) % avatarColors.length];
+              }
+              const checkbox = multiple && (
+                <span className={`${prefix}-checkbox`}>
+                  <CheckBox
+                    checked={record.isSelected}
+                    disabled={disabled}
+                    onClick={event => event.stopPropagation()}
+                    onChange={() => this.selectPopupRecord(record)}
+                  />
+                </span>
+              );
+              return (
+                <div
+                  {...rowProps}
+                  key={record.key}
+                  data-record-id={record.id}
+                  role="option"
+                  aria-selected={selected}
+                  aria-disabled={disabled}
+                  tabIndex={-1}
+                  className={classNames(`${prefix}-option`, rowProps.className, {
+                    [`${prefix}-option-selected`]: selected,
+                    [`${prefix}-option-disabled`]: disabled,
+                    [`${prefix}-option-active`]: dataSet.current === record,
+                  })}
+                  onMouseDown={event => {
+                    event.preventDefault();
+                    if (rowProps.onMouseDown) {
+                      rowProps.onMouseDown(event);
+                    }
+                  }}
+                  onFocus={action(event => {
+                    if (!disabled) {
+                      dataSet.current = record;
+                    }
+                    if (rowProps.onFocus) {
+                      rowProps.onFocus(event);
+                    }
+                  })}
+                  onClick={event => {
+                    if (rowProps.onClick) {
+                      rowProps.onClick(event);
+                    }
+                    if (!multiple && !event.defaultPrevented) {
+                      this.selectPopupRecord(record, event);
+                    }
+                  }}
+                >
+                  {popupShowAvatar && checkbox}
+                  {popupShowAvatar && (
+                    <Avatar
+                      size={Size.small}
+                      shape="square"
+                      className={avatarColor === undefined ? undefined : `${prefix}-avatar-color-${avatarColor}`}
+                    >
+                      {avatarText}
+                    </Avatar>
+                  )}
+                  <div className={`${prefix}-content`}>
+                    <div className={`${prefix}-main-row`}>
+                      {!popupShowAvatar && checkbox}
+                      <div className={`${prefix}-main`}>{renderField(record, mainField, index)}</div>
+                    </div>
+                    {!!visibleSecondaryColumns.length && (
+                      <div className={`${prefix}-secondary`}>
+                        {visibleSecondaryColumns.map(column => <div key={column.name} className={`${prefix}-field`}>{renderField(record, column.name!, index)}</div>)}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            }) : <div className={`${prefix}-empty`}>{emptyContent}</div>}
+          </div>
+        </Spin>
+        {pagination !== false && dataSet.paging && (
+          <div
+            className={`${prefix}-pagination`}
+            data-lov-pagination
+            onMouseDown={event => {
+              if ((event.target as HTMLElement).closest('button')) {
+                event.preventDefault();
+              }
+            }}
+          >
+            <Pagination {...paginationProps} dataSet={dataSet} simple={false} showPager={false} showSizeChanger={false} showQuickJumper={false} showTotal />
+          </div>
+        )}
+      </div>
+    );
   }
 
   renderTable() {
@@ -557,7 +812,9 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
                 modal,
               }),
             )
-            : this.renderTable()}
+            : viewMode === TriggerViewMode.popup
+              ? <Observer>{() => this.renderPopupList()}</Observer>
+              : this.renderTable()}
         </div>
       </>
     );
