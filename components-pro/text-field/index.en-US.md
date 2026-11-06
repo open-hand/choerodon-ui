@@ -38,6 +38,7 @@ title: TextField
 | tooltip | 输入框 tooltip 配置 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | placeholderTooltip | 输入框 placeholder tooltip 配置, 空值有效 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | fieldFocusMode | Input box focus mode: checked - By default, it focuses on the selected text; focus - It displays the cursor when focused. | `checked` \| `focus` | [globalConfig.fieldFocusMode](/components/configure#API) |
+| tagSeparatorRenderer | Custom tag separator renderer. You can get index, previousValue, nextValue, disabled, readOnly from the parameter object, where index is the index of the tag after the separator in the original multi-value array | (props) => ReactNode |  |
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

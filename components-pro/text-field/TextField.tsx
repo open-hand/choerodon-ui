@@ -73,7 +73,22 @@ export function isPlaceHolderSupport(): boolean {
   return true;
 }
 
+export interface TagSeparatorRendererProps {
+  /** 后一个标签在原始多值数组中的索引 */
+  index: number;
+  previousValue: any;
+  nextValue: any;
+  disabled: boolean;
+  readOnly: boolean;
+}
+
 export interface TextFieldProps<V = any> extends FormFieldProps<V> {
+  /**
+   * 渲染相邻可见标签之间的内容，省略占位项前不渲染。
+   * 间隔节点的鼠标和键盘事件不会冒泡到输入框，鼠标按下时保留输入框焦点。
+   * 业务交互应遵循 disabled 和 readOnly 状态。
+   */
+  tagSeparatorRenderer?: (props: TagSeparatorRendererProps) => ReactNode;
   /**
    * 占位词
    */
@@ -501,7 +516,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     if (!this.responsiveTags || !container || !measurement) {
       return;
     }
-    const tags = measurement.querySelectorAll(`.${this.prefixCls}-responsive-tag-measure > *`) as NodeListOf<HTMLElement>;
+    const tags = measurement.querySelectorAll(`.${this.prefixCls}-responsive-tag-measure > :not(.${this.prefixCls}-tag-separator)`) as NodeListOf<HTMLElement>;
     const placeholders = measurement.querySelectorAll(`.${this.prefixCls}-responsive-placeholder-measure > *`) as NodeListOf<HTMLElement>;
     const editor = container.lastElementChild as HTMLElement | null;
     const style = window.getComputedStyle(container);
@@ -516,6 +531,10 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
     let used = 0;
     let count = 0;
     for (let i = 0; i < tags.length; i++) {
+      const separator = tags[i].previousElementSibling as HTMLElement | null;
+      if (separator && separator.classList.contains(`${this.prefixCls}-tag-separator`)) {
+        used += measureWidth(separator);
+      }
       used += measureWidth(tags[i]);
       if (used > width) {
         break;
@@ -699,6 +718,7 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       'forceShowRangeSeparator',
       'placeholderTooltip',
       'fieldFocusMode',
+      'tagSeparatorRenderer',
     ]);
   }
 
@@ -1310,6 +1330,63 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
   }
 
   @autobind
+  handleTagSeparatorMouseDown(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  renderTagSeparators(tags: ReactNode[], overflow: boolean): ReactNode[] {
+    const { tagSeparatorRenderer } = this.props;
+    if (!tagSeparatorRenderer) {
+      return [];
+    }
+    const values = this.getValues();
+    let previousIndex: number | undefined;
+    return tags.map((tag, index) => {
+      if ((index === tags.length - 1 && overflow) || tag === null || tag === undefined || typeof tag === 'boolean' || tag === '') {
+        return null;
+      }
+      const previous = previousIndex;
+      previousIndex = index;
+      if (previous === undefined) {
+        return null;
+      }
+      const nextValue = values[index];
+      const disabled = this.disabled || this.isMultipleBlockDisabled(values[previous]) || this.isMultipleBlockDisabled(nextValue);
+      const content = tagSeparatorRenderer({
+        index,
+        previousValue: values[previous],
+        nextValue,
+        disabled,
+        readOnly: this.readOnly,
+      });
+      if (content === null || content === undefined || typeof content === 'boolean' || content === '') {
+        return null;
+      }
+      return (
+        <li
+          key={`separator-${isValidElement(tag) ? tag.key : this.getValueKey(nextValue)}`}
+          className={`${this.prefixCls}-tag-separator`}
+          data-disabled={disabled || this.readOnly || undefined}
+          onMouseDown={this.handleTagSeparatorMouseDown}
+          onMouseUp={stopPropagation}
+          onClick={stopPropagation}
+          onDoubleClick={stopPropagation}
+          onContextMenu={stopPropagation}
+          onKeyDown={stopPropagation}
+          onKeyUp={stopPropagation}
+          onMouseEnter={stopPropagation}
+          onMouseLeave={stopPropagation}
+          onClickCapture={disabled || this.readOnly ? this.handleTagSeparatorMouseDown : undefined}
+          onKeyDownCapture={disabled || this.readOnly ? this.handleTagSeparatorMouseDown : undefined}
+        >
+          {content}
+        </li>
+      );
+    });
+  }
+
+  @autobind
   getMultipleWrap(wrap: (node: ReactNode) => ReactNode): ReactNode {
     const {
       prefixCls,
@@ -1339,7 +1416,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       const placeholder = (limitedTags as ReactNode[])[0];
       return isValidElement(placeholder) ? cloneElement(placeholder, { key: String(index) }) : placeholder;
     }) : [];
-    const { tags: multipleTags } = this.renderMultipleValues(false, responsive ? this.responsiveTagCount : undefined);
+    const fullSeparators = responsive ? this.renderTagSeparators(fullTags, false) : [];
+    const { tags: multipleTags, isOverflowMaxTagCount } = this.renderMultipleValues(false, responsive ? this.responsiveTagCount : undefined);
+    const separators = this.renderTagSeparators(multipleTags as ReactNode[], isOverflowMaxTagCount);
     const eventsProps = !this.disabled ? {
       onMouseDown,
       onMouseUp,
@@ -1347,7 +1426,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
       onDoubleClick,
       onContextMenu,
     } : undefined;
-    const renderTags = showSelectLoading ? null : multipleTags;
+    const renderTags = showSelectLoading ? null : separators.length
+      ? (multipleTags as ReactNode[]).reduce<ReactNode[]>((nodes, tag, index) => nodes.concat(separators[index], tag), [])
+      : multipleTags;
     const tags = (
       <Animate
         component="ul"
@@ -1389,9 +1470,9 @@ export class TextField<T extends TextFieldProps> extends FormField<T> {
         {responsive && (
           <div ref={this.saveResponsiveMeasurement} className={`${prefixCls}-responsive-measure`} aria-hidden="true">
             <ul className={`${prefixCls}-responsive-tag-measure`}>
-              {fullTags.map((tag, index) => tag || (
+              {fullTags.reduce<ReactNode[]>((nodes, tag, index) => nodes.concat(fullSeparators[index], tag || (
                 <li key={String(index)} style={{ width: 0, margin: 0, padding: 0, border: 0 }} />
-              ))}
+              )), [])}
             </ul>
             <ul className={`${prefixCls}-responsive-placeholder-measure`}>{placeholders}</ul>
           </div>

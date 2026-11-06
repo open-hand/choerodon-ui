@@ -40,6 +40,8 @@ title: TextField
 | tooltip | 输入框 tooltip 配置 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | placeholderTooltip | 输入框 placeholder tooltip 配置, 空值有效 | TextTooltip \| \[TextTooltip, TooltipProps\] |  |
 | fieldFocusMode | 输入框聚焦模式: checked 默认聚焦选中文本，focus 聚焦显示光标 | `checked` \| `focus` | [globalConfig.fieldFocusMode](/components/configure#API) |
+| tagSeparatorRenderer | 自定义标签分隔符渲染器,参数对象中可以获取index, previousValue, nextValue, disabled, readOnly, 其中index为分隔符后一个标签在原始多值数组中的索引 | (props) => ReactNode |  |
+
 
 更多属性请参考 [FormField](/components-pro/field/#FormField)。
 

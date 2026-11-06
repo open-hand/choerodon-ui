@@ -38,6 +38,7 @@ timeline: true
 - 🌟 `<pro>Attachment`: Added `preview` button.
 - 🌟 `<pro>Attachment`: Added `onCustomPreview` property.
 - 🌟 `<pro>Select`: Added `popupMainField`, `popupShowAvatar`, and `popupAvatarColorful` properties.
+- 🌟 `<pro>TextField`: Added `tagSeparatorRenderer` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
 - 💄 `<pro>Attachment`: Optimize the display of incompletely visible filenames by displaying the full filename via a tooltip. 

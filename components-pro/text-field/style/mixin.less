@@ -486,6 +486,17 @@
     padding-right: @suffix-width;
   }
 
+  &-tag-separator {
+    margin-right: 0.08rem;
+    margin-left: 0.08rem;
+    color: @text-color-secondary;
+    white-space: nowrap;
+
+    &:not([data-disabled='true']):hover {
+      color: @primary-color;
+    }
+  }
+
   &-multiple-block {
     .tag-block;
     cursor: default;

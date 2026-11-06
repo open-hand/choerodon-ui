@@ -152,6 +152,8 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
 
   @observable stopAlphaDrafts: { [id: number]: string };
 
+  @observable stopPositionDrafts: { [id: number]: string };
+
   get colorModes(): ColorMode[] {
     const { gradientMode } = this.props;
     const modes = Array.isArray(gradientMode) ? gradientMode : [gradientMode || 'single'];
@@ -313,6 +315,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.gradientError = false;
       this.stopColorDrafts = {};
       this.stopAlphaDrafts = {};
+      this.stopPositionDrafts = {};
     });
     this.popupView = null;
   }
@@ -328,26 +331,25 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
       this.schedulePointerSync();
     }
     this.syncCustomPanelPosition();
-    if (!this.gradientHidden && this.popupView) {
-      const { left, width } = this.popupView.getBoundingClientRect();
-      const { innerWidth } = window;
-
-      runInAction(() => {
-        if (left + width + CUSTOM_PANEL_GAP > innerWidth && left > width + CUSTOM_PANEL_GAP) {
-          this.gradienLeft = -(width + CUSTOM_PANEL_GAP);
-        }
-      });
-    }
   }
 
+  @action
   syncCustomPanelPosition() {
     const { popupView, popup, preset, gradientHidden } = this;
     if (!popup || !preset || gradientHidden || !popupView) {
       return;
     }
+    popupView.style.left = '0px';
     popupView.style.bottom = `${-CUSTOM_PANEL_GAP}px`;
-    const { top, height } = popupView.getBoundingClientRect();
-    const viewportHeight = popupView.ownerDocument.documentElement.clientHeight;
+    const { left, top, width, height } = popupView.getBoundingClientRect();
+    const { clientWidth: viewportWidth, clientHeight: viewportHeight } = popupView.ownerDocument.documentElement;
+    const parentWidth = popupView.parentElement!.getBoundingClientRect().width;
+    const rightLeft = left + parentWidth + CUSTOM_PANEL_GAP;
+    const leftLeft = left - width - CUSTOM_PANEL_GAP;
+    const preferredLeft = rightLeft + width <= viewportWidth - CUSTOM_PANEL_VIEWPORT_GAP ? rightLeft : leftLeft;
+    const nextLeft = Math.max(CUSTOM_PANEL_VIEWPORT_GAP, Math.min(preferredLeft, viewportWidth - CUSTOM_PANEL_VIEWPORT_GAP - width));
+    this.gradienLeft = nextLeft - left;
+    popupView.style.left = `${this.gradienLeft}px`;
     const nextTop = Math.max(0, Math.min(top, viewportHeight - CUSTOM_PANEL_VIEWPORT_GAP - height));
     popupView.style.bottom = `${-CUSTOM_PANEL_GAP + top - nextTop}px`;
   }
@@ -659,6 +661,38 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
   }
 
   @action
+  handleStopPositionInput(id: number, value: string) {
+    this.stopPositionDrafts = { ...this.stopPositionDrafts, [id]: value };
+  }
+
+  @action
+  resetStopPositionDraft(id: number) {
+    const drafts = { ...this.stopPositionDrafts };
+    delete drafts[id];
+    this.stopPositionDrafts = drafts;
+  }
+
+  @action
+  handleStopPositionBlur(id: number) {
+    const draft = this.stopPositionDrafts[id];
+    this.resetStopPositionDraft(id);
+    if (draft !== undefined && draft.trim() !== '' && Number.isFinite(Number(draft))) {
+      this.updateStopPosition(Number(draft), id);
+    }
+  }
+
+  handleStopPositionKeyDown(e: React.KeyboardEvent<HTMLInputElement>, id: number) {
+    if (e.key === 'Enter' || e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.key === 'Escape') {
+        this.resetStopPositionDraft(id);
+      }
+      e.currentTarget.blur();
+    }
+  }
+
+  @action
   handleStopAlphaInput(id: number, value: string) {
     const { draft, alpha } = this.getAlphaInput(value);
     this.stopAlphaDrafts = { ...this.stopAlphaDrafts, [id]: draft };
@@ -730,11 +764,15 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
           {sortedStops.map((stop, index) => (
             <div key={stop.id} className={classNames(`${prefixCls}-stop-row`, { [`${prefixCls}-stop-row-active`]: stop.id === this.selectedStop })}>
               <div className={`${prefixCls}-stop-position`}>
-                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={stopUnit === '%' ? 100 : undefined} step="any" value={stop.position} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopPosition(Number(e.target.value), stop.id)} />
+                <input aria-label={`Color stop ${index + 1} position`} type="number" min={0} max={stopUnit === '%' ? 100 : undefined} step="any" value={this.stopPositionDrafts[stop.id] ?? stop.position} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.handleStopPositionInput(stop.id, e.target.value)} onBlur={() => this.handleStopPositionBlur(stop.id)} onKeyDown={e => this.handleStopPositionKeyDown(e, stop.id)} />
                 <span aria-hidden="true">{stopUnit}</span>
               </div>
               <div className={`${prefixCls}-stop-color-alpha`}>
-                {this.getStopColorDisplay(stop) && <span className={`${prefixCls}-stop-color-preview`} aria-hidden="true" style={{ background: stop.color }} />}
+                {this.getStopColorDisplay(stop) && (
+                  <span className={`${prefixCls}-stop-color-preview`} aria-hidden="true">
+                    <span className={`${prefixCls}-prefix-value`} style={{ background: stop.color }} />
+                  </span>
+                )}
                 <input className={`${prefixCls}-stop-color`} aria-label={`Color stop ${index + 1} color`} value={this.getStopColorDisplay(stop)} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.updateStopColor(stop.id, e.target.value)} onBlur={() => this.handleStopColorBlur(stop.id)} />
                 <input className={`${prefixCls}-stop-alpha`} aria-label={`Color stop ${index + 1} alpha`} inputMode="decimal" value={this.stopAlphaDrafts[stop.id] ?? this.formatAlpha(parseColor(stop.color)?.a)} onFocus={() => { this.selectStop(stop.id); this.handleFooterFocus(); }} onChange={e => this.handleStopAlphaInput(stop.id, e.target.value)} onBlur={() => this.handleStopAlphaBlur(stop.id)} />
               </div>
@@ -820,6 +858,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.footerAlphaDraft = undefined;
     this.stopColorDrafts = {};
     this.stopAlphaDrafts = {};
+    this.stopPositionDrafts = {};
     this.stops = gradient.stops.map(stop => ({ ...stop, id: ++this.stopId }));
     this.selectStop(this.sortedStops[0].id);
     this.gradientText = this.gradientValue;
@@ -838,6 +877,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.footerHex = undefined;
     this.footerAlphaDraft = undefined;
     this.stopAlphaDrafts = {};
+    this.stopPositionDrafts = {};
     this.gradientError = false;
     this.stopColorDrafts = {};
     this.stops = [
@@ -948,6 +988,7 @@ export default class ColorPicker extends TriggerField<ColorPickerProps> {
     this.stops = this.stops.filter(stop => stop.id !== id);
     this.resetStopColorDraft(id);
     this.resetStopAlphaDraft(id);
+    this.resetStopPositionDraft(id);
     if (id === this.selectedStop) {
       this.selectStop(this.sortedStops[0].id);
     }
