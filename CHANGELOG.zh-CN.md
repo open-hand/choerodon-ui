@@ -147,6 +147,7 @@ timeline: true
 - 🐞 `<pro>Lov`: 修复使用中文输入法输入后按回车，可能持续处于 loading 状态的问题。
 - 🐞 `<pro>Form`: 修复 Form 动态校验失败时未按表单字段顺序聚焦首个错误输入框的问题。
 - 🐞 `Trigger`: 修复 Trigger 弹层内元素失焦时异常回焦，导致点击外部区域无法收起弹层的问题。
+- 🐞 `<pro>Output`: 修复 Output 入口在循环依赖场景下可能导出 undefined 的问题。
 
 ## 1.6.8
 
