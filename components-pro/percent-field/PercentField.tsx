@@ -28,6 +28,10 @@ export default class PercentField extends NumberField<PercentFieldProps> {
    */
   static bigNumberFormat = defaultFormatNumber;
 
+  get showSuffix(): boolean {
+    return true;
+  }
+
   getFieldType(): FieldType {
     return FieldType.percentage;
   }
