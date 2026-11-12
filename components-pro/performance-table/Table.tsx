@@ -990,6 +990,34 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
     return typeof rowHeight === 'function' ? rowHeight(rowData) : rowHeight!;
   }
 
+  getWordWrapRowHeight(rowIndex: number) {
+    const { data, tableRowsMaxHeight } = this.state;
+    const { rowHeight, rowExpandedHeight } = this.props;
+    const rowData = data[rowIndex];
+    let height = Math.max(tableRowsMaxHeight[rowIndex] || 0, this.getRowHeight(rowData));
+    if (typeof rowHeight !== 'function' && this.shouldRenderExpandedRow(rowData)) {
+      height += rowExpandedHeight!;
+    }
+    return height;
+  }
+
+  getWordWrapRowSpanHeight(rowIndex: number, rowSpan: number) {
+    const { data } = this.state;
+    const { isTree, rowKey } = this.props;
+    let height = 0;
+    const endIndex = Math.min(rowIndex + rowSpan, data.length);
+    for (let index = rowIndex; index < endIndex; index++) {
+      if (isTree) {
+        const parents = findAllParents(data[index], rowKey);
+        if (!shouldShowRowByExpanded(this.getExpandedRowKeys(), parents)) {
+          continue;
+        }
+      }
+      height += this.getWordWrapRowHeight(index);
+    }
+    return height;
+  }
+
   get getScrollBarYWidth(): number {
     const { width } = this.state;
     const { showScrollArrow } = this.props;
@@ -2692,6 +2720,9 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           hasChildren,
           rowData,
           cellExternalProps,
+          rowSpanHeight: wordWrap && cellExternalProps.rowSpan > 1
+            ? this.getWordWrapRowSpanHeight(props.rowIndex, cellExternalProps.rowSpan)
+            : undefined,
           wordWrap,
           renderTreeToggle,
           height: props.height,
@@ -2751,6 +2782,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   }
 
   getCellGroupInfo(cells: any[], rowData: any, rowIndex: number, extraWidth: number = 0, rowBaseHeight: number = 1) {
+    const { wordWrap } = this.props;
     let maxRowSpan = 1;
     let hasVisibleCell = false;
     let left = 0;
@@ -2758,7 +2790,7 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
 
     for (let i = 0; i < cells.length; i++) {
       const cell = cells[i];
-      const { cellExternalProps = {}, rowSpan, width = 0 } = cell.props;
+      const { cellExternalProps = {}, rowSpan, rowSpanHeight, width = 0 } = cell.props;
       const cellRowSpan = !isNil(cellExternalProps.rowSpan) ? cellExternalProps.rowSpan : rowSpan;
       const normalizedRowSpan = isNil(cellRowSpan) ? 1 : cellRowSpan;
       const isHiddenCell = cellExternalProps.hidden || normalizedRowSpan === 0;
@@ -2769,7 +2801,8 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
         backgroundSegments.push({
           left,
           width: segmentWidth,
-          height: rowBaseHeight * normalizedRowSpan,
+          height: wordWrap && rowSpanHeight !== undefined
+            ? rowSpanHeight : rowBaseHeight * normalizedRowSpan,
         });
       }
 
@@ -2788,12 +2821,17 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
   getCellGroupHeight(cells: any[], rowData: any, rowIndex: number, defaultHeight?: number, cellGroupInfo?: {
     maxRowSpan: number;
     hasVisibleCell: boolean;
+    backgroundSegments?: Array<{ height: number }>;
   }) {
     const info = cellGroupInfo || this.getCellGroupInfo(cells, rowData, rowIndex);
+    const { wordWrap } = this.props;
     const { maxRowSpan, hasVisibleCell } = info;
     if (!hasVisibleCell) {
       // 占位行也需要保留一行高度，避免非固定大 rowSpan 在该行透出
       return defaultHeight || 1;
+    }
+    if (wordWrap && info.backgroundSegments) {
+      return info.backgroundSegments.reduce((height, segment) => Math.max(height, segment.height), defaultHeight || 1);
     }
     return (defaultHeight || 1) * maxRowSpan;
   }
@@ -3298,12 +3336,12 @@ export default class PerformanceTable extends React.Component<TableProps, TableS
           let nextRowHeight = 0;
           let depth = 0;
 
-          if (typeof rowHeight === 'function') {
-            nextRowHeight = wordWrap ? Math.max(maxHeight || 0, rowHeight(rowData)) : rowHeight(rowData);
+          if (wordWrap) {
+            nextRowHeight = this.getWordWrapRowHeight(index);
+          } else if (typeof rowHeight === 'function') {
+            nextRowHeight = rowHeight(rowData);
           } else {
-            nextRowHeight = wordWrap
-              ? Math.max(maxHeight || 0, rowHeight!)
-              : maxHeight ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight!) : rowHeight!;
+            nextRowHeight = maxHeight ? Math.max(maxHeight + CELL_PADDING_HEIGHT, rowHeight!) : rowHeight!;
             if (shouldRenderExpandedRow) {
               // @ts-ignore
               nextRowHeight += rowExpandedHeight!;

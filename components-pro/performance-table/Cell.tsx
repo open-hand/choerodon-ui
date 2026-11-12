@@ -32,6 +32,7 @@ export interface CellProps extends StandardProps {
   rowKey?: string | number;
   rowIndex?: number;
   rowSpan?: number;
+  rowSpanHeight?: number;
   rowData?: RowDataType;
   cellExternalProps?: Record<string, any>;
   depth?: number; // change `Cell` width and depth prop to optional
@@ -74,6 +75,7 @@ export const propTypeKeys = [
   'children',
   'rowKey',
   'rowIndex',
+  'rowSpanHeight',
   'rowData',
   'depth',
   'onTreeToggle',
@@ -178,6 +180,7 @@ class Cell extends React.PureComponent<CellProps> {
       onClick, // Fix sortColumn not getting fired in Gatsby production build
       onCell,
       rowSpan,
+      rowSpanHeight,
       fixed,
       hasChildren,
       cellExternalProps: cachedCellExternalProps,
@@ -221,7 +224,9 @@ class Cell extends React.PureComponent<CellProps> {
     const { rtl } = this.context;
 
     let nextHeight = isHeaderCell ? headerHeight : this.getHeight();
-    if (cellExternalProps.rowSpan) {
+    if (!isHeaderCell && wordWrap && rowSpanHeight !== undefined) {
+      nextHeight = rowSpanHeight;
+    } else if (cellExternalProps.rowSpan) {
       nextHeight = cellExternalProps.rowSpan * (nextHeight || 1);
     }
     const styles = {
