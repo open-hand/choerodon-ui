@@ -65,7 +65,7 @@ const App = () => {
     <Form dataSet={ds}>
       <Select name="single" popupShowAvatar />
       <Select name="multiple" popupShowAvatar />
-      <Select name="colorful" popupShowAvatar popupAvatarColorful />
+      <Select name="colorful" popupShowAvatar="colorful" />
     </Form>
   );
 };

@@ -79,16 +79,16 @@ const App = () => {
       <Form dataSet={ds} header="popup" columns={2}>
         <Lov name="single" viewMode="popup" />
         <Lov name="multiple" viewMode="popup" />
-        <Lov name="avatar1" popupShowAvatar viewMode="popup" />
-        <Lov name="avatar2" popupShowAvatar viewMode="popup" />
-        <Lov name="avatar-color" popupShowAvatar viewMode="popup" popupAvatarColorful />
+        <Lov name="avatar1" popupShowAvatar viewMode="popup" onOption={() => ({ disabled: true })} />
+        <Lov name="avatar2" popupShowAvatar viewMode="popup" onOption={() => ({ disabled: true })} />
+        <Lov name="avatar-color" popupShowAvatar="colorful" viewMode="popup" />
       </Form>
       <Form dataSet={ds} header="searchable" columns={2}>
         <Lov name="single" searchable />
         <Lov name="multiple" searchable />
-        <Lov name="avatar1" searchable popupShowAvatar />
-        <Lov name="avatar2" searchable popupShowAvatar />
-        <Lov name="avatar-color" searchable popupShowAvatar popupAvatarColorful />
+        <Lov name="avatar1" searchable popupShowAvatar onOption={() => ({ disabled: true })} />
+        <Lov name="avatar2" searchable popupShowAvatar onOption={() => ({ disabled: true })} />
+        <Lov name="avatar-color" searchable popupShowAvatar="colorful" />
       </Form>
     </>
   );

@@ -82,7 +82,8 @@ export class MenuItem extends React.Component {
   handleRippleMouseEnter = (e) => {
     const { tooltip, tooltipTheme, tooltipPlacement, children, mode } = this.props;
     const { currentTarget } = e;
-    if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(currentTarget)))) {
+    const overflowTarget = currentTarget.querySelector('[data-overflow-tooltip]') || currentTarget;
+    if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(overflowTarget)))) {
       show(currentTarget, {
         title: children,
         placement: tooltipPlacement || mode === 'horizontal' ? 'top' : 'right',

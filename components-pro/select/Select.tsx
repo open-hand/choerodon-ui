@@ -299,10 +299,8 @@ export interface SelectProps extends TriggerFieldProps<SelectPopupContentProps> 
   popupShowComboValue?: boolean;
   /** 下拉列表的主字段，默认使用 textField */
   popupMainField?: string;
-  /** 下拉列表是否显示主字段首字符头像 */
-  popupShowAvatar?: boolean;
-  /** 下拉列表头像是否使用多彩配色，默认关闭 */
-  popupAvatarColorful?: boolean;
+  /** 下拉列表是否显示主字段首字符头像，设为 colorful 时显示多色头像 */
+  popupShowAvatar?: boolean | 'colorful';
   /**
    * 可输入时，下拉框中是否显示输入提示
    */
@@ -767,7 +765,6 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
       'popupShowComboValue',
       'popupMainField',
       'popupShowAvatar',
-      'popupAvatarColorful',
       'showInputPrompt',
       'addNewOptionPrompt',
       'beforeCreateComboOption',
@@ -904,19 +901,28 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
   getMenuItem({ record, text, value }): string | ReactNode {
     const {
       options,
-      props: { optionRenderer, popupShowAvatar, popupAvatarColorful, popupMainField },
+      props: { optionRenderer, popupShowAvatar, popupMainField },
     } = this;
-    const content = optionRenderer
+    const content = toJS(optionRenderer
       ? optionRenderer({ dataSet: options, record, text, value })
-      : text;
+      : text);
     if (!popupShowAvatar) {
       return content;
     }
     const mainField = popupMainField || this.textField;
     const { valueField } = this;
-    const avatarText = Array.from(String(isNil(record.get(mainField)) ? '' : record.get(mainField)))[0];
+    const getAvatarText = (node: ReactNode): string => {
+      if (isValidElement(node)) {
+        return getAvatarText(node.props.children);
+      }
+      if (Array.isArray(node)) {
+        return node.map(getAvatarText).join('');
+      }
+      return typeof node === 'string' || typeof node === 'number' ? String(node) : '';
+    };
+    const avatarText = Array.from(getAvatarText(toJS(record.get(mainField))).trim())[0];
     let avatarColor: PresetColorType | undefined;
-    if (popupAvatarColorful) {
+    if (popupShowAvatar === 'colorful') {
       const avatarKey = String(!isNil(record.get(valueField)) ? record.get(valueField) : record.get(mainField) || '');
       let hash = 0;
       for (let i = 0; i < avatarKey.length; i += 1) {
@@ -935,7 +941,7 @@ export class Select<T extends SelectProps = SelectProps> extends TriggerField<T>
         >
           {avatarText}
         </Avatar>
-        <span className={`${this.prefixCls}-search-item-text`}>{content}</span>
+        <span className={`${this.prefixCls}-search-item-text`} data-overflow-tooltip>{content}</span>
       </span>
     );
   }

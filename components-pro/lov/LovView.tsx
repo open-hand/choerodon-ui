@@ -37,6 +37,7 @@ import { Size, Tooltip as TextTooltip } from '../core/enum';
 import { $l } from '../locale-context';
 import { Lang } from '../locale-context/enum';
 import { processFieldValue } from '../field/utils';
+import { Renderer } from '../field/FormField';
 
 export interface LovViewProps {
   dataSet: DataSet;
@@ -60,8 +61,8 @@ export interface LovViewProps {
   renderAddNewOptionPrompt?: (type: 'prompt' | 'noDataPrompt', renderEmptyComponent: string) => ReactNode;
   duplicateKey?: DuplicateKeyConfig;
   popupMainField?: string;
-  popupShowAvatar?: boolean;
-  popupAvatarColorful?: boolean;
+  popupShowAvatar?: boolean | 'colorful';
+  optionRenderer?: Renderer;
   popupSearchField?: ReactNode;
   popupEmptyContent?: ReactNode;
   popupOptionDisabled?: (record: Record) => boolean;
@@ -386,8 +387,9 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
   isPopupOptionDisabled(record: Record): boolean {
     const { popupOptionDisabled, config } = this.props;
     const { originData } = config as LovConfig & { originData?: { failed?: boolean } };
-    return !!(record.disabled || !record.selectable || this.isDuplicateRecord(record) ||
-      (popupOptionDisabled && popupOptionDisabled(record)) || (originData && originData.failed));
+    const disabled = popupOptionDisabled ? popupOptionDisabled(record) :
+      record.disabled || !record.selectable || this.isDuplicateRecord(record);
+    return !!(disabled || (originData && originData.failed));
   }
 
   @action
@@ -458,7 +460,7 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
 
   renderPopupList() {
     const {
-      dataSet, config, tableProps = {}, popupMainField, textField, popupShowAvatar, popupAvatarColorful, multiple,
+      dataSet, config, tableProps = {}, popupMainField, textField, popupShowAvatar, multiple, optionRenderer,
       popupSearchField, popupEmptyContent, renderAddNewOptionPrompt, context, values, valueField: propValueField, lang,
     } = this.props;
     const configTableProps = config.tableProps || {};
@@ -511,9 +513,9 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
               const selected = multiple ? record.isSelected : record.isSelected || values.some(value => valueField && (
                 value && typeof value === 'object' ? value[valueField] === record.get(valueField) : value === record.get(valueField)
               ));
-              const avatarText = Array.from(String(isNil(record.get(mainField)) ? '' : record.get(mainField)))[0];
+              const avatarText = Array.from(String(isNil(record.get(mainField)) ? '' : record.get(mainField)).trim())[0];
               let avatarColor: PresetColorType | undefined;
-              if (popupShowAvatar && popupAvatarColorful) {
+              if (popupShowAvatar === 'colorful') {
                 const avatarKey = String(valueField && !isNil(record.get(valueField)) ? record.get(valueField) : record.get(mainField) || '');
                 let hash = 0;
                 for (let i = 0; i < avatarKey.length; i += 1) {
@@ -584,7 +586,14 @@ export default class LovView extends Component<LovViewProps, LovViewState> {
                   <div className={`${prefix}-content`}>
                     <div className={`${prefix}-main-row`}>
                       {!popupShowAvatar && checkbox}
-                      <div className={`${prefix}-main`}>{renderField(record, mainField, index)}</div>
+                      <div className={`${prefix}-main`}>
+                        {optionRenderer ? optionRenderer({
+                          dataSet,
+                          record,
+                          text: record.get(textField || config.textField || ''),
+                          value: valueField ? record.get(valueField) : undefined,
+                        }) : renderField(record, mainField, index)}
+                      </div>
                     </div>
                     {!!visibleSecondaryColumns.length && (
                       <div className={`${prefix}-secondary`}>
