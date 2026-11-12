@@ -89,6 +89,7 @@ import {
   findRow,
   getCellVerticalSize,
   getDateByISOWeek,
+  getEditorByColumnAndRecord,
   getHeight,
   getPaginationPosition,
   isCanEdictingRow,
@@ -99,6 +100,7 @@ import {
   copyToClipboard,
 } from './utils';
 import { ButtonProps } from '../button/Button';
+import { SelectProps } from '../select/Select';
 import TableBody from './TableBody';
 import VirtualWrapper from './VirtualWrapper';
 import SelectionTips from './SelectionTips';
@@ -931,6 +933,7 @@ interface LovBatchTask {
   isMultiple: boolean;
   texts: string[];
   hook: LovQueryBatchHook;
+  getComboValue: (text: string) => object | null;
   columnRenderer?: any;
 }
 
@@ -1716,6 +1719,15 @@ export default class Table extends DataSetComponent<TableProps> {
       const totalCount = paging ? length : noPagingTotoalCount;
       let errorPasteColName='';
       try {
+        const hasComboFunc = (column: ColumnProps, record: Record) => {
+          const cellEditor = getEditorByColumnAndRecord(column, record);
+          const hasCombo = !!(
+            cellEditor &&
+            cellEditor.props &&
+            (cellEditor.props as SelectProps).combo
+          );
+          return hasCombo;
+        };
         for (let i = 0; i < rows.length; i++) {
           // 判断超出时自动新增行
           if (currentEditRecord && i > 0) {
@@ -1753,9 +1765,6 @@ export default class Table extends DataSetComponent<TableProps> {
                 text = text.split('，');
               }
             }
-            const tableEditor = editors && fieldName && editors.get(fieldName);
-            // @ts-ignore
-            const hasCombo = tableEditor && tableEditor.cellEditor && tableEditor.cellEditor.props && tableEditor.cellEditor.props.combo;
             let skipInlinePush = false;
             switch (fieldType) {
               case FieldType.boolean:
@@ -1812,18 +1821,24 @@ export default class Table extends DataSetComponent<TableProps> {
                   const valueField = field.get('valueField', record);
                   const param = field.get('lovPara', record);
                   const isSelect = isSelectCom(field, record);
+                  const hasCombo = hasComboFunc(column, record);
                   if (isSelect) {
                     const optionData = optionDs.toData();
                     if (isArrayLike(text)) {
                       text = text.map(v => {
                         const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
-                        return option ? option[valueField] : (hasCombo ? text : null);
+                        return option ? option[valueField] : (hasCombo ? v.trim() : null);
                       })
                     } else {
                       const option = optionData.find(x => x[textField] === text || x[valueField] === text);
                       text = option ? option[valueField] : (hasCombo ? text : null);
                     }
                   } else {
+                    const getComboValue = (value: string) => (
+                      hasCombo && value && value.trim() !== ''
+                        ? { [textField]: value.trim(), [valueField]: value.trim() }
+                        : null
+                    );
                     const lovQueryBatchAxiosConfig = field.get('lovQueryBatchAxiosConfig', record);
                     if (lovQueryBatchAxiosConfig) {
                       const textList = isArrayLike(text)
@@ -1842,6 +1857,7 @@ export default class Table extends DataSetComponent<TableProps> {
                           isMultiple: isArrayLike(text),
                           texts: textList,
                           hook: lovQueryBatchAxiosConfig,
+                          getComboValue,
                           columnRenderer: columns[colIndex + j].column.renderer,
                         });
                         skipInlinePush = true;
@@ -1859,7 +1875,7 @@ export default class Table extends DataSetComponent<TableProps> {
                         }
                         const data = await optionDs.query(1, obj);
                         if (this.dataSet && data) {
-                          return data[optionDs.dataKey][0] || null;
+                          return data[optionDs.dataKey][0] || getComboValue(trimmedText);
                         }
                         return null;
                       })
@@ -1879,7 +1895,7 @@ export default class Table extends DataSetComponent<TableProps> {
                         const data = await optionDs.query(1, obj);
                         if (this.dataSet && data) {
                           const current = data[optionDs.dataKey][0];
-                          text = current || null;
+                          text = current || getComboValue(text);
                         } else {
                           text = null;
                         }
@@ -1893,10 +1909,11 @@ export default class Table extends DataSetComponent<TableProps> {
                   const optionData = optionDs.toData();
                   const textField = field.get('textField', record);
                   const valueField = field.get('valueField', record);
+                  const hasCombo = hasComboFunc(column, record);
                   if (isArrayLike(text)) {
                     text = text.map(v => {
                       const option = optionData.find(x => x[textField] === v.trim() || x[valueField] === v.trim());
-                      return option ? option[valueField] : (hasCombo ? text : null);
+                      return option ? option[valueField] : (hasCombo ? v.trim() : null);
                     })
                   } else {
                     const option = optionData.find(x => x[textField] === text || x[valueField] === text);
@@ -2003,12 +2020,12 @@ export default class Table extends DataSetComponent<TableProps> {
       });
       // 按任务赋值
       tasks.forEach((task) => {
-        const { record, name, isMultiple, texts: taskTexts, columnRenderer } = task;
+        const { record, name, isMultiple, texts: taskTexts, columnRenderer, getComboValue } = task;
         let value;
         if (isMultiple) {
-          value = taskTexts.map((t: string) => (t === '' ? null : (textMap.get(t) || null))).filter(item => item);
+          value = taskTexts.map((t: string) => (t === '' ? null : (textMap.get(t) || getComboValue(t)))).filter(item => item);
         } else {
-          value = (taskTexts.length === 0 || taskTexts[0] === '') ? null : (textMap.get(taskTexts[0]) || null);
+          value = (taskTexts.length === 0 || taskTexts[0] === '') ? null : (textMap.get(taskTexts[0]) || getComboValue(taskTexts[0]));
         }
         if (columnRenderer) {
           columnRenderer({ record, text: value, value, name, dataSet: this.dataSet });
