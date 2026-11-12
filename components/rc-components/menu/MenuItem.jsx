@@ -82,8 +82,11 @@ export class MenuItem extends React.Component {
   handleRippleMouseEnter = (e) => {
     const { tooltip, tooltipTheme, tooltipPlacement, children, mode } = this.props;
     const { currentTarget } = e;
-    const overflowTarget = currentTarget.querySelector('[data-overflow-tooltip]') || currentTarget;
-    if (children && (tooltip === 'always' || (tooltip === 'overflow' && isOverflow(overflowTarget)))) {
+    const overflowTarget = currentTarget.querySelector('[data-overflow-tooltip]');
+    if (children && (tooltip === 'always' || (tooltip === 'overflow' && (
+      // 独立省略容器按实际滚动宽度判断，避免嵌套字体的 Canvas 测量误差。
+      overflowTarget ? overflowTarget.scrollWidth > overflowTarget.clientWidth : isOverflow(currentTarget)
+    )))) {
       show(currentTarget, {
         title: children,
         placement: tooltipPlacement || mode === 'horizontal' ? 'top' : 'right',
