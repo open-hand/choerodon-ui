@@ -37,7 +37,7 @@ timeline: true
 - 🌟 `<pro>ColorPicker`: 新增 showNoFill 属性。
 - 🌟 `<pro>Attachment`: 新增内置预览按钮。
 - 🌟 `<pro>Attachment`: 新增 onCustomPreview 属性。
-- 🌟 `<pro>Select`: 新增 popupMainField, popupShowAvatar和 popupAvatarColorful 属性。
+- 🌟 `<pro>Select`: 新增 popupMainField, popupShowAvatar 属性。
 - 🌟 `<pro>TextField`: 新增 tagSeparatorRenderer 属性。
 - 💄 `<pro>FormField`: 优化 newLine 类型 help 样式，溢出 Tooltip 显示。
 - 💄 `Tabs`: 当前 tab 改变时，同时显示前一个或后一个 tab。

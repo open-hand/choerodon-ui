@@ -54,8 +54,7 @@ title: Select
 | autoScrollToSelected | 自动滚动到选中位置 | boolean | true |
 | duplicateKey | 重复 `valueField` 处理的配置对象；也可通过全局 `duplicateKey` hook 按组件名配置。`disable` 控制是否禁用重复项，`showWarning` 是否显示重复项提示 | { disable?: boolean; showWarning?: boolean } | [globalConfig.duplicateKey](/components/configure#API) |
 | popupMainField | 下拉列表主字段，默认使用 `textField`。Select 中用于获取头像首字符，不改变选项文本；Lov popup 列表及树节点中同时用于展示主字段 | string | textField |
-| popupShowAvatar | 是否在下拉选项中显示主字段首字符头像，Lov 树形下拉不展示头像 | boolean | false |
-| popupAvatarColorful | 是否启用多色头像，仅在 `popupShowAvatar` 开启时生效 | boolean | false |
+| popupShowAvatar | boolean 控制是否在下拉选项中显示主字段首字符头像，`'colorful'` 开启多色头像；Lov 树形下拉不展示头像 | boolean \| 'colorful' | false |
 
 更多属性请参考 [TriggerField](/components-pro/trigger-field/#TriggerField)。
 

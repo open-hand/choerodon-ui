@@ -411,7 +411,7 @@ export default class Lov extends Select<LovProps> {
           valueField={this.valueField}
           popupMainField={this.props.popupMainField}
           popupShowAvatar={this.props.popupShowAvatar}
-          popupAvatarColorful={this.props.popupAvatarColorful}
+          optionRenderer={this.props.optionRenderer}
           popupSearchField={popupSearchMode !== PopupSearchMode.single && this.renderSearchField({ queryDataSet: options.queryDataSet })}
           popupOptionDisabled={record => this.getOptionDisabled(record)}
           popupHidden={!this.popup}
@@ -549,7 +549,7 @@ export default class Lov extends Select<LovProps> {
             className: classNames(`${treePrefix}-node`, {
               [`${treePrefix}-node-with-secondary`]: !!visibleSecondaryColumns.length,
             }, optionProps.className),
-            disabled: optionProps.disabled || this.getOptionDisabled(record) || record.disabled,
+            disabled: this.getOptionDisabled(record, optionProps),
             ...(this.multiple ? { selectable: false, disableCheckbox: optionProps.disableCheckbox || optionProps.selectable === false || !record.selectable } : {}),
             title: (
               <span className={`${treePrefix}-content`}>

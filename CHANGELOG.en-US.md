@@ -37,7 +37,7 @@ timeline: true
 - 🌟 `<pro>ColorPicker`: Added `showNoFill` property to show the no-fill option.
 - 🌟 `<pro>Attachment`: Added `preview` button.
 - 🌟 `<pro>Attachment`: Added `onCustomPreview` property.
-- 🌟 `<pro>Select`: Added `popupMainField`, `popupShowAvatar`, and `popupAvatarColorful` properties.
+- 🌟 `<pro>Select`: Added `popupMainField`, `popupShowAvatar` properties.
 - 🌟 `<pro>TextField`: Added `tagSeparatorRenderer` property.
 - 💄 `<pro>FormField`: Optimize the `help` style of the `newLine` type and enable the display of overflow `Tooltip`.
 - 💄 `Tabs`: When the current `tab` changes, the previous or next `tab` is displayed simultaneously.
