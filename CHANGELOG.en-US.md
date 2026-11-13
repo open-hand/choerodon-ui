@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Board`: Fixed an error when switching views if customizedLoad returns the Table fallback configuration.
+
 ## 1.6.9
 
 `2026-11-12`

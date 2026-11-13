@@ -223,7 +223,8 @@ const Board: FunctionComponent<BoardProps> = function Board(props) {
         const res = await customizedLoad(customizedCode, 'Board', {
           type: 'default',
         });
-        const remoteCustomized: BoardCustomized[] | undefined | null = res ? [res] : [];
+        // Table 个性化的兜底数据 { columns: {} } 不包含 Board 视图类型，按无个性化配置处理。
+        const remoteCustomized: BoardCustomized[] = res && res[ViewField.viewMode] ? [res] : [];
         const viewProps = {
           card: {
             [ViewField.cardWidth]: 6,
