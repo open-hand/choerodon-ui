@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.9
+
+`2026-11-12`
+
 - 🌟 `configure`: Added `selectBeforeCreateComboOption`, `uploadBatchMaxFileCount`, `attachment.previewTarget`, `lovModalAutoWidth`, `duplicateKey`, `uploadAlwaysShowActions` properties.
 - 🌟 `<pro>Table`: A `type` parameter has been added to the `onReset` event of the search bar to distinguish the triggering scenarios.
 - 🌟 `<pro>Button`: Added `iconPlacement` property.
