@@ -15,6 +15,10 @@ timeline: true
 
 ---
 
+## 1.6.9
+
+`2026-11-12`
+
 - 🌟 `configure`: 新增 selectBeforeCreateComboOption, uploadBatchMaxFileCount, attachment.previewTarget, lovModalAutoWidth, duplicateKey, uploadAlwaysShowActions 属性。
 - 🌟 `<pro>Table`: 查询栏 onReset 事件新增 type 参数用于区分触发的场景。
 - 🌟 `<pro>Button`: 新增 iconPlacement 属性。
