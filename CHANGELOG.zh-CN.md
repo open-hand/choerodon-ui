@@ -15,6 +15,8 @@ timeline: true
 
 ---
 
+- 🐞 `<pro>Board`: 修复 customizedLoad 返回 Table 兜底配置时切换视图报错的问题。
+
 ## 1.6.9
 
 `2026-11-12`
