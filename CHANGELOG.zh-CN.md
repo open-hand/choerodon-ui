@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🐞 `<pro>Board`: 修复 customizedLoad 返回 Table 兜底配置时切换视图报错的问题。
+- 🐞 `<pro>Lov`: 修复了 Lov 在合并 tableProps 时修改原始 MobX 可观察配置，导致渲染报错和页面白屏的问题。
 
 ## 1.6.9
 
