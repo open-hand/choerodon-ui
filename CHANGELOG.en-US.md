@@ -16,6 +16,7 @@ timeline: true
 ---
 
 - 🐞 `<pro>Board`: Fixed an error when switching views if customizedLoad returns the Table fallback configuration.
+- 🐞 `<pro>Lov`: Fixed a Lov rendering crash that could leave the page blank when merging `tableProps` mutated the original MobX observable configuration.
 
 ## 1.6.9
 
