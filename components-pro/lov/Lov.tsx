@@ -1253,7 +1253,7 @@ export default class Lov extends Select<LovProps> {
     }
     return {
       ...lovTablePropsConfigData,
-      ...mergeProps<Partial<TableProps>>(localTableProps && { ...localTableProps }, tablePropsData),
+      ...mergeProps<Partial<TableProps>>(localTableProps, tablePropsData, true),
       duplicateKey: this.duplicateKeyConfig,
     };
   }
