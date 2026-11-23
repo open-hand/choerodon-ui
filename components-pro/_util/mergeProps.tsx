@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import isPromise from 'is-promise';
 import isNil from 'lodash/isNil';
 import isFunction from 'lodash/isFunction';
+import isPlainObject from 'lodash/isPlainObject';
 import assignWith from 'lodash/assignWith';
 import { global } from 'choerodon-ui/shared';
 import { ChainsFunction } from 'choerodon-ui/shared/global';
@@ -25,7 +26,7 @@ function merge<T>(prop: T | undefined, other: T | undefined): T | undefined {
   };
 }
 
-function customizer(value: any, srcValue: any, key: string) {
+function customizer(value: any, srcValue: any, key: string, copyTarget: boolean) {
   if (key === 'style' || key.endsWith('Style')) {
     return merge(value, srcValue);
   }
@@ -33,7 +34,7 @@ function customizer(value: any, srcValue: any, key: string) {
     return classNames(value, srcValue);
   }
   if (key.endsWith('Props')) {
-    return mergeProps(value, srcValue);
+    return mergeProps(value, srcValue, copyTarget);
   }
   if (isFunction(value) && isFunction(srcValue)) {
     const chains = chainsMap.get(value);
@@ -67,12 +68,13 @@ function customizer(value: any, srcValue: any, key: string) {
   }
 }
 
-export default function mergeProps<P>(props: P | undefined, otherProps: P | undefined): P | undefined {
+export default function mergeProps<P>(props: P | undefined, otherProps: P | undefined, copyTarget = false): P | undefined {
   if (isNil(props)) {
     return otherProps;
   }
   if (isNil(otherProps)) {
     return props;
   }
-  return assignWith<P, P>(props, otherProps, customizer);
+  const target = copyTarget && isPlainObject(props) ? { ...props } : props;
+  return assignWith<P, P>(target, otherProps, (value, srcValue, key) => customizer(value, srcValue, key ?? '', copyTarget));
 }
